@@ -200,7 +200,7 @@ public class ServerList {
 		this.servers.set(parInt1, parServerData);
 	}
 
-	public static void func_147414_b(ServerData parServerData) {
+	public static void saveSingleServer(ServerData parServerData) {
 		ServerList serverlist = new ServerList(Minecraft.getMinecraft());
 		serverlist.loadServerList();
 
