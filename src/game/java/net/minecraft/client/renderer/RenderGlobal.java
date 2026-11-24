@@ -1,6 +1,7 @@
 package net.minecraft.client.renderer;
 
 import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import net.lax1dude.eaglercraft.v1_8.opengl.EffectPipelineEntityOutline;
 import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
@@ -200,18 +201,60 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         }
     }
 
+	private final List<Entity> outlineEntities = new java.util.ArrayList<>();
+	private boolean entityOutlineReady;
+
     public void makeEntityOutlineShader()
     {
+		EffectPipelineEntityOutline.initialize();
     }
 
     public void renderEntityOutlineFramebuffer()
     {
+		if (this.isRenderEntityOutlines() && this.entityOutlineReady) {
+			EffectPipelineEntityOutline.composite();
+			this.entityOutlineReady = false;
+		}
     }
 
     protected boolean isRenderEntityOutlines()
     {
-        return false;
+		return this.mc.player != null && this.world != null;
     }
+
+	public void resetEntityOutlines() {
+		this.outlineEntities.clear();
+		this.entityOutlineReady = false;
+	}
+
+	public void prepareEntityOutlines(float partialTicks) {
+		if (!this.outlineEntities.isEmpty()) {
+			try {
+				EffectPipelineEntityOutline.capture(this.mc.displayWidth, this.mc.displayHeight, () -> {
+					RenderHelper.disableStandardItemLighting();
+					this.renderManager.setRenderOutlines(true);
+					try {
+						for (Entity glowing : this.outlineEntities) {
+							this.renderManager.renderEntityStatic(glowing, partialTicks, false);
+						}
+					} finally {
+						this.renderManager.setRenderOutlines(false);
+						GlStateManager.disableOutlineMode();
+					}
+				});
+				this.entityOutlineReady = true;
+			} finally {
+				this.outlineEntities.clear();
+			}
+		}
+	}
+
+	private boolean shouldOutline(Entity entity, Entity viewer, ICamera camera) {
+		return entity.isGlowing() || this.mc.player.isSpectator()
+				&& this.mc.gameSettings.keyBindSpectatorOutlines.isKeyDown() && entity instanceof EntityPlayer
+				&& (entity.ignoreFrustumCheck || camera.isBoundingBoxInFrustum(entity.getEntityBoundingBox())
+						|| entity.isRidingOrBeingRiddenBy(this.mc.player));
+	}
 
     private void generateSun()
     {
@@ -442,6 +485,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
 
     public void setWorldAndLoadRenderers(@Nullable WorldClient worldClientIn)
     {
+		this.resetEntityOutlines();
         if (this.world != null)
         {
             this.world.removeEventListener(this);
@@ -709,6 +753,9 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
                             {
                                 ++this.countEntitiesRendered;
                                 this.renderManager.renderEntityStatic(entity2, partialTicks, false);
+								if (pass == 0 && this.isRenderEntityOutlines() && this.shouldOutline(entity2, entity, camera)) {
+									this.outlineEntities.add(entity2);
+								}
 
                                 if (this.renderManager.isRenderMultipass(entity2))
                                 {
@@ -721,6 +768,9 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
             }
 
             blockpos$pooledmutableblockpos.release();
+			if (pass == 0 && !DeferredStateManager.isDeferredRenderer()) {
+				this.prepareEntityOutlines(partialTicks);
+			}
 
             if (!list2.isEmpty())
             {

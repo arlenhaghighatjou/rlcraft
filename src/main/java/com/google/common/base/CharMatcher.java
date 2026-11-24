@@ -65,6 +65,9 @@ import com.google.common.annotations.GwtIncompatible;
 @Beta // Possibly change from chars to code points; decide constants vs. methods
 @GwtCompatible(emulated = true)
 public abstract class CharMatcher implements Predicate<Character> {
+	public static CharMatcher javaLetterOrDigit() {
+		return JAVA_LETTER_OR_DIGIT;
+	}
 
 	// Constants
 	/**

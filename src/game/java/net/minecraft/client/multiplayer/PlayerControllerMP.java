@@ -347,7 +347,18 @@ public class PlayerControllerMP
 
         if (this.connection.getNetworkManager().isChannelOpen())
         {
-            this.connection.getNetworkManager().processReceivedPackets();
+			try
+			{
+				this.connection.getNetworkManager().processReceivedPackets();
+				if (this.connection.getNetworkManager().isChannelOpen()) {
+					this.connection.getTextureCache().runTick();
+				}
+			}
+			catch (java.io.IOException ex)
+			{
+				this.connection.getNetworkManager().closeChannel(
+						new net.minecraft.util.text.TextComponentTranslation("disconnect.genericReason", ex.getMessage()));
+			}
         }
         else
         {

@@ -15,6 +15,7 @@ public class ModelManager implements IResourceManagerReloadListener
     private final TextureMap texMap;
     private final BlockModelShapes modelProvider;
     private IBakedModel defaultModel;
+	private net.minecraftforge.client.model.ModelLoader loadingModels;
 
     public ModelManager(TextureMap textures)
     {
@@ -25,7 +26,15 @@ public class ModelManager implements IResourceManagerReloadListener
     public void onResourceManagerReload(IResourceManager resourceManager)
     {
         net.minecraftforge.client.model.ModelLoader modelbakery = new net.minecraftforge.client.model.ModelLoader(resourceManager, this.texMap, this.modelProvider);
-        this.modelRegistry = modelbakery.setupModelRegistry();
+		this.loadingModels = modelbakery;
+		try
+		{
+			this.modelRegistry = modelbakery.setupModelRegistry();
+		}
+		finally
+		{
+			this.loadingModels = null;
+		}
         this.defaultModel = this.modelRegistry.getObject(ModelBakery.MODEL_MISSING);
         net.minecraftforge.client.ForgeHooksClient.onModelBake(this, this.modelRegistry, modelbakery);
         this.modelProvider.reloadModels();
@@ -43,6 +52,11 @@ public class ModelManager implements IResourceManagerReloadListener
             return ibakedmodel == null ? this.defaultModel : ibakedmodel;
         }
     }
+
+	public String getBaseTextureForLoadingBlock(int blockId, int metadata)
+	{
+		return this.loadingModels == null ? null : this.loadingModels.getBaseTextureForBlock(blockId, metadata);
+	}
 
     public IBakedModel getMissingModel()
     {

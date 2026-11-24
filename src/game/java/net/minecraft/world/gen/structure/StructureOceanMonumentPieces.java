@@ -865,7 +865,7 @@ public class StructureOceanMonumentPieces
                 }
 
                 structureoceanmonumentpieces$roomdefinition.updateOpenings();
-                Collections.shuffle(list, p_175836_1_);
+                p_175836_1_.shuffle(list);
                 int i5 = 1;
 
                 for (StructureOceanMonumentPieces.RoomDefinition structureoceanmonumentpieces$roomdefinition3 : list)

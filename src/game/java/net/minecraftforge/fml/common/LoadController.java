@@ -71,6 +71,9 @@ public class LoadController
             {
                 activeModList.add(mod);
                 modStates.put(mod.getModId(), ModState.LOADED);
+				if (FMLCommonHandler.instance().getSide() == net.minecraftforge.fml.relauncher.Side.CLIENT) {
+					FMLCommonHandler.instance().addModToResourcePack(mod);
+				}
             }
             else
             {

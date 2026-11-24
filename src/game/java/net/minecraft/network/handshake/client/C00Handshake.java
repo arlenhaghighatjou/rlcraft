@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class C00Handshake implements Packet<INetHandlerHandshakeServer>
 {
+	public static final int PROTOCOL_VERSION = 340;
     private int protocolVersion;
     private String ip;
     private int port;
@@ -23,7 +24,7 @@ public class C00Handshake implements Packet<INetHandlerHandshakeServer>
     @SideOnly(Side.CLIENT)
     public C00Handshake(String p_i47613_1_, int p_i47613_2_, EnumConnectionState p_i47613_3_)
     {
-        this.protocolVersion = 340;
+        this.protocolVersion = PROTOCOL_VERSION;
         this.ip = p_i47613_1_;
         this.port = p_i47613_2_;
         this.requestedState = p_i47613_3_;

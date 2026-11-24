@@ -39,6 +39,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.MathHelper;
 
 public class RenderHighPoly extends RenderPlayer {
@@ -53,7 +54,7 @@ public class RenderHighPoly extends RenderPlayer {
 
 	public void doRender(AbstractClientPlayer abstractclientplayer, double d0, double d1, double d2, float f,
 			float f1) {
-		if (!abstractclientplayer.isUser() || this.renderManager.livingPlayer == abstractclientplayer) {
+		if (!abstractclientplayer.isUser() || this.renderManager.renderViewEntity == abstractclientplayer) {
 			double nameY = d1;
 			HighPolySkin highPolySkin = abstractclientplayer.getEaglerSkinModel().highPoly;
 			
@@ -76,12 +77,12 @@ public class RenderHighPoly extends RenderPlayer {
 				float f3 = this.interpolateRotation(abstractclientplayer.prevRotationYawHead, abstractclientplayer.rotationYawHead,
 						f1);
 				float f4 = f3 - f2;
-				if (abstractclientplayer.isRiding() && abstractclientplayer.ridingEntity instanceof EntityLivingBase) {
-					EntityLivingBase entitylivingbase1 = (EntityLivingBase) abstractclientplayer.ridingEntity;
+				if (abstractclientplayer.isRiding() && abstractclientplayer.getRidingEntity() instanceof EntityLivingBase) {
+					EntityLivingBase entitylivingbase1 = (EntityLivingBase) abstractclientplayer.getRidingEntity();
 					f2 = this.interpolateRotation(entitylivingbase1.prevRenderYawOffset, entitylivingbase1.renderYawOffset,
 							f1);
 					f4 = f3 - f2;
-					float f5 = MathHelper.wrapAngleTo180_float(f4);
+					float f5 = MathHelper.wrapDegrees(f4);
 					if (f5 < -85.0F) {
 						f5 = -85.0F;
 					}
@@ -98,7 +99,7 @@ public class RenderHighPoly extends RenderPlayer {
 
 				this.renderLivingAt(abstractclientplayer, d0, d1, d2);
 				float f10 = this.handleRotationFloat(abstractclientplayer, f1);
-				this.rotateCorpse(abstractclientplayer, f10, f2, f1);
+				this.applyRotations(abstractclientplayer, f10, f2, f1);
 				GlStateManager.enableRescaleNormal();
 				this.preRenderCallback(abstractclientplayer, f1);
 				float f6 = 0.0625F;
@@ -174,16 +175,16 @@ public class RenderHighPoly extends RenderPlayer {
 						}
 						
 						float jumpFac = (float)(abstractclientplayer.posY - abstractclientplayer.prevPosY);
-						if(jumpFac < 0.0f && !abstractclientplayer.isCollidedVertically) {
+						if(jumpFac < 0.0f && !abstractclientplayer.collidedVertically) {
 							jumpFac = -jumpFac;
 							jumpFac *= 0.1f;
 						}
 						jumpFac -= 0.05f;
-						if(jumpFac > 0.1f && !abstractclientplayer.isCollidedVertically) {
+						if(jumpFac > 0.1f && !abstractclientplayer.collidedVertically) {
 							jumpFac = 0.1f;
 						}else if(jumpFac < 0.0f) {
 							jumpFac = 0.0f;
-						}else if(jumpFac > 0.1f && abstractclientplayer.isCollidedVertically) {
+						}else if(jumpFac > 0.1f && abstractclientplayer.collidedVertically) {
 							jumpFac = 0.1f;
 						}else if(jumpFac > 0.4f) {
 							jumpFac = 0.4f;
@@ -303,14 +304,14 @@ public class RenderHighPoly extends RenderPlayer {
 							
 							if(highPolySkin == HighPolySkin.LONG_ARMS) {
 								GlStateManager.translate(1.72f, 2.05f, -0.24f);
-								ItemStack stk = abstractclientplayer.getHeldItem();
-								if(stk != null) {
+								ItemStack stk = abstractclientplayer.getHeldItemMainhand();
+								if(!stk.isEmpty()) {
 									Item itm = stk.getItem();
 									if(itm != null) {
 										if(itm == Items.BOW) {
 											GlStateManager.translate(-0.22f, 0.8f, 0.6f);
 											GlStateManager.rotate(-90.0f, 1.0f, 0.0f, 0.0f);
-										}else if(itm instanceof ItemBlock && !((ItemBlock)itm).getBlock().isNormalCube()) {
+										}else if(itm instanceof ItemBlock && !((ItemBlock)itm).getBlock().getStateFromMeta(stk.getMetadata()).isNormalCube()) {
 											GlStateManager.translate(0.0f, -0.1f, 0.13f);
 										}else if(!itm.isFull3D()) {
 											GlStateManager.translate(-0.08f, -0.1f, 0.16f);
@@ -328,14 +329,14 @@ public class RenderHighPoly extends RenderPlayer {
 								GlStateManager.translate(-0.02f * var17, 0.42f * var17, var17 * 0.35f);
 								GlStateManager.rotate(var17 * 30.0f, 1.0f, 0.0f, 0.0f);
 								GlStateManager.rotate(110.0f, 1.0f, 0.0f, 0.0f);
-								ItemStack stk = abstractclientplayer.getHeldItem();
-								if(stk != null) {
+								ItemStack stk = abstractclientplayer.getHeldItemMainhand();
+								if(!stk.isEmpty()) {
 									Item itm = stk.getItem();
 									if(itm != null) {
 										if(itm == Items.BOW) {
 											GlStateManager.translate(-0.18f, 1.0f, 0.4f);
 											GlStateManager.rotate(-95.0f, 1.0f, 0.0f, 0.0f);
-										}else if(itm instanceof ItemBlock && !((ItemBlock)itm).getBlock().isNormalCube()) {
+										}else if(itm instanceof ItemBlock && !((ItemBlock)itm).getBlock().getStateFromMeta(stk.getMetadata()).isNormalCube()) {
 											GlStateManager.translate(0.0f, -0.1f, 0.13f);
 										}else if(!itm.isFull3D()) {
 											GlStateManager.translate(-0.08f, -0.1f, 0.16f);
@@ -345,15 +346,15 @@ public class RenderHighPoly extends RenderPlayer {
 							}else if(highPolySkin == HighPolySkin.LAXATIVE_DUDE) {
 								GlStateManager.translate(1.291f, 2.44f, -2.18f);
 								GlStateManager.rotate(95.0f, 1.0f, 0.0f, 0.0f);
-								ItemStack stk = abstractclientplayer.getHeldItem();
-								if(stk != null) {
+								ItemStack stk = abstractclientplayer.getHeldItemMainhand();
+								if(!stk.isEmpty()) {
 									Item itm = stk.getItem();
 									if(itm != null) {
 										if(itm == Items.BOW) {
 											GlStateManager.translate(-0.65f, 1.3f, -0.1f);
 											GlStateManager.rotate(180.0f, 0.0f, 0.0f, 1.0f);
 											GlStateManager.rotate(20.0f, 1.0f, 0.0f, 0.0f);
-										}else if(itm instanceof ItemBlock && !((ItemBlock)itm).getBlock().isNormalCube()) {
+										}else if(itm instanceof ItemBlock && !((ItemBlock)itm).getBlock().getStateFromMeta(stk.getMetadata()).isNormalCube()) {
 											GlStateManager.translate(0.0f, -0.35f, 0.4f);
 										}else if(!itm.isFull3D()) {
 											GlStateManager.translate(-0.1f, -0.1f, 0.16f);
@@ -373,10 +374,10 @@ public class RenderHighPoly extends RenderPlayer {
 				
 				if(highPolySkin.eyesModel != null && !DeferredStateManager.isEnableShadowRender()) {
 					float ff = 0.00416f;
-					int brightness = abstractclientplayer.getBrightnessForRender(0.0f);
+					int brightness = abstractclientplayer.getBrightnessForRender();
 					float blockLight = (brightness % 65536) * ff;
 					float skyLight = (brightness / 65536) * ff;
-					float sunCurve = (float)((abstractclientplayer.worldObj.getWorldTime() + 4000l) % 24000) / 24000.0f;
+					float sunCurve = (float)((abstractclientplayer.world.getWorldTime() + 4000l) % 24000) / 24000.0f;
 					sunCurve = MathHelper.clamp(9.8f - MathHelper.abs(sunCurve * 5.0f + sunCurve * sunCurve * 45.0f - 14.3f) * 0.7f, 0.0f, 1.0f);
 					skyLight = skyLight * (sunCurve * 0.85f + 0.15f);
 					blockLight = blockLight * (sunCurve * 0.3f + 0.7f);
@@ -388,7 +389,8 @@ public class RenderHighPoly extends RenderPlayer {
 					eyeBrightness = 1.0f - eyeBrightness;
 					eyeBrightness = MathHelper.clamp(eyeBrightness * 1.9f - 1.0f, 0.0f, 1.0f);
 					if(eyeBrightness > 0.1f) {
-						if(DeferredStateManager.isInDeferredPass()) {
+						boolean deferred = DeferredStateManager.isInDeferredPass();
+						if(deferred) {
 							GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 							DeferredStateManager.setDefaultMaterialConstants();
 							DeferredStateManager.setEmissionConstant(eyeBrightness);
@@ -410,11 +412,11 @@ public class RenderHighPoly extends RenderPlayer {
 						GlStateManager.enableTexture2D();
 						GlStateManager.enableLighting();
 						GlStateManager.disableCull();
-						if(jumpFactor > 0.0f) {
+						if(!deferred && jumpFactor > 0.0f) {
 							GlStateManager.popMatrix();
 						}
 						GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-						if(!DeferredStateManager.isInDeferredPass()) {
+						if(!deferred) {
 							GlStateManager.disableBlend();
 						}
 					}
@@ -427,6 +429,7 @@ public class RenderHighPoly extends RenderPlayer {
 			GlStateManager.enableTexture2D();
 			GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
 			GlStateManager.enableCull();
+			GlStateManager.disableRescaleNormal();
 			GlStateManager.popMatrix();
 			if (!this.renderOutlines) {
 				this.renderName(abstractclientplayer, d0, nameY, d2);
@@ -434,26 +437,26 @@ public class RenderHighPoly extends RenderPlayer {
 		}
 	}
 
+	@Override
 	public void renderRightArm(AbstractClientPlayer clientPlayer) {
-		
 	}
 
+	@Override
 	public void renderLeftArm(AbstractClientPlayer clientPlayer) {
-		
 	}
 
 	protected void renderHeldItem(AbstractClientPlayer clientPlayer, float partialTicks) {
-		ItemStack itemstack = clientPlayer.getHeldItem();
-		if (itemstack != null) {
+		ItemStack itemstack = clientPlayer.getHeldItemMainhand();
+		if (!itemstack.isEmpty()) {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(-0.11F, 0.475F, 0.25F);
 			if (clientPlayer.fishEntity != null) {
-				itemstack = new ItemStack(Items.FISHING_ROD, 0);
+				itemstack = new ItemStack(Items.FISHING_ROD);
 			}
 
 			Item item = itemstack.getItem();
 			Minecraft minecraft = Minecraft.getMinecraft();
-			if (item instanceof ItemBlock && Block.getBlockFromItem(item).getRenderType() == 2) {
+			if (item instanceof ItemBlock && Block.getBlockFromItem(item).getStateFromMeta(itemstack.getMetadata()).getRenderType() == EnumBlockRenderType.ENTITYBLOCK_ANIMATED) {
 				GlStateManager.translate(0.0F, 0.1875F, -0.3125F);
 				GlStateManager.rotate(20.0F, 1.0F, 0.0F, 0.0F);
 				GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
@@ -466,7 +469,7 @@ public class RenderHighPoly extends RenderPlayer {
 			}
 
 			minecraft.getItemRenderer().renderItem(clientPlayer, itemstack,
-					ItemCameraTransforms.TransformType.THIRD_PERSON);
+					ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND);
 			GlStateManager.popMatrix();
 		}
 	}

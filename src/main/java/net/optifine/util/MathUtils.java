@@ -42,7 +42,7 @@ public class MathUtils {
 	}
 
 	public static int roundDownToPowerOfTwo(int val) {
-		int i = MathHelper.roundUpToPowerOfTwo(val);
+		int i = MathHelper.smallestEncompassingPowerOfTwo(val);
 		return val == i ? i : i / 2;
 	}
 

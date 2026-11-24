@@ -86,6 +86,7 @@ public class GuiWorldSelection extends GuiScreen implements GuiYesNoCallback {
 	 * window resizes, the buttonList is cleared beforehand.
 	 */
 	public void initGui() {
+		this.field_146634_i = false;
 		this.ramdiskMode = SingleplayerServerController.isIssueDetected(IPCPacket1CIssueDetected.ISSUE_RAMDISK_MODE);
 		this.field_146628_f = I18n.format("selectWorld.title", new Object[0]);
 		this.field_146637_u = I18n.format("selectWorld.world", new Object[0]);
@@ -133,7 +134,13 @@ public class GuiWorldSelection extends GuiScreen implements GuiYesNoCallback {
 
 	private void func_146627_h() {
 		ISaveFormat isaveformat = this.mc.getSaveLoader();
-		this.field_146639_s = isaveformat.getSaveList();
+		try {
+			this.field_146639_s = isaveformat.getSaveList();
+		} catch (net.minecraft.client.AnvilConverterException ex) {
+			this.field_146639_s = java.util.Collections.emptyList();
+			this.mc.displayGuiScreen(new GuiErrorScreen(I18n.format("selectWorld.unable_to_load"), ex.getMessage()));
+			return;
+		}
 		Collections.sort(this.field_146639_s);
 		this.field_146640_r = -1;
 	}
@@ -220,7 +227,12 @@ public class GuiWorldSelection extends GuiScreen implements GuiYesNoCallback {
 			}
 
 			if (this.mc.getSaveLoader().canLoadWorld(s)) {
-				this.mc.launchIntegratedServer(s, s1, (WorldSettings) null);
+				if (parInt1 >= 0 && parInt1 < this.field_146639_s.size()) {
+					net.minecraftforge.fml.client.FMLClientHandler.instance().tryLoadExistingWorld(this,
+							(WorldSummary)this.field_146639_s.get(parInt1));
+				} else {
+					this.mc.launchIntegratedServer(s, s1, (WorldSettings)null);
+				}
 			}
 
 		}
@@ -273,7 +285,7 @@ public class GuiWorldSelection extends GuiScreen implements GuiYesNoCallback {
 	}
 
 	@Override
-	public void mouseClicked(int xx, int yy, int btn) {
+	public void mouseClicked(int xx, int yy, int btn) throws java.io.IOException {
 		String text = I18n.format("directConnect.lanWorld");
 		int w = mc.fontRenderer.getStringWidth(text);
 		if (xx > 2 && yy > 2 && xx < (w * 3 / 4) + 5 && yy < 12) {

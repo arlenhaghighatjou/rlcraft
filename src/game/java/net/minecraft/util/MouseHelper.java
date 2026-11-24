@@ -4,6 +4,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
 import net.lax1dude.eaglercraft.v1_8.Display;
+import net.lax1dude.eaglercraft.v1_8.PointerInputAbstraction;
 
 @SideOnly(Side.CLIENT)
 public class MouseHelper
@@ -27,7 +28,7 @@ public class MouseHelper
 
     public void mouseXYChange()
     {
-        this.deltaX = Mouse.getDX();
-        this.deltaY = Mouse.getDY();
+        this.deltaX = PointerInputAbstraction.getVCursorDX();
+        this.deltaY = PointerInputAbstraction.getVCursorDY();
     }
 }

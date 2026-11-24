@@ -57,6 +57,7 @@ public class EffectPipelineFXAA {
 
 	private static int currentWidth = -1;
 	private static int currentHeight = -1;
+	private static boolean rendering;
 
 	static void initialize() {
 		String fragmentSource = EagRuntime.getRequiredResourceString(fragmentShaderPath);
@@ -137,6 +138,7 @@ public class EffectPipelineFXAA {
 	}
 
 	public static void begin(int width, int height) {
+		rendering = true;
 		if(currentWidth != width || currentHeight != height) {
 			currentWidth = width;
 			currentHeight = height;
@@ -157,6 +159,7 @@ public class EffectPipelineFXAA {
 	}
 
 	public static void end() {
+		rendering = false;
 		_wglBindFramebuffer(_GL_FRAMEBUFFER, null);
 
 		EaglercraftGPU.bindGLShaderProgram(shaderProgram);
@@ -169,6 +172,7 @@ public class EffectPipelineFXAA {
 	}
 
 	public static void destroy() {
+		rendering = false;
 		if(shaderProgram != null) {
 			_wglDeleteProgram(shaderProgram);
 			shaderProgram = null;
@@ -186,6 +190,10 @@ public class EffectPipelineFXAA {
 			_wglDeleteRenderbuffer(framebufferDepth);
 			framebufferDepth = null;
 		}
+	}
+
+	static void bindSceneFramebuffer() {
+		_wglBindFramebuffer(_GL_FRAMEBUFFER, rendering ? framebuffer : null);
 	}
 
 }

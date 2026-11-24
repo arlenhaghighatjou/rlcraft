@@ -3,9 +3,15 @@ package net.minecraft.network;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Floats;
-import net.lax1dude.eaglercraft.v1_8.futures.Futures;
-import io.netty.util.concurrent.Future;
-import io.netty.util.concurrent.GenericFutureListener;
+import com.arlenh7.eaglercraft.network.INetworkManager;
+import net.lax1dude.eaglercraft.v1_8.socket.protocol.GamePluginMessageConstants;
+import net.lax1dude.eaglercraft.v1_8.socket.protocol.GamePluginMessageProtocol;
+import net.lax1dude.eaglercraft.v1_8.socket.protocol.message.InjectedMessageController;
+import net.lax1dude.eaglercraft.v1_8.socket.protocol.message.LegacyMessageController;
+import net.lax1dude.eaglercraft.v1_8.socket.protocol.message.MessageController;
+import net.lax1dude.eaglercraft.v1_8.socket.protocol.pkt.GameMessagePacket;
+import net.lax1dude.eaglercraft.v1_8.sp.server.socket.IntegratedServerPlayerNetworkManager;
+import net.lax1dude.eaglercraft.v1_8.sp.server.socket.protocol.ServerMessageHandler;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -81,6 +87,7 @@ import net.minecraft.network.play.client.CPacketVehicleMove;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.network.play.server.SPacketChat;
 import net.minecraft.network.play.server.SPacketConfirmTransaction;
+import net.minecraft.network.play.server.SPacketCustomPayload;
 import net.minecraft.network.play.server.SPacketDisconnect;
 import net.minecraft.network.play.server.SPacketHeldItemChange;
 import net.minecraft.network.play.server.SPacketKeepAlive;
@@ -124,8 +131,9 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
 {
     private static final Logger LOGGER = LogManager.getLogger();
-    public final NetworkManager netManager;
+    public final INetworkManager netManager;
     private final MinecraftServer serverController;
+	private final MessageController eaglerMessages;
     public EntityPlayerMP player;
     private int networkTickCount;
     private long field_194402_f;
@@ -158,17 +166,57 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
     private int lastMovePacketCounter;
     private ServerRecipeBookHelper field_194309_H = new ServerRecipeBookHelper();
 
-    public NetHandlerPlayServer(MinecraftServer server, NetworkManager networkManagerIn, EntityPlayerMP playerIn)
+    public NetHandlerPlayServer(MinecraftServer server, INetworkManager networkManagerIn, EntityPlayerMP playerIn)
     {
         this.serverController = server;
         this.netManager = networkManagerIn;
         networkManagerIn.setNetHandler(this);
         this.player = playerIn;
         playerIn.connection = this;
+		if (networkManagerIn instanceof IntegratedServerPlayerNetworkManager)
+		{
+			IntegratedServerPlayerNetworkManager manager = (IntegratedServerPlayerNetworkManager)networkManagerIn;
+			int version = manager.getEaglerProtocolVersion();
+			GamePluginMessageProtocol protocol = GamePluginMessageProtocol.getByVersion(version);
+			ServerMessageHandler handler = ServerMessageHandler.createServerHandler(version, this);
+			if (version >= 5)
+			{
+				InjectedMessageController controller = new InjectedMessageController(protocol, handler,
+						GamePluginMessageConstants.SERVER_TO_CLIENT, manager::injectRawFrame);
+				manager.setInjectedMessageController(controller);
+				this.eaglerMessages = controller;
+			}
+			else
+			{
+				this.eaglerMessages = new LegacyMessageController(protocol, handler,
+						GamePluginMessageConstants.SERVER_TO_CLIENT,
+						(channel, data) -> this.sendPacket(new SPacketCustomPayload(channel, data)));
+			}
+		}
+		else
+		{
+			this.eaglerMessages = null;
+		}
     }
+
+	public MinecraftServer getServer()
+	{
+		return this.serverController;
+	}
+
+	public GamePluginMessageProtocol getEaglerMessageProtocol()
+	{
+		return this.eaglerMessages == null ? null : this.eaglerMessages.getProtocol();
+	}
+
+	public void sendEaglerMessage(GameMessagePacket packet)
+	{
+		if (this.eaglerMessages != null) this.eaglerMessages.sendPacket(packet);
+	}
 
     public void update()
     {
+		if (this.eaglerMessages != null) this.eaglerMessages.flush();
         this.captureCurrentPosition();
         this.player.onUpdateEntity();
         this.player.setPositionAndRotation(this.firstGoodX, this.firstGoodY, this.firstGoodZ, this.player.rotationYaw, this.player.rotationPitch);
@@ -269,28 +317,15 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
         this.lastGoodZ = this.player.posZ;
     }
 
-    public NetworkManager getNetworkManager()
+    public INetworkManager getNetworkManager()
     {
         return this.netManager;
     }
 
     public void disconnect(final ITextComponent textComponent)
     {
-        this.netManager.sendPacket(new SPacketDisconnect(textComponent), new GenericFutureListener < Future <? super Void >> ()
-        {
-            public void operationComplete(Future <? super Void > p_operationComplete_1_) throws Exception
-            {
-                NetHandlerPlayServer.this.netManager.closeChannel(textComponent);
-            }
-        });
-        this.netManager.disableAutoRead();
-        Futures.getUnchecked(this.serverController.addScheduledTask(new Runnable()
-        {
-            public void run()
-            {
-                NetHandlerPlayServer.this.netManager.checkDisconnected();
-            }
-        }));
+        this.netManager.sendPacket(new SPacketDisconnect(textComponent));
+        this.netManager.closeChannel(textComponent);
     }
 
     public void processInput(CPacketInput packetIn)
@@ -1366,6 +1401,36 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
     {
         PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.player.getServerWorld());
         String s = packetIn.getChannelName();
+
+		if (this.eaglerMessages != null && "EAG|MyUpdCert-1.8".equals(s))
+		{
+			if (this.player.updateCertificate == null)
+			{
+				PacketBuffer data = packetIn.getBufferData();
+				byte[] certificate = new byte[data.readableBytes()];
+				data.readBytes(certificate);
+				this.player.updateCertificate = certificate;
+				for (EntityPlayerMP peer : this.serverController.getPlayerList().getPlayers())
+				{
+					if (peer != this.player) peer.connection.sendEaglerMessage(
+							new net.lax1dude.eaglercraft.v1_8.socket.protocol.pkt.server.SPacketUpdateCertEAG(certificate));
+				}
+			}
+			return;
+		}
+
+		if (this.eaglerMessages instanceof LegacyMessageController)
+		{
+			try
+			{
+				if (((LegacyMessageController)this.eaglerMessages).handlePacket(s, packetIn.getBufferData())) return;
+			}
+			catch (IOException ex)
+			{
+				LOGGER.error("Couldn't read Eaglercraft plugin message {}", s, ex);
+				return;
+			}
+		}
 
         if ("MC|BEdit".equals(s))
         {

@@ -12,7 +12,7 @@ public class BakedQuadRetextured extends BakedQuad
 
     public BakedQuadRetextured(BakedQuad quad, EaglerTextureAtlasSprite textureIn)
     {
-        super(Arrays.copyOf(quad.getVertexData(), quad.getVertexData().length), quad.tintIndex, FaceBakery.getFacingFromVertexData(quad.getVertexData()), quad.getSprite(), quad.applyDiffuseLighting, quad.format);
+        super(Arrays.copyOf(quad.getVertexData(), quad.getVertexData().length), quad.tintIndex, quad.getFace(), quad.getSprite(), quad.applyDiffuseLighting, quad.format);
         this.texture = textureIn;
         this.remapQuad();
     }
@@ -23,8 +23,8 @@ public class BakedQuadRetextured extends BakedQuad
         {
             int j = format.getIntegerSize() * i;
             int uvIndex = format.getUvOffsetById(0) / 4;
-            this.vertexData[j + uvIndex] = Float.floatToRawIntBits(this.texture.getInterpolatedU((double)this.sprite.getUnInterpolatedU(Float.intBitsToFloat(this.vertexData[j + uvIndex]))));
-            this.vertexData[j + uvIndex + 1] = Float.floatToRawIntBits(this.texture.getInterpolatedV((double)this.sprite.getUnInterpolatedV(Float.intBitsToFloat(this.vertexData[j + uvIndex + 1]))));
+            this.vertexData[j + uvIndex] = Float.floatToRawIntBits(this.texture.getInterpolatedU((double)this.sprite.getSpriteU16(Float.intBitsToFloat(this.vertexData[j + uvIndex]))));
+            this.vertexData[j + uvIndex + 1] = Float.floatToRawIntBits(this.texture.getInterpolatedV((double)this.sprite.getSpriteV16(Float.intBitsToFloat(this.vertexData[j + uvIndex + 1]))));
         }
     }
 

@@ -94,7 +94,7 @@ public class GuiScreenPhishingWarning extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mx, int my, int btn) {
+	protected void mouseClicked(int mx, int my, int btn) throws java.io.IOException {
 		if(btn == 0 && mouseOverCheck) {
 			hasCheckedBox = !hasCheckedBox;
 			mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));

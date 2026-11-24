@@ -2,6 +2,9 @@ package net.optifine.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.Map;
 
 import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
@@ -14,6 +17,7 @@ import net.minecraft.client.renderer.block.model.BlockPartRotation;
 import net.minecraft.client.renderer.block.model.BakedQuadRetextured;
 import net.minecraft.client.renderer.block.model.FaceBakery;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelManager;
@@ -34,43 +38,25 @@ public class BlockModelUtils {
 	}
 
 	public static IBakedModel makeModelCube(EaglerTextureAtlasSprite sprite, int tintIndex) {
-		List list = new ArrayList();
-		EnumFacing[] aenumfacing = EnumFacing._VALUES;
-		List<List<BakedQuad>> list1 = new ArrayList();
-
-		for (int i = 0; i < aenumfacing.length; ++i) {
-			EnumFacing enumfacing = aenumfacing[i];
-			List list2 = new ArrayList();
-			list2.add(makeBakedQuad(enumfacing, sprite, tintIndex));
-			list1.add(list2);
+		Map<EnumFacing, List<BakedQuad>> faces = new EnumMap<>(EnumFacing.class);
+		for (EnumFacing face : EnumFacing._VALUES) {
+			faces.put(face, Collections.singletonList(makeBakedQuad(face, sprite, tintIndex)));
 		}
-
-		IBakedModel ibakedmodel = new SimpleBakedModel(list, list1, true, true, sprite, ItemCameraTransforms.DEFAULT);
-		return ibakedmodel;
+		return new SimpleBakedModel(Collections.emptyList(), faces, true, true, sprite,
+				ItemCameraTransforms.DEFAULT, ItemOverrideList.NONE);
 	}
 
-	public static IBakedModel joinModelsCube(IBakedModel modelBase, IBakedModel modelAdd) {
-		List<BakedQuad> list = new ArrayList();
-		list.addAll(modelBase.getGeneralQuads());
-		list.addAll(modelAdd.getGeneralQuads());
-		EnumFacing[] aenumfacing = EnumFacing._VALUES;
-		List list1 = new ArrayList();
-
-		for (int i = 0; i < aenumfacing.length; ++i) {
-			EnumFacing enumfacing = aenumfacing[i];
-			List list2 = new ArrayList();
-			list2.addAll(modelBase.getFaceQuads(enumfacing));
-			list2.addAll(modelAdd.getFaceQuads(enumfacing));
-			list1.add(list2);
+	public static IBakedModel joinModelsCube(IBakedModel base, IBakedModel overlay) {
+		List<BakedQuad> general = new ArrayList<>(base.getQuads(null, null, 0L));
+		general.addAll(overlay.getQuads(null, null, 0L));
+		Map<EnumFacing, List<BakedQuad>> faces = new EnumMap<>(EnumFacing.class);
+		for (EnumFacing face : EnumFacing._VALUES) {
+			List<BakedQuad> quads = new ArrayList<>(base.getQuads(null, face, 0L));
+			quads.addAll(overlay.getQuads(null, face, 0L));
+			faces.put(face, quads);
 		}
-
-		boolean flag = modelBase.isAmbientOcclusion();
-		boolean flag1 = modelBase.isBuiltInRenderer();
-		EaglerTextureAtlasSprite textureatlassprite = modelBase.getParticleTexture();
-		ItemCameraTransforms itemcameratransforms = modelBase.getItemCameraTransforms();
-		IBakedModel ibakedmodel = new SimpleBakedModel(list, list1, flag, flag1, textureatlassprite,
-				itemcameratransforms);
-		return ibakedmodel;
+		return new SimpleBakedModel(general, faces, base.isAmbientOcclusion(), base.isGui3d(),
+				base.getParticleTexture(), base.getItemCameraTransforms(), base.getOverrides());
 	}
 
 	public static BakedQuad makeBakedQuad(EnumFacing facing, EaglerTextureAtlasSprite sprite, int tintIndex) {
@@ -112,11 +98,11 @@ public class BlockModelUtils {
 
 					for (int i = 0; i < aenumfacing.length; ++i) {
 						EnumFacing enumfacing = aenumfacing[i];
-						List<BakedQuad> list = ibakedmodel1.getFaceQuads(enumfacing);
+						List<BakedQuad> list = ibakedmodel1.getQuads(null, enumfacing, 0L);
 						replaceTexture(list, spriteOld, spriteNew);
 					}
 
-					List<BakedQuad> list1 = ibakedmodel1.getGeneralQuads();
+					List<BakedQuad> list1 = ibakedmodel1.getQuads(null, null, 0L);
 					replaceTexture(list1, spriteOld, spriteNew);
 					return ibakedmodel1;
 				} else {

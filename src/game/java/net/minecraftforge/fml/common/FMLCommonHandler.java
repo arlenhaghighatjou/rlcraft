@@ -70,9 +70,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.thread.SidedThreadGroup;
-import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.server.FMLServerHandler;
 
 import net.lax1dude.eaglercraft.v1_8.IOUtils;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
@@ -121,26 +119,6 @@ public class FMLCommonHandler
 
     private FMLCommonHandler()
     {
-        registerCrashCallable(new ICrashCallable()
-        {
-            @Override
-            public String call() throws Exception
-            {
-                StringBuilder builder = new StringBuilder();
-                Joiner joiner = Joiner.on("\n  ");
-                for(String coreMod : CoreModManager.getTransformers().keySet())
-                {
-                    builder.append("\n" + coreMod + "\n  ").append(joiner.join(CoreModManager.getTransformers().get(coreMod)));
-                }
-                return builder.toString();
-            }
-
-            @Override
-            public String getLabel()
-            {
-                return "Loaded coremods (and transformers)";
-            }
-        });
     }
     /**
      * The FML event bus. Subscribe here for FML related events
@@ -327,10 +305,9 @@ public class FMLCommonHandler
         sidedDelegate.queryUser(query);
     }
 
-    public void onServerStart(MinecraftServer dedicatedServer)
+    public void onServerStart(MinecraftServer server)
     {
-        FMLServerHandler.instance();
-        sidedDelegate.beginServerLoading(dedicatedServer);
+        sidedDelegate.beginServerLoading(server);
     }
 
     public void onServerStarted()
@@ -504,10 +481,7 @@ public class FMLCommonHandler
     public void handleServerStopped()
     {
         sidedDelegate.serverStopped();
-        MinecraftServer server = getMinecraftServerInstance();
         Loader.instance().serverStopped();
-        // FORCE the internal server to stop: hello optifine workaround!
-        if (server!=null) ObfuscationReflectionHelper.setPrivateValue(MinecraftServer.class, server, false, "field_71316"+"_v");
 
         // allow any pending exit to continue, clear exitLatch
         CountDownLatch latch = exitLatch;
@@ -650,7 +624,6 @@ public class FMLCommonHandler
             return false;
         }
 
-        manager.channel().attr(NetworkRegistry.FML_MARKER).set(packet.hasFMLMarker());
         return true;
     }
 
@@ -722,7 +695,7 @@ public class FMLCommonHandler
     @Nullable
     public InputStream loadLanguage(Map<String, String> table, InputStream inputstream) throws IOException
     {
-        byte[] data = IOUtils.toByteArray(inputstream);
+        byte[] data = inputstream.readAllBytes();
 
         boolean isEnhanced = false;
         for (String line : IOUtils.readLines(new ByteArrayInputStream(data), StandardCharsets.UTF_8))

@@ -162,6 +162,6 @@ public class ClientCommandHandler extends CommandHandler
 
     @Override
     protected MinecraftServer getServer() {
-        return Minecraft.getMinecraft().getIntegratedServer();
+        return FMLClientHandler.instance().getServer();
     }
 }

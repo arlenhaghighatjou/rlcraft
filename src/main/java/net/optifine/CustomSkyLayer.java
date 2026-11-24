@@ -329,7 +329,7 @@ public class CustomSkyLayer {
 			BlockPos blockpos = entity.getPosition();
 
 			if (this.biomes != null) {
-				Biome biomegenbase = world.getBiomeGenForCoords(blockpos);
+				Biome biomegenbase = world.getBiome(blockpos);
 
 				if (biomegenbase == null) {
 					return 0.0F;

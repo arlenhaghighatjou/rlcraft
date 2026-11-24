@@ -57,7 +57,6 @@ import net.minecraftforge.fml.client.config.GuiConfigEntries.IConfigEntry;
 import net.minecraftforge.fml.client.config.IConfigElement;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.relauncher.FMLInjectionData;
 import net.lax1dude.eaglercraft.v1_8.IOUtils;
 
 /**
@@ -97,7 +96,25 @@ public class Configuration
         NEW_LINE = System.getProperty("line.separator");
     }
 
+	private net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2 virtualFile;
+
     public Configuration(){}
+
+	public Configuration(net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2 file) {
+		this(file, false);
+	}
+
+	public Configuration(net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2 file, boolean caseSensitiveCategories) {
+		this.virtualFile = file;
+		this.caseSensitiveCustomCategories = caseSensitiveCategories;
+		this.fileName = file.getPath();
+		if (PARENT != null) {
+			PARENT.setChild(this.fileName, this);
+			this.isChild = true;
+		} else {
+			this.load();
+		}
+	}
 
     /**
      * Create a configuration file for the file given in parameter.
@@ -114,7 +131,7 @@ public class Configuration
     {
         this.file = file;
         this.definedConfigVersion = configVersion;
-        String basePath = ((File)(FMLInjectionData.data()[6])).getAbsolutePath().replace(File.separatorChar, '/').replace("/.", "");
+        String basePath = new File(".").getAbsolutePath().replace(File.separatorChar, '/').replace("/.", "");
         String path = file.getAbsolutePath().replace(File.separatorChar, '/').replace("/./", "/").replace(basePath, "");
         if (PARENT != null)
         {
@@ -160,7 +177,7 @@ public class Configuration
     @Override
     public String toString()
     {
-        return file.getAbsolutePath();
+        return this.virtualFile == null ? file.getAbsolutePath() : this.virtualFile.getPath();
     }
 
     public String getDefinedConfigVersion()
@@ -836,23 +853,26 @@ public class Configuration
         UnicodeInputStreamReader input = null;
         try
         {
-            if (file.getParentFile() != null)
-            {
-                file.getParentFile().mkdirs();
-            }
+			if (this.virtualFile == null) {
+				if (file.getParentFile() != null) {
+					file.getParentFile().mkdirs();
+				}
+				if (!file.exists()) {
+					categories.clear();
+					children.clear();
+					if (!file.createNewFile()) {
+						return;
+					}
+				}
+			} else if (!this.virtualFile.exists()) {
+				categories.clear();
+				children.clear();
+				return;
+			}
 
-            if (!file.exists())
-            {
-                // Either a previous load attempt failed or the file is new; clear maps
-                categories.clear();
-                children.clear();
-                if (!file.createNewFile())
-                    return;
-            }
-
-            if (file.canRead())
-            {
-                input = new UnicodeInputStreamReader(new FileInputStream(file), defaultEncoding);
+			if (this.virtualFile != null || file.canRead()) {
+				input = new UnicodeInputStreamReader(this.virtualFile == null ? new FileInputStream(file)
+						: this.virtualFile.getInputStream(), defaultEncoding);
                 defaultEncoding = input.getEncoding();
                 buffer = new BufferedReader(input);
 
@@ -1087,21 +1107,19 @@ public class Configuration
 
         try
         {
-            if (file.getParentFile() != null)
-            {
-                file.getParentFile().mkdirs();
-            }
-
-            if (!file.exists() && !file.createNewFile())
-            {
-                return;
-            }
-
-            if (file.canWrite())
-            {
-                FileOutputStream fos = new FileOutputStream(file);
-                BufferedWriter buffer = new BufferedWriter(new OutputStreamWriter(fos, defaultEncoding));
-
+			if (this.virtualFile == null) {
+				if (file.getParentFile() != null) {
+					file.getParentFile().mkdirs();
+				}
+				if (!file.exists() && !file.createNewFile()) {
+					return;
+				}
+				if (!file.canWrite()) {
+					return;
+				}
+			}
+			java.io.ByteArrayOutputStream data = new java.io.ByteArrayOutputStream();
+			try (BufferedWriter buffer = new BufferedWriter(new OutputStreamWriter(data, defaultEncoding))) {
                 buffer.write("# Configuration file" + NEW_LINE + NEW_LINE);
 
                 if (this.definedConfigVersion != null)
@@ -1121,9 +1139,14 @@ public class Configuration
                     }
                 }
 
-                buffer.close();
-                fos.close();
-            }
+			}
+			if (this.virtualFile != null) {
+				this.virtualFile.setAllBytes(data.toByteArray());
+			} else {
+				try (FileOutputStream output = new FileOutputStream(file)) {
+					data.writeTo(output);
+				}
+			}
         }
         catch (IOException e)
         {
@@ -1307,7 +1330,7 @@ public class Configuration
 
     public static void enableGlobalConfig()
     {
-        PARENT = new Configuration(new File(Loader.instance().getConfigDir(), "global.cfg"));
+        PARENT = new Configuration(new net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2(Loader.instance().getConfigDir(), "global.cfg"));
         PARENT.load();
     }
 
@@ -1825,6 +1848,6 @@ public class Configuration
 
     public File getConfigFile()
     {
-        return file;
+        return this.virtualFile == null ? file : new File(this.virtualFile.getPath());
     }
 }

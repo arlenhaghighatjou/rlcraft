@@ -17,7 +17,6 @@
 package net.lax1dude.eaglercraft.v1_8.sp.server;
 
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -47,7 +46,6 @@ public class EaglerMinecraftServer extends MinecraftServer {
 	protected GameType gamemode;
 	protected WorldSettings newWorldSettings;
 	protected boolean paused;
-	protected EaglerSaveHandler saveHandler;
 	protected IntegratedTextureService textureService;
 	protected IntegratedVoiceService voiceService;
 
@@ -60,22 +58,19 @@ public class EaglerMinecraftServer extends MinecraftServer {
 	public static int counterTileUpdate = 0;
 	public static int counterLightUpdate = 0;
 
-	private final List<Runnable> scheduledTasks = new LinkedList<>();
-
 	public EaglerMinecraftServer(String world, String owner, int viewDistance, WorldSettings currentWorldSettings, boolean demo) {
 		super(world);
 		Bootstrap.register();
-		this.saveHandler = new EaglerSaveHandler(savesDir, world);
 		EaglerPlayerList playerList = new EaglerPlayerList(this, viewDistance);
 		this.textureService = new IntegratedTextureService(playerList,
-				WorldsDB.newVFile(saveHandler.getWorldDirectory(), "eagler/skulls"));
+				WorldsDB.newVFile(savesDir, world, "eagler/skulls"));
 		this.voiceService = null;
 		this.setServerOwner(owner);
 		logger.info("server owner: " + owner);
 		this.setDemo(demo);
 		this.canCreateBonusChest(currentWorldSettings != null && currentWorldSettings.isBonusChestEnabled());
 		this.setBuildLimit(256);
-		this.setConfigManager(playerList);
+		this.setPlayerList(playerList);
 		this.newWorldSettings = currentWorldSettings;
 		this.paused = false;
 	}
@@ -94,7 +89,7 @@ public class EaglerMinecraftServer extends MinecraftServer {
 				voiceService.changeICEServers(iceServers);
 			}else {
 				voiceService = new IntegratedVoiceService(iceServers);
-				for(EntityPlayerMP player : getConfigurationManager().func_181057_v()) {
+				for(EntityPlayerMP player : getPlayerList().getPlayers()) {
 					voiceService.handlePlayerLoggedIn(player);
 				}
 			}
@@ -111,20 +106,25 @@ public class EaglerMinecraftServer extends MinecraftServer {
 	}
 
 	@Override
-	public void addScheduledTask(Runnable var1) {
-		scheduledTasks.add(var1);
-	}
-
-	@Override
 	protected boolean startServer() throws IOException {
-		logger.info("Starting integrated eaglercraft server version 1.8.8");
-		this.loadAllWorlds(saveHandler, this.getWorldName(), newWorldSettings);
-		serverRunning = true;
+		this.bindServerThread();
+		logger.info("Starting integrated Eaglercraft server version 1.12.2");
+		net.minecraftforge.fml.common.FMLCommonHandler forge = net.minecraftforge.fml.common.FMLCommonHandler.instance();
+		forge.onServerStart(this);
+		if (!forge.handleServerAboutToStart(this)) return false;
+		net.minecraft.tileentity.TileEntitySkull.setProfileCache(this.getPlayerProfileCache());
+		this.setMOTD(this.getWorldName());
+		WorldSettings settings = newWorldSettings;
+		if (settings == null) settings = new WorldSettings(0L, gamemode, true, false, net.minecraft.world.WorldType.DEFAULT);
+		this.loadAllWorlds(this.getFolderName(), this.getWorldName(), settings);
+		if (!forge.handleServerStarting(this)) return false;
+		forge.onServerStarted();
+		this.finishServerStartup();
 		return true;
 	}
 
 	public void deleteWorldAndStopServer() {
-		super.deleteWorldAndStopServer();
+		this.stopServer();
 		logger.info("Deleting world...");
 		EaglerIntegratedServerWorker.saveFormat.deleteWorldDirectory(getFolderName());
 	}
@@ -132,7 +132,7 @@ public class EaglerMinecraftServer extends MinecraftServer {
 	public void mainLoop(boolean singleThreadMode) {
 		long k = getCurrentTimeMillis();
 		this.sendTPSToClient(k);
-		if(paused && this.playersOnline.size() <= 1) {
+		if(paused && this.getPlayerList().getCurrentPlayerCount() <= 1) {
 			currentTime = k;
 			return;
 		}
@@ -199,7 +199,7 @@ public class EaglerMinecraftServer extends MinecraftServer {
 		int i = 0;
 		for(int j = 0; j < worlds.length; ++j) {
 			if(worlds[j] != null) {
-				i += worlds[j].theChunkProviderServer.getLoadedChunkCount();
+				i += worlds[j].getChunkProvider().getLoadedChunkCount();
 			}
 		}
 		return i;
@@ -209,11 +209,7 @@ public class EaglerMinecraftServer extends MinecraftServer {
 		int i = 0;
 		for(int j = 0; j < worlds.length; ++j) {
 			if(worlds[j] != null) {
-				List<EntityPlayer> players = worlds[j].playerEntities;
-				for(int l = 0, n = players.size(); l < n; ++l) {
-					i += ((EntityPlayerMP)players.get(l)).loadedChunks.size();
-				}
-				i += worlds[j].theChunkProviderServer.getLoadedChunkCount();
+				i += worlds[j].getChunkProvider().getLoadedChunkCount();
 			}
 		}
 		return i;
@@ -262,12 +258,12 @@ public class EaglerMinecraftServer extends MinecraftServer {
 
 	@Override
 	public boolean canStructuresSpawn() {
-		return worldServers != null ? worldServers[0].getWorldInfo().isMapFeaturesEnabled() : newWorldSettings.isMapFeaturesEnabled();
+		return worlds.length > 0 ? worlds[0].getWorldInfo().isMapFeaturesEnabled() : newWorldSettings == null || newWorldSettings.isMapFeaturesEnabled();
 	}
 
 	@Override
 	public GameType getGameType() {
-		return worldServers != null ? worldServers[0].getWorldInfo().getGameType() : newWorldSettings.getGameType();
+		return worlds.length > 0 ? worlds[0].getWorldInfo().getGameType() : gamemode;
 	}
 
 	@Override
@@ -277,7 +273,7 @@ public class EaglerMinecraftServer extends MinecraftServer {
 
 	@Override
 	public boolean isHardcore() {
-		return worldServers != null ? worldServers[0].getWorldInfo().isHardcoreModeEnabled() : newWorldSettings.getHardcoreEnabled();
+		return worlds.length > 0 ? worlds[0].getWorldInfo().isHardcoreModeEnabled() : newWorldSettings != null && newWorldSettings.getHardcoreEnabled();
 	}
 
 	@Override
@@ -286,12 +282,12 @@ public class EaglerMinecraftServer extends MinecraftServer {
 	}
 
 	@Override
-	public boolean func_181034_q() {
+	public boolean shouldBroadcastRconToOps() {
 		return true;
 	}
 
 	@Override
-	public boolean func_183002_r() {
+	public boolean shouldBroadcastConsoleToOps() {
 		return true;
 	}
 
@@ -301,7 +297,7 @@ public class EaglerMinecraftServer extends MinecraftServer {
 	}
 
 	@Override
-	public boolean func_181035_ah() {
+	public boolean shouldUseNativeTransport() {
 		return false;
 	}
 

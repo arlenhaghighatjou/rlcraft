@@ -21,11 +21,12 @@ package net.minecraftforge.common;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 
@@ -36,13 +37,13 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.google.common.io.Files;
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.JsonParseException;
 
-import net.minecraftforge.fml.relauncher.FMLInjectionData;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * Caches player's last known usernames
@@ -56,9 +57,7 @@ public final class UsernameCache {
 
     private static Map<EaglercraftUUID, String> map = Maps.newHashMap();
 
-    private static final Charset charset = StandardCharsets.UTF_8;
-
-    private static final File saveFile = new File( /* The minecraft dir */(File) FMLInjectionData.data()[6], "usernamecache.json");
+    private static final Path saveFile = Path.of("usernamecache.json").toAbsolutePath();
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     private static final Logger log = LogManager.getLogger(ForgeVersion.MOD_ID + ".UsernameCache");
@@ -73,7 +72,7 @@ public final class UsernameCache {
      * @param username
      *            the player's username
      */
-    protected static void setUsername(EaglercraftUUID uuid, String username)
+    protected static synchronized void setUsername(EaglercraftUUID uuid, String username)
     {
         checkNotNull(uuid);
         checkNotNull(username);
@@ -91,7 +90,7 @@ public final class UsernameCache {
      *            the player's {@link net.lax1dude.eaglercraft.v1_8.EaglercraftUUID EaglercraftUUID}
      * @return if the cache contained the user
      */
-    protected static boolean removeUsername(EaglercraftUUID uuid)
+    protected static synchronized boolean removeUsername(EaglercraftUUID uuid)
     {
         checkNotNull(uuid);
 
@@ -115,7 +114,7 @@ public final class UsernameCache {
      *         cache doesn't have a record of the last username
      */
     @Nullable
-    public static String getLastKnownUsername(EaglercraftUUID uuid)
+    public static synchronized String getLastKnownUsername(EaglercraftUUID uuid)
     {
         checkNotNull(uuid);
         return map.get(uuid);
@@ -128,7 +127,7 @@ public final class UsernameCache {
      *            the player's {@link net.lax1dude.eaglercraft.v1_8.EaglercraftUUID EaglercraftUUID}
      * @return if the cache contains a username for the given player
      */
-    public static boolean containsUUID(EaglercraftUUID uuid)
+    public static synchronized boolean containsUUID(EaglercraftUUID uuid)
     {
         checkNotNull(uuid);
         return map.containsKey(uuid);
@@ -139,7 +138,7 @@ public final class UsernameCache {
      *
      * @return the map
      */
-    public static Map<EaglercraftUUID, String> getMap()
+    public static synchronized Map<EaglercraftUUID, String> getMap()
     {
         return ImmutableMap.copyOf(map);
     }
@@ -147,75 +146,66 @@ public final class UsernameCache {
     /**
      * Save the cache to file
      */
-    protected static void save()
+    protected static synchronized void save()
     {
-        new SaveThread(gson.toJson(map)).start();
+		JsonObject usernames = new JsonObject();
+		map.forEach((uuid, username) -> usernames.addProperty(uuid.toString(), username));
+		Path temporary = null;
+        try
+        {
+			temporary = Files.createTempFile(saveFile.getParent(), "usernamecache-", ".tmp");
+			Files.writeString(temporary, gson.toJson(usernames), StandardCharsets.UTF_8);
+			try {
+				Files.move(temporary, saveFile, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+			} catch (AtomicMoveNotSupportedException ex) {
+				Files.move(temporary, saveFile, StandardCopyOption.REPLACE_EXISTING);
+			}
+			temporary = null;
+        }
+        catch (IOException e)
+        {
+            log.error("Failed to save username cache to file!", e);
+        }
+		finally {
+			if (temporary != null) {
+				try {
+					Files.deleteIfExists(temporary);
+				} catch (IOException ex) {
+					log.warn("Failed to remove temporary username cache", ex);
+				}
+			}
+		}
     }
 
     /**
      * Load the cache from file
      */
-    protected static void load()
+    protected static synchronized void load()
     {
-        if (!saveFile.exists()) return;
+        if (!Files.exists(saveFile)) return;
 
         try
         {
 
-            String json = Files.toString(saveFile, charset);
-            Type type = new TypeToken<Map<EaglercraftUUID, String>>() { private static final long serialVersionUID = 1L; }.getType();
-
-            map = gson.fromJson(json, type);
+            String json = Files.readString(saveFile, StandardCharsets.UTF_8);
+            Map<EaglercraftUUID, String> loaded = Maps.newHashMap();
+            JsonObject object = JsonParser.parseString(json).getAsJsonObject();
+            for (Map.Entry<String, JsonElement> entry : object.entrySet())
+            {
+				JsonElement username = entry.getValue();
+				if (username.isJsonPrimitive() && username.getAsJsonPrimitive().isString()) {
+					loaded.put(EaglercraftUUID.fromString(entry.getKey()), username.getAsString());
+				}
+            }
+            map = loaded;
         }
-        catch (JsonSyntaxException e)
+        catch (JsonParseException | IllegalArgumentException | IllegalStateException e)
         {
-            log.error("Could not parse username cache file as valid json, deleting file", e);
-            saveFile.delete();
+            log.error("Could not parse username cache file", e);
         }
         catch (IOException e)
         {
-            log.error("Failed to read username cache file from disk, deleting file", e);
-            saveFile.delete();
-        }
-        finally
-        {
-            // Can sometimes occur when the json file is malformed
-            if (map == null)
-            {
-                map = Maps.newHashMap();
-            }
-        }
-    }
-
-    /**
-     * Used for saving the {@link com.google.gson.Gson#toJson(Object) Gson}
-     * representation of the cache to disk
-     */
-    private static class SaveThread extends Thread {
-
-        /** The data that will be saved to disk */
-        private final String data;
-
-        public SaveThread(String data)
-        {
-            this.data = data;
-        }
-
-        @Override
-        public void run()
-        {
-            try
-            {
-                // Make sure we don't save when another thread is still saving
-                synchronized (saveFile)
-                {
-                    Files.write(data, saveFile, charset);
-                }
-            }
-            catch (IOException e)
-            {
-                log.error("Failed to save username cache to file!", e);
-            }
+            log.error("Failed to read username cache file from disk", e);
         }
     }
 }

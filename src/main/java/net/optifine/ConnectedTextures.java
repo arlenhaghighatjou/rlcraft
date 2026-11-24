@@ -147,7 +147,7 @@ public class ConnectedTextures {
 				return false;
 			}
 
-			if (block == Blocks.stained_glass_pane && iblockstate.getValue(BlockStainedGlassPane.COLOR) != blockState
+			if (block == Blocks.STAINED_GLASS_PANE && iblockstate.getValue(BlockStainedGlassPane.COLOR) != blockState
 					.getValue(BlockStainedGlassPane.COLOR)) {
 				return false;
 			}
@@ -259,29 +259,28 @@ public class ConnectedTextures {
 
 	private static BakedQuad makeSpriteQuad(BakedQuad quad, EaglerTextureAtlasSprite sprite) {
 		int[] aint = (int[]) quad.getVertexData().clone();
-		int[] aint2 = (int[]) quad.getVertexDataWithNormals().clone();
+		int uvOffset = quad.getFormat().getUvOffsetById(0) / Integer.BYTES;
 		EaglerTextureAtlasSprite textureatlassprite = quad.getSprite();
 
 		for (int i = 0; i < 4; ++i) {
-			fixVertex(aint, aint2, i, textureatlassprite, sprite);
+			fixVertex(aint, uvOffset, i, textureatlassprite, sprite);
 		}
 
-		BakedQuad bakedquad = new BakedQuad(aint, aint2, quad.getTintIndex(), quad.getFace(), sprite);
+		BakedQuad bakedquad = new BakedQuad(aint, quad.getTintIndex(), quad.getFace(), sprite,
+				quad.shouldApplyDiffuseLighting(), quad.getFormat());
 		return bakedquad;
 	}
 
-	private static void fixVertex(int[] data, int[] data2, int vertex, EaglerTextureAtlasSprite spriteFrom,
+	private static void fixVertex(int[] data, int uvOffset, int vertex, EaglerTextureAtlasSprite spriteFrom,
 			EaglerTextureAtlasSprite spriteTo) {
 		int i = data.length / 4;
 		int j = i * vertex;
-		int i2 = data2.length / 4;
-		int j2 = i2 * vertex;
-		float f = Float.intBitsToFloat(data[j + 4]);
-		float f1 = Float.intBitsToFloat(data[j + 4 + 1]);
+		float f = Float.intBitsToFloat(data[j + uvOffset]);
+		float f1 = Float.intBitsToFloat(data[j + uvOffset + 1]);
 		double d0 = spriteFrom.getSpriteU16(f);
 		double d1 = spriteFrom.getSpriteV16(f1);
-		data[j + 4] = data2[j2 + 4] = Float.floatToRawIntBits(spriteTo.getInterpolatedU(d0));
-		data[j + 4 + 1] = data2[j2 + 4 + 1] = Float.floatToRawIntBits(spriteTo.getInterpolatedV(d1));
+		data[j + uvOffset] = Float.floatToRawIntBits(spriteTo.getInterpolatedU(d0));
+		data[j + uvOffset + 1] = Float.floatToRawIntBits(spriteTo.getInterpolatedV(d1));
 	}
 
 	private static BakedQuad[] getConnectedTextureMultiPass(IBlockAccess blockAccess, IBlockState blockState,
@@ -485,7 +484,7 @@ public class ConnectedTextures {
 				return null;
 			} else {
 				if (cp.biomes != null) {
-					Biome biomegenbase = blockAccess.getBiomeGenForCoords(blockPos);
+					Biome biomegenbase = blockAccess.getBiome(blockPos);
 
 					if (!cp.matchesBiome(biomegenbase)) {
 						return null;
@@ -1505,14 +1504,14 @@ public class ConnectedTextures {
 			}
 
 			IBlockState iblockstate1 = iblockaccess.getBlockState(blockPos.offset(getFacing(side)));
-			return iblockstate1.getBlock().isOpaqueCube() ? false
+			return iblockstate1.isOpaqueCube() ? false
 					: (side == 1 && iblockstate1.getBlock() == Blocks.SNOW_LAYER ? false
 							: !isNeighbour(cp, iblockaccess, blockState, blockPos, iblockstate, side, icon, metadata));
 		}
 	}
 
 	private static boolean isFullCubeModel(IBlockState state) {
-		if (state.getBlock().isFullCube()) {
+		if (state.isFullCube()) {
 			return true;
 		} else {
 			Block block = state.getBlock();
@@ -1545,7 +1544,7 @@ public class ConnectedTextures {
 			}
 
 			IBlockState iblockstate1 = iblockaccess.getBlockState(blockPos.offset(getFacing(side)));
-			return iblockstate1.getBlock().isOpaqueCube() ? false
+			return iblockstate1.isOpaqueCube() ? false
 					: side != 1 || iblockstate1.getBlock() != Blocks.SNOW_LAYER;
 		}
 	}
@@ -1573,7 +1572,7 @@ public class ConnectedTextures {
 		} else if (cp.connect == 3) {
 			return neighbourState == null ? false
 					: (neighbourState == AIR_DEFAULT_STATE ? false
-							: neighbourState.getBlock().getMaterial() == blockState.getBlock().getMaterial());
+							: neighbourState.getMaterial() == blockState.getMaterial());
 		} else if (!(neighbourState instanceof BlockStateBase)) {
 			return false;
 		} else {
@@ -1598,8 +1597,10 @@ public class ConnectedTextures {
 //						Reflector.ForgeBlock_getExtendedState, new Object[] { neighbourState, iblockaccess, blockPos });
 //			}
 
+			neighbourState = neighbourState.getBlock().getExtendedState(neighbourState, iblockaccess, blockPos);
+			long seed = net.minecraft.util.math.MathHelper.getPositionRandom(blockPos);
 			EnumFacing enumfacing = getFacing(side);
-			List list = ibakedmodel.getFaceQuads(enumfacing);
+			List list = ibakedmodel.getQuads(neighbourState, enumfacing, seed);
 
 			if (list == null) {
 				return null;
@@ -1612,7 +1613,7 @@ public class ConnectedTextures {
 					BakedQuad bakedquad1 = (BakedQuad) list.get(0);
 					return bakedquad1.getSprite();
 				} else {
-					List list1 = ibakedmodel.getGeneralQuads();
+					List list1 = ibakedmodel.getQuads(neighbourState, null, seed);
 
 					if (list1 == null) {
 						return null;

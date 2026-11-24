@@ -83,7 +83,7 @@ public final class FMLContainer extends DummyModContainer implements WorldAccess
         if (evt instanceof FMLConstructionEvent)
         {
             NetworkRegistry.INSTANCE.register(this, this::checkModLists);
-            FMLNetworkHandler.registerChannel(this, evt.getSide());
+            FMLNetworkHandler.registerChannel(this, FMLCommonHandler.instance().getSide());
         }
         else if (evt instanceof FMLPreInitializationEvent)
         {

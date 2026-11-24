@@ -16,16 +16,14 @@
 
 package net.lax1dude.eaglercraft.v1_8.sp.server;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
-import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
-import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.EaglerOutputStream;
+import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -33,7 +31,6 @@ import net.minecraft.nbt.NBTTagCompound;
 public class EaglerChunkLoader extends AnvilChunkLoader {
 
 	private static final String hex = "0123456789ABCDEF";
-	private static final Logger logger = LogManager.getLogger("EaglerChunkLoader");
 
 	public static String getChunkPath(int x, int z) {
 		int unsignedX = x + 1900000;
@@ -65,54 +62,38 @@ public class EaglerChunkLoader extends AnvilChunkLoader {
 
 	public final VFile2 chunkDirectory;
 
-	public EaglerChunkLoader(VFile2 chunkDirectory) {
+	public EaglerChunkLoader(VFile2 chunkDirectory, DataFixer fixer) {
+		super(new File(chunkDirectory.getPath()), fixer);
 		this.chunkDirectory = chunkDirectory;
 	}
 
-	@Override
-	public Chunk loadChunk(World var1, int var2, int var3) throws IOException {
-		VFile2 file = WorldsDB.newVFile(chunkDirectory, getChunkPath(var2, var3) + ".dat");
-		if(!file.exists()) {
-			return null;
-		}
-		try {
-			NBTTagCompound nbt;
-			try(InputStream is = file.getInputStream()) {
-				nbt = CompressedStreamTools.readCompressed(is);
-			}
-			return checkedReadChunkFromNBT(var1, var2, var3, nbt);
-		}catch(Throwable t) {
-			
-		}
-		return null;
+	private VFile2 chunkFile(int x, int z) {
+		return WorldsDB.newVFile(this.chunkDirectory, getChunkPath(x, z) + ".dat");
 	}
 
 	@Override
-	public void saveChunk(World var1, Chunk var2) throws IOException {
-		var1.alfheim$getLightingEngine().processLightUpdates();
-		NBTTagCompound chunkData = new NBTTagCompound();
-		this.writeChunkToNBT(var2, var1, chunkData);
-		NBTTagCompound fileData = new NBTTagCompound();
-		fileData.setTag("Level", chunkData);
-		VFile2 file = WorldsDB.newVFile(chunkDirectory, getChunkPath(var2.x, var2.zPosition) + ".dat");
-		try(OutputStream os = file.getOutputStream()) {
-			CompressedStreamTools.writeCompressed(fileData, os);
+	protected boolean isStoredChunk(int x, int z) {
+		return chunkFile(x, z).exists();
+	}
+
+	@Override
+	protected NBTTagCompound readChunkData(int x, int z) throws IOException {
+		VFile2 file = chunkFile(x, z);
+		if (!file.exists()) return null;
+		try (InputStream input = file.getInputStream()) {
+			if (input == null) throw new IOException("Failed to open chunk " + x + ", " + z);
+			NBTTagCompound data = CompressedStreamTools.readCompressed(input);
+			++EaglerMinecraftServer.counterChunkRead;
+			return data;
 		}
 	}
 
 	@Override
-	public void saveExtraChunkData(World var1, Chunk var2) throws IOException {
-		// ?
-	}
-
-	@Override
-	public void chunkTick() {
-		// ?
-	}
-
-	@Override
-	public void saveExtraData() {
-		// ?
+	protected void writeChunkData(ChunkPos pos, NBTTagCompound data) throws IOException {
+		EaglerOutputStream encoded = new EaglerOutputStream();
+		CompressedStreamTools.writeCompressed(data, encoded);
+		chunkFile(pos.x, pos.z).setAllBytes(encoded.toByteArray());
+		++EaglerMinecraftServer.counterChunkWrite;
 	}
 
 }

@@ -16,6 +16,9 @@
 
 package net.lax1dude.eaglercraft.v1_8;
 
+import java.util.Collections;
+import java.util.List;
+
 import net.lax1dude.eaglercraft.v1_8.internal.PlatformRuntime;
 
 public class EaglercraftRandom {
@@ -71,6 +74,12 @@ public class EaglercraftRandom {
 	protected int next(int bits) {
 		seed = (seed * multiplier + addend) & mask;
 		return (int) (seed >>> (48 - bits));
+	}
+
+	public void shuffle(List<?> values) {
+		for (int size = values.size(); size > 1; --size) {
+			Collections.swap(values, size - 1, this.nextInt(size));
+		}
 	}
 
 	public void nextBytes(byte[] bytes) {

@@ -148,6 +148,16 @@ public interface ModContainer
     @Nullable
     IModGuiFactory getGuiFactory();
 
+	@Nullable
+	default net.minecraft.client.resources.IResourcePack createResourcePack() {
+		return null;
+	}
+
+	@Nullable
+	default java.io.File getSource() {
+		return null;
+	}
+
     boolean shouldLoadInEnvironment();
 
 }

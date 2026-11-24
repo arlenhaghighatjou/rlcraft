@@ -1,19 +1,15 @@
 package net.minecraft.world.storage.loot;
 
+import com.arlenh7.eaglercraft.forge.WorldTextFile;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import net.lax1dude.eaglercraft.v1_8.cache.EaglerLoadingCache;
-import com.google.common.io.Files;
-import com.google.common.io.Resources;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import javax.annotation.Nullable;
-import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
@@ -27,9 +23,14 @@ public class LootTableManager
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Gson GSON_INSTANCE = (new GsonBuilder()).registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer()).registerTypeAdapter(LootPool.class, new LootPool.Serializer()).registerTypeAdapter(LootTable.class, new LootTable.Serializer()).registerTypeHierarchyAdapter(LootEntry.class, new LootEntry.Serializer()).registerTypeHierarchyAdapter(LootFunction.class, new LootFunctionManager.Serializer()).registerTypeHierarchyAdapter(LootCondition.class, new LootConditionManager.Serializer()).registerTypeHierarchyAdapter(LootContext.EntityTarget.class, new LootContext.EntityTarget.Serializer()).create();
     private final EaglerLoadingCache<ResourceLocation, LootTable> registeredLootTables = CacheBuilder.newBuilder().<ResourceLocation, LootTable>build(new LootTableManager.Loader());
-    private final File baseFolder;
+    private final WorldTextFile baseFolder;
 
     public LootTableManager(@Nullable File folder)
+    {
+        this(folder == null ? null : new WorldTextFile(folder));
+    }
+
+    public LootTableManager(WorldTextFile folder)
     {
         this.baseFolder = folder;
         this.reloadLootTables();
@@ -85,86 +86,39 @@ public class LootTableManager
         @Nullable
         private LootTable loadLootTable(ResourceLocation resource)
         {
-            if (LootTableManager.this.baseFolder == null)
-            {
-                return null;
-            }
-            else
-            {
-                File file1 = new File(new File(LootTableManager.this.baseFolder, resource.getResourceDomain()), resource.getResourcePath() + ".json");
-
-                if (file1.exists())
-                {
-                    if (file1.isFile())
-                    {
-                        String s;
-
-                        try
-                        {
-                            s = Files.toString(file1, StandardCharsets.UTF_8);
-                        }
-                        catch (IOException ioexception)
-                        {
-                            LootTableManager.LOGGER.warn("Couldn't load loot table {} from {}", resource, file1, ioexception);
-                            return LootTable.EMPTY_LOOT_TABLE;
-                        }
-
-                        try
-                        {
-                            return net.minecraftforge.common.ForgeHooks.loadLootTable(LootTableManager.GSON_INSTANCE, resource, s, true, LootTableManager.this);
-                        }
-                        catch (IllegalArgumentException | JsonParseException jsonparseexception)
-                        {
-                            LootTableManager.LOGGER.error("Couldn't load loot table {} from {}", resource, file1, jsonparseexception);
-                            return LootTable.EMPTY_LOOT_TABLE;
-                        }
-                    }
-                    else
-                    {
-                        LootTableManager.LOGGER.warn("Expected to find loot table {} at {} but it was a folder.", resource, file1);
-                        return LootTable.EMPTY_LOOT_TABLE;
-                    }
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
+			if (LootTableManager.this.baseFolder == null) {
+				return null;
+			}
+			WorldTextFile file = LootTableManager.this.baseFolder
+					.resolve(resource.getResourceDomain() + "/" + resource.getResourcePath() + ".json");
+			if (!file.isFile()) {
+				return null;
+			}
+			try {
+				return net.minecraftforge.common.ForgeHooks.loadLootTable(
+						GSON_INSTANCE, resource, file.read(), true, LootTableManager.this);
+			} catch (IllegalArgumentException | JsonParseException | IOException ex) {
+				LOGGER.error("Couldn't load loot table " + resource + " from " + file, ex);
+				return LootTable.EMPTY_LOOT_TABLE;
+			}
+		}
 
         @Nullable
         private LootTable loadBuiltinLootTable(ResourceLocation resource)
         {
-            URL url = LootTableManager.class.getResource("/assets/" + resource.getResourceDomain() + "/loot_tables/" + resource.getResourcePath() + ".json");
-
-            if (url != null)
-            {
-                String s;
-
-                try
-                {
-                    s = Resources.toString(url, StandardCharsets.UTF_8);
-                }
-                catch (IOException ioexception)
-                {
-                    LootTableManager.LOGGER.warn("Couldn't load loot table {} from {}", resource, url, ioexception);
-                    return LootTable.EMPTY_LOOT_TABLE;
-                }
-
-                try
-                {
-                    return net.minecraftforge.common.ForgeHooks.loadLootTable(LootTableManager.GSON_INSTANCE, resource, s, false, LootTableManager.this);
-                }
-                catch (JsonParseException jsonparseexception)
-                {
-                    LootTableManager.LOGGER.error("Couldn't load loot table {} from {}", resource, url, jsonparseexception);
-                    return LootTable.EMPTY_LOOT_TABLE;
-                }
-            }
-            else
-            {
-                return null;
-            }
+			String path = "/assets/" + resource.getResourceDomain() + "/loot_tables/"
+					+ resource.getResourcePath() + ".json";
+			String json = net.lax1dude.eaglercraft.v1_8.EagRuntime.getResourceString(path);
+			if (json == null) {
+				return null;
+			}
+			try {
+				return net.minecraftforge.common.ForgeHooks.loadLootTable(
+						GSON_INSTANCE, resource, json, false, LootTableManager.this);
+			} catch (IllegalArgumentException | JsonParseException ex) {
+				LOGGER.error("Couldn't load loot table " + resource + " from " + path, ex);
+				return LootTable.EMPTY_LOOT_TABLE;
+			}
         }
     }
 }

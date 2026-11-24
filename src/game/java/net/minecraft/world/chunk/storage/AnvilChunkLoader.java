@@ -1,6 +1,5 @@
 package net.minecraft.world.chunk.storage;
 
-import com.google.common.collect.Maps;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -9,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -37,8 +37,8 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 public class AnvilChunkLoader implements IChunkLoader, IThreadedFileIO
 {
     private static final Logger LOGGER = LogManager.getLogger();
-    private final Map<ChunkPos, NBTTagCompound> chunksToSave = Maps.<ChunkPos, NBTTagCompound>newConcurrentMap();
-    private final Set<ChunkPos> chunksBeingSaved = Collections.<ChunkPos>newSetFromMap(Maps.newConcurrentMap());
+    private final Map<ChunkPos, NBTTagCompound> chunksToSave = new ConcurrentHashMap<>();
+    private final Set<ChunkPos> chunksBeingSaved = Collections.newSetFromMap(new ConcurrentHashMap<>());
     public final File chunkSaveLocation;
     private final DataFixer fixer;
     private boolean flushing;
@@ -79,15 +79,9 @@ public class AnvilChunkLoader implements IChunkLoader, IThreadedFileIO
 
         if (nbttagcompound == null)
         {
-            DataInputStream datainputstream = RegionFileCache.getChunkInputStream(this.chunkSaveLocation, x, z);
-
-            if (datainputstream == null)
-            {
-                return null;
-            }
-
-            nbttagcompound = this.fixer.process(FixTypes.CHUNK, CompressedStreamTools.read(datainputstream));
-            datainputstream.close(); // Forge: close stream after use
+			nbttagcompound = this.readChunkData(x, z);
+			if (nbttagcompound == null) return null;
+			nbttagcompound = this.fixer.process(FixTypes.CHUNK, nbttagcompound);
         }
 
         return this.checkedReadChunkFromNBT__Async(worldIn, x, z, nbttagcompound);
@@ -97,8 +91,50 @@ public class AnvilChunkLoader implements IChunkLoader, IThreadedFileIO
     {
         ChunkPos chunkpos = new ChunkPos(x, z);
         NBTTagCompound nbttagcompound = this.chunksToSave.get(chunkpos);
-        return nbttagcompound != null ? true : RegionFileCache.chunkExists(this.chunkSaveLocation, x, z);
+		return nbttagcompound != null || this.isStoredChunk(x, z);
     }
+
+	private File getRegionPath(int x, int z)
+	{
+		return new File(new File(this.chunkSaveLocation, "region"), "r." + (x >> 5) + "." + (z >> 5) + ".mca");
+	}
+
+	protected NBTTagCompound readChunkData(int x, int z) throws IOException
+	{
+		File path = this.getRegionPath(x, z);
+		if (!path.isFile()) return null;
+		RegionFile region = new RegionFile(path);
+		try (DataInputStream input = region.getChunkDataInputStream(x & 31, z & 31))
+		{
+			return input == null ? null : CompressedStreamTools.read(input);
+		}
+		finally
+		{
+			region.close();
+		}
+	}
+
+	protected boolean isStoredChunk(int x, int z)
+	{
+		File path = this.getRegionPath(x, z);
+		if (!path.isFile()) return false;
+		RegionFile region = new RegionFile(path);
+		try
+		{
+			return region.isChunkSaved(x & 31, z & 31);
+		}
+		finally
+		{
+			try
+			{
+				region.close();
+			}
+			catch (IOException ex)
+			{
+				LOGGER.warn("Failed to close region {}", path, ex);
+			}
+		}
+	}
 
     @Nullable
     protected Chunk checkedReadChunkFromNBT(World worldIn, int x, int z, NBTTagCompound compound)
@@ -236,11 +272,24 @@ public class AnvilChunkLoader implements IChunkLoader, IThreadedFileIO
         }
     }
 
-    private void writeChunkData(ChunkPos pos, NBTTagCompound compound) throws IOException
+    protected void writeChunkData(ChunkPos pos, NBTTagCompound compound) throws IOException
     {
-        DataOutputStream dataoutputstream = RegionFileCache.getChunkOutputStream(this.chunkSaveLocation, pos.x, pos.z);
-        CompressedStreamTools.write(compound, dataoutputstream);
-        dataoutputstream.close();
+		File path = this.getRegionPath(pos.x, pos.z);
+		File parent = path.getParentFile();
+		if (!parent.isDirectory() && !parent.mkdirs() && !parent.isDirectory())
+		{
+			throw new IOException("Could not create region directory " + parent);
+		}
+		RegionFile region = new RegionFile(path);
+		try (DataOutputStream output = region.getChunkDataOutputStream(pos.x & 31, pos.z & 31))
+		{
+			if (output == null) throw new IOException("Could not open chunk " + pos);
+			CompressedStreamTools.write(compound, output);
+		}
+		finally
+		{
+			region.close();
+		}
     }
 
     public void saveExtraChunkData(World worldIn, Chunk chunkIn) throws IOException

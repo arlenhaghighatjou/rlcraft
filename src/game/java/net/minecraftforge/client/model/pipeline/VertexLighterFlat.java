@@ -36,8 +36,6 @@ import java.util.Objects;
 
 public class VertexLighterFlat extends QuadGatheringTransformer
 {
-    protected static final VertexFormatElement NORMAL_4F = new VertexFormatElement(0, VertexFormatElement.EnumType.FLOAT, VertexFormatElement.EnumUsage.NORMAL, 4);
-
     protected final BlockInfo blockInfo;
     private int tint = -1;
     private boolean diffuse = true;
@@ -120,7 +118,8 @@ public class VertexLighterFlat extends QuadGatheringTransformer
     private static VertexFormat withNormalUncached(VertexFormat format)
     {
         if (format == null || format.hasNormal()) return format;
-        return new VertexFormat(format).addElement(NORMAL_4F);
+        if (format == DefaultVertexFormats.BLOCK) return VertexFormat.FORGE_BLOCK_NORMAL_4F;
+        throw new IllegalArgumentException("unsupported vertex format without normals: " + format);
     }
 
     @Override

@@ -206,7 +206,6 @@ public class CrashReport
     {
         StringBuilder stringbuilder = new StringBuilder();
         stringbuilder.append("---- Minecraft Crash Report ----\n");
-        net.minecraftforge.fml.relauncher.CoreModManager.onCrash(stringbuilder);
         stringbuilder.append("// ");
         stringbuilder.append(getWittyComment());
         stringbuilder.append("\n\n");

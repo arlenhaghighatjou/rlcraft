@@ -36,7 +36,6 @@ import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.ForgeVersion;
-import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.LoaderState.ModState;
 import net.minecraftforge.fml.common.ModContainer.Disableable;
@@ -68,6 +67,7 @@ public class Loader
     public static final String MC_VERSION = ForgeVersion.mcVersion;
 
     private static Loader instance;
+	private final List<java.util.function.Supplier<? extends ModContainer>> builtInMods = new java.util.ArrayList<>();
 
     private List<ModContainer> mods;
     private Map<String, ModContainer> namedMods;
@@ -172,9 +172,22 @@ public class Loader
         mods.add(new InjectedModContainer(mcp));
         mods.add(new InjectedModContainer(new FMLContainer()));
         mods.add(new InjectedModContainer(new ForgeModContainer()));
+		for (java.util.function.Supplier<? extends ModContainer> factory : this.builtInMods) {
+			ModContainer mod = java.util.Objects.requireNonNull(factory.get(), "Built-in mod container");
+			if (mod.shouldLoadInEnvironment()) {
+				mods.add(mod);
+			}
+		}
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }
+
+	public void registerBuiltInMod(java.util.function.Supplier<? extends ModContainer> factory) {
+		if (this.mods != null) {
+			throw new IllegalStateException("Register built-in mods before Forge loading starts");
+		}
+		this.builtInMods.add(java.util.Objects.requireNonNull(factory, "Built-in mod factory"));
+	}
 
     public List<ModContainer> getModList()
     {
@@ -197,7 +210,7 @@ public class Loader
         mods = ImmutableList.copyOf(mods);
 
         modController.transition(LoaderState.CONSTRUCTING, false);
-        modController.distributeStateMessage(LoaderState.CONSTRUCTING, Maps.newHashMap());
+        modController.distributeStateMessage(LoaderState.CONSTRUCTING, com.google.common.collect.ArrayListMultimap.create());
         progressBar.step("Initializing mods Phase 1");
         modController.transition(LoaderState.PREINITIALIZATION, false);
     }
@@ -210,7 +223,6 @@ public class Loader
             return;
         }
         GameData.fireCreateRegistryEvents();
-        CapabilityManager.INSTANCE.injectCapabilities();
         modController.distributeStateMessage(LoaderState.PREINITIALIZATION, canonicalConfigDir);
         GameData.fireRegistryEvents(rl -> !rl.equals(GameData.RECIPES));
         FMLCommonHandler.instance().fireSidedRegistryEvents();

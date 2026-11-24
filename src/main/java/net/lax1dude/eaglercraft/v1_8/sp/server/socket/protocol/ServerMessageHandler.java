@@ -27,7 +27,7 @@ public abstract class ServerMessageHandler implements GameMessageHandler {
 
 	public ServerMessageHandler(NetHandlerPlayServer netHandler) {
 		this.netHandler = netHandler;
-		this.server = (EaglerMinecraftServer)netHandler.serverController;
+		this.server = (EaglerMinecraftServer)netHandler.getServer();
 	}
 
 	public static ServerMessageHandler createServerHandler(int version, NetHandlerPlayServer netHandler) {

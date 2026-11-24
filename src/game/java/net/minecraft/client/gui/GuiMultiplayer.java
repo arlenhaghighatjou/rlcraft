@@ -286,7 +286,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback {
 	 * KeyListener.keyTyped(KeyEvent e). Args : character (character
 	 * on the key), keyCode (lwjgl Keyboard key code)
 	 */
-	protected void keyTyped(char parChar1, int parInt1) {
+	protected void keyTyped(char parChar1, int parInt1) throws java.io.IOException {
 		int i = this.serverListSelector.func_148193_k();
 		GuiListExtended.IGuiListEntry guilistextended$iguilistentry = i < 0 ? null
 				: this.serverListSelector.getListEntry(i);
@@ -424,7 +424,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback {
 	 * Called when the mouse is clicked. Args : mouseX, mouseY,
 	 * clickedButton
 	 */
-	protected void mouseClicked(int parInt1, int parInt2, int parInt3) {
+	protected void mouseClicked(int parInt1, int parInt2, int parInt3) throws java.io.IOException {
 		relaysButton.mouseClicked(parInt1, parInt2, parInt3);
 		super.mouseClicked(parInt1, parInt2, parInt3);
 		this.serverListSelector.mouseClicked(parInt1, parInt2, parInt3);

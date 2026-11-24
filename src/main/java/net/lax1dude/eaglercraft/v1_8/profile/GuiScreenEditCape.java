@@ -300,7 +300,7 @@ public class GuiScreenEditCape extends GuiScreen {
 		}
 	}
 	
-	protected void mouseClicked(int mx, int my, int button) {
+	protected void mouseClicked(int mx, int my, int button) throws IOException {
 		if (button == 0) {
 			if(!EagRuntime.getConfiguration().isDemo()) {
 				int w = mc.fontRenderer.getStringWidth(I18n.format("editProfile.importExport"));

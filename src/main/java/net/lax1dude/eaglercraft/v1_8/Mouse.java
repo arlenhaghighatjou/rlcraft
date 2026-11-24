@@ -21,6 +21,24 @@ import net.lax1dude.eaglercraft.v1_8.internal.EnumFireMouseEvent;
 import net.lax1dude.eaglercraft.v1_8.internal.PlatformInput;
 
 public class Mouse {
+	private static int previousEventX;
+	private static int previousEventY;
+	private static int eventDX;
+	private static int eventDY;
+	private static long eventNanoseconds;
+	private static boolean hasPreviousEvent;
+
+	public static int getEventDX() {
+		return eventDX;
+	}
+
+	public static int getEventDY() {
+		return eventDY;
+	}
+
+	public static long getEventNanoseconds() {
+		return eventNanoseconds;
+	}
 
 	public static int getEventDWheel() {
 		return PlatformInput.mouseGetEventDWheel();
@@ -43,7 +61,18 @@ public class Mouse {
 	}
 
 	public static boolean next() {
-		return PlatformInput.mouseNext();
+		if (!PlatformInput.mouseNext()) {
+			return false;
+		}
+		int x = PlatformInput.mouseGetEventX();
+		int y = PlatformInput.mouseGetEventY();
+		eventDX = hasPreviousEvent ? x - previousEventX : 0;
+		eventDY = hasPreviousEvent ? y - previousEventY : 0;
+		previousEventX = x;
+		previousEventY = y;
+		hasPreviousEvent = true;
+		eventNanoseconds = EagRuntime.nanoTime();
+		return true;
 	}
 
 	public static int getEventX() {

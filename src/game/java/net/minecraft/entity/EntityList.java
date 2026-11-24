@@ -178,8 +178,8 @@ public class EntityList
             try
             {
                 net.minecraftforge.fml.common.registry.EntityEntry entry = net.minecraftforge.fml.common.registry.EntityRegistry.getEntry(clazz);
-                if (entry != null) return entry.newInstance(worldIn);
-                return clazz.getConstructor(World.class).newInstance(worldIn);
+				if (entry != null) return entry.newInstance(worldIn);
+				return clazz.getConstructor(World.class).newInstance(worldIn);
             }
             catch (Exception exception)
             {
@@ -274,89 +274,89 @@ public class EntityList
 
     public static void init()
     {
-        register(1, "item", EntityItem.class, "Item");
-        register(2, "xp_orb", EntityXPOrb.class, "XPOrb");
-        register(3, "area_effect_cloud", EntityAreaEffectCloud.class, "AreaEffectCloud");
-        register(4, "elder_guardian", EntityElderGuardian.class, "ElderGuardian");
-        register(5, "wither_skeleton", EntityWitherSkeleton.class, "WitherSkeleton");
-        register(6, "stray", EntityStray.class, "Stray");
-        register(7, "egg", EntityEgg.class, "ThrownEgg");
-        register(8, "leash_knot", EntityLeashKnot.class, "LeashKnot");
-        register(9, "painting", EntityPainting.class, "Painting");
-        register(10, "arrow", EntityTippedArrow.class, "Arrow");
-        register(11, "snowball", EntitySnowball.class, "Snowball");
-        register(12, "fireball", EntityLargeFireball.class, "Fireball");
-        register(13, "small_fireball", EntitySmallFireball.class, "SmallFireball");
-        register(14, "ender_pearl", EntityEnderPearl.class, "ThrownEnderpearl");
-        register(15, "eye_of_ender_signal", EntityEnderEye.class, "EyeOfEnderSignal");
-        register(16, "potion", EntityPotion.class, "ThrownPotion");
-        register(17, "xp_bottle", EntityExpBottle.class, "ThrownExpBottle");
-        register(18, "item_frame", EntityItemFrame.class, "ItemFrame");
-        register(19, "wither_skull", EntityWitherSkull.class, "WitherSkull");
-        register(20, "tnt", EntityTNTPrimed.class, "PrimedTnt");
-        register(21, "falling_block", EntityFallingBlock.class, "FallingSand");
-        register(22, "fireworks_rocket", EntityFireworkRocket.class, "FireworksRocketEntity");
-        register(23, "husk", EntityHusk.class, "Husk");
-        register(24, "spectral_arrow", EntitySpectralArrow.class, "SpectralArrow");
-        register(25, "shulker_bullet", EntityShulkerBullet.class, "ShulkerBullet");
-        register(26, "dragon_fireball", EntityDragonFireball.class, "DragonFireball");
-        register(27, "zombie_villager", EntityZombieVillager.class, "ZombieVillager");
-        register(28, "skeleton_horse", EntitySkeletonHorse.class, "SkeletonHorse");
-        register(29, "zombie_horse", EntityZombieHorse.class, "ZombieHorse");
-        register(30, "armor_stand", EntityArmorStand.class, "ArmorStand");
-        register(31, "donkey", EntityDonkey.class, "Donkey");
-        register(32, "mule", EntityMule.class, "Mule");
-        register(33, "evocation_fangs", EntityEvokerFangs.class, "EvocationFangs");
-        register(34, "evocation_illager", EntityEvoker.class, "EvocationIllager");
-        register(35, "vex", EntityVex.class, "Vex");
-        register(36, "vindication_illager", EntityVindicator.class, "VindicationIllager");
-        register(37, "illusion_illager", EntityIllusionIllager.class, "IllusionIllager");
-        register(40, "commandblock_minecart", EntityMinecartCommandBlock.class, EntityMinecart.Type.COMMAND_BLOCK.getName());
-        register(41, "boat", EntityBoat.class, "Boat");
-        register(42, "minecart", EntityMinecartEmpty.class, EntityMinecart.Type.RIDEABLE.getName());
-        register(43, "chest_minecart", EntityMinecartChest.class, EntityMinecart.Type.CHEST.getName());
-        register(44, "furnace_minecart", EntityMinecartFurnace.class, EntityMinecart.Type.FURNACE.getName());
-        register(45, "tnt_minecart", EntityMinecartTNT.class, EntityMinecart.Type.TNT.getName());
-        register(46, "hopper_minecart", EntityMinecartHopper.class, EntityMinecart.Type.HOPPER.getName());
-        register(47, "spawner_minecart", EntityMinecartMobSpawner.class, EntityMinecart.Type.SPAWNER.getName());
-        register(50, "creeper", EntityCreeper.class, "Creeper");
-        register(51, "skeleton", EntitySkeleton.class, "Skeleton");
-        register(52, "spider", EntitySpider.class, "Spider");
-        register(53, "giant", EntityGiantZombie.class, "Giant");
-        register(54, "zombie", EntityZombie.class, "Zombie");
-        register(55, "slime", EntitySlime.class, "Slime");
-        register(56, "ghast", EntityGhast.class, "Ghast");
-        register(57, "zombie_pigman", EntityPigZombie.class, "PigZombie");
-        register(58, "enderman", EntityEnderman.class, "Enderman");
-        register(59, "cave_spider", EntityCaveSpider.class, "CaveSpider");
-        register(60, "silverfish", EntitySilverfish.class, "Silverfish");
-        register(61, "blaze", EntityBlaze.class, "Blaze");
-        register(62, "magma_cube", EntityMagmaCube.class, "LavaSlime");
-        register(63, "ender_dragon", EntityDragon.class, "EnderDragon");
-        register(64, "wither", EntityWither.class, "WitherBoss");
-        register(65, "bat", EntityBat.class, "Bat");
-        register(66, "witch", EntityWitch.class, "Witch");
-        register(67, "endermite", EntityEndermite.class, "Endermite");
-        register(68, "guardian", EntityGuardian.class, "Guardian");
-        register(69, "shulker", EntityShulker.class, "Shulker");
-        register(90, "pig", EntityPig.class, "Pig");
-        register(91, "sheep", EntitySheep.class, "Sheep");
-        register(92, "cow", EntityCow.class, "Cow");
-        register(93, "chicken", EntityChicken.class, "Chicken");
-        register(94, "squid", EntitySquid.class, "Squid");
-        register(95, "wolf", EntityWolf.class, "Wolf");
-        register(96, "mooshroom", EntityMooshroom.class, "MushroomCow");
-        register(97, "snowman", EntitySnowman.class, "SnowMan");
-        register(98, "ocelot", EntityOcelot.class, "Ozelot");
-        register(99, "villager_golem", EntityIronGolem.class, "VillagerGolem");
-        register(100, "horse", EntityHorse.class, "Horse");
-        register(101, "rabbit", EntityRabbit.class, "Rabbit");
-        register(102, "polar_bear", EntityPolarBear.class, "PolarBear");
-        register(103, "llama", EntityLlama.class, "Llama");
-        register(104, "llama_spit", EntityLlamaSpit.class, "LlamaSpit");
-        register(105, "parrot", EntityParrot.class, "Parrot");
-        register(120, "villager", EntityVillager.class, "Villager");
-        register(200, "ender_crystal", EntityEnderCrystal.class, "EnderCrystal");
+        register(1, "item", EntityItem.class, EntityItem::new, "Item");
+        register(2, "xp_orb", EntityXPOrb.class, EntityXPOrb::new, "XPOrb");
+        register(3, "area_effect_cloud", EntityAreaEffectCloud.class, EntityAreaEffectCloud::new, "AreaEffectCloud");
+        register(4, "elder_guardian", EntityElderGuardian.class, EntityElderGuardian::new, "ElderGuardian");
+        register(5, "wither_skeleton", EntityWitherSkeleton.class, EntityWitherSkeleton::new, "WitherSkeleton");
+        register(6, "stray", EntityStray.class, EntityStray::new, "Stray");
+        register(7, "egg", EntityEgg.class, EntityEgg::new, "ThrownEgg");
+        register(8, "leash_knot", EntityLeashKnot.class, EntityLeashKnot::new, "LeashKnot");
+        register(9, "painting", EntityPainting.class, EntityPainting::new, "Painting");
+        register(10, "arrow", EntityTippedArrow.class, EntityTippedArrow::new, "Arrow");
+        register(11, "snowball", EntitySnowball.class, EntitySnowball::new, "Snowball");
+        register(12, "fireball", EntityLargeFireball.class, EntityLargeFireball::new, "Fireball");
+        register(13, "small_fireball", EntitySmallFireball.class, EntitySmallFireball::new, "SmallFireball");
+        register(14, "ender_pearl", EntityEnderPearl.class, EntityEnderPearl::new, "ThrownEnderpearl");
+        register(15, "eye_of_ender_signal", EntityEnderEye.class, EntityEnderEye::new, "EyeOfEnderSignal");
+        register(16, "potion", EntityPotion.class, EntityPotion::new, "ThrownPotion");
+        register(17, "xp_bottle", EntityExpBottle.class, EntityExpBottle::new, "ThrownExpBottle");
+        register(18, "item_frame", EntityItemFrame.class, EntityItemFrame::new, "ItemFrame");
+        register(19, "wither_skull", EntityWitherSkull.class, EntityWitherSkull::new, "WitherSkull");
+        register(20, "tnt", EntityTNTPrimed.class, EntityTNTPrimed::new, "PrimedTnt");
+        register(21, "falling_block", EntityFallingBlock.class, EntityFallingBlock::new, "FallingSand");
+        register(22, "fireworks_rocket", EntityFireworkRocket.class, EntityFireworkRocket::new, "FireworksRocketEntity");
+        register(23, "husk", EntityHusk.class, EntityHusk::new, "Husk");
+        register(24, "spectral_arrow", EntitySpectralArrow.class, EntitySpectralArrow::new, "SpectralArrow");
+        register(25, "shulker_bullet", EntityShulkerBullet.class, EntityShulkerBullet::new, "ShulkerBullet");
+        register(26, "dragon_fireball", EntityDragonFireball.class, EntityDragonFireball::new, "DragonFireball");
+        register(27, "zombie_villager", EntityZombieVillager.class, EntityZombieVillager::new, "ZombieVillager");
+        register(28, "skeleton_horse", EntitySkeletonHorse.class, EntitySkeletonHorse::new, "SkeletonHorse");
+        register(29, "zombie_horse", EntityZombieHorse.class, EntityZombieHorse::new, "ZombieHorse");
+        register(30, "armor_stand", EntityArmorStand.class, EntityArmorStand::new, "ArmorStand");
+        register(31, "donkey", EntityDonkey.class, EntityDonkey::new, "Donkey");
+        register(32, "mule", EntityMule.class, EntityMule::new, "Mule");
+        register(33, "evocation_fangs", EntityEvokerFangs.class, EntityEvokerFangs::new, "EvocationFangs");
+        register(34, "evocation_illager", EntityEvoker.class, EntityEvoker::new, "EvocationIllager");
+        register(35, "vex", EntityVex.class, EntityVex::new, "Vex");
+        register(36, "vindication_illager", EntityVindicator.class, EntityVindicator::new, "VindicationIllager");
+        register(37, "illusion_illager", EntityIllusionIllager.class, EntityIllusionIllager::new, "IllusionIllager");
+        register(40, "commandblock_minecart", EntityMinecartCommandBlock.class, EntityMinecartCommandBlock::new, EntityMinecart.Type.COMMAND_BLOCK.getName());
+        register(41, "boat", EntityBoat.class, EntityBoat::new, "Boat");
+        register(42, "minecart", EntityMinecartEmpty.class, EntityMinecartEmpty::new, EntityMinecart.Type.RIDEABLE.getName());
+        register(43, "chest_minecart", EntityMinecartChest.class, EntityMinecartChest::new, EntityMinecart.Type.CHEST.getName());
+        register(44, "furnace_minecart", EntityMinecartFurnace.class, EntityMinecartFurnace::new, EntityMinecart.Type.FURNACE.getName());
+        register(45, "tnt_minecart", EntityMinecartTNT.class, EntityMinecartTNT::new, EntityMinecart.Type.TNT.getName());
+        register(46, "hopper_minecart", EntityMinecartHopper.class, EntityMinecartHopper::new, EntityMinecart.Type.HOPPER.getName());
+        register(47, "spawner_minecart", EntityMinecartMobSpawner.class, EntityMinecartMobSpawner::new, EntityMinecart.Type.SPAWNER.getName());
+        register(50, "creeper", EntityCreeper.class, EntityCreeper::new, "Creeper");
+        register(51, "skeleton", EntitySkeleton.class, EntitySkeleton::new, "Skeleton");
+        register(52, "spider", EntitySpider.class, EntitySpider::new, "Spider");
+        register(53, "giant", EntityGiantZombie.class, EntityGiantZombie::new, "Giant");
+        register(54, "zombie", EntityZombie.class, EntityZombie::new, "Zombie");
+        register(55, "slime", EntitySlime.class, EntitySlime::new, "Slime");
+        register(56, "ghast", EntityGhast.class, EntityGhast::new, "Ghast");
+        register(57, "zombie_pigman", EntityPigZombie.class, EntityPigZombie::new, "PigZombie");
+        register(58, "enderman", EntityEnderman.class, EntityEnderman::new, "Enderman");
+        register(59, "cave_spider", EntityCaveSpider.class, EntityCaveSpider::new, "CaveSpider");
+        register(60, "silverfish", EntitySilverfish.class, EntitySilverfish::new, "Silverfish");
+        register(61, "blaze", EntityBlaze.class, EntityBlaze::new, "Blaze");
+        register(62, "magma_cube", EntityMagmaCube.class, EntityMagmaCube::new, "LavaSlime");
+        register(63, "ender_dragon", EntityDragon.class, EntityDragon::new, "EnderDragon");
+        register(64, "wither", EntityWither.class, EntityWither::new, "WitherBoss");
+        register(65, "bat", EntityBat.class, EntityBat::new, "Bat");
+        register(66, "witch", EntityWitch.class, EntityWitch::new, "Witch");
+        register(67, "endermite", EntityEndermite.class, EntityEndermite::new, "Endermite");
+        register(68, "guardian", EntityGuardian.class, EntityGuardian::new, "Guardian");
+        register(69, "shulker", EntityShulker.class, EntityShulker::new, "Shulker");
+        register(90, "pig", EntityPig.class, EntityPig::new, "Pig");
+        register(91, "sheep", EntitySheep.class, EntitySheep::new, "Sheep");
+        register(92, "cow", EntityCow.class, EntityCow::new, "Cow");
+        register(93, "chicken", EntityChicken.class, EntityChicken::new, "Chicken");
+        register(94, "squid", EntitySquid.class, EntitySquid::new, "Squid");
+        register(95, "wolf", EntityWolf.class, EntityWolf::new, "Wolf");
+        register(96, "mooshroom", EntityMooshroom.class, EntityMooshroom::new, "MushroomCow");
+        register(97, "snowman", EntitySnowman.class, EntitySnowman::new, "SnowMan");
+        register(98, "ocelot", EntityOcelot.class, EntityOcelot::new, "Ozelot");
+        register(99, "villager_golem", EntityIronGolem.class, EntityIronGolem::new, "VillagerGolem");
+        register(100, "horse", EntityHorse.class, EntityHorse::new, "Horse");
+        register(101, "rabbit", EntityRabbit.class, EntityRabbit::new, "Rabbit");
+        register(102, "polar_bear", EntityPolarBear.class, EntityPolarBear::new, "PolarBear");
+        register(103, "llama", EntityLlama.class, EntityLlama::new, "Llama");
+        register(104, "llama_spit", EntityLlamaSpit.class, EntityLlamaSpit::new, "LlamaSpit");
+        register(105, "parrot", EntityParrot.class, EntityParrot::new, "Parrot");
+        register(120, "villager", EntityVillager.class, EntityVillager::new, "Villager");
+        register(200, "ender_crystal", EntityEnderCrystal.class, EntityEnderCrystal::new, "EnderCrystal");
         addSpawnInfo("bat", 4996656, 986895);
         addSpawnInfo("blaze", 16167425, 16775294);
         addSpawnInfo("cave_spider", 803406, 11013646);
@@ -403,27 +403,11 @@ public class EntityList
         EXTRA_NAMES.add(LIGHTNING_BOLT);
     }
 
-    private static void register(int id, String name, Class <? extends Entity > clazz, String oldName)
-    {
-        try
-        {
-            clazz.getConstructor(World.class);
-        }
-        catch (NoSuchMethodException var5)
-        {
-            throw new RuntimeException("Invalid class " + clazz + " no constructor taking " + World.class.getName());
-        }
-
-        if ((clazz.getModifiers() & 1024) == 1024)
-        {
-            throw new RuntimeException("Invalid abstract class " + clazz);
-        }
-        else
-        {
-            ResourceLocation resourcelocation = new ResourceLocation(name);
-            net.minecraftforge.registries.GameData.registerEntity(id, resourcelocation, clazz, oldName);
-        }
-    }
+	private static <T extends Entity> void register(int id, String name, Class<T> type,
+			java.util.function.Function<World, T> factory, String legacyName)
+	{
+		net.minecraftforge.registries.GameData.registerEntity(id, new ResourceLocation(name), type, legacyName, factory);
+	}
 
     protected static EntityList.EntityEggInfo addSpawnInfo(String id, int primaryColor, int secondaryColor)
     {

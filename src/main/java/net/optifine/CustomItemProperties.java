@@ -28,6 +28,7 @@ import net.minecraft.client.renderer.block.model.ModelManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.model.ModelRotation;
 import net.minecraft.client.renderer.block.model.SimpleBakedModel;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -738,19 +739,19 @@ public class CustomItemProperties {
 					String s = "leather";
 					String s1 = "helmet";
 
-					if (itemarmor.armorType == 0) {
+					if (itemarmor.armorType == EntityEquipmentSlot.HEAD) {
 						s1 = "helmet";
 					}
 
-					if (itemarmor.armorType == 1) {
+					if (itemarmor.armorType == EntityEquipmentSlot.CHEST) {
 						s1 = "chestplate";
 					}
 
-					if (itemarmor.armorType == 2) {
+					if (itemarmor.armorType == EntityEquipmentSlot.LEGS) {
 						s1 = "leggings";
 					}
 
-					if (itemarmor.armorType == 3) {
+					if (itemarmor.armorType == EntityEquipmentSlot.FEET) {
 						s1 = "boots";
 					}
 
@@ -800,7 +801,7 @@ public class CustomItemProperties {
 		boolean flag = false;
 		String s = modelBlockIn.resolveTextureName("particle");
 		EaglerTextureAtlasSprite textureatlassprite = textureMap.getAtlasSprite((new ResourceLocation(s)).toString());
-		SimpleBakedModel.Builder simplebakedmodel$builder = (new SimpleBakedModel.Builder(modelBlockIn))
+		SimpleBakedModel.Builder simplebakedmodel$builder = (new SimpleBakedModel.Builder(modelBlockIn, modelBlockIn.createOverrides()))
 				.setTexture(textureatlassprite);
 
 		for (BlockPart blockpart : modelBlockIn.getElements()) {

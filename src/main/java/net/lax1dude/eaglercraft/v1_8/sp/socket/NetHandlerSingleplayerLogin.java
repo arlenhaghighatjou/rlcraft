@@ -84,7 +84,7 @@ public class NetHandlerSingleplayerLogin implements INetHandlerLoginClient {
 
 	@Override
 	public void handleDisconnect(SPacketDisconnect var1) {
-		networkManager.closeChannel(var1.func_149603_c());
+		networkManager.closeChannel(var1.getReason());
 	}
 
 	@Override

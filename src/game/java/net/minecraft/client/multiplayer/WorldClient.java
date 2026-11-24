@@ -443,7 +443,7 @@ public class WorldClient extends World
         {
             public String call() throws Exception
             {
-                return WorldClient.this.mc.getIntegratedServer() == null ? "Non-integrated multiplayer server" : "Integrated singleplayer server";
+                return !WorldClient.this.mc.isIntegratedServerRunning() ? "Non-integrated multiplayer server" : "Integrated singleplayer server";
             }
         });
         return crashreportcategory;

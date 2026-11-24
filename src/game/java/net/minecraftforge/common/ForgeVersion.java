@@ -348,9 +348,14 @@ public class ForgeVersion
         Map<ModContainer, URL> ret = new HashMap<ModContainer, URL>();
         for (ModContainer mod : Loader.instance().getActiveModList())
         {
-            URL url = mod.getUpdateUrl();
-            if (url != null)
-                ret.put(mod, url);
+			String updateJson = mod.getMetadata().updateJSON;
+			if (updateJson != null && !updateJson.isEmpty()) {
+				try {
+					ret.put(mod, new URL(updateJson));
+				} catch (java.net.MalformedURLException ex) {
+					log.warn("Invalid update URL for " + mod.getModId(), ex);
+				}
+			}
         }
         return ret;
     }

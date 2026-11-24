@@ -297,7 +297,7 @@ public class WorldRenderer {
 	/**
 	 * gets the color index of a vertex parInt1 indicies before the current vertex
 	 */
-	private int getColorIndex(int parInt1) {
+	public int getColorIndex(int parInt1) {
 		return ((this.vertexCount - parInt1) * this.vertexFormat.attribStride +
 				this.vertexFormat.attribColorOffset) >> 2;
 	}
@@ -346,13 +346,17 @@ public class WorldRenderer {
 	/**
 	 * sets color multiplier of a vertex parInt1 indicies before the current vertex
 	 */
-	private void putColorRGBA(int index, int red, int parInt3, int parInt4, int parInt5) {
+	public void putColorRGBA(int index, int red, int parInt3, int parInt4, int parInt5) {
 		this.intBuffer.put(index, parInt5 << 24 | parInt4 << 16 | parInt3 << 8 | red);
 	}
 
 	/**
 	 * Marks the current renderer data as dirty (makes it skip certain calls)
 	 */
+	public boolean isColorDisabled() {
+		return this.needsUpdate;
+	}
+
 	public void markDirty() {
 		this.needsUpdate = true;
 	}

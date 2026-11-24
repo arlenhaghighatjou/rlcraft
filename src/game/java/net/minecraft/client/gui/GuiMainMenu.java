@@ -754,7 +754,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
 	 * Called when the mouse is clicked. Args : mouseX, mouseY,
 	 * clickedButton
 	 */
-	protected void mouseClicked(int par1, int par2, int par3) {
+	protected void mouseClicked(int par1, int par2, int par3) throws java.io.IOException {
 		if (par3 == 0) {
 			String lbl = "CREDITS.txt";
 			int w = fontRenderer.getStringWidth(lbl) * 3 / 4;

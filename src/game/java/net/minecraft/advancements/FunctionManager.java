@@ -1,10 +1,11 @@
 package net.minecraft.advancements;
 
+import com.arlenh7.eaglercraft.forge.WorldTextFile;
 import com.google.common.collect.Maps;
-import com.google.common.io.Files;
 import java.io.File;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 import java.util.ArrayDeque;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import net.minecraft.command.FunctionObject;
@@ -14,15 +15,13 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class FunctionManager implements ITickable
 {
     private static final Logger LOGGER = LogManager.getLogger();
-    private final File functionDir;
+    private final WorldTextFile functionDir;
     private final MinecraftServer server;
     private final Map<ResourceLocation, FunctionObject> functions = Maps.<ResourceLocation, FunctionObject>newHashMap();
     private String currentGameLoopFunctionId = "-";
@@ -50,6 +49,11 @@ public class FunctionManager implements ITickable
     };
 
     public FunctionManager(@Nullable File functionDirIn, MinecraftServer serverIn)
+    {
+        this(functionDirIn == null ? null : new WorldTextFile(functionDirIn), serverIn);
+    }
+
+    public FunctionManager(WorldTextFile functionDirIn, MinecraftServer serverIn)
     {
         this.functionDir = functionDirIn;
         this.server = serverIn;
@@ -158,38 +162,32 @@ public class FunctionManager implements ITickable
         this.loadFunctions();
     }
 
-    private void loadFunctions()
-    {
-        if (this.functionDir != null)
-        {
-            this.functionDir.mkdirs();
-
-            for (File file1 : FileUtils.listFiles(this.functionDir, new String[] {"mcfunction"}, true))
-            {
-                String s = FilenameUtils.removeExtension(this.functionDir.toURI().relativize(file1.toURI()).toString());
-                String[] astring = s.split("/", 2);
-
-                if (astring.length == 2)
-                {
-                    ResourceLocation resourcelocation = new ResourceLocation(astring[0], astring[1]);
-
-                    try
-                    {
-                        this.functions.put(resourcelocation, FunctionObject.create(this, Files.readLines(file1, StandardCharsets.UTF_8)));
-                    }
-                    catch (Throwable throwable)
-                    {
-                        LOGGER.error("Couldn't read custom function " + resourcelocation + " from " + file1, throwable);
-                    }
-                }
-            }
-
-            if (!this.functions.isEmpty())
-            {
-                LOGGER.info("Loaded " + this.functions.size() + " custom command functions");
-            }
-        }
-    }
+	private void loadFunctions() {
+		if (this.functionDir == null) {
+			return;
+		}
+		try {
+			for (String path : this.functionDir.list(".mcfunction")) {
+				int namespace = path.indexOf('/');
+				if (namespace <= 0) {
+					continue;
+				}
+				try {
+					ResourceLocation id = new ResourceLocation(path.substring(0, namespace),
+							path.substring(namespace + 1, path.length() - ".mcfunction".length()));
+					List<String> commands = java.util.Arrays.asList(this.functionDir.resolve(path).read().split("\r\n|\n|\r"));
+					this.functions.put(id, FunctionObject.create(this, commands));
+				} catch (IllegalArgumentException | IOException ex) {
+					LOGGER.error("Couldn't read custom function " + path, ex);
+				}
+			}
+		} catch (IOException ex) {
+			LOGGER.error("Couldn't list custom functions", ex);
+		}
+		if (!this.functions.isEmpty()) {
+			LOGGER.info("Loaded " + this.functions.size() + " custom command functions");
+		}
+	}
 
     public static class QueuedCommand
         {

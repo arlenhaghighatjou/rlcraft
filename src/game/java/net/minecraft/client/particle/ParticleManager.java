@@ -285,6 +285,15 @@ public class ParticleManager
         this.renderParticles(entityIn, partialTicks, 2);
     }
 
+	public boolean hasParticlesInAlphaLayer() {
+		for (int layer = 0; layer < 3; ++layer) {
+			if (!this.fxLayers[layer][0].isEmpty()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
     public void renderParticles(Entity entityIn, float partialTicks, int pass)
     {
         float f = ActiveRenderInfo.getRotationX();

@@ -191,6 +191,18 @@ public class InjectedModContainer implements ModContainer
     }
 
     @Override
+    public net.minecraft.client.resources.IResourcePack createResourcePack()
+    {
+        return wrappedContainer.createResourcePack();
+    }
+
+    @Override
+    public java.io.File getSource()
+    {
+        return wrappedContainer.getSource();
+    }
+
+    @Override
     public boolean shouldLoadInEnvironment()
     {
         return true;

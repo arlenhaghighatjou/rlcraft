@@ -148,15 +148,15 @@ public class FMLProxyPacket implements Packet<INetHandler> {
     public List<Packet<INetHandlerPlayClient>> toS3FPackets() throws IOException
     {
         List<Packet<INetHandlerPlayClient>> ret = Lists.newArrayList();
-        byte[] data = payload.array();
+        int payloadLength = payload.readableBytes();
 
-        if (data.length < PART_SIZE)
+        if (payloadLength < PART_SIZE)
         {
             ret.add(new SPacketCustomPayload(channel, new PacketBuffer(payload.duplicate())));
         }
         else
         {
-            int parts = (int)Math.ceil(data.length / (double)(PART_SIZE - 1)); //We add a byte header so -1
+            int parts = (int)Math.ceil(payloadLength / (double)(PART_SIZE - 1)); //We add a byte header so -1
             if (parts > 255)
             {
                 throw new IllegalArgumentException("Payload may not be larger than " + MAX_LENGTH + " bytes");
@@ -164,17 +164,19 @@ public class FMLProxyPacket implements Packet<INetHandler> {
             PacketBuffer preamble = new PacketBuffer(Unpooled.buffer());
             preamble.writeString(channel);
             preamble.writeByte(parts);
-            preamble.writeInt(data.length);
+            preamble.writeInt(payloadLength);
             ret.add(new SPacketCustomPayload("FML|MP", preamble));
 
-            int offset = 0;
+            int offset = payload.readerIndex();
+            int remaining = payloadLength;
             for (int x = 0; x < parts; x++)
             {
-                int length = Math.min(PART_SIZE, data.length - offset + 1);
+                int length = Math.min(PART_SIZE, remaining + 1);
                 byte[] tmp = new byte[length];
                 tmp[0] = (byte)(x & 0xFF);
-                System.arraycopy(data, offset, tmp, 1, tmp.length - 1);
+                payload.getBytes(offset, tmp, 1, tmp.length - 1);
                 offset += tmp.length - 1;
+                remaining -= tmp.length - 1;
                 ret.add(new SPacketCustomPayload("FML|MP", new PacketBuffer(Unpooled.buffer(tmp, tmp.length).writerIndex(tmp.length))));
             }
         }

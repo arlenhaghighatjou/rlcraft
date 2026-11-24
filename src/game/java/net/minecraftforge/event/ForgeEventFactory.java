@@ -133,7 +133,6 @@ import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.event.world.GetCollisionBoxesEvent;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -418,7 +417,7 @@ public class ForgeEventFactory
     public static void firePlayerLoadingEvent(EntityPlayer player, IPlayerFileData playerFileData, String uuidString)
     {
         SaveHandler sh = (SaveHandler) playerFileData;
-        File dir = ObfuscationReflectionHelper.getPrivateValue(SaveHandler.class, sh, "field_"+"75771_c");
+        File dir = sh.getPlayersDirectory();
         MinecraftForge.EVENT_BUS.post(new PlayerEvent.LoadFromFile(player, dir, uuidString));
     }
 

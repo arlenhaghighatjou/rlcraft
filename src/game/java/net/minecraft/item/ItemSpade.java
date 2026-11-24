@@ -17,6 +17,10 @@ import net.minecraft.world.World;
 
 public class ItemSpade extends ItemTool
 {
+	public static Set<Block> getEffectiveBlocks()
+	{
+		return java.util.Collections.unmodifiableSet(EFFECTIVE_ON);
+	}
     private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.CONCRETE_POWDER);
 
     public ItemSpade(Item.ToolMaterial material)

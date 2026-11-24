@@ -58,7 +58,7 @@ import net.minecraftforge.fml.common.InjectedModContainer;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.StartupQuery;
-import net.minecraftforge.fml.common.ZipperUtil;
+import com.arlenh7.eaglercraft.forge.WorldBackup;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -497,6 +497,13 @@ public class GameData
         reg.register(id, key, new EntityEntry(clazz, oldName));
     }
 
+	public static <T extends Entity> void registerEntity(int id, ResourceLocation key, Class<T> type, String oldName,
+			java.util.function.Function<World, T> factory)
+	{
+		RegistryNamespaced<ResourceLocation, EntityEntry> registry = getWrapper(EntityEntry.class);
+		registry.register(id, key, new EntityEntry(type, oldName, factory));
+	}
+
     private static class EntityCallbacks implements IForgeRegistry.AddCallback<EntityEntry>, IForgeRegistry.ClearCallback<EntityEntry>, IForgeRegistry.CreateCallback<EntityEntry>
     {
         static final EntityCallbacks INSTANCE = new EntityCallbacks();
@@ -721,7 +728,7 @@ public class GameData
                     String skip = System.getProperty("fml.doNotBackup");
                     if (skip == null || !"true".equals(skip))
                     {
-                        ZipperUtil.backupWorld();
+                        WorldBackup.backupActiveWorld();
                     }
                     else
                     {
@@ -914,7 +921,7 @@ public class GameData
             catch (NoSuchFieldException | SecurityException e)
             {
                 FMLLog.log.error("Could not get `registryName` field from IForgeRegistryEntry.Impl");
-                FMLLog.log.throwing(Level.ERROR, e);
+                FMLLog.log.error("Registry snapshot error", e);
                 throw new RuntimeException(e);
             }
         }
@@ -925,7 +932,7 @@ public class GameData
         catch (IllegalArgumentException | IllegalAccessException e)
         {
             FMLLog.log.error("Could not set `registryName` field in IForgeRegistryEntry.Impl to `{}`", name.toString());
-            FMLLog.log.throwing(Level.ERROR, e);
+            FMLLog.log.error("Registry snapshot error", e);
             throw new RuntimeException(e);
         }
 

@@ -132,7 +132,26 @@ public class GuiIngame extends Gui
         this.titleFadeOut = 20;
     }
 
+	public void renderCachedGameOverlay(float partialTicks) {
+		this.renderGameOverlay(partialTicks, true);
+	}
+
+	public void renderWorldOverlay(float partialTicks, ScaledResolution resolution) {
+		GlStateManager.enableBlend();
+		if (Minecraft.isFancyGraphicsEnabled()) {
+			this.renderVignette(this.mc.player.getBrightness(), resolution);
+		}
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		this.mc.getTextureManager().bindTexture(ICONS);
+		this.renderAttackIndicator(partialTicks, resolution);
+	}
+
     public void renderGameOverlay(float partialTicks)
+    {
+		this.renderGameOverlay(partialTicks, false);
+    }
+
+	private void renderGameOverlay(float partialTicks, boolean cached)
     {
         ScaledResolution scaledresolution = new ScaledResolution(this.mc);
         int i = scaledresolution.getScaledWidth();
@@ -140,7 +159,7 @@ public class GuiIngame extends Gui
         FontRenderer fontrenderer = this.getFontRenderer();
         GlStateManager.enableBlend();
 
-        if (Minecraft.isFancyGraphicsEnabled())
+        if (!cached && Minecraft.isFancyGraphicsEnabled())
         {
             this.renderVignette(this.mc.player.getBrightness(), scaledresolution);
         }
@@ -181,7 +200,7 @@ public class GuiIngame extends Gui
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(ICONS);
         GlStateManager.enableBlend();
-        this.renderAttackIndicator(partialTicks, scaledresolution);
+        if (!cached) this.renderAttackIndicator(partialTicks, scaledresolution);
         GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         this.mc.mcProfiler.startSection("bossHealth");
         this.overlayBoss.renderBossHealth();

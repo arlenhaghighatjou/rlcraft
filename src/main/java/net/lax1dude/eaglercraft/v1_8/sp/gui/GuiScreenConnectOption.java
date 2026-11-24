@@ -69,7 +69,7 @@ public class GuiScreenConnectOption extends GuiScreen {
 		relaysButton.drawScreen(par1, par2);
 	}
 
-	protected void mouseClicked(int par1, int par2, int par3) {
+	protected void mouseClicked(int par1, int par2, int par3) throws java.io.IOException {
 		relaysButton.mouseClicked(par1, par2, par3);
 		super.mouseClicked(par1, par2, par3);
 	}

@@ -188,9 +188,10 @@ public class ByteBufEaglercraftImpl extends AbstractByteBuf {
 
 	@Override
 	public ByteBuf copy(int index, int length) {
+		checkIndex(index, length);
 		byte[] cpy = new byte[length];
 		NioBufferFunctions.get(internal, index, cpy);
-		return new ByteBufEaglercraftImpl(ByteBuffer.wrap(cpy), maxCapacity());
+		return new ByteBufEaglercraftImpl(ByteBuffer.wrap(cpy), maxCapacity()).writerIndex(length);
 	}
 
 	@Override
@@ -200,8 +201,10 @@ public class ByteBufEaglercraftImpl extends AbstractByteBuf {
 
 	@Override
 	public ByteBuffer nioBuffer(int index, int length) {
-		//return internal.slice(index, length);
-		throw new UnsupportedOperationException("Not supported in JDK 8");
+		checkIndex(index, length);
+		ByteBuffer view = internal.duplicate();
+		view.clear().position(index).limit(index + length);
+		return view.slice().order(order());
 	}
 
 	@Override
@@ -212,13 +215,12 @@ public class ByteBufEaglercraftImpl extends AbstractByteBuf {
 
 	@Override
 	public ByteBuffer[] nioBuffers(int index, int length) {
-		//return new ByteBuffer[] { internal.slice(index, length) };
-		throw new UnsupportedOperationException("Not supported in JDK 8");
+		return new ByteBuffer[] { nioBuffer(index, length) };
 	}
 
 	@Override
 	public boolean hasArray() {
-		return true;
+		return internal.hasArray();
 	}
 
 	@Override
@@ -228,7 +230,7 @@ public class ByteBufEaglercraftImpl extends AbstractByteBuf {
 
 	@Override
 	public int arrayOffset() {
-		return 0;
+		return internal.arrayOffset();
 	}
 
 	@Override
@@ -243,13 +245,12 @@ public class ByteBufEaglercraftImpl extends AbstractByteBuf {
 
 	@Override
 	public ByteBuf slice(int index, int length) {
-		//return new ByteBufEaglercraftImpl(internal.slice(index, length), maxCapacity());
-		throw new UnsupportedOperationException("Not supported in JDK 8");
+		return new ByteBufEaglercraftImpl(nioBuffer(index, length), length).writerIndex(length);
 	}
 
 	@Override
 	public ByteBuf duplicate() {
-		return new ByteBufEaglercraftImpl(internal.duplicate(), maxCapacity());
+		return new ByteBufEaglercraftImpl(internal.duplicate(), maxCapacity()).setIndex(readerIndex(), writerIndex());
 	}
 
 }

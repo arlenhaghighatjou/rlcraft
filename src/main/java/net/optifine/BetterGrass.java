@@ -76,6 +76,7 @@ public class BetterGrass {
 		betterGrassSnow = true;
 		betterMyceliumSnow = true;
 		betterPodzolSnow = true;
+		grassMultilayer = false;
 		spriteGrass = textureMap.registerSprite(new ResourceLocation("blocks/grass_top"));
 		spriteGrassSide = textureMap.registerSprite(new ResourceLocation("blocks/grass_side"));
 		spriteMycelium = textureMap.registerSprite(new ResourceLocation("blocks/mycelium_top"));
@@ -101,6 +102,7 @@ public class BetterGrass {
 			spriteMycelium = registerSprite(properties, "texture.mycelium", "blocks/mycelium_top", textureMap);
 			spritePodzol = registerSprite(properties, "texture.podzol", "blocks/dirt_podzol_top", textureMap);
 			spriteSnow = registerSprite(properties, "texture.snow", "blocks/snow", textureMap);
+		} catch (java.io.FileNotFoundException ignored) {
 		} catch (IOException ioexception) {
 			Config.warn(
 					"Error reading: " + s + ", " + ioexception.getClass().getName() + ": " + ioexception.getMessage());
@@ -155,17 +157,17 @@ public class BetterGrass {
 		if (Config.isBetterGrassFancy()) {
 			if (flag) {
 				if (betterMyceliumSnow && getBlockAt(blockPos, facing, blockAccess) == Blocks.SNOW_LAYER) {
-					return modelCubeSnow.getFaceQuads(facing);
+					return modelCubeSnow.getQuads(blockState, facing, 0L);
 				}
 			} else if (betterMycelium && getBlockAt(blockPos.down(), facing, blockAccess) == Blocks.MYCELIUM) {
-				return modelCubeMycelium.getFaceQuads(facing);
+				return modelCubeMycelium.getQuads(blockState, facing, 0L);
 			}
 		} else if (flag) {
 			if (betterMyceliumSnow) {
-				return modelCubeSnow.getFaceQuads(facing);
+				return modelCubeSnow.getQuads(blockState, facing, 0L);
 			}
 		} else if (betterMycelium) {
-			return modelCubeMycelium.getFaceQuads(facing);
+			return modelCubeMycelium.getQuads(blockState, facing, 0L);
 		}
 
 		return quads;
@@ -183,7 +185,7 @@ public class BetterGrass {
 			if (Config.isBetterGrassFancy()) {
 				if (flag) {
 					if (betterPodzolSnow && getBlockAt(blockPos, facing, blockAccess) == Blocks.SNOW_LAYER) {
-						return modelCubeSnow.getFaceQuads(facing);
+						return modelCubeSnow.getQuads(blockState, facing, 0L);
 					}
 				} else if (betterPodzol) {
 					BlockPos blockpos = blockPos.down().offset(facing);
@@ -191,15 +193,15 @@ public class BetterGrass {
 
 					if (iblockstate.getBlock() == Blocks.DIRT
 							&& iblockstate.getValue(BlockDirt.VARIANT) == BlockDirt.DirtType.PODZOL) {
-						return modelCubePodzol.getFaceQuads(facing);
+						return modelCubePodzol.getQuads(blockState, facing, 0L);
 					}
 				}
 			} else if (flag) {
 				if (betterPodzolSnow) {
-					return modelCubeSnow.getFaceQuads(facing);
+					return modelCubeSnow.getQuads(blockState, facing, 0L);
 				}
 			} else if (betterPodzol) {
-				return modelCubePodzol.getFaceQuads(facing);
+				return modelCubePodzol.getQuads(blockState, facing, 0L);
 			}
 
 			return quads;
@@ -214,17 +216,17 @@ public class BetterGrass {
 		if (Config.isBetterGrassFancy()) {
 			if (flag) {
 				if (betterGrassSnow && getBlockAt(blockPos, facing, blockAccess) == Blocks.SNOW_LAYER) {
-					return modelCubeSnow.getFaceQuads(facing);
+					return modelCubeSnow.getQuads(blockState, facing, 0L);
 				}
 			} else if (betterGrass && getBlockAt(blockPos.down(), facing, blockAccess) == Blocks.GRASS) {
-				return modelCubeGrass.getFaceQuads(facing);
+				return modelCubeGrass.getQuads(blockState, facing, 0L);
 			}
 		} else if (flag) {
 			if (betterGrassSnow) {
-				return modelCubeSnow.getFaceQuads(facing);
+				return modelCubeSnow.getQuads(blockState, facing, 0L);
 			}
 		} else if (betterGrass) {
-			return modelCubeGrass.getFaceQuads(facing);
+			return modelCubeGrass.getQuads(blockState, facing, 0L);
 		}
 
 		return quads;

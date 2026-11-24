@@ -299,7 +299,6 @@ public final class AnimationStateMachine implements IAnimationStateMachine
         .registerTypeAdapterFactory(TimeValues.CommonTimeValueTypeAdapterFactory.INSTANCE)
         .registerTypeAdapterFactory(TransitionsAdapterFactory.INSTANCE)
         .setPrettyPrinting()
-        .enableComplexMapKeySerialization()
         .disableHtmlEscaping()
         .create();
 
@@ -321,14 +320,20 @@ public final class AnimationStateMachine implements IAnimationStateMachine
             {
                 return null;
             }
-            final TypeAdapter<Map<String, Collection<String>>> mapAdapter = gson.getAdapter(new TypeToken<Map<String, Collection<String>>>(){});
-            final TypeAdapter<Collection<String>> collectionAdapter = gson.getAdapter(new TypeToken<Collection<String>>(){});
             return (TypeAdapter<T>)new TypeAdapter<ImmutableMultimap<String, String>>()
             {
                 @Override
                 public void write(JsonWriter out, ImmutableMultimap<String, String> value) throws IOException
                 {
-                    mapAdapter.write(out, value.asMap());
+					out.beginObject();
+					for (Map.Entry<String, Collection<String>> entry : value.asMap().entrySet()) {
+						out.name(entry.getKey()).beginArray();
+						for (String target : entry.getValue()) {
+							out.value(target);
+						}
+						out.endArray();
+					}
+					out.endObject();
                 }
 
                 @Override
@@ -345,7 +350,11 @@ public final class AnimationStateMachine implements IAnimationStateMachine
                                 builder.put(key, in.nextString());
                                 break;
                             case BEGIN_ARRAY:
-                                builder.putAll(key, collectionAdapter.read(in));
+								in.beginArray();
+								while (in.hasNext()) {
+									builder.put(key, in.nextString());
+								}
+								in.endArray();
                                 break;
                             default:
                                 throw new JsonParseException("Expected String or Array, got " + in.peek());

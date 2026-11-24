@@ -18,9 +18,7 @@ package net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.texture;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.Callable;
 
-import com.carrotsearch.hppc.cursors.IntCursor;
 import com.google.common.collect.Lists;
 
 import net.lax1dude.eaglercraft.v1_8.HString;
@@ -34,6 +32,7 @@ import net.minecraft.client.resources.data.AnimationFrame;
 import net.minecraft.client.resources.data.AnimationMetadataSection;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
+import net.minecraft.crash.ICrashReportDetail;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.ResourceLocation;
 
@@ -104,8 +103,8 @@ public class EaglerTextureAtlasSpritePBR extends EaglerTextureAtlasSprite {
 			int l = i;
 			this.height = this.width;
 			if (meta.getFrameCount() > 0) {
-				for (IntCursor cur : meta.getFrameIndexSet()) {
-					int i1 = cur.value;
+				for (Integer frameIndex : meta.getFrameIndexSet()) {
+					int i1 = frameIndex.intValue();
 					if (i1 >= j1) {
 						throw new RuntimeException("invalid frameindex " + i1);
 					}
@@ -179,7 +178,7 @@ public class EaglerTextureAtlasSpritePBR extends EaglerTextureAtlasSprite {
 						CrashReportCategory crashreportcategory = crashreport.makeCategory("Frame being iterated");
 						crashreportcategory.addCrashSection("PBR Layer", Integer.valueOf(j));
 						crashreportcategory.addCrashSection("Frame index", Integer.valueOf(i));
-						crashreportcategory.addCrashSectionCallable("Frame sizes", new Callable<String>() {
+						crashreportcategory.addDetail("Frame sizes", new ICrashReportDetail<String>() {
 							public String call() throws Exception {
 								StringBuilder stringbuilder = new StringBuilder();
 	

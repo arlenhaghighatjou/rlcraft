@@ -65,7 +65,7 @@ public class EaglerCloudRenderer {
 			return;
 		}
 		
-		int c = mc.gameSettings.func_181147_e();
+		int c = mc.gameSettings.shouldRenderClouds();
 		if(c == 0) {
 			return;
 		}
@@ -99,9 +99,9 @@ public class EaglerCloudRenderer {
 		GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 		
 		Vec3d vec3 = mc.world.getCloudColour(partialTicks);
-		float _f1 = (float) vec3.xCoord;
-		float _f2 = (float) vec3.yCoord;
-		float _f3 = (float) vec3.zCoord;
+		float _f1 = (float) vec3.x;
+		float _f2 = (float) vec3.y;
+		float _f3 = (float) vec3.z;
 		if (pass != 2) {
 			float _f4 = (_f1 * 30.0F + _f2 * 59.0F + _f3 * 11.0F) / 100.0F;
 			float _f5 = (_f1 * 30.0F + _f2 * 70.0F) / 100.0F;

@@ -1,13 +1,13 @@
 package net.minecraft.stats;
 
-import com.google.common.collect.Maps;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.TupleIntJsonSerializable;
 
 public class StatisticsManager
 {
-    protected final Map<StatBase, TupleIntJsonSerializable> statsData = Maps.<StatBase, TupleIntJsonSerializable>newConcurrentMap();
+    protected final Map<StatBase, TupleIntJsonSerializable> statsData = new ConcurrentHashMap<>();
 
     public void increaseStat(EntityPlayer player, StatBase stat, int amount)
     {

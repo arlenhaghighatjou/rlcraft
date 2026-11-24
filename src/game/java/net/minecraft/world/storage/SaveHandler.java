@@ -32,26 +32,31 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     protected final DataFixer dataFixer;
 
     public SaveHandler(File p_i46648_1_, String saveDirectoryNameIn, boolean p_i46648_3_, DataFixer dataFixerIn)
+	{
+		this(p_i46648_1_, saveDirectoryNameIn, p_i46648_3_, dataFixerIn, true);
+	}
+
+	protected SaveHandler(File directory, String name, boolean storePlayers, DataFixer fixer, boolean useDisk)
     {
-        this.dataFixer = dataFixerIn;
-        this.worldDirectory = new File(p_i46648_1_, saveDirectoryNameIn);
-        this.worldDirectory.mkdirs();
+        this.dataFixer = fixer;
+        this.worldDirectory = new File(directory, name);
+        if (useDisk) this.worldDirectory.mkdirs();
         this.playersDirectory = new File(this.worldDirectory, "playerdata");
         this.mapDataDir = new File(this.worldDirectory, "data");
-        this.mapDataDir.mkdirs();
-        this.saveDirectoryName = saveDirectoryNameIn;
+        if (useDisk) this.mapDataDir.mkdirs();
+        this.saveDirectoryName = name;
 
-        if (p_i46648_3_)
+        if (storePlayers && useDisk)
         {
             this.playersDirectory.mkdirs();
-            this.structureTemplateManager = new TemplateManager((new File(this.worldDirectory, "structures")).toString(), dataFixerIn);
+            this.structureTemplateManager = new TemplateManager((new File(this.worldDirectory, "structures")).toString(), fixer);
         }
         else
         {
             this.structureTemplateManager = null;
         }
 
-        this.setSessionLock();
+        if (useDisk) this.setSessionLock();
     }
 
     private void setSessionLock()
@@ -81,6 +86,11 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     {
         return this.worldDirectory;
     }
+
+	public File getPlayersDirectory()
+	{
+		return this.playersDirectory;
+	}
 
     public void checkSessionLock() throws MinecraftException
     {

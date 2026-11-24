@@ -26,8 +26,6 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.reflect.TypeParameter;
-import com.google.common.reflect.TypeToken;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -53,7 +51,7 @@ public class JsonUtils
         public ImmutableList<?> deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException
         {
             final Type[] typeArguments = ((ParameterizedType) type).getActualTypeArguments();
-            final Type parametrizedType = listOf(typeArguments[0]).getType();
+            final Type parametrizedType = listOf(typeArguments[0]);
             final List<?> list = context.deserialize(json, parametrizedType);
             return ImmutableList.copyOf(list);
         }
@@ -62,15 +60,15 @@ public class JsonUtils
         public JsonElement serialize(ImmutableList<?> src, Type type, JsonSerializationContext context)
         {
             final Type[] typeArguments = ((ParameterizedType) type).getActualTypeArguments();
-            final Type parametrizedType = listOf(typeArguments[0]).getType();
+            final Type parametrizedType = listOf(typeArguments[0]);
             return context.serialize(src, parametrizedType);
         }
     }
 
     @SuppressWarnings({ "serial", "unchecked" })
-    private static <E> TypeToken<List<E>> listOf(final Type arg)
+    private static Type listOf(final Type arg)
     {
-        return new TypeToken<List<E>>() {}.where(new TypeParameter<E>() {}, (TypeToken<E>) TypeToken.of(arg));
+        return parameterized(List.class, arg);
     }
 
     public enum ImmutableMapTypeAdapter implements JsonDeserializer<ImmutableMap<String, ?>>, JsonSerializer<ImmutableMap<String, ?>>
@@ -81,7 +79,7 @@ public class JsonUtils
         public ImmutableMap<String, ?> deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException
         {
             final Type[] typeArguments = ((ParameterizedType) type).getActualTypeArguments();
-            final Type parameterizedType = mapOf(typeArguments[1]).getType();
+            final Type parameterizedType = mapOf(typeArguments[1]);
             final Map<String, ?> map = context.deserialize(json, parameterizedType);
             return ImmutableMap.copyOf(map);
         }
@@ -90,7 +88,7 @@ public class JsonUtils
         public JsonElement serialize(ImmutableMap<String, ?> src, Type type, JsonSerializationContext context)
         {
             final Type[] typeArguments = ((ParameterizedType) type).getActualTypeArguments();
-            final Type parameterizedType = mapOf(typeArguments[1]).getType();
+            final Type parameterizedType = mapOf(typeArguments[1]);
             return context.serialize(src, parameterizedType);
         }
     }
@@ -114,8 +112,18 @@ public class JsonUtils
     }
 
     @SuppressWarnings({ "serial", "unchecked" })
-    private static <E> TypeToken<Map<String, E>> mapOf(final Type arg)
+    private static Type mapOf(final Type arg)
     {
-        return new TypeToken<Map<String, E>>() {}.where(new TypeParameter<E>() {}, (TypeToken<E>) TypeToken.of(arg));
+        return parameterized(Map.class, String.class, arg);
+    }
+
+    private static Type parameterized(final Type raw, final Type... arguments)
+    {
+        return new ParameterizedType()
+        {
+            public Type[] getActualTypeArguments() { return arguments; }
+            public Type getRawType() { return raw; }
+            public Type getOwnerType() { return null; }
+        };
     }
 }

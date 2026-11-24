@@ -1,6 +1,5 @@
 package net.minecraft.world.storage;
 
-import java.io.File;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.client.AnvilConverterException;
@@ -40,8 +39,6 @@ public interface ISaveFormat
     boolean isConvertible(String saveName);
 
     boolean convertMapFormat(String filename, IProgressUpdate progressCallback);
-
-    File getFile(String p_186352_1_, String p_186352_2_);
 
     @SideOnly(Side.CLIENT)
     boolean canLoadWorld(String saveName);

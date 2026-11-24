@@ -81,7 +81,7 @@ public class DimensionManager
     private static final IntSet keepLoaded = IntSets.synchronize(new IntOpenHashSet());
     private static final IntSet unloadQueue = IntSets.synchronize(new IntLinkedOpenHashSet());
     private static final IntSet usedIds = new IntOpenHashSet();
-    private static final ConcurrentMap<World, World> weakWorldMap = new MapMaker().weakKeys().weakValues().makeMap();
+    private static final Map<World, Boolean> weakWorldMap = java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
     private static final Multiset<Integer> leakedWorlds = HashMultiset.create();
 
     /**
@@ -208,7 +208,7 @@ public class DimensionManager
         if (world != null)
         {
             worlds.put(id, world);
-            weakWorldMap.put(world, world);
+            weakWorldMap.put(world, Boolean.TRUE);
             server.worldTickTimes.put(id, new long[100]);
             FMLLog.log.info("Loading dimension {} ({}) ({})", id, world.getWorldInfo().getWorldName(), world.getMinecraftServer());
         }

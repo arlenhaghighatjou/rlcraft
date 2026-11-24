@@ -105,6 +105,35 @@ public class GuiIngameForge extends GuiIngame
     @Override
     public void renderGameOverlay(float partialTicks)
     {
+		this.renderGameOverlay(partialTicks, false);
+    }
+
+	private boolean cachedOverlayVisible;
+
+	@Override
+	public void renderCachedGameOverlay(float partialTicks) {
+		this.renderGameOverlay(partialTicks, true);
+	}
+
+	@Override
+	public void renderWorldOverlay(float partialTicks, ScaledResolution resolution) {
+		if (!this.cachedOverlayVisible) {
+			return;
+		}
+		this.res = resolution;
+		this.eventParent = new RenderGameOverlayEvent(partialTicks, resolution);
+		this.zLevel = -90.0F;
+		GlStateManager.enableBlend();
+		if (renderVignette && Minecraft.isFancyGraphicsEnabled()) {
+			this.renderVignette(mc.player.getBrightness(), resolution);
+		}
+		if (renderCrosshairs) {
+			this.renderCrosshairs(partialTicks);
+		}
+	}
+
+	private void renderGameOverlay(float partialTicks, boolean cached)
+    {
         res = new ScaledResolution(mc);
         eventParent = new RenderGameOverlayEvent(partialTicks, res);
         int width = res.getScaledWidth();
@@ -116,13 +145,17 @@ public class GuiIngameForge extends GuiIngame
         right_height = 39;
         left_height = 39;
 
-        if (pre(ALL)) return;
+		boolean allowed = !pre(ALL);
+		if (cached) {
+			this.cachedOverlayVisible = allowed;
+		}
+		if (!allowed) return;
 
         fontrenderer = mc.fontRenderer;
         mc.entityRenderer.setupOverlayRendering();
         GlStateManager.enableBlend();
 
-        if (renderVignette && Minecraft.isFancyGraphicsEnabled())
+        if (!cached && renderVignette && Minecraft.isFancyGraphicsEnabled())
         {
             renderVignette(mc.player.getBrightness(), res);
         }
@@ -147,7 +180,7 @@ public class GuiIngameForge extends GuiIngame
         zLevel = -90.0F;
         rand.setSeed((long)(updateCounter * 312871));
 
-        if (renderCrosshairs) renderCrosshairs(partialTicks);
+        if (!cached && renderCrosshairs) renderCrosshairs(partialTicks);
         if (renderBossHealth) renderBossHealth();
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

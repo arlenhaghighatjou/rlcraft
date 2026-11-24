@@ -1,11 +1,7 @@
 package net.minecraft.util;
 
-import io.netty.util.ResourceLeakDetector;
-import io.netty.util.ResourceLeakDetector.Level;
-
 public class ChatAllowedCharacters
 {
-    public static final Level NETTY_LEAK_DETECTION = Level.DISABLED;
     public static final char[] ILLEGAL_STRUCTURE_CHARACTERS = new char[] {'.', '\n', '\r', '\t', '\u0000', '\f', '`', '?', '*', '\\', '<', '>', '|', '"'};
     public static final char[] ILLEGAL_FILE_CHARACTERS = new char[] {'/', '\n', '\r', '\t', '\u0000', '\f', '`', '?', '*', '\\', '<', '>', '|', '"', ':'};
 
@@ -27,11 +23,5 @@ public class ChatAllowedCharacters
         }
 
         return stringbuilder.toString();
-    }
-
-    static
-    {
-        if (System.getProperty("io.netty.leakDetection.level") == null) // Forge: allow level to be manually specified
-        ResourceLeakDetector.setLevel(NETTY_LEAK_DETECTION);
     }
 }

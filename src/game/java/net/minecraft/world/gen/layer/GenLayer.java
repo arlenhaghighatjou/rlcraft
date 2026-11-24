@@ -8,6 +8,11 @@ import net.minecraft.world.gen.ChunkGeneratorSettings;
 public abstract class GenLayer
 {
     private long worldGenSeed;
+
+	protected long getWorldGenSeed()
+	{
+		return this.worldGenSeed;
+	}
     protected GenLayer parent;
     private long chunkSeed;
     protected long baseSeed;

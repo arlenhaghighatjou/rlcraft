@@ -46,12 +46,16 @@ public class PlatformInput {
 	private static boolean windowMouseGrabbed = false;
 	private static int cursorX = 0;
 	private static int cursorY = 0;
+	private static int logicalCursorX;
+	private static int logicalCursorY;
 	private static int cursorDX = 0;
 	private static int cursorDY = 0;
 	private static int DWheel = 0;
 	
 	private static int windowWidth = 640;
 	private static int windowHeight = 480;
+	private static int logicalWindowWidth = 640;
+	private static int logicalWindowHeight = 480;
 	
 	private static final List<KeyboardEvent> keyboardEventList = new LinkedList<>();
 	private static KeyboardEvent currentKeyboardEvent = null;
@@ -165,6 +169,13 @@ public class PlatformInput {
 		
 		windowWidth = v1[0];
 		windowHeight = v2[0];
+		glfwGetWindowSize(glfwWindow, v1, v2);
+		logicalWindowWidth = Math.max(1, v1[0]);
+		logicalWindowHeight = Math.max(1, v2[0]);
+		glfwSetWindowSizeCallback(glfwWindow, (window, width, height) -> {
+			logicalWindowWidth = Math.max(1, width);
+			logicalWindowHeight = Math.max(1, height);
+		});
 		windowResized = true;
 		windowResized2 = true;
 		
@@ -187,7 +198,7 @@ public class PlatformInput {
 			if (key == GLFW_KEY_F11 && action == GLFW_PRESS) {
 				toggleFullscreen();
 			}
-			if(glfwGetKey(glfwWindow, functionKeyModifier) == GLFW_PRESS) {
+			if(functionKeyModifier != 0 && glfwGetKey(glfwWindow, functionKeyModifier) == GLFW_PRESS) {
 				if(key >= GLFW_KEY_1 && key <= GLFW_KEY_9) {
 					key = key - GLFW_KEY_1 + GLFW_KEY_F1;
 				}
@@ -207,20 +218,21 @@ public class PlatformInput {
 		});
 		
 		glfwSetCursorPosCallback(glfwWindow, (window, posX, posY) -> {
-			posY = windowHeight - posY;
+			int x = (int) posX;
+			int y = (int) posY;
+			cursorX = (int) (posX * windowWidth / logicalWindowWidth);
+			cursorY = windowHeight - (int) (posY * windowHeight / logicalWindowHeight);
 			if(windowMouseGrabbed) {
-				cursorDX -= (cursorX - (int)posX);
-				cursorDY -= (cursorY - (int)posY);
-				cursorX = (int)posX;
-				cursorY = (int)posY;
+				cursorDX += x - logicalCursorX;
+				cursorDY += logicalCursorY - y;
 			}else {
-				cursorX = (int)posX;
-				cursorY = (int)posY;
 				mouseEventList.add(new MouseEvent(-1, false, cursorX, cursorY, 0.0f));
 				if(mouseEventList.size() > 64) {
 					mouseEventList.remove(0);
 				}
 			}
+			logicalCursorX = x;
+			logicalCursorY = y;
 		});
 		
 		glfwSetMouseButtonCallback(glfwWindow, (window, button, action, mods) -> {
@@ -420,15 +432,19 @@ public class PlatformInput {
 	}
 
 	public static boolean keyboardIsKeyDown(int key) {
-		if(glfwGetKey(win, functionKeyModifier) == GLFW_PRESS) {
-			if(key >= GLFW_KEY_1 && key <= GLFW_KEY_9) {
+		int glfwKey = KeyboardConstants.getGLFWKeyFromEagler(key);
+		if (glfwKey == 0) {
+			return false;
+		}
+		if(functionKeyModifier != 0 && glfwGetKey(win, functionKeyModifier) == GLFW_PRESS) {
+			if(glfwKey >= GLFW_KEY_1 && glfwKey <= GLFW_KEY_9) {
 				return false;
 			}
-			if(key >= GLFW_KEY_F1 && key <= GLFW_KEY_F9) {
-				key = key - GLFW_KEY_F1 + GLFW_KEY_1;
+			if(glfwKey >= GLFW_KEY_F1 && glfwKey <= GLFW_KEY_F9) {
+				glfwKey = glfwKey - GLFW_KEY_F1 + GLFW_KEY_1;
 			}
 		}
-		return glfwGetKey(win, KeyboardConstants.getGLFWKeyFromEagler(key)) == GLFW_PRESS;
+		return glfwGetKey(win, glfwKey) == GLFW_PRESS;
 	}
 
 	public static boolean keyboardIsRepeatEvent() {
@@ -534,14 +550,12 @@ public class PlatformInput {
 
 	public static void mouseSetGrabbed(boolean grab) {
 		if(grab != windowMouseGrabbed) {
-			cursorX = windowWidth / 2;
-			cursorY = windowHeight / 2;
-			glfwSetCursorPos(win, cursorX, cursorY);
 			windowMouseGrabbed = grab;
-			cursorDX = 0;
-			cursorDY = 0;
 			glfwSetInputMode(win, GLFW_CURSOR, grab ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 			glfwSetInputMode(win, GLFW_RAW_MOUSE_MOTION, grab ? GLFW_TRUE : GLFW_FALSE);
+			mouseSetCursorPosition(windowWidth / 2, windowHeight / 2);
+			cursorDX = 0;
+			cursorDY = 0;
 		}
 	}
 
@@ -572,7 +586,11 @@ public class PlatformInput {
 	public static void mouseSetCursorPosition(int x, int y) {
 		cursorX = x;
 		cursorY = y;
-		glfwSetCursorPos(win, x, y);
+		double logicalX = (double) x * logicalWindowWidth / Math.max(1, windowWidth);
+		double logicalY = (double) (windowHeight - y) * logicalWindowHeight / Math.max(1, windowHeight);
+		logicalCursorX = (int) logicalX;
+		logicalCursorY = (int) logicalY;
+		glfwSetCursorPos(win, logicalX, logicalY);
 	}
 
 	public static boolean mouseIsInsideWindow() {

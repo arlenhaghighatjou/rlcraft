@@ -2,13 +2,13 @@ package net.minecraft.client.audio;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import java.io.Closeable;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -38,21 +38,6 @@ public class SoundHandler implements IResourceManagerReloadListener, ITickable
     public static final Sound MISSING_SOUND = new Sound("meta:missing_sound", 1.0F, 1.0F, 1, Sound.Type.FILE, false);
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Gson GSON = (new GsonBuilder()).registerTypeHierarchyAdapter(ITextComponent.class, new ITextComponent.Serializer()).registerTypeAdapter(SoundList.class, new SoundListSerializer()).create();
-    private static final ParameterizedType TYPE = new ParameterizedType()
-    {
-        public Type[] getActualTypeArguments()
-        {
-            return new Type[] {String.class, SoundList.class};
-        }
-        public Type getRawType()
-        {
-            return Map.class;
-        }
-        public Type getOwnerType()
-        {
-            return null;
-        }
-    };
     private final SoundRegistry soundRegistry = new SoundRegistry();
     private final SoundManager sndManager;
     private final IResourceManager mcResourceManager;
@@ -138,18 +123,20 @@ public class SoundHandler implements IResourceManagerReloadListener, ITickable
     @Nullable
     protected Map<String, SoundList> getSoundMap(InputStream stream)
     {
-        Map map;
-
         try
         {
-            map = (Map)JsonUtils.fromJson(GSON, new InputStreamReader(stream, StandardCharsets.UTF_8), TYPE);
+			JsonObject definitions = JsonUtils.fromJson(GSON,
+					new InputStreamReader(stream, StandardCharsets.UTF_8), JsonObject.class);
+			Map<String, SoundList> sounds = new java.util.LinkedHashMap<>();
+			for (Entry<String, JsonElement> definition : definitions.entrySet()) {
+				sounds.put(definition.getKey(), GSON.fromJson(definition.getValue(), SoundList.class));
+			}
+			return sounds;
         }
         finally
         {
             IOUtils.closeQuietly(stream);
         }
-
-        return map;
     }
 
     private void loadSoundResource(ResourceLocation location, SoundList sounds)

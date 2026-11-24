@@ -25,13 +25,11 @@ public class LayerSlimeGel implements LayerRenderer<EntitySlime>
         if (!entitylivingbaseIn.isInvisible())
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.enableNormalize();
             GlStateManager.enableBlend();
             GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             this.slimeModel.setModelAttributes(this.slimeRenderer.getMainModel());
             this.slimeModel.render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
             GlStateManager.disableBlend();
-            GlStateManager.disableNormalize();
         }
     }
 

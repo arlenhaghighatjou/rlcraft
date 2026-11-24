@@ -37,6 +37,7 @@ public class CapabilityItemHandler
 
     public static void register()
     {
+		CapabilityManager.INSTANCE.onRegistered(IItemHandler.class, capability -> ITEM_HANDLER_CAPABILITY = capability);
         CapabilityManager.INSTANCE.register(IItemHandler.class, new Capability.IStorage<IItemHandler>()
         {
             @Override

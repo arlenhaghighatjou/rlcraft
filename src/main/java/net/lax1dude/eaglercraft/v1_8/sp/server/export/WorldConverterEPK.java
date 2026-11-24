@@ -38,10 +38,10 @@ public class WorldConverterEPK {
 	public static void importWorld(byte[] archiveContents, String newName) throws IOException {
 		logger.info("Importing world \"{}\" from EPK", newName);
 		String folderName = newName.replaceAll("[\\./\"]", "_");
-		VFile2 worldDir = EaglerIntegratedServerWorker.saveFormat.getSaveLoader(folderName, false).getWorldDirectory();
+		VFile2 worldDir = EaglerIntegratedServerWorker.saveFormat.getWorldPath(folderName);
 		while(WorldsDB.newVFile(worldDir, "level.dat").exists() || WorldsDB.newVFile(worldDir, "level.dat_old").exists()) {
 			folderName += "_";
-			worldDir = EaglerIntegratedServerWorker.saveFormat.getSaveLoader(folderName, false).getWorldDirectory();
+			worldDir = EaglerIntegratedServerWorker.saveFormat.getWorldPath(folderName);
 		}
 		try(EPKDecompiler dc = new EPKDecompiler(archiveContents)) {
 			EPKDecompiler.FileEntry f = null;
@@ -109,7 +109,7 @@ public class WorldConverterEPK {
 			worldOwner = worldName.substring(j + 3);
 			realWorldName = worldName.substring(0, j);
 		}
-		VFile2 worldDir = EaglerIntegratedServerWorker.saveFormat.getSaveLoader(realWorldName, false).getWorldDirectory();
+		VFile2 worldDir = EaglerIntegratedServerWorker.saveFormat.getWorldPath(realWorldName);
 		logger.info("Exporting world directory \"{}\" as EPK", worldDir.getPath());
 		final int[] bytesWritten = new int[1];
 		final int[] filesWritten = new int[1];

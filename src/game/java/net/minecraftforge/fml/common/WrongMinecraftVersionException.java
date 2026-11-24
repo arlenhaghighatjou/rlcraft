@@ -42,7 +42,7 @@ public class WrongMinecraftVersionException extends EnhancedRuntimeException imp
     protected void printStackTrace(WrappedPrintStream stream) {
         stream.println("Wrong Minecraft Versions!");
         stream.println("Mod: " + mod.getModId());
-        stream.println("Location: " + mod.getSource().toString());
+        stream.println("Location: " + (mod.getSource() != null ? mod.getSource().toString() : "built-in"));
         stream.println("Expected: " + mod.acceptableMinecraftVersionRange().toString());
         stream.println("Current: " + mcVersion);
         stream.println("");

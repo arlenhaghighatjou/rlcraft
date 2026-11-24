@@ -33,8 +33,9 @@ public class MatchBlock {
 	}
 
 	public boolean matches(BlockStateBase blockState) {
-		return blockState.getBlockId() != this.blockId ? false
-				: Matches.metadata(blockState.getMetadata(), this.metadatas);
+		net.minecraft.block.Block block = blockState.getBlock();
+		return net.minecraft.block.Block.getIdFromBlock(block) == this.blockId
+				&& Matches.metadata(block.getMetaFromState(blockState), this.metadatas);
 	}
 
 	public boolean matches(int id, int metadata) {

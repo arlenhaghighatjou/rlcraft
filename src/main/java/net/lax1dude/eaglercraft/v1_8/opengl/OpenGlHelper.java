@@ -24,8 +24,12 @@ public class OpenGlHelper {
 	public static final int defaultTexUnit = RealOpenGLEnums.GL_TEXTURE0;
 
 	public static final int lightmapTexUnit = RealOpenGLEnums.GL_TEXTURE1;
+	public static float lastBrightnessX = 0.0F;
+	public static float lastBrightnessY = 0.0F;
 
 	public static void setLightmapTextureCoords(int unit, float x, float y) {
+		lastBrightnessX = x;
+		lastBrightnessY = y;
 		GlStateManager.setActiveTexture(lightmapTexUnit);
 		GlStateManager.texCoords2D(x, y);
 		GlStateManager.setActiveTexture(defaultTexUnit);

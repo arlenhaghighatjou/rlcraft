@@ -121,11 +121,9 @@ public class RenderItemFrame extends Render<EntityItemFrame>
             else
             {
                 GlStateManager.scale(0.5F, 0.5F, 0.5F);
-                GlStateManager.pushAttrib();
                 RenderHelper.enableStandardItemLighting();
                 this.itemRenderer.renderItem(itemstack, ItemCameraTransforms.TransformType.FIXED);
                 RenderHelper.disableStandardItemLighting();
-                GlStateManager.popAttrib();
             }
             }
 

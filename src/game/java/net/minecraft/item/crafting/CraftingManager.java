@@ -5,20 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
-import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.Iterator;
 import javax.annotation.Nullable;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -27,8 +15,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.RegistryNamespaced;
 import net.minecraft.world.World;
-import org.apache.commons.io.FilenameUtils;
-import net.lax1dude.eaglercraft.v1_8.IOUtils;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
@@ -61,99 +47,31 @@ public class CraftingManager
         }
     }
 
-    private static boolean parseJsonRecipes()
-    {
-        FileSystem filesystem = null;
-        Gson gson = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
-        boolean flag1;
-
-        try
-        {
-            URL url = CraftingManager.class.getResource("/assets/.mcassetsroot");
-
-            if (url != null)
-            {
-                URI uri = url.toURI();
-                Path path;
-
-                if ("file".equals(uri.getScheme()))
-                {
-                    path = Paths.get(CraftingManager.class.getResource("/assets/minecraft/recipes").toURI());
-                }
-                else
-                {
-                    if (!"jar".equals(uri.getScheme()))
-                    {
-                        LOGGER.error("Unsupported scheme " + uri + " trying to list all recipes");
-                        boolean flag2 = false;
-                        return flag2;
-                    }
-
-                    filesystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
-                    path = filesystem.getPath("/assets/minecraft/recipes");
-                }
-
-                Iterator<Path> iterator = Files.walk(path).iterator();
-
-                while (iterator.hasNext())
-                {
-                    Path path1 = iterator.next();
-
-                    if ("json".equals(FilenameUtils.getExtension(path1.toString())))
-                    {
-                        Path path2 = path.relativize(path1);
-                        String s = FilenameUtils.removeExtension(path2.toString()).replaceAll("\\\\", "/");
-                        ResourceLocation resourcelocation = new ResourceLocation(s);
-                        BufferedReader bufferedreader = null;
-
-                        try
-                        {
-                            boolean flag;
-
-                            try
-                            {
-                                bufferedreader = Files.newBufferedReader(path1);
-                                register(s, parseRecipeJson((JsonObject)JsonUtils.fromJson(gson, bufferedreader, JsonObject.class)));
-                            }
-                            catch (JsonParseException jsonparseexception)
-                            {
-                                LOGGER.error("Parsing error loading recipe " + resourcelocation, (Throwable)jsonparseexception);
-                                flag = false;
-                                return flag;
-                            }
-                            catch (IOException ioexception)
-                            {
-                                LOGGER.error("Couldn't read recipe " + resourcelocation + " from " + path1, (Throwable)ioexception);
-                                flag = false;
-                                return flag;
-                            }
-                        }
-                        finally
-                        {
-                            IOUtils.closeQuietly((Reader)bufferedreader);
-                        }
-                    }
-                }
-
-                return true;
-            }
-
-            LOGGER.error("Couldn't find .mcassetsroot");
-            flag1 = false;
-        }
-        catch (IOException | URISyntaxException urisyntaxexception)
-        {
-            LOGGER.error("Couldn't get a list of all recipe files", (Throwable)urisyntaxexception);
-            flag1 = false;
-            return flag1;
-        }
-        finally
-        {
-            IOUtils.closeQuietly((Closeable)filesystem);
-        }
-
-        return flag1;
-    }
+	private static boolean parseJsonRecipes() {
+		String directory = "/assets/minecraft/recipes/";
+		String index = net.lax1dude.eaglercraft.v1_8.EagRuntime.getResourceString(directory + "_files.txt");
+		if (index == null) {
+			LOGGER.error("Could not find the Minecraft recipe index");
+			return false;
+		}
+		Gson gson = new GsonBuilder().create();
+		for (String file : index.split("\n")) {
+			file = file.trim();
+			if (file.isEmpty()) {
+				continue;
+			}
+			try (Reader reader = new java.io.InputStreamReader(
+					net.lax1dude.eaglercraft.v1_8.EagRuntime.getRequiredResourceStream(directory + file),
+					java.nio.charset.StandardCharsets.UTF_8)) {
+				register(file.substring(0, file.length() - ".json".length()),
+					parseRecipeJson(JsonUtils.fromJson(gson, reader, JsonObject.class)));
+			} catch (JsonParseException | IOException ex) {
+				LOGGER.error("Could not load Minecraft recipe " + file, ex);
+				return false;
+			}
+		}
+		return true;
+	}
 
     private static IRecipe parseRecipeJson(JsonObject p_193376_0_)
     {

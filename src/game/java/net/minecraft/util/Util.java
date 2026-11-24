@@ -2,12 +2,12 @@ package net.minecraft.util;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 import javax.annotation.Nullable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.futures.ExecutionException;
+import net.lax1dude.eaglercraft.v1_8.futures.FutureTask;
 
 public class Util
 {

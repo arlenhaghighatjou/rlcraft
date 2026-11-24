@@ -38,6 +38,7 @@ public class CapabilityAnimation
 
     public static void register()
     {
+		CapabilityManager.INSTANCE.onRegistered(IAnimationStateMachine.class, capability -> ANIMATION_CAPABILITY = capability);
         CapabilityManager.INSTANCE.register(IAnimationStateMachine.class, new Capability.IStorage<IAnimationStateMachine>()
         {
             @Override

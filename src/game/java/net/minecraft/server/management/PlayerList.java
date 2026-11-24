@@ -1,12 +1,16 @@
 package net.minecraft.server.management;
 
+import com.arlenh7.eaglercraft.forge.WorldTextFile;
+import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerSaveHandler;
+import net.lax1dude.eaglercraft.v1_8.sp.server.WorldsDB;
+import net.minecraft.world.storage.ISaveHandler;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import java.io.File;
-import java.net.SocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +24,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetHandlerPlayServer;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SPacketChangeGameState;
@@ -106,7 +110,7 @@ public abstract class PlayerList
         this.maxPlayers = 8;
     }
 
-    public void initializeConnectionToPlayer(NetworkManager netManager, EntityPlayerMP playerIn, NetHandlerPlayServer nethandlerplayserver)
+    public void initializeConnectionToPlayer(INetworkManager netManager, EntityPlayerMP playerIn, NetHandlerPlayServer nethandlerplayserver)
     {
         GameProfile gameprofile = playerIn.getGameProfile();
         PlayerProfileCache playerprofilecache = this.mcServer.getPlayerProfileCache();
@@ -427,7 +431,7 @@ public abstract class PlayerList
         this.sendPacketToAllPlayers(new SPacketPlayerListItem(SPacketPlayerListItem.Action.REMOVE_PLAYER, new EntityPlayerMP[] {playerIn}));
     }
 
-    public String allowUserToConnect(SocketAddress address, GameProfile profile)
+    public String allowUserToConnect(String address, GameProfile profile)
     {
         if (this.bannedPlayers.isBanned(profile))
         {
@@ -445,7 +449,7 @@ public abstract class PlayerList
         {
             return "You are not white-listed on this server!";
         }
-        else if (this.bannedIPs.isBanned(address))
+        else if (address != null && this.bannedIPs.isBanned(address))
         {
             UserListIPBansEntry userlistipbansentry = this.bannedIPs.getBanEntry(address);
             String s = "Your IP address is banned from this server!\nReason: " + userlistipbansentry.getBanReason();
@@ -1104,20 +1108,10 @@ public abstract class PlayerList
 
         if (statisticsmanagerserver == null)
         {
-            File file1 = new File(this.mcServer.getWorld(0).getSaveHandler().getWorldDirectory(), "stats");
-            File file2 = new File(file1, uuid + ".json");
-
-            if (!file2.exists())
-            {
-                File file3 = new File(file1, playerIn.getName() + ".json");
-
-                if (file3.exists() && file3.isFile())
-                {
-                    file3.renameTo(file2);
-                }
-            }
-
-            statisticsmanagerserver = new StatisticsManagerServer(this.mcServer, file2);
+			WorldTextFile file = playerTextFile("stats", uuid + ".json");
+			String name = playerIn.getName();
+			WorldTextFile legacy = name.matches("[A-Za-z0-9_]{1,16}") ? playerTextFile("stats", name + ".json") : null;
+			statisticsmanagerserver = new StatisticsManagerServer(this.mcServer, file, legacy);
             statisticsmanagerserver.readStatFile();
             this.playerStatFiles.put(uuid, statisticsmanagerserver);
         }
@@ -1132,15 +1126,23 @@ public abstract class PlayerList
 
         if (playeradvancements == null)
         {
-            File file1 = new File(this.mcServer.getWorld(0).getSaveHandler().getWorldDirectory(), "advancements");
-            File file2 = new File(file1, uuid + ".json");
-            playeradvancements = new PlayerAdvancements(this.mcServer, file2, p_192054_1_);
+			playeradvancements = new PlayerAdvancements(this.mcServer, playerTextFile("advancements", uuid + ".json"), p_192054_1_);
             this.advancements.put(uuid, playeradvancements);
         }
 
         playeradvancements.setPlayer(p_192054_1_);
         return playeradvancements;
     }
+
+	private WorldTextFile playerTextFile(String directory, String name)
+	{
+		ISaveHandler save = this.mcServer.getWorld(0).getSaveHandler();
+		if (save instanceof EaglerSaveHandler)
+		{
+			return new WorldTextFile(WorldsDB.newVFile(((EaglerSaveHandler)save).getWorldPath(), directory, name));
+		}
+		return new WorldTextFile(new File(new File(save.getWorldDirectory(), directory), name));
+	}
 
     public void setViewDistance(int distance)
     {

@@ -40,7 +40,9 @@ import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.ITextComponent;
 
 public class HandshakerHandler {
@@ -130,7 +132,7 @@ public class HandshakerHandler {
 		buffer.writeBytes(getSPHandshakeProtocolData()); // write supported eagler protocol versions
 		
 		buffer.writeShort(1); // supported game protocols count
-		buffer.writeShort(47); // client supports 1.8 protocol
+		buffer.writeShort(C00Handshake.PROTOCOL_VERSION);
 		
 		String clientBrand = EaglercraftVersion.projectForkName;
 		buffer.writeByte(clientBrand.length());
@@ -188,9 +190,9 @@ public class HandshakerHandler {
 		}
 		
 		int gameVers = packet.readUnsignedShort();
-		if(gameVers != 47) {
+		if(gameVers != C00Handshake.PROTOCOL_VERSION) {
 			logger.info("Incompatible minecraft protocol version: {}", gameVers);
-			handleError("connect.failed", new TextComponentString("This server does not support 1.8!"));
+			handleError("connect.failed", new TextComponentTranslation("eaglercraft.connect.unsupportedMinecraftProtocol", gameVers));
 			return;
 		}
 		
@@ -254,7 +256,7 @@ public class HandshakerHandler {
 			games.append("mc").append(packet.readUnsignedShort());
 		}
 		
-		logger.info("Incompatible client: v3/v4/v5 & mc47");
+		logger.info("Incompatible client: v3/v4/v5 & mc{}", C00Handshake.PROTOCOL_VERSION);
 		logger.info("Server supports: {}", protocols);
 		logger.info("Server supports: {}", games);
 		
@@ -263,7 +265,11 @@ public class HandshakerHandler {
 		packet.readBytes(dat);
 		String msg = new String(dat, StandardCharsets.UTF_8);
 		
-		handleError("connect.failed", new TextComponentString(msg));
+		if (games.length() > 0) {
+			handleError("connect.failed", new TextComponentTranslation("eaglercraft.connect.protocolMismatch", games.toString(), msg));
+		} else {
+			handleError("connect.failed", new TextComponentString(msg));
+		}
 	}
 
 	protected void handleServerError(PacketBuffer packet, boolean v3) {

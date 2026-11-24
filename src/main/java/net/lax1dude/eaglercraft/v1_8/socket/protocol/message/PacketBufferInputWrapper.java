@@ -198,7 +198,7 @@ public class PacketBufferInputWrapper implements GamePacketInputBuffer {
 	@Override
 	public String readStringMC(int maxLen) throws IOException {
 		try {
-			return buffer.readStringFromBuffer(maxLen);
+			return buffer.readString(maxLen);
 		}catch(DecoderException ex) {
 			throw new IOException(ex.getMessage());
 		}catch(IndexOutOfBoundsException ex) {

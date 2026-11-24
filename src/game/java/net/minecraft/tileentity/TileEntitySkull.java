@@ -1,9 +1,6 @@
 package net.minecraft.tileentity;
 
-import com.google.common.collect.Iterables;
 import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftSessionService;
-import net.lax1dude.eaglercraft.v1_8.mojang.authlib.Property;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockSkull;
@@ -27,16 +24,10 @@ public class TileEntitySkull extends TileEntity implements ITickable
     private int dragonAnimatedTicks;
     private boolean dragonAnimated;
     private static PlayerProfileCache profileCache;
-    private static MinecraftSessionService sessionService;
 
     public static void setProfileCache(PlayerProfileCache profileCacheIn)
     {
         profileCache = profileCacheIn;
-    }
-
-    public static void setSessionService(MinecraftSessionService sessionServiceIn)
-    {
-        sessionService = sessionServiceIn;
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound compound)
@@ -146,7 +137,7 @@ public class TileEntitySkull extends TileEntity implements ITickable
             {
                 return input;
             }
-            else if (profileCache != null && sessionService != null)
+            else if (profileCache != null)
             {
                 GameProfile gameprofile = profileCache.getGameProfileForUsername(input.getName());
 
@@ -154,17 +145,7 @@ public class TileEntitySkull extends TileEntity implements ITickable
                 {
                     return input;
                 }
-                else
-                {
-                    Property property = (Property)Iterables.getFirst(gameprofile.getProperties().get("textures"), (Object)null);
-
-                    if (property == null)
-                    {
-                        gameprofile = sessionService.fillProfileProperties(gameprofile, true);
-                    }
-
-                    return gameprofile;
-                }
+                else return gameprofile;
             }
             else
             {

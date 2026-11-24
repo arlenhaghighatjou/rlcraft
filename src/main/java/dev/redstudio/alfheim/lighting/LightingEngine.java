@@ -69,7 +69,7 @@ public final class LightingEngine {
 
 	// Iteration state data
 	// Cache position to avoid allocation of new object each time
-	private final BlockPos currentPos = new BlockPos();
+	private final BlockPos.MutableBlockPos currentPos = new BlockPos.MutableBlockPos();
 	private Chunk currentChunk;
 	private long currentChunkIdentifier;
 	private long currentData;
@@ -335,13 +335,12 @@ public final class LightingEngine {
 		final int y = blockPos.getY();
 		final int z = blockPos.getZ() & 15;
 
-		if (storage == null)
-			return type == EnumSkyBlock.SKY && chunk.canSeeSky(blockPos) ? (byte) type.defaultLightValue : 0;
-		else if (type == EnumSkyBlock.SKY)
-			return chunk.getWorld().provider.getHasNoSky() ? 0 : (byte) storage.getExtSkylightValue(x, y & 15, z);
-		else
-			return type == EnumSkyBlock.BLOCK ? (byte) storage.getExtBlocklightValue(x, y & 15, z)
-					: (byte) type.defaultLightValue;
+		if (type == EnumSkyBlock.SKY) {
+			if (!chunk.getWorld().provider.hasSkyLight()) return 0;
+			return storage == null ? (chunk.canSeeSky(blockPos) ? (byte)type.defaultLightValue : 0)
+					: (byte)storage.getSkyLight(x, y & 15, z);
+		}
+		return storage == null ? 0 : (byte)storage.getBlockLight(x, y & 15, z);
 	}
 
 	private byte calculateNewLightFromCursor(final EnumSkyBlock lightType) {
@@ -419,8 +418,8 @@ public final class LightingEngine {
 		chunk.setLightFor(lightType, blockPos, 0);
 	}
 
-	private static BlockPos decodeWorldCoord(final BlockPos mutableBlockPos, final long longPos) {
-		return mutableBlockPos.func_181079_c((int) (longPos >> S_X & M_X) - (1 << L_X - 1), (int) (longPos >> S_Y & M_Y),
+	private static BlockPos decodeWorldCoord(final BlockPos.MutableBlockPos mutableBlockPos, final long longPos) {
+		return mutableBlockPos.setPos((int) (longPos >> S_X & M_X) - (1 << L_X - 1), (int) (longPos >> S_Y & M_Y),
 				(int) (longPos >> S_Z & M_Z) - (1 << L_Z - 1));
 	}
 
@@ -457,7 +456,8 @@ public final class LightingEngine {
 	}
 
 	private byte getCursorCachedLight(final EnumSkyBlock lightType) {
-		return currentChunk.alfheim$getCachedLightFor(lightType, currentPos);
+		return getCachedLightFor(currentChunk, currentChunk.getBlockStorageArray()[currentPos.getY() >> 4],
+				currentPos, lightType);
 	}
 
 	/**
@@ -466,17 +466,17 @@ public final class LightingEngine {
 	 */
 	private byte getCursorLuminosity(final IBlockState state, final EnumSkyBlock lightType) {
 		if (lightType == EnumSkyBlock.SKY) {
-			if (currentChunk.canSeeSky(currentPos))
+			if (this.world.provider.hasSkyLight() && currentChunk.canSeeSky(currentPos))
 				return (byte) EnumSkyBlock.SKY.defaultLightValue;
 			else
 				return 0;
 		}
 
-		return (byte) ClampUtil.clampMinFirst(state.getBlock().getLightValue(), 0, MAX_LIGHT_LEVEL);
+		return (byte) ClampUtil.clampMinFirst(state.getLightValue(this.world, currentPos), 0, MAX_LIGHT_LEVEL);
 	}
 
 	private byte getPosOpacity(final BlockPos blockPos, final IBlockState blockState) {
-		return (byte) ClampUtil.clampMinFirst(blockState.getBlock().getLightOpacity(), 1, MAX_LIGHT_LEVEL);
+		return (byte) ClampUtil.clampMinFirst(blockState.getLightOpacity(this.world, blockPos), 1, MAX_LIGHT_LEVEL);
 	}
 
 	private Chunk getChunk(final BlockPos blockPos) {
@@ -485,7 +485,7 @@ public final class LightingEngine {
 
 	private static final class NeighborInfo {
 
-		public final BlockPos mutableBlockPos = new BlockPos();
+		public final BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
 
 		public Chunk chunk;
 

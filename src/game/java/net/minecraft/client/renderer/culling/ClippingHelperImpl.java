@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.culling;
 
-import java.nio.FloatBuffer;
+import net.lax1dude.eaglercraft.v1_8.internal.buffer.FloatBuffer;
 import net.minecraft.client.renderer.GLAllocation;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.math.MathHelper;

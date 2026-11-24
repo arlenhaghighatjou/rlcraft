@@ -593,12 +593,12 @@ public class ConnectedProperties {
 
 	private static EaglerTextureAtlasSprite getIcon(String iconName) {
 		TextureMap texturemap = Minecraft.getMinecraft().getTextureMapBlocks();
-		EaglerTextureAtlasSprite textureatlassprite = texturemap.getSpriteSafe(iconName);
+		EaglerTextureAtlasSprite textureatlassprite = texturemap.getTextureExtry(new ResourceLocation(iconName).toString());
 
 		if (textureatlassprite != null) {
 			return textureatlassprite;
 		} else {
-			textureatlassprite = texturemap.getSpriteSafe("blocks/" + iconName);
+			textureatlassprite = texturemap.getTextureExtry("minecraft:blocks/" + iconName);
 			return textureatlassprite;
 		}
 	}
@@ -859,7 +859,7 @@ public class ConnectedProperties {
 				if(metaBase == -1) {
 					metaBase = 0;
 				}
-				baseName = Minecraft.getMinecraft().getModelManager().modelbakerytmp.getBaseTextureForBlockPre(blockBaseID, metaBase);
+				baseName = Minecraft.getMinecraft().getModelManager().getBaseTextureForLoadingBlock(blockBaseID, metaBase);
 			}
 		}
 

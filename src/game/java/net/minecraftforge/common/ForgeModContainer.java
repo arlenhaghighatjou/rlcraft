@@ -417,7 +417,7 @@ public class ForgeModContainer extends DummyModContainer implements WorldAccessC
         if (evt instanceof FMLConstructionEvent)
         {
             NetworkRegistry.INSTANCE.register(this, "*");
-            ForgeNetworkHandler.registerChannel(this, evt.getSide());
+            ForgeNetworkHandler.registerChannel(this, FMLCommonHandler.instance().getSide());
             MinecraftForge.EVENT_BUS.register(OnConfigChangedEvent.class, this::onConfigChanged);
             MinecraftForge.EVENT_BUS.registerGeneric(RegistryEvent.MissingMappings.class, Item.class, this::missingMapping);
             MinecraftForge.EVENT_BUS.register(PlayerEvent.PlayerLoggedInEvent.class, this::playerLogin);

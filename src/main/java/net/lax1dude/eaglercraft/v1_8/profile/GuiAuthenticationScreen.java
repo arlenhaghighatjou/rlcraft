@@ -115,7 +115,7 @@ public class GuiAuthenticationScreen extends GuiScreen {
 		}
 	}
 
-	protected void mouseClicked(int parInt1, int parInt2, int parInt3) {
+	protected void mouseClicked(int parInt1, int parInt2, int parInt3) throws java.io.IOException {
 		super.mouseClicked(parInt1, parInt2, parInt3);
 		this.password.mouseClicked(parInt1, parInt2, parInt3);
 	}

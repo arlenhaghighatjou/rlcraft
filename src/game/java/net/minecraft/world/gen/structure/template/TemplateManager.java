@@ -16,18 +16,30 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.datafix.FixTypes;
 import net.lax1dude.eaglercraft.v1_8.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.EaglerOutputStream;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.lax1dude.eaglercraft.v1_8.sp.server.WorldsDB;
 
 public class TemplateManager
 {
     private final Map<String, Template> templates = Maps.<String, Template>newHashMap();
     private final String baseFolder;
+	private final VFile2 virtualFolder;
     private final DataFixer fixer;
 
     public TemplateManager(String p_i47239_1_, DataFixer p_i47239_2_)
     {
         this.baseFolder = p_i47239_1_;
+		this.virtualFolder = null;
         this.fixer = p_i47239_2_;
     }
+
+	public TemplateManager(VFile2 virtualFolder, DataFixer fixer)
+	{
+		this.baseFolder = null;
+		this.virtualFolder = virtualFolder;
+		this.fixer = fixer;
+	}
 
     public Template getTemplate(@Nullable MinecraftServer server, ResourceLocation id)
     {
@@ -69,6 +81,21 @@ public class TemplateManager
     public boolean readTemplate(ResourceLocation server)
     {
         String s = server.getResourcePath();
+		if (this.virtualFolder != null)
+		{
+			VFile2 file = this.getVirtualTemplateFile(s);
+			if (file == null) return false;
+			if (!file.exists()) return this.readTemplateFromJar(server);
+			try (InputStream input = file.getInputStream())
+			{
+				this.readTemplateFromStream(s, input);
+				return true;
+			}
+			catch (IOException ex)
+			{
+				return false;
+			}
+		}
         File file1 = new File(this.baseFolder, s + ".nbt");
 
         if (!file1.exists())
@@ -144,6 +171,22 @@ public class TemplateManager
 
         if (server != null && this.templates.containsKey(s))
         {
+			if (this.virtualFolder != null)
+			{
+				VFile2 file = this.getVirtualTemplateFile(s);
+				if (file == null) return false;
+				try
+				{
+					EaglerOutputStream encoded = new EaglerOutputStream();
+					CompressedStreamTools.writeCompressed(this.templates.get(s).writeToNBT(new NBTTagCompound()), encoded);
+					file.setAllBytes(encoded.toByteArray());
+					return true;
+				}
+				catch (IOException | RuntimeException ex)
+				{
+					return false;
+				}
+			}
             File file1 = new File(this.baseFolder);
 
             if (!file1.exists())
@@ -191,4 +234,11 @@ public class TemplateManager
     {
         this.templates.remove(templatePath.getResourcePath());
     }
+
+	private VFile2 getVirtualTemplateFile(String name)
+	{
+		if (name.isEmpty() || name.startsWith("/") || name.indexOf('\\') >= 0 || name.contains("..")) return null;
+		VFile2 file = WorldsDB.newVFile(this.virtualFolder, name + ".nbt");
+		return file.getPath().startsWith(this.virtualFolder.getPath() + "/") ? file : null;
+	}
 }

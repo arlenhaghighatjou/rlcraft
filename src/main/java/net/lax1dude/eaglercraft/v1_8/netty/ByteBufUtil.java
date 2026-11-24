@@ -391,51 +391,22 @@ public final class ByteBufUtil {
 	}
 
 	static ByteBuf encodeString0(boolean enforceHeap, CharBuffer src, Charset charset) {
-		final CharsetEncoder encoder = charset.newEncoder();
-		int length = (int) ((double) src.remaining() * encoder.maxBytesPerChar());
-		final ByteBuf dst = Unpooled.buffer(length);
-		try {
-			final ByteBuffer dstBuf = dst.internalNioBuffer(dst.readerIndex(), length);
-			final int pos = dstBuf.position();
-			CoderResult cr = encoder.encode(src, dstBuf, true);
-			if (!cr.isUnderflow()) {
-				cr.throwException();
-			}
-			cr = encoder.flush(dstBuf);
-			if (!cr.isUnderflow()) {
-				cr.throwException();
-			}
-			dst.writerIndex(dst.writerIndex() + dstBuf.position() - pos);
-			return dst;
-		} catch (CharacterCodingException x) {
-			throw new IllegalStateException(x);
-		}
+		ByteBuffer encoded = charset.encode(src);
+		byte[] bytes = new byte[encoded.remaining()];
+		encoded.get(bytes);
+		return Unpooled.wrappedBuffer(bytes);
 	}
 
 	static String decodeString(ByteBuf src, int readerIndex, int len, Charset charset) {
 		if (len == 0) {
 			return "";
 		}
-		final CharsetDecoder decoder = charset.newDecoder();
-		final int maxLength = (int) ((double) len * decoder.maxCharsPerByte());
-		CharBuffer dst = CharBuffer.wrap(new char[maxLength]);
-		decodeString(decoder, src.nioBuffer(readerIndex, len), dst);
-		return dst.flip().toString();
-	}
-
-	private static void decodeString(CharsetDecoder decoder, ByteBuffer src, CharBuffer dst) {
-		try {
-			CoderResult cr = decoder.decode(src, dst, true);
-			if (!cr.isUnderflow()) {
-				cr.throwException();
-			}
-			cr = decoder.flush(dst);
-			if (!cr.isUnderflow()) {
-				cr.throwException();
-			}
-		} catch (CharacterCodingException x) {
-			throw new IllegalStateException(x);
+		if (src.hasArray()) {
+			return new String(src.array(), src.arrayOffset() + readerIndex, len, charset);
 		}
+		byte[] bytes = new byte[len];
+		src.getBytes(readerIndex, bytes);
+		return new String(bytes, charset);
 	}
 
 	/**

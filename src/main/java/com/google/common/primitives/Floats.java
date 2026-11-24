@@ -53,6 +53,10 @@ import com.google.common.base.Converter;
  */
 @GwtCompatible(emulated = true)
 public final class Floats {
+	public static float constrainToRange(float value, float min, float max) {
+		if (min > max) throw new IllegalArgumentException("min must be less than or equal to max");
+		return Math.min(Math.max(value, min), max);
+	}
 	private Floats() {
 	}
 

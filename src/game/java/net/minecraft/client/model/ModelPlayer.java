@@ -88,7 +88,7 @@ public class ModelPlayer extends ModelBiped
         }
         else
         {
-            if (entityIn.isSneaking())
+            if (entityIn != null && entityIn.isSneaking())
             {
                 GlStateManager.translate(0.0F, 0.2F, 0.0F);
             }
@@ -125,7 +125,7 @@ public class ModelPlayer extends ModelBiped
         copyModelAngles(this.bipedRightArm, this.bipedRightArmwear);
         copyModelAngles(this.bipedBody, this.bipedBodyWear);
 
-        if (entityIn.isSneaking())
+        if (entityIn != null && entityIn.isSneaking())
         {
             this.bipedCape.rotationPointY = 2.0F;
         }

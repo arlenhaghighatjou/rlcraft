@@ -19,7 +19,6 @@
 
 package net.minecraftforge.client;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.BitSet;
 import java.util.HashMap;
@@ -44,6 +43,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import net.lax1dude.eaglercraft.v1_8.cache.EaglerLoadingCache;
+import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
 
 public class MinecraftForgeClient
 {
@@ -66,10 +66,11 @@ public class MinecraftForgeClient
         return Minecraft.getMinecraft().getLanguageManager().getCurrentLanguage().getJavaLocale();
     }
 
-    private static BitSet stencilBits = new BitSet(8);
+    private static final int STENCIL_BIT_COUNT = 8;
+    private static final BitSet stencilBits = new BitSet(STENCIL_BIT_COUNT);
     static
     {
-        stencilBits.set(0,8);
+        stencilBits.set(0, STENCIL_BIT_COUNT);
     }
 
     /**
@@ -97,7 +98,7 @@ public class MinecraftForgeClient
      */
     public static void releaseStencilBit(int bit)
     {
-        if (bit >= 0 && bit < stencilBits.length())
+        if (bit >= 0 && bit < STENCIL_BIT_COUNT)
         {
             stencilBits.set(bit);
         }
@@ -105,7 +106,6 @@ public class MinecraftForgeClient
 
     private static final EaglerLoadingCache<Pair<World, BlockPos>, ChunkCache> regionCache = CacheBuilder.newBuilder()
         .maximumSize(500)
-        .concurrencyLevel(5)
         .expireAfterAccess(1, TimeUnit.SECONDS)
         .build(new CacheLoader<Pair<World, BlockPos>, ChunkCache>()
         {
@@ -135,16 +135,16 @@ public class MinecraftForgeClient
         regionCache.cleanUp();
     }
 
-    private static HashMap<ResourceLocation, Supplier<BufferedImage>> bufferedImageSuppliers = new HashMap<ResourceLocation, Supplier<BufferedImage>>();
-    public static void registerImageLayerSupplier(ResourceLocation resourceLocation, Supplier<BufferedImage> supplier)
+    private static final HashMap<ResourceLocation, Supplier<ImageData>> imageSuppliers = new HashMap<>();
+    public static void registerImageLayerSupplier(ResourceLocation resourceLocation, Supplier<ImageData> supplier)
     {
-        bufferedImageSuppliers.put(resourceLocation, supplier);
+        imageSuppliers.put(resourceLocation, supplier);
     }
 
     @Nonnull
-    public static BufferedImage getImageLayer(ResourceLocation resourceLocation, IResourceManager resourceManager) throws IOException
+    public static ImageData getImageLayer(ResourceLocation resourceLocation, IResourceManager resourceManager) throws IOException
     {
-        Supplier<BufferedImage> supplier = bufferedImageSuppliers.get(resourceLocation);
+        Supplier<ImageData> supplier = imageSuppliers.get(resourceLocation);
         if (supplier != null)
             return supplier.get();
 

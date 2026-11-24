@@ -58,6 +58,15 @@ public class IntegratedServerPlayerNetworkManager implements INetworkManager {
 	private final List<byte[]> recievedPacketBuffer = new LinkedList<>();
 	private final boolean enableSendCompression;
 	protected InjectedMessageController injectedController = null;
+	private int eaglerProtocolVersion = 3;
+
+	public int getEaglerProtocolVersion() {
+		return eaglerProtocolVersion;
+	}
+
+	public void setEaglerProtocolVersion(int version) {
+		this.eaglerProtocolVersion = version;
+	}
 
 	private boolean firstPacket = true;
 
@@ -90,7 +99,10 @@ public class IntegratedServerPlayerNetworkManager implements INetworkManager {
 	}
 	
 	public void closeChannel(ITextComponent reason) {
-		EaglerIntegratedServerWorker.closeChannel(playerChannel);
+		EaglerIntegratedServerWorker.closeChannel(playerChannel, reason);
+	}
+
+	public void onChannelClosed(ITextComponent reason) {
 		if(dispatcher != null) {
 			dispatcher.onClose();
 		}
@@ -203,6 +215,7 @@ public class IntegratedServerPlayerNetworkManager implements INetworkManager {
 					if(handled != null) {
 						handled.processPacket(nethandler);
 					}
+				}catch(net.minecraft.network.PacketThreadUtil.DeferredPacket deferred) {
 				}catch(Throwable t) {
 					logger.error("Failed to process {}! It'll be skipped for debug purposes.", pkt.getClass().getSimpleName());
 					logger.error(t);
@@ -374,7 +387,7 @@ public class IntegratedServerPlayerNetworkManager implements INetworkManager {
 	}
 	
 	public boolean isLocalChannel() {
-		return false;
+		return SingleplayerServerController.PLAYER_CHANNEL.equals(this.playerChannel);
 	}
 	
 	public boolean isChannelOpen() {

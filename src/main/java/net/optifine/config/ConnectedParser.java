@@ -223,7 +223,7 @@ public class ConnectedParser {
 				return aint;
 			} else {
 				IBlockState iblockstate = block.getDefaultState();
-				Collection collection = iblockstate.getPropertyNames();
+				Collection collection = iblockstate.getPropertyKeys();
 				Map<IProperty, List<Comparable>> map = new HashMap();
 
 				for (int i = 0; i < params.length; ++i) {
@@ -309,7 +309,7 @@ public class ConnectedParser {
 		try {
 			IBlockState iblockstate = block.getStateFromMeta(md);
 
-			if (block == Blocks.double_plant && md > 7) {
+			if (block == Blocks.DOUBLE_PLANT && md > 7) {
 				IBlockState iblockstate1 = block.getStateFromMeta(md & 7);
 				iblockstate = iblockstate.withProperty(BlockDoublePlant.VARIANT,
 						iblockstate1.getValue(BlockDoublePlant.VARIANT));
@@ -413,7 +413,8 @@ public class ConnectedParser {
 			}
 
 			if (flag) {
-				List<Biome> list1 = new ArrayList(Arrays.asList(Biome.getBiomeGenArray()));
+				List<Biome> list1 = new ArrayList<>();
+				for (Biome biome : Biome.REGISTRY) list1.add(biome);
 				list1.removeAll(list);
 				list = list1;
 			}
@@ -425,27 +426,14 @@ public class ConnectedParser {
 	}
 
 	public Biome findBiome(String biomeName) {
-		biomeName = biomeName.toLowerCase();
-
-		if (biomeName.equals("nether")) {
-			return Biome.hell;
-		} else {
-			Biome[] abiomegenbase = Biome.getBiomeGenArray();
-
-			for (int i = 0; i < abiomegenbase.length; ++i) {
-				Biome biomegenbase = abiomegenbase[i];
-
-				if (biomegenbase != null) {
-					String s = biomegenbase.biomeName.replace(" ", "").toLowerCase();
-
-					if (s.equals(biomeName)) {
-						return biomegenbase;
-					}
-				}
-			}
-
-			return null;
+		String name = biomeName.toLowerCase(java.util.Locale.ROOT);
+		if (name.equals("nether")) return net.minecraft.init.Biomes.HELL;
+		Biome registered = Biome.REGISTRY.getObject(new ResourceLocation(name));
+		if (registered != null) return registered;
+		for (Biome biome : Biome.REGISTRY) {
+			if (biome.getBiomeName().replace(" ", "").toLowerCase(java.util.Locale.ROOT).equals(name)) return biome;
 		}
+		return null;
 	}
 
 	public int parseInt(String str, int defVal) {
@@ -891,7 +879,7 @@ public class ConnectedParser {
 		for (int i = 0; i < astring.length; ++i) {
 			String s = astring[i];
 			ResourceLocation resourcelocation = new ResourceLocation(s);
-			Item item = (Item) Item.itemRegistry.getObject(resourcelocation);
+			Item item = Item.REGISTRY.getObject(resourcelocation);
 
 			if (item == null) {
 				this.warn("Item not found: " + s);

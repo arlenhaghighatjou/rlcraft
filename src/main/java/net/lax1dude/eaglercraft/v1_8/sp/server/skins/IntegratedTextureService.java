@@ -132,7 +132,7 @@ public class IntegratedTextureService {
 	}
 
 	public void handleInstallNewSkin(EntityPlayerMP requester, byte[] skullData) {
-		if (!requester.canCommandSenderUseCommand(2, "give")) {
+		if (!requester.canUseCommand(2, "give")) {
 			TextComponentTranslation cc = new TextComponentTranslation("command.skull.nopermission");
 			cc.getStyle().setColor(TextFormatting.RED);
 			requester.sendMessage(cc);
@@ -162,7 +162,8 @@ public class IntegratedTextureService {
 		stack.setTagCompound(rootTagCompound);
 		boolean flag = requester.inventory.addItemStackToInventory(stack);
 		if (flag) {
-			requester.worldObj.playSoundAtEntity(requester, "random.pop", 0.2F,
+			requester.world.playSound(null, requester.posX, requester.posY, requester.posZ,
+					net.minecraft.init.SoundEvents.ENTITY_ITEM_PICKUP, net.minecraft.util.SoundCategory.PLAYERS, 0.2F,
 					((requester.getRNG().nextFloat() - requester.getRNG().nextFloat()) * 0.7F + 1.0F)
 							* 2.0F);
 			requester.inventoryContainer.detectAndSendChanges();

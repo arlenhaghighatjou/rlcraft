@@ -30,13 +30,14 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.ISound.AttenuationType;
+import net.minecraft.client.audio.ISoundEventListener;
 import net.minecraft.client.audio.ITickableSound;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.client.audio.SoundEventAccessor;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.audio.Sound;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
@@ -119,19 +120,20 @@ public class EaglercraftSoundManager {
 	private final float[] categoryVolumes;
 	private final List<ActiveSoundEvent> activeSounds;
 	private final List<WaitingSoundEvent> queuedSounds;
+	private final List<ISoundEventListener> listeners;
+	private int soundId = 0;
 
 	public EaglercraftSoundManager(GameSettings settings, SoundHandler handler) {
 		this.settings = settings;
 		this.handler = handler;
-		categoryVolumes = new float[] {
-				settings.getSoundLevel(SoundCategory.MASTER), settings.getSoundLevel(SoundCategory.MUSIC),
-				settings.getSoundLevel(SoundCategory.RECORDS), settings.getSoundLevel(SoundCategory.WEATHER),
-				settings.getSoundLevel(SoundCategory.BLOCKS), settings.getSoundLevel(SoundCategory.MOBS),
-				settings.getSoundLevel(SoundCategory.ANIMALS), settings.getSoundLevel(SoundCategory.PLAYERS),
-				settings.getSoundLevel(SoundCategory.AMBIENT)
-		};
+		SoundCategory[] categories = SoundCategory.values();
+		categoryVolumes = new float[categories.length];
+		for(int i = 0; i < categories.length; ++i) {
+			categoryVolumes[i] = settings.getSoundLevel(categories[i]);
+		}
 		activeSounds = new LinkedList<>();
 		queuedSounds = new LinkedList<>();
+		listeners = new LinkedList<>();
 	}
 
 	public void unloadSoundSystem() {
@@ -143,7 +145,7 @@ public class EaglercraftSoundManager {
 	}
 	
 	public void setSoundCategoryVolume(SoundCategory category, float volume) {
-		categoryVolumes[category.getCategoryId()] = volume;
+		categoryVolumes[category.ordinal()] = volume;
 		Iterator<ActiveSoundEvent> soundItr = activeSounds.iterator();
 		while(soundItr.hasNext()) {
 			ActiveSoundEvent evt = soundItr.next();
@@ -294,31 +296,38 @@ public class EaglercraftSoundManager {
 		if(!PlatformAudio.available()) {
 			return;
 		}
-		if(sound != null && categoryVolumes[SoundCategory.MASTER.getCategoryId()] > 0.0f) {
-			SoundEventAccessor accessor = handler.getSound(sound.getSoundLocation());
+		if(sound != null) {
+			sound = net.minecraftforge.client.ForgeHooksClient.playSound((net.minecraft.client.audio.SoundManager)this, sound);
+		}
+		if(sound != null && categoryVolumes[SoundCategory.MASTER.ordinal()] > 0.0f) {
+			SoundEventAccessor accessor = sound.createAccessor(handler);
 			if(accessor == null) {
 				logger.warn("Unable to play unknown soundEvent(1): {}", sound.getSoundLocation().toString());
 			}else {
-				Sound etr = accessor.cloneEntry();
-				if (etr == SoundHandler.missing_sound) {
-					logger.warn("Unable to play empty soundEvent(2): {}", etr.getSoundPoolEntryLocation().toString());
+				for(int i = 0, l = listeners.size(); i < l; ++i) {
+					listeners.get(i).soundPlay(sound, accessor);
+				}
+				Sound etr = sound.getSound();
+				if (etr == SoundHandler.MISSING_SOUND) {
+					logger.warn("Unable to play empty soundEvent(2): {}", etr.getSoundLocation().toString());
 				}else {
-					ResourceLocation lc = etr.getSoundPoolEntryLocation();
+					ResourceLocation lc = etr.getSoundAsOggLocation();
 					IAudioResource trk;
 					if(EagRuntime.getPlatformType() != EnumPlatformType.DESKTOP) {
-						trk = PlatformAudio.loadAudioDataNew(lc.toString(), !etr.isStreamingSound(), browserResourcePackLoader);
+						trk = PlatformAudio.loadAudioDataNew(lc.toString(), !etr.isStreaming(), browserResourcePackLoader);
 					}else {
 						trk = PlatformAudio.loadAudioData(
-								"/assets/" + lc.getResourceDomain() + "/" + lc.getResourcePath(), !etr.isStreamingSound());
+								"/assets/" + lc.getResourceDomain() + "/" + lc.getResourcePath(), !etr.isStreaming());
 					}
 					if(trk == null) {
 						logger.warn("Unable to play unknown soundEvent(3): {}", sound.getSoundLocation().toString());
 					}else {
 						
-						ActiveSoundEvent newSound = new ActiveSoundEvent(this, sound, accessor.getSoundCategory(), etr, null);
+						SoundCategory category = sound.getCategory();
+						ActiveSoundEvent newSound = new ActiveSoundEvent(this, sound, category, etr, null);
 
 						float pitch = getNormalizedPitch(sound, etr);
-						float attenuatedGain = getNormalizedVolume(sound, etr, accessor.getSoundCategory());
+						float attenuatedGain = getNormalizedVolume(sound, etr, category);
 						boolean repeat = sound.canRepeat();
 						
 						AttenuationType tp = sound.getAttenuationType();
@@ -333,6 +342,12 @@ public class EaglercraftSoundManager {
 							logger.error("Unable to play soundEvent(4): {}", sound.getSoundLocation().toString());
 						}else {
 							activeSounds.add(newSound);
+							String id = Integer.toString(++soundId);
+							if(etr.isStreaming()) {
+								net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.sound.PlayStreamingSourceEvent((net.minecraft.client.audio.SoundManager)this, sound, id));
+							}else {
+								net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.sound.PlaySoundSourceEvent((net.minecraft.client.audio.SoundManager)this, sound, id));
+							}
 						}
 					}
 				}
@@ -346,16 +361,15 @@ public class EaglercraftSoundManager {
 	
 	private float getNormalizedVolume(ISound sound, Sound entry, SoundCategory category) {
 		return (float) MathHelper.clamp((double) sound.getVolume() * entry.getVolume(), 0.0D, 1.0D)
-				* (category.getCategoryId() == SoundCategory.MASTER.getCategoryId() ? 1.0f
-						: categoryVolumes[category.getCategoryId()])
-				* categoryVolumes[SoundCategory.MASTER.getCategoryId()];
+				* (category == SoundCategory.MASTER ? 1.0f : categoryVolumes[category.ordinal()])
+				* categoryVolumes[SoundCategory.MASTER.ordinal()];
 	}
 	
 	private float getNormalizedPitch(ISound sound, Sound entry) {
 		return MathHelper.clamp(sound.getPitch() * (float)entry.getPitch(), 0.5f, 2.0f);
 	}
 	
-	public void setListener(EntityPlayer player, float partialTicks) {
+	public void setListener(Entity player, float partialTicks) {
 		if(!PlatformAudio.available()) {
 			return;
 		}
@@ -370,6 +384,37 @@ public class EaglercraftSoundManager {
 			}catch(Throwable t) {
 				// eaglercraft 1.5.2 had Infinity/NaN crashes for this function which
 				// couldn't be resolved via if statement checks in the above variables
+			}
+		}
+	}
+
+	public void addListener(ISoundEventListener listener) {
+		listeners.add(listener);
+	}
+
+	public void removeListener(ISoundEventListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void stop(String soundName, SoundCategory category) {
+		ResourceLocation location = soundName.isEmpty() ? null : new ResourceLocation(soundName);
+		Iterator<ActiveSoundEvent> soundItr = activeSounds.iterator();
+		while(soundItr.hasNext()) {
+			ActiveSoundEvent evt = soundItr.next();
+			if((category == null || evt.soundCategory == category)
+					&& (location == null || evt.soundInstance.getSoundLocation().equals(location))) {
+				if(!evt.soundHandle.shouldFree()) {
+					evt.soundHandle.end();
+				}
+				soundItr.remove();
+			}
+		}
+		Iterator<WaitingSoundEvent> waitingItr = queuedSounds.iterator();
+		while(waitingItr.hasNext()) {
+			ISound queued = waitingItr.next().playSound;
+			if((category == null || queued.getCategory() == category)
+					&& (location == null || queued.getSoundLocation().equals(location))) {
+				waitingItr.remove();
 			}
 		}
 	}

@@ -206,7 +206,7 @@ public class SingleplayerServerController implements ISaveFormat {
 		clearTPS();
 		if(settings != null) {
 			sendIPCPacket(new IPCPacket02InitWorld(folderName, settings.getGameType().getID(),
-					settings.getTerrainType().getWorldTypeID(), settings.getWorldName(), settings.getSeed(),
+					settings.getTerrainType().getId(), settings.getGeneratorOptions(), settings.getSeed(),
 					settings.areCommandsAllowed(), settings.isMapFeaturesEnabled(), settings.isBonusChestEnabled(),
 					settings.getHardcoreEnabled()));
 		}
@@ -560,8 +560,8 @@ public class SingleplayerServerController implements ISaveFormat {
 	}
 
 	@Override
-	public boolean func_154335_d(String var1) {
-		return false;
+	public boolean isNewLevelIdAcceptable(String folder) {
+		return !saveListMap.containsKey(folder);
 	}
 
 	@Override
@@ -572,10 +572,9 @@ public class SingleplayerServerController implements ISaveFormat {
 	}
 
 	@Override
-	public boolean renameWorld(String var1, String var2) {
+	public void renameWorld(String var1, String var2) {
 		sendIPCPacket(new IPCPacket06RenameWorldNBT(var1, var2, false));
 		statusState = IntegratedServerState.WORLD_RENAMING;
-		return true;
 	}
 
 	public static void duplicateWorld(String var1, String var2) {
@@ -584,8 +583,8 @@ public class SingleplayerServerController implements ISaveFormat {
 	}
 
 	@Override
-	public boolean func_154334_a(String var1) {
-		return false;
+	public boolean isConvertible(String folder) {
+		return isOldMapFormat(folder);
 	}
 
 	@Override

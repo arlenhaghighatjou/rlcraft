@@ -61,7 +61,9 @@ public class LayerCape implements LayerRenderer<AbstractClientPlayer>
                 GlStateManager.rotate(f3 / 2.0F, 0.0F, 0.0F, 1.0F);
                 GlStateManager.rotate(-f3 / 2.0F, 0.0F, 1.0F, 0.0F);
                 GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
-                this.playerRenderer.getMainModel().renderCape(0.0625F);
+                if (this.playerRenderer.getMainModel() instanceof net.minecraft.client.model.ModelPlayer) {
+					((net.minecraft.client.model.ModelPlayer)this.playerRenderer.getMainModel()).renderCape(0.0625F);
+				}
                 GlStateManager.popMatrix();
             }
         }

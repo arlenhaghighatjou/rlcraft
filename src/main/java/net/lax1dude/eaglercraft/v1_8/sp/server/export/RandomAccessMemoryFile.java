@@ -16,12 +16,10 @@
 
 package net.lax1dude.eaglercraft.v1_8.sp.server.export;
 
-import java.io.DataInput;
-import java.io.DataOutput;
 import java.io.EOFException;
 import java.io.IOException;
 
-public class RandomAccessMemoryFile implements DataInput, DataOutput {
+public class RandomAccessMemoryFile implements com.arlenh7.eaglercraft.forge.RegionStorage {
 
 	private byte[] buffer;
 	private int length;
@@ -134,6 +132,23 @@ public class RandomAccessMemoryFile implements DataInput, DataOutput {
 
 	public int getLength() {
 		return length;
+	}
+
+	@Override
+	public long length() {
+		return this.length;
+	}
+
+	@Override
+	public void seek(long position) throws IOException {
+		if (position < 0 || position > Integer.MAX_VALUE) {
+			throw new IOException("Invalid in-memory file position " + position);
+		}
+		this.seek((int)position);
+	}
+
+	@Override
+	public void close() {
 	}
 
 	public void setLength(int newLength) {

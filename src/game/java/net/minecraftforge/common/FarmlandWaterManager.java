@@ -39,7 +39,7 @@ import java.util.*;
 public class FarmlandWaterManager
 {
     private static boolean DEBUG = Boolean.parseBoolean(System.getProperty("forge.debugFarmlandWaterManager", "false"));
-    private static final Int2ObjectMap<Map<ChunkPos, ChunkTicketManager<Vec3d>>> customWaterHandler = new Int2ObjectOpenHashMap<>();
+    private static final Int2ObjectMap<Map<ChunkPos, java.lang.ref.WeakReference<ChunkTicketManager<Vec3d>>>> customWaterHandler = new Int2ObjectOpenHashMap<>();
 
     @Deprecated
     public static<T extends SimpleTicket<Vec3d>> T addCustomTicket(World world, T ticket, ChunkPos... chunkPoses)
@@ -63,11 +63,11 @@ public class FarmlandWaterManager
     public static<T extends SimpleTicket<Vec3d>> T addCustomTicket(World world, T ticket, ChunkPos masterChunk, ChunkPos... additionalChunks)
     {
         Preconditions.checkArgument(!world.isRemote, "Water region is only determined server-side");
-        Map<ChunkPos, ChunkTicketManager<Vec3d>> ticketMap = customWaterHandler.computeIfAbsent(world.provider.getDimension(), id -> new MapMaker().weakValues().makeMap());
+        Map<ChunkPos, java.lang.ref.WeakReference<ChunkTicketManager<Vec3d>>> ticketMap = customWaterHandler.computeIfAbsent(world.provider.getDimension(), id -> new java.util.HashMap<>());
         ChunkTicketManager<Vec3d>[] additionalTickets = new ChunkTicketManager[additionalChunks.length];
         for (int i = 0; i < additionalChunks.length; i++)
-            additionalTickets[i] = ticketMap.computeIfAbsent(additionalChunks[i], ChunkTicketManager::new);
-        ticket.setManager(ticketMap.computeIfAbsent(masterChunk, ChunkTicketManager::new), additionalTickets);
+            additionalTickets[i] = getOrCreateTicketManager(ticketMap, additionalChunks[i]);
+        ticket.setManager(getOrCreateTicketManager(ticketMap, masterChunk), additionalTickets);
         ticket.validate();
         return ticket;
     }
@@ -161,14 +161,27 @@ public class FarmlandWaterManager
         }
     }
 
+	private static ChunkTicketManager<Vec3d> getOrCreateTicketManager(
+			Map<ChunkPos, java.lang.ref.WeakReference<ChunkTicketManager<Vec3d>>> tickets, ChunkPos pos) {
+		java.lang.ref.WeakReference<ChunkTicketManager<Vec3d>> reference = tickets.get(pos);
+		ChunkTicketManager<Vec3d> manager = reference == null ? null : reference.get();
+		if (manager == null) {
+			tickets.values().removeIf(value -> value.get() == null);
+			manager = new ChunkTicketManager<>(pos);
+			tickets.put(pos, new java.lang.ref.WeakReference<>(manager));
+		}
+		return manager;
+	}
+
     private static ChunkTicketManager<Vec3d> getTicketManager(ChunkPos pos, World world)
     {
         Preconditions.checkArgument(!world.isRemote, "Water region is only determined server-side");
-        Map<ChunkPos, ChunkTicketManager<Vec3d>> ticketMap = customWaterHandler.get(world.provider.getDimension());
+        Map<ChunkPos, java.lang.ref.WeakReference<ChunkTicketManager<Vec3d>>> ticketMap = customWaterHandler.get(world.provider.getDimension());
         if (ticketMap == null)
         {
             return null;
         }
-        return ticketMap.get(pos);
+        java.lang.ref.WeakReference<ChunkTicketManager<Vec3d>> reference = ticketMap.get(pos);
+		return reference == null ? null : reference.get();
     }
 }

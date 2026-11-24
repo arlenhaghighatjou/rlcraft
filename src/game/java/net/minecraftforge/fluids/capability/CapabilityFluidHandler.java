@@ -42,6 +42,8 @@ public class CapabilityFluidHandler
 
     public static void register()
     {
+		CapabilityManager.INSTANCE.onRegistered(IFluidHandler.class, capability -> FLUID_HANDLER_CAPABILITY = capability);
+		CapabilityManager.INSTANCE.onRegistered(IFluidHandlerItem.class, capability -> FLUID_HANDLER_ITEM_CAPABILITY = capability);
         CapabilityManager.INSTANCE.register(IFluidHandler.class, new DefaultFluidHandlerStorage<>(), () -> new FluidTank(Fluid.BUCKET_VOLUME));
 
         CapabilityManager.INSTANCE.register(IFluidHandlerItem.class, new DefaultFluidHandlerStorage<>(), () -> new FluidHandlerItemStack(new ItemStack(Items.BUCKET), Fluid.BUCKET_VOLUME));

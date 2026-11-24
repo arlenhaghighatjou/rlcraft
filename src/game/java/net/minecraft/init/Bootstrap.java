@@ -52,14 +52,12 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionHelper;
 import net.minecraft.potion.PotionType;
-import net.minecraft.server.DebugLoggingPrintStream;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.tileentity.TileEntityShulkerBox;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.LoggingPrintStream;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.StringUtils;
@@ -492,8 +490,6 @@ public class Bootstrap
         if (!alreadyRegistered)
         {
             alreadyRegistered = true;
-            if (false) // skip redirectOutputToLog, Forge already redirects stdout and stderr output to log so that they print with more context
-            redirectOutputToLog();
             SoundEvent.registerSounds();
             Block.registerBlocks();
             BlockFire.init();
@@ -530,20 +526,6 @@ public class Bootstrap
             }
 
             net.minecraftforge.registries.GameData.vanillaSnapshot();
-        }
-    }
-
-    private static void redirectOutputToLog()
-    {
-        if (LOGGER.isDebugEnabled())
-        {
-            System.setErr(new DebugLoggingPrintStream("STDERR", System.err));
-            System.setOut(new DebugLoggingPrintStream("STDOUT", SYSOUT));
-        }
-        else
-        {
-            System.setErr(new LoggingPrintStream("STDERR", System.err));
-            System.setOut(new LoggingPrintStream("STDOUT", SYSOUT));
         }
     }
 

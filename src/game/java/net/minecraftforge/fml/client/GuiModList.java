@@ -22,7 +22,7 @@ package net.minecraftforge.fml.client;
 import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
+import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -379,21 +379,21 @@ public class GuiModList extends GuiScreen
             IResourcePack pack = FMLClientHandler.instance().getResourcePackFor(selectedMod.getModId());
             try
             {
-                BufferedImage logo = null;
+                ImageData logo = null;
                 if (pack != null)
                 {
                     logo = pack.getPackImage();
                 }
                 else
                 {
-                    InputStream logoResource = getClass().getResourceAsStream(logoFile);
+                    InputStream logoResource = net.lax1dude.eaglercraft.v1_8.EagRuntime.getResourceStream(logoFile);
                     if (logoResource != null)
                         logo = TextureUtil.readBufferedImage(logoResource);
                 }
                 if (logo != null)
                 {
                     logoPath = tm.getDynamicTextureLocation("modlogo", new DynamicTexture(logo));
-                    logoDims = new Dimension(logo.getWidth(), logo.getHeight());
+                    logoDims = new Dimension(logo.width, logo.height);
                 }
             }
             catch (IOException e) { }

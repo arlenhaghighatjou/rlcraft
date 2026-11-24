@@ -646,6 +646,17 @@ public class CraftingHelper {
 
     public static void loadFactories(ModContainer mod, String base, FactoryLoader... loaders)
     {
+		if (mod.getSource() == null) {
+			try (BufferedReader reader = openBundledResource(base + "/_factories.json")) {
+				if (reader != null) {
+					loadFactories(JsonUtils.fromJson(GSON, reader, JsonObject.class),
+							new JsonContext(mod.getModId()), loaders);
+				}
+			} catch (JsonParseException | IOException ex) {
+				FMLLog.log.error("Error loading bundled factories for " + mod.getModId(), ex);
+			}
+			return;
+		}
         FileSystem fs = null;
         try
         {
@@ -684,6 +695,9 @@ public class CraftingHelper {
     private static boolean loadRecipes(ModContainer mod)
     {
         JsonContext ctx = new JsonContext(mod.getModId());
+		if (mod.getSource() == null && !"minecraft".equals(mod.getModId())) {
+			return loadBundledRecipes(mod, ctx);
+		}
 
         return findFiles(mod, "assets/" + mod.getModId() + "/recipes",
             root ->
@@ -739,6 +753,50 @@ public class CraftingHelper {
         );
     }
 
+	private static BufferedReader openBundledResource(String path) {
+		java.io.InputStream stream = net.lax1dude.eaglercraft.v1_8.EagRuntime.getResourceStream("/" + path);
+		return stream == null ? null : new BufferedReader(new java.io.InputStreamReader(stream,
+				java.nio.charset.StandardCharsets.UTF_8));
+	}
+
+	private static boolean loadBundledRecipes(ModContainer mod, JsonContext context) {
+		String directory = "assets/" + mod.getModId() + "/recipes/";
+		String index = net.lax1dude.eaglercraft.v1_8.EagRuntime.getResourceString("/" + directory + "_files.txt");
+		if (index == null) {
+			return true;
+		}
+		Loader.instance().setActiveModContainer(mod);
+		try (BufferedReader constants = openBundledResource(directory + "_constants.json")) {
+			if (constants != null) {
+				context.loadConstants(JsonUtils.fromJson(GSON, constants, JsonObject[].class));
+			}
+		} catch (JsonParseException | IOException ex) {
+			FMLLog.log.error("Could not load recipe constants for " + mod.getModId(), ex);
+			return false;
+		}
+		boolean success = true;
+		for (String file : index.split("\n")) {
+			file = file.trim();
+			if (!file.endsWith(".json") || file.startsWith("_")) {
+				continue;
+			}
+			ResourceLocation key = new ResourceLocation(mod.getModId(), file.substring(0, file.length() - 5));
+			try (BufferedReader reader = openBundledResource(directory + file)) {
+				if (reader == null) {
+					throw new FileNotFoundException(directory + file);
+				}
+				JsonObject json = JsonUtils.fromJson(GSON, reader, JsonObject.class);
+				if (processConditions(json, "conditions", context)) {
+					ForgeRegistries.RECIPES.register(getRecipe(json, context).setRegistryName(key));
+				}
+			} catch (JsonParseException | IOException ex) {
+				FMLLog.log.error("Could not load bundled recipe " + key, ex);
+				success = false;
+			}
+		}
+		return success;
+	}
+
     /**
      * @deprecated Use {@link CraftingHelper#findFiles(ModContainer, String, Function, BiFunction, boolean, boolean)} instead.
      */
@@ -779,6 +837,10 @@ public class CraftingHelper {
                 return false;
             }
         }
+
+		if (source == null) {
+			return defaultUnfoundRoot;
+		}
 
         FileSystem fs = null;
         boolean success = true;
@@ -882,6 +944,18 @@ public class CraftingHelper {
 
     private static JsonContext loadContext(ModContainer mod, JsonContext ctx, ResourceLocation path) throws IOException
     {
+		if (mod.getSource() == null) {
+			try (BufferedReader reader = openBundledResource("assets/" + path.getResourceDomain()
+					+ "/" + path.getResourcePath())) {
+				if (reader == null) {
+					throw new FileNotFoundException(path.toString());
+				}
+				ctx.loadConstants(JsonUtils.fromJson(GSON, reader, JsonObject[].class));
+				return ctx;
+			} catch (JsonParseException ex) {
+				throw new IOException("Error loading constants from " + path, ex);
+			}
+		}
         Path fPath = null;
         if(mod.getSource().isFile())
         {

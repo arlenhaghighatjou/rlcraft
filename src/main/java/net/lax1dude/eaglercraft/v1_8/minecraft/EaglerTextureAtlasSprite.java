@@ -17,10 +17,11 @@
 package net.lax1dude.eaglercraft.v1_8.minecraft;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
+import java.util.function.Function;
 
-import com.carrotsearch.hppc.cursors.IntCursor;
 import com.google.common.collect.Lists;
 
 import net.lax1dude.eaglercraft.v1_8.HString;
@@ -28,13 +29,13 @@ import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureClock;
-import net.minecraft.client.renderer.texture.TextureCompass;
 import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.data.AnimationFrame;
 import net.minecraft.client.resources.data.AnimationMetadataSection;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
+import net.minecraft.crash.ICrashReportDetail;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.ResourceLocation;
 import net.optifine.util.CounterInt;
@@ -72,8 +73,7 @@ public class EaglerTextureAtlasSprite {
 
 	public static EaglerTextureAtlasSprite makeAtlasSprite(ResourceLocation spriteResourceLocation) {
 		String s = spriteResourceLocation.toString();
-		return (EaglerTextureAtlasSprite) (locationNameClock.equals(s) ? new TextureClock(s)
-				: (locationNameCompass.equals(s) ? new TextureCompass(s) : new EaglerTextureAtlasSprite(s)));
+		return new EaglerTextureAtlasSprite(s);
 	}
 
 	public static void setLocationNameClock(String clockName) {
@@ -213,6 +213,23 @@ public class EaglerTextureAtlasSprite {
 		return (int[][]) this.framesTextureData.get(index);
 	}
 
+	public int getInitialFrameIndex() {
+		return animationMetadata == null ? 0 : animationMetadata.getFrameIndex(0);
+	}
+
+	public boolean hasCustomLoader(IResourceManager manager, ResourceLocation location) {
+		return false;
+	}
+
+	public boolean load(IResourceManager manager, ResourceLocation location,
+			Function<ResourceLocation, EaglerTextureAtlasSprite> textureGetter) {
+		return true;
+	}
+
+	public Collection<ResourceLocation> getDependencies() {
+		return Collections.emptyList();
+	}
+
 	public int getFrameCount() {
 		return this.framesTextureData.size();
 	}
@@ -261,8 +278,8 @@ public class EaglerTextureAtlasSprite {
 			int l = i;
 			this.height = this.width;
 			if (meta.getFrameCount() > 0) {
-				for (IntCursor cur : meta.getFrameIndexSet()) {
-					int i1 = cur.value;
+				for (Integer frameIndex : meta.getFrameIndexSet()) {
+					int i1 = frameIndex.intValue();
 					if (i1 >= j1) {
 						throw new RuntimeException("invalid frameindex " + i1);
 					}
@@ -299,7 +316,7 @@ public class EaglerTextureAtlasSprite {
 					CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Generating mipmaps for frame");
 					CrashReportCategory crashreportcategory = crashreport.makeCategory("Frame being iterated");
 					crashreportcategory.addCrashSection("Frame index", Integer.valueOf(i));
-					crashreportcategory.addCrashSectionCallable("Frame sizes", new Callable<String>() {
+					crashreportcategory.addDetail("Frame sizes", new ICrashReportDetail<String>() {
 						public String call() throws Exception {
 							StringBuilder stringbuilder = new StringBuilder();
 

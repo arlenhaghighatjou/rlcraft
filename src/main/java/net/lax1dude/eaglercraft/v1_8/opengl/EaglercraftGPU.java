@@ -403,7 +403,7 @@ public class EaglercraftGPU {
 
 	public static void glTexStorage2D(int target, int levels, int internalFormat, int w, int h) {
 		GlStateManager.setTextureCachedSize(target, w, h);
-		if(texStorageCapable && (glesVers >= 300 || levels == 1 || (MathHelper.calculateLogBaseTwo(Math.max(w, h)) + 1) == levels)) {
+		if(texStorageCapable && (glesVers >= 300 || levels == 1 || (MathHelper.log2(Math.max(w, h)) + 1) == levels)) {
 			_wglTexStorage2D(target, levels, internalFormat, w, h);
 		}else {
 			int tv = TextureFormatHelper.trivializeInternalFormatToGLES20(internalFormat);
@@ -1094,6 +1094,7 @@ public class EaglercraftGPU {
 		InstancedFontRenderer.destroy();
 		InstancedParticleRenderer.destroy();
 		EffectPipelineFXAA.destroy();
+		EffectPipelineEntityOutline.destroy();
 		TextureCopyUtil.destroy();
 		FixedFunctionPipeline.flushCache();
 		StreamBuffer.destroyPool();

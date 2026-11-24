@@ -327,7 +327,7 @@ public class WoodlandMansionPieces
                     }
                 }
 
-                Collections.shuffle(list, this.random);
+                this.random.shuffle(list);
                 int k3 = 10;
 
                 for (Tuple<Integer, Integer> tuple : list)

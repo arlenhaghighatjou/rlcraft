@@ -28,6 +28,10 @@ public interface INetworkManager {
 
 	boolean hasFMLMarker();
 
+	default String getRemoteAddress() {
+		return null;
+	}
+
 	default Packet<?> dispatchInbound(Packet<?> pkt) {
 		NetworkDispatcher dispatcher = getDispatcher();
 		return dispatcher != null ? dispatcher.handleInbound(pkt) : pkt;

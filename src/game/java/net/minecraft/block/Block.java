@@ -956,7 +956,7 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
     //For ForgeInternal use Only!
     protected ThreadLocal<EntityPlayer> harvesters = new ThreadLocal();
     private ThreadLocal<IBlockState> silk_check_state = new ThreadLocal();
-    protected static java.util.EaglercraftRandom RANDOM = new java.util.EaglercraftRandom(); // Useful for random things without a seed.
+    protected static net.lax1dude.eaglercraft.v1_8.EaglercraftRandom RANDOM = new net.lax1dude.eaglercraft.v1_8.EaglercraftRandom(); // Useful for random things without a seed.
 
     /**
      * Gets the slipperiness at the given location at the given state. Normally

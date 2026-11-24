@@ -7,7 +7,6 @@ import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.math.MathHelper;
@@ -63,7 +62,7 @@ public class LayeredColorMaskTexture extends AbstractTexture {
 
 			for (int j = 0; j < 17 && j < this.field_174949_h.size() && j < this.field_174950_i.size(); ++j) {
 				String s = (String) this.field_174949_h.get(j);
-				MapColor mapcolor = ((EnumDyeColor) this.field_174950_i.get(j)).getMapColor();
+				int dyeColor = this.field_174950_i.get(j).getColorValue();
 				if (s != null) {
 					InputStream inputstream = parIResourceManager.getResource(new ResourceLocation(s)).getInputStream();
 					ImageData bufferedimage2 = TextureUtil.readBufferedImage(inputstream);
@@ -74,7 +73,7 @@ public class LayeredColorMaskTexture extends AbstractTexture {
 								if ((i1 & -16777216) != 0) {
 									int j1 = (i1 & 16711680) << 8 & -16777216;
 									int k1 = bufferedimage1.pixels[k * bufferedimage1.width + l];
-									int l1 = MathHelper.func_180188_d(k1, ImageData.swapRB(mapcolor.colorValue))
+									int l1 = MathHelper.multiplyColor(k1, ImageData.swapRB(dyeColor))
 											& 16777215;
 									bufferedimage2.pixels[k * bufferedimage2.width + l] = j1 | l1;
 								}

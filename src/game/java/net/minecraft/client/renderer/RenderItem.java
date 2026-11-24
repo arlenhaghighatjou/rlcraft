@@ -109,7 +109,7 @@ public class RenderItem implements IResourceManagerReloadListener
         this.renderModel(model, -1, stack);
     }
 
-    private void renderModel(IBakedModel model, int color)
+    public void renderModel(IBakedModel model, int color)
     {
         this.renderModel(model, color, ItemStack.EMPTY);
     }

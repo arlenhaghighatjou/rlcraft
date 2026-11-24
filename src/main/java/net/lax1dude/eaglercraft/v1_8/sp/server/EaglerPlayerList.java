@@ -20,6 +20,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.GameType;
 
 public class EaglerPlayerList extends PlayerList {
 	
@@ -27,7 +28,7 @@ public class EaglerPlayerList extends PlayerList {
 
 	public EaglerPlayerList(MinecraftServer par1MinecraftServer, int viewDistance) {
 		super(par1MinecraftServer);
-		this.viewDistance = viewDistance;
+		this.setViewDistance(viewDistance);
 	}
 
 	protected void writePlayerData(EntityPlayerMP par1EntityPlayerMP) {
@@ -42,7 +43,22 @@ public class EaglerPlayerList extends PlayerList {
 		return this.hostPlayerNBT;
 	}
 
-	public void playerLoggedOut(EntityPlayerMP playerIn) {
-		super.playerLoggedOut(playerIn);
+	public void configureLAN(GameType gameType, boolean allowCommands) {
+		this.setGameType(gameType);
+		this.setCommandsAllowedForAll(allowCommands);
+	}
+
+	@Override
+	public void playerLoggedIn(EntityPlayerMP player) {
+		super.playerLoggedIn(player);
+		EaglerMinecraftServer server = (EaglerMinecraftServer)this.getServerInstance();
+		if (server.getVoiceService() != null) server.getVoiceService().handlePlayerLoggedIn(player);
+	}
+
+	@Override
+	public void playerLoggedOut(EntityPlayerMP player) {
+		EaglerMinecraftServer server = (EaglerMinecraftServer)this.getServerInstance();
+		if (server.getVoiceService() != null) server.getVoiceService().handlePlayerLoggedOut(player);
+		super.playerLoggedOut(player);
 	}
 }

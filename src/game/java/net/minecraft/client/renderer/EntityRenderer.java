@@ -1,5 +1,19 @@
 package net.minecraft.client.renderer;
 
+import java.util.Arrays;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.BetterFrustum;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DebugFramebufferView;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.EaglerDeferredConfig;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.EaglerDeferredPipeline;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.NameTagRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.ShadersRenderPassFuture;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.gui.GuiShaderConfig;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
+import net.minecraft.client.renderer.RenderGlobal.ChunkCullAdapter;
+import net.minecraft.client.renderer.chunk.RenderChunk;
+import net.minecraft.client.renderer.entity.Render;
+
 import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
@@ -92,6 +106,7 @@ import net.optifine.Config;
 public class EntityRenderer implements IResourceManagerReloadListener
 {
     private static final Logger LOGGER = LogManager.getLogger();
+	private static final ResourceLocation DEFERRED_RAIN_TEXTURE = new ResourceLocation("eagler:glsl/deferred/rain.png");
     private static final ResourceLocation RAIN_TEXTURES = new ResourceLocation("textures/environment/rain.png");
     private static final ResourceLocation SNOW_TEXTURES = new ResourceLocation("textures/environment/snow.png");
     public static boolean anaglyphEnable;
@@ -417,7 +432,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
         }
     }
 
-    private float getFOVModifier(float partialTicks, boolean useFOVSetting)
+    public float getFOVModifier(float partialTicks, boolean useFOVSetting)
     {
         if (this.debugView)
         {
@@ -973,7 +988,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         this.mc.mcProfiler.startSection("mouse");
 
-        if (this.mc.inGameHasFocus && flag)
+        if (this.mc.inGameHasFocus && flag && this.mc.player != null)
         {
             this.mc.mouseHelper.mouseXYChange();
             this.mc.getTutorial().handleMouse(this.mc.mouseHelper);
@@ -1032,6 +1047,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 long k = EagRuntime.nanoTime() - nanoTime;
                 long l = Math.max((long)(1000000000 / j / 4) - k, 0L);
                 this.renderWorld(partialTicks, EagRuntime.nanoTime() + l);
+                this.mc.renderGlobal.renderEntityOutlineFramebuffer();
                 this.renderEndNanoTime = EagRuntime.nanoTime();
                 this.mc.mcProfiler.endStartSection("gui");
 
@@ -1048,13 +1064,14 @@ public class EntityRenderer implements IResourceManagerReloadListener
                         GlStateManager.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                         GlStateManager.enableOverlayFramebufferBlending();
                         this.setupOverlayRendering();
-                        this.mc.ingameGUI.renderGameOverlay(partialTicks);
+                        this.mc.ingameGUI.renderCachedGameOverlay(partialTicks);
                         GlStateManager.disableOverlayFramebufferBlending();
                         this.overlayFramebuffer.endRender();
                     }
 
                     this.setupOverlayRendering();
                     GlStateManager.disableLighting();
+                    this.mc.ingameGUI.renderWorldOverlay(partialTicks, scaledresolution);
                     this.renderItemActivation(i1, j1, partialTicks);
                     GlStateManager.bindTexture(this.overlayFramebuffer.getTexture());
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -1226,6 +1243,17 @@ public class EntityRenderer implements IResourceManagerReloadListener
         }
 
         this.getMouseOver(partialTicks);
+		this.mc.renderGlobal.resetEntityOutlines();
+		if (this.mc.gameSettings.shaders) {
+			VoiceTagRenderer.clearTagsDrawnSet();
+			this.mc.mcProfiler.startSection("deferred");
+			try {
+				this.eaglercraftShaders(partialTicks, finishTimeNano);
+			} finally {
+				this.mc.mcProfiler.endSection();
+			}
+			return;
+		}
         boolean fxaa = !this.mc.gameSettings.shaders && ((this.mc.gameSettings.fxaa == 0 && this.mc.gameSettings.fancyGraphics) || this.mc.gameSettings.fxaa == 1);
 
         if (fxaa)
@@ -1257,9 +1285,11 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 anaglyphField = 0;
                 GlStateManager.colorMask(false, true, true, false);
                 this.renderWorldPass(0, partialTicks, finishTimeNano);
+				this.mc.renderGlobal.renderEntityOutlineFramebuffer();
                 anaglyphField = 1;
                 GlStateManager.colorMask(true, false, false, false);
                 this.renderWorldPass(1, partialTicks, finishTimeNano);
+				this.mc.renderGlobal.renderEntityOutlineFramebuffer();
                 GlStateManager.colorMask(true, true, true, false);
             }
             else
@@ -1631,6 +1661,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         if (f > 0.0F)
         {
+			boolean deferred = DeferredStateManager.isInDeferredPass();
             this.enableLightmap();
             Entity entity = this.mc.getRenderViewEntity();
             World world = this.mc.world;
@@ -1641,19 +1672,29 @@ public class EntityRenderer implements IResourceManagerReloadListener
             WorldRenderer bufferbuilder = tessellator.getBuffer();
             GlStateManager.disableCull();
             EaglercraftGPU.glNormal3f(0.0F, 1.0F, 0.0F);
-            GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
-            GlStateManager.alphaFunc(516, 0.1F);
+			if (deferred) {
+				GlStateManager.enableAlpha();
+				DeferredStateManager.setHDRTranslucentPassBlendFunc();
+				DeferredStateManager.reportForwardRenderObjectPosition2(0.0F, 0.0F, 0.0F);
+				GlStateManager.alphaFunc(GL_GREATER, 0.01F);
+				GlStateManager.depthMask(false);
+				GlStateManager.enableDepth();
+				EaglerDeferredPipeline.instance.setForwardRenderLightFactors(0.65F,
+						4.75F - MathHelper.clamp(DeferredStateManager.getSunHeight() * 8.0F - 3.0F, 0.0F, 4.0F),
+						1.0F, 0.03F);
+			} else {
+				GlStateManager.enableBlend();
+				GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+				GlStateManager.alphaFunc(GL_GREATER, 0.1F);
+				if (DynamicLightsStateManager.isInDynamicLightsPass()) {
+					DynamicLightsStateManager.reportForwardRenderObjectPosition2(0.0F, 0.0F, 0.0F);
+				}
+			}
             double d0 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double)partialTicks;
             double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double)partialTicks;
             double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double)partialTicks;
             int l = MathHelper.floor(d1);
-            int i1 = 5;
-
-            if (this.mc.gameSettings.fancyGraphics)
-            {
-                i1 = 10;
-            }
+            int i1 = deferred ? 8 : this.mc.gameSettings.fancyGraphics ? 10 : 5;
 
             int j1 = -1;
             float f1 = (float)this.rendererUpdateCount + partialTicks;
@@ -1710,7 +1751,13 @@ public class EntityRenderer implements IResourceManagerReloadListener
                                     }
 
                                     j1 = 0;
-                                    this.mc.getTextureManager().bindTexture(RAIN_TEXTURES);
+                                    this.mc.getTextureManager().bindTexture(deferred ? DEFERRED_RAIN_TEXTURE : RAIN_TEXTURES);
+									if (deferred) {
+										DeferredStateManager.setRoughnessConstant(0.5F);
+										DeferredStateManager.setMetalnessConstant(0.05F);
+										DeferredStateManager.setEmissionConstant(1.0F);
+										GlStateManager.color(0.8F, 0.8F, 1.0F, 0.25F);
+									}
                                     bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
                                 }
 
@@ -1739,6 +1786,12 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
                                     j1 = 1;
                                     this.mc.getTextureManager().bindTexture(SNOW_TEXTURES);
+									if (deferred) {
+										DeferredStateManager.setRoughnessConstant(0.7F);
+										DeferredStateManager.setMetalnessConstant(0.05F);
+										DeferredStateManager.setEmissionConstant(1.0F);
+										GlStateManager.color(1.3F, 1.3F, 1.3F, 0.5F);
+									}
                                     bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
                                 }
 
@@ -1770,7 +1823,16 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
             bufferbuilder.setTranslation(0.0D, 0.0D, 0.0D);
             GlStateManager.enableCull();
-            GlStateManager.disableBlend();
+			if (deferred) {
+				GlStateManager.disableAlpha();
+				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+				DeferredStateManager.setDefaultMaterialConstants();
+				GlStateManager.depthMask(true);
+				GlStateManager.disableDepth();
+				EaglerDeferredPipeline.instance.setForwardRenderLightFactors(1.0F, 1.0F, 1.0F, 1.0F);
+			} else {
+				GlStateManager.disableBlend();
+			}
             GlStateManager.alphaFunc(516, 0.1F);
             this.disableLightmap();
         }
@@ -2243,4 +2305,882 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         return false;
     }
+	private static final Vector4f tmpVec4f_1 = new Vector4f();
+	private static final Matrix4f tmpMat4f_1 = new Matrix4f();
+	private int shadowFrameIndex = 0;
+
+	private double blockWaveOffsetX = 0.0;
+	private double blockWaveOffsetY = 0.0;
+	private double blockWaveOffsetZ = 0.0;
+
+	private void eaglercraftShaders(float partialTicks, long finishTimeNano) {
+		if ((EaglerDeferredPipeline.isSuspended || EaglerDeferredPipeline.instance == null)
+				|| (mc.currentScreen != null && mc.currentScreen instanceof GuiShaderConfig)) {
+			EaglerDeferredPipeline.renderSuspended();
+			return;
+		}
+		EaglerDeferredPipeline.instance.setPartialTicks(partialTicks);
+		eagPartialTicks = partialTicks;
+		EaglerDeferredConfig conf = mc.gameSettings.deferredShaderConf;
+		boolean flag = isDrawBlockOutline();
+		GlStateManager.viewport(0, 0, mc.displayWidth, mc.displayHeight);
+		setupCameraTransform(partialTicks, 2);
+		EaglerDeferredPipeline.instance.loadViewMatrix();
+		ActiveRenderInfo.updateRenderInfo(mc.player, mc.gameSettings.thirdPersonView == 2);
+		Frustum frustum = new Frustum();
+		Entity entity = mc.getRenderViewEntity();
+		if (entity == null) {
+			entity = mc.player;
+		}
+		double d0 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) partialTicks;
+		double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks;
+		double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) partialTicks;
+		EaglerDeferredPipeline.instance.setRenderPosGlobal(d0, d1, d2);
+		EaglerDeferredPipeline.instance.updateReprojectionCoordinates(d0, d1, d2);
+		float eyeHeight = entity.getEyeHeight();
+		frustum.setPosition(d0, d1, d2);
+
+		float waveTimer = (float) ((EagRuntime.steadyTimeMillis() % 600000l) * 0.001);
+		DeferredStateManager.setWaterWindOffset(waveTimer * 0.25f, waveTimer * 0.13f, waveTimer * 1.45f, waveTimer);
+
+		float blockWaveDistX = (float) (d0 - blockWaveOffsetX);
+		float blockWaveDistY = (float) (d1 - blockWaveOffsetY);
+		float blockWaveDistZ = (float) (d2 - blockWaveOffsetZ);
+		if (blockWaveDistX * blockWaveDistX + blockWaveDistY * blockWaveDistY + blockWaveDistZ * blockWaveDistZ > 128.0f
+				* 128.0f) {
+			blockWaveOffsetX = MathHelper.floor(d0);
+			blockWaveOffsetY = MathHelper.floor(d1);
+			blockWaveOffsetZ = MathHelper.floor(d2);
+			blockWaveDistX = (float) (d0 - blockWaveOffsetX);
+			blockWaveDistY = (float) (d1 - blockWaveOffsetY);
+			blockWaveDistZ = (float) (d2 - blockWaveOffsetZ);
+		}
+
+		boolean wavingBlocks = conf.is_rendering_wavingBlocks;
+
+		DeferredStateManager.setWavingBlockOffset(blockWaveDistX, blockWaveDistY, blockWaveDistZ);
+		if (wavingBlocks) {
+			DeferredStateManager.setWavingBlockParams(1.0f * waveTimer, 200.0f * waveTimer, 0.0f, 0.0f);
+		}
+
+		mc.renderGlobal.setupTerrain(entity, (double) partialTicks, frustum, frameCount++, mc.player.isSpectator());
+
+		GlStateManager.enableCull();
+		GlStateManager.matrixMode(GL_MODELVIEW);
+		GlStateManager.pushMatrix();
+		GlStateManager.disableAlpha();
+		GlStateManager.disableBlend();
+
+		EaglerDeferredPipeline.instance.beginDrawDeferred();
+		EaglerDeferredPipeline.instance.beginDrawMainGBuffer();
+
+		EaglerDeferredPipeline.instance.beginDrawMainGBufferTerrain();
+
+		mc.renderGlobal.updateChunks(finishTimeNano);
+
+		mc.renderGlobal.renderBlockLayer(BlockRenderLayer.SOLID, (double) partialTicks, 2, entity);
+		GlStateManager.enableAlpha();
+		GlStateManager.alphaFunc(GL_GREATER, 0.5F);
+		if (wavingBlocks)
+			DeferredStateManager.enableDrawWavingBlocks();
+		mc.renderGlobal.renderBlockLayer(BlockRenderLayer.CUTOUT_MIPPED, (double) partialTicks, 2, entity);
+		mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
+		mc.renderGlobal.renderBlockLayer(BlockRenderLayer.CUTOUT, (double) partialTicks, 2, entity);
+		mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
+		GlStateManager.alphaFunc(GL_GREATER, 0.1F);
+		GlStateManager.matrixMode(GL_MODELVIEW);
+		GlStateManager.popMatrix();
+		if (wavingBlocks)
+			DeferredStateManager.disableDrawWavingBlocks();
+
+		EaglerDeferredPipeline.instance.beginDrawMainGBufferEntities();
+		if (conf.is_rendering_dynamicLights) {
+			DynamicLightManager.setIsRenderingLights(true);
+		}
+
+		DeferredStateManager.forwardCallbackHandler = DeferredStateManager.forwardCallbackGBuffer;
+		DeferredStateManager.forwardCallbackHandler.reset();
+
+		NameTagRenderer.doRenderNameTags = true;
+		NameTagRenderer.nameTagsCount = 0;
+		GlStateManager.pushMatrix();
+		DeferredStateManager.setDefaultMaterialConstants();
+		DeferredStateManager.startUsingEnvMap();
+		net.minecraftforge.client.ForgeHooksClient.setRenderPass(0);
+		try {
+			mc.renderGlobal.renderEntities(entity, frustum, partialTicks);
+		} finally {
+			net.minecraftforge.client.ForgeHooksClient.setRenderPass(-1);
+		}
+		GlStateManager.matrixMode(GL_MODELVIEW);
+		GlStateManager.popMatrix();
+		net.minecraft.client.particle.Particle.interpPosX = d0;
+		net.minecraft.client.particle.Particle.interpPosY = d1;
+		net.minecraft.client.particle.Particle.interpPosZ = d2;
+		enableLightmap();
+		GlStateManager.pushMatrix();
+		mc.effectRenderer.renderLitParticles(entity, partialTicks);
+		GlStateManager.matrixMode(GL_MODELVIEW);
+		GlStateManager.popMatrix();
+		GlStateManager.pushMatrix();
+		mc.effectRenderer.acceleratedParticleRenderer = EaglerDeferredPipeline.instance.gbufferEffectRenderer;
+		mc.effectRenderer.renderParticles(entity, partialTicks, 1);
+		mc.effectRenderer.acceleratedParticleRenderer = ParticleManager.vanillaAcceleratedParticleRenderer;
+		GlStateManager.matrixMode(GL_MODELVIEW);
+		GlStateManager.popMatrix();
+		DeferredStateManager.endUsingEnvMap();
+		disableLightmap();
+		DynamicLightManager.setIsRenderingLights(false);
+		NameTagRenderer.doRenderNameTags = false;
+
+		EaglerDeferredPipeline.instance.endDrawMainGBuffer();
+
+		GlStateManager.matrixMode(GL_MODELVIEW);
+		GlStateManager.pushMatrix();
+		GlStateManager.loadIdentity();
+		GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
+		float celestialAngle = mc.world.getCelestialAngle(partialTicks) * 360.0F;
+		GlStateManager.rotate(DeferredStateManager.sunAngle, 0.0F, 1.0F, 0.0F);
+
+		if (mc.world.provider.getDimension() == 0) {
+			GlStateManager.pushMatrix();
+			GlStateManager.rotate(celestialAngle + 90.0f, 1.0F, 0.0F, 0.0F);
+			tmpVec4f_1.set(0.0f, 0.0f, 1.0f);
+			GlStateManager.transform(tmpVec4f_1, tmpVec4f_1);
+			tmpVec4f_1.normalise();
+			DeferredStateManager.setCurrentSunAngle(tmpVec4f_1);
+			if (tmpVec4f_1.y > 0.1f) {
+				celestialAngle += 180.0f;
+			}
+			GlStateManager.popMatrix();
+		} else {
+			tmpVec4f_1.set(0.0f, 1.0f, 0.0f);
+			DeferredStateManager.setCurrentSunAngle(tmpVec4f_1);
+			celestialAngle = 270.0f;
+		}
+
+		if (conf.is_rendering_shadowsSun_clamped > 0) {
+			if (conf.is_rendering_shadowsColored) {
+				DeferredStateManager.forwardCallbackHandler = DeferredStateManager.forwardCallbackSun;
+				DeferredStateManager.forwardCallbackHandler.reset();
+			} else {
+				DeferredStateManager.forwardCallbackHandler = null;
+			}
+			EaglerDeferredPipeline.instance.beginDrawMainShadowMap();
+			++shadowFrameIndex;
+			EaglerDeferredPipeline.instance.beginDrawMainShadowMapLOD(0);
+			GlStateManager.enableCull();
+			GlStateManager.matrixMode(GL_PROJECTION);
+			GlStateManager.pushMatrix();
+			GlStateManager.loadIdentity();
+			int shadowMapDist = 16;
+			GlStateManager.ortho(-shadowMapDist, shadowMapDist, -shadowMapDist, shadowMapDist, -64.0f, 64.0f);
+
+			setupSunCameraTransform(celestialAngle);
+
+			DeferredStateManager.loadShadowPassViewMatrix();
+			DeferredStateManager.loadSunShadowMatrixLOD0();
+
+			GlStateManager.disableAlpha();
+			GlStateManager.disableBlend();
+
+			GlStateManager.matrixMode(GL_MODELVIEW);
+			GlStateManager.loadIdentity();
+
+			final AxisAlignedBB aabb = matrixToBounds(DeferredStateManager.getSunShadowMatrixLOD0(), d0, d1 + eyeHeight,
+					d2);
+			DeferredStateManager.setShadowMapBounds(aabb);
+
+			final BetterFrustum shadowLOD0Frustrum = new BetterFrustum(DeferredStateManager.getSunShadowMatrixLOD0());
+
+			ChunkCullAdapter shadowCullAdapter = (renderChunk) -> {
+				if (renderChunk.shadowLOD0FrameIndex != shadowFrameIndex) {
+					renderChunk.shadowLOD0FrameIndex = shadowFrameIndex;
+					AxisAlignedBB aabb2 = renderChunk.boundingBox;
+					if (aabb.intersects(aabb2)) {
+						int shadowVisRet = shadowLOD0Frustrum.intersectAab((float) (aabb2.minX - d0),
+								(float) (aabb2.minY - d1 - eyeHeight), (float) (aabb2.minZ - d2),
+								(float) (aabb2.maxX - d0), (float) (aabb2.maxY - d1 - eyeHeight),
+								(float) (aabb2.maxZ - d2));
+						renderChunk.shadowLOD0InFrustum = shadowVisRet == BetterFrustum.INSIDE
+								? RenderChunk.ShadowFrustumState.INSIDE
+								: (shadowVisRet == BetterFrustum.INTERSECT ? RenderChunk.ShadowFrustumState.INTERSECT
+										: RenderChunk.ShadowFrustumState.OUTSIDE);
+					} else {
+						renderChunk.shadowLOD0InFrustum = RenderChunk.ShadowFrustumState.OUTSIDE_BB;
+						return true;
+					}
+				}
+				return renderChunk.shadowLOD0InFrustum == RenderChunk.ShadowFrustumState.OUTSIDE;
+			};
+
+			mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+			mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
+			mc.renderGlobal.renderBlockLayerShadow(BlockRenderLayer.SOLID, aabb, shadowCullAdapter);
+			GlStateManager.enableAlpha();
+			GlStateManager.alphaFunc(GL_GREATER, 0.5F);
+			if (wavingBlocks) {
+				DeferredStateManager.enableDrawWavingBlocks();
+				enableLightmap();
+			}
+			mc.renderGlobal.renderBlockLayerShadow(BlockRenderLayer.CUTOUT_MIPPED, aabb, shadowCullAdapter);
+			mc.renderGlobal.renderBlockLayerShadow(BlockRenderLayer.CUTOUT, aabb, shadowCullAdapter);
+			mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
+			GlStateManager.alphaFunc(GL_GREATER, 0.1F);
+			if (wavingBlocks) {
+				DeferredStateManager.disableDrawWavingBlocks();
+				disableLightmap();
+			}
+
+			mc.renderGlobal.renderShadowLODEntities(entity, partialTicks, (renderChunk) -> {
+				return renderChunk.shadowLOD0FrameIndex == shadowFrameIndex
+						&& (renderChunk.shadowLOD0InFrustum == RenderChunk.ShadowFrustumState.OUTSIDE
+								|| renderChunk.shadowLOD0InFrustum == RenderChunk.ShadowFrustumState.OUTSIDE_BB);
+			}, (renderChunk, renderManager, renderEntity) -> {
+				boolean b;
+				if (renderEntity.ignoreFrustumCheck) {
+					return false;
+				} else if (!renderEntity.isInRangeToRender3d(d0, d1, d2)) {
+					return true;
+				} else if (renderChunk.shadowLOD0FrameIndex == shadowFrameIndex
+						&& ((b = renderChunk.shadowLOD0InFrustum == RenderChunk.ShadowFrustumState.OUTSIDE)
+								|| renderChunk.shadowLOD0InFrustum == RenderChunk.ShadowFrustumState.INSIDE)) {
+					return b;
+				} else {
+					AxisAlignedBB aabbEntity = renderEntity.getEntityBoundingBox();
+					if (aabbEntity.hasNaN() || aabbEntity.getAverageEdgeLength() == 0.0) {
+						aabbEntity = new AxisAlignedBB(d0 - 2.0, d1 - 2.0, d2 - 2.0, d0 + 2.0, d1 + 2.0, d2 + 2.0);
+					}
+					if (shadowLOD0Frustrum.testAab((float) (aabbEntity.minX - d0),
+							(float) (aabbEntity.minY - d1 - eyeHeight), (float) (aabbEntity.minZ - d2),
+							(float) (aabbEntity.maxX - d0), (float) (aabbEntity.maxY - d1 - eyeHeight),
+							(float) (aabbEntity.maxZ - d2))) {
+						return !renderManager.shouldRender(renderEntity, frustum, d0, d1, d2);
+					} else {
+						return true;
+					}
+				}
+			});
+			disableLightmap();
+
+			if (conf.is_rendering_shadowsColored) {
+				EaglerDeferredPipeline.instance.beginDrawColoredShadows();
+				List<ShadersRenderPassFuture> lst = DeferredStateManager.forwardCallbackHandler.renderPassList;
+				for (int i = 0, l = lst.size(); i < l; ++i) {
+					lst.get(i).draw(ShadersRenderPassFuture.PassType.SHADOW);
+				}
+				DeferredStateManager.forwardCallbackHandler.reset();
+				mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+				mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
+				mc.renderGlobal.renderBlockLayerShadow(BlockRenderLayer.TRANSLUCENT, aabb, shadowCullAdapter);
+				mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
+				if (conf.is_rendering_realisticWater) {
+					GlStateManager.disableTexture2D();
+					GlStateManager.color(0.173f, 0.239f, 0.957f, 0.25f);
+					mc.renderGlobal.renderBlockLayerShadow(BlockRenderLayer.REALISTIC_WATER, aabb,
+							shadowCullAdapter);
+					GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+					GlStateManager.enableTexture2D();
+				}
+				EaglerDeferredPipeline.instance.endDrawColoredShadows();
+			}
+			disableLightmap();
+
+			GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+			GlStateManager.disableAlpha();
+			GlStateManager.matrixMode(GL_PROJECTION);
+			GlStateManager.popMatrix();
+
+			if (conf.is_rendering_shadowsSun_clamped > 1) {
+				EaglerDeferredPipeline.instance.beginDrawMainShadowMapLOD(1);
+				if (conf.is_rendering_shadowsColored) {
+					DeferredStateManager.forwardCallbackHandler.reset();
+				}
+
+				GlStateManager.enableCull();
+				GlStateManager.matrixMode(GL_PROJECTION);
+				GlStateManager.pushMatrix();
+				GlStateManager.loadIdentity();
+				shadowMapDist = 32;
+				GlStateManager.ortho(-shadowMapDist, shadowMapDist, -shadowMapDist, shadowMapDist, -64.0f, 64.0f);
+
+				setupSunCameraTransform(celestialAngle);
+
+				DeferredStateManager.loadShadowPassViewMatrix();
+				DeferredStateManager.loadSunShadowMatrixLOD1();
+
+				GlStateManager.disableAlpha();
+				GlStateManager.disableBlend();
+
+				GlStateManager.matrixMode(GL_MODELVIEW);
+				GlStateManager.loadIdentity();
+
+				final AxisAlignedBB aabb2 = matrixToBounds(DeferredStateManager.getSunShadowMatrixLOD1(), d0,
+						d1 + eyeHeight, d2);
+				DeferredStateManager.setShadowMapBounds(aabb2);
+
+				BetterFrustum shadowLOD1Frustrum = new BetterFrustum(DeferredStateManager.getSunShadowMatrixLOD1());
+
+				ChunkCullAdapter shadowCullAdapter2 = (renderChunk) -> {
+					if (renderChunk.shadowLOD1FrameIndex != shadowFrameIndex) {
+						renderChunk.shadowLOD1FrameIndex = shadowFrameIndex;
+						if (renderChunk.shadowLOD0FrameIndex == shadowFrameIndex
+								&& renderChunk.shadowLOD0InFrustum == RenderChunk.ShadowFrustumState.INSIDE) {
+							renderChunk.shadowLOD1InFrustum = RenderChunk.ShadowFrustumState.OUTSIDE;
+							return true;
+						} else {
+							AxisAlignedBB aabb3 = renderChunk.boundingBox;
+							if (aabb2.intersects(aabb3)) {
+								int shadowVisRet = shadowLOD1Frustrum.intersectAab((float) (aabb3.minX - d0),
+										(float) (aabb3.minY - d1 - eyeHeight), (float) (aabb3.minZ - d2),
+										(float) (aabb3.maxX - d0), (float) (aabb3.maxY - d1 - eyeHeight),
+										(float) (aabb3.maxZ - d2));
+								renderChunk.shadowLOD1InFrustum = shadowVisRet == BetterFrustum.INSIDE
+										? RenderChunk.ShadowFrustumState.INSIDE
+										: (shadowVisRet == BetterFrustum.INTERSECT
+												? RenderChunk.ShadowFrustumState.INTERSECT
+												: RenderChunk.ShadowFrustumState.OUTSIDE);
+							} else {
+								renderChunk.shadowLOD1InFrustum = RenderChunk.ShadowFrustumState.OUTSIDE_BB;
+								return true;
+							}
+						}
+					}
+					return renderChunk.shadowLOD1InFrustum == RenderChunk.ShadowFrustumState.OUTSIDE;
+				};
+
+				mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+				mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
+				mc.renderGlobal.renderBlockLayerShadow(BlockRenderLayer.SOLID, aabb2, shadowCullAdapter2);
+				GlStateManager.enableAlpha();
+				GlStateManager.alphaFunc(GL_GREATER, 0.5F);
+				if (wavingBlocks) {
+					DeferredStateManager.enableDrawWavingBlocks();
+					enableLightmap();
+				}
+				mc.renderGlobal.renderBlockLayerShadow(BlockRenderLayer.CUTOUT_MIPPED, aabb2, shadowCullAdapter2);
+				mc.renderGlobal.renderBlockLayerShadow(BlockRenderLayer.CUTOUT, aabb2, shadowCullAdapter2);
+				mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
+				GlStateManager.alphaFunc(GL_GREATER, 0.1F);
+				if (wavingBlocks) {
+					DeferredStateManager.disableDrawWavingBlocks();
+					disableLightmap();
+				}
+
+				mc.renderGlobal.renderShadowLODEntities(entity, partialTicks, (renderChunk) -> {
+					return renderChunk.shadowLOD1FrameIndex == shadowFrameIndex
+							&& (renderChunk.shadowLOD1InFrustum == RenderChunk.ShadowFrustumState.OUTSIDE
+									|| renderChunk.shadowLOD1InFrustum == RenderChunk.ShadowFrustumState.OUTSIDE_BB);
+				}, (renderChunk, renderManager, renderEntity) -> {
+					boolean b;
+					if (renderEntity.ignoreFrustumCheck) {
+						return false;
+					} else if (!renderEntity.isInRangeToRender3d(d0, d1, d2)) {
+						return true;
+					} else if (renderChunk.shadowLOD1FrameIndex == shadowFrameIndex
+							&& (b = renderChunk.shadowLOD1InFrustum == RenderChunk.ShadowFrustumState.OUTSIDE)) {
+						return b;
+					} else {
+						AxisAlignedBB aabbEntity = renderEntity.getEntityBoundingBox();
+						if (aabbEntity.hasNaN() || aabbEntity.getAverageEdgeLength() == 0.0) {
+							aabbEntity = new AxisAlignedBB(d0 - 2.0, d1 - 2.0, d2 - 2.0, d0 + 2.0, d1 + 2.0, d2 + 2.0);
+						}
+						if (shadowLOD1Frustrum.testAab((float) (aabbEntity.minX - d0),
+								(float) (aabbEntity.minY - d1 - eyeHeight), (float) (aabbEntity.minZ - d2),
+								(float) (aabbEntity.maxX - d0), (float) (aabbEntity.maxY - d1 - eyeHeight),
+								(float) (aabbEntity.maxZ - d2))) {
+							return !renderManager.shouldRender(renderEntity, frustum, d0, d1, d2);
+						} else {
+							return true;
+						}
+					}
+				});
+				disableLightmap();
+
+				if (conf.is_rendering_shadowsColored) {
+					EaglerDeferredPipeline.instance.beginDrawColoredShadows();
+					List<ShadersRenderPassFuture> lst = DeferredStateManager.forwardCallbackHandler.renderPassList;
+					for (int i = 0, l = lst.size(); i < l; ++i) {
+						lst.get(i).draw(ShadersRenderPassFuture.PassType.SHADOW);
+					}
+					DeferredStateManager.forwardCallbackHandler.reset();
+					mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+					mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
+					mc.renderGlobal.renderBlockLayerShadow(BlockRenderLayer.TRANSLUCENT, aabb2, shadowCullAdapter2);
+					mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
+					if (conf.is_rendering_realisticWater) {
+						GlStateManager.disableTexture2D();
+						GlStateManager.color(0.173f, 0.239f, 0.957f, 0.25f);
+						mc.renderGlobal.renderBlockLayerShadow(BlockRenderLayer.REALISTIC_WATER, aabb2,
+								shadowCullAdapter2);
+						GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+						GlStateManager.enableTexture2D();
+					}
+					EaglerDeferredPipeline.instance.endDrawColoredShadows();
+				}
+				disableLightmap();
+
+				GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+				GlStateManager.disableAlpha();
+				GlStateManager.matrixMode(GL_PROJECTION);
+				GlStateManager.popMatrix();
+
+				if (conf.is_rendering_shadowsSun_clamped > 2) {
+					EaglerDeferredPipeline.instance.beginDrawMainShadowMapLOD(2);
+
+					GlStateManager.enableCull();
+					GlStateManager.matrixMode(GL_PROJECTION);
+					GlStateManager.pushMatrix();
+					GlStateManager.loadIdentity();
+					shadowMapDist = 1 << (conf.is_rendering_shadowsSun_clamped + 3);
+					GlStateManager.ortho(-shadowMapDist, shadowMapDist, -shadowMapDist, shadowMapDist, -64.0f, 64.0f);
+
+					setupSunCameraTransform(celestialAngle);
+
+					DeferredStateManager.loadShadowPassViewMatrix();
+					DeferredStateManager.loadSunShadowMatrixLOD2();
+
+					GlStateManager.disableAlpha();
+					GlStateManager.disableBlend();
+
+					GlStateManager.matrixMode(GL_MODELVIEW);
+					GlStateManager.loadIdentity();
+
+					DeferredStateManager.loadPassViewMatrix();
+					DeferredStateManager.loadPassProjectionMatrix();
+
+					AxisAlignedBB aabb3 = matrixToBounds(DeferredStateManager.getSunShadowMatrixLOD2(), d0,
+							d1 + eyeHeight, d2);
+					DeferredStateManager.setShadowMapBounds(aabb3);
+
+					BetterFrustum shadowLOD2Frustum = new BetterFrustum(DeferredStateManager.getSunShadowMatrixLOD2());
+
+					ChunkCullAdapter shadowCullAdapter3 = (renderChunk) -> {
+						if (renderChunk.shadowLOD2FrameIndex != shadowFrameIndex) {
+							renderChunk.shadowLOD2FrameIndex = shadowFrameIndex;
+							if (renderChunk.shadowLOD0FrameIndex == shadowFrameIndex
+									&& renderChunk.shadowLOD0InFrustum == RenderChunk.ShadowFrustumState.INSIDE) {
+								renderChunk.shadowLOD2InFrustum = RenderChunk.ShadowFrustumState.OUTSIDE;
+								return true;
+							} else if (renderChunk.shadowLOD1FrameIndex == shadowFrameIndex
+									&& renderChunk.shadowLOD1InFrustum == RenderChunk.ShadowFrustumState.INSIDE) {
+								renderChunk.shadowLOD2InFrustum = RenderChunk.ShadowFrustumState.OUTSIDE;
+								return true;
+							} else {
+								AxisAlignedBB aabb4 = renderChunk.boundingBox;
+								if (aabb3.intersects(aabb4)) {
+									int shadowVisRet = shadowLOD2Frustum.intersectAab((float) (aabb4.minX - d0),
+											(float) (aabb4.minY - d1 - eyeHeight), (float) (aabb4.minZ - d2),
+											(float) (aabb4.maxX - d0), (float) (aabb4.maxY - d1 - eyeHeight),
+											(float) (aabb4.maxZ - d2));
+									renderChunk.shadowLOD2InFrustum = shadowVisRet == BetterFrustum.INSIDE
+											? RenderChunk.ShadowFrustumState.INSIDE
+											: (shadowVisRet == BetterFrustum.INTERSECT
+													? RenderChunk.ShadowFrustumState.INTERSECT
+													: RenderChunk.ShadowFrustumState.OUTSIDE);
+								} else {
+									renderChunk.shadowLOD2InFrustum = RenderChunk.ShadowFrustumState.OUTSIDE_BB;
+									return true;
+								}
+							}
+						}
+						return renderChunk.shadowLOD2InFrustum == RenderChunk.ShadowFrustumState.OUTSIDE;
+					};
+
+					mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+					mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
+					mc.renderGlobal.renderBlockLayerShadow(BlockRenderLayer.SOLID, aabb3, shadowCullAdapter3);
+					GlStateManager.enableAlpha();
+					mc.renderGlobal.renderBlockLayerShadow(BlockRenderLayer.CUTOUT_MIPPED, aabb3,
+							shadowCullAdapter3);
+					mc.renderGlobal.renderBlockLayerShadow(BlockRenderLayer.CUTOUT, aabb3, shadowCullAdapter3);
+					mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
+					disableLightmap();
+
+					GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+					GlStateManager.disableAlpha();
+					GlStateManager.matrixMode(GL_PROJECTION);
+					GlStateManager.popMatrix();
+				}
+			}
+
+			EaglerDeferredPipeline.instance.endDrawMainShadowMap();
+			if (conf.is_rendering_shadowsColored) {
+				DeferredStateManager.forwardCallbackHandler.reset();
+			}
+		}
+
+		GlStateManager.matrixMode(GL_MODELVIEW);
+		GlStateManager.popMatrix();
+
+		if (conf.is_rendering_dynamicLights && entity != null && mc.gameSettings.thirdPersonView == 0) {
+			if (entity instanceof EntityLivingBase) {
+				DynamicLightManager.setIsRenderingLights(true);
+				ItemStack itemStack = ((EntityLivingBase) entity).getHeldItemMainhand();
+				if (itemStack != null) {
+					float[] emission = EmissiveItems.getItemEmission(itemStack);
+					if (emission != null) {
+						float yaw = entity.prevRotationYaw
+								+ (entity.rotationYaw - entity.prevRotationYaw) * partialTicks;
+						yaw *= 0.017453293f;
+						float s = 0.2f;
+						double d02 = d0 + MathHelper.sin(yaw) * s;
+						double d22 = d2 + MathHelper.cos(yaw) * s;
+						float mag = 0.7f;
+						DynamicLightManager.renderDynamicLight("render_view_entity_holding", d02,
+								d1 + entity.getEyeHeight(), d22, emission[0] * mag, emission[1] * mag,
+								emission[2] * mag, false);
+					}
+				}
+				DynamicLightManager.setIsRenderingLights(false);
+			}
+		}
+
+		EaglerDeferredPipeline.instance.combineGBuffersAndIlluminate();
+
+		if (conf.is_rendering_useEnvMap) {
+			DeferredStateManager.forwardCallbackHandler = null;
+			EaglerDeferredPipeline.instance.beginDrawEnvMap();
+			GlStateManager.enableCull();
+
+			EaglerDeferredPipeline.instance.beginDrawEnvMapTop(entity.getEyeHeight());
+			EaglerDeferredPipeline.instance.beginDrawEnvMapSolid();
+			mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
+			mc.renderGlobal.renderParaboloidBlockLayer(BlockRenderLayer.SOLID, (double) partialTicks, 1, entity);
+			GlStateManager.enableAlpha();
+			GlStateManager.alphaFunc(GL_GREATER, 0.5F);
+			mc.renderGlobal.renderParaboloidBlockLayer(BlockRenderLayer.CUTOUT, (double) partialTicks, 1, entity);
+			mc.renderGlobal.renderParaboloidBlockLayer(BlockRenderLayer.CUTOUT_MIPPED, (double) partialTicks, 1,
+					entity);
+			DeferredStateManager.setDefaultMaterialConstants();
+			mc.renderGlobal.renderParaboloidTileEntities(entity, partialTicks, 1);
+			GlStateManager.alphaFunc(GL_GREATER, 0.1F);
+			EaglerDeferredPipeline.instance.beginDrawEnvMapTranslucent();
+			if (conf.is_rendering_realisticWater) {
+				GlStateManager.disableTexture2D();
+				DeferredStateManager.disableMaterialTexture();
+				DeferredStateManager.setRoughnessConstant(0.117f);
+				DeferredStateManager.setMetalnessConstant(0.067f);
+				DeferredStateManager.setEmissionConstant(0.0f);
+				GlStateManager.color(0.173f, 0.239f, 0.957f, 0.65f);
+				mc.renderGlobal.renderParaboloidBlockLayer(BlockRenderLayer.REALISTIC_WATER, (double) partialTicks,
+						1, entity);
+				GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+				GlStateManager.enableTexture2D();
+				DeferredStateManager.enableMaterialTexture();
+			}
+			mc.renderGlobal.renderParaboloidBlockLayer(BlockRenderLayer.TRANSLUCENT, (double) partialTicks, 1,
+					entity);
+			mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
+			GlStateManager.disableAlpha();
+
+			EaglerDeferredPipeline.instance.beginDrawEnvMapBottom(entity.getEyeHeight());
+			EaglerDeferredPipeline.instance.beginDrawEnvMapSolid();
+			mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
+			mc.renderGlobal.renderParaboloidBlockLayer(BlockRenderLayer.SOLID, (double) partialTicks, -1, entity);
+			GlStateManager.enableAlpha();
+			GlStateManager.alphaFunc(GL_GREATER, 0.5F);
+			mc.renderGlobal.renderParaboloidBlockLayer(BlockRenderLayer.CUTOUT, (double) partialTicks, -1, entity);
+			mc.renderGlobal.renderParaboloidBlockLayer(BlockRenderLayer.CUTOUT_MIPPED, (double) partialTicks, -1,
+					entity);
+			DeferredStateManager.setDefaultMaterialConstants();
+			mc.renderGlobal.renderParaboloidTileEntities(entity, partialTicks, -1);
+			GlStateManager.alphaFunc(GL_GREATER, 0.1F);
+			EaglerDeferredPipeline.instance.beginDrawEnvMapTranslucent();
+			if (conf.is_rendering_realisticWater) {
+				GlStateManager.disableTexture2D();
+				DeferredStateManager.disableMaterialTexture();
+				DeferredStateManager.setRoughnessConstant(0.117f);
+				DeferredStateManager.setMetalnessConstant(0.067f);
+				DeferredStateManager.setEmissionConstant(0.0f);
+				GlStateManager.color(0.173f, 0.239f, 0.957f, 0.65f);
+				mc.renderGlobal.renderParaboloidBlockLayer(BlockRenderLayer.REALISTIC_WATER, (double) partialTicks,
+						-1, entity);
+				GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+				GlStateManager.enableTexture2D();
+				DeferredStateManager.enableMaterialTexture();
+			}
+			mc.renderGlobal.renderParaboloidBlockLayer(BlockRenderLayer.TRANSLUCENT, (double) partialTicks, -1,
+					entity);
+			mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
+			GlStateManager.disableAlpha();
+
+			EaglerDeferredPipeline.instance.endDrawEnvMap();
+		}
+
+		if (conf.is_rendering_realisticWater) {
+			EaglerDeferredPipeline.instance.beginDrawRealisticWaterMask();
+			enableLightmap();
+			mc.renderGlobal.renderBlockLayer(BlockRenderLayer.REALISTIC_WATER, (double) partialTicks, 2, entity);
+			disableLightmap();
+			EaglerDeferredPipeline.instance.endDrawRealisticWaterMask();
+		}
+
+		int dim = mc.world.provider.getDimension();
+		float ff;
+		if (dim == 0) {
+			ff = (this.fogColor2 + (this.fogColor1 - this.fogColor2) * partialTicks) * 4.8f - 2.8f;
+			if (ff < 0.0f)
+				ff = 0.0f;
+			if (ff > 1.0f)
+				ff = 1.0f;
+		} else {
+			ff = 1.0f;
+		}
+
+		IBlockState viewState = ActiveRenderInfo.getBlockStateAtEntityViewpoint(this.mc.world, entity, partialTicks);
+		if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).isPotionActive(MobEffects.BLINDNESS)) {
+			float f1 = 5.0F;
+			int i = ((EntityLivingBase) entity).getActivePotionEffect(MobEffects.BLINDNESS).getDuration();
+			if (i < 20) {
+				f1 = 5.0F + (this.farPlaneDistance - 5.0F) * (1.0F - (float) i / 20.0F);
+			}
+			DeferredStateManager.enableFogLinear(f1 * 0.25F, f1, false, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+					1.0f);
+		} else if (viewState.getMaterial() == Material.WATER) {
+			updateFogColor(partialTicks);
+			ff *= 0.2f;
+			ff += 0.8f;
+			fogColorRed *= 0.5f;
+			fogColorGreen *= 0.5f;
+			fogColorBlue *= 0.5f;
+			if (entity instanceof EntityLivingBase
+					&& ((EntityLivingBase) entity).isPotionActive(MobEffects.WATER_BREATHING)) {
+				DeferredStateManager.enableFogExp(0.01F, false, fogColorRed, fogColorGreen, fogColorBlue, 1.0f,
+						fogColorRed * ff, fogColorGreen * ff, fogColorBlue * ff, 1.0f);
+			} else {
+				DeferredStateManager.enableFogExp(0.1F - (float) (entity instanceof EntityLivingBase ? EnchantmentHelper.getRespirationModifier((EntityLivingBase) entity) : 0) * 0.03F,
+						false, fogColorRed, fogColorGreen, fogColorBlue, 1.0f, fogColorRed * ff, fogColorGreen * ff,
+						fogColorBlue * ff, 1.0f);
+			}
+		} else if (viewState.getMaterial() == Material.LAVA) {
+			updateFogColor(partialTicks);
+			DeferredStateManager.enableFogExp(2.0F, false, fogColorRed, fogColorGreen, fogColorBlue, 1.0f, fogColorRed,
+					fogColorGreen, fogColorBlue, 1.0f);
+		} else {
+			float ds = 0.0005f;
+			if (mc.gameSettings.renderDistanceChunks < 6) {
+				ds *= 3.0f - mc.gameSettings.renderDistanceChunks * 0.33f;
+			}
+			ds *= 1.5f + mc.world.getRainStrength(partialTicks) * 10.0f
+					+ mc.world.getThunderStrength(partialTicks) * 5.0f;
+			ds *= MathHelper.clamp(6.0f - DeferredStateManager.getSunHeight() * 17.0f, 1.0f, 3.0f);
+			if (conf.is_rendering_lightShafts) {
+				ds *= Math.max(2.5f - Math.abs(DeferredStateManager.getSunHeight()) * 5.0f, 2.5f);
+			}
+			DeferredStateManager.enableFogExp(ds, true, 1.0f, 1.0f, 1.0f, 1.0f, ff, ff, ff, 1.0f);
+		}
+
+		EaglerDeferredPipeline.instance.beginDrawHDRTranslucent();
+		DeferredStateManager.setDefaultMaterialConstants();
+
+		if (conf.is_rendering_realisticWater) {
+			EaglerDeferredPipeline.instance.beginDrawRealisticWaterSurface();
+			mc.renderGlobal.renderBlockLayer(BlockRenderLayer.REALISTIC_WATER, (double) partialTicks, 2, entity);
+			EaglerDeferredPipeline.instance.endDrawRealisticWaterSurface();
+		}
+
+		EaglerDeferredPipeline.instance.applyGBufferFog();
+
+		EaglerDeferredPipeline.instance.beginDrawTranslucentEntities();
+
+		TileEntityRendererDispatcher.staticPlayerX = d0;
+		TileEntityRendererDispatcher.staticPlayerY = d1;
+		TileEntityRendererDispatcher.staticPlayerZ = d2;
+		mc.getRenderManager().setRenderPosition(d0, d1, d2);
+
+		for (int i = 0; i < mc.world.weatherEffects.size(); ++i) {
+			Entity entity1 = (Entity) mc.world.weatherEffects.get(i);
+			if (entity1.isInRangeToRender3d(d0, d1, d2)) {
+				mc.getRenderManager().renderEntityStatic(entity1, partialTicks, false);
+			}
+		}
+		net.minecraftforge.client.ForgeHooksClient.setRenderPass(1);
+		try {
+			mc.renderGlobal.renderEntities(entity, frustum, partialTicks);
+		} finally {
+			net.minecraftforge.client.ForgeHooksClient.setRenderPass(-1);
+		}
+		disableLightmap();
+
+		DeferredStateManager.forwardCallbackGBuffer.sort(0.0f, 0.0f, 0.0f);
+		List<ShadersRenderPassFuture> lst = DeferredStateManager.forwardCallbackGBuffer.renderPassList;
+		for (int i = 0, l = lst.size(); i < l; ++i) {
+			lst.get(i).draw(ShadersRenderPassFuture.PassType.MAIN);
+		}
+		DeferredStateManager.forwardCallbackGBuffer.reset();
+
+		EaglerDeferredPipeline.instance.beginDrawTranslucentBlocks();
+		mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		mc.renderGlobal.renderBlockLayer(BlockRenderLayer.TRANSLUCENT, (double) partialTicks, 2, entity);
+
+		EaglerDeferredPipeline.instance.beginDrawMainGBufferDestroyProgress();
+
+		GlStateManager.enableBlend();
+		GlStateManager.tryBlendFuncSeparate(0, GL_SRC_ALPHA, 0, 0);
+		GlStateManager.color(1.0f, 1.0f, 1.0f, 0.5f);
+		mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
+		mc.renderGlobal.drawBlockDamageTexture(Tessellator.getInstance(), Tessellator.getInstance().getBuffer(),
+				entity, partialTicks);
+		mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
+
+		EaglerDeferredPipeline.instance.endDrawMainGBufferDestroyProgress();
+
+		if (mc.effectRenderer.hasParticlesInAlphaLayer()) {
+			GlStateManager.pushMatrix();
+			mc.effectRenderer.acceleratedParticleRenderer = EaglerDeferredPipeline.instance.forwardEffectRenderer;
+			DeferredStateManager.setHDRTranslucentPassBlendFunc();
+			DeferredStateManager.reportForwardRenderObjectPosition2(0.0f, 0.0f, 0.0f);
+			GlStateManager.enableBlend();
+			GlStateManager.depthMask(false);
+			mc.effectRenderer.renderParticles(entity, partialTicks, 0);
+			mc.effectRenderer.acceleratedParticleRenderer = ParticleManager.vanillaAcceleratedParticleRenderer;
+			GlStateManager.matrixMode(GL_MODELVIEW);
+			GlStateManager.popMatrix();
+			GlStateManager.enableBlend();
+			GlStateManager.depthMask(true);
+		}
+
+		if (conf.is_rendering_useEnvMap) {
+			EaglerDeferredPipeline.instance.beginDrawGlassHighlights();
+			mc.renderGlobal.renderBlockLayer(BlockRenderLayer.GLASS_HIGHLIGHTS, (double) partialTicks, 2, entity);
+			EaglerDeferredPipeline.instance.endDrawGlassHighlights();
+		}
+
+		EaglerDeferredPipeline.instance.saveReprojData();
+
+		renderRainSnow(partialTicks);
+
+		GlStateManager.disableBlend();
+
+		if (renderHand) {
+			EaglerDeferredPipeline.instance.beginDrawHandOverlay();
+			DeferredStateManager.reportForwardRenderObjectPosition2(0.0f, 0.0f, 0.0f);
+			DeferredStateManager.forwardCallbackHandler = DeferredStateManager.forwardCallbackGBuffer;
+			GlStateManager.matrixMode(GL_MODELVIEW);
+			GlStateManager.pushMatrix();
+			GlStateManager.matrixMode(GL_PROJECTION);
+			GlStateManager.pushMatrix();
+			GlStateManager.enableAlpha();
+			renderHand(partialTicks, 2);
+			DeferredStateManager.forwardCallbackHandler = null;
+			GlStateManager.enableBlend();
+			DeferredStateManager.setHDRTranslucentPassBlendFunc();
+			lst = DeferredStateManager.forwardCallbackGBuffer.renderPassList;
+			for (int i = 0, l = lst.size(); i < l; ++i) {
+				lst.get(i).draw(ShadersRenderPassFuture.PassType.MAIN);
+			}
+			DeferredStateManager.forwardCallbackGBuffer.reset();
+			GlStateManager.matrixMode(GL_PROJECTION);
+			GlStateManager.popMatrix();
+			GlStateManager.matrixMode(GL_MODELVIEW);
+			GlStateManager.popMatrix();
+			EaglerDeferredPipeline.instance.endDrawHandOverlay();
+			GlStateManager.disableBlend();
+			GlStateManager.disableAlpha();
+		}
+
+		EaglerDeferredPipeline.instance.endDrawHDRTranslucent();
+
+		EaglerDeferredPipeline.instance.endDrawDeferred();
+		this.setupCameraTransform(partialTicks, 2);
+		this.mc.renderGlobal.prepareEntityOutlines(partialTicks);
+		net.minecraftforge.client.ForgeHooksClient.dispatchRenderLast(mc.renderGlobal, partialTicks);
+
+		GlStateManager.setActiveTexture(GL_TEXTURE1);
+		this.mc.getTextureManager().bindTexture(this.locationLightMap);
+
+		GlStateManager.setActiveTexture(GL_TEXTURE0);
+		GlStateManager.matrixMode(GL_TEXTURE);
+		GlStateManager.loadIdentity();
+		GlStateManager.matrixMode(GL_MODELVIEW);
+
+		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+		GlStateManager.enableDepth();
+		GlStateManager.depthMask(true);
+
+		if (!DebugFramebufferView.debugViewShown) {
+			GlStateManager.disableAlpha();
+			if (isDrawBlockOutline() && this.mc.objectMouseOver != null
+					&& !net.minecraftforge.client.ForgeHooksClient.onDrawBlockHighlight(mc.renderGlobal, mc.player,
+							this.mc.objectMouseOver, 0, partialTicks)) {
+				mc.renderGlobal.drawSelectionBox(mc.player, this.mc.objectMouseOver, 0, partialTicks);
+			}
+			GlStateManager.enableAlpha();
+			if (NameTagRenderer.nameTagsCount > 0) {
+				enableLightmap();
+				Arrays.sort(NameTagRenderer.nameTagsThisFrame, 0, NameTagRenderer.nameTagsCount, (n1, n2) -> {
+					return n1.dst2 < n2.dst2 ? 1 : (n1.dst2 > n2.dst2 ? -1 : 0);
+				});
+				for (int i = 0; i < NameTagRenderer.nameTagsCount; ++i) {
+					NameTagRenderer n = NameTagRenderer.nameTagsThisFrame[i];
+					int ii = n.entityIn.getBrightnessForRender();
+					int j = ii % 65536;
+					int k = ii / 65536;
+					OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) j / 1.0F,
+							(float) k / 1.0F);
+					GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+					if (n.maxDistance == -69) {
+
+						Render.renderNameAdapter(mc.getRenderManager().getEntityRenderObject(n.entityIn), n.entityIn,
+								n.x, n.y, n.z);
+					} else {
+						mc.getRenderManager().getEntityRenderObject(n.entityIn).renderLivingLabel(n.entityIn, n.str,
+								n.x, n.y, n.z, n.maxDistance);
+					}
+				}
+				NameTagRenderer.nameTagsCount = 0;
+			}
+			disableLightmap();
+			GlStateManager.disableLighting();
+			mc.renderGlobal.renderWorldBorder(entity, partialTicks);
+		}
+	}
+
+	private static final Matrix4f matrixToBounds_tmpMat4f_1 = new Matrix4f();
+	private static final Vector4f matrixToBounds_tmpVec4f_1 = new Vector4f();
+	private static final Vector4f[] matrixToBounds_tmpVec4f_array = new Vector4f[] { new Vector4f(-1, -1, -1, 1),
+			new Vector4f(-1, -1, 1, 1), new Vector4f(-1, 1, -1, 1), new Vector4f(-1, 1, 1, 1),
+			new Vector4f(1, -1, -1, 1), new Vector4f(1, -1, 1, 1), new Vector4f(1, 1, -1, 1),
+			new Vector4f(1, 1, 1, 1) };
+
+	private static AxisAlignedBB matrixToBounds(Matrix4f matrixIn, double x, double y, double z) {
+		Matrix4f.invert(matrixIn, matrixToBounds_tmpMat4f_1);
+
+		float minX = Integer.MAX_VALUE;
+		float minY = Integer.MAX_VALUE;
+		float minZ = Integer.MAX_VALUE;
+		float maxX = Integer.MIN_VALUE;
+		float maxY = Integer.MIN_VALUE;
+		float maxZ = Integer.MIN_VALUE;
+		Vector4f tmpVec = matrixToBounds_tmpVec4f_1;
+		float vx, vy, vz;
+		for (int i = 0; i < 8; ++i) {
+			Matrix4f.transform(matrixToBounds_tmpMat4f_1, matrixToBounds_tmpVec4f_array[i], tmpVec);
+			vx = tmpVec.x;
+			vy = tmpVec.y;
+			vz = tmpVec.z;
+			if (vx < minX)
+				minX = vx;
+			if (vy < minY)
+				minY = vy;
+			if (vz < minZ)
+				minZ = vz;
+			if (vx > maxX)
+				maxX = vx;
+			if (vy > maxY)
+				maxY = vy;
+			if (vz > maxZ)
+				maxZ = vz;
+		}
+
+		return new AxisAlignedBB(minX + x, minY + y, minZ + z, maxX + x, maxY + y, maxZ + z);
+	}
+
+	public static void setupSunCameraTransform(float celestialAngle) {
+		GlStateManager.rotate(celestialAngle + 90.0f, 1.0F, 0.0F, 0.0F);
+		GlStateManager.rotate(-DeferredStateManager.sunAngle, 0.0F, 1.0F, 0.0F);
+		GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
+	}
+
 }

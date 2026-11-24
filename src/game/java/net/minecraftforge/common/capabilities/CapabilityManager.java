@@ -19,23 +19,15 @@
 
 package net.minecraftforge.common.capabilities;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.objectweb.asm.Type;
-
-import java.util.function.Function;
+import java.util.function.Consumer;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 public enum CapabilityManager
 {
@@ -87,94 +79,32 @@ public enum CapabilityManager
         Capability<T> cap = new Capability<T>(realName, storage, factory);
         providers.put(realName, cap);
 
-        List<Function<Capability<?>, Object>> list = callbacks.get(realName);
+        List<Consumer<Capability<?>>> list = callbacks.remove(realName);
         if (list != null)
         {
-            for (Function<Capability<?>, Object> func : list)
+            for (Consumer<Capability<?>> callback : list)
             {
-                func.apply(cap);
+                callback.accept(cap);
             }
         }
     }
 
-    // INTERNAL
-    private IdentityHashMap<String, Capability<?>> providers = Maps.newIdentityHashMap();
-    private IdentityHashMap<String, List<Function<Capability<?>, Object>>> callbacks = Maps.newIdentityHashMap();
-    public void injectCapabilities(ASMDataTable data)
-    {
-        for (ASMDataTable.ASMData entry : data.getAll(CapabilityInject.class.getName()))
-        {
-            final String targetClass = entry.getClassName();
-            final String targetName = entry.getObjectName();
-            Type type = (Type)entry.getAnnotationInfo().get("value");
-            if (type == null)
-            {
-                FMLLog.log.warn("Unable to inject capability at {}.{} (Invalid Annotation)", targetClass, targetName);
-                continue;
-            }
-            final String capabilityName = type.getInternalName().replace('/', '.').intern();
+	private final IdentityHashMap<String, Capability<?>> providers = Maps.newIdentityHashMap();
+	private final IdentityHashMap<String, List<Consumer<Capability<?>>>> callbacks = Maps.newIdentityHashMap();
 
-            List<Function<Capability<?>, Object>> list = callbacks.computeIfAbsent(capabilityName, k -> Lists.newArrayList());
-
-            if (entry.getObjectName().indexOf('(') > 0)
-            {
-                list.add(new Function<Capability<?>, Object>()
-                {
-                    @Override
-                    public Object apply(Capability<?> input)
-                    {
-                        try
-                        {
-                            for (Method mtd : Class.forName(targetClass).getDeclaredMethods())
-                            {
-                                if (targetName.equals(mtd.getName() + Type.getMethodDescriptor(mtd)))
-                                {
-                                    if ((mtd.getModifiers() & Modifier.STATIC) != Modifier.STATIC)
-                                    {
-                                        FMLLog.log.warn("Unable to inject capability {} at {}.{} (Non-Static)", capabilityName, targetClass, targetName);
-                                        return null;
-                                    }
-
-                                    mtd.setAccessible(true);
-                                    mtd.invoke(null, input);
-                                    return null;
-                                }
-                            }
-                            FMLLog.log.warn("Unable to inject capability {} at {}.{} (Method Not Found)", capabilityName, targetClass, targetName);
-                        }
-                        catch (Exception e)
-                        {
-                            FMLLog.log.warn("Unable to inject capability {} at {}.{}", capabilityName, targetClass, targetName, e);
-                        }
-                        return null;
-                    }
-                });
-            }
-            else
-            {
-                list.add(new Function<Capability<?>, Object>()
-                {
-                    @Override
-                    public Object apply(Capability<?> input)
-                    {
-                        try
-                        {
-                            Field field = Class.forName(targetClass).getDeclaredField(targetName);
-                            if ((field.getModifiers() & Modifier.STATIC) != Modifier.STATIC)
-                            {
-                                FMLLog.log.warn("Unable to inject capability {} at {}.{} (Non-Static)", capabilityName, targetClass, targetName);
-                                return null;
-                            }
-                            EnumHelper.setFailsafeFieldValue(field, null, input);
-                        }
-                        catch (Exception e)
-                        {
-                            FMLLog.log.warn("Unable to inject capability {} at {}.{}", capabilityName, targetClass, targetName, e);
-                        }
-                        return null;
-                    }
-                });
-            }
-        }
-    }
+	@SuppressWarnings("unchecked")
+	public <T> void onRegistered(Class<T> type, Consumer<Capability<T>> callback)
+	{
+		String name = type.getName().intern();
+		Capability<?> capability = providers.get(name);
+		if (capability != null)
+		{
+			callback.accept((Capability<T>)capability);
+		}
+		else
+		{
+			callbacks.computeIfAbsent(name, key -> Lists.newArrayList())
+					.add(value -> callback.accept((Capability<T>)value));
+		}
+	}
 }

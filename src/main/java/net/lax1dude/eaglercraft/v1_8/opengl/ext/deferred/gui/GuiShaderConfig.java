@@ -109,7 +109,7 @@ public class GuiShaderConfig extends GuiScreen {
 		listView.handleTouchInput();
 	}
 
-	protected void mouseClicked(int parInt1, int parInt2, int parInt3) {
+	protected void mouseClicked(int parInt1, int parInt2, int parInt3) throws IOException {
 		super.mouseClicked(parInt1, parInt2, parInt3);
 		listView.mouseClicked(parInt1, parInt2, parInt3);
 	}

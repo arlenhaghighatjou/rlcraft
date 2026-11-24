@@ -3,14 +3,15 @@ package net.minecraft.advancements;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.common.io.Files;
+import com.arlenh7.eaglercraft.forge.WorldTextFile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketAdvancementInfo;
 import net.minecraft.network.play.server.SPacketSelectAdvancementsTab;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
@@ -34,11 +34,8 @@ public class PlayerAdvancements
 {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Gson GSON = (new GsonBuilder()).registerTypeAdapter(AdvancementProgress.class, new AdvancementProgress.Serializer()).registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer()).setPrettyPrinting().create();
-    private static final TypeToken<Map<ResourceLocation, AdvancementProgress>> MAP_TOKEN = new TypeToken<Map<ResourceLocation, AdvancementProgress>>()
-    {
-    };
     private final MinecraftServer server;
-    private final File progressFile;
+    private final WorldTextFile progressFile;
     private final Map<Advancement, AdvancementProgress> progress = Maps.<Advancement, AdvancementProgress>newLinkedHashMap();
     private final Set<Advancement> visible = Sets.<Advancement>newLinkedHashSet();
     private final Set<Advancement> visibilityChanged = Sets.<Advancement>newLinkedHashSet();
@@ -49,9 +46,14 @@ public class PlayerAdvancements
     private boolean isFirstPacket = true;
 
     public PlayerAdvancements(MinecraftServer server, File p_i47422_2_, EntityPlayerMP player)
+	{
+		this(server, new WorldTextFile(p_i47422_2_), player);
+	}
+
+	public PlayerAdvancements(MinecraftServer server, WorldTextFile progressFile, EntityPlayerMP player)
     {
         this.server = server;
-        this.progressFile = p_i47422_2_;
+        this.progressFile = progressFile;
         this.player = player;
         this.load();
     }
@@ -126,13 +128,16 @@ public class PlayerAdvancements
         {
             try
             {
-                String s = Files.toString(this.progressFile, StandardCharsets.UTF_8);
-                Map<ResourceLocation, AdvancementProgress> map = (Map)JsonUtils.gsonDeserialize(GSON, s, MAP_TOKEN.getType());
-
-                if (map == null)
-                {
-                    throw new JsonParseException("Found null for advancements");
-                }
+                String s = this.progressFile.read();
+				JsonElement parsed = new JsonParser().parse(s);
+				if (!parsed.isJsonObject()) throw new JsonParseException("Expected an advancements object");
+				Map<ResourceLocation, AdvancementProgress> map = Maps.newLinkedHashMap();
+				for (Entry<String, JsonElement> entry : parsed.getAsJsonObject().entrySet())
+				{
+					AdvancementProgress advancement = GSON.fromJson(entry.getValue(), AdvancementProgress.class);
+					if (advancement == null) throw new JsonParseException("Missing advancement progress for " + entry.getKey());
+					map.put(new ResourceLocation(entry.getKey()), advancement);
+				}
 
                 Stream<Entry<ResourceLocation, AdvancementProgress>> stream = map.entrySet().stream().sorted(Comparator.comparing(Entry::getValue));
 
@@ -167,7 +172,7 @@ public class PlayerAdvancements
 
     public void save()
     {
-        Map<ResourceLocation, AdvancementProgress> map = Maps.<ResourceLocation, AdvancementProgress>newHashMap();
+		JsonObject serialized = new JsonObject();
 
         for (Entry<Advancement, AdvancementProgress> entry : this.progress.entrySet())
         {
@@ -175,18 +180,13 @@ public class PlayerAdvancements
 
             if (advancementprogress.hasProgress())
             {
-                map.put(((Advancement)entry.getKey()).getId(), advancementprogress);
+				serialized.add(entry.getKey().getId().toString(), GSON.toJsonTree(advancementprogress, AdvancementProgress.class));
             }
-        }
-
-        if (this.progressFile.getParentFile() != null)
-        {
-            this.progressFile.getParentFile().mkdirs();
         }
 
         try
         {
-            Files.write(GSON.toJson(map), this.progressFile, StandardCharsets.UTF_8);
+			this.progressFile.write(GSON.toJson(serialized));
         }
         catch (IOException ioexception)
         {

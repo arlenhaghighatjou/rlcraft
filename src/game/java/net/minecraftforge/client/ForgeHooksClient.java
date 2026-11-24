@@ -25,9 +25,6 @@ import static net.minecraftforge.common.ForgeVersion.Status.BETA_OUTDATED;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.lang.reflect.Field;
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,8 +80,6 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
-import net.minecraft.client.renderer.vertex.VertexFormatElement;
-import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumUsage;
 import net.minecraft.client.resources.FoliageColorReloadListener;
 import net.minecraft.client.resources.GrassColorReloadListener;
 import net.minecraft.client.resources.I18n;
@@ -144,14 +139,7 @@ import net.minecraftforge.common.model.ITransformation;
 import net.minecraftforge.common.model.TRSRTransformation;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.FMLLog;
-
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.logging.log4j.core.async.ThreadNameCachingStrategy;
-import org.apache.logging.log4j.core.impl.ReusableLogEventFactory;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
 
 import java.util.function.Predicate;
 
@@ -182,7 +170,7 @@ public class ForgeHooksClient
 
         if (block != null && block.isBed(state, world, pos, entity))
         {
-            GL11.glRotatef((float)(block.getBedDirection(state, world, pos).getHorizontalIndex() * 90), 0.0F, 1.0F, 0.0F);
+            GlStateManager.rotate((float)(block.getBedDirection(state, world, pos).getHorizontalIndex() * 90), 0.0F, 1.0F, 0.0F);
         }
     }
 
@@ -439,93 +427,27 @@ public class ForgeHooksClient
         return pair.getLeft();
     }
 
-    private static final FloatBuffer matrixBuf = BufferUtils.createFloatBuffer(16);
+    private static final float[] matrixBuf = new float[16];
 
     public static void multiplyCurrentGlMatrix(Matrix4f matrix)
     {
-        matrixBuf.clear();
-        float[] t = new float[4];
-        for(int i = 0; i < 4; i++)
-        {
-            matrix.getColumn(i, t);
-            matrixBuf.put(t);
-        }
-        matrixBuf.flip();
-        GL11.glMultMatrix(matrixBuf);
-    }
-
-    // moved and expanded from WorldVertexBufferUploader.draw
-
-    public static void preDraw(EnumUsage attrType, VertexFormat format, int element, int stride, ByteBuffer buffer)
-    {
-        VertexFormatElement attr = format.getElement(element);
-        int count = attr.getElementCount();
-        int constant = attr.getType().getGlConstant();
-        buffer.position(format.getOffset(element));
-        switch(attrType)
-        {
-            case POSITION:
-                GlStateManager.glVertexPointer(count, constant, stride, buffer);
-                GlStateManager.glEnableClientState(GL11.GL_VERTEX_ARRAY);
-                break;
-            case NORMAL:
-                if(count != 3)
-                {
-                    throw new IllegalArgumentException("Normal attribute should have the size 3: " + attr);
-                }
-                GlStateManager.glNormalPointer(constant, stride, buffer);
-                GlStateManager.glEnableClientState(GL11.GL_NORMAL_ARRAY);
-                break;
-            case COLOR:
-                GlStateManager.glColorPointer(count, constant, stride, buffer);
-                GlStateManager.glEnableClientState(GL11.GL_COLOR_ARRAY);
-                break;
-            case UV:
-                OpenGlHelper.setClientActiveTexture(OpenGlHelper.defaultTexUnit + attr.getIndex());
-                GlStateManager.glTexCoordPointer(count, constant, stride, buffer);
-                GlStateManager.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
-                OpenGlHelper.setClientActiveTexture(OpenGlHelper.defaultTexUnit);
-                break;
-            case PADDING:
-                break;
-            case GENERIC:
-                GL20.glEnableVertexAttribArray(attr.getIndex());
-                GL20.glVertexAttribPointer(attr.getIndex(), count, constant, false, stride, buffer);
-                break;
-            default:
-                FMLLog.log.fatal("Unimplemented vanilla attribute upload: {}", attrType.getDisplayName());
-        }
-    }
-
-    public static void postDraw(EnumUsage attrType, VertexFormat format, int element, int stride, ByteBuffer buffer)
-    {
-        VertexFormatElement attr = format.getElement(element);
-        switch(attrType)
-        {
-            case POSITION:
-                GlStateManager.glDisableClientState(GL11.GL_VERTEX_ARRAY);
-                break;
-            case NORMAL:
-                GlStateManager.glDisableClientState(GL11.GL_NORMAL_ARRAY);
-                break;
-            case COLOR:
-                GlStateManager.glDisableClientState(GL11.GL_COLOR_ARRAY);
-                // is this really needed?
-                GlStateManager.resetColor();
-                break;
-            case UV:
-                OpenGlHelper.setClientActiveTexture(OpenGlHelper.defaultTexUnit + attr.getIndex());
-                GlStateManager.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
-                OpenGlHelper.setClientActiveTexture(OpenGlHelper.defaultTexUnit);
-                break;
-            case PADDING:
-                break;
-            case GENERIC:
-                GL20.glDisableVertexAttribArray(attr.getIndex());
-                break;
-            default:
-                FMLLog.log.fatal("Unimplemented vanilla attribute upload: {}", attrType.getDisplayName());
-        }
+        matrixBuf[0] = matrix.m00;
+        matrixBuf[1] = matrix.m10;
+        matrixBuf[2] = matrix.m20;
+        matrixBuf[3] = matrix.m30;
+        matrixBuf[4] = matrix.m01;
+        matrixBuf[5] = matrix.m11;
+        matrixBuf[6] = matrix.m21;
+        matrixBuf[7] = matrix.m31;
+        matrixBuf[8] = matrix.m02;
+        matrixBuf[9] = matrix.m12;
+        matrixBuf[10] = matrix.m22;
+        matrixBuf[11] = matrix.m32;
+        matrixBuf[12] = matrix.m03;
+        matrixBuf[13] = matrix.m13;
+        matrixBuf[14] = matrix.m23;
+        matrixBuf[15] = matrix.m33;
+        GlStateManager.multMatrix(matrixBuf);
     }
 
     public static void transform(net.lax1dude.eaglercraft.v1_8.vector.Vector3f vec, Matrix4f m)
@@ -599,7 +521,7 @@ public class ForgeHooksClient
     
     private static class LightGatheringTransformer extends QuadGatheringTransformer {
         
-        private static final VertexFormat FORMAT = new VertexFormat().addElement(DefaultVertexFormats.TEX_2F).addElement(DefaultVertexFormats.TEX_2S);
+        private static final VertexFormat FORMAT = VertexFormat.FORGE_LIGHT_GATHERER;
         
         int blockLight, skyLight;
         
@@ -726,7 +648,7 @@ public class ForgeHooksClient
     private static void drawSegment(RenderItem ri, int baseColor, ItemStack stack, List<BakedQuad> segment, int bl, int sl, boolean shade, boolean updateLighting, boolean updateShading)
     {
         WorldRenderer bufferbuilder = Tessellator.getInstance().getBuffer();
-        bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
+        bufferbuilder.begin(7, DefaultVertexFormats.ITEM);
 
         float lastBl = OpenGlHelper.lastBrightnessX;
         float lastSl = OpenGlHelper.lastBrightnessY;
@@ -964,22 +886,4 @@ public class ForgeHooksClient
         return true;
    }
 
-    // Resets cached thread fields in ThreadNameCachingStrategy and ReusableLogEventFactory to be repopulated during their next access.
-    // This serves a workaround for no built-in method of triggering this type of refresh as brought up by LOG4J2-2178.
-    public static void invalidateLog4jThreadCache()
-    {
-        try
-        {
-            Field nameField = ThreadNameCachingStrategy.class.getDeclaredField("THREADLOCAL_NAME");
-            Field logEventField = ReusableLogEventFactory.class.getDeclaredField("mutableLogEventThreadLocal");
-            nameField.setAccessible(true);
-            logEventField.setAccessible(true);
-            ((ThreadLocal<?>) nameField.get(null)).set(null);
-            ((ThreadLocal<?>) logEventField.get(null)).set(null);
-        }
-        catch (ReflectiveOperationException | NoClassDefFoundError e)
-        {
-            FMLLog.log.error("Unable to invalidate log4j thread cache, thread fields in logs may be inaccurate", e);
-        }
-    }
 }

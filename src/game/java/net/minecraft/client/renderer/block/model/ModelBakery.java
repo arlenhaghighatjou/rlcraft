@@ -385,7 +385,7 @@ public class ModelBakery
         }
     }
 
-    private void loadItemModel(String variantName, ResourceLocation location, ResourceLocation itemName)
+    public void loadItemModel(String variantName, ResourceLocation location, ResourceLocation itemName)
     {
         this.itemLocations.put(variantName, location);
 

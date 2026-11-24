@@ -26,6 +26,7 @@ import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 import com.google.common.io.Files;
+import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerSaveHandler;
 
 import net.minecraft.world.chunk.storage.IChunkLoader;
 import net.minecraft.world.storage.IPlayerFileData;
@@ -59,6 +60,29 @@ public class WorldSpecificSaveHandler implements ISaveHandler
     @Override public IPlayerFileData getPlayerNBTManager() { return parent.getPlayerNBTManager(); }
     @Override public void flush() { parent.flush(); }
     @Override public File getWorldDirectory() { return parent.getWorldDirectory(); }
+
+	@Override
+	public NBTTagCompound readMapData(String name, boolean compressed) throws IOException
+	{
+		if (parent instanceof EaglerSaveHandler)
+		{
+			return ((EaglerSaveHandler)parent).readDimensionMapData(this.world.provider.getDimension(), name, compressed);
+		}
+		return ISaveHandler.super.readMapData(name, compressed);
+	}
+
+	@Override
+	public void writeMapData(String name, NBTTagCompound data, boolean compressed) throws IOException
+	{
+		if (parent instanceof EaglerSaveHandler)
+		{
+			((EaglerSaveHandler)parent).writeDimensionMapData(this.world.provider.getDimension(), name, data, compressed);
+		}
+		else
+		{
+			ISaveHandler.super.writeMapData(name, data, compressed);
+		}
+	}
 
     @Override
     public File getMapFileFromName(String name)

@@ -149,7 +149,6 @@ import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.LoaderState;
 import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher;
 import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher.ConnectionType;
@@ -285,19 +284,19 @@ public class ForgeHooks
         }
         toolInit = true;
 
-        Set<Block> blocks = ObfuscationReflectionHelper.getPrivateValue(ItemPickaxe.class, null, "field_150915"+"_c");
+        Set<Block> blocks = ItemPickaxe.getEffectiveBlocks();
         for (Block block : blocks)
         {
             block.setHarvestLevel("pickaxe", 0);
         }
 
-        blocks = ObfuscationReflectionHelper.getPrivateValue(ItemSpade.class, null, "field_150916"+"_c");
+        blocks = ItemSpade.getEffectiveBlocks();
         for (Block block : blocks)
         {
             block.setHarvestLevel("shovel", 0);
         }
 
-        blocks = ObfuscationReflectionHelper.getPrivateValue(ItemAxe.class, null, "field_150917"+"_c");
+        blocks = ItemAxe.getEffectiveBlocks();
         for (Block block : blocks)
         {
             block.setHarvestLevel("axe", 0);
@@ -1374,7 +1373,7 @@ public class ForgeHooks
                     try
                     {
                         reader = Files.newBufferedReader(file);
-                        String contents = IOUtils.toString(reader);
+                        String contents = Files.readString(file, java.nio.charset.StandardCharsets.UTF_8);
                         JsonObject json = JsonUtils.gsonDeserialize(CraftingHelper.GSON, contents, JsonObject.class);
                         if (!CraftingHelper.processConditions(json, "conditions", ctx))
                             return true;

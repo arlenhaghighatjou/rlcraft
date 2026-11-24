@@ -15,7 +15,8 @@ import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 import javax.annotation.Nullable;
-import net.minecraft.server.MinecraftServer;
+import com.arlenh7.eaglercraft.forge.RegionStorage;
+import net.lax1dude.eaglercraft.v1_8.sp.server.export.RandomAccessMemoryFile;
 
 public class RegionFile
 {
@@ -24,7 +25,7 @@ public class RegionFile
     private static final boolean FORGE_ENABLE_EXTENDED_SAVE = Boolean.parseBoolean(System.getProperty("forge.enableExtendedSave", "true"));
     private static final byte[] EMPTY_SECTOR = new byte[4096];
     private final File fileName;
-    private RandomAccessFile dataFile;
+    private RegionStorage dataFile;
     private final int[] offsets = new int[1024];
     private final int[] chunkTimestamps = new int[1024];
     private List<Boolean> sectorFree;
@@ -43,10 +44,45 @@ public class RegionFile
                 this.lastModified = fileNameIn.lastModified();
             }
 
-            this.dataFile = new RandomAccessFile(fileNameIn, "rw");
+			this.dataFile = new DiskStorage(fileNameIn);
+			this.readHeader();
+		}
+		catch (IOException ex)
+		{
+			if (this.dataFile != null)
+			{
+				try
+				{
+					this.dataFile.close();
+				}
+				catch (IOException closeFailure)
+				{
+					ex.addSuppressed(closeFailure);
+				}
+			}
+			throw new java.io.UncheckedIOException("Could not open region " + fileNameIn, ex);
+		}
+	}
 
-            if (this.dataFile.length() < 4096L)
+	public RegionFile(RandomAccessMemoryFile file) throws IOException
+	{
+		this.fileName = null;
+		this.dataFile = file;
+		this.readHeader();
+	}
+
+	public RandomAccessMemoryFile getMemoryFile()
+	{
+		if (!(this.dataFile instanceof RandomAccessMemoryFile)) throw new IllegalStateException("Region is stored on disk");
+		return (RandomAccessMemoryFile)this.dataFile;
+	}
+
+	private void readHeader() throws IOException
+	{
+			long originalLength = this.dataFile.length();
+			if (originalLength < 8192L)
             {
+				if (originalLength != 0L) throw new IOException("Incomplete region header");
                 this.dataFile.write(EMPTY_SECTOR);
                 this.dataFile.write(EMPTY_SECTOR);
                 this.sizeDelta += 8192;
@@ -54,10 +90,9 @@ public class RegionFile
 
             if ((this.dataFile.length() & 4095L) != 0L)
             {
-                for (int i = 0; (long)i < (this.dataFile.length() & 4095L); ++i)
-                {
-                    this.dataFile.write(0);
-                }
+				long length = this.dataFile.length();
+				this.dataFile.seek(length);
+				this.dataFile.write(EMPTY_SECTOR, 0, (int)(4096L - (length & 4095L)));
             }
 
             int i1 = (int)this.dataFile.length() / 4096;
@@ -78,24 +113,28 @@ public class RegionFile
                 this.offsets[j1] = k;
 
                 int length = k & 255;
+				int offset = k >>> 8;
                 if (length == 255)
                 {
-                    if ((k >> 8) <= this.sectorFree.size())
+                    if (offset >= 2 && offset < this.sectorFree.size())
                     { // We're maxed out, so we need to read the proper length from the section
-                        this.dataFile.seek((k >> 8) * 4096);
+                        this.dataFile.seek((long)offset * 4096L);
                         length = (this.dataFile.readInt() + 4)/ 4096 + 1;
                         this.dataFile.seek(j1 * 4 + 4); //Go back to where we were
                     }
                 }
-                if (k != 0 && (k >> 8) + length <= this.sectorFree.size())
+                if (offset >= 2 && length > 0 && offset + length <= this.sectorFree.size())
                 {
                     for (int l = 0; l < length; ++l)
                     {
-                        this.sectorFree.set((k >> 8) + l, Boolean.valueOf(false));
+                        this.sectorFree.set(offset + l, Boolean.valueOf(false));
                     }
                 }
                 else if (length > 0)
-                    net.minecraftforge.fml.common.FMLLog.log.warn("Invalid chunk: ({}, {}) Offset: {} Length: {} runs off end file. {}", j1 % 32, (int)(j1 / 32), k >> 8, length, fileNameIn);
+				{
+					this.offsets[j1] = 0;
+					net.minecraftforge.fml.common.FMLLog.log.warn("Invalid chunk: ({}, {}) Offset: {} Length: {} runs off end file. {}", j1 % 32, j1 / 32, offset, length, this.fileName);
+				}
             }
 
             for (int k1 = 0; k1 < 1024; ++k1)
@@ -103,12 +142,15 @@ public class RegionFile
                 int l1 = this.dataFile.readInt();
                 this.chunkTimestamps[k1] = l1;
             }
-        }
-        catch (IOException ioexception)
-        {
-            ioexception.printStackTrace();
-        }
     }
+
+	private static final class DiskStorage extends RandomAccessFile implements RegionStorage
+	{
+		DiskStorage(File file) throws IOException
+		{
+			super(file, "rw");
+		}
+	}
 
     @Deprecated // TODO: remove (1.13)
     public synchronized boolean chunkExists(int x, int z)
@@ -170,13 +212,13 @@ public class RegionFile
                             if (b0 == 1)
                             {
                                 byte[] abyte1 = new byte[l - 1];
-                                this.dataFile.read(abyte1);
+                                this.dataFile.readFully(abyte1);
                                 return new DataInputStream(new BufferedInputStream(new GZIPInputStream(new ByteArrayInputStream(abyte1))));
                             }
                             else if (b0 == 2)
                             {
                                 byte[] abyte = new byte[l - 1];
-                                this.dataFile.read(abyte);
+                                this.dataFile.readFully(abyte);
                                 return new DataInputStream(new BufferedInputStream(new InflaterInputStream(new ByteArrayInputStream(abyte))));
                             }
                             else
@@ -291,7 +333,7 @@ public class RegionFile
                 }
             }
 
-            this.setChunkTimestamp(x, z, (int)(MinecraftServer.getCurrentTimeMillis() / 1000L));
+            this.setChunkTimestamp(x, z, (int)(System.currentTimeMillis() / 1000L));
         }
         catch (IOException ioexception)
         {

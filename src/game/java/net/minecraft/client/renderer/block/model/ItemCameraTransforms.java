@@ -7,10 +7,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.lax1dude.eaglercraft.v1_8.vector.Quaternion;
 
 /*
  * @deprecated use {@link net.minecraftforge.client.model.IPerspectiveAwareModel} instead
@@ -89,23 +87,9 @@ public class ItemCameraTransforms
                 f2 = -f2;
             }
 
-            GlStateManager.rotate(makeQuaternion(f, f1, f2));
+            GlStateManager.rotateXYZ(f, f1, f2);
             GlStateManager.scale(offsetScaleX + vec.scale.x, offsetScaleY + vec.scale.y, offsetScaleZ + vec.scale.z);
         }
-    }
-
-    private static Quaternion makeQuaternion(float p_188035_0_, float p_188035_1_, float p_188035_2_)
-    {
-        float f = p_188035_0_ * 0.017453292F;
-        float f1 = p_188035_1_ * 0.017453292F;
-        float f2 = p_188035_2_ * 0.017453292F;
-        float f3 = MathHelper.sin(0.5F * f);
-        float f4 = MathHelper.cos(0.5F * f);
-        float f5 = MathHelper.sin(0.5F * f1);
-        float f6 = MathHelper.cos(0.5F * f1);
-        float f7 = MathHelper.sin(0.5F * f2);
-        float f8 = MathHelper.cos(0.5F * f2);
-        return new Quaternion(f3 * f6 * f8 + f4 * f5 * f7, f4 * f5 * f8 - f3 * f6 * f7, f3 * f5 * f8 + f4 * f6 * f7, f4 * f6 * f8 - f3 * f5 * f7);
     }
 
     @Deprecated

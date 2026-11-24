@@ -19,6 +19,12 @@
 
 package net.minecraftforge.common;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerSaveHandler;
+import net.lax1dude.eaglercraft.v1_8.sp.server.WorldsDB;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -111,7 +117,6 @@ public class ForgeChunkManager
 
     private static Map<World,Cache<Long, ChunkEntry>> dormantChunkCache = new MapMaker().weakKeys().makeMap();
 
-    private static File cfgFile;
     private static Configuration config;
     private static int playerTicketLength;
     private static int dormantChunkCacheSize;
@@ -479,23 +484,16 @@ public class ForgeChunkManager
             dormantChunkCache.put(world, CacheBuilder.newBuilder().maximumSize(dormantChunkCacheSize).build());
         }
         WorldServer worldServer = (WorldServer) world;
-        File chunkDir = worldServer.getChunkSaveLocation();
-        File chunkLoaderData = new File(chunkDir, "forcedchunks.dat");
-
-        if (chunkLoaderData.exists() && chunkLoaderData.isFile())
-        {
+		NBTTagCompound forcedChunkData;
+		try {
+			forcedChunkData = readForcedChunkData(worldServer);
+		} catch (IOException ex) {
+			FMLLog.log.warn("Unable to read chunk tickets for dimension " + worldServer.provider.getDimension(), ex);
+			return;
+		}
+		if (forcedChunkData != null) {
             ArrayListMultimap<String, Ticket> loadedTickets = ArrayListMultimap.create();
             Map<String,ListMultimap<String,Ticket>> playerLoadedTickets = Maps.newHashMap();
-            NBTTagCompound forcedChunkData;
-            try
-            {
-                forcedChunkData = CompressedStreamTools.read(chunkLoaderData);
-            }
-            catch (IOException e)
-            {
-                FMLLog.log.warn("Unable to read forced chunk data at {} - it will be ignored", chunkLoaderData.getAbsolutePath(), e);
-                return;
-            }
             NBTTagList ticketList = forcedChunkData.getTagList("TicketList", Constants.NBT.TAG_COMPOUND);
             for (int i = 0; i < ticketList.tagCount(); i++)
             {
@@ -904,9 +902,6 @@ public class ForgeChunkManager
             return;
         }
         WorldServer worldServer = (WorldServer) world;
-        File chunkDir = worldServer.getChunkSaveLocation();
-        File chunkLoaderData = new File(chunkDir, "forcedchunks.dat");
-
         NBTTagCompound forcedChunkData = new NBTTagCompound();
         NBTTagList ticketList = new NBTTagList();
         forcedChunkData.setTag("TicketList", ticketList);
@@ -951,19 +946,44 @@ public class ForgeChunkManager
             }
         }
 
-        // Write the actual file on the IO thread rather than blocking the server thread
-        ThreadedFileIOBase.getThreadedIOInstance().queueIO(() -> {
-            try
-            {
-                CompressedStreamTools.write(forcedChunkData, chunkLoaderData);
-            }
-            catch (IOException e)
-            {
-                FMLLog.log.warn("Unable to write forced chunk data to {} - chunkloading won't work", chunkLoaderData.getAbsolutePath(), e);
-            }
-            return false;
-        });
-    }
+		try {
+			VFile2 virtualFile = getVirtualChunkTicketFile(worldServer);
+			if (virtualFile != null) {
+				ByteArrayOutputStream data = new ByteArrayOutputStream();
+				try (DataOutputStream output = new DataOutputStream(data)) {
+					CompressedStreamTools.write(forcedChunkData, output);
+				}
+				virtualFile.setAllBytes(data.toByteArray());
+			} else {
+				File chunkDir = worldServer.getChunkSaveLocation();
+				java.nio.file.Files.createDirectories(chunkDir.toPath());
+				CompressedStreamTools.write(forcedChunkData, new File(chunkDir, "forcedchunks.dat"));
+			}
+		} catch (IOException ex) {
+			FMLLog.log.warn("Unable to write chunk tickets for dimension " + worldServer.provider.getDimension(), ex);
+		}
+	}
+
+	private static VFile2 getVirtualChunkTicketFile(WorldServer world) {
+		if (world.getSaveHandler() instanceof EaglerSaveHandler) {
+			return WorldsDB.newVFile(((EaglerSaveHandler) world.getSaveHandler()).getWorldPath(),
+					"level" + world.provider.getDimension(), "forcedchunks.dat");
+		}
+		return null;
+	}
+
+	private static NBTTagCompound readForcedChunkData(WorldServer world) throws IOException {
+		VFile2 virtualFile = getVirtualChunkTicketFile(world);
+		if (virtualFile != null) {
+			if (!virtualFile.exists()) {
+				return null;
+			}
+			try (DataInputStream input = new DataInputStream(virtualFile.getInputStream())) {
+				return CompressedStreamTools.read(input);
+			}
+		}
+		return CompressedStreamTools.read(new File(world.getChunkSaveLocation(), "forcedchunks.dat"));
+	}
 
     static void loadEntity(Entity entity)
     {
@@ -1042,9 +1062,9 @@ public class ForgeChunkManager
         }
     }
 
-    static void captureConfig(File configDir)
+    static void captureConfig(net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2 configDir)
     {
-        cfgFile = new File(configDir,"forgeChunkLoading.cfg");
+        net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2 cfgFile = new net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2(configDir, "forgeChunkLoading.cfg");
         config = new Configuration(cfgFile, true);
         try
         {
@@ -1052,7 +1072,7 @@ public class ForgeChunkManager
         }
         catch (Exception e)
         {
-            File dest = new File(cfgFile.getParentFile(),"forgeChunkLoading.cfg.bak");
+            net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2 dest = new net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2(configDir, "forgeChunkLoading.cfg.bak");
             if (dest.exists())
             {
                 dest.delete();

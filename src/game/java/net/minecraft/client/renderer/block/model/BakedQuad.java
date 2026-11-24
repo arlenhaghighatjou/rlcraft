@@ -12,6 +12,7 @@ public class BakedQuad implements net.minecraftforge.client.model.pipeline.IVert
     protected final int tintIndex;
     protected final EnumFacing face;
     protected final EaglerTextureAtlasSprite sprite;
+	private volatile net.optifine.model.QuadBounds bounds;
 
     /**
      * @deprecated Use constructor with the format argument.
@@ -56,6 +57,33 @@ public class BakedQuad implements net.minecraftforge.client.model.pipeline.IVert
     {
         return this.face;
     }
+
+	private net.optifine.model.QuadBounds getBounds() {
+		net.optifine.model.QuadBounds current = this.bounds;
+		if (current == null) {
+			current = new net.optifine.model.QuadBounds(this.vertexData);
+			this.bounds = current;
+		}
+		return current;
+	}
+
+	public boolean isFaceQuad() {
+		return this.getBounds().isFaceQuad(this.getFace());
+	}
+
+	public boolean isFullQuad() {
+		return this.getBounds().isFullQuad(this.getFace());
+	}
+
+	public float getMidX() {
+		net.optifine.model.QuadBounds bounds = this.getBounds();
+		return (bounds.getMinX() + bounds.getMaxX()) * 0.5F;
+	}
+
+	public float getMidZ() {
+		net.optifine.model.QuadBounds bounds = this.getBounds();
+		return (bounds.getMinZ() + bounds.getMaxZ()) * 0.5F;
+	}
 
     protected final net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat format;
     protected final boolean applyDiffuseLighting;

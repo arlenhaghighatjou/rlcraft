@@ -19,8 +19,6 @@
 
 package net.minecraftforge.registries;
 
-import com.google.common.reflect.TypeToken;
-
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -61,9 +59,25 @@ public interface IForgeRegistryEntry<V>
     @SuppressWarnings({ "serial", "unchecked" })
     public static class Impl<T  extends IForgeRegistryEntry<T>> implements IForgeRegistryEntry<T>
     {
-        private TypeToken<T> token = new TypeToken<T>(getClass()){};
-        public final IRegistryDelegate<T> delegate = new RegistryDelegate<T>((T)this, (Class<T>)token.getRawType());
+        private final Class<T> registryType = resolveRegistryType();
+        public final IRegistryDelegate<T> delegate = new RegistryDelegate<T>((T)this, registryType);
         private ResourceLocation registryName = null;
+
+        private Class<T> resolveRegistryType()
+        {
+            if (this instanceof net.minecraft.block.Block) return (Class<T>)net.minecraft.block.Block.class;
+            if (this instanceof net.minecraft.item.Item) return (Class<T>)net.minecraft.item.Item.class;
+            if (this instanceof net.minecraft.potion.Potion) return (Class<T>)net.minecraft.potion.Potion.class;
+            if (this instanceof net.minecraft.world.biome.Biome) return (Class<T>)net.minecraft.world.biome.Biome.class;
+            if (this instanceof net.minecraft.util.SoundEvent) return (Class<T>)net.minecraft.util.SoundEvent.class;
+            if (this instanceof net.minecraft.potion.PotionType) return (Class<T>)net.minecraft.potion.PotionType.class;
+            if (this instanceof net.minecraft.enchantment.Enchantment) return (Class<T>)net.minecraft.enchantment.Enchantment.class;
+            if (this instanceof net.minecraft.item.crafting.IRecipe) return (Class<T>)net.minecraft.item.crafting.IRecipe.class;
+            if (this instanceof net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession) return (Class<T>)net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession.class;
+            if (this instanceof net.minecraftforge.registries.DataSerializerEntry) return (Class<T>)net.minecraftforge.registries.DataSerializerEntry.class;
+            if (this instanceof net.minecraftforge.fml.common.registry.EntityEntry) return (Class<T>)net.minecraftforge.fml.common.registry.EntityEntry.class;
+            throw new IllegalStateException("Unknown Forge registry entry type: " + getClass().getName());
+        }
 
         public final T setRegistryName(String name)
         {
@@ -87,6 +101,6 @@ public interface IForgeRegistryEntry<V>
         }
 
         @Override
-        public final Class<T> getRegistryType() { return (Class<T>) token.getRawType(); };
+        public final Class<T> getRegistryType() { return registryType; };
     }
 }

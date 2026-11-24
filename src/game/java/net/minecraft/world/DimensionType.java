@@ -2,25 +2,34 @@ package net.minecraft.world;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.function.Supplier;
 
 public enum DimensionType
 {
-    OVERWORLD(0, "overworld", "", WorldProviderSurface.class),
-    NETHER(-1, "the_nether", "_nether", WorldProviderHell.class),
-    THE_END(1, "the_end", "_end", WorldProviderEnd.class);
+    OVERWORLD(0, "overworld", "", WorldProviderSurface.class, WorldProviderSurface::new),
+    NETHER(-1, "the_nether", "_nether", WorldProviderHell.class, WorldProviderHell::new),
+    THE_END(1, "the_end", "_end", WorldProviderEnd.class, WorldProviderEnd::new);
 
     private final int id;
     private final String name;
     private final String suffix;
     private final Class <? extends WorldProvider > clazz;
+	private final Supplier<? extends WorldProvider> factory;
     private boolean shouldLoadSpawn = false;
 
     private DimensionType(int idIn, String nameIn, String suffixIn, Class <? extends WorldProvider > clazzIn)
+	{
+		this(idIn, nameIn, suffixIn, clazzIn, null);
+	}
+
+	private DimensionType(int idIn, String nameIn, String suffixIn, Class<? extends WorldProvider> clazzIn,
+			Supplier<? extends WorldProvider> factory)
     {
         this.id = idIn;
         this.name = nameIn;
         this.suffix = suffixIn;
         this.clazz = clazzIn;
+		this.factory = factory;
         this.shouldLoadSpawn = idIn == 0;
     }
 
@@ -41,6 +50,7 @@ public enum DimensionType
 
     public WorldProvider createDimension()
     {
+		if (this.factory != null) return this.factory.get();
         try
         {
             Constructor <? extends WorldProvider > constructor = this.clazz.getConstructor();
@@ -81,7 +91,6 @@ public enum DimensionType
     public DimensionType setLoadSpawn(boolean value) { this.shouldLoadSpawn = value; return this; }
 
     private static Class<?>[] ENUM_ARGS = {int.class, String.class, String.class, Class.class};
-    static { net.minecraftforge.common.util.EnumHelper.testEnum(DimensionType.class, ENUM_ARGS); }
     public static DimensionType register(String name, String suffix, int id, Class<? extends WorldProvider> provider, boolean keepLoaded)
     {
         String enum_name = name.replace(" ", "_").toLowerCase();

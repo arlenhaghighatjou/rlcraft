@@ -41,6 +41,13 @@ public class EntityEntry extends Impl<EntityEntry>
         init();
     }
 
+	public <T extends Entity> EntityEntry(Class<T> type, String name, Function<World, T> factory)
+	{
+		this.cls = type;
+		this.name = name;
+		this.factory = java.util.Objects.requireNonNull(factory, "factory");
+	}
+
     //Protected method, to make this optional, in case people subclass this to have a better factory.
     protected void init()
     {

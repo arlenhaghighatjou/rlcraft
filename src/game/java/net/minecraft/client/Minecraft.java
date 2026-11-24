@@ -341,6 +341,7 @@ public class Minecraft implements IThreadListener
     private final Tutorial tutorial;
     long prevFrameTime = -1L;
     public int joinWorldTickCounter = 0;
+    public int bungeeOutdatedMsgTimer;
     private int dontPauseTimer = 0;
     private boolean isLANOpen = false;
     public SkullCommand eagskullCommand;
@@ -449,7 +450,8 @@ public class Minecraft implements IThreadListener
     private void init() throws IOException
     {
         this.gameSettings = new GameSettings(this);
-        this.creativeSettings = new CreativeSettings(this);
+        this.creativeSettings = new CreativeSettings(this, new java.io.File("."));
+
         Config.setGameObj(this);
         this.defaultResourcePacks.add(this.mcDefaultResourcePack);
 
@@ -597,6 +599,7 @@ public class Minecraft implements IThreadListener
         this.mojangLogo = null;
         this.loadingScreen = new LoadingScreenRenderer(this);
         this.debugRenderer = new DebugRenderer(this);
+		net.optifine.util.TextureUtils.registerResourceListener();
         net.minecraftforge.fml.client.FMLClientHandler.instance().onInitializationComplete();
 
         while (Mouse.next())
@@ -963,16 +966,7 @@ public class Minecraft implements IThreadListener
         PointerInputAbstraction.runGameLoop();
         this.gameSettings.touchscreen = PointerInputAbstraction.isTouchMode();
 
-        if (this.isGamePaused && this.world != null)
-        {
-            float f = this.timer.renderPartialTicks;
-            this.timer.updateTimer();
-            this.timer.renderPartialTicks = f;
-        }
-        else
-        {
-            this.timer.updateTimer();
-        }
+        this.timer.updateTimer();
 
         synchronized (this.scheduledTasks)
         {
@@ -1351,6 +1345,7 @@ public class Minecraft implements IThreadListener
 
             if (this.isGamePaused)
             {
+				this.renderPartialTicksPaused = this.timer.renderPartialTicks;
                 this.mcSoundHandler.pauseSounds();
             }
             else
@@ -1599,6 +1594,17 @@ public class Minecraft implements IThreadListener
         if (this.world != null)
         {
             ++this.joinWorldTickCounter;
+			if (this.bungeeOutdatedMsgTimer > 0 && --this.bungeeOutdatedMsgTimer == 0 && this.player != null
+					&& this.player.connection != null)
+			{
+				String brand = this.player.connection.getNetworkManager().getPluginBrand();
+				if ("EaglercraftXBungee".equals(brand) || "EaglercraftXVelocity".equals(brand))
+				{
+					this.ingameGUI.getChatGUI().printChatMessage(new TextComponentString(
+							TextFormatting.GOLD + "[EagX] " + TextFormatting.AQUA + "This server uses " + brand
+									+ ", a discontinued proxy plugin. Server administrators can upgrade to EaglercraftXServer."));
+				}
+			}
         }
         else
         {
@@ -2446,7 +2452,7 @@ public class Minecraft implements IThreadListener
         return instance != null && instance.gameSettings.ambientOcclusion != 0;
     }
 
-    private void middleClickMouse()
+    public void middleClickMouse()
     {
         if (this.objectMouseOver != null && this.objectMouseOver.typeOfHit != RayTraceResult.Type.MISS)
         {
@@ -2903,6 +2909,11 @@ public class Minecraft implements IThreadListener
     {
         return this.blockRenderDispatcher;
     }
+
+	public ModelManager getModelManager()
+	{
+		return this.modelManager;
+	}
 
     public RenderManager getRenderManager()
     {

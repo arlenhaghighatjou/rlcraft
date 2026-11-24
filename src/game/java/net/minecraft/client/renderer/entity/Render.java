@@ -333,8 +333,19 @@ public abstract class Render<T extends Entity>
         return this.renderManager.getFontRenderer();
     }
 
-    protected void renderLivingLabel(T entityIn, String str, double x, double y, double z, int maxDistance)
+	public static <T extends Entity> void renderNameAdapter(Render<T> renderer, T entity, double x, double y, double z) {
+		renderer.renderName(entity, x, y, z);
+	}
+
+    public void renderLivingLabel(T entityIn, String str, double x, double y, double z, int maxDistance)
     {
+		if (net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DeferredStateManager.isDeferredRenderer()) {
+			if (!net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DeferredStateManager.isEnableShadowRender()) {
+				net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.NameTagRenderer.renderNameTag(entityIn, str,
+						x, y, z, maxDistance);
+			}
+			return;
+		}
         double d0 = entityIn.getDistanceSq(this.renderManager.renderViewEntity);
 
         if (d0 <= (double)(maxDistance * maxDistance))

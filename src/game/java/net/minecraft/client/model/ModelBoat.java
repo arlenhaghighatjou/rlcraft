@@ -1,6 +1,5 @@
 package net.minecraft.client.model;
 
-import net.minecraft.client.renderer.GLAllocation;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
@@ -14,7 +13,6 @@ public class ModelBoat extends ModelBase implements IMultipassModel
     public ModelRenderer[] boatSides = new ModelRenderer[5];
     public ModelRenderer[] paddles = new ModelRenderer[2];
     public ModelRenderer noWater;
-    private final int patchList = GLAllocation.generateDisplayLists(1);
 
     public ModelBoat()
     {

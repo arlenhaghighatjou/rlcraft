@@ -34,6 +34,14 @@ public abstract class BlockStateBase implements IBlockState
         }
     };
 
+	public int getBlockId() {
+		return Block.getIdFromBlock(this.getBlock());
+	}
+
+	public int getMetadata() {
+		return this.getBlock().getMetaFromState(this);
+	}
+
     public <T extends Comparable<T>> IBlockState cycleProperty(IProperty<T> property)
     {
         return this.withProperty(property, cyclePropertyValue(property.getAllowedValues(), this.getValue(property)));

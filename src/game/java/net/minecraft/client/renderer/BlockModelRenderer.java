@@ -46,7 +46,18 @@ public class BlockModelRenderer
 
         try
         {
-            return flag ? this.renderModelSmooth(worldIn, modelIn, stateIn, posIn, buffer, checkSides, rand) : this.renderModelFlat(worldIn, modelIn, stateIn, posIn, buffer, checkSides, rand);
+			boolean rendered = flag ? this.renderModelSmooth(worldIn, modelIn, stateIn, posIn, buffer, checkSides, rand)
+					: this.renderModelFlat(worldIn, modelIn, stateIn, posIn, buffer, checkSides, rand);
+			if (checkSides && net.optifine.Config.isBetterSnow() && net.optifine.BetterSnow.shouldRender(worldIn, stateIn, posIn))
+			{
+				IBakedModel snow = net.optifine.BetterSnow.getModelSnowLayer();
+				if (snow != null)
+				{
+					IBlockState snowState = net.optifine.BetterSnow.getStateSnowLayer();
+					rendered |= this.renderModel(worldIn, snow, snowState, posIn, buffer, true, rand);
+				}
+			}
+			return rendered;
         }
         catch (Throwable throwable)
         {
@@ -71,6 +82,10 @@ public class BlockModelRenderer
 
             if (!list.isEmpty() && (!checkSides || stateIn.shouldSideBeRendered(worldIn, posIn, enumfacing)))
             {
+				if (checkSides && net.optifine.Config.isBetterGrass())
+				{
+					list = net.optifine.BetterGrass.getFaceQuads(worldIn, stateIn, posIn, enumfacing, list);
+				}
                 this.renderQuadsSmooth(worldIn, stateIn, posIn, buffer, list, afloat, bitset, blockmodelrenderer$ambientocclusionface);
                 flag = true;
             }
@@ -98,6 +113,10 @@ public class BlockModelRenderer
 
             if (!list.isEmpty() && (!checkSides || stateIn.shouldSideBeRendered(worldIn, posIn, enumfacing)))
             {
+				if (checkSides && net.optifine.Config.isBetterGrass())
+				{
+					list = net.optifine.BetterGrass.getFaceQuads(worldIn, stateIn, posIn, enumfacing, list);
+				}
                 int i = stateIn.getPackedLightmapCoords(worldIn, posIn.offset(enumfacing));
                 this.renderQuadsFlat(worldIn, stateIn, posIn, i, false, buffer, list, bitset);
                 flag = true;
@@ -362,7 +381,7 @@ public class BlockModelRenderer
     }
 
     @SideOnly(Side.CLIENT)
-    class AmbientOcclusionFace
+    public static class AmbientOcclusionFace
     {
         private final float[] vertexColorMultiplier = new float[4];
         private final int[] vertexBrightness = new int[4];

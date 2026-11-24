@@ -48,10 +48,10 @@ public class WorldConverterMCA {
 	public static void importWorld(byte[] archiveContents, String newName, byte gameRules) throws IOException {
 		logger.info("Importing world \"{}\" from MCA", newName);
 		String folderName = newName.replaceAll("[\\./\"]", "_");
-		VFile2 worldDir = EaglerIntegratedServerWorker.saveFormat.getSaveLoader(folderName, false).getWorldDirectory();
+		VFile2 worldDir = EaglerIntegratedServerWorker.saveFormat.getWorldPath(folderName);
 		while(WorldsDB.newVFile(worldDir, "level.dat").exists() || WorldsDB.newVFile(worldDir, "level.dat_old").exists()) {
 			folderName += "_";
-			worldDir = EaglerIntegratedServerWorker.saveFormat.getSaveLoader(folderName, false).getWorldDirectory();
+			worldDir = EaglerIntegratedServerWorker.saveFormat.getWorldPath(folderName);
 		}
 		List<char[]> fileNames = new ArrayList<>();
 		try(ZipInputStream zis = new ZipInputStream(new EaglerInputStream(archiveContents))) {
@@ -183,7 +183,7 @@ public class WorldConverterMCA {
 		VFile2 worldFolder;
 		try(ZipOutputStream zos = new ZipOutputStream(bao)) {
 			zos.setComment("contains backup of world '" + folderName + "'");
-			worldFolder = EaglerIntegratedServerWorker.saveFormat.getSaveLoader(folderName, false).getWorldDirectory();
+			worldFolder = EaglerIntegratedServerWorker.saveFormat.getWorldPath(folderName);
 			logger.info("Exporting world directory \"{}\" as MCA", worldFolder.getPath());
 			VFile2 vf = WorldsDB.newVFile(worldFolder, "level.dat");
 			byte[] b;
@@ -263,7 +263,7 @@ public class WorldConverterMCA {
 					String regionPath = regionFolder + etr.getKey();
 					logger.info("Writing region file: {}", regionPath);
 					zos.putNextEntry(new ZipEntry(regionPath));
-					zos.write(etr.getValue().getFile().getByteArray());
+					zos.write(etr.getValue().getMemoryFile().getByteArray());
 				}
 			}
 			logger.info("Copying extra world data...");

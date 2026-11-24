@@ -17,6 +17,7 @@
 package net.lax1dude.eaglercraft.v1_8.sp.server;
 
 import net.minecraft.world.biome.Biome;
+import net.minecraft.init.Biomes;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
@@ -61,7 +62,7 @@ public class GenLayerEaglerRivers extends GenLayer {
 		int[] aint = this.parent.getInts(x, y, w, h);
 		int[] aint1 = IntCache.getIntCache(w * h);
 
-		long a = worldGenSeed * 6364136223846793005L + 1442695040888963407L;
+		long a = getWorldGenSeed() * 6364136223846793005L + 1442695040888963407L;
 		long b = ((a & 112104l) == 0) ? (((a & 534l) == 0) ? 1l : 15l) : 746l;
 		for (int yy = 0; yy < h; ++yy) {
 			for (int xx = 0; xx < w; ++xx) {
@@ -96,7 +97,7 @@ public class GenLayerEaglerRivers extends GenLayer {
 						break;
 					}
 					if((pattern[(int)yyy] & (1 << (int)xxx)) != 0) {
-						aint1[i] = Biome.river.biomeID;
+						aint1[i] = Biome.getIdForBiome(Biomes.RIVER);
 					}
 				}
 			}

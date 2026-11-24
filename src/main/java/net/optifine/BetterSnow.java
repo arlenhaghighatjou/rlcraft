@@ -52,13 +52,13 @@ public class BetterSnow {
 				&& blockAccess.getBlockState(pos.south()).getBlock() != block
 				&& blockAccess.getBlockState(pos.west()).getBlock() != block
 				&& blockAccess.getBlockState(pos.east()).getBlock() != block ? false
-						: blockAccess.getBlockState(pos.down()).getBlock().isOpaqueCube();
+						: blockAccess.getBlockState(pos.down()).isOpaqueCube();
 	}
 
 	private static boolean checkBlock(Block block, IBlockState blockState) {
-		if (block.isFullCube()) {
+		if (blockState.isFullCube()) {
 			return false;
-		} else if (block.isOpaqueCube()) {
+		} else if (blockState.isOpaqueCube()) {
 			return false;
 		} else if (block instanceof BlockSnow) {
 			return false;

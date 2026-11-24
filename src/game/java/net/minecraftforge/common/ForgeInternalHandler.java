@@ -28,12 +28,9 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 
 public class ForgeInternalHandler
@@ -45,7 +42,6 @@ public class ForgeInternalHandler
         bus.register(WorldEvent.Save.class, EventPriority.HIGHEST, this::onDimensionSave);
         bus.register(WorldEvent.Unload.class, EventPriority.HIGHEST, this::onDimensionUnload);
         bus.register(ServerTickEvent.class, this::onServerTick);
-        bus.register(ClientTickEvent.class, this::checkSettings);
         bus.register(ChunkEvent.Unload.class, this::onChunkUnload);
     }
 
@@ -94,12 +90,6 @@ public class ForgeInternalHandler
     public void onServerTick(ServerTickEvent event)
     {
         WorldWorkerManager.tick(event.phase == TickEvent.Phase.START);
-    }
-
-    public void checkSettings(ClientTickEvent event)
-    {
-        if (event.phase == Phase.END)
-            FMLClientHandler.instance().updateCloudSettings();
     }
 
     public void onChunkUnload(ChunkEvent.Unload event)

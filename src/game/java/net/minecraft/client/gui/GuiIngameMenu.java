@@ -336,9 +336,17 @@ public class GuiIngameMenu extends GuiScreen
         {
             if (this.isVoiceMenuShown())
             {
+				if (keyCode == 1 && this.voiceMenu.isBlockingInput()) {
+					this.voiceMenu.dismissModal();
+					return;
+				}
                 this.voiceMenu.keyTyped(typedChar, keyCode);
             }
 
+			if (keyCode == 1) {
+				this.mc.displayGuiScreen(null);
+				return;
+			}
             super.keyTyped(typedChar, keyCode);
         }
         catch (GuiVoiceMenu.AbortedException ex)

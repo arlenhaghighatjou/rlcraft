@@ -34,6 +34,7 @@ public class CapabilityEnergy
 
     public static void register()
     {
+		CapabilityManager.INSTANCE.onRegistered(IEnergyStorage.class, capability -> ENERGY = capability);
         CapabilityManager.INSTANCE.register(IEnergyStorage.class, new IStorage<IEnergyStorage>()
         {
             @Override

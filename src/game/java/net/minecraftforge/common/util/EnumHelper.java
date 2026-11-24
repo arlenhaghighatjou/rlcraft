@@ -50,7 +50,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.gen.structure.StructureStrongholdPieces.Stronghold.Door;
-import net.minecraftforge.classloading.FMLForgePlugin;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nullable;
@@ -313,7 +312,7 @@ public class EnumHelper
             }
         }
 
-        int flags = (FMLForgePlugin.RUNTIME_DEOBF ? Modifier.PUBLIC : Modifier.PRIVATE) | Modifier.STATIC | Modifier.FINAL | 0x1000 /*SYNTHETIC*/;
+        int flags = Modifier.STATIC | Modifier.FINAL | 0x1000 /*SYNTHETIC*/;
         if (valuesField == null)
         {
             String valueType = String.format("[L%s;", enumType.getName().replace('.', '/'));
@@ -333,7 +332,6 @@ public class EnumHelper
         {
             final List<String> lines = Lists.newArrayList();
             lines.add(String.format("Could not find $VALUES field for enum: %s", enumType.getName()));
-            lines.add(String.format("Runtime Deobf: %s", FMLForgePlugin.RUNTIME_DEOBF));
             lines.add(String.format("Flags: %s", String.format("%16s", Integer.toBinaryString(flags)).replace(' ', '0')));
             lines.add(              "Fields:");
             for (Field field : fields)

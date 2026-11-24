@@ -25,6 +25,11 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Joiner JOINER_RESOURCE_PACKS = Joiner.on(", ");
     private final Map<String, FallbackResourceManager> domainResourceManagers = Maps.<String, FallbackResourceManager>newHashMap();
+
+	public FallbackResourceManager getDomainResourceManager(String domain)
+	{
+		return this.domainResourceManagers.get(domain);
+	}
     private final List<IResourceManagerReloadListener> reloadListeners = Lists.<IResourceManagerReloadListener>newArrayList();
     private final Set<String> setResourceDomains = Sets.<String>newLinkedHashSet();
     private final MetadataSerializer rmMetadataSerializer;

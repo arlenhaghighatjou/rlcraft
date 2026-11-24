@@ -1,5 +1,7 @@
 package net.minecraft.command;
 
+import com.arlenh7.eaglercraft.forge.CommandDebug;
+
 import net.minecraft.command.server.CommandBanIp;
 import net.minecraft.command.server.CommandBanPlayer;
 import net.minecraft.command.server.CommandBroadcast;
@@ -26,7 +28,6 @@ import net.minecraft.command.server.CommandTestFor;
 import net.minecraft.command.server.CommandTestForBlock;
 import net.minecraft.command.server.CommandWhitelist;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.rcon.RConConsoleSource;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.CommandBlockBaseLogic;
 import net.minecraft.util.text.ITextComponent;
@@ -137,9 +138,9 @@ public class ServerCommandManager extends CommandHandler implements ICommandList
                 if (entityplayer != sender && minecraftserver.getPlayerList().canSendCommands(entityplayer.getGameProfile()) && command.checkPermission(this.server, sender))
                 {
                     boolean flag1 = sender instanceof MinecraftServer && this.server.shouldBroadcastConsoleToOps();
-                    boolean flag2 = sender instanceof RConConsoleSource && this.server.shouldBroadcastRconToOps();
+                    boolean flag2 = false;
 
-                    if (flag1 || flag2 || !(sender instanceof RConConsoleSource) && !(sender instanceof MinecraftServer))
+                    if (flag1 || flag2 || !(sender instanceof MinecraftServer))
                     {
                         entityplayer.sendMessage(itextcomponent);
                     }

@@ -161,7 +161,7 @@ public class GuiScreenAddServer extends GuiScreen {
 	 * Called when the mouse is clicked. Args : mouseX, mouseY,
 	 * clickedButton
 	 */
-	protected void mouseClicked(int parInt1, int parInt2, int parInt3) {
+	protected void mouseClicked(int parInt1, int parInt2, int parInt3) throws java.io.IOException {
 		super.mouseClicked(parInt1, parInt2, parInt3);
 		this.serverIPField.mouseClicked(parInt1, parInt2, parInt3);
 		this.serverNameField.mouseClicked(parInt1, parInt2, parInt3);

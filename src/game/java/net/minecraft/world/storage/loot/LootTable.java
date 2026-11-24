@@ -125,7 +125,7 @@ public class LootTable
         }
 
         stacks.addAll(list);
-        Collections.shuffle(stacks, rand);
+		rand.shuffle(stacks);
     }
 
     private List<Integer> getEmptySlotsRandomized(IInventory inventory, EaglercraftRandom rand)
@@ -140,7 +140,7 @@ public class LootTable
             }
         }
 
-        Collections.shuffle(list, rand);
+		rand.shuffle(list);
         return list;
     }
 

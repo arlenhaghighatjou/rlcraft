@@ -103,6 +103,7 @@ public class WebSocketNetworkManager extends EaglercraftNetworkManager {
 					if(handled != null) {
 						handled.processPacket(nethandler);
 					}
+				}catch(net.minecraft.network.PacketThreadUtil.DeferredPacket deferred) {
 				}catch(Throwable t) {
 					logger.error("Failed to process {}! It'll be skipped for debug purposes.", pkt.getClass().getSimpleName());
 					logger.error(t);

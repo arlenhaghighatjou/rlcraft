@@ -21,6 +21,11 @@ public class FallbackResourceManager implements IResourceManager
 {
     private static final Logger LOGGER = LogManager.getLogger();
     protected final List<IResourcePack> resourcePacks = Lists.<IResourcePack>newArrayList();
+
+	public List<IResourcePack> getResourcePacks()
+	{
+		return java.util.Collections.unmodifiableList(this.resourcePacks);
+	}
     private final MetadataSerializer frmMetadataSerializer;
 
     public FallbackResourceManager(MetadataSerializer frmMetadataSerializerIn)

@@ -45,4 +45,8 @@ public class Unpooled {
 	public static ByteBuf wrappedBuffer(ByteBuf buf) {
 		return buf.duplicate();
 	}
+
+	public static ByteBuf wrappedBuffer(byte[] data) {
+		return buffer(data, data.length).writerIndex(data.length);
+	}
 }

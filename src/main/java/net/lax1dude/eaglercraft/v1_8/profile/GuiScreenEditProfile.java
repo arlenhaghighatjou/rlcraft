@@ -422,7 +422,7 @@ public class GuiScreenEditProfile extends GuiScreen {
 		}
 	}
 	
-	protected void mouseClicked(int mx, int my, int button) {
+	protected void mouseClicked(int mx, int my, int button) throws java.io.IOException {
 		usernameField.mouseClicked(mx, my, button);
 		if (button == 0) {
 			if(!EagRuntime.getConfiguration().isDemo()) {

@@ -29,7 +29,6 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
@@ -68,7 +67,6 @@ public class WorldEvent extends Event
      * This event is fired when a world is loaded in
      * {@link WorldClient#WorldClient(NetHandlerPlayClient, WorldSettings, int, EnumDifficulty, Profiler)},
      * {@link MinecraftServer#loadAllWorlds(String, String, long, WorldType, String)},
-     * {@link IntegratedServer#loadAllWorlds(String, String, long, WorldType, String)}
      * {@link DimensionManager#initDimension(int)},
      * and {@link ForgeInternalHandler#onDimensionLoad(Load)}. <br>
      * <br>

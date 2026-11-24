@@ -369,7 +369,15 @@ public class NetworkDispatcher {
         }
         else
         {
-            List<Packet<INetHandlerPlayClient>> parts = msg.toS3FPackets();
+			List<Packet<INetHandlerPlayClient>> parts;
+			try
+			{
+				parts = msg.toS3FPackets();
+			}
+			catch (IOException ex)
+			{
+				throw new java.io.UncheckedIOException("Could not encode Forge packet " + msg.channel(), ex);
+			}
             for (int i = 0, l = parts.size(); i < l; ++i)
             {
                 manager.sendPacket(parts.get(i));

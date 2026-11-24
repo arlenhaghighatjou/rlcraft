@@ -111,10 +111,17 @@ public class EaglerIntegratedServerWorker {
 	}
 
 	public static void closeChannel(String channel) {
+		closeChannel(channel, new TextComponentString("End of stream"));
+	}
+
+	public static void closeChannel(String channel, net.minecraft.util.text.ITextComponent reason) {
 		IntegratedServerPlayerNetworkManager netmanager = openChannels.remove(channel);
 		if(netmanager != null) {
-			netmanager.closeChannel(new TextComponentString("End of stream"));
-			sendIPCPacket(new IPCPacket0CPlayerChannel(channel, false));
+			try {
+				netmanager.onChannelClosed(reason);
+			} finally {
+				sendIPCPacket(new IPCPacket0CPlayerChannel(channel, false));
+			}
 		}
 	}
 
@@ -146,7 +153,11 @@ public class EaglerIntegratedServerWorker {
 				
 				currentProcess = new EaglerMinecraftServer(pkt.worldName, pkt.ownerName, pkt.initialViewDistance, newWorldSettings, pkt.demoMode);
 				currentProcess.setBaseServerProperties(EnumDifficulty.getDifficultyEnum(pkt.initialDifficulty), newWorldSettings == null ? GameType.SURVIVAL : newWorldSettings.getGameType());
-				currentProcess.startServer();
+				if (!currentProcess.startServer()) {
+					tryStopServer();
+					sendTaskFailed();
+					break;
+				}
 				
 				String[] worlds = EaglerSaveFormat.worldsList.getAllLines();
 				if(worlds == null || (worlds.length == 1 && worlds[0].trim().length() <= 0)) {
@@ -184,9 +195,14 @@ public class EaglerIntegratedServerWorker {
 			case IPCPacket02InitWorld.ID: {
 				tryStopServer();
 				IPCPacket02InitWorld pkt = (IPCPacket02InitWorld)ipc;
+				if (pkt.worldType < 0 || pkt.worldType >= WorldType.WORLD_TYPES.length
+						|| WorldType.WORLD_TYPES[pkt.worldType] == null) {
+					sendTaskFailed();
+					break;
+				}
 				newWorldSettings = new WorldSettings(pkt.seed, GameType.getByID(pkt.gamemode), pkt.structures,
-						pkt.hardcore, WorldType.worldTypes[pkt.worldType]);
-				newWorldSettings.setWorldName(pkt.worldArgs); // "setWorldName" is actually for setting generator arguments, MCP fucked up
+						pkt.hardcore, WorldType.WORLD_TYPES[pkt.worldType]);
+				newWorldSettings.setGeneratorOptions(pkt.worldArgs);
 				if(pkt.bonusChest) {
 					newWorldSettings.enableBonusChest();
 				}
@@ -236,7 +252,7 @@ public class EaglerIntegratedServerWorker {
 				if(pkt.duplicate) {
 					b = saveFormat.duplicateWorld(pkt.worldName, pkt.displayName);
 				}else {
-					b = saveFormat.renameWorld(pkt.worldName, pkt.displayName);
+					b = saveFormat.renameWorldChecked(pkt.worldName, pkt.displayName);
 				}
 				if(!b) {
 					sendTaskFailed();
@@ -335,11 +351,8 @@ public class EaglerIntegratedServerWorker {
 									// shit fuck
 								}
 							}
-							rewrite = true;
-							logger.error("World level.dat for '{}' was not found, attempting to delete", w);
-							if(!saveFormat.deleteWorldDirectory(w)) {
-								logger.error("Failed to delete '{}'! It will be removed from the worlds list anyway", w);
-							}
+							updatedList.add(w);
+							logger.error("World metadata for '{}' could not be read", w);
 						}else {
 							rewrite = true;
 						}
@@ -373,7 +386,7 @@ public class EaglerIntegratedServerWorker {
 				if(!pkt.iceServers.isEmpty() && ServerPlatformSingleplayer.getClientConfigAdapter().isAllowVoiceClient()) {
 					currentProcess.enableVoice(pkt.iceServers.toArray(new String[pkt.iceServers.size()]));
 				}
-				currentProcess.getPlayerList().configureLAN(pkt.gamemode, pkt.cheats); // don't use iceServers
+				((EaglerPlayerList)currentProcess.getPlayerList()).configureLAN(GameType.getByID(pkt.gamemode), pkt.cheats);
 
 				break;
 			}

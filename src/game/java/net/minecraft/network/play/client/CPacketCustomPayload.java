@@ -57,11 +57,6 @@ public class CPacketCustomPayload implements Packet<INetHandlerPlayServer>
     public void processPacket(INetHandlerPlayServer handler)
     {
         handler.processCustomPayload(this);
-
-        if (this.data != null)
-        {
-            this.data.release();
-        }
     }
 
     public String getChannelName()

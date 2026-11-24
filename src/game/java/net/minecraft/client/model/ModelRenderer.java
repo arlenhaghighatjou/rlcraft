@@ -271,7 +271,7 @@ public class ModelRenderer
     @SideOnly(Side.CLIENT)
     private void compileDisplayList(float scale)
     {
-        this.displayList = GLAllocation.generateDisplayLists(1);
+        this.displayList = GLAllocation.generateDisplayLists();
         EaglercraftGPU.glNewList(this.displayList, 4864);
         WorldRenderer bufferbuilder = Tessellator.getInstance().getBuffer();
 

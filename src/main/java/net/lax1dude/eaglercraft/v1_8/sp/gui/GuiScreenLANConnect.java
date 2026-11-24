@@ -65,7 +65,7 @@ public class GuiScreenLANConnect extends GuiScreen {
 		this.codeTextField.updateCursorCounter();
 	}
 
-	protected void mouseClicked(int par1, int par2, int par3) {
+	protected void mouseClicked(int par1, int par2, int par3) throws java.io.IOException {
 		super.mouseClicked(par1, par2, par3);
 		this.codeTextField.mouseClicked(par1, par2, par3);
 		this.relaysButton.mouseClicked(par1, par2, par3);

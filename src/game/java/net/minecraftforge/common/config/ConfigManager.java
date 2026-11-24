@@ -19,7 +19,7 @@
 
 package net.minecraftforge.common.config;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Locale;
@@ -146,8 +146,8 @@ public class ConfigManager
     public static void sync(String modid, Config.Type type)
     {
         FMLLog.log.debug("Attempting to inject @Config classes into {} for type {}", modid, type);
-        ClassLoader mcl = Loader.instance().getModClassLoader();
-        File configDir = Loader.instance().getConfigDir();
+        ClassLoader mcl = ConfigManager.class.getClassLoader();
+        VFile2 configDir = Loader.instance().getConfigDir();
         Multimap<Config.Type, ASMData> map = asm_data.get(modid);
 
         if (map == null)
@@ -169,14 +169,14 @@ public class ConfigManager
                 if (category == null)
                     category = "general";
 
-                File file = new File(configDir, name + ".cfg");
+                VFile2 file = new VFile2(configDir, name + ".cfg");
 
-                Configuration cfg = CONFIGS.get(file.getAbsolutePath());
+                Configuration cfg = CONFIGS.get(file.getPath());
                 if (cfg == null)
                 {
                     cfg = new Configuration(file);
                     cfg.load();
-                    CONFIGS.put(file.getAbsolutePath(), cfg);
+                    CONFIGS.put(file.getPath(), cfg);
                 }
 
                 sync(cfg, cls, modid, category, !Loader.instance().hasReachedState(LoaderState.AVAILABLE), null);
@@ -208,9 +208,9 @@ public class ConfigManager
     static Configuration getConfiguration(String modid, String name) {
         if (Strings.isNullOrEmpty(name))
             name = modid;
-        File configDir = Loader.instance().getConfigDir();
-        File configFile = new File(configDir, name + ".cfg");
-        return CONFIGS.get(configFile.getAbsolutePath());
+        VFile2 configDir = Loader.instance().getConfigDir();
+        VFile2 configFile = new VFile2(configDir, name + ".cfg");
+        return CONFIGS.get(configFile.getPath());
     }
 
     private static void sync(Configuration cfg, Class<?> cls, String modid, String category, boolean loading, Object instance)

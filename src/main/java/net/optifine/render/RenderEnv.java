@@ -5,7 +5,6 @@ import java.util.BitSet;
 import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.state.BlockStateBase;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BlockModelRenderer;
 import net.minecraft.client.renderer.RegionRenderCacheBuilder;
@@ -64,12 +63,7 @@ public class RenderEnv {
 
 	public int getBlockId() {
 		if (this.blockId < 0) {
-			if (this.blockState instanceof BlockStateBase) {
-				BlockStateBase blockstatebase = (BlockStateBase) this.blockState;
-				this.blockId = blockstatebase.getBlockId();
-			} else {
-				this.blockId = Block.getIdFromBlock(this.blockState.getBlock());
-			}
+			this.blockId = Block.getIdFromBlock(this.blockState.getBlock());
 		}
 
 		return this.blockId;
@@ -77,12 +71,7 @@ public class RenderEnv {
 
 	public int getMetadata() {
 		if (this.metadata < 0) {
-			if (this.blockState instanceof BlockStateBase) {
-				BlockStateBase blockstatebase = (BlockStateBase) this.blockState;
-				this.metadata = blockstatebase.getMetadata();
-			} else {
-				this.metadata = this.blockState.getBlock().getMetaFromState(this.blockState);
-			}
+			this.metadata = this.blockState.getBlock().getMetaFromState(this.blockState);
 		}
 
 		return this.metadata;

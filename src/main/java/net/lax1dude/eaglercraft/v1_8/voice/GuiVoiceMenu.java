@@ -771,4 +771,13 @@ public class GuiVoiceMenu extends Gui {
 		return showSliderBlocks || showSliderVolume || showPTTKeyConfig || showingCompatWarning || showingTrackingWarning;
 	}
 
+	public void dismissModal() {
+		showSliderBlocks = false;
+		showSliderVolume = false;
+		showPTTKeyConfig = false;
+		showingCompatWarning = false;
+		showingTrackingWarning = false;
+		continueChannel = null;
+	}
+
 }

@@ -576,7 +576,6 @@ public class ModelBlockAnimation
         .registerTypeAdapter(ImmutableList.class, JsonUtils.ImmutableListTypeAdapter.INSTANCE)
         .registerTypeAdapter(ImmutableMap.class, JsonUtils.ImmutableMapTypeAdapter.INSTANCE)
         .setPrettyPrinting()
-        .enableComplexMapKeySerialization()
         .disableHtmlEscaping()
         .create();
 

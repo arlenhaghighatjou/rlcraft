@@ -19,6 +19,7 @@ package net.lax1dude.eaglercraft.v1_8.sp.server;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 
 public class ClientCommandDummy extends CommandBase {
@@ -34,7 +35,7 @@ public class ClientCommandDummy extends CommandBase {
 	}
 
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return commandName;
 	}
 
@@ -44,13 +45,13 @@ public class ClientCommandDummy extends CommandBase {
 	}
 
 	@Override
-	public String getCommandUsage(ICommandSender var1) {
+	public String getUsage(ICommandSender sender) {
 		return commandUsage;
 	}
 
 	@Override
-	public void processCommand(ICommandSender var1, String[] var2) throws CommandException {
-		var1.sendMessage(new TextComponentTranslation("command.clientStub"));
+	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+		sender.sendMessage(new TextComponentTranslation("command.clientStub"));
 	}
 
 }

@@ -1,10 +1,16 @@
 package net.minecraft.client.renderer.texture;
 
+import static net.lax1dude.eaglercraft.v1_8.internal.PlatformOpenGL.*;
 
 import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.internal.IFramebufferGL;
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.texture.EaglerTextureAtlasSpritePBR;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.texture.PBRTextureMapUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +28,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.lax1dude.eaglercraft.v1_8.IOUtils;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
@@ -39,6 +44,15 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
     private final ITextureMapPopulator iconCreator;
     private int mipmapLevels;
     private final EaglerTextureAtlasSprite missingImage;
+	private boolean eaglerPBRMode;
+	public int eaglerPBRMaterialTexture = -1;
+	private static final int FRAMEBUFFER = 0x8D40;
+	private static final int COLOR_ATTACHMENT = 0x8CE0;
+	private static final int TEXTURE_2D = 0x0DE1;
+	private IFramebufferGL[] animationTargets;
+	private IFramebufferGL[] materialAnimationTargets;
+	private int width;
+	private int height;
 
     public TextureMap(String basePathIn)
     {
@@ -61,13 +75,14 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         this.mapRegisteredSprites = Maps.<String, EaglerTextureAtlasSprite>newHashMap();
         this.mapUploadedSprites = Maps.<String, EaglerTextureAtlasSprite>newHashMap();
         this.missingImage = new EaglerTextureAtlasSprite("missingno");
+		this.missingImage.setIndexInMap(0);
         this.basePath = basePathIn;
         this.iconCreator = iconCreatorIn;
     }
 
     private void initMissingImage()
     {
-        int[] aint = TextureUtil.MISSING_TEXTURE_DATA;
+        int[] aint = TextureUtil.missingTextureData;
         this.missingImage.setIconWidth(16);
         this.missingImage.setIconHeight(16);
         int[][] aint1 = new int[this.mipmapLevels + 1][];
@@ -85,9 +100,16 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
 
     public void loadSprites(IResourceManager resourceManager, ITextureMapPopulator iconCreatorIn)
     {
+		for (EaglerTextureAtlasSprite sprite : this.listAnimatedSprites) sprite.clearFramesTextureData();
         this.mapRegisteredSprites.clear();
         net.minecraftforge.client.ForgeHooksClient.onTextureStitchedPre(this);
         iconCreatorIn.registerSprites(this);
+		if (this == Minecraft.getMinecraft().getTextureMapBlocks())
+		{
+			net.optifine.ConnectedTextures.updateIcons(this);
+			net.optifine.CustomItems.updateIcons(this);
+			net.optifine.BetterGrass.updateIcons(this);
+		}
         this.initMissingImage();
         this.deleteGlTexture();
         this.loadTextureAtlas(resourceManager);
@@ -96,7 +118,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
     public void loadTextureAtlas(IResourceManager resourceManager)
     {
         int i = Minecraft.getGLMaximumTextureSize();
-        Stitcher stitcher = new Stitcher(i, i, 0, this.mipmapLevels);
+        Stitcher stitcher = new Stitcher(i, this.eaglerPBRMode ? i >> 1 : i, 0, this.mipmapLevels);
         this.mapUploadedSprites.clear();
         this.listAnimatedSprites.clear();
         int j = Integer.MAX_VALUE;
@@ -120,7 +142,6 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
             return j;
         }
         ResourceLocation resourcelocation = this.getResourceLocation(textureatlassprite);
-        IResource iresource = null;
 
         for(ResourceLocation loading : loadingSprites)
         {
@@ -154,10 +175,31 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
             }
             else
             {
-                PngSizeInfo pngsizeinfo = PngSizeInfo.makeFromResource(resourceManager.getResource(resourcelocation));
-                iresource = resourceManager.getResource(resourcelocation);
-                boolean flag = iresource.getMetadata("animation") != null;
-                textureatlassprite.loadSprite(pngsizeinfo, flag);
+				try (IResource resource = resourceManager.getResource(resourcelocation))
+				{
+					ImageData image = TextureUtil.readBufferedImage(resource.getInputStream());
+					ImageData[] levels = new ImageData[this.mipmapLevels + 1];
+					levels[0] = image;
+					if (textureatlassprite instanceof EaglerTextureAtlasSpritePBR)
+					{
+						ImageData[] normals = new ImageData[levels.length];
+						ImageData[] materials = new ImageData[levels.length];
+						normals[0] = PBRTextureMapUtils.locateCompanionTexture(resourceManager, resource, "_n");
+						materials[0] = PBRTextureMapUtils.locateCompanionTexture(resourceManager, resource, "_s");
+						boolean staticNormals = normals[0] == null;
+						boolean staticMaterials = materials[0] == null;
+						if (staticNormals) normals[0] = PBRTextureMapUtils.defaultNormalsTexture;
+						if (staticMaterials) materials[0] = PBRTextureMapUtils.generateMaterialTextureFor(
+								textureatlassprite.getIconName(), textureatlassprite.optifineBaseTextureName);
+						PBRTextureMapUtils.unifySizes(0, levels, normals, materials);
+						textureatlassprite.loadSpritePBR(new ImageData[][] { levels, normals, materials },
+								resource.getMetadata("animation"), staticNormals, staticMaterials);
+					}
+					else
+					{
+						textureatlassprite.loadSprite(levels, resource.getMetadata("animation"));
+					}
+				}
             }
             }
             catch (RuntimeException runtimeexception)
@@ -170,10 +212,6 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
                 net.minecraftforge.fml.client.FMLClientHandler.instance().trackMissingTexture(resourcelocation);
                 return j;
             }
-            finally
-            {
-                IOUtils.closeQuietly((Closeable)iresource);
-            }
 
             j = Math.min(j, Math.min(textureatlassprite.getIconWidth(), textureatlassprite.getIconHeight()));
             int j1 = Math.min(Integer.lowestOneBit(textureatlassprite.getIconWidth()), Integer.lowestOneBit(textureatlassprite.getIconHeight()));
@@ -184,8 +222,8 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
                 LOGGER.warn("Texture {} with size {}x{} will have visual artifacts at mip level {}, it can only support level {}. Please report to the mod author that the texture should be some multiple of 16x16.", resourcelocation, Integer.valueOf(textureatlassprite.getIconWidth()), Integer.valueOf(textureatlassprite.getIconHeight()), Integer.valueOf(MathHelper.log2(k)), Integer.valueOf(MathHelper.log2(j1)));
             }
 
-            if (generateMipmaps(resourceManager, textureatlassprite))
-            stitcher.addSprite(textureatlassprite);
+			generateMipmaps(textureatlassprite);
+			stitcher.addSprite(textureatlassprite);
             return j;
         }
         finally
@@ -225,6 +263,13 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         LOGGER.info("Created: {}x{} {}-atlas", Integer.valueOf(stitcher.getCurrentWidth()), Integer.valueOf(stitcher.getCurrentHeight()), this.basePath);
         bar.step("Allocating GL texture");
         TextureUtil.allocateTextureImpl(this.getGlTextureId(), this.mipmapLevels, stitcher.getCurrentWidth(), stitcher.getCurrentHeight());
+		this.width = stitcher.getCurrentWidth();
+		this.height = stitcher.getCurrentHeight();
+		if (this.eaglerPBRMode)
+		{
+			this.eaglerPBRMaterialTexture = GlStateManager.generateTexture();
+			TextureUtil.allocateTextureImpl(this.eaglerPBRMaterialTexture, this.mipmapLevels, this.width, this.height << 1);
+		}
         Map<String, EaglerTextureAtlasSprite> map = Maps.<String, EaglerTextureAtlasSprite>newHashMap(this.mapRegisteredSprites);
 
         net.minecraftforge.fml.common.ProgressManager.pop(bar);
@@ -240,7 +285,9 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
 
                 try
                 {
-                    TextureUtil.uploadTextureMipmap(textureatlassprite1.getFrameTextureData(0), textureatlassprite1.getIconWidth(), textureatlassprite1.getIconHeight(), textureatlassprite1.getOriginX(), textureatlassprite1.getOriginY(), false, false);
+					TextureUtil.bindTexture(this.getGlTextureId());
+                    TextureUtil.uploadTextureMipmap(textureatlassprite1.getFrameTextureData(textureatlassprite1.getInitialFrameIndex()), textureatlassprite1.getIconWidth(), textureatlassprite1.getIconHeight(), textureatlassprite1.getOriginX(), textureatlassprite1.getOriginY(), false, false);
+					if (this.eaglerPBRMaterialTexture != -1) this.uploadMaterial(textureatlassprite1);
                 }
                 catch (Throwable throwable)
                 {
@@ -262,47 +309,17 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         {
             textureatlassprite2.copyFrom(this.missingImage);
         }
+		TextureUtil.bindTexture(this.getGlTextureId());
         net.minecraftforge.client.ForgeHooksClient.onTextureStitchedPost(this);
         net.minecraftforge.fml.common.ProgressManager.pop(bar);
     }
 
-    private boolean generateMipmaps(IResourceManager resourceManager, final EaglerTextureAtlasSprite texture)
+    private void generateMipmaps(final EaglerTextureAtlasSprite texture)
     {
-        ResourceLocation resourcelocation = this.getResourceLocation(texture);
-        IResource iresource = null;
-        label62:
-        {
-            boolean flag;
-            if (texture.hasCustomLoader(resourceManager, resourcelocation)) break label62;
-            try
-            {
-                iresource = resourceManager.getResource(resourcelocation);
-                texture.loadSpriteFrames(iresource, this.mipmapLevels + 1);
-                break label62;
-            }
-            catch (RuntimeException runtimeexception)
-            {
-                LOGGER.error("Unable to parse metadata from {}", resourcelocation, runtimeexception);
-                flag = false;
-            }
-            catch (IOException ioexception)
-            {
-                LOGGER.error("Using missing texture, unable to load {}", resourcelocation, ioexception);
-                flag = false;
-                return flag;
-            }
-            finally
-            {
-                IOUtils.closeQuietly((Closeable)iresource);
-            }
-
-            return flag;
-        }
 
         try
         {
             texture.generateMipmaps(this.mipmapLevels);
-            return true;
         }
         catch (Throwable throwable)
         {
@@ -337,6 +354,10 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
     private ResourceLocation getResourceLocation(EaglerTextureAtlasSprite p_184396_1_)
     {
         ResourceLocation resourcelocation = new ResourceLocation(p_184396_1_.getIconName());
+		String path = resourcelocation.getResourcePath();
+		if (path.startsWith("mcpatcher/") || path.startsWith("optifine/")) {
+			return new ResourceLocation(resourcelocation.getResourceDomain(), path + ".png");
+		}
         return new ResourceLocation(resourcelocation.getResourceDomain(), String.format("%s/%s%s", this.basePath, resourcelocation.getResourcePath(), ".png"));
     }
 
@@ -354,15 +375,124 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
 
     public void updateAnimations()
     {
-        TextureUtil.bindTexture(this.getGlTextureId());
-
-        for (EaglerTextureAtlasSprite textureatlassprite : this.listAnimatedSprites)
-        {
-            textureatlassprite.updateAnimation();
-        }
+		if (this.listAnimatedSprites.isEmpty()) return;
+		for (EaglerTextureAtlasSprite sprite : this.listAnimatedSprites)
+		{
+			if (sprite instanceof EaglerTextureAtlasSpritePBR) sprite.updateAnimationPBR();
+			else sprite.updateAnimation();
+		}
+		if (this.animationTargets == null) this.animationTargets = new IFramebufferGL[this.mipmapLevels + 1];
+		if (this.eaglerPBRMaterialTexture != -1 && this.materialAnimationTargets == null)
+		{
+			this.materialAnimationTargets = new IFramebufferGL[this.mipmapLevels + 1];
+		}
+		try
+		{
+			for (int level = 0; level < this.animationTargets.length; ++level)
+			{
+				bindAnimationTarget(this.animationTargets, this.getGlTextureId(), level);
+				int levelWidth = this.width >> level;
+				int levelHeight = this.height >> level;
+				GlStateManager.viewport(0, 0, levelWidth, levelHeight);
+				for (EaglerTextureAtlasSprite sprite : this.listAnimatedSprites)
+				{
+					if (sprite instanceof EaglerTextureAtlasSpritePBR) sprite.copyAnimationFramePBR(0, levelWidth, levelHeight, level);
+					else sprite.copyAnimationFrame(levelWidth, levelHeight, level);
+				}
+				if (this.materialAnimationTargets != null)
+				{
+					bindAnimationTarget(this.materialAnimationTargets, this.eaglerPBRMaterialTexture, level);
+					GlStateManager.viewport(0, 0, levelWidth, levelHeight << 1);
+					for (EaglerTextureAtlasSprite sprite : this.listAnimatedSprites)
+					{
+						if (sprite instanceof EaglerTextureAtlasSpritePBR) sprite.copyAnimationFramePBR(1, levelWidth, levelHeight << 1, level);
+					}
+				}
+			}
+		}
+		finally
+		{
+			_wglBindFramebuffer(FRAMEBUFFER, null);
+		}
     }
 
+	private void uploadMaterial(EaglerTextureAtlasSprite sprite)
+	{
+		int[][] normals;
+		int[][] materials;
+		if (sprite instanceof EaglerTextureAtlasSpritePBR)
+		{
+			int[][][] frames = ((EaglerTextureAtlasSpritePBR)sprite).getFramePBRTextureData(sprite.getInitialFrameIndex());
+			normals = frames[1];
+			materials = frames[2];
+		}
+		else
+		{
+			normals = constantMipmaps(sprite, PBRTextureMapUtils.defaultNormalsTexture.pixels[0]);
+			materials = constantMipmaps(sprite, PBRTextureMapUtils.generateMaterialTextureFor(
+					sprite.getIconName(), sprite.optifineBaseTextureName).pixels[0]);
+		}
+		TextureUtil.bindTexture(this.eaglerPBRMaterialTexture);
+		TextureUtil.uploadTextureMipmap(normals, sprite.getIconWidth(), sprite.getIconHeight(),
+				sprite.getOriginX(), sprite.getOriginY(), false, false);
+		TextureUtil.uploadTextureMipmap(materials, sprite.getIconWidth(), sprite.getIconHeight(),
+				sprite.getOriginX(), sprite.getOriginY() + this.height, false, false);
+	}
+
+	private int[][] constantMipmaps(EaglerTextureAtlasSprite sprite, int color)
+	{
+		int[][] pixels = new int[this.mipmapLevels + 1][];
+		for (int level = 0; level < pixels.length; ++level)
+		{
+			pixels[level] = new int[(sprite.getIconWidth() >> level) * (sprite.getIconHeight() >> level)];
+			java.util.Arrays.fill(pixels[level], color);
+		}
+		return pixels;
+	}
+
+	private static void bindAnimationTarget(IFramebufferGL[] targets, int texture, int level)
+	{
+		IFramebufferGL target = targets[level];
+		if (target == null)
+		{
+			target = targets[level] = _wglCreateFramebuffer();
+			_wglBindFramebuffer(FRAMEBUFFER, target);
+			_wglFramebufferTexture2D(FRAMEBUFFER, COLOR_ATTACHMENT, TEXTURE_2D,
+					EaglercraftGPU.getNativeTexture(texture), level);
+		}
+		else
+		{
+			_wglBindFramebuffer(FRAMEBUFFER, target);
+		}
+	}
+
+	@Override
+	public void deleteGlTexture()
+	{
+		if (this.animationTargets != null)
+		{
+			for (IFramebufferGL target : this.animationTargets) if (target != null) _wglDeleteFramebuffer(target);
+			this.animationTargets = null;
+		}
+		if (this.materialAnimationTargets != null)
+		{
+			for (IFramebufferGL target : this.materialAnimationTargets) if (target != null) _wglDeleteFramebuffer(target);
+			this.materialAnimationTargets = null;
+		}
+		if (this.eaglerPBRMaterialTexture != -1)
+		{
+			TextureUtil.deleteTexture(this.eaglerPBRMaterialTexture);
+			this.eaglerPBRMaterialTexture = -1;
+		}
+		super.deleteGlTexture();
+	}
+
     public EaglerTextureAtlasSprite registerSprite(ResourceLocation location)
+	{
+		return this.registerSprite(location, null);
+	}
+
+	public EaglerTextureAtlasSprite registerSprite(ResourceLocation location, String optifineBaseTexture)
     {
         if (location == null)
         {
@@ -374,13 +504,19 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
 
             if (textureatlassprite == null)
             {
-                textureatlassprite = EaglerTextureAtlasSprite.makeAtlasSprite(location);
+                textureatlassprite = this.eaglerPBRMode ? new EaglerTextureAtlasSpritePBR(location.toString()) : EaglerTextureAtlasSprite.makeAtlasSprite(location);
+				textureatlassprite.setIndexInMap(this.mapRegisteredSprites.size() + 1);
                 this.mapRegisteredSprites.put(location.toString(), textureatlassprite);
             }
+			if (optifineBaseTexture != null) textureatlassprite.optifineBaseTextureName = optifineBaseTexture;
 
             return textureatlassprite;
         }
     }
+
+	public int getCountRegisteredSprites() {
+		return this.mapRegisteredSprites.size();
+	}
 
     public void tick()
     {
@@ -396,6 +532,11 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
     {
         return this.missingImage;
     }
+
+	public void setEnablePBREagler(boolean enable)
+	{
+		this.eaglerPBRMode = enable;
+	}
 
     //===================================================================================================
     //                                           Forge Start
@@ -429,6 +570,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         String name = entry.getIconName();
         if (!mapRegisteredSprites.containsKey(name))
         {
+			entry.setIndexInMap(this.mapRegisteredSprites.size() + 1);
             mapRegisteredSprites.put(name, entry);
             return true;
         }
@@ -444,4 +586,14 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
     {
         return mipmapLevels;
     }
+
+	public int getWidth()
+	{
+		return this.width;
+	}
+
+	public int getHeight()
+	{
+		return this.height;
+	}
 }

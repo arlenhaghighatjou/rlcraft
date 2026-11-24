@@ -24,10 +24,15 @@ public class SaveFormatOld implements ISaveFormat
     protected final DataFixer dataFixer;
 
     public SaveFormatOld(File savesDirectoryIn, DataFixer dataFixerIn)
+	{
+		this(savesDirectoryIn, dataFixerIn, true);
+	}
+
+	protected SaveFormatOld(File savesDirectoryIn, DataFixer dataFixerIn, boolean createDirectory)
     {
         this.dataFixer = dataFixerIn;
 
-        if (!savesDirectoryIn.exists())
+        if (createDirectory && !savesDirectoryIn.exists())
         {
             savesDirectoryIn.mkdirs();
         }

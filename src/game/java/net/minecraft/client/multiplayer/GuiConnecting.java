@@ -178,7 +178,7 @@ public class GuiConnecting extends GuiScreen {
 					}
 				}
 			}
-			if (timer > 200) {
+			if (timer > 200 && mc.currentScreen == this) {
 				if (webSocket != null) {
 					webSocket.close();
 				}

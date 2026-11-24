@@ -99,14 +99,17 @@ public class B3DModel
                 // slower default for others
                 IOUtils.readFully(in, tag);
                 byte[] tmp = new byte[4];
-                IOUtils.readFully(in, tmp);
+                if (IOUtils.readFully(in, tmp) != tmp.length) throw new java.io.EOFException();
                 int l = ByteBuffer.wrap(tmp).order(ByteOrder.LITTLE_ENDIAN).getInt();
                 if(l < 0 || l + 8 < 0) throw new IOException("File is too large");
                 buf = ByteBuffer.allocate(l + 8).order(ByteOrder.LITTLE_ENDIAN);
                 buf.clear();
                 buf.put(tag);
                 buf.put(tmp);
-                buf.put(IOUtils.toByteArray(in, l));
+				if (IOUtils.readFully(in, buf.array(), 8, l) != l) {
+					throw new java.io.EOFException("Truncated B3D data");
+				}
+				buf.position(8 + l);
                 buf.flip();
             }
         }

@@ -88,7 +88,7 @@ public class ModelBiped extends ModelBase
         }
         else
         {
-            if (entityIn.isSneaking())
+            if (entityIn != null && entityIn.isSneaking())
             {
                 GlStateManager.translate(0.0F, 0.2F, 0.0F);
             }

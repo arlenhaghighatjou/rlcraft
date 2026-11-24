@@ -51,7 +51,7 @@ public class BiomeEndDecorator extends BiomeDecorator
             public WorldGenSpikes.EndSpike[] load(Long p_load_1_) throws Exception
             {
                 List<Integer> list = Lists.newArrayList(ContiguousSet.create(Range.closedOpen(Integer.valueOf(0), Integer.valueOf(10)), DiscreteDomain.integers()));
-                Collections.shuffle(list, new EaglercraftRandom(p_load_1_.longValue()));
+                new EaglercraftRandom(p_load_1_.longValue()).shuffle(list);
                 WorldGenSpikes.EndSpike[] aworldgenspikes$endspike = new WorldGenSpikes.EndSpike[10];
 
                 for (int i = 0; i < 10; ++i)

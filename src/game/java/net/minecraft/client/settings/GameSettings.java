@@ -33,6 +33,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.Display;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
 import net.lax1dude.eaglercraft.v1_8.ArrayUtils;

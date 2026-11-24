@@ -2,6 +2,7 @@ package net.minecraft.entity.player;
 
 import com.google.common.collect.Lists;
 import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import java.util.Collection;
 import java.util.Iterator;
@@ -116,6 +117,9 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class EntityPlayerMP extends EntityPlayer implements IContainerListener
 {
+	public net.lax1dude.eaglercraft.v1_8.sp.server.skins.PlayerTextureData textureData;
+	public EaglercraftUUID clientBrandUUID;
+	public byte[] updateCertificate;
     private static final Logger LOGGER = LogManager.getLogger();
     private String language = "en_US";
     public NetHandlerPlayServer connection;

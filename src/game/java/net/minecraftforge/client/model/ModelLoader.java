@@ -128,6 +128,30 @@ public final class ModelLoader extends ModelBakery
         return isLoading;
     }
 
+	@Nullable
+	public String getBaseTextureForBlock(int id, int metadata)
+	{
+		Block block = Block.getBlockById(id);
+		if (block == null) return null;
+		IBlockState state = block.getStateFromMeta(metadata);
+		ModelResourceLocation location = this.blockModelShapes.getBlockStateMapper().getVariants(block).get(state);
+		IModel model = this.stateModels.get(location);
+		while (model instanceof WeightedRandomModel)
+		{
+			List<IModel> children = ((WeightedRandomModel)model).models;
+			model = children.isEmpty() ? null : children.get(0);
+		}
+		if (model instanceof VanillaModelWrapper)
+		{
+			ModelBlock vanilla = ((VanillaModelWrapper)model).model;
+			String particle = vanilla.resolveTextureName("particle");
+			if (!"missingno".equals(particle)) return particle;
+		}
+		if (model == null) return null;
+		Collection<ResourceLocation> textures = model.getTextures();
+		return textures.isEmpty() ? null : textures.iterator().next().toString();
+	}
+
     private final boolean enableVerboseMissingInfo = FMLLaunchHandler.isDeobfuscatedEnvironment() || Boolean.parseBoolean(System.getProperty("forge.verboseMissingModelLogging", "false"));
     private final int verboseMissingInfoCount = Integer.parseInt(System.getProperty("forge.verboseMissingModelLoggingCount", "5"));
 

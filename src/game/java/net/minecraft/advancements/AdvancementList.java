@@ -1,6 +1,5 @@
 package net.minecraft.advancements;
 
-import com.google.common.base.Functions;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import java.util.Iterator;
@@ -74,7 +73,7 @@ public class AdvancementList
 
     public void loadAdvancements(Map<ResourceLocation, Advancement.Builder> advancementsIn)
     {
-        Function<ResourceLocation, Advancement> function = Functions.<ResourceLocation, Advancement>forMap(this.advancements, null);
+        Function<ResourceLocation, Advancement> function = this.advancements::get;
         label42:
 
         while (!advancementsIn.isEmpty())

@@ -74,12 +74,17 @@ public class BlockStateLoader
     {
         try
         {
-            byte[] data = IOUtils.toByteArray(reader, StandardCharsets.UTF_8);
-            reader = new InputStreamReader(new ByteArrayInputStream(data), StandardCharsets.UTF_8);
+            StringBuilder data = new StringBuilder();
+			char[] buffer = new char[4096];
+			int count;
+			while ((count = reader.read(buffer)) >= 0) {
+				data.append(buffer, 0, count);
+			}
+			reader = new java.io.StringReader(data.toString());
 
-            Marker marker = GSON.fromJson(new String(data, StandardCharsets.UTF_8), Marker.class);  // Read "forge_marker" to determine what to load.
+            com.google.gson.JsonObject marker = com.google.gson.JsonParser.parseString(data.toString()).getAsJsonObject();  // Read "forge_marker" to determine what to load.
 
-            switch (marker.forge_marker)
+            switch (net.minecraft.util.JsonUtils.getInt(marker, "forge_marker", 0))
             {
                 case 1: // Version 1
                     ForgeBlockStateV1 v1 = GSON.fromJson(reader, ForgeBlockStateV1.class);

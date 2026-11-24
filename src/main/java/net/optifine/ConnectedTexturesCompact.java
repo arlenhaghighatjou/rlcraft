@@ -315,25 +315,24 @@ public class ConnectedTexturesCompact {
 	private static BakedQuad makeSpriteQuadCompact(BakedQuad quad, EaglerTextureAtlasSprite sprite, int side, int x1,
 			int y1, int x2, int y2) {
 		int[] aint = (int[]) quad.getVertexData().clone();
-		int[] aint2 = (int[]) quad.getVertexDataWithNormals().clone();
+		int uvOffset = quad.getFormat().getUvOffsetById(0) / Integer.BYTES;
 		EaglerTextureAtlasSprite textureatlassprite = quad.getSprite();
 
 		for (int i = 0; i < 4; ++i) {
-			fixVertexCompact(aint, aint2, i, textureatlassprite, sprite, side, x1, y1, x2, y2);
+			fixVertexCompact(aint, uvOffset, i, textureatlassprite, sprite, side, x1, y1, x2, y2);
 		}
 
-		BakedQuad bakedquad = new BakedQuad(aint, aint2, quad.getTintIndex(), quad.getFace(), sprite);
+		BakedQuad bakedquad = new BakedQuad(aint, quad.getTintIndex(), quad.getFace(), sprite,
+				quad.shouldApplyDiffuseLighting(), quad.getFormat());
 		return bakedquad;
 	}
 
-	private static void fixVertexCompact(int[] data, int[] data2, int vertex, EaglerTextureAtlasSprite spriteFrom,
+	private static void fixVertexCompact(int[] data, int uvOffset, int vertex, EaglerTextureAtlasSprite spriteFrom,
 			EaglerTextureAtlasSprite spriteTo, int side, int x1, int y1, int x2, int y2) {
 		int i = data.length / 4;
 		int j = i * vertex;
-		int i2 = data2.length / 4;
-		int j2 = i2 * vertex;
-		float f = Float.intBitsToFloat(data[j + 4]);
-		float f1 = Float.intBitsToFloat(data[j + 4 + 1]);
+		float f = Float.intBitsToFloat(data[j + uvOffset]);
+		float f1 = Float.intBitsToFloat(data[j + uvOffset + 1]);
 		double d0 = spriteFrom.getSpriteU16(f);
 		double d1 = spriteFrom.getSpriteV16(f1);
 		float f2 = Float.intBitsToFloat(data[j + 0]);
@@ -435,11 +434,11 @@ public class ConnectedTexturesCompact {
 			return;
 		}
 
-		data[j + 4] = data2[j2 + 4] = Float.floatToRawIntBits(spriteTo.getInterpolatedU(d0));
-		data[j + 4 + 1] = data2[j2 + 4 + 1] = Float.floatToRawIntBits(spriteTo.getInterpolatedV(d1));
-		data[j + 0] = data2[j2 + 0] = Float.floatToRawIntBits(f2);
-		data[j + 1] = data2[j2 + 1] = Float.floatToRawIntBits(f3);
-		data[j + 2] = data2[j2 + 2] = Float.floatToRawIntBits(f4);
+		data[j + uvOffset] = Float.floatToRawIntBits(spriteTo.getInterpolatedU(d0));
+		data[j + uvOffset + 1] = Float.floatToRawIntBits(spriteTo.getInterpolatedV(d1));
+		data[j + 0] = Float.floatToRawIntBits(f2);
+		data[j + 1] = Float.floatToRawIntBits(f3);
+		data[j + 2] = Float.floatToRawIntBits(f4);
 	}
 
 	private static enum Dir {

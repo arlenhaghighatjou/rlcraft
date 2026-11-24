@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class SPacketLoginSuccess implements Packet<INetHandlerLoginClient>
 {
     private GameProfile profile;
+	private int selectedProtocol = 3;
 
     public SPacketLoginSuccess()
     {
@@ -22,12 +23,19 @@ public class SPacketLoginSuccess implements Packet<INetHandlerLoginClient>
         this.profile = profileIn;
     }
 
+	public SPacketLoginSuccess(GameProfile profile, int selectedProtocol)
+	{
+		this(profile);
+		this.selectedProtocol = selectedProtocol;
+	}
+
     public void readPacketData(PacketBuffer buf) throws IOException
     {
         String s = buf.readString(36);
         String s1 = buf.readString(16);
         EaglercraftUUID uuid = s.length() > 0 ? EaglercraftUUID.fromString(s) : null;
         this.profile = new GameProfile(uuid, s1);
+		this.selectedProtocol = buf.isReadable() ? buf.readUnsignedShort() : 3;
     }
 
     public void writePacketData(PacketBuffer buf) throws IOException
@@ -35,7 +43,13 @@ public class SPacketLoginSuccess implements Packet<INetHandlerLoginClient>
         EaglercraftUUID uuid = this.profile.getId();
         buf.writeString(uuid == null ? "" : uuid.toString());
         buf.writeString(this.profile.getName());
+		if (this.selectedProtocol != 3) buf.writeShort(this.selectedProtocol);
     }
+
+	public int getSelectedProtocol()
+	{
+		return this.selectedProtocol;
+	}
 
     public void processPacket(INetHandlerLoginClient handler)
     {

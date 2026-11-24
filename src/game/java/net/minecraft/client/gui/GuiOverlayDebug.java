@@ -411,9 +411,10 @@ public class GuiOverlayDebug extends Gui
                 }
             }
 
-            if (this.mc.entityRenderer != null && this.mc.entityRenderer.isShaderActive())
+            if (net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.EaglerDeferredPipeline.instance != null
+                    && this.mc.gameSettings.deferredShaderConf.shaderPackInfo != null)
             {
-                list.add("Shader: " + this.mc.entityRenderer.getShaderGroup().getShaderGroupName());
+                list.add("Shader: " + this.mc.gameSettings.deferredShaderConf.shaderPackInfo.name);
             }
 
             if (this.mc.objectMouseOver != null && this.mc.objectMouseOver.typeOfHit == RayTraceResult.Type.BLOCK && this.mc.objectMouseOver.getBlockPos() != null)

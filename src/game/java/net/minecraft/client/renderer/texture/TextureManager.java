@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.Callable;
 
 import com.carrotsearch.hppc.ObjectIntHashMap;
 import com.carrotsearch.hppc.ObjectIntMap;
@@ -23,6 +22,7 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
+import net.minecraft.crash.ICrashReportDetail;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.ResourceLocation;
 
@@ -110,7 +110,7 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
 			CrashReportCategory crashreportcategory = crashreport.makeCategory("Resource location being registered");
 			crashreportcategory.addCrashSection("Resource location", textureLocation);
 			final ITextureObject textureObj2 = textureObj;
-			crashreportcategory.addCrashSectionCallable("Texture object class", new Callable<String>() {
+			crashreportcategory.addDetail("Texture object class", new ICrashReportDetail<String>() {
 				public String call() throws Exception {
 					return textureObj2.getClass().getName();
 				}

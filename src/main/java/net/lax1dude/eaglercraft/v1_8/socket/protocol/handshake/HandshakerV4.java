@@ -28,6 +28,7 @@ import net.lax1dude.eaglercraft.v1_8.socket.HandshakePacketTypes;
 import net.minecraft.network.PacketBuffer;
 
 public class HandshakerV4 extends HandshakerV3 {
+	private static final int MAX_PROFILE_FRAME_SIZE = 0xFF00;
 
 	public HandshakerV4(HandshakerHandler handler) {
 		super(handler);
@@ -74,6 +75,12 @@ public class HandshakerV4 extends HandshakerV3 {
 
 	@Override
 	protected void sendClientProfileData(Map<String, byte[]> profileDataToSend) {
+		for (Entry<String, byte[]> entry : profileDataToSend.entrySet()) {
+			if (entry.getKey().length() > 255 || entry.getValue().length > 0xFFFF
+					|| 5 + entry.getKey().length() + entry.getValue().length >= MAX_PROFILE_FRAME_SIZE) {
+				throw new IllegalArgumentException("Profile data exceeds the Eagler handshake frame limit: " + entry.getKey());
+			}
+		}
 		List<Entry<String,byte[]>> toSend = new ArrayList<>(profileDataToSend.entrySet());
 		PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
 		while(!toSend.isEmpty()) {
@@ -85,7 +92,7 @@ public class HandshakerV4 extends HandshakerV3 {
 			while(!toSend.isEmpty() && packetCount < 255) {
 				Entry<String,byte[]> etr = toSend.get(toSend.size() - 1);
 				int i = 3 + etr.getKey().length() + etr.getValue().length;
-				if(sendLen + i < 0xFF00) {
+				if(sendLen + i < MAX_PROFILE_FRAME_SIZE) {
 					String profileDataType = etr.getKey();
 					buffer.writeByte(profileDataType.length());
 					HandshakerHandler.writeASCII(buffer, profileDataType);
@@ -93,6 +100,7 @@ public class HandshakerV4 extends HandshakerV3 {
 					buffer.writeShort(data.length);
 					buffer.writeBytes(data);
 					toSend.remove(toSend.size() - 1);
+					sendLen += i;
 					++packetCount;
 				}else {
 					break;

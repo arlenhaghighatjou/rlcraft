@@ -315,7 +315,7 @@ public abstract class TileEntity implements net.minecraftforge.common.capabiliti
      * @param net The NetworkManager the packet originated from
      * @param pkt The data packet
      */
-    public void onDataPacket(net.minecraft.network.NetworkManager net, net.minecraft.network.play.server.SPacketUpdateTileEntity pkt)
+    public void onDataPacket(com.arlenh7.eaglercraft.network.INetworkManager net, net.minecraft.network.play.server.SPacketUpdateTileEntity pkt)
     {
     }
 

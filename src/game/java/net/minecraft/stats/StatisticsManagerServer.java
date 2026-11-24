@@ -18,7 +18,7 @@ import net.minecraft.network.play.server.SPacketStatistics;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.IJsonSerializable;
 import net.minecraft.util.TupleIntJsonSerializable;
-import org.apache.commons.io.FileUtils;
+import com.arlenh7.eaglercraft.forge.WorldTextFile;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
@@ -26,24 +26,33 @@ public class StatisticsManagerServer extends StatisticsManager
 {
     private static final Logger LOGGER = LogManager.getLogger();
     private final MinecraftServer mcServer;
-    private final File statsFile;
+    private final WorldTextFile statsFile;
+	private final WorldTextFile legacyStatsFile;
     private final Set<StatBase> dirty = Sets.<StatBase>newHashSet();
     private int lastStatRequest = -300;
 
     public StatisticsManagerServer(MinecraftServer serverIn, File statsFileIn)
+	{
+		this(serverIn, new WorldTextFile(statsFileIn), null);
+	}
+
+	public StatisticsManagerServer(MinecraftServer serverIn, WorldTextFile statsFileIn, WorldTextFile legacyStatsFile)
     {
         this.mcServer = serverIn;
         this.statsFile = statsFileIn;
+		this.legacyStatsFile = legacyStatsFile;
     }
 
     public void readStatFile()
     {
-        if (this.statsFile.isFile())
+		WorldTextFile source = this.statsFile.isFile() ? this.statsFile : this.legacyStatsFile;
+        if (source != null && source.isFile())
         {
             try
             {
-                this.statsData.clear();
-                this.statsData.putAll(this.parseJson(FileUtils.readFileToString(this.statsFile)));
+                Map<StatBase, TupleIntJsonSerializable> loaded = this.parseJson(source.read());
+				this.statsData.clear();
+				this.statsData.putAll(loaded);
             }
             catch (IOException ioexception)
             {
@@ -60,7 +69,7 @@ public class StatisticsManagerServer extends StatisticsManager
     {
         try
         {
-            FileUtils.writeStringToFile(this.statsFile, dumpJson(this.statsData));
+            this.statsFile.write(dumpJson(this.statsData));
         }
         catch (IOException ioexception)
         {

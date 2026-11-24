@@ -42,7 +42,8 @@ public class EmissiveItems implements IResourceManagerReloadListener {
 	}
 
 	public static float[] getItemEmission(Item item, int damage) {
-		return entries.get(Item.itemRegistry.getNameForObject(item).toString() + "#" + damage);
+		ResourceLocation name = Item.REGISTRY.getNameForObject(item);
+		return name == null ? null : entries.get(name.toString() + "#" + damage);
 	}
 
 	@Override

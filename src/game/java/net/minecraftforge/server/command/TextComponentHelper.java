@@ -19,7 +19,6 @@
 
 package net.minecraftforge.server.command;
 
-import io.netty.channel.Channel;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.NetHandlerPlayServer;
@@ -28,7 +27,6 @@ import net.minecraft.util.text.TextComponentBase;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class TextComponentHelper
 {
@@ -56,8 +54,7 @@ public class TextComponentHelper
             if (connection != null)
             {
                 INetworkManager netManager = connection.netManager;
-                Channel channel = netManager.channel();
-                return !channel.attr(NetworkRegistry.FML_MARKER).get();
+                return !netManager.hasFMLMarker();
             }
         }
         return false;

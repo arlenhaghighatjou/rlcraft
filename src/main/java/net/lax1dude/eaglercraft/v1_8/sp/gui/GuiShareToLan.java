@@ -181,13 +181,13 @@ public class GuiShareToLan extends GuiScreen {
 		this.codeTextField.drawTextBox();
 	}
 
-	public void mouseClicked(int par1, int par2, int par3) {
+	public void mouseClicked(int par1, int par2, int par3) throws java.io.IOException {
 		super.mouseClicked(par1, par2, par3);
 		this.relaysButton.mouseClicked(par1, par2, par3);
 		this.codeTextField.mouseClicked(par1, par2, par3);
 	}
 
-	protected void keyTyped(char c, int k) {
+	protected void keyTyped(char c, int k) throws java.io.IOException {
 		super.keyTyped(c, k);
 		this.codeTextField.textboxKeyTyped(c, k);
 	}

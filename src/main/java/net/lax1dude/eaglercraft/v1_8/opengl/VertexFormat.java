@@ -38,7 +38,13 @@ public enum VertexFormat {
 	POSITION_TEX_COLOR(true, true, false, false),
 	POSITION_TEX_NORMAL(true, false, true, false),
 	POSITION_TEX_LMAP_COLOR(true, true, false, true),
-	POSITION_TEX_COLOR_NORMAL(true, true, true, false);
+	POSITION_TEX_COLOR_NORMAL(true, true, true, false),
+	FORGE_BAKED(VertexFormatElement.POSITION_3F, VertexFormatElement.COLOR_4UB, VertexFormatElement.TEX_2F,
+			new VertexFormatElement(0, VertexFormatElement.EnumType.BYTE, VertexFormatElement.EnumUsage.PADDING, 4)),
+	FORGE_BLOCK_NORMAL_4F(VertexFormatElement.POSITION_3F, VertexFormatElement.COLOR_4UB,
+			VertexFormatElement.TEX_2F, VertexFormatElement.TEX_2S,
+			new VertexFormatElement(0, VertexFormatElement.EnumType.FLOAT, VertexFormatElement.EnumUsage.NORMAL, 4)),
+	FORGE_LIGHT_GATHERER(VertexFormatElement.TEX_2F, VertexFormatElement.TEX_2S);
 
 	public static final int COMPONENT_POSITION_SIZE = 3;
 	public static final int COMPONENT_POSITION_FORMAT = GL_FLOAT;
@@ -111,124 +117,142 @@ public enum VertexFormat {
 	private final int[] uvOffsets = new int[] { -1, -1 };
 
 	private VertexFormat(boolean texture, boolean color, boolean normal, boolean lightmap) {
-		
+		this(createElements(texture, color, normal, lightmap));
+	}
+
+	private static VertexFormatElement[] createElements(boolean texture, boolean color, boolean normal,
+			boolean lightmap) {
+		int cnt = 1 + (color ? 1 : 0) + (texture ? 1 : 0) + (normal ? 2 : 0) + (lightmap ? 1 : 0);
+		VertexFormatElement[] ret = new VertexFormatElement[cnt];
+		int i = 0;
+		ret[i++] = VertexFormatElement.POSITION_3F;
+		if(color) {
+			ret[i++] = VertexFormatElement.COLOR_4UB;
+		}
+		if(texture) {
+			ret[i++] = VertexFormatElement.TEX_2F;
+		}
+		if(normal) {
+			ret[i++] = VertexFormatElement.NORMAL_3B;
+			ret[i++] = VertexFormatElement.PADDING_1B;
+		}
+		if(lightmap) {
+			ret[i++] = VertexFormatElement.TEX_2S;
+		}
+		return ret;
+	}
+
+	private VertexFormat(VertexFormatElement... formatElements) {
 		int index = 0;
 		int bytes = 0;
 		int bitfield = 0;
-		
-		attribPositionEnabled = true;
-		attribPositionIndex = index++;
-		attribPositionOffset = bytes;
-		attribPositionFormat = COMPONENT_POSITION_FORMAT;
+		int positionIndex = -1;
+		int positionOffset = -1;
+		int positionFormat = -1;
+		int positionSize = -1;
+		int textureIndex = -1;
+		int textureOffset = -1;
+		int textureFormat = -1;
+		int textureSize = -1;
+		int colorIndex = -1;
+		int colorOffset = -1;
+		int colorFormat = -1;
+		int colorSize = -1;
+		int normalIndex = -1;
+		int normalOffset = -1;
+		int normalFormat = -1;
+		int normalSize = -1;
+		int lightmapIndex = -1;
+		int lightmapOffset = -1;
+		int lightmapFormat = -1;
+		int lightmapSize = -1;
+		elements = formatElements;
+		elementOffsets = new int[elements.length];
+		for(int i = 0; i < elements.length; ++i) {
+			VertexFormatElement element = elements[i];
+			elementOffsets[i] = bytes;
+			switch(element.getUsage()) {
+			case POSITION:
+				positionIndex = index++;
+				positionOffset = bytes;
+				positionFormat = element.getType().getGlConstant();
+				positionSize = element.getElementCount();
+				break;
+			case COLOR:
+				colorIndex = index++;
+				colorOffset = bytes;
+				colorFormat = element.getType().getGlConstant();
+				colorSize = element.getElementCount();
+				bitfield |= EaglercraftGPU.ATTRIB_COLOR;
+				break;
+			case NORMAL:
+				normalIndex = index++;
+				normalOffset = bytes;
+				normalFormat = element.getType().getGlConstant();
+				normalSize = element.getElementCount();
+				bitfield |= EaglercraftGPU.ATTRIB_NORMAL;
+				break;
+			case UV:
+				if(element.getIndex() == 0) {
+					textureIndex = index++;
+					textureOffset = bytes;
+					textureFormat = element.getType().getGlConstant();
+					textureSize = element.getElementCount();
+					bitfield |= EaglercraftGPU.ATTRIB_TEXTURE;
+				}else if(element.getIndex() == 1) {
+					lightmapIndex = index++;
+					lightmapOffset = bytes;
+					lightmapFormat = element.getType().getGlConstant();
+					lightmapSize = element.getElementCount();
+					bitfield |= EaglercraftGPU.ATTRIB_LIGHTMAP;
+				}
+				if(element.getIndex() < uvOffsets.length) {
+					uvOffsets[element.getIndex()] = bytes;
+				}
+				break;
+			default:
+				break;
+			}
+			bytes += element.getSize();
+		}
+		attribPositionEnabled = positionIndex != -1;
+		attribPositionIndex = positionIndex;
+		attribPositionOffset = positionOffset;
+		attribPositionFormat = positionFormat;
 		attribPositionNormalized = false;
-		attribPositionSize = COMPONENT_POSITION_SIZE;
-		bytes += COMPONENT_POSITION_STRIDE;
-		
-		if(color) {
-			attribColorEnabled = true;
-			attribColorIndex = index++;
-			attribColorOffset = bytes;
-			attribColorFormat = COMPONENT_COLOR_FORMAT;
-			attribColorNormalized = true;
-			attribColorSize = COMPONENT_COLOR_SIZE;
-			bytes += COMPONENT_COLOR_STRIDE;
-			bitfield |= EaglercraftGPU.ATTRIB_COLOR;
-		}else {
-			attribColorEnabled = false;
-			attribColorIndex = -1;
-			attribColorOffset = -1;
-			attribColorFormat = -1;
-			attribColorNormalized = false;
-			attribColorSize = -1;
-		}
-
-		if(texture) {
-			attribTextureEnabled = true;
-			attribTextureIndex = index++;
-			attribTextureOffset = bytes;
-			attribTextureFormat = COMPONENT_TEX_FORMAT;
-			attribTextureNormalized = false;
-			attribTextureSize = COMPONENT_TEX_SIZE;
-			bytes += COMPONENT_TEX_STRIDE;
-			bitfield |= EaglercraftGPU.ATTRIB_TEXTURE;
-		}else {
-			attribTextureEnabled = false;
-			attribTextureIndex = -1;
-			attribTextureOffset = -1;
-			attribTextureFormat = -1;
-			attribTextureNormalized = false;
-			attribTextureSize = -1;
-		}
-		
-		if(normal) {
-			attribNormalEnabled = true;
-			attribNormalIndex = index++;
-			attribNormalOffset = bytes;
-			attribNormalFormat = COMPONENT_NORMAL_FORMAT;
-			attribNormalNormalized = true;
-			attribNormalSize = COMPONENT_NORMAL_SIZE;
-			bytes += COMPONENT_NORMAL_STRIDE;
-			bitfield |= EaglercraftGPU.ATTRIB_NORMAL;
-		}else {
-			attribNormalEnabled = false;
-			attribNormalIndex = -1;
-			attribNormalOffset = -1;
-			attribNormalFormat = -1;
-			attribNormalNormalized = false;
-			attribNormalSize = -1;
-		}
-		
-		if(lightmap) {
-			attribLightmapEnabled = true;
-			attribLightmapIndex = index++;
-			attribLightmapOffset = bytes;
-			attribLightmapFormat = COMPONENT_LIGHTMAP_FORMAT;
-			attribLightmapNormalized = false;
-			attribLightmapSize = COMPONENT_LIGHTMAP_SIZE;
-			bytes += COMPONENT_LIGHTMAP_STRIDE;
-			bitfield |= EaglercraftGPU.ATTRIB_LIGHTMAP;
-		}else {
-			attribLightmapEnabled = false;
-			attribLightmapIndex = -1;
-			attribLightmapOffset = -1;
-			attribLightmapFormat = -1;
-			attribLightmapNormalized = false;
-			attribLightmapSize = -1;
-		}
-		
+		attribPositionSize = positionSize;
+		attribTextureEnabled = textureIndex != -1;
+		attribTextureIndex = textureIndex;
+		attribTextureOffset = textureOffset;
+		attribTextureFormat = textureFormat;
+		attribTextureNormalized = false;
+		attribTextureSize = textureSize;
+		attribColorEnabled = colorIndex != -1;
+		attribColorIndex = colorIndex;
+		attribColorOffset = colorOffset;
+		attribColorFormat = colorFormat;
+		attribColorNormalized = true;
+		attribColorSize = colorSize;
+		attribNormalEnabled = normalIndex != -1;
+		attribNormalIndex = normalIndex;
+		attribNormalOffset = normalOffset;
+		attribNormalFormat = normalFormat;
+		attribNormalNormalized = true;
+		attribNormalSize = normalSize;
+		attribLightmapEnabled = lightmapIndex != -1;
+		attribLightmapIndex = lightmapIndex;
+		attribLightmapOffset = lightmapOffset;
+		attribLightmapFormat = lightmapFormat;
+		attribLightmapNormalized = false;
+		attribLightmapSize = lightmapSize;
 		attribCount = index;
-		attribStride = attribPositionStride =  bytes;
-		attribColorStride = color ? bytes : -1;
-		attribTextureStride = texture ? bytes : -1;
-		attribNormalStride = normal ? bytes : -1;
-		attribLightmapStride = lightmap ? bytes : -1;
+		attribStride = bytes;
+		attribPositionStride = attribPositionEnabled ? bytes : -1;
+		attribColorStride = attribColorEnabled ? bytes : -1;
+		attribTextureStride = attribTextureEnabled ? bytes : -1;
+		attribNormalStride = attribNormalEnabled ? bytes : -1;
+		attribLightmapStride = attribLightmapEnabled ? bytes : -1;
 		eaglercraftAttribBits = bitfield;
-
-		int cnt = 1 + (color ? 1 : 0) + (texture ? 1 : 0) + (normal ? 2 : 0) + (lightmap ? 1 : 0);
-		elements = new VertexFormatElement[cnt];
-		elementOffsets = new int[cnt];
-		int i = 0;
-		elements[i++] = VertexFormatElement.POSITION_3F;
-		if(color) {
-			elementOffsets[i] = attribColorOffset;
-			elements[i++] = VertexFormatElement.COLOR_4UB;
-		}
-		if(texture) {
-			uvOffsets[0] = attribTextureOffset;
-			elementOffsets[i] = attribTextureOffset;
-			elements[i++] = VertexFormatElement.TEX_2F;
-		}
-		if(normal) {
-			elementOffsets[i] = attribNormalOffset;
-			elements[i++] = VertexFormatElement.NORMAL_3B;
-			elementOffsets[i] = attribNormalOffset + 3;
-			elements[i++] = VertexFormatElement.PADDING_1B;
-		}
-		if(lightmap) {
-			uvOffsets[1] = attribLightmapOffset;
-			elementOffsets[i] = attribLightmapOffset;
-			elements[i++] = VertexFormatElement.TEX_2S;
-		}
 		elementList = Collections.unmodifiableList(Arrays.asList(elements));
 	}
 

@@ -1,7 +1,9 @@
 package net.optifine.model;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.SimpleBakedModel;
@@ -17,11 +19,11 @@ public class ModelUtils {
 
 			for (int i = 0; i < aenumfacing.length; ++i) {
 				EnumFacing enumfacing = aenumfacing[i];
-				List list = model.getFaceQuads(enumfacing);
+				List<BakedQuad> list = model.getQuads(null, enumfacing, 0L);
 				dbgQuads(enumfacing.getName(), list, "  ");
 			}
 
-			List list1 = model.getGeneralQuads();
+			List<BakedQuad> list1 = model.getQuads(null, null, 0L);
 			dbgQuads("General", list1, "  ");
 		}
 	}
@@ -58,27 +60,25 @@ public class ModelUtils {
 	}
 
 	public static IBakedModel duplicateModel(IBakedModel model) {
-		List list = duplicateQuadList(model.getGeneralQuads());
+		List<BakedQuad> list = duplicateQuadList(model.getQuads(null, null, 0L));
 		EnumFacing[] aenumfacing = EnumFacing._VALUES;
-		List list1 = new ArrayList();
+		Map<EnumFacing, List<BakedQuad>> list1 = new EnumMap<>(EnumFacing.class);
 
 		for (int i = 0; i < aenumfacing.length; ++i) {
 			EnumFacing enumfacing = aenumfacing[i];
-			List list2 = model.getFaceQuads(enumfacing);
-			List list3 = duplicateQuadList(list2);
-			list1.add(list3);
+			List<BakedQuad> list2 = model.getQuads(null, enumfacing, 0L);
+			list1.put(enumfacing, duplicateQuadList(list2));
 		}
 
 		SimpleBakedModel simplebakedmodel = new SimpleBakedModel(list, list1, model.isAmbientOcclusion(),
-				model.isGui3d(), model.getParticleTexture(), model.getItemCameraTransforms());
+				model.isGui3d(), model.getParticleTexture(), model.getItemCameraTransforms(), model.getOverrides());
 		return simplebakedmodel;
 	}
 
-	public static List duplicateQuadList(List lists) {
-		List list = new ArrayList();
+	public static List<BakedQuad> duplicateQuadList(List<BakedQuad> lists) {
+		List<BakedQuad> list = new ArrayList<>(lists.size());
 
-		for (Object e : lists) {
-			BakedQuad bakedquad = (BakedQuad) e;
+		for (BakedQuad bakedquad : lists) {
 			BakedQuad bakedquad1 = duplicateQuad(bakedquad);
 			list.add(bakedquad1);
 		}
@@ -87,8 +87,8 @@ public class ModelUtils {
 	}
 
 	public static BakedQuad duplicateQuad(BakedQuad quad) {
-		BakedQuad bakedquad = new BakedQuad((int[]) quad.getVertexData().clone(),
-				(int[]) quad.getVertexDataWithNormals().clone(), quad.getTintIndex(), quad.getFace(), quad.getSprite());
+		BakedQuad bakedquad = new BakedQuad(quad.getVertexData().clone(), quad.getTintIndex(), quad.getFace(),
+				quad.getSprite(), quad.shouldApplyDiffuseLighting(), quad.getFormat());
 		return bakedquad;
 	}
 }

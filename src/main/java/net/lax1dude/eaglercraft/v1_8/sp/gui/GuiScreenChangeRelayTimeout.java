@@ -70,7 +70,7 @@ public class GuiScreenChangeRelayTimeout extends GuiScreen {
 		super.drawScreen(par1, par2, par3);
 	}
 
-	public void mouseClicked(int mx, int my, int button) {
+	public void mouseClicked(int mx, int my, int button) throws java.io.IOException {
 		slider.mousePressed(mc, mx, my);
 		super.mouseClicked(mx, my, button);
 	}

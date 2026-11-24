@@ -35,7 +35,9 @@ public class LayerDeadmau5Head implements LayerRenderer<AbstractClientPlayer>
                 GlStateManager.rotate(-f, 0.0F, 1.0F, 0.0F);
                 float f2 = 1.3333334F;
                 GlStateManager.scale(1.3333334F, 1.3333334F, 1.3333334F);
-                this.playerRenderer.getMainModel().renderDeadmau5Head(0.0625F);
+                if (this.playerRenderer.getMainModel() instanceof net.minecraft.client.model.ModelPlayer) {
+					((net.minecraft.client.model.ModelPlayer)this.playerRenderer.getMainModel()).renderDeadmau5Head(0.0625F);
+				}
                 GlStateManager.popMatrix();
             }
         }

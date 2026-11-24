@@ -28,7 +28,7 @@ import net.minecraft.client.gui.GuiYesNo;
 import net.minecraft.client.gui.GuiYesNoCallback;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.StartupQuery;
-import net.minecraftforge.fml.common.ZipperUtil;
+import com.arlenh7.eaglercraft.forge.WorldBackup;
 
 public class GuiOldSaveLoadConfirm extends GuiYesNo implements GuiYesNoCallback {
 
@@ -42,7 +42,7 @@ public class GuiOldSaveLoadConfirm extends GuiYesNo implements GuiYesNoCallback 
         this.parent = parent;
         this.dirName = dirName;
         this.saveName = saveName;
-        this.zip = new File(FMLClientHandler.instance().getClient().mcDataDir,String.format("%s-%2$td%2$tm%2$ty%2$tH%2$tM%2$tS.zip", dirName, System.currentTimeMillis()));
+        this.zip = WorldBackup.destination(dirName);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class GuiOldSaveLoadConfirm extends GuiYesNo implements GuiYesNoCallback 
                 String skip = System.getProperty("fml.doNotBackup");
                 if (skip == null || !"true".equals(skip))
                 {
-                    ZipperUtil.zip(new File(FMLClientHandler.instance().getSavesDir(), dirName), zip);
+                    WorldBackup.backup(dirName, zip);
                 }
                 else
                 {

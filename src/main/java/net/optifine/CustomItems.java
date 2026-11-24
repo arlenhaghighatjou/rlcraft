@@ -373,21 +373,11 @@ public class CustomItems {
 	}
 
 	private static int getPotionNameDamage(String name) {
-		String s = "potion." + name;
-		Potion[] apotion = Potion.potionTypes;
-
-		for (int i = 0; i < apotion.length; ++i) {
-			Potion potion = apotion[i];
-
-			if (potion != null) {
-				String s1 = potion.getName();
-
-				if (s.equals(s1)) {
-					return potion.getId();
-				}
+		for (Potion potion : Potion.REGISTRY) {
+			if (("effect." + name).equals(potion.getName()) || ("potion." + name).equals(potion.getName())) {
+				return Potion.getIdFromPotion(potion);
 			}
 		}
-
 		return -1;
 	}
 
@@ -583,7 +573,7 @@ public class CustomItems {
 			}
 		}
 
-		if (cip.stackSize != null && !cip.stackSize.isInRange(itemStack.stackSize)) {
+		if (cip.stackSize != null && !cip.stackSize.isInRange(itemStack.getCount())) {
 			return false;
 		} else {
 			int[][] aint = enchantmentIdLevels;
@@ -658,7 +648,7 @@ public class CustomItems {
 
 	private static int[][] getEnchantmentIdLevels(ItemStack itemStack) {
 		Item item = itemStack.getItem();
-		NBTTagList nbttaglist = item == Items.ENCHANTED_BOOK ? Items.ENCHANTED_BOOK.getEnchantments(itemStack)
+		NBTTagList nbttaglist = item == Items.ENCHANTED_BOOK ? net.minecraft.item.ItemEnchantedBook.getEnchantments(itemStack)
 				: itemStack.getEnchantmentTagList();
 
 		if (nbttaglist != null && nbttaglist.tagCount() > 0) {
