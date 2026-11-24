@@ -54,14 +54,14 @@ public class EaglerIntegratedServerWorker {
 
 	public static final Logger logger = LogManager.getLogger("EaglerIntegratedServer");
 
+	private static final IPCPacketManager packetManagerInstance = new IPCPacketManager();
+
 	private static EaglerMinecraftServer currentProcess = null;
 	private static WorldSettings newWorldSettings = null;
 
 	public static final EaglerSaveFormat saveFormat = new EaglerSaveFormat(EaglerSaveFormat.worldsFolder);
 
 	private static final Map<String, IntegratedServerPlayerNetworkManager> openChannels = new HashMap<>();
-
-	private static final IPCPacketManager packetManagerInstance = new IPCPacketManager();
 
 	private static void processAsyncMessageQueue() {
 		List<IPCPacketData> pktList = ServerPlatformSingleplayer.recieveAllPacket();
@@ -504,6 +504,8 @@ public class EaglerIntegratedServerWorker {
 			
 			// signal thread startup successful
 			sendIPCPacket(new IPCPacketFFProcessKeepAlive(0xFF));
+			
+			com.arlenh7.eaglercraft.forge.FMLServerHandler.load();
 			
 			ServerPlatformSingleplayer.setCrashCallbackWASM(EaglerIntegratedServerWorker::sendIntegratedServerCrashWASMCB);
 			

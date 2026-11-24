@@ -30,6 +30,8 @@ import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.lax1dude.eaglercraft.v1_8.EaglerOutputStream;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.init.Bootstrap;
+import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.datafix.DataFixesManager;
 import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.world.storage.ISaveHandler;
@@ -42,8 +44,13 @@ public class EaglerSaveFormat extends SaveFormatOld {
 	private final VFile2 virtualSavesDirectory;
 
 	public EaglerSaveFormat(VFile2 parFile) {
-		super(new File(parFile.getPath()), DataFixesManager.createFixer(), false);
+		super(new File(parFile.getPath()), createFixer(), false);
 		this.virtualSavesDirectory = parFile;
+	}
+
+	private static DataFixer createFixer() {
+		Bootstrap.register();
+		return DataFixesManager.createFixer();
 	}
 
 	public static final VFile2 worldsList = WorldsDB.newVFile("worlds_list.txt");
