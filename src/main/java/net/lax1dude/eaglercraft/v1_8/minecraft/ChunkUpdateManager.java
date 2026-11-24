@@ -198,6 +198,10 @@ public class ChunkUpdateManager {
 		WorldVertexBufferUploader.uploadDisplayList(parInt1, chunkRenderer);
 	}
 
+	public boolean hasNoChunkUpdates() {
+		return queue.isEmpty();
+	}
+
 	public boolean isAlreadyQueued(RenderChunk update) {
 		for(int i = 0, l = queue.size(); i < l; ++i) {
 			if(queue.get(i).getRenderChunk() == update) {

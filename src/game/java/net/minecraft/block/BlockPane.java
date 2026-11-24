@@ -1,5 +1,6 @@
 package net.minecraft.block;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DeferredStateManager;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
@@ -221,5 +222,10 @@ public class BlockPane extends Block
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
     {
         return face != EnumFacing.UP && face != EnumFacing.DOWN ? BlockFaceShape.MIDDLE_POLE_THIN : BlockFaceShape.CENTER_SMALL;
+    }
+
+    public boolean eaglerShadersShouldRenderGlassHighlights()
+    {
+        return this == Blocks.GLASS_PANE && DeferredStateManager.isRenderingGlassHighlights();
     }
 }

@@ -3,8 +3,9 @@ package net.minecraft.client.renderer.chunk;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DeferredStateManager;
 import net.minecraft.client.renderer.RegionRenderCacheBuilder;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -12,7 +13,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ChunkCompileTaskGenerator implements Comparable<ChunkCompileTaskGenerator>
 {
     private final RenderChunk renderChunk;
-    private final ReentrantLock lock = new ReentrantLock();
     private final List<Runnable> listFinishRunnables = Lists.<Runnable>newArrayList();
     private final ChunkCompileTaskGenerator.Type type;
     private final double distanceSq;
@@ -20,6 +20,8 @@ public class ChunkCompileTaskGenerator implements Comparable<ChunkCompileTaskGen
     private CompiledChunk compiledChunk;
     private ChunkCompileTaskGenerator.Status status = ChunkCompileTaskGenerator.Status.PENDING;
     private boolean finished;
+    public long goddamnFuckingTimeout = 0L;
+    public long time = 0L;
 
     public ChunkCompileTaskGenerator(RenderChunk renderChunkIn, ChunkCompileTaskGenerator.Type typeIn, double distanceSqIn)
     {
@@ -60,65 +62,33 @@ public class ChunkCompileTaskGenerator implements Comparable<ChunkCompileTaskGen
 
     public void setStatus(ChunkCompileTaskGenerator.Status statusIn)
     {
-        this.lock.lock();
-
-        try
-        {
-            this.status = statusIn;
-        }
-        finally
-        {
-            this.lock.unlock();
-        }
+        this.status = statusIn;
     }
 
     public void finish()
     {
-        this.lock.lock();
-
-        try
+        if (this.type == ChunkCompileTaskGenerator.Type.REBUILD_CHUNK && this.status != ChunkCompileTaskGenerator.Status.DONE)
         {
-            if (this.type == ChunkCompileTaskGenerator.Type.REBUILD_CHUNK && this.status != ChunkCompileTaskGenerator.Status.DONE)
-            {
-                this.renderChunk.setNeedsUpdate(false);
-            }
-
-            this.finished = true;
-            this.status = ChunkCompileTaskGenerator.Status.DONE;
-
-            for (Runnable runnable : this.listFinishRunnables)
-            {
-                runnable.run();
-            }
+            this.renderChunk.setNeedsUpdate(false);
         }
-        finally
+
+        this.finished = true;
+        this.status = ChunkCompileTaskGenerator.Status.DONE;
+
+        for (int i = 0, l = this.listFinishRunnables.size(); i < l; ++i)
         {
-            this.lock.unlock();
+            this.listFinishRunnables.get(i).run();
         }
     }
 
     public void addFinishRunnable(Runnable runnable)
     {
-        this.lock.lock();
+        this.listFinishRunnables.add(runnable);
 
-        try
+        if (this.finished)
         {
-            this.listFinishRunnables.add(runnable);
-
-            if (this.finished)
-            {
-                runnable.run();
-            }
+            runnable.run();
         }
-        finally
-        {
-            this.lock.unlock();
-        }
-    }
-
-    public ReentrantLock getLock()
-    {
-        return this.lock;
     }
 
     public ChunkCompileTaskGenerator.Type getType()
@@ -129,6 +99,27 @@ public class ChunkCompileTaskGenerator implements Comparable<ChunkCompileTaskGen
     public boolean isFinished()
     {
         return this.finished;
+    }
+
+    public boolean canExecuteYet()
+    {
+        if (this.type == ChunkCompileTaskGenerator.Type.RESORT_TRANSPARENCY)
+        {
+            CompiledChunk ch = this.renderChunk.getCompiledChunk();
+
+            if (DeferredStateManager.isRenderingRealisticWater())
+            {
+                return !ch.isLayerEmpty(BlockRenderLayer.TRANSLUCENT) || !ch.isLayerEmpty(BlockRenderLayer.REALISTIC_WATER);
+            }
+            else
+            {
+                return !ch.isLayerEmpty(BlockRenderLayer.TRANSLUCENT);
+            }
+        }
+        else
+        {
+            return true;
+        }
     }
 
     public int compareTo(ChunkCompileTaskGenerator p_compareTo_1_)

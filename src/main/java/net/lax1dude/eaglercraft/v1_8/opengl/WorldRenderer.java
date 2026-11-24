@@ -113,7 +113,7 @@ public class WorldRenderer {
 	/**
 	 * MOST LIKELY USED TO SORT QUADS BACK TO FRONT
 	 */
-	public void func_181674_a(float parFloat1, float parFloat2, float parFloat3) {
+	public void sortVertexData(float parFloat1, float parFloat2, float parFloat3) {
 		int i = this.vertexCount / 4;
 		if(i == 0) {
 			return;
@@ -184,7 +184,7 @@ public class WorldRenderer {
 
 	}
 
-	public WorldRenderer.State func_181672_a() {
+	public WorldRenderer.State getVertexState() {
 		VertexFormat fmt = this.vertexFormat;
 		int i = (fmt.attribStride >> 2) * vertexCount;
 		IntBuffer buf = EagRuntime.allocateIntBuffer(i);

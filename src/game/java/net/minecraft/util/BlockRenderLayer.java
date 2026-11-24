@@ -5,7 +5,11 @@ public enum BlockRenderLayer
     SOLID("Solid"),
     CUTOUT_MIPPED("Mipped Cutout"),
     CUTOUT("Cutout"),
-    TRANSLUCENT("Translucent");
+    TRANSLUCENT("Translucent"),
+    REALISTIC_WATER("EaglerShaderWater"),
+    GLASS_HIGHLIGHTS("EaglerShaderGlassHighlights");
+
+    public static final BlockRenderLayer[] _VALUES = values();
 
     private final String layerName;
 

@@ -2154,6 +2154,11 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
      * Queries if this block should render in a given layer.
      * ISmartBlockModel can use {@link net.minecraftforge.client.MinecraftForgeClient#getRenderLayer()} to alter their model based on layer.
      */
+    public boolean eaglerShadersShouldRenderGlassHighlights()
+    {
+        return false;
+    }
+
     public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer)
     {
         return getBlockLayer() == layer;

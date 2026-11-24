@@ -22,6 +22,7 @@ public enum EnumFacing implements IStringSerializable
     WEST(4, 5, 1, "west", EnumFacing.AxisDirection.NEGATIVE, EnumFacing.Axis.X, new Vec3i(-1, 0, 0)),
     EAST(5, 4, 3, "east", EnumFacing.AxisDirection.POSITIVE, EnumFacing.Axis.X, new Vec3i(1, 0, 0));
 
+    public static final EnumFacing[] _VALUES = values();
     private final int index;
     private final int opposite;
     private final int horizontalIndex;

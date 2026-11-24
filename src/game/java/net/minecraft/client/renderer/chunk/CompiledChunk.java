@@ -1,6 +1,7 @@
 package net.minecraft.client.renderer.chunk;
 
 import com.google.common.collect.Lists;
+import java.util.Arrays;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -12,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class CompiledChunk
 {
-    public static final CompiledChunk DUMMY = new CompiledChunk()
+    public static final CompiledChunk DUMMY = new CompiledChunk(null)
     {
         protected void setLayerUsed(BlockRenderLayer layer)
         {
@@ -24,15 +25,33 @@ public class CompiledChunk
         }
         public boolean isVisible(EnumFacing facing, EnumFacing facing2)
         {
-            return false;
+            return true;
         }
     };
-    private final boolean[] layersUsed = new boolean[BlockRenderLayer.values().length];
-    private final boolean[] layersStarted = new boolean[BlockRenderLayer.values().length];
+    private final RenderChunk chunk;
+    private final boolean[] layersUsed = new boolean[BlockRenderLayer._VALUES.length];
+    private final boolean[] layersStarted = new boolean[BlockRenderLayer._VALUES.length];
     private boolean empty = true;
     private final List<TileEntity> tileEntities = Lists.<TileEntity>newArrayList();
     private SetVisibility setVisibility = new SetVisibility();
     private WorldRenderer.State state;
+    private WorldRenderer.State stateWater;
+
+    public CompiledChunk(RenderChunk chunk)
+    {
+        this.chunk = chunk;
+    }
+
+    public void reset()
+    {
+        Arrays.fill(this.layersUsed, false);
+        Arrays.fill(this.layersStarted, false);
+        this.empty = true;
+        this.tileEntities.clear();
+        this.setVisibility.setAllVisible(false);
+        this.setState((WorldRenderer.State)null);
+        this.setStateRealisticWater((WorldRenderer.State)null);
+    }
 
     public boolean isEmpty()
     {
@@ -87,6 +106,26 @@ public class CompiledChunk
 
     public void setState(WorldRenderer.State stateIn)
     {
+        if (this.state != stateIn && this.state != null)
+        {
+            this.state.release();
+        }
+
         this.state = stateIn;
+    }
+
+    public WorldRenderer.State getStateRealisticWater()
+    {
+        return this.stateWater;
+    }
+
+    public void setStateRealisticWater(WorldRenderer.State stateIn)
+    {
+        if (this.stateWater != stateIn && this.stateWater != null)
+        {
+            this.stateWater.release();
+        }
+
+        this.stateWater = stateIn;
     }
 }
