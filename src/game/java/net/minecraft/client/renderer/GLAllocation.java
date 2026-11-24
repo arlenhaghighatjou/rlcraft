@@ -1,63 +1,66 @@
 package net.minecraft.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.internal.buffer.ByteBuffer;
+import net.lax1dude.eaglercraft.v1_8.internal.buffer.FloatBuffer;
+import net.lax1dude.eaglercraft.v1_8.internal.buffer.IntBuffer;
+
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
-import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.util.glu.GLU;
 
-@SideOnly(Side.CLIENT)
-public class GLAllocation
-{
+/**+
+ * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
+ * 
+ * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
+ * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
+ * 
+ * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ * 
+ */
+public class GLAllocation {
+	/**+
+	 * Generates the specified number of display lists and returns
+	 * the first index.
+	 */
+	public static int generateDisplayLists() {
+		return EaglercraftGPU.glGenLists();
+	}
 
-    public static synchronized int generateDisplayLists(int range)
-    {
-        int i = EaglercraftGPU.glGenLists(range);
+	public static void deleteDisplayLists(int list) {
+		EaglercraftGPU.glDeleteLists(list);
+	}
 
-        if (i == 0)
-        {
-            int j = EaglercraftGPU.glGetError();
-            String s = "No error code reported";
+	/**+
+	 * Creates and returns a direct byte buffer with the specified
+	 * capacity. Applies native ordering to speed up access.
+	 */
+	public static ByteBuffer createDirectByteBuffer(int capacity) {
+		return EagRuntime.allocateByteBuffer(capacity);
+	}
 
-            if (j != 0)
-            {
-                s = GLU.gluErrorString(j);
-            }
+	/**+
+	 * Creates and returns a direct int buffer with the specified
+	 * capacity. Applies native ordering to speed up access.
+	 */
+	public static IntBuffer createDirectIntBuffer(int capacity) {
+		return EagRuntime.allocateIntBuffer(capacity);
+	}
 
-            throw new IllegalStateException("glGenLists returned an ID of 0 for a count of " + range + ", GL error (" + j + "): " + s);
-        }
-        else
-        {
-            return i;
-        }
-    }
-
-    public static synchronized void deleteDisplayLists(int list, int range)
-    {
-        EaglercraftGPU.glDeleteLists(list, range);
-    }
-
-    public static synchronized void deleteDisplayLists(int list)
-    {
-        deleteDisplayLists(list, 1);
-    }
-
-    public static synchronized ByteBuffer createDirectByteBuffer(int capacity)
-    {
-        return ByteBuffer.allocateDirect(capacity).order(ByteOrder.nativeOrder());
-    }
-
-    public static IntBuffer createDirectIntBuffer(int capacity)
-    {
-        return createDirectByteBuffer(capacity << 2).asIntBuffer();
-    }
-
-    public static FloatBuffer createDirectFloatBuffer(int capacity)
-    {
-        return createDirectByteBuffer(capacity << 2).asFloatBuffer();
-    }
+	/**+
+	 * Creates and returns a direct float buffer with the specified
+	 * capacity. Applies native ordering to speed up access.
+	 */
+	public static FloatBuffer createDirectFloatBuffer(int capacity) {
+		return EagRuntime.allocateFloatBuffer(capacity);
+	}
 }

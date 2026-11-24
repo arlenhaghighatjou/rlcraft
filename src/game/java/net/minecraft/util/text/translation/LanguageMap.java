@@ -3,15 +3,22 @@ package net.minecraft.util.text.translation;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
-import java.io.IOException;
 import java.io.InputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.IllegalFormatException;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.lax1dude.eaglercraft.v1_8.sp.SingleplayerServerController;
 
 public class LanguageMap
 {
@@ -23,15 +30,37 @@ public class LanguageMap
 
     public LanguageMap()
     {
-        InputStream inputstream = LanguageMap.class.getResourceAsStream("/assets/minecraft/lang/en_us.lang");
-        try
+    }
+
+    public static void initClient()
+    {
+        try (InputStream inputstream = EagRuntime.getRequiredResourceStream("/assets/minecraft/lang/en_us.lang"))
         {
-            inject(this, inputstream);
+            inject(instance, inputstream);
         }
-        finally
+        catch (IOException e)
         {
-            IOUtils.closeQuietly(inputstream); // Forge: close stream after use (MC-153470)
+            EagRuntime.debugPrintStackTrace(e);
         }
+    }
+
+    public static void initServer(List<String> strs)
+    {
+        instance.languageList.clear();
+        parseLines(strs, instance.languageList);
+        instance.lastUpdateTimeInMilliseconds = EagRuntime.steadyTimeMillis();
+    }
+
+    public static List<String> dump()
+    {
+        List<String> ret = new ArrayList<String>(instance.languageList.size());
+
+        for (Entry<String, String> etr : instance.languageList.entrySet())
+        {
+            ret.add(etr.getKey() + "=" + etr.getValue());
+        }
+
+        return ret;
     }
 
     public static void inject(InputStream inputstream)
@@ -43,7 +72,7 @@ public class LanguageMap
     {
         Map<String, String> map = parseLangFile(inputstream);
         inst.languageList.putAll(map);
-        inst.lastUpdateTimeInMilliseconds = System.currentTimeMillis();
+        inst.lastUpdateTimeInMilliseconds = EagRuntime.steadyTimeMillis();
     }
 
     public static Map<String, String> parseLangFile(InputStream inputstream)
@@ -54,28 +83,60 @@ public class LanguageMap
             inputstream = net.minecraftforge.fml.common.FMLCommonHandler.instance().loadLanguage(table, inputstream);
             if (inputstream == null) return table;
 
-            for (String s : IOUtils.readLines(inputstream, StandardCharsets.UTF_8))
-            {
-                if (!s.isEmpty() && s.charAt(0) != '#')
-                {
-                    String[] astring = (String[])Iterables.toArray(EQUAL_SIGN_SPLITTER.split(s), String.class);
-
-                    if (astring != null && astring.length == 2)
-                    {
-                        String s1 = astring[0];
-                        String s2 = NUMERIC_VARIABLE_PATTERN.matcher(astring[1]).replaceAll("%$1s");
-                        table.put(s1, s2);
-                    }
-                }
-            }
-
-        }
-        catch (IOException var7)
-        {
-            ;
+            parseLines(IOUtils.readLines(inputstream, StandardCharsets.UTF_8), table);
         }
         catch (Exception ex) {}
         return table;
+    }
+
+    private static void parseLines(List<String> lines, Map<String, String> table)
+    {
+        for (int i = 0, l = lines.size(); i < l; ++i)
+        {
+            String s = lines.get(i);
+
+            if (!s.isEmpty() && s.charAt(0) != '#')
+            {
+                String[] astring = (String[])Iterables.toArray(EQUAL_SIGN_SPLITTER.split(s), String.class);
+
+                if (astring != null && astring.length == 2)
+                {
+                    table.put(astring[0], fixNumericVariables(astring[1]));
+                }
+            }
+        }
+    }
+
+    private static String fixNumericVariables(String str)
+    {
+        Matcher matcher = NUMERIC_VARIABLE_PATTERN.matcher(str);
+
+        if (!matcher.find())
+        {
+            return str;
+        }
+
+        StringBuilder sb = new StringBuilder(str.length());
+        int last = 0;
+
+        do
+        {
+            sb.append(str, last, matcher.start());
+            String position = matcher.group(1);
+            sb.append('%');
+
+            if (position != null)
+            {
+                sb.append(position);
+            }
+
+            sb.append('s');
+            last = matcher.end();
+        }
+        while (matcher.find());
+
+        sb.append(str, last, str.length());
+        return sb.toString();
     }
 
     static LanguageMap getInstance()
@@ -89,7 +150,8 @@ public class LanguageMap
     {
         instance.languageList.clear();
         instance.languageList.putAll(p_135063_0_);
-        instance.lastUpdateTimeInMilliseconds = System.currentTimeMillis();
+        instance.lastUpdateTimeInMilliseconds = EagRuntime.steadyTimeMillis();
+        SingleplayerServerController.updateLocale(dump());
     }
 
     public synchronized String translateKey(String key)
@@ -103,7 +165,7 @@ public class LanguageMap
 
         try
         {
-            return String.format(s, format);
+            return HString.format(s, format);
         }
         catch (IllegalFormatException var5)
         {

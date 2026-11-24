@@ -1,121 +1,68 @@
 package net.minecraft.util;
 
-import com.google.common.collect.Maps;
-import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
-import com.mojang.util.UUIDTypeAdapter;
-import java.util.Locale;
-import java.util.Map;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
-import javax.annotation.Nullable;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.profile.EaglerProfile;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class Session
 {
-    private final String username;
-    private final String playerID;
-    private final String token;
-    private final Session.Type sessionType;
-    /** Forge: Cache of the local session's GameProfile properties. */
-    private com.mojang.authlib.properties.PropertyMap properties;
+    private static final EaglercraftUUID outOfGameUUID;
+    private GameProfile profile;
 
-    public Session(String usernameIn, String playerIDIn, String tokenIn, String sessionTypeIn)
+    public Session()
     {
-        if (usernameIn == null || usernameIn.isEmpty())
-        {
-            usernameIn = "MissingName";
-            playerIDIn = tokenIn = "NotValid";
-            net.lax1dude.eaglercraft.v1_8.log4j.Logger logger = net.minecraftforge.fml.common.FMLLog.log;
-            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "=========================================================");
-            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "WARNING!! the username was not set for this session, typically");
-            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "this means you installed Forge incorrectly. We have set your");
-            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "name to \"MissingName\" and your session to nothing. Please");
-            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "check your installation and post a console log from the launcher");
-            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "when asking for help!");
-            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "=========================================================");
-        }
-
-        this.username = usernameIn;
-        this.playerID = playerIDIn;
-        this.token = tokenIn;
-        this.sessionType = Session.Type.setSessionType(sessionTypeIn);
-    }
-
-    public String getSessionID()
-    {
-        return "token:" + this.token + ":" + this.playerID;
-    }
-
-    public String getPlayerID()
-    {
-        return this.playerID;
-    }
-
-    public String getUsername()
-    {
-        return this.username;
-    }
-
-    public String getToken()
-    {
-        return this.token;
+        this.reset();
     }
 
     public GameProfile getProfile()
     {
-        try
-        {
-            EaglercraftUUID uuid = UUIDTypeAdapter.fromString(this.getPlayerID());
-            GameProfile ret = new GameProfile(uuid, this.getUsername());    //Forge: Adds cached GameProfile properties to returned GameProfile.
-            if (properties != null) ret.getProperties().putAll(properties); // Helps to cut down on calls to the session service,
-            return ret;                                                     // which helps to fix MC-52974.
-        }
-        catch (IllegalArgumentException var2)
-        {
-            return new GameProfile(net.minecraft.entity.player.EntityPlayer.getUUID(new GameProfile((EaglercraftUUID)null, this.getUsername())), this.getUsername());
-        }
+        return this.profile;
     }
 
-    /* ======================================== FORGE START ===================================== */
-    //For internal use only. Modders should never need to use this.
-    public void setProperties(com.mojang.authlib.properties.PropertyMap properties)
+    public String getUsername()
     {
-        if(this.properties == null) this.properties = properties;
+        return this.profile.getName();
     }
 
-    public boolean hasCachedProperties()
+    public String getPlayerID()
     {
-        return properties != null;
+        return this.profile.getId().toString().replace("-", "");
     }
-    /* ========================================= FORGE END ====================================== */
 
-    @SideOnly(Side.CLIENT)
-    public static enum Type
+    public String getToken()
     {
-        LEGACY("legacy"),
-        MOJANG("mojang");
+        return "";
+    }
 
-        private static final Map<String, Session.Type> SESSION_TYPES = Maps.<String, Session.Type>newHashMap();
-        private final String sessionType;
+    public String getSessionID()
+    {
+        return "token::" + this.getPlayerID();
+    }
 
-        private Type(String sessionTypeIn)
-        {
-            this.sessionType = sessionTypeIn;
-        }
+    public void update(String serverUsername, EaglercraftUUID uuid)
+    {
+        this.profile = new GameProfile(uuid, serverUsername);
+    }
 
-        @Nullable
-        public static Session.Type setSessionType(String sessionTypeIn)
-        {
-            return SESSION_TYPES.get(sessionTypeIn.toLowerCase(Locale.ROOT));
-        }
+    public void reset()
+    {
+        this.update(EaglerProfile.getName(), outOfGameUUID);
+    }
 
-        static
-        {
-            for (Session.Type session$type : values())
-            {
-                SESSION_TYPES.put(session$type.sessionType, session$type);
-            }
-        }
+    public void setLAN()
+    {
+        this.update(EaglerProfile.getName(), EntityPlayer.getOfflineUUID(EaglerProfile.getName()));
+    }
+
+    static
+    {
+        byte[] bytes = new byte[16];
+        (new EaglercraftRandom()).nextBytes(bytes);
+        outOfGameUUID = new EaglercraftUUID(bytes);
     }
 }
