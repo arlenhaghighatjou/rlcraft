@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 public class Ingredient implements Predicate<ItemStack>
 {
     //Because Mojang caches things... we need to invalidate them.. so... here we go..
-    private static final java.util.Set<Ingredient> INSTANCES = java.util.Collections.newSetFromMap(new java.util.WeakHashMap<Ingredient, Boolean>());
+    private static final java.util.Set<Ingredient> INSTANCES = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<Ingredient, Boolean>());
     public static final Ingredient EMPTY = new Ingredient(new ItemStack[0])
     {
         public boolean apply(@Nullable ItemStack p_apply_1_)

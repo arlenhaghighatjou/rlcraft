@@ -585,9 +585,9 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
     {
         if (!worldIn.isRemote && !stack.isEmpty() && worldIn.getGameRules().getBoolean("doTileDrops")&& !worldIn.restoringBlockSnapshots) // do not drop items while restoring blockstates, prevents item dupe
         {
-            if (captureDrops.get())
+            if (captureDrops)
             {
-                capturedDrops.get().add(stack);
+                capturedDrops.add(stack);
                 return;
             }
             float f = 0.5F;
@@ -2164,20 +2164,20 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
         return getBlockLayer() == layer;
     }
     // For Internal use only to capture droped items inside getDrops
-    protected static ThreadLocal<Boolean> captureDrops = ThreadLocal.withInitial(() -> false);
-    protected static ThreadLocal<NonNullList<ItemStack>> capturedDrops = ThreadLocal.withInitial(NonNullList::create);
+    protected static boolean captureDrops = false;
+    protected static NonNullList<ItemStack> capturedDrops = NonNullList.create();
     protected NonNullList<ItemStack> captureDrops(boolean start)
     {
         if (start)
         {
-            captureDrops.set(true);
-            capturedDrops.get().clear();
+            captureDrops = true;
+            capturedDrops.clear();
             return NonNullList.create();
         }
         else
         {
-            captureDrops.set(false);
-            return capturedDrops.get();
+            captureDrops = false;
+            return capturedDrops;
         }
     }
 

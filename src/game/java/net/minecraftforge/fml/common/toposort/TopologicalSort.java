@@ -101,7 +101,7 @@ public class TopologicalSort
                 throw new NoSuchElementException("Missing node from graph");
             }
 
-            return Collections.unmodifiableSortedSet(graph.get(from));
+            return Collections.unmodifiableSet(graph.get(from));
         }
         @Override
         public Iterator<T> iterator()

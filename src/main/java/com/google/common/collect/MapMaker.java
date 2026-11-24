@@ -1,7 +1,7 @@
 package com.google.common.collect;
 
 import java.util.Map;
-import java.util.WeakHashMap;
+import java.util.HashMap;
 
 public final class MapMaker
 {
@@ -12,6 +12,6 @@ public final class MapMaker
 
     public <K, V> Map<K, V> makeMap()
     {
-        return new WeakHashMap<K, V>();
+        return new HashMap<K, V>();
     }
 }

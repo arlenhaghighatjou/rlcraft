@@ -7,8 +7,6 @@ import net.lax1dude.eaglercraft.v1_8.EncoderException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.annotation.Nullable;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -27,7 +25,6 @@ public class EntityDataManager
     private static final Map < Class <? extends Entity > , Integer > NEXT_ID_MAP = Maps. < Class <? extends Entity > , Integer > newHashMap();
     private final Entity entity;
     private final Map < Integer, EntityDataManager.DataEntry<? >> entries = Maps. < Integer, EntityDataManager.DataEntry<? >> newHashMap();
-    private final ReadWriteLock lock = new ReentrantReadWriteLock();
     private boolean empty = true;
     private boolean dirty;
 
@@ -118,15 +115,12 @@ public class EntityDataManager
     private <T> void setEntry(DataParameter<T> key, T value)
     {
         EntityDataManager.DataEntry<T> dataentry = new EntityDataManager.DataEntry<T>(key, value);
-        this.lock.writeLock().lock();
         this.entries.put(Integer.valueOf(key.getId()), dataentry);
         this.empty = false;
-        this.lock.writeLock().unlock();
     }
 
     private <T> EntityDataManager.DataEntry<T> getEntry(DataParameter<T> key)
     {
-        this.lock.readLock().lock();
         EntityDataManager.DataEntry<T> dataentry;
 
         try
@@ -141,7 +135,6 @@ public class EntityDataManager
             throw new ReportedException(crashreport);
         }
 
-        this.lock.readLock().unlock();
         return dataentry;
     }
 
@@ -197,7 +190,6 @@ public class EntityDataManager
 
         if (this.dirty)
         {
-            this.lock.readLock().lock();
 
             for (EntityDataManager.DataEntry<?> dataentry : this.entries.values())
             {
@@ -214,7 +206,6 @@ public class EntityDataManager
                 }
             }
 
-            this.lock.readLock().unlock();
         }
 
         this.dirty = false;
@@ -223,14 +214,12 @@ public class EntityDataManager
 
     public void writeEntries(PacketBuffer buf) throws IOException
     {
-        this.lock.readLock().lock();
 
         for (EntityDataManager.DataEntry<?> dataentry : this.entries.values())
         {
             writeEntry(buf, dataentry);
         }
 
-        this.lock.readLock().unlock();
         buf.writeByte(255);
     }
 
@@ -238,7 +227,6 @@ public class EntityDataManager
     public List < EntityDataManager.DataEntry<? >> getAll()
     {
         List < EntityDataManager.DataEntry<? >> list = null;
-        this.lock.readLock().lock();
 
         for (EntityDataManager.DataEntry<?> dataentry : this.entries.values())
         {
@@ -250,7 +238,6 @@ public class EntityDataManager
             list.add(dataentry.copy());
         }
 
-        this.lock.readLock().unlock();
         return list;
     }
 
@@ -301,7 +288,6 @@ public class EntityDataManager
     @SideOnly(Side.CLIENT)
     public void setEntryValues(List < EntityDataManager.DataEntry<? >> entriesIn)
     {
-        this.lock.writeLock().lock();
 
         for (EntityDataManager.DataEntry<?> dataentry : entriesIn)
         {
@@ -314,7 +300,6 @@ public class EntityDataManager
             }
         }
 
-        this.lock.writeLock().unlock();
         this.dirty = true;
     }
 
@@ -332,14 +317,12 @@ public class EntityDataManager
     public void setClean()
     {
         this.dirty = false;
-        this.lock.readLock().lock();
 
         for (EntityDataManager.DataEntry<?> dataentry : this.entries.values())
         {
             dataentry.setDirty(false);
         }
 
-        this.lock.readLock().unlock();
     }
 
     public static class DataEntry<T>

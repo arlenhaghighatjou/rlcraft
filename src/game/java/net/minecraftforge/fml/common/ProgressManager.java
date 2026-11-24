@@ -21,7 +21,7 @@ package net.minecraftforge.fml.common;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.ArrayList;
 
 import com.google.common.base.Joiner;
 
@@ -31,7 +31,7 @@ import com.google.common.base.Joiner;
  */
 public class ProgressManager
 {
-    private static final List<ProgressBar> bars = new CopyOnWriteArrayList<ProgressBar>();
+    private static final List<ProgressBar> bars = new ArrayList<ProgressBar>();
     /**
      * Not a fully fleshed out API, may change in future MC versions.
      * However feel free to use and suggest additions.

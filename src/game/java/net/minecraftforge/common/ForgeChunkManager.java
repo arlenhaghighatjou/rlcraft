@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
-import java.util.WeakHashMap;
+import java.util.IdentityHashMap;
 
 import javax.annotation.Nullable;
 
@@ -112,7 +112,7 @@ public class ForgeChunkManager
 
     private static Map<String, LoadingCallback> callbacks = Maps.newHashMap();
 
-    private static Map<World, ImmutableSetMultimap<ChunkPos,Ticket>> forcedChunks = Collections.synchronizedMap(new WeakHashMap<>());
+    private static Map<World, ImmutableSetMultimap<ChunkPos,Ticket>> forcedChunks = new IdentityHashMap<>();
     private static BiMap<EaglercraftUUID,Ticket> pendingEntities = HashBiMap.create();
 
     private static Map<World,Cache<Long, ChunkEntry>> dormantChunkCache = new MapMaker().weakKeys().makeMap();
@@ -947,42 +947,29 @@ public class ForgeChunkManager
         }
 
 		try {
-			VFile2 virtualFile = getVirtualChunkTicketFile(worldServer);
-			if (virtualFile != null) {
-				ByteArrayOutputStream data = new ByteArrayOutputStream();
-				try (DataOutputStream output = new DataOutputStream(data)) {
-					CompressedStreamTools.write(forcedChunkData, output);
-				}
-				virtualFile.setAllBytes(data.toByteArray());
-			} else {
-				File chunkDir = worldServer.getChunkSaveLocation();
-				java.nio.file.Files.createDirectories(chunkDir.toPath());
-				CompressedStreamTools.write(forcedChunkData, new File(chunkDir, "forcedchunks.dat"));
+			ByteArrayOutputStream data = new ByteArrayOutputStream();
+			try (DataOutputStream output = new DataOutputStream(data)) {
+				CompressedStreamTools.write(forcedChunkData, output);
 			}
+			getChunkTicketFile(worldServer).setAllBytes(data.toByteArray());
 		} catch (IOException ex) {
 			FMLLog.log.warn("Unable to write chunk tickets for dimension " + worldServer.provider.getDimension(), ex);
 		}
 	}
 
-	private static VFile2 getVirtualChunkTicketFile(WorldServer world) {
-		if (world.getSaveHandler() instanceof EaglerSaveHandler) {
-			return WorldsDB.newVFile(((EaglerSaveHandler) world.getSaveHandler()).getWorldPath(),
-					"level" + world.provider.getDimension(), "forcedchunks.dat");
-		}
-		return null;
+	private static VFile2 getChunkTicketFile(WorldServer world) {
+		return WorldsDB.newVFile(((EaglerSaveHandler) world.getSaveHandler()).getWorldPath(),
+				"level" + world.provider.getDimension(), "forcedchunks.dat");
 	}
 
 	private static NBTTagCompound readForcedChunkData(WorldServer world) throws IOException {
-		VFile2 virtualFile = getVirtualChunkTicketFile(world);
-		if (virtualFile != null) {
-			if (!virtualFile.exists()) {
-				return null;
-			}
-			try (DataInputStream input = new DataInputStream(virtualFile.getInputStream())) {
-				return CompressedStreamTools.read(input);
-			}
+		VFile2 file = getChunkTicketFile(world);
+		if (!file.exists()) {
+			return null;
 		}
-		return CompressedStreamTools.read(new File(world.getChunkSaveLocation(), "forcedchunks.dat"));
+		try (DataInputStream input = new DataInputStream(file.getInputStream())) {
+			return CompressedStreamTools.read(input);
+		}
 	}
 
     static void loadEntity(Entity entity)

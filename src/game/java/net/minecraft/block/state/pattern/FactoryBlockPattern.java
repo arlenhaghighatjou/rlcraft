@@ -87,7 +87,7 @@ public class FactoryBlockPattern
     private Predicate<BlockWorldState>[][][] makePredicateArray()
     {
         this.checkMissingPredicates();
-        Predicate<BlockWorldState>[][][] predicate = (Predicate[][][])((Predicate[][][])Array.newInstance(Predicate.class, this.depth.size(), this.aisleHeight, this.rowWidth));
+        Predicate<BlockWorldState>[][][] predicate = new Predicate[this.depth.size()][this.aisleHeight][this.rowWidth];
 
         for (int i = 0; i < this.depth.size(); ++i)
         {

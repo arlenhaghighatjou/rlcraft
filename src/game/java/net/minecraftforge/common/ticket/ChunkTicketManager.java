@@ -24,11 +24,11 @@ import net.minecraft.util.math.ChunkPos;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
-import java.util.WeakHashMap;
+import java.util.IdentityHashMap;
 
 public class ChunkTicketManager<T> implements ITicketGetter<T>
 {
-    private final Set<SimpleTicket<T>> tickets = Collections.newSetFromMap(new WeakHashMap<>());
+    private final Set<SimpleTicket<T>> tickets = Collections.newSetFromMap(new IdentityHashMap<>());
     public final ChunkPos pos;
 
     public ChunkTicketManager(ChunkPos pos)

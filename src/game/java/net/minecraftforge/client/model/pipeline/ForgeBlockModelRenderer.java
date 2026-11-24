@@ -34,16 +34,16 @@ import net.minecraftforge.common.ForgeModContainer;
 
 public class ForgeBlockModelRenderer extends BlockModelRenderer
 {
-    private final ThreadLocal<VertexLighterFlat> lighterFlat;
-    private final ThreadLocal<VertexLighterSmoothAo> lighterSmooth;
-    private final ThreadLocal<VertexBufferConsumer> consumerFlat = ThreadLocal.withInitial(VertexBufferConsumer::new);
-    private final ThreadLocal<VertexBufferConsumer> consumerSmooth = ThreadLocal.withInitial(VertexBufferConsumer::new);
+    private final VertexLighterFlat lighterFlat;
+    private final VertexLighterSmoothAo lighterSmooth;
+    private final VertexBufferConsumer consumerFlat = new VertexBufferConsumer();
+    private final VertexBufferConsumer consumerSmooth = new VertexBufferConsumer();
 
     public ForgeBlockModelRenderer(BlockColors colors)
     {
         super(colors);
-        lighterFlat = ThreadLocal.withInitial(() -> new VertexLighterFlat(colors));
-        lighterSmooth = ThreadLocal.withInitial(() -> new VertexLighterSmoothAo(colors));
+        lighterFlat = new VertexLighterFlat(colors);
+        lighterSmooth = new VertexLighterSmoothAo(colors);
     }
 
     @Override
@@ -51,11 +51,11 @@ public class ForgeBlockModelRenderer extends BlockModelRenderer
     {
         if(ForgeModContainer.forgeLightPipelineEnabled)
         {
-            VertexBufferConsumer consumer = consumerFlat.get();
+            VertexBufferConsumer consumer = consumerFlat;
             consumer.setBuffer(buffer);
             consumer.setOffset(pos);
 
-            VertexLighterFlat lighter = lighterFlat.get();
+            VertexLighterFlat lighter = lighterFlat;
             lighter.setParent(consumer);
 
             return render(lighter, world, model, state, pos, buffer, checkSides, rand);
@@ -71,11 +71,11 @@ public class ForgeBlockModelRenderer extends BlockModelRenderer
     {
         if(ForgeModContainer.forgeLightPipelineEnabled)
         {
-            VertexBufferConsumer consumer = consumerSmooth.get();
+            VertexBufferConsumer consumer = consumerSmooth;
             consumer.setBuffer(buffer);
             consumer.setOffset(pos);
 
-            VertexLighterSmoothAo lighter = lighterSmooth.get();
+            VertexLighterSmoothAo lighter = lighterSmooth;
             lighter.setParent(consumer);
 
             return render(lighter, world, model, state, pos, buffer, checkSides, rand);

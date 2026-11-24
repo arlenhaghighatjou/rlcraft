@@ -285,12 +285,12 @@ public class LightUtil
         }
     }
 
-    private static final ThreadLocal<ItemPipeline> itemPipeline = ThreadLocal.withInitial(ItemPipeline::new);
+    private static final ItemPipeline itemPipeline = new ItemPipeline();
 
     // renders quad in any Vertex Format, but is slower
     public static void renderQuadColorSlow(WorldRenderer buffer, BakedQuad quad, int auxColor)
     {
-        ItemPipeline pipeline = itemPipeline.get();
+        ItemPipeline pipeline = itemPipeline;
         pipeline.bufferConsumer.setBuffer(buffer);
         ItemConsumer cons = pipeline.itemConsumer;
 
