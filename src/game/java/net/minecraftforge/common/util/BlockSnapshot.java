@@ -42,7 +42,6 @@ import javax.annotation.Nullable;
  */
 public class BlockSnapshot
 {
-    private static final boolean DEBUG = Boolean.parseBoolean(System.getProperty("forge.debugBlockSnapshot", "false"));
 
     private final BlockPos pos;
     private final int dimId;
@@ -71,10 +70,6 @@ public class BlockSnapshot
         this.meta = state.getBlock().getMetaFromState(state);
         this.setFlag(3);
         this.nbt = nbt;
-        if (DEBUG)
-        {
-            System.out.printf("Created BlockSnapshot - [World: %s ][Location: %d,%d,%d ][Block: %s ][Meta: %d ]", world.getWorldInfo().getWorldName(), pos.getX(), pos.getY(), pos.getZ(), getRegistryName(), getMeta());
-        }
     }
 
     public BlockSnapshot(World world, BlockPos pos, IBlockState state, int flag)
@@ -212,10 +207,6 @@ public class BlockSnapshot
             }
         }
 
-        if (DEBUG)
-        {
-            System.out.printf("Restored BlockSnapshot with data [World: %s ][Location: %d,%d,%d ][Meta: %d ][Block: %s ][TileEntity: %s ][force: %s ][notifyNeighbors: %s]", world.getWorldInfo().getWorldName(), pos.getX(), pos.getY(), pos.getZ(), replaced.getBlock().getMetaFromState(replaced), replaced.getBlock().delegate.name(), te, force, notifyNeighbors);
-        }
         return true;
     }
 

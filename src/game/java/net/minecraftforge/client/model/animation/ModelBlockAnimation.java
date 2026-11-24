@@ -573,8 +573,6 @@ public class ModelBlockAnimation
     }
 
     private static final Gson mbaGson = new GsonBuilder()
-        .registerTypeAdapter(ImmutableList.class, JsonUtils.ImmutableListTypeAdapter.INSTANCE)
-        .registerTypeAdapter(ImmutableMap.class, JsonUtils.ImmutableMapTypeAdapter.INSTANCE)
         .setPrettyPrinting()
         .disableHtmlEscaping()
         .create();

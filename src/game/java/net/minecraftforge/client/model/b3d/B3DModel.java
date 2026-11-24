@@ -19,12 +19,10 @@
 
 package net.minecraftforge.client.model.b3d;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.channels.FileChannel;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,30 +86,21 @@ public class B3DModel
         private int length;
         public Parser(InputStream in) throws IOException
         {
-            if(in instanceof FileInputStream)
+            IOUtils.readFully(in, tag);
+            byte[] tmp = new byte[4];
+            if (IOUtils.readFully(in, tmp) != tmp.length) throw new java.io.EOFException();
+            int l = ByteBuffer.wrap(tmp).order(ByteOrder.LITTLE_ENDIAN).getInt();
+            if(l < 0 || l + 8 < 0) throw new IOException("File is too large");
+            buf = ByteBuffer.allocate(l + 8).order(ByteOrder.LITTLE_ENDIAN);
+            buf.clear();
+            buf.put(tag);
+            buf.put(tmp);
+            if (IOUtils.readFully(in, buf.array(), 8, l) != l)
             {
-                // fast shorthand for normal files
-                FileChannel channel = ((FileInputStream)in).getChannel();
-                buf = channel.map(FileChannel.MapMode.READ_ONLY, 0, channel.size()).order(ByteOrder.LITTLE_ENDIAN);
+                throw new java.io.EOFException("Truncated B3D data");
             }
-            else
-            {
-                // slower default for others
-                IOUtils.readFully(in, tag);
-                byte[] tmp = new byte[4];
-                if (IOUtils.readFully(in, tmp) != tmp.length) throw new java.io.EOFException();
-                int l = ByteBuffer.wrap(tmp).order(ByteOrder.LITTLE_ENDIAN).getInt();
-                if(l < 0 || l + 8 < 0) throw new IOException("File is too large");
-                buf = ByteBuffer.allocate(l + 8).order(ByteOrder.LITTLE_ENDIAN);
-                buf.clear();
-                buf.put(tag);
-                buf.put(tmp);
-				if (IOUtils.readFully(in, buf.array(), 8, l) != l) {
-					throw new java.io.EOFException("Truncated B3D data");
-				}
-				buf.position(8 + l);
-                buf.flip();
-            }
+            buf.position(8 + l);
+            buf.flip();
         }
 
         private String dump = "";

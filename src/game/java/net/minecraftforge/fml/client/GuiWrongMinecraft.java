@@ -43,8 +43,6 @@ public class GuiWrongMinecraft extends GuiErrorBase
         this.drawCenteredString(this.fontRenderer, I18n.format("fml.messages.mod.wrongminecraft.requirement", TextFormatting.BOLD + wrongMC.mod.getName() + TextFormatting.RESET, wrongMC.mod.getModId(), wrongMC.mod.acceptableMinecraftVersionRange().toStringFriendly()), this.width / 2, offset, 0xEEEEEE);
         offset+=15;
         this.drawCenteredString(this.fontRenderer, I18n.format("fml.messages.mod.wrongminecraft.fix", wrongMC.mod.getName()),this.width/2, offset, 0xFFFFFF);
-        offset+=20;
-        this.drawCenteredString(this.fontRenderer, I18n.format("fml.messages.mod.missing.dependencies.see.log", GuiErrorBase.logFile.getName()), this.width / 2, offset, 0xFFFFFF);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

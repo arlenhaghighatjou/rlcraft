@@ -45,7 +45,6 @@ import javax.annotation.Nullable;
 
 public class BlockEvent extends Event
 {
-    private static final boolean DEBUG = Boolean.parseBoolean(System.getProperty("forge.debugBlockEvent", "false"));
 
     private final World world;
     private final BlockPos pos;
@@ -195,11 +194,6 @@ public class BlockEvent extends Event
             this.blockSnapshot = blockSnapshot;
             this.placedBlock = !(entity instanceof EntityPlayer) ? blockSnapshot.getReplacedBlock() : blockSnapshot.getCurrentBlock();
             this.placedAgainst = placedAgainst;
-
-            if (DEBUG)
-            {
-                System.out.printf("Created EntityPlaceEvent - [PlacedBlock: %s ][PlacedAgainst: %s ][Entity: %s ]\n", getPlacedBlock(), placedAgainst, entity);
-            }
         }
 
         @Nullable
@@ -231,10 +225,6 @@ public class BlockEvent extends Event
             super(blockSnapshot, placedAgainst, player);
             this.player = player;
             this.hand = hand;
-            if (DEBUG)
-            {
-                System.out.printf("Created PlaceEvent - [PlacedBlock: %s ][PlacedAgainst: %s ][ItemStack: %s ][Player: %s ][Hand: %s]\n", getPlacedBlock(), placedAgainst, player.getHeldItem(hand), player, hand);
-            }
         }
 
         public EntityPlayer getPlayer() { return player; }
@@ -265,10 +255,6 @@ public class BlockEvent extends Event
         public EntityMultiPlaceEvent(@Nonnull List<BlockSnapshot> blockSnapshots, @Nonnull IBlockState placedAgainst, @Nullable Entity entity) {
             super(blockSnapshots.get(0), placedAgainst, entity);
             this.blockSnapshots = ImmutableList.copyOf(blockSnapshots);
-            if (DEBUG)
-            {
-                System.out.printf("Created EntityMultiPlaceEvent - [PlacedAgainst: %s ][Entity: %s ]\n", placedAgainst, entity);
-            }
         }
 
         /**
@@ -305,10 +291,6 @@ public class BlockEvent extends Event
         public MultiPlaceEvent(@Nonnull List<BlockSnapshot> blockSnapshots, @Nonnull IBlockState placedAgainst, @Nonnull EntityPlayer player, @Nonnull EnumHand hand) {
             super(blockSnapshots.get(0), placedAgainst, player, hand);
             this.blockSnapshots = ImmutableList.copyOf(blockSnapshots);
-            if (DEBUG)
-            {
-                System.out.printf("Created MultiPlaceEvent - [PlacedAgainst: %s ][ItemInHand: %s ][Player: %s ]\n", placedAgainst, player.getHeldItem(hand), player);
-            }
         }
 
         /**

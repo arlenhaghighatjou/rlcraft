@@ -70,7 +70,7 @@ public class GuiMultipleModsErrored extends GuiErrorBase
     }
 
     @Override
-    public void actionPerformed(GuiButton button)
+    public void actionPerformed(GuiButton button) throws IOException
     {
         this.list.actionPerformed(button);
         super.actionPerformed(button);

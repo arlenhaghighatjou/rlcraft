@@ -292,8 +292,6 @@ public final class AnimationStateMachine implements IAnimationStateMachine
     }
 
     private static final Gson asmGson = new GsonBuilder()
-        .registerTypeAdapter(ImmutableList.class, JsonUtils.ImmutableListTypeAdapter.INSTANCE)
-        .registerTypeAdapter(ImmutableMap.class, JsonUtils.ImmutableMapTypeAdapter.INSTANCE)
         .registerTypeAdapterFactory(Clips.CommonClipTypeAdapterFactory.INSTANCE)
         //.registerTypeAdapterFactory(ClipProviders.CommonClipProviderTypeAdapterFactory.INSTANCE)
         .registerTypeAdapterFactory(TimeValues.CommonTimeValueTypeAdapterFactory.INSTANCE)

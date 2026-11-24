@@ -19,20 +19,8 @@
 
 package net.minecraftforge.common.util;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Map;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
@@ -42,57 +30,6 @@ import javax.annotation.Nullable;
 
 public class JsonUtils
 {
-    // http://stackoverflow.com/questions/7706772/deserializing-immutablelist-using-gson/21677349#21677349
-    public enum ImmutableListTypeAdapter implements JsonDeserializer<ImmutableList<?>>, JsonSerializer<ImmutableList<?>>
-    {
-        INSTANCE;
-
-        @Override
-        public ImmutableList<?> deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException
-        {
-            final Type[] typeArguments = ((ParameterizedType) type).getActualTypeArguments();
-            final Type parametrizedType = listOf(typeArguments[0]);
-            final List<?> list = context.deserialize(json, parametrizedType);
-            return ImmutableList.copyOf(list);
-        }
-
-        @Override
-        public JsonElement serialize(ImmutableList<?> src, Type type, JsonSerializationContext context)
-        {
-            final Type[] typeArguments = ((ParameterizedType) type).getActualTypeArguments();
-            final Type parametrizedType = listOf(typeArguments[0]);
-            return context.serialize(src, parametrizedType);
-        }
-    }
-
-    @SuppressWarnings({ "serial", "unchecked" })
-    private static Type listOf(final Type arg)
-    {
-        return parameterized(List.class, arg);
-    }
-
-    public enum ImmutableMapTypeAdapter implements JsonDeserializer<ImmutableMap<String, ?>>, JsonSerializer<ImmutableMap<String, ?>>
-    {
-        INSTANCE;
-
-        @Override
-        public ImmutableMap<String, ?> deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException
-        {
-            final Type[] typeArguments = ((ParameterizedType) type).getActualTypeArguments();
-            final Type parameterizedType = mapOf(typeArguments[1]);
-            final Map<String, ?> map = context.deserialize(json, parameterizedType);
-            return ImmutableMap.copyOf(map);
-        }
-
-        @Override
-        public JsonElement serialize(ImmutableMap<String, ?> src, Type type, JsonSerializationContext context)
-        {
-            final Type[] typeArguments = ((ParameterizedType) type).getActualTypeArguments();
-            final Type parameterizedType = mapOf(typeArguments[1]);
-            return context.serialize(src, parameterizedType);
-        }
-    }
-
     @Nullable
     public static NBTTagCompound readNBT(JsonObject json, String key)
     {
@@ -109,21 +46,5 @@ public class JsonUtils
         {
             return null;
         }
-    }
-
-    @SuppressWarnings({ "serial", "unchecked" })
-    private static Type mapOf(final Type arg)
-    {
-        return parameterized(Map.class, String.class, arg);
-    }
-
-    private static Type parameterized(final Type raw, final Type... arguments)
-    {
-        return new ParameterizedType()
-        {
-            public Type[] getActualTypeArguments() { return arguments; }
-            public Type getRawType() { return raw; }
-            public Type getOwnerType() { return null; }
-        };
     }
 }

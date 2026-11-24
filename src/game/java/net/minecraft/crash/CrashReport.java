@@ -7,8 +7,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +15,7 @@ import net.minecraft.util.ReportedException;
 import net.minecraft.world.gen.layer.IntCache;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.lax1dude.eaglercraft.v1_8.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
@@ -74,39 +73,13 @@ public class CrashReport
         {
             public String call()
             {
-                Runtime runtime = Runtime.getRuntime();
-                long i = runtime.maxMemory();
-                long j = runtime.totalMemory();
-                long k = runtime.freeMemory();
+                long i = EagRuntime.maxMemory();
+                long j = EagRuntime.totalMemory();
+                long k = EagRuntime.freeMemory();
                 long l = i / 1024L / 1024L;
                 long i1 = j / 1024L / 1024L;
                 long j1 = k / 1024L / 1024L;
                 return k + " bytes (" + j1 + " MB) / " + j + " bytes (" + i1 + " MB) up to " + i + " bytes (" + l + " MB)";
-            }
-        });
-        this.systemDetailsCategory.addDetail("JVM Flags", new ICrashReportDetail<String>()
-        {
-            public String call()
-            {
-                RuntimeMXBean runtimemxbean = ManagementFactory.getRuntimeMXBean();
-                List<String> list = runtimemxbean.getInputArguments();
-                int i = 0;
-                StringBuilder stringbuilder = new StringBuilder();
-
-                for (String s : list)
-                {
-                    if (s.startsWith("-X"))
-                    {
-                        if (i++ > 0)
-                        {
-                            stringbuilder.append(" ");
-                        }
-
-                        stringbuilder.append(s);
-                    }
-                }
-
-                return String.format("%d total; %s", i, stringbuilder.toString());
             }
         });
         this.systemDetailsCategory.addDetail("IntCache", new ICrashReportDetail<String>()

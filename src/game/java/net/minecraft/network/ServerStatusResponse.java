@@ -213,7 +213,6 @@ public class ServerStatusResponse
             }
         }
 
-    private java.util.concurrent.Semaphore mutex = new java.util.concurrent.Semaphore(1);
     private String json = null;
     /**
      * Returns this object as a Json string.
@@ -231,14 +230,8 @@ public class ServerStatusResponse
         String ret = this.json;
         if (ret == null)
         {
-            mutex.acquireUninterruptibly();
-            ret = this.json;
-            if (ret == null)
-            {
-                ret = net.minecraft.network.status.server.SPacketServerInfo.GSON.toJson(this);
-                this.json = ret;
-            }
-            mutex.release();
+            ret = net.minecraft.network.status.server.SPacketServerInfo.GSON.toJson(this);
+            this.json = ret;
         }
         return ret;
     }
