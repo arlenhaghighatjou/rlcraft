@@ -9,24 +9,24 @@ public class EaglercraftVersion {
 	
 	/// Customize these to fit your fork:
 	
-	public static final String projectForkName = "EaglercraftX";
-	public static final String projectForkVersion = "u53";
-	public static final String projectForkVendor = "lax1dude";
+	public static final String projectForkName = "RLCraft";
+	public static final String projectForkVersion = "u53-1";
+	public static final String projectForkVendor = "arlen";
 	
-	public static final String projectForkURL = "https://gitlab.com/lax1dude/eaglercraftx-1.8";
+	public static final String projectForkURL = "https://github.com/arlenhaghighatjou/rlcraft";
 	
 	//////////////////////////////////////////////////////////////////////
 	
-	public static final String projectOriginName = "EaglercraftX";
-	public static final String projectOriginAuthor = "lax1dude";
-	public static final String projectOriginRevision = "1.8";
-	public static final String projectOriginVersion = "u53";
+	public static final String projectOriginName = "RLCraft";
+	public static final String projectOriginAuthor = "arlen";
+	public static final String projectOriginRevision = "1.12";
+	public static final String projectOriginVersion = "u53-1";
 	
 	public static final String projectOriginURL = "https://gitlab.com/lax1dude/eaglercraftx-1.8"; // rest in peace
 	
 	// EPK Version Identifier
 	
-	public static final String EPKVersionIdentifier = "u53"; // Set to null to disable EPK version check
+	public static final String EPKVersionIdentifier = "u53-1"; // Set to null to disable EPK version check
 	
 	// Updating configuration
 	
@@ -51,7 +51,7 @@ public class EaglercraftVersion {
 	
 	// Miscellaneous variables:
 
-	public static final String mainMenuStringA = "Minecraft 1.8.8";
+	public static final String mainMenuStringA = "Minecraft 1.12.2";
 	public static final String mainMenuStringB = projectOriginName + " " + projectOriginRevision + "-"
 			+ projectOriginVersion + " ultimate [" + EagRuntime.getPlatformType().getName() + "]";
 	public static final String mainMenuStringC = "";
