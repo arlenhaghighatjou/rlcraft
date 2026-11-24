@@ -541,26 +541,26 @@ public class GuiShaderConfigList extends GuiListExtended {
 		@Override
 		public void drawEntry(int entryID, int x, int y, int getListWidth, int var5, int var6, int var7, boolean var8) {
 			if(this.button1 != null) {
-				this.button1.xPosition = x;
-				this.button1.yPosition = y;
+				this.button1.x = x;
+				this.button1.y = y;
 				this.button1.drawButton(mc, var6, var7);
-				if(this.button1.isMouseOver() && this.button1.yPosition + 10 < bottom && this.button1.yPosition + 10 > top) {
+				if(this.button1.isMouseOver() && this.button1.y + 10 < bottom && this.button1.y + 10 > top) {
 					renderTooltip(var6, var7 + 15, this.opt1.desc);
 				}
 			}
 			if(this.button2 != null) {
-				this.button2.xPosition = x + 75;
-				this.button2.yPosition = y;
+				this.button2.x = x + 75;
+				this.button2.y = y;
 				this.button2.drawButton(mc, var6, var7);
-				if(this.button2.isMouseOver() && this.button2.yPosition + 10 < bottom && this.button2.yPosition + 10 > top) {
+				if(this.button2.isMouseOver() && this.button2.y + 10 < bottom && this.button2.y + 10 > top) {
 					renderTooltip(var6, var7 + 15, this.opt2.desc);
 				}
 			}
 			if(this.button3 != null) {
-				this.button3.xPosition = x + 150;
-				this.button3.yPosition = y;
+				this.button3.x = x + 150;
+				this.button3.y = y;
 				this.button3.drawButton(mc, var6, var7);
-				if(this.button3.isMouseOver() && this.button3.yPosition + 10 < bottom && this.button3.yPosition + 10 > top) {
+				if(this.button3.isMouseOver() && this.button3.y + 10 < bottom && this.button3.y + 10 > top) {
 					renderTooltip(var6, var7 + 15, this.opt3.desc);
 				}
 			}
@@ -570,7 +570,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 		public boolean mousePressed(int var1, int var2, int var3, int var4, int var5, int var6) {
 			if(var4 != 0) return false;
 			if(this.button1 != null) {
-				if(this.button1.yPosition + 15 < bottom && this.button1.yPosition + 5 > top) {
+				if(this.button1.y + 15 < bottom && this.button1.y + 5 > top) {
 					if(this.button1.mousePressed(mc, var2, var3)) {
 						this.opt1.toggleOption(this.button1, var4 == 1 ? -1 : 1);
 						this.button1.displayString = (this.opt1.getDirty() ? "*" : "") + this.opt1.label + ": " + this.opt1.getDisplayValue();
@@ -579,7 +579,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				}
 			}
 			if(this.button2 != null) {
-				if(this.button2.yPosition + 15 < bottom && this.button2.yPosition + 5 > top) {
+				if(this.button2.y + 15 < bottom && this.button2.y + 5 > top) {
 					if(this.button2.mousePressed(mc, var2, var3)) {
 						this.opt2.toggleOption(this.button2, var4 == 1 ? -1 : 1);
 						this.button2.displayString = (this.opt2.getDirty() ? "*" : "") + this.opt2.label + ": " + this.opt2.getDisplayValue();
@@ -588,7 +588,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				}
 			}
 			if(this.button3 != null) {
-				if(this.button3.yPosition + 15 < bottom && this.button3.yPosition + 5 > top) {
+				if(this.button3.y + 15 < bottom && this.button3.y + 5 > top) {
 					if(this.button3.mousePressed(mc, var2, var3)) {
 						this.opt3.toggleOption(this.button3, var4 == 1 ? -1 : 1);
 						this.button3.displayString = (this.opt3.getDirty() ? "*" : "") + this.opt3.label + ": " + this.opt3.getDisplayValue();

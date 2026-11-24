@@ -162,9 +162,9 @@ public class DeferredStateManager {
 			if(!cfg.is_rendering_dynamicLights || !cfg.shaderPackInfo.DYNAMIC_LIGHTS) {
 				return;
 			}
-			float posX = (float)((x + TileEntityRendererDispatcher.staticPlayerX) - (MathHelper.floor_double(TileEntityRendererDispatcher.staticPlayerX / 16.0) << 4));
-			float posY = (float)((y + TileEntityRendererDispatcher.staticPlayerY) - (MathHelper.floor_double(TileEntityRendererDispatcher.staticPlayerY / 16.0) << 4));
-			float posZ = (float)((z + TileEntityRendererDispatcher.staticPlayerZ) - (MathHelper.floor_double(TileEntityRendererDispatcher.staticPlayerZ / 16.0) << 4));
+			float posX = (float)((x + TileEntityRendererDispatcher.staticPlayerX) - (MathHelper.floor(TileEntityRendererDispatcher.staticPlayerX / 16.0) << 4));
+			float posY = (float)((y + TileEntityRendererDispatcher.staticPlayerY) - (MathHelper.floor(TileEntityRendererDispatcher.staticPlayerY / 16.0) << 4));
+			float posZ = (float)((z + TileEntityRendererDispatcher.staticPlayerZ) - (MathHelper.floor(TileEntityRendererDispatcher.staticPlayerZ / 16.0) << 4));
 			instance.bindLightSourceBucket((int)posX, (int)posY, (int)posZ, 1);
 		}
 	}

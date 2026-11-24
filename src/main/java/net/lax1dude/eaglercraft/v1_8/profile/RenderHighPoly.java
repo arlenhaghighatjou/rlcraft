@@ -307,7 +307,7 @@ public class RenderHighPoly extends RenderPlayer {
 								if(stk != null) {
 									Item itm = stk.getItem();
 									if(itm != null) {
-										if(itm == Items.bow) {
+										if(itm == Items.BOW) {
 											GlStateManager.translate(-0.22f, 0.8f, 0.6f);
 											GlStateManager.rotate(-90.0f, 1.0f, 0.0f, 0.0f);
 										}else if(itm instanceof ItemBlock && !((ItemBlock)itm).getBlock().isNormalCube()) {
@@ -332,7 +332,7 @@ public class RenderHighPoly extends RenderPlayer {
 								if(stk != null) {
 									Item itm = stk.getItem();
 									if(itm != null) {
-										if(itm == Items.bow) {
+										if(itm == Items.BOW) {
 											GlStateManager.translate(-0.18f, 1.0f, 0.4f);
 											GlStateManager.rotate(-95.0f, 1.0f, 0.0f, 0.0f);
 										}else if(itm instanceof ItemBlock && !((ItemBlock)itm).getBlock().isNormalCube()) {
@@ -349,7 +349,7 @@ public class RenderHighPoly extends RenderPlayer {
 								if(stk != null) {
 									Item itm = stk.getItem();
 									if(itm != null) {
-										if(itm == Items.bow) {
+										if(itm == Items.BOW) {
 											GlStateManager.translate(-0.65f, 1.3f, -0.1f);
 											GlStateManager.rotate(180.0f, 0.0f, 0.0f, 1.0f);
 											GlStateManager.rotate(20.0f, 1.0f, 0.0f, 0.0f);
@@ -377,7 +377,7 @@ public class RenderHighPoly extends RenderPlayer {
 					float blockLight = (brightness % 65536) * ff;
 					float skyLight = (brightness / 65536) * ff;
 					float sunCurve = (float)((abstractclientplayer.worldObj.getWorldTime() + 4000l) % 24000) / 24000.0f;
-					sunCurve = MathHelper.clamp_float(9.8f - MathHelper.abs(sunCurve * 5.0f + sunCurve * sunCurve * 45.0f - 14.3f) * 0.7f, 0.0f, 1.0f);
+					sunCurve = MathHelper.clamp(9.8f - MathHelper.abs(sunCurve * 5.0f + sunCurve * sunCurve * 45.0f - 14.3f) * 0.7f, 0.0f, 1.0f);
 					skyLight = skyLight * (sunCurve * 0.85f + 0.15f);
 					blockLight = blockLight * (sunCurve * 0.3f + 0.7f);
 					float eyeBrightness = blockLight;
@@ -386,7 +386,7 @@ public class RenderHighPoly extends RenderPlayer {
 					}
 					eyeBrightness += blockLight * 0.2f;
 					eyeBrightness = 1.0f - eyeBrightness;
-					eyeBrightness = MathHelper.clamp_float(eyeBrightness * 1.9f - 1.0f, 0.0f, 1.0f);
+					eyeBrightness = MathHelper.clamp(eyeBrightness * 1.9f - 1.0f, 0.0f, 1.0f);
 					if(eyeBrightness > 0.1f) {
 						if(DeferredStateManager.isInDeferredPass()) {
 							GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -448,7 +448,7 @@ public class RenderHighPoly extends RenderPlayer {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(-0.11F, 0.475F, 0.25F);
 			if (clientPlayer.fishEntity != null) {
-				itemstack = new ItemStack(Items.fishing_rod, 0);
+				itemstack = new ItemStack(Items.FISHING_ROD, 0);
 			}
 
 			Item item = itemstack.getItem();

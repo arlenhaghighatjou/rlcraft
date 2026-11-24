@@ -75,8 +75,8 @@ public class GuiUpdateInstallOptions extends GuiScreen {
 
 	public void drawScreen(int mx, int my, float partialTicks) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, I18n.format("updateInstall.title"), this.width / 2, 40, 11184810);
-		this.drawCenteredString(fontRendererObj,
+		this.drawCenteredString(fontRenderer, I18n.format("updateInstall.title"), this.width / 2, 40, 11184810);
+		this.drawCenteredString(fontRenderer,
 				updateData.clientSignature.bundleDisplayName + " " + updateData.clientSignature.bundleDisplayVersion,
 				this.width / 2, 60, 0xFFFFAA);
 		super.drawScreen(mx, my, partialTicks);

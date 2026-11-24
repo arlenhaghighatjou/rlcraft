@@ -85,11 +85,11 @@ public class GuiHandshakeApprove extends GuiScreen {
 
 	public void drawScreen(int xx, int yy, float partialTicks) {
 		drawBackground(0);
-		drawCenteredString(fontRendererObj, titleString, width / 2, bodyY, 16777215);
+		drawCenteredString(fontRenderer, titleString, width / 2, bodyY, 16777215);
 		for(int i = 0, l = bodyLines.size(); i < l; ++i) {
 			String s = bodyLines.get(i);
 			if(s.length() > 0) {
-				drawCenteredString(fontRendererObj, s, width / 2, bodyY + 20 + i * 10, 16777215);
+				drawCenteredString(fontRenderer, s, width / 2, bodyY + 20 + i * 10, 16777215);
 			}
 		}
 		super.drawScreen(xx, yy, partialTicks);		

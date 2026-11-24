@@ -28,28 +28,28 @@ public class ServerV3MessageHandler extends ServerMessageHandler {
 	}
 
 	public void handleClient(CPacketGetOtherCapeEAG packet) {
-		server.getTextureService().handleRequestPlayerCape(netHandler.playerEntity,
+		server.getTextureService().handleRequestPlayerCape(netHandler.player,
 				new EaglercraftUUID(packet.uuidMost, packet.uuidLeast));
 	}
 
 	public void handleClient(CPacketGetOtherSkinEAG packet) {
-		server.getTextureService().handleRequestPlayerSkin(netHandler.playerEntity,
+		server.getTextureService().handleRequestPlayerSkin(netHandler.player,
 				new EaglercraftUUID(packet.uuidMost, packet.uuidLeast));
 	}
 
 	public void handleClient(CPacketGetSkinByURLEAG packet) {
-		server.getTextureService().handleRequestSkinByURL(netHandler.playerEntity,
+		server.getTextureService().handleRequestSkinByURL(netHandler.player,
 				new EaglercraftUUID(packet.uuidMost, packet.uuidLeast), packet.url);
 	}
 
 	public void handleClient(CPacketInstallSkinSPEAG packet) {
-		server.getTextureService().handleInstallNewSkin(netHandler.playerEntity, packet.customSkin);
+		server.getTextureService().handleInstallNewSkin(netHandler.player, packet.customSkin);
 	}
 
 	public void handleClient(CPacketVoiceSignalConnectEAG packet) {
 		IntegratedVoiceService voiceSvc = server.getVoiceService();
 		if (voiceSvc != null) {
-			voiceSvc.handleVoiceSignalPacketTypeConnect(netHandler.playerEntity);
+			voiceSvc.handleVoiceSignalPacketTypeConnect(netHandler.player);
 		}
 	}
 
@@ -57,7 +57,7 @@ public class ServerV3MessageHandler extends ServerMessageHandler {
 		IntegratedVoiceService voiceSvc = server.getVoiceService();
 		if (voiceSvc != null) {
 			voiceSvc.handleVoiceSignalPacketTypeDesc(new EaglercraftUUID(packet.uuidMost, packet.uuidLeast),
-					packet.desc, netHandler.playerEntity);
+					packet.desc, netHandler.player);
 		}
 	}
 
@@ -66,9 +66,9 @@ public class ServerV3MessageHandler extends ServerMessageHandler {
 		if (voiceSvc != null) {
 			if (packet.isPeerType) {
 				voiceSvc.handleVoiceSignalPacketTypeDisconnectPeer(
-						new EaglercraftUUID(packet.uuidMost, packet.uuidLeast), netHandler.playerEntity);
+						new EaglercraftUUID(packet.uuidMost, packet.uuidLeast), netHandler.player);
 			} else {
-				voiceSvc.handleVoiceSignalPacketTypeDisconnect(netHandler.playerEntity);
+				voiceSvc.handleVoiceSignalPacketTypeDisconnect(netHandler.player);
 			}
 		}
 	}
@@ -77,7 +77,7 @@ public class ServerV3MessageHandler extends ServerMessageHandler {
 		IntegratedVoiceService voiceSvc = server.getVoiceService();
 		if (voiceSvc != null) {
 			voiceSvc.handleVoiceSignalPacketTypeICE(new EaglercraftUUID(packet.uuidMost, packet.uuidLeast), packet.ice,
-					netHandler.playerEntity);
+					netHandler.player);
 		}
 	}
 
@@ -85,7 +85,7 @@ public class ServerV3MessageHandler extends ServerMessageHandler {
 		IntegratedVoiceService voiceSvc = server.getVoiceService();
 		if (voiceSvc != null) {
 			voiceSvc.handleVoiceSignalPacketTypeRequest(new EaglercraftUUID(packet.uuidMost, packet.uuidLeast),
-					netHandler.playerEntity);
+					netHandler.player);
 		}
 	}
 

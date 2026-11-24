@@ -35,9 +35,9 @@ public class GuiScreenOldSeedWarning extends GuiScreen {
 
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, I18n.format("singleplayer.oldseedwarning.title"), this.width / 2, 70, 11184810);
-		this.drawCenteredString(fontRendererObj, I18n.format("singleplayer.oldseedwarning.msg1"), this.width / 2, 90, 16777215);
-		this.drawCenteredString(fontRendererObj, I18n.format("singleplayer.oldseedwarning.msg2"), this.width / 2, 105, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("singleplayer.oldseedwarning.title"), this.width / 2, 70, 11184810);
+		this.drawCenteredString(fontRenderer, I18n.format("singleplayer.oldseedwarning.msg1"), this.width / 2, 90, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("singleplayer.oldseedwarning.msg2"), this.width / 2, 105, 16777215);
 		super.drawScreen(par1, par2, par3);
 	}
 

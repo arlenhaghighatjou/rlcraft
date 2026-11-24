@@ -41,7 +41,7 @@ public class SkullCommand {
 		if(waitingForSelection && EagRuntime.fileChooserHasResult()) {
 			waitingForSelection = false;
 			FileChooserResult fr = EagRuntime.getFileChooserResult();
-			if(fr == null || mc.player == null || mc.player.sendQueue == null) {
+			if(fr == null || mc.player == null || mc.player.connection == null) {
 				return;
 			}
 			ImageData loaded = ImageData.loadImageFile(fr.fileData, ImageData.getMimeFromType(fr.fileName));
@@ -62,7 +62,7 @@ public class SkullCommand {
 				rawSkin[j + 2] = (byte)(k >>> 8);
 				rawSkin[j + 3] = (byte)(k & 0xFF);
 			}
-			mc.player.sendQueue.sendEaglerMessage(new CPacketInstallSkinSPEAG(rawSkin));
+			mc.player.connection.sendEaglerMessage(new CPacketInstallSkinSPEAG(rawSkin));
 		}
 	}
 

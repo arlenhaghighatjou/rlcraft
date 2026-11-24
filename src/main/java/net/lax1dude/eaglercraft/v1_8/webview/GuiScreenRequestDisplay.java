@@ -49,14 +49,14 @@ public class GuiScreenRequestDisplay extends GuiScreen {
 
 	public void drawScreen(int mx, int my, float pt) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, TextFormatting.BOLD + I18n.format("webviewDisplayWarning.title"), this.width / 2, 70, 0xFF4444);
-		this.drawCenteredString(fontRendererObj, I18n.format("webviewDisplayWarning.text0"), this.width / 2, 90, 16777215);
-		this.drawCenteredString(fontRendererObj, I18n.format("webviewDisplayWarning.text1"), this.width / 2, 102, 16777215);
+		this.drawCenteredString(fontRenderer, TextFormatting.BOLD + I18n.format("webviewDisplayWarning.title"), this.width / 2, 70, 0xFF4444);
+		this.drawCenteredString(fontRenderer, I18n.format("webviewDisplayWarning.text0"), this.width / 2, 90, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("webviewDisplayWarning.text1"), this.width / 2, 102, 16777215);
 		
 		String dontShowAgain = I18n.format("webviewPhishingWarning.dontShowAgain");
-		int w = fontRendererObj.getStringWidth(dontShowAgain) + 20;
+		int w = fontRenderer.getStringWidth(dontShowAgain) + 20;
 		int ww = (this.width - w) / 2;
-		this.drawString(fontRendererObj, dontShowAgain, ww + 20, 125, 0xCCCCCC);
+		this.drawString(fontRenderer, dontShowAgain, ww + 20, 125, 0xCCCCCC);
 		
 		mouseOverCheck = ww < mx && ww + 17 > mx && 121 < my && 138 > my;
 		

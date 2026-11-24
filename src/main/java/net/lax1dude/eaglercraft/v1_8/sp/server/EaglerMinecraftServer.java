@@ -153,7 +153,7 @@ public class EaglerMinecraftServer extends MinecraftServer {
 			this.currentTime = k;
 		}
 
-		if (this.worldServers[0].areAllPlayersAsleep()) {
+		if (this.worlds[0].areAllPlayersAsleep()) {
 			this.currentTime = k;
 			this.tick();
 			++counterTicksPerSecond;
@@ -176,15 +176,15 @@ public class EaglerMinecraftServer extends MinecraftServer {
 	protected void sendTPSToClient(long millis) {
 		if(millis - lastTPSUpdate > 1000l) {
 			lastTPSUpdate = millis;
-			if(serverRunning && this.worldServers != null) {
+			if(serverRunning && this.worlds != null) {
 				List<String> lst = Lists.newArrayList(
 						"TPS: " + counterTicksPerSecond + "/20",
-						"Chunks: " + countChunksLoaded(this.worldServers) + "/" + countChunksTotal(this.worldServers),
-						"Entities: " + countEntities(this.worldServers) + "+" + countTileEntities(this.worldServers),
+						"Chunks: " + countChunksLoaded(this.worlds) + "/" + countChunksTotal(this.worlds),
+						"Entities: " + countEntities(this.worlds) + "+" + countTileEntities(this.worlds),
 						"R: " + counterChunkRead + ", G: " + counterChunkGenerate + ", W: " + counterChunkWrite,
 						"TU: " + counterTileUpdate + ", LU: " + counterLightUpdate
 				);
-				int players = countPlayerEntities(this.worldServers);
+				int players = countPlayerEntities(this.worlds);
 				if(players > 1) {
 					lst.add("Players: " + players);
 				}

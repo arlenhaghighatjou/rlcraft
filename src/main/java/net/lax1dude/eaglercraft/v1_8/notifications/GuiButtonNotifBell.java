@@ -41,8 +41,8 @@ public class GuiButtonNotifBell extends GuiButton {
 		if (this.visible) {
 			minecraft.getTextureManager().bindTexture(eaglerTextures);
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			boolean flag = i >= this.xPosition && j >= this.yPosition && i < this.xPosition + this.width
-					&& j < this.yPosition + this.height;
+			boolean flag = i >= this.x && j >= this.y && i < this.x + this.width
+					&& j < this.y + this.height;
 			int k = 0;
 			int c = 14737632;
 			if (flag) {

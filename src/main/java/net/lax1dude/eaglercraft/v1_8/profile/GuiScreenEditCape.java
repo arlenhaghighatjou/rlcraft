@@ -80,8 +80,8 @@ public class GuiScreenEditCape extends GuiScreen {
 
 	public void drawScreen(int mx, int my, float partialTicks) {
 		drawDefaultBackground();
-		drawCenteredString(fontRendererObj, screenTitle, width / 2, 15, 16777215);
-		drawString(fontRendererObj, I18n.format("editCape.playerCape"), width / 2 - 20, height / 6 + 36, 10526880);
+		drawCenteredString(fontRenderer, screenTitle, width / 2, 15, 16777215);
+		drawString(fontRenderer, I18n.format("editCape.playerCape"), width / 2 - 20, height / 6 + 36, 10526880);
 		
 		mousex = mx;
 		mousey = my;
@@ -120,7 +120,7 @@ public class GuiScreenEditCape extends GuiScreen {
 		}
 		
 		if(model.highPoly != null) {
-			drawCenteredString(fontRendererObj, I18n.format(this.mc.gameSettings.enableFNAWSkins ? "editProfile.disableFNAW" : "editProfile.enableFNAW"), width / 2, height / 6 + 150, 10526880);
+			drawCenteredString(fontRenderer, I18n.format(this.mc.gameSettings.enableFNAWSkins ? "editProfile.disableFNAW" : "editProfile.enableFNAW"), width / 2, height / 6 + 150, 10526880);
 		}
 		
 		skinX = width / 2 - 20;
@@ -137,7 +137,7 @@ public class GuiScreenEditCape extends GuiScreen {
 		mc.getTextureManager().bindTexture(eaglerGui);
 		drawTexturedModalRect(skinX + skinWidth - 18, skinY + 3, 0, 0, 16, 16);
 		
-		drawString(fontRendererObj, dropDownOptions[selectedSlot], skinX + 5, skinY + 7, 14737632);
+		drawString(fontRenderer, dropDownOptions[selectedSlot], skinX + 5, skinY + 7, 14737632);
 		
 		skinX = width / 2 - 20;
 		skinY = height / 6 + 73;
@@ -166,7 +166,7 @@ public class GuiScreenEditCape extends GuiScreen {
 					}else if(mx >= skinX && mx < (skinX + skinWidth - 10) && my >= (skinY + i*10 + 5) && my < (skinY + i*10 + 15)) {
 						drawRect(skinX + 1, skinY + i*10 + 4, skinX + skinWidth - 1, skinY + i*10 + 14, 0x55ffffff);
 					}
-					drawString(fontRendererObj, dropDownOptions[i + scrollPos], skinX + 5, skinY + 5 + i*10, 14737632);
+					drawString(fontRenderer, dropDownOptions[i + scrollPos], skinX + 5, skinY + 5 + i*10, 14737632);
 				}
 			}
 			int scrollerSize = skinHeight * slotsVisible / dropDownOptions.length;

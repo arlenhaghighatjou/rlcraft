@@ -98,9 +98,9 @@ public class DynamicLightsStateManager {
 
 	public static void reportForwardRenderObjectPosition2(float x, float y, float z) {
 		if(bucketLoader != null) {
-			float posX = (float)((x + TileEntityRendererDispatcher.staticPlayerX) - (MathHelper.floor_double(TileEntityRendererDispatcher.staticPlayerX / 16.0) << 4));
-			float posY = (float)((y + TileEntityRendererDispatcher.staticPlayerY) - (MathHelper.floor_double(TileEntityRendererDispatcher.staticPlayerY / 16.0) << 4));
-			float posZ = (float)((z + TileEntityRendererDispatcher.staticPlayerZ) - (MathHelper.floor_double(TileEntityRendererDispatcher.staticPlayerZ / 16.0) << 4));
+			float posX = (float)((x + TileEntityRendererDispatcher.staticPlayerX) - (MathHelper.floor(TileEntityRendererDispatcher.staticPlayerX / 16.0) << 4));
+			float posY = (float)((y + TileEntityRendererDispatcher.staticPlayerY) - (MathHelper.floor(TileEntityRendererDispatcher.staticPlayerY / 16.0) << 4));
+			float posZ = (float)((z + TileEntityRendererDispatcher.staticPlayerZ) - (MathHelper.floor(TileEntityRendererDispatcher.staticPlayerZ / 16.0) << 4));
 			bucketLoader.bindLightSourceBucket((int)posX, (int)posY, (int)posZ, 0);
 		}
 	}
@@ -131,9 +131,9 @@ public class DynamicLightsStateManager {
 		lastTotal = lightRenderList.size();
 		if(bucketLoader != null) {
 			bucketLoader.clearBuckets();
-			int entityChunkOriginX = MathHelper.floor_double(renderPosX / 16.0) << 4;
-			int entityChunkOriginY = MathHelper.floor_double(renderPosY / 16.0) << 4;
-			int entityChunkOriginZ = MathHelper.floor_double(renderPosZ / 16.0) << 4;
+			int entityChunkOriginX = MathHelper.floor(renderPosX / 16.0) << 4;
+			int entityChunkOriginY = MathHelper.floor(renderPosY / 16.0) << 4;
+			int entityChunkOriginZ = MathHelper.floor(renderPosZ / 16.0) << 4;
 			Iterator<DynamicLightInstance> itr = lightRenderList.iterator();
 			while(itr.hasNext()) {
 				DynamicLightInstance dl = itr.next();

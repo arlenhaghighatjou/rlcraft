@@ -362,7 +362,7 @@ public class EaglerDeferredPipeline {
 	private int uniformBufferOffsetAlignment = -1;
 
 	private int uboAlign(int offset) {
-		return MathHelper.ceiling_float_int((float)offset / (float)uniformBufferOffsetAlignment) * uniformBufferOffsetAlignment;
+		return MathHelper.ceil((float)offset / (float)uniformBufferOffsetAlignment) * uniformBufferOffsetAlignment;
 	}
 
 	private final int lightSourceBucketsWidth;
@@ -1416,7 +1416,7 @@ public class EaglerDeferredPipeline {
 		TextureManager mgr = mc.getTextureManager();
 		GlStateManager.setActiveTexture(GL_TEXTURE0);
 		GlStateManager.enableTexture2D();
-		mgr.bindTexture(TextureMap.locationBlocksTexture);
+		mgr.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		DeferredStateManager.checkGLError("Post: beginDrawMainGBufferTerrain()");
 	}
 
@@ -1542,16 +1542,16 @@ public class EaglerDeferredPipeline {
 		double entityPosX = renderViewEntity.prevPosX + (renderViewEntity.posX - renderViewEntity.prevPosX) * partialTicks;
 		double entityPosY = renderViewEntity.prevPosY + (renderViewEntity.posY - renderViewEntity.prevPosY) * partialTicks;
 		double entityPosZ = renderViewEntity.prevPosZ + (renderViewEntity.posZ - renderViewEntity.prevPosZ) * partialTicks;
-		int entityChunkOriginX = MathHelper.floor_double(entityPosX / 16.0) << 4;
-		int entityChunkOriginY = MathHelper.floor_double(entityPosY / 16.0) << 4;
-		int entityChunkOriginZ = MathHelper.floor_double(entityPosZ / 16.0) << 4;
+		int entityChunkOriginX = MathHelper.floor(entityPosX / 16.0) << 4;
+		int entityChunkOriginY = MathHelper.floor(entityPosY / 16.0) << 4;
+		int entityChunkOriginZ = MathHelper.floor(entityPosZ / 16.0) << 4;
 
 		Vector3f currentSunAngle = DeferredStateManager.currentSunAngle;
 		float sunKelvin = 1500.0f + (2500.0f * Math.max(-currentSunAngle.y, 0.0f));
 		float fff = mc.world.getRainStrength(partialTicks);
 		float ff2 = mc.world.getThunderStrength(partialTicks);
 		long millis = EagRuntime.steadyTimeMillis();
-		int dim = Minecraft.getMinecraft().world.provider.getDimensionId();
+		int dim = Minecraft.getMinecraft().world.provider.getDimension();
 
 		// ==================== UPDATE CLOUD RENDERER ===================== //
 
@@ -2093,7 +2093,7 @@ public class EaglerDeferredPipeline {
 			uniformMatrixHelper(shader_moon_render.uniforms.u_modelMatrix4f, moonMatrix);
 			uniformMatrixHelper(shader_moon_render.uniforms.u_viewMatrix4f, DeferredStateManager.viewMatrix);
 			uniformMatrixHelper(shader_moon_render.uniforms.u_projMatrix4f, DeferredStateManager.projMatrix);
-			float fffff = 0.1f + MathHelper.clamp_float((-currentSunAngle.y + 0.1f) * 6.0f, 0.0f, 0.375f);
+			float fffff = 0.1f + MathHelper.clamp((-currentSunAngle.y + 0.1f) * 6.0f, 0.0f, 0.375f);
 			_wglUniform3f(shader_moon_render.uniforms.u_moonColor3f, 1.4f * fffff, 1.2f * fffff, 1.0f * fffff);
 			
 			float f = (float)(Minecraft.getMinecraft().world.getWorldTime() - 18000f) / 24000f / 4f * 3.14159f;
@@ -2360,9 +2360,9 @@ public class EaglerDeferredPipeline {
 	}
 
 	public void bucketLightSource(float x, float y, float z, DynamicLightInstance dl) {
-		int bucketX = MathHelper.floor_float(x / 16.0f);
-		int bucketY = MathHelper.floor_float(y / 16.0f);
-		int bucketZ = MathHelper.floor_float(z / 16.0f);
+		int bucketX = MathHelper.floor(x / 16.0f);
+		int bucketY = MathHelper.floor(y / 16.0f);
+		int bucketZ = MathHelper.floor(z / 16.0f);
 		addLightSourceToBucket(bucketX, bucketY, bucketZ, dl);
 		int minX = bucketX, maxX = bucketX;
 		int minY = bucketY, maxY = bucketY;
@@ -2557,7 +2557,7 @@ public class EaglerDeferredPipeline {
 		GlStateManager.setActiveTexture(GL_TEXTURE3);
 		GlStateManager.bindTexture(MetalsLUT.getGLTexture());
 		GlStateManager.setActiveTexture(GL_TEXTURE0);
-		mgr.bindTexture(TextureMap.locationBlocksTexture);
+		mgr.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.enableCull();
 		DeferredStateManager.checkGLError("Post: bindEnvMapBlockTexture()");
 	}
@@ -2623,7 +2623,7 @@ public class EaglerDeferredPipeline {
 		worldLightingDataCopyBuffer.putFloat(DeferredStateManager.fogColorLightG);
 		worldLightingDataCopyBuffer.putFloat(DeferredStateManager.fogColorLightB);
 		worldLightingDataCopyBuffer.putFloat(DeferredStateManager.fogColorLightA);
-		float mul = 0.05f * MathHelper.clamp_float(-1.0f - DeferredStateManager.getSunHeight() * 20.0f, 0.0f, 1.0f) + 0.01f;
+		float mul = 0.05f * MathHelper.clamp(-1.0f - DeferredStateManager.getSunHeight() * 20.0f, 0.0f, 1.0f) + 0.01f;
 		worldLightingDataCopyBuffer.putFloat(DeferredStateManager.currentSunLightColor.x * mul);
 		worldLightingDataCopyBuffer.putFloat(DeferredStateManager.currentSunLightColor.y * mul);
 		worldLightingDataCopyBuffer.putFloat(DeferredStateManager.currentSunLightColor.z * mul);
@@ -2664,7 +2664,7 @@ public class EaglerDeferredPipeline {
 	}
 
 	private float getSkyBrightnessTimeParam() {
-		return (2.0f + MathHelper.clamp_float(-DeferredStateManager.currentSunAngle.y * 8.0f, 0.0f, 1.5f)) * getSkyBrightnessParam();
+		return (2.0f + MathHelper.clamp(-DeferredStateManager.currentSunAngle.y * 8.0f, 0.0f, 1.5f)) * getSkyBrightnessParam();
 	}
 
 	public void beginDrawRealisticWaterMask() {
@@ -2820,7 +2820,7 @@ public class EaglerDeferredPipeline {
 		float fg = 0.06f;
 		float fb = 0.20f;
 		float ff = 0.1f;
-		float fac = MathHelper.clamp_float(DeferredStateManager.currentSunAngle.y * -4.0f, 0.1f, 1.0f);
+		float fac = MathHelper.clamp(DeferredStateManager.currentSunAngle.y * -4.0f, 0.1f, 1.0f);
 		_wglUniform4f(shader_realistic_water_control.uniforms.u_refractFogColor4f, fr * ff, fg * ff, fb * ff, fac);
 
 		uniformMatrixHelper(shader_realistic_water_control.uniforms.u_inverseProjectionMatrix4f, DeferredStateManager.inverseProjMatrix);
@@ -2938,7 +2938,7 @@ public class EaglerDeferredPipeline {
 			fogShader = shader_atmosphere_fog;
 			fogShader.useProgram();
 			_wglUniform1f(fogShader.uniforms.u_expFogDensity1f, DeferredStateManager.fogDensity);
-			float mul = 0.05f * MathHelper.clamp_float(-1.0f - DeferredStateManager.getSunHeight() * 20.0f, 0.0f, 1.0f) + 0.01f;
+			float mul = 0.05f * MathHelper.clamp(-1.0f - DeferredStateManager.getSunHeight() * 20.0f, 0.0f, 1.0f) + 0.01f;
 			_wglUniform3f(fogShader.uniforms.u_sunColorAdd3f, DeferredStateManager.currentSunLightColor.x * mul, DeferredStateManager.currentSunLightColor.y * mul, DeferredStateManager.currentSunLightColor.z * mul);
 			break;
 		default:
@@ -3021,7 +3021,7 @@ public class EaglerDeferredPipeline {
 		GlStateManager.setActiveTexture(GL_TEXTURE3);
 		GlStateManager.bindTexture(MetalsLUT.getGLTexture());
 		GlStateManager.setActiveTexture(GL_TEXTURE0);
-		mgr.bindTexture(TextureMap.locationBlocksTexture);
+		mgr.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.enableCull();
 		DeferredStateManager.checkGLError("Post: beginDrawRealisticWaterSurface()");
 	}
@@ -3079,7 +3079,7 @@ public class EaglerDeferredPipeline {
 		GlStateManager.setActiveTexture(GL_TEXTURE3);
 		GlStateManager.bindTexture(MetalsLUT.getGLTexture());
 		GlStateManager.setActiveTexture(GL_TEXTURE0);
-		mgr.bindTexture(TextureMap.locationBlocksTexture);
+		mgr.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.enableCull();
 		DeferredStateManager.checkGLError("Post: beginDrawTranslucentEntities()");
 	}
@@ -3170,7 +3170,7 @@ public class EaglerDeferredPipeline {
 	public void endDrawDeferred() {
 		DeferredStateManager.checkGLError("Pre: endDrawDeferred()");
 
-		if(config.is_rendering_lensFlares && mc.world.provider.getDimensionId() == 0 &&
+		if(config.is_rendering_lensFlares && mc.world.provider.getDimension() == 0 &&
 				DeferredStateManager.currentSunAngle.y < 0.2f && mc.world.getRainStrength(partialTicks) < 1.0f) {
 
 			// =============== CALCULATE SUN COORDINATES ================ //

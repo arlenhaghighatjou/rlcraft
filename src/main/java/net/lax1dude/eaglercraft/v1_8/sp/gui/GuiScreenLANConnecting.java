@@ -89,12 +89,12 @@ public class GuiScreenLANConnecting extends GuiScreen {
 		this.drawDefaultBackground();
 		if(completed) {
 			String message = I18n.format("connect.authorizing");
-			this.drawString(fontRendererObj, message, (this.width - this.fontRenderer.getStringWidth(message)) / 2, this.height / 3 + 10, 0xFFFFFF);
+			this.drawString(fontRenderer, message, (this.width - this.fontRenderer.getStringWidth(message)) / 2, this.height / 3 + 10, 0xFFFFFF);
 		}else {
 			LoadingScreenRenderer ls = mc.loadingScreen;
 
 			String message = I18n.format("lanServer.pleaseWait");
-			this.drawString(fontRendererObj, message, (this.width - this.fontRenderer.getStringWidth(message)) / 2, this.height / 3 + 10, 0xFFFFFF);
+			this.drawString(fontRenderer, message, (this.width - this.fontRenderer.getStringWidth(message)) / 2, this.height / 3 + 10, 0xFFFFFF);
 
 			PlatformWebRTC.startRTCLANClient();
 

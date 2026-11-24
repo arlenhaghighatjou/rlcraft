@@ -37,7 +37,7 @@ public class ServerV4MessageHandler extends ServerV3MessageHandler {
 	public void handleClient(CPacketVoiceSignalDisconnectV4EAG packet) {
 		IntegratedVoiceService voiceSvc = server.getVoiceService();
 		if(voiceSvc != null) {
-			voiceSvc.handleVoiceSignalPacketTypeDisconnect(netHandler.playerEntity);
+			voiceSvc.handleVoiceSignalPacketTypeDisconnect(netHandler.player);
 		}
 	}
 
@@ -45,12 +45,12 @@ public class ServerV4MessageHandler extends ServerV3MessageHandler {
 		IntegratedVoiceService voiceSvc = server.getVoiceService();
 		if (voiceSvc != null) {
 			voiceSvc.handleVoiceSignalPacketTypeDisconnectPeer(new EaglercraftUUID(packet.uuidMost, packet.uuidLeast),
-					netHandler.playerEntity);
+					netHandler.player);
 		}
 	}
 
 	public void handleClient(CPacketGetOtherClientUUIDV4EAG packet) {
-		EntityPlayerMP player = server.getConfigurationManager()
+		EntityPlayerMP player = server.getPlayerList()
 				.getPlayerByUUID(new EaglercraftUUID(packet.playerUUIDMost, packet.playerUUIDLeast));
 		if (player != null && player.clientBrandUUID != null) {
 			netHandler.sendEaglerMessage(new SPacketOtherPlayerClientUUIDV4EAG(packet.requestId,

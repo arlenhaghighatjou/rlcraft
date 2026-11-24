@@ -82,8 +82,8 @@ public class GuiButtonWithStupidIcons extends GuiButton {
 			FontRenderer fontrenderer = mc.fontRenderer;
 			mc.getTextureManager().bindTexture(buttonTextures);
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width
-					&& mouseY < this.yPosition + this.height;
+			this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width
+					&& mouseY < this.y + this.height;
 			if (this.enabled && this.hovered) {
 				Mouse.showCursor(EnumCursorType.HAND);
 			}
@@ -91,8 +91,8 @@ public class GuiButtonWithStupidIcons extends GuiButton {
 			GlStateManager.enableBlend();
 			GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 			GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46 + i * 20, this.width / 2, this.height);
-			this.drawTexturedModalRect(this.xPosition + this.width / 2, this.yPosition, 200 - this.width / 2,
+			this.drawTexturedModalRect(this.x, this.y, 0, 46 + i * 20, this.width / 2, this.height);
+			this.drawTexturedModalRect(this.x + this.width / 2, this.y, 200 - this.width / 2,
 					46 + i * 20, this.width / 2, this.height);
 			this.mouseDragged(mc, mouseX, mouseY);
 			int j = 14737632;
@@ -105,13 +105,13 @@ public class GuiButtonWithStupidIcons extends GuiButton {
 			int strWidth = fontrenderer.getStringWidth(displayString);
 			int strWidthAdj = strWidth - (leftIcon != null ? (int) (16 * leftIconAspect) : 0)
 					+ (rightIcon != null ? (int) (16 * rightIconAspect) : 0);
-			this.drawString(fontrenderer, this.displayString, this.xPosition + (this.width - strWidthAdj) / 2,
-					this.yPosition + (this.height - 8) / 2, j);
+			this.drawString(fontrenderer, this.displayString, this.x + (this.width - strWidthAdj) / 2,
+					this.y + (this.height - 8) / 2, j);
 			if(leftIcon != null) {
 				GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 				mc.getTextureManager().bindTexture(leftIcon);
 				GlStateManager.pushMatrix();
-				GlStateManager.translate(this.xPosition + (this.width - strWidthAdj) / 2 - 3 - 16 * leftIconAspect, this.yPosition + 2, 0.0f);
+				GlStateManager.translate(this.x + (this.width - strWidthAdj) / 2 - 3 - 16 * leftIconAspect, this.y + 2, 0.0f);
 				float f = 16.0f / 256.0f;
 				GlStateManager.scale(f * leftIconAspect, f, f);
 				this.drawTexturedModalRect(0, 0, 0, 0, 256, 256);
@@ -121,7 +121,7 @@ public class GuiButtonWithStupidIcons extends GuiButton {
 				GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 				mc.getTextureManager().bindTexture(rightIcon);
 				GlStateManager.pushMatrix();
-				GlStateManager.translate(this.xPosition + (this.width - strWidthAdj) / 2 + strWidth + 3, this.yPosition + 2, 0.0f);
+				GlStateManager.translate(this.x + (this.width - strWidthAdj) / 2 + strWidth + 3, this.y + 2, 0.0f);
 				float f = 16.0f / 256.0f;
 				GlStateManager.scale(f * rightIconAspect, f, f);
 				this.drawTexturedModalRect(0, 0, 0, 0, 256, 256);

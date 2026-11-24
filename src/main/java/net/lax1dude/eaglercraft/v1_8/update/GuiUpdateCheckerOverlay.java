@@ -144,10 +144,10 @@ public class GuiUpdateCheckerOverlay extends Gui {
 				
 				mc.fontRenderer.drawString(I18n.format("update.author") + " " + cert.bundleAuthorName, 5, 44 + (lst == null ? 0 : (3 + lst.size() * 8)), 0x777777);
 				
-				startDownloadButton.yPosition = embedHeight + embedY + 5;
-				viewAllUpdatesButton.yPosition = startDownloadButton.yPosition + 22;
-				dismissUpdatesButton.yPosition = viewAllUpdatesButton.yPosition + 22;
-				totalHeightOffset = dismissUpdatesButton.yPosition + 20;
+				startDownloadButton.y = embedHeight + embedY + 5;
+				viewAllUpdatesButton.y = startDownloadButton.y + 22;
+				dismissUpdatesButton.y = viewAllUpdatesButton.y + 22;
+				totalHeightOffset = dismissUpdatesButton.y + 20;
 				
 				GlStateManager.popMatrix();
 			}else if(isIngame) {
@@ -155,7 +155,7 @@ public class GuiUpdateCheckerOverlay extends Gui {
 					str = I18n.format("update.noneNew");
 					mc.fontRenderer.drawString(str, 3, 22, 0xDDDDDD);
 					if(i > 0) {
-						viewAllUpdatesButton.yPosition = 40;
+						viewAllUpdatesButton.y = 40;
 						viewAllUpdatesButton.visible = true;
 						viewAllUpdatesButton.displayString = I18n.format("update.viewAll", i);
 						totalHeightOffset = 60;

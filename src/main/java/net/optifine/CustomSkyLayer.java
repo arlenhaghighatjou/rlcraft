@@ -196,7 +196,7 @@ public class CustomSkyLayer {
 					Config.warn("Invalid axis values: " + str);
 					return defVal;
 				} else {
-					l = MathHelper.sqrt_float(l);
+					l = MathHelper.sqrt(l);
 					return new float[] { f1 / l, f / l, -f2 / l };
 				}
 			}

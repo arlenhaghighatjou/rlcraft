@@ -116,14 +116,14 @@ public class EaglerCloudRenderer {
 			double d0 = this.mc.renderGlobal.getCloudCounter(partialTicks);
 			double d1 = (rve.prevPosX + (rve.posX - rve.prevPosX) * (double) partialTicks + d0 * 0.029999999329447746D) / 12.0D;
 			double d2 = (rve.prevPosZ + (rve.posZ - rve.prevPosZ) * (double) partialTicks) / 12.0D + 0.33000001311302185D;
-			int i = MathHelper.floor_double(d1 / 2048.0D);
-			int j = MathHelper.floor_double(d2 / 2048.0D);
+			int i = MathHelper.floor(d1 / 2048.0D);
+			int j = MathHelper.floor(d2 / 2048.0D);
 			d1 = d1 - (double) (i * 2048);
 			d2 = d2 - (double) (j * 2048);
-			float f17 = (float) MathHelper.floor_double(d1) * 0.00390625F;
-			float f18 = (float) MathHelper.floor_double(d2) * 0.00390625F;
-			float f19 = (float) (d1 - (double) MathHelper.floor_double(d1));
-			float f20 = (float) (d2 - (double) MathHelper.floor_double(d2));
+			float f17 = (float) MathHelper.floor(d1) * 0.00390625F;
+			float f18 = (float) MathHelper.floor(d2) * 0.00390625F;
+			float f19 = (float) (d1 - (double) MathHelper.floor(d1));
+			float f20 = (float) (d2 - (double) MathHelper.floor(d2));
 
 			GlStateManager.pushMatrix();
 			GlStateManager.scale(12.0F, 1.0F, 12.0F);
@@ -208,8 +208,8 @@ public class EaglerCloudRenderer {
 			double d2 = this.mc.renderGlobal.getCloudCounter(partialTicks);
 			double d0 = rve.prevPosX + (rve.posX - rve.prevPosX) * (double) partialTicks + d2 * 0.029999999329447746D;
 			double d1 = rve.prevPosZ + (rve.posZ - rve.prevPosZ) * (double) partialTicks;
-			int i = MathHelper.floor_double(d0 / 2048.0D);
-			int j = MathHelper.floor_double(d1 / 2048.0D);
+			int i = MathHelper.floor(d0 / 2048.0D);
+			int j = MathHelper.floor(d1 / 2048.0D);
 			d0 = d0 - (double) (i * 2048);
 			d1 = d1 - (double) (j * 2048);
 			float f8 = (float) (d0 * 4.8828125E-4D);

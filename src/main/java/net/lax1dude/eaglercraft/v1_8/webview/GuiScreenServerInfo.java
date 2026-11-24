@@ -167,7 +167,7 @@ public class GuiScreenServerInfo extends GuiScreen {
 
 	public void drawScreen(int mx, int my, float pt) {
 		drawDefaultBackground();
-		drawCenteredString(fontRendererObj, opts.fallbackTitle == null ? "Server Info" : opts.fallbackTitle, width / 2, 13, 0xFFFFFF);
+		drawCenteredString(fontRenderer, opts.fallbackTitle == null ? "Server Info" : opts.fallbackTitle, width / 2, 13, 0xFFFFFF);
 		super.drawScreen(mx, my, pt);
 	}
 

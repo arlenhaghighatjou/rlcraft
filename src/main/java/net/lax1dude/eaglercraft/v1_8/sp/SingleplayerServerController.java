@@ -633,6 +633,6 @@ public class SingleplayerServerController implements ISaveFormat {
 
 	public static boolean isClientInEaglerSingleplayerOrLAN() {
 		Minecraft mc = Minecraft.getMinecraft();
-		return mc != null && mc.player != null && mc.player.sendQueue.isClientInEaglerSingleplayerOrLAN();
+		return mc != null && mc.player != null && mc.player.connection.isClientInEaglerSingleplayerOrLAN();
 	}
 }

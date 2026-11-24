@@ -46,7 +46,7 @@ public abstract class MessageController {
 		this.receiveDirection = direction == GamePluginMessageConstants.CLIENT_TO_SERVER
 				? GamePluginMessageConstants.SERVER_TO_CLIENT
 				: GamePluginMessageConstants.CLIENT_TO_SERVER;
-		this.sendQueue = protocol.ver >= 4 && !EagRuntime.getConfiguration().isEaglerNoDelay()
+		this.connection = protocol.ver >= 4 && !EagRuntime.getConfiguration().isEaglerNoDelay()
 				? new ArrayList<>() : null;
 	}
 

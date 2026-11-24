@@ -85,7 +85,7 @@ public class ClientIntegratedServerNetworkManager extends EaglercraftNetworkMana
 				ByteBuf nettyBuffer = Unpooled.buffer(next, next.length);
 				nettyBuffer.writerIndex(next.length);
 				PacketBuffer input = new PacketBuffer(nettyBuffer);
-				int pktId = input.readVarIntFromBuffer();
+				int pktId = input.readVarInt();
 				
 				Packet pkt;
 				try {
@@ -137,7 +137,7 @@ public class ClientIntegratedServerNetworkManager extends EaglercraftNetworkMana
 		}
 		
 		temporaryBuffer.clear();
-		temporaryBuffer.writeVarIntToBuffer(i);
+		temporaryBuffer.writeVarInt(i);
 		try {
 			pkt.writePacketData(temporaryBuffer);
 		}catch(IOException ex) {

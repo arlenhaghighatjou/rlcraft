@@ -76,12 +76,12 @@ public class GuiScreenServerInfoDesktop extends GuiScreen {
 
 	public void drawScreen(int mx, int my, float pt) {
 		drawDefaultBackground();
-		drawCenteredString(fontRendererObj, opts.fallbackTitle == null ? "Server Info" : opts.fallbackTitle,
+		drawCenteredString(fontRenderer, opts.fallbackTitle == null ? "Server Info" : opts.fallbackTitle,
 				this.width / 2, 70, 16777215);
-		drawCenteredString(fontRendererObj, I18n.format("fallbackWebViewScreen.text0"), this.width / 2, 90, 11184810);
+		drawCenteredString(fontRenderer, I18n.format("fallbackWebViewScreen.text0"), this.width / 2, 90, 11184810);
 		String link = WebViewOverlayController.fallbackRunning() ? WebViewOverlayController.getFallbackURL()
 				: I18n.format(hasStarted ? "fallbackWebViewScreen.exited" : "fallbackWebViewScreen.startingUp");
-		drawCenteredString(fontRendererObj, link != null ? link : I18n.format("fallbackWebViewScreen.pleaseWait"),
+		drawCenteredString(fontRenderer, link != null ? link : I18n.format("fallbackWebViewScreen.pleaseWait"),
 				width / 2, 110, 16777215);
 		super.drawScreen(mx, my, pt);
 	}

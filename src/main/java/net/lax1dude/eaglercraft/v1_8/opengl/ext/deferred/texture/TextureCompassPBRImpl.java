@@ -62,7 +62,7 @@ public class TextureCompassPBRImpl extends EaglerTextureAtlasSpritePBR {
 				d3 -= Math.PI * 2.0;
 			}
 
-			d3 = MathHelper.clamp_double(d3, -1.0, 1.0);
+			d3 = MathHelper.clamp(d3, -1.0, 1.0);
 			this.angleDelta += d3 * 0.1;
 			this.angleDelta *= 0.8;
 			this.currentAngle += this.angleDelta;

@@ -79,7 +79,7 @@ public class WebSocketNetworkManager extends EaglercraftNetworkManager {
 				ByteBuf nettyBuffer = Unpooled.buffer(asByteArray, asByteArray.length);
 				nettyBuffer.writerIndex(asByteArray.length);
 				PacketBuffer input = new PacketBuffer(nettyBuffer);
-				int pktId = input.readVarIntFromBuffer();
+				int pktId = input.readVarInt();
 				
 				Packet pkt;
 				try {
@@ -130,7 +130,7 @@ public class WebSocketNetworkManager extends EaglercraftNetworkManager {
 		}
 		
 		temporaryBuffer.clear();
-		temporaryBuffer.writeVarIntToBuffer(i);
+		temporaryBuffer.writeVarInt(i);
 		try {
 			pkt.writePacketData(temporaryBuffer);
 		}catch(IOException ex) {

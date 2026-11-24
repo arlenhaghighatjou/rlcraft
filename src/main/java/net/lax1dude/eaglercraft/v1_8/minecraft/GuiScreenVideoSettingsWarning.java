@@ -82,7 +82,7 @@ public class GuiScreenVideoSettingsWarning extends GuiScreen {
 		for(int i = 0, l = messages.size(); i < l; ++i) {
 			String str = messages.get(i);
 			if(str != null) {
-				this.drawCenteredString(fontRendererObj, str, this.width / 2, top + j, 16777215);
+				this.drawCenteredString(fontRenderer, str, this.width / 2, top + j, 16777215);
 				j += 9;
 			}else {
 				j += 5;

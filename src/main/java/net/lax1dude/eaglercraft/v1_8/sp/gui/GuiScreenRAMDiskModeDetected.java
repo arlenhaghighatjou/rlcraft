@@ -38,9 +38,9 @@ public class GuiScreenRAMDiskModeDetected extends GuiScreen {
 
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, I18n.format("singleplayer.ramdiskdetected.title"), this.width / 2, 70, 11184810);
-		this.drawCenteredString(fontRendererObj, I18n.format("singleplayer.ramdiskdetected.text0"), this.width / 2, 90, 16777215);
-		this.drawCenteredString(fontRendererObj, I18n.format("singleplayer.ramdiskdetected.text1"), this.width / 2, 105, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("singleplayer.ramdiskdetected.title"), this.width / 2, 70, 11184810);
+		this.drawCenteredString(fontRenderer, I18n.format("singleplayer.ramdiskdetected.text0"), this.width / 2, 90, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("singleplayer.ramdiskdetected.text1"), this.width / 2, 105, 16777215);
 		super.drawScreen(par1, par2, par3);
 	}
 

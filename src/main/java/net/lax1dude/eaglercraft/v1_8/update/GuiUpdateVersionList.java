@@ -77,9 +77,9 @@ public class GuiUpdateVersionList extends GuiScreen {
 		mx = par1;
 		my = par2;
 		slots.drawScreen(par1, par2, par3);
-		this.drawCenteredString(fontRendererObj, I18n.format("updateList.title"), this.width / 2, 16, 16777215);
-		this.drawCenteredString(fontRendererObj, I18n.format("updateList.note.0"), this.width / 2, this.height - 55, 0x888888);
-		this.drawCenteredString(fontRendererObj, I18n.format("updateList.note.1"), this.width / 2, this.height - 45, 0x888888);
+		this.drawCenteredString(fontRenderer, I18n.format("updateList.title"), this.width / 2, 16, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("updateList.note.0"), this.width / 2, this.height - 55, 0x888888);
+		this.drawCenteredString(fontRenderer, I18n.format("updateList.note.1"), this.width / 2, this.height - 45, 0x888888);
 		super.drawScreen(par1, par2, par3);
 		if(tooltip != null) {
 			drawHoveringText(mc.fontRenderer.listFormattedStringToWidth(tooltip, 180), par1, par2);

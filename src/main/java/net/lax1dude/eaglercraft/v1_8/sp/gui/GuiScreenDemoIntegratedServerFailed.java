@@ -31,8 +31,8 @@ public class GuiScreenDemoIntegratedServerFailed extends GuiScreen {
 
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, str1, this.width / 2, 70, 11184810);
-		this.drawCenteredString(fontRendererObj, str2, this.width / 2, 90, 16777215);
+		this.drawCenteredString(fontRenderer, str1, this.width / 2, 70, 11184810);
+		this.drawCenteredString(fontRenderer, str2, this.width / 2, 90, 16777215);
 		super.drawScreen(par1, par2, par3);
 	}
 

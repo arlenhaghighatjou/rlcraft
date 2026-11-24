@@ -48,7 +48,7 @@ public class GuiVoiceMenu extends Gui {
 	protected final GuiScreen parent;
 
 	protected Minecraft mc;
-	protected FontRenderer fontRendererObj;
+	protected FontRenderer fontRenderer;
 	protected int width;
 	protected int height;
 
@@ -151,7 +151,7 @@ public class GuiVoiceMenu extends Gui {
 	
 	public void drawScreen(int mx, int my, float partialTicks) {
 		String txt = I18n.format("voice.title");
-		drawString(fontRendererObj, txt, width - 5 - fontRendererObj.getStringWidth(txt), 5, 0xFFCC22);
+		drawString(fontRenderer, txt, width - 5 - fontRenderer.getStringWidth(txt), 5, 0xFFCC22);
 		
 		applyRadiusButton.visible = showSliderBlocks;
 		applyVolumeButton.visible = showSliderVolume;
@@ -208,16 +208,16 @@ public class GuiVoiceMenu extends Gui {
 		
 		if(!VoiceClientController.isClientSupported()) {
 			txt = I18n.format("voice.titleVoiceUnavailable");
-			drawString(fontRendererObj, txt, 1 - fontRendererObj.getStringWidth(txt), 6, 0xFF7777);
+			drawString(fontRenderer, txt, 1 - fontRenderer.getStringWidth(txt), 6, 0xFF7777);
 			txt = I18n.format("voice.titleVoiceBrowserError");
-			drawString(fontRendererObj, txt, 1 - fontRendererObj.getStringWidth(txt), 19, 0xAA4444);
+			drawString(fontRenderer, txt, 1 - fontRenderer.getStringWidth(txt), 19, 0xAA4444);
 			GlStateManager.popMatrix();
 			return;
 		}
 		
 		if(!VoiceClientController.isServerSupported()) {
 			txt = I18n.format("voice.titleNoVoice");
-			drawString(fontRendererObj, txt, 1 - fontRendererObj.getStringWidth(txt), 5, 0xFF7777);
+			drawString(fontRenderer, txt, 1 - fontRenderer.getStringWidth(txt), 5, 0xFF7777);
 			GlStateManager.popMatrix();
 			return;
 		}
@@ -226,11 +226,11 @@ public class GuiVoiceMenu extends Gui {
 		// this feature is optional
 		//if(VoiceClientController.voiceRelayed()) {
 		//	txt = I18n.format("voice.warning1");
-		//	drawString(fontRendererObj, txt, 1 - fontRendererObj.getStringWidth(txt), 8, 0xBB9999);
+		//	drawString(fontRenderer, txt, 1 - fontRenderer.getStringWidth(txt), 8, 0xBB9999);
 		//	txt = I18n.format("voice.warning2");
-		//	drawString(fontRendererObj, txt, 1 - fontRendererObj.getStringWidth(txt), 18, 0xBB9999);
+		//	drawString(fontRenderer, txt, 1 - fontRenderer.getStringWidth(txt), 18, 0xBB9999);
 		//	txt = I18n.format("voice.warning3");
-		//	drawString(fontRendererObj, txt, 1 - fontRendererObj.getStringWidth(txt), 28, 0xBB9999);
+		//	drawString(fontRenderer, txt, 1 - fontRenderer.getStringWidth(txt), 28, 0xBB9999);
 		//	xo = 43;
 		//	GlStateManager.translate(0.0f, xo, 0.0f);
 		//}
@@ -247,7 +247,7 @@ public class GuiVoiceMenu extends Gui {
 				
 				if(channel == EnumVoiceChannelType.PROXIMITY) {
 					txt = I18n.format("voice.connectedRadius").replace("$radius$", "" + VoiceClientController.getVoiceProximity()).replace("$f$", "");
-					int w = fontRendererObj.getStringWidth(txt);
+					int w = fontRenderer.getStringWidth(txt);
 					int xx = width - 5 - (w * 3 / 4);
 					int yy = 15 + (xo * 3 / 4);
 					voiceScreenButtonChangeRadiusposX = xx;
@@ -267,7 +267,7 @@ public class GuiVoiceMenu extends Gui {
 				voiceScreenVolumeIndicatorW = width - voiceScreenVolumeIndicatorX - 4;
 				voiceScreenVolumeIndicatorH = 23;
 				
-				drawString(fontRendererObj, txt, 1 - fontRendererObj.getStringWidth(txt), 5, 0x66DD66);
+				drawString(fontRenderer, txt, 1 - fontRenderer.getStringWidth(txt), 5, 0x66DD66);
 
 				drawRect(-90, 42, 2, 52, 0xFFAAAAAA);
 				drawRect(-89, 43, 1, 51, 0xFF222222);
@@ -312,7 +312,7 @@ public class GuiVoiceMenu extends Gui {
 				GlStateManager.popMatrix();
 				
 				txt = I18n.format("voice.ptt", Keyboard.getKeyName(mc.gameSettings.voicePTTKey));
-				drawString(fontRendererObj, txt, 1 - fontRendererObj.getStringWidth(txt) - 10, 76, 0x66DD66);
+				drawString(fontRenderer, txt, 1 - fontRenderer.getStringWidth(txt) - 10, 76, 0x66DD66);
 
 				mc.getTextureManager().bindTexture(voiceGuiIcons);
 				GlStateManager.color(0.4f, 0.9f, 0.4f, 1.0f);
@@ -327,7 +327,7 @@ public class GuiVoiceMenu extends Gui {
 				GlStateManager.pushMatrix();
 				GlStateManager.translate(0.0f, 98.0f, 0.0f);
 				GlStateManager.scale(1.2f, 1.2f, 1.2f);
-				drawString(fontRendererObj, txt, -fontRendererObj.getStringWidth(txt), 0, 0xFF7777);
+				drawString(fontRenderer, txt, -fontRenderer.getStringWidth(txt), 0, 0xFF7777);
 				GlStateManager.popMatrix();
 
 				List<EaglercraftUUID> playersToRender = VoiceClientController.getVoiceRecent();
@@ -366,17 +366,17 @@ public class GuiVoiceMenu extends Gui {
 						GlStateManager.popMatrix();
 
 						if(muted) {
-							drawString(fontRendererObj, txt, -84, 117 + i * 12, attenuate(0xCC4444, cm));
+							drawString(fontRenderer, txt, -84, 117 + i * 12, attenuate(0xCC4444, cm));
 						}else if(speaking) {
-							drawString(fontRendererObj, txt, -84, 117 + i * 12, attenuate(0xCCCCCC, cm));
+							drawString(fontRenderer, txt, -84, 117 + i * 12, attenuate(0xCCCCCC, cm));
 						}else {
-							drawString(fontRendererObj, txt, -84, 117 + i * 12, attenuate(0x999999, cm));
+							drawString(fontRenderer, txt, -84, 117 + i * 12, attenuate(0x999999, cm));
 						}
 						
 					}
 				}else {
 					txt = "(none)";
-					drawString(fontRendererObj, txt, -fontRendererObj.getStringWidth(txt), 112, 0xAAAAAA);
+					drawString(fontRenderer, txt, -fontRenderer.getStringWidth(txt), 112, 0xAAAAAA);
 				}
 				
 			}else if(status == EnumVoiceChannelStatus.CONNECTING) {
@@ -384,11 +384,11 @@ public class GuiVoiceMenu extends Gui {
 				txt = I18n.format("voice.connecting");
 				GlStateManager.enableBlend();
 				GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				drawString(fontRendererObj, txt, 1 - fontRendererObj.getStringWidth(txt), 5, (0xFFDD77 | ((int)(Math.pow(fadeTimer, 1.0d / 2.2d) * 255.0f) << 24)));
+				drawString(fontRenderer, txt, 1 - fontRenderer.getStringWidth(txt), 5, (0xFFDD77 | ((int)(Math.pow(fadeTimer, 1.0d / 2.2d) * 255.0f) << 24)));
 				GlStateManager.disableBlend();
 			}else if(status == EnumVoiceChannelStatus.UNAVAILABLE) {
 				txt = I18n.format("voice.unavailable");
-				drawString(fontRendererObj, txt, 1 - fontRendererObj.getStringWidth(txt), 5, 0xFF3333);
+				drawString(fontRenderer, txt, 1 - fontRenderer.getStringWidth(txt), 5, 0xFF3333);
 			}else {
 				flag = true;
 			}
@@ -396,16 +396,16 @@ public class GuiVoiceMenu extends Gui {
 		
 		if(flag) {
 			txt = I18n.format("voice.notConnected");
-			drawString(fontRendererObj, txt, 1 - fontRendererObj.getStringWidth(txt), 5, 0xBB9999);
+			drawString(fontRenderer, txt, 1 - fontRenderer.getStringWidth(txt), 5, 0xBB9999);
 		}
 
 		String OFFstring = I18n.format("voice.off");
 		String RADIUSstring = I18n.format("voice.radius");
 		String GLOBALstring = I18n.format("voice.global");
 
-		int OFFwidth = fontRendererObj.getStringWidth(OFFstring);
-		int RADIUSwidth = fontRendererObj.getStringWidth(RADIUSstring);
-		int GLOBALwidth = fontRendererObj.getStringWidth(GLOBALstring);
+		int OFFwidth = fontRenderer.getStringWidth(OFFstring);
+		int RADIUSwidth = fontRenderer.getStringWidth(RADIUSstring);
+		int GLOBALwidth = fontRenderer.getStringWidth(GLOBALstring);
 		
 		voiceButtonOFFposX = 0 - OFFwidth - 8 - RADIUSwidth - 8 - GLOBALwidth;
 		voiceButtonOFFposY = 20;
@@ -471,9 +471,9 @@ public class GuiVoiceMenu extends Gui {
 			enabledColor = disabledColor;
 		}
 		
-		drawString(fontRendererObj, OFFstring, 3 - OFFwidth - 8 - RADIUSwidth - 8 - GLOBALwidth, 24, channel == EnumVoiceChannelType.NONE ? enabledColor : disabledColor);
-		drawString(fontRendererObj, RADIUSstring, 3 - RADIUSwidth - 8 - GLOBALwidth, 24, channel == EnumVoiceChannelType.PROXIMITY ? enabledColor : disabledColor);
-		drawString(fontRendererObj, GLOBALstring, 3 - GLOBALwidth, 24, channel == EnumVoiceChannelType.GLOBAL ? enabledColor : disabledColor);
+		drawString(fontRenderer, OFFstring, 3 - OFFwidth - 8 - RADIUSwidth - 8 - GLOBALwidth, 24, channel == EnumVoiceChannelType.NONE ? enabledColor : disabledColor);
+		drawString(fontRenderer, RADIUSstring, 3 - RADIUSwidth - 8 - GLOBALwidth, 24, channel == EnumVoiceChannelType.PROXIMITY ? enabledColor : disabledColor);
+		drawString(fontRenderer, GLOBALstring, 3 - GLOBALwidth, 24, channel == EnumVoiceChannelType.GLOBAL ? enabledColor : disabledColor);
 		
 		GlStateManager.popMatrix();
 		
@@ -510,7 +510,7 @@ public class GuiVoiceMenu extends Gui {
 		int widthAccum = 0;
 		
 		for(int i = 0; i < lines.length; ++i) {
-			int w = fontRendererObj.getStringWidth(lines[i]);
+			int w = fontRenderer.getStringWidth(lines[i]);
 			if(widthAccum < w) {
 				widthAccum = w;
 			}
@@ -526,23 +526,23 @@ public class GuiVoiceMenu extends Gui {
 		drawRect(x - margin, y - margin, x + widthAccum + margin,
 				y + lines.length * 10 + 48 + margin, 0xFF111111);
 		
-		drawCenteredString(fontRendererObj, TextFormatting.BOLD + title, width / 2, y, 0xFF7766);
+		drawCenteredString(fontRenderer, TextFormatting.BOLD + title, width / 2, y, 0xFF7766);
 		
 		for(int i = 0; i < lines.length; ++i) {
-			drawString(fontRendererObj, lines[i], x, y + i * 10 + 18, 0xDDAAAA);
+			drawString(fontRenderer, lines[i], x, y + i * 10 + 18, 0xDDAAAA);
 		}
 		
 		if(!showCancel) {
 			noticeContinueButton.width = 150;
-			noticeContinueButton.xPosition = (width - 150) / 2;
-			noticeContinueButton.yPosition = y + lines.length * 10 + 29;
+			noticeContinueButton.x = (width - 150) / 2;
+			noticeContinueButton.y = y + lines.length * 10 + 29;
 		}else {
 			noticeContinueButton.width = widthAccum / 2 - 10;
-			noticeContinueButton.xPosition = (width - widthAccum) / 2 + widthAccum / 2 + 3;
-			noticeContinueButton.yPosition = y + lines.length * 10 + 28;
+			noticeContinueButton.x = (width - widthAccum) / 2 + widthAccum / 2 + 3;
+			noticeContinueButton.y = y + lines.length * 10 + 28;
 			noticeCancelButton.width = widthAccum / 2 - 10;
-			noticeCancelButton.xPosition = (width - widthAccum) / 2 + 4;
-			noticeCancelButton.yPosition = y + lines.length * 10 + 28;
+			noticeCancelButton.x = (width - widthAccum) / 2 + 4;
+			noticeCancelButton.y = y + lines.length * 10 + 28;
 		}
 		
 	}

@@ -276,7 +276,7 @@ public class GlStateManager {
 		paramVector4.w = (float)0.0f;
 		Matrix4f.transform(modelMatrixStack[modelMatrixStackPointer], paramVector4, paramVector4);
 		Vector4f dest = stateLightsStack[stateLightsStackPointer][light];
-		float len = MathHelper.sqrt_float(paramVector4.x * paramVector4.x
+		float len = MathHelper.sqrt(paramVector4.x * paramVector4.x
 				+ paramVector4.y * paramVector4.y
 				+ paramVector4.z * paramVector4.z);
 		dest.x = paramVector4.x / len;

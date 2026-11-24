@@ -64,11 +64,11 @@ public class GuiScreenSingleplayerConnecting extends GuiScreen {
 		long millis = EagRuntime.steadyTimeMillis();
 		
 		long dots = (millis / 500l) % 4l;
-		this.drawString(fontRendererObj, message + (dots > 0 ? "." : "") + (dots > 1 ? "." : "") + (dots > 2 ? "." : ""), (this.width - this.fontRenderer.getStringWidth(message)) / 2, top + 10, 0xFFFFFF);
+		this.drawString(fontRenderer, message + (dots > 0 ? "." : "") + (dots > 1 ? "." : "") + (dots > 2 ? "." : ""), (this.width - this.fontRenderer.getStringWidth(message)) / 2, top + 10, 0xFFFFFF);
 		
 		long elapsed = (millis - startStartTime) / 1000l;
 		if(elapsed > 3) {
-			this.drawCenteredString(fontRendererObj, "(" + elapsed + "s)", this.width / 2, top + 25, 0xFFFFFF);
+			this.drawCenteredString(fontRenderer, "(" + elapsed + "s)", this.width / 2, top + 25, 0xFFFFFF);
 		}
 		
 		super.drawScreen(par1, par2, par3);

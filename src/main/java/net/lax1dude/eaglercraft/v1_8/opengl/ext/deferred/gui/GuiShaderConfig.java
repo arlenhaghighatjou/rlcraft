@@ -132,7 +132,7 @@ public class GuiShaderConfig extends GuiScreen {
 	}
 
 	FontRenderer getFontRenderer() {
-		return fontRendererObj;
+		return fontRenderer;
 	}
 
 	Minecraft getMinecraft() {

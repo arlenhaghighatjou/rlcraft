@@ -88,8 +88,8 @@ public class GuiSlotNotifications extends GuiSlot {
 				ITextComponent cmp = slot.badge.bodyComponent;
 				if(cmp != null) {
 					if(doubleClk) {
-						if (cmp.getStyle().getChatClickEvent() != null
-								&& cmp.getStyle().getChatClickEvent().getAction().shouldAllowInChat()) {
+						if (cmp.getStyle().getClickEvent() != null
+								&& cmp.getStyle().getClickEvent().getAction().shouldAllowInChat()) {
 							if(parent.handleComponentClick(cmp)) {
 								mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
 								return;
@@ -239,7 +239,7 @@ public class GuiSlotNotifications extends GuiSlot {
 						mc.fontRenderer, true, true);
 				
 				int maxHeight = badgeHeight - (sourceText != null ? 32 : 22);
-				int maxLines = MathHelper.floor_float(maxHeight / (9 * bodyFontSize));
+				int maxLines = MathHelper.floor(maxHeight / (9 * bodyFontSize));
 				if(bodyLines.size() > maxLines) {
 					bodyLines = bodyLines.subList(0, maxLines);
 					ITextComponent cmp = bodyLines.get(maxLines - 1);
@@ -266,8 +266,8 @@ public class GuiSlotNotifications extends GuiSlot {
 						int w = mc.fontRenderer.drawStringWithShadow(
 								comp.getStyle().getFormattingCode() + comp.getUnformattedTextForChat(), startXLocal,
 								i * 9, bd.bodyTxtColor) - startXLocal;
-						ClickEvent clickEvent = comp.getStyle().getChatClickEvent();
-						HoverEvent hoverEvent = toolTip == null ? comp.getStyle().getChatHoverEvent() : null;
+						ClickEvent clickEvent = comp.getStyle().getClickEvent();
+						HoverEvent hoverEvent = toolTip == null ? comp.getStyle().getHoverEvent() : null;
 						if(clickEvent != null && !clickEvent.getAction().shouldAllowInChat()) {
 							clickEvent = null;
 						}

@@ -65,7 +65,7 @@ public class GuiScreenEditProfile extends GuiScreen {
 	public void initGui() {
 		Keyboard.enableRepeatEvents(true);
 		screenTitle = I18n.format("editProfile.title");
-		usernameField = new GuiTextField(0, fontRendererObj, width / 2 - 20 + 1, height / 6 + 24 + 1, 138, 20);
+		usernameField = new GuiTextField(0, fontRenderer, width / 2 - 20 + 1, height / 6 + 24 + 1, 138, 20);
 		usernameField.setFocused(true);
 		usernameField.setText(EaglerProfile.getName());
 		usernameField.setMaxStringLength(16);
@@ -97,9 +97,9 @@ public class GuiScreenEditProfile extends GuiScreen {
 
 	public void drawScreen(int mx, int my, float partialTicks) {
 		drawDefaultBackground();
-		drawCenteredString(fontRendererObj, screenTitle, width / 2, 15, 16777215);
-		drawString(fontRendererObj, I18n.format("editProfile.username"), width / 2 - 20, height / 6 + 8, 10526880);
-		drawString(fontRendererObj, I18n.format("editProfile.playerSkin"), width / 2 - 20, height / 6 + 66, 10526880);
+		drawCenteredString(fontRenderer, screenTitle, width / 2, 15, 16777215);
+		drawString(fontRenderer, I18n.format("editProfile.username"), width / 2 - 20, height / 6 + 8, 10526880);
+		drawString(fontRenderer, I18n.format("editProfile.playerSkin"), width / 2 - 20, height / 6 + 66, 10526880);
 		
 		mousex = mx;
 		mousey = my;
@@ -126,7 +126,7 @@ public class GuiScreenEditProfile extends GuiScreen {
 		if(selectedSkinModel == SkinModel.STEVE || selectedSkinModel == SkinModel.ALEX || (selectedSkinModel.highPoly != null && !this.mc.gameSettings.enableFNAWSkins)) {
 			String capesText = I18n.format("editProfile.capes");
 			int color = 10526880;
-			if(mx > skinX - 10 && my > skinY - 16 && mx < skinX + (fontRendererObj.getStringWidth(capesText) * 0.75f) + 10 && my < skinY + 7) {
+			if(mx > skinX - 10 && my > skinY - 16 && mx < skinX + (fontRenderer.getStringWidth(capesText) * 0.75f) + 10 && my < skinY + 7) {
 				color = 0xFFCCCC44;
 				Mouse.showCursor(EnumCursorType.HAND);
 			}
@@ -143,7 +143,7 @@ public class GuiScreenEditProfile extends GuiScreen {
 		}
 		
 		if(selectedSkinModel.highPoly != null) {
-			drawCenteredString(fontRendererObj, I18n.format(this.mc.gameSettings.enableFNAWSkins ? "editProfile.disableFNAW" : "editProfile.enableFNAW"), width / 2, height / 6 + 150, 10526880);
+			drawCenteredString(fontRenderer, I18n.format(this.mc.gameSettings.enableFNAWSkins ? "editProfile.disableFNAW" : "editProfile.enableFNAW"), width / 2, height / 6 + 150, 10526880);
 		}
 		
 		skinX = width / 2 - 20;
@@ -160,7 +160,7 @@ public class GuiScreenEditProfile extends GuiScreen {
 		mc.getTextureManager().bindTexture(eaglerGui);
 		drawTexturedModalRect(skinX + skinWidth - 18, skinY + 3, 0, 0, 16, 16);
 		
-		drawString(fontRendererObj, dropDownOptions[selectedSlot], skinX + 5, skinY + 7, 14737632);
+		drawString(fontRenderer, dropDownOptions[selectedSlot], skinX + 5, skinY + 7, 14737632);
 		
 		skinX = width / 2 - 20;
 		skinY = height / 6 + 103;
@@ -189,7 +189,7 @@ public class GuiScreenEditProfile extends GuiScreen {
 					}else if(mx >= skinX && mx < (skinX + skinWidth - 10) && my >= (skinY + i*10 + 5) && my < (skinY + i*10 + 15)) {
 						drawRect(skinX + 1, skinY + i*10 + 4, skinX + skinWidth - 1, skinY + i*10 + 14, 0x55ffffff);
 					}
-					drawString(fontRendererObj, dropDownOptions[i + scrollPos], skinX + 5, skinY + 5 + i*10, 14737632);
+					drawString(fontRenderer, dropDownOptions[i + scrollPos], skinX + 5, skinY + 5 + i*10, 14737632);
 				}
 			}
 			int scrollerSize = skinHeight * slotsVisible / dropDownOptions.length;
@@ -245,7 +245,7 @@ public class GuiScreenEditProfile extends GuiScreen {
 			drawRect(skinX, skinY + skinHeight - 1, skinX + skinWidth, skinY + skinHeight, cc);
 			
 			if(mouseOver) {
-				drawCenteredString(fontRendererObj, "Steve", skinX + skinWidth / 2, skinY + skinHeight + 6, cc);
+				drawCenteredString(fontRenderer, "Steve", skinX + skinWidth / 2, skinY + skinHeight + 6, cc);
 			}
 			
 			SkinPreviewRenderer.renderPreview(xx, yy, mx, my, false, SkinModel.STEVE, newSkin.getResource(),
@@ -270,7 +270,7 @@ public class GuiScreenEditProfile extends GuiScreen {
 			drawRect(skinX, skinY + skinHeight - 1, skinX + skinWidth, skinY + skinHeight, cc);
 			
 			if(mouseOver) {
-				drawCenteredString(fontRendererObj, "Alex", skinX + skinWidth / 2, skinY + skinHeight + 8, cc);
+				drawCenteredString(fontRenderer, "Alex", skinX + skinWidth / 2, skinY + skinHeight + 8, cc);
 			}
 			
 			SkinPreviewRenderer.renderPreview(xx, yy, mx, my, false, SkinModel.ALEX, newSkin.getResource(),
@@ -442,7 +442,7 @@ public class GuiScreenEditProfile extends GuiScreen {
 				skinX = this.width / 2 - 120;
 				skinY = this.height / 6 + 8;
 				String capesText = I18n.format("editProfile.capes");
-				if(mx > skinX - 10 && my > skinY - 16 && mx < skinX + (fontRendererObj.getStringWidth(capesText) * 0.75f) + 10 && my < skinY + 7) {
+				if(mx > skinX - 10 && my > skinY - 16 && mx < skinX + (fontRenderer.getStringWidth(capesText) * 0.75f) + 10 && my < skinY + 7) {
 					safeProfile();
 					this.mc.displayGuiScreen(new GuiScreenEditCape(this));
 					mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));

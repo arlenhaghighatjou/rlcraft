@@ -256,7 +256,7 @@ public class LANClientNetworkManager extends EaglercraftNetworkManager {
 		}
 
 		temporaryBuffer.clear();
-		temporaryBuffer.writeVarIntToBuffer(i);
+		temporaryBuffer.writeVarInt(i);
 		try {
 			pkt.writePacketData(temporaryBuffer);
 		}catch(IOException ex) {
@@ -374,7 +374,7 @@ public class LANClientNetworkManager extends EaglercraftNetworkManager {
 				nettyBuffer.writerIndex(fullData.length);
 				nettyBuffer.readerIndex(off);
 				PacketBuffer input = new PacketBuffer(nettyBuffer);
-				int pktId = input.readVarIntFromBuffer();
+				int pktId = input.readVarInt();
 
 				Packet pkt;
 				try {

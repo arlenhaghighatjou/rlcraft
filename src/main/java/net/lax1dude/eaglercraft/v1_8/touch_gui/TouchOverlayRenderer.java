@@ -138,7 +138,7 @@ public class TouchOverlayRenderer {
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		GlStateManager.enableAlpha();
-		GlStateManager.color(1.0f, 1.0f, 1.0f, MathHelper.clamp_float(mc.gameSettings.touchControlOpacity, 0.0f, 1.0f));
+		GlStateManager.color(1.0f, 1.0f, 1.0f, MathHelper.clamp(mc.gameSettings.touchControlOpacity, 0.0f, 1.0f));
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldrenderer = tessellator.getBuffer();
 		worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);

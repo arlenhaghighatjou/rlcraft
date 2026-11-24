@@ -55,7 +55,7 @@ public class LegacyMessageController extends MessageController {
 			inputStream.buffer = data;
 			int count = inputStream.readVarInt();
 			for(int i = 0, j, k, l; i < count; ++i) {
-				j = data.readVarIntFromBuffer();
+				j = data.readVarInt();
 				k = data.readerIndex() + j;
 				l = data.writerIndex();
 				if(j < 0 || k > l) {
@@ -151,10 +151,10 @@ public class LegacyMessageController extends MessageController {
 					Unpooled.buffer(1 + totalLen + GamePacketOutputBuffer.getVarIntSize(sendCount)));
 			sendBuffer.writerIndex(0);
 			sendBuffer.writeByte(0xFF);
-			sendBuffer.writeVarIntToBuffer(sendCount);
+			sendBuffer.writeVarInt(sendCount);
 			for(j = 0; j < sendCount; ++j) {
 				PacketBuffer dat = toSend[start++];
-				sendBuffer.writeVarIntToBuffer(dat.readableBytes());
+				sendBuffer.writeVarInt(dat.readableBytes());
 				sendBuffer.writeBytes(dat);
 			}
 			send.sendPluginMessage(GamePluginMessageConstants.V4_CHANNEL, sendBuffer);

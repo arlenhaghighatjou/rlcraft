@@ -47,7 +47,7 @@ public class TextureClockPBRImpl extends EaglerTextureAtlasSpritePBR {
 				--d1;
 			}
 
-			d1 = MathHelper.clamp_double(d1, -1.0, 1.0);
+			d1 = MathHelper.clamp(d1, -1.0, 1.0);
 			this.smoothParam2 += d1 * 0.1;
 			this.smoothParam2 *= 0.8;
 			this.smoothParam1 += this.smoothParam2;

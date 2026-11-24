@@ -66,10 +66,10 @@ public class HandshakerV5 extends HandshakerV4 {
 			buffer.writeByte(0);
 		}
 		ClientCapabilities caps = ClientCapabilities.createCapabilities(enableCookies);
-		buffer.writeVarIntToBuffer(caps.getStandardCaps());
+		buffer.writeVarInt(caps.getStandardCaps());
 		int[] vers = caps.getStandardCapsVers();
 		for(int i = 0; i < vers.length; ++i) {
-			buffer.writeVarIntToBuffer(vers[i]);
+			buffer.writeVarInt(vers[i]);
 		}
 		ExtCapability[] extVers = caps.getExtendedCaps();
 		buffer.writeByte(extVers.length);
@@ -77,7 +77,7 @@ public class HandshakerV5 extends HandshakerV4 {
 			ExtCapability extCap = extVers[i];
 			buffer.writeLong(extCap.uuid.msb);
 			buffer.writeLong(extCap.uuid.lsb);
-			buffer.writeVarIntToBuffer(extCap.vers);
+			buffer.writeVarInt(extCap.vers);
 		}
 		handler.websocket.send(buffer.toBytes());
 	}
@@ -87,7 +87,7 @@ public class HandshakerV5 extends HandshakerV4 {
 		byte[] username = new byte[buffer.readUnsignedByte()];
 		buffer.readBytes(username);
 		EaglercraftUUID uuid = new EaglercraftUUID(buffer.readLong(), buffer.readLong());
-		int standardCaps = buffer.readVarIntFromBuffer();
+		int standardCaps = buffer.readVarInt();
 		byte[] standardCapsVers = new byte[Integer.bitCount(standardCaps)];
 		buffer.readBytes(standardCapsVers);
 		int extCaps = buffer.readUnsignedByte();

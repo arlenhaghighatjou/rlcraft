@@ -101,7 +101,7 @@ public class CustomSky {
 
 	public static void renderSky(World world, TextureManager re, float partialTicks) {
 		if (worldSkyLayers != null) {
-			int i = world.provider.getDimensionId();
+			int i = world.provider.getDimension();
 
 			if (i >= 0 && i < worldSkyLayers.length) {
 				CustomSkyLayer[] acustomskylayer = worldSkyLayers[i];
@@ -136,7 +136,7 @@ public class CustomSky {
 		if (worldSkyLayers == null) {
 			return false;
 		} else {
-			int i = world.provider.getDimensionId();
+			int i = world.provider.getDimension();
 
 			if (i >= 0 && i < worldSkyLayers.length) {
 				CustomSkyLayer[] acustomskylayer = worldSkyLayers[i];

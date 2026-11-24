@@ -70,7 +70,7 @@ public class DynamicLightBucketLoader {
 		destroy();
 		
 		int alignment = EaglercraftGPU.getUniformBufferOffsetAlignment();
-		lightingBufferSliceLength = MathHelper.ceiling_float_int((float)LIGHTING_BUFFER_LENGTH / (float)alignment) * alignment;
+		lightingBufferSliceLength = MathHelper.ceil((float)LIGHTING_BUFFER_LENGTH / (float)alignment) * alignment;
 		
 		chunkLightingDataCopyBuffer = EagRuntime.allocateByteBuffer(LIGHTING_BUFFER_LENGTH);
 		for(int i = 0; i < LIGHTING_BUFFER_LENGTH; i += 4) {
@@ -184,9 +184,9 @@ public class DynamicLightBucketLoader {
 	}
 
 	public void bucketLightSource(float x, float y, float z, DynamicLightInstance dl) {
-		int bucketX = MathHelper.floor_float(x / 16.0f);
-		int bucketY = MathHelper.floor_float(y / 16.0f);
-		int bucketZ = MathHelper.floor_float(z / 16.0f);
+		int bucketX = MathHelper.floor(x / 16.0f);
+		int bucketY = MathHelper.floor(y / 16.0f);
+		int bucketZ = MathHelper.floor(z / 16.0f);
 		addLightSourceToBucket(bucketX, bucketY, bucketZ, dl);
 		int minX = bucketX, maxX = bucketX;
 		int minY = bucketY, maxY = bucketY;

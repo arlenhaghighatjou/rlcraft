@@ -180,7 +180,7 @@ public class PacketBufferInputWrapper implements GamePacketInputBuffer {
 	@Override
 	public int readVarInt() throws IOException {
 		try {
-			return buffer.readVarIntFromBuffer();
+			return buffer.readVarInt();
 		}catch(IndexOutOfBoundsException ex) {
 			throw new EOFException();
 		}

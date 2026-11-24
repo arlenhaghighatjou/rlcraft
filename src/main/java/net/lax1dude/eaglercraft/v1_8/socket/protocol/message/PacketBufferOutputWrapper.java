@@ -216,7 +216,7 @@ public class PacketBufferOutputWrapper implements GamePacketOutputBuffer {
 	@Override
 	public void writeVarInt(int i) throws IOException {
 		try {
-			buffer.writeVarIntToBuffer(i);
+			buffer.writeVarInt(i);
 		}catch(IndexOutOfBoundsException ex) {
 			throw new IOException("Packet buffer overflowed!");
 		}

@@ -53,11 +53,11 @@ public class GuiScreenContentWarning extends GuiScreen {
 
 	public void drawScreen(int mx, int my, float pt) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, TextFormatting.BOLD + I18n.format("profanityFilterWarning.title"), this.width / 2, 50, 0xFF4444);
-		this.drawCenteredString(fontRendererObj, I18n.format("profanityFilterWarning.text0"), this.width / 2, 70, 16777215);
-		this.drawCenteredString(fontRendererObj, I18n.format("profanityFilterWarning.text1"), this.width / 2, 82, 16777215);
-		this.drawCenteredString(fontRendererObj, I18n.format("profanityFilterWarning.text2"), this.width / 2, 94, 16777215);
-		this.drawCenteredString(fontRendererObj, I18n.format("profanityFilterWarning.text4"), this.width / 2, 116, 0xCCCCCC);
+		this.drawCenteredString(fontRenderer, TextFormatting.BOLD + I18n.format("profanityFilterWarning.title"), this.width / 2, 50, 0xFF4444);
+		this.drawCenteredString(fontRenderer, I18n.format("profanityFilterWarning.text0"), this.width / 2, 70, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("profanityFilterWarning.text1"), this.width / 2, 82, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("profanityFilterWarning.text2"), this.width / 2, 94, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("profanityFilterWarning.text4"), this.width / 2, 116, 0xCCCCCC);
 		super.drawScreen(mx, my, pt);
 	}
 

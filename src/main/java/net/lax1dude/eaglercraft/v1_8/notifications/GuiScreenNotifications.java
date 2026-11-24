@@ -74,7 +74,7 @@ public class GuiScreenNotifications extends GuiScreen {
 
 	void updateList() {
 		if(mc.player == null) return;
-		ServerNotificationManager mgr = mc.player.sendQueue.getNotifManager();
+		ServerNotificationManager mgr = mc.player.connection.getNotifManager();
 		int verHash = showPriority | (mgr.getNotifListUpdateCount() << 2);
 		if(verHash != lastUpdate) {
 			lastUpdate = verHash;
@@ -124,7 +124,7 @@ public class GuiScreenNotifications extends GuiScreen {
 			break;
 		case 1:
 			if(mc.player != null) {
-				ServerNotificationManager mgr = mc.player.sendQueue.getNotifManager();
+				ServerNotificationManager mgr = mc.player.connection.getNotifManager();
 				mgr.removeAllNotifFromActiveList(mgr.getNotifLongHistory());
 				clearAllButton.enabled = false;
 			}
@@ -144,7 +144,7 @@ public class GuiScreenNotifications extends GuiScreen {
 	public void drawScreen(int par1, int par2, float par3) {
 		if(mc.player == null) return;
 		slots.drawScreen(par1, par2, par3);
-		this.drawCenteredString(fontRendererObj, I18n.format("notifications.title"), this.width / 2, 16, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("notifications.title"), this.width / 2, 16, 16777215);
 		super.drawScreen(par1, par2, par3);
 	}
 
@@ -160,7 +160,7 @@ public class GuiScreenNotifications extends GuiScreen {
 
 	public void onGuiClosed() {
 		if(mc.player != null) {
-			mc.player.sendQueue.getNotifManager().commitUnreadFlag();
+			mc.player.connection.getNotifManager().commitUnreadFlag();
 		}
 	}
 }

@@ -79,7 +79,7 @@ public class ServerNotificationRenderer {
 
 	public boolean handleClicked(GuiScreen currentScreen, int posX, int posY) {
 		if(mc.player == null) return false;
-		ServerNotificationManager mgr = mc.player.sendQueue.getNotifManager();
+		ServerNotificationManager mgr = mc.player.connection.getNotifManager();
 		List<NotificationBadge> lst = mgr.getNotifBadgesToDisplay();
 		if(!lst.isEmpty()) {
 			int baseOffset = mc.guiAchievement.getHeight();
@@ -102,7 +102,7 @@ public class ServerNotificationRenderer {
 						timeRemainingSec = (float)((double)((long)badge.hideAfterSec * 1000l - age) * 0.001);
 					}
 					timeRemainingSec = Math.min((float)(age * 0.001) + 0.001f, timeRemainingSec);
-					float f = MathHelper.clamp_float(timeRemainingSec * 3.0F, 0.0F, 1.0F);
+					float f = MathHelper.clamp(timeRemainingSec * 3.0F, 0.0F, 1.0F);
 					f *= f;
 					texHeight *= f;
 					if(badge.hideAtMillis == -1l) {
@@ -149,7 +149,7 @@ public class ServerNotificationRenderer {
 
 	public void renderOverlay(int mouseX, int mouseY) {
 		if(mc.player == null) return;
-		ServerNotificationManager mgr = mc.player.sendQueue.getNotifManager();
+		ServerNotificationManager mgr = mc.player.connection.getNotifManager();
 		List<NotificationBadge> lst = mgr.getNotifBadgesToDisplay();
 		if(!lst.isEmpty()) {
 			GlStateManager.clear(GL_DEPTH_BUFFER_BIT);
@@ -187,9 +187,9 @@ public class ServerNotificationRenderer {
 						timeRemainingSec = (float)((double)((long)badge.hideAfterSec * 1000l - age) * 0.001);
 					}
 					timeRemainingSec = Math.min((float)(age * 0.001) + 0.001f, timeRemainingSec);
-					alphaTop *= MathHelper.clamp_float(timeRemainingSec * 3.0F, 0.0F, 1.0F);
+					alphaTop *= MathHelper.clamp(timeRemainingSec * 3.0F, 0.0F, 1.0F);
 					alphaTop *= alphaTop;
-					alphaBottom *= MathHelper.clamp_float(timeRemainingSec * 2.0F, 0.0F, 1.0F);
+					alphaBottom *= MathHelper.clamp(timeRemainingSec * 2.0F, 0.0F, 1.0F);
 					alphaBottom *= alphaBottom;
 					if(alphaTop == 0.0F && alphaBottom == 0.0F) {
 						continue;
@@ -286,15 +286,15 @@ public class ServerNotificationRenderer {
 		
 		ITextComponent bodyComponent = badge.getBodyProfanityFilter();
 		if(bodyComponent != null) {
-			if (bodyComponent.getStyle().getChatClickEvent() != null
-					&& bodyComponent.getStyle().getChatClickEvent().getAction().shouldAllowInChat()) {
+			if (bodyComponent.getStyle().getClickEvent() != null
+					&& bodyComponent.getStyle().getClickEvent().getAction().shouldAllowInChat()) {
 				rootClickEvt = bodyComponent;
 			}
 			bodyLines = GuiUtilRenderComponents.func_178908_a(bodyComponent, (int) (textZoneWidth / bodyFontSize),
 					mc.fontRenderer, true, true);
 			
 			int maxHeight = BADGE_HEIGHT - 32;
-			int maxLines = MathHelper.floor_float(maxHeight / (9 * bodyFontSize));
+			int maxLines = MathHelper.floor(maxHeight / (9 * bodyFontSize));
 			if(bodyLines.size() > maxLines) {
 				bodyLines = bodyLines.subList(0, maxLines);
 				bodyComponent = bodyLines.get(maxLines - 1);
@@ -305,7 +305,7 @@ public class ServerNotificationRenderer {
 				}
 				bodyComponent.appendSibling(dots);
 			}
-			bodyHeight = MathHelper.floor_float(bodyLines.size() * (9 * bodyFontSize));
+			bodyHeight = MathHelper.floor(bodyLines.size() * (9 * bodyFontSize));
 		}
 
 		String sourceText = null;
@@ -436,8 +436,8 @@ public class ServerNotificationRenderer {
 					int w = mc.fontRenderer.drawStringWithShadow(
 							comp.getStyle().getFormattingCode() + comp.getUnformattedTextForChat(), startXLocal,
 							i * 9, badge.bodyTxtColor) - startXLocal;
-					ClickEvent clickEvent = comp.getStyle().getChatClickEvent();
-					HoverEvent hoverEvent = comp.getStyle().getChatHoverEvent();
+					ClickEvent clickEvent = comp.getStyle().getClickEvent();
+					HoverEvent hoverEvent = comp.getStyle().getHoverEvent();
 					if(clickEvent != null && !clickEvent.getAction().shouldAllowInChat()) {
 						clickEvent = null;
 					}

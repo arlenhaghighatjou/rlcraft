@@ -90,7 +90,7 @@ public class EaglerIntegratedServerWorker {
 		if (!ServerPlatformSingleplayer.isSingleThreadMode() && ServerPlatformSingleplayer.isTabAboutToCloseWASM()
 				&& !isServerStopped()) {
 			logger.info("Autosaving worlds because the tab is about to close!");
-			currentProcess.getConfigurationManager().saveAllPlayerData();
+			currentProcess.getPlayerList().saveAllPlayerData();
 			currentProcess.saveAllWorlds(false);
 		}
 	}
@@ -373,7 +373,7 @@ public class EaglerIntegratedServerWorker {
 				if(!pkt.iceServers.isEmpty() && ServerPlatformSingleplayer.getClientConfigAdapter().isAllowVoiceClient()) {
 					currentProcess.enableVoice(pkt.iceServers.toArray(new String[pkt.iceServers.size()]));
 				}
-				currentProcess.getConfigurationManager().configureLAN(pkt.gamemode, pkt.cheats); // don't use iceServers
+				currentProcess.getPlayerList().configureLAN(pkt.gamemode, pkt.cheats); // don't use iceServers
 
 				break;
 			}
@@ -389,7 +389,7 @@ public class EaglerIntegratedServerWorker {
 			}
 			case IPCPacket19Autosave.ID: {
 				if(!isServerStopped()) {
-					currentProcess.getConfigurationManager().saveAllPlayerData();
+					currentProcess.getPlayerList().saveAllPlayerData();
 					currentProcess.saveAllWorlds(false);
 					sendIPCPacket(new IPCPacketFFProcessKeepAlive(IPCPacket19Autosave.ID));
 				}else {

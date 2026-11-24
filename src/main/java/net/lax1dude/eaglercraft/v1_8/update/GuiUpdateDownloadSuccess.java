@@ -51,8 +51,8 @@ public class GuiUpdateDownloadSuccess extends GuiScreen {
 
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, I18n.format("updateSuccess.title"), this.width / 2, 50, 11184810);
-		this.drawCenteredString(fontRendererObj,
+		this.drawCenteredString(fontRenderer, I18n.format("updateSuccess.title"), this.width / 2, 50, 11184810);
+		this.drawCenteredString(fontRenderer,
 				updateData.clientSignature.bundleDisplayName + " " + updateData.clientSignature.bundleDisplayVersion,
 				this.width / 2, 70, 0xFFFFAA);
 		super.drawScreen(par1, par2, par3);

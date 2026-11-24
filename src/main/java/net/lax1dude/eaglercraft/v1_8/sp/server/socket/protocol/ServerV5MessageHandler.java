@@ -40,21 +40,21 @@ public class ServerV5MessageHandler extends ServerV4MessageHandler {
 	}
 
 	public void handleClient(CPacketGetOtherCapeV5EAG packet) {
-		server.getTextureService().handleRequestPlayerCapeV5(netHandler.playerEntity, packet.requestId,
+		server.getTextureService().handleRequestPlayerCapeV5(netHandler.player, packet.requestId,
 				new EaglercraftUUID(packet.uuidMost, packet.uuidLeast));
 	}
 
 	public void handleClient(CPacketGetOtherSkinV5EAG packet) {
-		server.getTextureService().handleRequestPlayerSkinV5(netHandler.playerEntity, packet.requestId,
+		server.getTextureService().handleRequestPlayerSkinV5(netHandler.player, packet.requestId,
 				new EaglercraftUUID(packet.uuidMost, packet.uuidLeast));
 	}
 
 	public void handleClient(CPacketGetSkinByURLV5EAG packet) {
-		server.getTextureService().handleRequestSkinByURLV5(netHandler.playerEntity, packet.requestId, packet.url);
+		server.getTextureService().handleRequestSkinByURLV5(netHandler.player, packet.requestId, packet.url);
 	}
 
 	public void handleClient(CPacketGetOtherTexturesV5EAG packet) {
-		server.getTextureService().handleRequestPlayerTexturesV5(netHandler.playerEntity, packet.requestId,
+		server.getTextureService().handleRequestPlayerTexturesV5(netHandler.player, packet.requestId,
 				new EaglercraftUUID(packet.uuidMost, packet.uuidLeast));
 	}
 

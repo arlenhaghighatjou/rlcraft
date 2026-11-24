@@ -74,8 +74,8 @@ public class GuiScreenRecieveServerInfo extends GuiScreen {
 
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, I18n.format("recieveServerInfo.title"), this.width / 2, 70, 11184810);
-		this.drawCenteredString(fontRendererObj, I18n.format(statusString), this.width / 2, 90, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("recieveServerInfo.title"), this.width / 2, 70, 11184810);
+		this.drawCenteredString(fontRenderer, I18n.format(statusString), this.width / 2, 90, 16777215);
 		if(Arrays.equals(ServerInfoCache.chunkRecieveHash, expectHash) && ServerInfoCache.chunkFinalSize > 0) {
 			int progress = ServerInfoCache.chunkCurrentSize * 100 / ServerInfoCache.chunkFinalSize;
 			if(progress < 0) progress = 0;
@@ -119,7 +119,7 @@ public class GuiScreenRecieveServerInfo extends GuiScreen {
 			mc.displayGuiScreen(parent);
 			return;
 		}
-		NetHandlerPlayClient sendQueue = mc.player.sendQueue;
+		NetHandlerPlayClient sendQueue = mc.player.connection;
 		++timer;
 		if(timer == 1) {
 			byte[] data = ServerInfoCache.loadFromCache(expectHash);

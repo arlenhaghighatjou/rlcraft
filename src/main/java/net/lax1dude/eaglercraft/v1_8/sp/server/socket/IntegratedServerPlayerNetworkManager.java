@@ -179,7 +179,7 @@ public class IntegratedServerPlayerNetworkManager implements INetworkManager {
 				ByteBuf nettyBuffer = Unpooled.buffer(fullData, fullData.length);
 				nettyBuffer.writerIndex(fullData.length);
 				PacketBuffer input = new PacketBuffer(nettyBuffer);
-				int pktId = input.readVarIntFromBuffer();
+				int pktId = input.readVarInt();
 				
 				Packet pkt;
 				try {
@@ -229,7 +229,7 @@ public class IntegratedServerPlayerNetworkManager implements INetworkManager {
 		}
 		
 		temporaryBuffer.clear();
-		temporaryBuffer.writeVarIntToBuffer(i);
+		temporaryBuffer.writeVarInt(i);
 		try {
 			pkt.writePacketData(temporaryBuffer);
 		}catch(IOException ex) {

@@ -58,7 +58,7 @@ public class GuiScreenInspectSessionToken extends GuiScreen {
 			String[] strs = toDraw[i];
 			int w = 0;
 			for(int j = 0; j < strs.length; ++j) {
-				int k = fontRendererObj.getStringWidth(strs[j]);
+				int k = fontRenderer.getStringWidth(strs[j]);
 				if(k > w) {
 					w = k;
 				}
@@ -66,13 +66,13 @@ public class GuiScreenInspectSessionToken extends GuiScreen {
 			maxWidth[i] = w + 10;
 		}
 		int totalWidth = maxWidth[0] + maxWidth[1];
-		this.drawCenteredString(fontRendererObj, I18n.format("inspectSessionToken.title"), this.width / 2, 70, 16777215);
-		this.drawString(fontRendererObj, toDraw[0][0], (this.width - totalWidth) / 2, 90, 11184810);
-		this.drawString(fontRendererObj, toDraw[0][1], (this.width - totalWidth) / 2, 104, 11184810);
-		this.drawString(fontRendererObj, toDraw[0][2], (this.width - totalWidth) / 2, 118, 11184810);
-		this.drawString(fontRendererObj, toDraw[1][0], (this.width - totalWidth) / 2 + maxWidth[0], 90, 11184810);
-		this.drawString(fontRendererObj, toDraw[1][1], (this.width - totalWidth) / 2 + maxWidth[0], 104, 11184810);
-		this.drawString(fontRendererObj, toDraw[1][2], (this.width - totalWidth) / 2 + maxWidth[0], 118, 11184810);
+		this.drawCenteredString(fontRenderer, I18n.format("inspectSessionToken.title"), this.width / 2, 70, 16777215);
+		this.drawString(fontRenderer, toDraw[0][0], (this.width - totalWidth) / 2, 90, 11184810);
+		this.drawString(fontRenderer, toDraw[0][1], (this.width - totalWidth) / 2, 104, 11184810);
+		this.drawString(fontRenderer, toDraw[0][2], (this.width - totalWidth) / 2, 118, 11184810);
+		this.drawString(fontRenderer, toDraw[1][0], (this.width - totalWidth) / 2 + maxWidth[0], 90, 11184810);
+		this.drawString(fontRenderer, toDraw[1][1], (this.width - totalWidth) / 2 + maxWidth[0], 104, 11184810);
+		this.drawString(fontRenderer, toDraw[1][2], (this.width - totalWidth) / 2 + maxWidth[0], 118, 11184810);
 		super.drawScreen(par1, par2, par3);
 	}
 

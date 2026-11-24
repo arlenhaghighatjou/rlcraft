@@ -44,8 +44,8 @@ public class GuiScreenIntegratedServerCrashed extends GuiScreen {
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
 
-		this.drawCenteredString(fontRendererObj, I18n.format("singleplayer.crashed.title"), this.width / 2, 25, 0xFFAAAA);
-		this.drawCenteredString(fontRendererObj, I18n.format("singleplayer.crashed.checkConsole"), this.width / 2, 40, 0xBBBBBB);
+		this.drawCenteredString(fontRenderer, I18n.format("singleplayer.crashed.title"), this.width / 2, 25, 0xFFAAAA);
+		this.drawCenteredString(fontRenderer, I18n.format("singleplayer.crashed.checkConsole"), this.width / 2, 40, 0xBBBBBB);
 
 		super.drawScreen(par1, par2, par3);
 	}

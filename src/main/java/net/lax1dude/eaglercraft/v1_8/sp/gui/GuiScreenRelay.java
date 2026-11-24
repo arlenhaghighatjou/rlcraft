@@ -145,20 +145,20 @@ public class GuiScreenRelay extends GuiScreen implements GuiYesNoCallback {
 			tooltipString = null;
 		}
 
-		this.drawCenteredString(fontRendererObj, I18n.format("networkSettings.title"), this.width / 2, 16, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("networkSettings.title"), this.width / 2, 16, 16777215);
 
 		String str = I18n.format("networkSettings.relayTimeout") + " " + mc.gameSettings.relayTimeout;
-		int w = fontRendererObj.getStringWidth(str);
-		this.drawString(fontRendererObj, str, 3, 3, 0xDDDDDD);
+		int w = fontRenderer.getStringWidth(str);
+		this.drawString(fontRenderer, str, 3, 3, 0xDDDDDD);
 
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(w + 7, 4, 0.0f);
 		GlStateManager.scale(0.75f, 0.75f, 0.75f);
 		str = TextFormatting.UNDERLINE + I18n.format("networkSettings.relayTimeoutChange");
-		int w2 = fontRendererObj.getStringWidth(str);
+		int w2 = fontRenderer.getStringWidth(str);
 		boolean b = par1 > w + 5 && par1 < w + 7 + w2 * 3 / 4 && par2 > 3 && par2 < 11;
 		if(b) Mouse.showCursor(EnumCursorType.HAND);
-		this.drawString(fontRendererObj, TextFormatting.UNDERLINE + I18n.format("networkSettings.relayTimeoutChange"), 0, 0, b ? 0xCCCCCC : 0x999999);
+		this.drawString(fontRenderer, TextFormatting.UNDERLINE + I18n.format("networkSettings.relayTimeoutChange"), 0, 0, b ? 0xCCCCCC : 0x999999);
 		GlStateManager.popMatrix();
 
 		super.drawScreen(par1, par2, par3);
@@ -168,9 +168,9 @@ public class GuiScreenRelay extends GuiScreen implements GuiYesNoCallback {
 		super.mouseClicked(par1, par2, par3);
 		if(par3 == 0) {
 			String str = I18n.format("networkSettings.relayTimeout") + " " + mc.gameSettings.relayTimeout;
-			int w = fontRendererObj.getStringWidth(str);
+			int w = fontRenderer.getStringWidth(str);
 			str = I18n.format("networkSettings.relayTimeoutChange");
-			int w2 = fontRendererObj.getStringWidth(str);
+			int w2 = fontRenderer.getStringWidth(str);
 			if(par1 > w + 5 && par1 < w + 7 + w2 * 3 / 4 && par2 > 3 && par2 < 11) {
 				this.mc.displayGuiScreen(new GuiScreenChangeRelayTimeout(this));
 				this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));

@@ -554,7 +554,7 @@ public class CloudRenderWorker {
 					shapePosX = (int)(cloud3DSamplesTextureSizeX * (rand.nextFloat() * 1.5f - 0.75f));
 					shapePosY = (int)(cloud3DSamplesTextureSizeY * (rand.nextFloat() * 1.5f - 0.75f));
 				}while(shapePosX > -192 && shapePosY > -192 && shapePosX < 192 && shapePosY < 192);
-				float l = -MathHelper.sqrt_float(shapePosX * shapePosX + shapePosY * shapePosY);
+				float l = -MathHelper.sqrt(shapePosX * shapePosX + shapePosY * shapePosY);
 				shapeRotate = (float)Math.atan2(shapePosY / l, shapePosX / l) / 0.0174532f;
 				shapeRotate += (rand.nextFloat() - 0.5f) * 90.0f;
 				shapePosX += renderViewX * playerCoordsNoiseMapScale + cloud3DSamplesTextureSizeX * 0.5f;

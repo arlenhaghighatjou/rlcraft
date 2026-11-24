@@ -148,7 +148,7 @@ public class GuiScreenNameWorldImport extends GuiScreen {
 			definetlyTimeToImport = true;
 			long dots = (EagRuntime.steadyTimeMillis() / 500l) % 4l;
 			String str = I18n.format("singleplayer.import.reading", world.fileName);
-			this.drawString(fontRendererObj, str + (dots > 0 ? "." : "") + (dots > 1 ? "." : "") + (dots > 2 ? "." : ""), (this.width - this.fontRenderer.getStringWidth(str)) / 2, this.height / 3 + 10, 0xFFFFFF);
+			this.drawString(fontRenderer, str + (dots > 0 ? "." : "") + (dots > 1 ? "." : "") + (dots > 2 ? "." : ""), (this.width - this.fontRenderer.getStringWidth(str)) / 2, this.height / 3 + 10, 0xFFFFFF);
 		}
 		super.drawScreen(par1, par2, par3);
 	}

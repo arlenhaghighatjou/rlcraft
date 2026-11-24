@@ -59,7 +59,7 @@ public class ConnectedTextures {
 	private static final int Y_AXIS = 0;
 	private static final int Z_AXIS = 1;
 	private static final int X_AXIS = 2;
-	public static final IBlockState AIR_DEFAULT_STATE = Blocks.air.getDefaultState();
+	public static final IBlockState AIR_DEFAULT_STATE = Blocks.AIR.getDefaultState();
 	private static EaglerTextureAtlasSprite emptySprite = null;
 	private static final BlockDir[] SIDES_Y_NEG_DOWN = new BlockDir[] { BlockDir.WEST, BlockDir.EAST, BlockDir.NORTH,
 			BlockDir.SOUTH };
@@ -1506,7 +1506,7 @@ public class ConnectedTextures {
 
 			IBlockState iblockstate1 = iblockaccess.getBlockState(blockPos.offset(getFacing(side)));
 			return iblockstate1.getBlock().isOpaqueCube() ? false
-					: (side == 1 && iblockstate1.getBlock() == Blocks.snow_layer ? false
+					: (side == 1 && iblockstate1.getBlock() == Blocks.SNOW_LAYER ? false
 							: !isNeighbour(cp, iblockaccess, blockState, blockPos, iblockstate, side, icon, metadata));
 		}
 	}
@@ -1546,7 +1546,7 @@ public class ConnectedTextures {
 
 			IBlockState iblockstate1 = iblockaccess.getBlockState(blockPos.offset(getFacing(side)));
 			return iblockstate1.getBlock().isOpaqueCube() ? false
-					: side != 1 || iblockstate1.getBlock() != Blocks.snow_layer;
+					: side != 1 || iblockstate1.getBlock() != Blocks.SNOW_LAYER;
 		}
 	}
 

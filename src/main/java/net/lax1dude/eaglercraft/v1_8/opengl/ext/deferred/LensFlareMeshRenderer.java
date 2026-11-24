@@ -285,7 +285,7 @@ public class LensFlareMeshRenderer {
 		float aspectRatio = (float)mc.displayHeight / (float)mc.displayWidth;
 
 		float fov = 90.0f / mc.entityRenderer.getFOVModifier(EaglerDeferredPipeline.instance.getPartialTicks(), true);
-		float size = 0.075f * fov * (1.0f + MathHelper.sqrt_float(sunScreenX * sunScreenX + sunScreenY * sunScreenY));
+		float size = 0.075f * fov * (1.0f + MathHelper.sqrt(sunScreenX * sunScreenX + sunScreenY * sunScreenY));
 
 		tmpMat.setIdentity();
 		tmpMat.m00 = aspectRatio * 2.0f * size;

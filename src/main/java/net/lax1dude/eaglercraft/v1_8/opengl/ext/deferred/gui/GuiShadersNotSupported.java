@@ -37,8 +37,8 @@ public class GuiShadersNotSupported extends GuiScreen {
 
 	public void drawScreen(int i, int j, float var3) {
 		this.drawBackground(0);
-		drawCenteredString(fontRendererObj, I18n.format("shaders.gui.unsupported.title"), width / 2, height / 2 - 30, 0xFFFFFF);
-		drawCenteredString(fontRendererObj, reason, width / 2, height / 2 - 10, 11184810);
+		drawCenteredString(fontRenderer, I18n.format("shaders.gui.unsupported.title"), width / 2, height / 2 - 30, 0xFFFFFF);
+		drawCenteredString(fontRenderer, reason, width / 2, height / 2 - 10, 11184810);
 		super.drawScreen(i, j, var3);
 	}
 

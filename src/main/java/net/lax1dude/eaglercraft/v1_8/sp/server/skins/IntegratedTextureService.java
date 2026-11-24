@@ -49,10 +49,10 @@ public class IntegratedTextureService {
 	public void handleRequestPlayerSkin(EntityPlayerMP requester, EaglercraftUUID uuid) {
 		EntityPlayerMP target = playerList.getPlayerByUUID(uuid);
 		if (target != null && target.textureData != null) {
-			requester.playerNetServerHandler.sendEaglerMessage(target.textureData.getSkin(uuid.msb, uuid.lsb,
-					requester.playerNetServerHandler.getEaglerMessageProtocol()));
+			requester.connection.sendEaglerMessage(target.textureData.getSkin(uuid.msb, uuid.lsb,
+					requester.connection.getEaglerMessageProtocol()));
 		} else {
-			requester.playerNetServerHandler.sendEaglerMessage(
+			requester.connection.sendEaglerMessage(
 					new SPacketOtherSkinPresetEAG(uuid.msb, uuid.lsb, (uuid.hashCode() & 1) != 0 ? 1 : 0));
 		}
 	}
@@ -60,20 +60,20 @@ public class IntegratedTextureService {
 	public void handleRequestPlayerCape(EntityPlayerMP requester, EaglercraftUUID uuid) {
 		EntityPlayerMP target = playerList.getPlayerByUUID(uuid);
 		if (target != null && target.textureData != null) {
-			requester.playerNetServerHandler.sendEaglerMessage(target.textureData.getCape(uuid.msb, uuid.lsb,
-					requester.playerNetServerHandler.getEaglerMessageProtocol()));
+			requester.connection.sendEaglerMessage(target.textureData.getCape(uuid.msb, uuid.lsb,
+					requester.connection.getEaglerMessageProtocol()));
 		} else {
-			requester.playerNetServerHandler.sendEaglerMessage(new SPacketOtherCapePresetEAG(uuid.msb, uuid.lsb, 0));
+			requester.connection.sendEaglerMessage(new SPacketOtherCapePresetEAG(uuid.msb, uuid.lsb, 0));
 		}
 	}
 
 	public void handleRequestPlayerSkinV5(EntityPlayerMP requester, int requestId, EaglercraftUUID uuid) {
 		EntityPlayerMP target = playerList.getPlayerByUUID(uuid);
 		if (target != null && target.textureData != null) {
-			requester.playerNetServerHandler.sendEaglerMessage(target.textureData.getSkinV5(requestId,
-					requester.playerNetServerHandler.getEaglerMessageProtocol()));
+			requester.connection.sendEaglerMessage(target.textureData.getSkinV5(requestId,
+					requester.connection.getEaglerMessageProtocol()));
 		} else {
-			requester.playerNetServerHandler.sendEaglerMessage(
+			requester.connection.sendEaglerMessage(
 					new SPacketOtherSkinPresetV5EAG(requestId, (uuid.hashCode() & 1) != 0 ? 1 : 0));
 		}
 	}
@@ -81,20 +81,20 @@ public class IntegratedTextureService {
 	public void handleRequestPlayerCapeV5(EntityPlayerMP requester, int requestId, EaglercraftUUID uuid) {
 		EntityPlayerMP target = playerList.getPlayerByUUID(uuid);
 		if (target != null && target.textureData != null) {
-			requester.playerNetServerHandler.sendEaglerMessage(target.textureData.getCapeV5(requestId,
-					requester.playerNetServerHandler.getEaglerMessageProtocol()));
+			requester.connection.sendEaglerMessage(target.textureData.getCapeV5(requestId,
+					requester.connection.getEaglerMessageProtocol()));
 		} else {
-			requester.playerNetServerHandler.sendEaglerMessage(new SPacketOtherCapePresetV5EAG(requestId, 0));
+			requester.connection.sendEaglerMessage(new SPacketOtherCapePresetV5EAG(requestId, 0));
 		}
 	}
 
 	public void handleRequestPlayerTexturesV5(EntityPlayerMP requester, int requestId, EaglercraftUUID uuid) {
 		EntityPlayerMP target = playerList.getPlayerByUUID(uuid);
 		if (target != null && target.textureData != null) {
-			requester.playerNetServerHandler.sendEaglerMessage(target.textureData.getTexturesV5(requestId,
-					requester.playerNetServerHandler.getEaglerMessageProtocol()));
+			requester.connection.sendEaglerMessage(target.textureData.getTexturesV5(requestId,
+					requester.connection.getEaglerMessageProtocol()));
 		} else {
-			requester.playerNetServerHandler
+			requester.connection
 					.sendEaglerMessage(new SPacketOtherTexturesV5EAG(requestId, 0, null, 0, null));
 		}
 	}
@@ -106,13 +106,13 @@ public class IntegratedTextureService {
 			if (!url.contains(VFile2.pathSeperator)) {
 				CustomSkullData skull = skullHandler.loadSkullData(url);
 				if (skull != null) {
-					requester.playerNetServerHandler.sendEaglerMessage(skull.getSkin(uuid.msb, uuid.lsb,
-							requester.playerNetServerHandler.getEaglerMessageProtocol()));
+					requester.connection.sendEaglerMessage(skull.getSkin(uuid.msb, uuid.lsb,
+							requester.connection.getEaglerMessageProtocol()));
 					return;
 				}
 			}
 		}
-		requester.playerNetServerHandler.sendEaglerMessage(new SPacketOtherSkinPresetEAG(uuid.msb, uuid.lsb, 0));
+		requester.connection.sendEaglerMessage(new SPacketOtherSkinPresetEAG(uuid.msb, uuid.lsb, 0));
 	}
 
 	public void handleRequestSkinByURLV5(EntityPlayerMP requester, int requestId, String url) {
@@ -122,13 +122,13 @@ public class IntegratedTextureService {
 			if (!url.contains(VFile2.pathSeperator)) {
 				CustomSkullData skull = skullHandler.loadSkullData(url);
 				if (skull != null) {
-					requester.playerNetServerHandler.sendEaglerMessage(skull.getSkinV5(requestId,
-							requester.playerNetServerHandler.getEaglerMessageProtocol()));
+					requester.connection.sendEaglerMessage(skull.getSkinV5(requestId,
+							requester.connection.getEaglerMessageProtocol()));
 					return;
 				}
 			}
 		}
-		requester.playerNetServerHandler.sendEaglerMessage(new SPacketOtherSkinPresetV5EAG(requestId, 0));
+		requester.connection.sendEaglerMessage(new SPacketOtherSkinPresetV5EAG(requestId, 0));
 	}
 
 	public void handleInstallNewSkin(EntityPlayerMP requester, byte[] skullData) {
@@ -158,7 +158,7 @@ public class IntegratedTextureService {
 		loreList.appendTag(new NBTTagString(TextFormatting.GRAY + (fileName.length() > 24 ? (fileName.substring(0, 22) + "...") : fileName)));
 		displayTagCompound.setTag("Lore", loreList);
 		rootTagCompound.setTag("display", displayTagCompound);
-		ItemStack stack = new ItemStack(Items.skull, 1, 3);
+		ItemStack stack = new ItemStack(Items.SKULL, 1, 3);
 		stack.setTagCompound(rootTagCompound);
 		boolean flag = requester.inventory.addItemStackToInventory(stack);
 		if (flag) {

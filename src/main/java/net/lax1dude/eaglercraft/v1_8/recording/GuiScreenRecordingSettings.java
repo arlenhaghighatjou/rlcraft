@@ -80,7 +80,7 @@ public class GuiScreenRecordingSettings extends GuiScreen {
 				dirty = true;
 			}
 		});
-		buttonList.add(videoBitrateSlider = new GuiSlider2(5, this.width / 2 - 155, this.height / 6 + 98, 150, 20, MathHelper.sqrt_float(MathHelper.clamp_float((mc.gameSettings.screenRecordVideoBitrate - 250) / 19750.999f, 0.0f, 1.0f)), 1.0f) {
+		buttonList.add(videoBitrateSlider = new GuiSlider2(5, this.width / 2 - 155, this.height / 6 + 98, 150, 20, MathHelper.sqrt(MathHelper.clamp((mc.gameSettings.screenRecordVideoBitrate - 250) / 19750.999f, 0.0f, 1.0f)), 1.0f) {
 			@Override
 			protected String updateDisplayString() {
 				return I18n.format("options.screenRecording.videoBitrate") + ": " + (250 + (int)(sliderValue * sliderValue * 19750.999f)) + "kbps";
@@ -91,7 +91,7 @@ public class GuiScreenRecordingSettings extends GuiScreen {
 				dirty = true;
 			}
 		});
-		buttonList.add(audioBitrateSlider = new GuiSlider2(6, this.width / 2 + 5, this.height / 6 + 98, 150, 20, MathHelper.sqrt_float(MathHelper.clamp_float((mc.gameSettings.screenRecordAudioBitrate - 24) / 232.999f, 0.0f, 1.0f)), 1.0f) {
+		buttonList.add(audioBitrateSlider = new GuiSlider2(6, this.width / 2 + 5, this.height / 6 + 98, 150, 20, MathHelper.sqrt(MathHelper.clamp((mc.gameSettings.screenRecordAudioBitrate - 24) / 232.999f, 0.0f, 1.0f)), 1.0f) {
 			@Override
 			protected String updateDisplayString() {
 				return I18n.format("options.screenRecording.audioBitrate") + ": " + (24 + (int)(sliderValue * sliderValue * 232.999f)) + "kbps";
@@ -162,14 +162,14 @@ public class GuiScreenRecordingSettings extends GuiScreen {
 
 	public void drawScreen(int i, int j, float var3) {
 		drawDefaultBackground();
-		drawCenteredString(fontRendererObj, I18n.format("options.screenRecording.title"), this.width / 2, 15, 16777215);
+		drawCenteredString(fontRenderer, I18n.format("options.screenRecording.title"), this.width / 2, 15, 16777215);
 		if(mc.gameSettings.screenRecordCodec == null) {
 			mc.gameSettings.screenRecordCodec = ScreenRecordingController.getDefaultCodec();
 		}
 		
 		String codecString = mc.gameSettings.screenRecordCodec.name;
-		int codecStringWidth = fontRendererObj.getStringWidth(codecString);
-		drawString(fontRendererObj, codecString, this.width / 2 + 60 - codecStringWidth, this.height / 6 + 4, 0xFFFFFF);
+		int codecStringWidth = fontRenderer.getStringWidth(codecString);
+		drawString(fontRenderer, codecString, this.width / 2 + 60 - codecStringWidth, this.height / 6 + 4, 0xFFFFFF);
 		
 		boolean isRecording = ScreenRecordingController.isRecording();
 		codecButton.enabled = !isRecording;
@@ -181,8 +181,8 @@ public class GuiScreenRecordingSettings extends GuiScreen {
 		recordButton.displayString = I18n.format(isRecording ? "options.screenRecording.stop" : "options.screenRecording.start");
 		String statusString = I18n.format("options.screenRecording.status",
 				(isRecording ? TextFormatting.GREEN : TextFormatting.RED) + I18n.format(isRecording ? "options.screenRecording.status.1" : "options.screenRecording.status.0"));
-		int statusStringWidth = fontRendererObj.getStringWidth(statusString);
-		drawString(fontRendererObj, statusString, this.width / 2 + 10 - statusStringWidth, this.height / 6 + 34, 0xFFFFFF);
+		int statusStringWidth = fontRenderer.getStringWidth(statusString);
+		drawString(fontRenderer, statusString, this.width / 2 + 10 - statusStringWidth, this.height / 6 + 34, 0xFFFFFF);
 		
 		super.drawScreen(i, j, var3);
 	}

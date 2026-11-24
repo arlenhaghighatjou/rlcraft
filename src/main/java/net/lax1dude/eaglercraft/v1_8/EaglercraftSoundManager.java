@@ -345,14 +345,14 @@ public class EaglercraftSoundManager {
 	}
 	
 	private float getNormalizedVolume(ISound sound, Sound entry, SoundCategory category) {
-		return (float) MathHelper.clamp_double((double) sound.getVolume() * entry.getVolume(), 0.0D, 1.0D)
+		return (float) MathHelper.clamp((double) sound.getVolume() * entry.getVolume(), 0.0D, 1.0D)
 				* (category.getCategoryId() == SoundCategory.MASTER.getCategoryId() ? 1.0f
 						: categoryVolumes[category.getCategoryId()])
 				* categoryVolumes[SoundCategory.MASTER.getCategoryId()];
 	}
 	
 	private float getNormalizedPitch(ISound sound, Sound entry) {
-		return MathHelper.clamp_float(sound.getPitch() * (float)entry.getPitch(), 0.5f, 2.0f);
+		return MathHelper.clamp(sound.getPitch() * (float)entry.getPitch(), 0.5f, 2.0f);
 	}
 	
 	public void setListener(EntityPlayer player, float partialTicks) {

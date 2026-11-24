@@ -45,15 +45,15 @@ public class GuiScreenPhishingWarning extends GuiScreen {
 
 	public void drawScreen(int mx, int my, float pt) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, TextFormatting.BOLD + I18n.format("webviewPhishingWarning.title"), this.width / 2, 70, 0xFF4444);
-		this.drawCenteredString(fontRendererObj, I18n.format("webviewPhishingWarning.text0"), this.width / 2, 90, 16777215);
-		this.drawCenteredString(fontRendererObj, I18n.format("webviewPhishingWarning.text1"), this.width / 2, 102, 16777215);
-		this.drawCenteredString(fontRendererObj, I18n.format("webviewPhishingWarning.text2"), this.width / 2, 114, 16777215);
+		this.drawCenteredString(fontRenderer, TextFormatting.BOLD + I18n.format("webviewPhishingWarning.title"), this.width / 2, 70, 0xFF4444);
+		this.drawCenteredString(fontRenderer, I18n.format("webviewPhishingWarning.text0"), this.width / 2, 90, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("webviewPhishingWarning.text1"), this.width / 2, 102, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("webviewPhishingWarning.text2"), this.width / 2, 114, 16777215);
 		
 		String dontShowAgain = I18n.format("webviewPhishingWarning.dontShowAgain");
-		int w = fontRendererObj.getStringWidth(dontShowAgain) + 20;
+		int w = fontRenderer.getStringWidth(dontShowAgain) + 20;
 		int ww = (this.width - w) / 2;
-		this.drawString(fontRendererObj, dontShowAgain, ww + 20, 137, 0xCCCCCC);
+		this.drawString(fontRenderer, dontShowAgain, ww + 20, 137, 0xCCCCCC);
 		
 		mouseOverCheck = ww < mx && ww + 17 > mx && 133 < my && 150 > my;
 		

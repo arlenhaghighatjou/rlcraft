@@ -146,7 +146,7 @@ public class DebugFramebufferView {
 				DrawUtils.drawStandardQuad2D();
 			})),
 			(new DebugFramebufferView("GBuffer Subsurface Scattering", (pipeline) -> {
-				if(!pipeline.config.is_rendering_subsurfaceScattering || Minecraft.getMinecraft().world.provider.getDimensionId() != 0) throw new NoDataException();
+				if(!pipeline.config.is_rendering_subsurfaceScattering || Minecraft.getMinecraft().world.provider.getDimension() != 0) throw new NoDataException();
 				pipeline.useDebugViewShader(6);
 				GlStateManager.setActiveTexture(GL_TEXTURE0);
 				GlStateManager.bindTexture(pipeline.subsurfaceScatteringTexture);

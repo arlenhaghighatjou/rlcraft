@@ -35,11 +35,11 @@ public class GuiScreenVSyncReEnabled extends GuiScreen {
 
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, I18n.format("options.vsyncReEnabled.title"), this.width / 2, 70, 11184810);
-		this.drawCenteredString(fontRendererObj, I18n.format("options.vsyncReEnabled.0"), this.width / 2, 95, 16777215);
-		this.drawCenteredString(fontRendererObj, I18n.format("options.vsyncReEnabled.1"), this.width / 2, 120, 16777215);
-		this.drawCenteredString(fontRendererObj, I18n.format("options.vsyncReEnabled.2"), this.width / 2, 145, 16777215);
-		this.drawCenteredString(fontRendererObj, I18n.format("options.vsyncReEnabled.3"), this.width / 2, 160, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("options.vsyncReEnabled.title"), this.width / 2, 70, 11184810);
+		this.drawCenteredString(fontRenderer, I18n.format("options.vsyncReEnabled.0"), this.width / 2, 95, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("options.vsyncReEnabled.1"), this.width / 2, 120, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("options.vsyncReEnabled.2"), this.width / 2, 145, 16777215);
+		this.drawCenteredString(fontRenderer, I18n.format("options.vsyncReEnabled.3"), this.width / 2, 160, 16777215);
 		super.drawScreen(par1, par2, par3);
 	}
 

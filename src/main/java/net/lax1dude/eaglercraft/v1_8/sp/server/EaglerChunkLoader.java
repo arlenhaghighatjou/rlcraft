@@ -94,7 +94,7 @@ public class EaglerChunkLoader extends AnvilChunkLoader {
 		this.writeChunkToNBT(var2, var1, chunkData);
 		NBTTagCompound fileData = new NBTTagCompound();
 		fileData.setTag("Level", chunkData);
-		VFile2 file = WorldsDB.newVFile(chunkDirectory, getChunkPath(var2.xPosition, var2.zPosition) + ".dat");
+		VFile2 file = WorldsDB.newVFile(chunkDirectory, getChunkPath(var2.x, var2.zPosition) + ".dat");
 		try(OutputStream os = file.getOutputStream()) {
 			CompressedStreamTools.writeCompressed(fileData, os);
 		}

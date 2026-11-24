@@ -135,7 +135,7 @@ public class ProfanityFilter {
 			}
 			Style styleOpt = ((TextComponentBase)componentIn).getChatStyleIfPresent();
 			if(styleOpt != null) {
-				HoverEvent hoverEvent = styleOpt.getChatHoverEvent();
+				HoverEvent hoverEvent = styleOpt.getHoverEvent();
 				if(hoverEvent != null) {
 					HoverEvent filteredHoverEvent = profanityFilterHoverEvent(hoverEvent);
 					if(filteredHoverEvent != null) {
@@ -144,7 +144,7 @@ public class ProfanityFilter {
 							flag = true;
 						}
 						Style newStyle = styleOpt.createShallowCopy();
-						newStyle.setChatHoverEvent(filteredHoverEvent);
+						newStyle.setHoverEvent(filteredHoverEvent);
 						componentIn.setStyle(newStyle);
 					}
 				}
@@ -351,7 +351,7 @@ public class ProfanityFilter {
 			return stringIn;
 		}
 		StringBuilder fixed = new StringBuilder(stringIn.substring(0, start));
-		fixed.append(stars, 0, MathHelper.clamp_int(len, 1, stars.length));
+		fixed.append(stars, 0, MathHelper.clamp(len, 1, stars.length));
 		fixed.append(stringIn, end, stringIn.length());
 		return fixed.toString();
 	}
