@@ -128,4 +128,9 @@ public class ItemEnderEye extends Item
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
         }
     }
+
+    public boolean shouldUseOnTouchEagler(ItemStack itemStack)
+    {
+        return true;
+    }
 }

@@ -3,6 +3,8 @@ package net.minecraft.client.renderer.entity;
 import com.google.common.collect.Maps;
 import java.util.Map;
 import javax.annotation.Nullable;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.profile.RenderHighPoly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.state.IBlockState;
@@ -120,7 +122,8 @@ public class RenderManager
 {
     public final Map < Class <? extends Entity > , Render <? extends Entity >> entityRenderMap = Maps. < Class <? extends Entity > , Render <? extends Entity >> newHashMap();
     private final Map<String, RenderPlayer> skinMap = Maps.<String, RenderPlayer>newHashMap();
-    private final RenderPlayer playerRenderer;
+    private RenderPlayer playerRenderer;
+    private RenderPlayer eaglerRenderer;
     private FontRenderer textRenderer;
     private double renderPosX;
     private double renderPosY;
@@ -227,7 +230,24 @@ public class RenderManager
         this.playerRenderer = new RenderPlayer(this);
         this.skinMap.put("default", this.playerRenderer);
         this.skinMap.put("slim", new RenderPlayer(this, true));
+        this.skinMap.put("zombie", new RenderPlayer(this, false, true));
+
+        if (EagRuntime.getConfiguration().isAllowFNAWSkins())
+        {
+            this.eaglerRenderer = new RenderHighPoly(this, this.playerRenderer.getMainModel(), this.playerRenderer.shadowSize);
+        }
+        else
+        {
+            this.eaglerRenderer = this.playerRenderer;
+        }
+
+        this.skinMap.put("eagler", Minecraft.getMinecraft().gameSettings.enableFNAWSkins ? this.eaglerRenderer : this.playerRenderer);
         net.minecraftforge.fml.client.registry.RenderingRegistry.loadEntityRenderers(this, this.entityRenderMap);
+    }
+
+    public void setEnableFNAWSkins(boolean en)
+    {
+        this.skinMap.put("eagler", en ? this.eaglerRenderer : this.playerRenderer);
     }
 
     public Map<String, RenderPlayer> getSkinMap() {

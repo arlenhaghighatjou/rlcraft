@@ -3,6 +3,8 @@ package net.minecraft.client.renderer.entity;
 import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelZombie;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelPlayer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerArrow;
@@ -30,16 +32,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderPlayer extends RenderLivingBase<AbstractClientPlayer>
 {
     private final boolean smallArms;
+    private final boolean zombieModel;
 
     public RenderPlayer(RenderManager renderManager)
     {
-        this(renderManager, false);
+        this(renderManager, false, false);
     }
 
     public RenderPlayer(RenderManager renderManager, boolean useSmallArms)
     {
-        super(renderManager, new ModelPlayer(0.0F, useSmallArms), 0.5F);
+        this(renderManager, useSmallArms, false);
+    }
+
+    public RenderPlayer(RenderManager renderManager, boolean useSmallArms, boolean zombieModel)
+    {
+        super(renderManager, zombieModel ? new ModelZombie(0.0F, true) : new ModelPlayer(0.0F, useSmallArms), 0.5F);
         this.smallArms = useSmallArms;
+        this.zombieModel = zombieModel;
         this.addLayer(new LayerBipedArmor(this));
         this.addLayer(new LayerHeldItem(this));
         this.addLayer(new LayerArrow(this));
@@ -50,9 +59,16 @@ public class RenderPlayer extends RenderLivingBase<AbstractClientPlayer>
         this.addLayer(new LayerEntityOnShoulder(renderManager));
     }
 
-    public ModelPlayer getMainModel()
+    protected RenderPlayer(RenderManager renderManager, ModelBase modelBase, float size)
     {
-        return (ModelPlayer)super.getMainModel();
+        super(renderManager, modelBase, size);
+        this.smallArms = false;
+        this.zombieModel = false;
+    }
+
+    public ModelBiped getMainModel()
+    {
+        return (ModelBiped)super.getMainModel();
     }
 
     public void doRender(AbstractClientPlayer entity, double x, double y, double z, float entityYaw, float partialTicks)
@@ -78,7 +94,7 @@ public class RenderPlayer extends RenderLivingBase<AbstractClientPlayer>
 
     private void setModelVisibilities(AbstractClientPlayer clientPlayer)
     {
-        ModelPlayer modelplayer = this.getMainModel();
+        ModelBiped modelplayer = this.getMainModel();
 
         if (clientPlayer.isSpectator())
         {
@@ -92,11 +108,16 @@ public class RenderPlayer extends RenderLivingBase<AbstractClientPlayer>
             ItemStack itemstack1 = clientPlayer.getHeldItemOffhand();
             modelplayer.setVisible(true);
             modelplayer.bipedHeadwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.HAT);
-            modelplayer.bipedBodyWear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.JACKET);
-            modelplayer.bipedLeftLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_PANTS_LEG);
-            modelplayer.bipedRightLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_PANTS_LEG);
-            modelplayer.bipedLeftArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_SLEEVE);
-            modelplayer.bipedRightArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_SLEEVE);
+
+            if (!this.zombieModel)
+            {
+                ModelPlayer playermodel = (ModelPlayer)modelplayer;
+                playermodel.bipedBodyWear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.JACKET);
+                playermodel.bipedLeftLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_PANTS_LEG);
+                playermodel.bipedRightLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_PANTS_LEG);
+                playermodel.bipedLeftArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_SLEEVE);
+                playermodel.bipedRightArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_SLEEVE);
+            }
             modelplayer.isSneak = clientPlayer.isSneaking();
             ModelBiped.ArmPose modelbiped$armpose = ModelBiped.ArmPose.EMPTY;
             ModelBiped.ArmPose modelbiped$armpose1 = ModelBiped.ArmPose.EMPTY;
@@ -189,10 +210,15 @@ public class RenderPlayer extends RenderLivingBase<AbstractClientPlayer>
 
     public void renderRightArm(AbstractClientPlayer clientPlayer)
     {
+        if (this.zombieModel)
+        {
+            return;
+        }
+
         float f = 1.0F;
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         float f1 = 0.0625F;
-        ModelPlayer modelplayer = this.getMainModel();
+        ModelPlayer modelplayer = (ModelPlayer)this.getMainModel();
         this.setModelVisibilities(clientPlayer);
         GlStateManager.enableBlend();
         modelplayer.swingProgress = 0.0F;
@@ -207,10 +233,15 @@ public class RenderPlayer extends RenderLivingBase<AbstractClientPlayer>
 
     public void renderLeftArm(AbstractClientPlayer clientPlayer)
     {
+        if (this.zombieModel)
+        {
+            return;
+        }
+
         float f = 1.0F;
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         float f1 = 0.0625F;
-        ModelPlayer modelplayer = this.getMainModel();
+        ModelPlayer modelplayer = (ModelPlayer)this.getMainModel();
         this.setModelVisibilities(clientPlayer);
         GlStateManager.enableBlend();
         modelplayer.isSneak = false;

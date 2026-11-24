@@ -2,6 +2,7 @@ package net.minecraft.client.entity;
 
 import java.util.List;
 import javax.annotation.Nullable;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftVersion;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ElytraSound;
@@ -122,6 +123,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     public EntityPlayerSP(Minecraft p_i47378_1_, World p_i47378_2_, NetHandlerPlayClient p_i47378_3_, StatisticsManager p_i47378_4_, RecipeBook p_i47378_5_)
     {
         super(p_i47378_2_, p_i47378_3_.getGameProfile());
+        this.clientBrandUUIDCache = EaglercraftVersion.clientBrandUUID;
         this.connection = p_i47378_3_;
         this.statWriter = p_i47378_4_;
         this.recipeBook = p_i47378_5_;
@@ -300,7 +302,14 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
     public void sendChatMessage(String message)
     {
-        this.connection.sendPacket(new CPacketChatMessage(message));
+        if (this.connection.isClientInEaglerSingleplayerOrLAN() && message.startsWith("/eagskull"))
+        {
+            this.mc.eagskullCommand.openFileChooser();
+        }
+        else
+        {
+            this.connection.sendPacket(new CPacketChatMessage(message));
+        }
     }
 
     public void swingArm(EnumHand hand)

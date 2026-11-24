@@ -1,23 +1,25 @@
 package net.minecraft.client.entity;
 
 import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
+import net.lax1dude.eaglercraft.v1_8.profanity_filter.ProfanityFilter;
+import net.lax1dude.eaglercraft.v1_8.profile.SkinModel;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.client.renderer.ImageBufferDownload;
-import net.minecraft.client.renderer.ThreadDownloadImageData;
-import net.minecraft.client.renderer.texture.ITextureObject;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StringUtils;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.world.GameType;
 import net.minecraft.world.World;
+import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,6 +30,15 @@ public abstract class AbstractClientPlayer extends EntityPlayer
     public float rotateElytraX;
     public float rotateElytraY;
     public float rotateElytraZ;
+    public long eaglerHighPolyAnimationTick = EagRuntime.steadyTimeMillis();
+    public float eaglerHighPolyAnimationFloat1 = 0.0f;
+    public float eaglerHighPolyAnimationFloat2 = 0.0f;
+    public float eaglerHighPolyAnimationFloat3 = 0.0f;
+    public float eaglerHighPolyAnimationFloat4 = 0.0f;
+    public float eaglerHighPolyAnimationFloat5 = 0.0f;
+    public float eaglerHighPolyAnimationFloat6 = 0.0f;
+    public EaglercraftUUID clientBrandUUIDCache = null;
+    private String nameProfanityFilter = null;
 
     public AbstractClientPlayer(World worldIn, GameProfile playerProfile)
     {
@@ -93,29 +104,42 @@ public abstract class AbstractClientPlayer extends EntityPlayer
         return networkplayerinfo == null ? null : networkplayerinfo.getLocationElytra();
     }
 
-    public static ThreadDownloadImageData getDownloadImageSkin(ResourceLocation resourceLocationIn, String username)
-    {
-        TextureManager texturemanager = Minecraft.getMinecraft().getTextureManager();
-        ITextureObject itextureobject = texturemanager.getTexture(resourceLocationIn);
-
-        if (itextureobject == null)
-        {
-            itextureobject = new ThreadDownloadImageData((File)null, String.format("http://skins.minecraft.net/MinecraftSkins/%s.png", StringUtils.stripControlCodes(username)), DefaultPlayerSkin.getDefaultSkin(getOfflineUUID(username)), new ImageBufferDownload());
-            texturemanager.loadTexture(resourceLocationIn, itextureobject);
-        }
-
-        return (ThreadDownloadImageData)itextureobject;
-    }
-
-    public static ResourceLocation getLocationSkin(String username)
-    {
-        return new ResourceLocation("skins/" + StringUtils.stripControlCodes(username));
-    }
-
     public String getSkinType()
     {
         NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
         return networkplayerinfo == null ? DefaultPlayerSkin.getSkinType(this.getUniqueID()) : networkplayerinfo.getSkinType();
+    }
+
+    public SkinModel getEaglerSkinModel()
+    {
+        NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
+        return networkplayerinfo == null ? SkinModel.STEVE : networkplayerinfo.getEaglerSkinModel();
+    }
+
+    public String getNameProfanityFilter()
+    {
+        if (Minecraft.getMinecraft().isEnableProfanityFilter())
+        {
+            if (this.nameProfanityFilter == null)
+            {
+                this.nameProfanityFilter = ProfanityFilter.getInstance().profanityFilterString(this.getGameProfile().getName());
+            }
+
+            return this.nameProfanityFilter;
+        }
+        else
+        {
+            return this.getGameProfile().getName();
+        }
+    }
+
+    public ITextComponent getDisplayNameProfanityFilter()
+    {
+        TextComponentString textcomponentstring = new TextComponentString(ScorePlayerTeam.formatPlayerName(this.getTeam(), this.getNameProfanityFilter()));
+        textcomponentstring.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + this.getName() + " "));
+        textcomponentstring.getStyle().setHoverEvent(this.getHoverEvent());
+        textcomponentstring.getStyle().setInsertion(this.getName());
+        return textcomponentstring;
     }
 
     public float getFovModifier()

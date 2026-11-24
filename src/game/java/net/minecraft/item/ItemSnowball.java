@@ -40,4 +40,9 @@ public class ItemSnowball extends Item
         playerIn.addStat(StatList.getObjectUseStats(this));
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
     }
+
+    public boolean shouldUseOnTouchEagler(ItemStack itemStack)
+    {
+        return true;
+    }
 }

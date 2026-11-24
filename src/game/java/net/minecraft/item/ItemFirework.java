@@ -97,4 +97,9 @@ public class ItemFirework extends Item
             }
         }
     }
+
+    public boolean shouldUseOnTouchEagler(ItemStack itemStack)
+    {
+        return true;
+    }
 }

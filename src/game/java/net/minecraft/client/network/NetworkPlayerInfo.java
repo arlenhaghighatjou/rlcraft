@@ -1,15 +1,10 @@
 package net.minecraft.client.network;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.collect.Maps;
 import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
-import java.util.Map;
+import net.lax1dude.eaglercraft.v1_8.profanity_filter.ProfanityFilter;
+import net.lax1dude.eaglercraft.v1_8.profile.SkinModel;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.DefaultPlayerSkin;
-import net.minecraft.client.resources.SkinManager;
 import net.minecraft.network.play.server.SPacketPlayerListItem;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.util.ResourceLocation;
@@ -22,12 +17,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class NetworkPlayerInfo
 {
     private final GameProfile gameProfile;
-    Map<Type, ResourceLocation> playerTextures = Maps.newEnumMap(Type.class);
+    private String gameProfileProfanityFilter;
     private GameType gameType;
     private int responseTime;
-    private boolean playerTexturesLoaded;
-    private String skinType;
     private ITextComponent displayName;
+    private ITextComponent displayNameProfanityFilter;
     private int lastHealth;
     private int displayHealth;
     private long lastHealthTime;
@@ -45,6 +39,7 @@ public class NetworkPlayerInfo
         this.gameType = entry.getGameMode();
         this.responseTime = entry.getPing();
         this.displayName = entry.getDisplayName();
+        this.displayNameProfanityFilter = null;
     }
 
     public GameProfile getGameProfile()
@@ -74,32 +69,34 @@ public class NetworkPlayerInfo
 
     public boolean hasLocationSkin()
     {
-        return this.getLocationSkin() != null;
+        return true;
     }
 
     public String getSkinType()
     {
-        return this.skinType == null ? DefaultPlayerSkin.getSkinType(this.gameProfile.getId()) : this.skinType;
+        return this.getEaglerSkinModel().profileSkinType;
+    }
+
+    public SkinModel getEaglerSkinModel()
+    {
+        return Minecraft.getMinecraft().getConnection().getTextureCache().getPlayerSkin(this.gameProfile).getModel();
     }
 
     public ResourceLocation getLocationSkin()
     {
-        this.loadPlayerTextures();
-        return (ResourceLocation)MoreObjects.firstNonNull(this.playerTextures.get(Type.SKIN), DefaultPlayerSkin.getDefaultSkin(this.gameProfile.getId()));
+        return Minecraft.getMinecraft().getConnection().getTextureCache().getPlayerSkin(this.gameProfile).getLocation();
     }
 
     @Nullable
     public ResourceLocation getLocationCape()
     {
-        this.loadPlayerTextures();
-        return this.playerTextures.get(Type.CAPE);
+        return Minecraft.getMinecraft().getConnection().getTextureCache().getPlayerCape(this.gameProfile);
     }
 
     @Nullable
     public ResourceLocation getLocationElytra()
     {
-        this.loadPlayerTextures();
-        return this.playerTextures.get(Type.ELYTRA);
+        return this.getLocationCape();
     }
 
     @Nullable
@@ -108,50 +105,58 @@ public class NetworkPlayerInfo
         return Minecraft.getMinecraft().world.getScoreboard().getPlayersTeam(this.getGameProfile().getName());
     }
 
-    protected void loadPlayerTextures()
-    {
-        synchronized (this)
-        {
-            if (!this.playerTexturesLoaded)
-            {
-                this.playerTexturesLoaded = true;
-                Minecraft.getMinecraft().getSkinManager().loadProfileTextures(this.gameProfile, new SkinManager.SkinAvailableCallback()
-                {
-                    public void skinAvailable(Type typeIn, ResourceLocation location, MinecraftProfileTexture profileTexture)
-                    {
-                        switch (typeIn)
-                        {
-                            case SKIN:
-                                NetworkPlayerInfo.this.playerTextures.put(Type.SKIN, location);
-                                NetworkPlayerInfo.this.skinType = profileTexture.getMetadata("model");
-
-                                if (NetworkPlayerInfo.this.skinType == null)
-                                {
-                                    NetworkPlayerInfo.this.skinType = "default";
-                                }
-
-                                break;
-                            case CAPE:
-                                NetworkPlayerInfo.this.playerTextures.put(Type.CAPE, location);
-                                break;
-                            case ELYTRA:
-                                NetworkPlayerInfo.this.playerTextures.put(Type.ELYTRA, location);
-                        }
-                    }
-                }, true);
-            }
-        }
-    }
-
     public void setDisplayName(@Nullable ITextComponent displayNameIn)
     {
         this.displayName = displayNameIn;
+        this.displayNameProfanityFilter = null;
     }
 
     @Nullable
     public ITextComponent getDisplayName()
     {
         return this.displayName;
+    }
+
+    @Nullable
+    public ITextComponent getDisplayNameProfanityFilter()
+    {
+        if (Minecraft.getMinecraft().isEnableProfanityFilter())
+        {
+            if (this.displayName != null)
+            {
+                if (this.displayNameProfanityFilter == null)
+                {
+                    this.displayNameProfanityFilter = ProfanityFilter.getInstance().profanityFilterChatComponent(this.displayName);
+                }
+
+                return this.displayNameProfanityFilter;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else
+        {
+            return this.displayName;
+        }
+    }
+
+    public String getGameProfileNameProfanityFilter()
+    {
+        if (Minecraft.getMinecraft().isEnableProfanityFilter())
+        {
+            if (this.gameProfileProfanityFilter == null)
+            {
+                this.gameProfileProfanityFilter = ProfanityFilter.getInstance().profanityFilterString(this.gameProfile.getName());
+            }
+
+            return this.gameProfileProfanityFilter;
+        }
+        else
+        {
+            return this.gameProfile.getName();
+        }
     }
 
     public int getLastHealth()

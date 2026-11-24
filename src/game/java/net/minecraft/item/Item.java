@@ -1857,4 +1857,14 @@ public class Item extends net.minecraftforge.registries.IForgeRegistryEntry.Impl
             return repairMaterial;
         }
     }
+
+    public float getHeldItemBrightnessEagler(ItemStack itemStack)
+    {
+        return 0.0f;
+    }
+
+    public boolean shouldUseOnTouchEagler(ItemStack itemStack)
+    {
+        return this.getItemUseAction(itemStack) != EnumAction.NONE;
+    }
 }

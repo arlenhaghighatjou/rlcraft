@@ -2265,6 +2265,12 @@ public abstract class EntityPlayer extends EntityLivingBase
         }
     }
 
+    public boolean getItemShouldUseOnTouchEagler()
+    {
+        ItemStack st = this.isHandActive() ? this.getActiveItemStack() : this.getHeldItemMainhand();
+        return !st.isEmpty() && st.getItem().shouldUseOnTouchEagler(st);
+    }
+
     public abstract boolean isSpectator();
 
     public abstract boolean isCreative();
