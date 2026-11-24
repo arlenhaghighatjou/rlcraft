@@ -48,11 +48,6 @@ public class FunctionManager implements ITickable
         }
     };
 
-    public FunctionManager(@Nullable File functionDirIn, MinecraftServer serverIn)
-    {
-        this(functionDirIn == null ? null : new WorldTextFile(functionDirIn), serverIn);
-    }
-
     public FunctionManager(WorldTextFile functionDirIn, MinecraftServer serverIn)
     {
         this.functionDir = functionDirIn;
@@ -166,23 +161,19 @@ public class FunctionManager implements ITickable
 		if (this.functionDir == null) {
 			return;
 		}
-		try {
-			for (String path : this.functionDir.list(".mcfunction")) {
-				int namespace = path.indexOf('/');
-				if (namespace <= 0) {
-					continue;
-				}
-				try {
-					ResourceLocation id = new ResourceLocation(path.substring(0, namespace),
-							path.substring(namespace + 1, path.length() - ".mcfunction".length()));
-					List<String> commands = java.util.Arrays.asList(this.functionDir.resolve(path).read().split("\r\n|\n|\r"));
-					this.functions.put(id, FunctionObject.create(this, commands));
-				} catch (IllegalArgumentException | IOException ex) {
-					LOGGER.error("Couldn't read custom function " + path, ex);
-				}
+		for (String path : this.functionDir.list(".mcfunction")) {
+			int namespace = path.indexOf('/');
+			if (namespace <= 0) {
+				continue;
 			}
-		} catch (IOException ex) {
-			LOGGER.error("Couldn't list custom functions", ex);
+			try {
+				ResourceLocation id = new ResourceLocation(path.substring(0, namespace),
+						path.substring(namespace + 1, path.length() - ".mcfunction".length()));
+				List<String> commands = java.util.Arrays.asList(this.functionDir.resolve(path).read().split("\r\n|\n|\r"));
+				this.functions.put(id, FunctionObject.create(this, commands));
+			} catch (IllegalArgumentException | IOException ex) {
+				LOGGER.error("Couldn't read custom function " + path, ex);
+			}
 		}
 		if (!this.functions.isEmpty()) {
 			LOGGER.info("Loaded " + this.functions.size() + " custom command functions");

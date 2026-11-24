@@ -512,7 +512,7 @@ public class Bootstrap
 
             if (LOGGER.isDebugEnabled())
             {
-                if ((new AdvancementManager((File)null)).hasErrored())
+                if ((new AdvancementManager(null)).hasErrored())
                 {
                     hasErrored = true;
                     LOGGER.error("Errors with built-in advancements!");

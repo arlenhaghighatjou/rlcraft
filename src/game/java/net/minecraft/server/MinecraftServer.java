@@ -21,8 +21,9 @@ import java.util.List;
 import java.util.Queue;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
+import net.lax1dude.eaglercraft.v1_8.futures.Executors;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import net.minecraft.advancements.AdvancementManager;
@@ -75,7 +76,7 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 public abstract class MinecraftServer implements ICommandSender, IThreadListener
 {
     private static final Logger LOGGER = LogManager.getLogger();
-    public static final File USER_CACHE_FILE = new File("usercache.json");
+    public static final VFile2 USER_CACHE_FILE = new VFile2("usercache.json");
     private final ISaveFormat anvilConverterForAnvilFile;
     private final List<ITickable> tickables = Lists.<ITickable>newArrayList();
     public final ICommandManager commandManager;
@@ -545,7 +546,6 @@ public abstract class MinecraftServer implements ICommandSender, IThreadListener
         }
 
         this.profiler.endStartSection("levels");
-        net.minecraftforge.common.chunkio.ChunkIOExecutor.tick();
 
         Integer[] ids = net.minecraftforge.common.DimensionManager.getIDs(this.tickCounter % 200 == 0);
         for (int x = 0; x < ids.length; x++)

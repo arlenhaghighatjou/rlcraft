@@ -1,6 +1,7 @@
 package net.minecraft.server.management;
 
 import com.arlenh7.eaglercraft.forge.WorldTextFile;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerSaveHandler;
 import net.lax1dude.eaglercraft.v1_8.sp.server.WorldsDB;
 import net.minecraft.world.storage.ISaveHandler;
@@ -73,10 +74,10 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public abstract class PlayerList
 {
-    public static final File FILE_PLAYERBANS = new File("banned-players.json");
-    public static final File FILE_IPBANS = new File("banned-ips.json");
-    public static final File FILE_OPS = new File("ops.json");
-    public static final File FILE_WHITELIST = new File("whitelist.json");
+    public static final VFile2 FILE_PLAYERBANS = new VFile2("banned-players.json");
+    public static final VFile2 FILE_IPBANS = new VFile2("banned-ips.json");
+    public static final VFile2 FILE_OPS = new VFile2("ops.json");
+    public static final VFile2 FILE_WHITELIST = new VFile2("whitelist.json");
     private static final Logger LOGGER = LogManager.getLogger();
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
     private final MinecraftServer mcServer;
@@ -377,7 +378,6 @@ public abstract class PlayerList
             playerIn.connection.sendPacket(new SPacketPlayerListItem(SPacketPlayerListItem.Action.ADD_PLAYER, new EntityPlayerMP[] {this.playerEntityList.get(i)}));
         }
 
-        net.minecraftforge.common.chunkio.ChunkIOExecutor.adjustPoolSize(this.getCurrentPlayerCount());
         worldserver.spawnEntity(playerIn);
         this.preparePlayer(playerIn, (WorldServer)null);
     }
@@ -412,7 +412,6 @@ public abstract class PlayerList
                 worldserver.getChunkFromChunkCoords(playerIn.chunkCoordX, playerIn.chunkCoordZ).markDirty();
             }
         }
-        net.minecraftforge.common.chunkio.ChunkIOExecutor.adjustPoolSize(this.getCurrentPlayerCount());
 
         worldserver.removeEntity(playerIn);
         worldserver.getPlayerChunkMap().removePlayer(playerIn);
@@ -1136,12 +1135,8 @@ public abstract class PlayerList
 
 	private WorldTextFile playerTextFile(String directory, String name)
 	{
-		ISaveHandler save = this.mcServer.getWorld(0).getSaveHandler();
-		if (save instanceof EaglerSaveHandler)
-		{
-			return new WorldTextFile(WorldsDB.newVFile(((EaglerSaveHandler)save).getWorldPath(), directory, name));
-		}
-		return new WorldTextFile(new File(new File(save.getWorldDirectory(), directory), name));
+		EaglerSaveHandler save = (EaglerSaveHandler)this.mcServer.getWorld(0).getSaveHandler();
+		return new WorldTextFile(WorldsDB.newVFile(save.getWorldPath(), directory, name));
 	}
 
     public void setViewDistance(int distance)

@@ -25,11 +25,6 @@ public class LootTableManager
     private final EaglerLoadingCache<ResourceLocation, LootTable> registeredLootTables = CacheBuilder.newBuilder().<ResourceLocation, LootTable>build(new LootTableManager.Loader());
     private final WorldTextFile baseFolder;
 
-    public LootTableManager(@Nullable File folder)
-    {
-        this(folder == null ? null : new WorldTextFile(folder));
-    }
-
     public LootTableManager(WorldTextFile folder)
     {
         this.baseFolder = folder;

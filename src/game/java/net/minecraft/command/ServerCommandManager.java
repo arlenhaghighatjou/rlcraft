@@ -1,6 +1,5 @@
 package net.minecraft.command;
 
-import com.arlenh7.eaglercraft.forge.CommandDebug;
 
 import net.minecraft.command.server.CommandBanIp;
 import net.minecraft.command.server.CommandBanPlayer;
@@ -60,7 +59,6 @@ public class ServerCommandManager extends CommandHandler implements ICommandList
         this.registerCommand(new CommandEmote());
         this.registerCommand(new CommandShowSeed());
         this.registerCommand(new CommandHelp());
-        this.registerCommand(new CommandDebug());
         this.registerCommand(new CommandMessage());
         this.registerCommand(new CommandBroadcast());
         this.registerCommand(new CommandSetSpawnpoint());

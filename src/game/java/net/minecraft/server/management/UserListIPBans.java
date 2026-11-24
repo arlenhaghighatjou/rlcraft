@@ -1,13 +1,13 @@
 package net.minecraft.server.management;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.net.SocketAddress;
 
 import com.google.gson.JsonObject;
 
 public class UserListIPBans extends UserList<String, UserListIPBansEntry>
 {
-	public UserListIPBans(File file) { super(file); }
+	public UserListIPBans(VFile2 file) { super(file); }
 	protected UserListEntry<String> createEntry(JsonObject json) { return new UserListIPBansEntry(json); }
 	public boolean isBanned(SocketAddress address) { return hasEntry(addressToString(address.toString())); }
 	public boolean isBanned(String address) { return hasEntry(addressToString(address)); }

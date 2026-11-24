@@ -31,11 +31,6 @@ public class StatisticsManagerServer extends StatisticsManager
     private final Set<StatBase> dirty = Sets.<StatBase>newHashSet();
     private int lastStatRequest = -300;
 
-    public StatisticsManagerServer(MinecraftServer serverIn, File statsFileIn)
-	{
-		this(serverIn, new WorldTextFile(statsFileIn), null);
-	}
-
 	public StatisticsManagerServer(MinecraftServer serverIn, WorldTextFile statsFileIn, WorldTextFile legacyStatsFile)
     {
         this.mcServer = serverIn;
@@ -67,14 +62,7 @@ public class StatisticsManagerServer extends StatisticsManager
 
     public void saveStatFile()
     {
-        try
-        {
-            this.statsFile.write(dumpJson(this.statsData));
-        }
-        catch (IOException ioexception)
-        {
-            LOGGER.error("Couldn't save stats", (Throwable)ioexception);
-        }
+        this.statsFile.write(dumpJson(this.statsData));
     }
 
     public void unlockAchievement(EntityPlayer playerIn, StatBase statIn, int p_150873_3_)

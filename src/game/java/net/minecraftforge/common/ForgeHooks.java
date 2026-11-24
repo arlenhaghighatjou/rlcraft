@@ -23,7 +23,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -42,6 +41,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.block.Block;
@@ -1319,18 +1319,12 @@ public class ForgeHooks
         CraftingHelper.init();
         boolean errored = false;
         setActiveModContainer(null);
-        Loader.instance().getActiveModList().forEach(ForgeHooks::loadFactories);
         for (ModContainer mod : Loader.instance().getActiveModList())
         {
             errored |= !loadAdvancements(map, mod);
         }
         setActiveModContainer(null);
         return errored;
-    }
-
-    private static void loadFactories(ModContainer mod)
-    {
-        CraftingHelper.loadFactories(mod, "assets/" + mod.getModId() + "/advancements", CraftingHelper.CONDITIONS);
     }
 
     @Nullable
@@ -1353,53 +1347,32 @@ public class ForgeHooks
 
     private static boolean loadAdvancements(Map<ResourceLocation, Advancement.Builder> map, ModContainer mod)
     {
+        if ("minecraft".equals(mod.getModId())) return true;
+        String directory = "/assets/" + mod.getModId() + "/advancements/";
+        String index = EagRuntime.getResourceString(directory + "_files.txt");
+        if (index == null) return true;
         JsonContext ctx = new JsonContext(mod.getModId());
-
-        return CraftingHelper.findFiles(mod, "assets/" + mod.getModId() + "/advancements", null,
-            (root, file) ->
+        boolean success = true;
+        for (String file : index.split("\n"))
+        {
+            file = file.trim();
+            if (!file.endsWith(".json") || file.startsWith("_")) continue;
+            ResourceLocation key = new ResourceLocation(mod.getModId(), file.substring(0, file.length() - 5));
+            if (map.containsKey(key)) continue;
+            try
             {
-
-                String relative = root.relativize(file).toString();
-                if (!"json".equals(FilenameUtils.getExtension(file.toString())) || relative.startsWith("_"))
-                    return true;
-
-                String name = FilenameUtils.removeExtension(relative).replaceAll("\\\\", "/");
-                ResourceLocation key = new ResourceLocation(mod.getModId(), name);
-
-                if (!map.containsKey(key))
-                {
-                    BufferedReader reader = null;
-
-                    try
-                    {
-                        reader = Files.newBufferedReader(file);
-                        String contents = Files.readString(file, java.nio.charset.StandardCharsets.UTF_8);
-                        JsonObject json = JsonUtils.gsonDeserialize(CraftingHelper.GSON, contents, JsonObject.class);
-                        if (!CraftingHelper.processConditions(json, "conditions", ctx))
-                            return true;
-                        Advancement.Builder builder = JsonUtils.gsonDeserialize(AdvancementManager.GSON, contents, Advancement.Builder.class);
-                        map.put(key, builder);
-                    }
-                    catch (JsonParseException jsonparseexception)
-                    {
-                        FMLLog.log.error("Parsing error loading built-in advancement " + key, (Throwable)jsonparseexception);
-                        return false;
-                    }
-                    catch (IOException ioexception)
-                    {
-                        FMLLog.log.error("Couldn't read advancement " + key + " from " + file, (Throwable)ioexception);
-                        return false;
-                    }
-                    finally
-                    {
-                        IOUtils.closeQuietly(reader);
-                    }
-                }
-
-                return true;
-            },
-            true, true
-        );
+                String contents = EagRuntime.getRequiredResourceString(directory + file);
+                JsonObject json = JsonUtils.gsonDeserialize(CraftingHelper.GSON, contents, JsonObject.class);
+                if (!CraftingHelper.processConditions(json, "conditions", ctx)) continue;
+                map.put(key, JsonUtils.gsonDeserialize(AdvancementManager.GSON, contents, Advancement.Builder.class));
+            }
+            catch (JsonParseException jsonparseexception)
+            {
+                FMLLog.log.error("Parsing error loading built-in advancement " + key, (Throwable)jsonparseexception);
+                success = false;
+            }
+        }
+        return success;
     }
 
     public static void sendRecipeBook(NetHandlerPlayServer connection, State state, List<IRecipe> recipes, List<IRecipe> display, boolean isGuiOpen, boolean isFilteringCraftable)

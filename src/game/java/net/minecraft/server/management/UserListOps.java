@@ -1,6 +1,6 @@
 package net.minecraft.server.management;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 
 import com.google.gson.JsonObject;
 
@@ -8,7 +8,7 @@ import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 
 public class UserListOps extends UserList<GameProfile, UserListOpsEntry>
 {
-	public UserListOps(File file) { super(file); }
+	public UserListOps(VFile2 file) { super(file); }
 	protected UserListEntry<GameProfile> createEntry(JsonObject json) { return new UserListOpsEntry(json); }
 	protected String getObjectKey(GameProfile profile) { return profile.getId().toString(); }
 	public int getPermissionLevel(GameProfile profile) { UserListOpsEntry entry = getEntry(profile); return entry == null ? 0 : entry.getPermissionLevel(); }

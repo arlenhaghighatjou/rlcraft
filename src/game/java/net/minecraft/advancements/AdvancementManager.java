@@ -39,11 +39,6 @@ public class AdvancementManager
     private final WorldTextFile advancementsDir;
     private boolean hasErrored;
 
-    public AdvancementManager(@Nullable File advancementsDirIn)
-    {
-        this(advancementsDirIn == null ? null : new WorldTextFile(advancementsDirIn));
-    }
-
     public AdvancementManager(WorldTextFile advancementsDirIn)
     {
         this.advancementsDir = advancementsDirIn;
@@ -78,31 +73,26 @@ public class AdvancementManager
 		if (this.advancementsDir == null) {
 			return advancements;
 		}
-		try {
-			for (String path : this.advancementsDir.list(".json")) {
-				int namespace = path.indexOf('/');
-				if (namespace <= 0) {
-					continue;
-				}
-				try {
-					ResourceLocation id = new ResourceLocation(path.substring(0, namespace),
-							path.substring(namespace + 1, path.length() - 5));
-					Advancement.Builder advancement = JsonUtils.gsonDeserialize(GSON,
-							this.advancementsDir.resolve(path).read(), Advancement.Builder.class);
-					if (advancement == null) {
-						LOGGER.error("Empty custom advancement " + path);
-						this.hasErrored = true;
-					} else {
-						advancements.put(id, advancement);
-					}
-				} catch (IllegalArgumentException | JsonParseException | IOException ex) {
-					LOGGER.error("Could not load custom advancement " + path, ex);
-					this.hasErrored = true;
-				}
+		for (String path : this.advancementsDir.list(".json")) {
+			int namespace = path.indexOf('/');
+			if (namespace <= 0) {
+				continue;
 			}
-		} catch (IOException ex) {
-			LOGGER.error("Could not list custom advancements", ex);
-			this.hasErrored = true;
+			try {
+				ResourceLocation id = new ResourceLocation(path.substring(0, namespace),
+						path.substring(namespace + 1, path.length() - 5));
+				Advancement.Builder advancement = JsonUtils.gsonDeserialize(GSON,
+						this.advancementsDir.resolve(path).read(), Advancement.Builder.class);
+				if (advancement == null) {
+					LOGGER.error("Empty custom advancement " + path);
+					this.hasErrored = true;
+				} else {
+					advancements.put(id, advancement);
+				}
+			} catch (IllegalArgumentException | JsonParseException | IOException ex) {
+				LOGGER.error("Could not load custom advancement " + path, ex);
+				this.hasErrored = true;
+			}
 		}
 		return advancements;
 	}

@@ -19,7 +19,6 @@
 
 package net.minecraftforge.fml.client;
 
-import java.io.File;
 import java.io.IOException;
 
 import net.minecraft.client.gui.GuiButton;
@@ -29,12 +28,13 @@ import net.minecraft.client.gui.GuiYesNoCallback;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.StartupQuery;
 import com.arlenh7.eaglercraft.forge.WorldBackup;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 
 public class GuiOldSaveLoadConfirm extends GuiYesNo implements GuiYesNoCallback {
 
     private String dirName;
     private String saveName;
-    private File zip;
+    private VFile2 zip;
     private GuiScreen parent;
     public GuiOldSaveLoadConfirm(String dirName, String saveName, GuiScreen parent)
     {
@@ -74,7 +74,7 @@ public class GuiOldSaveLoadConfirm extends GuiYesNo implements GuiYesNoCallback 
         }
         else
         {
-            FMLLog.log.info("Capturing current state of world {} into file {}", saveName, zip.getAbsolutePath());
+            FMLLog.log.info("Capturing current state of world {} into file {}", saveName, zip.getPath());
             try
             {
                 String skip = System.getProperty("fml.doNotBackup");

@@ -1,6 +1,6 @@
 package net.minecraft.server.management;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 
 import com.google.gson.JsonObject;
 
@@ -8,7 +8,7 @@ import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 
 public class UserListWhitelist extends UserList<GameProfile, UserListWhitelistEntry>
 {
-	public UserListWhitelist(File file) { super(file); }
+	public UserListWhitelist(VFile2 file) { super(file); }
 	protected UserListEntry<GameProfile> createEntry(JsonObject json) { return new UserListWhitelistEntry(json); }
 	protected String getObjectKey(GameProfile profile) { return profile.getId().toString(); }
 	public boolean isWhitelisted(GameProfile profile) { return hasEntry(profile); }

@@ -21,14 +21,9 @@ package net.minecraftforge.common;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.AtomicMoveNotSupportedException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 
 import javax.annotation.Nullable;
 
@@ -57,7 +52,7 @@ public final class UsernameCache {
 
     private static Map<EaglercraftUUID, String> map = Maps.newHashMap();
 
-    private static final Path saveFile = Path.of("usernamecache.json").toAbsolutePath();
+    private static final VFile2 saveFile = new VFile2("usernamecache.json");
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     private static final Logger log = LogManager.getLogger(ForgeVersion.MOD_ID + ".UsernameCache");
@@ -148,33 +143,12 @@ public final class UsernameCache {
      */
     protected static synchronized void save()
     {
-		JsonObject usernames = new JsonObject();
-		map.forEach((uuid, username) -> usernames.addProperty(uuid.toString(), username));
-		Path temporary = null;
-        try
+        JsonObject usernames = new JsonObject();
+        for (Map.Entry<EaglercraftUUID, String> entry : map.entrySet())
         {
-			temporary = Files.createTempFile(saveFile.getParent(), "usernamecache-", ".tmp");
-			Files.writeString(temporary, gson.toJson(usernames), StandardCharsets.UTF_8);
-			try {
-				Files.move(temporary, saveFile, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
-			} catch (AtomicMoveNotSupportedException ex) {
-				Files.move(temporary, saveFile, StandardCopyOption.REPLACE_EXISTING);
-			}
-			temporary = null;
+            usernames.addProperty(entry.getKey().toString(), entry.getValue());
         }
-        catch (IOException e)
-        {
-            log.error("Failed to save username cache to file!", e);
-        }
-		finally {
-			if (temporary != null) {
-				try {
-					Files.deleteIfExists(temporary);
-				} catch (IOException ex) {
-					log.warn("Failed to remove temporary username cache", ex);
-				}
-			}
-		}
+        saveFile.setAllChars(gson.toJson(usernames));
     }
 
     /**
@@ -182,30 +156,25 @@ public final class UsernameCache {
      */
     protected static synchronized void load()
     {
-        if (!Files.exists(saveFile)) return;
+        if (!saveFile.exists()) return;
 
         try
         {
-
-            String json = Files.readString(saveFile, StandardCharsets.UTF_8);
             Map<EaglercraftUUID, String> loaded = Maps.newHashMap();
-            JsonObject object = JsonParser.parseString(json).getAsJsonObject();
+            JsonObject object = JsonParser.parseString(saveFile.getAllChars()).getAsJsonObject();
             for (Map.Entry<String, JsonElement> entry : object.entrySet())
             {
-				JsonElement username = entry.getValue();
-				if (username.isJsonPrimitive() && username.getAsJsonPrimitive().isString()) {
-					loaded.put(EaglercraftUUID.fromString(entry.getKey()), username.getAsString());
-				}
+                JsonElement username = entry.getValue();
+                if (username.isJsonPrimitive() && username.getAsJsonPrimitive().isString())
+                {
+                    loaded.put(EaglercraftUUID.fromString(entry.getKey()), username.getAsString());
+                }
             }
             map = loaded;
         }
         catch (JsonParseException | IllegalArgumentException | IllegalStateException e)
         {
             log.error("Could not parse username cache file", e);
-        }
-        catch (IOException e)
-        {
-            log.error("Failed to read username cache file from disk", e);
         }
     }
 }

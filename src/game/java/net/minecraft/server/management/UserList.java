@@ -1,51 +1,32 @@
 package net.minecraft.server.management;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.JsonParser;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
-import net.minecraft.util.JsonUtils;
 
 public class UserList<K, V extends UserListEntry<K>>
 {
 	private static final Logger LOGGER = LogManager.getLogger("UserList");
-	private static final ParameterizedType ENTRY_LIST_TYPE = new ParameterizedType()
-	{
-		public Type[] getActualTypeArguments() { return new Type[] { UserListEntry.class }; }
-		public Type getRawType() { return List.class; }
-		public Type getOwnerType() { return null; }
-	};
-	protected final Gson gson;
-	private final File saveFile;
+	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+	private final VFile2 saveFile;
 	private final Map<String, V> values = new LinkedHashMap<>();
 	private boolean lanServer = true;
 
-	public UserList(File saveFile)
+	public UserList(VFile2 saveFile)
 	{
 		this.saveFile = saveFile;
-		GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
-		builder.registerTypeHierarchyAdapter(UserListEntry.class, new Serializer());
-		gson = builder.create();
 	}
 
 	public boolean isLanServer() { return lanServer; }
@@ -54,7 +35,7 @@ public class UserList<K, V extends UserListEntry<K>>
 	public void addEntry(V entry)
 	{
 		values.put(getObjectKey(entry.getValue()), entry);
-		try { writeChanges(); } catch (IOException ex) { LOGGER.warn("Could not save user list", ex); }
+		writeChanges();
 	}
 
 	public V getEntry(K value)
@@ -66,10 +47,10 @@ public class UserList<K, V extends UserListEntry<K>>
 	public void removeEntry(K value)
 	{
 		values.remove(getObjectKey(value));
-		try { writeChanges(); } catch (IOException ex) { LOGGER.warn("Could not save user list", ex); }
+		writeChanges();
 	}
 
-	public File getSaveFile() { return saveFile; }
+	public VFile2 getSaveFile() { return saveFile; }
 	public String[] getKeys() { return values.keySet().toArray(new String[values.size()]); }
 	protected String getObjectKey(K value) { return value.toString(); }
 	protected boolean hasEntry(K value) { return getEntry(value) != null; }
@@ -84,37 +65,29 @@ public class UserList<K, V extends UserListEntry<K>>
 		for (String key : expired) values.remove(key);
 	}
 
-	public void writeChanges() throws IOException
+	public void writeChanges()
 	{
-		File parent = saveFile.getParentFile();
-		if (parent != null) parent.mkdirs();
-		Files.write(gson.toJson(values.values()), saveFile, StandardCharsets.UTF_8);
-	}
-
-	@SuppressWarnings("unchecked")
-	public void readSavedFile() throws IOException
-	{
-		if (!saveFile.exists()) return;
-		Collection<UserListEntry<K>> loaded = JsonUtils.fromJson(gson, Files.toString(saveFile, StandardCharsets.UTF_8), ENTRY_LIST_TYPE, false);
-		if (loaded != null)
-		{
-			values.clear();
-			for (UserListEntry<K> entry : loaded) if (entry != null && entry.getValue() != null) values.put(getObjectKey(entry.getValue()), (V)entry);
-		}
-	}
-
-	class Serializer implements JsonDeserializer<UserListEntry<K>>, JsonSerializer<UserListEntry<K>>
-	{
-		public JsonElement serialize(UserListEntry<K> entry, Type type, JsonSerializationContext context)
+		JsonArray array = new JsonArray();
+		for (V entry : values.values())
 		{
 			JsonObject json = new JsonObject();
 			entry.onSerialization(json);
-			return json;
+			array.add(json);
 		}
+		saveFile.setAllChars(GSON.toJson(array));
+	}
 
-		public UserListEntry<K> deserialize(JsonElement element, Type type, JsonDeserializationContext context) throws JsonParseException
+	@SuppressWarnings("unchecked")
+	public void readSavedFile()
+	{
+		if (!saveFile.exists()) return;
+		JsonArray array = JsonParser.parseString(saveFile.getAllChars()).getAsJsonArray();
+		values.clear();
+		for (JsonElement element : array)
 		{
-			return element.isJsonObject() ? UserList.this.createEntry(element.getAsJsonObject()) : null;
+			if (!element.isJsonObject()) continue;
+			UserListEntry<K> entry = createEntry(element.getAsJsonObject());
+			if (entry != null && entry.getValue() != null) values.put(getObjectKey(entry.getValue()), (V)entry);
 		}
 	}
 }

@@ -1,8 +1,5 @@
 package net.minecraft.server.management;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,13 +10,13 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import com.google.common.io.Files;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -28,9 +25,9 @@ public class PlayerProfileCache
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
 	private final Map<String, ProfileEntry> byName = new LinkedHashMap<>();
 	private final Map<EaglercraftUUID, ProfileEntry> byUUID = new LinkedHashMap<>();
-	private final File cacheFile;
+	private final VFile2 cacheFile;
 
-	public PlayerProfileCache(File file)
+	public PlayerProfileCache(VFile2 file)
 	{
 		cacheFile = file;
 		load();
@@ -91,10 +88,10 @@ public class PlayerProfileCache
 
 	public void load()
 	{
-		if (!cacheFile.isFile()) return;
+		if (!cacheFile.exists()) return;
 		try
 		{
-			JsonArray array = new JsonParser().parse(Files.toString(cacheFile, StandardCharsets.UTF_8)).getAsJsonArray();
+			JsonArray array = JsonParser.parseString(cacheFile.getAllChars()).getAsJsonArray();
 			for (JsonElement element : array)
 			{
 				JsonObject json = element.getAsJsonObject();
@@ -109,7 +106,7 @@ public class PlayerProfileCache
 				}
 			}
 		}
-		catch (IOException | RuntimeException ex)
+		catch (RuntimeException ex)
 		{
 		}
 	}
@@ -125,7 +122,7 @@ public class PlayerProfileCache
 			json.addProperty("expiresOn", DATE_FORMAT.format(entry.expiration));
 			array.add(json);
 		}
-		try { Files.write(array.toString(), cacheFile, StandardCharsets.UTF_8); } catch (IOException ex) { }
+		cacheFile.setAllChars(array.toString());
 	}
 
 	private static class ProfileEntry

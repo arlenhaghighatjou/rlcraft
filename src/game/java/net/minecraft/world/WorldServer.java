@@ -152,13 +152,8 @@ public class WorldServer extends World implements IThreadListener
 
         scoreboardsavedata.setScoreboard(this.worldScoreboard);
         ((ServerScoreboard)this.worldScoreboard).addDirtyRunnable(new WorldSavedDataCallableSave(scoreboardsavedata));
-		com.arlenh7.eaglercraft.forge.WorldTextFile worldData;
-		if (this.saveHandler instanceof net.lax1dude.eaglercraft.v1_8.sp.server.EaglerSaveHandler) {
-			worldData = new com.arlenh7.eaglercraft.forge.WorldTextFile(
-					((net.lax1dude.eaglercraft.v1_8.sp.server.EaglerSaveHandler) this.saveHandler).getWorldPath()).resolve("data");
-		} else {
-			worldData = new com.arlenh7.eaglercraft.forge.WorldTextFile(new File(this.saveHandler.getWorldDirectory(), "data"));
-		}
+		com.arlenh7.eaglercraft.forge.WorldTextFile worldData = new com.arlenh7.eaglercraft.forge.WorldTextFile(
+				((net.lax1dude.eaglercraft.v1_8.sp.server.EaglerSaveHandler) this.saveHandler).getWorldPath()).resolve("data");
 		this.lootTable = new LootTableManager(worldData.resolve("loot_tables"));
 		this.advancementManager = new AdvancementManager(worldData.resolve("advancements"));
 		this.functionManager = new FunctionManager(worldData.resolve("functions"), this.mcServer);

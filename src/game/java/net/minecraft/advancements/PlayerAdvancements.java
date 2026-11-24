@@ -45,11 +45,6 @@ public class PlayerAdvancements
     private Advancement lastSelectedTab;
     private boolean isFirstPacket = true;
 
-    public PlayerAdvancements(MinecraftServer server, File p_i47422_2_, EntityPlayerMP player)
-	{
-		this(server, new WorldTextFile(p_i47422_2_), player);
-	}
-
 	public PlayerAdvancements(MinecraftServer server, WorldTextFile progressFile, EntityPlayerMP player)
     {
         this.server = server;
@@ -184,14 +179,7 @@ public class PlayerAdvancements
             }
         }
 
-        try
-        {
-			this.progressFile.write(GSON.toJson(serialized));
-        }
-        catch (IOException ioexception)
-        {
-            LOGGER.error("Couldn't save player advancements to " + this.progressFile, (Throwable)ioexception);
-        }
+        this.progressFile.write(GSON.toJson(serialized));
     }
 
     public boolean grantCriterion(Advancement p_192750_1_, String p_192750_2_)

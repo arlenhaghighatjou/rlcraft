@@ -19,7 +19,7 @@
 
 package net.minecraftforge.fml.client;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -27,8 +27,8 @@ import net.minecraft.client.resources.I18n;
 public class GuiBackupFailed extends GuiScreen
 {
     private GuiScreen parent;
-    private File zipName;
-    public GuiBackupFailed(GuiScreen parent, File zipName)
+    private VFile2 zipName;
+    public GuiBackupFailed(GuiScreen parent, VFile2 zipName)
     {
         this.parent = parent;
         this.zipName = zipName;
