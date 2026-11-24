@@ -24,7 +24,7 @@ import javax.vecmath.Vector3f;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.color.BlockColors;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
@@ -290,7 +290,7 @@ public class VertexLighterFlat extends QuadGatheringTransformer
     public void setQuadOrientation(EnumFacing orientation) {}
     public void setQuadCulled() {}
     @Override
-    public void setTexture(TextureAtlasSprite texture) {}
+    public void setTexture(EaglerTextureAtlasSprite texture) {}
     @Override
     public void setApplyDiffuseLighting(boolean diffuse)
     {

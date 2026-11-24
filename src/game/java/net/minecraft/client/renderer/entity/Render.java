@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.EntityRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.culling.ICamera;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -128,8 +128,8 @@ public abstract class Render<T extends Entity>
     {
         GlStateManager.disableLighting();
         TextureMap texturemap = Minecraft.getMinecraft().getTextureMapBlocks();
-        TextureAtlasSprite textureatlassprite = texturemap.getAtlasSprite("minecraft:blocks/fire_layer_0");
-        TextureAtlasSprite textureatlassprite1 = texturemap.getAtlasSprite("minecraft:blocks/fire_layer_1");
+        EaglerTextureAtlasSprite textureatlassprite = texturemap.getAtlasSprite("minecraft:blocks/fire_layer_0");
+        EaglerTextureAtlasSprite textureatlassprite1 = texturemap.getAtlasSprite("minecraft:blocks/fire_layer_1");
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)x, (float)y, (float)z);
         float f = entity.width * 1.4F;
@@ -149,7 +149,7 @@ public abstract class Render<T extends Entity>
 
         while (f3 > 0.0F)
         {
-            TextureAtlasSprite textureatlassprite2 = i % 2 == 0 ? textureatlassprite : textureatlassprite1;
+            EaglerTextureAtlasSprite textureatlassprite2 = i % 2 == 0 ? textureatlassprite : textureatlassprite1;
             this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
             float f6 = textureatlassprite2.getMinU();
             float f7 = textureatlassprite2.getMinV();

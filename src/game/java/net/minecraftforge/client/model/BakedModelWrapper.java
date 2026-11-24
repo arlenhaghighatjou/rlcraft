@@ -28,7 +28,7 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -72,7 +72,7 @@ public abstract class BakedModelWrapper<T extends IBakedModel> implements IBaked
     }
 
     @Override
-    public TextureAtlasSprite getParticleTexture()
+    public EaglerTextureAtlasSprite getParticleTexture()
     {
         return originalModel.getParticleTexture();
     }

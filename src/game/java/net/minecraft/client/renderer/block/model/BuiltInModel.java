@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -41,7 +41,7 @@ public class BuiltInModel implements IBakedModel
         return true;
     }
 
-    public TextureAtlasSprite getParticleTexture()
+    public EaglerTextureAtlasSprite getParticleTexture()
     {
         return null;
     }

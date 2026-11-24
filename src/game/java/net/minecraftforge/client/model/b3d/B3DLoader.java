@@ -38,7 +38,7 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
@@ -449,10 +449,10 @@ public enum B3DLoader implements ICustomModelLoader
         }
 
         @Override
-        public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+        public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
         {
-            ImmutableMap.Builder<String, TextureAtlasSprite> builder = ImmutableMap.builder();
-            TextureAtlasSprite missing = bakedTextureGetter.apply(new ResourceLocation("missingno"));
+            ImmutableMap.Builder<String, EaglerTextureAtlasSprite> builder = ImmutableMap.builder();
+            EaglerTextureAtlasSprite missing = bakedTextureGetter.apply(new ResourceLocation("missingno"));
             for(Map.Entry<String, ResourceLocation> e : textures.entrySet())
             {
                 if(e.getValue().getResourcePath().startsWith("#"))
@@ -590,12 +590,12 @@ public enum B3DLoader implements ICustomModelLoader
         private final boolean gui3d;
         private final VertexFormat format;
         private final ImmutableSet<String> meshes;
-        private final ImmutableMap<String, TextureAtlasSprite> textures;
+        private final ImmutableMap<String, EaglerTextureAtlasSprite> textures;
         private final EaglerLoadingCache<Integer, B3DState> cache;
 
         private ImmutableList<BakedQuad> quads;
 
-        public BakedWrapper(final Node<?> node, final IModelState state, final boolean smooth, final boolean gui3d, final VertexFormat format, final ImmutableSet<String> meshes, final ImmutableMap<String, TextureAtlasSprite> textures)
+        public BakedWrapper(final Node<?> node, final IModelState state, final boolean smooth, final boolean gui3d, final VertexFormat format, final ImmutableSet<String> meshes, final ImmutableMap<String, EaglerTextureAtlasSprite> textures)
         {
             this(node, state, smooth, gui3d, format, meshes, textures, CacheBuilder.newBuilder()
                 .maximumSize(128)
@@ -617,7 +617,7 @@ public enum B3DLoader implements ICustomModelLoader
                 }));
         }
 
-        public BakedWrapper(Node<?> node, IModelState state, boolean smooth, boolean gui3d, VertexFormat format, ImmutableSet<String> meshes, ImmutableMap<String, TextureAtlasSprite> textures, EaglerLoadingCache<Integer, B3DState> cache)
+        public BakedWrapper(Node<?> node, IModelState state, boolean smooth, boolean gui3d, VertexFormat format, ImmutableSet<String> meshes, ImmutableMap<String, EaglerTextureAtlasSprite> textures, EaglerLoadingCache<Integer, B3DState> cache)
         {
             this.node = node;
             this.state = state;
@@ -716,7 +716,7 @@ public enum B3DLoader implements ICustomModelLoader
                     quadBuilder.setQuadOrientation(EnumFacing.getFacingFromVector(f.getNormal().x, f.getNormal().y, f.getNormal().z));
                     List<Texture> textures = null;
                     if(f.getBrush() != null) textures = f.getBrush().getTextures();
-                    TextureAtlasSprite sprite;
+                    EaglerTextureAtlasSprite sprite;
                     if(textures == null || textures.isEmpty()) sprite = this.textures.get("missingno");
                     else if(textures.get(0) == B3DModel.Texture.White) sprite = ModelLoader.White.INSTANCE;
                     else sprite = this.textures.get(textures.get(0).getPath());
@@ -730,7 +730,7 @@ public enum B3DLoader implements ICustomModelLoader
             }
         }
 
-        private final void putVertexData(UnpackedBakedQuad.Builder builder, Vertex v, Vector3f faceNormal, TextureAtlasSprite sprite)
+        private final void putVertexData(UnpackedBakedQuad.Builder builder, Vertex v, Vector3f faceNormal, EaglerTextureAtlasSprite sprite)
         {
             // TODO handle everything not handled (texture transformations, bones, transformations, normals, e.t.c)
             for(int e = 0; e < format.getElementCount(); e++)
@@ -801,7 +801,7 @@ public enum B3DLoader implements ICustomModelLoader
         }
 
         @Override
-        public TextureAtlasSprite getParticleTexture()
+        public EaglerTextureAtlasSprite getParticleTexture()
         {
             // FIXME somehow specify particle texture in the model
             return textures.values().asList().get(0);

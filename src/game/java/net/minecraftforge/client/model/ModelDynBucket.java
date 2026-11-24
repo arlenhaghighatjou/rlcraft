@@ -33,7 +33,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.resources.IResource;
@@ -129,7 +129,7 @@ public final class ModelDynBucket implements IModel
 
     @Override
     public IBakedModel bake(IModelState state, VertexFormat format,
-                                    Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+                                    Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
     {
 
         ImmutableMap<TransformType, TRSRTransformation> transformMap = PerspectiveMapWrapper.getTransforms(state);
@@ -141,8 +141,8 @@ public final class ModelDynBucket implements IModel
         }
 
         TRSRTransformation transform = state.apply(Optional.empty()).orElse(TRSRTransformation.identity());
-        TextureAtlasSprite fluidSprite = null;
-        TextureAtlasSprite particleSprite = null;
+        EaglerTextureAtlasSprite fluidSprite = null;
+        EaglerTextureAtlasSprite particleSprite = null;
         ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 
         if(fluid != null) {
@@ -158,7 +158,7 @@ public final class ModelDynBucket implements IModel
         }
         if (liquidLocation != null && fluidSprite != null)
         {
-            TextureAtlasSprite liquid = bakedTextureGetter.apply(liquidLocation);
+            EaglerTextureAtlasSprite liquid = bakedTextureGetter.apply(liquidLocation);
             // build liquid layer (inside)
             builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, liquid, fluidSprite, NORTH_Z_FLUID, EnumFacing.NORTH, tint ? fluid.getColor() : 0xFFFFFFFF, 1));
             builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, liquid, fluidSprite, SOUTH_Z_FLUID, EnumFacing.SOUTH, tint ? fluid.getColor() : 0xFFFFFFFF, 1));
@@ -167,7 +167,7 @@ public final class ModelDynBucket implements IModel
         if (coverLocation != null)
         {
             // cover (the actual item around the other two)
-            TextureAtlasSprite cover = bakedTextureGetter.apply(coverLocation);
+            EaglerTextureAtlasSprite cover = bakedTextureGetter.apply(coverLocation);
             builder.add(ItemTextureQuadConverter.genQuad(format, transform, 0, 0, 16, 16, NORTH_Z_COVER, cover, EnumFacing.NORTH, 0xFFFFFFFF, 2));
             builder.add(ItemTextureQuadConverter.genQuad(format, transform, 0, 0, 16, 16, SOUTH_Z_COVER, cover, EnumFacing.SOUTH, 0xFFFFFFFF, 2));
             if (particleSprite == null)
@@ -310,7 +310,7 @@ public final class ModelDynBucket implements IModel
         }
     }
 
-    private static final class BucketBaseSprite extends TextureAtlasSprite
+    private static final class BucketBaseSprite extends EaglerTextureAtlasSprite
     {
         private final ResourceLocation bucket = new ResourceLocation("items/bucket_empty");
         private final ImmutableList<ResourceLocation> dependencies = ImmutableList.of(bucket);
@@ -333,9 +333,9 @@ public final class ModelDynBucket implements IModel
         }
 
         @Override
-        public boolean load(@Nonnull IResourceManager manager, @Nonnull ResourceLocation location, @Nonnull Function<ResourceLocation, TextureAtlasSprite> textureGetter)
+        public boolean load(@Nonnull IResourceManager manager, @Nonnull ResourceLocation location, @Nonnull Function<ResourceLocation, EaglerTextureAtlasSprite> textureGetter)
         {
-            final TextureAtlasSprite sprite = textureGetter.apply(bucket);
+            final EaglerTextureAtlasSprite sprite = textureGetter.apply(bucket);
             width = sprite.getIconWidth();
             height = sprite.getIconHeight();
             final int[][] pixels = sprite.getFrameTextureData(0);
@@ -348,7 +348,7 @@ public final class ModelDynBucket implements IModel
     /**
      * Creates a bucket cover sprite from the vanilla resource.
      */
-    private static final class BucketCoverSprite extends TextureAtlasSprite
+    private static final class BucketCoverSprite extends EaglerTextureAtlasSprite
     {
         private final ResourceLocation bucket = new ResourceLocation("items/bucket_empty");
         private final ResourceLocation bucketCoverMask = new ResourceLocation(ForgeVersion.MOD_ID, "items/vanilla_bucket_cover_mask");
@@ -372,10 +372,10 @@ public final class ModelDynBucket implements IModel
         }
 
         @Override
-        public boolean load(@Nonnull IResourceManager manager, @Nonnull ResourceLocation location, @Nonnull Function<ResourceLocation, TextureAtlasSprite> textureGetter)
+        public boolean load(@Nonnull IResourceManager manager, @Nonnull ResourceLocation location, @Nonnull Function<ResourceLocation, EaglerTextureAtlasSprite> textureGetter)
         {
-            final TextureAtlasSprite sprite = textureGetter.apply(bucket);
-            final TextureAtlasSprite alphaMask = textureGetter.apply(bucketCoverMask);
+            final EaglerTextureAtlasSprite sprite = textureGetter.apply(bucket);
+            final EaglerTextureAtlasSprite alphaMask = textureGetter.apply(bucketCoverMask);
             width = sprite.getIconWidth();
             height = sprite.getIconHeight();
             final int[][] pixels = new int[Minecraft.getMinecraft().gameSettings.mipmapLevels + 1][];
@@ -441,7 +441,7 @@ public final class ModelDynBucket implements IModel
             if (!model.cache.containsKey(name))
             {
                 IModel parent = model.parent.process(ImmutableMap.of("fluid", name));
-                Function<ResourceLocation, TextureAtlasSprite> textureGetter;
+                Function<ResourceLocation, EaglerTextureAtlasSprite> textureGetter;
                 textureGetter = location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
 
                 IBakedModel bakedModel = parent.bake(new SimpleModelState(model.transforms), model.format, textureGetter);
@@ -462,7 +462,7 @@ public final class ModelDynBucket implements IModel
 
         BakedDynBucket(ModelDynBucket parent,
                        ImmutableList<BakedQuad> quads,
-                       TextureAtlasSprite particle,
+                       EaglerTextureAtlasSprite particle,
                        VertexFormat format,
                        ImmutableMap<TransformType, TRSRTransformation> transforms,
                        Map<String, IBakedModel> cache,

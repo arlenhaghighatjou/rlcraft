@@ -20,7 +20,7 @@
 package net.minecraftforge.client.model.pipeline;
 
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumUsage;
 import net.minecraft.util.math.BlockPos;
@@ -99,5 +99,5 @@ public class VertexBufferConsumer implements IVertexConsumer
     @Override
     public void setApplyDiffuseLighting(boolean diffuse) {}
     @Override
-    public void setTexture(TextureAtlasSprite texture ) {}
+    public void setTexture(EaglerTextureAtlasSprite texture ) {}
 }

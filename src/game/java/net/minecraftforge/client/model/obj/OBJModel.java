@@ -45,7 +45,7 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
@@ -111,11 +111,11 @@ public class OBJModel implements IModel
     }
 
     @Override
-    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
     {
-        ImmutableMap.Builder<String, TextureAtlasSprite> builder = ImmutableMap.builder();
+        ImmutableMap.Builder<String, EaglerTextureAtlasSprite> builder = ImmutableMap.builder();
         builder.put(ModelLoader.White.LOCATION.toString(), ModelLoader.White.INSTANCE);
-        TextureAtlasSprite missing = bakedTextureGetter.apply(new ResourceLocation("missingno"));
+        EaglerTextureAtlasSprite missing = bakedTextureGetter.apply(new ResourceLocation("missingno"));
         for (Map.Entry<String, Material> e : matLib.materials.entrySet())
         {
             if (e.getValue().getTexture().getTextureLocation().getResourcePath().startsWith("#"))
@@ -1271,10 +1271,10 @@ public class OBJModel implements IModel
         private IModelState state;
         private final VertexFormat format;
         private ImmutableList<BakedQuad> quads;
-        private ImmutableMap<String, TextureAtlasSprite> textures;
-        private TextureAtlasSprite sprite = ModelLoader.White.INSTANCE;
+        private ImmutableMap<String, EaglerTextureAtlasSprite> textures;
+        private EaglerTextureAtlasSprite sprite = ModelLoader.White.INSTANCE;
 
-        public OBJBakedModel(OBJModel model, IModelState state, VertexFormat format, ImmutableMap<String, TextureAtlasSprite> textures)
+        public OBJBakedModel(OBJModel model, IModelState state, VertexFormat format, ImmutableMap<String, EaglerTextureAtlasSprite> textures)
         {
             this.model = model;
             this.state = state;
@@ -1403,7 +1403,7 @@ public class OBJModel implements IModel
             return ImmutableList.copyOf(quads);
         }
 
-        private final void putVertexData(UnpackedBakedQuad.Builder builder, Vertex v, Normal faceNormal, TextureCoordinate defUV, TextureAtlasSprite sprite)
+        private final void putVertexData(UnpackedBakedQuad.Builder builder, Vertex v, Normal faceNormal, TextureCoordinate defUV, EaglerTextureAtlasSprite sprite)
         {
             for (int e = 0; e < format.getElementCount(); e++)
             {
@@ -1465,7 +1465,7 @@ public class OBJModel implements IModel
         }
 
         @Override
-        public TextureAtlasSprite getParticleTexture()
+        public EaglerTextureAtlasSprite getParticleTexture()
         {
             return this.sprite;
         }

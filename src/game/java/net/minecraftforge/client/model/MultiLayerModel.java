@@ -31,7 +31,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.BlockRenderLayer;
@@ -69,7 +69,7 @@ public final class MultiLayerModel implements IModel
         return ImmutableList.copyOf(models.values());
     }
 
-    private static ImmutableMap<Optional<BlockRenderLayer>, IBakedModel> buildModels(ImmutableMap<Optional<BlockRenderLayer>, ModelResourceLocation> models, IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+    private static ImmutableMap<Optional<BlockRenderLayer>, IBakedModel> buildModels(ImmutableMap<Optional<BlockRenderLayer>, ModelResourceLocation> models, IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
     {
         ImmutableMap.Builder<Optional<BlockRenderLayer>, IBakedModel> builder = ImmutableMap.builder();
         for(Optional<BlockRenderLayer> key : models.keySet())
@@ -81,7 +81,7 @@ public final class MultiLayerModel implements IModel
     }
 
     @Override
-    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
     {
         IModel missing = ModelLoaderRegistry.getMissingModel();
         return new MultiLayerBakedModel(
@@ -182,7 +182,7 @@ public final class MultiLayerModel implements IModel
         }
 
         @Override
-        public TextureAtlasSprite getParticleTexture()
+        public EaglerTextureAtlasSprite getParticleTexture()
         {
             return base.getParticleTexture();
         }

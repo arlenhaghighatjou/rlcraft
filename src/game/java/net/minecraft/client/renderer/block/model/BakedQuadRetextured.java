@@ -1,16 +1,16 @@
 package net.minecraft.client.renderer.block.model;
 
 import java.util.Arrays;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class BakedQuadRetextured extends BakedQuad
 {
-    private final TextureAtlasSprite texture;
+    private final EaglerTextureAtlasSprite texture;
 
-    public BakedQuadRetextured(BakedQuad quad, TextureAtlasSprite textureIn)
+    public BakedQuadRetextured(BakedQuad quad, EaglerTextureAtlasSprite textureIn)
     {
         super(Arrays.copyOf(quad.getVertexData(), quad.getVertexData().length), quad.tintIndex, FaceBakery.getFacingFromVertexData(quad.getVertexData()), quad.getSprite(), quad.applyDiffuseLighting, quad.format);
         this.texture = textureIn;
@@ -29,7 +29,7 @@ public class BakedQuadRetextured extends BakedQuad
     }
 
     @Override
-    public TextureAtlasSprite getSprite()
+    public EaglerTextureAtlasSprite getSprite()
     {
         return texture;
     }

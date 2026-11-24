@@ -33,7 +33,7 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.EnumFacing;
@@ -83,7 +83,7 @@ public final class ModelFluid implements IModel
     }
 
     @Override
-    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
     {
         return new CachingBakedFluid(
                 state.apply(Optional.empty()),
@@ -148,7 +148,7 @@ public final class ModelFluid implements IModel
             }
         });
 
-        public CachingBakedFluid(Optional<TRSRTransformation> transformation, ImmutableMap<TransformType, TRSRTransformation> transforms, VertexFormat format, int color, TextureAtlasSprite still, TextureAtlasSprite flowing, Optional<TextureAtlasSprite> overlay, boolean gas, Optional<IExtendedBlockState> stateOption)
+        public CachingBakedFluid(Optional<TRSRTransformation> transformation, ImmutableMap<TransformType, TRSRTransformation> transforms, VertexFormat format, int color, EaglerTextureAtlasSprite still, EaglerTextureAtlasSprite flowing, Optional<EaglerTextureAtlasSprite> overlay, boolean gas, Optional<IExtendedBlockState> stateOption)
         {
             super(transformation, transforms, format, color, still, flowing, overlay, gas, stateOption.isPresent(), getCorners(stateOption), getFlow(stateOption), getOverlay(stateOption));
         }
@@ -263,12 +263,12 @@ public final class ModelFluid implements IModel
         protected final ImmutableMap<TransformType, TRSRTransformation> transforms;
         protected final VertexFormat format;
         protected final int color;
-        protected final TextureAtlasSprite still, flowing;
-        protected final Optional<TextureAtlasSprite> overlay;
+        protected final EaglerTextureAtlasSprite still, flowing;
+        protected final Optional<EaglerTextureAtlasSprite> overlay;
         protected final boolean gas;
         protected final ImmutableMap<EnumFacing, ImmutableList<BakedQuad>> faceQuads;
 
-        public BakedFluid(Optional<TRSRTransformation> transformation, ImmutableMap<TransformType, TRSRTransformation> transforms, VertexFormat format, int color, TextureAtlasSprite still, TextureAtlasSprite flowing, Optional<TextureAtlasSprite> overlay, boolean gas, boolean statePresent, int[] cornerRound, int flowRound, boolean[] sideOverlays)
+        public BakedFluid(Optional<TRSRTransformation> transformation, ImmutableMap<TransformType, TRSRTransformation> transforms, VertexFormat format, int color, EaglerTextureAtlasSprite still, EaglerTextureAtlasSprite flowing, Optional<EaglerTextureAtlasSprite> overlay, boolean gas, boolean statePresent, int[] cornerRound, int flowRound, boolean[] sideOverlays)
         {
             this.transformation = transformation;
             this.transforms = transforms;
@@ -305,7 +305,7 @@ public final class ModelFluid implements IModel
                 boolean isFlowing = flowRound > -1000;
 
                 float flow = isFlowing ? (float) Math.toRadians(flowRound) : 0f;
-                TextureAtlasSprite topSprite = isFlowing ? flowing : still;
+                EaglerTextureAtlasSprite topSprite = isFlowing ? flowing : still;
                 float scale = isFlowing ? 4f : 8f;
 
                 float c = MathHelper.cos(flow) * scale;
@@ -388,7 +388,7 @@ public final class ModelFluid implements IModel
             float get(int index);
         }
 
-        private BakedQuad buildQuad(EnumFacing side, TextureAtlasSprite texture, boolean flip, boolean offset, VertexParameter x, VertexParameter y, VertexParameter z, VertexParameter u, VertexParameter v)
+        private BakedQuad buildQuad(EnumFacing side, EaglerTextureAtlasSprite texture, boolean flip, boolean offset, VertexParameter x, VertexParameter y, VertexParameter z, VertexParameter u, VertexParameter v)
         {
             UnpackedBakedQuad.Builder builder = new UnpackedBakedQuad.Builder(format);
 
@@ -471,7 +471,7 @@ public final class ModelFluid implements IModel
         }
 
         @Override
-        public TextureAtlasSprite getParticleTexture()
+        public EaglerTextureAtlasSprite getParticleTexture()
         {
             return still;
         }

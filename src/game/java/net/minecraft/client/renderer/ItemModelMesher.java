@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -26,12 +26,12 @@ public class ItemModelMesher
         this.modelManager = modelManager;
     }
 
-    public TextureAtlasSprite getParticleIcon(Item item)
+    public EaglerTextureAtlasSprite getParticleIcon(Item item)
     {
         return this.getParticleIcon(item, 0);
     }
 
-    public TextureAtlasSprite getParticleIcon(Item item, int meta)
+    public EaglerTextureAtlasSprite getParticleIcon(Item item, int meta)
     {
         ItemStack stack = new ItemStack(item, 1, meta);
         IBakedModel model = this.getItemModel(stack);

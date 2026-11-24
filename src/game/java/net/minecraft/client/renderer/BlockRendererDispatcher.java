@@ -5,7 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.SimpleBakedModel;
 import net.minecraft.client.renderer.color.BlockColors;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.crash.CrashReport;
@@ -38,7 +38,7 @@ public class BlockRendererDispatcher implements IResourceManagerReloadListener
         return this.blockModelShapes;
     }
 
-    public void renderBlockDamage(IBlockState state, BlockPos pos, TextureAtlasSprite texture, IBlockAccess blockAccess)
+    public void renderBlockDamage(IBlockState state, BlockPos pos, EaglerTextureAtlasSprite texture, IBlockAccess blockAccess)
     {
         if (state.getRenderType() == EnumBlockRenderType.MODEL)
         {

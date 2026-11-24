@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -20,11 +20,11 @@ public class SimpleBakedModel implements IBakedModel
     protected final Map<EnumFacing, List<BakedQuad>> faceQuads;
     protected final boolean ambientOcclusion;
     protected final boolean gui3d;
-    protected final TextureAtlasSprite texture;
+    protected final EaglerTextureAtlasSprite texture;
     protected final ItemCameraTransforms cameraTransforms;
     protected final ItemOverrideList itemOverrideList;
 
-    public SimpleBakedModel(List<BakedQuad> generalQuadsIn, Map<EnumFacing, List<BakedQuad>> faceQuadsIn, boolean ambientOcclusionIn, boolean gui3dIn, TextureAtlasSprite textureIn, ItemCameraTransforms cameraTransformsIn, ItemOverrideList itemOverrideListIn)
+    public SimpleBakedModel(List<BakedQuad> generalQuadsIn, Map<EnumFacing, List<BakedQuad>> faceQuadsIn, boolean ambientOcclusionIn, boolean gui3dIn, EaglerTextureAtlasSprite textureIn, ItemCameraTransforms cameraTransformsIn, ItemOverrideList itemOverrideListIn)
     {
         this.generalQuads = generalQuadsIn;
         this.faceQuads = faceQuadsIn;
@@ -55,7 +55,7 @@ public class SimpleBakedModel implements IBakedModel
         return false;
     }
 
-    public TextureAtlasSprite getParticleTexture()
+    public EaglerTextureAtlasSprite getParticleTexture()
     {
         return this.texture;
     }
@@ -77,7 +77,7 @@ public class SimpleBakedModel implements IBakedModel
             private final Map<EnumFacing, List<BakedQuad>> builderFaceQuads;
             private final ItemOverrideList builderItemOverrideList;
             private final boolean builderAmbientOcclusion;
-            private TextureAtlasSprite builderTexture;
+            private EaglerTextureAtlasSprite builderTexture;
             private final boolean builderGui3d;
             private final ItemCameraTransforms builderCameraTransforms;
 
@@ -86,7 +86,7 @@ public class SimpleBakedModel implements IBakedModel
                 this(model.isAmbientOcclusion(), model.isGui3d(), model.getAllTransforms(), overrides);
             }
 
-            public Builder(IBlockState state, IBakedModel model, TextureAtlasSprite texture, BlockPos pos)
+            public Builder(IBlockState state, IBakedModel model, EaglerTextureAtlasSprite texture, BlockPos pos)
             {
                 this(model.isAmbientOcclusion(state), model.isGui3d(), model.getItemCameraTransforms(), model.getOverrides());
                 this.builderTexture = model.getParticleTexture();
@@ -116,7 +116,7 @@ public class SimpleBakedModel implements IBakedModel
                 this.builderCameraTransforms = transforms;
             }
 
-            private void addFaceQuads(IBlockState p_188644_1_, IBakedModel p_188644_2_, TextureAtlasSprite p_188644_3_, EnumFacing p_188644_4_, long p_188644_5_)
+            private void addFaceQuads(IBlockState p_188644_1_, IBakedModel p_188644_2_, EaglerTextureAtlasSprite p_188644_3_, EnumFacing p_188644_4_, long p_188644_5_)
             {
                 for (BakedQuad bakedquad : p_188644_2_.getQuads(p_188644_1_, p_188644_4_, p_188644_5_))
                 {
@@ -124,7 +124,7 @@ public class SimpleBakedModel implements IBakedModel
                 }
             }
 
-            private void addGeneralQuads(IBlockState p_188645_1_, IBakedModel p_188645_2_, TextureAtlasSprite p_188645_3_, long p_188645_4_)
+            private void addGeneralQuads(IBlockState p_188645_1_, IBakedModel p_188645_2_, EaglerTextureAtlasSprite p_188645_3_, long p_188645_4_)
             {
                 for (BakedQuad bakedquad : p_188645_2_.getQuads(p_188645_1_, (EnumFacing)null, p_188645_4_))
                 {
@@ -144,7 +144,7 @@ public class SimpleBakedModel implements IBakedModel
                 return this;
             }
 
-            public SimpleBakedModel.Builder setTexture(TextureAtlasSprite texture)
+            public SimpleBakedModel.Builder setTexture(EaglerTextureAtlasSprite texture)
             {
                 this.builderTexture = texture;
                 return this;

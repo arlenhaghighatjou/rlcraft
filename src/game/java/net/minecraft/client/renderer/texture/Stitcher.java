@@ -1,5 +1,7 @@
 package net.minecraft.client.renderer.texture;
 
+
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.Arrays;
@@ -40,7 +42,7 @@ public class Stitcher
         return this.currentHeight;
     }
 
-    public void addSprite(TextureAtlasSprite textureAtlas)
+    public void addSprite(EaglerTextureAtlasSprite textureAtlas)
     {
         Stitcher.Holder stitcher$holder = new Stitcher.Holder(textureAtlas, this.mipmapLevelStitcher);
 
@@ -76,7 +78,7 @@ public class Stitcher
         net.minecraftforge.fml.common.ProgressManager.pop(bar);
     }
 
-    public List<TextureAtlasSprite> getStichSlots()
+    public List<EaglerTextureAtlasSprite> getStichSlots()
     {
         List<Stitcher.Slot> list = Lists.<Stitcher.Slot>newArrayList();
 
@@ -85,12 +87,12 @@ public class Stitcher
             stitcher$slot.getAllStitchSlots(list);
         }
 
-        List<TextureAtlasSprite> list1 = Lists.<TextureAtlasSprite>newArrayList();
+        List<EaglerTextureAtlasSprite> list1 = Lists.<EaglerTextureAtlasSprite>newArrayList();
 
         for (Stitcher.Slot stitcher$slot1 : list)
         {
             Stitcher.Holder stitcher$holder = stitcher$slot1.getStitchHolder();
-            TextureAtlasSprite textureatlassprite = stitcher$holder.getAtlasSprite();
+            EaglerTextureAtlasSprite textureatlassprite = stitcher$holder.getAtlasSprite();
             textureatlassprite.initSprite(this.currentWidth, this.currentHeight, stitcher$slot1.getOriginX(), stitcher$slot1.getOriginY(), stitcher$holder.isRotated());
             list1.add(textureatlassprite);
         }
@@ -105,7 +107,7 @@ public class Stitcher
 
     private boolean allocateSlot(Stitcher.Holder p_94310_1_)
     {
-        TextureAtlasSprite textureatlassprite = p_94310_1_.getAtlasSprite();
+        EaglerTextureAtlasSprite textureatlassprite = p_94310_1_.getAtlasSprite();
         boolean flag = textureatlassprite.getIconWidth() != textureatlassprite.getIconHeight();
 
         for (int i = 0; i < this.stitchSlots.size(); ++i)
@@ -193,14 +195,14 @@ public class Stitcher
     @SideOnly(Side.CLIENT)
     public static class Holder implements Comparable<Stitcher.Holder>
         {
-            private final TextureAtlasSprite sprite;
+            private final EaglerTextureAtlasSprite sprite;
             private final int width;
             private final int height;
             private final int mipmapLevelHolder;
             private boolean rotated;
             private float scaleFactor = 1.0F;
 
-            public Holder(TextureAtlasSprite theTextureIn, int mipmapLevelHolderIn)
+            public Holder(EaglerTextureAtlasSprite theTextureIn, int mipmapLevelHolderIn)
             {
                 this.sprite = theTextureIn;
                 this.width = theTextureIn.getIconWidth();
@@ -209,7 +211,7 @@ public class Stitcher
                 this.rotated = Stitcher.getMipmapDimension(this.height, mipmapLevelHolderIn) > Stitcher.getMipmapDimension(this.width, mipmapLevelHolderIn);
             }
 
-            public TextureAtlasSprite getAtlasSprite()
+            public EaglerTextureAtlasSprite getAtlasSprite()
             {
                 return this.sprite;
             }

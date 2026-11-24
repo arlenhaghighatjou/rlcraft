@@ -75,7 +75,7 @@ import net.minecraft.client.renderer.block.model.ModelRotation;
 import net.minecraft.client.renderer.block.model.SimpleBakedModel;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.texture.TextureUtil;
@@ -639,7 +639,7 @@ public class ForgeHooksClient
         public void setApplyDiffuseLighting(boolean diffuse) {}
 
         @Override
-        public void setTexture(TextureAtlasSprite texture) {}
+        public void setTexture(EaglerTextureAtlasSprite texture) {}
     }
     
     private static final LightGatheringTransformer lightGatherer = new LightGatheringTransformer();
@@ -829,7 +829,7 @@ public class ForgeHooksClient
         }
     }
 
-    public static IBakedModel getDamageModel(IBakedModel ibakedmodel, TextureAtlasSprite texture, IBlockState state, IBlockAccess world, BlockPos pos)
+    public static IBakedModel getDamageModel(IBakedModel ibakedmodel, EaglerTextureAtlasSprite texture, IBlockState state, IBlockAccess world, BlockPos pos)
     {
         state = state.getBlock().getExtendedState(state, world, pos);
         return (new SimpleBakedModel.Builder(state, ibakedmodel, texture, pos)).makeBakedModel();

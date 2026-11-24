@@ -149,7 +149,7 @@ public class Slot
 
     @Nullable
     @SideOnly(Side.CLIENT)
-    public net.minecraft.client.renderer.texture.TextureAtlasSprite getBackgroundSprite()
+    public net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite getBackgroundSprite()
     {
         String name = getSlotTexture();
         return name == null ? null : getBackgroundMap().getAtlasSprite(name);

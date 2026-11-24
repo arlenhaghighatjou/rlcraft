@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLivingBase;
@@ -489,7 +489,7 @@ public class ItemRenderer
         GlStateManager.enableAlpha();
     }
 
-    private void renderBlockInHand(TextureAtlasSprite sprite)
+    private void renderBlockInHand(EaglerTextureAtlasSprite sprite)
     {
         this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         Tessellator tessellator = Tessellator.getInstance();
@@ -559,7 +559,7 @@ public class ItemRenderer
         for (int i = 0; i < 2; ++i)
         {
             GlStateManager.pushMatrix();
-            TextureAtlasSprite textureatlassprite = this.mc.getTextureMapBlocks().getAtlasSprite("minecraft:blocks/fire_layer_1");
+            EaglerTextureAtlasSprite textureatlassprite = this.mc.getTextureMapBlocks().getAtlasSprite("minecraft:blocks/fire_layer_1");
             this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
             float f1 = textureatlassprite.getMinU();
             float f2 = textureatlassprite.getMaxU();

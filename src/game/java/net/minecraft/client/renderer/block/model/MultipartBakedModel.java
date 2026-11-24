@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,7 +19,7 @@ public class MultipartBakedModel implements IBakedModel
     private final Map<Predicate<IBlockState>, IBakedModel> selectors;
     protected final boolean ambientOcclusion;
     protected final boolean gui3D;
-    protected final TextureAtlasSprite particleTexture;
+    protected final EaglerTextureAtlasSprite particleTexture;
     protected final ItemCameraTransforms cameraTransforms;
     protected final ItemOverrideList overrides;
 
@@ -67,7 +67,7 @@ public class MultipartBakedModel implements IBakedModel
         return false;
     }
 
-    public TextureAtlasSprite getParticleTexture()
+    public EaglerTextureAtlasSprite getParticleTexture()
     {
         return this.particleTexture;
     }

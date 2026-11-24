@@ -31,7 +31,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.resources.IResourceManager;
@@ -49,7 +49,7 @@ public abstract class SimpleModelFontRenderer extends FontRenderer {
     private final EnumFacing orientation;
     private boolean fillBlanks = false;
 
-    private TextureAtlasSprite sprite;
+    private EaglerTextureAtlasSprite sprite;
 
     public SimpleModelFontRenderer(GameSettings settings, ResourceLocation font, TextureManager manager, boolean isUnicode, Matrix4f matrix, VertexFormat format)
     {
@@ -60,7 +60,7 @@ public abstract class SimpleModelFontRenderer extends FontRenderer {
         orientation = EnumFacing.getFacingFromVector(normal.x, normal.y, normal.z);
     }
 
-    public void setSprite(TextureAtlasSprite sprite)
+    public void setSprite(EaglerTextureAtlasSprite sprite)
     {
         this.sprite = sprite;
         super.onResourceManagerReload(null);

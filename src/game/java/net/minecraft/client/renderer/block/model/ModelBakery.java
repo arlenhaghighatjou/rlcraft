@@ -31,7 +31,7 @@ import net.minecraft.client.renderer.block.model.multipart.Multipart;
 import net.minecraft.client.renderer.block.model.multipart.Selector;
 import net.minecraft.client.renderer.block.statemap.BlockStateMapper;
 import net.minecraft.client.renderer.texture.ITextureMapPopulator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
@@ -58,7 +58,7 @@ public class ModelBakery
     private static final Map<String, String> BUILT_IN_MODELS = Maps.<String, String>newHashMap();
     private static final Joiner JOINER = Joiner.on(" -> ");
     protected final IResourceManager resourceManager;
-    protected final Map<ResourceLocation, TextureAtlasSprite> sprites = Maps.<ResourceLocation, TextureAtlasSprite>newHashMap();
+    protected final Map<ResourceLocation, EaglerTextureAtlasSprite> sprites = Maps.<ResourceLocation, EaglerTextureAtlasSprite>newHashMap();
     private final Map<ResourceLocation, ModelBlock> models = Maps.<ResourceLocation, ModelBlock>newLinkedHashMap();
     private final Map<ModelResourceLocation, VariantList> variants = Maps.<ModelResourceLocation, VariantList>newLinkedHashMap();
     private final Map<ModelBlockDefinition, Collection<ModelResourceLocation>> multipartVariantMap = Maps.<ModelBlockDefinition, Collection<ModelResourceLocation>>newLinkedHashMap();
@@ -674,7 +674,7 @@ public class ModelBakery
 
     protected IBakedModel bakeModel(ModelBlock modelBlockIn, net.minecraftforge.common.model.ITransformation modelRotationIn, boolean uvLocked)
     {
-        TextureAtlasSprite textureatlassprite = this.sprites.get(new ResourceLocation(modelBlockIn.resolveTextureName("particle")));
+        EaglerTextureAtlasSprite textureatlassprite = this.sprites.get(new ResourceLocation(modelBlockIn.resolveTextureName("particle")));
         SimpleBakedModel.Builder simplebakedmodel$builder = (new SimpleBakedModel.Builder(modelBlockIn, modelBlockIn.createOverrides())).setTexture(textureatlassprite);
 
         if (modelBlockIn.getElements().isEmpty())
@@ -688,7 +688,7 @@ public class ModelBakery
                 for (EnumFacing enumfacing : blockpart.mapFaces.keySet())
                 {
                     BlockPartFace blockpartface = blockpart.mapFaces.get(enumfacing);
-                    TextureAtlasSprite textureatlassprite1 = this.sprites.get(new ResourceLocation(modelBlockIn.resolveTextureName(blockpartface.texture)));
+                    EaglerTextureAtlasSprite textureatlassprite1 = this.sprites.get(new ResourceLocation(modelBlockIn.resolveTextureName(blockpartface.texture)));
 
                     if (blockpartface.cullFace == null || !net.minecraftforge.common.model.TRSRTransformation.isInteger(modelRotationIn.getMatrix()))
                     {
@@ -705,12 +705,12 @@ public class ModelBakery
         }
     }
 
-    private BakedQuad makeBakedQuad(BlockPart p_177589_1_, BlockPartFace p_177589_2_, TextureAtlasSprite p_177589_3_, EnumFacing p_177589_4_, ModelRotation p_177589_5_, boolean p_177589_6_)
+    private BakedQuad makeBakedQuad(BlockPart p_177589_1_, BlockPartFace p_177589_2_, EaglerTextureAtlasSprite p_177589_3_, EnumFacing p_177589_4_, ModelRotation p_177589_5_, boolean p_177589_6_)
     {
         return makeBakedQuad(p_177589_1_, p_177589_2_, p_177589_3_, p_177589_4_, (net.minecraftforge.common.model.ITransformation)p_177589_5_, p_177589_6_);
     }
 
-    protected BakedQuad makeBakedQuad(BlockPart p_177589_1_, BlockPartFace p_177589_2_, TextureAtlasSprite p_177589_3_, EnumFacing p_177589_4_, net.minecraftforge.common.model.ITransformation p_177589_5_, boolean p_177589_6_)
+    protected BakedQuad makeBakedQuad(BlockPart p_177589_1_, BlockPartFace p_177589_2_, EaglerTextureAtlasSprite p_177589_3_, EnumFacing p_177589_4_, net.minecraftforge.common.model.ITransformation p_177589_5_, boolean p_177589_6_)
     {
         return this.faceBakery.makeBakedQuad(p_177589_1_.positionFrom, p_177589_1_.positionTo, p_177589_2_, p_177589_3_, p_177589_4_, p_177589_5_, p_177589_1_.partRotation, p_177589_6_, p_177589_1_.shade);
     }
@@ -829,7 +829,7 @@ public class ModelBakery
             {
                 for (ResourceLocation resourcelocation : set)
                 {
-                    TextureAtlasSprite textureatlassprite = textureMapIn.registerSprite(resourcelocation);
+                    EaglerTextureAtlasSprite textureatlassprite = textureMapIn.registerSprite(resourcelocation);
                     ModelBakery.this.sprites.put(resourcelocation, textureatlassprite);
                 }
             }
@@ -922,7 +922,7 @@ public class ModelBakery
             }
         }
 
-        for (TextureAtlasSprite textureatlassprite : this.sprites.values())
+        for (EaglerTextureAtlasSprite textureatlassprite : this.sprites.values())
         {
             if (!textureatlassprite.hasAnimationMetadata())
             {

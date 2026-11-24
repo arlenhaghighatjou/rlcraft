@@ -19,7 +19,7 @@
 
 package net.minecraftforge.client.model.pipeline;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.EnumFacing;
 
@@ -45,7 +45,7 @@ public class VertexTransformer implements IVertexConsumer
     }
 
     @Override
-    public void setTexture(TextureAtlasSprite texture)
+    public void setTexture(EaglerTextureAtlasSprite texture)
     {
         parent.setTexture(texture);
     }

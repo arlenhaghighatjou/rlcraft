@@ -36,7 +36,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -171,7 +171,7 @@ public final class MultiModel implements IModel
         }
 
         @Override
-        public TextureAtlasSprite getParticleTexture()
+        public EaglerTextureAtlasSprite getParticleTexture()
         {
             return internalBase.getParticleTexture();
         }
@@ -272,7 +272,7 @@ public final class MultiModel implements IModel
     }
 
     @Override
-    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
     {
         IBakedModel bakedBase = null;
 

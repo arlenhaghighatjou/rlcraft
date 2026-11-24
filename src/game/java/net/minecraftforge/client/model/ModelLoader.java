@@ -61,7 +61,7 @@ import net.minecraft.client.renderer.block.model.multipart.Multipart;
 import net.minecraft.client.renderer.block.model.multipart.Selector;
 import net.minecraft.client.renderer.block.statemap.BlockStateMapper;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
@@ -414,12 +414,12 @@ public final class ModelLoader extends ModelBakery
         }
 
         @Override
-        public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+        public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
         {
             return VanillaLoader.INSTANCE.modelCache.getUnchecked(new BakedModelCacheKey(this, state, format, bakedTextureGetter));
         }
 
-        public IBakedModel bakeImpl(IModelState state, final VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+        public IBakedModel bakeImpl(IModelState state, final VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
         {
             if(!Attributes.moreSpecific(format, Attributes.DEFAULT_BAKED_FORMAT))
             {
@@ -449,10 +449,10 @@ public final class ModelLoader extends ModelBakery
             return bakeNormal(model, perState, state, newTransforms, format, bakedTextureGetter, uvlock);
         }
 
-        private IBakedModel bakeNormal(ModelBlock model, IModelState perState, final IModelState modelState, List<TRSRTransformation> newTransforms, final VertexFormat format, final Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, boolean uvLocked)
+        private IBakedModel bakeNormal(ModelBlock model, IModelState perState, final IModelState modelState, List<TRSRTransformation> newTransforms, final VertexFormat format, final Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter, boolean uvLocked)
         {
             final TRSRTransformation baseState = modelState.apply(Optional.empty()).orElse(TRSRTransformation.identity());
-            TextureAtlasSprite particle = bakedTextureGetter.apply(new ResourceLocation(model.resolveTextureName("particle")));
+            EaglerTextureAtlasSprite particle = bakedTextureGetter.apply(new ResourceLocation(model.resolveTextureName("particle")));
             SimpleBakedModel.Builder builder = (new SimpleBakedModel.Builder(model, model.createOverrides())).setTexture(particle);
             for(int i = 0; i < model.getElements().size(); i++)
             {
@@ -471,7 +471,7 @@ public final class ModelLoader extends ModelBakery
                 }
                 for(Map.Entry<EnumFacing, BlockPartFace> e : part.mapFaces.entrySet())
                 {
-                    TextureAtlasSprite textureatlassprite1 = bakedTextureGetter.apply(new ResourceLocation(model.resolveTextureName(e.getValue().texture)));
+                    EaglerTextureAtlasSprite textureatlassprite1 = bakedTextureGetter.apply(new ResourceLocation(model.resolveTextureName(e.getValue().texture)));
 
                     if (e.getValue().cullFace == null || !TRSRTransformation.isInteger(transformation.getMatrix()))
                     {
@@ -707,7 +707,7 @@ public final class ModelLoader extends ModelBakery
         }
 
         @Override
-        public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+        public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
         {
             if(!Attributes.moreSpecific(format, Attributes.DEFAULT_BAKED_FORMAT))
             {
@@ -777,9 +777,9 @@ public final class ModelLoader extends ModelBakery
         private final VanillaModelWrapper model;
         private final IModelState state;
         private final VertexFormat format;
-        private final Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter;
+        private final Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter;
 
-        public BakedModelCacheKey(VanillaModelWrapper model, IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+        public BakedModelCacheKey(VanillaModelWrapper model, IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
         {
             this.model = model;
             this.state = state;
@@ -877,7 +877,7 @@ public final class ModelLoader extends ModelBakery
     /**
      * 16x16 pure white sprite.
      */
-    public static final class White extends TextureAtlasSprite
+    public static final class White extends EaglerTextureAtlasSprite
     {
         public static final ResourceLocation LOCATION = new ResourceLocation("white");
         public static final White INSTANCE = new White();
@@ -895,7 +895,7 @@ public final class ModelLoader extends ModelBakery
         }
 
         @Override
-        public boolean load(IResourceManager manager, ResourceLocation location, Function<ResourceLocation, TextureAtlasSprite> textureGetter)
+        public boolean load(IResourceManager manager, ResourceLocation location, Function<ResourceLocation, EaglerTextureAtlasSprite> textureGetter)
         {
             BufferedImage image = new BufferedImage(this.getIconWidth(), this.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
@@ -1124,12 +1124,12 @@ public final class ModelLoader extends ModelBakery
         }
     }
 
-    private static enum DefaultTextureGetter implements Function<ResourceLocation, TextureAtlasSprite>
+    private static enum DefaultTextureGetter implements Function<ResourceLocation, EaglerTextureAtlasSprite>
     {
         INSTANCE;
 
         @Override
-        public TextureAtlasSprite apply(ResourceLocation location)
+        public EaglerTextureAtlasSprite apply(ResourceLocation location)
         {
             return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
         }
@@ -1138,7 +1138,7 @@ public final class ModelLoader extends ModelBakery
     /**
      * Get the default texture getter the models will be baked with.
      */
-    public static Function<ResourceLocation, TextureAtlasSprite> defaultTextureGetter()
+    public static Function<ResourceLocation, EaglerTextureAtlasSprite> defaultTextureGetter()
     {
         return DefaultTextureGetter.INSTANCE;
     }
@@ -1226,7 +1226,7 @@ public final class ModelLoader extends ModelBakery
         // FIXME: represent selectors as dependencies?
         // FIXME
         @Override
-        public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+        public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
         {
             MultipartBakedModel.Builder builder = new MultipartBakedModel.Builder();
 

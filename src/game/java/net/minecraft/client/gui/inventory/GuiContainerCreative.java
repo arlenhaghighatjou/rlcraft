@@ -1163,7 +1163,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         }
 
         @Nullable
-        public net.minecraft.client.renderer.texture.TextureAtlasSprite getBackgroundSprite()
+        public net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite getBackgroundSprite()
         {
             return this.slot.getBackgroundSprite();
         }

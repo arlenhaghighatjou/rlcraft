@@ -33,7 +33,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ModelBlock;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -103,7 +103,7 @@ final class FancyMissingModel implements IModel
     }
 
     @Override
-    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
     {
         IBakedModel bigMissing = missingModel.bake(state, format, bakedTextureGetter);
         IModelState smallState = new ModelStateComposition(state, smallTransformation);
@@ -115,13 +115,13 @@ final class FancyMissingModel implements IModel
     {
         private final SimpleModelFontRenderer fontRenderer;
         private final String message;
-        private final TextureAtlasSprite fontTexture;
+        private final EaglerTextureAtlasSprite fontTexture;
         private final IBakedModel missingModel;
         private final IBakedModel otherModel;
         private final boolean big;
         private ImmutableList<BakedQuad> quads;
 
-        public BakedModel(IBakedModel bigMissing, IBakedModel smallMissing, SimpleModelFontRenderer fontRenderer, String message, TextureAtlasSprite fontTexture)
+        public BakedModel(IBakedModel bigMissing, IBakedModel smallMissing, SimpleModelFontRenderer fontRenderer, String message, EaglerTextureAtlasSprite fontTexture)
         {
             this.missingModel = bigMissing;
             otherModel = new BakedModel(smallMissing, fontRenderer, message, fontTexture, this);
@@ -131,7 +131,7 @@ final class FancyMissingModel implements IModel
             this.fontTexture = fontTexture;
         }
 
-        public BakedModel(IBakedModel smallMissing, SimpleModelFontRenderer fontRenderer, String message, TextureAtlasSprite fontTexture, BakedModel big)
+        public BakedModel(IBakedModel smallMissing, SimpleModelFontRenderer fontRenderer, String message, EaglerTextureAtlasSprite fontTexture, BakedModel big)
         {
             this.missingModel = smallMissing;
             otherModel = big;
@@ -180,7 +180,7 @@ final class FancyMissingModel implements IModel
         public boolean isBuiltInRenderer() { return false; }
 
         @Override
-        public TextureAtlasSprite getParticleTexture() { return fontTexture; }
+        public EaglerTextureAtlasSprite getParticleTexture() { return fontTexture; }
 
         @Override
         public ItemOverrideList getOverrides() { return ItemOverrideList.NONE; }

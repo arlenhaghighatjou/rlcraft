@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.block.model;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -11,18 +11,18 @@ public class BakedQuad implements net.minecraftforge.client.model.pipeline.IVert
     protected final int[] vertexData;
     protected final int tintIndex;
     protected final EnumFacing face;
-    protected final TextureAtlasSprite sprite;
+    protected final EaglerTextureAtlasSprite sprite;
 
     /**
      * @deprecated Use constructor with the format argument.
      */
     @Deprecated
-    public BakedQuad(int[] vertexDataIn, int tintIndexIn, EnumFacing faceIn, TextureAtlasSprite spriteIn)
+    public BakedQuad(int[] vertexDataIn, int tintIndexIn, EnumFacing faceIn, EaglerTextureAtlasSprite spriteIn)
     {
         this(vertexDataIn, tintIndexIn, faceIn, spriteIn, true, net.minecraft.client.renderer.vertex.DefaultVertexFormats.ITEM);
     }
 
-    public BakedQuad(int[] vertexDataIn, int tintIndexIn, EnumFacing faceIn, TextureAtlasSprite spriteIn, boolean applyDiffuseLighting, net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat format)
+    public BakedQuad(int[] vertexDataIn, int tintIndexIn, EnumFacing faceIn, EaglerTextureAtlasSprite spriteIn, boolean applyDiffuseLighting, net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat format)
     {
         this.format = format;
         this.applyDiffuseLighting = applyDiffuseLighting;
@@ -32,7 +32,7 @@ public class BakedQuad implements net.minecraftforge.client.model.pipeline.IVert
         this.sprite = spriteIn;
     }
 
-    public TextureAtlasSprite getSprite()
+    public EaglerTextureAtlasSprite getSprite()
     {
         return this.sprite;
     }

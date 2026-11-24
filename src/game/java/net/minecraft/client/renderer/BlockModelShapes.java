@@ -49,7 +49,7 @@ import net.minecraft.client.renderer.block.statemap.BlockStateMapper;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
@@ -73,7 +73,7 @@ public class BlockModelShapes
         return this.blockStateMapper;
     }
 
-    public TextureAtlasSprite getTexture(IBlockState state)
+    public EaglerTextureAtlasSprite getTexture(IBlockState state)
     {
         Block block = state.getBlock();
         IBakedModel ibakedmodel = this.getModelForState(state);

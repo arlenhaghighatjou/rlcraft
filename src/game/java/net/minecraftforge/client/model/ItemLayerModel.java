@@ -26,7 +26,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ModelBlock;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.EnumFacing;
@@ -106,22 +106,22 @@ public final class ItemLayerModel implements IModel
     }
 
     @Override
-    public IBakedModel bake(IModelState state, final VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+    public IBakedModel bake(IModelState state, final VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter)
     {
         ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
         Optional<TRSRTransformation> transform = state.apply(Optional.empty());
         boolean identity = !transform.isPresent() || transform.get().isIdentity();
         for(int i = 0; i < textures.size(); i++)
         {
-            TextureAtlasSprite sprite = bakedTextureGetter.apply(textures.get(i));
+            EaglerTextureAtlasSprite sprite = bakedTextureGetter.apply(textures.get(i));
             builder.addAll(getQuadsForSprite(i, sprite, format, transform));
         }
-        TextureAtlasSprite particle = bakedTextureGetter.apply(textures.isEmpty() ? new ResourceLocation("missingno") : textures.get(0));
+        EaglerTextureAtlasSprite particle = bakedTextureGetter.apply(textures.isEmpty() ? new ResourceLocation("missingno") : textures.get(0));
         ImmutableMap<TransformType, TRSRTransformation> map = PerspectiveMapWrapper.getTransforms(state);
         return new BakedItemModel(builder.build(), particle, map, overrides, identity);
     }
 
-    public static ImmutableList<BakedQuad> getQuadsForSprite(int tint, TextureAtlasSprite sprite, VertexFormat format, Optional<TRSRTransformation> transform)
+    public static ImmutableList<BakedQuad> getQuadsForSprite(int tint, EaglerTextureAtlasSprite sprite, VertexFormat format, Optional<TRSRTransformation> transform)
     {
         ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 
@@ -334,7 +334,7 @@ public final class ItemLayerModel implements IModel
         return pixels[u + (vMax - 1 - v) * uMax] >> 24 & 0xFF;
     }
 
-    private static BakedQuad buildSideQuad(VertexFormat format, Optional<TRSRTransformation> transform, EnumFacing side, int tint, TextureAtlasSprite sprite, int u, int v, int size)
+    private static BakedQuad buildSideQuad(VertexFormat format, Optional<TRSRTransformation> transform, EnumFacing side, int tint, EaglerTextureAtlasSprite sprite, int u, int v, int size)
     {
         final float eps = 1e-2f;
 
@@ -388,7 +388,7 @@ public final class ItemLayerModel implements IModel
     }
 
     private static BakedQuad buildQuad(
-        VertexFormat format, Optional<TRSRTransformation> transform, EnumFacing side, TextureAtlasSprite sprite, int tint,
+        VertexFormat format, Optional<TRSRTransformation> transform, EnumFacing side, EaglerTextureAtlasSprite sprite, int tint,
         float x0, float y0, float z0, float u0, float v0,
         float x1, float y1, float z1, float u1, float v1,
         float x2, float y2, float z2, float u2, float v2,

@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.WeightedRandom;
 import net.minecraftforge.fml.relauncher.Side;
@@ -53,7 +53,7 @@ public class WeightedBakedModel implements IBakedModel
         return this.baseModel.isBuiltInRenderer();
     }
 
-    public TextureAtlasSprite getParticleTexture()
+    public EaglerTextureAtlasSprite getParticleTexture()
     {
         return this.baseModel.getParticleTexture();
     }

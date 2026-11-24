@@ -1,5 +1,7 @@
 package net.minecraft.client.renderer.texture;
 
+
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import java.io.Closeable;
@@ -30,13 +32,13 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
     private static final Logger LOGGER = LogManager.getLogger();
     public static final ResourceLocation LOCATION_MISSING_TEXTURE = new ResourceLocation("missingno");
     public static final ResourceLocation LOCATION_BLOCKS_TEXTURE = new ResourceLocation("textures/atlas/blocks.png");
-    private final List<TextureAtlasSprite> listAnimatedSprites;
-    private final Map<String, TextureAtlasSprite> mapRegisteredSprites;
-    private final Map<String, TextureAtlasSprite> mapUploadedSprites;
+    private final List<EaglerTextureAtlasSprite> listAnimatedSprites;
+    private final Map<String, EaglerTextureAtlasSprite> mapRegisteredSprites;
+    private final Map<String, EaglerTextureAtlasSprite> mapUploadedSprites;
     private final String basePath;
     private final ITextureMapPopulator iconCreator;
     private int mipmapLevels;
-    private final TextureAtlasSprite missingImage;
+    private final EaglerTextureAtlasSprite missingImage;
 
     public TextureMap(String basePathIn)
     {
@@ -55,10 +57,10 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
 
     public TextureMap(String basePathIn, @Nullable ITextureMapPopulator iconCreatorIn, boolean skipFirst)
     {
-        this.listAnimatedSprites = Lists.<TextureAtlasSprite>newArrayList();
-        this.mapRegisteredSprites = Maps.<String, TextureAtlasSprite>newHashMap();
-        this.mapUploadedSprites = Maps.<String, TextureAtlasSprite>newHashMap();
-        this.missingImage = new TextureAtlasSprite("missingno");
+        this.listAnimatedSprites = Lists.<EaglerTextureAtlasSprite>newArrayList();
+        this.mapRegisteredSprites = Maps.<String, EaglerTextureAtlasSprite>newHashMap();
+        this.mapUploadedSprites = Maps.<String, EaglerTextureAtlasSprite>newHashMap();
+        this.missingImage = new EaglerTextureAtlasSprite("missingno");
         this.basePath = basePathIn;
         this.iconCreator = iconCreatorIn;
     }
@@ -103,7 +105,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         net.minecraftforge.fml.common.ProgressManager.ProgressBar bar = net.minecraftforge.fml.common.ProgressManager.push("Texture stitching", this.mapRegisteredSprites.size());
         loadedSprites.clear();
 
-        for (Entry<String, TextureAtlasSprite> entry : Maps.newHashMap(this.mapRegisteredSprites).entrySet())
+        for (Entry<String, EaglerTextureAtlasSprite> entry : Maps.newHashMap(this.mapRegisteredSprites).entrySet())
         {
             final ResourceLocation location = new ResourceLocation(entry.getKey());
             bar.step(location.toString());
@@ -112,7 +114,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         finishLoading(stitcher, bar, j, k);
     }
 
-    private int loadTexture(Stitcher stitcher, IResourceManager resourceManager, ResourceLocation location, TextureAtlasSprite textureatlassprite, net.minecraftforge.fml.common.ProgressManager.ProgressBar bar, int j, int k)
+    private int loadTexture(Stitcher stitcher, IResourceManager resourceManager, ResourceLocation location, EaglerTextureAtlasSprite textureatlassprite, net.minecraftforge.fml.common.ProgressManager.ProgressBar bar, int j, int k)
     {
         if (loadedSprites.contains(location)) {
             return j;
@@ -138,7 +140,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
                 {
                     registerSprite(dependency);
                 }
-                TextureAtlasSprite depSprite = mapRegisteredSprites.get(dependency.toString());
+                EaglerTextureAtlasSprite depSprite = mapRegisteredSprites.get(dependency.toString());
                 j = loadTexture(stitcher, resourceManager, dependency, depSprite, bar, j, k);
             }
             try
@@ -223,12 +225,12 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         LOGGER.info("Created: {}x{} {}-atlas", Integer.valueOf(stitcher.getCurrentWidth()), Integer.valueOf(stitcher.getCurrentHeight()), this.basePath);
         bar.step("Allocating GL texture");
         TextureUtil.allocateTextureImpl(this.getGlTextureId(), this.mipmapLevels, stitcher.getCurrentWidth(), stitcher.getCurrentHeight());
-        Map<String, TextureAtlasSprite> map = Maps.<String, TextureAtlasSprite>newHashMap(this.mapRegisteredSprites);
+        Map<String, EaglerTextureAtlasSprite> map = Maps.<String, EaglerTextureAtlasSprite>newHashMap(this.mapRegisteredSprites);
 
         net.minecraftforge.fml.common.ProgressManager.pop(bar);
         bar = net.minecraftforge.fml.common.ProgressManager.push("Texture mipmap and upload", stitcher.getStichSlots().size());
 
-        for (TextureAtlasSprite textureatlassprite1 : stitcher.getStichSlots())
+        for (EaglerTextureAtlasSprite textureatlassprite1 : stitcher.getStichSlots())
         {
             bar.step(textureatlassprite1.getIconName());
             {
@@ -256,7 +258,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
             }
         }
 
-        for (TextureAtlasSprite textureatlassprite2 : map.values())
+        for (EaglerTextureAtlasSprite textureatlassprite2 : map.values())
         {
             textureatlassprite2.copyFrom(this.missingImage);
         }
@@ -264,7 +266,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         net.minecraftforge.fml.common.ProgressManager.pop(bar);
     }
 
-    private boolean generateMipmaps(IResourceManager resourceManager, final TextureAtlasSprite texture)
+    private boolean generateMipmaps(IResourceManager resourceManager, final EaglerTextureAtlasSprite texture)
     {
         ResourceLocation resourcelocation = this.getResourceLocation(texture);
         IResource iresource = null;
@@ -332,15 +334,15 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         }
     }
 
-    private ResourceLocation getResourceLocation(TextureAtlasSprite p_184396_1_)
+    private ResourceLocation getResourceLocation(EaglerTextureAtlasSprite p_184396_1_)
     {
         ResourceLocation resourcelocation = new ResourceLocation(p_184396_1_.getIconName());
         return new ResourceLocation(resourcelocation.getResourceDomain(), String.format("%s/%s%s", this.basePath, resourcelocation.getResourcePath(), ".png"));
     }
 
-    public TextureAtlasSprite getAtlasSprite(String iconName)
+    public EaglerTextureAtlasSprite getAtlasSprite(String iconName)
     {
-        TextureAtlasSprite textureatlassprite = this.mapUploadedSprites.get(iconName);
+        EaglerTextureAtlasSprite textureatlassprite = this.mapUploadedSprites.get(iconName);
 
         if (textureatlassprite == null)
         {
@@ -354,13 +356,13 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
     {
         TextureUtil.bindTexture(this.getGlTextureId());
 
-        for (TextureAtlasSprite textureatlassprite : this.listAnimatedSprites)
+        for (EaglerTextureAtlasSprite textureatlassprite : this.listAnimatedSprites)
         {
             textureatlassprite.updateAnimation();
         }
     }
 
-    public TextureAtlasSprite registerSprite(ResourceLocation location)
+    public EaglerTextureAtlasSprite registerSprite(ResourceLocation location)
     {
         if (location == null)
         {
@@ -368,11 +370,11 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         }
         else
         {
-            TextureAtlasSprite textureatlassprite = this.mapRegisteredSprites.get(location.toString());
+            EaglerTextureAtlasSprite textureatlassprite = this.mapRegisteredSprites.get(location.toString());
 
             if (textureatlassprite == null)
             {
-                textureatlassprite = TextureAtlasSprite.makeAtlasSprite(location);
+                textureatlassprite = EaglerTextureAtlasSprite.makeAtlasSprite(location);
                 this.mapRegisteredSprites.put(location.toString(), textureatlassprite);
             }
 
@@ -390,7 +392,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         this.mipmapLevels = mipmapLevelsIn;
     }
 
-    public TextureAtlasSprite getMissingSprite()
+    public EaglerTextureAtlasSprite getMissingSprite()
     {
         return this.missingImage;
     }
@@ -410,7 +412,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
      * @return The registered entry, null if nothing was registered.
      */
     @Nullable
-    public TextureAtlasSprite getTextureExtry(String name)
+    public EaglerTextureAtlasSprite getTextureExtry(String name)
     {
         return mapRegisteredSprites.get(name);
     }
@@ -422,7 +424,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
      * @param entry Entry instance
      * @return True if the entry was added to the map, false otherwise.
      */
-    public boolean setTextureEntry(TextureAtlasSprite entry)
+    public boolean setTextureEntry(EaglerTextureAtlasSprite entry)
     {
         String name = entry.getIconName();
         if (!mapRegisteredSprites.containsKey(name))

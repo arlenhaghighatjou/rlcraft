@@ -20,7 +20,7 @@
 package net.minecraftforge.client.model.pipeline;
 
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.EnumFacing;
@@ -33,7 +33,7 @@ public class UnpackedBakedQuad extends BakedQuad
     protected final VertexFormat format;
     protected boolean packed = false;
 
-    public UnpackedBakedQuad(float[][][] unpackedData, int tint, EnumFacing orientation, TextureAtlasSprite texture, boolean applyDiffuseLighting, VertexFormat format)
+    public UnpackedBakedQuad(float[][][] unpackedData, int tint, EnumFacing orientation, EaglerTextureAtlasSprite texture, boolean applyDiffuseLighting, VertexFormat format)
     {
         super(new int[format.getNextOffset() /* / 4 * 4 */], tint, orientation, texture, applyDiffuseLighting, format);
         this.unpackedData = unpackedData;
@@ -91,7 +91,7 @@ public class UnpackedBakedQuad extends BakedQuad
         private final float[][][] unpackedData;
         private int tint = -1;
         private EnumFacing orientation;
-        private TextureAtlasSprite texture;
+        private EaglerTextureAtlasSprite texture;
         private boolean applyDiffuseLighting = true;
 
         private int vertices = 0;
@@ -129,7 +129,7 @@ public class UnpackedBakedQuad extends BakedQuad
 
         // FIXME: move (or at least add) into constructor
         @Override
-        public void setTexture(TextureAtlasSprite texture)
+        public void setTexture(EaglerTextureAtlasSprite texture)
         {
             this.texture = texture;
         }

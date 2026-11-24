@@ -8,7 +8,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
@@ -242,7 +242,7 @@ public abstract class GuiContainer extends GuiScreen
 
         if (itemstack.isEmpty() && slotIn.isEnabled())
         {
-            TextureAtlasSprite textureatlassprite = slotIn.getBackgroundSprite();
+            EaglerTextureAtlasSprite textureatlassprite = slotIn.getBackgroundSprite();
 
             if (textureatlassprite != null)
             {

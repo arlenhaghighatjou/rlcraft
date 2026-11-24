@@ -4,7 +4,7 @@ import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -145,7 +145,7 @@ public class Gui
         tessellator.draw();
     }
 
-    public void drawTexturedModalRect(int xCoord, int yCoord, TextureAtlasSprite textureSprite, int widthIn, int heightIn)
+    public void drawTexturedModalRect(int xCoord, int yCoord, EaglerTextureAtlasSprite textureSprite, int widthIn, int heightIn)
     {
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer bufferbuilder = tessellator.getBuffer();

@@ -19,7 +19,7 @@
 
 package net.minecraftforge.client.model.pipeline;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.EnumFacing;
 
@@ -38,6 +38,6 @@ public interface IVertexConsumer
     void setQuadTint(int tint);
     void setQuadOrientation(EnumFacing orientation);
     void setApplyDiffuseLighting(boolean diffuse);
-    void setTexture(TextureAtlasSprite texture);
+    void setTexture(EaglerTextureAtlasSprite texture);
     void put(int element, float... data);
 }

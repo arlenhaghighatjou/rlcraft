@@ -25,7 +25,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverride;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -46,14 +46,14 @@ public final class AnimationItemOverrideList extends ItemOverrideList
     private final IModel model;
     private final IModelState state;
     private final VertexFormat format;
-    private final Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter;
+    private final Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter;
 
-    public AnimationItemOverrideList(IModel model, IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, ItemOverrideList overrides)
+    public AnimationItemOverrideList(IModel model, IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter, ItemOverrideList overrides)
     {
         this(model, state, format, bakedTextureGetter, overrides.getOverrides().reverse());
     }
 
-    public AnimationItemOverrideList(IModel model, IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, List<ItemOverride> overrides)
+    public AnimationItemOverrideList(IModel model, IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter, List<ItemOverride> overrides)
     {
         super(overrides);
         this.model = model;

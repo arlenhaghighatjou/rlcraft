@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -35,7 +35,7 @@ public class ItemModelGenerator
 
             String s1 = blockModel.resolveTextureName(s);
             map.put(s, s1);
-            TextureAtlasSprite textureatlassprite = textureMapIn.getAtlasSprite((new ResourceLocation(s1)).toString());
+            EaglerTextureAtlasSprite textureatlassprite = textureMapIn.getAtlasSprite((new ResourceLocation(s1)).toString());
             list.addAll(this.getBlockParts(i, s, textureatlassprite));
         }
 
@@ -50,7 +50,7 @@ public class ItemModelGenerator
         }
     }
 
-    private List<BlockPart> getBlockParts(int tintIndex, String p_178394_2_, TextureAtlasSprite p_178394_3_)
+    private List<BlockPart> getBlockParts(int tintIndex, String p_178394_2_, EaglerTextureAtlasSprite p_178394_3_)
     {
         Map<EnumFacing, BlockPartFace> map = Maps.<EnumFacing, BlockPartFace>newHashMap();
         map.put(EnumFacing.SOUTH, new BlockPartFace((EnumFacing)null, tintIndex, p_178394_2_, new BlockFaceUV(new float[] {0.0F, 0.0F, 16.0F, 16.0F}, 0)));
@@ -61,7 +61,7 @@ public class ItemModelGenerator
         return list;
     }
 
-    private List<BlockPart> getBlockParts(TextureAtlasSprite p_178397_1_, String p_178397_2_, int p_178397_3_)
+    private List<BlockPart> getBlockParts(EaglerTextureAtlasSprite p_178397_1_, String p_178397_2_, int p_178397_3_)
     {
         float f = (float)p_178397_1_.getIconWidth();
         float f1 = (float)p_178397_1_.getIconHeight();
@@ -165,7 +165,7 @@ public class ItemModelGenerator
         return list;
     }
 
-    private List<ItemModelGenerator.Span> getSpans(TextureAtlasSprite p_178393_1_)
+    private List<ItemModelGenerator.Span> getSpans(EaglerTextureAtlasSprite p_178393_1_)
     {
         int i = p_178393_1_.getIconWidth();
         int j = p_178393_1_.getIconHeight();

@@ -7,7 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.BlockColors;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -21,9 +21,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockFluidRenderer
 {
     private final BlockColors blockColors;
-    private final TextureAtlasSprite[] atlasSpritesLava = new TextureAtlasSprite[2];
-    private final TextureAtlasSprite[] atlasSpritesWater = new TextureAtlasSprite[2];
-    private TextureAtlasSprite atlasSpriteWaterOverlay;
+    private final EaglerTextureAtlasSprite[] atlasSpritesLava = new EaglerTextureAtlasSprite[2];
+    private final EaglerTextureAtlasSprite[] atlasSpritesWater = new EaglerTextureAtlasSprite[2];
+    private EaglerTextureAtlasSprite atlasSpriteWaterOverlay;
 
     public BlockFluidRenderer(BlockColors blockColorsIn)
     {
@@ -45,7 +45,7 @@ public class BlockFluidRenderer
     {
         BlockLiquid blockliquid = (BlockLiquid)blockStateIn.getBlock();
         boolean flag = blockStateIn.getMaterial() == Material.LAVA;
-        TextureAtlasSprite[] atextureatlassprite = flag ? this.atlasSpritesLava : this.atlasSpritesWater;
+        EaglerTextureAtlasSprite[] atextureatlassprite = flag ? this.atlasSpritesLava : this.atlasSpritesWater;
         int i = this.blockColors.colorMultiplier(blockStateIn, blockAccess, blockPosIn, 0);
         float f = (float)(i >> 16 & 255) / 255.0F;
         float f1 = (float)(i >> 8 & 255) / 255.0F;
@@ -79,7 +79,7 @@ public class BlockFluidRenderer
             {
                 flag3 = true;
                 float f12 = BlockLiquid.getSlopeAngle(blockAccess, blockPosIn, material, blockStateIn);
-                TextureAtlasSprite textureatlassprite = f12 > -999.0F ? atextureatlassprite[1] : atextureatlassprite[0];
+                EaglerTextureAtlasSprite textureatlassprite = f12 > -999.0F ? atextureatlassprite[1] : atextureatlassprite[0];
                 f7 -= 0.001F;
                 f8 -= 0.001F;
                 f9 -= 0.001F;
@@ -181,7 +181,7 @@ public class BlockFluidRenderer
                 }
 
                 BlockPos blockpos = blockPosIn.add(j1, 0, k1);
-                TextureAtlasSprite textureatlassprite1 = atextureatlassprite[1];
+                EaglerTextureAtlasSprite textureatlassprite1 = atextureatlassprite[1];
 
                 if (!flag)
                 {

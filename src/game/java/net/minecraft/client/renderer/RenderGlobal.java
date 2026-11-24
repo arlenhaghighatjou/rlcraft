@@ -46,7 +46,7 @@ import net.minecraft.client.renderer.culling.ClippingHelperImpl;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -124,7 +124,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
     private int cloudTickCounter;
     private final Map<Integer, DestroyBlockProgress> damagedBlocks = Maps.<Integer, DestroyBlockProgress>newHashMap();
     private final Map<BlockPos, ISound> mapSoundPositions = Maps.<BlockPos, ISound>newHashMap();
-    private final TextureAtlasSprite[] destroyBlockIcons = new TextureAtlasSprite[10];
+    private final EaglerTextureAtlasSprite[] destroyBlockIcons = new EaglerTextureAtlasSprite[10];
     private Framebuffer entityOutlineFramebuffer;
     private ShaderGroup entityOutlineShader;
     private double frustumUpdatePosX = Double.MIN_VALUE;
@@ -1939,7 +1939,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
                         if (iblockstate.getMaterial() != Material.AIR)
                         {
                             int k1 = destroyblockprogress.getPartialBlockDamage();
-                            TextureAtlasSprite textureatlassprite = this.destroyBlockIcons[k1];
+                            EaglerTextureAtlasSprite textureatlassprite = this.destroyBlockIcons[k1];
                             BlockRendererDispatcher blockrendererdispatcher = this.mc.getBlockRendererDispatcher();
                             blockrendererdispatcher.renderBlockDamage(iblockstate, blockpos, textureatlassprite, this.world);
                         }

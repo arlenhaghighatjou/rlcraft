@@ -31,7 +31,7 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.model.TRSRTransformation;
 import org.apache.commons.lang3.tuple.Pair;
@@ -39,19 +39,19 @@ import org.apache.commons.lang3.tuple.Pair;
 public class BakedItemModel implements IBakedModel
 {
     protected final ImmutableList<BakedQuad> quads;
-    protected final TextureAtlasSprite particle;
+    protected final EaglerTextureAtlasSprite particle;
     protected final ImmutableMap<TransformType, TRSRTransformation> transforms;
     protected final ItemOverrideList overrides;
     protected final IBakedModel guiModel;
 
-    /** @deprecated use {@link #BakedItemModel(ImmutableList, TextureAtlasSprite, ImmutableMap, ItemOverrideList, boolean)} */
+    /** @deprecated use {@link #BakedItemModel(ImmutableList, EaglerTextureAtlasSprite, ImmutableMap, ItemOverrideList, boolean)} */
     @Deprecated // TODO: remove
-    public BakedItemModel(ImmutableList<BakedQuad> quads, TextureAtlasSprite particle, ImmutableMap<TransformType, TRSRTransformation> transforms, ItemOverrideList overrides)
+    public BakedItemModel(ImmutableList<BakedQuad> quads, EaglerTextureAtlasSprite particle, ImmutableMap<TransformType, TRSRTransformation> transforms, ItemOverrideList overrides)
     {
         this(quads, particle, transforms, overrides, true);
     }
 
-    public BakedItemModel(ImmutableList<BakedQuad> quads, TextureAtlasSprite particle, ImmutableMap<TransformType, TRSRTransformation> transforms, ItemOverrideList overrides, boolean untransformed)
+    public BakedItemModel(ImmutableList<BakedQuad> quads, EaglerTextureAtlasSprite particle, ImmutableMap<TransformType, TRSRTransformation> transforms, ItemOverrideList overrides, boolean untransformed)
     {
         this.quads = quads;
         this.particle = particle;
@@ -69,7 +69,7 @@ public class BakedItemModel implements IBakedModel
     @Override public boolean isAmbientOcclusion() { return true; }
     @Override public boolean isGui3d() { return false; }
     @Override public boolean isBuiltInRenderer() { return false; }
-    @Override public TextureAtlasSprite getParticleTexture() { return particle; }
+    @Override public EaglerTextureAtlasSprite getParticleTexture() { return particle; }
     @Override public ItemOverrideList getOverrides() { return overrides; }
 
     @Override

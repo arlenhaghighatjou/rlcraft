@@ -3,7 +3,7 @@ package net.minecraft.client.particle;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -46,7 +46,7 @@ public class Particle
     protected float particleGreen;
     protected float particleBlue;
     protected float particleAlpha;
-    protected TextureAtlasSprite particleTexture;
+    protected EaglerTextureAtlasSprite particleTexture;
     protected float particleAngle;
     protected float prevParticleAngle;
     public static double interpPosX;
@@ -217,7 +217,7 @@ public class Particle
         return 0;
     }
 
-    public void setParticleTexture(TextureAtlasSprite texture)
+    public void setParticleTexture(EaglerTextureAtlasSprite texture)
     {
         int i = this.getFXLayer();
 
