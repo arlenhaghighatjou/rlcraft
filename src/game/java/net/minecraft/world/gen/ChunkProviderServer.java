@@ -97,32 +97,17 @@ public class ChunkProviderServer implements IChunkProvider
         {
             long pos = ChunkPos.asLong(x, z);
             chunk = net.minecraftforge.common.ForgeChunkManager.fetchDormantChunk(pos, this.world);
-            if (chunk != null || !(this.chunkLoader instanceof net.minecraft.world.chunk.storage.AnvilChunkLoader))
-            {
-                if (!loadingChunks.add(pos)) net.minecraftforge.fml.common.FMLLog.bigWarning("There is an attempt to load a chunk ({},{}) in dimension {} that is already being loaded. This will cause weird chunk breakages.", x, z, this.world.provider.getDimension());
-                if (chunk == null) chunk = this.loadChunkFromFile(x, z);
+            if (!loadingChunks.add(pos)) net.minecraftforge.fml.common.FMLLog.bigWarning("There is an attempt to load a chunk ({},{}) in dimension {} that is already being loaded. This will cause weird chunk breakages.", x, z, this.world.provider.getDimension());
+            if (chunk == null) chunk = this.loadChunkFromFile(x, z);
 
-                if (chunk != null)
-                {
+            if (chunk != null)
+            {
                 this.id2ChunkMap.put(ChunkPos.asLong(x, z), chunk);
                 chunk.onLoad();
                 chunk.populate(this, this.chunkGenerator);
-                }
+            }
 
-                loadingChunks.remove(pos);
-            }
-            else
-            {
-                net.minecraft.world.chunk.storage.AnvilChunkLoader loader = (net.minecraft.world.chunk.storage.AnvilChunkLoader) this.chunkLoader;
-                if (runnable == null || !net.minecraftforge.common.ForgeChunkManager.asyncChunkLoading)
-                    chunk = net.minecraftforge.common.chunkio.ChunkIOExecutor.syncChunkLoad(this.world, loader, this, x, z);
-                else if (loader.isChunkGeneratedAt(x, z))
-                {
-                    // We can only use the async queue for already generated chunks
-                    net.minecraftforge.common.chunkio.ChunkIOExecutor.queueChunkLoad(this.world, loader, this, x, z, runnable);
-                    return null;
-                }
-            }
+            loadingChunks.remove(pos);
         }
 
         // If we didn't load the chunk async and have a callback run it now

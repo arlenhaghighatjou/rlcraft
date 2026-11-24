@@ -89,7 +89,6 @@ public class PlayerChunkMapEntry
 
                 if (this.players.isEmpty())
                 {
-                    if (this.loading) net.minecraftforge.common.chunkio.ChunkIOExecutor.dropQueuedChunkLoad(this.playerChunkMap.getWorldServer(), this.pos.x, this.pos.z, this.loadedRunnable);
                     this.playerChunkMap.removeEntry(this);
                 }
 
