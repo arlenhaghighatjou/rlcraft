@@ -14,6 +14,11 @@ import org.apache.commons.lang3.Validate;
 public class ResourceLocation implements Comparable<ResourceLocation>
 {
     protected final String resourceDomain;
+    public Object cachedPointer = null;
+    public int cachedPointerType = 0;
+    public static final int CACHED_POINTER_NONE = 0;
+    public static final int CACHED_POINTER_TEXTURE = 1;
+    public static final int CACHED_POINTER_EAGLER_MESH = 2;
     protected final String resourcePath;
 
     protected ResourceLocation(int unused, String... resourceName)

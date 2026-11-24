@@ -465,6 +465,17 @@ public class GlStateManager {
 		stateEnableShaderBlendColor = false;
 	}
 
+	public static void enableOutlineMode(int color) {
+		enableShaderBlendAdd();
+		setShaderBlendSrc(0.0f, 0.0f, 0.0f, 1.0f);
+		setShaderBlendAdd((float) (color >> 16 & 255) / 255.0f, (float) (color >> 8 & 255) / 255.0f,
+				(float) (color & 255) / 255.0f, 0.0f);
+	}
+
+	public static void disableOutlineMode() {
+		disableShaderBlendAdd();
+	}
+
 	public static void setBlendConstants(float r, float g, float b, float a) {
 		if(r != blendConstantR || g != blendConstantG || b != blendConstantB || a != blendConstantA) {
 			_wglBlendColor(r, g, b, a);
@@ -1291,5 +1302,4 @@ public class GlStateManager {
 			}
 		}
 	}
-
 }

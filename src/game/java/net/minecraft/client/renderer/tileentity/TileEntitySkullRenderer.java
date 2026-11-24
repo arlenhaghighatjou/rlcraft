@@ -2,10 +2,6 @@ package net.minecraft.client.renderer.tileentity;
 
 import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
-import java.util.Map;
-import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -14,8 +10,8 @@ import net.minecraft.client.model.ModelHumanoidHead;
 import net.minecraft.client.model.ModelSkeletonHead;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.resources.DefaultPlayerSkin;
+import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -80,19 +76,13 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer<TileEntit
                     modelbase = this.humanoidHead;
                     ResourceLocation resourcelocation = DefaultPlayerSkin.getDefaultSkinLegacy();
 
-                    if (profile != null)
+                    if (profile != null && profile.getId() != null)
                     {
-                        Minecraft minecraft = Minecraft.getMinecraft();
-                        Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
+                        NetHandlerPlayClient netHandler = Minecraft.getMinecraft().getConnection();
 
-                        if (map.containsKey(Type.SKIN))
+                        if (netHandler != null)
                         {
-                            resourcelocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
-                        }
-                        else
-                        {
-                            EaglercraftUUID uuid = EntityPlayer.getUUID(profile);
-                            resourcelocation = DefaultPlayerSkin.getDefaultSkin(uuid);
+                            resourcelocation = netHandler.getTextureCache().getPlayerSkin(profile).getLocation();
                         }
                     }
 
