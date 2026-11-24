@@ -2,6 +2,7 @@ package net.minecraft.crash;
 
 import com.google.common.collect.Lists;
 import java.util.List;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -13,7 +14,7 @@ public class CrashReportCategory
     private final CrashReport crashReport;
     private final String name;
     private final List<CrashReportCategory.Entry> children = Lists.<CrashReportCategory.Entry>newArrayList();
-    private StackTraceElement[] stackTrace = new StackTraceElement[0];
+    private String[] stackTrace = new String[0];
 
     public CrashReportCategory(CrashReport report, String name)
     {
@@ -113,30 +114,27 @@ public class CrashReportCategory
 
     public int getPrunedStackTrace(int size)
     {
-        StackTraceElement[] astacktraceelement = Thread.currentThread().getStackTrace();
+        String[] astacktraceelement = EagRuntime.getStackTraceElements(new Exception());
 
-        if (astacktraceelement.length <= 0)
+        if (astacktraceelement.length - 3 - size <= 0)
         {
             return 0;
         }
         else
         {
-            int len = astacktraceelement.length - 3 - size;
-            // Really Mojang, Still, god damn...
-            if (len <= 0) len = astacktraceelement.length;
-            this.stackTrace = new StackTraceElement[len];
-            System.arraycopy(astacktraceelement, astacktraceelement.length - len, this.stackTrace, 0, this.stackTrace.length);
+            this.stackTrace = new String[astacktraceelement.length - 3 - size];
+            System.arraycopy(astacktraceelement, 3 + size, this.stackTrace, 0, this.stackTrace.length);
             return this.stackTrace.length;
         }
     }
 
-    public boolean firstTwoElementsOfStackTraceMatch(StackTraceElement s1, StackTraceElement s2)
+    public boolean firstTwoElementsOfStackTraceMatch(String s1, String s2)
     {
         if (this.stackTrace.length != 0 && s1 != null)
         {
-            StackTraceElement stacktraceelement = this.stackTrace[0];
+            String stacktraceelement = this.stackTrace[0];
 
-            if (stacktraceelement.isNativeMethod() == s1.isNativeMethod() && stacktraceelement.getClassName().equals(s1.getClassName()) && stacktraceelement.getFileName().equals(s1.getFileName()) && stacktraceelement.getMethodName().equals(s1.getMethodName()))
+            if (s1.equals(stacktraceelement))
             {
                 if (s2 != null != this.stackTrace.length > 1)
                 {
@@ -165,7 +163,7 @@ public class CrashReportCategory
 
     public void trimStackTraceEntriesFromBottom(int amount)
     {
-        StackTraceElement[] astacktraceelement = new StackTraceElement[this.stackTrace.length - amount];
+        String[] astacktraceelement = new String[this.stackTrace.length - amount];
         System.arraycopy(this.stackTrace, 0, astacktraceelement, 0, astacktraceelement.length);
         this.stackTrace = astacktraceelement;
     }
@@ -187,15 +185,15 @@ public class CrashReportCategory
         {
             builder.append("\nStacktrace:");
 
-            for (StackTraceElement stacktraceelement : this.stackTrace)
+            for (int i = 0; i < this.stackTrace.length; ++i)
             {
                 builder.append("\n\tat ");
-                builder.append((Object)stacktraceelement);
+                builder.append(this.stackTrace[i]);
             }
         }
     }
 
-    public StackTraceElement[] getStackTrace()
+    public String[] getStackTrace()
     {
         return this.stackTrace;
     }

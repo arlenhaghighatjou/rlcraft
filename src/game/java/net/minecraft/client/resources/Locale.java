@@ -104,8 +104,13 @@ public class Locale
                 if (astring != null && astring.length == 2)
                 {
                     String s1 = astring[0];
-                    String s2 = PATTERN.matcher(astring[1]).replaceAll("%$1s");
+                    String s2 = PATTERN.matcher(astring[1]).replaceAll("%s");
                     this.properties.put(s1, s2);
+
+                    if (s1.startsWith("eaglercraft."))
+                    {
+                        this.properties.put(s1.substring(12), s2);
+                    }
                 }
             }
         }

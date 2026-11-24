@@ -37,35 +37,6 @@ public abstract class EnhancedRuntimeException extends RuntimeException
     public EnhancedRuntimeException(Throwable cause) { super(cause); }
 
     @Override
-    public String getMessage()
-    {
-        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
-        if (stack.length > 2 && stack[2].getClassName().startsWith("org.apache.logging.log4j."))
-        {
-            // This is a bit of a hack to force ourselves to be able to give a extended description when log4j prints this out.
-            // Sadly this text is displayed AFTER the initial exception line, and before the stack trace. But as the intention
-            // is to print this to the end user this is what we need to do.
-            final StringWriter buf = new StringWriter();
-
-            String msg = super.getMessage();
-            if (msg != null)
-                buf.append(msg);
-
-            buf.append('\n');
-            this.printStackTrace(new WrappedPrintStream()
-            {
-                @Override
-                public void println(String line)
-                {
-                    buf.append(line).append('\n');
-                }
-            });
-            return buf.toString();
-        }
-        return super.getMessage();
-    }
-
-    @Override
     public void printStackTrace(final PrintWriter s)
     {
         printStackTrace(new WrappedPrintStream()

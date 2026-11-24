@@ -109,8 +109,8 @@ public class RenderEntityItem extends Render<EntityItem>
 
         if (!flag1)
         {
-            float f3 = -0.0F * (float)(j - 1) * 0.5F;
-            float f4 = -0.0F * (float)(j - 1) * 0.5F;
+            float f3 = 0.0F;
+            float f4 = 0.0F;
             float f5 = -0.09375F * (float)(j - 1) * 0.5F;
             GlStateManager.translate(f3, f4, f5);
         }

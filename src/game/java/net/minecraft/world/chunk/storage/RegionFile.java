@@ -11,9 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.List;
-import java.util.zip.DeflaterOutputStream;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.InflaterInputStream;
+import net.lax1dude.eaglercraft.v1_8.EaglerZLIB;
 import javax.annotation.Nullable;
 import com.arlenh7.eaglercraft.forge.RegionStorage;
 import net.lax1dude.eaglercraft.v1_8.sp.server.export.RandomAccessMemoryFile;
@@ -213,13 +211,13 @@ public class RegionFile
                             {
                                 byte[] abyte1 = new byte[l - 1];
                                 this.dataFile.readFully(abyte1);
-                                return new DataInputStream(new BufferedInputStream(new GZIPInputStream(new ByteArrayInputStream(abyte1))));
+                                return new DataInputStream(new BufferedInputStream(EaglerZLIB.newGZIPInputStream(new ByteArrayInputStream(abyte1))));
                             }
                             else if (b0 == 2)
                             {
                                 byte[] abyte = new byte[l - 1];
                                 this.dataFile.readFully(abyte);
-                                return new DataInputStream(new BufferedInputStream(new InflaterInputStream(new ByteArrayInputStream(abyte))));
+                                return new DataInputStream(new BufferedInputStream(EaglerZLIB.newInflaterInputStream(new ByteArrayInputStream(abyte))));
                             }
                             else
                             {
@@ -237,9 +235,9 @@ public class RegionFile
     }
 
     @Nullable
-    public DataOutputStream getChunkDataOutputStream(int x, int z)
+    public DataOutputStream getChunkDataOutputStream(int x, int z) throws IOException
     {
-        return this.outOfBounds(x, z) ? null : new DataOutputStream(new BufferedOutputStream(new DeflaterOutputStream(new RegionFile.ChunkBuffer(x, z))));
+        return this.outOfBounds(x, z) ? null : new DataOutputStream(new BufferedOutputStream(EaglerZLIB.newDeflaterOutputStream(new RegionFile.ChunkBuffer(x, z))));
     }
 
     protected synchronized void write(int x, int z, byte[] data, int length)

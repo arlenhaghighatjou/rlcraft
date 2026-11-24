@@ -12,9 +12,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 import javax.annotation.Nullable;
+import net.lax1dude.eaglercraft.v1_8.EaglerZLIB;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.util.ReportedException;
@@ -23,7 +22,7 @@ public class CompressedStreamTools
 {
     public static NBTTagCompound readCompressed(InputStream is) throws IOException
     {
-        DataInputStream datainputstream = new DataInputStream(new BufferedInputStream(new GZIPInputStream(is)));
+        DataInputStream datainputstream = new DataInputStream(new BufferedInputStream(EaglerZLIB.newGZIPInputStream(is)));
         NBTTagCompound nbttagcompound;
 
         try
@@ -40,7 +39,7 @@ public class CompressedStreamTools
 
     public static void writeCompressed(NBTTagCompound compound, OutputStream outputStream) throws IOException
     {
-        DataOutputStream dataoutputstream = new DataOutputStream(new BufferedOutputStream(new GZIPOutputStream(outputStream)));
+        DataOutputStream dataoutputstream = new DataOutputStream(new BufferedOutputStream(EaglerZLIB.newGZIPOutputStream(outputStream)));
 
         try
         {

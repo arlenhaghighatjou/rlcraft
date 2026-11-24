@@ -1,13 +1,6 @@
 package net.minecraft.crash;
 
 import com.google.common.collect.Lists;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +9,6 @@ import net.minecraft.world.gen.layer.IntCache;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
-import net.lax1dude.eaglercraft.v1_8.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
@@ -28,14 +20,14 @@ public class CrashReport
     private final Throwable cause;
     private final CrashReportCategory systemDetailsCategory = new CrashReportCategory(this, "System Details");
     private final List<CrashReportCategory> crashReportSections = Lists.<CrashReportCategory>newArrayList();
-    private File crashReportFile;
     private boolean firstCategoryInCrashReport = true;
-    private StackTraceElement[] stacktrace = new StackTraceElement[0];
+    private String[] stacktrace;
 
     public CrashReport(String descriptionIn, Throwable causeThrowable)
     {
         this.description = descriptionIn;
         this.cause = causeThrowable;
+        this.stacktrace = EagRuntime.getStackTraceElements(causeThrowable);
         this.populateEnvironment();
     }
 
@@ -106,7 +98,7 @@ public class CrashReport
     {
         if ((this.stacktrace == null || this.stacktrace.length <= 0) && !this.crashReportSections.isEmpty())
         {
-            this.stacktrace = (StackTraceElement[])ArrayUtils.subarray(((CrashReportCategory)this.crashReportSections.get(0)).getStackTrace(), 0, 1);
+            this.stacktrace = (String[])ArrayUtils.subarray(((CrashReportCategory)this.crashReportSections.get(0)).getStackTrace(), 0, 1);
         }
 
         if (this.stacktrace != null && this.stacktrace.length > 0)
@@ -115,9 +107,9 @@ public class CrashReport
             builder.append("Thread: ").append(Thread.currentThread().getName()).append("\n");
             builder.append("Stacktrace:\n");
 
-            for (StackTraceElement stacktraceelement : this.stacktrace)
+            for (int i = 0; i < this.stacktrace.length; ++i)
             {
-                builder.append("\t").append("at ").append((Object)stacktraceelement);
+                builder.append("\t").append("at ").append(this.stacktrace[i]);
                 builder.append("\n");
             }
 
@@ -135,44 +127,35 @@ public class CrashReport
 
     public String getCauseStackTraceOrString()
     {
-        StringWriter stringwriter = null;
-        PrintWriter printwriter = null;
-        Throwable throwable = this.cause;
+        StringBuilder stackTrace = new StringBuilder();
 
-        if (throwable.getMessage() == null)
+        if ((this.cause.getMessage() == null || this.cause.getMessage().length() == 0)
+                && ((this.cause instanceof NullPointerException) || (this.cause instanceof StackOverflowError) || (this.cause instanceof OutOfMemoryError)))
         {
-            if (throwable instanceof NullPointerException)
-            {
-                throwable = new NullPointerException(this.description);
-            }
-            else if (throwable instanceof StackOverflowError)
-            {
-                throwable = new StackOverflowError(this.description);
-            }
-            else if (throwable instanceof OutOfMemoryError)
-            {
-                throwable = new OutOfMemoryError(this.description);
-            }
-
-            throwable.setStackTrace(this.cause.getStackTrace());
+            stackTrace.append(this.cause.getClass().getName()).append(": ");
+            stackTrace.append(this.description).append('\n');
+        }
+        else
+        {
+            stackTrace.append(this.cause.toString()).append('\n');
         }
 
-        String s = throwable.toString();
+        EagRuntime.getStackTrace(this.cause, (s) -> {
+            stackTrace.append("\tat ").append(s).append('\n');
+        });
 
-        try
+        Throwable t = this.cause.getCause();
+
+        while (t != null)
         {
-            stringwriter = new StringWriter();
-            printwriter = new PrintWriter(stringwriter);
-            throwable.printStackTrace(printwriter);
-            s = stringwriter.toString();
-        }
-        finally
-        {
-            IOUtils.closeQuietly((Writer)stringwriter);
-            IOUtils.closeQuietly((Writer)printwriter);
+            stackTrace.append("Caused by: " + t.toString()).append('\n');
+            EagRuntime.getStackTrace(t, (s) -> {
+                stackTrace.append("\tat ").append(s).append('\n');
+            });
+            t = t.getCause();
         }
 
-        return s;
+        return stackTrace.toString();
     }
 
     public String getCompleteReport()
@@ -201,50 +184,6 @@ public class CrashReport
         return stringbuilder.toString();
     }
 
-    @SideOnly(Side.CLIENT)
-    public File getFile()
-    {
-        return this.crashReportFile;
-    }
-
-    public boolean saveToFile(File toFile)
-    {
-        if (this.crashReportFile != null)
-        {
-            return false;
-        }
-        else
-        {
-            if (toFile.getParentFile() != null)
-            {
-                toFile.getParentFile().mkdirs();
-            }
-
-            Writer writer = null;
-            boolean flag1;
-
-            try
-            {
-                writer = new OutputStreamWriter(new FileOutputStream(toFile), StandardCharsets.UTF_8);
-                writer.write(this.getCompleteReport());
-                this.crashReportFile = toFile;
-                boolean lvt_3_1_ = true;
-                return lvt_3_1_;
-            }
-            catch (Throwable throwable)
-            {
-                LOGGER.error("Could not save crash report to {}", toFile, throwable);
-                flag1 = false;
-            }
-            finally
-            {
-                IOUtils.closeQuietly(writer);
-            }
-
-            return flag1;
-        }
-    }
-
     public CrashReportCategory getCategory()
     {
         return this.systemDetailsCategory;
@@ -262,9 +201,9 @@ public class CrashReport
         if (this.firstCategoryInCrashReport)
         {
             int i = crashreportcategory.getPrunedStackTrace(stacktraceLength);
-            StackTraceElement[] astacktraceelement = this.cause.getStackTrace();
-            StackTraceElement stacktraceelement = null;
-            StackTraceElement stacktraceelement1 = null;
+            String[] astacktraceelement = EagRuntime.getStackTraceElements(this.cause);
+            String stacktraceelement = null;
+            String stacktraceelement1 = null;
             int j = astacktraceelement.length - i;
 
             if (j < 0)
@@ -291,7 +230,7 @@ public class CrashReport
             }
             else if (astacktraceelement != null && astacktraceelement.length >= i && 0 <= j && j < astacktraceelement.length)
             {
-                this.stacktrace = new StackTraceElement[j];
+                this.stacktrace = new String[j];
                 System.arraycopy(astacktraceelement, 0, this.stacktrace, 0, this.stacktrace.length);
             }
             else

@@ -107,13 +107,13 @@ public class ModelIllager extends ModelBase
             if (((EntityLivingBase)entityIn).getPrimaryHand() == EnumHandSide.RIGHT)
             {
                 this.rightArm.rotateAngleX = -1.8849558F + MathHelper.cos(ageInTicks * 0.09F) * 0.15F;
-                this.leftArm.rotateAngleX = -0.0F + MathHelper.cos(ageInTicks * 0.19F) * 0.5F;
+                this.leftArm.rotateAngleX = MathHelper.cos(ageInTicks * 0.19F) * 0.5F;
                 this.rightArm.rotateAngleX += f * 2.2F - f1 * 0.4F;
                 this.leftArm.rotateAngleX += f * 1.2F - f1 * 0.4F;
             }
             else
             {
-                this.rightArm.rotateAngleX = -0.0F + MathHelper.cos(ageInTicks * 0.19F) * 0.5F;
+                this.rightArm.rotateAngleX = MathHelper.cos(ageInTicks * 0.19F) * 0.5F;
                 this.leftArm.rotateAngleX = -1.8849558F + MathHelper.cos(ageInTicks * 0.09F) * 0.15F;
                 this.rightArm.rotateAngleX += f * 1.2F - f1 * 0.4F;
                 this.leftArm.rotateAngleX += f * 2.2F - f1 * 0.4F;

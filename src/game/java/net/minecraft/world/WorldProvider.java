@@ -113,11 +113,11 @@ public abstract class WorldProvider
     {
         float f = 0.4F;
         float f1 = MathHelper.cos(celestialAngle * ((float)Math.PI * 2F)) - 0.0F;
-        float f2 = -0.0F;
+        float f2 = 0.0F;
 
-        if (f1 >= -0.4F && f1 <= 0.4F)
+        if (f1 >= f2 - f && f1 <= f2 + f)
         {
-            float f3 = (f1 - -0.0F) / 0.4F * 0.5F + 0.5F;
+            float f3 = (f1 - f2) / f * 0.5F + 0.5F;
             float f4 = 1.0F - (1.0F - MathHelper.sin(f3 * (float)Math.PI)) * 0.99F;
             f4 = f4 * f4;
             this.colorsSunriseSunset[0] = f3 * 0.3F + 0.7F;

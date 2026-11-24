@@ -21,6 +21,7 @@ package net.minecraftforge.fml.common;
 
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
@@ -36,12 +37,12 @@ public class FMLLog
 
     public static void bigWarning(String format, Object... data)
     {
-        StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+        String[] trace = EagRuntime.getStackTraceElements(new Exception());
         log.warn("****************************************");
         log.warn("* "+format, data);
         for (int i = 2; i < 8 && i < trace.length; i++)
         {
-            log.warn("*  at {}{}", trace[i].toString(), i == 7 ? "..." : "");
+            log.warn("*  at {}{}", trace[i], i == 7 ? "..." : "");
         }
         log.warn("****************************************");
     }

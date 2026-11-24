@@ -43,7 +43,7 @@ public class ModelEnderman extends ModelBiped
         float f = -14.0F;
         this.bipedBody.rotateAngleX = 0.0F;
         this.bipedBody.rotationPointY = -14.0F;
-        this.bipedBody.rotationPointZ = -0.0F;
+        this.bipedBody.rotationPointZ = 0.0F;
         this.bipedRightLeg.rotateAngleX -= 0.0F;
         this.bipedLeftLeg.rotateAngleX -= 0.0F;
         this.bipedRightArm.rotateAngleX = (float)((double)this.bipedRightArm.rotateAngleX * 0.5D);
@@ -106,7 +106,7 @@ public class ModelEnderman extends ModelBiped
         this.bipedLeftLeg.rotationPointZ = 0.0F;
         this.bipedRightLeg.rotationPointY = -5.0F;
         this.bipedLeftLeg.rotationPointY = -5.0F;
-        this.bipedHead.rotationPointZ = -0.0F;
+        this.bipedHead.rotationPointZ = 0.0F;
         this.bipedHead.rotationPointY = -13.0F;
         this.bipedHeadwear.rotationPointX = this.bipedHead.rotationPointX;
         this.bipedHeadwear.rotationPointY = this.bipedHead.rotationPointY;

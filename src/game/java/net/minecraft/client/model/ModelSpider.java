@@ -88,7 +88,7 @@ public class ModelSpider extends ModelBase
         this.spiderLeg6.rotateAngleZ = 0.58119464F;
         this.spiderLeg7.rotateAngleZ = -((float)Math.PI / 4F);
         this.spiderLeg8.rotateAngleZ = ((float)Math.PI / 4F);
-        float f1 = -0.0F;
+        float f1 = 0.0F;
         float f2 = 0.3926991F;
         this.spiderLeg1.rotateAngleY = ((float)Math.PI / 4F);
         this.spiderLeg2.rotateAngleY = -((float)Math.PI / 4F);
