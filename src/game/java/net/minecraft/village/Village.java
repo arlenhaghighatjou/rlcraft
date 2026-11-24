@@ -2,11 +2,11 @@ package net.minecraft.village;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
@@ -37,7 +37,7 @@ public class Village implements net.minecraftforge.common.capabilities.ICapabili
     private int tickCounter;
     private int numVillagers;
     private int noBreedTicks;
-    private final Map<UUID, Integer> playerReputation = Maps.<UUID, Integer>newHashMap();
+    private final Map<EaglercraftUUID, Integer> playerReputation = Maps.<EaglercraftUUID, Integer>newHashMap();
     private final List<Village.VillageAggressor> villageAgressors = Lists.<Village.VillageAggressor>newArrayList();
     private int numIronGolems;
 
@@ -312,7 +312,7 @@ public class Village implements net.minecraftforge.common.capabilities.ICapabili
         double d0 = Double.MAX_VALUE;
         EntityPlayer entityplayer = null;
 
-        for (UUID s : this.playerReputation.keySet())
+        for (EaglercraftUUID s : this.playerReputation.keySet())
         {
             if (this.isPlayerReputationTooLow(s))
             {
@@ -418,19 +418,19 @@ public class Village implements net.minecraftforge.common.capabilities.ICapabili
         }
     }
 
-    @Deprecated //Hasn't worked since 1.9, use UUID version below.
+    @Deprecated //Hasn't worked since 1.9, use EaglercraftUUID version below.
     public int getPlayerReputation(String playerName)
     {
         return this.getPlayerReputation(findUUID(playerName));
     }
 
-    public int getPlayerReputation(UUID playerName)
+    public int getPlayerReputation(EaglercraftUUID playerName)
     {
         Integer integer = this.playerReputation.get(playerName);
         return integer == null ? 0 : integer.intValue();
     }
 
-    private UUID findUUID(String name)
+    private EaglercraftUUID findUUID(String name)
     {
         if (this.world == null || this.world.getMinecraftServer() == null)
             return EntityPlayer.getOfflineUUID(name);
@@ -438,13 +438,13 @@ public class Village implements net.minecraftforge.common.capabilities.ICapabili
         return profile == null ? EntityPlayer.getOfflineUUID(name) : profile.getId();
     }
 
-    @Deprecated //Hasn't worked since 1.9, use UUID version below.
+    @Deprecated //Hasn't worked since 1.9, use EaglercraftUUID version below.
     public int modifyPlayerReputation(String playerName, int reputation)
     {
         return this.modifyPlayerReputation(findUUID(playerName), reputation);
     }
 
-    public int modifyPlayerReputation(UUID playerName, int reputation)
+    public int modifyPlayerReputation(EaglercraftUUID playerName, int reputation)
     {
         int i = this.getPlayerReputation(playerName);
         int j = MathHelper.clamp(i + reputation, -30, 10);
@@ -452,13 +452,13 @@ public class Village implements net.minecraftforge.common.capabilities.ICapabili
         return j;
     }
 
-    @Deprecated //Hasn't worked since 1.9, use UUID version below.
+    @Deprecated //Hasn't worked since 1.9, use EaglercraftUUID version below.
     public boolean isPlayerReputationTooLow(String playerName)
     {
         return this.isPlayerReputationTooLow(findUUID(playerName));
     }
 
-    public boolean isPlayerReputationTooLow(UUID uuid)
+    public boolean isPlayerReputationTooLow(EaglercraftUUID uuid)
     {
         return this.getPlayerReputation(uuid) <= -15;
     }
@@ -490,7 +490,7 @@ public class Village implements net.minecraftforge.common.capabilities.ICapabili
 
             if (nbttagcompound1.hasKey("UUID"))
             {
-                this.playerReputation.put(UUID.fromString(nbttagcompound1.getString("UUID")), Integer.valueOf(nbttagcompound1.getInteger("S")));
+                this.playerReputation.put(EaglercraftUUID.fromString(nbttagcompound1.getString("UUID")), Integer.valueOf(nbttagcompound1.getInteger("S")));
             }
             else
             {
@@ -532,7 +532,7 @@ public class Village implements net.minecraftforge.common.capabilities.ICapabili
         compound.setTag("Doors", nbttaglist);
         NBTTagList nbttaglist1 = new NBTTagList();
 
-        for (UUID s : this.playerReputation.keySet())
+        for (EaglercraftUUID s : this.playerReputation.keySet())
         {
             NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 
@@ -566,7 +566,7 @@ public class Village implements net.minecraftforge.common.capabilities.ICapabili
 
     public void setDefaultPlayerReputation(int defaultReputation)
     {
-        for (UUID s : this.playerReputation.keySet())
+        for (EaglercraftUUID s : this.playerReputation.keySet())
         {
             this.modifyPlayerReputation(s, defaultReputation);
         }

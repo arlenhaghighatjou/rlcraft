@@ -1,6 +1,6 @@
 package net.minecraft.entity.passive;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityAgeable;
@@ -31,7 +31,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityHorse extends AbstractHorse
 {
-    private static final UUID ARMOR_MODIFIER_UUID = UUID.fromString("556E1665-8B10-40C8-8F9D-CF9B1667F295");
+    private static final EaglercraftUUID ARMOR_MODIFIER_UUID = EaglercraftUUID.fromString("556E1665-8B10-40C8-8F9D-CF9B1667F295");
     private static final DataParameter<Integer> HORSE_VARIANT = EntityDataManager.<Integer>createKey(EntityHorse.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> HORSE_ARMOR = EntityDataManager.<Integer>createKey(EntityHorse.class, DataSerializers.VARINT);
     private static final DataParameter<ItemStack> HORSE_ARMOR_STACK = EntityDataManager.<ItemStack>createKey(EntityHorse.class, DataSerializers.ITEM_STACK);

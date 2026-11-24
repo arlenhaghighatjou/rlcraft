@@ -20,7 +20,7 @@
 package net.minecraftforge.fml.common.network.handshake;
 
 import net.minecraftforge.fml.common.network.FMLIndexedMessageToMessageCodec;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
 public class FMLHandshakeCodec extends FMLIndexedMessageToMessageCodec<FMLHandshakeMessage> {

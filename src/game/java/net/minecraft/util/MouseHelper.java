@@ -2,8 +2,8 @@ package net.minecraft.util;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Display;
 
 @SideOnly(Side.CLIENT)
 public class MouseHelper

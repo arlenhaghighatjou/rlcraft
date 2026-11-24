@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GLContext;
-import org.lwjgl.util.vector.Quaternion;
+import net.lax1dude.eaglercraft.v1_8.vector.Quaternion;
 
 @SideOnly(Side.CLIENT)
 public class GlStateManager

@@ -19,6 +19,7 @@
 
 package net.minecraftforge.client.model;
 
+import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Map;
 import java.util.Set;
@@ -40,7 +41,6 @@ import net.minecraftforge.fml.common.FMLLog;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
 
 /*
@@ -50,7 +50,7 @@ public class ModelLoaderRegistry
 {
     private static final Set<ICustomModelLoader> loaders = Sets.newHashSet();
     private static final Map<ResourceLocation, IModel> cache = Maps.newHashMap();
-    private static final Deque<ResourceLocation> loadingModels = Queues.newArrayDeque();
+    private static final Deque<ResourceLocation> loadingModels = new ArrayDeque<>();
     private static final Set<ResourceLocation> textures = Sets.newHashSet();
     private static final Map<ResourceLocation, ResourceLocation> aliases = Maps.newHashMap();
 

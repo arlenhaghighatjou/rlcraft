@@ -43,7 +43,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
+import net.lax1dude.eaglercraft.v1_8.cache.EaglerLoadingCache;
 
 public class MinecraftForgeClient
 {
@@ -103,7 +103,7 @@ public class MinecraftForgeClient
         }
     }
 
-    private static final LoadingCache<Pair<World, BlockPos>, ChunkCache> regionCache = CacheBuilder.newBuilder()
+    private static final EaglerLoadingCache<Pair<World, BlockPos>, ChunkCache> regionCache = CacheBuilder.newBuilder()
         .maximumSize(500)
         .concurrencyLevel(5)
         .expireAfterAccess(1, TimeUnit.SECONDS)

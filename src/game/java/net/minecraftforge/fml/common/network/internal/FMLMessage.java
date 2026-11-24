@@ -19,12 +19,12 @@
 
 package net.minecraftforge.fml.common.network.internal;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -127,7 +127,7 @@ public abstract class FMLMessage {
     public static class EntitySpawnMessage extends EntityMessage {
         String modId;
         int modEntityTypeId;
-        UUID entityUUID;
+        EaglercraftUUID entityUUID;
         double rawX;
         double rawY;
         double rawZ;
@@ -220,7 +220,7 @@ public abstract class FMLMessage {
             super.fromBytes(dat);
             modId = ByteBufUtils.readUTF8String(dat);
             modEntityTypeId = dat.readInt();
-            entityUUID = new UUID(dat.readLong(), dat.readLong());
+            entityUUID = new EaglercraftUUID(dat.readLong(), dat.readLong());
             rawX = dat.readDouble();
             rawY = dat.readDouble();
             rawZ = dat.readDouble();

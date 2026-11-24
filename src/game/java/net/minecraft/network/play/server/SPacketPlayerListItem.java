@@ -2,8 +2,8 @@ package net.minecraft.network.play.server;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.Property;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Nullable;

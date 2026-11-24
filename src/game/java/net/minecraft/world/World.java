@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
@@ -3464,7 +3464,7 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
     }
 
     @Nullable
-    public EntityPlayer getPlayerEntityByUUID(UUID uuid)
+    public EntityPlayer getPlayerEntityByUUID(EaglercraftUUID uuid)
     {
         for (int j2 = 0; j2 < this.playerEntities.size(); ++j2)
         {

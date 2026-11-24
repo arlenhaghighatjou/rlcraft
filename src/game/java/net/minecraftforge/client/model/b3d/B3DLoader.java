@@ -80,7 +80,7 @@ import java.util.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
+import net.lax1dude.eaglercraft.v1_8.cache.EaglerLoadingCache;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -265,7 +265,7 @@ public enum B3DLoader implements ICustomModelLoader
             return Optional.of(nodeTransform);
         }
 
-        private static LoadingCache<Triple<Animation, Node<?>, Integer>, TRSRTransformation> cache = CacheBuilder.newBuilder()
+        private static EaglerLoadingCache<Triple<Animation, Node<?>, Integer>, TRSRTransformation> cache = CacheBuilder.newBuilder()
             .maximumSize(16384)
             .expireAfterAccess(2, TimeUnit.MINUTES)
             .build(new CacheLoader<Triple<Animation, Node<?>, Integer>, TRSRTransformation>()
@@ -591,7 +591,7 @@ public enum B3DLoader implements ICustomModelLoader
         private final VertexFormat format;
         private final ImmutableSet<String> meshes;
         private final ImmutableMap<String, TextureAtlasSprite> textures;
-        private final LoadingCache<Integer, B3DState> cache;
+        private final EaglerLoadingCache<Integer, B3DState> cache;
 
         private ImmutableList<BakedQuad> quads;
 
@@ -617,7 +617,7 @@ public enum B3DLoader implements ICustomModelLoader
                 }));
         }
 
-        public BakedWrapper(Node<?> node, IModelState state, boolean smooth, boolean gui3d, VertexFormat format, ImmutableSet<String> meshes, ImmutableMap<String, TextureAtlasSprite> textures, LoadingCache<Integer, B3DState> cache)
+        public BakedWrapper(Node<?> node, IModelState state, boolean smooth, boolean gui3d, VertexFormat format, ImmutableSet<String> meshes, ImmutableMap<String, TextureAtlasSprite> textures, EaglerLoadingCache<Integer, B3DState> cache)
         {
             this.node = node;
             this.state = state;
@@ -692,7 +692,7 @@ public enum B3DLoader implements ICustomModelLoader
                 Collection<Face> faces = mesh.bake(new Function<Node<?>, Matrix4f>()
                 {
                     private final TRSRTransformation global = state.apply(Optional.empty()).orElse(TRSRTransformation.identity());
-                    private final LoadingCache<Node<?>, TRSRTransformation> localCache = CacheBuilder.newBuilder()
+                    private final EaglerLoadingCache<Node<?>, TRSRTransformation> localCache = CacheBuilder.newBuilder()
                         .maximumSize(32)
                         .build(new CacheLoader<Node<?>, TRSRTransformation>()
                         {

@@ -2,7 +2,7 @@ package net.minecraft.entity.projectile;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -37,10 +37,10 @@ public class EntityShulkerBullet extends Entity
     private double targetDeltaY;
     private double targetDeltaZ;
     @Nullable
-    private UUID ownerUniqueId;
+    private EaglercraftUUID ownerUniqueId;
     private BlockPos ownerBlockPos;
     @Nullable
-    private UUID targetUniqueId;
+    private EaglercraftUUID targetUniqueId;
     private BlockPos targetBlockPos;
 
     public EntityShulkerBullet(World worldIn)

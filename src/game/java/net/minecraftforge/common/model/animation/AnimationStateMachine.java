@@ -22,7 +22,7 @@ package net.minecraftforge.common.model.animation;
 import com.google.common.base.Predicate;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
+import net.lax1dude.eaglercraft.v1_8.cache.EaglerLoadingCache;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
@@ -79,7 +79,7 @@ public final class AnimationStateMachine implements IAnimationStateMachine
     private transient IClip currentState;
     private transient float lastPollTime;
 
-    private static final LoadingCache<Triple<? extends IClip, Float, Float>, Pair<IModelState, Iterable<Event>>> clipCache = CacheBuilder.newBuilder()
+    private static final EaglerLoadingCache<Triple<? extends IClip, Float, Float>, Pair<IModelState, Iterable<Event>>> clipCache = CacheBuilder.newBuilder()
         .maximumSize(100)
         .expireAfterWrite(100, TimeUnit.MILLISECONDS)
         .build(new CacheLoader<Triple<? extends IClip, Float, Float>, Pair<IModelState, Iterable<Event>>>()

@@ -1,7 +1,7 @@
 package net.minecraft.network.play.client;
 
 import java.io.IOException;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.Packet;
@@ -11,13 +11,13 @@ import net.minecraft.world.WorldServer;
 
 public class CPacketSpectate implements Packet<INetHandlerPlayServer>
 {
-    private UUID id;
+    private EaglercraftUUID id;
 
     public CPacketSpectate()
     {
     }
 
-    public CPacketSpectate(UUID uniqueIdIn)
+    public CPacketSpectate(EaglercraftUUID uniqueIdIn)
     {
         this.id = uniqueIdIn;
     }

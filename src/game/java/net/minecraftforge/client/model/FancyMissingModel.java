@@ -23,7 +23,7 @@ import java.util.function.Function;
 import java.util.Optional;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
+import net.lax1dude.eaglercraft.v1_8.cache.EaglerLoadingCache;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import net.minecraft.block.state.IBlockState;
@@ -54,7 +54,7 @@ final class FancyMissingModel implements IModel
     private static final ResourceLocation font = new ResourceLocation("minecraft", "textures/font/ascii.png");
     private static final ResourceLocation font2 = new ResourceLocation("minecraft", "font/ascii");
     private static final TRSRTransformation smallTransformation = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(null, null, new Vector3f(.25f, .25f, .25f), null));
-    private static final LoadingCache<VertexFormat, SimpleModelFontRenderer> fontCache = CacheBuilder.newBuilder().maximumSize(3).build(new CacheLoader<VertexFormat, SimpleModelFontRenderer>()
+    private static final EaglerLoadingCache<VertexFormat, SimpleModelFontRenderer> fontCache = CacheBuilder.newBuilder().maximumSize(3).build(new CacheLoader<VertexFormat, SimpleModelFontRenderer>()
     {
         @Override
         public SimpleModelFontRenderer load(VertexFormat format) throws Exception

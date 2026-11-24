@@ -1,7 +1,7 @@
 package net.minecraft.entity.projectile;
 
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -372,7 +372,7 @@ public abstract class EntityThrowable extends Entity implements IProjectile
             {
                 try
                 {
-                    Entity entity = ((WorldServer)this.world).getEntityFromUuid(UUID.fromString(this.throwerName));
+                    Entity entity = ((WorldServer)this.world).getEntityFromUuid(EaglercraftUUID.fromString(this.throwerName));
 
                     if (entity instanceof EntityLivingBase)
                     {

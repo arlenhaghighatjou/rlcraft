@@ -6,7 +6,7 @@ import com.google.common.collect.Multimap;
 import java.util.List;
 import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
@@ -95,8 +95,8 @@ public class Item extends net.minecraftforge.registries.IForgeRegistryEntry.Impl
         }
     };
     private final IRegistry<ResourceLocation, IItemPropertyGetter> properties = new RegistrySimple<ResourceLocation, IItemPropertyGetter>();
-    protected static final UUID ATTACK_DAMAGE_MODIFIER = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF");
-    protected static final UUID ATTACK_SPEED_MODIFIER = UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3");
+    protected static final EaglercraftUUID ATTACK_DAMAGE_MODIFIER = EaglercraftUUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF");
+    protected static final EaglercraftUUID ATTACK_SPEED_MODIFIER = EaglercraftUUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3");
     private CreativeTabs tabToDisplayOn;
     protected static EaglercraftRandom itemRand = new EaglercraftRandom();
     protected int maxStackSize = 64;

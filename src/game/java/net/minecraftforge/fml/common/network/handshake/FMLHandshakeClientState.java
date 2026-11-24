@@ -27,7 +27,7 @@ import java.util.function.Consumer;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
-import com.google.common.util.concurrent.Futures;
+import net.lax1dude.eaglercraft.v1_8.futures.Futures;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;

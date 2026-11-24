@@ -1,10 +1,10 @@
 package net.minecraft.init;
 
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import java.io.File;
 import java.io.PrintStream;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
@@ -422,7 +422,7 @@ public class Bootstrap
 
                                         if (!StringUtils.isNullOrEmpty(s))
                                         {
-                                            gameprofile = new GameProfile((UUID)null, s);
+                                            gameprofile = new GameProfile((EaglercraftUUID)null, s);
                                         }
                                     }
                                 }

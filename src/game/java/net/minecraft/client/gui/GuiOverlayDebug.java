@@ -26,7 +26,7 @@ import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.Display;
+import net.lax1dude.eaglercraft.v1_8.Display;
 
 @SideOnly(Side.CLIENT)
 public class GuiOverlayDebug extends Gui

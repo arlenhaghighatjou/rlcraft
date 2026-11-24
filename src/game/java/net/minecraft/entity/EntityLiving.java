@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import java.util.Arrays;
 import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -411,7 +411,7 @@ public abstract class EntityLiving extends EntityLivingBase
 
             if (this.leashHolder instanceof EntityLivingBase)
             {
-                UUID uuid = this.leashHolder.getUniqueID();
+                EaglercraftUUID uuid = this.leashHolder.getUniqueID();
                 nbttagcompound2.setUniqueId("UUID", uuid);
             }
             else if (this.leashHolder instanceof EntityHanging)
@@ -1323,7 +1323,7 @@ public abstract class EntityLiving extends EntityLivingBase
         {
             if (this.leashNBTTag.hasUniqueId("UUID"))
             {
-                UUID uuid = this.leashNBTTag.getUniqueId("UUID");
+                EaglercraftUUID uuid = this.leashNBTTag.getUniqueId("UUID");
 
                 for (EntityLivingBase entitylivingbase : this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(10.0D)))
                 {

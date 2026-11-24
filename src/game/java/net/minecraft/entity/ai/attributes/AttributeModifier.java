@@ -1,7 +1,7 @@
 package net.minecraft.entity.ai.attributes;
 
 import io.netty.util.internal.ThreadLocalRandom;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.util.math.MathHelper;
 import org.apache.commons.lang3.Validate;
 
@@ -10,7 +10,7 @@ public class AttributeModifier
     private final double amount;
     private final int operation;
     private final String name;
-    private final UUID id;
+    private final EaglercraftUUID id;
     private boolean isSaved;
 
     public AttributeModifier(String nameIn, double amountIn, int operationIn)
@@ -18,7 +18,7 @@ public class AttributeModifier
         this(MathHelper.getRandomUUID(ThreadLocalRandom.current()), nameIn, amountIn, operationIn);
     }
 
-    public AttributeModifier(UUID idIn, String nameIn, double amountIn, int operationIn)
+    public AttributeModifier(EaglercraftUUID idIn, String nameIn, double amountIn, int operationIn)
     {
         this.isSaved = true;
         this.id = idIn;
@@ -29,7 +29,7 @@ public class AttributeModifier
         Validate.inclusiveBetween(0L, 2L, (long)operationIn, "Invalid operation");
     }
 
-    public UUID getID()
+    public EaglercraftUUID getID()
     {
         return this.id;
     }

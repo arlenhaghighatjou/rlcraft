@@ -27,7 +27,7 @@ import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 
 import javax.annotation.Nullable;
 
@@ -47,14 +47,14 @@ import net.minecraftforge.fml.relauncher.FMLInjectionData;
 /**
  * Caches player's last known usernames
  * <p>
- * Modders should use {@link #getLastKnownUsername(UUID)} to determine a players
+ * Modders should use {@link #getLastKnownUsername(EaglercraftUUID)} to determine a players
  * last known username.<br>
  * For convenience, {@link #getMap()} is provided to get an immutable copy of
  * the caches underlying map.
  */
 public final class UsernameCache {
 
-    private static Map<UUID, String> map = Maps.newHashMap();
+    private static Map<EaglercraftUUID, String> map = Maps.newHashMap();
 
     private static final Charset charset = StandardCharsets.UTF_8;
 
@@ -69,11 +69,11 @@ public final class UsernameCache {
      * Set a player's current username
      *
      * @param uuid
-     *            the player's {@link java.util.UUID UUID}
+     *            the player's {@link net.lax1dude.eaglercraft.v1_8.EaglercraftUUID EaglercraftUUID}
      * @param username
      *            the player's username
      */
-    protected static void setUsername(UUID uuid, String username)
+    protected static void setUsername(EaglercraftUUID uuid, String username)
     {
         checkNotNull(uuid);
         checkNotNull(username);
@@ -88,10 +88,10 @@ public final class UsernameCache {
      * Remove a player's username from the cache
      *
      * @param uuid
-     *            the player's {@link java.util.UUID UUID}
+     *            the player's {@link net.lax1dude.eaglercraft.v1_8.EaglercraftUUID EaglercraftUUID}
      * @return if the cache contained the user
      */
-    protected static boolean removeUsername(UUID uuid)
+    protected static boolean removeUsername(EaglercraftUUID uuid)
     {
         checkNotNull(uuid);
 
@@ -110,12 +110,12 @@ public final class UsernameCache {
      * <b>May be <code>null</code></b>
      *
      * @param uuid
-     *            the player's {@link java.util.UUID UUID}
+     *            the player's {@link net.lax1dude.eaglercraft.v1_8.EaglercraftUUID EaglercraftUUID}
      * @return the player's last known username, or <code>null</code> if the
      *         cache doesn't have a record of the last username
      */
     @Nullable
-    public static String getLastKnownUsername(UUID uuid)
+    public static String getLastKnownUsername(EaglercraftUUID uuid)
     {
         checkNotNull(uuid);
         return map.get(uuid);
@@ -125,10 +125,10 @@ public final class UsernameCache {
      * Check if the cache contains the given player's username
      *
      * @param uuid
-     *            the player's {@link java.util.UUID UUID}
+     *            the player's {@link net.lax1dude.eaglercraft.v1_8.EaglercraftUUID EaglercraftUUID}
      * @return if the cache contains a username for the given player
      */
-    public static boolean containsUUID(UUID uuid)
+    public static boolean containsUUID(EaglercraftUUID uuid)
     {
         checkNotNull(uuid);
         return map.containsKey(uuid);
@@ -139,7 +139,7 @@ public final class UsernameCache {
      *
      * @return the map
      */
-    public static Map<UUID, String> getMap()
+    public static Map<EaglercraftUUID, String> getMap()
     {
         return ImmutableMap.copyOf(map);
     }
@@ -163,7 +163,7 @@ public final class UsernameCache {
         {
 
             String json = Files.toString(saveFile, charset);
-            Type type = new TypeToken<Map<UUID, String>>() { private static final long serialVersionUID = 1L; }.getType();
+            Type type = new TypeToken<Map<EaglercraftUUID, String>>() { private static final long serialVersionUID = 1L; }.getType();
 
             map = gson.fromJson(json, type);
         }

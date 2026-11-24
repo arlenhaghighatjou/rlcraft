@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer.tileentity;
 
-import com.mojang.authlib.GameProfile;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockShulkerBox;
@@ -90,7 +90,7 @@ public class TileEntityItemStackRenderer
                 }
                 else if (nbttagcompound.hasKey("SkullOwner", 8) && !StringUtils.isBlank(nbttagcompound.getString("SkullOwner")))
                 {
-                    GameProfile gameprofile1 = new GameProfile((UUID)null, nbttagcompound.getString("SkullOwner"));
+                    GameProfile gameprofile1 = new GameProfile((EaglercraftUUID)null, nbttagcompound.getString("SkullOwner"));
                     gameprofile = TileEntitySkull.updateGameprofile(gameprofile1);
                     nbttagcompound.removeTag("SkullOwner");
                     nbttagcompound.setTag("SkullOwner", NBTUtil.writeGameProfile(new NBTTagCompound(), gameprofile));

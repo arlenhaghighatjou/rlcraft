@@ -528,7 +528,7 @@ public class ForgeHooksClient
         }
     }
 
-    public static void transform(org.lwjgl.util.vector.Vector3f vec, Matrix4f m)
+    public static void transform(net.lax1dude.eaglercraft.v1_8.vector.Vector3f vec, Matrix4f m)
     {
         Vector4f tmp = new Vector4f(vec.x, vec.y, vec.z, 1f);
         m.transform(tmp);

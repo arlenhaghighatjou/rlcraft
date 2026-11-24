@@ -2,7 +2,7 @@ package net.minecraft.network.datasync;
 
 import com.google.common.base.Optional;
 import java.io.IOException;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -261,9 +261,9 @@ public class DataSerializers
             return value;
         }
     };
-    public static final DataSerializer<Optional<UUID>> OPTIONAL_UNIQUE_ID = new DataSerializer<Optional<UUID>>()
+    public static final DataSerializer<Optional<EaglercraftUUID>> OPTIONAL_UNIQUE_ID = new DataSerializer<Optional<EaglercraftUUID>>()
     {
-        public void write(PacketBuffer buf, Optional<UUID> value)
+        public void write(PacketBuffer buf, Optional<EaglercraftUUID> value)
         {
             buf.writeBoolean(value.isPresent());
 
@@ -272,15 +272,15 @@ public class DataSerializers
                 buf.writeUniqueId(value.get());
             }
         }
-        public Optional<UUID> read(PacketBuffer buf) throws IOException
+        public Optional<EaglercraftUUID> read(PacketBuffer buf) throws IOException
         {
             return !buf.readBoolean() ? Optional.absent() : Optional.of(buf.readUniqueId());
         }
-        public DataParameter<Optional<UUID>> createKey(int id)
+        public DataParameter<Optional<EaglercraftUUID>> createKey(int id)
         {
-            return new DataParameter<Optional<UUID>>(id, this);
+            return new DataParameter<Optional<EaglercraftUUID>>(id, this);
         }
-        public Optional<UUID> copyValue(Optional<UUID> value)
+        public Optional<EaglercraftUUID> copyValue(Optional<EaglercraftUUID> value)
         {
             return value;
         }

@@ -1,17 +1,16 @@
 package net.minecraft.server;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Queues;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ListenableFutureTask;
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.futures.Futures;
+import net.lax1dude.eaglercraft.v1_8.futures.ListenableFuture;
+import net.lax1dude.eaglercraft.v1_8.futures.ListenableFutureTask;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import com.mojang.authlib.GameProfileRepository;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufOutputStream;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBufOutputStream;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import io.netty.handler.codec.base64.Base64;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
@@ -23,13 +22,14 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.text.SimpleDateFormat;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Queue;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
@@ -144,7 +144,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IThre
     private final GameProfileRepository profileRepo;
     private final PlayerProfileCache profileCache;
     private long nanoTimeSinceStatusRefresh;
-    public final Queue < FutureTask<? >> futureTaskQueue = Queues. < FutureTask<? >> newArrayDeque();
+    public final Queue < FutureTask<? >> futureTaskQueue = new ArrayDeque<>();
     private Thread serverThread;
     protected long currentTime = getCurrentTimeMillis();
     @SideOnly(Side.CLIENT)
@@ -1329,7 +1329,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IThre
     }
 
     @Nullable
-    public Entity getEntityFromUuid(UUID uuid)
+    public Entity getEntityFromUuid(EaglercraftUUID uuid)
     {
         for (WorldServer worldserver1 : this.worlds)
         {
@@ -1535,7 +1535,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IThre
                 }
             }
 
-            YggdrasilAuthenticationService yggdrasilauthenticationservice = new YggdrasilAuthenticationService(Proxy.NO_PROXY, UUID.randomUUID().toString());
+            YggdrasilAuthenticationService yggdrasilauthenticationservice = new YggdrasilAuthenticationService(Proxy.NO_PROXY, EaglercraftUUID.randomUUID().toString());
             MinecraftSessionService minecraftsessionservice = yggdrasilauthenticationservice.createMinecraftSessionService();
             GameProfileRepository gameprofilerepository = yggdrasilauthenticationservice.createProfileRepository();
             PlayerProfileCache playerprofilecache = new PlayerProfileCache(gameprofilerepository, new File(s1, USER_CACHE_FILE.getName()));

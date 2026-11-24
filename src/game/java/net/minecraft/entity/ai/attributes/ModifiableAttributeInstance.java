@@ -6,7 +6,7 @@ import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,7 +17,7 @@ public class ModifiableAttributeInstance implements IAttributeInstance
     private final IAttribute genericAttribute;
     private final Map<Integer, Set<AttributeModifier>> mapByOperation = Maps.<Integer, Set<AttributeModifier>>newHashMap();
     private final Map<String, Set<AttributeModifier>> mapByName = Maps.<String, Set<AttributeModifier>>newHashMap();
-    private final Map<UUID, AttributeModifier> mapByUUID = Maps.<UUID, AttributeModifier>newHashMap();
+    private final Map<EaglercraftUUID, AttributeModifier> mapByUUID = Maps.<EaglercraftUUID, AttributeModifier>newHashMap();
     private double baseValue;
     private boolean needsUpdate = true;
     private double cachedValue;
@@ -71,7 +71,7 @@ public class ModifiableAttributeInstance implements IAttributeInstance
     }
 
     @Nullable
-    public AttributeModifier getModifier(UUID uuid)
+    public AttributeModifier getModifier(EaglercraftUUID uuid)
     {
         return this.mapByUUID.get(uuid);
     }
@@ -134,7 +134,7 @@ public class ModifiableAttributeInstance implements IAttributeInstance
         this.flagForUpdate();
     }
 
-    public void removeModifier(UUID p_188479_1_)
+    public void removeModifier(EaglercraftUUID p_188479_1_)
     {
         AttributeModifier attributemodifier = this.getModifier(p_188479_1_);
 

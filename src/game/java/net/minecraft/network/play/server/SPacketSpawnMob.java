@@ -2,7 +2,7 @@ package net.minecraft.network.play.server;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class SPacketSpawnMob implements Packet<INetHandlerPlayClient>
 {
     private int entityId;
-    private UUID uniqueId;
+    private EaglercraftUUID uniqueId;
     private int type;
     private double x;
     private double y;
@@ -139,7 +139,7 @@ public class SPacketSpawnMob implements Packet<INetHandlerPlayClient>
     }
 
     @SideOnly(Side.CLIENT)
-    public UUID getUniqueId()
+    public EaglercraftUUID getUniqueId()
     {
         return this.uniqueId;
     }

@@ -98,7 +98,7 @@ import java.util.stream.StreamSupport;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
+import net.lax1dude.eaglercraft.v1_8.cache.EaglerLoadingCache;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -466,7 +466,7 @@ public final class ModelLoader extends ModelBakery
                 {
                     transformation = transformation.compose(newTransforms.get(i));
                     BlockPartRotation rot = part.partRotation;
-                    if(rot == null) rot = new BlockPartRotation(new org.lwjgl.util.vector.Vector3f(), EnumFacing.Axis.Y, 0, false);
+                    if(rot == null) rot = new BlockPartRotation(new net.lax1dude.eaglercraft.v1_8.vector.Vector3f(), EnumFacing.Axis.Y, 0, false);
                     part = new BlockPart(part.positionFrom, part.positionTo, part.mapFaces, rot, part.shade);
                 }
                 for(Map.Entry<EnumFacing, BlockPartFace> e : part.mapFaces.entrySet())
@@ -815,7 +815,7 @@ public final class ModelLoader extends ModelBakery
 
         @Nullable
         private ModelLoader loader;
-        private LoadingCache<BakedModelCacheKey, IBakedModel> modelCache = CacheBuilder.newBuilder().maximumSize(50).expireAfterWrite(100, TimeUnit.MILLISECONDS).build(new CacheLoader<BakedModelCacheKey, IBakedModel>() {
+        private EaglerLoadingCache<BakedModelCacheKey, IBakedModel> modelCache = CacheBuilder.newBuilder().maximumSize(50).expireAfterWrite(100, TimeUnit.MILLISECONDS).build(new CacheLoader<BakedModelCacheKey, IBakedModel>() {
             @Override
             public IBakedModel load(BakedModelCacheKey key) throws Exception
             {

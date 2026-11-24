@@ -1,10 +1,10 @@
 package net.minecraft.tileentity;
 
 import com.google.common.collect.Iterables;
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
-import com.mojang.authlib.properties.Property;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.Property;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockSkull;
 import net.minecraft.nbt.NBTTagCompound;
@@ -73,7 +73,7 @@ public class TileEntitySkull extends TileEntity implements ITickable
 
                 if (!StringUtils.isNullOrEmpty(s))
                 {
-                    this.playerProfile = new GameProfile((UUID)null, s);
+                    this.playerProfile = new GameProfile((EaglercraftUUID)null, s);
                     this.updatePlayerProfile();
                 }
             }

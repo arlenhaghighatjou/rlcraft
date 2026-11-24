@@ -32,7 +32,7 @@ import com.google.common.collect.Sets;
 
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 
 public abstract class ForgeMessage {
     public static class DimensionRegisterMessage extends ForgeMessage {

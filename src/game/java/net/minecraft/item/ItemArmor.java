@@ -3,7 +3,7 @@ package net.minecraft.item;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Multimap;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
@@ -33,7 +33,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemArmor extends Item
 {
     private static final int[] MAX_DAMAGE_ARRAY = new int[] {13, 15, 16, 11};
-    private static final UUID[] ARMOR_MODIFIERS = new UUID[] {UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B"), UUID.fromString("D8499B04-0E66-4726-AB29-64469D734E0D"), UUID.fromString("9F3D476D-C118-4544-8365-64846904B48E"), UUID.fromString("2AD3F246-FEE1-4E67-B886-69FD380BB150")};
+    private static final EaglercraftUUID[] ARMOR_MODIFIERS = new EaglercraftUUID[] {EaglercraftUUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B"), EaglercraftUUID.fromString("D8499B04-0E66-4726-AB29-64469D734E0D"), EaglercraftUUID.fromString("9F3D476D-C118-4544-8365-64846904B48E"), EaglercraftUUID.fromString("2AD3F246-FEE1-4E67-B886-69FD380BB150")};
     public static final String[] EMPTY_SLOT_NAMES = new String[] {"minecraft:items/empty_armor_slot_boots", "minecraft:items/empty_armor_slot_leggings", "minecraft:items/empty_armor_slot_chestplate", "minecraft:items/empty_armor_slot_helmet"};
     public static final IBehaviorDispenseItem DISPENSER_BEHAVIOR = new BehaviorDefaultDispenseItem()
     {

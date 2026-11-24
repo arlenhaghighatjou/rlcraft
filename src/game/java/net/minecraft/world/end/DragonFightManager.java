@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.state.BlockWorldState;
@@ -62,7 +62,7 @@ public class DragonFightManager
     private int ticksSinceLastPlayerScan;
     private boolean dragonKilled;
     private boolean previouslyKilled;
-    private UUID dragonUniqueId;
+    private EaglercraftUUID dragonUniqueId;
     private boolean scanForLegacyFight = true;
     private BlockPos exitPortalLocation;
     private DragonSpawnManager respawnState;

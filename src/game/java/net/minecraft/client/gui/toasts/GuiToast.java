@@ -1,6 +1,6 @@
 package net.minecraft.client.gui.toasts;
 
-import com.google.common.collect.Queues;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
 import javax.annotation.Nullable;
@@ -18,7 +18,7 @@ public class GuiToast extends Gui
 {
     private final Minecraft mc;
     private final GuiToast.ToastInstance<?>[] visible = new GuiToast.ToastInstance[5];
-    private final Deque<IToast> toastsQueue = Queues.<IToast>newArrayDeque();
+    private final Deque<IToast> toastsQueue = new ArrayDeque<>();
 
     public GuiToast(Minecraft mcIn)
     {

@@ -1,11 +1,11 @@
 package net.minecraft.util;
 
 import com.google.common.collect.Maps;
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import com.mojang.util.UUIDTypeAdapter;
 import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -26,14 +26,14 @@ public class Session
         {
             usernameIn = "MissingName";
             playerIDIn = tokenIn = "NotValid";
-            org.apache.logging.log4j.Logger logger = net.minecraftforge.fml.common.FMLLog.log;
-            logger.log(org.apache.logging.log4j.Level.WARN, "=========================================================");
-            logger.log(org.apache.logging.log4j.Level.WARN, "WARNING!! the username was not set for this session, typically");
-            logger.log(org.apache.logging.log4j.Level.WARN, "this means you installed Forge incorrectly. We have set your");
-            logger.log(org.apache.logging.log4j.Level.WARN, "name to \"MissingName\" and your session to nothing. Please");
-            logger.log(org.apache.logging.log4j.Level.WARN, "check your installation and post a console log from the launcher");
-            logger.log(org.apache.logging.log4j.Level.WARN, "when asking for help!");
-            logger.log(org.apache.logging.log4j.Level.WARN, "=========================================================");
+            net.lax1dude.eaglercraft.v1_8.log4j.Logger logger = net.minecraftforge.fml.common.FMLLog.log;
+            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "=========================================================");
+            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "WARNING!! the username was not set for this session, typically");
+            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "this means you installed Forge incorrectly. We have set your");
+            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "name to \"MissingName\" and your session to nothing. Please");
+            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "check your installation and post a console log from the launcher");
+            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "when asking for help!");
+            logger.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "=========================================================");
         }
 
         this.username = usernameIn;
@@ -66,14 +66,14 @@ public class Session
     {
         try
         {
-            UUID uuid = UUIDTypeAdapter.fromString(this.getPlayerID());
+            EaglercraftUUID uuid = UUIDTypeAdapter.fromString(this.getPlayerID());
             GameProfile ret = new GameProfile(uuid, this.getUsername());    //Forge: Adds cached GameProfile properties to returned GameProfile.
             if (properties != null) ret.getProperties().putAll(properties); // Helps to cut down on calls to the session service,
             return ret;                                                     // which helps to fix MC-52974.
         }
         catch (IllegalArgumentException var2)
         {
-            return new GameProfile(net.minecraft.entity.player.EntityPlayer.getUUID(new GameProfile((UUID)null, this.getUsername())), this.getUsername());
+            return new GameProfile(net.minecraft.entity.player.EntityPlayer.getUUID(new GameProfile((EaglercraftUUID)null, this.getUsername())), this.getUsername());
         }
     }
 

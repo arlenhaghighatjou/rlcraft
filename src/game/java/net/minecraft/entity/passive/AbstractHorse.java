@@ -2,7 +2,7 @@ package net.minecraft.entity.passive;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
@@ -68,7 +68,7 @@ public abstract class AbstractHorse extends EntityAnimal implements IInventoryCh
     };
     protected static final IAttribute JUMP_STRENGTH = (new RangedAttribute((IAttribute)null, "horse.jumpStrength", 0.7D, 0.0D, 2.0D)).setDescription("Jump Strength").setShouldWatch(true);
     private static final DataParameter<Byte> STATUS = EntityDataManager.<Byte>createKey(AbstractHorse.class, DataSerializers.BYTE);
-    private static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(AbstractHorse.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+    private static final DataParameter<Optional<EaglercraftUUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<EaglercraftUUID>>createKey(AbstractHorse.class, DataSerializers.OPTIONAL_UNIQUE_ID);
     private int eatingCounter;
     private int openMouthCounter;
     private int jumpRearingCounter;
@@ -140,12 +140,12 @@ public abstract class AbstractHorse extends EntityAnimal implements IInventoryCh
     }
 
     @Nullable
-    public UUID getOwnerUniqueId()
+    public EaglercraftUUID getOwnerUniqueId()
     {
-        return (UUID)((Optional)this.dataManager.get(OWNER_UNIQUE_ID)).orNull();
+        return (EaglercraftUUID)((Optional)this.dataManager.get(OWNER_UNIQUE_ID)).orNull();
     }
 
-    public void setOwnerUniqueId(@Nullable UUID uniqueId)
+    public void setOwnerUniqueId(@Nullable EaglercraftUUID uniqueId)
     {
         this.dataManager.set(OWNER_UNIQUE_ID, Optional.fromNullable(uniqueId));
     }
@@ -969,7 +969,7 @@ public abstract class AbstractHorse extends EntityAnimal implements IInventoryCh
 
         if (!s.isEmpty())
         {
-            this.setOwnerUniqueId(UUID.fromString(s));
+            this.setOwnerUniqueId(EaglercraftUUID.fromString(s));
         }
 
         IAttributeInstance iattributeinstance = this.getAttributeMap().getAttributeInstanceByName("Speed");

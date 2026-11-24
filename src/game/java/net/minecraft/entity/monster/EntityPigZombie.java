@@ -1,6 +1,6 @@
 package net.minecraft.entity.monster;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -29,11 +29,11 @@ import net.minecraft.world.storage.loot.LootTableList;
 
 public class EntityPigZombie extends EntityZombie
 {
-    private static final UUID ATTACK_SPEED_BOOST_MODIFIER_UUID = UUID.fromString("49455A49-7EC5-45BA-B886-3B90B23A1718");
+    private static final EaglercraftUUID ATTACK_SPEED_BOOST_MODIFIER_UUID = EaglercraftUUID.fromString("49455A49-7EC5-45BA-B886-3B90B23A1718");
     private static final AttributeModifier ATTACK_SPEED_BOOST_MODIFIER = (new AttributeModifier(ATTACK_SPEED_BOOST_MODIFIER_UUID, "Attacking speed boost", 0.05D, 0)).setSaved(false);
     private int angerLevel;
     private int randomSoundDelay;
-    private UUID angerTargetUUID;
+    private EaglercraftUUID angerTargetUUID;
 
     public EntityPigZombie(World worldIn)
     {
@@ -137,7 +137,7 @@ public class EntityPigZombie extends EntityZombie
 
         if (!s.isEmpty())
         {
-            this.angerTargetUUID = UUID.fromString(s);
+            this.angerTargetUUID = EaglercraftUUID.fromString(s);
             EntityPlayer entityplayer = this.world.getPlayerEntityByUUID(this.angerTargetUUID);
             this.setRevengeTarget(entityplayer);
 

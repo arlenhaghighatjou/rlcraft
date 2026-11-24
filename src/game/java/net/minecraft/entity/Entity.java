@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
@@ -169,7 +169,7 @@ public abstract class Entity implements ICommandSender, net.minecraftforge.commo
     protected Vec3d lastPortalVec;
     protected EnumFacing teleportDirection;
     private boolean invulnerable;
-    protected UUID entityUniqueID;
+    protected EaglercraftUUID entityUniqueID;
     protected String cachedUniqueIdString;
     private final CommandResultStats cmdResultStats;
     protected boolean glowing;
@@ -2706,7 +2706,7 @@ public abstract class Entity implements ICommandSender, net.minecraftforge.commo
         });
     }
 
-    public void setUniqueId(UUID uniqueIdIn)
+    public void setUniqueId(EaglercraftUUID uniqueIdIn)
     {
         this.entityUniqueID = uniqueIdIn;
         this.cachedUniqueIdString = this.entityUniqueID.toString();
@@ -2718,7 +2718,7 @@ public abstract class Entity implements ICommandSender, net.minecraftforge.commo
         return this.isBurning();
     }
 
-    public UUID getUniqueID()
+    public EaglercraftUUID getUniqueID()
     {
         return this.entityUniqueID;
     }
@@ -3055,7 +3055,7 @@ public abstract class Entity implements ICommandSender, net.minecraftforge.commo
         return ItemStack.EMPTY;
     }
 
-    public UUID getPersistentID()
+    public EaglercraftUUID getPersistentID()
     {
         return entityUniqueID;
     }

@@ -1,14 +1,13 @@
 package net.minecraft.client;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
 import com.google.common.hash.Hashing;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ListenableFutureTask;
+import net.lax1dude.eaglercraft.v1_8.futures.Futures;
+import net.lax1dude.eaglercraft.v1_8.futures.ListenableFuture;
+import net.lax1dude.eaglercraft.v1_8.futures.ListenableFutureTask;
 import com.mojang.authlib.AuthenticationService;
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import com.mojang.authlib.GameProfileRepository;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.properties.PropertyMap;
@@ -24,6 +23,7 @@ import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Queue;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
@@ -210,10 +210,10 @@ import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 import org.lwjgl.opengl.ContextCapabilities;
-import org.lwjgl.opengl.Display;
+import net.lax1dude.eaglercraft.v1_8.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.opengl.OpenGLException;
@@ -314,7 +314,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
     private ResourceLocation mojangLogo;
     private final MinecraftSessionService sessionService;
     private SkinManager skinManager;
-    private final Queue < FutureTask<? >> scheduledTasks = Queues. < FutureTask<? >> newArrayDeque();
+    private final Queue < FutureTask<? >> scheduledTasks = new ArrayDeque<>();
     private final Thread mcThread = Thread.currentThread();
     private ModelManager modelManager;
     private BlockRendererDispatcher blockRenderDispatcher;
@@ -342,7 +342,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         this.profileProperties = gameConfig.userInfo.profileProperties;
         this.mcDefaultResourcePack = new DefaultResourcePack(gameConfig.folderInfo.getAssetsIndex());
         this.proxy = gameConfig.userInfo.proxy == null ? Proxy.NO_PROXY : gameConfig.userInfo.proxy;
-        this.sessionService = (new YggdrasilAuthenticationService(this.proxy, UUID.randomUUID().toString())).createMinecraftSessionService();
+        this.sessionService = (new YggdrasilAuthenticationService(this.proxy, EaglercraftUUID.randomUUID().toString())).createMinecraftSessionService();
         this.session = gameConfig.userInfo.session;
         LOGGER.info("Setting user: {}", (Object)this.session.getUsername());
         this.isDemo = gameConfig.gameInfo.isDemo;
@@ -2359,7 +2359,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
 
         try
         {
-            YggdrasilAuthenticationService yggdrasilauthenticationservice = new YggdrasilAuthenticationService(this.proxy, UUID.randomUUID().toString());
+            YggdrasilAuthenticationService yggdrasilauthenticationservice = new YggdrasilAuthenticationService(this.proxy, EaglercraftUUID.randomUUID().toString());
             MinecraftSessionService minecraftsessionservice = yggdrasilauthenticationservice.createMinecraftSessionService();
             GameProfileRepository gameprofilerepository = yggdrasilauthenticationservice.createProfileRepository();
             PlayerProfileCache playerprofilecache = new PlayerProfileCache(gameprofilerepository, new File(this.mcDataDir, MinecraftServer.USER_CACHE_FILE.getName()));
@@ -2415,7 +2415,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         NetworkManager networkmanager = NetworkManager.provideLocalClient(socketaddress);
         networkmanager.setNetHandler(new NetHandlerLoginClient(networkmanager, this, (GuiScreen)null));
         networkmanager.sendPacket(new C00Handshake(socketaddress.toString(), 0, EnumConnectionState.LOGIN, true));
-        com.mojang.authlib.GameProfile gameProfile = this.getSession().getProfile();
+        net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile gameProfile = this.getSession().getProfile();
         if (!this.getSession().hasCachedProperties())
         {
             gameProfile = sessionService.fillProfileProperties(gameProfile, true); //Forge: Fill profile properties upon game load. Fixes MC-52974.
@@ -2504,7 +2504,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         {
             if (!this.integratedServerIsRunning)
             {
-                AuthenticationService authenticationservice = new YggdrasilAuthenticationService(this.proxy, UUID.randomUUID().toString());
+                AuthenticationService authenticationservice = new YggdrasilAuthenticationService(this.proxy, EaglercraftUUID.randomUUID().toString());
                 MinecraftSessionService minecraftsessionservice = authenticationservice.createMinecraftSessionService();
                 GameProfileRepository gameprofilerepository = authenticationservice.createProfileRepository();
                 PlayerProfileCache playerprofilecache = new PlayerProfileCache(gameprofilerepository, new File(this.mcDataDir, MinecraftServer.USER_CACHE_FILE.getName()));

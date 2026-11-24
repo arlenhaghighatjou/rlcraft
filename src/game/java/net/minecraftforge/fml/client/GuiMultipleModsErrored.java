@@ -31,7 +31,7 @@ import net.minecraftforge.fml.common.MultipleModsErrored;
 import net.minecraftforge.fml.common.WrongMinecraftVersionException;
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.chunk;
 
-import com.google.common.collect.Queues;
+import java.util.ArrayDeque;
 import java.util.BitSet;
 import java.util.EnumSet;
 import java.util.Queue;
@@ -71,7 +71,7 @@ public class VisGraph
     private Set<EnumFacing> floodFill(int pos)
     {
         Set<EnumFacing> set = EnumSet.<EnumFacing>noneOf(EnumFacing.class);
-        Queue<Integer> queue = Queues.<Integer>newArrayDeque();
+        Queue<Integer> queue = new ArrayDeque<>();
         queue.add(IntegerCache.getInteger(pos));
         this.bitSet.set(pos, true);
 

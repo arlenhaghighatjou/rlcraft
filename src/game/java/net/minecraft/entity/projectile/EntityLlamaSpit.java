@@ -1,7 +1,7 @@
 package net.minecraft.entity.projectile;
 
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -239,7 +239,7 @@ public class EntityLlamaSpit extends Entity implements IProjectile
         if (this.owner != null)
         {
             NBTTagCompound nbttagcompound = new NBTTagCompound();
-            UUID uuid = this.owner.getUniqueID();
+            EaglercraftUUID uuid = this.owner.getUniqueID();
             nbttagcompound.setUniqueId("OwnerUUID", uuid);
             compound.setTag("Owner", nbttagcompound);
         }
@@ -249,7 +249,7 @@ public class EntityLlamaSpit extends Entity implements IProjectile
     {
         if (this.ownerNbt != null && this.ownerNbt.hasUniqueId("OwnerUUID"))
         {
-            UUID uuid = this.ownerNbt.getUniqueId("OwnerUUID");
+            EaglercraftUUID uuid = this.ownerNbt.getUniqueId("OwnerUUID");
 
             for (EntityLlama entityllama : this.world.getEntitiesWithinAABB(EntityLlama.class, this.getEntityBoundingBox().grow(15.0D)))
             {

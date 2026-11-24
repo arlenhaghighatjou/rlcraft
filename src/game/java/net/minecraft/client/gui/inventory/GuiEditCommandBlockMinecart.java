@@ -1,6 +1,6 @@
 package net.minecraft.client.gui.inventory;
 
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import java.io.IOException;
 import javax.annotation.Nullable;
 import net.minecraft.client.gui.GuiButton;
@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 @SideOnly(Side.CLIENT)
 public class GuiEditCommandBlockMinecart extends GuiScreen implements ITabCompleter

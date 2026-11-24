@@ -2,7 +2,7 @@ package net.minecraft.client.shader;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.util.vector.Matrix4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
 
 @SideOnly(Side.CLIENT)
 public class ShaderDefault extends ShaderUniform

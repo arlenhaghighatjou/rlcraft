@@ -1,7 +1,7 @@
 package net.minecraft.entity.monster;
 
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
@@ -44,7 +44,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityWitch extends EntityMob implements IRangedAttackMob
 {
-    private static final UUID MODIFIER_UUID = UUID.fromString("5CD17E52-A79A-43D3-A529-90FDE04B181E");
+    private static final EaglercraftUUID MODIFIER_UUID = EaglercraftUUID.fromString("5CD17E52-A79A-43D3-A529-90FDE04B181E");
     private static final AttributeModifier MODIFIER = (new AttributeModifier(MODIFIER_UUID, "Drinking speed penalty", -0.25D, 0)).setSaved(false);
     private static final DataParameter<Boolean> IS_DRINKING = EntityDataManager.<Boolean>createKey(EntityWitch.class, DataSerializers.BOOLEAN);
     private int potionUseTimer;

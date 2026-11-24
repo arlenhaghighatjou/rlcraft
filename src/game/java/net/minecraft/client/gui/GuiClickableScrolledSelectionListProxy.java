@@ -5,7 +5,7 @@ import net.minecraft.realms.RealmsClickableScrolledSelectionList;
 import net.minecraft.realms.Tezzelator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 @SideOnly(Side.CLIENT)
 public class GuiClickableScrolledSelectionListProxy extends GuiSlot

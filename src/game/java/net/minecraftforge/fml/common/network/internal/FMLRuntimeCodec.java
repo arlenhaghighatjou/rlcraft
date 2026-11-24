@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.network.FMLNetworkException;
 
 import com.google.common.base.Splitter;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
 public class FMLRuntimeCodec extends FMLIndexedMessageToMessageCodec<FMLMessage> {

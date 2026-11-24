@@ -2,9 +2,9 @@ package net.minecraft.client.network;
 
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.mojang.authlib.GameProfile;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.futures.Futures;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -18,7 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
@@ -271,7 +271,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     private Minecraft gameController;
     private WorldClient clientWorldController;
     private boolean doneLoadingTerrain;
-    private final Map<UUID, NetworkPlayerInfo> playerInfoMap = Maps.<UUID, NetworkPlayerInfo>newHashMap();
+    private final Map<EaglercraftUUID, NetworkPlayerInfo> playerInfoMap = Maps.<EaglercraftUUID, NetworkPlayerInfo>newHashMap();
     public int currentServerMaxPlayers = 20;
     private boolean hasStatistics;
     private final ClientAdvancementManager advancementManager;
@@ -2139,7 +2139,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         return this.playerInfoMap.values();
     }
 
-    public NetworkPlayerInfo getPlayerInfo(UUID uniqueId)
+    public NetworkPlayerInfo getPlayerInfo(EaglercraftUUID uniqueId)
     {
         return this.playerInfoMap.get(uniqueId);
     }

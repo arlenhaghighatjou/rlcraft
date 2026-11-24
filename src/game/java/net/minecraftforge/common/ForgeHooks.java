@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashSet;
@@ -36,7 +37,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -1165,7 +1165,7 @@ public class ForgeHooks
         Deque<LootTableContext> que = lootContext.get();
         if (que == null)
         {
-            que = Queues.newArrayDeque();
+            que = new ArrayDeque<>();
             lootContext.set(que);
         }
 

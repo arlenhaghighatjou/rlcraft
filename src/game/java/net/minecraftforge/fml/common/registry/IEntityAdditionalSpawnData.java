@@ -19,7 +19,7 @@
 
 package net.minecraftforge.fml.common.registry;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 
 /**
  * A interface for Entities that need extra information to be communicated

@@ -29,7 +29,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.stats.StatisticsManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 @SideOnly(Side.CLIENT)
 public class GuiStats extends GuiScreen implements IProgressMeter

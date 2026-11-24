@@ -3,7 +3,7 @@ package net.minecraft.world;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.common.util.concurrent.ListenableFuture;
+import net.lax1dude.eaglercraft.v1_8.futures.ListenableFuture;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +13,7 @@ import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
@@ -90,7 +90,7 @@ public class WorldServer extends World implements IThreadListener
     private final PlayerChunkMap playerChunkMap;
     private final Set<NextTickListEntry> pendingTickListEntriesHashSet = Sets.<NextTickListEntry>newHashSet();
     private final TreeSet<NextTickListEntry> pendingTickListEntriesTreeSet = new TreeSet<NextTickListEntry>();
-    private final Map<UUID, Entity> entitiesByUuid = Maps.<UUID, Entity>newHashMap();
+    private final Map<EaglercraftUUID, Entity> entitiesByUuid = Maps.<EaglercraftUUID, Entity>newHashMap();
     public boolean disableLevelSaving;
     private boolean allPlayersSleeping;
     private int updateEntityTick;
@@ -1079,7 +1079,7 @@ public class WorldServer extends World implements IThreadListener
         }
         else
         {
-            UUID uuid = entityIn.getUniqueID();
+            EaglercraftUUID uuid = entityIn.getUniqueID();
 
             if (this.entitiesByUuid.containsKey(uuid))
             {
@@ -1325,7 +1325,7 @@ public class WorldServer extends World implements IThreadListener
     }
 
     @Nullable
-    public Entity getEntityFromUuid(UUID uuid)
+    public Entity getEntityFromUuid(EaglercraftUUID uuid)
     {
         return this.entitiesByUuid.get(uuid);
     }

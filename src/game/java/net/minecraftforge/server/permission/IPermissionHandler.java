@@ -19,7 +19,7 @@
 
 package net.minecraftforge.server.permission;
 
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import net.minecraftforge.server.permission.context.IContext;
 
 import javax.annotation.Nullable;

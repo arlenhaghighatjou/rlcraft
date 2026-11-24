@@ -1,6 +1,6 @@
 package net.minecraft.command;
 
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nullable;

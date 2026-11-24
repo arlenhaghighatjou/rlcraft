@@ -1,8 +1,8 @@
 package net.minecraft.server.management;
 
 import com.google.gson.JsonObject;
-import com.mojang.authlib.GameProfile;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 
 public class UserListWhitelistEntry extends UserListEntry<GameProfile>
 {
@@ -31,11 +31,11 @@ public class UserListWhitelistEntry extends UserListEntry<GameProfile>
         if (json.has("uuid") && json.has("name"))
         {
             String s = json.get("uuid").getAsString();
-            UUID uuid;
+            EaglercraftUUID uuid;
 
             try
             {
-                uuid = UUID.fromString(s);
+                uuid = EaglercraftUUID.fromString(s);
             }
             catch (Throwable var4)
             {

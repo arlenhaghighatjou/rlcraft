@@ -2,10 +2,10 @@ package net.minecraft.client.renderer;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -88,8 +88,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 @SideOnly(Side.CLIENT)
 public class RenderGlobal implements IWorldEventListener, IResourceManagerReloadListener
@@ -863,7 +863,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         {
             this.displayListEntitiesDirty = false;
             this.renderInfos = Lists.<RenderGlobal.ContainerLocalRenderInformation>newArrayList();
-            Queue<RenderGlobal.ContainerLocalRenderInformation> queue = Queues.<RenderGlobal.ContainerLocalRenderInformation>newArrayDeque();
+            Queue<RenderGlobal.ContainerLocalRenderInformation> queue = new ArrayDeque<>();
             Entity.setRenderDistanceWeight(MathHelper.clamp((double)this.mc.gameSettings.renderDistanceChunks / 8.0D, 1.0D, 2.5D));
             boolean flag1 = this.mc.renderChunksMany;
 

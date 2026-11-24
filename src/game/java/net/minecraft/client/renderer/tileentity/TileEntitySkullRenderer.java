@@ -1,10 +1,10 @@
 package net.minecraft.client.renderer.tileentity;
 
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -90,7 +90,7 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer<TileEntit
                         }
                         else
                         {
-                            UUID uuid = EntityPlayer.getUUID(profile);
+                            EaglercraftUUID uuid = EntityPlayer.getUUID(profile);
                             resourcelocation = DefaultPlayerSkin.getDefaultSkin(uuid);
                         }
                     }

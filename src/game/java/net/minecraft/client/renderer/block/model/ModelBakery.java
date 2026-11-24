@@ -5,7 +5,6 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
 import java.io.Closeable;
 import java.io.FileNotFoundException;
@@ -15,6 +14,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -729,7 +729,7 @@ public class ModelBakery
 
     private void loadModels()
     {
-        Deque<ResourceLocation> deque = Queues.<ResourceLocation>newArrayDeque();
+        Deque<ResourceLocation> deque = new ArrayDeque<>();
         Set<ResourceLocation> set = Sets.<ResourceLocation>newHashSet();
 
         for (ResourceLocation resourcelocation : this.models.keySet())

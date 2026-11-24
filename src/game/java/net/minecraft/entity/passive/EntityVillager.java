@@ -109,7 +109,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
     private boolean needsInitilization;
     private boolean isWillingToMate;
     private int wealth;
-    private java.util.UUID lastBuyingPlayer;
+    private net.lax1dude.eaglercraft.v1_8.EaglercraftUUID lastBuyingPlayer;
     private int careerId;
     private int careerLevel;
     private boolean isLookingForHome;

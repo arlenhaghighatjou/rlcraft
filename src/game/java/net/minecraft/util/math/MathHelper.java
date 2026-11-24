@@ -1,7 +1,7 @@
 package net.minecraft.util.math;
 
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -389,14 +389,14 @@ public class MathHelper
         return getCoordinateRandom(pos.getX(), pos.getY(), pos.getZ());
     }
 
-    public static UUID getRandomUUID(EaglercraftRandom rand)
+    public static EaglercraftUUID getRandomUUID(EaglercraftRandom rand)
     {
         long i = rand.nextLong() & -61441L | 16384L;
         long j = rand.nextLong() & 4611686018427387903L | Long.MIN_VALUE;
-        return new UUID(i, j);
+        return new EaglercraftUUID(i, j);
     }
 
-    public static UUID getRandomUUID()
+    public static EaglercraftUUID getRandomUUID()
     {
         return getRandomUUID(RANDOM);
     }

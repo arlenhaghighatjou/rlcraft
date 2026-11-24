@@ -1,6 +1,6 @@
 package net.minecraft.entity.projectile;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,7 +20,7 @@ public class EntityEvokerFangs extends Entity
     private int lifeTicks;
     private boolean clientSideAttackStarted;
     private EntityLivingBase caster;
-    private UUID casterUuid;
+    private EaglercraftUUID casterUuid;
 
     public EntityEvokerFangs(World worldIn)
     {

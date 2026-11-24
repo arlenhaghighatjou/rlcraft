@@ -1,6 +1,6 @@
 package net.minecraft.command.server;
 
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;

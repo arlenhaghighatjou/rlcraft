@@ -1,7 +1,7 @@
 package net.minecraft.entity.passive;
 
 import com.google.common.base.Predicate;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -527,7 +527,7 @@ public class EntityWolf extends EntityTameable
     public EntityWolf createChild(EntityAgeable ageable)
     {
         EntityWolf entitywolf = new EntityWolf(this.world);
-        UUID uuid = this.getOwnerId();
+        EaglercraftUUID uuid = this.getOwnerId();
 
         if (uuid != null)
         {

@@ -37,7 +37,7 @@ import net.minecraftforge.registries.RegistryManager;
 
 import org.apache.commons.lang3.Validate;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 
 import javax.annotation.Nullable;
 import javax.annotation.Nonnull;

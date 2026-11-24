@@ -6,7 +6,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import com.mojang.authlib.Agent;
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import com.mojang.authlib.ProfileLookupCallback;
 import com.mojang.authlib.yggdrasil.ProfileNotFoundException;
 import java.io.File;
@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
@@ -57,7 +57,7 @@ public class PreYggdrasilConverter
         {
             for (String s : astring)
             {
-                UUID uuid = EntityPlayer.getUUID(new GameProfile((UUID)null, s));
+                EaglercraftUUID uuid = EntityPlayer.getUUID(new GameProfile((EaglercraftUUID)null, s));
                 GameProfile gameprofile = new GameProfile(uuid, s);
                 callback.onProfileLookupSucceeded(gameprofile);
             }
@@ -94,7 +94,7 @@ public class PreYggdrasilConverter
             }
             else
             {
-                return EntityPlayer.getUUID(new GameProfile((UUID)null, username)).toString();
+                return EntityPlayer.getUUID(new GameProfile((EaglercraftUUID)null, username)).toString();
             }
         }
         else
@@ -405,7 +405,7 @@ public class PreYggdrasilConverter
                     public void onProfileLookupSucceeded(GameProfile p_onProfileLookupSucceeded_1_)
                     {
                         server.getPlayerProfileCache().addEntry(p_onProfileLookupSucceeded_1_);
-                        UUID uuid = p_onProfileLookupSucceeded_1_.getId();
+                        EaglercraftUUID uuid = p_onProfileLookupSucceeded_1_.getId();
 
                         if (uuid == null)
                         {

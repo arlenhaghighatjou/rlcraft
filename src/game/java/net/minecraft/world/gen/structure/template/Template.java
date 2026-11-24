@@ -6,7 +6,7 @@ import com.google.common.collect.Maps;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -303,7 +303,7 @@ public class Template
                 nbttaglist.appendTag(new NBTTagDouble(vec3d1.y));
                 nbttaglist.appendTag(new NBTTagDouble(vec3d1.z));
                 nbttagcompound.setTag("Pos", nbttaglist);
-                nbttagcompound.setUniqueId("UUID", UUID.randomUUID());
+                nbttagcompound.setUniqueId("UUID", EaglercraftUUID.randomUUID());
                 Entity entity;
 
                 try

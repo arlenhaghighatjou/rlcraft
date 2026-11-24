@@ -3,7 +3,7 @@ package net.minecraft.block.state.pattern;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Predicate;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.LoadingCache;
+import net.lax1dude.eaglercraft.v1_8.cache.EaglerLoadingCache;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.BlockWorldState;
 import net.minecraft.util.EnumFacing;
@@ -59,7 +59,7 @@ public class BlockPattern
     }
 
     @Nullable
-    private BlockPattern.PatternHelper checkPatternAt(BlockPos pos, EnumFacing finger, EnumFacing thumb, LoadingCache<BlockPos, BlockWorldState> lcache)
+    private BlockPattern.PatternHelper checkPatternAt(BlockPos pos, EnumFacing finger, EnumFacing thumb, EaglerLoadingCache<BlockPos, BlockWorldState> lcache)
     {
         for (int i = 0; i < this.palmLength; ++i)
         {
@@ -81,7 +81,7 @@ public class BlockPattern
     @Nullable
     public BlockPattern.PatternHelper match(World worldIn, BlockPos pos)
     {
-        LoadingCache<BlockPos, BlockWorldState> loadingcache = createLoadingCache(worldIn, false);
+        EaglerLoadingCache<BlockPos, BlockWorldState> loadingcache = createLoadingCache(worldIn, false);
         int i = Math.max(Math.max(this.palmLength, this.thumbLength), this.fingerLength);
 
         for (BlockPos blockpos : BlockPos.getAllInBox(pos, pos.add(i - 1, i - 1, i - 1)))
@@ -106,7 +106,7 @@ public class BlockPattern
         return null;
     }
 
-    public static LoadingCache<BlockPos, BlockWorldState> createLoadingCache(World worldIn, boolean forceLoadIn)
+    public static EaglerLoadingCache<BlockPos, BlockWorldState> createLoadingCache(World worldIn, boolean forceLoadIn)
     {
         return CacheBuilder.newBuilder().<BlockPos, BlockWorldState>build(new BlockPattern.CacheLoader(worldIn, forceLoadIn));
     }
@@ -148,12 +148,12 @@ public class BlockPattern
             private final BlockPos frontTopLeft;
             private final EnumFacing forwards;
             private final EnumFacing up;
-            private final LoadingCache<BlockPos, BlockWorldState> lcache;
+            private final EaglerLoadingCache<BlockPos, BlockWorldState> lcache;
             private final int width;
             private final int height;
             private final int depth;
 
-            public PatternHelper(BlockPos posIn, EnumFacing fingerIn, EnumFacing thumbIn, LoadingCache<BlockPos, BlockWorldState> lcacheIn, int widthIn, int heightIn, int depthIn)
+            public PatternHelper(BlockPos posIn, EnumFacing fingerIn, EnumFacing thumbIn, EaglerLoadingCache<BlockPos, BlockWorldState> lcacheIn, int widthIn, int heightIn, int depthIn)
             {
                 this.frontTopLeft = posIn;
                 this.forwards = fingerIn;

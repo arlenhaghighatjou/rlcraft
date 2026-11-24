@@ -19,7 +19,7 @@
 
 package net.minecraftforge.fml.common.network.simpleimpl;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 
 /**
  * Implement this interface for each message you wish to define.

@@ -3,9 +3,9 @@ package net.minecraft.nbt;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.collect.UnmodifiableIterator;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.Property;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -41,11 +41,11 @@ public final class NBTUtil
 
         try
         {
-            UUID uuid;
+            EaglercraftUUID uuid;
 
             try
             {
-                uuid = UUID.fromString(s1);
+                uuid = EaglercraftUUID.fromString(s1);
             }
             catch (Throwable var12)
             {
@@ -205,7 +205,7 @@ public final class NBTUtil
         }
     }
 
-    public static NBTTagCompound createUUIDTag(UUID uuid)
+    public static NBTTagCompound createUUIDTag(EaglercraftUUID uuid)
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         nbttagcompound.setLong("M", uuid.getMostSignificantBits());
@@ -213,9 +213,9 @@ public final class NBTUtil
         return nbttagcompound;
     }
 
-    public static UUID getUUIDFromTag(NBTTagCompound tag)
+    public static EaglercraftUUID getUUIDFromTag(NBTTagCompound tag)
     {
-        return new UUID(tag.getLong("M"), tag.getLong("L"));
+        return new EaglercraftUUID(tag.getLong("M"), tag.getLong("L"));
     }
 
     public static BlockPos getPosFromTag(NBTTagCompound tag)

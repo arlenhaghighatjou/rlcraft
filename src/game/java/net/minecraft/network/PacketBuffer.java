@@ -1,9 +1,9 @@
 package net.minecraft.network;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import io.netty.buffer.ByteBufInputStream;
-import io.netty.buffer.ByteBufOutputStream;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBufInputStream;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBufOutputStream;
 import io.netty.handler.codec.DecoderException;
 import io.netty.handler.codec.EncoderException;
 import io.netty.util.ByteProcessor;
@@ -18,7 +18,7 @@ import java.nio.channels.ScatteringByteChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -239,16 +239,16 @@ public class PacketBuffer extends ByteBuf
         return i;
     }
 
-    public PacketBuffer writeUniqueId(UUID uuid)
+    public PacketBuffer writeUniqueId(EaglercraftUUID uuid)
     {
         this.writeLong(uuid.getMostSignificantBits());
         this.writeLong(uuid.getLeastSignificantBits());
         return this;
     }
 
-    public UUID readUniqueId()
+    public EaglercraftUUID readUniqueId()
     {
-        return new UUID(this.readLong(), this.readLong());
+        return new EaglercraftUUID(this.readLong(), this.readLong());
     }
 
     public PacketBuffer writeVarInt(int input)

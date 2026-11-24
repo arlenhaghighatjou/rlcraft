@@ -23,17 +23,17 @@ import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 
 import com.google.common.collect.Maps;
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 
 import net.minecraft.world.WorldServer;
 
 //To be expanded for generic Mod fake players?
 public class FakePlayerFactory
 {
-    private static GameProfile MINECRAFT = new GameProfile(UUID.fromString("41C82C87-7AfB-4024-BA57-13D2C99CAE77"), "[Minecraft]");
+    private static GameProfile MINECRAFT = new GameProfile(EaglercraftUUID.fromString("41C82C87-7AfB-4024-BA57-13D2C99CAE77"), "[Minecraft]");
     // Map of all active fake player usernames to their entities
     private static Map<GameProfile, FakePlayer> fakePlayers = Maps.newHashMap();
     private static WeakReference<FakePlayer> MINECRAFT_PLAYER = null;

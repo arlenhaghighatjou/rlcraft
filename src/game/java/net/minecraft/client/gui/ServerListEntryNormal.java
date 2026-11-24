@@ -1,9 +1,9 @@
 package net.minecraft.client.gui;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufInputStream;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBufInputStream;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import io.netty.handler.codec.base64.Base64;
 import java.awt.image.BufferedImage;
 import java.net.UnknownHostException;

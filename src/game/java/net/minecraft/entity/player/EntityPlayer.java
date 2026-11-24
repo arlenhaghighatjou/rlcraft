@@ -2,10 +2,10 @@ package net.minecraft.entity.player;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
@@ -2334,9 +2334,9 @@ public abstract class EntityPlayer extends EntityLivingBase
         return ((Float)this.getDataManager().get(ABSORPTION)).floatValue();
     }
 
-    public static UUID getUUID(GameProfile profile)
+    public static EaglercraftUUID getUUID(GameProfile profile)
     {
-        UUID uuid = profile.getId();
+        EaglercraftUUID uuid = profile.getId();
 
         if (uuid == null)
         {
@@ -2346,9 +2346,9 @@ public abstract class EntityPlayer extends EntityLivingBase
         return uuid;
     }
 
-    public static UUID getOfflineUUID(String username)
+    public static EaglercraftUUID getOfflineUUID(String username)
     {
-        return UUID.nameUUIDFromBytes(("OfflinePlayer:" + username).getBytes(StandardCharsets.UTF_8));
+        return EaglercraftUUID.nameUUIDFromBytes(("OfflinePlayer:" + username).getBytes(StandardCharsets.UTF_8));
     }
 
     public boolean canOpen(LockCode code)

@@ -2,12 +2,11 @@ package net.minecraft.world.chunk;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Queues;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -66,7 +65,7 @@ public class Chunk implements net.minecraftforge.common.capabilities.ICapability
     private int heightMapMinimum;
     private long inhabitedTime;
     private int queuedLightChecks;
-    private final ConcurrentLinkedQueue<BlockPos> tileEntityPosQueue;
+    private final ArrayDeque<BlockPos> tileEntityPosQueue;
     public boolean unloadQueued;
 
     public Chunk(World worldIn, int x, int z)
@@ -77,7 +76,7 @@ public class Chunk implements net.minecraftforge.common.capabilities.ICapability
         this.updateSkylightColumns = new boolean[256];
         this.tileEntities = Maps.<BlockPos, TileEntity>newHashMap();
         this.queuedLightChecks = 4096;
-        this.tileEntityPosQueue = Queues.<BlockPos>newConcurrentLinkedQueue();
+        this.tileEntityPosQueue = new ArrayDeque<>();
         this.entityLists = (ClassInheritanceMultiMap[])(new ClassInheritanceMultiMap[16]);
         this.world = worldIn;
         this.x = x;

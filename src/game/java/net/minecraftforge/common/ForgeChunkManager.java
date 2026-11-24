@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.WeakHashMap;
 
 import javax.annotation.Nullable;
@@ -107,7 +107,7 @@ public class ForgeChunkManager
     private static Map<String, LoadingCallback> callbacks = Maps.newHashMap();
 
     private static Map<World, ImmutableSetMultimap<ChunkPos,Ticket>> forcedChunks = Collections.synchronizedMap(new WeakHashMap<>());
-    private static BiMap<UUID,Ticket> pendingEntities = HashBiMap.create();
+    private static BiMap<EaglercraftUUID,Ticket> pendingEntities = HashBiMap.create();
 
     private static Map<World,Cache<Long, ChunkEntry>> dormantChunkCache = new MapMaker().weakKeys().makeMap();
 
@@ -544,7 +544,7 @@ public class ForgeChunkManager
                     {
                         tick.entityChunkX = ticket.getInteger("chunkX");
                         tick.entityChunkZ = ticket.getInteger("chunkZ");
-                        UUID uuid = new UUID(ticket.getLong("PersistentIDMSB"), ticket.getLong("PersistentIDLSB"));
+                        EaglercraftUUID uuid = new EaglercraftUUID(ticket.getLong("PersistentIDMSB"), ticket.getLong("PersistentIDLSB"));
                         // add the ticket to the "pending entity" list
                         pendingEntities.put(uuid, tick);
                     }
@@ -967,7 +967,7 @@ public class ForgeChunkManager
 
     static void loadEntity(Entity entity)
     {
-        UUID id = entity.getPersistentID();
+        EaglercraftUUID id = entity.getPersistentID();
         Ticket tick = pendingEntities.get(id);
         if (tick != null)
         {

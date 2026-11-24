@@ -1,6 +1,6 @@
 package net.minecraft.client.resources;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -16,17 +16,17 @@ public class DefaultPlayerSkin
         return TEXTURE_STEVE;
     }
 
-    public static ResourceLocation getDefaultSkin(UUID playerUUID)
+    public static ResourceLocation getDefaultSkin(EaglercraftUUID playerUUID)
     {
         return isSlimSkin(playerUUID) ? TEXTURE_ALEX : TEXTURE_STEVE;
     }
 
-    public static String getSkinType(UUID playerUUID)
+    public static String getSkinType(EaglercraftUUID playerUUID)
     {
         return isSlimSkin(playerUUID) ? "slim" : "default";
     }
 
-    private static boolean isSlimSkin(UUID playerUUID)
+    private static boolean isSlimSkin(EaglercraftUUID playerUUID)
     {
         return (playerUUID.hashCode() & 1) == 1;
     }

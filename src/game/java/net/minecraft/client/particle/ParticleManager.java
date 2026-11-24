@@ -2,7 +2,6 @@ package net.minecraft.client.particle;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Queues;
 import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.List;
@@ -41,11 +40,11 @@ public class ParticleManager
     private static final ResourceLocation PARTICLE_TEXTURES = new ResourceLocation("textures/particle/particles.png");
     protected World world;
     private final ArrayDeque<Particle>[][] fxLayers = new ArrayDeque[4][];
-    private final Queue<ParticleEmitter> particleEmitters = Queues.<ParticleEmitter>newArrayDeque();
+    private final Queue<ParticleEmitter> particleEmitters = new ArrayDeque<>();
     private final TextureManager renderer;
     private final EaglercraftRandom rand = new EaglercraftRandom();
     private final Map<Integer, IParticleFactory> particleTypes = Maps.<Integer, IParticleFactory>newHashMap();
-    private final Queue<Particle> queue = Queues.<Particle>newArrayDeque();
+    private final Queue<Particle> queue = new ArrayDeque<>();
 
     public ParticleManager(World worldIn, TextureManager rendererIn)
     {
@@ -58,7 +57,7 @@ public class ParticleManager
 
             for (int j = 0; j < 2; ++j)
             {
-                this.fxLayers[i][j] = Queues.newArrayDeque();
+                this.fxLayers[i][j] = new ArrayDeque<>();
             }
         }
 

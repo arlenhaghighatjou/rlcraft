@@ -1,6 +1,6 @@
 package net.minecraft.entity.monster;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
@@ -36,7 +36,7 @@ public class EntityZombieVillager extends EntityZombie
     private static final DataParameter<Boolean> CONVERTING = EntityDataManager.<Boolean>createKey(EntityZombieVillager.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> PROFESSION = EntityDataManager.<Integer>createKey(EntityZombieVillager.class, DataSerializers.VARINT);
     private int conversionTime;
-    private UUID converstionStarter;
+    private EaglercraftUUID converstionStarter;
 
     public EntityZombieVillager(World worldIn)
     {
@@ -155,7 +155,7 @@ public class EntityZombieVillager extends EntityZombie
         return ((Boolean)this.getDataManager().get(CONVERTING)).booleanValue();
     }
 
-    protected void startConverting(@Nullable UUID conversionStarterIn, int conversionTimeIn)
+    protected void startConverting(@Nullable EaglercraftUUID conversionStarterIn, int conversionTimeIn)
     {
         this.converstionStarter = conversionStarterIn;
         this.conversionTime = conversionTimeIn;

@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import com.google.common.cache.LoadingCache;
+import net.lax1dude.eaglercraft.v1_8.cache.EaglerLoadingCache;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
@@ -305,7 +305,7 @@ public class BlockPortal extends BlockBreakable
     {
         EnumFacing.Axis enumfacing$axis = EnumFacing.Axis.Z;
         BlockPortal.Size blockportal$size = new BlockPortal.Size(worldIn, p_181089_2_, EnumFacing.Axis.X);
-        LoadingCache<BlockPos, BlockWorldState> loadingcache = BlockPattern.createLoadingCache(worldIn, true);
+        EaglerLoadingCache<BlockPos, BlockWorldState> loadingcache = BlockPattern.createLoadingCache(worldIn, true);
 
         if (!blockportal$size.isValid())
         {

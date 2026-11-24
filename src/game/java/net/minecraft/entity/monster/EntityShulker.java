@@ -3,7 +3,7 @@ package net.minecraft.entity.monster;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonExtension;
@@ -50,7 +50,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityShulker extends EntityGolem implements IMob
 {
-    private static final UUID COVERED_ARMOR_BONUS_ID = UUID.fromString("7E0292F2-9434-48D5-A29F-9583AF7DF27F");
+    private static final EaglercraftUUID COVERED_ARMOR_BONUS_ID = EaglercraftUUID.fromString("7E0292F2-9434-48D5-A29F-9583AF7DF27F");
     private static final AttributeModifier COVERED_ARMOR_BONUS_MODIFIER = (new AttributeModifier(COVERED_ARMOR_BONUS_ID, "Covered armor bonus", 20.0D, 0)).setSaved(false);
     protected static final DataParameter<EnumFacing> ATTACHED_FACE = EntityDataManager.<EnumFacing>createKey(EntityShulker.class, DataSerializers.FACING);
     protected static final DataParameter<Optional<BlockPos>> ATTACHED_BLOCK_POS = EntityDataManager.<Optional<BlockPos>>createKey(EntityShulker.class, DataSerializers.OPTIONAL_BLOCK_POS);
