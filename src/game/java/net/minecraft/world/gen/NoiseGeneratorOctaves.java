@@ -1,6 +1,6 @@
 package net.minecraft.world.gen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.MathHelper;
 
 public class NoiseGeneratorOctaves extends NoiseGenerator
@@ -8,7 +8,7 @@ public class NoiseGeneratorOctaves extends NoiseGenerator
     private final NoiseGeneratorImproved[] generatorCollection;
     private final int octaves;
 
-    public NoiseGeneratorOctaves(Random seed, int octavesIn)
+    public NoiseGeneratorOctaves(EaglercraftRandom seed, int octavesIn)
     {
         this.octaves = octavesIn;
         this.generatorCollection = new NoiseGeneratorImproved[octavesIn];

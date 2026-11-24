@@ -7,7 +7,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -342,7 +342,7 @@ public class EntityParrot extends EntityShoulderRiding implements EntityFlying
         return getAmbientSound(this.rand);
     }
 
-    private static SoundEvent getAmbientSound(Random random)
+    private static SoundEvent getAmbientSound(EaglercraftRandom random)
     {
         if (random.nextInt(1000) == 0)
         {
@@ -387,7 +387,7 @@ public class EntityParrot extends EntityShoulderRiding implements EntityFlying
         return getPitch(this.rand);
     }
 
-    private static float getPitch(Random random)
+    private static float getPitch(EaglercraftRandom random)
     {
         return (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F;
     }

@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -46,12 +46,12 @@ public class BlockDeadBush extends BlockBush implements net.minecraftforge.commo
         return true;
     }
 
-    public int quantityDropped(Random random)
+    public int quantityDropped(EaglercraftRandom random)
     {
         return random.nextInt(3);
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Items.STICK;
     }

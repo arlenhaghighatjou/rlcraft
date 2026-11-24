@@ -1,6 +1,6 @@
 package net.minecraft.world.biome;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.BlockOldLog;
@@ -55,7 +55,7 @@ public class BiomeJungle extends Biome
         this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityChicken.class, 10, 4, 4));
     }
 
-    public WorldGenAbstractTree getRandomTreeFeature(Random rand)
+    public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand)
     {
         if (rand.nextInt(10) == 0)
         {
@@ -71,12 +71,12 @@ public class BiomeJungle extends Biome
         }
     }
 
-    public WorldGenerator getRandomWorldGenForGrass(Random rand)
+    public WorldGenerator getRandomWorldGenForGrass(EaglercraftRandom rand)
     {
         return rand.nextInt(4) == 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);
     }
 
-    public void decorate(World worldIn, Random rand, BlockPos pos)
+    public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos)
     {
         super.decorate(worldIn, rand, pos);
         int i = rand.nextInt(16) + 8;

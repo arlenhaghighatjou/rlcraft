@@ -2,7 +2,7 @@ package net.minecraft.world.gen.feature;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 public class WorldGenBigTree extends WorldGenAbstractTree
 {
-    private Random rand;
+    private EaglercraftRandom rand;
     private World world;
     private BlockPos basePos = BlockPos.ORIGIN;
     int heightLimit;
@@ -284,11 +284,11 @@ public class WorldGenBigTree extends WorldGenAbstractTree
         this.leafDistanceLimit = 5;
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position)
     {
         this.world = worldIn;
         this.basePos = position;
-        this.rand = new Random(rand.nextLong());
+        this.rand = new EaglercraftRandom(rand.nextLong());
 
         if (this.heightLimit == 0)
         {

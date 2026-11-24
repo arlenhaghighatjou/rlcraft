@@ -1,6 +1,6 @@
 package net.minecraft.enchantment;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -33,7 +33,7 @@ public class EnchantmentDurability extends Enchantment
         return stack.isItemStackDamageable() ? true : super.canApply(stack);
     }
 
-    public static boolean negateDamage(ItemStack stack, int level, Random rand)
+    public static boolean negateDamage(ItemStack stack, int level, EaglercraftRandom rand)
     {
         if (stack.getItem() instanceof ItemArmor && rand.nextFloat() < 0.6F)
         {

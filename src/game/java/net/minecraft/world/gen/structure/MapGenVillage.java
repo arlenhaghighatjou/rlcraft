@@ -3,7 +3,7 @@ package net.minecraft.world.gen.structure;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.minecraft.init.Biomes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -64,7 +64,7 @@ public class MapGenVillage extends MapGenStructure
 
         int k = chunkX / this.distance;
         int l = chunkZ / this.distance;
-        Random random = this.world.setRandomSeed(k, l, 10387312);
+        EaglercraftRandom random = this.world.setRandomSeed(k, l, 10387312);
         k = k * this.distance;
         l = l * this.distance;
         k = k + random.nextInt(this.distance - 8);
@@ -102,7 +102,7 @@ public class MapGenVillage extends MapGenStructure
             {
             }
 
-            public Start(World worldIn, Random rand, int x, int z, int size)
+            public Start(World worldIn, EaglercraftRandom rand, int x, int z, int size)
             {
                 super(x, z);
                 List<StructureVillagePieces.PieceWeight> list = StructureVillagePieces.getStructureVillageWeightedPieceList(rand, size);

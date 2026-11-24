@@ -1,7 +1,7 @@
 package net.minecraft.world.gen.structure;
 
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.minecraft.block.BlockFlowerPot;
 import net.minecraft.block.BlockLever;
@@ -52,7 +52,7 @@ public class ComponentScatteredFeaturePieces
             {
             }
 
-            public DesertPyramid(Random p_i2062_1_, int p_i2062_2_, int p_i2062_3_)
+            public DesertPyramid(EaglercraftRandom p_i2062_1_, int p_i2062_2_, int p_i2062_3_)
             {
                 super(p_i2062_1_, p_i2062_2_, 64, p_i2062_3_, 21, 15, 21);
             }
@@ -75,7 +75,7 @@ public class ComponentScatteredFeaturePieces
                 this.hasPlacedChest[3] = tagCompound.getBoolean("hasPlacedChest3");
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 this.fillWithBlocks(worldIn, structureBoundingBoxIn, 0, -4, 0, this.width - 1, 0, this.depth - 1, Blocks.SANDSTONE.getDefaultState(), Blocks.SANDSTONE.getDefaultState(), false);
 
@@ -289,7 +289,7 @@ public class ComponentScatteredFeaturePieces
             {
             }
 
-            protected Feature(Random rand, int x, int y, int z, int sizeX, int sizeY, int sizeZ)
+            protected Feature(EaglercraftRandom rand, int x, int y, int z, int sizeX, int sizeY, int sizeZ)
             {
                 super(0);
                 this.width = sizeX;
@@ -373,12 +373,12 @@ public class ComponentScatteredFeaturePieces
             {
             }
 
-            public Igloo(Random rand, int x, int z)
+            public Igloo(EaglercraftRandom rand, int x, int z)
             {
                 super(rand, x, 64, z, 7, 5, 8);
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 if (!this.offsetToAverageGroundLevel(worldIn, structureBoundingBoxIn, -1))
                 {
@@ -449,7 +449,7 @@ public class ComponentScatteredFeaturePieces
             {
             }
 
-            public JunglePyramid(Random rand, int x, int z)
+            public JunglePyramid(EaglercraftRandom rand, int x, int z)
             {
                 super(rand, x, 64, z, 12, 10, 15);
             }
@@ -472,7 +472,7 @@ public class ComponentScatteredFeaturePieces
                 this.placedTrap2 = tagCompound.getBoolean("placedTrap2");
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 if (!this.offsetToAverageGroundLevel(worldIn, structureBoundingBoxIn, 0))
                 {
@@ -675,7 +675,7 @@ public class ComponentScatteredFeaturePieces
                     {
                     }
 
-                    public void selectBlocks(Random rand, int x, int y, int z, boolean wall)
+                    public void selectBlocks(EaglercraftRandom rand, int x, int y, int z, boolean wall)
                     {
                         if (rand.nextFloat() < 0.4F)
                         {
@@ -697,7 +697,7 @@ public class ComponentScatteredFeaturePieces
             {
             }
 
-            public SwampHut(Random p_i2066_1_, int p_i2066_2_, int p_i2066_3_)
+            public SwampHut(EaglercraftRandom p_i2066_1_, int p_i2066_2_, int p_i2066_3_)
             {
                 super(p_i2066_1_, p_i2066_2_, 64, p_i2066_3_, 7, 7, 9);
             }
@@ -714,7 +714,7 @@ public class ComponentScatteredFeaturePieces
                 this.hasWitch = tagCompound.getBoolean("Witch");
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 if (!this.offsetToAverageGroundLevel(worldIn, structureBoundingBoxIn, 0))
                 {

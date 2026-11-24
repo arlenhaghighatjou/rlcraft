@@ -1,7 +1,7 @@
 package net.minecraft.world.gen;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
@@ -35,7 +35,7 @@ public class ChunkGeneratorHell implements IChunkGenerator
     protected static final IBlockState SOUL_SAND = Blocks.SOUL_SAND.getDefaultState();
     private final World world;
     private final boolean generateStructures;
-    private final Random rand;
+    private final EaglercraftRandom rand;
     private double[] slowsandNoise = new double[256];
     private double[] gravelNoise = new double[256];
     private double[] depthBuffer = new double[256];
@@ -68,7 +68,7 @@ public class ChunkGeneratorHell implements IChunkGenerator
     {
         this.world = worldIn;
         this.generateStructures = p_i45637_2_;
-        this.rand = new Random(seed);
+        this.rand = new EaglercraftRandom(seed);
         this.lperlinNoise1 = new NoiseGeneratorOctaves(this.rand, 16);
         this.lperlinNoise2 = new NoiseGeneratorOctaves(this.rand, 16);
         this.perlinNoise1 = new NoiseGeneratorOctaves(this.rand, 8);

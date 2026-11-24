@@ -1,6 +1,6 @@
 package net.minecraft.util.math;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.UUID;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -9,7 +9,7 @@ public class MathHelper
 {
     public static final float SQRT_2 = sqrt(2.0F);
     private static final float[] SIN_TABLE = new float[65536];
-    private static final Random RANDOM = new Random();
+    private static final EaglercraftRandom RANDOM = new EaglercraftRandom();
     private static final int[] MULTIPLY_DE_BRUIJN_BIT_POSITION;
     private static final double FRAC_BIAS;
     private static final double[] ASINE_TAB;
@@ -156,17 +156,17 @@ public class MathHelper
         return p_76137_0_ < 0 ? -((-p_76137_0_ - 1) / p_76137_1_) - 1 : p_76137_0_ / p_76137_1_;
     }
 
-    public static int getInt(Random random, int minimum, int maximum)
+    public static int getInt(EaglercraftRandom random, int minimum, int maximum)
     {
         return minimum >= maximum ? minimum : random.nextInt(maximum - minimum + 1) + minimum;
     }
 
-    public static float nextFloat(Random random, float minimum, float maximum)
+    public static float nextFloat(EaglercraftRandom random, float minimum, float maximum)
     {
         return minimum >= maximum ? minimum : random.nextFloat() * (maximum - minimum) + minimum;
     }
 
-    public static double nextDouble(Random random, double minimum, double maximum)
+    public static double nextDouble(EaglercraftRandom random, double minimum, double maximum)
     {
         return minimum >= maximum ? minimum : random.nextDouble() * (maximum - minimum) + minimum;
     }
@@ -389,7 +389,7 @@ public class MathHelper
         return getCoordinateRandom(pos.getX(), pos.getY(), pos.getZ());
     }
 
-    public static UUID getRandomUUID(Random rand)
+    public static UUID getRandomUUID(EaglercraftRandom rand)
     {
         long i = rand.nextLong() & -61441L | 16384L;
         long j = rand.nextLong() & 4611686018427387903L | Long.MIN_VALUE;

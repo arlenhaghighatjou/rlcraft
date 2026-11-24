@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -68,12 +68,12 @@ public class BlockEnderChest extends BlockContainer
         return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Item.getItemFromBlock(Blocks.OBSIDIAN);
     }
 
-    public int quantityDropped(Random random)
+    public int quantityDropped(EaglercraftRandom random)
     {
         return 8;
     }
@@ -128,7 +128,7 @@ public class BlockEnderChest extends BlockContainer
     }
 
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand)
     {
         for (int i = 0; i < 3; ++i)
         {

@@ -19,7 +19,7 @@
 
 package net.minecraftforge.event.terraingen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraftforge.common.MinecraftForge;
@@ -44,10 +44,10 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 public class OreGenEvent extends Event
 {
     private final World world;
-    private final Random rand;
+    private final EaglercraftRandom rand;
     private final BlockPos pos;
 
-    public OreGenEvent(World world, Random rand, BlockPos pos)
+    public OreGenEvent(World world, EaglercraftRandom rand, BlockPos pos)
     {
         this.world = world;
         this.rand = rand;
@@ -59,7 +59,7 @@ public class OreGenEvent extends Event
         return world;
     }
 
-    public Random getRand()
+    public EaglercraftRandom getRand()
     {
         return rand;
     }
@@ -72,7 +72,7 @@ public class OreGenEvent extends Event
     /**
      * OreGenEvent.Pre is fired just before a chunk is populated with ores.<br>
      * This event is fired just before ore generation in
-     * {@link BiomeDecorator#generateOres(World, Random)}.<br>
+     * {@link BiomeDecorator#generateOres(World, EaglercraftRandom)}.<br>
      * <br>
      * This event is not {@link Cancelable}.<br>
      * <br>
@@ -82,7 +82,7 @@ public class OreGenEvent extends Event
      **/
     public static class Pre extends OreGenEvent
     {
-        public Pre(World world, Random rand, BlockPos pos)
+        public Pre(World world, EaglercraftRandom rand, BlockPos pos)
         {
             super(world, rand, pos);
         }
@@ -91,7 +91,7 @@ public class OreGenEvent extends Event
     /**
      * OreGenEvent.Post is fired just after a chunk is populated with ores.<br>
      * This event is fired just after ore generation in
-     * {@link BiomeDecorator#generateOres(World, Random)}.<br>
+     * {@link BiomeDecorator#generateOres(World, EaglercraftRandom)}.<br>
      * <br>
      * This event is not {@link Cancelable}.<br>
      * <br>
@@ -101,7 +101,7 @@ public class OreGenEvent extends Event
      **/
     public static class Post extends OreGenEvent
     {
-        public Post(World world, Random rand, BlockPos pos)
+        public Post(World world, EaglercraftRandom rand, BlockPos pos)
         {
             super(world, rand, pos);
         }
@@ -110,7 +110,7 @@ public class OreGenEvent extends Event
     /**
      * GenerateMinable is fired when a mineable block is generated in a chunk.<br>
      * This event is fired just after ore generation in
-     * {@link BiomeDecorator#generateOres(World, Random)}.<br>
+     * {@link BiomeDecorator#generateOres(World, EaglercraftRandom)}.<br>
      * <br>
      * {@link #type} contains the enum value for the Ore attempting to be generated.<br>
      * {@link #generator} contains the WorldGenerator generating this ore. <br>
@@ -130,7 +130,7 @@ public class OreGenEvent extends Event
         private final EventType type;
         private final WorldGenerator generator;
 
-        public GenerateMinable(World world, Random rand, WorldGenerator generator, BlockPos pos, EventType type)
+        public GenerateMinable(World world, EaglercraftRandom rand, WorldGenerator generator, BlockPos pos, EventType type)
         {
             super(world, rand, pos);
             this.generator = generator;

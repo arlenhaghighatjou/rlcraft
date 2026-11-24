@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -30,7 +30,7 @@ public class BlockFrostedIce extends BlockIce
         return this.getDefaultState().withProperty(AGE, Integer.valueOf(MathHelper.clamp(meta, 0, 3)));
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         if ((rand.nextInt(3) == 0 || this.countNeighbors(worldIn, pos) < 4) && worldIn.getLightFromNeighbors(pos) > 11 - ((Integer)state.getValue(AGE)).intValue() - state.getLightOpacity())
         {
@@ -75,7 +75,7 @@ public class BlockFrostedIce extends BlockIce
         return i;
     }
 
-    protected void slightlyMelt(World worldIn, BlockPos pos, IBlockState state, Random rand, boolean meltNeighbors)
+    protected void slightlyMelt(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand, boolean meltNeighbors)
     {
         int i = ((Integer)state.getValue(AGE)).intValue();
 

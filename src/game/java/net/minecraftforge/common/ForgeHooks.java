@@ -29,7 +29,7 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -179,7 +179,7 @@ public class ForgeHooks
             this.seed = seed;
         }
         @Nonnull
-        public ItemStack getStack(Random rand, int fortune)
+        public ItemStack getStack(EaglercraftRandom rand, int fortune)
         {
             return seed.copy();
         }
@@ -187,7 +187,7 @@ public class ForgeHooks
     static final List<SeedEntry> seedList = new ArrayList<SeedEntry>();
 
     @Nonnull
-    public static ItemStack getGrassSeed(Random rand, int fortune)
+    public static ItemStack getGrassSeed(EaglercraftRandom rand, int fortune)
     {
         if (seedList.size() == 0)
         {
@@ -340,7 +340,7 @@ public class ForgeHooks
         {
             @Override
             @Nonnull
-            public ItemStack getStack(Random rand, int fortune)
+            public ItemStack getStack(EaglercraftRandom rand, int fortune)
             {
                 return new ItemStack(Items.WHEAT_SEEDS, 1 + rand.nextInt(fortune * 2 + 1));
             }

@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.UUID;
 import javax.annotation.Nullable;
@@ -512,7 +512,7 @@ public class EntityEnderman extends EntityMob
 
             public void updateTask()
             {
-                Random random = this.enderman.getRNG();
+                EaglercraftRandom random = this.enderman.getRNG();
                 World world = this.enderman.world;
                 int i = MathHelper.floor(this.enderman.posX - 1.0D + random.nextDouble() * 2.0D);
                 int j = MathHelper.floor(this.enderman.posY + random.nextDouble() * 2.0D);
@@ -577,7 +577,7 @@ public class EntityEnderman extends EntityMob
 
             public void updateTask()
             {
-                Random random = this.enderman.getRNG();
+                EaglercraftRandom random = this.enderman.getRNG();
                 World world = this.enderman.world;
                 int i = MathHelper.floor(this.enderman.posX - 2.0D + random.nextDouble() * 4.0D);
                 int j = MathHelper.floor(this.enderman.posY + random.nextDouble() * 3.0D);

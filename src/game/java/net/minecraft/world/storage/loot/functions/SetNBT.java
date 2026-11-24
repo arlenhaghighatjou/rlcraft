@@ -4,7 +4,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSyntaxException;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
@@ -24,7 +24,7 @@ public class SetNBT extends LootFunction
         this.tag = tagIn;
     }
 
-    public ItemStack apply(ItemStack stack, Random rand, LootContext context)
+    public ItemStack apply(ItemStack stack, EaglercraftRandom rand, LootContext context)
     {
         NBTTagCompound nbttagcompound = stack.getTagCompound();
 

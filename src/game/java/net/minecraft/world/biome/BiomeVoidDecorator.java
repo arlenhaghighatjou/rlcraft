@@ -1,13 +1,13 @@
 package net.minecraft.world.biome;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BiomeVoidDecorator extends BiomeDecorator
 {
-    public void decorate(World worldIn, Random random, Biome biome, BlockPos pos)
+    public void decorate(World worldIn, EaglercraftRandom random, Biome biome, BlockPos pos)
     {
         BlockPos blockpos = worldIn.getSpawnPoint();
         int i = 16;

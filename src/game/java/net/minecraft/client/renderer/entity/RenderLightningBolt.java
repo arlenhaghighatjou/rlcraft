@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -31,7 +31,7 @@ public class RenderLightningBolt extends Render<EntityLightningBolt>
         double[] adouble1 = new double[8];
         double d0 = 0.0D;
         double d1 = 0.0D;
-        Random random = new Random(entity.boltVertex);
+        EaglercraftRandom random = new EaglercraftRandom(entity.boltVertex);
 
         for (int i = 7; i >= 0; --i)
         {
@@ -43,7 +43,7 @@ public class RenderLightningBolt extends Render<EntityLightningBolt>
 
         for (int k1 = 0; k1 < 4; ++k1)
         {
-            Random random1 = new Random(entity.boltVertex);
+            EaglercraftRandom random1 = new EaglercraftRandom(entity.boltVertex);
 
             for (int j = 0; j < 3; ++j)
             {

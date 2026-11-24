@@ -1,6 +1,6 @@
 package net.minecraft.tileentity;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -15,7 +15,7 @@ import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 
 public class TileEntityDispenser extends TileEntityLockableLoot
 {
-    private static final Random RNG = new Random();
+    private static final EaglercraftRandom RNG = new EaglercraftRandom();
     private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(9, ItemStack.EMPTY);
 
     public int getSizeInventory()

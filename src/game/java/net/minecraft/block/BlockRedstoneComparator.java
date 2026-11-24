@@ -2,7 +2,7 @@ package net.minecraft.block;
 
 import com.google.common.base.Predicate;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -50,7 +50,7 @@ public class BlockRedstoneComparator extends BlockRedstoneDiode implements ITile
         return I18n.translateToLocal("item.comparator.name");
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Items.COMPARATOR;
     }
@@ -241,7 +241,7 @@ public class BlockRedstoneComparator extends BlockRedstoneDiode implements ITile
         }
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         if (this.isRepeaterPowered)
         {

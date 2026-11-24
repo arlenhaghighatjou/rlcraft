@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
@@ -38,7 +38,7 @@ public class BlockCocoa extends BlockHorizontal implements IGrowable
         this.setTickRandomly(true);
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         if (!this.canBlockStay(worldIn, pos, state))
         {
@@ -164,12 +164,12 @@ public class BlockCocoa extends BlockHorizontal implements IGrowable
         return ((Integer)state.getValue(AGE)).intValue() < 2;
     }
 
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state)
     {
         return true;
     }
 
-    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state)
     {
         worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(((Integer)state.getValue(AGE)).intValue() + 1)), 2);
     }

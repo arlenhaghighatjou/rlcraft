@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -134,12 +134,12 @@ public abstract class BlockLiquid extends Block
         return EnumBlockRenderType.LIQUID;
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Items.AIR;
     }
 
-    public int quantityDropped(Random random)
+    public int quantityDropped(EaglercraftRandom random)
     {
         return 0;
     }
@@ -308,7 +308,7 @@ public abstract class BlockLiquid extends Block
     }
 
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand)
     {
         double d0 = (double)pos.getX();
         double d1 = (double)pos.getY();

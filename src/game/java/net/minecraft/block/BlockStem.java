@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -62,7 +62,7 @@ public class BlockStem extends BlockBush implements IGrowable
         return state.getBlock() == Blocks.FARMLAND;
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         super.updateTick(worldIn, pos, state, rand);
 
@@ -149,7 +149,7 @@ public class BlockStem extends BlockBush implements IGrowable
         }
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Items.AIR;
     }
@@ -165,12 +165,12 @@ public class BlockStem extends BlockBush implements IGrowable
         return ((Integer)state.getValue(AGE)).intValue() != 7;
     }
 
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state)
     {
         return true;
     }
 
-    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state)
     {
         this.growStem(worldIn, pos, state);
     }

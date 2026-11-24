@@ -1,6 +1,6 @@
 package net.minecraft.enchantment;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Enchantments;
@@ -39,7 +39,7 @@ public class EnchantmentThorns extends Enchantment
 
     public void onUserHurt(EntityLivingBase user, Entity attacker, int level)
     {
-        Random random = user.getRNG();
+        EaglercraftRandom random = user.getRNG();
         ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.THORNS, user);
 
         if (shouldHit(level, random))
@@ -60,7 +60,7 @@ public class EnchantmentThorns extends Enchantment
         }
     }
 
-    public static boolean shouldHit(int level, Random rnd)
+    public static boolean shouldHit(int level, EaglercraftRandom rnd)
     {
         if (level <= 0)
         {
@@ -72,7 +72,7 @@ public class EnchantmentThorns extends Enchantment
         }
     }
 
-    public static int getDamage(int level, Random rnd)
+    public static int getDamage(int level, EaglercraftRandom rnd)
     {
         return level > 10 ? level - 10 : 1 + rnd.nextInt(4);
     }

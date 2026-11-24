@@ -1,6 +1,6 @@
 package net.minecraft.world.gen.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -22,7 +22,7 @@ public class WorldGenFlowers extends WorldGenerator
         this.state = flowerIn.getDefaultState().withProperty(flowerIn.getTypeProperty(), typeIn);
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position)
     {
         for (int i = 0; i < 64; ++i)
         {

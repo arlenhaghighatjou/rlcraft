@@ -1,6 +1,6 @@
 package net.minecraft.world.gen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class NoiseGeneratorImproved extends NoiseGenerator
 {
@@ -16,10 +16,10 @@ public class NoiseGeneratorImproved extends NoiseGenerator
 
     public NoiseGeneratorImproved()
     {
-        this(new Random());
+        this(new EaglercraftRandom());
     }
 
-    public NoiseGeneratorImproved(Random p_i45469_1_)
+    public NoiseGeneratorImproved(EaglercraftRandom p_i45469_1_)
     {
         this.permutations = new int[512];
         this.xCoord = p_i45469_1_.nextDouble() * 256.0D;

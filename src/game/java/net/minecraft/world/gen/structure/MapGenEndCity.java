@@ -1,6 +1,6 @@
 package net.minecraft.world.gen.structure;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -40,7 +40,7 @@ public class MapGenEndCity extends MapGenStructure
 
         int k = chunkX / 20;
         int l = chunkZ / 20;
-        Random random = this.world.setRandomSeed(k, l, 10387313);
+        EaglercraftRandom random = this.world.setRandomSeed(k, l, 10387313);
         k = k * 20;
         l = l * 20;
         k = k + (random.nextInt(9) + random.nextInt(9)) / 2;
@@ -70,7 +70,7 @@ public class MapGenEndCity extends MapGenStructure
 
     private static int getYPosForStructure(int p_191070_0_, int p_191070_1_, ChunkGeneratorEnd p_191070_2_)
     {
-        Random random = new Random((long)(p_191070_0_ + p_191070_1_ * 10387313));
+        EaglercraftRandom random = new EaglercraftRandom((long)(p_191070_0_ + p_191070_1_ * 10387313));
         Rotation rotation = Rotation.values()[random.nextInt(Rotation.values().length)];
         ChunkPrimer chunkprimer = new ChunkPrimer();
         p_191070_2_.setBlocksInChunk(p_191070_0_, p_191070_1_, chunkprimer);
@@ -107,15 +107,15 @@ public class MapGenEndCity extends MapGenStructure
             {
             }
 
-            public Start(World worldIn, ChunkGeneratorEnd chunkProvider, Random random, int chunkX, int chunkZ)
+            public Start(World worldIn, ChunkGeneratorEnd chunkProvider, EaglercraftRandom random, int chunkX, int chunkZ)
             {
                 super(chunkX, chunkZ);
                 this.create(worldIn, chunkProvider, random, chunkX, chunkZ);
             }
 
-            private void create(World worldIn, ChunkGeneratorEnd chunkProvider, Random rnd, int chunkX, int chunkZ)
+            private void create(World worldIn, ChunkGeneratorEnd chunkProvider, EaglercraftRandom rnd, int chunkX, int chunkZ)
             {
-                Random random = new Random((long)(chunkX + chunkZ * 10387313));
+                EaglercraftRandom random = new EaglercraftRandom((long)(chunkX + chunkZ * 10387313));
                 Rotation rotation = Rotation.values()[random.nextInt(Rotation.values().length)];
                 int i = MapGenEndCity.getYPosForStructure(chunkX, chunkZ, chunkProvider);
 

@@ -3,7 +3,7 @@ package net.minecraft.entity;
 import com.google.common.collect.Maps;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
@@ -538,7 +538,7 @@ public abstract class EntityLiving extends EntityLivingBase
                 lootcontext$builder = lootcontext$builder.withPlayer(this.attackingPlayer).withLuck(this.attackingPlayer.getLuck());
             }
 
-            for (ItemStack itemstack : loottable.generateLootForPools(this.deathLootTableSeed == 0L ? this.rand : new Random(this.deathLootTableSeed), lootcontext$builder.build()))
+            for (ItemStack itemstack : loottable.generateLootForPools(this.deathLootTableSeed == 0L ? this.rand : new EaglercraftRandom(this.deathLootTableSeed), lootcontext$builder.build()))
             {
                 this.entityDropItem(itemstack, 0.0F);
             }

@@ -19,7 +19,7 @@
 
 package net.minecraftforge.event.terraingen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.state.IBlockState;
@@ -33,10 +33,10 @@ import net.minecraftforge.event.world.WorldEvent;
 /**
  * SaplingGrowTreeEvent is fired when a sapling grows into a tree.<br>
  * This event is fired during sapling growth in
- * {@link BlockSapling#generateTree(World, BlockPos, IBlockState, Random)}.<br>
+ * {@link BlockSapling#generateTree(World, BlockPos, IBlockState, EaglercraftRandom)}.<br>
  * <br>
  * {@link #pos} contains the coordinates of the growing sapling. <br>
- * {@link #rand} contains an instance of Random for use. <br>
+ * {@link #rand} contains an instance of EaglercraftRandom for use. <br>
  * <br>
  * This event is not {@link Cancelable}.<br>
  * <br>
@@ -49,9 +49,9 @@ import net.minecraftforge.event.world.WorldEvent;
 public class SaplingGrowTreeEvent extends WorldEvent
 {
     private final BlockPos pos;
-    private final Random rand;
+    private final EaglercraftRandom rand;
 
-    public SaplingGrowTreeEvent(World world, Random rand, BlockPos pos)
+    public SaplingGrowTreeEvent(World world, EaglercraftRandom rand, BlockPos pos)
     {
         super(world);
         this.rand = rand;
@@ -63,7 +63,7 @@ public class SaplingGrowTreeEvent extends WorldEvent
         return pos;
     }
 
-    public Random getRand()
+    public EaglercraftRandom getRand()
     {
         return rand;
     }

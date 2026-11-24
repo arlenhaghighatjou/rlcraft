@@ -1,6 +1,6 @@
 package net.minecraft.entity.monster;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLiving;
@@ -315,7 +315,7 @@ public class EntityGhast extends EntityFlying implements IMob
 
             public void startExecuting()
             {
-                Random random = this.parentEntity.getRNG();
+                EaglercraftRandom random = this.parentEntity.getRNG();
                 double d0 = this.parentEntity.posX + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
                 double d1 = this.parentEntity.posY + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
                 double d2 = this.parentEntity.posZ + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);

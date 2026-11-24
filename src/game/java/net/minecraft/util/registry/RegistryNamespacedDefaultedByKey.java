@@ -1,6 +1,6 @@
 package net.minecraft.util.registry;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.apache.commons.lang3.Validate;
@@ -58,7 +58,7 @@ public class RegistryNamespacedDefaultedByKey<K, V> extends RegistryNamespaced<K
     }
 
     @Nonnull
-    public V getRandomObject(Random random)
+    public V getRandomObject(EaglercraftRandom random)
     {
         V v = (V)super.getRandomObject(random);
         return (V)(v == null ? this.defaultValue : v);

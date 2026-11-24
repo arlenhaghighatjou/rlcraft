@@ -3,7 +3,7 @@ package net.minecraft.block;
 import com.google.common.collect.Sets;
 import com.google.common.collect.UnmodifiableIterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.EnumPushReaction;
@@ -503,17 +503,17 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
         return true;
     }
 
-    public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random)
+    public void randomTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom random)
     {
         this.updateTick(worldIn, pos, state, random);
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
     }
 
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand)
     {
     }
 
@@ -543,12 +543,12 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
         }
     }
 
-    public int quantityDropped(Random random)
+    public int quantityDropped(EaglercraftRandom random)
     {
         return 1;
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Item.getItemFromBlock(this);
     }
@@ -756,7 +756,7 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
         return new ItemStack(item, 1, i);
     }
 
-    public int quantityDroppedWithBonus(int fortune, Random random)
+    public int quantityDroppedWithBonus(int fortune, EaglercraftRandom random)
     {
         return this.quantityDropped(random);
     }
@@ -956,7 +956,7 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
     //For ForgeInternal use Only!
     protected ThreadLocal<EntityPlayer> harvesters = new ThreadLocal();
     private ThreadLocal<IBlockState> silk_check_state = new ThreadLocal();
-    protected static java.util.Random RANDOM = new java.util.Random(); // Useful for random things without a seed.
+    protected static java.util.EaglercraftRandom RANDOM = new java.util.EaglercraftRandom(); // Useful for random things without a seed.
 
     /**
      * Gets the slipperiness at the given location at the given state. Normally
@@ -1277,15 +1277,15 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
     }
 
     /**
-     * State and fortune sensitive version, this replaces the old (int meta, Random rand)
+     * State and fortune sensitive version, this replaces the old (int meta, EaglercraftRandom rand)
      * version in 1.1.
      *
      * @param state Current state
      * @param fortune Current item fortune level
-     * @param random Random number generator
+     * @param random EaglercraftRandom number generator
      * @return The number of items to drop
      */
-    public int quantityDropped(IBlockState state, int fortune, Random random)
+    public int quantityDropped(IBlockState state, int fortune, EaglercraftRandom random)
     {
         return quantityDroppedWithBonus(fortune, random);
     }
@@ -1312,7 +1312,7 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
      */
     public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
-        Random rand = world instanceof World ? ((World)world).rand : RANDOM;
+        EaglercraftRandom rand = world instanceof World ? ((World)world).rand : RANDOM;
 
         int count = quantityDropped(state, fortune, rand);
         for (int i = 0; i < count; i++)

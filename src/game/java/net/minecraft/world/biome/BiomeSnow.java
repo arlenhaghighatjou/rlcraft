@@ -1,7 +1,7 @@
 package net.minecraft.world.biome;
 
 import java.util.Iterator;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.monster.EntityPolarBear;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityStray;
@@ -54,7 +54,7 @@ public class BiomeSnow extends Biome
         return 0.07F;
     }
 
-    public void decorate(World worldIn, Random rand, BlockPos pos)
+    public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos)
     {
         if (this.superIcy && net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, new net.minecraft.util.math.ChunkPos(pos), net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.ICE))
         {
@@ -76,7 +76,7 @@ public class BiomeSnow extends Biome
         super.decorate(worldIn, rand, pos);
     }
 
-    public WorldGenAbstractTree getRandomTreeFeature(Random rand)
+    public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand)
     {
         return new WorldGenTaiga2(false);
     }

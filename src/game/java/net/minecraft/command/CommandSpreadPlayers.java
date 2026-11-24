@@ -6,7 +6,7 @@ import com.google.common.collect.Sets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
@@ -97,7 +97,7 @@ public class CommandSpreadPlayers extends CommandBase
 
     private void spread(ICommandSender sender, List<Entity> p_110669_2_, CommandSpreadPlayers.Position pos, double spreadDistance, double maxRange, World worldIn, boolean respectTeams) throws CommandException
     {
-        Random random = new Random();
+        EaglercraftRandom random = new EaglercraftRandom();
         double d0 = pos.x - maxRange;
         double d1 = pos.z - maxRange;
         double d2 = pos.x + maxRange;
@@ -132,7 +132,7 @@ public class CommandSpreadPlayers extends CommandBase
         return set.size();
     }
 
-    private int spreadPositions(CommandSpreadPlayers.Position p_110668_1_, double p_110668_2_, World worldIn, Random random, double minX, double minZ, double maxX, double maxZ, CommandSpreadPlayers.Position[] p_110668_14_, boolean respectTeams) throws CommandException
+    private int spreadPositions(CommandSpreadPlayers.Position p_110668_1_, double p_110668_2_, World worldIn, EaglercraftRandom random, double minX, double minZ, double maxX, double maxZ, CommandSpreadPlayers.Position[] p_110668_14_, boolean respectTeams) throws CommandException
     {
         boolean flag = true;
         double d0 = 3.4028234663852886E38D;
@@ -260,7 +260,7 @@ public class CommandSpreadPlayers extends CommandBase
         return d0;
     }
 
-    private CommandSpreadPlayers.Position[] createInitialPositions(Random p_110670_1_, int p_110670_2_, double p_110670_3_, double p_110670_5_, double p_110670_7_, double p_110670_9_)
+    private CommandSpreadPlayers.Position[] createInitialPositions(EaglercraftRandom p_110670_1_, int p_110670_2_, double p_110670_3_, double p_110670_5_, double p_110670_7_, double p_110670_9_)
     {
         CommandSpreadPlayers.Position[] acommandspreadplayers$position = new CommandSpreadPlayers.Position[p_110670_2_];
 
@@ -383,7 +383,7 @@ public class CommandSpreadPlayers extends CommandBase
                 return false;
             }
 
-            public void randomize(Random rand, double p_111097_2_, double p_111097_4_, double p_111097_6_, double p_111097_8_)
+            public void randomize(EaglercraftRandom rand, double p_111097_2_, double p_111097_4_, double p_111097_6_, double p_111097_8_)
             {
                 this.x = MathHelper.nextDouble(rand, p_111097_2_, p_111097_6_);
                 this.z = MathHelper.nextDouble(rand, p_111097_4_, p_111097_8_);

@@ -1,7 +1,7 @@
 package net.minecraft.world.gen;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
@@ -29,7 +29,7 @@ import net.minecraft.world.gen.structure.WoodlandMansion;
 public class ChunkGeneratorOverworld implements IChunkGenerator
 {
     protected static final IBlockState STONE = Blocks.STONE.getDefaultState();
-    private final Random rand;
+    private final EaglercraftRandom rand;
     private NoiseGeneratorOctaves minLimitPerlinNoise;
     private NoiseGeneratorOctaves maxLimitPerlinNoise;
     private NoiseGeneratorOctaves mainPerlinNoise;
@@ -74,7 +74,7 @@ public class ChunkGeneratorOverworld implements IChunkGenerator
         this.world = worldIn;
         this.mapFeaturesEnabled = mapFeaturesEnabledIn;
         this.terrainType = worldIn.getWorldInfo().getTerrainType();
-        this.rand = new Random(seed);
+        this.rand = new EaglercraftRandom(seed);
         this.minLimitPerlinNoise = new NoiseGeneratorOctaves(this.rand, 16);
         this.maxLimitPerlinNoise = new NoiseGeneratorOctaves(this.rand, 16);
         this.mainPerlinNoise = new NoiseGeneratorOctaves(this.rand, 8);

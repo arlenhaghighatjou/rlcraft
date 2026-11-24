@@ -1,6 +1,6 @@
 package net.minecraft.inventory;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class InventoryHelper
 {
-    private static final Random RANDOM = new Random();
+    private static final EaglercraftRandom RANDOM = new EaglercraftRandom();
 
     public static void dropInventoryItems(World worldIn, BlockPos pos, IInventory inventory)
     {

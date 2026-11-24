@@ -1,7 +1,7 @@
 package net.minecraft.inventory;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -27,7 +27,7 @@ public class ContainerEnchantment extends Container
     public IInventory tableInventory;
     private final World worldPointer;
     private final BlockPos position;
-    private final Random rand;
+    private final EaglercraftRandom rand;
     public int xpSeed;
     public int[] enchantLevels;
     public int[] enchantClue;
@@ -53,7 +53,7 @@ public class ContainerEnchantment extends Container
                 ContainerEnchantment.this.onCraftMatrixChanged(this);
             }
         };
-        this.rand = new Random();
+        this.rand = new EaglercraftRandom();
         this.enchantLevels = new int[3];
         this.enchantClue = new int[] { -1, -1, -1};
         this.worldClue = new int[] { -1, -1, -1};

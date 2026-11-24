@@ -10,7 +10,7 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
 import java.lang.reflect.Type;
 import java.util.Collection;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.math.MathHelper;
@@ -38,7 +38,7 @@ public abstract class LootEntry
 
     public String getEntryName(){ return this.entryName; }
 
-    public abstract void addLoot(Collection<ItemStack> stacks, Random rand, LootContext context);
+    public abstract void addLoot(Collection<ItemStack> stacks, EaglercraftRandom rand, LootContext context);
 
     protected abstract void serialize(JsonObject json, JsonSerializationContext context);
 

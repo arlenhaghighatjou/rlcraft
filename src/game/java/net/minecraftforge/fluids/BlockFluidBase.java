@@ -20,7 +20,7 @@
 package net.minecraftforge.fluids;
 
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -355,13 +355,13 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
 
     @Override
     @Nonnull
-    public Item getItemDropped(@Nonnull IBlockState state, @Nonnull Random rand, int fortune)
+    public Item getItemDropped(@Nonnull IBlockState state, @Nonnull EaglercraftRandom rand, int fortune)
     {
         return Items.AIR;
     }
 
     @Override
-    public int quantityDropped(@Nonnull Random par1Random)
+    public int quantityDropped(@Nonnull EaglercraftRandom par1Random)
     {
         return 0;
     }

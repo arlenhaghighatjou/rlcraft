@@ -1,7 +1,7 @@
 package net.minecraft.client.particle;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
@@ -33,7 +33,7 @@ public class Particle
     protected boolean isExpired;
     protected float width;
     protected float height;
-    protected Random rand;
+    protected EaglercraftRandom rand;
     protected int particleTextureIndexX;
     protected int particleTextureIndexY;
     protected float particleTextureJitterX;
@@ -59,7 +59,7 @@ public class Particle
         this.boundingBox = EMPTY_AABB;
         this.width = 0.6F;
         this.height = 1.8F;
-        this.rand = new Random();
+        this.rand = new EaglercraftRandom();
         this.particleAlpha = 1.0F;
         this.world = worldIn;
         this.setSize(0.2F, 0.2F);

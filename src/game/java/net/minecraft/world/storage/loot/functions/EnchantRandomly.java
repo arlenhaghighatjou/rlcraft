@@ -10,7 +10,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSyntaxException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -22,8 +22,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class EnchantRandomly extends LootFunction
 {
@@ -36,7 +36,7 @@ public class EnchantRandomly extends LootFunction
         this.enchantments = enchantmentsIn == null ? Collections.emptyList() : enchantmentsIn;
     }
 
-    public ItemStack apply(ItemStack stack, Random rand, LootContext context)
+    public ItemStack apply(ItemStack stack, EaglercraftRandom rand, LootContext context)
     {
         Enchantment enchantment;
 

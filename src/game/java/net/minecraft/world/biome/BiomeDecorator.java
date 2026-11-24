@@ -1,6 +1,6 @@
 package net.minecraft.world.biome;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.material.Material;
@@ -64,7 +64,7 @@ public class BiomeDecorator
     public int bigMushroomsPerChunk;
     public boolean generateFalls = true;
 
-    public void decorate(World worldIn, Random random, Biome biome, BlockPos pos)
+    public void decorate(World worldIn, EaglercraftRandom random, Biome biome, BlockPos pos)
     {
         if (this.decorating)
         {
@@ -90,7 +90,7 @@ public class BiomeDecorator
         }
     }
 
-    protected void genDecorations(Biome biomeIn, World worldIn, Random random)
+    protected void genDecorations(Biome biomeIn, World worldIn, EaglercraftRandom random)
     {
         net.minecraft.util.math.ChunkPos forgeChunkPos = new net.minecraft.util.math.ChunkPos(chunkPos); // actual ChunkPos instead of BlockPos, used for events
         net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.terraingen.DecorateBiomeEvent.Pre(worldIn, random, forgeChunkPos));
@@ -366,7 +366,7 @@ public class BiomeDecorator
         net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.terraingen.DecorateBiomeEvent.Post(worldIn, random, forgeChunkPos));
     }
 
-    protected void generateOres(World worldIn, Random random)
+    protected void generateOres(World worldIn, EaglercraftRandom random)
     {
         net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, random, chunkPos));
         if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, random, dirtGen, chunkPos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.DIRT))
@@ -394,7 +394,7 @@ public class BiomeDecorator
         net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Post(worldIn, random, chunkPos));
     }
 
-    protected void genStandardOre1(World worldIn, Random random, int blockCount, WorldGenerator generator, int minHeight, int maxHeight)
+    protected void genStandardOre1(World worldIn, EaglercraftRandom random, int blockCount, WorldGenerator generator, int minHeight, int maxHeight)
     {
         if (maxHeight < minHeight)
         {
@@ -421,7 +421,7 @@ public class BiomeDecorator
         }
     }
 
-    protected void genStandardOre2(World worldIn, Random random, int blockCount, WorldGenerator generator, int centerHeight, int spread)
+    protected void genStandardOre2(World worldIn, EaglercraftRandom random, int blockCount, WorldGenerator generator, int centerHeight, int spread)
     {
         for (int i = 0; i < blockCount; ++i)
         {

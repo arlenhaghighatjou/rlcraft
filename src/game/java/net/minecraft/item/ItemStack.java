@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -299,7 +299,7 @@ public final class ItemStack implements net.minecraftforge.common.capabilities.I
         return this.getItem().getMaxDamage(this);
     }
 
-    public boolean attemptDamageItem(int amount, Random rand, @Nullable EntityPlayerMP damager)
+    public boolean attemptDamageItem(int amount, EaglercraftRandom rand, @Nullable EntityPlayerMP damager)
     {
         if (!this.isItemStackDamageable())
         {

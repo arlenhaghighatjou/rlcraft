@@ -2,7 +2,7 @@ package net.minecraft.entity.passive;
 
 import com.google.common.collect.Maps;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
@@ -312,7 +312,7 @@ public class EntitySheep extends EntityAnimal implements net.minecraftforge.comm
         }
     }
 
-    public static EnumDyeColor getRandomSheepColor(Random random)
+    public static EnumDyeColor getRandomSheepColor(EaglercraftRandom random)
     {
         int i = random.nextInt(100);
 

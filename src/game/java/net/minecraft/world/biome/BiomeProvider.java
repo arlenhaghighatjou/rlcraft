@@ -2,7 +2,7 @@ package net.minecraft.world.biome;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -175,7 +175,7 @@ public class BiomeProvider
     }
 
     @Nullable
-    public BlockPos findBiomePosition(int x, int z, int range, List<Biome> biomes, Random random)
+    public BlockPos findBiomePosition(int x, int z, int range, List<Biome> biomes, EaglercraftRandom random)
     {
         IntCache.resetIntCache();
         int i = x - range >> 2;

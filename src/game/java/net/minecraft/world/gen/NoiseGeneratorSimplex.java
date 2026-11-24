@@ -1,6 +1,6 @@
 package net.minecraft.world.gen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class NoiseGeneratorSimplex
 {
@@ -15,10 +15,10 @@ public class NoiseGeneratorSimplex
 
     public NoiseGeneratorSimplex()
     {
-        this(new Random());
+        this(new EaglercraftRandom());
     }
 
-    public NoiseGeneratorSimplex(Random seed)
+    public NoiseGeneratorSimplex(EaglercraftRandom seed)
     {
         this.p = new int[512];
         this.xo = seed.nextDouble() * 256.0D;

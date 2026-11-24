@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.UUID;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
@@ -258,8 +258,8 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.MapData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 @SideOnly(Side.CLIENT)
 public class NetHandlerPlayClient implements INetHandlerPlayClient
@@ -275,7 +275,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     public int currentServerMaxPlayers = 20;
     private boolean hasStatistics;
     private final ClientAdvancementManager advancementManager;
-    private final Random avRandomizer = new Random();
+    private final EaglercraftRandom avRandomizer = new EaglercraftRandom();
 
     public NetHandlerPlayClient(Minecraft mcIn, GuiScreen p_i46300_2_, NetworkManager networkManagerIn, GameProfile profileIn)
     {

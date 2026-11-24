@@ -70,7 +70,7 @@ import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.ObjectHolderRegistry;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;

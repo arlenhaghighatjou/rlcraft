@@ -1,7 +1,7 @@
 package net.minecraft.world.gen.feature;
 
 import com.google.common.base.Predicates;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStoneSlab;
@@ -19,7 +19,7 @@ public class WorldGenDesertWells extends WorldGenerator
     private final IBlockState sandstone = Blocks.SANDSTONE.getDefaultState();
     private final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position)
     {
         while (worldIn.isAirBlock(position) && position.getY() > 2)
         {

@@ -1,6 +1,6 @@
 package net.minecraft.world.biome;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockSilverfish;
 import net.minecraft.entity.passive.EntityLlama;
 import net.minecraft.init.Blocks;
@@ -31,12 +31,12 @@ public class BiomeHills extends Biome
         this.type = p_i46710_1_;
     }
 
-    public WorldGenAbstractTree getRandomTreeFeature(Random rand)
+    public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand)
     {
         return (WorldGenAbstractTree)(rand.nextInt(3) > 0 ? this.spruceGenerator : super.getRandomTreeFeature(rand));
     }
 
-    public void decorate(World worldIn, Random rand, BlockPos pos)
+    public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos)
     {
         super.decorate(worldIn, rand, pos);
 
@@ -56,7 +56,7 @@ public class BiomeHills extends Biome
         net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Post(worldIn, rand, pos));
     }
 
-    public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
+    public void genTerrainBlocks(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
     {
         this.topBlock = Blocks.GRASS.getDefaultState();
         this.fillerBlock = Blocks.DIRT.getDefaultState();
@@ -85,7 +85,7 @@ public class BiomeHills extends Biome
     private static class EmeraldGenerator extends WorldGenerator
     {
         @Override
-        public boolean generate(World worldIn, Random rand, BlockPos pos)
+        public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos pos)
         {
             int count = 3 + rand.nextInt(6);
             for (int i = 0; i < count; i++)

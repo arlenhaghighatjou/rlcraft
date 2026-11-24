@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -79,8 +79,8 @@ import net.minecraft.world.storage.WorldSavedDataCallableSave;
 import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class WorldServer extends World implements IThreadListener
 {
@@ -923,7 +923,7 @@ public class WorldServer extends World implements IThreadListener
             this.findingSpawnPoint = true;
             BiomeProvider biomeprovider = this.provider.getBiomeProvider();
             List<Biome> list = biomeprovider.getBiomesToSpawnIn();
-            Random random = new Random(this.getSeed());
+            EaglercraftRandom random = new EaglercraftRandom(this.getSeed());
             BlockPos blockpos = biomeprovider.findBiomePosition(0, 0, 256, list, random);
             int i = 8;
             int j = this.provider.getAverageGroundLevel();

@@ -1,6 +1,6 @@
 package net.minecraft.world.gen.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -18,7 +18,7 @@ public class WorldGenEndPodium extends WorldGenerator
         this.activePortal = activePortalIn;
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position)
     {
         for (BlockPos.MutableBlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(new BlockPos(position.getX() - 4, position.getY() - 1, position.getZ() - 4), new BlockPos(position.getX() + 4, position.getY() + 32, position.getZ() + 4)))
         {

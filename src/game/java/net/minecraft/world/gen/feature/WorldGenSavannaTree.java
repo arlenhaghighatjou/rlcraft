@@ -1,6 +1,6 @@
 package net.minecraft.world.gen.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockNewLeaf;
@@ -23,7 +23,7 @@ public class WorldGenSavannaTree extends WorldGenAbstractTree
         super(doBlockNotify);
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position)
     {
         int i = rand.nextInt(3) + rand.nextInt(3) + 5;
         boolean flag = true;

@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.IOException;
 
 import net.minecraft.world.gen.structure.template.TemplateManager;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 import com.google.common.io.Files;
 

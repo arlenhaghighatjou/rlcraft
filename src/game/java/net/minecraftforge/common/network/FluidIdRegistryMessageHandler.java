@@ -21,7 +21,7 @@ package net.minecraftforge.common.network;
 
 import net.minecraftforge.fluids.FluidRegistry;
 
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 import net.minecraftforge.fml.common.FMLLog;
 import io.netty.channel.ChannelHandlerContext;

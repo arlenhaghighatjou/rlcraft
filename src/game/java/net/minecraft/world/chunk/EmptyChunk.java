@@ -2,7 +2,7 @@ package net.minecraft.world.chunk;
 
 import com.google.common.base.Predicate;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -125,9 +125,9 @@ public class EmptyChunk extends Chunk
         return false;
     }
 
-    public Random getRandomWithSeed(long seed)
+    public EaglercraftRandom getRandomWithSeed(long seed)
     {
-        return new Random(this.getWorld().getSeed() + (long)(this.x * this.x * 4987142) + (long)(this.x * 5947611) + (long)(this.z * this.z) * 4392871L + (long)(this.z * 389711) ^ seed);
+        return new EaglercraftRandom(this.getWorld().getSeed() + (long)(this.x * this.x * 4987142) + (long)(this.x * 5947611) + (long)(this.z * this.z) * 4392871L + (long)(this.z * 389711) ^ seed);
     }
 
     public boolean isEmpty()

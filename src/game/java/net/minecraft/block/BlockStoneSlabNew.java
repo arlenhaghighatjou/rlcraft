@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -47,7 +47,7 @@ public abstract class BlockStoneSlabNew extends BlockSlab
         return I18n.translateToLocal(this.getUnlocalizedName() + ".red_sandstone.name");
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Item.getItemFromBlock(Blocks.STONE_SLAB2);
     }

@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.Map.Entry;
 import net.minecraft.entity.monster.EntityGuardian;
@@ -72,7 +72,7 @@ public class StructureOceanMonument extends MapGenStructure
 
         int k = chunkX / this.spacing;
         int l = chunkZ / this.spacing;
-        Random random = this.world.setRandomSeed(k, l, 10387313);
+        EaglercraftRandom random = this.world.setRandomSeed(k, l, 10387313);
         k = k * this.spacing;
         l = l * this.spacing;
         k = k + (random.nextInt(this.spacing - this.separation) + random.nextInt(this.spacing - this.separation)) / 2;
@@ -126,13 +126,13 @@ public class StructureOceanMonument extends MapGenStructure
             {
             }
 
-            public StartMonument(World worldIn, Random random, int chunkX, int chunkZ)
+            public StartMonument(World worldIn, EaglercraftRandom random, int chunkX, int chunkZ)
             {
                 super(chunkX, chunkZ);
                 this.create(worldIn, random, chunkX, chunkZ);
             }
 
-            private void create(World worldIn, Random random, int chunkX, int chunkZ)
+            private void create(World worldIn, EaglercraftRandom random, int chunkX, int chunkZ)
             {
                 random.setSeed(worldIn.getSeed());
                 long i = random.nextLong();
@@ -148,7 +148,7 @@ public class StructureOceanMonument extends MapGenStructure
                 this.wasCreated = true;
             }
 
-            public void generateStructure(World worldIn, Random rand, StructureBoundingBox structurebb)
+            public void generateStructure(World worldIn, EaglercraftRandom rand, StructureBoundingBox structurebb)
             {
                 if (!this.wasCreated)
                 {

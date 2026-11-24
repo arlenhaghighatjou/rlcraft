@@ -1,6 +1,6 @@
 package net.minecraft.client.audio;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ITickable;
@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class MusicTicker implements ITickable
 {
-    private final Random rand = new Random();
+    private final EaglercraftRandom rand = new EaglercraftRandom();
     private final Minecraft mc;
     private ISound currentMusic;
     private int timeUntilNextMusic = 100;

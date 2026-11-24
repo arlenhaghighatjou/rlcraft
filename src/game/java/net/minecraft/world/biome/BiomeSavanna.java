@@ -1,6 +1,6 @@
 package net.minecraft.world.biome;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.entity.passive.EntityDonkey;
 import net.minecraft.entity.passive.EntityHorse;
@@ -30,12 +30,12 @@ public class BiomeSavanna extends Biome
         this.decorator.grassPerChunk = 20;
     }
 
-    public WorldGenAbstractTree getRandomTreeFeature(Random rand)
+    public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand)
     {
         return (WorldGenAbstractTree)(rand.nextInt(5) > 0 ? SAVANNA_TREE : TREE_FEATURE);
     }
 
-    public void decorate(World worldIn, Random rand, BlockPos pos)
+    public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos)
     {
         DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.GRASS);
 

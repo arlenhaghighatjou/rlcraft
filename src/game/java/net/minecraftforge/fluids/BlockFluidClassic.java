@@ -22,7 +22,7 @@ package net.minecraftforge.fluids;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import com.google.common.primitives.Ints;
 
@@ -110,7 +110,7 @@ public class BlockFluidClassic extends BlockFluidBase
     }
 
     @Override
-    public void updateTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random rand)
+    public void updateTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EaglercraftRandom rand)
     {
         int quantaRemaining = quantaPerBlock - state.getValue(LEVEL);
         int expQuanta = -101;

@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer.tileentity;
 
 import java.nio.FloatBuffer;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GLAllocation;
@@ -19,7 +19,7 @@ public class TileEntityEndPortalRenderer extends TileEntitySpecialRenderer<TileE
 {
     private static final ResourceLocation END_SKY_TEXTURE = new ResourceLocation("textures/environment/end_sky.png");
     private static final ResourceLocation END_PORTAL_TEXTURE = new ResourceLocation("textures/entity/end_portal.png");
-    private static final Random RANDOM = new Random(31100L);
+    private static final EaglercraftRandom RANDOM = new EaglercraftRandom(31100L);
     private static final FloatBuffer MODELVIEW = GLAllocation.createDirectFloatBuffer(16);
     private static final FloatBuffer PROJECTION = GLAllocation.createDirectFloatBuffer(16);
     private final FloatBuffer buffer = GLAllocation.createDirectFloatBuffer(16);

@@ -3,7 +3,7 @@ package net.minecraft.world.storage.loot.functions;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
@@ -21,7 +21,7 @@ public class SetCount extends LootFunction
         this.countRange = countRangeIn;
     }
 
-    public ItemStack apply(ItemStack stack, Random rand, LootContext context)
+    public ItemStack apply(ItemStack stack, EaglercraftRandom rand, LootContext context)
     {
         stack.setCount(this.countRange.generateInt(rand));
         return stack;

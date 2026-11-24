@@ -3,13 +3,13 @@ package net.minecraft.world.storage.loot.conditions;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
 
 public interface LootCondition
 {
-    boolean testCondition(Random rand, LootContext context);
+    boolean testCondition(EaglercraftRandom rand, LootContext context);
 
     public abstract static class Serializer<T extends LootCondition>
         {

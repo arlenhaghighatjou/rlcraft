@@ -1,6 +1,6 @@
 package net.minecraft.world.biome;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.entity.passive.EntityDonkey;
@@ -25,7 +25,7 @@ public class BiomePlains extends Biome
         this.decorator.grassPerChunk = 10;
     }
 
-    public BlockFlower.EnumFlowerType pickRandomFlower(Random rand, BlockPos pos)
+    public BlockFlower.EnumFlowerType pickRandomFlower(EaglercraftRandom rand, BlockPos pos)
     {
         double d0 = GRASS_COLOR_NOISE.getValue((double)pos.getX() / 200.0D, (double)pos.getZ() / 200.0D);
 
@@ -65,7 +65,7 @@ public class BiomePlains extends Biome
         }
     }
 
-    public void decorate(World worldIn, Random rand, BlockPos pos)
+    public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos)
     {
         double d0 = GRASS_COLOR_NOISE.getValue((double)(pos.getX() + 8) / 200.0D, (double)(pos.getZ() + 8) / 200.0D);
 
@@ -121,7 +121,7 @@ public class BiomePlains extends Biome
         addFlower(yel.getDefaultState().withProperty(yel.getTypeProperty(), BlockFlower.EnumFlowerType.DANDELION), 30);
     }
 
-    public WorldGenAbstractTree getRandomTreeFeature(Random rand)
+    public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand)
     {
         return (WorldGenAbstractTree)(rand.nextInt(3) == 0 ? BIG_TREE_FEATURE : TREE_FEATURE);
     }

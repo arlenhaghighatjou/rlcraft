@@ -1,7 +1,7 @@
 package net.minecraft.util;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class WeightedRandom
 {
@@ -19,7 +19,7 @@ public class WeightedRandom
         return i;
     }
 
-    public static <T extends WeightedRandom.Item> T getRandomItem(Random random, List<T> collection, int totalWeight)
+    public static <T extends WeightedRandom.Item> T getRandomItem(EaglercraftRandom random, List<T> collection, int totalWeight)
     {
         if (totalWeight <= 0)
         {
@@ -50,7 +50,7 @@ public class WeightedRandom
         return (T)null;
     }
 
-    public static <T extends WeightedRandom.Item> T getRandomItem(Random random, List<T> collection)
+    public static <T extends WeightedRandom.Item> T getRandomItem(EaglercraftRandom random, List<T> collection)
     {
         return (T)getRandomItem(random, collection, getTotalWeight(collection));
     }

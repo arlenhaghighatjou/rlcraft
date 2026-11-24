@@ -11,7 +11,7 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
 import java.lang.reflect.Type;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
@@ -42,7 +42,7 @@ public class LootConditionManager
         }
     }
 
-    public static boolean testAllConditions(Iterable<LootCondition> conditions, Random rand, LootContext context)
+    public static boolean testAllConditions(Iterable<LootCondition> conditions, EaglercraftRandom rand, LootContext context)
     {
         if (conditions == null) return true;
         for (LootCondition cond : conditions)
@@ -51,7 +51,7 @@ public class LootConditionManager
         return true;
     }
 
-    public static boolean testAllConditions(@Nullable LootCondition[] conditions, Random rand, LootContext context)
+    public static boolean testAllConditions(@Nullable LootCondition[] conditions, EaglercraftRandom rand, LootContext context)
     {
         if (conditions == null)
         {

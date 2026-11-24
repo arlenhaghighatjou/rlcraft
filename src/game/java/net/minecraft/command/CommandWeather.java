@@ -2,7 +2,7 @@ package net.minecraft.command;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
@@ -30,7 +30,7 @@ public class CommandWeather extends CommandBase
     {
         if (args.length >= 1 && args.length <= 2)
         {
-            int i = (300 + (new Random()).nextInt(600)) * 20;
+            int i = (300 + (new EaglercraftRandom()).nextInt(600)) * 20;
 
             if (args.length >= 2)
             {

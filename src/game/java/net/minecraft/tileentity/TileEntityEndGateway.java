@@ -1,7 +1,7 @@
 package net.minecraft.tileentity;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -22,8 +22,8 @@ import net.minecraft.world.gen.feature.WorldGenEndGateway;
 import net.minecraft.world.gen.feature.WorldGenEndIsland;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class TileEntityEndGateway extends TileEntityEndPortal implements ITickable
 {
@@ -208,7 +208,7 @@ public class TileEntityEndGateway extends TileEntityEndPortal implements ITickab
         {
             this.exitPortal = new BlockPos(vec3d1.x + 0.5D, 75.0D, vec3d1.z + 0.5D);
             LOGGER.debug("Failed to find suitable block, settling on {}", (Object)this.exitPortal);
-            (new WorldGenEndIsland()).generate(this.world, new Random(this.exitPortal.toLong()), this.exitPortal);
+            (new WorldGenEndIsland()).generate(this.world, new EaglercraftRandom(this.exitPortal.toLong()), this.exitPortal);
         }
         else
         {
@@ -285,7 +285,7 @@ public class TileEntityEndGateway extends TileEntityEndPortal implements ITickab
 
     private void createExitPortal(BlockPos posIn)
     {
-        (new WorldGenEndGateway()).generate(this.world, new Random(), posIn);
+        (new WorldGenEndGateway()).generate(this.world, new EaglercraftRandom(), posIn);
         TileEntity tileentity = this.world.getTileEntity(posIn);
 
         if (tileentity instanceof TileEntityEndGateway)

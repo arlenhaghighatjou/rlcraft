@@ -1,6 +1,6 @@
 package net.minecraft.world.gen.structure.template;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.util.Mirror;
@@ -23,7 +23,7 @@ public class PlacementSettings
     private boolean ignoreStructureBlock = true;
     private float integrity = 1.0F;
     @Nullable
-    private Random random;
+    private EaglercraftRandom random;
     @Nullable
     private Long setSeed;
 
@@ -85,7 +85,7 @@ public class PlacementSettings
         return this;
     }
 
-    public PlacementSettings setRandom(@Nullable Random randomIn)
+    public PlacementSettings setRandom(@Nullable EaglercraftRandom randomIn)
     {
         this.random = randomIn;
         return this;
@@ -113,7 +113,7 @@ public class PlacementSettings
         return this.rotation;
     }
 
-    public Random getRandom(@Nullable BlockPos seed)
+    public EaglercraftRandom getRandom(@Nullable BlockPos seed)
     {
         if (this.random != null)
         {
@@ -121,17 +121,17 @@ public class PlacementSettings
         }
         else if (this.setSeed != null)
         {
-            return this.setSeed.longValue() == 0L ? new Random(System.currentTimeMillis()) : new Random(this.setSeed.longValue());
+            return this.setSeed.longValue() == 0L ? new EaglercraftRandom(System.currentTimeMillis()) : new EaglercraftRandom(this.setSeed.longValue());
         }
         else if (seed == null)
         {
-            return new Random(System.currentTimeMillis());
+            return new EaglercraftRandom(System.currentTimeMillis());
         }
         else
         {
             int i = seed.getX();
             int j = seed.getZ();
-            return new Random((long)(i * i * 4987142 + i * 5947611) + (long)(j * j) * 4392871L + (long)(j * 389711) ^ 987234911L);
+            return new EaglercraftRandom((long)(i * i * 4987142 + i * 5947611) + (long)(j * j) * 4392871L + (long)(j * 389711) ^ 987234911L);
         }
     }
 

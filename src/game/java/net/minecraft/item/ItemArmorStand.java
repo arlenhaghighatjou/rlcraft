@@ -1,7 +1,7 @@
 package net.minecraft.item;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -84,7 +84,7 @@ public class ItemArmorStand extends Item
         }
     }
 
-    private void applyRandomRotations(EntityArmorStand armorStand, Random rand)
+    private void applyRandomRotations(EntityArmorStand armorStand, EaglercraftRandom rand)
     {
         Rotations rotations = armorStand.getHeadRotation();
         float f = rand.nextFloat() * 5.0F;

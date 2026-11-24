@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -27,7 +27,7 @@ public class BlockOre extends Block
         this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         if (this == Blocks.COAL_ORE)
         {
@@ -51,12 +51,12 @@ public class BlockOre extends Block
         }
     }
 
-    public int quantityDropped(Random random)
+    public int quantityDropped(EaglercraftRandom random)
     {
         return this == Blocks.LAPIS_ORE ? 4 + random.nextInt(5) : 1;
     }
 
-    public int quantityDroppedWithBonus(int fortune, Random random)
+    public int quantityDroppedWithBonus(int fortune, EaglercraftRandom random)
     {
         if (fortune > 0 && Item.getItemFromBlock(this) != this.getItemDropped((IBlockState)this.getBlockState().getValidStates().iterator().next(), random, fortune))
         {
@@ -82,7 +82,7 @@ public class BlockOre extends Block
     @Override
     public int getExpDrop(IBlockState state, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune)
     {
-        Random rand = world instanceof World ? ((World)world).rand : new Random();
+        EaglercraftRandom rand = world instanceof World ? ((World)world).rand : new EaglercraftRandom();
         if (this.getItemDropped(state, rand, fortune) != Item.getItemFromBlock(this))
         {
             int i = 0;

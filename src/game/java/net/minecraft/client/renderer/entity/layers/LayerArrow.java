@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.entity.layers;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -30,7 +30,7 @@ public class LayerArrow implements LayerRenderer<EntityLivingBase>
         if (i > 0)
         {
             Entity entity = new EntityTippedArrow(entitylivingbaseIn.world, entitylivingbaseIn.posX, entitylivingbaseIn.posY, entitylivingbaseIn.posZ);
-            Random random = new Random((long)entitylivingbaseIn.getEntityId());
+            EaglercraftRandom random = new EaglercraftRandom((long)entitylivingbaseIn.getEntityId());
             RenderHelper.disableStandardItemLighting();
 
             for (int j = 0; j < i; ++j)

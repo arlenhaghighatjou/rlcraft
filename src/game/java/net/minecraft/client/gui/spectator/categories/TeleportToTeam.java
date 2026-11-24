@@ -2,7 +2,7 @@ package net.minecraft.client.gui.spectator.categories;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.FontRenderer;
@@ -105,7 +105,7 @@ public class TeleportToTeam implements ISpectatorMenuView, ISpectatorMenuObject
             }
             else
             {
-                String s1 = ((NetworkPlayerInfo)this.players.get((new Random()).nextInt(this.players.size()))).getGameProfile().getName();
+                String s1 = ((NetworkPlayerInfo)this.players.get((new EaglercraftRandom()).nextInt(this.players.size()))).getGameProfile().getName();
                 this.location = AbstractClientPlayer.getLocationSkin(s1);
                 AbstractClientPlayer.getDownloadImageSkin(this.location, s1);
             }

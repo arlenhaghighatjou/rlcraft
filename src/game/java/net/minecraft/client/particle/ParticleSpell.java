@@ -1,6 +1,6 @@
 package net.minecraft.client.particle;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ParticleSpell extends Particle
 {
-    private static final Random RANDOM = new Random();
+    private static final EaglercraftRandom RANDOM = new EaglercraftRandom();
     private int baseSpellTextureIndex = 128;
 
     protected ParticleSpell(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double p_i1229_8_, double ySpeed, double p_i1229_12_)

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 
 import com.google.common.base.Predicate;
@@ -156,7 +156,7 @@ public class GameRegistry
             computeSortedGeneratorList();
         }
         long worldSeed = world.getSeed();
-        Random fmlRandom = new Random(worldSeed);
+        EaglercraftRandom fmlRandom = new EaglercraftRandom(worldSeed);
         long xSeed = fmlRandom.nextLong() >> 2 + 1L;
         long zSeed = fmlRandom.nextLong() >> 2 + 1L;
         long chunkSeed = (xSeed * chunkX + zSeed * chunkZ) ^ worldSeed;

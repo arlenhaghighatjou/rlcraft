@@ -1,7 +1,7 @@
 package net.minecraft.block;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -159,7 +159,7 @@ public class BlockPistonExtension extends BlockDirectional
         return false;
     }
 
-    public int quantityDropped(Random random)
+    public int quantityDropped(EaglercraftRandom random)
     {
         return 0;
     }

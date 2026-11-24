@@ -2,7 +2,7 @@ package net.minecraft.client.audio;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class SoundEventAccessor implements ISoundEventAccessor<Sound>
 {
     private final List<ISoundEventAccessor<Sound>> accessorList = Lists.<ISoundEventAccessor<Sound>>newArrayList();
-    private final Random rnd = new Random();
+    private final EaglercraftRandom rnd = new EaglercraftRandom();
     private final ResourceLocation location;
     private final ITextComponent subtitle;
 

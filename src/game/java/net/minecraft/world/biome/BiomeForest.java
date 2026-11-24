@@ -1,6 +1,6 @@
 package net.minecraft.world.biome;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.entity.passive.EntityRabbit;
@@ -59,7 +59,7 @@ public class BiomeForest extends Biome
         }
     }
 
-    public WorldGenAbstractTree getRandomTreeFeature(Random rand)
+    public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand)
     {
         if (this.type == BiomeForest.Type.ROOFED && rand.nextInt(3) > 0)
         {
@@ -75,7 +75,7 @@ public class BiomeForest extends Biome
         }
     }
 
-    public BlockFlower.EnumFlowerType pickRandomFlower(Random rand, BlockPos pos)
+    public BlockFlower.EnumFlowerType pickRandomFlower(EaglercraftRandom rand, BlockPos pos)
     {
         if (this.type == BiomeForest.Type.FLOWER)
         {
@@ -89,7 +89,7 @@ public class BiomeForest extends Biome
         }
     }
 
-    public void decorate(World worldIn, Random rand, BlockPos pos)
+    public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos)
     {
         if (this.type == BiomeForest.Type.ROOFED)
         {
@@ -110,7 +110,7 @@ public class BiomeForest extends Biome
         super.decorate(worldIn, rand, pos);
     }
 
-    public void addMushrooms(World p_185379_1_, Random p_185379_2_, BlockPos p_185379_3_)
+    public void addMushrooms(World p_185379_1_, EaglercraftRandom p_185379_2_, BlockPos p_185379_3_)
     {
 
         for (int i = 0; i < 4; ++i)
@@ -140,7 +140,7 @@ public class BiomeForest extends Biome
         }
     }
 
-    public void addDoublePlants(World p_185378_1_, Random p_185378_2_, BlockPos p_185378_3_, int p_185378_4_)
+    public void addDoublePlants(World p_185378_1_, EaglercraftRandom p_185378_2_, BlockPos p_185378_3_, int p_185378_4_)
     {
         for (int i = 0; i < p_185378_4_; ++i)
         {

@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -19,8 +19,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 @SideOnly(Side.CLIENT)
 public class GuiWinGame extends GuiScreen
@@ -95,7 +95,7 @@ public class GuiWinGame extends GuiScreen
                     iresource = this.mc.getResourceManager().getResource(new ResourceLocation("texts/end.txt"));
                     InputStream inputstream = iresource.getInputStream();
                     BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(inputstream, StandardCharsets.UTF_8));
-                    Random random = new Random(8124371L);
+                    EaglercraftRandom random = new EaglercraftRandom(8124371L);
                     String s1;
 
                     while ((s1 = bufferedreader.readLine()) != null)

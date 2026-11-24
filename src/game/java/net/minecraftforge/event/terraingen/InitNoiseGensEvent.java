@@ -19,7 +19,7 @@
 
 package net.minecraftforge.event.terraingen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
@@ -29,19 +29,19 @@ import net.minecraftforge.event.world.WorldEvent;
 
 public class InitNoiseGensEvent<T extends InitNoiseGensEvent.Context> extends WorldEvent
 {
-    private final Random rand;
+    private final EaglercraftRandom rand;
     private final T original;
     private T newValues;
 
     @SuppressWarnings("unchecked")
-    public InitNoiseGensEvent(World world, Random rand, T original)
+    public InitNoiseGensEvent(World world, EaglercraftRandom rand, T original)
     {
         super(world);
         this.rand = rand;
         this.original = original;
         this.newValues = (T)original.clone();
     }
-    public Random getRandom() { return this.rand; }
+    public EaglercraftRandom getRandom() { return this.rand; }
     public T getOriginal() { return this.original; }
     public T getNewValues() { return this.newValues; }
 

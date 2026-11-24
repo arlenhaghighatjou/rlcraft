@@ -9,7 +9,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.math.MathHelper;
 
@@ -40,12 +40,12 @@ public class RandomValueRange
         return this.max;
     }
 
-    public int generateInt(Random rand)
+    public int generateInt(EaglercraftRandom rand)
     {
         return MathHelper.getInt(rand, MathHelper.floor(this.min), MathHelper.floor(this.max));
     }
 
-    public float generateFloat(Random rand)
+    public float generateFloat(EaglercraftRandom rand)
     {
         return MathHelper.nextFloat(rand, this.min, this.max);
     }

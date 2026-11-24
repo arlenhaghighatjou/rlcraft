@@ -3,7 +3,7 @@ package net.minecraft.world.storage.loot.functions;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,7 +26,7 @@ public class LootingEnchantBonus extends LootFunction
         this.limit = limitIn;
     }
 
-    public ItemStack apply(ItemStack stack, Random rand, LootContext context)
+    public ItemStack apply(ItemStack stack, EaglercraftRandom rand, LootContext context)
     {
         Entity entity = context.getKiller();
 

@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
@@ -86,8 +86,8 @@ import net.minecraft.world.border.WorldBorder;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -383,7 +383,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
 
     private void renderStars(BufferBuilder bufferBuilderIn)
     {
-        Random random = new Random(10842L);
+        EaglercraftRandom random = new EaglercraftRandom(10842L);
         bufferBuilderIn.begin(7, DefaultVertexFormats.POSITION);
 
         for (int i = 0; i < 1500; ++i)
@@ -2269,7 +2269,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
 
     public void playEvent(EntityPlayer player, int type, BlockPos blockPosIn, int data)
     {
-        Random random = this.world.rand;
+        EaglercraftRandom random = this.world.rand;
 
         switch (type)
         {

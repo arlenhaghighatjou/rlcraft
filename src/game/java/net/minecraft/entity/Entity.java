@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.UUID;
 import javax.annotation.Nullable;
@@ -82,8 +82,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public abstract class Entity implements ICommandSender, net.minecraftforge.common.capabilities.ICapabilitySerializable<NBTTagCompound>
 {
@@ -135,7 +135,7 @@ public abstract class Entity implements ICommandSender, net.minecraftforge.commo
     public float stepHeight;
     public boolean noClip;
     public float entityCollisionReduction;
-    protected Random rand;
+    protected EaglercraftRandom rand;
     public int ticksExisted;
     private int fire;
     protected boolean inWater;
@@ -191,7 +191,7 @@ public abstract class Entity implements ICommandSender, net.minecraftforge.commo
         this.height = 1.8F;
         this.nextStepDistance = 1;
         this.nextFlap = 1.0F;
-        this.rand = new Random();
+        this.rand = new EaglercraftRandom();
         this.fire = -this.getFireImmuneTicks();
         this.firstUpdate = true;
         this.entityUniqueID = MathHelper.getRandomUUID(this.rand);

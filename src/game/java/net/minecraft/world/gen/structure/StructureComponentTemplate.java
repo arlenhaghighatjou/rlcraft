@@ -1,7 +1,7 @@
 package net.minecraft.world.gen.structure;
 
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -53,7 +53,7 @@ public abstract class StructureComponentTemplate extends StructureComponent
         this.templatePosition = new BlockPos(tagCompound.getInteger("TPX"), tagCompound.getInteger("TPY"), tagCompound.getInteger("TPZ"));
     }
 
-    public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+    public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
     {
         this.placeSettings.setBoundingBox(structureBoundingBoxIn);
         this.template.addBlocksToWorld(worldIn, this.templatePosition, this.placeSettings, 18);
@@ -68,7 +68,7 @@ public abstract class StructureComponentTemplate extends StructureComponent
         return true;
     }
 
-    protected abstract void handleDataMarker(String function, BlockPos pos, World worldIn, Random rand, StructureBoundingBox sbb);
+    protected abstract void handleDataMarker(String function, BlockPos pos, World worldIn, EaglercraftRandom rand, StructureBoundingBox sbb);
 
     private void setBoundingBoxFromTemplate()
     {

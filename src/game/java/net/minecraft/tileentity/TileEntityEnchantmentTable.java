@@ -1,6 +1,6 @@
 package net.minecraft.tileentity;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -25,7 +25,7 @@ public class TileEntityEnchantmentTable extends TileEntity implements ITickable,
     public float bookRotation;
     public float bookRotationPrev;
     public float tRot;
-    private static final Random rand = new Random();
+    private static final EaglercraftRandom rand = new EaglercraftRandom();
     private String customName;
 
     public NBTTagCompound writeToNBT(NBTTagCompound compound)

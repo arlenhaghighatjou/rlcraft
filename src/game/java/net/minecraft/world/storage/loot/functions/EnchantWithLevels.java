@@ -3,7 +3,7 @@ package net.minecraft.world.storage.loot.functions;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
@@ -24,7 +24,7 @@ public class EnchantWithLevels extends LootFunction
         this.isTreasure = isTreasureIn;
     }
 
-    public ItemStack apply(ItemStack stack, Random rand, LootContext context)
+    public ItemStack apply(ItemStack stack, EaglercraftRandom rand, LootContext context)
     {
         return EnchantmentHelper.addRandomEnchantment(rand, stack, this.randomLevel.generateInt(rand), this.isTreasure);
     }

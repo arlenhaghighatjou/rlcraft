@@ -1,6 +1,6 @@
 package net.minecraft.entity.monster;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
@@ -257,7 +257,7 @@ public class EntitySpider extends EntityMob
         {
             public Potion effect;
 
-            public void setRandomEffect(Random rand)
+            public void setRandomEffect(EaglercraftRandom rand)
             {
                 int i = rand.nextInt(5);
 

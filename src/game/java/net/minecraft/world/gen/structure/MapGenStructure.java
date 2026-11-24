@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import java.util.Iterator;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -77,7 +77,7 @@ public abstract class MapGenStructure extends MapGenBase
         }
     }
 
-    public synchronized boolean generateStructure(World worldIn, Random randomIn, ChunkPos chunkCoord)
+    public synchronized boolean generateStructure(World worldIn, EaglercraftRandom randomIn, ChunkPos chunkCoord)
     {
         this.initializeStructureData(worldIn);
         int i = (chunkCoord.x << 4) + 8;
@@ -227,7 +227,7 @@ public abstract class MapGenStructure extends MapGenBase
         int j = p_191069_2_.getZ() >> 4;
         int k = 0;
 
-        for (Random random = new Random(); k <= p_191069_7_; ++k)
+        for (EaglercraftRandom random = new EaglercraftRandom(); k <= p_191069_7_; ++k)
         {
             for (int l = -k; l <= k; ++l)
             {
@@ -254,7 +254,7 @@ public abstract class MapGenStructure extends MapGenBase
 
                         int l1 = j1 / p_191069_3_;
                         int i2 = k1 / p_191069_3_;
-                        Random random1 = worldIn.setRandomSeed(l1, i2, p_191069_5_);
+                        EaglercraftRandom random1 = worldIn.setRandomSeed(l1, i2, p_191069_5_);
                         l1 = l1 * p_191069_3_;
                         i2 = i2 * p_191069_3_;
 

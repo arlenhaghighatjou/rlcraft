@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelEnderman;
 import net.minecraft.client.renderer.entity.layers.LayerEndermanEyes;
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderEnderman extends RenderLiving<EntityEnderman>
 {
     private static final ResourceLocation ENDERMAN_TEXTURES = new ResourceLocation("textures/entity/enderman/enderman.png");
-    private final Random rnd = new Random();
+    private final EaglercraftRandom rnd = new EaglercraftRandom();
 
     public RenderEnderman(RenderManager renderManagerIn)
     {

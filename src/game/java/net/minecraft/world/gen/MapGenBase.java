@@ -1,13 +1,13 @@
 package net.minecraft.world.gen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 
 public class MapGenBase
 {
     protected int range = 8;
-    protected Random rand = new Random();
+    protected EaglercraftRandom rand = new EaglercraftRandom();
     protected World world;
 
     public void generate(World worldIn, int x, int z, ChunkPrimer primer)
@@ -30,7 +30,7 @@ public class MapGenBase
         }
     }
 
-    public static void setupChunkSeed(long p_191068_0_, Random p_191068_2_, int p_191068_3_, int p_191068_4_)
+    public static void setupChunkSeed(long p_191068_0_, EaglercraftRandom p_191068_2_, int p_191068_3_, int p_191068_4_)
     {
         p_191068_2_.setSeed(p_191068_0_);
         long i = p_191068_2_.nextLong();

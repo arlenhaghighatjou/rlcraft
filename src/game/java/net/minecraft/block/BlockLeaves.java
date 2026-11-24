@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
@@ -63,7 +63,7 @@ public abstract class BlockLeaves extends Block implements net.minecraftforge.co
         }
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         if (!worldIn.isRemote)
         {
@@ -183,7 +183,7 @@ public abstract class BlockLeaves extends Block implements net.minecraftforge.co
     }
 
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand)
     {
         if (worldIn.isRainingAt(pos.up()) && !worldIn.getBlockState(pos.down()).isTopSolid() && rand.nextInt(15) == 1)
         {
@@ -194,12 +194,12 @@ public abstract class BlockLeaves extends Block implements net.minecraftforge.co
         }
     }
 
-    public int quantityDropped(Random random)
+    public int quantityDropped(EaglercraftRandom random)
     {
         return random.nextInt(20) == 0 ? 1 : 0;
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Item.getItemFromBlock(Blocks.SAPLING);
     }
@@ -257,7 +257,7 @@ public abstract class BlockLeaves extends Block implements net.minecraftforge.co
     @Override
     public void getDrops(net.minecraft.util.NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
-        Random rand = world instanceof World ? ((World)world).rand : new Random();
+        EaglercraftRandom rand = world instanceof World ? ((World)world).rand : new EaglercraftRandom();
         int chance = this.getSaplingDropChance(state);
 
         if (fortune > 0)

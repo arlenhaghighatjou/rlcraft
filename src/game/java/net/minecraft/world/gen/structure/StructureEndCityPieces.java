@@ -2,7 +2,7 @@ package net.minecraft.world.gen.structure;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.init.Blocks;
@@ -32,7 +32,7 @@ public class StructureEndCityPieces
         public void init()
         {
         }
-        public boolean generate(TemplateManager p_191086_1_, int p_191086_2_, StructureEndCityPieces.CityTemplate p_191086_3_, BlockPos p_191086_4_, List<StructureComponent> p_191086_5_, Random p_191086_6_)
+        public boolean generate(TemplateManager p_191086_1_, int p_191086_2_, StructureEndCityPieces.CityTemplate p_191086_3_, BlockPos p_191086_4_, List<StructureComponent> p_191086_5_, EaglercraftRandom p_191086_6_)
         {
             if (p_191086_2_ > 8)
             {
@@ -72,7 +72,7 @@ public class StructureEndCityPieces
         public void init()
         {
         }
-        public boolean generate(TemplateManager p_191086_1_, int p_191086_2_, StructureEndCityPieces.CityTemplate p_191086_3_, BlockPos p_191086_4_, List<StructureComponent> p_191086_5_, Random p_191086_6_)
+        public boolean generate(TemplateManager p_191086_1_, int p_191086_2_, StructureEndCityPieces.CityTemplate p_191086_3_, BlockPos p_191086_4_, List<StructureComponent> p_191086_5_, EaglercraftRandom p_191086_6_)
         {
             Rotation rotation = p_191086_3_.placeSettings.getRotation();
             StructureEndCityPieces.CityTemplate lvt_8_1_ = StructureEndCityPieces.addHelper(p_191086_5_, StructureEndCityPieces.addPiece(p_191086_1_, p_191086_3_, new BlockPos(3 + p_191086_6_.nextInt(2), -3, 3 + p_191086_6_.nextInt(2)), "tower_base", rotation, true));
@@ -123,7 +123,7 @@ public class StructureEndCityPieces
         {
             this.shipCreated = false;
         }
-        public boolean generate(TemplateManager p_191086_1_, int p_191086_2_, StructureEndCityPieces.CityTemplate p_191086_3_, BlockPos p_191086_4_, List<StructureComponent> p_191086_5_, Random p_191086_6_)
+        public boolean generate(TemplateManager p_191086_1_, int p_191086_2_, StructureEndCityPieces.CityTemplate p_191086_3_, BlockPos p_191086_4_, List<StructureComponent> p_191086_5_, EaglercraftRandom p_191086_6_)
         {
             Rotation rotation = p_191086_3_.placeSettings.getRotation();
             int i = p_191086_6_.nextInt(4) + 1;
@@ -174,7 +174,7 @@ public class StructureEndCityPieces
         public void init()
         {
         }
-        public boolean generate(TemplateManager p_191086_1_, int p_191086_2_, StructureEndCityPieces.CityTemplate p_191086_3_, BlockPos p_191086_4_, List<StructureComponent> p_191086_5_, Random p_191086_6_)
+        public boolean generate(TemplateManager p_191086_1_, int p_191086_2_, StructureEndCityPieces.CityTemplate p_191086_3_, BlockPos p_191086_4_, List<StructureComponent> p_191086_5_, EaglercraftRandom p_191086_6_)
         {
             Rotation rotation = p_191086_3_.placeSettings.getRotation();
             StructureEndCityPieces.CityTemplate structureendcitypieces$citytemplate = StructureEndCityPieces.addHelper(p_191086_5_, StructureEndCityPieces.addPiece(p_191086_1_, p_191086_3_, new BlockPos(-3, 4, -3), "fat_tower_base", rotation, true));
@@ -212,7 +212,7 @@ public class StructureEndCityPieces
         return structureendcitypieces$citytemplate;
     }
 
-    public static void startHouseTower(TemplateManager p_191087_0_, BlockPos p_191087_1_, Rotation p_191087_2_, List<StructureComponent> p_191087_3_, Random p_191087_4_)
+    public static void startHouseTower(TemplateManager p_191087_0_, BlockPos p_191087_1_, Rotation p_191087_2_, List<StructureComponent> p_191087_3_, EaglercraftRandom p_191087_4_)
     {
         FAT_TOWER_GENERATOR.init();
         HOUSE_TOWER_GENERATOR.init();
@@ -231,7 +231,7 @@ public class StructureEndCityPieces
         return p_189935_1_;
     }
 
-    private static boolean recursiveChildren(TemplateManager p_191088_0_, StructureEndCityPieces.IGenerator p_191088_1_, int p_191088_2_, StructureEndCityPieces.CityTemplate p_191088_3_, BlockPos p_191088_4_, List<StructureComponent> p_191088_5_, Random p_191088_6_)
+    private static boolean recursiveChildren(TemplateManager p_191088_0_, StructureEndCityPieces.IGenerator p_191088_1_, int p_191088_2_, StructureEndCityPieces.CityTemplate p_191088_3_, BlockPos p_191088_4_, List<StructureComponent> p_191088_5_, EaglercraftRandom p_191088_6_)
     {
         if (p_191088_2_ > 8)
         {
@@ -313,7 +313,7 @@ public class StructureEndCityPieces
                 this.loadTemplate(p_143011_2_);
             }
 
-            protected void handleDataMarker(String function, BlockPos pos, World worldIn, Random rand, StructureBoundingBox sbb)
+            protected void handleDataMarker(String function, BlockPos pos, World worldIn, EaglercraftRandom rand, StructureBoundingBox sbb)
             {
                 if (function.startsWith("Chest"))
                 {
@@ -349,6 +349,6 @@ public class StructureEndCityPieces
     {
         void init();
 
-        boolean generate(TemplateManager p_191086_1_, int p_191086_2_, StructureEndCityPieces.CityTemplate p_191086_3_, BlockPos p_191086_4_, List<StructureComponent> p_191086_5_, Random p_191086_6_);
+        boolean generate(TemplateManager p_191086_1_, int p_191086_2_, StructureEndCityPieces.CityTemplate p_191086_3_, BlockPos p_191086_4_, List<StructureComponent> p_191086_5_, EaglercraftRandom p_191086_6_);
     }
 }

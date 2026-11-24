@@ -75,7 +75,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.server.FMLServerHandler;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;

@@ -3,7 +3,7 @@ package net.minecraft.world.storage.loot.conditions;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.JsonUtils;
@@ -21,7 +21,7 @@ public class RandomChanceWithLooting implements LootCondition
         this.lootingMultiplier = lootingMultiplierIn;
     }
 
-    public boolean testCondition(Random rand, LootContext context)
+    public boolean testCondition(EaglercraftRandom rand, LootContext context)
     {
         int i = context.getLootingModifier();
 

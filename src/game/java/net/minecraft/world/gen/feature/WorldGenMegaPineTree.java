@@ -1,6 +1,6 @@
 package net.minecraft.world.gen.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockLeaves;
@@ -27,7 +27,7 @@ public class WorldGenMegaPineTree extends WorldGenHugeTrees
         this.useBaseHeight = p_i45457_2_;
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position)
     {
         int i = this.getHeight(rand);
 
@@ -70,7 +70,7 @@ public class WorldGenMegaPineTree extends WorldGenHugeTrees
         }
     }
 
-    private void createCrown(World worldIn, int x, int z, int y, int p_150541_5_, Random rand)
+    private void createCrown(World worldIn, int x, int z, int y, int p_150541_5_, EaglercraftRandom rand)
     {
         int i = rand.nextInt(5) + (this.useBaseHeight ? this.baseHeight : 3);
         int j = 0;
@@ -84,7 +84,7 @@ public class WorldGenMegaPineTree extends WorldGenHugeTrees
         }
     }
 
-    public void generateSaplings(World worldIn, Random random, BlockPos pos)
+    public void generateSaplings(World worldIn, EaglercraftRandom random, BlockPos pos)
     {
         this.placePodzolCircle(worldIn, pos.west().north());
         this.placePodzolCircle(worldIn, pos.east(2).north());

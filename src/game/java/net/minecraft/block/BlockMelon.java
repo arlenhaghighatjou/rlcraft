@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,17 +16,17 @@ public class BlockMelon extends Block
         this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Items.MELON;
     }
 
-    public int quantityDropped(Random random)
+    public int quantityDropped(EaglercraftRandom random)
     {
         return 3 + random.nextInt(5);
     }
 
-    public int quantityDroppedWithBonus(int fortune, Random random)
+    public int quantityDroppedWithBonus(int fortune, EaglercraftRandom random)
     {
         return Math.min(9, this.quantityDropped(random) + random.nextInt(1 + fortune));
     }

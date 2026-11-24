@@ -3,7 +3,7 @@ package net.minecraft.world.gen.structure;
 import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.ChunkPos;
@@ -36,7 +36,7 @@ public abstract class StructureStart
         return this.components;
     }
 
-    public void generateStructure(World worldIn, Random rand, StructureBoundingBox structurebb)
+    public void generateStructure(World worldIn, EaglercraftRandom rand, StructureBoundingBox structurebb)
     {
         Iterator<StructureComponent> iterator = this.components.iterator();
 
@@ -113,7 +113,7 @@ public abstract class StructureStart
     {
     }
 
-    protected void markAvailableHeight(World worldIn, Random rand, int p_75067_3_)
+    protected void markAvailableHeight(World worldIn, EaglercraftRandom rand, int p_75067_3_)
     {
         int i = worldIn.getSeaLevel() - p_75067_3_;
         int j = this.boundingBox.getYSize() + 1;
@@ -132,7 +132,7 @@ public abstract class StructureStart
         }
     }
 
-    protected void setRandomHeight(World worldIn, Random rand, int p_75070_3_, int p_75070_4_)
+    protected void setRandomHeight(World worldIn, EaglercraftRandom rand, int p_75070_3_, int p_75070_4_)
     {
         int i = p_75070_4_ - p_75070_3_ + 1 - this.boundingBox.getYSize();
         int j;

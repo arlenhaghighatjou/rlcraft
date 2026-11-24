@@ -1,7 +1,7 @@
 package net.minecraft.world.gen;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockChorusFlower;
 import net.minecraft.block.BlockFalling;
@@ -24,7 +24,7 @@ import net.minecraft.world.gen.structure.MapGenEndCity;
 
 public class ChunkGeneratorEnd implements IChunkGenerator
 {
-    private final Random rand;
+    private final EaglercraftRandom rand;
     protected static final IBlockState END_STONE = Blocks.END_STONE.getDefaultState();
     protected static final IBlockState AIR = Blocks.AIR.getDefaultState();
     private NoiseGeneratorOctaves lperlinNoise1;
@@ -52,7 +52,7 @@ public class ChunkGeneratorEnd implements IChunkGenerator
         this.world = p_i47241_1_;
         this.mapFeaturesEnabled = p_i47241_2_;
         this.spawnPoint = p_i47241_5_;
-        this.rand = new Random(p_i47241_3_);
+        this.rand = new EaglercraftRandom(p_i47241_3_);
         this.lperlinNoise1 = new NoiseGeneratorOctaves(this.rand, 16);
         this.lperlinNoise2 = new NoiseGeneratorOctaves(this.rand, 16);
         this.perlinNoise1 = new NoiseGeneratorOctaves(this.rand, 8);

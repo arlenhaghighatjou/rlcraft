@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -86,14 +86,14 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
     protected final IntHashMap<Entity> entitiesById = new IntHashMap<Entity>();
     private final long cloudColour = 16777215L;
     private int skylightSubtracted;
-    protected int updateLCG = (new Random()).nextInt();
+    protected int updateLCG = (new EaglercraftRandom()).nextInt();
     protected final int DIST_HASH_MAGIC = 1013904223;
     public float prevRainingStrength;
     public float rainingStrength;
     public float prevThunderingStrength;
     public float thunderingStrength;
     private int lastLightningBolt;
-    public final Random rand = new Random();
+    public final EaglercraftRandom rand = new EaglercraftRandom();
     public final WorldProvider provider;
     protected PathWorldListener pathListener = new PathWorldListener();
     protected List<IWorldEventListener> eventListeners;
@@ -2676,7 +2676,7 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
     {
     }
 
-    public void immediateBlockTick(BlockPos pos, IBlockState state, Random random)
+    public void immediateBlockTick(BlockPos pos, IBlockState state, EaglercraftRandom random)
     {
         this.scheduledUpdatesAreImmediate = true;
         state.getBlock().updateTick(this, pos, state, random);
@@ -3731,7 +3731,7 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
         return this.provider.getActualHeight();
     }
 
-    public Random setRandomSeed(int p_72843_1_, int p_72843_2_, int p_72843_3_)
+    public EaglercraftRandom setRandomSeed(int p_72843_1_, int p_72843_2_, int p_72843_3_)
     {
         long j2 = (long)p_72843_1_ * 341873128712L + (long)p_72843_2_ * 132897987541L + this.getWorldInfo().getSeed() + (long)p_72843_3_;
         this.rand.setSeed(j2);

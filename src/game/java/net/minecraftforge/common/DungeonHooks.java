@@ -20,7 +20,7 @@
 package net.minecraftforge.common;
 
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
@@ -86,7 +86,7 @@ public class DungeonHooks
      * @param rand World generation random number generator
      * @return The mob name
      */
-    public static ResourceLocation getRandomDungeonMob(Random rand)
+    public static ResourceLocation getRandomDungeonMob(EaglercraftRandom rand)
     {
         DungeonMob mob = WeightedRandom.getRandomItem(rand, dungeonMobs);
         return mob.type;

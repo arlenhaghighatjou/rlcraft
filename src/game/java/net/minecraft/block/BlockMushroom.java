@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -24,7 +24,7 @@ public class BlockMushroom extends BlockBush implements IGrowable
         return MUSHROOM_AABB;
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         if (rand.nextInt(25) == 0)
         {
@@ -98,7 +98,7 @@ public class BlockMushroom extends BlockBush implements IGrowable
         }
     }
 
-    public boolean generateBigMushroom(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public boolean generateBigMushroom(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         worldIn.setBlockToAir(pos);
         WorldGenerator worldgenerator = null;
@@ -128,12 +128,12 @@ public class BlockMushroom extends BlockBush implements IGrowable
         return true;
     }
 
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state)
     {
         return (double)rand.nextFloat() < 0.4D;
     }
 
-    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state)
     {
         this.generateBigMushroom(worldIn, pos, state, rand);
     }

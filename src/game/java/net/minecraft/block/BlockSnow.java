@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -117,17 +117,17 @@ public class BlockSnow extends Block
         worldIn.setBlockToAir(pos);
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Items.SNOWBALL;
     }
 
-    public int quantityDropped(Random random)
+    public int quantityDropped(EaglercraftRandom random)
     {
         return 1;
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         if (worldIn.getLightFor(EnumSkyBlock.BLOCK, pos) > 11)
         {
@@ -164,7 +164,7 @@ public class BlockSnow extends Block
         return ((Integer)state.getValue(LAYERS)).intValue() - 1;
     }
 
-    @Override public int quantityDropped(IBlockState state, int fortune, Random random){ return ((Integer)state.getValue(LAYERS)) + 1; }
+    @Override public int quantityDropped(IBlockState state, int fortune, EaglercraftRandom random){ return ((Integer)state.getValue(LAYERS)) + 1; }
 
     protected BlockStateContainer createBlockState()
     {

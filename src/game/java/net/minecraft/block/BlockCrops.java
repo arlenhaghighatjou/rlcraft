@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -66,7 +66,7 @@ public class BlockCrops extends BlockBush implements IGrowable
         return ((Integer)state.getValue(this.getAgeProperty())).intValue() >= this.getMaxAge();
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         super.updateTick(worldIn, pos, state, rand);
 
@@ -182,7 +182,7 @@ public class BlockCrops extends BlockBush implements IGrowable
     {
         super.getDrops(drops, world, pos, state, 0);
         int age = getAge(state);
-        Random rand = world instanceof World ? ((World)world).rand : new Random();
+        EaglercraftRandom rand = world instanceof World ? ((World)world).rand : new EaglercraftRandom();
 
         if (age >= getMaxAge())
         {
@@ -221,7 +221,7 @@ public class BlockCrops extends BlockBush implements IGrowable
         }
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return this.isMaxAge(state) ? this.getCrop() : this.getSeed();
     }
@@ -236,12 +236,12 @@ public class BlockCrops extends BlockBush implements IGrowable
         return !this.isMaxAge(state);
     }
 
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state)
     {
         return true;
     }
 
-    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state)
     {
         this.grow(worldIn, pos, state);
     }

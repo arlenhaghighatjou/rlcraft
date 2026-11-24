@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockPrismarine;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -40,12 +40,12 @@ public class StructureOceanMonumentPieces
             {
             }
 
-            public DoubleXRoom(EnumFacing p_i45597_1_, StructureOceanMonumentPieces.RoomDefinition p_i45597_2_, Random p_i45597_3_)
+            public DoubleXRoom(EnumFacing p_i45597_1_, StructureOceanMonumentPieces.RoomDefinition p_i45597_2_, EaglercraftRandom p_i45597_3_)
             {
                 super(1, p_i45597_1_, p_i45597_2_, 2, 1, 1);
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 StructureOceanMonumentPieces.RoomDefinition structureoceanmonumentpieces$roomdefinition = this.roomDefinition.connections[EnumFacing.EAST.getIndex()];
                 StructureOceanMonumentPieces.RoomDefinition structureoceanmonumentpieces$roomdefinition1 = this.roomDefinition;
@@ -124,12 +124,12 @@ public class StructureOceanMonumentPieces
             {
             }
 
-            public DoubleXYRoom(EnumFacing p_i45596_1_, StructureOceanMonumentPieces.RoomDefinition p_i45596_2_, Random p_i45596_3_)
+            public DoubleXYRoom(EnumFacing p_i45596_1_, StructureOceanMonumentPieces.RoomDefinition p_i45596_2_, EaglercraftRandom p_i45596_3_)
             {
                 super(1, p_i45596_1_, p_i45596_2_, 2, 2, 1);
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 StructureOceanMonumentPieces.RoomDefinition structureoceanmonumentpieces$roomdefinition = this.roomDefinition.connections[EnumFacing.EAST.getIndex()];
                 StructureOceanMonumentPieces.RoomDefinition structureoceanmonumentpieces$roomdefinition1 = this.roomDefinition;
@@ -261,12 +261,12 @@ public class StructureOceanMonumentPieces
             {
             }
 
-            public DoubleYRoom(EnumFacing p_i45595_1_, StructureOceanMonumentPieces.RoomDefinition p_i45595_2_, Random p_i45595_3_)
+            public DoubleYRoom(EnumFacing p_i45595_1_, StructureOceanMonumentPieces.RoomDefinition p_i45595_2_, EaglercraftRandom p_i45595_3_)
             {
                 super(1, p_i45595_1_, p_i45595_2_, 1, 2, 1);
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 if (this.roomDefinition.index / 25 > 0)
                 {
@@ -365,12 +365,12 @@ public class StructureOceanMonumentPieces
             {
             }
 
-            public DoubleYZRoom(EnumFacing p_i45594_1_, StructureOceanMonumentPieces.RoomDefinition p_i45594_2_, Random p_i45594_3_)
+            public DoubleYZRoom(EnumFacing p_i45594_1_, StructureOceanMonumentPieces.RoomDefinition p_i45594_2_, EaglercraftRandom p_i45594_3_)
             {
                 super(1, p_i45594_1_, p_i45594_2_, 1, 2, 2);
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 StructureOceanMonumentPieces.RoomDefinition structureoceanmonumentpieces$roomdefinition = this.roomDefinition.connections[EnumFacing.NORTH.getIndex()];
                 StructureOceanMonumentPieces.RoomDefinition structureoceanmonumentpieces$roomdefinition1 = this.roomDefinition;
@@ -502,12 +502,12 @@ public class StructureOceanMonumentPieces
             {
             }
 
-            public DoubleZRoom(EnumFacing p_i45593_1_, StructureOceanMonumentPieces.RoomDefinition p_i45593_2_, Random p_i45593_3_)
+            public DoubleZRoom(EnumFacing p_i45593_1_, StructureOceanMonumentPieces.RoomDefinition p_i45593_2_, EaglercraftRandom p_i45593_3_)
             {
                 super(1, p_i45593_1_, p_i45593_2_, 1, 1, 2);
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 StructureOceanMonumentPieces.RoomDefinition structureoceanmonumentpieces$roomdefinition = this.roomDefinition.connections[EnumFacing.NORTH.getIndex()];
                 StructureOceanMonumentPieces.RoomDefinition structureoceanmonumentpieces$roomdefinition1 = this.roomDefinition;
@@ -610,7 +610,7 @@ public class StructureOceanMonumentPieces
                 super(1, p_i45592_1_, p_i45592_2_, 1, 1, 1);
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 this.fillWithBlocks(worldIn, structureBoundingBoxIn, 0, 3, 0, 2, 3, 7, BRICKS_PRISMARINE, BRICKS_PRISMARINE, false);
                 this.fillWithBlocks(worldIn, structureBoundingBoxIn, 5, 3, 0, 7, 3, 7, BRICKS_PRISMARINE, BRICKS_PRISMARINE, false);
@@ -652,7 +652,7 @@ public class StructureOceanMonumentPieces
                 return true;
             }
 
-            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, Random p_175968_3_)
+            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, EaglercraftRandom p_175968_3_)
             {
                 p_175968_2_.claimed = true;
                 return new StructureOceanMonumentPieces.SimpleRoom(p_175968_1_, p_175968_2_, p_175968_3_);
@@ -670,7 +670,7 @@ public class StructureOceanMonumentPieces
                 return !definition.hasOpening[EnumFacing.WEST.getIndex()] && !definition.hasOpening[EnumFacing.EAST.getIndex()] && !definition.hasOpening[EnumFacing.NORTH.getIndex()] && !definition.hasOpening[EnumFacing.SOUTH.getIndex()] && !definition.hasOpening[EnumFacing.UP.getIndex()];
             }
 
-            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, Random p_175968_3_)
+            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, EaglercraftRandom p_175968_3_)
             {
                 p_175968_2_.claimed = true;
                 return new StructureOceanMonumentPieces.SimpleTopRoom(p_175968_1_, p_175968_2_, p_175968_3_);
@@ -687,7 +687,7 @@ public class StructureOceanMonumentPieces
             {
             }
 
-            public MonumentBuilding(Random p_i45599_1_, int p_i45599_2_, int p_i45599_3_, EnumFacing p_i45599_4_)
+            public MonumentBuilding(EaglercraftRandom p_i45599_1_, int p_i45599_2_, int p_i45599_3_, EnumFacing p_i45599_4_)
             {
                 super(0);
                 this.setCoordBaseMode(p_i45599_4_);
@@ -760,7 +760,7 @@ public class StructureOceanMonumentPieces
                 this.childPieces.add(new StructureOceanMonumentPieces.Penthouse(enumfacing, structureboundingbox));
             }
 
-            private List<StructureOceanMonumentPieces.RoomDefinition> generateRoomGraph(Random p_175836_1_)
+            private List<StructureOceanMonumentPieces.RoomDefinition> generateRoomGraph(EaglercraftRandom p_175836_1_)
             {
                 StructureOceanMonumentPieces.RoomDefinition[] astructureoceanmonumentpieces$roomdefinition = new StructureOceanMonumentPieces.RoomDefinition[75];
 
@@ -903,7 +903,7 @@ public class StructureOceanMonumentPieces
                 return list;
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 int i = Math.max(worldIn.getSeaLevel(), 64) - this.boundingBox.minY;
                 this.generateWaterBox(worldIn, structureBoundingBoxIn, 0, 0, 0, 58, i, 58, false);
@@ -969,7 +969,7 @@ public class StructureOceanMonumentPieces
                 return true;
             }
 
-            private void generateWing(boolean p_175840_1_, int p_175840_2_, World worldIn, Random p_175840_4_, StructureBoundingBox p_175840_5_)
+            private void generateWing(boolean p_175840_1_, int p_175840_2_, World worldIn, EaglercraftRandom p_175840_4_, StructureBoundingBox p_175840_5_)
             {
                 int i = 24;
 
@@ -1020,7 +1020,7 @@ public class StructureOceanMonumentPieces
                 }
             }
 
-            private void generateEntranceArchs(World worldIn, Random p_175839_2_, StructureBoundingBox p_175839_3_)
+            private void generateEntranceArchs(World worldIn, EaglercraftRandom p_175839_2_, StructureBoundingBox p_175839_3_)
             {
                 if (this.doesChunkIntersect(p_175839_3_, 22, 5, 35, 17))
                 {
@@ -1043,7 +1043,7 @@ public class StructureOceanMonumentPieces
                 }
             }
 
-            private void generateEntranceWall(World worldIn, Random p_175837_2_, StructureBoundingBox p_175837_3_)
+            private void generateEntranceWall(World worldIn, EaglercraftRandom p_175837_2_, StructureBoundingBox p_175837_3_)
             {
                 if (this.doesChunkIntersect(p_175837_3_, 15, 20, 42, 21))
                 {
@@ -1107,7 +1107,7 @@ public class StructureOceanMonumentPieces
                 }
             }
 
-            private void generateRoofPiece(World worldIn, Random p_175841_2_, StructureBoundingBox p_175841_3_)
+            private void generateRoofPiece(World worldIn, EaglercraftRandom p_175841_2_, StructureBoundingBox p_175841_3_)
             {
                 if (this.doesChunkIntersect(p_175841_3_, 21, 21, 36, 36))
                 {
@@ -1146,7 +1146,7 @@ public class StructureOceanMonumentPieces
                 }
             }
 
-            private void generateLowerWall(World worldIn, Random p_175835_2_, StructureBoundingBox p_175835_3_)
+            private void generateLowerWall(World worldIn, EaglercraftRandom p_175835_2_, StructureBoundingBox p_175835_3_)
             {
                 if (this.doesChunkIntersect(p_175835_3_, 0, 21, 6, 58))
                 {
@@ -1208,7 +1208,7 @@ public class StructureOceanMonumentPieces
                 }
             }
 
-            private void generateMiddleWall(World worldIn, Random p_175842_2_, StructureBoundingBox p_175842_3_)
+            private void generateMiddleWall(World worldIn, EaglercraftRandom p_175842_2_, StructureBoundingBox p_175842_3_)
             {
                 if (this.doesChunkIntersect(p_175842_3_, 7, 21, 13, 50))
                 {
@@ -1279,7 +1279,7 @@ public class StructureOceanMonumentPieces
                 }
             }
 
-            private void generateUpperWall(World worldIn, Random p_175838_2_, StructureBoundingBox p_175838_3_)
+            private void generateUpperWall(World worldIn, EaglercraftRandom p_175838_2_, StructureBoundingBox p_175838_3_)
             {
                 if (this.doesChunkIntersect(p_175838_3_, 14, 21, 20, 43))
                 {
@@ -1342,12 +1342,12 @@ public class StructureOceanMonumentPieces
             {
             }
 
-            public MonumentCoreRoom(EnumFacing p_i45598_1_, StructureOceanMonumentPieces.RoomDefinition p_i45598_2_, Random p_i45598_3_)
+            public MonumentCoreRoom(EnumFacing p_i45598_1_, StructureOceanMonumentPieces.RoomDefinition p_i45598_2_, EaglercraftRandom p_i45598_3_)
             {
                 super(1, p_i45598_1_, p_i45598_2_, 2, 2, 2);
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 this.generateBoxOnFillOnly(worldIn, structureBoundingBoxIn, 1, 8, 0, 14, 8, 14, ROUGH_PRISMARINE);
                 int i = 7;
@@ -1427,7 +1427,7 @@ public class StructureOceanMonumentPieces
     {
         boolean fits(StructureOceanMonumentPieces.RoomDefinition definition);
 
-        StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, Random p_175968_3_);
+        StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, EaglercraftRandom p_175968_3_);
     }
 
     public static class Penthouse extends StructureOceanMonumentPieces.Piece
@@ -1441,7 +1441,7 @@ public class StructureOceanMonumentPieces
                 super(p_i45591_1_, p_i45591_2_);
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 this.fillWithBlocks(worldIn, structureBoundingBoxIn, 2, -1, 2, 11, -1, 11, BRICKS_PRISMARINE, BRICKS_PRISMARINE, false);
                 this.fillWithBlocks(worldIn, structureBoundingBoxIn, 0, -1, 0, 1, -1, 11, ROUGH_PRISMARINE, ROUGH_PRISMARINE, false);
@@ -1740,13 +1740,13 @@ public class StructureOceanMonumentPieces
             {
             }
 
-            public SimpleRoom(EnumFacing p_i45587_1_, StructureOceanMonumentPieces.RoomDefinition p_i45587_2_, Random p_i45587_3_)
+            public SimpleRoom(EnumFacing p_i45587_1_, StructureOceanMonumentPieces.RoomDefinition p_i45587_2_, EaglercraftRandom p_i45587_3_)
             {
                 super(1, p_i45587_1_, p_i45587_2_, 1, 1, 1);
                 this.mainDesign = p_i45587_3_.nextInt(3);
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 if (this.roomDefinition.index / 25 > 0)
                 {
@@ -1939,12 +1939,12 @@ public class StructureOceanMonumentPieces
             {
             }
 
-            public SimpleTopRoom(EnumFacing p_i45586_1_, StructureOceanMonumentPieces.RoomDefinition p_i45586_2_, Random p_i45586_3_)
+            public SimpleTopRoom(EnumFacing p_i45586_1_, StructureOceanMonumentPieces.RoomDefinition p_i45586_2_, EaglercraftRandom p_i45586_3_)
             {
                 super(1, p_i45586_1_, p_i45586_2_, 1, 1, 1);
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 if (this.roomDefinition.index / 25 > 0)
                 {
@@ -2008,7 +2008,7 @@ public class StructureOceanMonumentPieces
                 this.mainDesign = p_i45585_3_ & 1;
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 if (this.mainDesign == 0)
                 {
@@ -2121,7 +2121,7 @@ public class StructureOceanMonumentPieces
                 return definition.hasOpening[EnumFacing.EAST.getIndex()] && !definition.connections[EnumFacing.EAST.getIndex()].claimed;
             }
 
-            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, Random p_175968_3_)
+            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, EaglercraftRandom p_175968_3_)
             {
                 p_175968_2_.claimed = true;
                 p_175968_2_.connections[EnumFacing.EAST.getIndex()].claimed = true;
@@ -2148,7 +2148,7 @@ public class StructureOceanMonumentPieces
                 }
             }
 
-            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, Random p_175968_3_)
+            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, EaglercraftRandom p_175968_3_)
             {
                 p_175968_2_.claimed = true;
                 p_175968_2_.connections[EnumFacing.EAST.getIndex()].claimed = true;
@@ -2169,7 +2169,7 @@ public class StructureOceanMonumentPieces
                 return definition.hasOpening[EnumFacing.UP.getIndex()] && !definition.connections[EnumFacing.UP.getIndex()].claimed;
             }
 
-            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, Random p_175968_3_)
+            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, EaglercraftRandom p_175968_3_)
             {
                 p_175968_2_.claimed = true;
                 p_175968_2_.connections[EnumFacing.UP.getIndex()].claimed = true;
@@ -2196,7 +2196,7 @@ public class StructureOceanMonumentPieces
                 }
             }
 
-            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, Random p_175968_3_)
+            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, EaglercraftRandom p_175968_3_)
             {
                 p_175968_2_.claimed = true;
                 p_175968_2_.connections[EnumFacing.NORTH.getIndex()].claimed = true;
@@ -2217,7 +2217,7 @@ public class StructureOceanMonumentPieces
                 return definition.hasOpening[EnumFacing.NORTH.getIndex()] && !definition.connections[EnumFacing.NORTH.getIndex()].claimed;
             }
 
-            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, Random p_175968_3_)
+            public StructureOceanMonumentPieces.Piece create(EnumFacing p_175968_1_, StructureOceanMonumentPieces.RoomDefinition p_175968_2_, EaglercraftRandom p_175968_3_)
             {
                 StructureOceanMonumentPieces.RoomDefinition structureoceanmonumentpieces$roomdefinition = p_175968_2_;
 

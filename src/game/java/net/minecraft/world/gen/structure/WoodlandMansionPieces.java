@@ -3,7 +3,7 @@ package net.minecraft.world.gen.structure;
 import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
@@ -32,7 +32,7 @@ public class WoodlandMansionPieces
         MapGenStructureIO.registerStructureComponent(WoodlandMansionPieces.MansionTemplate.class, "WMP");
     }
 
-    public static void generateMansion(TemplateManager p_191152_0_, BlockPos p_191152_1_, Rotation p_191152_2_, List<WoodlandMansionPieces.MansionTemplate> p_191152_3_, Random p_191152_4_)
+    public static void generateMansion(TemplateManager p_191152_0_, BlockPos p_191152_1_, Rotation p_191152_2_, List<WoodlandMansionPieces.MansionTemplate> p_191152_3_, EaglercraftRandom p_191152_4_)
     {
         WoodlandMansionPieces.Grid woodlandmansionpieces$grid = new WoodlandMansionPieces.Grid(p_191152_4_);
         WoodlandMansionPieces.Placer woodlandmansionpieces$placer = new WoodlandMansionPieces.Placer(p_191152_0_, p_191152_4_);
@@ -45,37 +45,37 @@ public class WoodlandMansionPieces
             {
             }
 
-            public String get1x1(Random p_191104_1_)
+            public String get1x1(EaglercraftRandom p_191104_1_)
             {
                 return "1x1_a" + (p_191104_1_.nextInt(5) + 1);
             }
 
-            public String get1x1Secret(Random p_191099_1_)
+            public String get1x1Secret(EaglercraftRandom p_191099_1_)
             {
                 return "1x1_as" + (p_191099_1_.nextInt(4) + 1);
             }
 
-            public String get1x2SideEntrance(Random p_191100_1_, boolean p_191100_2_)
+            public String get1x2SideEntrance(EaglercraftRandom p_191100_1_, boolean p_191100_2_)
             {
                 return "1x2_a" + (p_191100_1_.nextInt(9) + 1);
             }
 
-            public String get1x2FrontEntrance(Random p_191098_1_, boolean p_191098_2_)
+            public String get1x2FrontEntrance(EaglercraftRandom p_191098_1_, boolean p_191098_2_)
             {
                 return "1x2_b" + (p_191098_1_.nextInt(5) + 1);
             }
 
-            public String get1x2Secret(Random p_191102_1_)
+            public String get1x2Secret(EaglercraftRandom p_191102_1_)
             {
                 return "1x2_s" + (p_191102_1_.nextInt(2) + 1);
             }
 
-            public String get2x2(Random p_191101_1_)
+            public String get2x2(EaglercraftRandom p_191101_1_)
             {
                 return "2x2_a" + (p_191101_1_.nextInt(4) + 1);
             }
 
-            public String get2x2Secret(Random p_191103_1_)
+            public String get2x2Secret(EaglercraftRandom p_191103_1_)
             {
                 return "2x2_s1";
             }
@@ -83,14 +83,14 @@ public class WoodlandMansionPieces
 
     static class Grid
         {
-            private final Random random;
+            private final EaglercraftRandom random;
             private final WoodlandMansionPieces.SimpleGrid baseGrid;
             private final WoodlandMansionPieces.SimpleGrid thirdFloorGrid;
             private final WoodlandMansionPieces.SimpleGrid[] floorRooms;
             private final int entranceX;
             private final int entranceY;
 
-            public Grid(Random randomIn)
+            public Grid(EaglercraftRandom randomIn)
             {
                 this.random = randomIn;
                 int i = 11;
@@ -480,7 +480,7 @@ public class WoodlandMansionPieces
                 this.loadTemplate(p_143011_2_);
             }
 
-            protected void handleDataMarker(String function, BlockPos pos, World worldIn, Random rand, StructureBoundingBox sbb)
+            protected void handleDataMarker(String function, BlockPos pos, World worldIn, EaglercraftRandom rand, StructureBoundingBox sbb)
             {
                 if (function.startsWith("Chest"))
                 {
@@ -540,11 +540,11 @@ public class WoodlandMansionPieces
     static class Placer
         {
             private final TemplateManager templateManager;
-            private final Random random;
+            private final EaglercraftRandom random;
             private int startX;
             private int startY;
 
-            public Placer(TemplateManager p_i47361_1_, Random p_i47361_2_)
+            public Placer(TemplateManager p_i47361_1_, EaglercraftRandom p_i47361_2_)
             {
                 this.templateManager = p_i47361_1_;
                 this.random = p_i47361_2_;
@@ -1197,19 +1197,19 @@ public class WoodlandMansionPieces
             {
             }
 
-            public abstract String get1x1(Random p_191104_1_);
+            public abstract String get1x1(EaglercraftRandom p_191104_1_);
 
-            public abstract String get1x1Secret(Random p_191099_1_);
+            public abstract String get1x1Secret(EaglercraftRandom p_191099_1_);
 
-            public abstract String get1x2SideEntrance(Random p_191100_1_, boolean p_191100_2_);
+            public abstract String get1x2SideEntrance(EaglercraftRandom p_191100_1_, boolean p_191100_2_);
 
-            public abstract String get1x2FrontEntrance(Random p_191098_1_, boolean p_191098_2_);
+            public abstract String get1x2FrontEntrance(EaglercraftRandom p_191098_1_, boolean p_191098_2_);
 
-            public abstract String get1x2Secret(Random p_191102_1_);
+            public abstract String get1x2Secret(EaglercraftRandom p_191102_1_);
 
-            public abstract String get2x2(Random p_191101_1_);
+            public abstract String get2x2(EaglercraftRandom p_191101_1_);
 
-            public abstract String get2x2Secret(Random p_191103_1_);
+            public abstract String get2x2Secret(EaglercraftRandom p_191103_1_);
         }
 
     static class SecondFloor extends WoodlandMansionPieces.RoomCollection
@@ -1218,37 +1218,37 @@ public class WoodlandMansionPieces
             {
             }
 
-            public String get1x1(Random p_191104_1_)
+            public String get1x1(EaglercraftRandom p_191104_1_)
             {
                 return "1x1_b" + (p_191104_1_.nextInt(4) + 1);
             }
 
-            public String get1x1Secret(Random p_191099_1_)
+            public String get1x1Secret(EaglercraftRandom p_191099_1_)
             {
                 return "1x1_as" + (p_191099_1_.nextInt(4) + 1);
             }
 
-            public String get1x2SideEntrance(Random p_191100_1_, boolean p_191100_2_)
+            public String get1x2SideEntrance(EaglercraftRandom p_191100_1_, boolean p_191100_2_)
             {
                 return p_191100_2_ ? "1x2_c_stairs" : "1x2_c" + (p_191100_1_.nextInt(4) + 1);
             }
 
-            public String get1x2FrontEntrance(Random p_191098_1_, boolean p_191098_2_)
+            public String get1x2FrontEntrance(EaglercraftRandom p_191098_1_, boolean p_191098_2_)
             {
                 return p_191098_2_ ? "1x2_d_stairs" : "1x2_d" + (p_191098_1_.nextInt(5) + 1);
             }
 
-            public String get1x2Secret(Random p_191102_1_)
+            public String get1x2Secret(EaglercraftRandom p_191102_1_)
             {
                 return "1x2_se" + (p_191102_1_.nextInt(1) + 1);
             }
 
-            public String get2x2(Random p_191101_1_)
+            public String get2x2(EaglercraftRandom p_191101_1_)
             {
                 return "2x2_b" + (p_191101_1_.nextInt(5) + 1);
             }
 
-            public String get2x2Secret(Random p_191103_1_)
+            public String get2x2Secret(EaglercraftRandom p_191103_1_)
             {
                 return "2x2_s1";
             }

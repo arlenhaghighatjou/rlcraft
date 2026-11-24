@@ -1,7 +1,7 @@
 package net.minecraft.world.gen.structure;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.BlockDoor;
@@ -72,11 +72,11 @@ public abstract class StructureComponent
 
     protected abstract void readStructureFromNBT(NBTTagCompound tagCompound, TemplateManager p_143011_2_);
 
-    public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
+    public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, EaglercraftRandom rand)
     {
     }
 
-    public abstract boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn);
+    public abstract boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn);
 
     public StructureBoundingBox getBoundingBox()
     {
@@ -293,7 +293,7 @@ public abstract class StructureComponent
         }
     }
 
-    protected void fillWithRandomizedBlocks(World worldIn, StructureBoundingBox boundingboxIn, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, boolean alwaysReplace, Random rand, StructureComponent.BlockSelector blockselector)
+    protected void fillWithRandomizedBlocks(World worldIn, StructureBoundingBox boundingboxIn, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, boolean alwaysReplace, EaglercraftRandom rand, StructureComponent.BlockSelector blockselector)
     {
         for (int i = minY; i <= maxY; ++i)
         {
@@ -311,7 +311,7 @@ public abstract class StructureComponent
         }
     }
 
-    protected void generateMaybeBox(World worldIn, StructureBoundingBox sbb, Random rand, float chance, int x1, int y1, int z1, int x2, int y2, int z2, IBlockState edgeState, IBlockState state, boolean requireNonAir, int requiredSkylight)
+    protected void generateMaybeBox(World worldIn, StructureBoundingBox sbb, EaglercraftRandom rand, float chance, int x1, int y1, int z1, int x2, int y2, int z2, IBlockState edgeState, IBlockState state, boolean requireNonAir, int requiredSkylight)
     {
         for (int i = y1; i <= y2; ++i)
         {
@@ -335,7 +335,7 @@ public abstract class StructureComponent
         }
     }
 
-    protected void randomlyPlaceBlock(World worldIn, StructureBoundingBox boundingboxIn, Random rand, float chance, int x, int y, int z, IBlockState blockstateIn)
+    protected void randomlyPlaceBlock(World worldIn, StructureBoundingBox boundingboxIn, EaglercraftRandom rand, float chance, int x, int y, int z, IBlockState blockstateIn)
     {
         if (rand.nextFloat() < chance)
         {
@@ -407,13 +407,13 @@ public abstract class StructureComponent
         }
     }
 
-    protected boolean generateChest(World worldIn, StructureBoundingBox structurebb, Random randomIn, int x, int y, int z, ResourceLocation loot)
+    protected boolean generateChest(World worldIn, StructureBoundingBox structurebb, EaglercraftRandom randomIn, int x, int y, int z, ResourceLocation loot)
     {
         BlockPos blockpos = new BlockPos(this.getXWithOffset(x, z), this.getYWithOffset(y), this.getZWithOffset(x, z));
         return this.generateChest(worldIn, structurebb, randomIn, blockpos, loot, (IBlockState)null);
     }
 
-    protected boolean generateChest(World p_191080_1_, StructureBoundingBox p_191080_2_, Random p_191080_3_, BlockPos p_191080_4_, ResourceLocation p_191080_5_, @Nullable IBlockState p_191080_6_)
+    protected boolean generateChest(World p_191080_1_, StructureBoundingBox p_191080_2_, EaglercraftRandom p_191080_3_, BlockPos p_191080_4_, ResourceLocation p_191080_5_, @Nullable IBlockState p_191080_6_)
     {
         if (p_191080_2_.isVecInside(p_191080_4_) && p_191080_1_.getBlockState(p_191080_4_).getBlock() != Blocks.CHEST)
         {
@@ -438,7 +438,7 @@ public abstract class StructureComponent
         }
     }
 
-    protected boolean createDispenser(World worldIn, StructureBoundingBox sbb, Random rand, int x, int y, int z, EnumFacing facing, ResourceLocation lootTableIn)
+    protected boolean createDispenser(World worldIn, StructureBoundingBox sbb, EaglercraftRandom rand, int x, int y, int z, EnumFacing facing, ResourceLocation lootTableIn)
     {
         BlockPos blockpos = new BlockPos(this.getXWithOffset(x, z), this.getYWithOffset(y), this.getZWithOffset(x, z));
 
@@ -460,7 +460,7 @@ public abstract class StructureComponent
         }
     }
 
-    protected void generateDoor(World worldIn, StructureBoundingBox sbb, Random rand, int x, int y, int z, EnumFacing facing, BlockDoor door)
+    protected void generateDoor(World worldIn, StructureBoundingBox sbb, EaglercraftRandom rand, int x, int y, int z, EnumFacing facing, BlockDoor door)
     {
         this.setBlockState(worldIn, door.getDefaultState().withProperty(BlockDoor.FACING, facing), x, y, z, sbb);
         this.setBlockState(worldIn, door.getDefaultState().withProperty(BlockDoor.FACING, facing).withProperty(BlockDoor.HALF, BlockDoor.EnumDoorHalf.UPPER), x, y + 1, z, sbb);
@@ -513,7 +513,7 @@ public abstract class StructureComponent
         {
             protected IBlockState blockstate = Blocks.AIR.getDefaultState();
 
-            public abstract void selectBlocks(Random rand, int x, int y, int z, boolean wall);
+            public abstract void selectBlocks(EaglercraftRandom rand, int x, int y, int z, boolean wall);
 
             public IBlockState getBlockState()
             {

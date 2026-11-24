@@ -8,7 +8,7 @@ import com.google.common.collect.Ordering;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -64,7 +64,7 @@ public class GuiIngame extends Gui
     protected static final ResourceLocation VIGNETTE_TEX_PATH = new ResourceLocation("textures/misc/vignette.png");
     protected static final ResourceLocation WIDGETS_TEX_PATH = new ResourceLocation("textures/gui/widgets.png");
     protected static final ResourceLocation PUMPKIN_BLUR_TEX_PATH = new ResourceLocation("textures/misc/pumpkinblur.png");
-    protected final Random rand = new Random();
+    protected final EaglercraftRandom rand = new EaglercraftRandom();
     protected final Minecraft mc;
     protected final RenderItem itemRenderer;
     protected final GuiNewChat persistantChatGUI;

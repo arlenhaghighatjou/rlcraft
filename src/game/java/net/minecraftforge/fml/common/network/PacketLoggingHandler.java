@@ -30,7 +30,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.NettyVarint21FrameDecoder;

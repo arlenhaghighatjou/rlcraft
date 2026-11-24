@@ -1,6 +1,6 @@
 package net.minecraft.world.gen.structure.template;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public class BlockRotationProcessor implements ITemplateProcessor
 {
     private final float chance;
-    private final Random random;
+    private final EaglercraftRandom random;
 
     public BlockRotationProcessor(BlockPos pos, PlacementSettings settings)
     {

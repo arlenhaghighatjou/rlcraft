@@ -22,7 +22,7 @@ package net.minecraftforge.fml.common.registry;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.entity.monster.EntityZombieVillager;
@@ -73,7 +73,7 @@ public class VillagerRegistry
          * @param random
          * @param i
          */
-        StructureVillagePieces.PieceWeight getVillagePieceWeight(Random random, int i);
+        StructureVillagePieces.PieceWeight getVillagePieceWeight(EaglercraftRandom random, int i);
 
         /**
          * The class of the root structure component to add to the village
@@ -94,7 +94,7 @@ public class VillagerRegistry
          * @param facing
          * @param p5
          */
-        Village buildComponent(StructureVillagePieces.PieceWeight villagePiece, StructureVillagePieces.Start startPiece, List<StructureComponent> pieces, Random random, int p1,
+        Village buildComponent(StructureVillagePieces.PieceWeight villagePiece, StructureVillagePieces.Start startPiece, List<StructureComponent> pieces, EaglercraftRandom random, int p1,
                                int p2, int p3, EnumFacing facing, int p5);
     }
 
@@ -113,7 +113,7 @@ public class VillagerRegistry
         villageCreationHandlers.put(handler.getComponentClass(), handler);
     }
 
-    public static void addExtraVillageComponents(List<PieceWeight> list, Random random, int i)
+    public static void addExtraVillageComponents(List<PieceWeight> list, EaglercraftRandom random, int i)
     {
         List<StructureVillagePieces.PieceWeight> parts = list;
         for (IVillageCreationHandler handler : instance().villageCreationHandlers.values())
@@ -122,7 +122,7 @@ public class VillagerRegistry
         }
     }
 
-    public static Village getVillageComponent(StructureVillagePieces.PieceWeight villagePiece, StructureVillagePieces.Start startPiece, List<StructureComponent> pieces, Random random,
+    public static Village getVillageComponent(StructureVillagePieces.PieceWeight villagePiece, StructureVillagePieces.Start startPiece, List<StructureComponent> pieces, EaglercraftRandom random,
                                               int p1, int p2, int p3, EnumFacing facing, int p5)
     {
         return instance().villageCreationHandlers.get(villagePiece.villagePieceClass).buildComponent(villagePiece, startPiece, pieces, random, p1, p2, p3, facing, p5);
@@ -229,7 +229,7 @@ public class VillagerRegistry
             return this.careers.get(0);
         }
 
-        public int getRandomCareer(Random rand)
+        public int getRandomCareer(EaglercraftRandom rand)
         {
             return this.careers.get(rand.nextInt(this.careers.size())).id;
         }
@@ -313,12 +313,12 @@ public class VillagerRegistry
      * @param entity The new entity
      * @param rand   The world's RNG
      */
-    public static void setRandomProfession(EntityVillager entity, Random rand)
+    public static void setRandomProfession(EntityVillager entity, EaglercraftRandom rand)
     {
         entity.setProfession(INSTANCE.REGISTRY.getRandomObject(rand));
     }
 
-    public static void setRandomProfession(EntityZombieVillager entity, Random rand)
+    public static void setRandomProfession(EntityZombieVillager entity, EaglercraftRandom rand)
     {
         entity.setForgeProfession(INSTANCE.REGISTRY.getRandomObject(rand));
     }

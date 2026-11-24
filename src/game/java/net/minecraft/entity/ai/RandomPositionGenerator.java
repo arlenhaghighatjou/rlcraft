@@ -1,6 +1,6 @@
 package net.minecraft.entity.ai;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityCreature;
@@ -49,7 +49,7 @@ public class RandomPositionGenerator
     private static Vec3d generateRandomPos(EntityCreature p_191379_0_, int p_191379_1_, int p_191379_2_, @Nullable Vec3d p_191379_3_, boolean p_191379_4_)
     {
         PathNavigate pathnavigate = p_191379_0_.getNavigator();
-        Random random = p_191379_0_.getRNG();
+        EaglercraftRandom random = p_191379_0_.getRNG();
         boolean flag;
 
         if (p_191379_0_.hasHome())

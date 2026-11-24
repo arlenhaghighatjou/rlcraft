@@ -1,7 +1,7 @@
 package net.minecraft.entity.ai;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -126,7 +126,7 @@ public class EntityAIMate extends EntityAIBase
             entityageable.setGrowingAge(-24000);
             entityageable.setLocationAndAngles(this.animal.posX, this.animal.posY, this.animal.posZ, 0.0F, 0.0F);
             this.world.spawnEntity(entityageable);
-            Random random = this.animal.getRNG();
+            EaglercraftRandom random = this.animal.getRNG();
 
             for (int i = 0; i < 7; ++i)
             {

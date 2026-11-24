@@ -19,7 +19,7 @@
 
 package net.minecraftforge.fluids;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -80,7 +80,7 @@ public class BlockFluidFinite extends BlockFluidBase
     }
 
     @Override
-    public void updateTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random rand)
+    public void updateTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EaglercraftRandom rand)
     {
         boolean changed = false;
         int quantaRemaining = state.getValue(LEVEL) + 1;

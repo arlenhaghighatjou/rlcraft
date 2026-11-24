@@ -1,7 +1,7 @@
 package net.minecraft.block;
 
 import com.google.common.cache.LoadingCache;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -58,7 +58,7 @@ public class BlockPortal extends BlockBreakable
         }
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         super.updateTick(worldIn, pos, state, rand);
 
@@ -207,7 +207,7 @@ public class BlockPortal extends BlockBreakable
         }
     }
 
-    public int quantityDropped(Random random)
+    public int quantityDropped(EaglercraftRandom random)
     {
         return 0;
     }
@@ -237,7 +237,7 @@ public class BlockPortal extends BlockBreakable
     }
 
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand)
     {
         if (rand.nextInt(100) == 0)
         {

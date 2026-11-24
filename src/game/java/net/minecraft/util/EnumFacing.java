@@ -6,7 +6,7 @@ import com.google.common.collect.Maps;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.BlockPos;
@@ -219,7 +219,7 @@ public enum EnumFacing implements IStringSerializable
         return (float)((this.horizontalIndex & 3) * 90);
     }
 
-    public static EnumFacing random(Random rand)
+    public static EnumFacing random(EaglercraftRandom rand)
     {
         return values()[rand.nextInt(values().length)];
     }
@@ -412,7 +412,7 @@ public enum EnumFacing implements IStringSerializable
             }
         }
 
-        public EnumFacing random(Random rand)
+        public EnumFacing random(EaglercraftRandom rand)
         {
             EnumFacing[] aenumfacing = this.facings();
             return aenumfacing[rand.nextInt(aenumfacing.length)];

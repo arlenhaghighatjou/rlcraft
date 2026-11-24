@@ -1,12 +1,12 @@
 package net.minecraft.util.datafix.fixes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.datafix.IFixableData;
 
 public class ZombieProfToType implements IFixableData
 {
-    private static final Random RANDOM = new Random();
+    private static final EaglercraftRandom RANDOM = new EaglercraftRandom();
 
     public int getFixVersion()
     {

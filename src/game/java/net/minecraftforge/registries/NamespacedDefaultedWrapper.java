@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -122,7 +122,7 @@ class NamespacedDefaultedWrapper<V extends IForgeRegistryEntry<V>> extends Regis
 
     @Override
     @Nullable
-    public V getRandomObject(Random random)
+    public V getRandomObject(EaglercraftRandom random)
     {
         Collection<V> values = this.delegate.getValuesCollection();
         return values.stream().skip(random.nextInt(values.size())).findFirst().orElse(this.delegate.getDefault());

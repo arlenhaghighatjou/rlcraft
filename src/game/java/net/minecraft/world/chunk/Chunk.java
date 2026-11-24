@@ -6,7 +6,7 @@ import com.google.common.collect.Queues;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -38,8 +38,8 @@ import net.minecraft.world.gen.ChunkGeneratorDebug;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class Chunk implements net.minecraftforge.common.capabilities.ICapabilityProvider
 {
@@ -958,9 +958,9 @@ public class Chunk implements net.minecraftforge.common.capabilities.ICapability
         return this.dirty;
     }
 
-    public Random getRandomWithSeed(long seed)
+    public EaglercraftRandom getRandomWithSeed(long seed)
     {
-        return new Random(this.world.getSeed() + (long)(this.x * this.x * 4987142) + (long)(this.x * 5947611) + (long)(this.z * this.z) * 4392871L + (long)(this.z * 389711) ^ seed);
+        return new EaglercraftRandom(this.world.getSeed() + (long)(this.x * this.x * 4987142) + (long)(this.x * 5947611) + (long)(this.z * this.z) * 4392871L + (long)(this.z * 389711) ^ seed);
     }
 
     public boolean isEmpty()

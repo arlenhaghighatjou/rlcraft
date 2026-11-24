@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.init.Biomes;
@@ -63,7 +63,7 @@ public class MapGenScatteredFeature extends MapGenStructure
 
         int k = chunkX / this.maxDistanceBetweenScatteredFeatures;
         int l = chunkZ / this.maxDistanceBetweenScatteredFeatures;
-        Random random = this.world.setRandomSeed(k, l, 14357617);
+        EaglercraftRandom random = this.world.setRandomSeed(k, l, 14357617);
         k = k * this.maxDistanceBetweenScatteredFeatures;
         l = l * this.maxDistanceBetweenScatteredFeatures;
         k = k + random.nextInt(this.maxDistanceBetweenScatteredFeatures - 8);
@@ -127,12 +127,12 @@ public class MapGenScatteredFeature extends MapGenStructure
             {
             }
 
-            public Start(World worldIn, Random random, int chunkX, int chunkZ)
+            public Start(World worldIn, EaglercraftRandom random, int chunkX, int chunkZ)
             {
                 this(worldIn, random, chunkX, chunkZ, worldIn.getBiome(new BlockPos(chunkX * 16 + 8, 0, chunkZ * 16 + 8)));
             }
 
-            public Start(World worldIn, Random random, int chunkX, int chunkZ, Biome biomeIn)
+            public Start(World worldIn, EaglercraftRandom random, int chunkX, int chunkZ, Biome biomeIn)
             {
                 super(chunkX, chunkZ);
 

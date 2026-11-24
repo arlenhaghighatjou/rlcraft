@@ -19,7 +19,7 @@
 
 package net.minecraftforge.fml.common.network.simpleimpl;
 
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 import net.minecraft.network.INetHandler;
 import net.minecraftforge.fml.common.FMLLog;

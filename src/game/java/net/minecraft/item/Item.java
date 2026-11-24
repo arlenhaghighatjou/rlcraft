@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -98,7 +98,7 @@ public class Item extends net.minecraftforge.registries.IForgeRegistryEntry.Impl
     protected static final UUID ATTACK_DAMAGE_MODIFIER = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF");
     protected static final UUID ATTACK_SPEED_MODIFIER = UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3");
     private CreativeTabs tabToDisplayOn;
-    protected static Random itemRand = new Random();
+    protected static EaglercraftRandom itemRand = new EaglercraftRandom();
     protected int maxStackSize = 64;
     private int maxDamage;
     protected boolean bFull3D;

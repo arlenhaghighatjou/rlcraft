@@ -21,7 +21,7 @@ package net.minecraftforge.fml.common;
 
 import java.io.PrintStream;
 
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 /**
  * PrintStream which redirects it's output to a given logger.

@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -32,7 +32,7 @@ public class Explosion
 {
     private final boolean causesFire;
     private final boolean damagesTerrain;
-    private final Random random;
+    private final EaglercraftRandom random;
     private final World world;
     private final double x;
     private final double y;
@@ -58,7 +58,7 @@ public class Explosion
 
     public Explosion(World worldIn, Entity entityIn, double x, double y, double z, float size, boolean flaming, boolean damagesTerrain)
     {
-        this.random = new Random();
+        this.random = new EaglercraftRandom();
         this.affectedBlockPositions = Lists.<BlockPos>newArrayList();
         this.playerKnockbackMap = Maps.<EntityPlayer, Vec3d>newHashMap();
         this.world = worldIn;

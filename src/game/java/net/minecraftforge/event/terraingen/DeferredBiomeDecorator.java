@@ -19,7 +19,7 @@
 
 package net.minecraftforge.event.terraingen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeDecorator;
@@ -35,7 +35,7 @@ public class DeferredBiomeDecorator extends BiomeDecorator {
     }
 
     @Override
-    public void decorate(World par1World, Random par2Random, Biome biome, BlockPos pos)
+    public void decorate(World par1World, EaglercraftRandom par2Random, Biome biome, BlockPos pos)
     {
         fireCreateEventAndReplace(biome);
         // On first call to decorate, we fire and substitute ourselves, if we haven't already done so

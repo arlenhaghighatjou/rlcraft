@@ -10,7 +10,7 @@ import com.google.common.collect.Sets;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.UUID;
 import javax.annotation.Nullable;
@@ -45,8 +45,8 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenEndGateway;
 import net.minecraft.world.gen.feature.WorldGenEndPodium;
 import net.minecraft.world.gen.feature.WorldGenSpikes;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class DragonFightManager
 {
@@ -112,7 +112,7 @@ public class DragonFightManager
         else
         {
             this.gateways.addAll(ContiguousSet.create(Range.closedOpen(Integer.valueOf(0), Integer.valueOf(20)), DiscreteDomain.integers()));
-            Collections.shuffle(this.gateways, new Random(worldIn.getSeed()));
+            Collections.shuffle(this.gateways, new EaglercraftRandom(worldIn.getSeed()));
         }
 
         this.portalPattern = FactoryBlockPattern.start().aisle("       ", "       ", "       ", "   #   ", "       ", "       ", "       ").aisle("       ", "       ", "       ", "   #   ", "       ", "       ", "       ").aisle("       ", "       ", "       ", "   #   ", "       ", "       ", "       ").aisle("  ###  ", " #   # ", "#     #", "#  #  #", "#     #", " #   # ", "  ###  ").aisle("       ", "  ###  ", " ##### ", " ##### ", " ##### ", "  ###  ", "       ").where('#', BlockWorldState.hasState(BlockMatcher.forBlock(Blocks.BEDROCK))).build();
@@ -424,7 +424,7 @@ public class DragonFightManager
     private void generateGateway(BlockPos pos)
     {
         this.world.playEvent(3000, pos, 0);
-        (new WorldGenEndGateway()).generate(this.world, new Random(), pos);
+        (new WorldGenEndGateway()).generate(this.world, new EaglercraftRandom(), pos);
     }
 
     private void generatePortal(boolean active)
@@ -439,7 +439,7 @@ public class DragonFightManager
             }
         }
 
-        worldgenendpodium.generate(this.world, new Random(), this.exitPortalLocation);
+        worldgenendpodium.generate(this.world, new EaglercraftRandom(), this.exitPortalLocation);
     }
 
     private EntityDragon createNewDragon()

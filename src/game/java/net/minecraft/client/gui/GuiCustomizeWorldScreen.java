@@ -3,7 +3,7 @@ package net.minecraft.client.gui;
 import com.google.common.base.Predicate;
 import com.google.common.primitives.Floats;
 import java.io.IOException;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -47,7 +47,7 @@ public class GuiCustomizeWorldScreen extends GuiScreen implements GuiSlider.Form
     };
     private final ChunkGeneratorSettings.Factory defaultSettings = new ChunkGeneratorSettings.Factory();
     private ChunkGeneratorSettings.Factory settings;
-    private final Random random = new Random();
+    private final EaglercraftRandom random = new EaglercraftRandom();
 
     public GuiCustomizeWorldScreen(GuiScreen parentIn, String p_i45521_2_)
     {

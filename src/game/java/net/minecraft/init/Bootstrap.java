@@ -3,7 +3,7 @@ package net.minecraft.init;
 import com.mojang.authlib.GameProfile;
 import java.io.File;
 import java.io.PrintStream;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.UUID;
 import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.block.Block;
@@ -69,8 +69,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class Bootstrap
 {
@@ -233,7 +233,7 @@ public class Bootstrap
                 double d1 = iposition.getY() + (double)((float)enumfacing.getFrontOffsetY() * 0.3F);
                 double d2 = iposition.getZ() + (double)((float)enumfacing.getFrontOffsetZ() * 0.3F);
                 World world = source.getWorld();
-                Random random = world.rand;
+                EaglercraftRandom random = world.rand;
                 double d3 = random.nextGaussian() * 0.05D + (double)enumfacing.getFrontOffsetX();
                 double d4 = random.nextGaussian() * 0.05D + (double)enumfacing.getFrontOffsetY();
                 double d5 = random.nextGaussian() * 0.05D + (double)enumfacing.getFrontOffsetZ();

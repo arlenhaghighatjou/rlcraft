@@ -3,7 +3,7 @@ package net.minecraft.world;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockPattern;
@@ -18,13 +18,13 @@ import net.minecraft.util.math.MathHelper;
 public class Teleporter implements net.minecraftforge.common.util.ITeleporter
 {
     protected final WorldServer world;
-    protected final Random random;
+    protected final EaglercraftRandom random;
     protected final Long2ObjectMap<Teleporter.PortalPosition> destinationCoordinateCache = new Long2ObjectOpenHashMap<Teleporter.PortalPosition>(4096);
 
     public Teleporter(WorldServer worldIn)
     {
         this.world = worldIn;
-        this.random = new Random(worldIn.getSeed());
+        this.random = new EaglercraftRandom(worldIn.getSeed());
     }
 
     public void placeInPortal(Entity entityIn, float rotationYaw)

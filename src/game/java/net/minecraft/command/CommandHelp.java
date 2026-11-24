@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import javax.annotation.Nullable;
 import net.minecraft.server.MinecraftServer;
@@ -19,7 +19,7 @@ import net.minecraft.util.text.event.ClickEvent;
 public class CommandHelp extends CommandBase
 {
     private static final String[] SEARGE_SAYS = new String[] {"Yolo", "Ask for help on twitter", "/deop @p", "Scoreboard deleted, commands blocked", "Contact helpdesk for help", "/testfornoob @p", "/trigger warning", "Oh my god, it's full of stats", "/kill @p[name=!Searge]", "Have you tried turning it off and on again?", "Sorry, no help today"};
-    private final Random rand = new Random();
+    private final EaglercraftRandom rand = new EaglercraftRandom();
 
     public String getName()
     {

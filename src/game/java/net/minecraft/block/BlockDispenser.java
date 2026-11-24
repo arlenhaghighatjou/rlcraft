@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -37,7 +37,7 @@ public class BlockDispenser extends BlockContainer
     public static final PropertyDirection FACING = BlockDirectional.FACING;
     public static final PropertyBool TRIGGERED = PropertyBool.create("triggered");
     public static final RegistryDefaulted<Item, IBehaviorDispenseItem> DISPENSE_BEHAVIOR_REGISTRY = new RegistryDefaulted<Item, IBehaviorDispenseItem>(new BehaviorDefaultDispenseItem());
-    protected Random rand = new Random();
+    protected EaglercraftRandom rand = new EaglercraftRandom();
 
     protected BlockDispenser()
     {
@@ -167,7 +167,7 @@ public class BlockDispenser extends BlockContainer
         }
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         if (!worldIn.isRemote)
         {

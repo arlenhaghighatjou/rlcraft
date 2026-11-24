@@ -11,7 +11,7 @@ import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.math.MathHelper;
@@ -36,7 +36,7 @@ public class LootPool
         this.name = name;
     }
 
-    protected void createLootRoll(Collection<ItemStack> stacks, Random rand, LootContext context)
+    protected void createLootRoll(Collection<ItemStack> stacks, EaglercraftRandom rand, LootContext context)
     {
         List<LootEntry> list = Lists.<LootEntry>newArrayList();
         int i = 0;
@@ -72,7 +72,7 @@ public class LootPool
         }
     }
 
-    public void generateLoot(Collection<ItemStack> stacks, Random rand, LootContext context)
+    public void generateLoot(Collection<ItemStack> stacks, EaglercraftRandom rand, LootContext context)
     {
         if (LootConditionManager.testAllConditions(this.poolConditions, rand, context))
         {

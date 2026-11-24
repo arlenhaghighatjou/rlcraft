@@ -1,7 +1,7 @@
 package net.minecraft.world.end;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.util.math.BlockPos;
@@ -77,7 +77,7 @@ public enum DragonSpawnManager
                         worldgenspikes.setSpike(worldgenspikes$endspike);
                         worldgenspikes.setCrystalInvulnerable(true);
                         worldgenspikes.setBeamTarget(new BlockPos(0, 128, 0));
-                        worldgenspikes.generate(worldIn, new Random(), new BlockPos(worldgenspikes$endspike.getCenterX(), 45, worldgenspikes$endspike.getCenterZ()));
+                        worldgenspikes.generate(worldIn, new EaglercraftRandom(), new BlockPos(worldgenspikes$endspike.getCenterX(), 45, worldgenspikes$endspike.getCenterZ()));
                     }
                 }
                 else if (flag)

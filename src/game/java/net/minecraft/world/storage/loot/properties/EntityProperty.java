@@ -3,13 +3,13 @@ package net.minecraft.world.storage.loot.properties;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 public interface EntityProperty
 {
-    boolean testProperty(Random random, Entity entityIn);
+    boolean testProperty(EaglercraftRandom random, Entity entityIn);
 
     public abstract static class Serializer<T extends EntityProperty>
         {

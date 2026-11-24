@@ -32,7 +32,7 @@ import net.minecraft.block.BlockPrismarine;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.ModContainer;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;

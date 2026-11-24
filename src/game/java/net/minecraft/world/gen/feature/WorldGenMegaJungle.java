@@ -1,6 +1,6 @@
 package net.minecraft.world.gen.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockVine;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
@@ -16,7 +16,7 @@ public class WorldGenMegaJungle extends WorldGenHugeTrees
         super(notify, baseHeightIn, extraRandomHeightIn, woodMetadataIn, p_i46448_5_);
     }
 
-    public boolean generate(World worldIn, Random rand, BlockPos position)
+    public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position)
     {
         int i = this.getHeight(rand);
 
@@ -113,7 +113,7 @@ public class WorldGenMegaJungle extends WorldGenHugeTrees
         }
     }
 
-    private void placeVine(World p_181632_1_, Random p_181632_2_, BlockPos p_181632_3_, PropertyBool p_181632_4_)
+    private void placeVine(World p_181632_1_, EaglercraftRandom p_181632_2_, BlockPos p_181632_3_, PropertyBool p_181632_4_)
     {
         if (p_181632_2_.nextInt(3) > 0 && p_181632_1_.isAirBlock(p_181632_3_))
         {

@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -137,7 +137,7 @@ public class MapGenStronghold extends MapGenStructure
             }
         }
 
-        Random random = new Random();
+        EaglercraftRandom random = new EaglercraftRandom();
         random.setSeed(this.world.getSeed());
         double d1 = random.nextDouble() * Math.PI * 2.0D;
         int j = 0;
@@ -197,7 +197,7 @@ public class MapGenStronghold extends MapGenStructure
             {
             }
 
-            public Start(World worldIn, Random random, int chunkX, int chunkZ)
+            public Start(World worldIn, EaglercraftRandom random, int chunkX, int chunkZ)
             {
                 super(chunkX, chunkZ);
                 StructureStrongholdPieces.prepareStructurePieces();

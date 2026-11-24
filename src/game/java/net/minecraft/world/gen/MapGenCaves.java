@@ -1,7 +1,7 @@
 package net.minecraft.world.gen;
 
 import com.google.common.base.MoreObjects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -28,7 +28,7 @@ public class MapGenCaves extends MapGenBase
         double d1 = (double)(p_180702_4_ * 16 + 8);
         float f = 0.0F;
         float f1 = 0.0F;
-        Random random = new Random(p_180702_1_);
+        EaglercraftRandom random = new EaglercraftRandom(p_180702_1_);
 
         if (p_180702_16_ <= 0)
         {

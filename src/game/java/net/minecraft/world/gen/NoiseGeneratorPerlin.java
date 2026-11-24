@@ -1,13 +1,13 @@
 package net.minecraft.world.gen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class NoiseGeneratorPerlin extends NoiseGenerator
 {
     private final NoiseGeneratorSimplex[] noiseLevels;
     private final int levels;
 
-    public NoiseGeneratorPerlin(Random seed, int levelsIn)
+    public NoiseGeneratorPerlin(EaglercraftRandom seed, int levelsIn)
     {
         this.levels = levelsIn;
         this.noiseLevels = new NoiseGeneratorSimplex[levelsIn];

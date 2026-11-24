@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -66,7 +66,7 @@ public class BlockRedstoneOre extends Block
         }
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         if (this == Blocks.LIT_REDSTONE_ORE)
         {
@@ -74,17 +74,17 @@ public class BlockRedstoneOre extends Block
         }
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Items.REDSTONE;
     }
 
-    public int quantityDroppedWithBonus(int fortune, Random random)
+    public int quantityDroppedWithBonus(int fortune, EaglercraftRandom random)
     {
         return this.quantityDropped(random) + random.nextInt(fortune + 1);
     }
 
-    public int quantityDropped(Random random)
+    public int quantityDropped(EaglercraftRandom random)
     {
         return 4 + random.nextInt(2);
     }
@@ -105,7 +105,7 @@ public class BlockRedstoneOre extends Block
     }
 
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand)
     {
         if (this.isOn)
         {
@@ -115,7 +115,7 @@ public class BlockRedstoneOre extends Block
 
     private void spawnParticles(World worldIn, BlockPos pos)
     {
-        Random random = worldIn.rand;
+        EaglercraftRandom random = worldIn.rand;
         double d0 = 0.0625D;
 
         for (int i = 0; i < 6; ++i)

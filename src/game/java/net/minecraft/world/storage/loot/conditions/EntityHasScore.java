@@ -6,7 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.Map.Entry;
 import net.minecraft.entity.Entity;
@@ -29,7 +29,7 @@ public class EntityHasScore implements LootCondition
         this.target = targetIn;
     }
 
-    public boolean testCondition(Random rand, LootContext context)
+    public boolean testCondition(EaglercraftRandom rand, LootContext context)
     {
         Entity entity = context.getEntity(this.target);
 

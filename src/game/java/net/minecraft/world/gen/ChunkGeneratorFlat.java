@@ -3,7 +3,7 @@ package net.minecraft.world.gen;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
@@ -27,7 +27,7 @@ import net.minecraft.world.gen.structure.StructureOceanMonument;
 public class ChunkGeneratorFlat implements IChunkGenerator
 {
     private final World world;
-    private final Random random;
+    private final EaglercraftRandom random;
     private final IBlockState[] cachedBlockIDs = new IBlockState[256];
     private final FlatGeneratorInfo flatWorldGenInfo;
     private final Map<String, MapGenStructure> structureGenerators = new HashMap<String, MapGenStructure>();
@@ -39,7 +39,7 @@ public class ChunkGeneratorFlat implements IChunkGenerator
     public ChunkGeneratorFlat(World worldIn, long seed, boolean generateStructures, String flatGeneratorSettings)
     {
         this.world = worldIn;
-        this.random = new Random(seed);
+        this.random = new EaglercraftRandom(seed);
         this.flatWorldGenInfo = FlatGeneratorInfo.createFlatGeneratorFromString(flatGeneratorSettings);
 
         if (generateStructures)

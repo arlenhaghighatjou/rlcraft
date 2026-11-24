@@ -12,13 +12,13 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.math.MathHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class LootTable
 {
@@ -31,7 +31,7 @@ public class LootTable
         this.pools = Lists.newArrayList(poolsIn);
     }
 
-    public List<ItemStack> generateLootForPools(Random rand, LootContext context)
+    public List<ItemStack> generateLootForPools(EaglercraftRandom rand, LootContext context)
     {
         List<ItemStack> list = Lists.<ItemStack>newArrayList();
 
@@ -52,7 +52,7 @@ public class LootTable
         return list;
     }
 
-    public void fillInventory(IInventory inventory, Random rand, LootContext context)
+    public void fillInventory(IInventory inventory, EaglercraftRandom rand, LootContext context)
     {
         List<ItemStack> list = this.generateLootForPools(rand, context);
         List<Integer> list1 = this.getEmptySlotsRandomized(inventory, rand);
@@ -77,7 +77,7 @@ public class LootTable
         }
     }
 
-    private void shuffleItems(List<ItemStack> stacks, int p_186463_2_, Random rand)
+    private void shuffleItems(List<ItemStack> stacks, int p_186463_2_, EaglercraftRandom rand)
     {
         List<ItemStack> list = Lists.<ItemStack>newArrayList();
         Iterator<ItemStack> iterator = stacks.iterator();
@@ -128,7 +128,7 @@ public class LootTable
         Collections.shuffle(stacks, rand);
     }
 
-    private List<Integer> getEmptySlotsRandomized(IInventory inventory, Random rand)
+    private List<Integer> getEmptySlotsRandomized(IInventory inventory, EaglercraftRandom rand)
     {
         List<Integer> list = Lists.<Integer>newArrayList();
 

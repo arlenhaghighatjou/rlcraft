@@ -155,7 +155,7 @@ public class WorldType
         return this == FLAT ? 1.0D : 0.03125D;
     }
 
-    public boolean handleSlimeSpawnReduction(java.util.Random random, World world)
+    public boolean handleSlimeSpawnReduction(net.lax1dude.eaglercraft.v1_8.EaglercraftRandom random, World world)
     {
         return this == FLAT ? random.nextInt(4) != 1 : false;
     }

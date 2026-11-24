@@ -1,7 +1,7 @@
 package net.minecraft.world.biome;
 
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockSand;
@@ -59,12 +59,12 @@ public class BiomeMesa extends Biome
         return new BiomeMesa.Decorator();
     }
 
-    public WorldGenAbstractTree getRandomTreeFeature(Random rand)
+    public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand)
     {
         return TREE_FEATURE;
     }
 
-    public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
+    public void genTerrainBlocks(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
     {
         if (this.clayBands == null || this.worldSeed != worldIn.getSeed())
         {
@@ -73,7 +73,7 @@ public class BiomeMesa extends Biome
 
         if (this.pillarNoise == null || this.pillarRoofNoise == null || this.worldSeed != worldIn.getSeed())
         {
-            Random random = new Random(this.worldSeed);
+            EaglercraftRandom random = new EaglercraftRandom(this.worldSeed);
             this.pillarNoise = new NoiseGeneratorPerlin(random, 4);
             this.pillarRoofNoise = new NoiseGeneratorPerlin(random, 1);
         }
@@ -232,7 +232,7 @@ public class BiomeMesa extends Biome
     {
         this.clayBands = new IBlockState[64];
         Arrays.fill(this.clayBands, HARDENED_CLAY);
-        Random random = new Random(p_150619_1_);
+        EaglercraftRandom random = new EaglercraftRandom(p_150619_1_);
         this.clayBandsOffsetNoise = new NoiseGeneratorPerlin(random, 1);
 
         for (int l1 = 0; l1 < 64; ++l1)
@@ -333,7 +333,7 @@ public class BiomeMesa extends Biome
         {
         }
 
-        protected void generateOres(World worldIn, Random random)
+        protected void generateOres(World worldIn, EaglercraftRandom random)
         {
             super.generateOres(worldIn, random);
             if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, random, goldGen, chunkPos, net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.GOLD))

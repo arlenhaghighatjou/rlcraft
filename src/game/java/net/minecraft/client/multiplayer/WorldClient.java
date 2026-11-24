@@ -1,7 +1,7 @@
 package net.minecraft.client.multiplayer;
 
 import com.google.common.collect.Sets;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
@@ -334,7 +334,7 @@ public class WorldClient extends World
     public void doVoidFogParticles(int posX, int posY, int posZ)
     {
         int i = 32;
-        Random random = new Random();
+        EaglercraftRandom random = new EaglercraftRandom();
         ItemStack itemstack = this.mc.player.getHeldItemMainhand();
         boolean flag = this.mc.playerController.getCurrentGameType() == GameType.CREATIVE && !itemstack.isEmpty() && itemstack.getItem() == Item.getItemFromBlock(Blocks.BARRIER);
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
@@ -346,7 +346,7 @@ public class WorldClient extends World
         }
     }
 
-    public void showBarrierParticles(int x, int y, int z, int offset, Random random, boolean holdingBarrier, BlockPos.MutableBlockPos pos)
+    public void showBarrierParticles(int x, int y, int z, int offset, EaglercraftRandom random, boolean holdingBarrier, BlockPos.MutableBlockPos pos)
     {
         int i = x + this.rand.nextInt(offset) - this.rand.nextInt(offset);
         int j = y + this.rand.nextInt(offset) - this.rand.nextInt(offset);

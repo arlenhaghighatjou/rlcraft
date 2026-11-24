@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -43,7 +43,7 @@ public class ParticleManager
     private final ArrayDeque<Particle>[][] fxLayers = new ArrayDeque[4][];
     private final Queue<ParticleEmitter> particleEmitters = Queues.<ParticleEmitter>newArrayDeque();
     private final TextureManager renderer;
-    private final Random rand = new Random();
+    private final EaglercraftRandom rand = new EaglercraftRandom();
     private final Map<Integer, IParticleFactory> particleTypes = Maps.<Integer, IParticleFactory>newHashMap();
     private final Queue<Particle> queue = Queues.<Particle>newArrayDeque();
 

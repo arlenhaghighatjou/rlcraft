@@ -1,6 +1,6 @@
 package net.minecraft.entity.monster;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSilverfish;
@@ -182,7 +182,7 @@ public class EntitySilverfish extends EntityMob
                 }
                 else
                 {
-                    Random random = this.entity.getRNG();
+                    EaglercraftRandom random = this.entity.getRNG();
 
                     if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.entity.world, this.entity) && random.nextInt(10) == 0)
                     {
@@ -259,7 +259,7 @@ public class EntitySilverfish extends EntityMob
                 if (this.lookForFriends <= 0)
                 {
                     World world = this.silverfish.world;
-                    Random random = this.silverfish.getRNG();
+                    EaglercraftRandom random = this.silverfish.getRNG();
                     BlockPos blockpos = new BlockPos(this.silverfish);
 
                     for (int i = 0; i <= 5 && i >= -5; i = (i <= 0 ? 1 : 0) - i)

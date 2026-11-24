@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -55,7 +55,7 @@ public class BlockBush extends Block implements net.minecraftforge.common.IPlant
         this.checkAndDropBlock(worldIn, pos, state);
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         this.checkAndDropBlock(worldIn, pos, state);
     }

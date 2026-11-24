@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -306,7 +306,7 @@ public class EnchantmentHelper
         }
     }
 
-    public static int calcItemStackEnchantability(Random rand, int enchantNum, int power, ItemStack stack)
+    public static int calcItemStackEnchantability(EaglercraftRandom rand, int enchantNum, int power, ItemStack stack)
     {
         Item item = stack.getItem();
         int i = item.getItemEnchantability(stack);
@@ -335,7 +335,7 @@ public class EnchantmentHelper
         }
     }
 
-    public static ItemStack addRandomEnchantment(Random random, ItemStack stack, int level, boolean allowTreasure)
+    public static ItemStack addRandomEnchantment(EaglercraftRandom random, ItemStack stack, int level, boolean allowTreasure)
     {
         List<EnchantmentData> list = buildEnchantmentList(random, stack, level, allowTreasure);
         boolean flag = stack.getItem() == Items.BOOK;
@@ -360,7 +360,7 @@ public class EnchantmentHelper
         return stack;
     }
 
-    public static List<EnchantmentData> buildEnchantmentList(Random randomIn, ItemStack itemStackIn, int level, boolean allowTreasure)
+    public static List<EnchantmentData> buildEnchantmentList(EaglercraftRandom randomIn, ItemStack itemStackIn, int level, boolean allowTreasure)
     {
         List<EnchantmentData> list = Lists.<EnchantmentData>newArrayList();
         Item item = itemStackIn.getItem();

@@ -1,6 +1,6 @@
 package net.minecraft.world.gen.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -20,7 +20,7 @@ public abstract class WorldGenAbstractTree extends WorldGenerator
         return material == Material.AIR || material == Material.LEAVES || blockType == Blocks.GRASS || blockType == Blocks.DIRT || blockType == Blocks.LOG || blockType == Blocks.LOG2 || blockType == Blocks.SAPLING || blockType == Blocks.VINE;
     }
 
-    public void generateSaplings(World worldIn, Random random, BlockPos pos)
+    public void generateSaplings(World worldIn, EaglercraftRandom random, BlockPos pos)
     {
     }
 

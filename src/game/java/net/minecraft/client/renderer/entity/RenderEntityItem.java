@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderEntityItem extends Render<EntityItem>
 {
     private final RenderItem itemRenderer;
-    private final Random random = new Random();
+    private final EaglercraftRandom random = new EaglercraftRandom();
 
     public RenderEntityItem(RenderManager renderManagerIn, RenderItem p_i46167_2_)
     {

@@ -19,7 +19,7 @@
 
 package net.minecraftforge.event.terraingen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import javax.annotation.Nullable;
 
@@ -38,7 +38,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  * {@link DeferredBiomeDecorator#fireCreateEventAndReplace(Biome)}.<br>
  * <br>
  * {@link #world} contains the world that is being decorated. <br>
- * {@link #rand} contains an instance of Random to be used. <br>
+ * {@link #rand} contains an instance of EaglercraftRandom to be used. <br>
  * {@link #chunkPos} contains the original chunk for the decorator. <br>
  * <br>
  * This event is not {@link Cancelable}.
@@ -50,13 +50,13 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 public class DecorateBiomeEvent extends Event
 {
     private final World world;
-    private final Random rand;
+    private final EaglercraftRandom rand;
     /** @deprecated use {@link #chunkPos} */
     @Deprecated // TODO remove in 1.13
     private final BlockPos pos;
     private final ChunkPos chunkPos;
 
-    public DecorateBiomeEvent(World world, Random rand, ChunkPos chunkPos)
+    public DecorateBiomeEvent(World world, EaglercraftRandom rand, ChunkPos chunkPos)
     {
         this.world = world;
         this.rand = rand;
@@ -65,7 +65,7 @@ public class DecorateBiomeEvent extends Event
     }
 
     @Deprecated // TODO: remove in 1.13
-    public DecorateBiomeEvent(World world, Random rand, BlockPos pos)
+    public DecorateBiomeEvent(World world, EaglercraftRandom rand, BlockPos pos)
     {
         this.world = world;
         this.rand = rand;
@@ -78,7 +78,7 @@ public class DecorateBiomeEvent extends Event
         return world;
     }
 
-    public Random getRand()
+    public EaglercraftRandom getRand()
     {
         return rand;
     }
@@ -102,13 +102,13 @@ public class DecorateBiomeEvent extends Event
      */
     public static class Pre extends DecorateBiomeEvent
     {
-        public Pre(World world, Random rand, ChunkPos chunkPos)
+        public Pre(World world, EaglercraftRandom rand, ChunkPos chunkPos)
         {
             super(world, rand, chunkPos);
         }
 
         @Deprecated // TODO: remove in 1.13
-        public Pre(World world, Random rand, BlockPos pos)
+        public Pre(World world, EaglercraftRandom rand, BlockPos pos)
         {
             this(world, rand, new ChunkPos(pos));
         }
@@ -119,13 +119,13 @@ public class DecorateBiomeEvent extends Event
      */
     public static class Post extends DecorateBiomeEvent
     {
-        public Post(World world, Random rand, ChunkPos chunkPos)
+        public Post(World world, EaglercraftRandom rand, ChunkPos chunkPos)
         {
             super(world, rand, chunkPos);
         }
 
         @Deprecated //TODO: remove in 1.13
-        public Post(World world, Random rand, BlockPos pos)
+        public Post(World world, EaglercraftRandom rand, BlockPos pos)
         {
             this(world, rand, new ChunkPos(pos));
         }
@@ -151,7 +151,7 @@ public class DecorateBiomeEvent extends Event
         @Nullable
         private final BlockPos placementPos;
 
-        public Decorate(World world, Random rand, ChunkPos chunkPos, @Nullable BlockPos placementPos, EventType type)
+        public Decorate(World world, EaglercraftRandom rand, ChunkPos chunkPos, @Nullable BlockPos placementPos, EventType type)
         {
             super(world, rand, chunkPos);
             this.type = type;
@@ -159,7 +159,7 @@ public class DecorateBiomeEvent extends Event
         }
 
         @Deprecated // TODO: remove in 1.13
-        public Decorate(World world, Random rand, BlockPos pos, EventType type)
+        public Decorate(World world, EaglercraftRandom rand, BlockPos pos, EventType type)
         {
             super(world, rand, pos);
             this.type = type;

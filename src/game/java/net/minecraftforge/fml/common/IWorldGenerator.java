@@ -19,7 +19,7 @@
 
 package net.minecraftforge.fml.common;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -37,7 +37,7 @@ public interface IWorldGenerator
     /**
      * Generate some world
      *
-     * @param random the chunk specific {@link Random}.
+     * @param random the chunk specific {@link EaglercraftRandom}.
      * @param chunkX the chunk X coordinate of this chunk.
      * @param chunkZ the chunk Z coordinate of this chunk.
      * @param world : additionalData[0] The minecraft {@link World} we're generating for.
@@ -45,5 +45,5 @@ public interface IWorldGenerator
      * @param chunkProvider : additionalData[2] {@link IChunkProvider} that is requesting the world generation.
      *
      */
-    void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider);
+    void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider);
 }

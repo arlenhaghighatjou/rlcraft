@@ -2,7 +2,7 @@ package net.minecraft.world.gen.structure;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntityPigZombie;
@@ -100,7 +100,7 @@ public class MapGenNetherBridge extends MapGenStructure
             {
             }
 
-            public Start(World worldIn, Random random, int chunkX, int chunkZ)
+            public Start(World worldIn, EaglercraftRandom random, int chunkX, int chunkZ)
             {
                 super(chunkX, chunkZ);
                 StructureNetherBridgePieces.Start structurenetherbridgepieces$start = new StructureNetherBridgePieces.Start(random, (chunkX << 4) + 2, (chunkZ << 4) + 2);

@@ -3,7 +3,7 @@ package net.minecraft.world.biome;
 import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
@@ -47,8 +47,8 @@ import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public abstract class Biome extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<Biome>
 {
@@ -62,8 +62,8 @@ public abstract class Biome extends net.minecraftforge.registries.IForgeRegistry
     protected static final IBlockState ICE = Blocks.ICE.getDefaultState();
     protected static final IBlockState WATER = Blocks.WATER.getDefaultState();
     public static final ObjectIntIdentityMap<Biome> MUTATION_TO_BASE_ID_MAP = new ObjectIntIdentityMap<Biome>();
-    protected static final NoiseGeneratorPerlin TEMPERATURE_NOISE = new NoiseGeneratorPerlin(new Random(1234L), 1);
-    protected static final NoiseGeneratorPerlin GRASS_COLOR_NOISE = new NoiseGeneratorPerlin(new Random(2345L), 1);
+    protected static final NoiseGeneratorPerlin TEMPERATURE_NOISE = new NoiseGeneratorPerlin(new EaglercraftRandom(1234L), 1);
+    protected static final NoiseGeneratorPerlin GRASS_COLOR_NOISE = new NoiseGeneratorPerlin(new EaglercraftRandom(2345L), 1);
     protected static final WorldGenDoublePlant DOUBLE_PLANT_GENERATOR = new WorldGenDoublePlant();
     protected static final WorldGenTrees TREE_FEATURE = new WorldGenTrees(false);
     protected static final WorldGenBigTree BIG_TREE_FEATURE = new WorldGenBigTree(false);
@@ -145,17 +145,17 @@ public abstract class Biome extends net.minecraftforge.registries.IForgeRegistry
         return this.baseBiomeRegName != null;
     }
 
-    public WorldGenAbstractTree getRandomTreeFeature(Random rand)
+    public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand)
     {
         return (WorldGenAbstractTree)(rand.nextInt(10) == 0 ? BIG_TREE_FEATURE : TREE_FEATURE);
     }
 
-    public WorldGenerator getRandomWorldGenForGrass(Random rand)
+    public WorldGenerator getRandomWorldGenForGrass(EaglercraftRandom rand)
     {
         return new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);
     }
 
-    public BlockFlower.EnumFlowerType pickRandomFlower(Random rand, BlockPos pos)
+    public BlockFlower.EnumFlowerType pickRandomFlower(EaglercraftRandom rand, BlockPos pos)
     {
         return rand.nextInt(3) > 0 ? BlockFlower.EnumFlowerType.DANDELION : BlockFlower.EnumFlowerType.POPPY;
     }
@@ -220,12 +220,12 @@ public abstract class Biome extends net.minecraftforge.registries.IForgeRegistry
         }
     }
 
-    public void decorate(World worldIn, Random rand, BlockPos pos)
+    public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos)
     {
         this.decorator.decorate(worldIn, rand, this, pos);
     }
 
-    public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
+    public void genTerrainBlocks(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
     {
         this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
     }
@@ -238,7 +238,7 @@ public abstract class Biome extends net.minecraftforge.registries.IForgeRegistry
         return getModdedBiomeGrassColor(ColorizerGrass.getGrassColor(d0, d1));
     }
 
-    public final void generateBiomeTerrain(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
+    public final void generateBiomeTerrain(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
     {
         int i = worldIn.getSeaLevel();
         IBlockState iblockstate = this.topBlock;
@@ -464,7 +464,7 @@ public abstract class Biome extends net.minecraftforge.registries.IForgeRegistry
         this.flowers.add(new FlowerEntry(state, weight));
     }
 
-    public void plantFlower(World world, Random rand, BlockPos pos)
+    public void plantFlower(World world, EaglercraftRandom rand, BlockPos pos)
     {
         if (flowers.isEmpty()) return;
         FlowerEntry flower = (FlowerEntry)WeightedRandom.getRandomItem(rand, flowers);

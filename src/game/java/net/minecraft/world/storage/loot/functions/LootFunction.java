@@ -3,7 +3,7 @@ package net.minecraft.world.storage.loot.functions;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
@@ -18,7 +18,7 @@ public abstract class LootFunction
         this.conditions = conditionsIn;
     }
 
-    public abstract ItemStack apply(ItemStack stack, Random rand, LootContext context);
+    public abstract ItemStack apply(ItemStack stack, EaglercraftRandom rand, LootContext context);
 
     public LootCondition[] getConditions()
     {

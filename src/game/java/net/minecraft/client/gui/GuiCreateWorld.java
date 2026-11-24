@@ -1,7 +1,7 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.world.GameType;
@@ -186,7 +186,7 @@ public class GuiCreateWorld extends GuiScreen
                 }
 
                 this.alreadyGenerated = true;
-                long i = (new Random()).nextLong();
+                long i = (new EaglercraftRandom()).nextLong();
                 String s = this.worldSeedField.getText();
 
                 if (!StringUtils.isEmpty(s))

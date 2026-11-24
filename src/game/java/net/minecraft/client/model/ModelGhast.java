@@ -1,6 +1,6 @@
 package net.minecraft.client.model;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
@@ -19,7 +19,7 @@ public class ModelGhast extends ModelBase
         this.body = new ModelRenderer(this, 0, 0);
         this.body.addBox(-8.0F, -8.0F, -8.0F, 16, 16, 16);
         this.body.rotationPointY += 8.0F;
-        Random random = new Random(1660L);
+        EaglercraftRandom random = new EaglercraftRandom(1660L);
 
         for (int j = 0; j < this.tentacles.length; ++j)
         {

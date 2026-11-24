@@ -2,7 +2,7 @@ package net.minecraft.world.gen.structure;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockRail;
@@ -35,7 +35,7 @@ public class StructureMineshaftPieces
         MapGenStructureIO.registerStructureComponent(StructureMineshaftPieces.Stairs.class, "MSStairs");
     }
 
-    private static StructureMineshaftPieces.Peice createRandomShaftPiece(List<StructureComponent> p_189940_0_, Random p_189940_1_, int p_189940_2_, int p_189940_3_, int p_189940_4_, @Nullable EnumFacing p_189940_5_, int p_189940_6_, MapGenMineshaft.Type p_189940_7_)
+    private static StructureMineshaftPieces.Peice createRandomShaftPiece(List<StructureComponent> p_189940_0_, EaglercraftRandom p_189940_1_, int p_189940_2_, int p_189940_3_, int p_189940_4_, @Nullable EnumFacing p_189940_5_, int p_189940_6_, MapGenMineshaft.Type p_189940_7_)
     {
         int i = p_189940_1_.nextInt(100);
 
@@ -70,7 +70,7 @@ public class StructureMineshaftPieces
         return null;
     }
 
-    private static StructureMineshaftPieces.Peice generateAndAddPiece(StructureComponent p_189938_0_, List<StructureComponent> p_189938_1_, Random p_189938_2_, int p_189938_3_, int p_189938_4_, int p_189938_5_, EnumFacing p_189938_6_, int p_189938_7_)
+    private static StructureMineshaftPieces.Peice generateAndAddPiece(StructureComponent p_189938_0_, List<StructureComponent> p_189938_1_, EaglercraftRandom p_189938_2_, int p_189938_3_, int p_189938_4_, int p_189938_5_, EnumFacing p_189938_6_, int p_189938_7_)
     {
         if (p_189938_7_ > 8)
         {
@@ -124,7 +124,7 @@ public class StructureMineshaftPieces
                 this.sectionCount = tagCompound.getInteger("Num");
             }
 
-            public Corridor(int p_i47140_1_, Random p_i47140_2_, StructureBoundingBox p_i47140_3_, EnumFacing p_i47140_4_, MapGenMineshaft.Type p_i47140_5_)
+            public Corridor(int p_i47140_1_, EaglercraftRandom p_i47140_2_, StructureBoundingBox p_i47140_3_, EnumFacing p_i47140_4_, MapGenMineshaft.Type p_i47140_5_)
             {
                 super(p_i47140_1_, p_i47140_5_);
                 this.setCoordBaseMode(p_i47140_4_);
@@ -142,7 +142,7 @@ public class StructureMineshaftPieces
                 }
             }
 
-            public static StructureBoundingBox findCorridorSize(List<StructureComponent> p_175814_0_, Random rand, int x, int y, int z, EnumFacing facing)
+            public static StructureBoundingBox findCorridorSize(List<StructureComponent> p_175814_0_, EaglercraftRandom rand, int x, int y, int z, EnumFacing facing)
             {
                 StructureBoundingBox structureboundingbox = new StructureBoundingBox(x, y, z, x, y + 2, z);
                 int i;
@@ -180,7 +180,7 @@ public class StructureMineshaftPieces
                 return i > 0 ? structureboundingbox : null;
             }
 
-            public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
+            public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, EaglercraftRandom rand)
             {
                 int i = this.getComponentType();
                 int j = rand.nextInt(4);
@@ -293,7 +293,7 @@ public class StructureMineshaftPieces
                 }
             }
 
-            protected boolean generateChest(World worldIn, StructureBoundingBox structurebb, Random randomIn, int x, int y, int z, ResourceLocation loot)
+            protected boolean generateChest(World worldIn, StructureBoundingBox structurebb, EaglercraftRandom randomIn, int x, int y, int z, ResourceLocation loot)
             {
                 BlockPos blockpos = new BlockPos(this.getXWithOffset(x, z), this.getYWithOffset(y), this.getZWithOffset(x, z));
 
@@ -312,7 +312,7 @@ public class StructureMineshaftPieces
                 }
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 if (this.isLiquidInStructureBoundingBox(worldIn, structureBoundingBoxIn))
                 {
@@ -414,7 +414,7 @@ public class StructureMineshaftPieces
                 }
             }
 
-            private void placeSupport(World p_189921_1_, StructureBoundingBox p_189921_2_, int p_189921_3_, int p_189921_4_, int p_189921_5_, int p_189921_6_, int p_189921_7_, Random p_189921_8_)
+            private void placeSupport(World p_189921_1_, StructureBoundingBox p_189921_2_, int p_189921_3_, int p_189921_4_, int p_189921_5_, int p_189921_6_, int p_189921_7_, EaglercraftRandom p_189921_8_)
             {
                 if (this.isSupportingBox(p_189921_1_, p_189921_2_, p_189921_3_, p_189921_7_, p_189921_6_, p_189921_5_))
                 {
@@ -438,7 +438,7 @@ public class StructureMineshaftPieces
                 }
             }
 
-            private void placeCobWeb(World p_189922_1_, StructureBoundingBox p_189922_2_, Random p_189922_3_, float p_189922_4_, int p_189922_5_, int p_189922_6_, int p_189922_7_)
+            private void placeCobWeb(World p_189922_1_, StructureBoundingBox p_189922_2_, EaglercraftRandom p_189922_3_, float p_189922_4_, int p_189922_5_, int p_189922_6_, int p_189922_7_)
             {
                 if (this.getSkyBrightness(p_189922_1_, p_189922_5_, p_189922_6_, p_189922_7_, p_189922_2_) < 8)
                 {
@@ -470,7 +470,7 @@ public class StructureMineshaftPieces
                 this.corridorDirection = EnumFacing.getHorizontal(tagCompound.getInteger("D"));
             }
 
-            public Cross(int p_i47139_1_, Random p_i47139_2_, StructureBoundingBox p_i47139_3_, @Nullable EnumFacing p_i47139_4_, MapGenMineshaft.Type p_i47139_5_)
+            public Cross(int p_i47139_1_, EaglercraftRandom p_i47139_2_, StructureBoundingBox p_i47139_3_, @Nullable EnumFacing p_i47139_4_, MapGenMineshaft.Type p_i47139_5_)
             {
                 super(p_i47139_1_, p_i47139_5_);
                 this.corridorDirection = p_i47139_4_;
@@ -478,7 +478,7 @@ public class StructureMineshaftPieces
                 this.isMultipleFloors = p_i47139_3_.getYSize() > 3;
             }
 
-            public static StructureBoundingBox findCrossing(List<StructureComponent> listIn, Random rand, int x, int y, int z, EnumFacing facing)
+            public static StructureBoundingBox findCrossing(List<StructureComponent> listIn, EaglercraftRandom rand, int x, int y, int z, EnumFacing facing)
             {
                 StructureBoundingBox structureboundingbox = new StructureBoundingBox(x, y, z, x, y + 2, z);
 
@@ -514,7 +514,7 @@ public class StructureMineshaftPieces
                 return StructureComponent.findIntersecting(listIn, structureboundingbox) != null ? null : structureboundingbox;
             }
 
-            public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
+            public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, EaglercraftRandom rand)
             {
                 int i = this.getComponentType();
 
@@ -566,7 +566,7 @@ public class StructureMineshaftPieces
                 }
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 if (this.isLiquidInStructureBoundingBox(worldIn, structureBoundingBoxIn))
                 {
@@ -689,14 +689,14 @@ public class StructureMineshaftPieces
             {
             }
 
-            public Room(int p_i47137_1_, Random p_i47137_2_, int p_i47137_3_, int p_i47137_4_, MapGenMineshaft.Type p_i47137_5_)
+            public Room(int p_i47137_1_, EaglercraftRandom p_i47137_2_, int p_i47137_3_, int p_i47137_4_, MapGenMineshaft.Type p_i47137_5_)
             {
                 super(p_i47137_1_, p_i47137_5_);
                 this.mineShaftType = p_i47137_5_;
                 this.boundingBox = new StructureBoundingBox(p_i47137_3_, 50, p_i47137_4_, p_i47137_3_ + 7 + p_i47137_2_.nextInt(6), 54 + p_i47137_2_.nextInt(6), p_i47137_4_ + 7 + p_i47137_2_.nextInt(6));
             }
 
-            public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
+            public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, EaglercraftRandom rand)
             {
                 int i = this.getComponentType();
                 int j = this.boundingBox.getYSize() - 3 - 1;
@@ -781,7 +781,7 @@ public class StructureMineshaftPieces
                 }
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 if (this.isLiquidInStructureBoundingBox(worldIn, structureBoundingBoxIn))
                 {
@@ -843,14 +843,14 @@ public class StructureMineshaftPieces
             {
             }
 
-            public Stairs(int p_i47136_1_, Random p_i47136_2_, StructureBoundingBox p_i47136_3_, EnumFacing p_i47136_4_, MapGenMineshaft.Type p_i47136_5_)
+            public Stairs(int p_i47136_1_, EaglercraftRandom p_i47136_2_, StructureBoundingBox p_i47136_3_, EnumFacing p_i47136_4_, MapGenMineshaft.Type p_i47136_5_)
             {
                 super(p_i47136_1_, p_i47136_5_);
                 this.setCoordBaseMode(p_i47136_4_);
                 this.boundingBox = p_i47136_3_;
             }
 
-            public static StructureBoundingBox findStairs(List<StructureComponent> listIn, Random rand, int x, int y, int z, EnumFacing facing)
+            public static StructureBoundingBox findStairs(List<StructureComponent> listIn, EaglercraftRandom rand, int x, int y, int z, EnumFacing facing)
             {
                 StructureBoundingBox structureboundingbox = new StructureBoundingBox(x, y - 5, z, x, y + 2, z);
 
@@ -877,7 +877,7 @@ public class StructureMineshaftPieces
                 return StructureComponent.findIntersecting(listIn, structureboundingbox) != null ? null : structureboundingbox;
             }
 
-            public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
+            public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, EaglercraftRandom rand)
             {
                 int i = this.getComponentType();
                 EnumFacing enumfacing = this.getCoordBaseMode();
@@ -902,7 +902,7 @@ public class StructureMineshaftPieces
                 }
             }
 
-            public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
+            public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn)
             {
                 if (this.isLiquidInStructureBoundingBox(worldIn, structureBoundingBoxIn))
                 {

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -32,7 +32,7 @@ public class FontRenderer implements IResourceManagerReloadListener
     private static final ResourceLocation[] UNICODE_PAGE_LOCATIONS = new ResourceLocation[256];
     protected final int[] charWidth = new int[256];
     public int FONT_HEIGHT = 9;
-    public Random fontRandom = new Random();
+    public EaglercraftRandom fontRandom = new EaglercraftRandom();
     protected final byte[] glyphWidth = new byte[65536];
     private final int[] colorCode = new int[32];
     protected final ResourceLocation locationFontTexture;

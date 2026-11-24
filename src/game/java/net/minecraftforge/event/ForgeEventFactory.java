@@ -22,7 +22,7 @@ package net.minecraftforge.event;
 import java.io.File;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
@@ -764,7 +764,7 @@ public class ForgeEventFactory
         return event.getResult() != net.minecraftforge.fml.common.eventhandler.Event.Result.DENY;
     }
 
-    public static void onChunkPopulate(boolean pre, IChunkGenerator gen, World world, Random rand, int x, int z, boolean hasVillageGenerated)
+    public static void onChunkPopulate(boolean pre, IChunkGenerator gen, World world, EaglercraftRandom rand, int x, int z, boolean hasVillageGenerated)
     {
         MinecraftForge.EVENT_BUS.post(pre ? new PopulateChunkEvent.Pre(gen, world, rand, x, z, hasVillageGenerated) : new PopulateChunkEvent.Post(gen, world, rand, x, z, hasVillageGenerated));
     }

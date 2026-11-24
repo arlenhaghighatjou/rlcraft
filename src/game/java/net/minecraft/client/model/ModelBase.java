@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.fml.relauncher.Side;
@@ -32,7 +32,7 @@ public abstract class ModelBase
     {
     }
 
-    public ModelRenderer getRandomModelBox(Random rand)
+    public ModelRenderer getRandomModelBox(EaglercraftRandom rand)
     {
         return this.boxList.get(rand.nextInt(this.boxList.size()));
     }

@@ -1,6 +1,6 @@
 package net.minecraft.world.gen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -16,7 +16,7 @@ public class MapGenRavine extends MapGenBase
 
     protected void addTunnel(long p_180707_1_, int p_180707_3_, int p_180707_4_, ChunkPrimer p_180707_5_, double p_180707_6_, double p_180707_8_, double p_180707_10_, float p_180707_12_, float p_180707_13_, float p_180707_14_, int p_180707_15_, int p_180707_16_, double p_180707_17_)
     {
-        Random random = new Random(p_180707_1_);
+        EaglercraftRandom random = new EaglercraftRandom(p_180707_1_);
         double d0 = (double)(p_180707_3_ * 16 + 8);
         double d1 = (double)(p_180707_4_ * 16 + 8);
         float f = 0.0F;

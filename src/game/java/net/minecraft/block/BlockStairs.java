@@ -2,7 +2,7 @@ package net.minecraft.block;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.properties.IProperty;
@@ -205,7 +205,7 @@ public class BlockStairs extends Block
     }
 
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand)
     {
         this.modelBlock.randomDisplayTick(stateIn, worldIn, pos, rand);
     }
@@ -284,7 +284,7 @@ public class BlockStairs extends Block
         this.modelBlock.onEntityWalk(worldIn, pos, entityIn);
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         this.modelBlock.updateTick(worldIn, pos, state, rand);
     }

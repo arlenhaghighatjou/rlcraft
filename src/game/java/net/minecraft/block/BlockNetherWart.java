@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -45,7 +45,7 @@ public class BlockNetherWart extends BlockBush
         return super.canBlockStay(worldIn, pos, state);
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         int i = ((Integer)state.getValue(AGE)).intValue();
 
@@ -84,12 +84,12 @@ public class BlockNetherWart extends BlockBush
         }
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Items.AIR;
     }
 
-    public int quantityDropped(Random random)
+    public int quantityDropped(EaglercraftRandom random)
     {
         return 0;
     }
@@ -112,7 +112,7 @@ public class BlockNetherWart extends BlockBush
     @Override
     public void getDrops(net.minecraft.util.NonNullList<ItemStack> drops, net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
-        Random rand = world instanceof World ? ((World)world).rand : new Random();
+        EaglercraftRandom rand = world instanceof World ? ((World)world).rand : new EaglercraftRandom();
         int count = 1;
 
         if (((Integer)state.getValue(AGE)) >= 3)

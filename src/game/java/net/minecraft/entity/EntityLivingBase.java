@@ -7,7 +7,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -74,8 +74,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public abstract class EntityLivingBase extends Entity
 {
@@ -425,7 +425,7 @@ public abstract class EntityLivingBase extends Entity
         return false;
     }
 
-    public Random getRNG()
+    public EaglercraftRandom getRNG()
     {
         return this.rand;
     }
@@ -2873,7 +2873,7 @@ public abstract class EntityLivingBase extends Entity
         boolean flag = false;
         BlockPos blockpos = new BlockPos(this);
         World world = this.world;
-        Random random = this.getRNG();
+        EaglercraftRandom random = this.getRNG();
 
         if (world.isBlockLoaded(blockpos))
         {

@@ -53,7 +53,7 @@ public class ItemShears extends Item
                 java.util.List<ItemStack> drops = target.onSheared(itemstack, entity.world, pos,
                         net.minecraft.enchantment.EnchantmentHelper.getEnchantmentLevel(net.minecraft.init.Enchantments.FORTUNE, itemstack));
 
-                java.util.Random rand = new java.util.Random();
+                net.lax1dude.eaglercraft.v1_8.EaglercraftRandom rand = new net.lax1dude.eaglercraft.v1_8.EaglercraftRandom();
                 for(ItemStack stack : drops)
                 {
                     net.minecraft.entity.item.EntityItem ent = entity.entityDropItem(stack, 1.0F);
@@ -83,7 +83,7 @@ public class ItemShears extends Item
             {
                 java.util.List<ItemStack> drops = target.onSheared(itemstack, player.world, pos,
                         net.minecraft.enchantment.EnchantmentHelper.getEnchantmentLevel(net.minecraft.init.Enchantments.FORTUNE, itemstack));
-                java.util.Random rand = new java.util.Random();
+                net.lax1dude.eaglercraft.v1_8.EaglercraftRandom rand = new net.lax1dude.eaglercraft.v1_8.EaglercraftRandom();
 
                 for (ItemStack stack : drops)
                 {

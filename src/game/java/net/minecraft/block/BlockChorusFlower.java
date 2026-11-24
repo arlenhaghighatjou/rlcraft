@@ -1,6 +1,6 @@
 package net.minecraft.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -36,12 +36,12 @@ public class BlockChorusFlower extends Block
         this.setTickRandomly(true);
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Items.AIR;
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         if (!this.canSurvive(worldIn, pos))
         {
@@ -269,13 +269,13 @@ public class BlockChorusFlower extends Block
         return new BlockStateContainer(this, new IProperty[] {AGE});
     }
 
-    public static void generatePlant(World worldIn, BlockPos pos, Random rand, int p_185603_3_)
+    public static void generatePlant(World worldIn, BlockPos pos, EaglercraftRandom rand, int p_185603_3_)
     {
         worldIn.setBlockState(pos, Blocks.CHORUS_PLANT.getDefaultState(), 2);
         growTreeRecursive(worldIn, pos, rand, pos, p_185603_3_, 0);
     }
 
-    private static void growTreeRecursive(World worldIn, BlockPos p_185601_1_, Random rand, BlockPos p_185601_3_, int p_185601_4_, int p_185601_5_)
+    private static void growTreeRecursive(World worldIn, BlockPos p_185601_1_, EaglercraftRandom rand, BlockPos p_185601_3_, int p_185601_4_, int p_185601_5_)
     {
         int i = rand.nextInt(4) + 1;
 

@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -105,11 +105,11 @@ public class BlockRedstoneTorch extends BlockTorch
         return worldIn.isSidePowered(pos.offset(enumfacing), enumfacing);
     }
 
-    public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random)
+    public void randomTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom random)
     {
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         boolean flag = this.shouldBeOff(worldIn, pos, state);
         List<BlockRedstoneTorch.Toggle> list = (List)toggles.get(worldIn);
@@ -163,7 +163,7 @@ public class BlockRedstoneTorch extends BlockTorch
         return side == EnumFacing.DOWN ? blockState.getWeakPower(blockAccess, pos, side) : 0;
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
     {
         return Item.getItemFromBlock(Blocks.REDSTONE_TORCH);
     }
@@ -174,7 +174,7 @@ public class BlockRedstoneTorch extends BlockTorch
     }
 
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand)
     {
         if (this.isOn)
         {

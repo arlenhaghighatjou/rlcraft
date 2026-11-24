@@ -4,7 +4,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import java.util.Collection;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
@@ -20,7 +20,7 @@ public class LootEntryTable extends LootEntry
         this.table = tableIn;
     }
 
-    public void addLoot(Collection<ItemStack> stacks, Random rand, LootContext context)
+    public void addLoot(Collection<ItemStack> stacks, EaglercraftRandom rand, LootContext context)
     {
         LootTable loottable = context.getLootTableManager().getLootTableFromLocation(this.table);
         Collection<ItemStack> collection = loottable.generateLootForPools(rand, context);

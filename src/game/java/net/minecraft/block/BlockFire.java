@@ -2,7 +2,7 @@ package net.minecraft.block;
 
 import com.google.common.collect.Maps;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -121,7 +121,7 @@ public class BlockFire extends Block
         return false;
     }
 
-    public int quantityDropped(Random random)
+    public int quantityDropped(EaglercraftRandom random)
     {
         return 0;
     }
@@ -131,7 +131,7 @@ public class BlockFire extends Block
         return 30;
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand)
     {
         if (worldIn.getGameRules().getBoolean("doFireTick"))
         {
@@ -266,12 +266,12 @@ public class BlockFire extends Block
     }
 
     @Deprecated // Use tryCatchFire with face below
-    private void catchOnFire(World worldIn, BlockPos pos, int chance, Random random, int age)
+    private void catchOnFire(World worldIn, BlockPos pos, int chance, EaglercraftRandom random, int age)
     {
         this.tryCatchFire(worldIn, pos, chance, random, age, EnumFacing.UP);
     }
 
-    private void tryCatchFire(World worldIn, BlockPos pos, int chance, Random random, int age, EnumFacing face)
+    private void tryCatchFire(World worldIn, BlockPos pos, int chance, EaglercraftRandom random, int age, EnumFacing face)
     {
         int i = worldIn.getBlockState(pos).getBlock().getFlammability(worldIn, pos, face);
 
@@ -379,7 +379,7 @@ public class BlockFire extends Block
     }
 
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand)
     {
         if (rand.nextInt(24) == 0)
         {

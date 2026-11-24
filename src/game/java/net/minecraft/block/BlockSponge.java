@@ -3,7 +3,7 @@ package net.minecraft.block;
 import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Queue;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -129,7 +129,7 @@ public class BlockSponge extends Block
     }
 
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand)
     {
         if (((Boolean)stateIn.getValue(WET)).booleanValue())
         {

@@ -1,6 +1,6 @@
 package net.minecraft.entity.item;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -260,15 +260,15 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
         {
             LootTable loottable = this.world.getLootTableManager().getLootTableFromLocation(this.lootTable);
             this.lootTable = null;
-            Random random;
+            EaglercraftRandom random;
 
             if (this.lootTableSeed == 0L)
             {
-                random = new Random();
+                random = new EaglercraftRandom();
             }
             else
             {
-                random = new Random(this.lootTableSeed);
+                random = new EaglercraftRandom(this.lootTableSeed);
             }
 
             LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer)this.world).withLootedEntity(this); // Forge: add looted entity to LootContext

@@ -1,6 +1,6 @@
 package net.minecraft.world.gen.structure;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.world.World;
 
 public class StructureMineshaftStart extends StructureStart
@@ -11,7 +11,7 @@ public class StructureMineshaftStart extends StructureStart
     {
     }
 
-    public StructureMineshaftStart(World p_i47149_1_, Random p_i47149_2_, int p_i47149_3_, int p_i47149_4_, MapGenMineshaft.Type p_i47149_5_)
+    public StructureMineshaftStart(World p_i47149_1_, EaglercraftRandom p_i47149_2_, int p_i47149_3_, int p_i47149_4_, MapGenMineshaft.Type p_i47149_5_)
     {
         super(p_i47149_3_, p_i47149_4_);
         this.mineShaftType = p_i47149_5_;

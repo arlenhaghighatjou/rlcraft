@@ -1,6 +1,6 @@
 package net.minecraft.world.gen.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +24,7 @@ public abstract class WorldGenHugeTrees extends WorldGenAbstractTree
         this.leavesMetadata = leavesMetadataIn;
     }
 
-    protected int getHeight(Random rand)
+    protected int getHeight(EaglercraftRandom rand)
     {
         int i = rand.nextInt(3) + this.baseHeight;
 
@@ -95,7 +95,7 @@ public abstract class WorldGenHugeTrees extends WorldGenAbstractTree
         }
     }
 
-    protected boolean ensureGrowable(World worldIn, Random rand, BlockPos treePos, int height)
+    protected boolean ensureGrowable(World worldIn, EaglercraftRandom rand, BlockPos treePos, int height)
     {
         return this.isSpaceAt(worldIn, treePos, height) && this.ensureDirtsUnderneath(treePos, worldIn);
     }

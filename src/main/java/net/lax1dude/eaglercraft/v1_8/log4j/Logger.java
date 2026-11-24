@@ -132,7 +132,21 @@ public class Logger {
 					LogManager.logRedirector.log(line, level.isErr);
 				}
 			}
+			int l = args.length;
+			if(l > 0 && args[l - 1] instanceof Throwable && countParams(msg) < l) {
+				logExcp(level, "Exception Thrown", (Throwable)args[l - 1]);
+			}
 		}
+	}
+
+	private static int countParams(String msg) {
+		int cnt = 0;
+		int idx = 0;
+		while((idx = msg.indexOf("{}", idx)) != -1) {
+			++cnt;
+			idx += 2;
+		}
+		return cnt;
 	}
 
 	public static String formatParams(String msg, Object... args) {

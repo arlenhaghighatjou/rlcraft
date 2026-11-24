@@ -19,7 +19,7 @@
 
 package net.minecraftforge.event.terraingen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.world.World;
 import net.minecraft.world.gen.IChunkGenerator;
@@ -43,12 +43,12 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 public class PopulateChunkEvent extends ChunkGeneratorEvent
 {
     private final World world;
-    private final Random rand;
+    private final EaglercraftRandom rand;
     private final int chunkX;
     private final int chunkZ;
     private final boolean hasVillageGenerated;
 
-    public PopulateChunkEvent(IChunkGenerator gen, World world, Random rand, int chunkX, int chunkZ, boolean hasVillageGenerated)
+    public PopulateChunkEvent(IChunkGenerator gen, World world, EaglercraftRandom rand, int chunkX, int chunkZ, boolean hasVillageGenerated)
     {
         super(gen);
         this.world = world;
@@ -59,7 +59,7 @@ public class PopulateChunkEvent extends ChunkGeneratorEvent
     }
 
     public World getWorld() { return world; }
-    public Random getRand() { return rand; }
+    public EaglercraftRandom getRand() { return rand; }
     public int getChunkX() { return chunkX; }
     public int getChunkZ() { return chunkZ; }
     public boolean isHasVillageGenerated() { return hasVillageGenerated; }
@@ -78,7 +78,7 @@ public class PopulateChunkEvent extends ChunkGeneratorEvent
      **/
     public static class Pre extends PopulateChunkEvent
     {
-        public Pre(IChunkGenerator gen, World world, Random rand, int chunkX, int chunkZ, boolean hasVillageGenerated)
+        public Pre(IChunkGenerator gen, World world, EaglercraftRandom rand, int chunkX, int chunkZ, boolean hasVillageGenerated)
         {
             super(gen, world, rand, chunkX, chunkZ, hasVillageGenerated);
         }
@@ -99,7 +99,7 @@ public class PopulateChunkEvent extends ChunkGeneratorEvent
      **/
     public static class Post extends PopulateChunkEvent
     {
-        public Post(IChunkGenerator chunkProvider, World world, Random rand, int chunkX, int chunkZ, boolean hasVillageGenerated)
+        public Post(IChunkGenerator chunkProvider, World world, EaglercraftRandom rand, int chunkX, int chunkZ, boolean hasVillageGenerated)
         {
             super(chunkProvider, world, rand, chunkX, chunkZ, hasVillageGenerated);
         }
@@ -135,7 +135,7 @@ public class PopulateChunkEvent extends ChunkGeneratorEvent
 
         private final EventType type;
 
-        public Populate(IChunkGenerator gen, World world, Random rand, int chunkX, int chunkZ, boolean hasVillageGenerated, EventType type)
+        public Populate(IChunkGenerator gen, World world, EaglercraftRandom rand, int chunkX, int chunkZ, boolean hasVillageGenerated, EventType type)
         {
             super(gen, world, rand, chunkX, chunkZ, hasVillageGenerated);
             this.type = type;

@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.entity.layers;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -28,7 +28,7 @@ public class LayerEnderDragonDeath implements LayerRenderer<EntityDragon>
                 f1 = (f - 0.8F) / 0.2F;
             }
 
-            Random random = new Random(432L);
+            EaglercraftRandom random = new EaglercraftRandom(432L);
             GlStateManager.disableTexture2D();
             GlStateManager.shadeModel(7425);
             GlStateManager.enableBlend();

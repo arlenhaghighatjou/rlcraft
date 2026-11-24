@@ -1,7 +1,7 @@
 package net.minecraft.entity.passive;
 
 import java.util.Locale;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.enchantment.Enchantment;
@@ -90,8 +90,8 @@ import net.minecraft.world.storage.MapDecoration;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class EntityVillager extends EntityAgeable implements INpc, IMerchant
 {
@@ -1027,7 +1027,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
                 this.price = priceIn;
             }
 
-            public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random)
+            public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random)
             {
                 int i = 1;
 
@@ -1042,7 +1042,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
 
     public interface ITradeList
     {
-        void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random);
+        void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random);
     }
 
     public static class ItemAndEmeraldToItem implements EntityVillager.ITradeList
@@ -1060,7 +1060,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
                 this.sellingPriceInfo = p_i45813_4_;
             }
 
-            public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random)
+            public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random)
             {
                 int i = this.buyingPriceInfo.getPrice(random);
                 int j = this.sellingPriceInfo.getPrice(random);
@@ -1070,7 +1070,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
 
     public static class ListEnchantedBookForEmeralds implements EntityVillager.ITradeList
         {
-            public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random)
+            public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random)
             {
                 Enchantment enchantment = (Enchantment)Enchantment.REGISTRY.getRandomObject(random);
                 int i = MathHelper.getInt(random, enchantment.getMinLevel(), enchantment.getMaxLevel());
@@ -1102,7 +1102,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
                 this.priceInfo = p_i45814_2_;
             }
 
-            public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random)
+            public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random)
             {
                 int i = 1;
 
@@ -1137,7 +1137,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
                 this.priceInfo = priceInfo;
             }
 
-            public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random)
+            public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random)
             {
                 int i = 1;
 
@@ -1176,7 +1176,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
                 }
             }
 
-            public int getPrice(Random rand)
+            public int getPrice(EaglercraftRandom rand)
             {
                 return ((Integer)this.getFirst()).intValue() >= ((Integer)this.getSecond()).intValue() ? ((Integer)this.getFirst()).intValue() : ((Integer)this.getFirst()).intValue() + rand.nextInt(((Integer)this.getSecond()).intValue() - ((Integer)this.getFirst()).intValue() + 1);
             }
@@ -1195,7 +1195,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
                 this.destinationType = p_i47340_3_;
             }
 
-            public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random)
+            public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random)
             {
                 int i = this.value.getPrice(random);
                 World world = merchant.getWorld();
