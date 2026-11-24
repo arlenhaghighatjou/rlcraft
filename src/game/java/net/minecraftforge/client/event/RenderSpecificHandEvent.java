@@ -35,6 +35,12 @@ import javax.annotation.Nonnull;
 @Cancelable
 public class RenderSpecificHandEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final EnumHand hand;
     private final float partialTicks;
     private final float interpolatedPitch;

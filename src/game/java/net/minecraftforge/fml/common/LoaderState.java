@@ -31,6 +31,8 @@ import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.event.FMLStateEvent;
 
+import java.util.function.Function;
+
 /**
  * The state enum used to help track state progression for the loader
  * @author cpw
@@ -40,26 +42,26 @@ public enum LoaderState
 {
     NOINIT("Uninitialized",null),
     LOADING("Loading",null),
-    CONSTRUCTING("Constructing mods",FMLConstructionEvent.class),
-    PREINITIALIZATION("Pre-initializing mods", FMLPreInitializationEvent.class),
-    INITIALIZATION("Initializing mods", FMLInitializationEvent.class),
-    POSTINITIALIZATION("Post-initializing mods", FMLPostInitializationEvent.class),
-    AVAILABLE("Mod loading complete", FMLLoadCompleteEvent.class),
-    SERVER_ABOUT_TO_START("Server about to start", FMLServerAboutToStartEvent.class),
-    SERVER_STARTING("Server starting", FMLServerStartingEvent.class),
-    SERVER_STARTED("Server started", FMLServerStartedEvent.class),
-    SERVER_STOPPING("Server stopping", FMLServerStoppingEvent.class),
-    SERVER_STOPPED("Server stopped", FMLServerStoppedEvent.class),
+    CONSTRUCTING("Constructing mods",FMLConstructionEvent::new),
+    PREINITIALIZATION("Pre-initializing mods", FMLPreInitializationEvent::new),
+    INITIALIZATION("Initializing mods", FMLInitializationEvent::new),
+    POSTINITIALIZATION("Post-initializing mods", FMLPostInitializationEvent::new),
+    AVAILABLE("Mod loading complete", FMLLoadCompleteEvent::new),
+    SERVER_ABOUT_TO_START("Server about to start", FMLServerAboutToStartEvent::new),
+    SERVER_STARTING("Server starting", FMLServerStartingEvent::new),
+    SERVER_STARTED("Server started", FMLServerStartedEvent::new),
+    SERVER_STOPPING("Server stopping", FMLServerStoppingEvent::new),
+    SERVER_STOPPED("Server stopped", FMLServerStoppedEvent::new),
     ERRORED("Mod Loading errored",null);
 
 
-    private Class<? extends FMLStateEvent> eventClass;
+    private Function<Object[], FMLStateEvent> eventFactory;
     private String name;
 
-    private LoaderState(String name, Class<? extends FMLStateEvent> event)
+    private LoaderState(String name, Function<Object[], FMLStateEvent> event)
     {
         this.name = name;
-        this.eventClass = event;
+        this.eventFactory = event;
     }
 
     public LoaderState transition(boolean errored)
@@ -78,19 +80,12 @@ public enum LoaderState
 
     public boolean hasEvent()
     {
-        return eventClass != null;
+        return eventFactory != null;
     }
 
     public FMLStateEvent getEvent(Object... eventData)
     {
-        try
-        {
-            return eventClass.getConstructor(Object[].class).newInstance((Object)eventData);
-        }
-        catch (ReflectiveOperationException e)
-        {
-            throw new RuntimeException(e);
-        }
+        return eventFactory.apply(eventData);
     }
     public LoaderState requiredState()
     {

@@ -43,6 +43,12 @@ import net.minecraft.entity.EntityLivingBase;
 @Cancelable
 public class LivingFallEvent extends LivingEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private float distance;
     private float damageMultiplier;
     public LivingFallEvent(EntityLivingBase entity, float distance, float damageMultiplier)

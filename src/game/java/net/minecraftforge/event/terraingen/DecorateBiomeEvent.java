@@ -139,6 +139,12 @@ public class DecorateBiomeEvent extends Event
     @HasResult
     public static class Decorate extends DecorateBiomeEvent
     {
+        @Override
+        public boolean hasResult()
+        {
+            return true;
+        }
+
         /**
          * Use {@link EventType#CUSTOM} to filter custom event types
          */

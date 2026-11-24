@@ -44,6 +44,12 @@ import java.util.Collection;
 @Cancelable
 public class EntityJoinWorldEvent extends EntityEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
 
     private final World world;
 

@@ -30,6 +30,12 @@ import net.minecraft.entity.EntityLivingBase;
 @Cancelable
 public class EnderTeleportEvent extends LivingEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
 
     private double targetX;
     private double targetY;

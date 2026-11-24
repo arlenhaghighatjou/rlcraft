@@ -52,6 +52,12 @@ import javax.annotation.Nullable;
 @Cancelable
 public class BabyEntitySpawnEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final EntityLiving parentA;
     private final EntityLiving parentB;
     private final EntityPlayer causedByPlayer;

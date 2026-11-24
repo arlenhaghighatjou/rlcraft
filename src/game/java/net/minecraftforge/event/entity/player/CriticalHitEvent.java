@@ -41,6 +41,12 @@ import net.minecraft.entity.player.EntityPlayer;
 @HasResult
 public class CriticalHitEvent extends PlayerEvent
 {
+    @Override
+    public boolean hasResult()
+    {
+        return true;
+    }
+
     private float damageModifier;
     private final float oldDamageModifier;
     private final Entity target;

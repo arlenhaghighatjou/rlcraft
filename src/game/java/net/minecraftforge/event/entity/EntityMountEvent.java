@@ -42,6 +42,12 @@ import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 @Cancelable
 public class EntityMountEvent extends EntityEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     
     private final Entity entityMounting;
     private final Entity entityBeingMounted;

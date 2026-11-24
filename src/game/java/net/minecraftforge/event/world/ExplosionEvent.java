@@ -69,6 +69,12 @@ public class ExplosionEvent extends Event
     @Cancelable
     public static class Start extends ExplosionEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         public Start(World world, Explosion explosion)
         {
             super(world, explosion);

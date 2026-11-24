@@ -34,6 +34,12 @@ import javax.annotation.Nonnull;
 @Cancelable
 public class PlayerSPPushOutOfBlocksEvent extends PlayerEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private AxisAlignedBB entityBoundingBox;
 
     public PlayerSPPushOutOfBlocksEvent(EntityPlayer player, AxisAlignedBB entityBoundingBox)

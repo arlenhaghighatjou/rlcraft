@@ -86,6 +86,12 @@ public class NoteBlockEvent extends BlockEvent
     @Cancelable
     public static class Play extends NoteBlockEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private Instrument instrument;
 
         public Play(World world, BlockPos pos, IBlockState state, int note, int instrument)
@@ -112,6 +118,12 @@ public class NoteBlockEvent extends BlockEvent
     @Cancelable
     public static class Change extends NoteBlockEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final Note oldNote;
         private final Octave oldOctave;
 

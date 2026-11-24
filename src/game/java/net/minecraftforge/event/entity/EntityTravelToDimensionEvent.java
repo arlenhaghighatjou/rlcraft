@@ -39,6 +39,12 @@ import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 @Cancelable
 public class EntityTravelToDimensionEvent extends EntityEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final int dimension;
 
     public EntityTravelToDimensionEvent(Entity entity, int dimension)

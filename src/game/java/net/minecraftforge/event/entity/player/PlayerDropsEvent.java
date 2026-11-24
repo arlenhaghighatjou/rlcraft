@@ -37,6 +37,12 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 @Cancelable
 public class PlayerDropsEvent extends LivingDropsEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final EntityPlayer entityPlayer;
 
     /**

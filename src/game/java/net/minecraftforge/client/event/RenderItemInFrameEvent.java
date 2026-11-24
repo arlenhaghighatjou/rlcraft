@@ -35,6 +35,12 @@ import javax.annotation.Nonnull;
 @Cancelable
 public class RenderItemInFrameEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final ItemStack item;
     private final EntityItemFrame entityItemFrame;
     private final RenderItemFrame renderer;

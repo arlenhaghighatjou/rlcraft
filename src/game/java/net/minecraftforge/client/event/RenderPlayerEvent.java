@@ -54,6 +54,12 @@ public abstract class RenderPlayerEvent extends PlayerEvent
     @Cancelable
     public static class Pre extends RenderPlayerEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         public Pre(EntityPlayer player, RenderPlayer renderer, float tick, double x, double y, double z){ super(player, renderer, tick, x, y, z); }
         @Deprecated
         public Pre(EntityPlayer player, RenderPlayer renderer, float tick){ this(player, renderer, tick, 0D, 0D, 0D); }
@@ -77,6 +83,12 @@ public abstract class RenderPlayerEvent extends PlayerEvent
         @Cancelable
         public static class Pre extends Specials
         {
+            @Override
+            public boolean isCancelable()
+            {
+                return true;
+            }
+
             private boolean renderHelmet = true;
             private boolean renderCape = true;
             private boolean renderItem = true;

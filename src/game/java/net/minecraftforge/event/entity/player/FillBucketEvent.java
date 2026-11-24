@@ -42,6 +42,18 @@ import javax.annotation.Nullable;
 @Event.HasResult
 public class FillBucketEvent extends PlayerEvent
 {
+    @Override
+    public boolean hasResult()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
 
     private final ItemStack current;
     private final World world;

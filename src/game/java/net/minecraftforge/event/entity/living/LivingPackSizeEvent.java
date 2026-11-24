@@ -25,6 +25,12 @@ import net.minecraft.entity.EntityLiving;
 @HasResult
 public class LivingPackSizeEvent extends LivingEvent
 {
+    @Override
+    public boolean hasResult()
+    {
+        return true;
+    }
+
     private int maxPackSize;
     
     public LivingPackSizeEvent(EntityLiving entity)

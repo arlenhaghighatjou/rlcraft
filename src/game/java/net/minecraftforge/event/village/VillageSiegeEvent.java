@@ -42,6 +42,12 @@ import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 @Cancelable
 public class VillageSiegeEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final VillageSiege siege;
     private final World world;
     private final EntityPlayer player;

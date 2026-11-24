@@ -25,10 +25,10 @@ import com.google.common.collect.Lists;
 
 import javax.annotation.Nullable;
 
-
 public class ListenerList
 {
     private static ImmutableList<ListenerList> allLists = ImmutableList.of();
+    private static final Map<Class<?>, ListenerList> classLists = new HashMap<>();
     private static int maxSize = 0;
 
     @Nullable
@@ -54,6 +54,16 @@ public class ListenerList
         builder.addAll(allLists);
         builder.add(inst);
         allLists = builder.build();
+    }
+    public static ListenerList forClass(Class<?> eventClass)
+    {
+        ListenerList list = classLists.get(eventClass);
+        if (list == null)
+        {
+            list = new ListenerList(eventClass == Event.class ? null : forClass(eventClass.getSuperclass()));
+            classLists.put(eventClass, list);
+        }
+        return list;
     }
 
     public static void resize(int max)
@@ -144,7 +154,6 @@ public class ListenerList
         private ArrayList<ArrayList<IEventListener>> priorities;
         private ListenerListInst parent;
         private List<ListenerListInst> children;
-
 
         private ListenerListInst()
         {

@@ -42,6 +42,12 @@ import net.minecraft.entity.EntityLivingBase;
 @Cancelable
 public class LivingHealEvent extends LivingEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private float amount;
     public LivingHealEvent(EntityLivingBase entity, float amount)
     {

@@ -92,6 +92,12 @@ public class GuiScreenEvent extends Event
         @Cancelable
         public static class Pre extends InitGuiEvent
         {
+            @Override
+            public boolean isCancelable()
+            {
+                return true;
+            }
+
             public Pre(GuiScreen gui, List<GuiButton> buttonList)
             {
                 super(gui, buttonList);
@@ -156,6 +162,12 @@ public class GuiScreenEvent extends Event
         @Cancelable
         public static class Pre extends DrawScreenEvent
         {
+            @Override
+            public boolean isCancelable()
+            {
+                return true;
+            }
+
             public Pre(GuiScreen gui, int mouseX, int mouseY, float renderPartialTicks)
             {
                 super(gui, mouseX, mouseY, renderPartialTicks);
@@ -218,6 +230,12 @@ public class GuiScreenEvent extends Event
     @Cancelable
     public static class PotionShiftEvent extends GuiScreenEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         public PotionShiftEvent(GuiScreen gui)
         {
             super(gui);
@@ -270,6 +288,12 @@ public class GuiScreenEvent extends Event
         @Cancelable
         public static class Pre extends ActionPerformedEvent
         {
+            @Override
+            public boolean isCancelable()
+            {
+                return true;
+            }
+
             public Pre(GuiScreen gui, GuiButton button, List<GuiButton> buttonList)
             {
                 super(gui, button, buttonList);
@@ -303,6 +327,12 @@ public class GuiScreenEvent extends Event
         @Cancelable
         public static class Pre extends MouseInputEvent
         {
+            @Override
+            public boolean isCancelable()
+            {
+                return true;
+            }
+
             public Pre(GuiScreen gui)
             {
                 super(gui);
@@ -318,6 +348,12 @@ public class GuiScreenEvent extends Event
         @Cancelable
         public static class Post extends MouseInputEvent
         {
+            @Override
+            public boolean isCancelable()
+            {
+                return true;
+            }
+
             public Post(GuiScreen gui)
             {
                 super(gui);
@@ -339,6 +375,12 @@ public class GuiScreenEvent extends Event
         @Cancelable
         public static class Pre extends KeyboardInputEvent
         {
+            @Override
+            public boolean isCancelable()
+            {
+                return true;
+            }
+
             public Pre(GuiScreen gui)
             {
                 super(gui);
@@ -354,6 +396,12 @@ public class GuiScreenEvent extends Event
         @Cancelable
         public static class Post extends KeyboardInputEvent
         {
+            @Override
+            public boolean isCancelable()
+            {
+                return true;
+            }
+
             public Post(GuiScreen gui)
             {
                 super(gui);

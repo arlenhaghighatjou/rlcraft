@@ -66,6 +66,12 @@ public class LivingEvent extends EntityEvent
     @Cancelable
     public static class LivingUpdateEvent extends LivingEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         public LivingUpdateEvent(EntityLivingBase e){ super(e); }
     }
     

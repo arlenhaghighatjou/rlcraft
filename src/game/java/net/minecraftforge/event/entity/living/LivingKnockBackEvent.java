@@ -53,6 +53,12 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 @Cancelable
 public class LivingKnockBackEvent extends LivingEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     protected Entity attacker;
     protected float strength;
     protected double ratioX, ratioZ;

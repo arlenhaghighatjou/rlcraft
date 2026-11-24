@@ -19,8 +19,6 @@
 
 package net.minecraftforge.fml.common;
 
-import java.io.File;
-import java.security.cert.Certificate;
 import java.util.Arrays;
 import java.util.Map;
 import net.minecraft.nbt.NBTBase;
@@ -29,16 +27,15 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.SaveHandler;
 import net.minecraft.world.storage.WorldInfo;
-import net.minecraftforge.fml.client.FMLFileResourcePack;
-import net.minecraftforge.fml.client.FMLFolderResourcePack;
-import net.minecraftforge.fml.common.asm.FMLSanityChecker;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkCheckHandler;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.client.FMLConfigGuiFactory;
+import net.minecraftforge.fml.client.IModGuiFactory;
 import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.RegistryManager;
@@ -47,11 +44,7 @@ import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
-import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
-
-import javax.annotation.Nullable;
 
 /**
  * @author cpw
@@ -79,28 +72,27 @@ public final class FMLContainer extends DummyModContainer implements WorldAccess
     }
 
     @Override
-    public boolean registerBus(EventBus bus, LoadController controller)
+    public boolean registerBus(LoadController controller)
     {
-        bus.register(this);
         return true;
     }
 
-    @Subscribe
-    public void modConstruction(FMLConstructionEvent evt)
+    @Override
+    public void handleModStateEvent(FMLEvent evt)
     {
-        NetworkRegistry.INSTANCE.register(this, this.getClass(), null, evt.getASMHarvestedData());
-        FMLNetworkHandler.registerChannel(this, evt.getSide());
+        if (evt instanceof FMLConstructionEvent)
+        {
+            NetworkRegistry.INSTANCE.register(this, this::checkModLists);
+            FMLNetworkHandler.registerChannel(this, evt.getSide());
+        }
+        else if (evt instanceof FMLPreInitializationEvent)
+        {
+            // Initialize all Forge/Vanilla registries {invoke the static init)
+            if (ForgeRegistries.ITEMS == null)
+                throw new RuntimeException("Something horrible went wrong in init, ForgeRegistres didn't create...");
+        }
     }
 
-    @Subscribe
-    public void modPreinitialization(FMLPreInitializationEvent evt)
-    {
-        // Initialize all Forge/Vanilla registries {invoke the static init)
-        if (ForgeRegistries.ITEMS == null)
-            throw new RuntimeException("Something horrible went wrong in init, ForgeRegistres didn't create...");
-    }
-
-    @NetworkCheckHandler
     public boolean checkModLists(Map<String,String> modList, Side side)
     {
         return Loader.instance().checkRemoteModList(modList,side);
@@ -190,31 +182,10 @@ public final class FMLContainer extends DummyModContainer implements WorldAccess
         }
     }
 
-
     @Override
-    @Nullable
-    public Certificate getSigningCertificate()
+    public IModGuiFactory getGuiFactory()
     {
-        Certificate[] certificates = getClass().getProtectionDomain().getCodeSource().getCertificates();
-        return certificates != null ? certificates[0] : null;
-    }
-
-    @Override
-    public File getSource()
-    {
-        return FMLSanityChecker.fmlLocation;
-    }
-
-    @Override
-    public Class<?> getCustomResourcePackClass()
-    {
-        return getSource().isDirectory() ? FMLFolderResourcePack.class : FMLFileResourcePack.class;
-    }
-
-    @Override
-    public String getGuiClassName()
-    {
-        return "net.minecraftforge.fml.client.FMLConfigGuiFactory";
+        return new FMLConfigGuiFactory();
     }
 
     @Override

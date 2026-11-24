@@ -41,6 +41,18 @@ import javax.annotation.Nonnull;
 @Event.HasResult
 public class UseHoeEvent extends PlayerEvent
 {
+    @Override
+    public boolean hasResult()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
 
     private final ItemStack current;
     private final World world;

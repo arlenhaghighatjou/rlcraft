@@ -31,6 +31,12 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  */
 @Cancelable
 public class RenderBlockOverlayEvent extends Event {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
 
     public static enum OverlayType {
         FIRE, BLOCK, WATER

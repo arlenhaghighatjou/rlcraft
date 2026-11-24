@@ -37,6 +37,12 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 @Cancelable
 public class LootTableLoadEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final ResourceLocation name;
     private LootTable table;
     private LootTableManager lootTableManager;

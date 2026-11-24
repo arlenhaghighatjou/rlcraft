@@ -51,6 +51,12 @@ import net.minecraft.entity.EntityLivingBase;
 @Cancelable
 public class LivingDropsEvent extends LivingEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final DamageSource source;
     private final List<EntityItem> drops;
     private final int lootingLevel;

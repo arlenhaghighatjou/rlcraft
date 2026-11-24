@@ -19,16 +19,8 @@
 
 package net.minecraftforge.fml.common;
 
-import java.io.File;
-import java.security.cert.Certificate;
-
-import com.google.common.eventbus.EventBus;
 import net.minecraftforge.fml.common.versioning.VersionParser;
 import net.minecraftforge.fml.common.versioning.VersionRange;
-import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
-import net.minecraftforge.fml.relauncher.Side;
-
-import javax.annotation.Nullable;
 
 public class MinecraftDummyContainer extends DummyModContainer
 {
@@ -50,13 +42,7 @@ public class MinecraftDummyContainer extends DummyModContainer
     }
 
     @Override
-    public File getSource()
-    {
-        return new File("minecraft.jar");
-    }
-
-    @Override
-    public boolean registerBus(EventBus bus, LoadController controller)
+    public boolean registerBus(LoadController controller)
     {
         return true;
     }
@@ -65,21 +51,5 @@ public class MinecraftDummyContainer extends DummyModContainer
     {
         return staticRange;
     }
-
-    @Override
-    @Nullable
-    public Certificate getSigningCertificate()
-    {
-        if (FMLLaunchHandler.side() != Side.CLIENT)
-            return null;
-
-        try
-        {
-            Class<?> cbr = Class.forName("net.minecraft.client.ClientBrandRetriever", false, getClass().getClassLoader());
-            Certificate[] certificates = cbr.getProtectionDomain().getCodeSource().getCertificates();
-            return certificates != null ? certificates[0] : null;
-        }
-        catch (Exception ignored){} // Errors don't matter just return null.
-        return null;
-    }
 }
+

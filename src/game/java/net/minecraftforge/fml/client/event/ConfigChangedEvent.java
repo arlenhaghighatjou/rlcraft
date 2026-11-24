@@ -38,6 +38,12 @@ import javax.annotation.Nullable;
 @HasResult
 public class ConfigChangedEvent extends Event
 {
+    @Override
+    public boolean hasResult()
+    {
+        return true;
+    }
+
     private final String  modID;
     private final boolean isWorldRunning;
     private final boolean requiresMcRestart;

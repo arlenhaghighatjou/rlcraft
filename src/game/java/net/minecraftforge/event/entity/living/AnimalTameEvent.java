@@ -35,6 +35,12 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 @Cancelable
 public class AnimalTameEvent extends LivingEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final EntityAnimal animal;
     private final EntityPlayer tamer;
 

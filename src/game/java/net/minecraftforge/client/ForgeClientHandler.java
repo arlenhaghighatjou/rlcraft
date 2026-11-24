@@ -24,11 +24,16 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 
 public class ForgeClientHandler
 {
-    @SubscribeEvent
+    public static void register(EventBus bus)
+    {
+        bus.register(ModelRegistryEvent.class, ForgeClientHandler::registerModels);
+        bus.register(ColorHandlerEvent.Item.class, ForgeClientHandler::registerItemHandlers);
+    }
+
     public static void registerModels(ModelRegistryEvent event)
     {
         // register model for the universal bucket, if it exists
@@ -38,7 +43,6 @@ public class ForgeClientHandler
         }
     }
 
-    @SubscribeEvent
     public static void registerItemHandlers(ColorHandlerEvent.Item event)
     {
         if (FluidRegistry.isUniversalBucketEnabled())

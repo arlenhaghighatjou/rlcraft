@@ -26,7 +26,6 @@ import java.util.Map;
 
 import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.ModAPIManager;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.toposort.TopologicalSort.DirectedGraph;
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
@@ -49,7 +48,6 @@ public class ModSorter
     public ModSorter(List<ModContainer> modList, Map<String, ModContainer> nameLookup)
     {
         HashMap<String, ModContainer> sortingNameLookup = Maps.newHashMap(nameLookup);
-        ModAPIManager.INSTANCE.injectAPIModContainers(modList, sortingNameLookup);
         buildGraph(modList, sortingNameLookup);
     }
 

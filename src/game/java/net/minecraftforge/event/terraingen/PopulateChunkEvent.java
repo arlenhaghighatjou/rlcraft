@@ -124,6 +124,12 @@ public class PopulateChunkEvent extends ChunkGeneratorEvent
     @HasResult
     public static class Populate extends PopulateChunkEvent
     {
+        @Override
+        public boolean hasResult()
+        {
+            return true;
+        }
+
         public EventType getType()
         {
             return type;

@@ -39,6 +39,12 @@ import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 @HasResult
 public class SleepingLocationCheckEvent extends PlayerEvent
 {
+    @Override
+    public boolean hasResult()
+    {
+        return true;
+    }
+
 
     private final BlockPos sleepingLocation;
 

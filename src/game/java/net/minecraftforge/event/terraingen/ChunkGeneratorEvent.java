@@ -49,6 +49,12 @@ public class ChunkGeneratorEvent extends Event
     @HasResult
     public static class ReplaceBiomeBlocks extends ChunkGeneratorEvent
     {
+        @Override
+        public boolean hasResult()
+        {
+            return true;
+        }
+
         private final int x;
         private final int z;
         private final ChunkPrimer primer;
@@ -77,6 +83,12 @@ public class ChunkGeneratorEvent extends Event
     @HasResult
     public static class InitNoiseField extends ChunkGeneratorEvent
     {
+        @Override
+        public boolean hasResult()
+        {
+            return true;
+        }
+
         private double[] noisefield;
         private final int posX;
         private final int posY;

@@ -42,6 +42,12 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 @Cancelable
 public class EntityStruckByLightningEvent extends EntityEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final EntityLightningBolt lightning;
 
     public EntityStruckByLightningEvent(Entity entity, EntityLightningBolt lightning)

@@ -19,15 +19,13 @@
 
 package net.minecraftforge.fml.common;
 
-import com.google.common.eventbus.EventBus;
-
 public class MCPDummyContainer extends DummyModContainer {
 	public MCPDummyContainer(ModMetadata metadata) {
 		super(metadata);
 	}
 
 	@Override
-	public boolean registerBus(EventBus bus, LoadController controller) {
+	public boolean registerBus(LoadController controller) {
 		return true;
 	}
 

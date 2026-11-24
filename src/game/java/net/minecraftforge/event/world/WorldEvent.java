@@ -130,6 +130,12 @@ public class WorldEvent extends Event
     @Cancelable
     public static class PotentialSpawns extends WorldEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final EnumCreatureType type;
         private final BlockPos pos;
         private final List<SpawnListEntry> list;
@@ -172,6 +178,12 @@ public class WorldEvent extends Event
     @Cancelable
     public static class CreateSpawnPosition extends WorldEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final WorldSettings settings;
         public CreateSpawnPosition(World world, WorldSettings settings)
         {

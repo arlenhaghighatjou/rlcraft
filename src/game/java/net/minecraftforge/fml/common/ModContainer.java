@@ -19,18 +19,16 @@
 
 package net.minecraftforge.fml.common;
 
-import java.io.File;
-import java.net.URL;
-import java.security.cert.Certificate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
 import net.minecraftforge.fml.common.versioning.VersionRange;
+import net.minecraftforge.fml.client.IModGuiFactory;
+import net.minecraftforge.fml.common.event.FMLEvent;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.eventbus.EventBus;
 
 import javax.annotation.Nullable;
 
@@ -67,11 +65,6 @@ public interface ModContainer
      * A human readable version identifier
      */
     String getVersion();
-
-    /**
-     * The location on the file system which this mod came from
-     */
-    File getSource();
 
     /**
      * The metadata for this mod
@@ -121,7 +114,9 @@ public interface ModContainer
      * @param bus
      * @param controller
      */
-    boolean registerBus(EventBus bus, LoadController controller);
+    boolean registerBus(LoadController controller);
+
+    void handleModStateEvent(FMLEvent event);
 
     /**
      * Does this mod match the supplied mod
@@ -143,27 +138,16 @@ public interface ModContainer
 
     VersionRange acceptableMinecraftVersionRange();
 
-    @Nullable
-    Certificate getSigningCertificate();
-
     public static final Map<String,String> EMPTY_PROPERTIES = ImmutableMap.of();
     Map<String,String> getCustomModProperties();
-
-    public Class<?> getCustomResourcePackClass();
 
     Map<String, String> getSharedModDescriptor();
 
     Disableable canBeDisabled();
 
-    String getGuiClassName();
-
-    List<String> getOwnedPackages();
+    @Nullable
+    IModGuiFactory getGuiFactory();
 
     boolean shouldLoadInEnvironment();
 
-    URL getUpdateUrl();
-
-    void setClassVersion(int classVersion);
-
-    int getClassVersion();
 }

@@ -41,6 +41,12 @@ import net.minecraft.entity.player.EntityPlayer;
 @Cancelable
 public class AttackEntityEvent extends PlayerEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final Entity target;
     public AttackEntityEvent(EntityPlayer player, Entity target)
     {

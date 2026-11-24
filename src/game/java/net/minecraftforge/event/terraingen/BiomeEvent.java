@@ -134,6 +134,12 @@ public class BiomeEvent extends Event
     @HasResult
     public static class GetVillageBlockID extends BiomeEvent
     {
+        @Override
+        public boolean hasResult()
+        {
+            return true;
+        }
+
         private final IBlockState original;
         private IBlockState replacement;
 

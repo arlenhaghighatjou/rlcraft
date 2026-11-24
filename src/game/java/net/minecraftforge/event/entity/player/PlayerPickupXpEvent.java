@@ -30,6 +30,12 @@ import net.minecraft.entity.player.EntityPlayer;
 @Cancelable
 public class PlayerPickupXpEvent extends PlayerEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final EntityXPOrb orb;
 
     public PlayerPickupXpEvent(EntityPlayer player, EntityXPOrb orb)

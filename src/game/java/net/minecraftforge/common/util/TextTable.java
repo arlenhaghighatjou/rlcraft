@@ -19,7 +19,6 @@
 
 package net.minecraftforge.common.util;
 
-import com.google.common.collect.Streams;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
@@ -210,7 +209,12 @@ public class TextTable
             {
                 throw new IllegalArgumentException("Received wrong amount of columns for table row, expected " + columns.size() + ", received " + columns.size() + ".");
             }
-            return Streams.zip(values.stream(), columns.stream(), (v, c) -> c.format(v, padding)).collect(Collectors.toList());
+            List<String> ret = new ArrayList<>(values.size());
+            for (int i = 0, l = values.size(); i < l; ++i)
+            {
+                ret.add(columns.get(i).format(values.get(i), padding));
+            }
+            return ret;
         }
     }
 

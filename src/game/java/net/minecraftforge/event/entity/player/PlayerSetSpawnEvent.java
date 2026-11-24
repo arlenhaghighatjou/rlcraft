@@ -26,6 +26,12 @@ import net.minecraft.util.math.BlockPos;
 @Cancelable
 public class PlayerSetSpawnEvent extends PlayerEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final boolean forced;
     private final BlockPos newSpawn;
     

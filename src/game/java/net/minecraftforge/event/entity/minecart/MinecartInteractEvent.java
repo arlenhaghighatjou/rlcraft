@@ -50,6 +50,12 @@ import javax.annotation.Nonnull;
 @Cancelable
 public class MinecartInteractEvent extends MinecartEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final EntityPlayer player;
     private final EnumHand hand;
 

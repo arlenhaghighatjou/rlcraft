@@ -35,6 +35,12 @@ import javax.annotation.Nonnull;
 @Cancelable
 public class AnvilUpdateEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     @Nonnull
     private final ItemStack left;  // The left side of the input
     @Nonnull

@@ -41,8 +41,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
@@ -209,7 +207,6 @@ public class UniversalBucket extends Item
         return ActionResult.newResult(EnumActionResult.FAIL, itemstack);
     }
 
-    @SubscribeEvent(priority = EventPriority.LOW) // low priority so other mods can handle their stuff first
     public void onFillBucket(FillBucketEvent event)
     {
         if (event.getResult() != Event.Result.DEFAULT)

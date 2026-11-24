@@ -31,6 +31,12 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 @Cancelable
 public class LivingExperienceDropEvent extends LivingEvent 
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final EntityPlayer attackingPlayer;
     private final int originalExperiencePoints;
 

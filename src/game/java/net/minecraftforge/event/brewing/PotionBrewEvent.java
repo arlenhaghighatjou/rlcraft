@@ -79,6 +79,12 @@ public class PotionBrewEvent extends Event
     @Cancelable
     public static class Pre extends PotionBrewEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         public Pre(NonNullList<ItemStack> stacks)
         {
             super(stacks);

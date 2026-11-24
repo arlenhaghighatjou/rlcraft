@@ -36,6 +36,12 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 @Cancelable
 public class ThrowableImpactEvent extends EntityEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final EntityThrowable throwable;
     private final RayTraceResult ray;
 

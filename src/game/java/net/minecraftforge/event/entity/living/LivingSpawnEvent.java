@@ -73,6 +73,12 @@ public class LivingSpawnEvent extends LivingEvent
     @HasResult
     public static class CheckSpawn extends LivingSpawnEvent
     {
+        @Override
+        public boolean hasResult()
+        {
+            return true;
+        }
+
         private final boolean isSpawner; // TODO: remove in 1.13
         @Nullable
         private final MobSpawnerBaseLogic spawner;
@@ -152,6 +158,12 @@ public class LivingSpawnEvent extends LivingEvent
     @Cancelable
     public static class SpecialSpawn extends LivingSpawnEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         @Nullable
         private final MobSpawnerBaseLogic spawner;
 
@@ -198,6 +210,12 @@ public class LivingSpawnEvent extends LivingEvent
     @HasResult
     public static class AllowDespawn extends LivingSpawnEvent
     {
+        @Override
+        public boolean hasResult()
+        {
+            return true;
+        }
+
         public AllowDespawn(EntityLiving entity)
         {
             super(entity, entity.world, (float)entity.posX, (float)entity.posY, (float)entity.posZ);

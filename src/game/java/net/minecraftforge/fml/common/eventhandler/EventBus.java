@@ -19,13 +19,10 @@
 
 package net.minecraftforge.fml.common.eventhandler;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 
@@ -35,16 +32,13 @@ import net.minecraftforge.fml.common.ModContainer;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
-import com.google.common.collect.MapMaker;
-import com.google.common.collect.Sets;
-import com.google.common.reflect.TypeToken;
 
 public class EventBus implements IEventExceptionHandler
 {
     private static int maxID = 0;
 
-    private ConcurrentHashMap<Object, ArrayList<IEventListener>> listeners = new ConcurrentHashMap<Object, ArrayList<IEventListener>>();
-    private Map<Object,ModContainer> listenerOwners = new MapMaker().weakKeys().weakValues().makeMap();
+    private HashMap<Object, ArrayList<IEventListener>> listeners = new HashMap<Object, ArrayList<IEventListener>>();
+    private Map<Object,ModContainer> listenerOwners = new HashMap<>();
     private final int busID = maxID++;
     private IEventExceptionHandler exceptionHandler;
     private boolean shutdown;
@@ -62,110 +56,61 @@ public class EventBus implements IEventExceptionHandler
         exceptionHandler = handler;
     }
 
-    public void register(Object target)
+    public <T extends Event> void register(Class<T> eventType, Consumer<T> handler)
     {
-        if (listeners.containsKey(target))
-        {
-            return;
-        }
-
-        ModContainer activeModContainer = Loader.instance().activeModContainer();
-        if (activeModContainer == null)
-        {
-            FMLLog.log.error("Unable to determine registrant mod for {}. This is a critical error and should be impossible", target, new Throwable());
-            activeModContainer = Loader.instance().getMinecraftModContainer();
-        }
-        listenerOwners.put(target, activeModContainer);
-        boolean isStatic = target.getClass() == Class.class;
-        @SuppressWarnings("unchecked")
-        Set<? extends Class<?>> supers = isStatic ? Sets.newHashSet((Class<?>)target) : TypeToken.of(target.getClass()).getTypes().rawTypes();
-        for (Method method : (isStatic ? (Class<?>)target : target.getClass()).getMethods())
-        {
-            if (isStatic && !Modifier.isStatic(method.getModifiers()))
-                continue;
-            else if (!isStatic && Modifier.isStatic(method.getModifiers()))
-                continue;
-
-            for (Class<?> cls : supers)
-            {
-                try
-                {
-                    Method real = cls.getDeclaredMethod(method.getName(), method.getParameterTypes());
-                    if (real.isAnnotationPresent(SubscribeEvent.class))
-                    {
-                        Class<?>[] parameterTypes = method.getParameterTypes();
-                        if (parameterTypes.length != 1)
-                        {
-                            throw new IllegalArgumentException(
-                                "Method " + method + " has @SubscribeEvent annotation, but requires " + parameterTypes.length +
-                                " arguments.  Event handler methods must require a single argument."
-                            );
-                        }
-
-                        Class<?> eventType = parameterTypes[0];
-
-                        if (!Event.class.isAssignableFrom(eventType))
-                        {
-                            throw new IllegalArgumentException("Method " + method + " has @SubscribeEvent annotation, but takes a argument that is not an Event " + eventType);
-                        }
-
-                        register(eventType, target, real, activeModContainer);
-                        break;
-                    }
-                }
-                catch (NoSuchMethodException e)
-                {
-                    ; // Eat the error, this is not unexpected
-                }
-            }
-        }
+        register(eventType, EventPriority.NORMAL, false, null, handler);
     }
 
-    private void register(Class<?> eventType, Object target, Method method, final ModContainer owner)
+    public <T extends Event> void register(Class<T> eventType, EventPriority priority, Consumer<T> handler)
     {
-        try
-        {
-            Constructor<?> ctr = eventType.getConstructor();
-            ctr.setAccessible(true);
-            Event event = (Event)ctr.newInstance();
-            final ASMEventHandler asm = new ASMEventHandler(target, method, owner, IGenericEvent.class.isAssignableFrom(eventType));
-
-            IEventListener listener = asm;
-            if (IContextSetter.class.isAssignableFrom(eventType))
-            {
-                listener = new IEventListener()
-                {
-                    @Override
-                    public void invoke(Event event)
-                    {
-                        ModContainer old = Loader.instance().activeModContainer();
-                        Loader.instance().setActiveModContainer(owner);
-                        ((IContextSetter)event).setModContainer(owner);
-                        asm.invoke(event);
-                        Loader.instance().setActiveModContainer(old);
-                    }
-                };
-            }
-
-            event.getListenerList().register(busID, asm.getPriority(), listener);
-
-            ArrayList<IEventListener> others = listeners.computeIfAbsent(target, k -> new ArrayList<>());
-            others.add(listener);
-        }
-        catch (Exception e)
-        {
-            FMLLog.log.error("Error registering event handler: {} {} {}", owner, eventType, method, e);
-        }
+        register(eventType, priority, false, null, handler);
     }
 
-    public void unregister(Object object)
+    public <T extends Event> void register(Class<T> eventType, EventPriority priority, boolean receiveCanceled, Consumer<T> handler)
     {
-        ArrayList<IEventListener> list = listeners.remove(object);
+        register(eventType, priority, receiveCanceled, null, handler);
+    }
+
+    public <T extends GenericEvent<?>> void registerGeneric(Class<T> eventType, Class<?> genericType, Consumer<T> handler)
+    {
+        register(eventType, EventPriority.NORMAL, false, genericType, handler);
+    }
+
+    public <T extends GenericEvent<?>> void registerGeneric(Class<T> eventType, Class<?> genericType, EventPriority priority, boolean receiveCanceled, Consumer<T> handler)
+    {
+        register(eventType, priority, receiveCanceled, genericType, handler);
+    }
+
+    private <T extends Event> void register(Class<T> eventType, EventPriority priority, boolean receiveCanceled, Class<?> genericType, Consumer<T> handler)
+    {
+        ModContainer owner = Loader.instance().activeModContainer();
+        if (owner == null)
+        {
+            owner = Loader.instance().getMinecraftModContainer();
+        }
+        listenerOwners.put(handler, owner);
+
+        IEventListener listener = new ConsumerEventListener<T>(handler, receiveCanceled, genericType, owner, IContextSetter.class.isAssignableFrom(eventType));
+        ListenerList.forClass(eventType).register(busID, priority, listener);
+
+        ArrayList<IEventListener> others = listeners.get(handler);
+        if (others == null)
+        {
+            others = new ArrayList<>();
+            listeners.put(handler, others);
+        }
+        others.add(listener);
+    }
+
+    public void unregister(Object handler)
+    {
+        ArrayList<IEventListener> list = listeners.remove(handler);
         if(list == null)
             return;
-        for (IEventListener listener : list)
+        listenerOwners.remove(handler);
+        for (int i = 0, l = list.size(); i < l; ++i)
         {
-            ListenerList.unregisterAll(busID, listener);
+            ListenerList.unregisterAll(busID, list.get(i));
         }
     }
 
@@ -205,6 +150,56 @@ public class EventBus implements IEventExceptionHandler
         for (int x = 0; x < listeners.length; x++)
         {
             FMLLog.log.error("{}: {}", x, listeners[x]);
+        }
+    }
+
+    private static class ConsumerEventListener<T extends Event> implements IEventListener
+    {
+        private final Consumer<T> handler;
+        private final boolean receiveCanceled;
+        private final Class<?> genericType;
+        private final ModContainer owner;
+        private final boolean setContext;
+
+        private ConsumerEventListener(Consumer<T> handler, boolean receiveCanceled, Class<?> genericType, ModContainer owner, boolean setContext)
+        {
+            this.handler = handler;
+            this.receiveCanceled = receiveCanceled;
+            this.genericType = genericType;
+            this.owner = owner;
+            this.setContext = setContext;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public void invoke(Event event)
+        {
+            if (!receiveCanceled && event.isCancelable() && event.isCanceled())
+            {
+                return;
+            }
+            if (genericType != null && genericType != ((IGenericEvent<?>)event).getGenericType())
+            {
+                return;
+            }
+            if (setContext)
+            {
+                ModContainer old = Loader.instance().activeModContainer();
+                Loader.instance().setActiveModContainer(owner);
+                ((IContextSetter)event).setModContainer(owner);
+                handler.accept((T)event);
+                Loader.instance().setActiveModContainer(old);
+            }
+            else
+            {
+                handler.accept((T)event);
+            }
+        }
+
+        @Override
+        public String toString()
+        {
+            return "Listener{" + owner + ":" + handler + "}";
         }
     }
 }

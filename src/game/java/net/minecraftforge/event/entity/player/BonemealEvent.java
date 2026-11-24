@@ -44,6 +44,18 @@ import javax.annotation.Nullable;
 @Event.HasResult
 public class BonemealEvent extends PlayerEvent
 {
+    @Override
+    public boolean hasResult()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
 
     private final World world;
     private final BlockPos pos;

@@ -51,6 +51,12 @@ import net.minecraft.util.SoundEvent;
 @Cancelable
 public class PlaySoundAtEntityEvent extends EntityEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private SoundEvent name;
     private SoundCategory category;
     private final float volume;

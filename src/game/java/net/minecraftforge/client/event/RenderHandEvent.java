@@ -33,6 +33,12 @@ import net.minecraft.client.renderer.RenderGlobal;
 @Cancelable
 public class RenderHandEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final RenderGlobal context;
     private final float partialTicks;
     private final int renderPass;

@@ -31,6 +31,12 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 @Cancelable
 public class MouseEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final int x;
     private final int y;
     private final int dx;

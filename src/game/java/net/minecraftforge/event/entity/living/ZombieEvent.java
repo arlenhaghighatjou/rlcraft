@@ -74,6 +74,12 @@ public class ZombieEvent extends EntityEvent {
      **/
     @HasResult
     public static class SummonAidEvent extends ZombieEvent {
+        @Override
+        public boolean hasResult()
+        {
+            return true;
+        }
+
         private EntityZombie customSummonedAid;
         
         private final World world;

@@ -47,6 +47,12 @@ import javax.annotation.Nonnull;
 @Cancelable
 public class ArrowLooseEvent extends PlayerEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final ItemStack bow;
     private final World world;
     private final boolean hasAmmo;

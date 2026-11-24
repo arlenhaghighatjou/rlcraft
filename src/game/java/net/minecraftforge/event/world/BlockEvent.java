@@ -116,6 +116,12 @@ public class BlockEvent extends Event
     @Cancelable
     public static class BreakEvent extends BlockEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         /** Reference to the Player who broke the block. If no player is available, use a EntityFakePlayer */
         private final EntityPlayer player;
         private int exp;
@@ -171,6 +177,12 @@ public class BlockEvent extends Event
     @Cancelable
     public static class EntityPlaceEvent extends BlockEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final Entity entity;
         private final BlockSnapshot blockSnapshot;
         private final IBlockState placedBlock;
@@ -206,6 +218,12 @@ public class BlockEvent extends Event
     @Deprecated // Remove in 1.13
     public static class PlaceEvent extends EntityPlaceEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final EntityPlayer player;
         private final EnumHand hand;
 
@@ -236,6 +254,12 @@ public class BlockEvent extends Event
     @Cancelable
     public static class EntityMultiPlaceEvent extends EntityPlaceEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final List<BlockSnapshot> blockSnapshots;
 
         public EntityMultiPlaceEvent(@Nonnull List<BlockSnapshot> blockSnapshots, @Nonnull IBlockState placedAgainst, @Nullable Entity entity) {
@@ -270,6 +294,12 @@ public class BlockEvent extends Event
     @Cancelable
     public static class MultiPlaceEvent extends PlaceEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final List<BlockSnapshot> blockSnapshots;
 
         public MultiPlaceEvent(@Nonnull List<BlockSnapshot> blockSnapshots, @Nonnull IBlockState placedAgainst, @Nonnull EntityPlayer player, @Nonnull EnumHand hand) {
@@ -301,6 +331,12 @@ public class BlockEvent extends Event
     @Cancelable
     public static class NeighborNotifyEvent extends BlockEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final EnumSet<EnumFacing> notifiedSides;
         private final boolean forceRedstoneUpdate;
 
@@ -340,6 +376,12 @@ public class BlockEvent extends Event
     @HasResult
     public static class CreateFluidSourceEvent extends BlockEvent
     {
+        @Override
+        public boolean hasResult()
+        {
+            return true;
+        }
+
         public CreateFluidSourceEvent(World world, BlockPos pos, IBlockState state)
         {
             super(world, pos, state);
@@ -357,6 +399,12 @@ public class BlockEvent extends Event
     @Cancelable
     public static class FluidPlaceBlockEvent extends BlockEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final BlockPos liquidPos;
         private IBlockState newState;
         private IBlockState origState;
@@ -424,6 +472,12 @@ public class BlockEvent extends Event
         @HasResult
         public static class Pre extends CropGrowEvent
         {
+            @Override
+            public boolean hasResult()
+            {
+                return true;
+            }
+
             public Pre(World world, BlockPos pos, IBlockState state)
             {
                 super(world, pos, state);
@@ -462,6 +516,12 @@ public class BlockEvent extends Event
     @Cancelable
     public static class FarmlandTrampleEvent extends BlockEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
 
         private final Entity entity;
         private final float fallDistance;
@@ -491,6 +551,12 @@ public class BlockEvent extends Event
     @Cancelable
     public static class PortalSpawnEvent extends BlockEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final BlockPortal.Size size;
 
         public PortalSpawnEvent(World world, BlockPos pos, IBlockState state, BlockPortal.Size size)

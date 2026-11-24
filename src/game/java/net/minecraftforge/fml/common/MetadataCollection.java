@@ -19,25 +19,22 @@
 
 package net.minecraftforge.fml.common;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Collection;
 
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
 import net.minecraftforge.fml.common.versioning.VersionParser;
+import net.minecraft.util.JsonUtils;
 
 import com.google.common.collect.Maps;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.google.gson.JsonObject;
 
 import javax.annotation.Nullable;
 
@@ -46,7 +43,6 @@ public class MetadataCollection
     private String modListVersion;
     private ModMetadata[] modList;
     private Map<String, ModMetadata> metadatas = Maps.newHashMap();
-
     public static MetadataCollection from(@Nullable InputStream inputStream, String sourceName)
     {
         if (inputStream == null)
@@ -57,24 +53,23 @@ public class MetadataCollection
         InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
         try
         {
-            MetadataCollection collection;
-            Gson gson = new GsonBuilder().registerTypeAdapter(ArtifactVersion.class, new ArtifactVersionAdapter()).create();
-            JsonParser parser = new JsonParser();
-            JsonElement rootElement = parser.parse(reader);
+            MetadataCollection collection = new MetadataCollection();
+            JsonElement rootElement = new JsonParser().parse(reader);
+            JsonArray jsonList;
             if (rootElement.isJsonArray())
             {
-                collection = new MetadataCollection();
-                JsonArray jsonList = rootElement.getAsJsonArray();
-                collection.modList = new ModMetadata[jsonList.size()];
-                int i = 0;
-                for (JsonElement mod : jsonList)
-                {
-                    collection.modList[i++]=gson.fromJson(mod, ModMetadata.class);
-                }
+                jsonList = rootElement.getAsJsonArray();
             }
             else
             {
-                collection = gson.fromJson(rootElement, MetadataCollection.class);
+                JsonObject root = rootElement.getAsJsonObject();
+                collection.modListVersion = JsonUtils.getString(root, "modListVersion", null);
+                jsonList = JsonUtils.getJsonArray(root, "modList");
+            }
+            collection.modList = new ModMetadata[jsonList.size()];
+            for (int i = 0, l = jsonList.size(); i < l; ++i)
+            {
+                collection.modList[i] = readMetadata(jsonList.get(i).getAsJsonObject());
             }
             collection.parseModMetadataList();
             return collection;
@@ -83,6 +78,55 @@ public class MetadataCollection
         {
             FMLLog.log.error("The mcmod.info file in {} cannot be parsed as valid JSON. It will be ignored", sourceName, e);
             return new MetadataCollection();
+        }
+    }
+
+    private static ModMetadata readMetadata(JsonObject json)
+    {
+        ModMetadata meta = new ModMetadata();
+        meta.modId = JsonUtils.getString(json, "modid", null);
+        meta.name = JsonUtils.getString(json, "name", null);
+        meta.description = JsonUtils.getString(json, "description", meta.description);
+        meta.url = JsonUtils.getString(json, "url", meta.url);
+        meta.updateUrl = JsonUtils.getString(json, "updateUrl", meta.updateUrl);
+        meta.updateJSON = JsonUtils.getString(json, "updateJSON", meta.updateJSON);
+        meta.logoFile = JsonUtils.getString(json, "logoFile", meta.logoFile);
+        meta.version = JsonUtils.getString(json, "version", meta.version);
+        meta.credits = JsonUtils.getString(json, "credits", meta.credits);
+        meta.parent = JsonUtils.getString(json, "parent", meta.parent);
+        meta.useDependencyInformation = JsonUtils.getBoolean(json, "useDependencyInformation", false);
+        if (json.has("authorList"))
+        {
+            JsonArray arr = JsonUtils.getJsonArray(json, "authorList");
+            for (int i = 0, l = arr.size(); i < l; ++i)
+            {
+                meta.authorList.add(arr.get(i).getAsString());
+            }
+        }
+        if (json.has("screenshots"))
+        {
+            JsonArray arr = JsonUtils.getJsonArray(json, "screenshots");
+            meta.screenshots = new String[arr.size()];
+            for (int i = 0; i < meta.screenshots.length; ++i)
+            {
+                meta.screenshots[i] = arr.get(i).getAsString();
+            }
+        }
+        readVersions(json, "requiredMods", meta.requiredMods);
+        readVersions(json, "dependencies", meta.dependencies);
+        readVersions(json, "dependants", meta.dependants);
+        return meta;
+    }
+
+    private static void readVersions(JsonObject json, String key, Collection<ArtifactVersion> out)
+    {
+        if (json.has(key))
+        {
+            JsonArray arr = JsonUtils.getJsonArray(json, key);
+            for (int i = 0, l = arr.size(); i < l; ++i)
+            {
+                out.add(VersionParser.parseVersionReference(arr.get(i).getAsString()));
+            }
         }
     }
 
@@ -106,22 +150,5 @@ public class MetadataCollection
             metadatas.put(modId, dummy);
         }
         return metadatas.get(modId);
-    }
-
-    public static class ArtifactVersionAdapter extends TypeAdapter<ArtifactVersion>
-    {
-
-        @Override
-        public void write(JsonWriter out, ArtifactVersion value) throws IOException
-        {
-            // no op - we never write these out
-        }
-
-        @Override
-        public ArtifactVersion read(JsonReader in) throws IOException
-        {
-            return VersionParser.parseVersionReference(in.nextString());
-        }
-
     }
 }

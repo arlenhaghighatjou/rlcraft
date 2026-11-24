@@ -38,6 +38,18 @@ import net.minecraft.entity.player.EntityPlayer;
 @Event.HasResult
 public class EntityItemPickupEvent extends PlayerEvent
 {
+    @Override
+    public boolean hasResult()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final EntityItem item;
 
     public EntityItemPickupEvent(EntityPlayer player, EntityItem item)

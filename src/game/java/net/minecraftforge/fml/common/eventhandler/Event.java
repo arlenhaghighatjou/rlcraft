@@ -30,7 +30,6 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Preconditions;
 
-
 /**
  * Base Event class that all other events are derived from
  */
@@ -49,11 +48,12 @@ public class Event
 
     private boolean isCanceled = false;
     private Result result = Result.DEFAULT;
-    private static ListenerList listeners = new ListenerList();
+    private final ListenerList listeners;
     private EventPriority phase = null;
 
     public Event()
     {
+        listeners = ListenerList.forClass(getClass());
         setup();
     }
 

@@ -37,6 +37,12 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 @HasResult
 public class EntityMobGriefingEvent extends EntityEvent
 {
+    @Override
+    public boolean hasResult()
+    {
+        return true;
+    }
+
     public EntityMobGriefingEvent(Entity entity)
     {
         super(entity);

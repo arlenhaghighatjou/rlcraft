@@ -28,6 +28,12 @@ import net.minecraft.client.renderer.RenderGlobal;
 @Cancelable
 public class DrawBlockHighlightEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final RenderGlobal context;
     private final EntityPlayer player;
     private final RayTraceResult target;

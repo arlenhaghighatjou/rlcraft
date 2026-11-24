@@ -29,6 +29,12 @@ import net.minecraft.client.gui.ScaledResolution;
 @Cancelable
 public class RenderGameOverlayEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     public float getPartialTicks()
     {
         return partialTicks;

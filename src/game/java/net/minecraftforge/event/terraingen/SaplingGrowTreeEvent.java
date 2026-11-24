@@ -48,6 +48,12 @@ import net.minecraftforge.event.world.WorldEvent;
 @HasResult
 public class SaplingGrowTreeEvent extends WorldEvent
 {
+    @Override
+    public boolean hasResult()
+    {
+        return true;
+    }
+
     private final BlockPos pos;
     private final EaglercraftRandom rand;
 

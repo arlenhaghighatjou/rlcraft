@@ -44,6 +44,12 @@ import net.minecraft.client.gui.GuiScreen;
 @Cancelable
 public class ClientChatEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private String message;
     private final String originalMessage;
     public ClientChatEvent(String message)

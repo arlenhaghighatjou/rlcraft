@@ -47,6 +47,12 @@ import net.minecraft.util.text.ITextComponent;
 @Cancelable
 public class ServerChatEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final String message, username;
     private final EntityPlayerMP player;
     private ITextComponent component;

@@ -113,6 +113,12 @@ public abstract class RenderTooltipEvent extends Event
     @Cancelable
     public static class Pre extends RenderTooltipEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private int screenWidth;
         private int screenHeight;
         private int maxWidth;

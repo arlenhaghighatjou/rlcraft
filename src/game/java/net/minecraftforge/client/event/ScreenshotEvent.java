@@ -39,6 +39,12 @@ import java.io.File;
 @Cancelable
 public class ScreenshotEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
 
     public static final ITextComponent DEFAULT_CANCEL_REASON = new TextComponentString("Screenshot canceled");
 

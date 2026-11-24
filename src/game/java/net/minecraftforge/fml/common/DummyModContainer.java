@@ -19,9 +19,6 @@
 
 package net.minecraftforge.fml.common;
 
-import java.io.File;
-import java.net.URL;
-import java.security.cert.Certificate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -30,9 +27,8 @@ import java.util.Set;
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 import net.minecraftforge.fml.common.versioning.VersionRange;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.eventbus.EventBus;
+import net.minecraftforge.fml.client.IModGuiFactory;
+import net.minecraftforge.fml.common.event.FMLEvent;
 
 import javax.annotation.Nullable;
 
@@ -41,7 +37,6 @@ public class DummyModContainer implements ModContainer
     private ModMetadata md;
     private ArtifactVersion processedVersion;
     private String label;
-    private int classVersion;
 
     public DummyModContainer(ModMetadata md)
     {
@@ -110,12 +105,6 @@ public class DummyModContainer implements ModContainer
     }
 
     @Override
-    public File getSource()
-    {
-        return null;
-    }
-
-    @Override
     public String getVersion()
     {
         return md.version;
@@ -133,9 +122,14 @@ public class DummyModContainer implements ModContainer
     }
 
     @Override
-    public boolean registerBus(EventBus bus, LoadController controller)
+    public boolean registerBus(LoadController controller)
     {
         return false;
+    }
+
+    @Override
+    public void handleModStateEvent(FMLEvent event)
+    {
     }
 
     @Override
@@ -166,13 +160,6 @@ public class DummyModContainer implements ModContainer
     }
 
     @Override
-    @Nullable
-    public Certificate getSigningCertificate()
-    {
-        return null;
-    }
-
-    @Override
     public String toString()
     {
         return md != null ? getModId() : "Dummy Container ("+label+") @" + System.identityHashCode(this);
@@ -183,12 +170,6 @@ public class DummyModContainer implements ModContainer
     {
         return EMPTY_PROPERTIES;
     }
-    @Override
-    public Class<?> getCustomResourcePackClass()
-    {
-        return null;
-    }
-
     @Override
     public Map<String, String> getSharedModDescriptor()
     {
@@ -202,15 +183,9 @@ public class DummyModContainer implements ModContainer
     }
 
     @Override
-    public String getGuiClassName()
+    public IModGuiFactory getGuiFactory()
     {
         return null;
-    }
-
-    @Override
-    public List<String> getOwnedPackages()
-    {
-        return ImmutableList.of();
     }
 
     @Override
@@ -219,21 +194,4 @@ public class DummyModContainer implements ModContainer
         return true;
     }
 
-    @Override
-    public URL getUpdateUrl()
-    {
-        return null;
-    }
-
-    @Override
-    public void setClassVersion(int classVersion)
-    {
-        this.classVersion = classVersion;
-    }
-
-    @Override
-    public int getClassVersion()
-    {
-        return this.classVersion;
-    }
 }

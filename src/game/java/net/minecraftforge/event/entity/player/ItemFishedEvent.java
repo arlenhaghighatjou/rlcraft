@@ -38,6 +38,12 @@ import java.util.List;
 @Cancelable
 public class ItemFishedEvent extends PlayerEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final NonNullList<ItemStack> stacks = NonNullList.create();
     private final EntityFishHook hook;
     private int rodDamage;

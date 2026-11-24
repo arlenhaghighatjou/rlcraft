@@ -19,28 +19,23 @@
 
 package net.minecraftforge.fml.common;
 
-import java.io.File;
-import java.net.URL;
-import java.security.cert.Certificate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
 import net.minecraftforge.fml.common.versioning.VersionRange;
-
-import com.google.common.eventbus.EventBus;
+import net.minecraftforge.fml.client.IModGuiFactory;
+import net.minecraftforge.fml.common.event.FMLEvent;
 
 import javax.annotation.Nullable;
 
 public class InjectedModContainer implements ModContainer
 {
-    private File source;
     public final ModContainer wrappedContainer;
 
-    public InjectedModContainer(ModContainer mc, File source)
+    public InjectedModContainer(ModContainer mc)
     {
-        this.source = source != null ? source : new File("minecraft.jar");
         this.wrappedContainer = mc;
     }
 
@@ -60,12 +55,6 @@ public class InjectedModContainer implements ModContainer
     public String getVersion()
     {
         return wrappedContainer.getVersion();
-    }
-
-    @Override
-    public File getSource()
-    {
-        return source;
     }
 
     @Override
@@ -111,9 +100,15 @@ public class InjectedModContainer implements ModContainer
     }
 
     @Override
-    public boolean registerBus(EventBus bus, LoadController controller)
+    public boolean registerBus(LoadController controller)
     {
-        return wrappedContainer.registerBus(bus, controller);
+        return wrappedContainer.registerBus(controller);
+    }
+
+    @Override
+    public void handleModStateEvent(FMLEvent event)
+    {
+        wrappedContainer.handleModStateEvent(event);
     }
 
     @Override
@@ -166,13 +161,6 @@ public class InjectedModContainer implements ModContainer
     }
 
     @Override
-    @Nullable
-    public Certificate getSigningCertificate()
-    {
-        return wrappedContainer.getSigningCertificate();
-    }
-
-    @Override
     public String toString()
     {
         return "Wrapped{"+wrappedContainer.toString()+"}";
@@ -182,12 +170,6 @@ public class InjectedModContainer implements ModContainer
     public Map<String, String> getCustomModProperties()
     {
         return wrappedContainer.getCustomModProperties();
-    }
-
-    @Override
-    public Class<?> getCustomResourcePackClass()
-    {
-        return wrappedContainer.getCustomResourcePackClass();
     }
 
     @Override
@@ -203,15 +185,9 @@ public class InjectedModContainer implements ModContainer
     }
 
     @Override
-    public String getGuiClassName()
+    public IModGuiFactory getGuiFactory()
     {
-        return wrappedContainer.getGuiClassName();
-    }
-
-    @Override
-    public List<String> getOwnedPackages()
-    {
-        return wrappedContainer.getOwnedPackages();
+        return wrappedContainer.getGuiFactory();
     }
 
     @Override
@@ -220,21 +196,4 @@ public class InjectedModContainer implements ModContainer
         return true;
     }
 
-    @Override
-    public URL getUpdateUrl()
-    {
-        return wrappedContainer.getUpdateUrl();
-    }
-
-    @Override
-    public void setClassVersion(int classVersion)
-    {
-        wrappedContainer.setClassVersion(classVersion);
-    }
-
-    @Override
-    public int getClassVersion()
-    {
-        return wrappedContainer.getClassVersion();
-    }
 }

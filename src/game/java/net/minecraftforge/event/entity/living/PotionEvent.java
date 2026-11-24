@@ -57,6 +57,12 @@ public class PotionEvent extends LivingEvent
     @Cancelable
     public static class PotionRemoveEvent extends PotionEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final Potion potion;
         
         public PotionRemoveEvent(EntityLivingBase living, Potion potion)
@@ -101,6 +107,12 @@ public class PotionEvent extends LivingEvent
     @HasResult
     public static class PotionApplicableEvent extends PotionEvent
     {
+        @Override
+        public boolean hasResult()
+        {
+            return true;
+        }
+
         public PotionApplicableEvent(EntityLivingBase living, PotionEffect effect)
         {
             super(living, effect);

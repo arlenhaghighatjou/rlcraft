@@ -71,6 +71,12 @@ public abstract class EntityViewRenderEvent extends Event
     @Cancelable
     public static class FogDensity extends EntityViewRenderEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private float density;
 
         public FogDensity(EntityRenderer renderer, Entity entity, IBlockState state, double renderPartialTicks, float density)
@@ -96,6 +102,12 @@ public abstract class EntityViewRenderEvent extends Event
     @HasResult
     public static class RenderFogEvent extends EntityViewRenderEvent
     {
+        @Override
+        public boolean hasResult()
+        {
+            return true;
+        }
+
         private final int fogMode;
         private final float farPlaneDistance;
 

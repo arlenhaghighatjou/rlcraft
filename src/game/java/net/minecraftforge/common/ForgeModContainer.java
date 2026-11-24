@@ -24,22 +24,15 @@ import net.minecraft.world.biome.Biome;
 import static net.minecraftforge.common.config.Configuration.CATEGORY_CLIENT;
 import static net.minecraftforge.common.config.Configuration.CATEGORY_GENERAL;
 
-import java.io.File;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.cert.Certificate;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
-import net.lax1dude.eaglercraft.v1_8.IOUtils;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 
-import net.minecraft.crash.ICrashReportDetail;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTBase;
@@ -47,11 +40,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.world.storage.SaveHandler;
 import net.minecraft.world.storage.WorldInfo;
-import net.minecraftforge.classloading.FMLForgePlugin;
 import net.minecraftforge.client.ForgeClientHandler;
-import net.minecraftforge.common.config.Config;
+import net.minecraftforge.client.gui.ForgeGuiFactory;
 import net.minecraftforge.common.config.ConfigCategory;
-import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.common.model.animation.CapabilityAnimation;
@@ -60,6 +51,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.RegistryEvent.MissingMappings;
 import net.minecraftforge.event.terraingen.DeferredBiomeDecorator;
+import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -69,25 +61,17 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.server.command.ForgeCommand;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
 
-import net.minecraftforge.fml.client.FMLFileResourcePack;
-import net.minecraftforge.fml.client.FMLFolderResourcePack;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
+import net.minecraftforge.fml.client.IModGuiFactory;
 import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.fml.common.ICrashCallable;
 import net.minecraftforge.fml.common.LoadController;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.WorldAccessContainer;
-import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
-import net.minecraftforge.fml.common.discovery.json.JsonAnnotationLoader;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLModIdMappingEvent;
@@ -95,14 +79,14 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nullable;
 
-@EventBusSubscriber(modid = "forge")
 public class ForgeModContainer extends DummyModContainer implements WorldAccessContainer
 {
     public static final String VERSION_CHECK_CAT = "version_checking";
@@ -138,7 +122,6 @@ public class ForgeModContainer extends DummyModContainer implements WorldAccessC
         return INSTANCE;
     }
 
-    private URL updateJSONUrl = null;
     public UniversalBucket universalBucket;
 
     public ForgeModContainer()
@@ -156,12 +139,8 @@ public class ForgeModContainer extends DummyModContainer implements WorldAccessC
         meta.url         = "http://minecraftforge.net";
         meta.screenshots = new String[0];
         meta.logoFile    = "/forge_logo.png";
-        try {
-            updateJSONUrl    = new URL("http://files.minecraftforge.net/maven/net/minecraftforge/forge/promotions_slim.json");
-        } catch (MalformedURLException e) {}
-
         config = null;
-        File cfgFile = new File(Loader.instance().getConfigDir(), "forge.cfg");
+        VFile2 cfgFile = new VFile2(Loader.instance().getConfigDir(), "forge.cfg");
         config = new Configuration(cfgFile);
 
         syncConfig(true);
@@ -170,9 +149,9 @@ public class ForgeModContainer extends DummyModContainer implements WorldAccessC
     }
 
     @Override
-    public String getGuiClassName()
+    public IModGuiFactory getGuiFactory()
     {
-        return "net.minecraftforge.client.gui.ForgeGuiFactory";
+        return new ForgeGuiFactory();
     }
 
     public static Configuration getConfig()
@@ -385,7 +364,6 @@ public class ForgeModContainer extends DummyModContainer implements WorldAccessC
      * By subscribing to the OnConfigChangedEvent we are able to execute code when our config screens are closed.
      * This implementation uses the optional configID string to handle multiple Configurations using one event handler.
      */
-    @SubscribeEvent
     public void onConfigChanged(OnConfigChangedEvent event)
     {
         if (getMetadata().modId.equals(event.getModID()))
@@ -410,7 +388,6 @@ public class ForgeModContainer extends DummyModContainer implements WorldAccessC
         }
     }
 
-    @SubscribeEvent
     public void missingMapping(RegistryEvent.MissingMappings<Item> event)
     {
         for (MissingMappings.Mapping<Item> entry : event.getAllMappings())
@@ -423,90 +400,74 @@ public class ForgeModContainer extends DummyModContainer implements WorldAccessC
         }
     }
 
-    @SubscribeEvent
     public void playerLogin(PlayerEvent.PlayerLoggedInEvent event)
     {
         UsernameCache.setUsername(event.player.getPersistentID(), event.player.getGameProfile().getName());
     }
 
     @Override
-    public boolean registerBus(EventBus bus, LoadController controller)
+    public boolean registerBus(LoadController controller)
     {
-        bus.register(this);
         return true;
     }
 
-    @Subscribe
-    public void modConstruction(FMLConstructionEvent evt)
+    @Override
+    public void handleModStateEvent(FMLEvent evt)
     {
-        InputStream is = ForgeModContainer.class.getResourceAsStream("/META-INF/vanilla_annotations.json");
-        try
+        if (evt instanceof FMLConstructionEvent)
         {
-            if (is != null)
-                JsonAnnotationLoader.loadJson(is, null, evt.getASMHarvestedData());
-            log.debug("Loading Vanilla annotations: " + is);
+            NetworkRegistry.INSTANCE.register(this, "*");
+            ForgeNetworkHandler.registerChannel(this, evt.getSide());
+            MinecraftForge.EVENT_BUS.register(OnConfigChangedEvent.class, this::onConfigChanged);
+            MinecraftForge.EVENT_BUS.registerGeneric(RegistryEvent.MissingMappings.class, Item.class, this::missingMapping);
+            MinecraftForge.EVENT_BUS.register(PlayerEvent.PlayerLoggedInEvent.class, this::playerLogin);
+            MinecraftForge.EVENT_BUS.registerGeneric(RegistryEvent.Register.class, Item.class, this::registrItems);
         }
-        finally
+        else if (evt instanceof FMLPreInitializationEvent)
         {
-            IOUtils.closeQuietly(is);
-        }
-
-        List<String> all = Lists.newArrayList();
-        for (ASMData asm : evt.getASMHarvestedData().getAll(ICrashReportDetail.class.getName().replace('.', '/')))
-            all.add(asm.getClassName());
-        for (ASMData asm : evt.getASMHarvestedData().getAll(ICrashCallable.class.getName().replace('.', '/')))
-            all.add(asm.getClassName());
-        // Add table classes for mod list tabulation
-        all.add("net/minecraftforge/common/util/TextTable");
-        all.add("net/minecraftforge/common/util/TextTable$Column");
-        all.add("net/minecraftforge/common/util/TextTable$Row");
-        all.add("net/minecraftforge/common/util/TextTable$Alignment");
-
-        all.removeIf(cls -> !cls.startsWith("net/minecraft/") && !cls.startsWith("net/minecraftforge/"));
-
-        log.debug("Preloading CrashReport Classes");
-        Collections.sort(all); //Sort it because I like pretty output ;)
-        for (String name : all)
-        {
-            log.debug("\t{}", name);
-            try
+            CapabilityItemHandler.register();
+            CapabilityFluidHandler.register();
+            CapabilityAnimation.register();
+            CapabilityEnergy.register();
+            MinecraftForge.INTERNAL_HANDLER.register(MinecraftForge.EVENT_BUS);
+            if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
             {
-                Class.forName(name.replace('/', '.'), false, MinecraftForge.class.getClassLoader());
+                ForgeClientHandler.register(MinecraftForge.EVENT_BUS);
             }
-            catch (Exception e)
+            ForgeChunkManager.captureConfig(((FMLPreInitializationEvent)evt).getModConfigurationDirectory());
+        }
+        else if (evt instanceof FMLPostInitializationEvent)
+        {
+            registerAllBiomesAndGenerateEvents();
+            ForgeChunkManager.loadConfiguration();
+        }
+        else if (evt instanceof FMLLoadCompleteEvent)
+        {
+            if (shouldSortRecipies)
             {
-                log.error("Could not find class for name '{}'.", name, e);
+                RecipeSorter.sortCraftManager();
             }
+            FluidRegistry.validateFluidRegistry();
         }
-
-        NetworkRegistry.INSTANCE.register(this, this.getClass(), "*", evt.getASMHarvestedData());
-        ForgeNetworkHandler.registerChannel(this, evt.getSide());
-        ConfigManager.sync(this.getModId(), Config.Type.INSTANCE);
-        MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    @Subscribe
-    public void preInit(FMLPreInitializationEvent evt)
-    {
-        CapabilityItemHandler.register();
-        CapabilityFluidHandler.register();
-        CapabilityAnimation.register();
-        CapabilityEnergy.register();
-        MinecraftForge.EVENT_BUS.register(MinecraftForge.INTERNAL_HANDLER);
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+        else if (evt instanceof FMLServerStartingEvent)
         {
-            MinecraftForge.EVENT_BUS.register(ForgeClientHandler.class);
+            ((FMLServerStartingEvent)evt).registerServerCommand(new ForgeCommand());
         }
-        ForgeChunkManager.captureConfig(evt.getModConfigurationDirectory());
-        MinecraftForge.EVENT_BUS.register(this);
-
-        if (!ForgeModContainer.disableVersionCheck)
+        else if (evt instanceof FMLServerStoppingEvent)
         {
-            ForgeVersion.startVersionCheck();
+            WorldWorkerManager.clear();
+        }
+        else if (evt instanceof FMLModIdMappingEvent)
+        {
+            OreDictionary.rebakeMap();
+            StatList.reinit();
+            Ingredient.invalidateAll();
+            FMLCommonHandler.instance().resetClientRecipeBook();
+            FMLCommonHandler.instance().reloadSearchTrees();
+            FMLCommonHandler.instance().reloadCreativeSettings();
         }
     }
 
-    @SubscribeEvent
     public void registrItems(RegistryEvent.Register<Item> event)
     {
         // Add and register the forge universal bucket, if it's enabled
@@ -515,15 +476,8 @@ public class ForgeModContainer extends DummyModContainer implements WorldAccessC
             universalBucket = new UniversalBucket();
             universalBucket.setUnlocalizedName("forge.bucketFilled");
             event.getRegistry().register(universalBucket.setRegistryName(ForgeVersion.MOD_ID, "bucketFilled"));
-            MinecraftForge.EVENT_BUS.register(universalBucket);
+            MinecraftForge.EVENT_BUS.register(FillBucketEvent.class, EventPriority.LOW, universalBucket::onFillBucket);
         }
-    }
-
-    @Subscribe
-    public void postInit(FMLPostInitializationEvent evt)
-    {
-        registerAllBiomesAndGenerateEvents();
-        ForgeChunkManager.loadConfiguration();
     }
 
     private static void registerAllBiomesAndGenerateEvents()
@@ -538,28 +492,6 @@ public class ForgeModContainer extends DummyModContainer implements WorldAccessC
 
             BiomeDictionary.ensureHasTypes(biome);
         }
-    }
-
-    @Subscribe
-    public void onAvailable(FMLLoadCompleteEvent evt)
-    {
-        if (shouldSortRecipies)
-        {
-            RecipeSorter.sortCraftManager();
-        }
-        FluidRegistry.validateFluidRegistry();
-    }
-
-    @Subscribe
-    public void serverStarting(FMLServerStartingEvent evt)
-    {
-        evt.registerServerCommand(new ForgeCommand());
-    }
-
-    @Subscribe
-    public void serverStopping(FMLServerStoppingEvent evt)
-    {
-        WorldWorkerManager.clear();
     }
 
     @Override
@@ -578,85 +510,4 @@ public class ForgeModContainer extends DummyModContainer implements WorldAccessC
         DimensionManager.loadDimensionDataMap(tag.hasKey("DimensionData") ? tag.getCompoundTag("DimensionData") : null);
         FluidRegistry.loadFluidDefaults(tag);
     }
-
-    @Subscribe
-    public void mappingChanged(FMLModIdMappingEvent evt)
-    {
-        OreDictionary.rebakeMap();
-        StatList.reinit();
-        Ingredient.invalidateAll();
-        FMLCommonHandler.instance().resetClientRecipeBook();
-        FMLCommonHandler.instance().reloadSearchTrees();
-        FMLCommonHandler.instance().reloadCreativeSettings();
-    }
-
-
-    @Override
-    public File getSource()
-    {
-        return FMLForgePlugin.forgeLocation;
-    }
-    @Override
-    public Class<?> getCustomResourcePackClass()
-    {
-        if (getSource().isDirectory())
-        {
-            return FMLFolderResourcePack.class;
-        }
-        else
-        {
-            return FMLFileResourcePack.class;
-        }
-    }
-
-    @Override
-    public List<String> getOwnedPackages()
-    {
-        // All the packages which are part of forge. Only needs updating if new logic is added
-        // that requires event handlers
-        return ImmutableList.of(
-                "net.minecraftforge.classloading",
-                "net.minecraftforge.client",
-                "net.minecraftforge.client.event",
-                "net.minecraftforge.client.event.sound",
-                "net.minecraftforge.client.model",
-                "net.minecraftforge.client.model.obj",
-                "net.minecraftforge.client.model.techne",
-                "net.minecraftforge.common",
-                "net.minecraftforge.common.config",
-                "net.minecraftforge.common.network",
-                "net.minecraftforge.common.util",
-                "net.minecraftforge.event",
-                "net.minecraftforge.event.brewing",
-                "net.minecraftforge.event.entity",
-                "net.minecraftforge.event.entity.item",
-                "net.minecraftforge.event.entity.living",
-                "net.minecraftforge.event.entity.minecart",
-                "net.minecraftforge.event.entity.player",
-                "net.minecraftforge.event.terraingen",
-                "net.minecraftforge.event.world",
-                "net.minecraftforge.fluids",
-                "net.minecraftforge.oredict",
-                "net.minecraftforge.server",
-                "net.minecraftforge.server.command",
-                "net.minecraftforge.transformers"
-                );
-    }
-
-
-
-    @Override
-    @Nullable
-    public Certificate getSigningCertificate()
-    {
-        Certificate[] certificates = getClass().getProtectionDomain().getCodeSource().getCertificates();
-        return certificates != null ? certificates[0] : null;
-    }
-
-    @Override
-    public URL getUpdateUrl()
-    {
-        return updateJSONUrl;
-    }
-
 }

@@ -47,6 +47,12 @@ import net.minecraft.entity.EntityLivingBase;
 @Cancelable
 public class LivingAttackEvent extends LivingEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final DamageSource source;
     private final float amount;
     public LivingAttackEvent(EntityLivingBase entity, DamageSource source, float amount)

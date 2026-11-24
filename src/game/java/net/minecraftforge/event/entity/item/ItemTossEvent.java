@@ -32,6 +32,12 @@ import net.minecraft.entity.player.EntityPlayer;
 @Cancelable
 public class ItemTossEvent extends ItemEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
 
     private final EntityPlayer player;
 

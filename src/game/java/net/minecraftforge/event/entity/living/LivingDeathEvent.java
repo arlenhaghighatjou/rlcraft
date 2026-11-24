@@ -48,6 +48,12 @@ import net.minecraft.entity.EntityLivingBase;
 @Cancelable
 public class LivingDeathEvent extends LivingEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final DamageSource source;
     public LivingDeathEvent(EntityLivingBase entity, DamageSource source)
     {

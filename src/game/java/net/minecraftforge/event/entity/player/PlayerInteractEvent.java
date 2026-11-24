@@ -72,6 +72,12 @@ public class PlayerInteractEvent extends PlayerEvent
     @Cancelable
     public static class EntityInteractSpecific extends PlayerInteractEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final Vec3d localPos;
         private final Entity target;
 
@@ -113,6 +119,12 @@ public class PlayerInteractEvent extends PlayerEvent
     @Cancelable
     public static class EntityInteract extends PlayerInteractEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final Entity target;
 
         public EntityInteract(EntityPlayer player, EnumHand hand, Entity target)
@@ -142,6 +154,12 @@ public class PlayerInteractEvent extends PlayerEvent
     @Cancelable
     public static class RightClickBlock extends PlayerInteractEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private Result useBlock = DEFAULT;
         private Result useItem = DEFAULT;
         private final Vec3d hitVec;
@@ -217,6 +235,12 @@ public class PlayerInteractEvent extends PlayerEvent
     @Cancelable
     public static class RightClickItem extends PlayerInteractEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         public RightClickItem(EntityPlayer player, EnumHand hand)
         {
             super(player, hand, new BlockPos(player), null);
@@ -251,6 +275,12 @@ public class PlayerInteractEvent extends PlayerEvent
     @Cancelable
     public static class LeftClickBlock extends PlayerInteractEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private Result useBlock = DEFAULT;
         private Result useItem = DEFAULT;
         private final Vec3d hitVec;

@@ -41,6 +41,12 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 @Cancelable
 public class LivingDestroyBlockEvent extends LivingEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final BlockPos pos;
     private final IBlockState state;
     

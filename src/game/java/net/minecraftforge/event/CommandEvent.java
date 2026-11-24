@@ -47,6 +47,12 @@ import net.minecraft.command.ICommandSender;
 @Cancelable
 public class CommandEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
 
     private final ICommand command;
     private final ICommandSender sender;

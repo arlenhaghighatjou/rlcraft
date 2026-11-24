@@ -59,6 +59,12 @@ public abstract class RenderLivingEvent<T extends EntityLivingBase> extends Even
     @Cancelable
     public static class Pre<T extends EntityLivingBase> extends RenderLivingEvent<T>
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         @Deprecated
         public Pre(EntityLivingBase entity, RenderLivingBase<T> renderer, double x, double y, double z){ super(entity, renderer, x, y, z); }
         public Pre(EntityLivingBase entity, RenderLivingBase<T> renderer, float partialRenderTick, double x, double y, double z){ super(entity, renderer, partialRenderTick, x, y, z); }
@@ -77,6 +83,12 @@ public abstract class RenderLivingEvent<T extends EntityLivingBase> extends Even
         @Cancelable
         public static class Pre<T extends EntityLivingBase> extends Specials<T>
         {
+            @Override
+            public boolean isCancelable()
+            {
+                return true;
+            }
+
             public Pre(EntityLivingBase entity, RenderLivingBase<T> renderer, double x, double y, double z){ super(entity, renderer, x, y, z); }
         }
         public static class Post<T extends EntityLivingBase> extends Specials<T>

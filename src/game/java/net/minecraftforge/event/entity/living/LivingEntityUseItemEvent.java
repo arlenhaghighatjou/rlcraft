@@ -67,6 +67,12 @@ public class LivingEntityUseItemEvent extends LivingEvent
     @Cancelable
     public static class Start extends LivingEntityUseItemEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         public Start(EntityLivingBase entity, @Nonnull ItemStack item, int duration)
         {
             super(entity, item, duration);
@@ -82,6 +88,12 @@ public class LivingEntityUseItemEvent extends LivingEvent
     @Cancelable
     public static class Tick extends LivingEntityUseItemEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         public Tick(EntityLivingBase entity, @Nonnull ItemStack item, int duration)
         {
             super(entity, item, duration);
@@ -103,6 +115,12 @@ public class LivingEntityUseItemEvent extends LivingEvent
     @Cancelable
     public static class Stop extends LivingEntityUseItemEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         public Stop(EntityLivingBase entity, @Nonnull ItemStack item, int duration)
         {
             super(entity, item, duration);

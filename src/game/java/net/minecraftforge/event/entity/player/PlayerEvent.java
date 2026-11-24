@@ -108,6 +108,12 @@ public class PlayerEvent extends LivingEvent
     @Cancelable
     public static class BreakSpeed extends PlayerEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final IBlockState state;
         private final float originalSpeed;
         private float newSpeed = 0.0f;

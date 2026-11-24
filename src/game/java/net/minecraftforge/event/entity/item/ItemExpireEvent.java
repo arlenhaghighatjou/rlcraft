@@ -31,6 +31,12 @@ import net.minecraft.entity.item.EntityItem;
 @Cancelable
 public class ItemExpireEvent extends ItemEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
 
     private int extraLife;
 

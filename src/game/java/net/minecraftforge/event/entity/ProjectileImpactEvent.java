@@ -41,6 +41,12 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 @Cancelable
 public class ProjectileImpactEvent extends EntityEvent
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private final RayTraceResult ray;
 
     public ProjectileImpactEvent(Entity entity, RayTraceResult ray)
@@ -57,6 +63,12 @@ public class ProjectileImpactEvent extends EntityEvent
     @Cancelable
     public static class Arrow extends ProjectileImpactEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final EntityArrow arrow;
 
         public Arrow(EntityArrow arrow, RayTraceResult ray)
@@ -74,6 +86,12 @@ public class ProjectileImpactEvent extends EntityEvent
     @Cancelable
     public static class Fireball extends ProjectileImpactEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final EntityFireball fireball;
 
         public Fireball(EntityFireball fireball, RayTraceResult ray)
@@ -91,6 +109,12 @@ public class ProjectileImpactEvent extends EntityEvent
     @Cancelable
     public static class Throwable extends ProjectileImpactEvent
     {
+        @Override
+        public boolean isCancelable()
+        {
+            return true;
+        }
+
         private final EntityThrowable throwable;
 
         public Throwable(EntityThrowable throwable, RayTraceResult ray)

@@ -44,6 +44,12 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 @Cancelable
 public class FurnaceFuelBurnTimeEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     @Nonnull
     private final ItemStack itemStack;
     private int burnTime;

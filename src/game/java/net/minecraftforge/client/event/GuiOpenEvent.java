@@ -33,6 +33,12 @@ import net.minecraft.client.gui.GuiScreen;
 @Cancelable
 public class GuiOpenEvent extends Event
 {
+    @Override
+    public boolean isCancelable()
+    {
+        return true;
+    }
+
     private GuiScreen gui;
     public GuiOpenEvent(GuiScreen gui)
     {
