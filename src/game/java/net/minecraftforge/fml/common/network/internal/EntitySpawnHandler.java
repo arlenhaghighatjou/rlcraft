@@ -19,8 +19,8 @@
 
 package net.minecraftforge.fml.common.network.internal;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.SimpleChannelInboundHandler;
 
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;

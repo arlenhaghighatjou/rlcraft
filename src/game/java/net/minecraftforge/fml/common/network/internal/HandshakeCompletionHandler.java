@@ -23,9 +23,9 @@ import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher;
 import net.minecraftforge.fml.common.network.internal.FMLMessage.CompleteHandshake;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.channel.ChannelHandler.Sharable;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.SimpleChannelInboundHandler;
+import com.arlenh7.eaglercraft.netty.ChannelHandler.Sharable;
 
 @Sharable
 public class HandshakeCompletionHandler extends SimpleChannelInboundHandler<FMLMessage.CompleteHandshake> {

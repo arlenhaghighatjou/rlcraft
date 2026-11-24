@@ -19,11 +19,11 @@
 
 package net.minecraftforge.fml.common.network;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelOutboundHandlerAdapter;
-import io.netty.channel.ChannelPromise;
-import io.netty.channel.embedded.EmbeddedChannel;
-import io.netty.util.AttributeKey;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.ChannelOutboundHandlerAdapter;
+import com.arlenh7.eaglercraft.netty.ChannelPromise;
+import com.arlenh7.eaglercraft.netty.EmbeddedChannel;
+import com.arlenh7.eaglercraft.netty.AttributeKey;
 
 import java.util.List;
 import java.util.Set;

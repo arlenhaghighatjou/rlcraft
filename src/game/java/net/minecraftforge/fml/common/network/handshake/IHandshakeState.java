@@ -19,7 +19,7 @@
 
 package net.minecraftforge.fml.common.network.handshake;
 
-import io.netty.channel.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
 
 import java.util.function.Consumer;
 

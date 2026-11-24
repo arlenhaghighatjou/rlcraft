@@ -20,7 +20,7 @@
 package net.minecraftforge.common.network;
 
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
 import net.minecraftforge.fml.common.network.FMLIndexedMessageToMessageCodec;
 
 public class ForgeRuntimeCodec extends FMLIndexedMessageToMessageCodec<ForgeMessage> {

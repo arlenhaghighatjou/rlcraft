@@ -24,8 +24,8 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 import net.minecraftforge.fml.common.FMLLog;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.SimpleChannelInboundHandler;
 
 public class FluidIdRegistryMessageHandler extends SimpleChannelInboundHandler<ForgeMessage.FluidIdMapMessage> {
     @Override

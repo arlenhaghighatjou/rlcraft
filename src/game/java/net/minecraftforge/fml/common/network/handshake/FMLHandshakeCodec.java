@@ -21,7 +21,7 @@ package net.minecraftforge.fml.common.network.handshake;
 
 import net.minecraftforge.fml.common.network.FMLIndexedMessageToMessageCodec;
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
 
 public class FMLHandshakeCodec extends FMLIndexedMessageToMessageCodec<FMLHandshakeMessage> {
     public FMLHandshakeCodec()

@@ -21,11 +21,11 @@ package net.minecraftforge.fml.common.network;
 
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelOutboundHandlerAdapter;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.ChannelPromise;
-import io.netty.channel.SimpleChannelInboundHandler;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.ChannelOutboundHandlerAdapter;
+import com.arlenh7.eaglercraft.netty.ChannelPipeline;
+import com.arlenh7.eaglercraft.netty.ChannelPromise;
+import com.arlenh7.eaglercraft.netty.SimpleChannelInboundHandler;
 
 import java.util.Iterator;
 import java.util.List;

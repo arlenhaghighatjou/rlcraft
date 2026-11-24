@@ -20,8 +20,8 @@
 package net.minecraftforge.common.network;
 
 import net.minecraftforge.fml.common.network.NetworkHandshakeEstablished;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.ChannelInboundHandlerAdapter;
 
 public class ServerToClientConnectionEstablishedHandler extends ChannelInboundHandlerAdapter {
     @Override

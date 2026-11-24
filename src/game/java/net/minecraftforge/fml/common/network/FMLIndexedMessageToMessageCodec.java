@@ -21,10 +21,10 @@ package net.minecraftforge.fml.common.network;
 
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
-import io.netty.channel.ChannelHandler.Sharable;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToMessageCodec;
-import io.netty.util.AttributeKey;
+import com.arlenh7.eaglercraft.netty.ChannelHandler.Sharable;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.MessageToMessageCodec;
+import com.arlenh7.eaglercraft.netty.AttributeKey;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

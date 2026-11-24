@@ -19,8 +19,8 @@
 
 package net.minecraftforge.common.network;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.SimpleChannelInboundHandler;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.network.ForgeMessage.DimensionRegisterMessage;

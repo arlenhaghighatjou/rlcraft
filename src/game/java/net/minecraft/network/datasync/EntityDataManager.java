@@ -2,8 +2,8 @@ package net.minecraft.network.datasync;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import io.netty.handler.codec.DecoderException;
-import io.netty.handler.codec.EncoderException;
+import net.lax1dude.eaglercraft.v1_8.DecoderException;
+import net.lax1dude.eaglercraft.v1_8.EncoderException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;

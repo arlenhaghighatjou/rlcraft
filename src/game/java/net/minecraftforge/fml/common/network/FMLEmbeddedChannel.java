@@ -19,8 +19,8 @@
 
 package net.minecraftforge.fml.common.network;
 
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.embedded.EmbeddedChannel;
+import com.arlenh7.eaglercraft.netty.ChannelHandler;
+import com.arlenh7.eaglercraft.netty.EmbeddedChannel;
 
 import java.util.Map.Entry;
 

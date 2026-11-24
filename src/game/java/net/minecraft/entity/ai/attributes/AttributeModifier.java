@@ -1,6 +1,6 @@
 package net.minecraft.entity.ai.attributes;
 
-import io.netty.util.internal.ThreadLocalRandom;
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.util.math.MathHelper;
 import org.apache.commons.lang3.Validate;

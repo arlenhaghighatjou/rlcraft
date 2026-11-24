@@ -19,8 +19,8 @@
 
 package net.minecraftforge.fml.common.network.handshake;
 
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.ChannelFutureListener;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
 
 import java.util.Iterator;
 import java.util.Map;

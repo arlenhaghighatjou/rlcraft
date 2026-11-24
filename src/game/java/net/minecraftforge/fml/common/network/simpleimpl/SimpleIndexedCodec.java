@@ -21,7 +21,7 @@ package net.minecraftforge.fml.common.network.simpleimpl;
 
 import net.minecraftforge.fml.common.network.FMLIndexedMessageToMessageCodec;
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
 
 public class SimpleIndexedCodec extends FMLIndexedMessageToMessageCodec<IMessage> {
     @Override

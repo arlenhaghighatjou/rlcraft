@@ -24,9 +24,9 @@ import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
-import io.netty.channel.ChannelHandler.Sharable;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import com.arlenh7.eaglercraft.netty.ChannelHandler.Sharable;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.SimpleChannelInboundHandler;
 
 /**
  * Use this handler as the only thing in your channel, to receive network events

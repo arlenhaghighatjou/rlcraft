@@ -19,8 +19,8 @@
 
 package net.minecraftforge.fml.common.network.internal;
 
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.embedded.EmbeddedChannel;
+import com.arlenh7.eaglercraft.netty.ChannelPipeline;
+import com.arlenh7.eaglercraft.netty.EmbeddedChannel;
 
 import java.util.ArrayList;
 import java.util.Comparator;

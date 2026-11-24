@@ -20,12 +20,12 @@
 package net.minecraftforge.fml.common.network.handshake;
 
 import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelOutboundHandler;
-import io.netty.channel.ChannelPromise;
-import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.channel.embedded.EmbeddedChannel;
-import io.netty.util.AttributeKey;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.ChannelOutboundHandler;
+import com.arlenh7.eaglercraft.netty.ChannelPromise;
+import com.arlenh7.eaglercraft.netty.SimpleChannelInboundHandler;
+import com.arlenh7.eaglercraft.netty.EmbeddedChannel;
+import com.arlenh7.eaglercraft.netty.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 

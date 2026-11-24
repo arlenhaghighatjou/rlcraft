@@ -29,9 +29,9 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import com.google.common.base.Preconditions;
 
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import com.arlenh7.eaglercraft.netty.ChannelFutureListener;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.SimpleChannelInboundHandler;
 
 public class SimpleChannelHandlerWrapper<REQ extends IMessage, REPLY extends IMessage> extends SimpleChannelInboundHandler<REQ> {
     private final IMessageHandler<? super REQ, ? extends REPLY> messageHandler;

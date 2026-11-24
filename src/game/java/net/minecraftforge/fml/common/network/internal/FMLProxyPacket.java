@@ -21,7 +21,7 @@ package net.minecraftforge.fml.common.network.internal;
 
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
-import io.netty.channel.embedded.EmbeddedChannel;
+import com.arlenh7.eaglercraft.netty.EmbeddedChannel;
 
 import java.io.IOException;
 import java.util.List;

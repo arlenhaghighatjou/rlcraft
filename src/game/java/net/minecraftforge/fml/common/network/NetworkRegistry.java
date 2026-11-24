@@ -19,10 +19,10 @@
 
 package net.minecraftforge.fml.common.network;
 
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToMessageCodec;
-import io.netty.util.AttributeKey;
+import com.arlenh7.eaglercraft.netty.ChannelHandler;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.MessageToMessageCodec;
+import com.arlenh7.eaglercraft.netty.AttributeKey;
 
 import java.util.Collection;
 import java.util.EnumMap;

@@ -19,7 +19,7 @@
 
 package net.minecraftforge.fml.common.network.simpleimpl;
 
-import io.netty.channel.ChannelFutureListener;
+import com.arlenh7.eaglercraft.netty.ChannelFutureListener;
 
 import java.lang.reflect.Method;
 import java.util.EnumMap;
@@ -27,8 +27,8 @@ import java.util.EnumMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.IThreadListener;
 
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelPipeline;
+import com.arlenh7.eaglercraft.netty.ChannelHandler;
+import com.arlenh7.eaglercraft.netty.ChannelPipeline;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.Packet;
