@@ -5,15 +5,10 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.gson.Gson;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Writer;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
@@ -30,41 +25,38 @@ import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.client.CPacketClientSettings;
 import net.minecraft.util.EnumHandSide;
-import net.minecraft.util.JsonUtils;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.lax1dude.eaglercraft.v1_8.IOUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
-import net.lax1dude.eaglercraft.v1_8.Display;
+import net.lax1dude.eaglercraft.v1_8.ArrayUtils;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.EaglerInputStream;
+import net.lax1dude.eaglercraft.v1_8.EaglerOutputStream;
+import net.lax1dude.eaglercraft.v1_8.EaglerZLIB;
+import net.lax1dude.eaglercraft.v1_8.internal.EnumPlatformType;
+import net.lax1dude.eaglercraft.v1_8.internal.KeyboardConstants;
+import net.lax1dude.eaglercraft.v1_8.minecraft.GuiScreenVideoSettingsWarning;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.EaglerDeferredConfig;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.EaglerDeferredPipeline;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.dynamiclights.DynamicLightsStateManager;
+import net.lax1dude.eaglercraft.v1_8.recording.EnumScreenRecordingCodec;
+import net.lax1dude.eaglercraft.v1_8.recording.ScreenRecordingController;
+import net.lax1dude.eaglercraft.v1_8.sp.relay.RelayManager;
+import net.lax1dude.eaglercraft.v1_8.voice.VoiceClientController;
+import net.optifine.CustomSky;
+import org.json.JSONArray;
 
 @SideOnly(Side.CLIENT)
 public class GameSettings
 {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Gson GSON = new Gson();
-    private static final Type TYPE_LIST_STRING = new ParameterizedType()
-    {
-        public Type[] getActualTypeArguments()
-        {
-            return new Type[] {String.class};
-        }
-        public Type getRawType()
-        {
-            return List.class;
-        }
-        public Type getOwnerType()
-        {
-            return null;
-        }
-    };
     public static final Splitter COLON_SPLITTER = Splitter.on(':');
     private static final String[] GUISCALES = new String[] {"options.guiScale.auto", "options.guiScale.small", "options.guiScale.normal", "options.guiScale.large"};
     private static final String[] PARTICLES = new String[] {"options.particles.all", "options.particles.decreased", "options.particles.minimal"};
@@ -91,7 +83,8 @@ public class GameSettings
     public float chatOpacity = 1.0F;
     public boolean snooperEnabled = true;
     public boolean fullScreen;
-    public boolean enableVsync = true;
+    public boolean enableVsync = EagRuntime.getPlatformType() != EnumPlatformType.DESKTOP;
+    public boolean allowBlockAlternatives = true;
     public boolean useVbo = true;
     public boolean reducedDebugInfo;
     public boolean hideServerAddress;
@@ -135,7 +128,10 @@ public class GameSettings
     public KeyBinding keyBindCommand = new KeyBinding("key.command", 53, "key.categories.multiplayer");
     public KeyBinding keyBindScreenshot = new KeyBinding("key.screenshot", 60, "key.categories.misc");
     public KeyBinding keyBindTogglePerspective = new KeyBinding("key.togglePerspective", 63, "key.categories.misc");
-    public KeyBinding keyBindSmoothCamera = new KeyBinding("key.smoothCamera", 0, "key.categories.misc");
+    public KeyBinding keyBindSmoothCamera = new KeyBinding("key.smoothCamera", KeyboardConstants.KEY_M, "key.categories.misc");
+    public KeyBinding keyBindZoomCamera = new KeyBinding("key.zoomCamera", KeyboardConstants.KEY_C, "key.categories.misc");
+    public KeyBinding keyBindFunction = new KeyBinding("key.function", KeyboardConstants.KEY_F, "key.categories.misc");
+    public KeyBinding keyBindClose = new KeyBinding("key.close", KeyboardConstants.KEY_GRAVE, "key.categories.misc");
     public KeyBinding keyBindFullscreen = new KeyBinding("key.fullscreen", 87, "key.categories.misc");
     public KeyBinding keyBindSpectatorOutlines = new KeyBinding("key.spectatorOutlines", 0, "key.categories.misc");
     public KeyBinding keyBindAdvancements = new KeyBinding("key.advancements", 38, "key.categories.misc");
@@ -144,7 +140,6 @@ public class GameSettings
     public KeyBinding keyBindLoadToolbar = new KeyBinding("key.loadToolbarActivator", 45, "key.categories.creative");
     public KeyBinding[] keyBindings;
     protected Minecraft mc;
-    private File optionsFile;
     public EnumDifficulty difficulty;
     public boolean hideGUI;
     public int thirdPersonView;
@@ -162,39 +157,64 @@ public class GameSettings
     public int narrator;
     public String language;
     public boolean forceUnicodeFont;
+    public int relayTimeout;
+    public boolean hideJoinCode;
+    public boolean hudFps = true;
+    public boolean hudCoords = true;
+    public boolean hudPlayer = false;
+    public boolean hudWorld = false;
+    public boolean hudStats = false;
+    public boolean hud24h = false;
+    public boolean chunkFix = true;
+    public boolean fog = true;
+    public int fxaa = 0;
+    public boolean shaders = false;
+    public boolean shadersAODisable = false;
+    public EaglerDeferredConfig deferredShaderConf = new EaglerDeferredConfig();
+    public boolean enableUpdateSvc = true;
+    public boolean enableFNAWSkins = true;
+    public boolean enableDynamicLights = false;
+    public boolean hasHiddenPhishWarning = false;
+    public boolean enableProfanityFilter = false;
+    public boolean hasShownProfanityFilter = false;
+    public float touchControlOpacity = 1.0f;
+    public boolean hideDefaultUsernameWarning = false;
+    public boolean hideVideoSettingsWarning = EagRuntime.getPlatformType() == EnumPlatformType.DESKTOP;
 
-    public GameSettings(Minecraft mcIn, File mcDataDir)
+    public int voiceListenRadius = 16;
+    public float voiceListenVolume = 0.5f;
+    public float voiceSpeakVolume = 0.5f;
+    public int voicePTTKey = 47;
+
+    public EnumScreenRecordingCodec screenRecordCodec;
+    public int screenRecordFPS = ScreenRecordingController.DEFAULT_FPS;
+    public int screenRecordResolution = ScreenRecordingController.DEFAULT_RESOLUTION;
+    public int screenRecordAudioBitrate = ScreenRecordingController.DEFAULT_AUDIO_BITRATE;
+    public int screenRecordVideoBitrate = ScreenRecordingController.DEFAULT_VIDEO_BITRATE;
+    public float screenRecordGameVolume = ScreenRecordingController.DEFAULT_GAME_VOLUME;
+    public float screenRecordMicVolume = ScreenRecordingController.DEFAULT_MIC_VOLUME;
+
+    public int betterGrassOF = 0;
+    public int connectedTexturesOF = 1;
+    public boolean customSkyOF = true;
+    public boolean smartLeavesOF = false;
+    public boolean customItemsOF = true;
+
+    public GameSettings(Minecraft mcIn)
     {
         setForgeKeybindProperties();
-        this.keyBindings = (KeyBinding[])ArrayUtils.addAll(new KeyBinding[] {this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindSprint, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock, this.keyBindCommand, this.keyBindScreenshot, this.keyBindTogglePerspective, this.keyBindSmoothCamera, this.keyBindFullscreen, this.keyBindSpectatorOutlines, this.keyBindSwapHands, this.keyBindSaveToolbar, this.keyBindLoadToolbar, this.keyBindAdvancements}, this.keyBindsHotbar);
+        this.keyBindings = (KeyBinding[])ArrayUtils.addAll(new KeyBinding[] {this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindSprint, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock, this.keyBindCommand, this.keyBindScreenshot, this.keyBindTogglePerspective, this.keyBindSmoothCamera, this.keyBindZoomCamera, this.keyBindFunction, this.keyBindClose, this.keyBindFullscreen, this.keyBindSpectatorOutlines, this.keyBindSwapHands, this.keyBindSaveToolbar, this.keyBindLoadToolbar, this.keyBindAdvancements}, this.keyBindsHotbar);
         this.difficulty = EnumDifficulty.NORMAL;
+        this.relayTimeout = 4;
+        this.hideJoinCode = false;
         this.lastServer = "";
         this.fovSetting = 70.0F;
-        this.language = "en_us";
+        this.language = EagRuntime.getConfiguration().getDefaultLocale();
         this.mc = mcIn;
-        this.optionsFile = new File(mcDataDir, "options.txt");
-
-        if (mcIn.isJava64bit() && Runtime.getRuntime().maxMemory() >= 1000000000L)
-        {
-            GameSettings.Options.RENDER_DISTANCE.setValueMax(32.0F);
-        }
-        else
-        {
-            GameSettings.Options.RENDER_DISTANCE.setValueMax(16.0F);
-        }
-
-        this.renderDistanceChunks = mcIn.isJava64bit() ? 12 : 8;
+        GameSettings.Options.RENDER_DISTANCE.setValueMax(18.0F);
+        this.renderDistanceChunks = 4;
+        this.screenRecordCodec = ScreenRecordingController.getDefaultCodec();
         this.loadOptions();
-    }
-
-    public GameSettings()
-    {
-        setForgeKeybindProperties();
-        this.keyBindings = (KeyBinding[])ArrayUtils.addAll(new KeyBinding[] {this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindSprint, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock, this.keyBindCommand, this.keyBindScreenshot, this.keyBindTogglePerspective, this.keyBindSmoothCamera, this.keyBindFullscreen, this.keyBindSpectatorOutlines, this.keyBindSwapHands, this.keyBindSaveToolbar, this.keyBindLoadToolbar, this.keyBindAdvancements}, this.keyBindsHotbar);
-        this.difficulty = EnumDifficulty.NORMAL;
-        this.lastServer = "";
-        this.fovSetting = 70.0F;
-        this.language = "en_us";
     }
 
     public static String getKeyDisplayString(int key)
@@ -309,6 +329,11 @@ public class GameSettings
         {
             this.renderDistanceChunks = (int)value;
             this.mc.renderGlobal.setDisplayListEntitiesDirty();
+        }
+
+        if (settingsOption == GameSettings.Options.EAGLER_TOUCH_CONTROL_OPACITY)
+        {
+            this.touchControlOpacity = value;
         }
     }
 
@@ -474,6 +499,114 @@ public class GameSettings
             NarratorChatListener.INSTANCE.announceMode(this.narrator);
         }
 
+        if (settingsOption == GameSettings.Options.BLOCK_ALTERNATIVES)
+        {
+            this.allowBlockAlternatives = !this.allowBlockAlternatives;
+            this.mc.renderGlobal.loadRenderers();
+        }
+
+        if (settingsOption == GameSettings.Options.HUD_FPS)
+        {
+            this.hudFps = !this.hudFps;
+        }
+
+        if (settingsOption == GameSettings.Options.HUD_COORDS)
+        {
+            this.hudCoords = !this.hudCoords;
+        }
+
+        if (settingsOption == GameSettings.Options.HUD_PLAYER)
+        {
+            this.hudPlayer = !this.hudPlayer;
+        }
+
+        if (settingsOption == GameSettings.Options.HUD_STATS)
+        {
+            this.hudStats = !this.hudStats;
+        }
+
+        if (settingsOption == GameSettings.Options.HUD_WORLD)
+        {
+            this.hudWorld = !this.hudWorld;
+        }
+
+        if (settingsOption == GameSettings.Options.HUD_24H)
+        {
+            this.hud24h = !this.hud24h;
+        }
+
+        if (settingsOption == GameSettings.Options.CHUNK_FIX)
+        {
+            this.chunkFix = !this.chunkFix;
+        }
+
+        if (settingsOption == GameSettings.Options.FOG)
+        {
+            this.fog = !this.fog;
+        }
+
+        if (settingsOption == GameSettings.Options.FXAA)
+        {
+            this.fxaa = (this.fxaa + value) % 3;
+        }
+
+        if (settingsOption == GameSettings.Options.FULLSCREEN)
+        {
+            this.mc.toggleFullscreen();
+        }
+
+        if (settingsOption == GameSettings.Options.FNAW_SKINS)
+        {
+            this.enableFNAWSkins = !this.enableFNAWSkins;
+            this.mc.getRenderManager().setEnableFNAWSkins(this.mc.getEnableFNAWSkins());
+        }
+
+        if (settingsOption == GameSettings.Options.EAGLER_VSYNC)
+        {
+            this.enableVsync = !this.enableVsync;
+        }
+
+        if (settingsOption == GameSettings.Options.EAGLER_DYNAMIC_LIGHTS)
+        {
+            this.enableDynamicLights = !this.enableDynamicLights;
+            this.mc.renderGlobal.loadRenderers();
+        }
+
+        if (settingsOption == GameSettings.Options.EAGLER_PROFANITY_FILTER)
+        {
+            this.enableProfanityFilter = !this.enableProfanityFilter;
+        }
+
+        if (settingsOption == GameSettings.Options.OF_CONNECTED_TEXTURES)
+        {
+            this.connectedTexturesOF = (this.connectedTexturesOF + 1) % 3;
+            this.mc.renderGlobal.loadRenderers();
+        }
+
+        if (settingsOption == GameSettings.Options.OF_BETTER_GRASS)
+        {
+            this.betterGrassOF = (this.betterGrassOF + 1) % 3;
+            this.mc.renderGlobal.loadRenderers();
+        }
+
+        if (settingsOption == GameSettings.Options.OF_CUSTOM_SKIES)
+        {
+            this.customSkyOF = !this.customSkyOF;
+            CustomSky.update();
+        }
+
+        if (settingsOption == GameSettings.Options.OF_SMART_LEAVES)
+        {
+            this.smartLeavesOF = !this.smartLeavesOF;
+            this.mc.renderGlobal.loadRenderers();
+        }
+
+        if (settingsOption == GameSettings.Options.OF_CUSTOM_ITEMS)
+        {
+            this.customItemsOF = !this.customItemsOF;
+            this.mc.renderGlobal.loadRenderers();
+        }
+
         this.saveOptions();
     }
 
@@ -525,7 +658,7 @@ public class GameSettings
         }
         else
         {
-            return settingOption == GameSettings.Options.RENDER_DISTANCE ? (float)this.renderDistanceChunks : 0.0F;
+            return settingOption == GameSettings.Options.RENDER_DISTANCE ? (float)this.renderDistanceChunks : (settingOption == GameSettings.Options.EAGLER_TOUCH_CONTROL_OPACITY ? this.touchControlOpacity : 0.0F);
         }
     }
 
@@ -571,6 +704,40 @@ public class GameSettings
                 return this.enableWeakAttacks;
             case AUTO_JUMP:
                 return this.autoJump;
+            case BLOCK_ALTERNATIVES:
+                return this.allowBlockAlternatives;
+            case HUD_COORDS:
+                return this.hudCoords;
+            case HUD_FPS:
+                return this.hudFps;
+            case HUD_PLAYER:
+                return this.hudPlayer;
+            case HUD_STATS:
+                return this.hudStats;
+            case HUD_WORLD:
+                return this.hudWorld;
+            case HUD_24H:
+                return this.hud24h;
+            case CHUNK_FIX:
+                return this.chunkFix;
+            case FOG:
+                return this.fog;
+            case FULLSCREEN:
+                return this.mc.isFullScreen();
+            case FNAW_SKINS:
+                return this.enableFNAWSkins;
+            case EAGLER_VSYNC:
+                return this.enableVsync;
+            case EAGLER_DYNAMIC_LIGHTS:
+                return this.enableDynamicLights;
+            case EAGLER_PROFANITY_FILTER:
+                return this.enableProfanityFilter;
+            case OF_CUSTOM_SKIES:
+                return this.customSkyOF;
+            case OF_SMART_LEAVES:
+                return this.smartLeavesOF;
+            case OF_CUSTOM_ITEMS:
+                return this.customItemsOF;
             default:
                 return false;
         }
@@ -718,6 +885,29 @@ public class GameSettings
         {
             return NarratorChatListener.INSTANCE.isActive() ? s + getTranslation(NARRATOR_MODES, this.narrator) : s + I18n.format("options.narrator.notavailable");
         }
+        else if (settingOption == GameSettings.Options.FXAA)
+        {
+            if (this.fxaa == 0)
+            {
+                return s + I18n.format("options.fxaa.auto");
+            }
+            else if (this.fxaa == 1)
+            {
+                return s + I18n.format("options.on");
+            }
+            else
+            {
+                return s + I18n.format("options.off");
+            }
+        }
+        else if (settingOption == GameSettings.Options.OF_CONNECTED_TEXTURES)
+        {
+            return s + I18n.format(this.connectedTexturesOF == 0 ? "options.off" : (this.connectedTexturesOF == 1 ? "options.graphics.fast" : "options.graphics.fancy"));
+        }
+        else if (settingOption == GameSettings.Options.OF_BETTER_GRASS)
+        {
+            return s + I18n.format(this.betterGrassOF == 0 ? "options.off" : (this.betterGrassOF == 1 ? "options.graphics.fast" : "options.graphics.fancy"));
+        }
         else
         {
             return s;
@@ -726,19 +916,23 @@ public class GameSettings
 
     public void loadOptions()
     {
-        FileInputStream fileInputStream = null; // Forge: fix MC-151173
-        try
+        byte[] options = EagRuntime.getStorage("g");
+        if (options == null)
         {
-            if (!this.optionsFile.exists())
-            {
-                return;
-            }
+            return;
+        }
+        loadOptions(options);
+    }
 
+    public void loadOptions(byte[] data)
+    {
+        try (BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(EaglerZLIB.newGZIPInputStream(new EaglerInputStream(data)), StandardCharsets.UTF_8)))
+        {
             this.soundLevels.clear();
-            List<String> list = IOUtils.readLines(fileInputStream = new FileInputStream(this.optionsFile), StandardCharsets.UTF_8); // Forge: fix MC-117449, MC-151173
             NBTTagCompound nbttagcompound = new NBTTagCompound();
+            String s;
 
-            for (String s : list)
+            while ((s = bufferedreader.readLine()) != null)
             {
                 try
                 {
@@ -884,22 +1078,12 @@ public class GameSettings
 
                     if ("resourcePacks".equals(s1))
                     {
-                        this.resourcePacks = (List)JsonUtils.gsonDeserialize(GSON, s2, TYPE_LIST_STRING);
-
-                        if (this.resourcePacks == null)
-                        {
-                            this.resourcePacks = Lists.<String>newArrayList();
-                        }
+                        this.resourcePacks = fromJSONArray(s2);
                     }
 
                     if ("incompatibleResourcePacks".equals(s1))
                     {
-                        this.incompatibleResourcePacks = (List)JsonUtils.gsonDeserialize(GSON, s2, TYPE_LIST_STRING);
-
-                        if (this.incompatibleResourcePacks == null)
-                        {
-                            this.incompatibleResourcePacks = Lists.<String>newArrayList();
-                        }
+                        this.incompatibleResourcePacks = fromJSONArray(s2);
                     }
 
                     if ("lastServer".equals(s1))
@@ -1067,6 +1251,206 @@ public class GameSettings
                         this.narrator = Integer.parseInt(s2);
                     }
 
+                    if ("relayTimeout".equals(s1))
+                    {
+                        this.relayTimeout = Integer.parseInt(s2);
+                    }
+
+                    if ("hideJoinCode".equals(s1))
+                    {
+                        this.hideJoinCode = "true".equals(s2);
+                    }
+
+                    if ("enableVsyncEag".equals(s1))
+                    {
+                        this.enableVsync = "true".equals(s2);
+                    }
+
+                    if ("allowBlockAlternatives".equals(s1))
+                    {
+                        this.allowBlockAlternatives = "true".equals(s2);
+                    }
+
+                    if ("hudFps".equals(s1))
+                    {
+                        this.hudFps = "true".equals(s2);
+                    }
+
+                    if ("hudWorld".equals(s1))
+                    {
+                        this.hudWorld = "true".equals(s2);
+                    }
+
+                    if ("hudCoords".equals(s1))
+                    {
+                        this.hudCoords = "true".equals(s2);
+                    }
+
+                    if ("hudPlayer".equals(s1))
+                    {
+                        this.hudPlayer = "true".equals(s2);
+                    }
+
+                    if ("hudStats".equals(s1))
+                    {
+                        this.hudStats = "true".equals(s2);
+                    }
+
+                    if ("hud24h".equals(s1))
+                    {
+                        this.hud24h = "true".equals(s2);
+                    }
+
+                    if ("chunkFix".equals(s1))
+                    {
+                        this.chunkFix = "true".equals(s2);
+                    }
+
+                    if ("fog".equals(s1))
+                    {
+                        this.fog = "true".equals(s2);
+                    }
+
+                    if ("fxaa".equals(s1))
+                    {
+                        this.fxaa = ("true".equals(s2) || "false".equals(s2)) ? 0 : Math.max(Math.min(Integer.parseInt(s2), 2), 0);
+                    }
+
+                    if ("shaders".equals(s1))
+                    {
+                        this.shaders = "true".equals(s2);
+                    }
+
+                    if ("enableUpdateSvc".equals(s1))
+                    {
+                        this.enableUpdateSvc = "true".equals(s2);
+                    }
+
+                    if ("voiceListenRadius".equals(s1))
+                    {
+                        this.voiceListenRadius = Integer.parseInt(s2);
+                    }
+
+                    if ("voiceListenVolume".equals(s1))
+                    {
+                        this.voiceListenVolume = this.parseFloat(s2);
+                    }
+
+                    if ("voiceSpeakVolume".equals(s1))
+                    {
+                        this.voiceSpeakVolume = this.parseFloat(s2);
+                    }
+
+                    if ("voicePTTKey".equals(s1))
+                    {
+                        this.voicePTTKey = Integer.parseInt(s2);
+                    }
+
+                    if ("enableFNAWSkins".equals(s1))
+                    {
+                        this.enableFNAWSkins = "true".equals(s2);
+                    }
+
+                    if ("enableDynamicLights".equals(s1))
+                    {
+                        this.enableDynamicLights = "true".equals(s2);
+                    }
+
+                    if ("hasHiddenPhishWarning".equals(s1))
+                    {
+                        this.hasHiddenPhishWarning = "true".equals(s2);
+                    }
+
+                    if ("enableProfanityFilter".equals(s1))
+                    {
+                        this.enableProfanityFilter = "true".equals(s2);
+                    }
+
+                    if ("hasShownProfanityFilter".equals(s1))
+                    {
+                        this.hasShownProfanityFilter = "true".equals(s2);
+                    }
+
+                    if ("screenRecordCodec".equals(s1))
+                    {
+                        EnumScreenRecordingCodec codec = EnumScreenRecordingCodec.valueOf(s2);
+                        if (!ScreenRecordingController.codecs.contains(codec))
+                        {
+                            throw new IllegalStateException("Selected codec is not supported: " + codec.name);
+                        }
+                        this.screenRecordCodec = codec;
+                    }
+
+                    if ("screenRecordFPS".equals(s1))
+                    {
+                        this.screenRecordFPS = Integer.parseInt(s2);
+                    }
+
+                    if ("screenRecordResolution".equals(s1))
+                    {
+                        this.screenRecordResolution = Integer.parseInt(s2);
+                    }
+
+                    if ("screenRecordAudioBitrate".equals(s1))
+                    {
+                        this.screenRecordAudioBitrate = Integer.parseInt(s2);
+                    }
+
+                    if ("screenRecordVideoBitrate".equals(s1))
+                    {
+                        this.screenRecordVideoBitrate = Integer.parseInt(s2);
+                    }
+
+                    if ("screenRecordGameVolume".equals(s1))
+                    {
+                        this.screenRecordGameVolume = this.parseFloat(s2);
+                    }
+
+                    if ("screenRecordMicVolume".equals(s1))
+                    {
+                        this.screenRecordMicVolume = this.parseFloat(s2);
+                    }
+
+                    if ("touchControlOpacity".equals(s1))
+                    {
+                        this.touchControlOpacity = this.parseFloat(s2);
+                    }
+
+                    if ("hideDefaultUsernameWarning".equals(s1))
+                    {
+                        this.hideDefaultUsernameWarning = "true".equals(s2);
+                    }
+
+                    if ("hideVideoSettingsWarning".equals(s1))
+                    {
+                        this.hideVideoSettingsWarning = "true".equals(s2);
+                    }
+
+                    if ("betterGrassOF".equals(s1))
+                    {
+                        this.betterGrassOF = Integer.parseInt(s2);
+                    }
+
+                    if ("connectedTexturesOF".equals(s1))
+                    {
+                        this.connectedTexturesOF = Integer.parseInt(s2);
+                    }
+
+                    if ("customSkyOF".equals(s1))
+                    {
+                        this.customSkyOF = "true".equals(s2);
+                    }
+
+                    if ("smartLeavesOF".equals(s1))
+                    {
+                        this.smartLeavesOF = "true".equals(s2);
+                    }
+
+                    if ("customItemsOF".equals(s1))
+                    {
+                        this.customItemsOF = "true".equals(s2);
+                    }
+
                     for (KeyBinding keybinding : this.keyBindings)
                     {
                         if (s1.equals("key_" + keybinding.getKeyDescription()))
@@ -1095,6 +1479,8 @@ public class GameSettings
                             this.setModelPartEnabled(enumplayermodelparts, "true".equals(s2));
                         }
                     }
+
+                    this.deferredShaderConf.readOption(s1, s2);
                 }
                 catch (Exception var11)
                 {
@@ -1103,12 +1489,34 @@ public class GameSettings
             }
 
             KeyBinding.resetKeyBindingArrayAndHash();
+            Keyboard.setFunctionKeyModifier(this.keyBindFunction.getKeyCode());
+            VoiceClientController.setVoiceListenVolume(this.voiceListenVolume);
+            VoiceClientController.setVoiceSpeakVolume(this.voiceSpeakVolume);
+            VoiceClientController.setVoiceProximity(this.voiceListenRadius);
+            ScreenRecordingController.setGameVolume(this.screenRecordGameVolume);
+            ScreenRecordingController.setMicrophoneVolume(this.screenRecordMicVolume);
+
+            if (this.mc.getRenderManager() != null)
+            {
+                this.mc.getRenderManager().setEnableFNAWSkins(this.enableFNAWSkins);
+            }
+
+            if (this.shaders && !EaglerDeferredPipeline.isSupported())
+            {
+                LOGGER.error("Setting shaders to false because they are not supported");
+                this.shaders = false;
+            }
+
+            if (this.enableDynamicLights && !DynamicLightsStateManager.isSupported())
+            {
+                LOGGER.error("Setting dynamic lights to false because they are not supported");
+                this.enableDynamicLights = false;
+            }
         }
         catch (Exception exception)
         {
             LOGGER.error("Failed to load options", (Throwable)exception);
         }
-        finally { IOUtils.closeQuietly(fileInputStream); } // Forge: fix MC-151173
     }
 
     private NBTTagCompound dataFix(NBTTagCompound p_189988_1_)
@@ -1142,11 +1550,23 @@ public class GameSettings
     public void saveOptions()
     {
         if (net.minecraftforge.fml.client.FMLClientHandler.instance().isLoading()) return;
-        PrintWriter printwriter = null;
+        byte[] data = writeOptions();
 
-        try
+        if (data != null)
         {
-            printwriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(this.optionsFile), StandardCharsets.UTF_8));
+            EagRuntime.setStorage("g", data);
+        }
+
+        RelayManager.relayManager.save();
+        this.sendSettingsToServer();
+    }
+
+    public byte[] writeOptions()
+    {
+        EaglerOutputStream bao = new EaglerOutputStream();
+
+        try (PrintWriter printwriter = new PrintWriter(new OutputStreamWriter(EaglerZLIB.newGZIPOutputStream(bao), StandardCharsets.UTF_8)))
+        {
             printwriter.println("version:1343");
             printwriter.println("invertYMouse:" + this.invertMouse);
             printwriter.println("mouseSensitivity:" + this.mouseSensitivity);
@@ -1176,8 +1596,8 @@ public class GameSettings
                     printwriter.println("renderClouds:true");
             }
 
-            printwriter.println("resourcePacks:" + GSON.toJson(this.resourcePacks));
-            printwriter.println("incompatibleResourcePacks:" + GSON.toJson(this.incompatibleResourcePacks));
+            printwriter.println("resourcePacks:" + toJSONArray(this.resourcePacks));
+            printwriter.println("incompatibleResourcePacks:" + toJSONArray(this.incompatibleResourcePacks));
             printwriter.println("lastServer:" + this.lastServer);
             printwriter.println("lang:" + this.language);
             printwriter.println("chatVisibility:" + this.chatVisibility.getChatVisibility());
@@ -1214,6 +1634,51 @@ public class GameSettings
             printwriter.println("narrator:" + this.narrator);
             printwriter.println("tutorialStep:" + this.tutorialStep.getName());
 
+            printwriter.println("relayTimeout:" + this.relayTimeout);
+            printwriter.println("hideJoinCode:" + this.hideJoinCode);
+            printwriter.println("enableVsyncEag:" + this.enableVsync);
+            printwriter.println("allowBlockAlternatives:" + this.allowBlockAlternatives);
+            printwriter.println("hudFps:" + this.hudFps);
+            printwriter.println("hudWorld:" + this.hudWorld);
+            printwriter.println("hudCoords:" + this.hudCoords);
+            printwriter.println("hudPlayer:" + this.hudPlayer);
+            printwriter.println("hudStats:" + this.hudStats);
+            printwriter.println("hud24h:" + this.hud24h);
+            printwriter.println("chunkFix:" + this.chunkFix);
+            printwriter.println("fog:" + this.fog);
+            printwriter.println("fxaa:" + this.fxaa);
+            printwriter.println("shaders:" + this.shaders);
+            printwriter.println("enableUpdateSvc:" + this.enableUpdateSvc);
+            printwriter.println("voiceListenRadius:" + this.voiceListenRadius);
+            printwriter.println("voiceListenVolume:" + this.voiceListenVolume);
+            printwriter.println("voiceSpeakVolume:" + this.voiceSpeakVolume);
+            printwriter.println("voicePTTKey:" + this.voicePTTKey);
+            printwriter.println("enableFNAWSkins:" + this.enableFNAWSkins);
+            printwriter.println("enableDynamicLights:" + this.enableDynamicLights);
+            printwriter.println("hasHiddenPhishWarning:" + this.hasHiddenPhishWarning);
+            printwriter.println("enableProfanityFilter:" + this.enableProfanityFilter);
+            printwriter.println("hasShownProfanityFilter:" + this.hasShownProfanityFilter);
+
+            if (this.screenRecordCodec != null)
+            {
+                printwriter.println("screenRecordCodec:" + this.screenRecordCodec);
+            }
+
+            printwriter.println("screenRecordFPS:" + this.screenRecordFPS);
+            printwriter.println("screenRecordResolution:" + this.screenRecordResolution);
+            printwriter.println("screenRecordAudioBitrate:" + this.screenRecordAudioBitrate);
+            printwriter.println("screenRecordVideoBitrate:" + this.screenRecordVideoBitrate);
+            printwriter.println("screenRecordGameVolume:" + this.screenRecordGameVolume);
+            printwriter.println("screenRecordMicVolume:" + this.screenRecordMicVolume);
+            printwriter.println("touchControlOpacity:" + this.touchControlOpacity);
+            printwriter.println("hideDefaultUsernameWarning:" + this.hideDefaultUsernameWarning);
+            printwriter.println("hideVideoSettingsWarning:" + this.hideVideoSettingsWarning);
+            printwriter.println("betterGrassOF:" + this.betterGrassOF);
+            printwriter.println("connectedTexturesOF:" + this.connectedTexturesOF);
+            printwriter.println("customSkyOF:" + this.customSkyOF);
+            printwriter.println("smartLeavesOF:" + this.smartLeavesOF);
+            printwriter.println("customItemsOF:" + this.customItemsOF);
+
             for (KeyBinding keybinding : this.keyBindings)
             {
                 String keyString = "key_" + keybinding.getKeyDescription() + ":" + keybinding.getKeyCode();
@@ -1229,17 +1694,65 @@ public class GameSettings
             {
                 printwriter.println("modelPart_" + enumplayermodelparts.getPartName() + ":" + this.setModelParts.contains(enumplayermodelparts));
             }
+
+            Keyboard.setFunctionKeyModifier(this.keyBindFunction.getKeyCode());
+            this.deferredShaderConf.writeOptions(printwriter);
         }
         catch (Exception exception)
         {
             LOGGER.error("Failed to save options", (Throwable)exception);
-        }
-        finally
-        {
-            IOUtils.closeQuietly((Writer)printwriter);
+            return null;
         }
 
-        this.sendSettingsToServer();
+        return bao.toByteArray();
+    }
+
+    private static String toJSONArray(List<String> list)
+    {
+        JSONArray arr = new JSONArray();
+
+        for (int i = 0, l = list.size(); i < l; ++i)
+        {
+            arr.put(list.get(i));
+        }
+
+        return arr.toString();
+    }
+
+    private static List<String> fromJSONArray(String json)
+    {
+        JSONArray arr = new JSONArray(json);
+        List<String> ret = Lists.<String>newArrayListWithCapacity(arr.length());
+
+        for (int i = 0, l = arr.length(); i < l; ++i)
+        {
+            ret.add(arr.getString(i));
+        }
+
+        return ret;
+    }
+
+    public int checkBadVideoSettings()
+    {
+        return this.hideVideoSettingsWarning ? 0 : ((this.renderDistanceChunks > 6 ? GuiScreenVideoSettingsWarning.WARNING_RENDER_DISTANCE : 0) | (!this.enableVsync ? GuiScreenVideoSettingsWarning.WARNING_VSYNC : 0) | (this.limitFramerate < 30 ? GuiScreenVideoSettingsWarning.WARNING_FRAME_LIMIT : 0));
+    }
+
+    public void fixBadVideoSettings()
+    {
+        if (this.renderDistanceChunks > 6)
+        {
+            this.renderDistanceChunks = 4;
+        }
+
+        if (!this.enableVsync)
+        {
+            this.enableVsync = true;
+        }
+
+        if (this.limitFramerate < 30)
+        {
+            this.limitFramerate = 260;
+        }
     }
 
     public float getSoundLevel(SoundCategory category)
@@ -1353,7 +1866,28 @@ public class GameSettings
         SHOW_SUBTITLES("options.showSubtitles", false, true),
         REALMS_NOTIFICATIONS("options.realmsNotifications", false, true),
         AUTO_JUMP("options.autoJump", false, true),
-        NARRATOR("options.narrator", false, false);
+        NARRATOR("options.narrator", false, false),
+        BLOCK_ALTERNATIVES("options.blockAlternatives", false, true),
+        HUD_FPS("options.hud.fps", false, true),
+        HUD_COORDS("options.hud.coords", false, true),
+        HUD_STATS("options.hud.stats", false, true),
+        HUD_WORLD("options.hud.world", false, true),
+        HUD_PLAYER("options.hud.player", false, true),
+        HUD_24H("options.hud.24h", false, true),
+        CHUNK_FIX("options.chunkFix", false, true),
+        FOG("options.fog", false, true),
+        FXAA("options.fxaa", false, false),
+        FULLSCREEN("options.fullscreen", false, true),
+        FNAW_SKINS("options.skinCustomisation.enableFNAWSkins", false, true),
+        EAGLER_VSYNC("options.vsync", false, true),
+        EAGLER_DYNAMIC_LIGHTS("options.dynamicLights", false, true),
+        EAGLER_PROFANITY_FILTER("options.profanityFilterButton", false, true),
+        EAGLER_TOUCH_CONTROL_OPACITY("options.touchControlOpacity", true, false),
+        OF_CONNECTED_TEXTURES("options.connectedTexturesOF", false, false),
+        OF_BETTER_GRASS("options.betterGrassOF", false, false),
+        OF_CUSTOM_SKIES("options.customSkiesOF", false, true),
+        OF_SMART_LEAVES("options.smartLeavesOF", false, true),
+        OF_CUSTOM_ITEMS("options.customItemsOF", false, true);
 
         private final boolean isFloat;
         private final boolean isBoolean;
