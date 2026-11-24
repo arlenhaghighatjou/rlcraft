@@ -7,7 +7,7 @@ import java.io.InputStream;
 import net.minecraft.client.resources.IResource;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.io.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
 
 @SideOnly(Side.CLIENT)
 public class PngSizeInfo

@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.io.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
 
 @SideOnly(Side.CLIENT)
 public class Locale

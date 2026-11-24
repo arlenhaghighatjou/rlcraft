@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.io.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
 
 public class LanguageMap
 {

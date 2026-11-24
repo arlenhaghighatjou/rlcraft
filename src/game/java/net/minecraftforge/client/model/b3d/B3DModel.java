@@ -45,7 +45,7 @@ import javax.vecmath.Vector4f;
 
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.common.model.TRSRTransformation;
-import org.apache.commons.io.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;

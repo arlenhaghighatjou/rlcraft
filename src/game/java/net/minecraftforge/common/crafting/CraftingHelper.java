@@ -45,7 +45,7 @@ import java.util.function.Function;
 import javax.annotation.Nonnull;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
