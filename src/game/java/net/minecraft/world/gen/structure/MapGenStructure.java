@@ -1,265 +1,298 @@
 package net.minecraft.world.gen.structure;
 
-import com.carrotsearch.hppc.LongObjectHashMap;
-import com.carrotsearch.hppc.LongObjectMap;
-import com.carrotsearch.hppc.cursors.ObjectCursor;
-
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import java.util.Iterator;
-import java.util.List;
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import net.lax1dude.eaglercraft.v1_8.HString;
-
-import java.util.concurrent.Callable;
+import java.util.Random;
+import javax.annotation.Nullable;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
+import net.minecraft.crash.ICrashReportDetail;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ReportedException;
-import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.MapGenBase;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public abstract class MapGenStructure extends MapGenBase {
-	private MapGenStructureData structureData;
-	/**+
-	 * Used to store a list of all structures that have been
-	 * recursively generated. Used so that during recursive
-	 * generation, the structure generator can avoid generating
-	 * structures that intersect ones that have already been placed.
-	 */
-	protected LongObjectMap<StructureStart> structureMap = new LongObjectHashMap<>();
+public abstract class MapGenStructure extends MapGenBase
+{
+    private MapGenStructureData structureData;
+    protected Long2ObjectMap<StructureStart> structureMap = new Long2ObjectOpenHashMap<StructureStart>(1024);
 
-	public abstract String getStructureName();
+    public abstract String getStructureName();
 
-	public MapGenStructure() {
-		super();
-	}
+    protected final synchronized void recursiveGenerate(World worldIn, final int chunkX, final int chunkZ, int originalX, int originalZ, ChunkPrimer chunkPrimerIn)
+    {
+        this.initializeStructureData(worldIn);
 
-	public MapGenStructure(boolean scramble) {
-		super(scramble);
-	}
+        if (!this.structureMap.containsKey(ChunkPos.asLong(chunkX, chunkZ)))
+        {
+            this.rand.nextInt();
 
-	/**+
-	 * Recursively called by generate()
-	 */
-	protected final void recursiveGenerate(World world, final int i, final int j, int var4, int var5,
-			ChunkPrimer var6) {
-		this.func_143027_a(world);
-		if (!this.structureMap.containsKey(ChunkCoordIntPair.chunkXZ2Int(i, j))) {
-			this.rand.nextInt();
+            try
+            {
+                if (this.canSpawnStructureAtCoords(chunkX, chunkZ))
+                {
+                    StructureStart structurestart = this.getStructureStart(chunkX, chunkZ);
+                    this.structureMap.put(ChunkPos.asLong(chunkX, chunkZ), structurestart);
 
-			try {
-				if (this.canSpawnStructureAtCoords(i, j)) {
-					StructureStart structurestart = this.getStructureStart(i, j);
-					this.structureMap.put(ChunkCoordIntPair.chunkXZ2Int(i, j), structurestart);
-					this.func_143026_a(i, j, structurestart);
-				}
+                    if (structurestart.isSizeableStructure())
+                    {
+                        this.setStructureStart(chunkX, chunkZ, structurestart);
+                    }
+                }
+            }
+            catch (Throwable throwable)
+            {
+                CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Exception preparing structure feature");
+                CrashReportCategory crashreportcategory = crashreport.makeCategory("Feature being prepared");
+                crashreportcategory.addDetail("Is feature chunk", new ICrashReportDetail<String>()
+                {
+                    public String call() throws Exception
+                    {
+                        return MapGenStructure.this.canSpawnStructureAtCoords(chunkX, chunkZ) ? "True" : "False";
+                    }
+                });
+                crashreportcategory.addCrashSection("Chunk location", String.format("%d,%d", chunkX, chunkZ));
+                crashreportcategory.addDetail("Chunk pos hash", new ICrashReportDetail<String>()
+                {
+                    public String call() throws Exception
+                    {
+                        return String.valueOf(ChunkPos.asLong(chunkX, chunkZ));
+                    }
+                });
+                crashreportcategory.addDetail("Structure type", new ICrashReportDetail<String>()
+                {
+                    public String call() throws Exception
+                    {
+                        return MapGenStructure.this.getClass().getCanonicalName();
+                    }
+                });
+                throw new ReportedException(crashreport);
+            }
+        }
+    }
 
-			} catch (Throwable throwable) {
-				CrashReport crashreport = CrashReport.makeCrashReport(throwable,
-						"Exception preparing structure feature");
-				CrashReportCategory crashreportcategory = crashreport.makeCategory("Feature being prepared");
-				crashreportcategory.addCrashSectionCallable("Is feature chunk", new Callable<String>() {
-					public String call() throws Exception {
-						return MapGenStructure.this.canSpawnStructureAtCoords(i, j) ? "True" : "False";
-					}
-				});
-				crashreportcategory.addCrashSection("Chunk location",
-						HString.format("%d,%d", new Object[] { Integer.valueOf(i), Integer.valueOf(j) }));
-				crashreportcategory.addCrashSectionCallable("Chunk pos hash", new Callable<String>() {
-					public String call() throws Exception {
-						return String.valueOf(ChunkCoordIntPair.chunkXZ2Int(i, j));
-					}
-				});
-				crashreportcategory.addCrashSectionCallable("Structure type", new Callable<String>() {
-					public String call() throws Exception {
-						return MapGenStructure.this.getClass().getCanonicalName();
-					}
-				});
-				throw new ReportedException(crashreport);
-			}
-		}
-	}
+    public synchronized boolean generateStructure(World worldIn, Random randomIn, ChunkPos chunkCoord)
+    {
+        this.initializeStructureData(worldIn);
+        int i = (chunkCoord.x << 4) + 8;
+        int j = (chunkCoord.z << 4) + 8;
+        boolean flag = false;
+        ObjectIterator objectiterator = this.structureMap.values().iterator();
 
-	public boolean generateStructure(World worldIn, EaglercraftRandom randomIn, ChunkCoordIntPair chunkCoord) {
-		this.func_143027_a(worldIn);
-		int i = (chunkCoord.chunkXPos << 4) + 8;
-		int j = (chunkCoord.chunkZPos << 4) + 8;
-		boolean flag = false;
+        while (objectiterator.hasNext())
+        {
+            StructureStart structurestart = (StructureStart)objectiterator.next();
 
-		for (ObjectCursor<StructureStart> structurestart_ : this.structureMap.values()) {
-			StructureStart structurestart = structurestart_.value;
-			if (structurestart.isSizeableStructure() && structurestart.func_175788_a(chunkCoord)
-					&& structurestart.getBoundingBox().intersectsWith(i, j, i + 15, j + 15)) {
-				structurestart.generateStructure(worldIn, randomIn, new StructureBoundingBox(i, j, i + 15, j + 15));
-				structurestart.func_175787_b(chunkCoord);
-				flag = true;
-				this.func_143026_a(structurestart.getChunkPosX(), structurestart.getChunkPosZ(), structurestart);
-			}
-		}
+            if (structurestart.isSizeableStructure() && structurestart.isValidForPostProcess(chunkCoord) && structurestart.getBoundingBox().intersectsWith(i, j, i + 15, j + 15))
+            {
+                structurestart.generateStructure(worldIn, randomIn, new StructureBoundingBox(i, j, i + 15, j + 15));
+                structurestart.notifyPostProcessAt(chunkCoord);
+                flag = true;
+                this.setStructureStart(structurestart.getChunkPosX(), structurestart.getChunkPosZ(), structurestart);
+            }
+        }
 
-		return flag;
-	}
+        return flag;
+    }
 
-	public boolean func_175795_b(BlockPos pos) {
-		this.func_143027_a(this.worldObj);
-		return this.func_175797_c(pos) != null;
-	}
+    public boolean isInsideStructure(BlockPos pos)
+    {
+        if (this.world == null)
+        {
+            return false;
+        }
+        else
+        {
+            this.initializeStructureData(this.world);
+            return this.getStructureAt(pos) != null;
+        }
+    }
 
-	protected StructureStart func_175797_c(BlockPos pos) {
-		label24: for (ObjectCursor<StructureStart> structurestart_ : this.structureMap.values()) {
-			StructureStart structurestart = structurestart_.value;
-			if (structurestart.isSizeableStructure() && structurestart.getBoundingBox().isVecInside(pos)) {
-				Iterator iterator = structurestart.getComponents().iterator();
+    @Nullable
+    protected StructureStart getStructureAt(BlockPos pos)
+    {
+        ObjectIterator objectiterator = this.structureMap.values().iterator();
+        label31:
 
-				while (true) {
-					if (!iterator.hasNext()) {
-						continue label24;
-					}
+        while (objectiterator.hasNext())
+        {
+            StructureStart structurestart = (StructureStart)objectiterator.next();
 
-					StructureComponent structurecomponent = (StructureComponent) iterator.next();
-					if (structurecomponent.getBoundingBox().isVecInside(pos)) {
-						break;
-					}
-				}
+            if (structurestart.isSizeableStructure() && structurestart.getBoundingBox().isVecInside(pos))
+            {
+                Iterator<StructureComponent> iterator = structurestart.getComponents().iterator();
 
-				return structurestart;
-			}
-		}
+                while (true)
+                {
+                    if (!iterator.hasNext())
+                    {
+                        continue label31;
+                    }
 
-		return null;
-	}
+                    StructureComponent structurecomponent = iterator.next();
 
-	public boolean func_175796_a(World worldIn, BlockPos pos) {
-		this.func_143027_a(worldIn);
+                    if (structurecomponent.getBoundingBox().isVecInside(pos))
+                    {
+                        break;
+                    }
+                }
 
-		for (ObjectCursor<StructureStart> structurestart_ : this.structureMap.values()) {
-			StructureStart structurestart = structurestart_.value;
-			if (structurestart.isSizeableStructure() && structurestart.getBoundingBox().isVecInside(pos)) {
-				return true;
-			}
-		}
+                return structurestart;
+            }
+        }
 
-		return false;
-	}
+        return null;
+    }
 
-	public BlockPos getClosestStrongholdPos(World worldIn, BlockPos pos) {
-		this.worldObj = worldIn;
-		this.func_143027_a(worldIn);
-		this.rand.setSeed(worldIn.getSeed());
-		long i = this.rand.nextLong();
-		long j = this.rand.nextLong();
-		long k = (long) (pos.getX() >> 4) * i;
-		long l = (long) (pos.getZ() >> 4) * j;
-		this.rand.setSeed(k ^ l ^ worldIn.getSeed());
-		this.recursiveGenerate(worldIn, pos.getX() >> 4, pos.getZ() >> 4, 0, 0, (ChunkPrimer) null);
-		double d0 = Double.MAX_VALUE;
-		BlockPos blockpos = null;
+    public boolean isPositionInStructure(World worldIn, BlockPos pos)
+    {
+        this.initializeStructureData(worldIn);
+        ObjectIterator objectiterator = this.structureMap.values().iterator();
 
-		for (ObjectCursor<StructureStart> structurestart_ : this.structureMap.values()) {
-			StructureStart structurestart = structurestart_.value;
-			if (structurestart.isSizeableStructure()) {
-				StructureComponent structurecomponent = (StructureComponent) structurestart.getComponents().get(0);
-				BlockPos blockpos1 = structurecomponent.getBoundingBoxCenter();
-				double d1 = blockpos1.distanceSq(pos);
-				if (d1 < d0) {
-					d0 = d1;
-					blockpos = blockpos1;
-				}
-			}
-		}
+        while (objectiterator.hasNext())
+        {
+            StructureStart structurestart = (StructureStart)objectiterator.next();
 
-		if (blockpos != null) {
-			return blockpos;
-		} else {
-			List<BlockPos> list = this.getCoordList();
-			if (list != null) {
-				BlockPos blockpos2 = null;
+            if (structurestart.isSizeableStructure() && structurestart.getBoundingBox().isVecInside(pos))
+            {
+                return true;
+            }
+        }
 
-				for (int m = 0, n = list.size(); m < n; ++m) {
-					BlockPos blockpos3 = list.get(m);
-					double d2 = blockpos3.distanceSq(pos);
-					if (d2 < d0) {
-						d0 = d2;
-						blockpos2 = blockpos3;
-					}
-				}
+        return false;
+    }
 
-				return blockpos2;
-			} else {
-				return null;
-			}
-		}
-	}
+    @Nullable
+    public abstract BlockPos getNearestStructurePos(World worldIn, BlockPos pos, boolean findUnexplored);
 
-	/**+
-	 * Returns a list of other locations at which the structure
-	 * generation has been run, or null if not relevant to this
-	 * structure generator.
-	 */
-	protected List<BlockPos> getCoordList() {
-		return null;
-	}
+    protected void initializeStructureData(World worldIn)
+    {
+        if (this.structureData == null && worldIn != null)
+        {
+            this.structureData = (MapGenStructureData)worldIn.getPerWorldStorage().getOrLoadData(MapGenStructureData.class, this.getStructureName());
 
-	private void func_143027_a(World worldIn) {
-		if (this.structureData == null) {
-			this.structureData = (MapGenStructureData) worldIn.loadItemData(MapGenStructureData.class,
-					this.getStructureName());
-			if (this.structureData == null) {
-				this.structureData = new MapGenStructureData(this.getStructureName());
-				worldIn.setItemData(this.getStructureName(), this.structureData);
-			} else {
-				NBTTagCompound nbttagcompound = this.structureData.getTagCompound();
+            if (this.structureData == null)
+            {
+                this.structureData = new MapGenStructureData(this.getStructureName());
+                worldIn.getPerWorldStorage().setData(this.getStructureName(), this.structureData);
+            }
+            else
+            {
+                NBTTagCompound nbttagcompound = this.structureData.getTagCompound();
 
-				for (String s : nbttagcompound.getKeySet()) {
-					NBTBase nbtbase = nbttagcompound.getTag(s);
-					if (nbtbase.getId() == 10) {
-						NBTTagCompound nbttagcompound1 = (NBTTagCompound) nbtbase;
-						if (nbttagcompound1.hasKey("ChunkX") && nbttagcompound1.hasKey("ChunkZ")) {
-							int i = nbttagcompound1.getInteger("ChunkX");
-							int j = nbttagcompound1.getInteger("ChunkZ");
-							StructureStart structurestart = MapGenStructureIO.getStructureStart(nbttagcompound1,
-									worldIn);
-							if (structurestart != null) {
-								this.structureMap.put(ChunkCoordIntPair.chunkXZ2Int(i, j), structurestart);
-							}
-						}
-					}
-				}
-			}
-		}
+                for (String s : nbttagcompound.getKeySet())
+                {
+                    NBTBase nbtbase = nbttagcompound.getTag(s);
 
-	}
+                    if (nbtbase.getId() == 10)
+                    {
+                        NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbtbase;
 
-	private void func_143026_a(int start, int parInt2, StructureStart parStructureStart) {
-		this.structureData.writeInstance(parStructureStart.writeStructureComponentsToNBT(start, parInt2), start,
-				parInt2);
-		this.structureData.markDirty();
-	}
+                        if (nbttagcompound1.hasKey("ChunkX") && nbttagcompound1.hasKey("ChunkZ"))
+                        {
+                            int i = nbttagcompound1.getInteger("ChunkX");
+                            int j = nbttagcompound1.getInteger("ChunkZ");
+                            StructureStart structurestart = MapGenStructureIO.getStructureStart(nbttagcompound1, worldIn);
 
-	protected abstract boolean canSpawnStructureAtCoords(int var1, int var2);
+                            if (structurestart != null)
+                            {
+                                this.structureMap.put(ChunkPos.asLong(i, j), structurestart);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	protected abstract StructureStart getStructureStart(int var1, int var2);
+    private void setStructureStart(int chunkX, int chunkZ, StructureStart start)
+    {
+        this.structureData.writeInstance(start.writeStructureComponentsToNBT(chunkX, chunkZ), chunkX, chunkZ);
+        this.structureData.markDirty();
+    }
+
+    protected abstract boolean canSpawnStructureAtCoords(int chunkX, int chunkZ);
+
+    protected abstract StructureStart getStructureStart(int chunkX, int chunkZ);
+
+    protected static BlockPos findNearestStructurePosBySpacing(World worldIn, MapGenStructure p_191069_1_, BlockPos p_191069_2_, int p_191069_3_, int p_191069_4_, int p_191069_5_, boolean p_191069_6_, int p_191069_7_, boolean findUnexplored)
+    {
+        int i = p_191069_2_.getX() >> 4;
+        int j = p_191069_2_.getZ() >> 4;
+        int k = 0;
+
+        for (Random random = new Random(); k <= p_191069_7_; ++k)
+        {
+            for (int l = -k; l <= k; ++l)
+            {
+                boolean flag = l == -k || l == k;
+
+                for (int i1 = -k; i1 <= k; ++i1)
+                {
+                    boolean flag1 = i1 == -k || i1 == k;
+
+                    if (flag || flag1)
+                    {
+                        int j1 = i + p_191069_3_ * l;
+                        int k1 = j + p_191069_3_ * i1;
+
+                        if (j1 < 0)
+                        {
+                            j1 -= p_191069_3_ - 1;
+                        }
+
+                        if (k1 < 0)
+                        {
+                            k1 -= p_191069_3_ - 1;
+                        }
+
+                        int l1 = j1 / p_191069_3_;
+                        int i2 = k1 / p_191069_3_;
+                        Random random1 = worldIn.setRandomSeed(l1, i2, p_191069_5_);
+                        l1 = l1 * p_191069_3_;
+                        i2 = i2 * p_191069_3_;
+
+                        if (p_191069_6_)
+                        {
+                            l1 = l1 + (random1.nextInt(p_191069_3_ - p_191069_4_) + random1.nextInt(p_191069_3_ - p_191069_4_)) / 2;
+                            i2 = i2 + (random1.nextInt(p_191069_3_ - p_191069_4_) + random1.nextInt(p_191069_3_ - p_191069_4_)) / 2;
+                        }
+                        else
+                        {
+                            l1 = l1 + random1.nextInt(p_191069_3_ - p_191069_4_);
+                            i2 = i2 + random1.nextInt(p_191069_3_ - p_191069_4_);
+                        }
+
+                        MapGenBase.setupChunkSeed(worldIn.getSeed(), random, l1, i2);
+                        random.nextInt();
+
+                        if (p_191069_1_.canSpawnStructureAtCoords(l1, i2))
+                        {
+                            if (!findUnexplored || !worldIn.isChunkGeneratedAt(l1, i2))
+                            {
+                                return new BlockPos((l1 << 4) + 8, 64, (i2 << 4) + 8);
+                            }
+                        }
+                        else if (k == 0)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                if (k == 0)
+                {
+                    break;
+                }
+            }
+        }
+
+        return null;
+    }
 }

@@ -1,170 +1,177 @@
 package net.minecraft.block;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-
+import java.util.Random;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class BlockFarmland extends Block {
-	public static final PropertyInteger MOISTURE = PropertyInteger.create("moisture", 0, 7);
+public class BlockFarmland extends Block
+{
+    public static final PropertyInteger MOISTURE = PropertyInteger.create("moisture", 0, 7);
+    protected static final AxisAlignedBB FARMLAND_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.9375D, 1.0D);
+    protected static final AxisAlignedBB field_194405_c = new AxisAlignedBB(0.0D, 0.9375D, 0.0D, 1.0D, 1.0D, 1.0D);
 
-	protected BlockFarmland() {
-		super(Material.ground);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(MOISTURE, Integer.valueOf(0)));
-		this.setTickRandomly(true);
-		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.9375F, 1.0F);
-		this.setLightOpacity(255);
-	}
+    protected BlockFarmland()
+    {
+        super(Material.GROUND);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(MOISTURE, Integer.valueOf(0)));
+        this.setTickRandomly(true);
+        this.setLightOpacity(255);
+    }
 
-	public AxisAlignedBB getCollisionBoundingBox(World var1, BlockPos blockpos, IBlockState var3) {
-		return new AxisAlignedBB((double) blockpos.getX(), (double) blockpos.getY(), (double) blockpos.getZ(),
-				(double) (blockpos.getX() + 1), (double) (blockpos.getY() + 1), (double) (blockpos.getZ() + 1));
-	}
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return FARMLAND_AABB;
+    }
 
-	/**+
-	 * Used to determine ambient occlusion and culling when
-	 * rebuilding chunks for render
-	 */
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
 
-	public boolean isFullCube() {
-		return false;
-	}
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
+    }
 
-	public void updateTick(World world, BlockPos blockpos, IBlockState iblockstate, EaglercraftRandom var4) {
-		int i = ((Integer) iblockstate.getValue(MOISTURE)).intValue();
-		if (!this.hasWater(world, blockpos) && !world.canLightningStrike(blockpos.up())) {
-			if (i > 0) {
-				world.setBlockState(blockpos, iblockstate.withProperty(MOISTURE, Integer.valueOf(i - 1)), 2);
-			} else if (!this.hasCrops(world, blockpos)) {
-				world.setBlockState(blockpos, Blocks.dirt.getDefaultState());
-			}
-		} else if (i < 7) {
-			world.setBlockState(blockpos, iblockstate.withProperty(MOISTURE, Integer.valueOf(7)), 2);
-		}
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        int i = ((Integer)state.getValue(MOISTURE)).intValue();
 
-	}
+        if (!this.hasWater(worldIn, pos) && !worldIn.isRainingAt(pos.up()))
+        {
+            if (i > 0)
+            {
+                worldIn.setBlockState(pos, state.withProperty(MOISTURE, Integer.valueOf(i - 1)), 2);
+            }
+            else if (!this.hasCrops(worldIn, pos))
+            {
+                turnToDirt(worldIn, pos);
+            }
+        }
+        else if (i < 7)
+        {
+            worldIn.setBlockState(pos, state.withProperty(MOISTURE, Integer.valueOf(7)), 2);
+        }
+    }
 
-	/**+
-	 * Block's chance to react to a living entity falling on it.
-	 */
-	public void onFallenUpon(World world, BlockPos blockpos, Entity entity, float f) {
-		if (entity instanceof EntityLivingBase) {
-			if (!world.isRemote && world.rand.nextFloat() < f - 0.5F) {
-				if (!(entity instanceof EntityPlayer) && !world.getGameRules().getBoolean("mobGriefing")) {
-					return;
-				}
+    public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance)
+    {
+        if (net.minecraftforge.common.ForgeHooks.onFarmlandTrample(worldIn, pos, Blocks.DIRT.getDefaultState(), fallDistance, entityIn)) // Forge: Move logic to Entity#canTrample
+        {
+            turnToDirt(worldIn, pos);
+        }
 
-				world.setBlockState(blockpos, Blocks.dirt.getDefaultState());
-			}
+        super.onFallenUpon(worldIn, pos, entityIn, fallDistance);
+    }
 
-			super.onFallenUpon(world, blockpos, entity, f);
-		}
-	}
+    protected static void turnToDirt(World p_190970_0_, BlockPos worldIn)
+    {
+        p_190970_0_.setBlockState(worldIn, Blocks.DIRT.getDefaultState());
+        AxisAlignedBB axisalignedbb = field_194405_c.offset(worldIn);
 
-	private boolean hasCrops(World worldIn, BlockPos pos) {
-		Block block = worldIn.getBlockState(pos.up()).getBlock();
-		return block instanceof BlockCrops || block instanceof BlockStem;
-	}
+        for (Entity entity : p_190970_0_.getEntitiesWithinAABBExcludingEntity((Entity)null, axisalignedbb))
+        {
+            double d0 = Math.min(axisalignedbb.maxY - axisalignedbb.minY, axisalignedbb.maxY - entity.getEntityBoundingBox().minY);
+            entity.setPositionAndUpdate(entity.posX, entity.posY + d0 + 0.001D, entity.posZ);
+        }
+    }
 
-	private boolean hasWater(World worldIn, BlockPos pos) {
-		for (BlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(pos.add(-4, 0, -4), pos.add(4, 1, 4))) {
-			if (worldIn.getBlockState(blockpos$mutableblockpos).getBlock().getMaterial() == Material.water) {
-				return true;
-			}
-		}
+    private boolean hasCrops(World worldIn, BlockPos pos)
+    {
+        Block block = worldIn.getBlockState(pos.up()).getBlock();
+        return block instanceof net.minecraftforge.common.IPlantable && canSustainPlant(worldIn.getBlockState(pos), worldIn, pos, net.minecraft.util.EnumFacing.UP, (net.minecraftforge.common.IPlantable)block);
+    }
 
-		return false;
-	}
+    private boolean hasWater(World worldIn, BlockPos pos)
+    {
+        for (BlockPos.MutableBlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(pos.add(-4, 0, -4), pos.add(4, 1, 4)))
+        {
+            if (worldIn.getBlockState(blockpos$mutableblockpos).getMaterial() == Material.WATER)
+            {
+                return true;
+            }
+        }
 
-	/**+
-	 * Called when a neighboring block changes.
-	 */
-	public void onNeighborBlockChange(World world, BlockPos blockpos, IBlockState iblockstate, Block block) {
-		super.onNeighborBlockChange(world, blockpos, iblockstate, block);
-		if (world.getBlockState(blockpos.up()).getBlock().getMaterial().isSolid()) {
-			world.setBlockState(blockpos, Blocks.dirt.getDefaultState());
-		}
+        return net.minecraftforge.common.FarmlandWaterManager.hasBlockWaterTicket(worldIn, pos);
+    }
 
-	}
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
+    {
+        super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
 
-	public boolean shouldSideBeRendered(IBlockAccess iblockaccess, BlockPos blockpos, EnumFacing enumfacing) {
-		switch (enumfacing) {
-		case UP:
-			return true;
-		case NORTH:
-		case SOUTH:
-		case WEST:
-		case EAST:
-			Block block = iblockaccess.getBlockState(blockpos).getBlock();
-			return !block.isOpaqueCube() && block != Blocks.farmland;
-		default:
-			return super.shouldSideBeRendered(iblockaccess, blockpos, enumfacing);
-		}
-	}
+        if (worldIn.getBlockState(pos.up()).getMaterial().isSolid())
+        {
+            turnToDirt(worldIn, pos);
+        }
+    }
 
-	/**+
-	 * Get the Item that this Block should drop when harvested.
-	 */
-	public Item getItemDropped(IBlockState var1, EaglercraftRandom random, int i) {
-		return Blocks.dirt.getItemDropped(
-				Blocks.dirt.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT), random, i);
-	}
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    {
+        super.onBlockAdded(worldIn, pos, state);
 
-	public Item getItem(World var1, BlockPos var2) {
-		return Item.getItemFromBlock(Blocks.dirt);
-	}
+        if (worldIn.getBlockState(pos.up()).getMaterial().isSolid())
+        {
+            turnToDirt(worldIn, pos);
+        }
+    }
 
-	/**+
-	 * Convert the given metadata into a BlockState for this Block
-	 */
-	public IBlockState getStateFromMeta(int i) {
-		return this.getDefaultState().withProperty(MOISTURE, Integer.valueOf(i & 7));
-	}
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
+    {
+        switch (side)
+        {
+            case UP:
+                return true;
+            case NORTH:
+            case SOUTH:
+            case WEST:
+            case EAST:
+                IBlockState iblockstate = blockAccess.getBlockState(pos.offset(side));
+                Block block = iblockstate.getBlock();
+                return !iblockstate.isOpaqueCube() && block != Blocks.FARMLAND && block != Blocks.GRASS_PATH;
+            default:
+                return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+        }
+    }
 
-	/**+
-	 * Convert the BlockState into the correct metadata value
-	 */
-	public int getMetaFromState(IBlockState iblockstate) {
-		return ((Integer) iblockstate.getValue(MOISTURE)).intValue();
-	}
+    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    {
+        return Blocks.DIRT.getItemDropped(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT), rand, fortune);
+    }
 
-	protected BlockState createBlockState() {
-		return new BlockState(this, new IProperty[] { MOISTURE });
-	}
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.getDefaultState().withProperty(MOISTURE, Integer.valueOf(meta & 7));
+    }
+
+    public int getMetaFromState(IBlockState state)
+    {
+        return ((Integer)state.getValue(MOISTURE)).intValue();
+    }
+
+    protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, new IProperty[] {MOISTURE});
+    }
+
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+    {
+        return face == EnumFacing.DOWN ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
+    }
 }

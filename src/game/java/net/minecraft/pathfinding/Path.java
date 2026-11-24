@@ -1,163 +1,166 @@
 package net.minecraft.pathfinding;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class Path {
-	/**+
-	 * Contains the points in this path
-	 */
-	private PathPoint[] pathPoints = new PathPoint[1024];
-	private int count;
+import javax.annotation.Nullable;
+import net.minecraft.entity.Entity;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-	/**+
-	 * Adds a point to the path
-	 */
-	public PathPoint addPoint(PathPoint point) {
-		if (point.index >= 0) {
-			throw new IllegalStateException("OW KNOWS!");
-		} else {
-			if (this.count == this.pathPoints.length) {
-				PathPoint[] apathpoint = new PathPoint[this.count << 1];
-				System.arraycopy(this.pathPoints, 0, apathpoint, 0, this.count);
-				this.pathPoints = apathpoint;
-			}
+public class Path
+{
+    private final PathPoint[] points;
+    private PathPoint[] openSet = new PathPoint[0];
+    private PathPoint[] closedSet = new PathPoint[0];
+    @SideOnly(Side.CLIENT)
+    private PathPoint target;
+    private int currentPathIndex;
+    private int pathLength;
 
-			this.pathPoints[this.count] = point;
-			point.index = this.count;
-			this.sortBack(this.count++);
-			return point;
-		}
-	}
+    public Path(PathPoint[] pathpoints)
+    {
+        this.points = pathpoints;
+        this.pathLength = pathpoints.length;
+    }
 
-	/**+
-	 * Clears the path
-	 */
-	public void clearPath() {
-		this.count = 0;
-	}
+    public void incrementPathIndex()
+    {
+        ++this.currentPathIndex;
+    }
 
-	/**+
-	 * Returns and removes the first point in the path
-	 */
-	public PathPoint dequeue() {
-		PathPoint pathpoint = this.pathPoints[0];
-		this.pathPoints[0] = this.pathPoints[--this.count];
-		this.pathPoints[this.count] = null;
-		if (this.count > 0) {
-			this.sortForward(0);
-		}
+    public boolean isFinished()
+    {
+        return this.currentPathIndex >= this.pathLength;
+    }
 
-		pathpoint.index = -1;
-		return pathpoint;
-	}
+    @Nullable
+    public PathPoint getFinalPathPoint()
+    {
+        return this.pathLength > 0 ? this.points[this.pathLength - 1] : null;
+    }
 
-	/**+
-	 * Changes the provided point's distance to target
-	 */
-	public void changeDistance(PathPoint parPathPoint, float parFloat1) {
-		float f = parPathPoint.distanceToTarget;
-		parPathPoint.distanceToTarget = parFloat1;
-		if (parFloat1 < f) {
-			this.sortBack(parPathPoint.index);
-		} else {
-			this.sortForward(parPathPoint.index);
-		}
+    public PathPoint getPathPointFromIndex(int index)
+    {
+        return this.points[index];
+    }
 
-	}
+    public void setPoint(int index, PathPoint point)
+    {
+        this.points[index] = point;
+    }
 
-	/**+
-	 * Sorts a point to the left
-	 */
-	private void sortBack(int parInt1) {
-		PathPoint pathpoint = this.pathPoints[parInt1];
+    public int getCurrentPathLength()
+    {
+        return this.pathLength;
+    }
 
-		int i;
-		for (float f = pathpoint.distanceToTarget; parInt1 > 0; parInt1 = i) {
-			i = parInt1 - 1 >> 1;
-			PathPoint pathpoint1 = this.pathPoints[i];
-			if (f >= pathpoint1.distanceToTarget) {
-				break;
-			}
+    public void setCurrentPathLength(int length)
+    {
+        this.pathLength = length;
+    }
 
-			this.pathPoints[parInt1] = pathpoint1;
-			pathpoint1.index = parInt1;
-		}
+    public int getCurrentPathIndex()
+    {
+        return this.currentPathIndex;
+    }
 
-		this.pathPoints[parInt1] = pathpoint;
-		pathpoint.index = parInt1;
-	}
+    public void setCurrentPathIndex(int currentPathIndexIn)
+    {
+        this.currentPathIndex = currentPathIndexIn;
+    }
 
-	/**+
-	 * Sorts a point to the right
-	 */
-	private void sortForward(int parInt1) {
-		PathPoint pathpoint = this.pathPoints[parInt1];
-		float f = pathpoint.distanceToTarget;
+    public Vec3d getVectorFromIndex(Entity entityIn, int index)
+    {
+        double d0 = (double)this.points[index].x + (double)((int)(entityIn.width + 1.0F)) * 0.5D;
+        double d1 = (double)this.points[index].y;
+        double d2 = (double)this.points[index].z + (double)((int)(entityIn.width + 1.0F)) * 0.5D;
+        return new Vec3d(d0, d1, d2);
+    }
 
-		while (true) {
-			int i = 1 + (parInt1 << 1);
-			int j = i + 1;
-			if (i >= this.count) {
-				break;
-			}
+    public Vec3d getPosition(Entity entityIn)
+    {
+        return this.getVectorFromIndex(entityIn, this.currentPathIndex);
+    }
 
-			PathPoint pathpoint1 = this.pathPoints[i];
-			float f1 = pathpoint1.distanceToTarget;
-			PathPoint pathpoint2;
-			float f2;
-			if (j >= this.count) {
-				pathpoint2 = null;
-				f2 = Float.POSITIVE_INFINITY;
-			} else {
-				pathpoint2 = this.pathPoints[j];
-				f2 = pathpoint2.distanceToTarget;
-			}
+    public Vec3d getCurrentPos()
+    {
+        PathPoint pathpoint = this.points[this.currentPathIndex];
+        return new Vec3d((double)pathpoint.x, (double)pathpoint.y, (double)pathpoint.z);
+    }
 
-			if (f1 < f2) {
-				if (f1 >= f) {
-					break;
-				}
+    public boolean isSamePath(Path pathentityIn)
+    {
+        if (pathentityIn == null)
+        {
+            return false;
+        }
+        else if (pathentityIn.points.length != this.points.length)
+        {
+            return false;
+        }
+        else
+        {
+            for (int i = 0; i < this.points.length; ++i)
+            {
+                if (this.points[i].x != pathentityIn.points[i].x || this.points[i].y != pathentityIn.points[i].y || this.points[i].z != pathentityIn.points[i].z)
+                {
+                    return false;
+                }
+            }
 
-				this.pathPoints[parInt1] = pathpoint1;
-				pathpoint1.index = parInt1;
-				parInt1 = i;
-			} else {
-				if (f2 >= f) {
-					break;
-				}
+            return true;
+        }
+    }
 
-				this.pathPoints[parInt1] = pathpoint2;
-				pathpoint2.index = parInt1;
-				parInt1 = j;
-			}
-		}
+    @SideOnly(Side.CLIENT)
+    public PathPoint[] getOpenSet()
+    {
+        return this.openSet;
+    }
 
-		this.pathPoints[parInt1] = pathpoint;
-		pathpoint.index = parInt1;
-	}
+    @SideOnly(Side.CLIENT)
+    public PathPoint[] getClosedSet()
+    {
+        return this.closedSet;
+    }
 
-	/**+
-	 * Returns true if this path contains no points
-	 */
-	public boolean isPathEmpty() {
-		return this.count == 0;
-	}
+    @SideOnly(Side.CLIENT)
+    public PathPoint getTarget()
+    {
+        return this.target;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static Path read(PacketBuffer buf)
+    {
+        int i = buf.readInt();
+        PathPoint pathpoint = PathPoint.createFromBuffer(buf);
+        PathPoint[] apathpoint = new PathPoint[buf.readInt()];
+
+        for (int j = 0; j < apathpoint.length; ++j)
+        {
+            apathpoint[j] = PathPoint.createFromBuffer(buf);
+        }
+
+        PathPoint[] apathpoint1 = new PathPoint[buf.readInt()];
+
+        for (int k = 0; k < apathpoint1.length; ++k)
+        {
+            apathpoint1[k] = PathPoint.createFromBuffer(buf);
+        }
+
+        PathPoint[] apathpoint2 = new PathPoint[buf.readInt()];
+
+        for (int l = 0; l < apathpoint2.length; ++l)
+        {
+            apathpoint2[l] = PathPoint.createFromBuffer(buf);
+        }
+
+        Path path = new Path(apathpoint);
+        path.openSet = apathpoint1;
+        path.closedSet = apathpoint2;
+        path.target = pathpoint;
+        path.currentPathIndex = i;
+        return path;
+    }
 }

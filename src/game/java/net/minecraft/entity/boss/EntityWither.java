@@ -3,595 +3,674 @@ package net.minecraft.entity.boss;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIArrowAttack;
+import net.minecraft.entity.ai.EntityAIAttackRanged;
+import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityWitherSkull;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.stats.AchievementList;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.datafix.DataFixer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.BossInfo;
+import net.minecraft.world.BossInfoServer;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class EntityWither extends EntityMob implements IBossDisplayData, IRangedAttackMob {
-	private float[] field_82220_d = new float[2];
-	private float[] field_82221_e = new float[2];
-	private float[] field_82217_f = new float[2];
-	private float[] field_82218_g = new float[2];
-	private int[] field_82223_h = new int[2];
-	private int[] field_82224_i = new int[2];
-	private int blockBreakCounter;
-	/**+
-	 * Selector used to determine the entities a wither boss should
-	 * attack.
-	 */
-	private static final Predicate<Entity> attackEntitySelector = new Predicate<Entity>() {
-		public boolean apply(Entity entity) {
-			return entity instanceof EntityLivingBase
-					&& ((EntityLivingBase) entity).getCreatureAttribute() != EnumCreatureAttribute.UNDEAD;
-		}
-	};
-
-	public EntityWither(World worldIn) {
-		super(worldIn);
-		this.setHealth(this.getMaxHealth());
-		this.setSize(0.9F, 3.5F);
-		this.isImmuneToFire = true;
-		((PathNavigateGround) this.getNavigator()).setCanSwim(true);
-		this.tasks.addTask(0, new EntityAISwimming(this));
-		this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 40, 20.0F));
-		this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
-		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-		this.tasks.addTask(7, new EntityAILookIdle(this));
-		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
-		this.targetTasks.addTask(2,
-				new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, false, false, attackEntitySelector));
-		this.experienceValue = 50;
-	}
-
-	protected void entityInit() {
-		super.entityInit();
-		this.dataWatcher.addObject(17, Integer.valueOf(0));
-		this.dataWatcher.addObject(18, Integer.valueOf(0));
-		this.dataWatcher.addObject(19, Integer.valueOf(0));
-		this.dataWatcher.addObject(20, Integer.valueOf(0));
-	}
-
-	/**+
-	 * (abstract) Protected helper method to write subclass entity
-	 * data to NBT.
-	 */
-	public void writeEntityToNBT(NBTTagCompound nbttagcompound) {
-		super.writeEntityToNBT(nbttagcompound);
-		nbttagcompound.setInteger("Invul", this.getInvulTime());
-	}
-
-	/**+
-	 * (abstract) Protected helper method to read subclass entity
-	 * data from NBT.
-	 */
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound) {
-		super.readEntityFromNBT(nbttagcompound);
-		this.setInvulTime(nbttagcompound.getInteger("Invul"));
-	}
-
-	/**+
-	 * Returns the sound this mob makes while it's alive.
-	 */
-	protected String getLivingSound() {
-		return "mob.wither.idle";
-	}
-
-	/**+
-	 * Returns the sound this mob makes when it is hurt.
-	 */
-	protected String getHurtSound() {
-		return "mob.wither.hurt";
-	}
-
-	/**+
-	 * Returns the sound this mob makes on death.
-	 */
-	protected String getDeathSound() {
-		return "mob.wither.death";
-	}
-
-	/**+
-	 * Called frequently so the entity can update its state every
-	 * tick as required. For example, zombies and skeletons use this
-	 * to react to sunlight and start to burn.
-	 */
-	public void onLivingUpdate() {
-		this.motionY *= 0.6000000238418579D;
-		if (!this.worldObj.isRemote && this.getWatchedTargetId(0) > 0) {
-			Entity entity = this.worldObj.getEntityByID(this.getWatchedTargetId(0));
-			if (entity != null) {
-				if (this.posY < entity.posY || !this.isArmored() && this.posY < entity.posY + 5.0D) {
-					if (this.motionY < 0.0D) {
-						this.motionY = 0.0D;
-					}
-
-					this.motionY += (0.5D - this.motionY) * 0.6000000238418579D;
-				}
-
-				double d0 = entity.posX - this.posX;
-				double d1 = entity.posZ - this.posZ;
-				double d3 = d0 * d0 + d1 * d1;
-				if (d3 > 9.0D) {
-					double d5 = (double) MathHelper.sqrt_double(d3);
-					this.motionX += (d0 / d5 * 0.5D - this.motionX) * 0.6000000238418579D;
-					this.motionZ += (d1 / d5 * 0.5D - this.motionZ) * 0.6000000238418579D;
-				}
-			}
-		}
-
-		if (this.motionX * this.motionX + this.motionZ * this.motionZ > 0.05000000074505806D) {
-			this.rotationYaw = (float) MathHelper.func_181159_b(this.motionZ, this.motionX) * 57.295776F - 90.0F;
-		}
-
-		super.onLivingUpdate();
-
-		for (int i = 0; i < 2; ++i) {
-			this.field_82218_g[i] = this.field_82221_e[i];
-			this.field_82217_f[i] = this.field_82220_d[i];
-		}
-
-		for (int j = 0; j < 2; ++j) {
-			int k = this.getWatchedTargetId(j + 1);
-			Entity entity1 = null;
-			if (k > 0) {
-				entity1 = this.worldObj.getEntityByID(k);
-			}
-
-			if (entity1 != null) {
-				double d11 = this.func_82214_u(j + 1);
-				double d12 = this.func_82208_v(j + 1);
-				double d13 = this.func_82213_w(j + 1);
-				double d6 = entity1.posX - d11;
-				double d7 = entity1.posY + (double) entity1.getEyeHeight() - d12;
-				double d8 = entity1.posZ - d13;
-				double d9 = (double) MathHelper.sqrt_double(d6 * d6 + d8 * d8);
-				float f = (float) (MathHelper.func_181159_b(d8, d6) * 180.0D / 3.1415927410125732D) - 90.0F;
-				float f1 = (float) (-(MathHelper.func_181159_b(d7, d9) * 180.0D / 3.1415927410125732D));
-				this.field_82220_d[j] = this.func_82204_b(this.field_82220_d[j], f1, 40.0F);
-				this.field_82221_e[j] = this.func_82204_b(this.field_82221_e[j], f, 10.0F);
-			} else {
-				this.field_82221_e[j] = this.func_82204_b(this.field_82221_e[j], this.renderYawOffset, 10.0F);
-			}
-		}
-
-		boolean flag = this.isArmored();
-
-		for (int l = 0; l < 3; ++l) {
-			double d10 = this.func_82214_u(l);
-			double d2 = this.func_82208_v(l);
-			double d4 = this.func_82213_w(l);
-			this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL,
-					d10 + this.rand.nextGaussian() * 0.30000001192092896D,
-					d2 + this.rand.nextGaussian() * 0.30000001192092896D,
-					d4 + this.rand.nextGaussian() * 0.30000001192092896D, 0.0D, 0.0D, 0.0D, new int[0]);
-			if (flag && this.worldObj.rand.nextInt(4) == 0) {
-				this.worldObj.spawnParticle(EnumParticleTypes.SPELL_MOB,
-						d10 + this.rand.nextGaussian() * 0.30000001192092896D,
-						d2 + this.rand.nextGaussian() * 0.30000001192092896D,
-						d4 + this.rand.nextGaussian() * 0.30000001192092896D, 0.699999988079071D, 0.699999988079071D,
-						0.5D, new int[0]);
-			}
-		}
-
-		if (this.getInvulTime() > 0) {
-			for (int i1 = 0; i1 < 3; ++i1) {
-				this.worldObj.spawnParticle(EnumParticleTypes.SPELL_MOB, this.posX + this.rand.nextGaussian() * 1.0D,
-						this.posY + (double) (this.rand.nextFloat() * 3.3F),
-						this.posZ + this.rand.nextGaussian() * 1.0D, 0.699999988079071D, 0.699999988079071D,
-						0.8999999761581421D, new int[0]);
-			}
-		}
-
-	}
-
-	protected void updateAITasks() {
-		if (this.getInvulTime() > 0) {
-			int j1 = this.getInvulTime() - 1;
-			if (j1 <= 0) {
-				this.worldObj.newExplosion(this, this.posX, this.posY + (double) this.getEyeHeight(), this.posZ, 7.0F,
-						false, this.worldObj.getGameRules().getBoolean("mobGriefing"));
-				this.worldObj.playBroadcastSound(1013, new BlockPos(this), 0);
-			}
-
-			this.setInvulTime(j1);
-			if (this.ticksExisted % 10 == 0) {
-				this.heal(10.0F);
-			}
-
-		} else {
-			super.updateAITasks();
-
-			for (int i = 1; i < 3; ++i) {
-				if (this.ticksExisted >= this.field_82223_h[i - 1]) {
-					this.field_82223_h[i - 1] = this.ticksExisted + 10 + this.rand.nextInt(10);
-					if (this.worldObj.getDifficulty() == EnumDifficulty.NORMAL
-							|| this.worldObj.getDifficulty() == EnumDifficulty.HARD) {
-						int j3 = i - 1;
-						int k3 = this.field_82224_i[i - 1];
-						this.field_82224_i[j3] = this.field_82224_i[i - 1] + 1;
-						if (k3 > 15) {
-							float f = 10.0F;
-							float f1 = 5.0F;
-							double d0 = MathHelper.getRandomDoubleInRange(this.rand, this.posX - (double) f,
-									this.posX + (double) f);
-							double d1 = MathHelper.getRandomDoubleInRange(this.rand, this.posY - (double) f1,
-									this.posY + (double) f1);
-							double d2 = MathHelper.getRandomDoubleInRange(this.rand, this.posZ - (double) f,
-									this.posZ + (double) f);
-							this.launchWitherSkullToCoords(i + 1, d0, d1, d2, true);
-							this.field_82224_i[i - 1] = 0;
-						}
-					}
-
-					int k1 = this.getWatchedTargetId(i);
-					if (k1 > 0) {
-						Entity entity = this.worldObj.getEntityByID(k1);
-						if (entity != null && entity.isEntityAlive() && this.getDistanceSqToEntity(entity) <= 900.0D
-								&& this.canEntityBeSeen(entity)) {
-							if (entity instanceof EntityPlayer && ((EntityPlayer) entity).capabilities.disableDamage) {
-								this.updateWatchedTargetId(i, 0);
-							} else {
-								this.launchWitherSkullToEntity(i + 1, (EntityLivingBase) entity);
-								this.field_82223_h[i - 1] = this.ticksExisted + 40 + this.rand.nextInt(20);
-								this.field_82224_i[i - 1] = 0;
-							}
-						} else {
-							this.updateWatchedTargetId(i, 0);
-						}
-					} else {
-						List list = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class,
-								this.getEntityBoundingBox().expand(20.0D, 8.0D, 20.0D),
-								Predicates.and(attackEntitySelector, EntitySelectors.NOT_SPECTATING));
-
-						for (int j2 = 0; j2 < 10 && !list.isEmpty(); ++j2) {
-							EntityLivingBase entitylivingbase = (EntityLivingBase) list
-									.get(this.rand.nextInt(list.size()));
-							if (entitylivingbase != this && entitylivingbase.isEntityAlive()
-									&& this.canEntityBeSeen(entitylivingbase)) {
-								if (entitylivingbase instanceof EntityPlayer) {
-									if (!((EntityPlayer) entitylivingbase).capabilities.disableDamage) {
-										this.updateWatchedTargetId(i, entitylivingbase.getEntityId());
-									}
-								} else {
-									this.updateWatchedTargetId(i, entitylivingbase.getEntityId());
-								}
-								break;
-							}
-
-							list.remove(entitylivingbase);
-						}
-					}
-				}
-			}
-
-			if (this.getAttackTarget() != null) {
-				this.updateWatchedTargetId(0, this.getAttackTarget().getEntityId());
-			} else {
-				this.updateWatchedTargetId(0, 0);
-			}
-
-			if (this.blockBreakCounter > 0) {
-				--this.blockBreakCounter;
-				if (this.blockBreakCounter == 0 && this.worldObj.getGameRules().getBoolean("mobGriefing")) {
-					int i1 = MathHelper.floor_double(this.posY);
-					int l1 = MathHelper.floor_double(this.posX);
-					int i2 = MathHelper.floor_double(this.posZ);
-					boolean flag = false;
-
-					for (int k2 = -1; k2 <= 1; ++k2) {
-						for (int l2 = -1; l2 <= 1; ++l2) {
-							for (int j = 0; j <= 3; ++j) {
-								int i3 = l1 + k2;
-								int k = i1 + j;
-								int l = i2 + l2;
-								BlockPos blockpos = new BlockPos(i3, k, l);
-								Block block = this.worldObj.getBlockState(blockpos).getBlock();
-								if (block.getMaterial() != Material.air && func_181033_a(block)) {
-									flag = this.worldObj.destroyBlock(blockpos, true) || flag;
-								}
-							}
-						}
-					}
-
-					if (flag) {
-						this.worldObj.playAuxSFXAtEntity((EntityPlayer) null, 1012, new BlockPos(this), 0);
-					}
-				}
-			}
-
-			if (this.ticksExisted % 20 == 0) {
-				this.heal(1.0F);
-			}
-
-		}
-	}
-
-	public static boolean func_181033_a(Block parBlock) {
-		return parBlock != Blocks.bedrock && parBlock != Blocks.end_portal && parBlock != Blocks.end_portal_frame
-				&& parBlock != Blocks.command_block && parBlock != Blocks.barrier;
-	}
-
-	public void func_82206_m() {
-		this.setInvulTime(220);
-		this.setHealth(this.getMaxHealth() / 3.0F);
-	}
-
-	/**+
-	 * Sets the Entity inside a web block.
-	 */
-	public void setInWeb() {
-	}
-
-	/**+
-	 * Returns the current armor value as determined by a call to
-	 * InventoryPlayer.getTotalArmorValue
-	 */
-	public int getTotalArmorValue() {
-		return 4;
-	}
-
-	private double func_82214_u(int parInt1) {
-		if (parInt1 <= 0) {
-			return this.posX;
-		} else {
-			float f = (this.renderYawOffset + (float) (180 * (parInt1 - 1))) / 180.0F * 3.1415927F;
-			float f1 = MathHelper.cos(f);
-			return this.posX + (double) f1 * 1.3D;
-		}
-	}
-
-	private double func_82208_v(int parInt1) {
-		return parInt1 <= 0 ? this.posY + 3.0D : this.posY + 2.2D;
-	}
-
-	private double func_82213_w(int parInt1) {
-		if (parInt1 <= 0) {
-			return this.posZ;
-		} else {
-			float f = (this.renderYawOffset + (float) (180 * (parInt1 - 1))) / 180.0F * 3.1415927F;
-			float f1 = MathHelper.sin(f);
-			return this.posZ + (double) f1 * 1.3D;
-		}
-	}
-
-	private float func_82204_b(float parFloat1, float parFloat2, float parFloat3) {
-		float f = MathHelper.wrapAngleTo180_float(parFloat2 - parFloat1);
-		if (f > parFloat3) {
-			f = parFloat3;
-		}
-
-		if (f < -parFloat3) {
-			f = -parFloat3;
-		}
-
-		return parFloat1 + f;
-	}
-
-	private void launchWitherSkullToEntity(int parInt1, EntityLivingBase parEntityLivingBase) {
-		this.launchWitherSkullToCoords(parInt1, parEntityLivingBase.posX,
-				parEntityLivingBase.posY + (double) parEntityLivingBase.getEyeHeight() * 0.5D, parEntityLivingBase.posZ,
-				parInt1 == 0 && this.rand.nextFloat() < 0.001F);
-	}
-
-	/**+
-	 * Launches a Wither skull toward (par2, par4, par6)
-	 */
-	private void launchWitherSkullToCoords(int x, double y, double z, double invulnerable, boolean parFlag) {
-		this.worldObj.playAuxSFXAtEntity((EntityPlayer) null, 1014, new BlockPos(this), 0);
-		double d0 = this.func_82214_u(x);
-		double d1 = this.func_82208_v(x);
-		double d2 = this.func_82213_w(x);
-		double d3 = y - d0;
-		double d4 = z - d1;
-		double d5 = invulnerable - d2;
-		EntityWitherSkull entitywitherskull = new EntityWitherSkull(this.worldObj, this, d3, d4, d5);
-		if (parFlag) {
-			entitywitherskull.setInvulnerable(true);
-		}
-
-		entitywitherskull.posY = d1;
-		entitywitherskull.posX = d0;
-		entitywitherskull.posZ = d2;
-		this.worldObj.spawnEntityInWorld(entitywitherskull);
-	}
-
-	/**+
-	 * Attack the specified entity using a ranged attack.
-	 */
-	public void attackEntityWithRangedAttack(EntityLivingBase entitylivingbase, float var2) {
-		this.launchWitherSkullToEntity(0, entitylivingbase);
-	}
-
-	/**+
-	 * Called when the entity is attacked.
-	 */
-	public boolean attackEntityFrom(DamageSource damagesource, float f) {
-		if (this.isEntityInvulnerable(damagesource)) {
-			return false;
-		} else if (damagesource != DamageSource.drown && !(damagesource.getEntity() instanceof EntityWither)) {
-			if (this.getInvulTime() > 0 && damagesource != DamageSource.outOfWorld) {
-				return false;
-			} else {
-				if (this.isArmored()) {
-					Entity entity = damagesource.getSourceOfDamage();
-					if (entity instanceof EntityArrow) {
-						return false;
-					}
-				}
-
-				Entity entity1 = damagesource.getEntity();
-				if (entity1 != null && !(entity1 instanceof EntityPlayer) && entity1 instanceof EntityLivingBase
-						&& ((EntityLivingBase) entity1).getCreatureAttribute() == this.getCreatureAttribute()) {
-					return false;
-				} else {
-					if (this.blockBreakCounter <= 0) {
-						this.blockBreakCounter = 20;
-					}
-
-					for (int i = 0; i < this.field_82224_i.length; ++i) {
-						this.field_82224_i[i] += 3;
-					}
-
-					return super.attackEntityFrom(damagesource, f);
-				}
-			}
-		} else {
-			return false;
-		}
-	}
-
-	/**+
-	 * Drop 0-2 items of this living's type
-	 */
-	protected void dropFewItems(boolean var1, int var2) {
-		EntityItem entityitem = this.dropItem(Items.nether_star, 1);
-		if (entityitem != null) {
-			entityitem.setNoDespawn();
-		}
-
-		if (!this.worldObj.isRemote) {
-			List<EntityPlayer> lst = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class,
-					this.getEntityBoundingBox().expand(50.0D, 100.0D, 50.0D));
-			for (int i = 0, l = lst.size(); i < l; ++i) {
-				lst.get(i).triggerAchievement(AchievementList.killWither);
-			}
-		}
-
-	}
-
-	/**+
-	 * Makes the entity despawn if requirements are reached
-	 */
-	protected void despawnEntity() {
-		this.entityAge = 0;
-	}
-
-	public int getBrightnessForRender(float var1) {
-		return 15728880;
-	}
-
-	protected float getEaglerDynamicLightsValueSimple(float partialTicks) {
-		return 1.0f;
-	}
-
-	public void fall(float var1, float var2) {
-	}
-
-	/**+
-	 * adds a PotionEffect to the entity
-	 */
-	public void addPotionEffect(PotionEffect var1) {
-	}
-
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(300.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.6000000238418579D);
-		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(40.0D);
-	}
-
-	public float func_82207_a(int parInt1) {
-		return this.field_82221_e[parInt1];
-	}
-
-	public float func_82210_r(int parInt1) {
-		return this.field_82220_d[parInt1];
-	}
-
-	public int getInvulTime() {
-		return this.dataWatcher.getWatchableObjectInt(20);
-	}
-
-	public void setInvulTime(int parInt1) {
-		this.dataWatcher.updateObject(20, Integer.valueOf(parInt1));
-	}
-
-	/**+
-	 * Returns the target entity ID if present, or -1 if not @param
-	 * par1 The target offset, should be from 0-2
-	 */
-	public int getWatchedTargetId(int parInt1) {
-		return this.dataWatcher.getWatchableObjectInt(17 + parInt1);
-	}
-
-	/**+
-	 * Updates the target entity ID
-	 */
-	public void updateWatchedTargetId(int targetOffset, int newId) {
-		this.dataWatcher.updateObject(17 + targetOffset, Integer.valueOf(newId));
-	}
-
-	/**+
-	 * Returns whether the wither is armored with its boss armor or
-	 * not by checking whether its health is below half of its
-	 * maximum.
-	 */
-	public boolean isArmored() {
-		return this.getHealth() <= this.getMaxHealth() / 2.0F;
-	}
-
-	/**+
-	 * Get this Entity's EnumCreatureAttribute
-	 */
-	public EnumCreatureAttribute getCreatureAttribute() {
-		return EnumCreatureAttribute.UNDEAD;
-	}
-
-	/**+
-	 * Called when a player mounts an entity. e.g. mounts a pig,
-	 * mounts a boat.
-	 */
-	public void mountEntity(Entity var1) {
-		this.ridingEntity = null;
-	}
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class EntityWither extends EntityMob implements IRangedAttackMob
+{
+    private static final DataParameter<Integer> FIRST_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityWither.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> SECOND_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityWither.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> THIRD_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityWither.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer>[] HEAD_TARGETS = new DataParameter[] {FIRST_HEAD_TARGET, SECOND_HEAD_TARGET, THIRD_HEAD_TARGET};
+    private static final DataParameter<Integer> INVULNERABILITY_TIME = EntityDataManager.<Integer>createKey(EntityWither.class, DataSerializers.VARINT);
+    private final float[] xRotationHeads = new float[2];
+    private final float[] yRotationHeads = new float[2];
+    private final float[] xRotOHeads = new float[2];
+    private final float[] yRotOHeads = new float[2];
+    private final int[] nextHeadUpdate = new int[2];
+    private final int[] idleHeadUpdates = new int[2];
+    private int blockBreakCounter;
+    private final BossInfoServer bossInfo = (BossInfoServer)(new BossInfoServer(this.getDisplayName(), BossInfo.Color.PURPLE, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
+    private static final Predicate<Entity> NOT_UNDEAD = new Predicate<Entity>()
+    {
+        public boolean apply(@Nullable Entity p_apply_1_)
+        {
+            return p_apply_1_ instanceof EntityLivingBase && ((EntityLivingBase)p_apply_1_).getCreatureAttribute() != EnumCreatureAttribute.UNDEAD && ((EntityLivingBase)p_apply_1_).attackable();
+        }
+    };
+
+    public EntityWither(World worldIn)
+    {
+        super(worldIn);
+        this.setHealth(this.getMaxHealth());
+        this.setSize(0.9F, 3.5F);
+        this.isImmuneToFire = true;
+        ((PathNavigateGround)this.getNavigator()).setCanSwim(true);
+        this.experienceValue = 50;
+    }
+
+    protected void initEntityAI()
+    {
+        this.tasks.addTask(0, new EntityWither.AIDoNothing());
+        this.tasks.addTask(1, new EntityAISwimming(this));
+        this.tasks.addTask(2, new EntityAIAttackRanged(this, 1.0D, 40, 20.0F));
+        this.tasks.addTask(5, new EntityAIWanderAvoidWater(this, 1.0D));
+        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(7, new EntityAILookIdle(this));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, false, false, NOT_UNDEAD));
+    }
+
+    protected void entityInit()
+    {
+        super.entityInit();
+        this.dataManager.register(FIRST_HEAD_TARGET, Integer.valueOf(0));
+        this.dataManager.register(SECOND_HEAD_TARGET, Integer.valueOf(0));
+        this.dataManager.register(THIRD_HEAD_TARGET, Integer.valueOf(0));
+        this.dataManager.register(INVULNERABILITY_TIME, Integer.valueOf(0));
+    }
+
+    public static void registerFixesWither(DataFixer fixer)
+    {
+        EntityLiving.registerFixesMob(fixer, EntityWither.class);
+    }
+
+    public void writeEntityToNBT(NBTTagCompound compound)
+    {
+        super.writeEntityToNBT(compound);
+        compound.setInteger("Invul", this.getInvulTime());
+    }
+
+    public void readEntityFromNBT(NBTTagCompound compound)
+    {
+        super.readEntityFromNBT(compound);
+        this.setInvulTime(compound.getInteger("Invul"));
+
+        if (this.hasCustomName())
+        {
+            this.bossInfo.setName(this.getDisplayName());
+        }
+    }
+
+    public void setCustomNameTag(String name)
+    {
+        super.setCustomNameTag(name);
+        this.bossInfo.setName(this.getDisplayName());
+    }
+
+    protected SoundEvent getAmbientSound()
+    {
+        return SoundEvents.ENTITY_WITHER_AMBIENT;
+    }
+
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn)
+    {
+        return SoundEvents.ENTITY_WITHER_HURT;
+    }
+
+    protected SoundEvent getDeathSound()
+    {
+        return SoundEvents.ENTITY_WITHER_DEATH;
+    }
+
+    public void onLivingUpdate()
+    {
+        this.motionY *= 0.6000000238418579D;
+
+        if (!this.world.isRemote && this.getWatchedTargetId(0) > 0)
+        {
+            Entity entity = this.world.getEntityByID(this.getWatchedTargetId(0));
+
+            if (entity != null)
+            {
+                if (this.posY < entity.posY || !this.isArmored() && this.posY < entity.posY + 5.0D)
+                {
+                    if (this.motionY < 0.0D)
+                    {
+                        this.motionY = 0.0D;
+                    }
+
+                    this.motionY += (0.5D - this.motionY) * 0.6000000238418579D;
+                }
+
+                double d0 = entity.posX - this.posX;
+                double d1 = entity.posZ - this.posZ;
+                double d3 = d0 * d0 + d1 * d1;
+
+                if (d3 > 9.0D)
+                {
+                    double d5 = (double)MathHelper.sqrt(d3);
+                    this.motionX += (d0 / d5 * 0.5D - this.motionX) * 0.6000000238418579D;
+                    this.motionZ += (d1 / d5 * 0.5D - this.motionZ) * 0.6000000238418579D;
+                }
+            }
+        }
+
+        if (this.motionX * this.motionX + this.motionZ * this.motionZ > 0.05000000074505806D)
+        {
+            this.rotationYaw = (float)MathHelper.atan2(this.motionZ, this.motionX) * (180F / (float)Math.PI) - 90.0F;
+        }
+
+        super.onLivingUpdate();
+
+        for (int i = 0; i < 2; ++i)
+        {
+            this.yRotOHeads[i] = this.yRotationHeads[i];
+            this.xRotOHeads[i] = this.xRotationHeads[i];
+        }
+
+        for (int j = 0; j < 2; ++j)
+        {
+            int k = this.getWatchedTargetId(j + 1);
+            Entity entity1 = null;
+
+            if (k > 0)
+            {
+                entity1 = this.world.getEntityByID(k);
+            }
+
+            if (entity1 != null)
+            {
+                double d11 = this.getHeadX(j + 1);
+                double d12 = this.getHeadY(j + 1);
+                double d13 = this.getHeadZ(j + 1);
+                double d6 = entity1.posX - d11;
+                double d7 = entity1.posY + (double)entity1.getEyeHeight() - d12;
+                double d8 = entity1.posZ - d13;
+                double d9 = (double)MathHelper.sqrt(d6 * d6 + d8 * d8);
+                float f = (float)(MathHelper.atan2(d8, d6) * (180D / Math.PI)) - 90.0F;
+                float f1 = (float)(-(MathHelper.atan2(d7, d9) * (180D / Math.PI)));
+                this.xRotationHeads[j] = this.rotlerp(this.xRotationHeads[j], f1, 40.0F);
+                this.yRotationHeads[j] = this.rotlerp(this.yRotationHeads[j], f, 10.0F);
+            }
+            else
+            {
+                this.yRotationHeads[j] = this.rotlerp(this.yRotationHeads[j], this.renderYawOffset, 10.0F);
+            }
+        }
+
+        boolean flag = this.isArmored();
+
+        for (int l = 0; l < 3; ++l)
+        {
+            double d10 = this.getHeadX(l);
+            double d2 = this.getHeadY(l);
+            double d4 = this.getHeadZ(l);
+            this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d10 + this.rand.nextGaussian() * 0.30000001192092896D, d2 + this.rand.nextGaussian() * 0.30000001192092896D, d4 + this.rand.nextGaussian() * 0.30000001192092896D, 0.0D, 0.0D, 0.0D);
+
+            if (flag && this.world.rand.nextInt(4) == 0)
+            {
+                this.world.spawnParticle(EnumParticleTypes.SPELL_MOB, d10 + this.rand.nextGaussian() * 0.30000001192092896D, d2 + this.rand.nextGaussian() * 0.30000001192092896D, d4 + this.rand.nextGaussian() * 0.30000001192092896D, 0.699999988079071D, 0.699999988079071D, 0.5D);
+            }
+        }
+
+        if (this.getInvulTime() > 0)
+        {
+            for (int i1 = 0; i1 < 3; ++i1)
+            {
+                this.world.spawnParticle(EnumParticleTypes.SPELL_MOB, this.posX + this.rand.nextGaussian(), this.posY + (double)(this.rand.nextFloat() * 3.3F), this.posZ + this.rand.nextGaussian(), 0.699999988079071D, 0.699999988079071D, 0.8999999761581421D);
+            }
+        }
+    }
+
+    protected void updateAITasks()
+    {
+        if (this.getInvulTime() > 0)
+        {
+            int j1 = this.getInvulTime() - 1;
+
+            if (j1 <= 0)
+            {
+                this.world.newExplosion(this, this.posX, this.posY + (double)this.getEyeHeight(), this.posZ, 7.0F, false, net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this));
+                this.world.playBroadcastSound(1023, new BlockPos(this), 0);
+            }
+
+            this.setInvulTime(j1);
+
+            if (this.ticksExisted % 10 == 0)
+            {
+                this.heal(10.0F);
+            }
+        }
+        else
+        {
+            super.updateAITasks();
+
+            for (int i = 1; i < 3; ++i)
+            {
+                if (this.ticksExisted >= this.nextHeadUpdate[i - 1])
+                {
+                    this.nextHeadUpdate[i - 1] = this.ticksExisted + 10 + this.rand.nextInt(10);
+
+                    if (this.world.getDifficulty() == EnumDifficulty.NORMAL || this.world.getDifficulty() == EnumDifficulty.HARD)
+                    {
+                        int j3 = i - 1;
+                        int k3 = this.idleHeadUpdates[i - 1];
+                        this.idleHeadUpdates[j3] = this.idleHeadUpdates[i - 1] + 1;
+
+                        if (k3 > 15)
+                        {
+                            float f = 10.0F;
+                            float f1 = 5.0F;
+                            double d0 = MathHelper.nextDouble(this.rand, this.posX - 10.0D, this.posX + 10.0D);
+                            double d1 = MathHelper.nextDouble(this.rand, this.posY - 5.0D, this.posY + 5.0D);
+                            double d2 = MathHelper.nextDouble(this.rand, this.posZ - 10.0D, this.posZ + 10.0D);
+                            this.launchWitherSkullToCoords(i + 1, d0, d1, d2, true);
+                            this.idleHeadUpdates[i - 1] = 0;
+                        }
+                    }
+
+                    int k1 = this.getWatchedTargetId(i);
+
+                    if (k1 > 0)
+                    {
+                        Entity entity = this.world.getEntityByID(k1);
+
+                        if (entity != null && entity.isEntityAlive() && this.getDistanceSq(entity) <= 900.0D && this.canEntityBeSeen(entity))
+                        {
+                            if (entity instanceof EntityPlayer && ((EntityPlayer)entity).capabilities.disableDamage)
+                            {
+                                this.updateWatchedTargetId(i, 0);
+                            }
+                            else
+                            {
+                                this.launchWitherSkullToEntity(i + 1, (EntityLivingBase)entity);
+                                this.nextHeadUpdate[i - 1] = this.ticksExisted + 40 + this.rand.nextInt(20);
+                                this.idleHeadUpdates[i - 1] = 0;
+                            }
+                        }
+                        else
+                        {
+                            this.updateWatchedTargetId(i, 0);
+                        }
+                    }
+                    else
+                    {
+                        List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(20.0D, 8.0D, 20.0D), Predicates.and(NOT_UNDEAD, EntitySelectors.NOT_SPECTATING));
+
+                        for (int j2 = 0; j2 < 10 && !list.isEmpty(); ++j2)
+                        {
+                            EntityLivingBase entitylivingbase = list.get(this.rand.nextInt(list.size()));
+
+                            if (entitylivingbase != this && entitylivingbase.isEntityAlive() && this.canEntityBeSeen(entitylivingbase))
+                            {
+                                if (entitylivingbase instanceof EntityPlayer)
+                                {
+                                    if (!((EntityPlayer)entitylivingbase).capabilities.disableDamage)
+                                    {
+                                        this.updateWatchedTargetId(i, entitylivingbase.getEntityId());
+                                    }
+                                }
+                                else
+                                {
+                                    this.updateWatchedTargetId(i, entitylivingbase.getEntityId());
+                                }
+
+                                break;
+                            }
+
+                            list.remove(entitylivingbase);
+                        }
+                    }
+                }
+            }
+
+            if (this.getAttackTarget() != null)
+            {
+                this.updateWatchedTargetId(0, this.getAttackTarget().getEntityId());
+            }
+            else
+            {
+                this.updateWatchedTargetId(0, 0);
+            }
+
+            if (this.blockBreakCounter > 0)
+            {
+                --this.blockBreakCounter;
+
+                if (this.blockBreakCounter == 0 && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this))
+                {
+                    int i1 = MathHelper.floor(this.posY);
+                    int l1 = MathHelper.floor(this.posX);
+                    int i2 = MathHelper.floor(this.posZ);
+                    boolean flag = false;
+
+                    for (int k2 = -1; k2 <= 1; ++k2)
+                    {
+                        for (int l2 = -1; l2 <= 1; ++l2)
+                        {
+                            for (int j = 0; j <= 3; ++j)
+                            {
+                                int i3 = l1 + k2;
+                                int k = i1 + j;
+                                int l = i2 + l2;
+                                BlockPos blockpos = new BlockPos(i3, k, l);
+                                IBlockState iblockstate = this.world.getBlockState(blockpos);
+                                Block block = iblockstate.getBlock();
+
+                                if (!block.isAir(iblockstate, this.world, blockpos) && block.canEntityDestroy(iblockstate, world, blockpos, this) && net.minecraftforge.event.ForgeEventFactory.onEntityDestroyBlock(this, blockpos, iblockstate))
+                                {
+                                    flag = this.world.destroyBlock(blockpos, true) || flag;
+                                }
+                            }
+                        }
+                    }
+
+                    if (flag)
+                    {
+                        this.world.playEvent((EntityPlayer)null, 1022, new BlockPos(this), 0);
+                    }
+                }
+            }
+
+            if (this.ticksExisted % 20 == 0)
+            {
+                this.heal(1.0F);
+            }
+
+            this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
+        }
+    }
+
+    public static boolean canDestroyBlock(Block blockIn)
+    {
+        return blockIn != Blocks.BEDROCK && blockIn != Blocks.END_PORTAL && blockIn != Blocks.END_PORTAL_FRAME && blockIn != Blocks.COMMAND_BLOCK && blockIn != Blocks.REPEATING_COMMAND_BLOCK && blockIn != Blocks.CHAIN_COMMAND_BLOCK && blockIn != Blocks.BARRIER && blockIn != Blocks.STRUCTURE_BLOCK && blockIn != Blocks.STRUCTURE_VOID && blockIn != Blocks.PISTON_EXTENSION && blockIn != Blocks.END_GATEWAY;
+    }
+
+    public void ignite()
+    {
+        this.setInvulTime(220);
+        this.setHealth(this.getMaxHealth() / 3.0F);
+    }
+
+    public void setInWeb()
+    {
+    }
+
+    public void addTrackingPlayer(EntityPlayerMP player)
+    {
+        super.addTrackingPlayer(player);
+        this.bossInfo.addPlayer(player);
+    }
+
+    public void removeTrackingPlayer(EntityPlayerMP player)
+    {
+        super.removeTrackingPlayer(player);
+        this.bossInfo.removePlayer(player);
+    }
+
+    private double getHeadX(int p_82214_1_)
+    {
+        if (p_82214_1_ <= 0)
+        {
+            return this.posX;
+        }
+        else
+        {
+            float f = (this.renderYawOffset + (float)(180 * (p_82214_1_ - 1))) * 0.017453292F;
+            float f1 = MathHelper.cos(f);
+            return this.posX + (double)f1 * 1.3D;
+        }
+    }
+
+    private double getHeadY(int p_82208_1_)
+    {
+        return p_82208_1_ <= 0 ? this.posY + 3.0D : this.posY + 2.2D;
+    }
+
+    private double getHeadZ(int p_82213_1_)
+    {
+        if (p_82213_1_ <= 0)
+        {
+            return this.posZ;
+        }
+        else
+        {
+            float f = (this.renderYawOffset + (float)(180 * (p_82213_1_ - 1))) * 0.017453292F;
+            float f1 = MathHelper.sin(f);
+            return this.posZ + (double)f1 * 1.3D;
+        }
+    }
+
+    private float rotlerp(float p_82204_1_, float p_82204_2_, float p_82204_3_)
+    {
+        float f = MathHelper.wrapDegrees(p_82204_2_ - p_82204_1_);
+
+        if (f > p_82204_3_)
+        {
+            f = p_82204_3_;
+        }
+
+        if (f < -p_82204_3_)
+        {
+            f = -p_82204_3_;
+        }
+
+        return p_82204_1_ + f;
+    }
+
+    private void launchWitherSkullToEntity(int p_82216_1_, EntityLivingBase p_82216_2_)
+    {
+        this.launchWitherSkullToCoords(p_82216_1_, p_82216_2_.posX, p_82216_2_.posY + (double)p_82216_2_.getEyeHeight() * 0.5D, p_82216_2_.posZ, p_82216_1_ == 0 && this.rand.nextFloat() < 0.001F);
+    }
+
+    private void launchWitherSkullToCoords(int p_82209_1_, double x, double y, double z, boolean invulnerable)
+    {
+        this.world.playEvent((EntityPlayer)null, 1024, new BlockPos(this), 0);
+        double d0 = this.getHeadX(p_82209_1_);
+        double d1 = this.getHeadY(p_82209_1_);
+        double d2 = this.getHeadZ(p_82209_1_);
+        double d3 = x - d0;
+        double d4 = y - d1;
+        double d5 = z - d2;
+        EntityWitherSkull entitywitherskull = new EntityWitherSkull(this.world, this, d3, d4, d5);
+
+        if (invulnerable)
+        {
+            entitywitherskull.setInvulnerable(true);
+        }
+
+        entitywitherskull.posY = d1;
+        entitywitherskull.posX = d0;
+        entitywitherskull.posZ = d2;
+        this.world.spawnEntity(entitywitherskull);
+    }
+
+    public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor)
+    {
+        this.launchWitherSkullToEntity(0, target);
+    }
+
+    public boolean attackEntityFrom(DamageSource source, float amount)
+    {
+        if (this.isEntityInvulnerable(source))
+        {
+            return false;
+        }
+        else if (source != DamageSource.DROWN && !(source.getTrueSource() instanceof EntityWither))
+        {
+            if (this.getInvulTime() > 0 && source != DamageSource.OUT_OF_WORLD)
+            {
+                return false;
+            }
+            else
+            {
+                if (this.isArmored())
+                {
+                    Entity entity = source.getImmediateSource();
+
+                    if (entity instanceof EntityArrow)
+                    {
+                        return false;
+                    }
+                }
+
+                Entity entity1 = source.getTrueSource();
+
+                if (entity1 != null && !(entity1 instanceof EntityPlayer) && entity1 instanceof EntityLivingBase && ((EntityLivingBase)entity1).getCreatureAttribute() == this.getCreatureAttribute())
+                {
+                    return false;
+                }
+                else
+                {
+                    if (this.blockBreakCounter <= 0)
+                    {
+                        this.blockBreakCounter = 20;
+                    }
+
+                    for (int i = 0; i < this.idleHeadUpdates.length; ++i)
+                    {
+                        this.idleHeadUpdates[i] += 3;
+                    }
+
+                    return super.attackEntityFrom(source, amount);
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier)
+    {
+        EntityItem entityitem = this.dropItem(Items.NETHER_STAR, 1);
+
+        if (entityitem != null)
+        {
+            entityitem.setNoDespawn();
+        }
+    }
+
+    protected void despawnEntity()
+    {
+        this.idleTime = 0;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getBrightnessForRender()
+    {
+        return 15728880;
+    }
+
+    public void fall(float distance, float damageMultiplier)
+    {
+    }
+
+    public void addPotionEffect(PotionEffect potioneffectIn)
+    {
+    }
+
+    protected void applyEntityAttributes()
+    {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(300.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.6000000238418579D);
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(40.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(4.0D);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public float getHeadYRotation(int p_82207_1_)
+    {
+        return this.yRotationHeads[p_82207_1_];
+    }
+
+    @SideOnly(Side.CLIENT)
+    public float getHeadXRotation(int p_82210_1_)
+    {
+        return this.xRotationHeads[p_82210_1_];
+    }
+
+    public int getInvulTime()
+    {
+        return ((Integer)this.dataManager.get(INVULNERABILITY_TIME)).intValue();
+    }
+
+    public void setInvulTime(int time)
+    {
+        this.dataManager.set(INVULNERABILITY_TIME, Integer.valueOf(time));
+    }
+
+    public int getWatchedTargetId(int head)
+    {
+        return ((Integer)this.dataManager.get(HEAD_TARGETS[head])).intValue();
+    }
+
+    public void updateWatchedTargetId(int targetOffset, int newId)
+    {
+        this.dataManager.set(HEAD_TARGETS[targetOffset], Integer.valueOf(newId));
+    }
+
+    public boolean isArmored()
+    {
+        return this.getHealth() <= this.getMaxHealth() / 2.0F;
+    }
+
+    public EnumCreatureAttribute getCreatureAttribute()
+    {
+        return EnumCreatureAttribute.UNDEAD;
+    }
+
+    protected boolean canBeRidden(Entity entityIn)
+    {
+        return false;
+    }
+
+    public boolean isNonBoss()
+    {
+        return false;
+    }
+
+    public void setSwingingArms(boolean swingingArms)
+    {
+    }
+
+    class AIDoNothing extends EntityAIBase
+    {
+        public AIDoNothing()
+        {
+            this.setMutexBits(7);
+        }
+
+        public boolean shouldExecute()
+        {
+            return EntityWither.this.getInvulTime() > 0;
+        }
+    }
 }

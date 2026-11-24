@@ -1,275 +1,292 @@
 package net.minecraft.world.border;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
-import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import java.util.List;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class WorldBorder {
-	private final List<IBorderListener> listeners = Lists.newArrayList();
-	private double centerX = 0.0D;
-	private double centerZ = 0.0D;
-	private double startDiameter = 6.0E7D;
-	private double endDiameter;
-	private long endTime;
-	private long startTime;
-	private int worldSize;
-	private double damageAmount;
-	private double damageBuffer;
-	private int warningTime;
-	private int warningDistance;
+public class WorldBorder
+{
+    private final List<IBorderListener> listeners = Lists.<IBorderListener>newArrayList();
+    private double centerX;
+    private double centerZ;
+    private double startDiameter = 6.0E7D;
+    private double endDiameter;
+    private long endTime;
+    private long startTime;
+    private int worldSize;
+    private double damageAmount;
+    private double damageBuffer;
+    private int warningTime;
+    private int warningDistance;
 
-	public WorldBorder() {
-		this.endDiameter = this.startDiameter;
-		this.worldSize = 29999984;
-		this.damageAmount = 0.2D;
-		this.damageBuffer = 5.0D;
-		this.warningTime = 15;
-		this.warningDistance = 5;
-	}
+    public WorldBorder()
+    {
+        this.endDiameter = this.startDiameter;
+        this.worldSize = 29999984;
+        this.damageAmount = 0.2D;
+        this.damageBuffer = 5.0D;
+        this.warningTime = 15;
+        this.warningDistance = 5;
+    }
 
-	public boolean contains(BlockPos pos) {
-		return (double) (pos.getX() + 1) > this.minX() && (double) pos.getX() < this.maxX()
-				&& (double) (pos.getZ() + 1) > this.minZ() && (double) pos.getZ() < this.maxZ();
-	}
+    public boolean contains(BlockPos pos)
+    {
+        return (double)(pos.getX() + 1) > this.minX() && (double)pos.getX() < this.maxX() && (double)(pos.getZ() + 1) > this.minZ() && (double)pos.getZ() < this.maxZ();
+    }
 
-	public boolean contains(ChunkCoordIntPair range) {
-		return (double) range.getXEnd() > this.minX() && (double) range.getXStart() < this.maxX()
-				&& (double) range.getZEnd() > this.minZ() && (double) range.getZStart() < this.maxZ();
-	}
+    public boolean contains(ChunkPos range)
+    {
+        return (double)range.getXEnd() > this.minX() && (double)range.getXStart() < this.maxX() && (double)range.getZEnd() > this.minZ() && (double)range.getZStart() < this.maxZ();
+    }
 
-	public boolean contains(long range) {
-		int chunkXPos = (int) (range & 4294967295L);
-		int chunkZPos = (int) (range >>> 32);
-		return (double) ((chunkXPos << 4) + 15) > this.minX() && (double) (chunkXPos << 4) < this.maxX()
-				&& (double) ((chunkZPos << 4) + 15) > this.minZ() && (double) (chunkZPos << 4) < this.maxZ();
-	}
+    public boolean contains(AxisAlignedBB bb)
+    {
+        return bb.maxX > this.minX() && bb.minX < this.maxX() && bb.maxZ > this.minZ() && bb.minZ < this.maxZ();
+    }
 
-	public boolean contains(AxisAlignedBB bb) {
-		return bb.maxX > this.minX() && bb.minX < this.maxX() && bb.maxZ > this.minZ() && bb.minZ < this.maxZ();
-	}
+    public double getClosestDistance(Entity entityIn)
+    {
+        return this.getClosestDistance(entityIn.posX, entityIn.posZ);
+    }
 
-	public double getClosestDistance(Entity entityIn) {
-		return this.getClosestDistance(entityIn.posX, entityIn.posZ);
-	}
+    public double getClosestDistance(double x, double z)
+    {
+        double d0 = z - this.minZ();
+        double d1 = this.maxZ() - z;
+        double d2 = x - this.minX();
+        double d3 = this.maxX() - x;
+        double d4 = Math.min(d2, d3);
+        d4 = Math.min(d4, d0);
+        return Math.min(d4, d1);
+    }
 
-	public double getClosestDistance(double x, double z) {
-		double d0 = z - this.minZ();
-		double d1 = this.maxZ() - z;
-		double d2 = x - this.minX();
-		double d3 = this.maxX() - x;
-		double d4 = Math.min(d2, d3);
-		d4 = Math.min(d4, d0);
-		return Math.min(d4, d1);
-	}
+    public EnumBorderStatus getStatus()
+    {
+        if (this.endDiameter < this.startDiameter)
+        {
+            return EnumBorderStatus.SHRINKING;
+        }
+        else
+        {
+            return this.endDiameter > this.startDiameter ? EnumBorderStatus.GROWING : EnumBorderStatus.STATIONARY;
+        }
+    }
 
-	public EnumBorderStatus getStatus() {
-		return this.endDiameter < this.startDiameter ? EnumBorderStatus.SHRINKING
-				: (this.endDiameter > this.startDiameter ? EnumBorderStatus.GROWING : EnumBorderStatus.STATIONARY);
-	}
+    public double minX()
+    {
+        double d0 = this.getCenterX() - this.getDiameter() / 2.0D;
 
-	public double minX() {
-		double d0 = this.getCenterX() - this.getDiameter() / 2.0D;
-		if (d0 < (double) (-this.worldSize)) {
-			d0 = (double) (-this.worldSize);
-		}
+        if (d0 < (double)(-this.worldSize))
+        {
+            d0 = (double)(-this.worldSize);
+        }
 
-		return d0;
-	}
+        return d0;
+    }
 
-	public double minZ() {
-		double d0 = this.getCenterZ() - this.getDiameter() / 2.0D;
-		if (d0 < (double) (-this.worldSize)) {
-			d0 = (double) (-this.worldSize);
-		}
+    public double minZ()
+    {
+        double d0 = this.getCenterZ() - this.getDiameter() / 2.0D;
 
-		return d0;
-	}
+        if (d0 < (double)(-this.worldSize))
+        {
+            d0 = (double)(-this.worldSize);
+        }
 
-	public double maxX() {
-		double d0 = this.getCenterX() + this.getDiameter() / 2.0D;
-		if (d0 > (double) this.worldSize) {
-			d0 = (double) this.worldSize;
-		}
+        return d0;
+    }
 
-		return d0;
-	}
+    public double maxX()
+    {
+        double d0 = this.getCenterX() + this.getDiameter() / 2.0D;
 
-	public double maxZ() {
-		double d0 = this.getCenterZ() + this.getDiameter() / 2.0D;
-		if (d0 > (double) this.worldSize) {
-			d0 = (double) this.worldSize;
-		}
+        if (d0 > (double)this.worldSize)
+        {
+            d0 = (double)this.worldSize;
+        }
 
-		return d0;
-	}
+        return d0;
+    }
 
-	public double getCenterX() {
-		return this.centerX;
-	}
+    public double maxZ()
+    {
+        double d0 = this.getCenterZ() + this.getDiameter() / 2.0D;
 
-	public double getCenterZ() {
-		return this.centerZ;
-	}
+        if (d0 > (double)this.worldSize)
+        {
+            d0 = (double)this.worldSize;
+        }
 
-	public void setCenter(double x, double z) {
-		this.centerX = x;
-		this.centerZ = z;
+        return d0;
+    }
 
-		List<IBorderListener> lst = this.getListeners();
-		for (int i = 0, l = lst.size(); i < l; ++i) {
-			lst.get(i).onCenterChanged(this, x, z);
-		}
+    public double getCenterX()
+    {
+        return this.centerX;
+    }
 
-	}
+    public double getCenterZ()
+    {
+        return this.centerZ;
+    }
 
-	public double getDiameter() {
-		if (this.getStatus() != EnumBorderStatus.STATIONARY) {
-			double d0 = (double) ((float) (EagRuntime.steadyTimeMillis() - this.startTime)
-					/ (float) (this.endTime - this.startTime));
-			if (d0 < 1.0D) {
-				return this.startDiameter + (this.endDiameter - this.startDiameter) * d0;
-			}
+    public void setCenter(double x, double z)
+    {
+        this.centerX = x;
+        this.centerZ = z;
 
-			this.setTransition(this.endDiameter);
-		}
+        for (IBorderListener iborderlistener : this.getListeners())
+        {
+            iborderlistener.onCenterChanged(this, x, z);
+        }
+    }
 
-		return this.startDiameter;
-	}
+    public double getDiameter()
+    {
+        if (this.getStatus() != EnumBorderStatus.STATIONARY)
+        {
+            double d0 = (double)((float)(System.currentTimeMillis() - this.startTime) / (float)(this.endTime - this.startTime));
 
-	public long getTimeUntilTarget() {
-		return this.getStatus() != EnumBorderStatus.STATIONARY ? this.endTime - EagRuntime.steadyTimeMillis() : 0L;
-	}
+            if (d0 < 1.0D)
+            {
+                return this.startDiameter + (this.endDiameter - this.startDiameter) * d0;
+            }
 
-	public double getTargetSize() {
-		return this.endDiameter;
-	}
+            this.setTransition(this.endDiameter);
+        }
 
-	public void setTransition(double newSize) {
-		this.startDiameter = newSize;
-		this.endDiameter = newSize;
-		this.endTime = EagRuntime.steadyTimeMillis();
-		this.startTime = this.endTime;
+        return this.startDiameter;
+    }
 
-		List<IBorderListener> lst = this.getListeners();
-		for (int i = 0, l = lst.size(); i < l; ++i) {
-			lst.get(i).onSizeChanged(this, newSize);
-		}
+    public long getTimeUntilTarget()
+    {
+        return this.getStatus() == EnumBorderStatus.STATIONARY ? 0L : this.endTime - System.currentTimeMillis();
+    }
 
-	}
+    public double getTargetSize()
+    {
+        return this.endDiameter;
+    }
 
-	public void setTransition(double oldSize, double newSize, long time) {
-		this.startDiameter = oldSize;
-		this.endDiameter = newSize;
-		this.startTime = EagRuntime.steadyTimeMillis();
-		this.endTime = this.startTime + time;
+    public void setTransition(double newSize)
+    {
+        this.startDiameter = newSize;
+        this.endDiameter = newSize;
+        this.endTime = System.currentTimeMillis();
+        this.startTime = this.endTime;
 
-		List<IBorderListener> lst = this.getListeners();
-		for (int i = 0, l = lst.size(); i < l; ++i) {
-			lst.get(i).onTransitionStarted(this, oldSize, newSize, time);
-		}
+        for (IBorderListener iborderlistener : this.getListeners())
+        {
+            iborderlistener.onSizeChanged(this, newSize);
+        }
+    }
 
-	}
+    public void setTransition(double oldSize, double newSize, long time)
+    {
+        this.startDiameter = oldSize;
+        this.endDiameter = newSize;
+        this.startTime = System.currentTimeMillis();
+        this.endTime = this.startTime + time;
 
-	protected List<IBorderListener> getListeners() {
-		return Lists.newArrayList(this.listeners);
-	}
+        for (IBorderListener iborderlistener : this.getListeners())
+        {
+            iborderlistener.onTransitionStarted(this, oldSize, newSize, time);
+        }
+    }
 
-	public void addListener(IBorderListener listener) {
-		this.listeners.add(listener);
-	}
+    protected List<IBorderListener> getListeners()
+    {
+        return Lists.newArrayList(this.listeners);
+    }
 
-	public void setSize(int size) {
-		this.worldSize = size;
-	}
+    public void addListener(IBorderListener listener)
+    {
+        this.listeners.add(listener);
+    }
 
-	public int getSize() {
-		return this.worldSize;
-	}
+    public void setSize(int size)
+    {
+        this.worldSize = size;
+    }
 
-	public double getDamageBuffer() {
-		return this.damageBuffer;
-	}
+    public int getSize()
+    {
+        return this.worldSize;
+    }
 
-	public void setDamageBuffer(double bufferSize) {
-		this.damageBuffer = bufferSize;
+    public double getDamageBuffer()
+    {
+        return this.damageBuffer;
+    }
 
-		List<IBorderListener> lst = this.getListeners();
-		for (int i = 0, l = lst.size(); i < l; ++i) {
-			lst.get(i).onDamageBufferChanged(this, bufferSize);
-		}
+    public void setDamageBuffer(double bufferSize)
+    {
+        this.damageBuffer = bufferSize;
 
-	}
+        for (IBorderListener iborderlistener : this.getListeners())
+        {
+            iborderlistener.onDamageBufferChanged(this, bufferSize);
+        }
+    }
 
-	public double getDamageAmount() {
-		return this.damageAmount;
-	}
+    public double getDamageAmount()
+    {
+        return this.damageAmount;
+    }
 
-	public void setDamageAmount(double newAmount) {
-		this.damageAmount = newAmount;
+    public void setDamageAmount(double newAmount)
+    {
+        this.damageAmount = newAmount;
 
-		List<IBorderListener> lst = this.getListeners();
-		for (int i = 0, l = lst.size(); i < l; ++i) {
-			lst.get(i).onDamageAmountChanged(this, newAmount);
-		}
+        for (IBorderListener iborderlistener : this.getListeners())
+        {
+            iborderlistener.onDamageAmountChanged(this, newAmount);
+        }
+    }
 
-	}
+    @SideOnly(Side.CLIENT)
+    public double getResizeSpeed()
+    {
+        return this.endTime == this.startTime ? 0.0D : Math.abs(this.startDiameter - this.endDiameter) / (double)(this.endTime - this.startTime);
+    }
 
-	public double getResizeSpeed() {
-		return this.endTime == this.startTime ? 0.0D
-				: Math.abs(this.startDiameter - this.endDiameter) / (double) (this.endTime - this.startTime);
-	}
+    public int getWarningTime()
+    {
+        return this.warningTime;
+    }
 
-	public int getWarningTime() {
-		return this.warningTime;
-	}
+    public void setWarningTime(int warningTime)
+    {
+        this.warningTime = warningTime;
 
-	public void setWarningTime(int warningTime) {
-		this.warningTime = warningTime;
+        for (IBorderListener iborderlistener : this.getListeners())
+        {
+            iborderlistener.onWarningTimeChanged(this, warningTime);
+        }
+    }
 
-		List<IBorderListener> lst = this.getListeners();
-		for (int i = 0, l = lst.size(); i < l; ++i) {
-			lst.get(i).onWarningTimeChanged(this, warningTime);
-		}
+    public int getWarningDistance()
+    {
+        return this.warningDistance;
+    }
 
-	}
+    public void setWarningDistance(int warningDistance)
+    {
+        this.warningDistance = warningDistance;
 
-	public int getWarningDistance() {
-		return this.warningDistance;
-	}
+        for (IBorderListener iborderlistener : this.getListeners())
+        {
+            iborderlistener.onWarningDistanceChanged(this, warningDistance);
+        }
+    }
 
-	public void setWarningDistance(int warningDistance) {
-		this.warningDistance = warningDistance;
-
-		List<IBorderListener> lst = this.getListeners();
-		for (int i = 0, l = lst.size(); i < l; ++i) {
-			lst.get(i).onWarningDistanceChanged(this, warningDistance);
-		}
-
-	}
+    public void removeListener(IBorderListener listener)
+    {
+        this.listeners.remove(listener);
+    }
 }

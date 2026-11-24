@@ -1,109 +1,109 @@
 package net.minecraft.client.resources;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-
-import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
-import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
-import net.minecraft.client.resources.data.IMetadataSerializer;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
 import net.minecraft.client.resources.data.LanguageMetadataSection;
-import net.minecraft.util.StringTranslate;
+import net.minecraft.client.resources.data.MetadataSerializer;
+import net.minecraft.util.text.translation.LanguageMap;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class LanguageManager implements IResourceManagerReloadListener {
-	private static final Logger logger = LogManager.getLogger();
-	private final IMetadataSerializer theMetadataSerializer;
-	private String currentLanguage;
-	protected static final Locale currentLocale = new Locale();
-	private Map<String, Language> languageMap = Maps.newHashMap();
+@SideOnly(Side.CLIENT)
+public class LanguageManager implements IResourceManagerReloadListener
+{
+    private static final Logger LOGGER = LogManager.getLogger();
+    private final MetadataSerializer metadataSerializer;
+    private String currentLanguage;
+    protected static final Locale CURRENT_LOCALE = new Locale();
+    private final Map<String, Language> languageMap = Maps.<String, Language>newHashMap();
 
-	public LanguageManager(IMetadataSerializer theMetadataSerializerIn, String currentLanguageIn) {
-		this.theMetadataSerializer = theMetadataSerializerIn;
-		this.currentLanguage = currentLanguageIn;
-		I18n.setLocale(currentLocale);
-	}
+    public LanguageManager(MetadataSerializer theMetadataSerializerIn, String currentLanguageIn)
+    {
+        this.metadataSerializer = theMetadataSerializerIn;
+        this.currentLanguage = currentLanguageIn;
+        I18n.setLocale(CURRENT_LOCALE);
+    }
 
-	public void parseLanguageMetadata(List<IResourcePack> parList) {
-		this.languageMap.clear();
+    public void parseLanguageMetadata(List<IResourcePack> resourcesPacks)
+    {
+        this.languageMap.clear();
 
-		for (int i = 0, l = parList.size(); i < l; ++i) {
-			IResourcePack iresourcepack = parList.get(i);
-			try {
-				LanguageMetadataSection languagemetadatasection = (LanguageMetadataSection) iresourcepack
-						.getPackMetadata(this.theMetadataSerializer, "language");
-				if (languagemetadatasection != null) {
-					for (Language language : languagemetadatasection.getLanguages()) {
-						if (!this.languageMap.containsKey(language.getLanguageCode())) {
-							this.languageMap.put(language.getLanguageCode(), language);
-						}
-					}
-				}
-			} catch (RuntimeException runtimeexception) {
-				logger.warn("Unable to parse metadata section of resourcepack: " + iresourcepack.getPackName(),
-						runtimeexception);
-			} catch (IOException ioexception) {
-				logger.warn("Unable to parse metadata section of resourcepack: " + iresourcepack.getPackName(),
-						ioexception);
-			}
-		}
+        for (IResourcePack iresourcepack : resourcesPacks)
+        {
+            try
+            {
+                LanguageMetadataSection languagemetadatasection = (LanguageMetadataSection)iresourcepack.getPackMetadata(this.metadataSerializer, "language");
 
-	}
+                if (languagemetadatasection != null)
+                {
+                    for (Language language : languagemetadatasection.getLanguages())
+                    {
+                        if (!this.languageMap.containsKey(language.getLanguageCode()))
+                        {
+                            this.languageMap.put(language.getLanguageCode(), language);
+                        }
+                    }
+                }
+            }
+            catch (RuntimeException runtimeexception)
+            {
+                LOGGER.warn("Unable to parse language metadata section of resourcepack: {}", iresourcepack.getPackName(), runtimeexception);
+            }
+            catch (IOException ioexception)
+            {
+                LOGGER.warn("Unable to parse language metadata section of resourcepack: {}", iresourcepack.getPackName(), ioexception);
+            }
+        }
+    }
 
-	public void onResourceManagerReload(IResourceManager iresourcemanager) {
-		ArrayList arraylist = Lists.newArrayList(new String[] { "en_US" });
-		if (!"en_US".equals(this.currentLanguage)) {
-			arraylist.add(this.currentLanguage);
-		}
+    public void onResourceManagerReload(IResourceManager resourceManager)
+    {
+        List<String> list = Lists.newArrayList("en_us");
 
-		currentLocale.loadLocaleDataFiles(iresourcemanager, arraylist);
-		StringTranslate.replaceWith(currentLocale.properties);
-	}
+        if (!"en_us".equals(this.currentLanguage))
+        {
+            list.add(this.currentLanguage);
+        }
 
-	public boolean isCurrentLocaleUnicode() {
-		return currentLocale.isUnicode();
-	}
+        CURRENT_LOCALE.loadLocaleDataFiles(resourceManager, list);
+        LanguageMap.replaceWith(CURRENT_LOCALE.properties);
+    }
 
-	public boolean isCurrentLanguageBidirectional() {
-		return this.getCurrentLanguage() != null && this.getCurrentLanguage().isBidirectional();
-	}
+    public boolean isCurrentLocaleUnicode()
+    {
+        return CURRENT_LOCALE.isUnicode();
+    }
 
-	public void setCurrentLanguage(Language currentLanguageIn) {
-		this.currentLanguage = currentLanguageIn.getLanguageCode();
-	}
+    public boolean isCurrentLanguageBidirectional()
+    {
+        return this.getCurrentLanguage() != null && this.getCurrentLanguage().isBidirectional();
+    }
 
-	public Language getCurrentLanguage() {
-		return this.languageMap.containsKey(this.currentLanguage)
-				? (Language) this.languageMap.get(this.currentLanguage)
-				: (Language) this.languageMap.get("en_US");
-	}
+    public void setCurrentLanguage(Language currentLanguageIn)
+    {
+        this.currentLanguage = currentLanguageIn.getLanguageCode();
+    }
 
-	public SortedSet<Language> getLanguages() {
-		return Sets.newTreeSet(this.languageMap.values());
-	}
+    public Language getCurrentLanguage()
+    {
+        String s = this.languageMap.containsKey(this.currentLanguage) ? this.currentLanguage : "en_us";
+        return this.languageMap.get(s);
+    }
+
+    public SortedSet<Language> getLanguages()
+    {
+        return Sets.newTreeSet(this.languageMap.values());
+    }
+
+    public Language getLanguage(String p_191960_1_)
+    {
+        return this.languageMap.get(p_191960_1_);
+    }
 }

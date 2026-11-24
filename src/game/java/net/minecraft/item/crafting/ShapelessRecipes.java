@@ -1,103 +1,139 @@
 package net.minecraft.item.crafting;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import java.util.List;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.JsonUtils;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ShapelessRecipes implements IRecipe {
-	private final ItemStack recipeOutput;
-	private final List<ItemStack> recipeItems;
+public class ShapelessRecipes extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
+{
+    private final ItemStack recipeOutput;
+    public final NonNullList<Ingredient> recipeItems;
+    private final String group;
+    private final boolean isSimple;
 
-	public ShapelessRecipes(ItemStack output, List<ItemStack> inputList) {
-		this.recipeOutput = output;
-		this.recipeItems = inputList;
-	}
+    public ShapelessRecipes(String group, ItemStack output, NonNullList<Ingredient> ingredients)
+    {
+        this.group = group;
+        this.recipeOutput = output;
+        this.recipeItems = ingredients;
+        boolean simple = true;
+        for (Ingredient i : ingredients)
+            simple &= i.isSimple();
+        this.isSimple = simple;
+    }
 
-	public ItemStack getRecipeOutput() {
-		return this.recipeOutput;
-	}
+    public String getGroup()
+    {
+        return this.group;
+    }
 
-	public ItemStack[] getRemainingItems(InventoryCrafting inventorycrafting) {
-		ItemStack[] aitemstack = new ItemStack[inventorycrafting.getSizeInventory()];
+    public ItemStack getRecipeOutput()
+    {
+        return this.recipeOutput;
+    }
 
-		for (int i = 0; i < aitemstack.length; ++i) {
-			ItemStack itemstack = inventorycrafting.getStackInSlot(i);
-			if (itemstack != null && itemstack.getItem().hasContainerItem()) {
-				aitemstack[i] = new ItemStack(itemstack.getItem().getContainerItem());
-			}
-		}
+    public NonNullList<Ingredient> getIngredients()
+    {
+        return this.recipeItems;
+    }
 
-		return aitemstack;
-	}
+    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
+    {
+        NonNullList<ItemStack> nonnulllist = NonNullList.<ItemStack>withSize(inv.getSizeInventory(), ItemStack.EMPTY);
 
-	/**+
-	 * Used to check if a recipe matches current crafting inventory
-	 */
-	public boolean matches(InventoryCrafting inventorycrafting, World var2) {
-		ArrayList<ItemStack> arraylist = Lists.newArrayList(this.recipeItems);
+        for (int i = 0; i < nonnulllist.size(); ++i)
+        {
+            ItemStack itemstack = inv.getStackInSlot(i);
 
-		for (int i = 0; i < inventorycrafting.getHeight(); ++i) {
-			for (int j = 0; j < inventorycrafting.getWidth(); ++j) {
-				ItemStack itemstack = inventorycrafting.getStackInRowAndColumn(j, i);
-				if (itemstack != null) {
-					boolean flag = false;
+            nonnulllist.set(i, net.minecraftforge.common.ForgeHooks.getContainerItem(itemstack));
+        }
 
-					for (int m = 0, l = arraylist.size(); m < l; ++m) {
-						ItemStack itemstack1 = arraylist.get(m);
-						if (itemstack.getItem() == itemstack1.getItem() && (itemstack1.getMetadata() == 32767
-								|| itemstack.getMetadata() == itemstack1.getMetadata())) {
-							flag = true;
-							arraylist.remove(itemstack1);
-							break;
-						}
-					}
+        return nonnulllist;
+    }
 
-					if (!flag) {
-						return false;
-					}
-				}
-			}
-		}
+    public boolean matches(InventoryCrafting inv, World worldIn)
+    {
+        int ingredientCount = 0;
+        net.minecraft.client.util.RecipeItemHelper recipeItemHelper = new net.minecraft.client.util.RecipeItemHelper();
+        List<ItemStack> inputs = Lists.newArrayList();
 
-		return arraylist.isEmpty();
-	}
+        for (int i = 0; i < inv.getHeight(); ++i)
+        {
+            for (int j = 0; j < inv.getWidth(); ++j)
+            {
+                ItemStack itemstack = inv.getStackInRowAndColumn(j, i);
 
-	/**+
-	 * Returns an Item that is the result of this recipe
-	 */
-	public ItemStack getCraftingResult(InventoryCrafting var1) {
-		return this.recipeOutput.copy();
-	}
+                if (!itemstack.isEmpty())
+                {
+                    ++ingredientCount;
+                    if (this.isSimple)
+                        recipeItemHelper.accountStack(itemstack, 1);
+                    else
+                        inputs.add(itemstack);
+                }
+            }
+        }
 
-	/**+
-	 * Returns the size of the recipe area
-	 */
-	public int getRecipeSize() {
-		return this.recipeItems.size();
-	}
+        if (ingredientCount != this.recipeItems.size())
+            return false;
+
+        if (this.isSimple)
+            return recipeItemHelper.canCraft(this, null);
+
+        return net.minecraftforge.common.util.RecipeMatcher.findMatches(inputs, this.recipeItems) != null;
+    }
+
+    public ItemStack getCraftingResult(InventoryCrafting inv)
+    {
+        return this.recipeOutput.copy();
+    }
+
+    public static ShapelessRecipes deserialize(JsonObject json)
+    {
+        String s = JsonUtils.getString(json, "group", "");
+        NonNullList<Ingredient> nonnulllist = deserializeIngredients(JsonUtils.getJsonArray(json, "ingredients"));
+
+        if (nonnulllist.isEmpty())
+        {
+            throw new JsonParseException("No ingredients for shapeless recipe");
+        }
+        else if (nonnulllist.size() > 9)
+        {
+            throw new JsonParseException("Too many ingredients for shapeless recipe");
+        }
+        else
+        {
+            ItemStack itemstack = ShapedRecipes.deserializeItem(JsonUtils.getJsonObject(json, "result"), true);
+            return new ShapelessRecipes(s, itemstack, nonnulllist);
+        }
+    }
+
+    private static NonNullList<Ingredient> deserializeIngredients(JsonArray array)
+    {
+        NonNullList<Ingredient> nonnulllist = NonNullList.<Ingredient>create();
+
+        for (int i = 0; i < array.size(); ++i)
+        {
+            Ingredient ingredient = ShapedRecipes.deserializeIngredient(array.get(i));
+
+            if (ingredient != Ingredient.EMPTY)
+            {
+                nonnulllist.add(ingredient);
+            }
+        }
+
+        return nonnulllist;
+    }
+
+    public boolean canFit(int width, int height)
+    {
+        return width * height >= this.recipeItems.size();
+    }
 }

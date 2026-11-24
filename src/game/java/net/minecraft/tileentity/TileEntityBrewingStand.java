@@ -1,7 +1,6 @@
 package net.minecraft.tileentity;
 
 import java.util.Arrays;
-import java.util.List;
 import net.minecraft.block.BlockBrewingStand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,382 +9,402 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerBrewingStand;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionHelper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.datafix.DataFixer;
+import net.minecraft.util.datafix.FixTypes;
+import net.minecraft.util.datafix.walkers.ItemStackDataLists;
+import net.minecraft.util.math.BlockPos;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class TileEntityBrewingStand extends TileEntityLockable implements ITickable, ISidedInventory {
-	/**+
-	 * an array of the input slot indices
-	 */
-	private static final int[] inputSlots = new int[] { 3 };
-	/**+
-	 * an array of the output slot indices
-	 */
-	private static final int[] outputSlots = new int[] { 0, 1, 2 };
-	/**+
-	 * The ItemStacks currently placed in the slots of the brewing
-	 * stand
-	 */
-	private ItemStack[] brewingItemStacks = new ItemStack[4];
-	private int brewTime;
-	private boolean[] filledSlots;
-	private Item ingredientID;
-	private String customName;
+public class TileEntityBrewingStand extends TileEntityLockable implements ITickable, ISidedInventory
+{
+    private static final int[] SLOTS_FOR_UP = new int[] {3};
+    private static final int[] SLOTS_FOR_DOWN = new int[] {0, 1, 2, 3};
+    private static final int[] OUTPUT_SLOTS = new int[] {0, 1, 2, 4};
+    private NonNullList<ItemStack> brewingItemStacks = NonNullList.<ItemStack>withSize(5, ItemStack.EMPTY);
+    private int brewTime;
+    private boolean[] filledSlots;
+    private Item ingredientID;
+    private String customName;
+    private int fuel;
 
-	/**+
-	 * Gets the name of this command sender (usually username, but
-	 * possibly "Rcon")
-	 */
-	public String getName() {
-		return this.hasCustomName() ? this.customName : "container.brewing";
-	}
+    public String getName()
+    {
+        return this.hasCustomName() ? this.customName : "container.brewing";
+    }
 
-	/**+
-	 * Returns true if this thing is named
-	 */
-	public boolean hasCustomName() {
-		return this.customName != null && this.customName.length() > 0;
-	}
+    public boolean hasCustomName()
+    {
+        return this.customName != null && !this.customName.isEmpty();
+    }
 
-	public void setName(String name) {
-		this.customName = name;
-	}
+    public void setName(String name)
+    {
+        this.customName = name;
+    }
 
-	/**+
-	 * Returns the number of slots in the inventory.
-	 */
-	public int getSizeInventory() {
-		return this.brewingItemStacks.length;
-	}
+    public int getSizeInventory()
+    {
+        return this.brewingItemStacks.size();
+    }
 
-	/**+
-	 * Like the old updateEntity(), except more generic.
-	 */
-	public void update() {
-		if (this.brewTime > 0) {
-			--this.brewTime;
-			if (this.brewTime == 0) {
-				this.brewPotions();
-				this.markDirty();
-			} else if (!this.canBrew()) {
-				this.brewTime = 0;
-				this.markDirty();
-			} else if (this.ingredientID != this.brewingItemStacks[3].getItem()) {
-				this.brewTime = 0;
-				this.markDirty();
-			}
-		} else if (this.canBrew()) {
-			this.brewTime = 400;
-			this.ingredientID = this.brewingItemStacks[3].getItem();
-		}
+    public boolean isEmpty()
+    {
+        for (ItemStack itemstack : this.brewingItemStacks)
+        {
+            if (!itemstack.isEmpty())
+            {
+                return false;
+            }
+        }
 
-		if (!this.worldObj.isRemote) {
-			boolean[] aboolean = this.func_174902_m();
-			if (!Arrays.equals(aboolean, this.filledSlots)) {
-				this.filledSlots = aboolean;
-				IBlockState iblockstate = this.worldObj.getBlockState(this.getPos());
-				if (!(iblockstate.getBlock() instanceof BlockBrewingStand)) {
-					return;
-				}
+        return true;
+    }
 
-				for (int i = 0; i < BlockBrewingStand.HAS_BOTTLE.length; ++i) {
-					iblockstate = iblockstate.withProperty(BlockBrewingStand.HAS_BOTTLE[i],
-							Boolean.valueOf(aboolean[i]));
-				}
+    public void update()
+    {
+        ItemStack itemstack = this.brewingItemStacks.get(4);
 
-				this.worldObj.setBlockState(this.pos, iblockstate, 2);
-			}
-		}
+        if (this.fuel <= 0 && itemstack.getItem() == Items.BLAZE_POWDER)
+        {
+            this.fuel = 20;
+            itemstack.shrink(1);
+            this.markDirty();
+        }
 
-	}
+        boolean flag = this.canBrew();
+        boolean flag1 = this.brewTime > 0;
+        ItemStack itemstack1 = this.brewingItemStacks.get(3);
 
-	private boolean canBrew() {
-		if (this.brewingItemStacks[3] != null && this.brewingItemStacks[3].stackSize > 0) {
-			ItemStack itemstack = this.brewingItemStacks[3];
-			if (!itemstack.getItem().isPotionIngredient(itemstack)) {
-				return false;
-			} else {
-				boolean flag = false;
+        if (flag1)
+        {
+            --this.brewTime;
+            boolean flag2 = this.brewTime == 0;
 
-				for (int i = 0; i < 3; ++i) {
-					if (this.brewingItemStacks[i] != null && this.brewingItemStacks[i].getItem() == Items.potionitem) {
-						int j = this.brewingItemStacks[i].getMetadata();
-						int k = this.getPotionResult(j, itemstack);
-						if (!ItemPotion.isSplash(j) && ItemPotion.isSplash(k)) {
-							flag = true;
-							break;
-						}
+            if (flag2 && flag)
+            {
+                this.brewPotions();
+                this.markDirty();
+            }
+            else if (!flag)
+            {
+                this.brewTime = 0;
+                this.markDirty();
+            }
+            else if (this.ingredientID != itemstack1.getItem())
+            {
+                this.brewTime = 0;
+                this.markDirty();
+            }
+        }
+        else if (flag && this.fuel > 0)
+        {
+            --this.fuel;
+            this.brewTime = 400;
+            this.ingredientID = itemstack1.getItem();
+            this.markDirty();
+        }
 
-						List list = Items.potionitem.getEffects(j);
-						List list1 = Items.potionitem.getEffects(k);
-						if ((j <= 0 || list != list1) && (list == null || !list.equals(list1) && list1 != null)
-								&& j != k) {
-							flag = true;
-							break;
-						}
-					}
-				}
+        if (!this.world.isRemote)
+        {
+            boolean[] aboolean = this.createFilledSlotsArray();
 
-				return flag;
-			}
-		} else {
-			return false;
-		}
-	}
+            if (!Arrays.equals(aboolean, this.filledSlots))
+            {
+                this.filledSlots = aboolean;
+                IBlockState iblockstate = this.world.getBlockState(this.getPos());
 
-	private void brewPotions() {
-		if (this.canBrew()) {
-			ItemStack itemstack = this.brewingItemStacks[3];
+                if (!(iblockstate.getBlock() instanceof BlockBrewingStand))
+                {
+                    return;
+                }
 
-			for (int i = 0; i < 3; ++i) {
-				if (this.brewingItemStacks[i] != null && this.brewingItemStacks[i].getItem() == Items.potionitem) {
-					int j = this.brewingItemStacks[i].getMetadata();
-					int k = this.getPotionResult(j, itemstack);
-					List list = Items.potionitem.getEffects(j);
-					List list1 = Items.potionitem.getEffects(k);
-					if (j > 0 && list == list1 || list != null && (list.equals(list1) || list1 == null)) {
-						if (!ItemPotion.isSplash(j) && ItemPotion.isSplash(k)) {
-							this.brewingItemStacks[i].setItemDamage(k);
-						}
-					} else if (j != k) {
-						this.brewingItemStacks[i].setItemDamage(k);
-					}
-				}
-			}
+                for (int i = 0; i < BlockBrewingStand.HAS_BOTTLE.length; ++i)
+                {
+                    iblockstate = iblockstate.withProperty(BlockBrewingStand.HAS_BOTTLE[i], Boolean.valueOf(aboolean[i]));
+                }
 
-			if (itemstack.getItem().hasContainerItem()) {
-				this.brewingItemStacks[3] = new ItemStack(itemstack.getItem().getContainerItem());
-			} else {
-				--this.brewingItemStacks[3].stackSize;
-				if (this.brewingItemStacks[3].stackSize <= 0) {
-					this.brewingItemStacks[3] = null;
-				}
-			}
+                this.world.setBlockState(this.pos, iblockstate, 2);
+            }
+        }
+    }
 
-		}
-	}
+    public boolean[] createFilledSlotsArray()
+    {
+        boolean[] aboolean = new boolean[3];
 
-	/**+
-	 * The result of brewing a potion of the specified damage value
-	 * with an ingredient itemstack.
-	 */
-	private int getPotionResult(int meta, ItemStack stack) {
-		return stack == null ? meta
-				: (stack.getItem().isPotionIngredient(stack)
-						? PotionHelper.applyIngredient(meta, stack.getItem().getPotionEffect(stack))
-						: meta);
-	}
+        for (int i = 0; i < 3; ++i)
+        {
+            if (!((ItemStack)this.brewingItemStacks.get(i)).isEmpty())
+            {
+                aboolean[i] = true;
+            }
+        }
 
-	public void readFromNBT(NBTTagCompound nbttagcompound) {
-		super.readFromNBT(nbttagcompound);
-		NBTTagList nbttaglist = nbttagcompound.getTagList("Items", 10);
-		this.brewingItemStacks = new ItemStack[this.getSizeInventory()];
+        return aboolean;
+    }
 
-		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-			byte b0 = nbttagcompound1.getByte("Slot");
-			if (b0 >= 0 && b0 < this.brewingItemStacks.length) {
-				this.brewingItemStacks[b0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-			}
-		}
+    private boolean canBrew()
+    {
+        if (1 == 1) return net.minecraftforge.common.brewing.BrewingRecipeRegistry.canBrew(brewingItemStacks, brewingItemStacks.get(3), OUTPUT_SLOTS); // divert to VanillaBrewingRegistry
+        ItemStack itemstack = this.brewingItemStacks.get(3);
 
-		this.brewTime = nbttagcompound.getShort("BrewTime");
-		if (nbttagcompound.hasKey("CustomName", 8)) {
-			this.customName = nbttagcompound.getString("CustomName");
-		}
+        if (itemstack.isEmpty())
+        {
+            return false;
+        }
+        else if (!PotionHelper.isReagent(itemstack))
+        {
+            return false;
+        }
+        else
+        {
+            for (int i = 0; i < 3; ++i)
+            {
+                ItemStack itemstack1 = this.brewingItemStacks.get(i);
 
-	}
+                if (!itemstack1.isEmpty() && PotionHelper.hasConversions(itemstack1, itemstack))
+                {
+                    return true;
+                }
+            }
 
-	public void writeToNBT(NBTTagCompound nbttagcompound) {
-		super.writeToNBT(nbttagcompound);
-		nbttagcompound.setShort("BrewTime", (short) this.brewTime);
-		NBTTagList nbttaglist = new NBTTagList();
+            return false;
+        }
+    }
 
-		for (int i = 0; i < this.brewingItemStacks.length; ++i) {
-			if (this.brewingItemStacks[i] != null) {
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte) i);
-				this.brewingItemStacks[i].writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
-			}
-		}
+    private void brewPotions()
+    {
+        if (net.minecraftforge.event.ForgeEventFactory.onPotionAttemptBrew(brewingItemStacks)) return;
+        ItemStack itemstack = this.brewingItemStacks.get(3);
 
-		nbttagcompound.setTag("Items", nbttaglist);
-		if (this.hasCustomName()) {
-			nbttagcompound.setString("CustomName", this.customName);
-		}
+        net.minecraftforge.common.brewing.BrewingRecipeRegistry.brewPotions(brewingItemStacks, brewingItemStacks.get(3), OUTPUT_SLOTS);
 
-	}
+        itemstack.shrink(1);
+        BlockPos blockpos = this.getPos();
 
-	/**+
-	 * Returns the stack in the given slot.
-	 */
-	public ItemStack getStackInSlot(int i) {
-		return i >= 0 && i < this.brewingItemStacks.length ? this.brewingItemStacks[i] : null;
-	}
+        if (itemstack.getItem().hasContainerItem(itemstack))
+        {
+            ItemStack itemstack1 = itemstack.getItem().getContainerItem(itemstack);
 
-	/**+
-	 * Removes up to a specified number of items from an inventory
-	 * slot and returns them in a new stack.
-	 */
-	public ItemStack decrStackSize(int i, int var2) {
-		if (i >= 0 && i < this.brewingItemStacks.length) {
-			ItemStack itemstack = this.brewingItemStacks[i];
-			this.brewingItemStacks[i] = null;
-			return itemstack;
-		} else {
-			return null;
-		}
-	}
+            if (itemstack.isEmpty())
+            {
+                itemstack = itemstack1;
+            }
+            else
+            {
+                InventoryHelper.spawnItemStack(this.world, (double)blockpos.getX(), (double)blockpos.getY(), (double)blockpos.getZ(), itemstack1);
+            }
+        }
 
-	/**+
-	 * Removes a stack from the given slot and returns it.
-	 */
-	public ItemStack removeStackFromSlot(int i) {
-		if (i >= 0 && i < this.brewingItemStacks.length) {
-			ItemStack itemstack = this.brewingItemStacks[i];
-			this.brewingItemStacks[i] = null;
-			return itemstack;
-		} else {
-			return null;
-		}
-	}
+        this.brewingItemStacks.set(3, itemstack);
+        this.world.playEvent(1035, blockpos, 0);
+        net.minecraftforge.event.ForgeEventFactory.onPotionBrewed(brewingItemStacks);
+    }
 
-	/**+
-	 * Sets the given item stack to the specified slot in the
-	 * inventory (can be crafting or armor sections).
-	 */
-	public void setInventorySlotContents(int i, ItemStack itemstack) {
-		if (i >= 0 && i < this.brewingItemStacks.length) {
-			this.brewingItemStacks[i] = itemstack;
-		}
+    public static void registerFixesBrewingStand(DataFixer fixer)
+    {
+        fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(TileEntityBrewingStand.class, new String[] {"Items"}));
+    }
 
-	}
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
+        this.brewingItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(compound, this.brewingItemStacks);
+        this.brewTime = compound.getShort("BrewTime");
 
-	/**+
-	 * Returns the maximum stack size for a inventory slot. Seems to
-	 * always be 64, possibly will be extended.
-	 */
-	public int getInventoryStackLimit() {
-		return 64;
-	}
+        if (compound.hasKey("CustomName", 8))
+        {
+            this.customName = compound.getString("CustomName");
+        }
 
-	/**+
-	 * Do not make give this method the name canInteractWith because
-	 * it clashes with Container
-	 */
-	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-		return this.worldObj.getTileEntity(this.pos) != this ? false
-				: entityplayer.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D,
-						(double) this.pos.getZ() + 0.5D) <= 64.0D;
-	}
+        this.fuel = compound.getByte("Fuel");
+    }
 
-	public void openInventory(EntityPlayer var1) {
-	}
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
+        compound.setShort("BrewTime", (short)this.brewTime);
+        ItemStackHelper.saveAllItems(compound, this.brewingItemStacks);
 
-	public void closeInventory(EntityPlayer var1) {
-	}
+        if (this.hasCustomName())
+        {
+            compound.setString("CustomName", this.customName);
+        }
 
-	/**+
-	 * Returns true if automation is allowed to insert the given
-	 * stack (ignoring stack size) into the given slot.
-	 */
-	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		return i == 3 ? itemstack.getItem().isPotionIngredient(itemstack)
-				: itemstack.getItem() == Items.potionitem || itemstack.getItem() == Items.glass_bottle;
-	}
+        compound.setByte("Fuel", (byte)this.fuel);
+        return compound;
+    }
 
-	public boolean[] func_174902_m() {
-		boolean[] aboolean = new boolean[3];
+    public ItemStack getStackInSlot(int index)
+    {
+        return index >= 0 && index < this.brewingItemStacks.size() ? (ItemStack)this.brewingItemStacks.get(index) : ItemStack.EMPTY;
+    }
 
-		for (int i = 0; i < 3; ++i) {
-			if (this.brewingItemStacks[i] != null) {
-				aboolean[i] = true;
-			}
-		}
+    public ItemStack decrStackSize(int index, int count)
+    {
+        return ItemStackHelper.getAndSplit(this.brewingItemStacks, index, count);
+    }
 
-		return aboolean;
-	}
+    public ItemStack removeStackFromSlot(int index)
+    {
+        return ItemStackHelper.getAndRemove(this.brewingItemStacks, index);
+    }
 
-	public int[] getSlotsForFace(EnumFacing side) {
-		return side == EnumFacing.UP ? inputSlots : outputSlots;
-	}
+    public void setInventorySlotContents(int index, ItemStack stack)
+    {
+        if (index >= 0 && index < this.brewingItemStacks.size())
+        {
+            this.brewingItemStacks.set(index, stack);
+        }
+    }
 
-	/**+
-	 * Returns true if automation can insert the given item in the
-	 * given slot from the given side. Args: slot, item, side
-	 */
-	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-		return this.isItemValidForSlot(index, itemStackIn);
-	}
+    public int getInventoryStackLimit()
+    {
+        return 64;
+    }
 
-	/**+
-	 * Returns true if automation can extract the given item in the
-	 * given slot from the given side. Args: slot, item, side
-	 */
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-		return true;
-	}
+    public boolean isUsableByPlayer(EntityPlayer player)
+    {
+        if (this.world.getTileEntity(this.pos) != this)
+        {
+            return false;
+        }
+        else
+        {
+            return player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
+        }
+    }
 
-	public String getGuiID() {
-		return "minecraft:brewing_stand";
-	}
+    public void openInventory(EntityPlayer player)
+    {
+    }
 
-	public Container createContainer(InventoryPlayer inventoryplayer, EntityPlayer var2) {
-		return new ContainerBrewingStand(inventoryplayer, this);
-	}
+    public void closeInventory(EntityPlayer player)
+    {
+    }
 
-	public int getField(int i) {
-		switch (i) {
-		case 0:
-			return this.brewTime;
-		default:
-			return 0;
-		}
-	}
+    public boolean isItemValidForSlot(int index, ItemStack stack)
+    {
+        if (index == 3)
+        {
+            return net.minecraftforge.common.brewing.BrewingRecipeRegistry.isValidIngredient(stack);
+        }
+        else
+        {
+            Item item = stack.getItem();
 
-	public void setField(int i, int j) {
-		switch (i) {
-		case 0:
-			this.brewTime = j;
-		default:
-		}
-	}
+            if (index == 4)
+            {
+                return item == Items.BLAZE_POWDER;
+            }
+            else
+            {
+                return net.minecraftforge.common.brewing.BrewingRecipeRegistry.isValidInput(stack) && this.getStackInSlot(index).isEmpty();
+            }
+        }
+    }
 
-	public int getFieldCount() {
-		return 1;
-	}
+    public int[] getSlotsForFace(EnumFacing side)
+    {
+        if (side == EnumFacing.UP)
+        {
+            return SLOTS_FOR_UP;
+        }
+        else
+        {
+            return side == EnumFacing.DOWN ? SLOTS_FOR_DOWN : OUTPUT_SLOTS;
+        }
+    }
 
-	public void clear() {
-		for (int i = 0; i < this.brewingItemStacks.length; ++i) {
-			this.brewingItemStacks[i] = null;
-		}
+    public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction)
+    {
+        return this.isItemValidForSlot(index, itemStackIn);
+    }
 
-	}
+    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
+    {
+        if (index == 3)
+        {
+            return stack.getItem() == Items.GLASS_BOTTLE;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public String getGuiID()
+    {
+        return "minecraft:brewing_stand";
+    }
+
+    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
+    {
+        return new ContainerBrewingStand(playerInventory, this);
+    }
+
+    public int getField(int id)
+    {
+        switch (id)
+        {
+            case 0:
+                return this.brewTime;
+            case 1:
+                return this.fuel;
+            default:
+                return 0;
+        }
+    }
+
+    public void setField(int id, int value)
+    {
+        switch (id)
+        {
+            case 0:
+                this.brewTime = value;
+                break;
+            case 1:
+                this.fuel = value;
+        }
+    }
+
+    net.minecraftforge.items.IItemHandler handlerInput = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
+    net.minecraftforge.items.IItemHandler handlerOutput = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
+    net.minecraftforge.items.IItemHandler handlerSides = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.NORTH);
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @javax.annotation.Nullable
+    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing)
+    {
+        if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        {
+            if (facing == EnumFacing.UP)
+                return (T) handlerInput;
+            else if (facing == EnumFacing.DOWN)
+                return (T) handlerOutput;
+            else
+                return (T) handlerSides;
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    public int getFieldCount()
+    {
+        return 2;
+    }
+
+    public void clear()
+    {
+        this.brewingItemStacks.clear();
+    }
 }

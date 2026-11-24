@@ -1,96 +1,119 @@
 package net.minecraft.tileentity;
 
+import javax.annotation.Nullable;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.WeightedSpawnerEntity;
+import net.minecraft.util.datafix.DataFixer;
+import net.minecraft.util.datafix.FixTypes;
+import net.minecraft.util.datafix.IDataFixer;
+import net.minecraft.util.datafix.IDataWalker;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class TileEntityMobSpawner extends TileEntity implements ITickable {
-	private final MobSpawnerBaseLogic spawnerLogic = new MobSpawnerBaseLogic() {
-		public void func_98267_a(int i) {
-			TileEntityMobSpawner.this.worldObj.addBlockEvent(TileEntityMobSpawner.this.pos, Blocks.mob_spawner, i, 0);
-		}
+public class TileEntityMobSpawner extends TileEntity implements ITickable
+{
+    private final MobSpawnerBaseLogic spawnerLogic = new MobSpawnerBaseLogic()
+    {
+        public void broadcastEvent(int id)
+        {
+            TileEntityMobSpawner.this.world.addBlockEvent(TileEntityMobSpawner.this.pos, Blocks.MOB_SPAWNER, id, 0);
+        }
+        public World getSpawnerWorld()
+        {
+            return TileEntityMobSpawner.this.world;
+        }
+        public BlockPos getSpawnerPosition()
+        {
+            return TileEntityMobSpawner.this.pos;
+        }
+        public void setNextSpawnData(WeightedSpawnerEntity p_184993_1_)
+        {
+            super.setNextSpawnData(p_184993_1_);
 
-		public World getSpawnerWorld() {
-			return TileEntityMobSpawner.this.worldObj;
-		}
+            if (this.getSpawnerWorld() != null)
+            {
+                IBlockState iblockstate = this.getSpawnerWorld().getBlockState(this.getSpawnerPosition());
+                this.getSpawnerWorld().notifyBlockUpdate(TileEntityMobSpawner.this.pos, iblockstate, iblockstate, 4);
+            }
+        }
+    };
 
-		public BlockPos getSpawnerPosition() {
-			return TileEntityMobSpawner.this.pos;
-		}
+    public static void registerFixesMobSpawner(DataFixer fixer)
+    {
+        fixer.registerWalker(FixTypes.BLOCK_ENTITY, new IDataWalker()
+        {
+            public NBTTagCompound process(IDataFixer fixer, NBTTagCompound compound, int versionIn)
+            {
+                if (TileEntity.getKey(TileEntityMobSpawner.class).equals(new ResourceLocation(compound.getString("id"))))
+                {
+                    if (compound.hasKey("SpawnPotentials", 9))
+                    {
+                        NBTTagList nbttaglist = compound.getTagList("SpawnPotentials", 10);
 
-		public void setRandomEntity(
-				MobSpawnerBaseLogic.WeightedRandomMinecart mobspawnerbaselogic$weightedrandomminecart) {
-			super.setRandomEntity(mobspawnerbaselogic$weightedrandomminecart);
-			if (this.getSpawnerWorld() != null) {
-				this.getSpawnerWorld().markBlockForUpdate(TileEntityMobSpawner.this.pos);
-			}
+                        for (int i = 0; i < nbttaglist.tagCount(); ++i)
+                        {
+                            NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
+                            nbttagcompound.setTag("Entity", fixer.process(FixTypes.ENTITY, nbttagcompound.getCompoundTag("Entity"), versionIn));
+                        }
+                    }
 
-		}
-	};
+                    compound.setTag("SpawnData", fixer.process(FixTypes.ENTITY, compound.getCompoundTag("SpawnData"), versionIn));
+                }
 
-	public void readFromNBT(NBTTagCompound nbttagcompound) {
-		super.readFromNBT(nbttagcompound);
-		this.spawnerLogic.readFromNBT(nbttagcompound);
-	}
+                return compound;
+            }
+        });
+    }
 
-	public void writeToNBT(NBTTagCompound nbttagcompound) {
-		super.writeToNBT(nbttagcompound);
-		this.spawnerLogic.writeToNBT(nbttagcompound);
-	}
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
+        this.spawnerLogic.readFromNBT(compound);
+    }
 
-	/**+
-	 * Like the old updateEntity(), except more generic.
-	 */
-	public void update() {
-		this.spawnerLogic.updateSpawner();
-	}
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
+        this.spawnerLogic.writeToNBT(compound);
+        return compound;
+    }
 
-	/**+
-	 * Allows for a specialized description packet to be created.
-	 * This is often used to sync tile entity data from the server
-	 * to the client easily. For example this is used by signs to
-	 * synchronise the text to be displayed.
-	 */
-	public Packet getDescriptionPacket() {
-		NBTTagCompound nbttagcompound = new NBTTagCompound();
-		this.writeToNBT(nbttagcompound);
-		nbttagcompound.removeTag("SpawnPotentials");
-		return new S35PacketUpdateTileEntity(this.pos, 1, nbttagcompound);
-	}
+    public void update()
+    {
+        this.spawnerLogic.updateSpawner();
+    }
 
-	public boolean receiveClientEvent(int i, int j) {
-		return this.spawnerLogic.setDelayToMin(i) ? true : super.receiveClientEvent(i, j);
-	}
+    @Nullable
+    public SPacketUpdateTileEntity getUpdatePacket()
+    {
+        return new SPacketUpdateTileEntity(this.pos, 1, this.getUpdateTag());
+    }
 
-	public boolean func_183000_F() {
-		return true;
-	}
+    public NBTTagCompound getUpdateTag()
+    {
+        NBTTagCompound nbttagcompound = this.writeToNBT(new NBTTagCompound());
+        nbttagcompound.removeTag("SpawnPotentials");
+        return nbttagcompound;
+    }
 
-	public MobSpawnerBaseLogic getSpawnerBaseLogic() {
-		return this.spawnerLogic;
-	}
+    public boolean receiveClientEvent(int id, int type)
+    {
+        return this.spawnerLogic.setDelayToMin(id) ? true : super.receiveClientEvent(id, type);
+    }
+
+    public boolean onlyOpsCanSetNbt()
+    {
+        return true;
+    }
+
+    public MobSpawnerBaseLogic getSpawnerBaseLogic()
+    {
+        return this.spawnerLogic;
+    }
 }

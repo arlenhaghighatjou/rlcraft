@@ -1,87 +1,86 @@
 package net.minecraft.item;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSnow;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ItemSnow extends ItemBlock {
-	public ItemSnow(Block block) {
-		super(block);
-		this.setMaxDamage(0);
-		this.setHasSubtypes(true);
-	}
+public class ItemSnow extends ItemBlock
+{
+    public ItemSnow(Block block)
+    {
+        super(block);
+        this.setMaxDamage(0);
+    }
 
-	/**+
-	 * Called when a Block is right-clicked with this Item
-	 */
-	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos blockpos,
-			EnumFacing enumfacing, float f, float f1, float f2) {
-		if (itemstack.stackSize == 0) {
-			return false;
-		} else if (!entityplayer.canPlayerEdit(blockpos, enumfacing, itemstack)) {
-			return false;
-		} else {
-			IBlockState iblockstate = world.getBlockState(blockpos);
-			Block block = iblockstate.getBlock();
-			BlockPos blockpos1 = blockpos;
-			if ((enumfacing != EnumFacing.UP || block != this.block) && !block.isReplaceable(world, blockpos)) {
-				blockpos1 = blockpos.offset(enumfacing);
-				iblockstate = world.getBlockState(blockpos1);
-				block = iblockstate.getBlock();
-			}
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        ItemStack itemstack = player.getHeldItem(hand);
 
-			if (block == this.block) {
-				int i = ((Integer) iblockstate.getValue(BlockSnow.LAYERS)).intValue();
-				if (i <= 7) {
-					IBlockState iblockstate1 = iblockstate.withProperty(BlockSnow.LAYERS, Integer.valueOf(i + 1));
-					AxisAlignedBB axisalignedbb = this.block.getCollisionBoundingBox(world, blockpos1, iblockstate1);
-					if (axisalignedbb != null && world.checkNoEntityCollision(axisalignedbb)
-							&& world.setBlockState(blockpos1, iblockstate1, 2)) {
-						world.playSoundEffect((double) ((float) blockpos1.getX() + 0.5F),
-								(double) ((float) blockpos1.getY() + 0.5F), (double) ((float) blockpos1.getZ() + 0.5F),
-								this.block.stepSound.getPlaceSound(), (this.block.stepSound.getVolume() + 1.0F) / 2.0F,
-								this.block.stepSound.getFrequency() * 0.8F);
-						--itemstack.stackSize;
-						return true;
-					}
-				}
-			}
+        if (!itemstack.isEmpty() && player.canPlayerEdit(pos, facing, itemstack))
+        {
+            IBlockState iblockstate = worldIn.getBlockState(pos);
+            Block block = iblockstate.getBlock();
+            BlockPos blockpos = pos;
 
-			return super.onItemUse(itemstack, entityplayer, world, blockpos1, enumfacing, f, f1, f2);
-		}
-	}
+            if ((facing != EnumFacing.UP || block != this.block) && !block.isReplaceable(worldIn, pos))
+            {
+                blockpos = pos.offset(facing);
+                iblockstate = worldIn.getBlockState(blockpos);
+                block = iblockstate.getBlock();
+            }
 
-	/**+
-	 * Converts the given ItemStack damage value into a metadata
-	 * value to be placed in the world when this Item is placed as a
-	 * Block (mostly used with ItemBlocks).
-	 */
-	public int getMetadata(int i) {
-		return i;
-	}
+            if (block == this.block)
+            {
+                int i = ((Integer)iblockstate.getValue(BlockSnow.LAYERS)).intValue();
+
+                if (i < 8)
+                {
+                    IBlockState iblockstate1 = iblockstate.withProperty(BlockSnow.LAYERS, Integer.valueOf(i + 1));
+                    AxisAlignedBB axisalignedbb = iblockstate1.getCollisionBoundingBox(worldIn, blockpos);
+
+                    if (axisalignedbb != Block.NULL_AABB && worldIn.checkNoEntityCollision(axisalignedbb.offset(blockpos)) && worldIn.setBlockState(blockpos, iblockstate1, 10))
+                    {
+                        SoundType soundtype = this.block.getSoundType(iblockstate1, worldIn, pos, player);
+                        worldIn.playSound(player, blockpos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+
+                        if (player instanceof EntityPlayerMP)
+                        {
+                            CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, itemstack);
+                        }
+
+                        itemstack.shrink(1);
+                        return EnumActionResult.SUCCESS;
+                    }
+                }
+            }
+
+            return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+        }
+        else
+        {
+            return EnumActionResult.FAIL;
+        }
+    }
+
+    public int getMetadata(int damage)
+    {
+        return damage;
+    }
+
+    public boolean canPlaceBlockOnSide(World world, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack)
+    {
+        IBlockState state = world.getBlockState(pos);
+        return (state.getBlock() != net.minecraft.init.Blocks.SNOW_LAYER || ((Integer)state.getValue(BlockSnow.LAYERS)) > 7) ? super.canPlaceBlockOnSide(world, pos, side, player, stack) : true;
+    }
 }

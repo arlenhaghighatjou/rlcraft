@@ -1,147 +1,153 @@
 package net.minecraft.enchantment;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Enchantments;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class EnchantmentProtection extends Enchantment {
-	/**+
-	 * Holds the name to be translated of each protection type.
-	 */
-	private static final String[] protectionName = new String[] { "all", "fire", "fall", "explosion", "projectile" };
-	/**+
-	 * Holds the base factor of enchantability needed to be able to
-	 * use the enchant.
-	 */
-	private static final int[] baseEnchantability = new int[] { 1, 10, 5, 5, 3 };
-	/**+
-	 * Holds how much each level increased the enchantability factor
-	 * to be able to use this enchant.
-	 */
-	private static final int[] levelEnchantability = new int[] { 11, 8, 6, 8, 6 };
-	/**+
-	 * Used on the formula of base enchantability, this is the
-	 * 'window' factor of values to be able to use thing enchant.
-	 */
-	private static final int[] thresholdEnchantability = new int[] { 20, 12, 10, 12, 15 };
-	public final int protectionType;
+public class EnchantmentProtection extends Enchantment
+{
+    public final EnchantmentProtection.Type protectionType;
 
-	public EnchantmentProtection(int parInt1, ResourceLocation parResourceLocation, int parInt2, int parInt3) {
-		super(parInt1, parResourceLocation, parInt2, EnumEnchantmentType.ARMOR);
-		this.protectionType = parInt3;
-		if (parInt3 == 2) {
-			this.type = EnumEnchantmentType.ARMOR_FEET;
-		}
+    public EnchantmentProtection(Enchantment.Rarity rarityIn, EnchantmentProtection.Type protectionTypeIn, EntityEquipmentSlot... slots)
+    {
+        super(rarityIn, EnumEnchantmentType.ARMOR, slots);
+        this.protectionType = protectionTypeIn;
 
-	}
+        if (protectionTypeIn == EnchantmentProtection.Type.FALL)
+        {
+            this.type = EnumEnchantmentType.ARMOR_FEET;
+        }
+    }
 
-	/**+
-	 * Returns the minimal value of enchantability needed on the
-	 * enchantment level passed.
-	 */
-	public int getMinEnchantability(int i) {
-		return baseEnchantability[this.protectionType] + (i - 1) * levelEnchantability[this.protectionType];
-	}
+    public int getMinEnchantability(int enchantmentLevel)
+    {
+        return this.protectionType.getMinimalEnchantability() + (enchantmentLevel - 1) * this.protectionType.getEnchantIncreasePerLevel();
+    }
 
-	/**+
-	 * Returns the maximum value of enchantability nedded on the
-	 * enchantment level passed.
-	 */
-	public int getMaxEnchantability(int i) {
-		return this.getMinEnchantability(i) + thresholdEnchantability[this.protectionType];
-	}
+    public int getMaxEnchantability(int enchantmentLevel)
+    {
+        return this.getMinEnchantability(enchantmentLevel) + this.protectionType.getEnchantIncreasePerLevel();
+    }
 
-	/**+
-	 * Returns the maximum level that the enchantment can have.
-	 */
-	public int getMaxLevel() {
-		return 4;
-	}
+    public int getMaxLevel()
+    {
+        return 4;
+    }
 
-	/**+
-	 * Calculates the damage protection of the enchantment based on
-	 * level and damage source passed.
-	 */
-	public int calcModifierDamage(int i, DamageSource damagesource) {
-		if (damagesource.canHarmInCreative()) {
-			return 0;
-		} else {
-			float f = (float) (6 + i * i) / 3.0F;
-			return this.protectionType == 0 ? MathHelper.floor_float(f * 0.75F)
-					: (this.protectionType == 1 && damagesource.isFireDamage() ? MathHelper.floor_float(f * 1.25F)
-							: (this.protectionType == 2 && damagesource == DamageSource.fall
-									? MathHelper.floor_float(f * 2.5F)
-									: (this.protectionType == 3 && damagesource.isExplosion()
-											? MathHelper.floor_float(f * 1.5F)
-											: (this.protectionType == 4 && damagesource.isProjectile()
-													? MathHelper.floor_float(f * 1.5F)
-													: 0))));
-		}
-	}
+    public int calcModifierDamage(int level, DamageSource source)
+    {
+        if (source.canHarmInCreative())
+        {
+            return 0;
+        }
+        else if (this.protectionType == EnchantmentProtection.Type.ALL)
+        {
+            return level;
+        }
+        else if (this.protectionType == EnchantmentProtection.Type.FIRE && source.isFireDamage())
+        {
+            return level * 2;
+        }
+        else if (this.protectionType == EnchantmentProtection.Type.FALL && source == DamageSource.FALL)
+        {
+            return level * 3;
+        }
+        else if (this.protectionType == EnchantmentProtection.Type.EXPLOSION && source.isExplosion())
+        {
+            return level * 2;
+        }
+        else
+        {
+            return this.protectionType == EnchantmentProtection.Type.PROJECTILE && source.isProjectile() ? level * 2 : 0;
+        }
+    }
 
-	/**+
-	 * Return the name of key in translation table of this
-	 * enchantment.
-	 */
-	public String getName() {
-		return "enchantment.protect." + protectionName[this.protectionType];
-	}
+    public String getName()
+    {
+        return "enchantment.protect." + this.protectionType.getTypeName();
+    }
 
-	/**+
-	 * Determines if the enchantment passed can be applyied together
-	 * with this enchantment.
-	 */
-	public boolean canApplyTogether(Enchantment enchantment) {
-		if (enchantment instanceof EnchantmentProtection) {
-			EnchantmentProtection enchantmentprotection = (EnchantmentProtection) enchantment;
-			return enchantmentprotection.protectionType == this.protectionType ? false
-					: this.protectionType == 2 || enchantmentprotection.protectionType == 2;
-		} else {
-			return super.canApplyTogether(enchantment);
-		}
-	}
+    public boolean canApplyTogether(Enchantment ench)
+    {
+        if (ench instanceof EnchantmentProtection)
+        {
+            EnchantmentProtection enchantmentprotection = (EnchantmentProtection)ench;
 
-	/**+
-	 * Gets the amount of ticks an entity should be set fire,
-	 * adjusted for fire protection.
-	 */
-	public static int getFireTimeForEntity(Entity parEntity, int parInt1) {
-		int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantment.fireProtection.effectId, parEntity.getInventory());
-		if (i > 0) {
-			parInt1 -= MathHelper.floor_float((float) parInt1 * (float) i * 0.15F);
-		}
+            if (this.protectionType == enchantmentprotection.protectionType)
+            {
+                return false;
+            }
+            else
+            {
+                return this.protectionType == EnchantmentProtection.Type.FALL || enchantmentprotection.protectionType == EnchantmentProtection.Type.FALL;
+            }
+        }
+        else
+        {
+            return super.canApplyTogether(ench);
+        }
+    }
 
-		return parInt1;
-	}
+    public static int getFireTimeForEntity(EntityLivingBase p_92093_0_, int p_92093_1_)
+    {
+        int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FIRE_PROTECTION, p_92093_0_);
 
-	public static double func_92092_a(Entity parEntity, double parDouble1) {
-		int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantment.blastProtection.effectId,
-				parEntity.getInventory());
-		if (i > 0) {
-			parDouble1 -= (double) MathHelper.floor_double(parDouble1 * (double) ((float) i * 0.15F));
-		}
+        if (i > 0)
+        {
+            p_92093_1_ -= MathHelper.floor((float)p_92093_1_ * (float)i * 0.15F);
+        }
 
-		return parDouble1;
-	}
+        return p_92093_1_;
+    }
+
+    public static double getBlastDamageReduction(EntityLivingBase entityLivingBaseIn, double damage)
+    {
+        int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.BLAST_PROTECTION, entityLivingBaseIn);
+
+        if (i > 0)
+        {
+            damage -= (double)MathHelper.floor(damage * (double)((float)i * 0.15F));
+        }
+
+        return damage;
+    }
+
+    public static enum Type
+    {
+        ALL("all", 1, 11, 20),
+        FIRE("fire", 10, 8, 12),
+        FALL("fall", 5, 6, 10),
+        EXPLOSION("explosion", 5, 8, 12),
+        PROJECTILE("projectile", 3, 6, 15);
+
+        private final String typeName;
+        private final int minEnchantability;
+        private final int levelCost;
+        private final int levelCostSpan;
+
+        private Type(String name, int minimal, int perLevelEnchantability, int p_i47051_6_)
+        {
+            this.typeName = name;
+            this.minEnchantability = minimal;
+            this.levelCost = perLevelEnchantability;
+            this.levelCostSpan = p_i47051_6_;
+        }
+
+        public String getTypeName()
+        {
+            return this.typeName;
+        }
+
+        public int getMinimalEnchantability()
+        {
+            return this.minEnchantability;
+        }
+
+        public int getEnchantIncreasePerLevel()
+        {
+            return this.levelCost;
+        }
+    }
 }

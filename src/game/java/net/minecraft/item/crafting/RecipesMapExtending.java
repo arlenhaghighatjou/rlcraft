@@ -4,84 +4,106 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapData;
+import net.minecraft.world.storage.MapDecoration;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class RecipesMapExtending extends ShapedRecipes {
-	public RecipesMapExtending() {
-		super(3, 3,
-				new ItemStack[] { new ItemStack(Items.paper), new ItemStack(Items.paper), new ItemStack(Items.paper),
-						new ItemStack(Items.paper), new ItemStack(Items.filled_map, 0, 32767),
-						new ItemStack(Items.paper), new ItemStack(Items.paper), new ItemStack(Items.paper),
-						new ItemStack(Items.paper) },
-				new ItemStack(Items.map, 0, 0));
-	}
+public class RecipesMapExtending extends ShapedRecipes
+{
+    public RecipesMapExtending()
+    {
+        super("", 3, 3, NonNullList.from(Ingredient.EMPTY, Ingredient.fromItems(Items.PAPER), Ingredient.fromItems(Items.PAPER), Ingredient.fromItems(Items.PAPER), Ingredient.fromItems(Items.PAPER), Ingredient.fromItem(Items.FILLED_MAP), Ingredient.fromItems(Items.PAPER), Ingredient.fromItems(Items.PAPER), Ingredient.fromItems(Items.PAPER), Ingredient.fromItems(Items.PAPER)), new ItemStack(Items.MAP));
+    }
 
-	/**+
-	 * Used to check if a recipe matches current crafting inventory
-	 */
-	public boolean matches(InventoryCrafting inventorycrafting, World world) {
-		if (!super.matches(inventorycrafting, world)) {
-			return false;
-		} else {
-			ItemStack itemstack = null;
+    public boolean matches(InventoryCrafting inv, World worldIn)
+    {
+        if (!super.matches(inv, worldIn))
+        {
+            return false;
+        }
+        else
+        {
+            ItemStack itemstack = ItemStack.EMPTY;
 
-			for (int i = 0; i < inventorycrafting.getSizeInventory() && itemstack == null; ++i) {
-				ItemStack itemstack1 = inventorycrafting.getStackInSlot(i);
-				if (itemstack1 != null && itemstack1.getItem() == Items.filled_map) {
-					itemstack = itemstack1;
-				}
-			}
+            for (int i = 0; i < inv.getSizeInventory() && itemstack.isEmpty(); ++i)
+            {
+                ItemStack itemstack1 = inv.getStackInSlot(i);
 
-			if (itemstack == null) {
-				return false;
-			} else {
-				MapData mapdata = Items.filled_map.getMapData(itemstack, world);
-				return mapdata == null ? false : mapdata.scale < 4;
-			}
-		}
-	}
+                if (itemstack1.getItem() == Items.FILLED_MAP)
+                {
+                    itemstack = itemstack1;
+                }
+            }
 
-	/**+
-	 * Returns an Item that is the result of this recipe
-	 */
-	public ItemStack getCraftingResult(InventoryCrafting inventorycrafting) {
-		ItemStack itemstack = null;
+            if (itemstack.isEmpty())
+            {
+                return false;
+            }
+            else
+            {
+                MapData mapdata = Items.FILLED_MAP.getMapData(itemstack, worldIn);
 
-		for (int i = 0; i < inventorycrafting.getSizeInventory() && itemstack == null; ++i) {
-			ItemStack itemstack1 = inventorycrafting.getStackInSlot(i);
-			if (itemstack1 != null && itemstack1.getItem() == Items.filled_map) {
-				itemstack = itemstack1;
-			}
-		}
+                if (mapdata == null)
+                {
+                    return false;
+                }
+                else if (this.isExplorationMap(mapdata))
+                {
+                    return false;
+                }
+                else
+                {
+                    return mapdata.scale < 4;
+                }
+            }
+        }
+    }
 
-		itemstack = itemstack.copy();
-		itemstack.stackSize = 1;
-		if (itemstack.getTagCompound() == null) {
-			itemstack.setTagCompound(new NBTTagCompound());
-		}
+    private boolean isExplorationMap(MapData p_190934_1_)
+    {
+        if (p_190934_1_.mapDecorations != null)
+        {
+            for (MapDecoration mapdecoration : p_190934_1_.mapDecorations.values())
+            {
+                if (mapdecoration.getType() == MapDecoration.Type.MANSION || mapdecoration.getType() == MapDecoration.Type.MONUMENT)
+                {
+                    return true;
+                }
+            }
+        }
 
-		itemstack.getTagCompound().setBoolean("map_is_scaling", true);
-		return itemstack;
-	}
+        return false;
+    }
+
+    public ItemStack getCraftingResult(InventoryCrafting inv)
+    {
+        ItemStack itemstack = ItemStack.EMPTY;
+
+        for (int i = 0; i < inv.getSizeInventory() && itemstack.isEmpty(); ++i)
+        {
+            ItemStack itemstack1 = inv.getStackInSlot(i);
+
+            if (itemstack1.getItem() == Items.FILLED_MAP)
+            {
+                itemstack = itemstack1;
+            }
+        }
+
+        itemstack = itemstack.copy();
+        itemstack.setCount(1);
+
+        if (itemstack.getTagCompound() == null)
+        {
+            itemstack.setTagCompound(new NBTTagCompound());
+        }
+
+        itemstack.getTagCompound().setInteger("map_scale_direction", 1);
+        return itemstack;
+    }
+
+    public boolean isDynamic()
+    {
+        return true;
+    }
 }

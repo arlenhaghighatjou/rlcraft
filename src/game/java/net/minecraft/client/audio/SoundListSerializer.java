@@ -1,85 +1,82 @@
 package net.minecraft.client.audio;
 
+import com.google.common.collect.Lists;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import java.lang.reflect.Type;
+import java.util.List;
+import net.minecraft.util.JsonUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.Validate;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import net.lax1dude.eaglercraft.v1_8.json.JSONTypeDeserializer;
+@SideOnly(Side.CLIENT)
+public class SoundListSerializer implements JsonDeserializer<SoundList>
+{
+    public SoundList deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException
+    {
+        JsonObject jsonobject = JsonUtils.getJsonObject(p_deserialize_1_, "entry");
+        boolean flag = JsonUtils.getBoolean(jsonobject, "replace", false);
+        String s = JsonUtils.getString(jsonobject, "subtitle", (String)null);
+        List<Sound> list = this.deserializeSounds(jsonobject);
+        return new SoundList(list, flag, s);
+    }
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class SoundListSerializer implements JSONTypeDeserializer<JSONObject, SoundList> {
-	public SoundList deserialize(JSONObject jsonobject) throws JSONException {
-		SoundList soundlist = new SoundList();
-		soundlist.setReplaceExisting(jsonobject.optBoolean("replace", false));
-		SoundCategory soundcategory = SoundCategory
-				.getCategory(jsonobject.optString("category", SoundCategory.MASTER.getCategoryName()));
-		soundlist.setSoundCategory(soundcategory);
-		Validate.notNull(soundcategory, "Invalid category", new Object[0]);
-		if (jsonobject.has("sounds")) {
-			JSONArray jsonarray = jsonobject.getJSONArray("sounds");
+    private List<Sound> deserializeSounds(JsonObject object)
+    {
+        List<Sound> list = Lists.<Sound>newArrayList();
 
-			for (int i = 0; i < jsonarray.length(); ++i) {
-				Object jsonelement = jsonarray.get(i);
-				SoundList.SoundEntry soundlist$soundentry = new SoundList.SoundEntry();
-				if (jsonelement instanceof String) {
-					soundlist$soundentry.setSoundEntryName((String) jsonelement);
-				} else if (jsonelement instanceof JSONObject) {
-					JSONObject jsonobject1 = (JSONObject) jsonelement;
-					soundlist$soundentry.setSoundEntryName(jsonobject1.getString("name"));
-					if (jsonobject1.has("type")) {
-						SoundList.SoundEntry.Type soundlist$soundentry$type = SoundList.SoundEntry.Type
-								.getType(jsonobject1.getString("type"));
-						Validate.notNull(soundlist$soundentry$type, "Invalid type", new Object[0]);
-						soundlist$soundentry.setSoundEntryType(soundlist$soundentry$type);
-					}
+        if (object.has("sounds"))
+        {
+            JsonArray jsonarray = JsonUtils.getJsonArray(object, "sounds");
 
-					if (jsonobject1.has("volume")) {
-						float f = jsonobject1.getFloat("volume");
-						Validate.isTrue(f > 0.0F, "Invalid volume", new Object[0]);
-						soundlist$soundentry.setSoundEntryVolume(f);
-					}
+            for (int i = 0; i < jsonarray.size(); ++i)
+            {
+                JsonElement jsonelement = jsonarray.get(i);
 
-					if (jsonobject1.has("pitch")) {
-						float f1 = jsonobject1.getFloat("pitch");
-						Validate.isTrue(f1 > 0.0F, "Invalid pitch", new Object[0]);
-						soundlist$soundentry.setSoundEntryPitch(f1);
-					}
+                if (JsonUtils.isString(jsonelement))
+                {
+                    String s = JsonUtils.getString(jsonelement, "sound");
+                    list.add(new Sound(s, 1.0F, 1.0F, 1, Sound.Type.FILE, false));
+                }
+                else
+                {
+                    list.add(this.deserializeSound(JsonUtils.getJsonObject(jsonelement, "sound")));
+                }
+            }
+        }
 
-					if (jsonobject1.has("weight")) {
-						int j = jsonobject1.getInt("weight");
-						Validate.isTrue(j > 0, "Invalid weight", new Object[0]);
-						soundlist$soundentry.setSoundEntryWeight(j);
-					}
+        return list;
+    }
 
-					if (jsonobject1.has("stream")) {
-						soundlist$soundentry.setStreaming(jsonobject1.getBoolean("stream"));
-					}
-				}
+    private Sound deserializeSound(JsonObject object)
+    {
+        String s = JsonUtils.getString(object, "name");
+        Sound.Type sound$type = this.deserializeType(object, Sound.Type.FILE);
+        float f = JsonUtils.getFloat(object, "volume", 1.0F);
+        Validate.isTrue(f > 0.0F, "Invalid volume");
+        float f1 = JsonUtils.getFloat(object, "pitch", 1.0F);
+        Validate.isTrue(f1 > 0.0F, "Invalid pitch");
+        int i = JsonUtils.getInt(object, "weight", 1);
+        Validate.isTrue(i > 0, "Invalid weight");
+        boolean flag = JsonUtils.getBoolean(object, "stream", false);
+        return new Sound(s, f, f1, i, sound$type, flag);
+    }
 
-				soundlist.getSoundList().add(soundlist$soundentry);
-			}
-		}
+    private Sound.Type deserializeType(JsonObject object, Sound.Type defaultValue)
+    {
+        Sound.Type sound$type = defaultValue;
 
-		return soundlist;
-	}
+        if (object.has("type"))
+        {
+            sound$type = Sound.Type.getByName(JsonUtils.getString(object, "type"));
+            Validate.notNull(sound$type, "Invalid type");
+        }
+
+        return sound$type;
+    }
 }

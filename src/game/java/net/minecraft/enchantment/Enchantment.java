@@ -1,283 +1,232 @@
 package net.minecraft.enchantment;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
-
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.registry.RegistryNamespaced;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public abstract class Enchantment {
-	private static final Enchantment[] enchantmentsList = new Enchantment[256];
-	public static final Enchantment[] enchantmentsBookList;
-	private static final Map<ResourceLocation, Enchantment> locationEnchantments = Maps.newHashMap();
-	public static final Enchantment protection = new EnchantmentProtection(0, new ResourceLocation("protection"), 10,
-			0);
-	/**+
-	 * Protection against fire
-	 */
-	public static final Enchantment fireProtection = new EnchantmentProtection(1,
-			new ResourceLocation("fire_protection"), 5, 1);
-	public static final Enchantment featherFalling = new EnchantmentProtection(2,
-			new ResourceLocation("feather_falling"), 5, 2);
-	/**+
-	 * Protection against explosions
-	 */
-	public static final Enchantment blastProtection = new EnchantmentProtection(3,
-			new ResourceLocation("blast_protection"), 2, 3);
-	public static final Enchantment projectileProtection = new EnchantmentProtection(4,
-			new ResourceLocation("projectile_protection"), 5, 4);
-	public static final Enchantment respiration = new EnchantmentOxygen(5, new ResourceLocation("respiration"), 2);
-	/**+
-	 * Increases underwater mining rate
-	 */
-	public static final Enchantment aquaAffinity = new EnchantmentWaterWorker(6, new ResourceLocation("aqua_affinity"),
-			2);
-	public static final Enchantment thorns = new EnchantmentThorns(7, new ResourceLocation("thorns"), 1);
-	public static final Enchantment depthStrider = new EnchantmentWaterWalker(8, new ResourceLocation("depth_strider"),
-			2);
-	public static final Enchantment sharpness = new EnchantmentDamage(16, new ResourceLocation("sharpness"), 10, 0);
-	public static final Enchantment smite = new EnchantmentDamage(17, new ResourceLocation("smite"), 5, 1);
-	public static final Enchantment baneOfArthropods = new EnchantmentDamage(18,
-			new ResourceLocation("bane_of_arthropods"), 5, 2);
-	public static final Enchantment knockback = new EnchantmentKnockback(19, new ResourceLocation("knockback"), 5);
-	/**+
-	 * Lights mobs on fire
-	 */
-	public static final Enchantment fireAspect = new EnchantmentFireAspect(20, new ResourceLocation("fire_aspect"), 2);
-	/**+
-	 * Mobs have a chance to drop more loot
-	 */
-	public static final Enchantment looting = new EnchantmentLootBonus(21, new ResourceLocation("looting"), 2,
-			EnumEnchantmentType.WEAPON);
-	/**+
-	 * Faster resource gathering while in use
-	 */
-	public static final Enchantment efficiency = new EnchantmentDigging(32, new ResourceLocation("efficiency"), 10);
-	/**+
-	 * Blocks mined will drop themselves, even if it should drop
-	 * something else (e.g. stone will drop stone, not cobblestone)
-	 */
-	public static final Enchantment silkTouch = new EnchantmentUntouching(33, new ResourceLocation("silk_touch"), 1);
-	/**+
-	 * Sometimes, the tool's durability will not be spent when the
-	 * tool is used
-	 */
-	public static final Enchantment unbreaking = new EnchantmentDurability(34, new ResourceLocation("unbreaking"), 5);
-	/**+
-	 * Can multiply the drop rate of items from blocks
-	 */
-	public static final Enchantment fortune = new EnchantmentLootBonus(35, new ResourceLocation("fortune"), 2,
-			EnumEnchantmentType.DIGGER);
-	/**+
-	 * Power enchantment for bows, add's extra damage to arrows.
-	 */
-	public static final Enchantment power = new EnchantmentArrowDamage(48, new ResourceLocation("power"), 10);
-	/**+
-	 * Knockback enchantments for bows, the arrows will knockback
-	 * the target when hit.
-	 */
-	public static final Enchantment punch = new EnchantmentArrowKnockback(49, new ResourceLocation("punch"), 2);
-	/**+
-	 * Flame enchantment for bows. Arrows fired by the bow will be
-	 * on fire. Any target hit will also set on fire.
-	 */
-	public static final Enchantment flame = new EnchantmentArrowFire(50, new ResourceLocation("flame"), 2);
-	/**+
-	 * Infinity enchantment for bows. The bow will not consume
-	 * arrows anymore, but will still required at least one arrow on
-	 * inventory use the bow.
-	 */
-	public static final Enchantment infinity = new EnchantmentArrowInfinite(51, new ResourceLocation("infinity"), 1);
-	public static final Enchantment luckOfTheSea = new EnchantmentLootBonus(61, new ResourceLocation("luck_of_the_sea"),
-			2, EnumEnchantmentType.FISHING_ROD);
-	public static final Enchantment lure = new EnchantmentFishingSpeed(62, new ResourceLocation("lure"), 2,
-			EnumEnchantmentType.FISHING_ROD);
-	public final int effectId;
-	private final int weight;
-	public EnumEnchantmentType type;
-	protected String name;
+public abstract class Enchantment extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<Enchantment>
+{
+    public static final RegistryNamespaced<ResourceLocation, Enchantment> REGISTRY = net.minecraftforge.registries.GameData.getWrapper(Enchantment.class);
+    private final EntityEquipmentSlot[] applicableEquipmentTypes;
+    private final Enchantment.Rarity rarity;
+    @Nullable
+    public EnumEnchantmentType type;
+    protected String name;
 
-	/**+
-	 * Retrieves an Enchantment from the enchantmentsList
-	 */
-	public static Enchantment getEnchantmentById(int enchID) {
-		return enchID >= 0 && enchID < enchantmentsList.length ? enchantmentsList[enchID] : null;
-	}
+    @Nullable
+    public static Enchantment getEnchantmentByID(int id)
+    {
+        return REGISTRY.getObjectById(id);
+    }
 
-	protected Enchantment(int enchID, ResourceLocation enchName, int enchWeight, EnumEnchantmentType enchType) {
-		this.effectId = enchID;
-		this.weight = enchWeight;
-		this.type = enchType;
-		if (enchantmentsList[enchID] != null) {
-			throw new IllegalArgumentException("Duplicate enchantment id!");
-		} else {
-			enchantmentsList[enchID] = this;
-			locationEnchantments.put(enchName, this);
-		}
-	}
+    public static int getEnchantmentID(Enchantment enchantmentIn)
+    {
+        return REGISTRY.getIDForObject(enchantmentIn);
+    }
 
-	/**+
-	 * Retrieves an enchantment by using its location name.
-	 */
-	public static Enchantment getEnchantmentByLocation(String location) {
-		return (Enchantment) locationEnchantments.get(new ResourceLocation(location));
-	}
+    @Nullable
+    public static Enchantment getEnchantmentByLocation(String location)
+    {
+        return REGISTRY.getObject(new ResourceLocation(location));
+    }
 
-	public static Set<ResourceLocation> func_181077_c() {
-		return locationEnchantments.keySet();
-	}
+    protected Enchantment(Enchantment.Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot[] slots)
+    {
+        this.rarity = rarityIn;
+        this.type = typeIn;
+        this.applicableEquipmentTypes = slots;
+    }
 
-	/**+
-	 * Retrieves the weight value of an Enchantment. This weight
-	 * value is used within vanilla to determine how rare an
-	 * enchantment is.
-	 */
-	public int getWeight() {
-		return this.weight;
-	}
+    public List<ItemStack> getEntityEquipment(EntityLivingBase entityIn)
+    {
+        List<ItemStack> list = Lists.<ItemStack>newArrayList();
 
-	/**+
-	 * Returns the minimum level that the enchantment can have.
-	 */
-	public int getMinLevel() {
-		return 1;
-	}
+        for (EntityEquipmentSlot entityequipmentslot : this.applicableEquipmentTypes)
+        {
+            ItemStack itemstack = entityIn.getItemStackFromSlot(entityequipmentslot);
 
-	/**+
-	 * Returns the maximum level that the enchantment can have.
-	 */
-	public int getMaxLevel() {
-		return 1;
-	}
+            if (!itemstack.isEmpty())
+            {
+                list.add(itemstack);
+            }
+        }
 
-	/**+
-	 * Returns the minimal value of enchantability needed on the
-	 * enchantment level passed.
-	 */
-	public int getMinEnchantability(int i) {
-		return 1 + i * 10;
-	}
+        return list;
+    }
 
-	/**+
-	 * Returns the maximum value of enchantability nedded on the
-	 * enchantment level passed.
-	 */
-	public int getMaxEnchantability(int i) {
-		return this.getMinEnchantability(i) + 5;
-	}
+    public Enchantment.Rarity getRarity()
+    {
+        return this.rarity;
+    }
 
-	/**+
-	 * Calculates the damage protection of the enchantment based on
-	 * level and damage source passed.
-	 */
-	public int calcModifierDamage(int level, DamageSource source) {
-		return 0;
-	}
+    public int getMinLevel()
+    {
+        return 1;
+    }
 
-	/**+
-	 * Calculates the additional damage that will be dealt by an
-	 * item with this enchantment. This alternative to
-	 * calcModifierDamage is sensitive to the targets
-	 * EnumCreatureAttribute.
-	 */
-	public float calcDamageByCreature(int var1, EnumCreatureAttribute var2) {
-		return 0.0F;
-	}
+    public int getMaxLevel()
+    {
+        return 1;
+    }
 
-	/**+
-	 * Determines if the enchantment passed can be applyied together
-	 * with this enchantment.
-	 */
-	public boolean canApplyTogether(Enchantment enchantment) {
-		return this != enchantment;
-	}
+    public int getMinEnchantability(int enchantmentLevel)
+    {
+        return 1 + enchantmentLevel * 10;
+    }
 
-	/**+
-	 * Sets the enchantment name
-	 */
-	public Enchantment setName(String enchName) {
-		this.name = enchName;
-		return this;
-	}
+    public int getMaxEnchantability(int enchantmentLevel)
+    {
+        return this.getMinEnchantability(enchantmentLevel) + 5;
+    }
 
-	/**+
-	 * Return the name of key in translation table of this
-	 * enchantment.
-	 */
-	public String getName() {
-		return "enchantment." + this.name;
-	}
+    public int calcModifierDamage(int level, DamageSource source)
+    {
+        return 0;
+    }
 
-	/**+
-	 * Returns the correct traslated name of the enchantment and the
-	 * level in roman numbers.
-	 */
-	public String getTranslatedName(int level) {
-		String s = StatCollector.translateToLocal(this.getName());
-		return s + " " + StatCollector.translateToLocal("enchantment.level." + level);
-	}
+    public float calcDamageByCreature(int level, EnumCreatureAttribute creatureType)
+    {
+        return 0.0F;
+    }
 
-	/**+
-	 * Determines if this enchantment can be applied to a specific
-	 * ItemStack.
-	 */
-	public boolean canApply(ItemStack itemstack) {
-		return this.type.canEnchantItem(itemstack.getItem());
-	}
+    public final boolean isCompatibleWith(Enchantment p_191560_1_)
+    {
+        return this.canApplyTogether(p_191560_1_) && p_191560_1_.canApplyTogether(this);
+    }
 
-	/**+
-	 * Called whenever a mob is damaged with an item that has this
-	 * enchantment on it.
-	 */
-	public void onEntityDamaged(EntityLivingBase var1, Entity var2, int var3) {
-	}
+    protected boolean canApplyTogether(Enchantment ench)
+    {
+        return this != ench;
+    }
 
-	/**+
-	 * Whenever an entity that has this enchantment on one of its
-	 * associated items is damaged this method will be called.
-	 */
-	public void onUserHurt(EntityLivingBase user, Entity attacker, int level) {
-	}
+    public Enchantment setName(String enchName)
+    {
+        this.name = enchName;
+        return this;
+    }
 
-	static {
-		ArrayList arraylist = Lists.newArrayList();
+    public String getName()
+    {
+        return "enchantment." + this.name;
+    }
 
-		for (int i = 0; i < enchantmentsList.length; ++i) {
-			Enchantment enchantment = enchantmentsList[i];
-			if (enchantment != null) {
-				arraylist.add(enchantment);
-			}
-		}
+    public String getTranslatedName(int level)
+    {
+        String s = I18n.translateToLocal(this.getName());
 
-		enchantmentsBookList = (Enchantment[]) arraylist.toArray(new Enchantment[arraylist.size()]);
-	}
+        if (this.isCurse())
+        {
+            s = TextFormatting.RED + s;
+        }
+
+        return level == 1 && this.getMaxLevel() == 1 ? s : s + " " + I18n.translateToLocal("enchantment.level." + level);
+    }
+
+    public boolean canApply(ItemStack stack)
+    {
+        return canApplyAtEnchantingTable(stack);
+    }
+
+    public void onEntityDamaged(EntityLivingBase user, Entity target, int level)
+    {
+    }
+
+    public void onUserHurt(EntityLivingBase user, Entity attacker, int level)
+    {
+    }
+
+    public boolean isTreasureEnchantment()
+    {
+        return false;
+    }
+
+    public boolean isCurse()
+    {
+        return false;
+    }
+
+    /**
+     * This applies specifically to applying at the enchanting table. The other method {@link #canApply(ItemStack)}
+     * applies for <i>all possible</i> enchantments.
+     * @param stack
+     * @return
+     */
+    public boolean canApplyAtEnchantingTable(ItemStack stack)
+    {
+        return stack.getItem().canApplyAtEnchantingTable(stack, this);
+    }
+
+    /**
+     * Is this enchantment allowed to be enchanted on books via Enchantment Table
+     * @return false to disable the vanilla feature
+     */
+    public boolean isAllowedOnBooks()
+    {
+        return true;
+    }
+
+    public static void registerEnchantments()
+    {
+        EntityEquipmentSlot[] aentityequipmentslot = new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET};
+        REGISTRY.register(0, new ResourceLocation("protection"), new EnchantmentProtection(Enchantment.Rarity.COMMON, EnchantmentProtection.Type.ALL, aentityequipmentslot));
+        REGISTRY.register(1, new ResourceLocation("fire_protection"), new EnchantmentProtection(Enchantment.Rarity.UNCOMMON, EnchantmentProtection.Type.FIRE, aentityequipmentslot));
+        REGISTRY.register(2, new ResourceLocation("feather_falling"), new EnchantmentProtection(Enchantment.Rarity.UNCOMMON, EnchantmentProtection.Type.FALL, aentityequipmentslot));
+        REGISTRY.register(3, new ResourceLocation("blast_protection"), new EnchantmentProtection(Enchantment.Rarity.RARE, EnchantmentProtection.Type.EXPLOSION, aentityequipmentslot));
+        REGISTRY.register(4, new ResourceLocation("projectile_protection"), new EnchantmentProtection(Enchantment.Rarity.UNCOMMON, EnchantmentProtection.Type.PROJECTILE, aentityequipmentslot));
+        REGISTRY.register(5, new ResourceLocation("respiration"), new EnchantmentOxygen(Enchantment.Rarity.RARE, aentityequipmentslot));
+        REGISTRY.register(6, new ResourceLocation("aqua_affinity"), new EnchantmentWaterWorker(Enchantment.Rarity.RARE, aentityequipmentslot));
+        REGISTRY.register(7, new ResourceLocation("thorns"), new EnchantmentThorns(Enchantment.Rarity.VERY_RARE, aentityequipmentslot));
+        REGISTRY.register(8, new ResourceLocation("depth_strider"), new EnchantmentWaterWalker(Enchantment.Rarity.RARE, aentityequipmentslot));
+        REGISTRY.register(9, new ResourceLocation("frost_walker"), new EnchantmentFrostWalker(Enchantment.Rarity.RARE, new EntityEquipmentSlot[] {EntityEquipmentSlot.FEET}));
+        REGISTRY.register(10, new ResourceLocation("binding_curse"), new EnchantmentBindingCurse(Enchantment.Rarity.VERY_RARE, aentityequipmentslot));
+        REGISTRY.register(16, new ResourceLocation("sharpness"), new EnchantmentDamage(Enchantment.Rarity.COMMON, 0, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(17, new ResourceLocation("smite"), new EnchantmentDamage(Enchantment.Rarity.UNCOMMON, 1, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(18, new ResourceLocation("bane_of_arthropods"), new EnchantmentDamage(Enchantment.Rarity.UNCOMMON, 2, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(19, new ResourceLocation("knockback"), new EnchantmentKnockback(Enchantment.Rarity.UNCOMMON, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(20, new ResourceLocation("fire_aspect"), new EnchantmentFireAspect(Enchantment.Rarity.RARE, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(21, new ResourceLocation("looting"), new EnchantmentLootBonus(Enchantment.Rarity.RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(22, new ResourceLocation("sweeping"), new EnchantmentSweepingEdge(Enchantment.Rarity.RARE, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(32, new ResourceLocation("efficiency"), new EnchantmentDigging(Enchantment.Rarity.COMMON, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(33, new ResourceLocation("silk_touch"), new EnchantmentUntouching(Enchantment.Rarity.VERY_RARE, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(34, new ResourceLocation("unbreaking"), new EnchantmentDurability(Enchantment.Rarity.UNCOMMON, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(35, new ResourceLocation("fortune"), new EnchantmentLootBonus(Enchantment.Rarity.RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(48, new ResourceLocation("power"), new EnchantmentArrowDamage(Enchantment.Rarity.COMMON, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(49, new ResourceLocation("punch"), new EnchantmentArrowKnockback(Enchantment.Rarity.RARE, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(50, new ResourceLocation("flame"), new EnchantmentArrowFire(Enchantment.Rarity.RARE, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(51, new ResourceLocation("infinity"), new EnchantmentArrowInfinite(Enchantment.Rarity.VERY_RARE, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(61, new ResourceLocation("luck_of_the_sea"), new EnchantmentLootBonus(Enchantment.Rarity.RARE, EnumEnchantmentType.FISHING_ROD, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(62, new ResourceLocation("lure"), new EnchantmentFishingSpeed(Enchantment.Rarity.RARE, EnumEnchantmentType.FISHING_ROD, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND}));
+        REGISTRY.register(70, new ResourceLocation("mending"), new EnchantmentMending(Enchantment.Rarity.RARE, EntityEquipmentSlot.values()));
+        REGISTRY.register(71, new ResourceLocation("vanishing_curse"), new EnchantmentVanishingCurse(Enchantment.Rarity.VERY_RARE, EntityEquipmentSlot.values()));
+    }
+
+    public static enum Rarity
+    {
+        COMMON(10),
+        UNCOMMON(5),
+        RARE(2),
+        VERY_RARE(1);
+
+        private final int weight;
+
+        private Rarity(int rarityWeight)
+        {
+            this.weight = rarityWeight;
+        }
+
+        public int getWeight()
+        {
+            return this.weight;
+        }
+    }
 }

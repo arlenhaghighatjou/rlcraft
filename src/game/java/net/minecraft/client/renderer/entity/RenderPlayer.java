@@ -1,17 +1,16 @@
 package net.minecraft.client.renderer.entity;
 
-import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelPlayer;
-import net.minecraft.client.model.ModelZombie;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerArrow;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
 import net.minecraft.client.renderer.entity.layers.LayerCape;
 import net.minecraft.client.renderer.entity.layers.LayerCustomHead;
 import net.minecraft.client.renderer.entity.layers.LayerDeadmau5Head;
+import net.minecraft.client.renderer.entity.layers.LayerElytra;
+import net.minecraft.client.renderer.entity.layers.LayerEntityOnShoulder;
 import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.item.EnumAction;
@@ -19,201 +18,249 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer> {
-	private boolean smallArms;
-	private boolean zombieModel;
+@SideOnly(Side.CLIENT)
+public class RenderPlayer extends RenderLivingBase<AbstractClientPlayer>
+{
+    private final boolean smallArms;
 
-	public RenderPlayer(RenderManager renderManager) {
-		this(renderManager, false, false);
-	}
+    public RenderPlayer(RenderManager renderManager)
+    {
+        this(renderManager, false);
+    }
 
-	public RenderPlayer(RenderManager renderManager, boolean useSmallArms, boolean zombieModel) {
-		super(renderManager, zombieModel ? new ModelZombie(0.0F, true) : new ModelPlayer(0.0F, useSmallArms), 0.5F);
-		this.smallArms = useSmallArms;
-		this.zombieModel = zombieModel;
-		this.addLayer(new LayerBipedArmor(this));
-		this.addLayer(new LayerHeldItem(this));
-		this.addLayer(new LayerArrow(this));
-		this.addLayer(new LayerDeadmau5Head(this));
-		this.addLayer(new LayerCape(this));
-		this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
-	}
+    public RenderPlayer(RenderManager renderManager, boolean useSmallArms)
+    {
+        super(renderManager, new ModelPlayer(0.0F, useSmallArms), 0.5F);
+        this.smallArms = useSmallArms;
+        this.addLayer(new LayerBipedArmor(this));
+        this.addLayer(new LayerHeldItem(this));
+        this.addLayer(new LayerArrow(this));
+        this.addLayer(new LayerDeadmau5Head(this));
+        this.addLayer(new LayerCape(this));
+        this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
+        this.addLayer(new LayerElytra(this));
+        this.addLayer(new LayerEntityOnShoulder(renderManager));
+    }
 
-	protected RenderPlayer(RenderManager renderManager, ModelBase modelBase, float size) {
-		super(renderManager, modelBase, size);
-	}
+    public ModelPlayer getMainModel()
+    {
+        return (ModelPlayer)super.getMainModel();
+    }
 
-	public ModelBiped getMainModel() {
-		return (ModelBiped) super.getMainModel();
-	}
+    public void doRender(AbstractClientPlayer entity, double x, double y, double z, float entityYaw, float partialTicks)
+    {
+        if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Pre(entity, this, partialTicks, x, y, z))) return;
+        if (!entity.isUser() || this.renderManager.renderViewEntity == entity)
+        {
+            double d0 = y;
 
-	/**+
-	 * Actually renders the given argument. This is a synthetic
-	 * bridge method, always casting down its argument and then
-	 * handing it off to a worker function which does the actual
-	 * work. In all probabilty, the class Render is generic
-	 * (Render<T extends Entity>) and this method has signature
-	 * public void func_76986_a(T entity, double d, double d1,
-	 * double d2, float f, float f1). But JAD is pre 1.5 so doe
-	 */
-	public void doRender(AbstractClientPlayer abstractclientplayer, double d0, double d1, double d2, float f,
-			float f1) {
-		if (!abstractclientplayer.isUser() || this.renderManager.livingPlayer == abstractclientplayer) {
-			double d3 = d1;
-			if (abstractclientplayer.isSneaking() && !(abstractclientplayer instanceof EntityPlayerSP)) {
-				d3 = d1 - 0.125D;
-			}
+            if (entity.isSneaking())
+            {
+                d0 = y - 0.125D;
+            }
 
-			this.setModelVisibilities(abstractclientplayer);
-			super.doRender(abstractclientplayer, d0, d3, d2, f, f1);
-		}
-	}
+            this.setModelVisibilities(entity);
+            GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
+            super.doRender(entity, x, d0, z, entityYaw, partialTicks);
+            GlStateManager.disableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
+        }
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Post(entity, this, partialTicks, x, y, z));
+    }
 
-	private void setModelVisibilities(AbstractClientPlayer clientPlayer) {
-		ModelBiped modelplayer = this.getMainModel();
-		if (clientPlayer.isSpectator()) {
-			modelplayer.setInvisible(false);
-			modelplayer.bipedHead.showModel = true;
-			modelplayer.bipedHeadwear.showModel = true;
-		} else {
-			ItemStack itemstack = clientPlayer.inventory.getCurrentItem();
-			modelplayer.setInvisible(true);
-			modelplayer.bipedHeadwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.HAT);
-			if (!zombieModel) {
-				ModelPlayer modelplayer_ = (ModelPlayer) modelplayer;
-				modelplayer_.bipedBodyWear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.JACKET);
-				modelplayer_.bipedLeftLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_PANTS_LEG);
-				modelplayer_.bipedRightLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_PANTS_LEG);
-				modelplayer_.bipedLeftArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_SLEEVE);
-				modelplayer_.bipedRightArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_SLEEVE);
-			}
-			modelplayer.heldItemLeft = 0;
-			modelplayer.aimedBow = false;
-			modelplayer.isSneak = clientPlayer.isSneaking();
-			if (itemstack == null) {
-				modelplayer.heldItemRight = 0;
-			} else {
-				modelplayer.heldItemRight = 1;
-				if (clientPlayer.getItemInUseCount() > 0) {
-					EnumAction enumaction = itemstack.getItemUseAction();
-					if (enumaction == EnumAction.BLOCK) {
-						modelplayer.heldItemRight = 3;
-					} else if (enumaction == EnumAction.BOW) {
-						modelplayer.aimedBow = true;
-					}
-				}
-			}
-		}
+    private void setModelVisibilities(AbstractClientPlayer clientPlayer)
+    {
+        ModelPlayer modelplayer = this.getMainModel();
 
-	}
+        if (clientPlayer.isSpectator())
+        {
+            modelplayer.setVisible(false);
+            modelplayer.bipedHead.showModel = true;
+            modelplayer.bipedHeadwear.showModel = true;
+        }
+        else
+        {
+            ItemStack itemstack = clientPlayer.getHeldItemMainhand();
+            ItemStack itemstack1 = clientPlayer.getHeldItemOffhand();
+            modelplayer.setVisible(true);
+            modelplayer.bipedHeadwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.HAT);
+            modelplayer.bipedBodyWear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.JACKET);
+            modelplayer.bipedLeftLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_PANTS_LEG);
+            modelplayer.bipedRightLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_PANTS_LEG);
+            modelplayer.bipedLeftArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_SLEEVE);
+            modelplayer.bipedRightArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_SLEEVE);
+            modelplayer.isSneak = clientPlayer.isSneaking();
+            ModelBiped.ArmPose modelbiped$armpose = ModelBiped.ArmPose.EMPTY;
+            ModelBiped.ArmPose modelbiped$armpose1 = ModelBiped.ArmPose.EMPTY;
 
-	/**+
-	 * Returns the location of an entity's texture. Doesn't seem to
-	 * be called unless you call Render.bindEntityTexture.
-	 */
-	protected ResourceLocation getEntityTexture(AbstractClientPlayer abstractclientplayer) {
-		return abstractclientplayer.getLocationSkin();
-	}
+            if (!itemstack.isEmpty())
+            {
+                modelbiped$armpose = ModelBiped.ArmPose.ITEM;
 
-	public void transformHeldFull3DItemLayer() {
-		GlStateManager.translate(0.0F, 0.1875F, 0.0F);
-	}
+                if (clientPlayer.getItemInUseCount() > 0)
+                {
+                    EnumAction enumaction = itemstack.getItemUseAction();
 
-	/**+
-	 * Allows the render to do any OpenGL state modifications
-	 * necessary before the model is rendered. Args: entityLiving,
-	 * partialTickTime
-	 */
-	protected void preRenderCallback(AbstractClientPlayer var1, float var2) {
-		float f = 0.9375F;
-		GlStateManager.scale(f, f, f);
-	}
+                    if (enumaction == EnumAction.BLOCK)
+                    {
+                        modelbiped$armpose = ModelBiped.ArmPose.BLOCK;
+                    }
+                    else if (enumaction == EnumAction.BOW)
+                    {
+                        modelbiped$armpose = ModelBiped.ArmPose.BOW_AND_ARROW;
+                    }
+                }
+            }
 
-	protected void renderOffsetLivingLabel(AbstractClientPlayer abstractclientplayer, double d0, double d1, double d2,
-			String s, float f, double d3) {
-		if (d3 < 100.0D) {
-			Scoreboard scoreboard = abstractclientplayer.getWorldScoreboard();
-			ScoreObjective scoreobjective = scoreboard.getObjectiveInDisplaySlot(2);
-			if (scoreobjective != null) {
-				Score score = scoreboard.getValueFromObjective(abstractclientplayer.getName(), scoreobjective);
-				this.renderLivingLabel(abstractclientplayer,
-						score.getScorePoints() + " " + scoreobjective.getDisplayNameProfanityFilter(), d0, d1, d2, 64);
-				d1 += (double) ((float) this.getFontRendererFromRenderManager().FONT_HEIGHT * 1.15F * f);
-			}
-		}
+            if (!itemstack1.isEmpty())
+            {
+                modelbiped$armpose1 = ModelBiped.ArmPose.ITEM;
 
-		super.renderOffsetLivingLabel(abstractclientplayer, d0, d1, d2, s, f, d3);
-	}
+                if (clientPlayer.getItemInUseCount() > 0)
+                {
+                    EnumAction enumaction1 = itemstack1.getItemUseAction();
 
-	public void renderRightArm(AbstractClientPlayer clientPlayer) {
-		if (!zombieModel) {
-			float f = 1.0F;
-			GlStateManager.color(f, f, f);
-			ModelBiped modelplayer = this.getMainModel();
-			this.setModelVisibilities(clientPlayer);
-			modelplayer.swingProgress = 0.0F;
-			modelplayer.isSneak = false;
-			modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, clientPlayer);
-			((ModelPlayer) modelplayer).renderRightArm();
-		}
-	}
+                    if (enumaction1 == EnumAction.BLOCK)
+                    {
+                        modelbiped$armpose1 = ModelBiped.ArmPose.BLOCK;
+                    }
+                    // FORGE: fix MC-88356 allow offhand to use bow and arrow animation
+                    else if (enumaction1 == EnumAction.BOW)
+                    {
+                        modelbiped$armpose1 = ModelBiped.ArmPose.BOW_AND_ARROW;
+                    }
+                }
+            }
 
-	public void renderLeftArm(AbstractClientPlayer clientPlayer) {
-		if (!zombieModel) {
-			float f = 1.0F;
-			GlStateManager.color(f, f, f);
-			ModelBiped modelplayer = this.getMainModel();
-			this.setModelVisibilities(clientPlayer);
-			modelplayer.isSneak = false;
-			modelplayer.swingProgress = 0.0F;
-			modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, clientPlayer);
-			((ModelPlayer) modelplayer).renderLeftArm();
-		}
-	}
+            if (clientPlayer.getPrimaryHand() == EnumHandSide.RIGHT)
+            {
+                modelplayer.rightArmPose = modelbiped$armpose;
+                modelplayer.leftArmPose = modelbiped$armpose1;
+            }
+            else
+            {
+                modelplayer.rightArmPose = modelbiped$armpose1;
+                modelplayer.leftArmPose = modelbiped$armpose;
+            }
+        }
+    }
 
-	/**+
-	 * Sets a simple glTranslate on a LivingEntity.
-	 */
-	public void renderLivingAt(AbstractClientPlayer abstractclientplayer, double d0, double d1, double d2) {
-		if (abstractclientplayer.isEntityAlive() && abstractclientplayer.isPlayerSleeping()) {
-			super.renderLivingAt(abstractclientplayer, d0 + (double) abstractclientplayer.renderOffsetX,
-					d1 + (double) abstractclientplayer.renderOffsetY, d2 + (double) abstractclientplayer.renderOffsetZ);
-		} else {
-			super.renderLivingAt(abstractclientplayer, d0, d1, d2);
-		}
+    public ResourceLocation getEntityTexture(AbstractClientPlayer entity)
+    {
+        return entity.getLocationSkin();
+    }
 
-	}
+    public void transformHeldFull3DItemLayer()
+    {
+        GlStateManager.translate(0.0F, 0.1875F, 0.0F);
+    }
 
-	protected void rotateCorpse(AbstractClientPlayer abstractclientplayer, float f, float f1, float f2) {
-		if (abstractclientplayer.isEntityAlive() && abstractclientplayer.isPlayerSleeping()) {
-			GlStateManager.rotate(abstractclientplayer.getBedOrientationInDegrees(), 0.0F, 1.0F, 0.0F);
-			GlStateManager.rotate(this.getDeathMaxRotation(abstractclientplayer), 0.0F, 0.0F, 1.0F);
-			GlStateManager.rotate(270.0F, 0.0F, 1.0F, 0.0F);
-		} else {
-			super.rotateCorpse(abstractclientplayer, f, f1, f2);
-		}
+    protected void preRenderCallback(AbstractClientPlayer entitylivingbaseIn, float partialTickTime)
+    {
+        float f = 0.9375F;
+        GlStateManager.scale(0.9375F, 0.9375F, 0.9375F);
+    }
 
-	}
+    protected void renderEntityName(AbstractClientPlayer entityIn, double x, double y, double z, String name, double distanceSq)
+    {
+        if (distanceSq < 100.0D)
+        {
+            Scoreboard scoreboard = entityIn.getWorldScoreboard();
+            ScoreObjective scoreobjective = scoreboard.getObjectiveInDisplaySlot(2);
+
+            if (scoreobjective != null)
+            {
+                Score score = scoreboard.getOrCreateScore(entityIn.getName(), scoreobjective);
+                this.renderLivingLabel(entityIn, score.getScorePoints() + " " + scoreobjective.getDisplayName(), x, y, z, 64);
+                y += (double)((float)this.getFontRendererFromRenderManager().FONT_HEIGHT * 1.15F * 0.025F);
+            }
+        }
+
+        super.renderEntityName(entityIn, x, y, z, name, distanceSq);
+    }
+
+    public void renderRightArm(AbstractClientPlayer clientPlayer)
+    {
+        float f = 1.0F;
+        GlStateManager.color(1.0F, 1.0F, 1.0F);
+        float f1 = 0.0625F;
+        ModelPlayer modelplayer = this.getMainModel();
+        this.setModelVisibilities(clientPlayer);
+        GlStateManager.enableBlend();
+        modelplayer.swingProgress = 0.0F;
+        modelplayer.isSneak = false;
+        modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, clientPlayer);
+        modelplayer.bipedRightArm.rotateAngleX = 0.0F;
+        modelplayer.bipedRightArm.render(0.0625F);
+        modelplayer.bipedRightArmwear.rotateAngleX = 0.0F;
+        modelplayer.bipedRightArmwear.render(0.0625F);
+        GlStateManager.disableBlend();
+    }
+
+    public void renderLeftArm(AbstractClientPlayer clientPlayer)
+    {
+        float f = 1.0F;
+        GlStateManager.color(1.0F, 1.0F, 1.0F);
+        float f1 = 0.0625F;
+        ModelPlayer modelplayer = this.getMainModel();
+        this.setModelVisibilities(clientPlayer);
+        GlStateManager.enableBlend();
+        modelplayer.isSneak = false;
+        modelplayer.swingProgress = 0.0F;
+        modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, clientPlayer);
+        modelplayer.bipedLeftArm.rotateAngleX = 0.0F;
+        modelplayer.bipedLeftArm.render(0.0625F);
+        modelplayer.bipedLeftArmwear.rotateAngleX = 0.0F;
+        modelplayer.bipedLeftArmwear.render(0.0625F);
+        GlStateManager.disableBlend();
+    }
+
+    protected void renderLivingAt(AbstractClientPlayer entityLivingBaseIn, double x, double y, double z)
+    {
+        if (entityLivingBaseIn.isEntityAlive() && entityLivingBaseIn.isPlayerSleeping())
+        {
+            super.renderLivingAt(entityLivingBaseIn, x + (double)entityLivingBaseIn.renderOffsetX, y + (double)entityLivingBaseIn.renderOffsetY, z + (double)entityLivingBaseIn.renderOffsetZ);
+        }
+        else
+        {
+            super.renderLivingAt(entityLivingBaseIn, x, y, z);
+        }
+    }
+
+    protected void applyRotations(AbstractClientPlayer entityLiving, float p_77043_2_, float rotationYaw, float partialTicks)
+    {
+        if (entityLiving.isEntityAlive() && entityLiving.isPlayerSleeping())
+        {
+            GlStateManager.rotate(entityLiving.getBedOrientationInDegrees(), 0.0F, 1.0F, 0.0F);
+            GlStateManager.rotate(this.getDeathMaxRotation(entityLiving), 0.0F, 0.0F, 1.0F);
+            GlStateManager.rotate(270.0F, 0.0F, 1.0F, 0.0F);
+        }
+        else if (entityLiving.isElytraFlying())
+        {
+            super.applyRotations(entityLiving, p_77043_2_, rotationYaw, partialTicks);
+            float f = (float)entityLiving.getTicksElytraFlying() + partialTicks;
+            float f1 = MathHelper.clamp(f * f / 100.0F, 0.0F, 1.0F);
+            GlStateManager.rotate(f1 * (-90.0F - entityLiving.rotationPitch), 1.0F, 0.0F, 0.0F);
+            Vec3d vec3d = entityLiving.getLook(partialTicks);
+            double d0 = entityLiving.motionX * entityLiving.motionX + entityLiving.motionZ * entityLiving.motionZ;
+            double d1 = vec3d.x * vec3d.x + vec3d.z * vec3d.z;
+
+            if (d0 > 0.0D && d1 > 0.0D)
+            {
+                double d2 = (entityLiving.motionX * vec3d.x + entityLiving.motionZ * vec3d.z) / (Math.sqrt(d0) * Math.sqrt(d1));
+                double d3 = entityLiving.motionX * vec3d.z - entityLiving.motionZ * vec3d.x;
+                GlStateManager.rotate((float)(Math.signum(d3) * Math.acos(d2)) * 180.0F / (float)Math.PI, 0.0F, 1.0F, 0.0F);
+            }
+        }
+        else
+        {
+            super.applyRotations(entityLiving, p_77043_2_, rotationYaw, partialTicks);
+        }
+    }
 }

@@ -1,79 +1,118 @@
 package net.minecraft.scoreboard;
 
+import com.google.common.collect.Maps;
 import java.util.Collection;
 import java.util.Map;
+import javax.annotation.Nullable;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.google.common.collect.Maps;
+public abstract class Team
+{
+    public boolean isSameTeam(@Nullable Team other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        else
+        {
+            return this == other;
+        }
+    }
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public abstract class Team {
-	/**+
-	 * Same as ==
-	 */
-	public boolean isSameTeam(Team other) {
-		return other == null ? false : this == other;
-	}
+    public abstract String getName();
 
-	public abstract String getRegisteredName();
+    public abstract String formatString(String input);
 
-	public abstract String formatString(String var1);
+    @SideOnly(Side.CLIENT)
+    public abstract boolean getSeeFriendlyInvisiblesEnabled();
 
-	public abstract boolean getSeeFriendlyInvisiblesEnabled();
+    public abstract boolean getAllowFriendlyFire();
 
-	public abstract boolean getAllowFriendlyFire();
+    @SideOnly(Side.CLIENT)
+    public abstract Team.EnumVisible getNameTagVisibility();
 
-	public abstract Team.EnumVisible getNameTagVisibility();
+    public abstract TextFormatting getColor();
 
-	public abstract Collection<String> getMembershipCollection();
+    public abstract Collection<String> getMembershipCollection();
 
-	public abstract Team.EnumVisible getDeathMessageVisibility();
+    public abstract Team.EnumVisible getDeathMessageVisibility();
 
-	public static enum EnumVisible {
-		ALWAYS("always", 0), NEVER("never", 1), HIDE_FOR_OTHER_TEAMS("hideForOtherTeams", 2),
-		HIDE_FOR_OWN_TEAM("hideForOwnTeam", 3);
+    public abstract Team.CollisionRule getCollisionRule();
 
-		private static Map<String, Team.EnumVisible> field_178828_g = Maps.newHashMap();
-		public final String field_178830_e;
-		public final int field_178827_f;
+    public static enum CollisionRule
+    {
+        ALWAYS("always", 0),
+        NEVER("never", 1),
+        HIDE_FOR_OTHER_TEAMS("pushOtherTeams", 2),
+        HIDE_FOR_OWN_TEAM("pushOwnTeam", 3);
 
-		public static String[] func_178825_a() {
-			return (String[]) field_178828_g.keySet().toArray(new String[field_178828_g.size()]);
-		}
+        private static final Map<String, Team.CollisionRule> nameMap = Maps.<String, Team.CollisionRule>newHashMap();
+        public final String name;
+        public final int id;
 
-		public static Team.EnumVisible func_178824_a(String parString1) {
-			return (Team.EnumVisible) field_178828_g.get(parString1);
-		}
+        public static String[] getNames()
+        {
+            return (String[])nameMap.keySet().toArray(new String[nameMap.size()]);
+        }
 
-		private EnumVisible(String parString2, int parInt2) {
-			this.field_178830_e = parString2;
-			this.field_178827_f = parInt2;
-		}
+        @Nullable
+        public static Team.CollisionRule getByName(String nameIn)
+        {
+            return nameMap.get(nameIn);
+        }
 
-		static {
-			Team.EnumVisible[] types = values();
-			for (int i = 0; i < types.length; ++i) {
-				field_178828_g.put(types[i].field_178830_e, types[i]);
-			}
+        private CollisionRule(String nameIn, int idIn)
+        {
+            this.name = nameIn;
+            this.id = idIn;
+        }
 
-		}
-	}
+        static
+        {
+            for (Team.CollisionRule team$collisionrule : values())
+            {
+                nameMap.put(team$collisionrule.name, team$collisionrule);
+            }
+        }
+    }
+
+    public static enum EnumVisible
+    {
+        ALWAYS("always", 0),
+        NEVER("never", 1),
+        HIDE_FOR_OTHER_TEAMS("hideForOtherTeams", 2),
+        HIDE_FOR_OWN_TEAM("hideForOwnTeam", 3);
+
+        private static final Map<String, Team.EnumVisible> nameMap = Maps.<String, Team.EnumVisible>newHashMap();
+        public final String internalName;
+        public final int id;
+
+        public static String[] getNames()
+        {
+            return (String[])nameMap.keySet().toArray(new String[nameMap.size()]);
+        }
+
+        @Nullable
+        public static Team.EnumVisible getByName(String nameIn)
+        {
+            return nameMap.get(nameIn);
+        }
+
+        private EnumVisible(String nameIn, int idIn)
+        {
+            this.internalName = nameIn;
+            this.id = idIn;
+        }
+
+        static
+        {
+            for (Team.EnumVisible team$enumvisible : values())
+            {
+                nameMap.put(team$enumvisible.internalName, team$enumvisible);
+            }
+        }
+    }
 }

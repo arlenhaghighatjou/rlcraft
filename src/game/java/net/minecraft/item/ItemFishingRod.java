@@ -1,87 +1,110 @@
 package net.minecraft.item;
 
+import javax.annotation.Nullable;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFishHook;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ItemFishingRod extends Item {
-	public ItemFishingRod() {
-		this.setMaxDamage(64);
-		this.setMaxStackSize(1);
-		this.setCreativeTab(CreativeTabs.tabTools);
-	}
+public class ItemFishingRod extends Item
+{
+    public ItemFishingRod()
+    {
+        this.setMaxDamage(64);
+        this.setMaxStackSize(1);
+        this.setCreativeTab(CreativeTabs.TOOLS);
+        this.addPropertyOverride(new ResourceLocation("cast"), new IItemPropertyGetter()
+        {
+            @SideOnly(Side.CLIENT)
+            public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
+            {
+                if (entityIn == null)
+                {
+                    return 0.0F;
+                }
+                else
+                {
+                    boolean flag = entityIn.getHeldItemMainhand() == stack;
+                    boolean flag1 = entityIn.getHeldItemOffhand() == stack;
 
-	/**+
-	 * Returns True is the item is renderer in full 3D when hold.
-	 */
-	public boolean isFull3D() {
-		return true;
-	}
+                    if (entityIn.getHeldItemMainhand().getItem() instanceof ItemFishingRod)
+                    {
+                        flag1 = false;
+                    }
 
-	/**+
-	 * Returns true if this item should be rotated by 180 degrees
-	 * around the Y axis when being held in an entities hands.
-	 */
-	public boolean shouldRotateAroundWhenRendering() {
-		return true;
-	}
+                    return (flag || flag1) && entityIn instanceof EntityPlayer && ((EntityPlayer)entityIn).fishEntity != null ? 1.0F : 0.0F;
+                }
+            }
+        });
+    }
 
-	/**+
-	 * Called whenever this item is equipped and the right mouse
-	 * button is pressed. Args: itemStack, world, entityPlayer
-	 */
-	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		if (entityplayer.fishEntity != null) {
-			int i = entityplayer.fishEntity.handleHookRetraction();
-			itemstack.damageItem(i, entityplayer);
-			entityplayer.swingItem();
-		} else {
-			world.playSoundAtEntity(entityplayer, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-			if (!world.isRemote) {
-				world.spawnEntityInWorld(new EntityFishHook(world, entityplayer));
-			}
+    @SideOnly(Side.CLIENT)
+    public boolean isFull3D()
+    {
+        return true;
+    }
 
-			entityplayer.swingItem();
-			entityplayer.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);
-		}
+    @SideOnly(Side.CLIENT)
+    public boolean shouldRotateAroundWhenRendering()
+    {
+        return true;
+    }
 
-		return itemstack;
-	}
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+    {
+        ItemStack itemstack = playerIn.getHeldItem(handIn);
 
-	/**+
-	 * Checks isDamagable and if it cannot be stacked
-	 */
-	public boolean isItemTool(ItemStack itemstack) {
-		return super.isItemTool(itemstack);
-	}
+        if (playerIn.fishEntity != null)
+        {
+            int i = playerIn.fishEntity.handleHookRetraction();
+            itemstack.damageItem(i, playerIn);
+            playerIn.swingArm(handIn);
+            worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_BOBBER_RETRIEVE, SoundCategory.NEUTRAL, 1.0F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+        }
+        else
+        {
+            worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
-	/**+
-	 * Return the enchantability factor of the item, most of the
-	 * time is based on material.
-	 */
-	public int getItemEnchantability() {
-		return 1;
-	}
+            if (!worldIn.isRemote)
+            {
+                EntityFishHook entityfishhook = new EntityFishHook(worldIn, playerIn);
+                int j = EnchantmentHelper.getFishingSpeedBonus(itemstack);
+
+                if (j > 0)
+                {
+                    entityfishhook.setLureSpeed(j);
+                }
+
+                int k = EnchantmentHelper.getFishingLuckBonus(itemstack);
+
+                if (k > 0)
+                {
+                    entityfishhook.setLuck(k);
+                }
+
+                worldIn.spawnEntity(entityfishhook);
+            }
+
+            playerIn.swingArm(handIn);
+            playerIn.addStat(StatList.getObjectUseStats(this));
+        }
+
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
+    }
+
+    public int getItemEnchantability()
+    {
+        return 1;
+    }
 }

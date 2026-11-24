@@ -1,107 +1,143 @@
 package net.minecraft.block;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-
+import java.util.Random;
+import javax.annotation.Nullable;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class BlockBush extends Block {
-	protected BlockBush() {
-		this(Material.plants);
-	}
+public class BlockBush extends Block implements net.minecraftforge.common.IPlantable
+{
+    protected static final AxisAlignedBB BUSH_AABB = new AxisAlignedBB(0.30000001192092896D, 0.0D, 0.30000001192092896D, 0.699999988079071D, 0.6000000238418579D, 0.699999988079071D);
 
-	protected BlockBush(Material materialIn) {
-		this(materialIn, materialIn.getMaterialMapColor());
-	}
+    protected BlockBush()
+    {
+        this(Material.PLANTS);
+    }
 
-	protected BlockBush(Material parMaterial, MapColor parMapColor) {
-		super(parMaterial, parMapColor);
-		this.setTickRandomly(true);
-		float f = 0.2F;
-		this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F, 0.5F + f);
-		this.setCreativeTab(CreativeTabs.tabDecorations);
-	}
+    protected BlockBush(Material materialIn)
+    {
+        this(materialIn, materialIn.getMaterialMapColor());
+    }
 
-	public boolean canPlaceBlockAt(World world, BlockPos blockpos) {
-		return super.canPlaceBlockAt(world, blockpos)
-				&& this.canPlaceBlockOn(world.getBlockState(blockpos.down()).getBlock());
-	}
+    protected BlockBush(Material materialIn, MapColor mapColorIn)
+    {
+        super(materialIn, mapColorIn);
+        this.setTickRandomly(true);
+        this.setCreativeTab(CreativeTabs.DECORATIONS);
+    }
 
-	/**+
-	 * is the block grass, dirt or farmland
-	 */
-	protected boolean canPlaceBlockOn(Block ground) {
-		return ground == Blocks.grass || ground == Blocks.dirt || ground == Blocks.farmland;
-	}
+    public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
+    {
+        IBlockState soil = worldIn.getBlockState(pos.down());
+        return super.canPlaceBlockAt(worldIn, pos) && soil.getBlock().canSustainPlant(soil, worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
+    }
 
-	/**+
-	 * Called when a neighboring block changes.
-	 */
-	public void onNeighborBlockChange(World world, BlockPos blockpos, IBlockState iblockstate, Block block) {
-		super.onNeighborBlockChange(world, blockpos, iblockstate, block);
-		this.checkAndDropBlock(world, blockpos, iblockstate);
-	}
+    protected boolean canSustainBush(IBlockState state)
+    {
+        return state.getBlock() == Blocks.GRASS || state.getBlock() == Blocks.DIRT || state.getBlock() == Blocks.FARMLAND;
+    }
 
-	public void updateTick(World world, BlockPos blockpos, IBlockState iblockstate, EaglercraftRandom var4) {
-		this.checkAndDropBlock(world, blockpos, iblockstate);
-	}
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
+    {
+        super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
+        this.checkAndDropBlock(worldIn, pos, state);
+    }
 
-	protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state) {
-		if (!this.canBlockStay(worldIn, pos, state)) {
-			this.dropBlockAsItem(worldIn, pos, state, 0);
-			worldIn.setBlockState(pos, Blocks.air.getDefaultState(), 3);
-		}
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        this.checkAndDropBlock(worldIn, pos, state);
+    }
 
-	}
+    protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state)
+    {
+        if (!this.canBlockStay(worldIn, pos, state))
+        {
+            this.dropBlockAsItem(worldIn, pos, state, 0);
+            worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
+        }
+    }
 
-	public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state) {
-		return this.canPlaceBlockOn(worldIn.getBlockState(pos.down()).getBlock());
-	}
+    public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
+    {
+        if (state.getBlock() == this) //Forge: This function is called during world gen and placement, before this block is set, so if we are not 'here' then assume it's the pre-check.
+        {
+            IBlockState soil = worldIn.getBlockState(pos.down());
+            return soil.getBlock().canSustainPlant(soil, worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
+        }
+        return this.canSustainBush(worldIn.getBlockState(pos.down()));
+    }
 
-	public AxisAlignedBB getCollisionBoundingBox(World var1, BlockPos var2, IBlockState var3) {
-		return null;
-	}
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return BUSH_AABB;
+    }
 
-	/**+
-	 * Used to determine ambient occlusion and culling when
-	 * rebuilding chunks for render
-	 */
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    @Nullable
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
+    {
+        return NULL_AABB;
+    }
 
-	public boolean isFullCube() {
-		return false;
-	}
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
 
-	public EnumWorldBlockLayer getBlockLayer() {
-		return EnumWorldBlockLayer.CUTOUT;
-	}
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
+    }
+
+    @Override
+    public net.minecraftforge.common.EnumPlantType getPlantType(net.minecraft.world.IBlockAccess world, BlockPos pos)
+    {
+        if (this == Blocks.WHEAT)          return net.minecraftforge.common.EnumPlantType.Crop;
+        if (this == Blocks.CARROTS)        return net.minecraftforge.common.EnumPlantType.Crop;
+        if (this == Blocks.POTATOES)       return net.minecraftforge.common.EnumPlantType.Crop;
+        if (this == Blocks.BEETROOTS)      return net.minecraftforge.common.EnumPlantType.Crop;
+        if (this == Blocks.MELON_STEM)     return net.minecraftforge.common.EnumPlantType.Crop;
+        if (this == Blocks.PUMPKIN_STEM)   return net.minecraftforge.common.EnumPlantType.Crop;
+        if (this == Blocks.DEADBUSH)       return net.minecraftforge.common.EnumPlantType.Desert;
+        if (this == Blocks.WATERLILY)      return net.minecraftforge.common.EnumPlantType.Water;
+        if (this == Blocks.RED_MUSHROOM)   return net.minecraftforge.common.EnumPlantType.Cave;
+        if (this == Blocks.BROWN_MUSHROOM) return net.minecraftforge.common.EnumPlantType.Cave;
+        if (this == Blocks.NETHER_WART)    return net.minecraftforge.common.EnumPlantType.Nether;
+        if (this == Blocks.SAPLING)        return net.minecraftforge.common.EnumPlantType.Plains;
+        if (this == Blocks.TALLGRASS)      return net.minecraftforge.common.EnumPlantType.Plains;
+        if (this == Blocks.DOUBLE_PLANT)   return net.minecraftforge.common.EnumPlantType.Plains;
+        if (this == Blocks.RED_FLOWER)     return net.minecraftforge.common.EnumPlantType.Plains;
+        if (this == Blocks.YELLOW_FLOWER)  return net.minecraftforge.common.EnumPlantType.Plains;
+        return net.minecraftforge.common.EnumPlantType.Plains;
+    }
+
+    @Override
+    public IBlockState getPlant(net.minecraft.world.IBlockAccess world, BlockPos pos)
+    {
+        IBlockState state = world.getBlockState(pos);
+        if (state.getBlock() != this) return getDefaultState();
+        return state;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+    {
+        return BlockFaceShape.UNDEFINED;
+    }
 }

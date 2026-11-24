@@ -1,78 +1,139 @@
 package net.minecraft.world.gen.feature;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import net.minecraft.block.Block;
+import java.util.Random;
+import javax.annotation.Nullable;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class WorldGenSpikes extends WorldGenerator {
-	private Block baseBlockRequired;
+public class WorldGenSpikes extends WorldGenerator
+{
+    private boolean crystalInvulnerable;
+    private WorldGenSpikes.EndSpike spike;
+    private BlockPos beamTarget;
 
-	public WorldGenSpikes(Block parBlock) {
-		this.baseBlockRequired = parBlock;
-	}
+    public void setSpike(WorldGenSpikes.EndSpike p_186143_1_)
+    {
+        this.spike = p_186143_1_;
+    }
 
-	public boolean generate(World world, EaglercraftRandom random, BlockPos blockpos) {
-		if (world.isAirBlock(blockpos) && world.getBlockState(blockpos.down()).getBlock() == this.baseBlockRequired) {
-			int i = random.nextInt(32) + 6;
-			int j = random.nextInt(4) + 1;
-			BlockPos blockpos$mutableblockpos = new BlockPos();
+    public void setCrystalInvulnerable(boolean p_186144_1_)
+    {
+        this.crystalInvulnerable = p_186144_1_;
+    }
 
-			for (int k = blockpos.getX() - j; k <= blockpos.getX() + j; ++k) {
-				for (int l = blockpos.getZ() - j; l <= blockpos.getZ() + j; ++l) {
-					int i1 = k - blockpos.getX();
-					int j1 = l - blockpos.getZ();
-					if (i1 * i1 + j1 * j1 <= j * j + 1
-							&& world.getBlockState(blockpos$mutableblockpos.func_181079_c(k, blockpos.getY() - 1, l))
-									.getBlock() != this.baseBlockRequired) {
-						return false;
-					}
-				}
-			}
+    public boolean generate(World worldIn, Random rand, BlockPos position)
+    {
+        if (this.spike == null)
+        {
+            throw new IllegalStateException("Decoration requires priming with a spike");
+        }
+        else
+        {
+            int i = this.spike.getRadius();
 
-			for (int l1 = blockpos.getY(); l1 < blockpos.getY() + i && l1 < 256; ++l1) {
-				for (int i2 = blockpos.getX() - j; i2 <= blockpos.getX() + j; ++i2) {
-					for (int j2 = blockpos.getZ() - j; j2 <= blockpos.getZ() + j; ++j2) {
-						int k2 = i2 - blockpos.getX();
-						int k1 = j2 - blockpos.getZ();
-						if (k2 * k2 + k1 * k1 <= j * j + 1) {
-							world.setBlockState(new BlockPos(i2, l1, j2), Blocks.obsidian.getDefaultState(), 2);
-						}
-					}
-				}
-			}
+            for (BlockPos.MutableBlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(new BlockPos(position.getX() - i, 0, position.getZ() - i), new BlockPos(position.getX() + i, this.spike.getHeight() + 10, position.getZ() + i)))
+            {
+                if (blockpos$mutableblockpos.distanceSq((double)position.getX(), (double)blockpos$mutableblockpos.getY(), (double)position.getZ()) <= (double)(i * i + 1) && blockpos$mutableblockpos.getY() < this.spike.getHeight())
+                {
+                    this.setBlockAndNotifyAdequately(worldIn, blockpos$mutableblockpos, Blocks.OBSIDIAN.getDefaultState());
+                }
+                else if (blockpos$mutableblockpos.getY() > 65)
+                {
+                    this.setBlockAndNotifyAdequately(worldIn, blockpos$mutableblockpos, Blocks.AIR.getDefaultState());
+                }
+            }
 
-			EntityEnderCrystal entityendercrystal = new EntityEnderCrystal(world);
-			entityendercrystal.setLocationAndAngles((double) ((float) blockpos.getX() + 0.5F),
-					(double) (blockpos.getY() + i), (double) ((float) blockpos.getZ() + 0.5F),
-					random.nextFloat() * 360.0F, 0.0F);
-			world.spawnEntityInWorld(entityendercrystal);
-			world.setBlockState(blockpos.up(i), Blocks.bedrock.getDefaultState(), 2);
-			return true;
-		} else {
-			return false;
-		}
-	}
+            if (this.spike.isGuarded())
+            {
+                for (int j = -2; j <= 2; ++j)
+                {
+                    for (int k = -2; k <= 2; ++k)
+                    {
+                        if (MathHelper.abs(j) == 2 || MathHelper.abs(k) == 2)
+                        {
+                            this.setBlockAndNotifyAdequately(worldIn, new BlockPos(position.getX() + j, this.spike.getHeight(), position.getZ() + k), Blocks.IRON_BARS.getDefaultState());
+                            this.setBlockAndNotifyAdequately(worldIn, new BlockPos(position.getX() + j, this.spike.getHeight() + 1, position.getZ() + k), Blocks.IRON_BARS.getDefaultState());
+                            this.setBlockAndNotifyAdequately(worldIn, new BlockPos(position.getX() + j, this.spike.getHeight() + 2, position.getZ() + k), Blocks.IRON_BARS.getDefaultState());
+                        }
+
+                        this.setBlockAndNotifyAdequately(worldIn, new BlockPos(position.getX() + j, this.spike.getHeight() + 3, position.getZ() + k), Blocks.IRON_BARS.getDefaultState());
+                    }
+                }
+            }
+
+            EntityEnderCrystal entityendercrystal = new EntityEnderCrystal(worldIn);
+            entityendercrystal.setBeamTarget(this.beamTarget);
+            entityendercrystal.setEntityInvulnerable(this.crystalInvulnerable);
+            entityendercrystal.setLocationAndAngles((double)((float)position.getX() + 0.5F), (double)(this.spike.getHeight() + 1), (double)((float)position.getZ() + 0.5F), rand.nextFloat() * 360.0F, 0.0F);
+            worldIn.spawnEntity(entityendercrystal);
+            this.setBlockAndNotifyAdequately(worldIn, new BlockPos(position.getX(), this.spike.getHeight(), position.getZ()), Blocks.BEDROCK.getDefaultState());
+            return true;
+        }
+    }
+
+    public void setBeamTarget(@Nullable BlockPos pos)
+    {
+        this.beamTarget = pos;
+    }
+
+    public static class EndSpike
+        {
+            private final int centerX;
+            private final int centerZ;
+            private final int radius;
+            private final int height;
+            private final boolean guarded;
+            private final AxisAlignedBB topBoundingBox;
+
+            public EndSpike(int p_i47020_1_, int p_i47020_2_, int p_i47020_3_, int p_i47020_4_, boolean p_i47020_5_)
+            {
+                this.centerX = p_i47020_1_;
+                this.centerZ = p_i47020_2_;
+                this.radius = p_i47020_3_;
+                this.height = p_i47020_4_;
+                this.guarded = p_i47020_5_;
+                this.topBoundingBox = new AxisAlignedBB((double)(p_i47020_1_ - p_i47020_3_), 0.0D, (double)(p_i47020_2_ - p_i47020_3_), (double)(p_i47020_1_ + p_i47020_3_), 256.0D, (double)(p_i47020_2_ + p_i47020_3_));
+            }
+
+            public boolean doesStartInChunk(BlockPos p_186154_1_)
+            {
+                int i = this.centerX - this.radius;
+                int j = this.centerZ - this.radius;
+                return p_186154_1_.getX() == (i & -16) && p_186154_1_.getZ() == (j & -16);
+            }
+
+            public int getCenterX()
+            {
+                return this.centerX;
+            }
+
+            public int getCenterZ()
+            {
+                return this.centerZ;
+            }
+
+            public int getRadius()
+            {
+                return this.radius;
+            }
+
+            public int getHeight()
+            {
+                return this.height;
+            }
+
+            public boolean isGuarded()
+            {
+                return this.guarded;
+            }
+
+            public AxisAlignedBB getTopBoundingBox()
+            {
+                return this.topBoundingBox;
+            }
+        }
 }

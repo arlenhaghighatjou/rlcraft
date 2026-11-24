@@ -1,178 +1,188 @@
 package net.minecraft.scoreboard;
 
+import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.Set;
+import javax.annotation.Nullable;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.google.common.collect.Sets;
+public class ScorePlayerTeam extends Team
+{
+    private final Scoreboard scoreboard;
+    private final String name;
+    private final Set<String> membershipSet = Sets.<String>newHashSet();
+    private String displayName;
+    private String prefix = "";
+    private String suffix = "";
+    private boolean allowFriendlyFire = true;
+    private boolean canSeeFriendlyInvisibles = true;
+    private Team.EnumVisible nameTagVisibility = Team.EnumVisible.ALWAYS;
+    private Team.EnumVisible deathMessageVisibility = Team.EnumVisible.ALWAYS;
+    private TextFormatting color = TextFormatting.RESET;
+    private Team.CollisionRule collisionRule = Team.CollisionRule.ALWAYS;
 
-import net.minecraft.util.EnumChatFormatting;
+    public ScorePlayerTeam(Scoreboard scoreboardIn, String name)
+    {
+        this.scoreboard = scoreboardIn;
+        this.name = name;
+        this.displayName = name;
+    }
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ScorePlayerTeam extends Team {
-	private final Scoreboard theScoreboard;
-	private final String registeredName;
-	/**+
-	 * A set of all team member usernames.
-	 */
-	private final Set<String> membershipSet = Sets.newHashSet();
-	private String teamNameSPT;
-	private String namePrefixSPT = "";
-	private String colorSuffix = "";
-	private boolean allowFriendlyFire = true;
-	private boolean canSeeFriendlyInvisibles = true;
-	private Team.EnumVisible nameTagVisibility = Team.EnumVisible.ALWAYS;
-	private Team.EnumVisible deathMessageVisibility = Team.EnumVisible.ALWAYS;
-	private EnumChatFormatting chatFormat = EnumChatFormatting.RESET;
+    public String getName()
+    {
+        return this.name;
+    }
 
-	public ScorePlayerTeam(Scoreboard theScoreboardIn, String name) {
-		this.theScoreboard = theScoreboardIn;
-		this.registeredName = name;
-		this.teamNameSPT = name;
-	}
+    public String getDisplayName()
+    {
+        return this.displayName;
+    }
 
-	/**+
-	 * Retrieve the name by which this team is registered in the
-	 * scoreboard
-	 */
-	public String getRegisteredName() {
-		return this.registeredName;
-	}
+    public void setDisplayName(String name)
+    {
+        if (name == null)
+        {
+            throw new IllegalArgumentException("Name cannot be null");
+        }
+        else
+        {
+            this.displayName = name;
+            this.scoreboard.broadcastTeamInfoUpdate(this);
+        }
+    }
 
-	public String getTeamName() {
-		return this.teamNameSPT;
-	}
+    public Collection<String> getMembershipCollection()
+    {
+        return this.membershipSet;
+    }
 
-	public void setTeamName(String name) {
-		if (name == null) {
-			throw new IllegalArgumentException("Name cannot be null");
-		} else {
-			this.teamNameSPT = name;
-			this.theScoreboard.sendTeamUpdate(this);
-		}
-	}
+    public String getPrefix()
+    {
+        return this.prefix;
+    }
 
-	public Collection<String> getMembershipCollection() {
-		return this.membershipSet;
-	}
+    public void setPrefix(String prefix)
+    {
+        if (prefix == null)
+        {
+            throw new IllegalArgumentException("Prefix cannot be null");
+        }
+        else
+        {
+            this.prefix = prefix;
+            this.scoreboard.broadcastTeamInfoUpdate(this);
+        }
+    }
 
-	/**+
-	 * Returns the color prefix for the player's team name
-	 */
-	public String getColorPrefix() {
-		return this.namePrefixSPT;
-	}
+    public String getSuffix()
+    {
+        return this.suffix;
+    }
 
-	public void setNamePrefix(String prefix) {
-		if (prefix == null) {
-			throw new IllegalArgumentException("Prefix cannot be null");
-		} else {
-			this.namePrefixSPT = prefix;
-			this.theScoreboard.sendTeamUpdate(this);
-		}
-	}
+    public void setSuffix(String suffix)
+    {
+        this.suffix = suffix;
+        this.scoreboard.broadcastTeamInfoUpdate(this);
+    }
 
-	/**+
-	 * Returns the color suffix for the player's team name
-	 */
-	public String getColorSuffix() {
-		return this.colorSuffix;
-	}
+    public String formatString(String input)
+    {
+        return this.getPrefix() + input + this.getSuffix();
+    }
 
-	public void setNameSuffix(String suffix) {
-		this.colorSuffix = suffix;
-		this.theScoreboard.sendTeamUpdate(this);
-	}
+    public static String formatPlayerName(@Nullable Team teamIn, String string)
+    {
+        return teamIn == null ? string : teamIn.formatString(string);
+    }
 
-	public String formatString(String input) {
-		return this.getColorPrefix() + input + this.getColorSuffix();
-	}
+    public boolean getAllowFriendlyFire()
+    {
+        return this.allowFriendlyFire;
+    }
 
-	/**+
-	 * Returns the player name including the color prefixes and
-	 * suffixes
-	 */
-	public static String formatPlayerName(Team parTeam, String parString1) {
-		return parTeam == null ? parString1 : parTeam.formatString(parString1);
-	}
+    public void setAllowFriendlyFire(boolean friendlyFire)
+    {
+        this.allowFriendlyFire = friendlyFire;
+        this.scoreboard.broadcastTeamInfoUpdate(this);
+    }
 
-	public boolean getAllowFriendlyFire() {
-		return this.allowFriendlyFire;
-	}
+    public boolean getSeeFriendlyInvisiblesEnabled()
+    {
+        return this.canSeeFriendlyInvisibles;
+    }
 
-	public void setAllowFriendlyFire(boolean friendlyFire) {
-		this.allowFriendlyFire = friendlyFire;
-		this.theScoreboard.sendTeamUpdate(this);
-	}
+    public void setSeeFriendlyInvisiblesEnabled(boolean friendlyInvisibles)
+    {
+        this.canSeeFriendlyInvisibles = friendlyInvisibles;
+        this.scoreboard.broadcastTeamInfoUpdate(this);
+    }
 
-	public boolean getSeeFriendlyInvisiblesEnabled() {
-		return this.canSeeFriendlyInvisibles;
-	}
+    public Team.EnumVisible getNameTagVisibility()
+    {
+        return this.nameTagVisibility;
+    }
 
-	public void setSeeFriendlyInvisiblesEnabled(boolean friendlyInvisibles) {
-		this.canSeeFriendlyInvisibles = friendlyInvisibles;
-		this.theScoreboard.sendTeamUpdate(this);
-	}
+    public Team.EnumVisible getDeathMessageVisibility()
+    {
+        return this.deathMessageVisibility;
+    }
 
-	public Team.EnumVisible getNameTagVisibility() {
-		return this.nameTagVisibility;
-	}
+    public void setNameTagVisibility(Team.EnumVisible visibility)
+    {
+        this.nameTagVisibility = visibility;
+        this.scoreboard.broadcastTeamInfoUpdate(this);
+    }
 
-	public Team.EnumVisible getDeathMessageVisibility() {
-		return this.deathMessageVisibility;
-	}
+    public void setDeathMessageVisibility(Team.EnumVisible visibility)
+    {
+        this.deathMessageVisibility = visibility;
+        this.scoreboard.broadcastTeamInfoUpdate(this);
+    }
 
-	public void setNameTagVisibility(Team.EnumVisible parEnumVisible) {
-		this.nameTagVisibility = parEnumVisible;
-		this.theScoreboard.sendTeamUpdate(this);
-	}
+    public Team.CollisionRule getCollisionRule()
+    {
+        return this.collisionRule;
+    }
 
-	public void setDeathMessageVisibility(Team.EnumVisible parEnumVisible) {
-		this.deathMessageVisibility = parEnumVisible;
-		this.theScoreboard.sendTeamUpdate(this);
-	}
+    public void setCollisionRule(Team.CollisionRule rule)
+    {
+        this.collisionRule = rule;
+        this.scoreboard.broadcastTeamInfoUpdate(this);
+    }
 
-	public int func_98299_i() {
-		int i = 0;
-		if (this.getAllowFriendlyFire()) {
-			i |= 1;
-		}
+    public int getFriendlyFlags()
+    {
+        int i = 0;
 
-		if (this.getSeeFriendlyInvisiblesEnabled()) {
-			i |= 2;
-		}
+        if (this.getAllowFriendlyFire())
+        {
+            i |= 1;
+        }
 
-		return i;
-	}
+        if (this.getSeeFriendlyInvisiblesEnabled())
+        {
+            i |= 2;
+        }
 
-	public void func_98298_a(int parInt1) {
-		this.setAllowFriendlyFire((parInt1 & 1) > 0);
-		this.setSeeFriendlyInvisiblesEnabled((parInt1 & 2) > 0);
-	}
+        return i;
+    }
 
-	public void setChatFormat(EnumChatFormatting parEnumChatFormatting) {
-		this.chatFormat = parEnumChatFormatting;
-	}
+    @SideOnly(Side.CLIENT)
+    public void setFriendlyFlags(int flags)
+    {
+        this.setAllowFriendlyFire((flags & 1) > 0);
+        this.setSeeFriendlyInvisiblesEnabled((flags & 2) > 0);
+    }
 
-	public EnumChatFormatting getChatFormat() {
-		return this.chatFormat;
-	}
+    public void setColor(TextFormatting color)
+    {
+        this.color = color;
+    }
+
+    public TextFormatting getColor()
+    {
+        return this.color;
+    }
 }

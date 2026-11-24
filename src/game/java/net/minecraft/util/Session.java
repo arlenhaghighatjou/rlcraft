@@ -1,60 +1,121 @@
 package net.minecraft.util;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
-import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
-import net.lax1dude.eaglercraft.v1_8.profile.EaglerProfile;
-import net.minecraft.entity.player.EntityPlayer;
+import com.google.common.collect.Maps;
+import com.mojang.authlib.GameProfile;
+import com.mojang.util.UUIDTypeAdapter;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
+import javax.annotation.Nullable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class Session {
-	private GameProfile profile;
+@SideOnly(Side.CLIENT)
+public class Session
+{
+    private final String username;
+    private final String playerID;
+    private final String token;
+    private final Session.Type sessionType;
+    /** Forge: Cache of the local session's GameProfile properties. */
+    private com.mojang.authlib.properties.PropertyMap properties;
 
-	private static final EaglercraftUUID outOfGameUUID;
+    public Session(String usernameIn, String playerIDIn, String tokenIn, String sessionTypeIn)
+    {
+        if (usernameIn == null || usernameIn.isEmpty())
+        {
+            usernameIn = "MissingName";
+            playerIDIn = tokenIn = "NotValid";
+            org.apache.logging.log4j.Logger logger = net.minecraftforge.fml.common.FMLLog.log;
+            logger.log(org.apache.logging.log4j.Level.WARN, "=========================================================");
+            logger.log(org.apache.logging.log4j.Level.WARN, "WARNING!! the username was not set for this session, typically");
+            logger.log(org.apache.logging.log4j.Level.WARN, "this means you installed Forge incorrectly. We have set your");
+            logger.log(org.apache.logging.log4j.Level.WARN, "name to \"MissingName\" and your session to nothing. Please");
+            logger.log(org.apache.logging.log4j.Level.WARN, "check your installation and post a console log from the launcher");
+            logger.log(org.apache.logging.log4j.Level.WARN, "when asking for help!");
+            logger.log(org.apache.logging.log4j.Level.WARN, "=========================================================");
+        }
 
-	public Session() {
-		reset();
-	}
+        this.username = usernameIn;
+        this.playerID = playerIDIn;
+        this.token = tokenIn;
+        this.sessionType = Session.Type.setSessionType(sessionTypeIn);
+    }
 
-	public GameProfile getProfile() {
-		return profile;
-	}
+    public String getSessionID()
+    {
+        return "token:" + this.token + ":" + this.playerID;
+    }
 
-	public void update(String serverUsername, EaglercraftUUID uuid) {
-		profile = new GameProfile(uuid, serverUsername);
-	}
+    public String getPlayerID()
+    {
+        return this.playerID;
+    }
 
-	public void reset() {
-		update(EaglerProfile.getName(), outOfGameUUID);
-	}
+    public String getUsername()
+    {
+        return this.username;
+    }
 
-	public void setLAN() {
-		update(EaglerProfile.getName(), EntityPlayer.getOfflineUUID(EaglerProfile.getName()));
-	}
+    public String getToken()
+    {
+        return this.token;
+    }
 
-	static {
-		byte[] bytes = new byte[16];
-		(new EaglercraftRandom()).nextBytes(bytes);
-		outOfGameUUID = new EaglercraftUUID(bytes);
-	}
+    public GameProfile getProfile()
+    {
+        try
+        {
+            UUID uuid = UUIDTypeAdapter.fromString(this.getPlayerID());
+            GameProfile ret = new GameProfile(uuid, this.getUsername());    //Forge: Adds cached GameProfile properties to returned GameProfile.
+            if (properties != null) ret.getProperties().putAll(properties); // Helps to cut down on calls to the session service,
+            return ret;                                                     // which helps to fix MC-52974.
+        }
+        catch (IllegalArgumentException var2)
+        {
+            return new GameProfile(net.minecraft.entity.player.EntityPlayer.getUUID(new GameProfile((UUID)null, this.getUsername())), this.getUsername());
+        }
+    }
 
+    /* ======================================== FORGE START ===================================== */
+    //For internal use only. Modders should never need to use this.
+    public void setProperties(com.mojang.authlib.properties.PropertyMap properties)
+    {
+        if(this.properties == null) this.properties = properties;
+    }
+
+    public boolean hasCachedProperties()
+    {
+        return properties != null;
+    }
+    /* ========================================= FORGE END ====================================== */
+
+    @SideOnly(Side.CLIENT)
+    public static enum Type
+    {
+        LEGACY("legacy"),
+        MOJANG("mojang");
+
+        private static final Map<String, Session.Type> SESSION_TYPES = Maps.<String, Session.Type>newHashMap();
+        private final String sessionType;
+
+        private Type(String sessionTypeIn)
+        {
+            this.sessionType = sessionTypeIn;
+        }
+
+        @Nullable
+        public static Session.Type setSessionType(String sessionTypeIn)
+        {
+            return SESSION_TYPES.get(sessionTypeIn.toLowerCase(Locale.ROOT));
+        }
+
+        static
+        {
+            for (Session.Type session$type : values())
+            {
+                SESSION_TYPES.put(session$type.sessionType, session$type);
+            }
+        }
+    }
 }

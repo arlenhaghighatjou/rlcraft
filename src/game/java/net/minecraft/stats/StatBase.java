@@ -3,177 +3,169 @@ package net.minecraft.stats;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.function.Supplier;
-
-import net.minecraft.event.HoverEvent;
-import net.minecraft.scoreboard.IScoreObjectiveCriteria;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.scoreboard.IScoreCriteria;
+import net.minecraft.scoreboard.ScoreCriteriaStat;
 import net.minecraft.util.IJsonSerializable;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class StatBase {
-	public final String statId;
-	private final IChatComponent statName;
-	public boolean isIndependent;
-	private final IStatType type;
-	private final IScoreObjectiveCriteria field_150957_c;
-	private Class<? extends IJsonSerializable> field_150956_d;
-	private Supplier<? extends IJsonSerializable> field_150956_d_ctor;
-	private static NumberFormat numberFormat = NumberFormat.getIntegerInstance(Locale.US);
-	public static IStatType simpleStatType = new IStatType() {
-		public String format(int parInt1) {
-			return StatBase.numberFormat.format((long) parInt1);
-		}
-	};
-	private static DecimalFormat decimalFormat = new DecimalFormat("########0.00");
-	public static IStatType timeStatType = new IStatType() {
-		public String format(int i) {
-			double d0 = (double) i / 20.0D;
-			double d1 = d0 / 60.0D;
-			double d2 = d1 / 60.0D;
-			double d3 = d2 / 24.0D;
-			double d4 = d3 / 365.0D;
-			return d4 > 0.5D ? StatBase.decimalFormat.format(d4) + " y"
-					: (d3 > 0.5D ? StatBase.decimalFormat.format(d3) + " d"
-							: (d2 > 0.5D ? StatBase.decimalFormat.format(d2) + " h"
-									: (d1 > 0.5D ? StatBase.decimalFormat.format(d1) + " m" : d0 + " s")));
-		}
-	};
-	public static IStatType distanceStatType = new IStatType() {
-		public String format(int i) {
-			double d0 = (double) i / 100.0D;
-			double d1 = d0 / 1000.0D;
-			return d1 > 0.5D ? StatBase.decimalFormat.format(d1) + " km"
-					: (d0 > 0.5D ? StatBase.decimalFormat.format(d0) + " m" : i + " cm");
-		}
-	};
-	public static IStatType field_111202_k = new IStatType() {
-		public String format(int i) {
-			return StatBase.decimalFormat.format((double) i * 0.1D);
-		}
-	};
+public class StatBase
+{
+    public final String statId;
+    private final ITextComponent statName;
+    public boolean isIndependent;
+    private final IStatType formatter;
+    private final IScoreCriteria objectiveCriteria;
+    private Class <? extends IJsonSerializable > serializableClazz;
+    private static final NumberFormat numberFormat = NumberFormat.getIntegerInstance(Locale.US);
+    public static IStatType simpleStatType = new IStatType()
+    {
+        @SideOnly(Side.CLIENT)
+        public String format(int number)
+        {
+            return StatBase.numberFormat.format((long)number);
+        }
+    };
+    private static final DecimalFormat decimalFormat = new DecimalFormat("########0.00");
+    public static IStatType timeStatType = new IStatType()
+    {
+        @SideOnly(Side.CLIENT)
+        public String format(int number)
+        {
+            double d0 = (double)number / 20.0D;
+            double d1 = d0 / 60.0D;
+            double d2 = d1 / 60.0D;
+            double d3 = d2 / 24.0D;
+            double d4 = d3 / 365.0D;
 
-	public StatBase(String statIdIn, IChatComponent statNameIn, IStatType typeIn) {
-		this.statId = statIdIn;
-		this.statName = statNameIn;
-		this.type = typeIn;
-		this.field_150957_c = new ObjectiveStat(this);
-		IScoreObjectiveCriteria.INSTANCES.put(this.field_150957_c.getName(), this.field_150957_c);
-	}
+            if (d4 > 0.5D)
+            {
+                return StatBase.decimalFormat.format(d4) + " y";
+            }
+            else if (d3 > 0.5D)
+            {
+                return StatBase.decimalFormat.format(d3) + " d";
+            }
+            else if (d2 > 0.5D)
+            {
+                return StatBase.decimalFormat.format(d2) + " h";
+            }
+            else
+            {
+                return d1 > 0.5D ? StatBase.decimalFormat.format(d1) + " m" : d0 + " s";
+            }
+        }
+    };
+    public static IStatType distanceStatType = new IStatType()
+    {
+        @SideOnly(Side.CLIENT)
+        public String format(int number)
+        {
+            double d0 = (double)number / 100.0D;
+            double d1 = d0 / 1000.0D;
 
-	public StatBase(String statIdIn, IChatComponent statNameIn) {
-		this(statIdIn, statNameIn, simpleStatType);
-	}
+            if (d1 > 0.5D)
+            {
+                return StatBase.decimalFormat.format(d1) + " km";
+            }
+            else
+            {
+                return d0 > 0.5D ? StatBase.decimalFormat.format(d0) + " m" : number + " cm";
+            }
+        }
+    };
+    public static IStatType divideByTen = new IStatType()
+    {
+        @SideOnly(Side.CLIENT)
+        public String format(int number)
+        {
+            return StatBase.decimalFormat.format((double)number * 0.1D);
+        }
+    };
 
-	/**+
-	 * Initializes the current stat as independent (i.e., lacking
-	 * prerequisites for being updated) and returns the current
-	 * instance.
-	 */
-	public StatBase initIndependentStat() {
-		this.isIndependent = true;
-		return this;
-	}
+    public StatBase(String statIdIn, ITextComponent statNameIn, IStatType formatterIn)
+    {
+        this.statId = statIdIn;
+        this.statName = statNameIn;
+        this.formatter = formatterIn;
+        this.objectiveCriteria = new ScoreCriteriaStat(this);
+        IScoreCriteria.INSTANCES.put(this.objectiveCriteria.getName(), this.objectiveCriteria);
+    }
 
-	/**+
-	 * Register the stat into StatList.
-	 */
-	public StatBase registerStat() {
-		if (StatList.oneShotStats.containsKey(this.statId)) {
-			throw new RuntimeException(
-					"Duplicate stat id: \"" + ((StatBase) StatList.oneShotStats.get(this.statId)).statName + "\" and \""
-							+ this.statName + "\" at id " + this.statId);
-		} else {
-			StatList.allStats.add(this);
-			StatList.oneShotStats.put(this.statId, this);
-			return this;
-		}
-	}
+    public StatBase(String statIdIn, ITextComponent statNameIn)
+    {
+        this(statIdIn, statNameIn, simpleStatType);
+    }
 
-	/**+
-	 * Returns whether or not the StatBase-derived class is a
-	 * statistic (running counter) or an achievement (one-shot).
-	 */
-	public boolean isAchievement() {
-		return false;
-	}
+    public StatBase initIndependentStat()
+    {
+        this.isIndependent = true;
+        return this;
+    }
 
-	public String format(int parInt1) {
-		return this.type.format(parInt1);
-	}
+    public StatBase registerStat()
+    {
+        if (StatList.ID_TO_STAT_MAP.containsKey(this.statId))
+        {
+            throw new RuntimeException("Duplicate stat id: \"" + (StatList.ID_TO_STAT_MAP.get(this.statId)).statName + "\" and \"" + this.statName + "\" at id " + this.statId);
+        }
+        else
+        {
+            StatList.ALL_STATS.add(this);
+            StatList.ID_TO_STAT_MAP.put(this.statId, this);
+            return this;
+        }
+    }
 
-	public IChatComponent getStatName() {
-		IChatComponent ichatcomponent = this.statName.createCopy();
-		ichatcomponent.getChatStyle().setColor(EnumChatFormatting.GRAY);
-		ichatcomponent.getChatStyle().setChatHoverEvent(
-				new HoverEvent(HoverEvent.Action.SHOW_ACHIEVEMENT, new ChatComponentText(this.statId)));
-		return ichatcomponent;
-	}
+    @SideOnly(Side.CLIENT)
+    public String format(int number)
+    {
+        return this.formatter.format(number);
+    }
 
-	public IChatComponent func_150955_j() {
-		IChatComponent ichatcomponent = this.getStatName();
-		IChatComponent ichatcomponent1 = (new ChatComponentText("[")).appendSibling(ichatcomponent).appendText("]");
-		ichatcomponent1.setChatStyle(ichatcomponent.getChatStyle());
-		return ichatcomponent1;
-	}
+    public ITextComponent getStatName()
+    {
+        ITextComponent itextcomponent = this.statName.createCopy();
+        itextcomponent.getStyle().setColor(TextFormatting.GRAY);
+        return itextcomponent;
+    }
 
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		} else if (object != null && this.getClass() == object.getClass()) {
-			StatBase statbase = (StatBase) object;
-			return this.statId.equals(statbase.statId);
-		} else {
-			return false;
-		}
-	}
+    public boolean equals(Object p_equals_1_)
+    {
+        if (this == p_equals_1_)
+        {
+            return true;
+        }
+        else if (p_equals_1_ != null && this.getClass() == p_equals_1_.getClass())
+        {
+            StatBase statbase = (StatBase)p_equals_1_;
+            return this.statId.equals(statbase.statId);
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	public int hashCode() {
-		return this.statId.hashCode();
-	}
+    public int hashCode()
+    {
+        return this.statId.hashCode();
+    }
 
-	public String toString() {
-		return "Stat{id=" + this.statId + ", nameId=" + this.statName + ", awardLocallyOnly=" + this.isIndependent
-				+ ", formatter=" + this.type + ", objectiveCriteria=" + this.field_150957_c + '}';
-	}
+    public String toString()
+    {
+        return "Stat{id=" + this.statId + ", nameId=" + this.statName + ", awardLocallyOnly=" + this.isIndependent + ", formatter=" + this.formatter + ", objectiveCriteria=" + this.objectiveCriteria + '}';
+    }
 
-	public IScoreObjectiveCriteria func_150952_k() {
-		return this.field_150957_c;
-	}
+    public IScoreCriteria getCriteria()
+    {
+        return this.objectiveCriteria;
+    }
 
-	public Class<? extends IJsonSerializable> func_150954_l() {
-		return this.field_150956_d;
-	}
-
-	public Supplier<? extends IJsonSerializable> func_150954_l_ctor() {
-		return this.field_150956_d_ctor;
-	}
-
-	public StatBase func_150953_b(Class<? extends IJsonSerializable> oclass,
-			Supplier<? extends IJsonSerializable> octor) {
-		this.field_150956_d = oclass;
-		this.field_150956_d_ctor = octor;
-		return this;
-	}
+    public Class <? extends IJsonSerializable > getSerializableClazz()
+    {
+        return this.serializableClazz;
+    }
 }

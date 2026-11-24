@@ -10,69 +10,64 @@ import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class EntityMinecartChest extends EntityMinecartContainer {
-	public EntityMinecartChest(World worldIn) {
-		super(worldIn);
-	}
+public class EntityMinecartChest extends EntityMinecartContainer
+{
+    public EntityMinecartChest(World worldIn)
+    {
+        super(worldIn);
+    }
 
-	public EntityMinecartChest(World worldIn, double parDouble1, double parDouble2, double parDouble3) {
-		super(worldIn, parDouble1, parDouble2, parDouble3);
-	}
+    public EntityMinecartChest(World worldIn, double x, double y, double z)
+    {
+        super(worldIn, x, y, z);
+    }
 
-	public void killMinecart(DamageSource damagesource) {
-		super.killMinecart(damagesource);
-		if (this.worldObj.getGameRules().getBoolean("doEntityDrops")) {
-			this.dropItemWithOffset(Item.getItemFromBlock(Blocks.chest), 1, 0.0F);
-		}
+    public static void registerFixesMinecartChest(DataFixer fixer)
+    {
+        EntityMinecartContainer.addDataFixers(fixer, EntityMinecartChest.class);
+    }
 
-	}
+    public void killMinecart(DamageSource source)
+    {
+        super.killMinecart(source);
 
-	/**+
-	 * Returns the number of slots in the inventory.
-	 */
-	public int getSizeInventory() {
-		return 27;
-	}
+        if (this.world.getGameRules().getBoolean("doEntityDrops"))
+        {
+            this.dropItemWithOffset(Item.getItemFromBlock(Blocks.CHEST), 1, 0.0F);
+        }
+    }
 
-	public EntityMinecart.EnumMinecartType getMinecartType() {
-		return EntityMinecart.EnumMinecartType.CHEST;
-	}
+    public int getSizeInventory()
+    {
+        return 27;
+    }
 
-	public IBlockState getDefaultDisplayTile() {
-		return Blocks.chest.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.NORTH);
-	}
+    public EntityMinecart.Type getType()
+    {
+        return EntityMinecart.Type.CHEST;
+    }
 
-	public int getDefaultDisplayTileOffset() {
-		return 8;
-	}
+    public IBlockState getDefaultDisplayTile()
+    {
+        return Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.NORTH);
+    }
 
-	public String getGuiID() {
-		return "minecraft:chest";
-	}
+    public int getDefaultDisplayTileOffset()
+    {
+        return 8;
+    }
 
-	public Container createContainer(InventoryPlayer inventoryplayer, EntityPlayer entityplayer) {
-		return new ContainerChest(inventoryplayer, this, entityplayer);
-	}
+    public String getGuiID()
+    {
+        return "minecraft:chest";
+    }
+
+    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
+    {
+        this.addLoot(playerIn);
+        return new ContainerChest(playerInventory, this, playerIn);
+    }
 }

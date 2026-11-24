@@ -1,343 +1,327 @@
 package net.minecraft.world.gen;
 
-import com.carrotsearch.hppc.LongHashSet;
-import com.carrotsearch.hppc.LongObjectHashMap;
-import com.carrotsearch.hppc.LongObjectMap;
-import com.carrotsearch.hppc.LongSet;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import javax.annotation.Nullable;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
-import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerMinecraftServer;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.IProgressUpdate;
 import net.minecraft.util.ReportedException;
-import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.MinecraftException;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.EmptyChunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.chunk.storage.IChunkLoader;
-import net.lax1dude.eaglercraft.v1_8.HString;
-import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
-import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ChunkProviderServer implements IChunkProvider {
-	private static final Logger logger = LogManager.getLogger();
-	private LongSet droppedChunksSet = new LongHashSet();
-	private Chunk dummyChunk;
-	private IChunkProvider serverChunkGenerator;
-	private IChunkLoader chunkLoader;
-	/**+
-	 * if set, this flag forces a request to load a chunk to load
-	 * the chunk rather than defaulting to the dummy if possible
-	 */
-	public boolean chunkLoadOverride = true;
-	/**+
-	 * map of chunk Id's to Chunk instances
-	 */
-	private LongObjectMap<Chunk> id2ChunkMap = new LongObjectHashMap<>();
-	private List<Chunk> loadedChunks = Lists.newLinkedList();
-	private WorldServer worldObj;
+public class ChunkProviderServer implements IChunkProvider
+{
+    private static final Logger LOGGER = LogManager.getLogger();
+    private final Set<Long> droppedChunksSet = Sets.<Long>newHashSet();
+    public final IChunkGenerator chunkGenerator;
+    public final IChunkLoader chunkLoader;
+    public final Long2ObjectMap<Chunk> id2ChunkMap = new Long2ObjectOpenHashMap<Chunk>(8192);
+    public final WorldServer world;
+    private final Set<Long> loadingChunks = com.google.common.collect.Sets.newHashSet();
 
-	public ChunkProviderServer(WorldServer parWorldServer, IChunkLoader parIChunkLoader,
-			IChunkProvider parIChunkProvider) {
-		this.dummyChunk = new EmptyChunk(parWorldServer, Integer.MIN_VALUE, Integer.MIN_VALUE);
-		this.worldObj = parWorldServer;
-		this.chunkLoader = parIChunkLoader;
-		this.serverChunkGenerator = parIChunkProvider;
-	}
+    public ChunkProviderServer(WorldServer worldObjIn, IChunkLoader chunkLoaderIn, IChunkGenerator chunkGeneratorIn)
+    {
+        this.world = worldObjIn;
+        this.chunkLoader = chunkLoaderIn;
+        this.chunkGenerator = chunkGeneratorIn;
+    }
 
-	/**+
-	 * Checks to see if a chunk exists at x, z
-	 */
-	public boolean chunkExists(int i, int j) {
-		return this.id2ChunkMap.containsKey(ChunkCoordIntPair.chunkXZ2Int(i, j));
-	}
+    public Collection<Chunk> getLoadedChunks()
+    {
+        return this.id2ChunkMap.values();
+    }
 
-	public List<Chunk> func_152380_a() {
-		return this.loadedChunks;
-	}
+    public void queueUnload(Chunk chunkIn)
+    {
+        if (this.world.provider.canDropChunk(chunkIn.x, chunkIn.z))
+        {
+            this.droppedChunksSet.add(Long.valueOf(ChunkPos.asLong(chunkIn.x, chunkIn.z)));
+            chunkIn.unloadQueued = true;
+        }
+    }
 
-	public void dropChunk(int parInt1, int parInt2) {
-		if (this.worldObj.provider.canRespawnHere()) {
-			if (!this.worldObj.isSpawnChunk(parInt1, parInt2)) {
-				this.droppedChunksSet.add(ChunkCoordIntPair.chunkXZ2Int(parInt1, parInt2));
-			}
-		} else {
-			this.droppedChunksSet.add(ChunkCoordIntPair.chunkXZ2Int(parInt1, parInt2));
-		}
+    public void queueUnloadAll()
+    {
+        ObjectIterator objectiterator = this.id2ChunkMap.values().iterator();
 
-	}
+        while (objectiterator.hasNext())
+        {
+            Chunk chunk = (Chunk)objectiterator.next();
+            this.queueUnload(chunk);
+        }
+    }
 
-	/**+
-	 * marks all chunks for unload, ignoring those near the spawn
-	 */
-	public void unloadAllChunks() {
-		for (Chunk chunk : this.loadedChunks) {
-			this.dropChunk(chunk.xPosition, chunk.zPosition);
-		}
+    @Nullable
+    public Chunk getLoadedChunk(int x, int z)
+    {
+        long i = ChunkPos.asLong(x, z);
+        Chunk chunk = (Chunk)this.id2ChunkMap.get(i);
 
-	}
+        if (chunk != null)
+        {
+            chunk.unloadQueued = false;
+        }
 
-	/**+
-	 * loads or generates the chunk at the chunk location specified
-	 */
-	public Chunk loadChunk(int i, int j) {
-		long k = ChunkCoordIntPair.chunkXZ2Int(i, j);
-		this.droppedChunksSet.removeAll(k);
-		Chunk chunk = this.id2ChunkMap.get(k);
-		if (chunk == null) {
-			chunk = this.loadChunkFromFile(i, j);
-			if (chunk == null) {
-				if (this.serverChunkGenerator == null) {
-					chunk = this.dummyChunk;
-				} else {
-					try {
-						chunk = this.serverChunkGenerator.provideChunk(i, j);
-						++EaglerMinecraftServer.counterChunkGenerate;
-					} catch (Throwable throwable) {
-						CrashReport crashreport = CrashReport.makeCrashReport(throwable,
-								"Exception generating new chunk");
-						CrashReportCategory crashreportcategory = crashreport.makeCategory("Chunk to be generated");
-						crashreportcategory.addCrashSection("Location",
-								HString.format("%d,%d", new Object[] { Integer.valueOf(i), Integer.valueOf(j) }));
-						crashreportcategory.addCrashSection("Position hash", Long.valueOf(k));
-						crashreportcategory.addCrashSection("Generator", this.serverChunkGenerator.makeString());
-						throw new ReportedException(crashreport);
-					}
-				}
-			} else {
-				++EaglerMinecraftServer.counterChunkRead;
-			}
+        return chunk;
+    }
 
-			this.id2ChunkMap.put(k, chunk);
-			this.loadedChunks.add(chunk);
-			chunk.onChunkLoad();
-			chunk.populateChunk(this, this, i, j);
-		}
+    @Nullable
+    public Chunk loadChunk(int x, int z)
+    {
+        return loadChunk(x, z, null);
+    }
 
-		return chunk;
-	}
+    @Nullable
+    public Chunk loadChunk(int x, int z, @Nullable Runnable runnable)
+    {
+        Chunk chunk = this.getLoadedChunk(x, z);
+        if (chunk == null)
+        {
+            long pos = ChunkPos.asLong(x, z);
+            chunk = net.minecraftforge.common.ForgeChunkManager.fetchDormantChunk(pos, this.world);
+            if (chunk != null || !(this.chunkLoader instanceof net.minecraft.world.chunk.storage.AnvilChunkLoader))
+            {
+                if (!loadingChunks.add(pos)) net.minecraftforge.fml.common.FMLLog.bigWarning("There is an attempt to load a chunk ({},{}) in dimension {} that is already being loaded. This will cause weird chunk breakages.", x, z, this.world.provider.getDimension());
+                if (chunk == null) chunk = this.loadChunkFromFile(x, z);
 
-	/**+
-	 * Will return back a chunk, if it doesn't exist and its not a
-	 * MP client it will generates all the blocks for the specified
-	 * chunk from the map seed and chunk seed
-	 */
-	public Chunk provideChunk(int i, int j) {
-		Chunk chunk = this.id2ChunkMap.get(ChunkCoordIntPair.chunkXZ2Int(i, j));
-		return chunk == null ? (!this.worldObj.isFindingSpawnPoint() && !this.chunkLoadOverride ? this.dummyChunk
-				: this.loadChunk(i, j)) : chunk;
-	}
+                if (chunk != null)
+                {
+                this.id2ChunkMap.put(ChunkPos.asLong(x, z), chunk);
+                chunk.onLoad();
+                chunk.populate(this, this.chunkGenerator);
+                }
 
-	private Chunk loadChunkFromFile(int x, int z) {
-		if (this.chunkLoader == null) {
-			return null;
-		} else {
-			try {
-				Chunk chunk = this.chunkLoader.loadChunk(this.worldObj, x, z);
-				if (chunk != null) {
-					chunk.setLastSaveTime(this.worldObj.getTotalWorldTime());
-					if (this.serverChunkGenerator != null) {
-						this.serverChunkGenerator.recreateStructures(chunk, x, z);
-					}
-				}
+                loadingChunks.remove(pos);
+            }
+            else
+            {
+                net.minecraft.world.chunk.storage.AnvilChunkLoader loader = (net.minecraft.world.chunk.storage.AnvilChunkLoader) this.chunkLoader;
+                if (runnable == null || !net.minecraftforge.common.ForgeChunkManager.asyncChunkLoading)
+                    chunk = net.minecraftforge.common.chunkio.ChunkIOExecutor.syncChunkLoad(this.world, loader, this, x, z);
+                else if (loader.isChunkGeneratedAt(x, z))
+                {
+                    // We can only use the async queue for already generated chunks
+                    net.minecraftforge.common.chunkio.ChunkIOExecutor.queueChunkLoad(this.world, loader, this, x, z, runnable);
+                    return null;
+                }
+            }
+        }
 
-				return chunk;
-			} catch (Exception exception) {
-				logger.error("Couldn\'t load chunk");
-				logger.error(exception);
-				return null;
-			}
-		}
-	}
+        // If we didn't load the chunk async and have a callback run it now
+        if (runnable != null) runnable.run();
+        return chunk;
+    }
 
-	private void saveChunkExtraData(Chunk parChunk) {
-		if (this.chunkLoader != null) {
-			try {
-				this.chunkLoader.saveExtraChunkData(this.worldObj, parChunk);
-			} catch (Exception exception) {
-				logger.error("Couldn\'t save entities");
-				logger.error(exception);
-			}
+    public Chunk provideChunk(int x, int z)
+    {
+        Chunk chunk = this.loadChunk(x, z);
 
-		}
-	}
+        if (chunk == null)
+        {
+            long i = ChunkPos.asLong(x, z);
 
-	private void saveChunkData(Chunk parChunk) {
-		if (this.chunkLoader != null) {
-			try {
-				parChunk.setLastSaveTime(this.worldObj.getTotalWorldTime());
-				this.chunkLoader.saveChunk(this.worldObj, parChunk);
-				++EaglerMinecraftServer.counterChunkWrite;
-			} catch (IOException ioexception) {
-				logger.error("Couldn\'t save chunk");
-				logger.error(ioexception);
-			}
-		}
-	}
+            try
+            {
+                chunk = this.chunkGenerator.generateChunk(x, z);
+            }
+            catch (Throwable throwable)
+            {
+                CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Exception generating new chunk");
+                CrashReportCategory crashreportcategory = crashreport.makeCategory("Chunk to be generated");
+                crashreportcategory.addCrashSection("Location", String.format("%d,%d", x, z));
+                crashreportcategory.addCrashSection("Position hash", Long.valueOf(i));
+                crashreportcategory.addCrashSection("Generator", this.chunkGenerator);
+                throw new ReportedException(crashreport);
+            }
 
-	/**+
-	 * Populates chunk with ores etc etc
-	 */
-	public void populate(IChunkProvider ichunkprovider, int i, int j) {
-		Chunk chunk = this.provideChunk(i, j);
-		if (!chunk.isTerrainPopulated()) {
-			chunk.func_150809_p();
-			if (this.serverChunkGenerator != null) {
-				this.serverChunkGenerator.populate(ichunkprovider, i, j);
-				chunk.setChunkModified();
-			}
-		}
+            this.id2ChunkMap.put(i, chunk);
+            chunk.onLoad();
+            chunk.populate(this, this.chunkGenerator);
+        }
 
-	}
+        return chunk;
+    }
 
-	public boolean func_177460_a(IChunkProvider ichunkprovider, Chunk chunk, int i, int j) {
-		if (this.serverChunkGenerator != null && this.serverChunkGenerator.func_177460_a(ichunkprovider, chunk, i, j)) {
-			Chunk chunk1 = this.provideChunk(i, j);
-			chunk1.setChunkModified();
-			return true;
-		} else {
-			return false;
-		}
-	}
+    @Nullable
+    private Chunk loadChunkFromFile(int x, int z)
+    {
+        try
+        {
+            Chunk chunk = this.chunkLoader.loadChunk(this.world, x, z);
 
-	/**+
-	 * Two modes of operation: if passed true, save all Chunks in
-	 * one go. If passed false, save up to two chunks. Return true
-	 * if all chunks have been saved.
-	 */
-	public boolean saveChunks(boolean flag, IProgressUpdate var2) {
-		int i = 0;
-		ArrayList arraylist = Lists.newArrayList(this.loadedChunks);
+            if (chunk != null)
+            {
+                chunk.setLastSaveTime(this.world.getTotalWorldTime());
+                this.chunkGenerator.recreateStructures(chunk, x, z);
+            }
 
-		for (int j = 0, l = arraylist.size(); j < l; ++j) {
-			Chunk chunk = (Chunk) arraylist.get(j);
-			if (flag) {
-				this.saveChunkExtraData(chunk);
-			}
+            return chunk;
+        }
+        catch (Exception exception)
+        {
+            LOGGER.error("Couldn't load chunk", (Throwable)exception);
+            return null;
+        }
+    }
 
-			if (chunk.needsSaving(flag)) {
-				this.saveChunkData(chunk);
-				chunk.setModified(false);
-				++i;
-				if (i == 24 && !flag) {
-					return false;
-				}
-			}
-		}
+    private void saveChunkExtraData(Chunk chunkIn)
+    {
+        try
+        {
+            this.chunkLoader.saveExtraChunkData(this.world, chunkIn);
+        }
+        catch (Exception exception)
+        {
+            LOGGER.error("Couldn't save entities", (Throwable)exception);
+        }
+    }
 
-		return true;
-	}
+    private void saveChunkData(Chunk chunkIn)
+    {
+        try
+        {
+            chunkIn.setLastSaveTime(this.world.getTotalWorldTime());
+            this.chunkLoader.saveChunk(this.world, chunkIn);
+        }
+        catch (IOException ioexception)
+        {
+            LOGGER.error("Couldn't save chunk", (Throwable)ioexception);
+        }
+        catch (MinecraftException minecraftexception)
+        {
+            LOGGER.error("Couldn't save chunk; already in use by another instance of Minecraft?", (Throwable)minecraftexception);
+        }
+    }
 
-	/**+
-	 * Save extra data not associated with any Chunk. Not saved
-	 * during autosave, only during world unload. Currently
-	 * unimplemented.
-	 */
-	public void saveExtraData() {
-		if (this.chunkLoader != null) {
-			this.chunkLoader.saveExtraData();
-		}
+    public boolean saveChunks(boolean all)
+    {
+        int i = 0;
+        List<Chunk> list = Lists.newArrayList(this.id2ChunkMap.values());
 
-	}
+        for (int j = 0; j < list.size(); ++j)
+        {
+            Chunk chunk = list.get(j);
 
-	/**+
-	 * Unloads chunks that are marked to be unloaded. This is not
-	 * guaranteed to unload every such chunk.
-	 */
-	public boolean unloadQueuedChunks() {
-		if (!this.worldObj.disableLevelSaving) {
-			for (int i = 0; i < 100; ++i) {
-				if (!this.droppedChunksSet.isEmpty()) {
-					long olong = this.droppedChunksSet.iterator().next().value;
-					Chunk chunk = this.id2ChunkMap.get(olong);
-					if (chunk != null) {
-						chunk.onChunkUnload();
-						this.saveChunkData(chunk);
-						this.saveChunkExtraData(chunk);
-						this.id2ChunkMap.remove(olong);
-						this.loadedChunks.remove(chunk);
-					}
+            if (all)
+            {
+                this.saveChunkExtraData(chunk);
+            }
 
-					this.droppedChunksSet.removeAll(olong);
-				}
-			}
+            if (chunk.needsSaving(all))
+            {
+                this.saveChunkData(chunk);
+                chunk.setModified(false);
+                ++i;
 
-			if (this.chunkLoader != null) {
-				this.chunkLoader.chunkTick();
-			}
-		}
+                if (i == 24 && !all)
+                {
+                    return false;
+                }
+            }
+        }
 
-		return this.serverChunkGenerator.unloadQueuedChunks();
-	}
+        return true;
+    }
 
-	/**+
-	 * Returns if the IChunkProvider supports saving.
-	 */
-	public boolean canSave() {
-		return !this.worldObj.disableLevelSaving;
-	}
+    public void flushToDisk()
+    {
+        this.chunkLoader.flush();
+    }
 
-	/**+
-	 * Converts the instance data to a readable string.
-	 */
-	public String makeString() {
-		return "ServerChunkCache: " + this.id2ChunkMap.size() + " Drop: " + this.droppedChunksSet.size();
-	}
+    public boolean tick()
+    {
+        if (!this.world.disableLevelSaving)
+        {
+            if (!this.droppedChunksSet.isEmpty())
+            {
+                for (ChunkPos forced : this.world.getPersistentChunks().keySet())
+                {
+                    this.droppedChunksSet.remove(ChunkPos.asLong(forced.x, forced.z));
+                }
 
-	public List<BiomeGenBase.SpawnListEntry> getPossibleCreatures(EnumCreatureType enumcreaturetype,
-			BlockPos blockpos) {
-		return this.serverChunkGenerator.getPossibleCreatures(enumcreaturetype, blockpos);
-	}
+                Iterator<Long> iterator = this.droppedChunksSet.iterator();
 
-	public BlockPos getStrongholdGen(World world, String s, BlockPos blockpos) {
-		return this.serverChunkGenerator.getStrongholdGen(world, s, blockpos);
-	}
+                for (int i = 0; i < 100 && iterator.hasNext(); iterator.remove())
+                {
+                    Long olong = iterator.next();
+                    Chunk chunk = (Chunk)this.id2ChunkMap.get(olong);
 
-	public int getLoadedChunkCount() {
-		return this.id2ChunkMap.size();
-	}
+                    if (chunk != null && chunk.unloadQueued)
+                    {
+                        chunk.onUnload();
+                        net.minecraftforge.common.ForgeChunkManager.putDormantChunk(ChunkPos.asLong(chunk.x, chunk.z), chunk);
+                        this.saveChunkData(chunk);
+                        this.saveChunkExtraData(chunk);
+                        this.id2ChunkMap.remove(olong);
+                        ++i;
+                    }
+                }
+            }
 
-	public void recreateStructures(Chunk var1, int var2, int var3) {
-	}
+            if (this.id2ChunkMap.isEmpty()) net.minecraftforge.common.DimensionManager.unloadWorld(this.world.provider.getDimension());
 
-	/**+
-	 * Will return back a chunk, if it doesn't exist and its not a
-	 * MP client it will generates all the blocks for the specified
-	 * chunk from the map seed and chunk seed
-	 */
-	public Chunk provideChunk(BlockPos blockpos) {
-		return this.provideChunk(blockpos.getX() >> 4, blockpos.getZ() >> 4);
-	}
+            this.chunkLoader.chunkTick();
+        }
 
-	public Chunk getLoadedChunk(int var1, int var2) {
-		return this.id2ChunkMap.get(ChunkCoordIntPair.chunkXZ2Int(var1, var2));
-	}
+        return false;
+    }
+
+    public boolean canSave()
+    {
+        return !this.world.disableLevelSaving;
+    }
+
+    public String makeString()
+    {
+        return "ServerChunkCache: " + this.id2ChunkMap.size() + " Drop: " + this.droppedChunksSet.size();
+    }
+
+    public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos)
+    {
+        return this.chunkGenerator.getPossibleCreatures(creatureType, pos);
+    }
+
+    @Nullable
+    public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored)
+    {
+        return this.chunkGenerator.getNearestStructurePos(worldIn, structureName, position, findUnexplored);
+    }
+
+    public boolean isInsideStructure(World worldIn, String structureName, BlockPos pos)
+    {
+        return this.chunkGenerator.isInsideStructure(worldIn, structureName, pos);
+    }
+
+    public int getLoadedChunkCount()
+    {
+        return this.id2ChunkMap.size();
+    }
+
+    public boolean chunkExists(int x, int z)
+    {
+        return this.id2ChunkMap.containsKey(ChunkPos.asLong(x, z));
+    }
+
+    public boolean isChunkGeneratedAt(int x, int z)
+    {
+        return this.id2ChunkMap.containsKey(ChunkPos.asLong(x, z)) || this.chunkLoader.isChunkGeneratedAt(x, z);
+    }
 }

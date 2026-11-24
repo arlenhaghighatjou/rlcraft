@@ -1,99 +1,87 @@
 package net.minecraft.entity.ai;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class EntityAIRunAroundLikeCrazy extends EntityAIBase {
-	private EntityHorse horseHost;
-	private double speed;
-	private double targetX;
-	private double targetY;
-	private double targetZ;
+public class EntityAIRunAroundLikeCrazy extends EntityAIBase
+{
+    private final AbstractHorse horseHost;
+    private final double speed;
+    private double targetX;
+    private double targetY;
+    private double targetZ;
 
-	public EntityAIRunAroundLikeCrazy(EntityHorse horse, double speedIn) {
-		this.horseHost = horse;
-		this.speed = speedIn;
-		this.setMutexBits(1);
-	}
+    public EntityAIRunAroundLikeCrazy(AbstractHorse horse, double speedIn)
+    {
+        this.horseHost = horse;
+        this.speed = speedIn;
+        this.setMutexBits(1);
+    }
 
-	/**+
-	 * Returns whether the EntityAIBase should begin execution.
-	 */
-	public boolean shouldExecute() {
-		if (!this.horseHost.isTame() && this.horseHost.riddenByEntity != null) {
-			Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.horseHost, 5, 4);
-			if (vec3 == null) {
-				return false;
-			} else {
-				this.targetX = vec3.xCoord;
-				this.targetY = vec3.yCoord;
-				this.targetZ = vec3.zCoord;
-				return true;
-			}
-		} else {
-			return false;
-		}
-	}
+    public boolean shouldExecute()
+    {
+        if (!this.horseHost.isTame() && this.horseHost.isBeingRidden())
+        {
+            Vec3d vec3d = RandomPositionGenerator.findRandomTarget(this.horseHost, 5, 4);
 
-	/**+
-	 * Execute a one shot task or start executing a continuous task
-	 */
-	public void startExecuting() {
-		this.horseHost.getNavigator().tryMoveToXYZ(this.targetX, this.targetY, this.targetZ, this.speed);
-	}
+            if (vec3d == null)
+            {
+                return false;
+            }
+            else
+            {
+                this.targetX = vec3d.x;
+                this.targetY = vec3d.y;
+                this.targetZ = vec3d.z;
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	/**+
-	 * Returns whether an in-progress EntityAIBase should continue
-	 * executing
-	 */
-	public boolean continueExecuting() {
-		return !this.horseHost.getNavigator().noPath() && this.horseHost.riddenByEntity != null;
-	}
+    public void startExecuting()
+    {
+        this.horseHost.getNavigator().tryMoveToXYZ(this.targetX, this.targetY, this.targetZ, this.speed);
+    }
 
-	/**+
-	 * Updates the task
-	 */
-	public void updateTask() {
-		if (this.horseHost.getRNG().nextInt(50) == 0) {
-			if (this.horseHost.riddenByEntity instanceof EntityPlayer) {
-				int i = this.horseHost.getTemper();
-				int j = this.horseHost.getMaxTemper();
-				if (j > 0 && this.horseHost.getRNG().nextInt(j) < i) {
-					this.horseHost.setTamedBy((EntityPlayer) this.horseHost.riddenByEntity);
-					this.horseHost.worldObj.setEntityState(this.horseHost, (byte) 7);
-					return;
-				}
+    public boolean shouldContinueExecuting()
+    {
+        return !this.horseHost.isTame() && !this.horseHost.getNavigator().noPath() && this.horseHost.isBeingRidden();
+    }
 
-				this.horseHost.increaseTemper(5);
-			}
+    public void updateTask()
+    {
+        if (!this.horseHost.isTame() && this.horseHost.getRNG().nextInt(50) == 0)
+        {
+            Entity entity = (Entity)this.horseHost.getPassengers().get(0);
 
-			this.horseHost.riddenByEntity.mountEntity((Entity) null);
-			this.horseHost.riddenByEntity = null;
-			this.horseHost.makeHorseRearWithSound();
-			this.horseHost.worldObj.setEntityState(this.horseHost, (byte) 6);
-		}
+            if (entity == null)
+            {
+                return;
+            }
 
-	}
+            if (entity instanceof EntityPlayer)
+            {
+                int i = this.horseHost.getTemper();
+                int j = this.horseHost.getMaxTemper();
+
+                if (j > 0 && this.horseHost.getRNG().nextInt(j) < i && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(horseHost, (EntityPlayer)entity))
+                {
+                    this.horseHost.setTamedBy((EntityPlayer)entity);
+                    return;
+                }
+
+                this.horseHost.increaseTemper(5);
+            }
+
+            this.horseHost.removePassengers();
+            this.horseHost.makeMad();
+            this.horseHost.world.setEntityState(this.horseHost, (byte)6);
+        }
+    }
 }

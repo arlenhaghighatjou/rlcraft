@@ -1,196 +1,188 @@
 package net.minecraft.client.gui;
 
 import java.util.Arrays;
-
-import net.lax1dude.eaglercraft.v1_8.ArrayUtils;
-import net.lax1dude.eaglercraft.v1_8.PointerInputAbstraction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.ArrayUtils;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class GuiKeyBindingList extends GuiListExtended {
-	private final GuiControls field_148191_k;
-	private final Minecraft mc;
-	private final GuiListExtended.IGuiListEntry[] listEntries;
-	private int maxListLabelWidth = 0;
+@SideOnly(Side.CLIENT)
+public class GuiKeyBindingList extends GuiListExtended
+{
+    private final GuiControls controlsScreen;
+    private final Minecraft mc;
+    private final GuiListExtended.IGuiListEntry[] listEntries;
+    private int maxListLabelWidth;
 
-	public GuiKeyBindingList(GuiControls controls, Minecraft mcIn) {
-		super(mcIn, controls.width, controls.height, 66, controls.height - 32, 20);
-		this.field_148191_k = controls;
-		this.mc = mcIn;
-		KeyBinding[] akeybinding = (KeyBinding[]) ArrayUtils.clone(mcIn.gameSettings.keyBindings);
-		this.listEntries = new GuiListExtended.IGuiListEntry[akeybinding.length + KeyBinding.getKeybinds().size()];
-		Arrays.sort(akeybinding);
-		int i = 0;
-		String s = null;
+    public GuiKeyBindingList(GuiControls controls, Minecraft mcIn)
+    {
+        super(mcIn, controls.width + 45, controls.height, 63, controls.height - 32, 20);
+        this.controlsScreen = controls;
+        this.mc = mcIn;
+        KeyBinding[] akeybinding = (KeyBinding[])ArrayUtils.clone(mcIn.gameSettings.keyBindings);
+        this.listEntries = new GuiListExtended.IGuiListEntry[akeybinding.length + KeyBinding.getKeybinds().size()];
+        Arrays.sort((Object[])akeybinding);
+        int i = 0;
+        String s = null;
 
-		for (int l = 0; l < akeybinding.length; ++l) {
-			KeyBinding keybinding = akeybinding[l];
-			String s1 = keybinding.getKeyCategory();
-			if (!s1.equals(s)) {
-				s = s1;
-				this.listEntries[i++] = new GuiKeyBindingList.CategoryEntry(s1);
-			}
+        for (KeyBinding keybinding : akeybinding)
+        {
+            String s1 = keybinding.getKeyCategory();
 
-			int j = mcIn.fontRendererObj.getStringWidth(I18n.format(keybinding.getKeyDescription(), new Object[0]));
-			if (j > this.maxListLabelWidth) {
-				this.maxListLabelWidth = j;
-			}
+            if (!s1.equals(s))
+            {
+                s = s1;
+                this.listEntries[i++] = new GuiKeyBindingList.CategoryEntry(s1);
+            }
 
-			this.listEntries[i++] = new GuiKeyBindingList.KeyEntry(keybinding);
-		}
+            int j = mcIn.fontRenderer.getStringWidth(I18n.format(keybinding.getKeyDescription()));
 
-	}
+            if (j > this.maxListLabelWidth)
+            {
+                this.maxListLabelWidth = j;
+            }
 
-	protected int getSize() {
-		return this.listEntries.length;
-	}
+            this.listEntries[i++] = new GuiKeyBindingList.KeyEntry(keybinding);
+        }
+    }
 
-	/**+
-	 * Gets the IGuiListEntry object for the given index
-	 */
-	public GuiListExtended.IGuiListEntry getListEntry(int i) {
-		return this.listEntries[i];
-	}
+    protected int getSize()
+    {
+        return this.listEntries.length;
+    }
 
-	protected int getScrollBarX() {
-		return super.getScrollBarX() + 15;
-	}
+    public GuiListExtended.IGuiListEntry getListEntry(int index)
+    {
+        return this.listEntries[index];
+    }
 
-	/**+
-	 * Gets the width of the list
-	 */
-	public int getListWidth() {
-		return super.getListWidth() + 32;
-	}
+    protected int getScrollBarX()
+    {
+        return super.getScrollBarX() + 35;
+    }
 
-	public class CategoryEntry implements GuiListExtended.IGuiListEntry {
-		private final String labelText;
-		private final int labelWidth;
+    public int getListWidth()
+    {
+        return super.getListWidth() + 32;
+    }
 
-		public CategoryEntry(String parString1) {
-			this.labelText = I18n.format(parString1, new Object[0]);
-			this.labelWidth = GuiKeyBindingList.this.mc.fontRendererObj.getStringWidth(this.labelText);
-		}
+    @SideOnly(Side.CLIENT)
+    public class CategoryEntry implements GuiListExtended.IGuiListEntry
+    {
+        private final String labelText;
+        private final int labelWidth;
 
-		public void drawEntry(int var1, int var2, int i, int var4, int j, int var6, int var7, boolean var8) {
-			GuiKeyBindingList.this.mc.fontRendererObj.drawString(this.labelText,
-					GuiKeyBindingList.this.mc.currentScreen.width / 2 - this.labelWidth / 2,
-					i + j - GuiKeyBindingList.this.mc.fontRendererObj.FONT_HEIGHT - 1, 16777215);
-		}
+        public CategoryEntry(String name)
+        {
+            this.labelText = I18n.format(name);
+            this.labelWidth = GuiKeyBindingList.this.mc.fontRenderer.getStringWidth(this.labelText);
+        }
 
-		public boolean mousePressed(int var1, int var2, int var3, int var4, int var5, int var6) {
-			return false;
-		}
+        public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected, float partialTicks)
+        {
+            GuiKeyBindingList.this.mc.fontRenderer.drawString(this.labelText, GuiKeyBindingList.this.mc.currentScreen.width / 2 - this.labelWidth / 2, y + slotHeight - GuiKeyBindingList.this.mc.fontRenderer.FONT_HEIGHT - 1, 16777215);
+        }
 
-		public void mouseReleased(int var1, int var2, int var3, int var4, int var5, int var6) {
-		}
+        public boolean mousePressed(int slotIndex, int mouseX, int mouseY, int mouseEvent, int relativeX, int relativeY)
+        {
+            return false;
+        }
 
-		public void setSelected(int var1, int var2, int var3) {
-		}
-	}
+        public void mouseReleased(int slotIndex, int x, int y, int mouseEvent, int relativeX, int relativeY)
+        {
+        }
 
-	public class KeyEntry implements GuiListExtended.IGuiListEntry {
-		private final KeyBinding keybinding;
-		private final String keyDesc;
-		private final GuiButton btnChangeKeyBinding;
-		private final GuiButton btnReset;
+        public void updatePosition(int slotIndex, int x, int y, float partialTicks)
+        {
+        }
+    }
 
-		private KeyEntry(KeyBinding parKeyBinding) {
-			this.keybinding = parKeyBinding;
-			this.keyDesc = I18n.format(parKeyBinding.getKeyDescription(), new Object[0]);
-			this.btnChangeKeyBinding = new GuiButton(0, 0, 0, 75, 20,
-					I18n.format(parKeyBinding.getKeyDescription(), new Object[0]));
-			this.btnReset = new GuiButton(0, 0, 0, 50, 20, I18n.format("controls.reset", new Object[0]));
-		}
+    @SideOnly(Side.CLIENT)
+    public class KeyEntry implements GuiListExtended.IGuiListEntry
+    {
+        private final KeyBinding keybinding;
+        private final String keyDesc;
+        private final GuiButton btnChangeKeyBinding;
+        private final GuiButton btnReset;
 
-		public void drawEntry(int var1, int i, int j, int var4, int k, int l, int i1, boolean var8) {
-			boolean flag = GuiKeyBindingList.this.field_148191_k.buttonId == this.keybinding;
-			GuiKeyBindingList.this.mc.fontRendererObj.drawString(this.keyDesc,
-					i + 90 - GuiKeyBindingList.this.maxListLabelWidth,
-					j + k / 2 - GuiKeyBindingList.this.mc.fontRendererObj.FONT_HEIGHT / 2, 16777215);
-			this.btnReset.xPosition = i + 190;
-			this.btnReset.yPosition = j;
-			this.btnReset.enabled = this.keybinding.getKeyCode() != this.keybinding.getKeyCodeDefault();
-			this.btnReset.drawButton(GuiKeyBindingList.this.mc, l, i1);
-			this.btnChangeKeyBinding.xPosition = i + 105;
-			this.btnChangeKeyBinding.yPosition = j;
-			this.btnChangeKeyBinding.displayString = GameSettings.getKeyDisplayString(this.keybinding.getKeyCode());
-			boolean flag1 = false;
-			if (this.keybinding.getKeyCode() != 0) {
-				KeyBinding[] kb = GuiKeyBindingList.this.mc.gameSettings.keyBindings;
-				for (int m = 0; m < kb.length; ++m) {
-					KeyBinding keybindingx = kb[m];
-					if (keybindingx != this.keybinding && keybindingx.getKeyCode() == this.keybinding.getKeyCode()) {
-						flag1 = true;
-						break;
-					}
-				}
-			}
+        private KeyEntry(KeyBinding name)
+        {
+            this.keybinding = name;
+            this.keyDesc = I18n.format(name.getKeyDescription());
+            this.btnChangeKeyBinding = new GuiButton(0, 0, 0, 95, 20, I18n.format(name.getKeyDescription()));
+            this.btnReset = new GuiButton(0, 0, 0, 50, 20, I18n.format("controls.reset"));
+        }
 
-			if (flag) {
-				this.btnChangeKeyBinding.displayString = EnumChatFormatting.WHITE + "> " + EnumChatFormatting.YELLOW
-						+ this.btnChangeKeyBinding.displayString + EnumChatFormatting.WHITE + " <";
-			} else if (flag1) {
-				this.btnChangeKeyBinding.displayString = EnumChatFormatting.RED
-						+ this.btnChangeKeyBinding.displayString;
-			}
+        public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected, float partialTicks)
+        {
+            boolean flag = GuiKeyBindingList.this.controlsScreen.buttonId == this.keybinding;
+            GuiKeyBindingList.this.mc.fontRenderer.drawString(this.keyDesc, x + 90 - GuiKeyBindingList.this.maxListLabelWidth, y + slotHeight / 2 - GuiKeyBindingList.this.mc.fontRenderer.FONT_HEIGHT / 2, 16777215);
+            this.btnReset.x = x + 210;
+            this.btnReset.y = y;
+            this.btnReset.enabled = !this.keybinding.isSetToDefaultValue();
+            this.btnReset.drawButton(GuiKeyBindingList.this.mc, mouseX, mouseY, partialTicks);
+            this.btnChangeKeyBinding.x = x + 105;
+            this.btnChangeKeyBinding.y = y;
+            this.btnChangeKeyBinding.displayString = this.keybinding.getDisplayName();
+            boolean flag1 = false;
+            boolean keyCodeModifierConflict = true; // less severe form of conflict, like SHIFT conflicting with SHIFT+G
 
-			this.btnChangeKeyBinding.drawButton(GuiKeyBindingList.this.mc, l, i1);
-		}
+            if (this.keybinding.getKeyCode() != 0)
+            {
+                for (KeyBinding keybinding : GuiKeyBindingList.this.mc.gameSettings.keyBindings)
+                {
+                    if (keybinding != this.keybinding && keybinding.conflicts(this.keybinding))
+                    {
+                        flag1 = true;
+                        keyCodeModifierConflict &= keybinding.hasKeyCodeModifierConflict(this.keybinding);
+                    }
+                }
+            }
 
-		public boolean mousePressed(int var1, int i, int j, int var4, int var5, int var6) {
-			if (var4 != 0 && var4 != 12345)
-				return false;
-			boolean touchMode = PointerInputAbstraction.isTouchMode();
-			if ((!touchMode || (this.btnChangeKeyBinding.isSliderTouchEvents() == (var4 == 12345)))
-					&& this.btnChangeKeyBinding.mousePressed(GuiKeyBindingList.this.mc, i, j)) {
-				GuiKeyBindingList.this.field_148191_k.buttonId = this.keybinding;
-				return true;
-			} else if ((!touchMode || (this.btnReset.isSliderTouchEvents() == (var4 == 12345)))
-					&& this.btnReset.mousePressed(GuiKeyBindingList.this.mc, i, j)) {
-				GuiKeyBindingList.this.mc.gameSettings.setOptionKeyBinding(this.keybinding,
-						this.keybinding.getKeyCodeDefault());
-				KeyBinding.resetKeyBindingArrayAndHash();
-				return true;
-			} else {
-				return false;
-			}
-		}
+            if (flag)
+            {
+                this.btnChangeKeyBinding.displayString = TextFormatting.WHITE + "> " + TextFormatting.YELLOW + this.btnChangeKeyBinding.displayString + TextFormatting.WHITE + " <";
+            }
+            else if (flag1)
+            {
+                this.btnChangeKeyBinding.displayString = (keyCodeModifierConflict ? TextFormatting.GOLD : TextFormatting.RED) + this.btnChangeKeyBinding.displayString;
+            }
 
-		public void mouseReleased(int var1, int i, int j, int var4, int var5, int var6) {
-			if (var4 != 0 && var4 != 12345)
-				return;
-			boolean touchMode = PointerInputAbstraction.isTouchMode();
-			if (!touchMode || (this.btnChangeKeyBinding.isSliderTouchEvents() == (var4 == 12345)))
-				this.btnChangeKeyBinding.mouseReleased(i, j);
-			if (!touchMode || (this.btnReset.isSliderTouchEvents() == (var4 == 12345)))
-				this.btnReset.mouseReleased(i, j);
-		}
+            this.btnChangeKeyBinding.drawButton(GuiKeyBindingList.this.mc, mouseX, mouseY, partialTicks);
+        }
 
-		public void setSelected(int var1, int var2, int var3) {
-		}
-	}
+        public boolean mousePressed(int slotIndex, int mouseX, int mouseY, int mouseEvent, int relativeX, int relativeY)
+        {
+            if (this.btnChangeKeyBinding.mousePressed(GuiKeyBindingList.this.mc, mouseX, mouseY))
+            {
+                GuiKeyBindingList.this.controlsScreen.buttonId = this.keybinding;
+                return true;
+            }
+            else if (this.btnReset.mousePressed(GuiKeyBindingList.this.mc, mouseX, mouseY))
+            {
+                this.keybinding.setToDefault();
+                GuiKeyBindingList.this.mc.gameSettings.setOptionKeyBinding(this.keybinding, this.keybinding.getKeyCodeDefault());
+                KeyBinding.resetKeyBindingArrayAndHash();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void mouseReleased(int slotIndex, int x, int y, int mouseEvent, int relativeX, int relativeY)
+        {
+            this.btnChangeKeyBinding.mouseReleased(x, y);
+            this.btnReset.mouseReleased(x, y);
+        }
+
+        public void updatePosition(int slotIndex, int x, int y, float partialTicks)
+        {
+        }
+    }
 }

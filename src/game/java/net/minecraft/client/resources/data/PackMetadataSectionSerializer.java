@@ -1,57 +1,46 @@
 package net.minecraft.client.resources.data;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import java.lang.reflect.Type;
+import net.minecraft.util.JsonUtils;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import net.lax1dude.eaglercraft.v1_8.json.JSONTypeSerializer;
-import net.lax1dude.eaglercraft.v1_8.json.JSONTypeProvider;
-import net.minecraft.util.IChatComponent;
+@SideOnly(Side.CLIENT)
+public class PackMetadataSectionSerializer extends BaseMetadataSectionSerializer<PackMetadataSection> implements JsonSerializer<PackMetadataSection>
+{
+    public PackMetadataSection deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException
+    {
+        JsonObject jsonobject = p_deserialize_1_.getAsJsonObject();
+        ITextComponent itextcomponent = (ITextComponent)p_deserialize_3_.deserialize(jsonobject.get("description"), ITextComponent.class);
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class PackMetadataSectionSerializer extends BaseMetadataSectionSerializer<PackMetadataSection>
-		implements JSONTypeSerializer<PackMetadataSection, JSONObject> {
-	public PackMetadataSection deserialize(JSONObject jsonobject) throws JSONException {
-		IChatComponent ichatcomponent = JSONTypeProvider.deserialize(jsonobject.get("description"),
-				IChatComponent.class);
-		if (ichatcomponent == null) {
-			throw new JSONException("Invalid/missing description!");
-		} else {
-			int i = jsonobject.getInt("pack_format");
-			return new PackMetadataSection(ichatcomponent, i);
-		}
-	}
+        if (itextcomponent == null)
+        {
+            throw new JsonParseException("Invalid/missing description!");
+        }
+        else
+        {
+            int i = JsonUtils.getInt(jsonobject, "pack_format");
+            return new PackMetadataSection(itextcomponent, i);
+        }
+    }
 
-	public JSONObject serialize(PackMetadataSection packmetadatasection) {
-		JSONObject jsonobject = new JSONObject();
-		jsonobject.put("pack_format", packmetadatasection.getPackFormat());
-		jsonobject.put("description",
-				(JSONObject) JSONTypeProvider.serialize(packmetadatasection.getPackDescription()));
-		return jsonobject;
-	}
+    public JsonElement serialize(PackMetadataSection p_serialize_1_, Type p_serialize_2_, JsonSerializationContext p_serialize_3_)
+    {
+        JsonObject jsonobject = new JsonObject();
+        jsonobject.addProperty("pack_format", Integer.valueOf(p_serialize_1_.getPackFormat()));
+        jsonobject.add("description", p_serialize_3_.serialize(p_serialize_1_.getPackDescription()));
+        return jsonobject;
+    }
 
-	/**+
-	 * The name of this section type as it appears in JSON.
-	 */
-	public String getSectionName() {
-		return "pack";
-	}
+    public String getSectionName()
+    {
+        return "pack";
+    }
 }

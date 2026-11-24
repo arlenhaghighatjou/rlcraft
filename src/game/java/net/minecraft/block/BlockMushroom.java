@@ -1,125 +1,140 @@
 package net.minecraft.block;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-
+import java.util.Random;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenBigMushroom;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class BlockMushroom extends BlockBush implements IGrowable {
-	protected BlockMushroom() {
-		float f = 0.2F;
-		this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
-		this.setTickRandomly(true);
-	}
+public class BlockMushroom extends BlockBush implements IGrowable
+{
+    protected static final AxisAlignedBB MUSHROOM_AABB = new AxisAlignedBB(0.30000001192092896D, 0.0D, 0.30000001192092896D, 0.699999988079071D, 0.4000000059604645D, 0.699999988079071D);
 
-	public void updateTick(World world, BlockPos blockpos, IBlockState var3, EaglercraftRandom random) {
-		if (random.nextInt(25) == 0) {
-			int i = 5;
-			boolean flag = true;
+    protected BlockMushroom()
+    {
+        this.setTickRandomly(true);
+    }
 
-			for (BlockPos blockpos1 : BlockPos.getAllInBoxMutable(blockpos.add(-4, -1, -4), blockpos.add(4, 1, 4))) {
-				if (world.getBlockState(blockpos1).getBlock() == this) {
-					--i;
-					if (i <= 0) {
-						return;
-					}
-				}
-			}
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return MUSHROOM_AABB;
+    }
 
-			BlockPos blockpos2 = blockpos.add(random.nextInt(3) - 1, random.nextInt(2) - random.nextInt(2),
-					random.nextInt(3) - 1);
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        if (rand.nextInt(25) == 0)
+        {
+            int i = 5;
+            int j = 4;
 
-			for (int j = 0; j < 4; ++j) {
-				if (world.isAirBlock(blockpos2) && this.canBlockStay(world, blockpos2, this.getDefaultState())) {
-					blockpos = blockpos2;
-				}
+            for (BlockPos blockpos : BlockPos.getAllInBoxMutable(pos.add(-4, -1, -4), pos.add(4, 1, 4)))
+            {
+                if (worldIn.getBlockState(blockpos).getBlock() == this)
+                {
+                    --i;
 
-				blockpos2 = blockpos.add(random.nextInt(3) - 1, random.nextInt(2) - random.nextInt(2),
-						random.nextInt(3) - 1);
-			}
+                    if (i <= 0)
+                    {
+                        return;
+                    }
+                }
+            }
 
-			if (world.isAirBlock(blockpos2) && this.canBlockStay(world, blockpos2, this.getDefaultState())) {
-				world.setBlockState(blockpos2, this.getDefaultState(), 2);
-			}
-		}
+            BlockPos blockpos1 = pos.add(rand.nextInt(3) - 1, rand.nextInt(2) - rand.nextInt(2), rand.nextInt(3) - 1);
 
-	}
+            for (int k = 0; k < 4; ++k)
+            {
+                if (worldIn.isAirBlock(blockpos1) && this.canBlockStay(worldIn, blockpos1, this.getDefaultState()))
+                {
+                    pos = blockpos1;
+                }
 
-	public boolean canPlaceBlockAt(World world, BlockPos blockpos) {
-		return super.canPlaceBlockAt(world, blockpos) && this.canBlockStay(world, blockpos, this.getDefaultState());
-	}
+                blockpos1 = pos.add(rand.nextInt(3) - 1, rand.nextInt(2) - rand.nextInt(2), rand.nextInt(3) - 1);
+            }
 
-	/**+
-	 * is the block grass, dirt or farmland
-	 */
-	protected boolean canPlaceBlockOn(Block block) {
-		return block.isFullBlock();
-	}
+            if (worldIn.isAirBlock(blockpos1) && this.canBlockStay(worldIn, blockpos1, this.getDefaultState()))
+            {
+                worldIn.setBlockState(blockpos1, this.getDefaultState(), 2);
+            }
+        }
+    }
 
-	public boolean canBlockStay(World world, BlockPos blockpos, IBlockState var3) {
-		if (blockpos.getY() >= 0 && blockpos.getY() < 256) {
-			IBlockState iblockstate = world.getBlockState(blockpos.down());
-			return iblockstate.getBlock() == Blocks.mycelium ? true
-					: (iblockstate.getBlock() == Blocks.dirt
-							&& iblockstate.getValue(BlockDirt.VARIANT) == BlockDirt.DirtType.PODZOL ? true
-									: world.getLight(blockpos) < 13 && this.canPlaceBlockOn(iblockstate.getBlock()));
-		} else {
-			return false;
-		}
-	}
+    public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
+    {
+        return super.canPlaceBlockAt(worldIn, pos) && this.canBlockStay(worldIn, pos, this.getDefaultState());
+    }
 
-	public boolean generateBigMushroom(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
-		worldIn.setBlockToAir(pos);
-		WorldGenBigMushroom worldgenbigmushroom = null;
-		if (this == Blocks.brown_mushroom) {
-			worldgenbigmushroom = new WorldGenBigMushroom(Blocks.brown_mushroom_block);
-		} else if (this == Blocks.red_mushroom) {
-			worldgenbigmushroom = new WorldGenBigMushroom(Blocks.red_mushroom_block);
-		}
+    protected boolean canSustainBush(IBlockState state)
+    {
+        return state.isFullBlock();
+    }
 
-		if (worldgenbigmushroom != null && worldgenbigmushroom.generate(worldIn, rand, pos)) {
-			return true;
-		} else {
-			worldIn.setBlockState(pos, state, 3);
-			return false;
-		}
-	}
+    public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
+    {
+        if (pos.getY() >= 0 && pos.getY() < 256)
+        {
+            IBlockState iblockstate = worldIn.getBlockState(pos.down());
 
-	/**+
-	 * Whether this IGrowable can grow
-	 */
-	public boolean canGrow(World var1, BlockPos var2, IBlockState var3, boolean var4) {
-		return true;
-	}
+            if (iblockstate.getBlock() == Blocks.MYCELIUM)
+            {
+                return true;
+            }
+            else if (iblockstate.getBlock() == Blocks.DIRT && iblockstate.getValue(BlockDirt.VARIANT) == BlockDirt.DirtType.PODZOL)
+            {
+                return true;
+            }
+            else
+            {
+                return worldIn.getLight(pos) < 13 && iblockstate.getBlock().canSustainPlant(iblockstate, worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	public boolean canUseBonemeal(World var1, EaglercraftRandom random, BlockPos var3, IBlockState var4) {
-		return (double) random.nextFloat() < 0.4D;
-	}
+    public boolean generateBigMushroom(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        worldIn.setBlockToAir(pos);
+        WorldGenerator worldgenerator = null;
 
-	public void grow(World world, EaglercraftRandom random, BlockPos blockpos, IBlockState iblockstate) {
-		this.generateBigMushroom(world, blockpos, iblockstate, random);
-	}
+        if (this == Blocks.BROWN_MUSHROOM)
+        {
+            worldgenerator = new WorldGenBigMushroom(Blocks.BROWN_MUSHROOM_BLOCK);
+        }
+        else if (this == Blocks.RED_MUSHROOM)
+        {
+            worldgenerator = new WorldGenBigMushroom(Blocks.RED_MUSHROOM_BLOCK);
+        }
+
+        if (worldgenerator != null && worldgenerator.generate(worldIn, rand, pos))
+        {
+            return true;
+        }
+        else
+        {
+            worldIn.setBlockState(pos, state, 3);
+            return false;
+        }
+    }
+
+    public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient)
+    {
+        return true;
+    }
+
+    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    {
+        return (double)rand.nextFloat() < 0.4D;
+    }
+
+    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    {
+        this.generateBigMushroom(worldIn, pos, state, rand);
+    }
 }

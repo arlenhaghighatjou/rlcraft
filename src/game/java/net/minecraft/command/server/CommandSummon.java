@@ -1,6 +1,8 @@
 package net.minecraft.command.server;
 
+import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -13,140 +15,115 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.Vec3;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class CommandSummon extends CommandBase {
+public class CommandSummon extends CommandBase
+{
+    public String getName()
+    {
+        return "summon";
+    }
 
-	/**+
-	 * Gets the name of the command
-	 */
-	public String getCommandName() {
-		return "summon";
-	}
+    public int getRequiredPermissionLevel()
+    {
+        return 2;
+    }
 
-	/**+
-	 * Return the required permission level for this command.
-	 */
-	public int getRequiredPermissionLevel() {
-		return 2;
-	}
+    public String getUsage(ICommandSender sender)
+    {
+        return "commands.summon.usage";
+    }
 
-	/**+
-	 * Gets the usage string for the command.
-	 */
-	public String getCommandUsage(ICommandSender var1) {
-		return "commands.summon.usage";
-	}
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
+    {
+        if (args.length < 1)
+        {
+            throw new WrongUsageException("commands.summon.usage", new Object[0]);
+        }
+        else
+        {
+            String s = args[0];
+            BlockPos blockpos = sender.getPosition();
+            Vec3d vec3d = sender.getPositionVector();
+            double d0 = vec3d.x;
+            double d1 = vec3d.y;
+            double d2 = vec3d.z;
 
-	/**+
-	 * Callback when the command is invoked
-	 */
-	public void processCommand(ICommandSender parICommandSender, String[] parArrayOfString) throws CommandException {
-		if (parArrayOfString.length < 1) {
-			throw new WrongUsageException("commands.summon.usage", new Object[0]);
-		} else {
-			String s = parArrayOfString[0];
-			BlockPos blockpos = parICommandSender.getPosition();
-			Vec3 vec3 = parICommandSender.getPositionVector();
-			double d0 = vec3.xCoord;
-			double d1 = vec3.yCoord;
-			double d2 = vec3.zCoord;
-			if (parArrayOfString.length >= 4) {
-				d0 = parseDouble(d0, parArrayOfString[1], true);
-				d1 = parseDouble(d1, parArrayOfString[2], false);
-				d2 = parseDouble(d2, parArrayOfString[3], true);
-				blockpos = new BlockPos(d0, d1, d2);
-			}
+            if (args.length >= 4)
+            {
+                d0 = parseDouble(d0, args[1], true);
+                d1 = parseDouble(d1, args[2], false);
+                d2 = parseDouble(d2, args[3], true);
+                blockpos = new BlockPos(d0, d1, d2);
+            }
 
-			World world = parICommandSender.getEntityWorld();
-			if (!world.isBlockLoaded(blockpos)) {
-				throw new CommandException("commands.summon.outOfWorld", new Object[0]);
-			} else if ("LightningBolt".equals(s)) {
-				world.addWeatherEffect(new EntityLightningBolt(world, d0, d1, d2));
-				notifyOperators(parICommandSender, this, "commands.summon.success", new Object[0]);
-			} else {
-				NBTTagCompound nbttagcompound = new NBTTagCompound();
-				boolean flag = false;
-				if (parArrayOfString.length >= 5) {
-					IChatComponent ichatcomponent = getChatComponentFromNthArg(parICommandSender, parArrayOfString, 4);
+            World world = sender.getEntityWorld();
 
-					try {
-						nbttagcompound = JsonToNBT.getTagFromJson(ichatcomponent.getUnformattedText());
-						flag = true;
-					} catch (NBTException nbtexception) {
-						throw new CommandException("commands.summon.tagError",
-								new Object[] { nbtexception.getMessage() });
-					}
-				}
+            if (!world.isBlockLoaded(blockpos))
+            {
+                throw new CommandException("commands.summon.outOfWorld", new Object[0]);
+            }
+            else if (EntityList.LIGHTNING_BOLT.equals(new ResourceLocation(s)))
+            {
+                world.addWeatherEffect(new EntityLightningBolt(world, d0, d1, d2, false));
+                notifyCommandListener(sender, this, "commands.summon.success", new Object[0]);
+            }
+            else
+            {
+                NBTTagCompound nbttagcompound = new NBTTagCompound();
+                boolean flag = false;
 
-				nbttagcompound.setString("id", s);
+                if (args.length >= 5)
+                {
+                    String s1 = buildString(args, 4);
 
-				Entity entity2;
-				try {
-					entity2 = EntityList.createEntityFromNBT(nbttagcompound, world);
-				} catch (RuntimeException var19) {
-					throw new CommandException("commands.summon.failed", new Object[0]);
-				}
+                    try
+                    {
+                        nbttagcompound = JsonToNBT.getTagFromJson(s1);
+                        flag = true;
+                    }
+                    catch (NBTException nbtexception)
+                    {
+                        throw new CommandException("commands.summon.tagError", new Object[] {nbtexception.getMessage()});
+                    }
+                }
 
-				if (entity2 == null) {
-					throw new CommandException("commands.summon.failed", new Object[0]);
-				} else {
-					entity2.setLocationAndAngles(d0, d1, d2, entity2.rotationYaw, entity2.rotationPitch);
-					if (!flag && entity2 instanceof EntityLiving) {
-						((EntityLiving) entity2).onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entity2)),
-								(IEntityLivingData) null);
-					}
+                nbttagcompound.setString("id", s);
+                Entity entity = AnvilChunkLoader.readWorldEntityPos(nbttagcompound, world, d0, d1, d2, true);
 
-					world.spawnEntityInWorld(entity2);
-					Entity entity = entity2;
+                if (entity == null)
+                {
+                    throw new CommandException("commands.summon.failed", new Object[0]);
+                }
+                else
+                {
+                    entity.setLocationAndAngles(d0, d1, d2, entity.rotationYaw, entity.rotationPitch);
 
-					for (NBTTagCompound nbttagcompound1 = nbttagcompound; entity != null && nbttagcompound1
-							.hasKey("Riding", 10); nbttagcompound1 = nbttagcompound1.getCompoundTag("Riding")) {
-						Entity entity1 = EntityList.createEntityFromNBT(nbttagcompound1.getCompoundTag("Riding"),
-								world);
-						if (entity1 != null) {
-							entity1.setLocationAndAngles(d0, d1, d2, entity1.rotationYaw, entity1.rotationPitch);
-							world.spawnEntityInWorld(entity1);
-							entity.mountEntity(entity1);
-						}
+                    if (!flag && entity instanceof EntityLiving)
+                    {
+                        ((EntityLiving)entity).onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entity)), (IEntityLivingData)null);
+                    }
 
-						entity = entity1;
-					}
+                    notifyCommandListener(sender, this, "commands.summon.success", new Object[0]);
+                }
+            }
+        }
+    }
 
-					notifyOperators(parICommandSender, this, "commands.summon.success", new Object[0]);
-				}
-			}
-		}
-	}
-
-	/**+
-	 * Return a list of options when the user types TAB
-	 */
-	public List<String> addTabCompletionOptions(ICommandSender var1, String[] astring, BlockPos blockpos) {
-		return astring.length == 1 ? getListOfStringsMatchingLastWord(astring, EntityList.getEntityNameList())
-				: (astring.length > 1 && astring.length <= 4 ? func_175771_a(astring, 1, blockpos) : null);
-	}
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos)
+    {
+        if (args.length == 1)
+        {
+            return getListOfStringsMatchingLastWord(args, EntityList.getEntityNameList());
+        }
+        else
+        {
+            return args.length > 1 && args.length <= 4 ? getTabCompletionCoordinate(args, 1, targetPos) : Collections.emptyList();
+        }
+    }
 }

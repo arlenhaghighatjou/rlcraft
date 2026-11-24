@@ -2,37 +2,16 @@ package net.minecraft.command;
 
 import java.util.List;
 import java.util.Map;
-import net.minecraft.util.BlockPos;
+import javax.annotation.Nullable;
+import net.minecraft.util.math.BlockPos;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public interface ICommandManager {
-	int executeCommand(ICommandSender var1, String var2);
+public interface ICommandManager
+{
+    int executeCommand(ICommandSender sender, String rawCommand);
 
-	List<String> getTabCompletionOptions(ICommandSender var1, String var2, BlockPos var3);
+    List<String> getTabCompletions(ICommandSender sender, String input, @Nullable BlockPos pos);
 
-	/**+
-	 * returns all commands that the commandSender can use
-	 */
-	List<ICommand> getPossibleCommands(ICommandSender var1);
+    List<ICommand> getPossibleCommands(ICommandSender sender);
 
-	Map<String, ICommand> getCommands();
+    Map<String, ICommand> getCommands();
 }

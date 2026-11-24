@@ -1,112 +1,96 @@
 package net.minecraft.client.audio;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-
+import java.util.Random;
 import net.minecraft.client.Minecraft;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class MusicTicker implements ITickable {
-	private final EaglercraftRandom rand = new EaglercraftRandom();
-	private final Minecraft mc;
-	private ISound currentMusic;
-	private int timeUntilNextMusic = 100;
+@SideOnly(Side.CLIENT)
+public class MusicTicker implements ITickable
+{
+    private final Random rand = new Random();
+    private final Minecraft mc;
+    private ISound currentMusic;
+    private int timeUntilNextMusic = 100;
 
-	public MusicTicker(Minecraft mcIn) {
-		this.mc = mcIn;
-	}
+    public MusicTicker(Minecraft mcIn)
+    {
+        this.mc = mcIn;
+    }
 
-	/**+
-	 * Like the old updateEntity(), except more generic.
-	 */
-	public void update() {
-		MusicTicker.MusicType musicticker$musictype = this.mc.getAmbientMusicType();
-		if (this.currentMusic != null) {
-			if (!musicticker$musictype.getMusicLocation().equals(this.currentMusic.getSoundLocation())) {
-				this.mc.getSoundHandler().stopSound(this.currentMusic);
-				this.timeUntilNextMusic = MathHelper.getRandomIntegerInRange(this.rand, 0,
-						musicticker$musictype.getMinDelay() / 2);
-			}
+    public void update()
+    {
+        MusicTicker.MusicType musicticker$musictype = this.mc.getAmbientMusicType();
 
-			if (!this.mc.getSoundHandler().isSoundPlaying(this.currentMusic)) {
-				this.currentMusic = null;
-				this.timeUntilNextMusic = Math.min(MathHelper.getRandomIntegerInRange(this.rand,
-						musicticker$musictype.getMinDelay(), musicticker$musictype.getMaxDelay()),
-						this.timeUntilNextMusic);
-			}
-		}
+        if (this.currentMusic != null)
+        {
+            if (!musicticker$musictype.getMusicLocation().getSoundName().equals(this.currentMusic.getSoundLocation()))
+            {
+                this.mc.getSoundHandler().stopSound(this.currentMusic);
+                this.timeUntilNextMusic = MathHelper.getInt(this.rand, 0, musicticker$musictype.getMinDelay() / 2);
+            }
 
-		if (this.currentMusic == null && this.timeUntilNextMusic-- <= 0) {
-			this.func_181558_a(musicticker$musictype);
-		}
+            if (!this.mc.getSoundHandler().isSoundPlaying(this.currentMusic))
+            {
+                this.currentMusic = null;
+                this.timeUntilNextMusic = Math.min(MathHelper.getInt(this.rand, musicticker$musictype.getMinDelay(), musicticker$musictype.getMaxDelay()), this.timeUntilNextMusic);
+            }
+        }
 
-	}
+        this.timeUntilNextMusic = Math.min(this.timeUntilNextMusic, musicticker$musictype.getMaxDelay());
 
-	public void func_181558_a(MusicTicker.MusicType parMusicType) {
-		this.currentMusic = PositionedSoundRecord.create(parMusicType.getMusicLocation());
-		this.mc.getSoundHandler().playSound(this.currentMusic);
-		this.timeUntilNextMusic = Integer.MAX_VALUE;
-	}
+        if (this.currentMusic == null && this.timeUntilNextMusic-- <= 0)
+        {
+            this.playMusic(musicticker$musictype);
+        }
+    }
 
-	public void func_181557_a() {
-		if (this.currentMusic != null) {
-			this.mc.getSoundHandler().stopSound(this.currentMusic);
-			this.currentMusic = null;
-			this.timeUntilNextMusic = 0;
-		}
+    public void playMusic(MusicTicker.MusicType requestedMusicType)
+    {
+        this.currentMusic = PositionedSoundRecord.getMusicRecord(requestedMusicType.getMusicLocation());
+        this.mc.getSoundHandler().playSound(this.currentMusic);
+        this.timeUntilNextMusic = Integer.MAX_VALUE;
+    }
 
-	}
+    @SideOnly(Side.CLIENT)
+    public static enum MusicType
+    {
+        MENU(SoundEvents.MUSIC_MENU, 20, 600),
+        GAME(SoundEvents.MUSIC_GAME, 12000, 24000),
+        CREATIVE(SoundEvents.MUSIC_CREATIVE, 1200, 3600),
+        CREDITS(SoundEvents.MUSIC_CREDITS, 0, 0),
+        NETHER(SoundEvents.MUSIC_NETHER, 1200, 3600),
+        END_BOSS(SoundEvents.MUSIC_DRAGON, 0, 0),
+        END(SoundEvents.MUSIC_END, 6000, 24000);
 
-	public static enum MusicType {
-		MENU(new ResourceLocation("minecraft:music.menu"), 20, 600),
-		GAME(new ResourceLocation("minecraft:music.game"), 12000, 24000),
-		CREATIVE(new ResourceLocation("minecraft:music.game.creative"), 1200, 3600),
-		CREDITS(new ResourceLocation("minecraft:music.game.end.credits"), Integer.MAX_VALUE, Integer.MAX_VALUE),
-		NETHER(new ResourceLocation("minecraft:music.game.nether"), 1200, 3600),
-		END_BOSS(new ResourceLocation("minecraft:music.game.end.dragon"), 0, 0),
-		END(new ResourceLocation("minecraft:music.game.end"), 6000, 24000);
+        private final SoundEvent musicLocation;
+        private final int minDelay;
+        private final int maxDelay;
 
-		private final ResourceLocation musicLocation;
-		private final int minDelay;
-		private final int maxDelay;
+        private MusicType(SoundEvent musicLocationIn, int minDelayIn, int maxDelayIn)
+        {
+            this.musicLocation = musicLocationIn;
+            this.minDelay = minDelayIn;
+            this.maxDelay = maxDelayIn;
+        }
 
-		private MusicType(ResourceLocation location, int minDelayIn, int maxDelayIn) {
-			this.musicLocation = location;
-			this.minDelay = minDelayIn;
-			this.maxDelay = maxDelayIn;
-		}
+        public SoundEvent getMusicLocation()
+        {
+            return this.musicLocation;
+        }
 
-		public ResourceLocation getMusicLocation() {
-			return this.musicLocation;
-		}
+        public int getMinDelay()
+        {
+            return this.minDelay;
+        }
 
-		public int getMinDelay() {
-			return this.minDelay;
-		}
-
-		public int getMaxDelay() {
-			return this.maxDelay;
-		}
-	}
+        public int getMaxDelay()
+        {
+            return this.maxDelay;
+        }
+    }
 }

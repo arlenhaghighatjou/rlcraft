@@ -1,162 +1,186 @@
 package net.minecraft.inventory;
 
+import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class Slot {
-	private final int slotIndex;
-	public final IInventory inventory;
-	public int slotNumber;
-	public int xDisplayPosition;
-	public int yDisplayPosition;
+public class Slot
+{
+    private final int slotIndex;
+    public final IInventory inventory;
+    public int slotNumber;
+    public int xPos;
+    public int yPos;
 
-	public Slot(IInventory inventoryIn, int index, int xPosition, int yPosition) {
-		this.inventory = inventoryIn;
-		this.slotIndex = index;
-		this.xDisplayPosition = xPosition;
-		this.yDisplayPosition = yPosition;
-	}
+    public Slot(IInventory inventoryIn, int index, int xPosition, int yPosition)
+    {
+        this.inventory = inventoryIn;
+        this.slotIndex = index;
+        this.xPos = xPosition;
+        this.yPos = yPosition;
+    }
 
-	/**+
-	 * if par2 has more items than par1,
-	 * onCrafting(item,countIncrease) is called
-	 */
-	public void onSlotChange(ItemStack parItemStack, ItemStack parItemStack2) {
-		if (parItemStack != null && parItemStack2 != null) {
-			if (parItemStack.getItem() == parItemStack2.getItem()) {
-				int i = parItemStack2.stackSize - parItemStack.stackSize;
-				if (i > 0) {
-					this.onCrafting(parItemStack, i);
-				}
+    public void onSlotChange(ItemStack p_75220_1_, ItemStack p_75220_2_)
+    {
+        int i = p_75220_2_.getCount() - p_75220_1_.getCount();
 
-			}
-		}
-	}
+        if (i > 0)
+        {
+            this.onCrafting(p_75220_2_, i);
+        }
+    }
 
-	/**+
-	 * the itemStack passed in is the output - ie, iron ingots, and
-	 * pickaxes, not ore and wood. Typically increases an internal
-	 * count then calls onCrafting(item).
-	 */
-	protected void onCrafting(ItemStack var1, int var2) {
-	}
+    protected void onCrafting(ItemStack stack, int amount)
+    {
+    }
 
-	/**+
-	 * the itemStack passed in is the output - ie, iron ingots, and
-	 * pickaxes, not ore and wood. Typically increases an internal
-	 * count then calls onCrafting(item).
-	 */
-	protected void onCrafting(ItemStack var1) {
-	}
+    protected void onSwapCraft(int p_190900_1_)
+    {
+    }
 
-	public void onPickupFromSlot(EntityPlayer var1, ItemStack var2) {
-		this.onSlotChanged();
-	}
+    protected void onCrafting(ItemStack stack)
+    {
+    }
 
-	/**+
-	 * Check if the stack is a valid item for this slot. Always true
-	 * beside for the armor slots.
-	 */
-	public boolean isItemValid(ItemStack var1) {
-		return true;
-	}
+    public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack)
+    {
+        this.onSlotChanged();
+        return stack;
+    }
 
-	/**+
-	 * Helper fnct to get the stack in the slot.
-	 */
-	public ItemStack getStack() {
-		return this.inventory.getStackInSlot(this.slotIndex);
-	}
+    public boolean isItemValid(ItemStack stack)
+    {
+        return true;
+    }
 
-	/**+
-	 * Returns if this slot contains a stack.
-	 */
-	public boolean getHasStack() {
-		return this.getStack() != null;
-	}
+    public ItemStack getStack()
+    {
+        return this.inventory.getStackInSlot(this.slotIndex);
+    }
 
-	/**+
-	 * Helper method to put a stack in the slot.
-	 */
-	public void putStack(ItemStack itemstack) {
-		this.inventory.setInventorySlotContents(this.slotIndex, itemstack);
-		this.onSlotChanged();
-	}
+    public boolean getHasStack()
+    {
+        return !this.getStack().isEmpty();
+    }
 
-	/**+
-	 * Called when the stack in a Slot changes
-	 */
-	public void onSlotChanged() {
-		this.inventory.markDirty();
-	}
+    public void putStack(ItemStack stack)
+    {
+        this.inventory.setInventorySlotContents(this.slotIndex, stack);
+        this.onSlotChanged();
+    }
 
-	/**+
-	 * Returns the maximum stack size for a given slot (usually the
-	 * same as getInventoryStackLimit(), but 1 in the case of armor
-	 * slots)
-	 */
-	public int getSlotStackLimit() {
-		return this.inventory.getInventoryStackLimit();
-	}
+    public void onSlotChanged()
+    {
+        this.inventory.markDirty();
+    }
 
-	public int getItemStackLimit(ItemStack var1) {
-		return this.getSlotStackLimit();
-	}
+    public int getSlotStackLimit()
+    {
+        return this.inventory.getInventoryStackLimit();
+    }
 
-	public String getSlotTexture() {
-		return null;
-	}
+    public int getItemStackLimit(ItemStack stack)
+    {
+        return this.getSlotStackLimit();
+    }
 
-	/**+
-	 * Decrease the size of the stack in slot (first int arg) by the
-	 * amount of the second int arg. Returns the new stack.
-	 */
-	public ItemStack decrStackSize(int i) {
-		return this.inventory.decrStackSize(this.slotIndex, i);
-	}
+    @Nullable
+    @SideOnly(Side.CLIENT)
+    public String getSlotTexture()
+    {
+        return backgroundName;
+    }
 
-	/**+
-	 * returns true if the slot exists in the given inventory and
-	 * location
-	 */
-	public boolean isHere(IInventory iinventory, int i) {
-		return iinventory == this.inventory && i == this.slotIndex;
-	}
+    public ItemStack decrStackSize(int amount)
+    {
+        return this.inventory.decrStackSize(this.slotIndex, amount);
+    }
 
-	/**+
-	 * Return whether this slot's stack can be taken from this slot.
-	 */
-	public boolean canTakeStack(EntityPlayer var1) {
-		return true;
-	}
+    public boolean isHere(IInventory inv, int slotIn)
+    {
+        return inv == this.inventory && slotIn == this.slotIndex;
+    }
 
-	/**+
-	 * Actualy only call when we want to render the white square
-	 * effect over the slots. Return always True, except for the
-	 * armor slot of the Donkey/Mule (we can't interact with the
-	 * Undead and Skeleton horses)
-	 */
-	public boolean canBeHovered() {
-		return true;
-	}
+    public boolean canTakeStack(EntityPlayer playerIn)
+    {
+        return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public boolean isEnabled()
+    {
+        return true;
+    }
+
+    /*========================================= FORGE START =====================================*/
+    protected String backgroundName = null;
+    protected net.minecraft.util.ResourceLocation backgroundLocation = null;
+    protected Object backgroundMap;
+    /**
+     * Gets the path of the texture file to use for the background image of this slot when drawing the GUI.
+     * @return The resource location for the background image
+     */
+    @SideOnly(Side.CLIENT)
+    public net.minecraft.util.ResourceLocation getBackgroundLocation()
+    {
+        return (backgroundLocation == null ? net.minecraft.client.renderer.texture.TextureMap.LOCATION_BLOCKS_TEXTURE : backgroundLocation);
+    }
+
+    /**
+     * Sets the texture file to use for the background image of the slot when it's empty.
+     * @param texture the resourcelocation for the texture
+     */
+    @SideOnly(Side.CLIENT)
+    public void setBackgroundLocation(net.minecraft.util.ResourceLocation texture)
+    {
+        this.backgroundLocation = texture;
+    }
+
+    /**
+     * Sets which icon index to use as the background image of the slot when it's empty.
+     * @param name The icon to use, null for none
+     */
+    public void setBackgroundName(@Nullable String name)
+    {
+        this.backgroundName = name;
+    }
+
+    @Nullable
+    @SideOnly(Side.CLIENT)
+    public net.minecraft.client.renderer.texture.TextureAtlasSprite getBackgroundSprite()
+    {
+        String name = getSlotTexture();
+        return name == null ? null : getBackgroundMap().getAtlasSprite(name);
+    }
+
+    @SideOnly(Side.CLIENT)
+    protected net.minecraft.client.renderer.texture.TextureMap getBackgroundMap()
+    {
+        if (backgroundMap == null) backgroundMap = net.minecraft.client.Minecraft.getMinecraft().getTextureMapBlocks();
+        return (net.minecraft.client.renderer.texture.TextureMap)backgroundMap;
+    }
+
+    /**
+     * Retrieves the index in the inventory for this slot, this value should typically not
+     * be used, but can be useful for some occasions.
+     *
+     * @return Index in associated inventory for this slot.
+     */
+    public int getSlotIndex()
+    {
+        return slotIndex;
+    }
+
+    /**
+     * Checks if the other slot is in the same inventory, by comparing the inventory reference.
+     * @param other
+     * @return true if the other slot is in the same inventory
+     */
+    public boolean isSameInventory(Slot other)
+    {
+        return this.inventory == other.inventory;
+    }
+    /*========================================= FORGE END =====================================*/
 }

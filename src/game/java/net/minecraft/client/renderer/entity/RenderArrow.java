@@ -1,119 +1,98 @@
 package net.minecraft.client.renderer.entity;
 
-import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
-import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class RenderArrow extends Render<EntityArrow> {
-	private static final ResourceLocation arrowTextures = new ResourceLocation("textures/entity/arrow.png");
+@SideOnly(Side.CLIENT)
+public abstract class RenderArrow<T extends EntityArrow> extends Render<T>
+{
+    public RenderArrow(RenderManager renderManagerIn)
+    {
+        super(renderManagerIn);
+    }
 
-	public RenderArrow(RenderManager renderManagerIn) {
-		super(renderManagerIn);
-	}
+    public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks)
+    {
+        this.bindEntityTexture(entity);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.pushMatrix();
+        GlStateManager.disableLighting();
+        GlStateManager.translate((float)x, (float)y, (float)z);
+        GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks - 90.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks, 0.0F, 0.0F, 1.0F);
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        int i = 0;
+        float f = 0.0F;
+        float f1 = 0.5F;
+        float f2 = 0.0F;
+        float f3 = 0.15625F;
+        float f4 = 0.0F;
+        float f5 = 0.15625F;
+        float f6 = 0.15625F;
+        float f7 = 0.3125F;
+        float f8 = 0.05625F;
+        GlStateManager.enableRescaleNormal();
+        float f9 = (float)entity.arrowShake - partialTicks;
 
-	/**+
-	 * Actually renders the given argument. This is a synthetic
-	 * bridge method, always casting down its argument and then
-	 * handing it off to a worker function which does the actual
-	 * work. In all probabilty, the class Render is generic
-	 * (Render<T extends Entity>) and this method has signature
-	 * public void func_76986_a(T entity, double d, double d1,
-	 * double d2, float f, float f1). But JAD is pre 1.5 so doe
-	 */
-	public void doRender(EntityArrow entityarrow, double d0, double d1, double d2, float f, float f1) {
-		this.bindEntityTexture(entityarrow);
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.pushMatrix();
-		GlStateManager.translate((float) d0, (float) d1, (float) d2);
-		GlStateManager.rotate(
-				entityarrow.prevRotationYaw + (entityarrow.rotationYaw - entityarrow.prevRotationYaw) * f1 - 90.0F,
-				0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(
-				entityarrow.prevRotationPitch + (entityarrow.rotationPitch - entityarrow.prevRotationPitch) * f1, 0.0F,
-				0.0F, 1.0F);
-		Tessellator tessellator = Tessellator.getInstance();
-		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-		byte b0 = 0;
-		float f2 = 0.0F;
-		float f3 = 0.5F;
-		float f4 = (float) (0 + b0 * 10) / 32.0F;
-		float f5 = (float) (5 + b0 * 10) / 32.0F;
-		float f6 = 0.0F;
-		float f7 = 0.15625F;
-		float f8 = (float) (5 + b0 * 10) / 32.0F;
-		float f9 = (float) (10 + b0 * 10) / 32.0F;
-		float f10 = 0.05625F;
-		GlStateManager.enableRescaleNormal();
-		float f11 = (float) entityarrow.arrowShake - f1;
-		if (f11 > 0.0F) {
-			float f12 = -MathHelper.sin(f11 * 3.0F) * f11;
-			GlStateManager.rotate(f12, 0.0F, 0.0F, 1.0F);
-		}
+        if (f9 > 0.0F)
+        {
+            float f10 = -MathHelper.sin(f9 * 3.0F) * f9;
+            GlStateManager.rotate(f10, 0.0F, 0.0F, 1.0F);
+        }
 
-		GlStateManager.rotate(45.0F, 1.0F, 0.0F, 0.0F);
-		GlStateManager.scale(f10, f10, f10);
-		GlStateManager.translate(-4.0F, 0.0F, 0.0F);
-		EaglercraftGPU.glNormal3f(f10, 0.0F, 0.0F);
-		worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-		worldrenderer.pos(-7.0D, -2.0D, -2.0D).tex((double) f6, (double) f8).endVertex();
-		worldrenderer.pos(-7.0D, -2.0D, 2.0D).tex((double) f7, (double) f8).endVertex();
-		worldrenderer.pos(-7.0D, 2.0D, 2.0D).tex((double) f7, (double) f9).endVertex();
-		worldrenderer.pos(-7.0D, 2.0D, -2.0D).tex((double) f6, (double) f9).endVertex();
-		tessellator.draw();
-		EaglercraftGPU.glNormal3f(-f10, 0.0F, 0.0F);
-		worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-		worldrenderer.pos(-7.0D, 2.0D, -2.0D).tex((double) f6, (double) f8).endVertex();
-		worldrenderer.pos(-7.0D, 2.0D, 2.0D).tex((double) f7, (double) f8).endVertex();
-		worldrenderer.pos(-7.0D, -2.0D, 2.0D).tex((double) f7, (double) f9).endVertex();
-		worldrenderer.pos(-7.0D, -2.0D, -2.0D).tex((double) f6, (double) f9).endVertex();
-		tessellator.draw();
+        GlStateManager.rotate(45.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scale(0.05625F, 0.05625F, 0.05625F);
+        GlStateManager.translate(-4.0F, 0.0F, 0.0F);
 
-		for (int i = 0; i < 4; ++i) {
-			GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
-			EaglercraftGPU.glNormal3f(0.0F, 0.0F, f10);
-			worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-			worldrenderer.pos(-8.0D, -2.0D, 0.0D).tex((double) f2, (double) f4).endVertex();
-			worldrenderer.pos(8.0D, -2.0D, 0.0D).tex((double) f3, (double) f4).endVertex();
-			worldrenderer.pos(8.0D, 2.0D, 0.0D).tex((double) f3, (double) f5).endVertex();
-			worldrenderer.pos(-8.0D, 2.0D, 0.0D).tex((double) f2, (double) f5).endVertex();
-			tessellator.draw();
-		}
+        if (this.renderOutlines)
+        {
+            GlStateManager.enableColorMaterial();
+            GlStateManager.enableOutlineMode(this.getTeamColor(entity));
+        }
 
-		GlStateManager.disableRescaleNormal();
-		GlStateManager.popMatrix();
-		super.doRender(entityarrow, d0, d1, d2, f, f1);
-	}
+        GlStateManager.glNormal3f(0.05625F, 0.0F, 0.0F);
+        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+        bufferbuilder.pos(-7.0D, -2.0D, -2.0D).tex(0.0D, 0.15625D).endVertex();
+        bufferbuilder.pos(-7.0D, -2.0D, 2.0D).tex(0.15625D, 0.15625D).endVertex();
+        bufferbuilder.pos(-7.0D, 2.0D, 2.0D).tex(0.15625D, 0.3125D).endVertex();
+        bufferbuilder.pos(-7.0D, 2.0D, -2.0D).tex(0.0D, 0.3125D).endVertex();
+        tessellator.draw();
+        GlStateManager.glNormal3f(-0.05625F, 0.0F, 0.0F);
+        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+        bufferbuilder.pos(-7.0D, 2.0D, -2.0D).tex(0.0D, 0.15625D).endVertex();
+        bufferbuilder.pos(-7.0D, 2.0D, 2.0D).tex(0.15625D, 0.15625D).endVertex();
+        bufferbuilder.pos(-7.0D, -2.0D, 2.0D).tex(0.15625D, 0.3125D).endVertex();
+        bufferbuilder.pos(-7.0D, -2.0D, -2.0D).tex(0.0D, 0.3125D).endVertex();
+        tessellator.draw();
 
-	/**+
-	 * Returns the location of an entity's texture. Doesn't seem to
-	 * be called unless you call Render.bindEntityTexture.
-	 */
-	protected ResourceLocation getEntityTexture(EntityArrow var1) {
-		return arrowTextures;
-	}
+        for (int j = 0; j < 4; ++j)
+        {
+            GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
+            GlStateManager.glNormal3f(0.0F, 0.0F, 0.05625F);
+            bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+            bufferbuilder.pos(-8.0D, -2.0D, 0.0D).tex(0.0D, 0.0D).endVertex();
+            bufferbuilder.pos(8.0D, -2.0D, 0.0D).tex(0.5D, 0.0D).endVertex();
+            bufferbuilder.pos(8.0D, 2.0D, 0.0D).tex(0.5D, 0.15625D).endVertex();
+            bufferbuilder.pos(-8.0D, 2.0D, 0.0D).tex(0.0D, 0.15625D).endVertex();
+            tessellator.draw();
+        }
+
+        if (this.renderOutlines)
+        {
+            GlStateManager.disableOutlineMode();
+            GlStateManager.disableColorMaterial();
+        }
+
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.enableLighting();
+        GlStateManager.popMatrix();
+        super.doRender(entity, x, y, z, entityYaw, partialTicks);
+    }
 }

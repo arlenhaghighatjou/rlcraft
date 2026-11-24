@@ -4,97 +4,103 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class NBTTagIntArray extends NBTBase {
-	private int[] intArray;
+public class NBTTagIntArray extends NBTBase
+{
+    private int[] intArray;
 
-	NBTTagIntArray() {
-	}
+    NBTTagIntArray()
+    {
+    }
 
-	public NBTTagIntArray(int[] parArrayOfInt) {
-		this.intArray = parArrayOfInt;
-	}
+    public NBTTagIntArray(int[] p_i45132_1_)
+    {
+        this.intArray = p_i45132_1_;
+    }
 
-	/**+
-	 * Write the actual data contents of the tag, implemented in NBT
-	 * extension classes
-	 */
-	void write(DataOutput parDataOutput) throws IOException {
-		parDataOutput.writeInt(this.intArray.length);
+    public NBTTagIntArray(List<Integer> p_i47528_1_)
+    {
+        this(toArray(p_i47528_1_));
+    }
 
-		for (int i = 0; i < this.intArray.length; ++i) {
-			parDataOutput.writeInt(this.intArray[i]);
-		}
+    private static int[] toArray(List<Integer> p_193584_0_)
+    {
+        int[] aint = new int[p_193584_0_.size()];
 
-	}
+        for (int i = 0; i < p_193584_0_.size(); ++i)
+        {
+            Integer integer = p_193584_0_.get(i);
+            aint[i] = integer == null ? 0 : integer.intValue();
+        }
 
-	void read(DataInput parDataInput, int parInt1, NBTSizeTracker parNBTSizeTracker) throws IOException {
-		parNBTSizeTracker.read(192L);
-		int i = parDataInput.readInt();
-		parNBTSizeTracker.read((long) (32 * i));
-		this.intArray = new int[i];
+        return aint;
+    }
 
-		for (int j = 0; j < i; ++j) {
-			this.intArray[j] = parDataInput.readInt();
-		}
+    void write(DataOutput output) throws IOException
+    {
+        output.writeInt(this.intArray.length);
 
-	}
+        for (int i : this.intArray)
+        {
+            output.writeInt(i);
+        }
+    }
 
-	/**+
-	 * Gets the type byte for the tag.
-	 */
-	public byte getId() {
-		return (byte) 11;
-	}
+    void read(DataInput input, int depth, NBTSizeTracker sizeTracker) throws IOException
+    {
+        sizeTracker.read(192L);
+        int i = input.readInt();
+        sizeTracker.read((long)(32 * i));
+        this.intArray = new int[i];
 
-	public String toString() {
-		String s = "[";
+        for (int j = 0; j < i; ++j)
+        {
+            this.intArray[j] = input.readInt();
+        }
+    }
 
-		for (int i = 0; i < this.intArray.length; ++i) {
-			s = s + this.intArray[i] + ",";
-		}
+    public byte getId()
+    {
+        return 11;
+    }
 
-		return s + "]";
-	}
+    public String toString()
+    {
+        StringBuilder stringbuilder = new StringBuilder("[I;");
 
-	/**+
-	 * Creates a clone of the tag.
-	 */
-	public NBTBase copy() {
-		int[] aint = new int[this.intArray.length];
-		System.arraycopy(this.intArray, 0, aint, 0, this.intArray.length);
-		return new NBTTagIntArray(aint);
-	}
+        for (int i = 0; i < this.intArray.length; ++i)
+        {
+            if (i != 0)
+            {
+                stringbuilder.append(',');
+            }
 
-	public boolean equals(Object object) {
-		return super.equals(object) ? Arrays.equals(this.intArray, ((NBTTagIntArray) object).intArray) : false;
-	}
+            stringbuilder.append(this.intArray[i]);
+        }
 
-	public int hashCode() {
-		return super.hashCode() ^ Arrays.hashCode(this.intArray);
-	}
+        return stringbuilder.append(']').toString();
+    }
 
-	public int[] getIntArray() {
-		return this.intArray;
-	}
+    public NBTTagIntArray copy()
+    {
+        int[] aint = new int[this.intArray.length];
+        System.arraycopy(this.intArray, 0, aint, 0, this.intArray.length);
+        return new NBTTagIntArray(aint);
+    }
+
+    public boolean equals(Object p_equals_1_)
+    {
+        return super.equals(p_equals_1_) && Arrays.equals(this.intArray, ((NBTTagIntArray)p_equals_1_).intArray);
+    }
+
+    public int hashCode()
+    {
+        return super.hashCode() ^ Arrays.hashCode(this.intArray);
+    }
+
+    public int[] getIntArray()
+    {
+        return this.intArray;
+    }
 }

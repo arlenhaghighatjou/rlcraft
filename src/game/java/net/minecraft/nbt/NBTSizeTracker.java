@@ -1,48 +1,58 @@
 package net.minecraft.nbt;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class NBTSizeTracker {
-	public static final NBTSizeTracker INFINITE = new NBTSizeTracker(0L) {
-		/**+
-		 * Tracks the reading of the given amount of bits(!)
-		 */
-		public void read(long bits) {
-		}
-	};
-	private final long max;
-	private long read;
+public class NBTSizeTracker
+{
+    public static final NBTSizeTracker INFINITE = new NBTSizeTracker(0L)
+    {
+        public void read(long bits)
+        {
+        }
+    };
+    private final long max;
+    private long read;
 
-	public NBTSizeTracker(long max) {
-		this.max = max;
-	}
+    public NBTSizeTracker(long max)
+    {
+        this.max = max;
+    }
 
-	/**+
-	 * Tracks the reading of the given amount of bits(!)
-	 */
-	public void read(long i) {
-		this.read += i / 8L;
-		if (this.read > this.max) {
-			throw new RuntimeException("Tried to read NBT tag that was too big; tried to allocate: " + this.read
-					+ "bytes where max allowed: " + this.max);
-		}
-	}
+    public void read(long bits)
+    {
+        this.read += bits / 8L;
+
+        if (this.read > this.max)
+        {
+            throw new RuntimeException("Tried to read NBT tag that was too big; tried to allocate: " + this.read + "bytes where max allowed: " + this.max);
+        }
+    }
+
+    /*
+     * UTF8 is not a simple encoding system, each character can be either
+     * 1, 2, or 3 bytes. Depending on where it's numerical value falls.
+     * We have to count up each character individually to see the true
+     * length of the data.
+     *
+     * Basic concept is that it uses the MSB of each byte as a 'read more' signal.
+     * So it has to shift each 7-bit segment.
+     *
+     * This will accurately count the correct byte length to encode this string, plus the 2 bytes for it's length prefix.
+     */
+    public static void readUTF(NBTSizeTracker tracker, String data)
+    {
+        tracker.read(16); //Header length
+        if (data == null)
+            return;
+
+        int len = data.length();
+        int utflen = 0;
+
+        for (int i = 0; i < len; i++)
+        {
+            int c = data.charAt(i);
+            if ((c >= 0x0001) && (c <= 0x007F)) utflen += 1;
+            else if (c > 0x07FF)                utflen += 3;
+            else                                utflen += 2;
+        }
+        tracker.read(8 * utflen);
+    }
 }

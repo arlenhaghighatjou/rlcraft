@@ -1,5 +1,6 @@
 package net.minecraft.entity.ai;
 
+import javax.annotation.Nullable;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -7,196 +8,225 @@ import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.scoreboard.Team;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
-import org.apache.commons.lang3.StringUtils;
+public abstract class EntityAITarget extends EntityAIBase
+{
+    protected final EntityCreature taskOwner;
+    protected boolean shouldCheckSight;
+    private final boolean nearbyOnly;
+    private int targetSearchStatus;
+    private int targetSearchDelay;
+    private int targetUnseenTicks;
+    protected EntityLivingBase target;
+    protected int unseenMemoryTicks;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public abstract class EntityAITarget extends EntityAIBase {
-	protected final EntityCreature taskOwner;
-	protected boolean shouldCheckSight;
-	private boolean nearbyOnly;
-	private int targetSearchStatus;
-	private int targetSearchDelay;
-	private int targetUnseenTicks;
+    public EntityAITarget(EntityCreature creature, boolean checkSight)
+    {
+        this(creature, checkSight, false);
+    }
 
-	public EntityAITarget(EntityCreature creature, boolean checkSight) {
-		this(creature, checkSight, false);
-	}
+    public EntityAITarget(EntityCreature creature, boolean checkSight, boolean onlyNearby)
+    {
+        this.unseenMemoryTicks = 60;
+        this.taskOwner = creature;
+        this.shouldCheckSight = checkSight;
+        this.nearbyOnly = onlyNearby;
+    }
 
-	public EntityAITarget(EntityCreature creature, boolean checkSight, boolean onlyNearby) {
-		this.taskOwner = creature;
-		this.shouldCheckSight = checkSight;
-		this.nearbyOnly = onlyNearby;
-	}
+    public boolean shouldContinueExecuting()
+    {
+        EntityLivingBase entitylivingbase = this.taskOwner.getAttackTarget();
 
-	/**+
-	 * Returns whether an in-progress EntityAIBase should continue
-	 * executing
-	 */
-	public boolean continueExecuting() {
-		EntityLivingBase entitylivingbase = this.taskOwner.getAttackTarget();
-		if (entitylivingbase == null) {
-			return false;
-		} else if (!entitylivingbase.isEntityAlive()) {
-			return false;
-		} else {
-			Team team = this.taskOwner.getTeam();
-			Team team1 = entitylivingbase.getTeam();
-			if (team != null && team1 == team) {
-				return false;
-			} else {
-				double d0 = this.getTargetDistance();
-				if (this.taskOwner.getDistanceSqToEntity(entitylivingbase) > d0 * d0) {
-					return false;
-				} else {
-					if (this.shouldCheckSight) {
-						if (this.taskOwner.getEntitySenses().canSee(entitylivingbase)) {
-							this.targetUnseenTicks = 0;
-						} else if (++this.targetUnseenTicks > 60) {
-							return false;
-						}
-					}
+        if (entitylivingbase == null)
+        {
+            entitylivingbase = this.target;
+        }
 
-					return !(entitylivingbase instanceof EntityPlayer)
-							|| !((EntityPlayer) entitylivingbase).capabilities.disableDamage;
-				}
-			}
-		}
-	}
+        if (entitylivingbase == null)
+        {
+            return false;
+        }
+        else if (!entitylivingbase.isEntityAlive())
+        {
+            return false;
+        }
+        else
+        {
+            Team team = this.taskOwner.getTeam();
+            Team team1 = entitylivingbase.getTeam();
 
-	protected double getTargetDistance() {
-		IAttributeInstance iattributeinstance = this.taskOwner.getEntityAttribute(SharedMonsterAttributes.followRange);
-		return iattributeinstance == null ? 16.0D : iattributeinstance.getAttributeValue();
-	}
+            if (team != null && team1 == team)
+            {
+                return false;
+            }
+            else
+            {
+                double d0 = this.getTargetDistance();
 
-	/**+
-	 * Execute a one shot task or start executing a continuous task
-	 */
-	public void startExecuting() {
-		this.targetSearchStatus = 0;
-		this.targetSearchDelay = 0;
-		this.targetUnseenTicks = 0;
-	}
+                if (this.taskOwner.getDistanceSq(entitylivingbase) > d0 * d0)
+                {
+                    return false;
+                }
+                else
+                {
+                    if (this.shouldCheckSight)
+                    {
+                        if (this.taskOwner.getEntitySenses().canSee(entitylivingbase))
+                        {
+                            this.targetUnseenTicks = 0;
+                        }
+                        else if (++this.targetUnseenTicks > this.unseenMemoryTicks)
+                        {
+                            return false;
+                        }
+                    }
 
-	/**+
-	 * Resets the task
-	 */
-	public void resetTask() {
-		this.taskOwner.setAttackTarget((EntityLivingBase) null);
-	}
+                    if (entitylivingbase instanceof EntityPlayer && ((EntityPlayer)entitylivingbase).capabilities.disableDamage)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        this.taskOwner.setAttackTarget(entitylivingbase);
+                        return true;
+                    }
+                }
+            }
+        }
+    }
 
-	/**+
-	 * A method used to see if an entity is a suitable target
-	 * through a number of checks. Args : entity,
-	 * canTargetInvinciblePlayer
-	 */
-	public static boolean isSuitableTarget(EntityLiving attacker, EntityLivingBase target, boolean includeInvincibles,
-			boolean checkSight) {
-		if (target == null) {
-			return false;
-		} else if (target == attacker) {
-			return false;
-		} else if (!target.isEntityAlive()) {
-			return false;
-		} else if (!attacker.canAttackClass(target.getClass())) {
-			return false;
-		} else {
-			Team team = attacker.getTeam();
-			Team team1 = target.getTeam();
-			if (team != null && team1 == team) {
-				return false;
-			} else {
-				if (attacker instanceof IEntityOwnable
-						&& StringUtils.isNotEmpty(((IEntityOwnable) attacker).getOwnerId())) {
-					if (target instanceof IEntityOwnable && ((IEntityOwnable) attacker).getOwnerId()
-							.equals(((IEntityOwnable) target).getOwnerId())) {
-						return false;
-					}
+    protected double getTargetDistance()
+    {
+        IAttributeInstance iattributeinstance = this.taskOwner.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE);
+        return iattributeinstance == null ? 16.0D : iattributeinstance.getAttributeValue();
+    }
 
-					if (target == ((IEntityOwnable) attacker).getOwner()) {
-						return false;
-					}
-				} else if (target instanceof EntityPlayer && !includeInvincibles
-						&& ((EntityPlayer) target).capabilities.disableDamage) {
-					return false;
-				}
+    public void startExecuting()
+    {
+        this.targetSearchStatus = 0;
+        this.targetSearchDelay = 0;
+        this.targetUnseenTicks = 0;
+    }
 
-				return !checkSight || attacker.getEntitySenses().canSee(target);
-			}
-		}
-	}
+    public void resetTask()
+    {
+        this.taskOwner.setAttackTarget((EntityLivingBase)null);
+        this.target = null;
+    }
 
-	/**+
-	 * A method used to see if an entity is a suitable target
-	 * through a number of checks. Args : entity,
-	 * canTargetInvinciblePlayer
-	 */
-	protected boolean isSuitableTarget(EntityLivingBase target, boolean includeInvincibles) {
-		if (!isSuitableTarget(this.taskOwner, target, includeInvincibles, this.shouldCheckSight)) {
-			return false;
-		} else if (!this.taskOwner.isWithinHomeDistanceFromPosition(new BlockPos(target))) {
-			return false;
-		} else {
-			if (this.nearbyOnly) {
-				if (--this.targetSearchDelay <= 0) {
-					this.targetSearchStatus = 0;
-				}
+    public static boolean isSuitableTarget(EntityLiving attacker, @Nullable EntityLivingBase target, boolean includeInvincibles, boolean checkSight)
+    {
+        if (target == null)
+        {
+            return false;
+        }
+        else if (target == attacker)
+        {
+            return false;
+        }
+        else if (!target.isEntityAlive())
+        {
+            return false;
+        }
+        else if (!attacker.canAttackClass(target.getClass()))
+        {
+            return false;
+        }
+        else if (attacker.isOnSameTeam(target))
+        {
+            return false;
+        }
+        else
+        {
+            if (attacker instanceof IEntityOwnable && ((IEntityOwnable)attacker).getOwnerId() != null)
+            {
+                if (target instanceof IEntityOwnable && ((IEntityOwnable)attacker).getOwnerId().equals(((IEntityOwnable)target).getOwnerId()))
+                {
+                    return false;
+                }
 
-				if (this.targetSearchStatus == 0) {
-					this.targetSearchStatus = this.canEasilyReach(target) ? 1 : 2;
-				}
+                if (target == ((IEntityOwnable)attacker).getOwner())
+                {
+                    return false;
+                }
+            }
+            else if (target instanceof EntityPlayer && !includeInvincibles && ((EntityPlayer)target).capabilities.disableDamage)
+            {
+                return false;
+            }
 
-				if (this.targetSearchStatus == 2) {
-					return false;
-				}
-			}
+            return !checkSight || attacker.getEntitySenses().canSee(target);
+        }
+    }
 
-			return true;
-		}
-	}
+    protected boolean isSuitableTarget(@Nullable EntityLivingBase target, boolean includeInvincibles)
+    {
+        if (!isSuitableTarget(this.taskOwner, target, includeInvincibles, this.shouldCheckSight))
+        {
+            return false;
+        }
+        else if (!this.taskOwner.isWithinHomeDistanceFromPosition(new BlockPos(target)))
+        {
+            return false;
+        }
+        else
+        {
+            if (this.nearbyOnly)
+            {
+                if (--this.targetSearchDelay <= 0)
+                {
+                    this.targetSearchStatus = 0;
+                }
 
-	/**+
-	 * Checks to see if this entity can find a short path to the
-	 * given target.
-	 */
-	private boolean canEasilyReach(EntityLivingBase parEntityLivingBase) {
-		this.targetSearchDelay = 10 + this.taskOwner.getRNG().nextInt(5);
-		PathEntity pathentity = this.taskOwner.getNavigator().getPathToEntityLiving(parEntityLivingBase);
-		if (pathentity == null) {
-			return false;
-		} else {
-			PathPoint pathpoint = pathentity.getFinalPathPoint();
-			if (pathpoint == null) {
-				return false;
-			} else {
-				int i = pathpoint.xCoord - MathHelper.floor_double(parEntityLivingBase.posX);
-				int j = pathpoint.zCoord - MathHelper.floor_double(parEntityLivingBase.posZ);
-				return (double) (i * i + j * j) <= 2.25D;
-			}
-		}
-	}
+                if (this.targetSearchStatus == 0)
+                {
+                    this.targetSearchStatus = this.canEasilyReach(target) ? 1 : 2;
+                }
+
+                if (this.targetSearchStatus == 2)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
+    private boolean canEasilyReach(EntityLivingBase target)
+    {
+        this.targetSearchDelay = 10 + this.taskOwner.getRNG().nextInt(5);
+        Path path = this.taskOwner.getNavigator().getPathToEntityLiving(target);
+
+        if (path == null)
+        {
+            return false;
+        }
+        else
+        {
+            PathPoint pathpoint = path.getFinalPathPoint();
+
+            if (pathpoint == null)
+            {
+                return false;
+            }
+            else
+            {
+                int i = pathpoint.x - MathHelper.floor(target.posX);
+                int j = pathpoint.z - MathHelper.floor(target.posZ);
+                return (double)(i * i + j * j) <= 2.25D;
+            }
+        }
+    }
+
+    public EntityAITarget setUnseenMemoryTicks(int p_190882_1_)
+    {
+        this.unseenMemoryTicks = p_190882_1_;
+        return this;
+    }
 }

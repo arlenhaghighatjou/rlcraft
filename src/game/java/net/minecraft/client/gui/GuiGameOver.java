@@ -1,159 +1,179 @@
 package net.minecraft.client.gui;
 
-import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import java.io.IOException;
+import javax.annotation.Nullable;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class GuiGameOver extends GuiScreen implements GuiYesNoCallback {
-	private int enableButtonsTimer;
-	private boolean field_146346_f = false;
+@SideOnly(Side.CLIENT)
+public class GuiGameOver extends GuiScreen
+{
+    private int enableButtonsTimer;
+    private final ITextComponent causeOfDeath;
 
-	/**+
-	 * Adds the buttons (and other controls) to the screen in
-	 * question. Called when the GUI is displayed and when the
-	 * window resizes, the buttonList is cleared beforehand.
-	 */
-	public void initGui() {
-		this.buttonList.clear();
-		if (this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled()) {
-			if (this.mc.isIntegratedServerRunning()) {
-				this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96,
-						I18n.format("deathScreen.deleteWorld", new Object[0])));
-			} else {
-				this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96,
-						I18n.format("deathScreen.leaveServer", new Object[0])));
-			}
-		} else {
-			this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 72,
-					I18n.format("deathScreen.respawn", new Object[0])));
-			this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96,
-					I18n.format("deathScreen.titleScreen", new Object[0])));
-			if (this.mc.getSession() == null) {
-				((GuiButton) this.buttonList.get(1)).enabled = false;
-			}
-		}
+    public GuiGameOver(@Nullable ITextComponent causeOfDeathIn)
+    {
+        this.causeOfDeath = causeOfDeathIn;
+    }
 
-		for (int i = 0, l = this.buttonList.size(); i < l; ++i) {
-			this.buttonList.get(i).enabled = false;
-		}
+    public void initGui()
+    {
+        this.buttonList.clear();
+        this.enableButtonsTimer = 0;
 
-	}
+        if (this.mc.world.getWorldInfo().isHardcoreModeEnabled())
+        {
+            this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 72, I18n.format("deathScreen.spectate")));
+            this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, I18n.format("deathScreen." + (this.mc.isIntegratedServerRunning() ? "deleteWorld" : "leaveServer"))));
+        }
+        else
+        {
+            this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 72, I18n.format("deathScreen.respawn")));
+            this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, I18n.format("deathScreen.titleScreen")));
 
-	/**+
-	 * Fired when a key is typed (except F11 which toggles full
-	 * screen). This is the equivalent of
-	 * KeyListener.keyTyped(KeyEvent e). Args : character (character
-	 * on the key), keyCode (lwjgl Keyboard key code)
-	 */
-	protected void keyTyped(char parChar1, int parInt1) {
-	}
+            if (this.mc.getSession() == null)
+            {
+                (this.buttonList.get(1)).enabled = false;
+            }
+        }
 
-	/**+
-	 * Called by the controls from the buttonList when activated.
-	 * (Mouse pressed for buttons)
-	 */
-	protected void actionPerformed(GuiButton parGuiButton) {
-		switch (parGuiButton.id) {
-		case 0:
-			this.mc.thePlayer.respawnPlayer();
-			this.mc.displayGuiScreen((GuiScreen) null);
-			break;
-		case 1:
-			if (this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled()) {
-				if (this.mc.isIntegratedServerRunning()) {
-					this.mc.thePlayer.respawnPlayer();
-					this.mc.displayGuiScreen((GuiScreen) null);
-				} else {
-					this.mc.theWorld.sendQuittingDisconnectingPacket();
-					this.mc.loadWorld((WorldClient) null);
-					this.mc.shutdownIntegratedServer(new GuiMainMenu());
-				}
-			} else {
-				GuiYesNo guiyesno = new GuiYesNo(this, I18n.format("deathScreen.quit.confirm", new Object[0]), "",
-						I18n.format("deathScreen.titleScreen", new Object[0]),
-						I18n.format("deathScreen.respawn", new Object[0]), 0);
-				this.mc.displayGuiScreen(guiyesno);
-				guiyesno.setButtonDelay(20);
-			}
-		}
+        for (GuiButton guibutton : this.buttonList)
+        {
+            guibutton.enabled = false;
+        }
+    }
 
-	}
+    protected void keyTyped(char typedChar, int keyCode) throws IOException
+    {
+    }
 
-	public void confirmClicked(boolean flag, int var2) {
-		if (flag) {
-			this.mc.theWorld.sendQuittingDisconnectingPacket();
-			this.mc.loadWorld((WorldClient) null);
-			this.mc.shutdownIntegratedServer(new GuiMainMenu());
-		} else {
-			this.mc.thePlayer.respawnPlayer();
-			this.mc.displayGuiScreen((GuiScreen) null);
-		}
+    protected void actionPerformed(GuiButton button) throws IOException
+    {
+        switch (button.id)
+        {
+            case 0:
+                this.mc.player.respawnPlayer();
+                this.mc.displayGuiScreen((GuiScreen)null);
+                break;
+            case 1:
 
-	}
+                if (this.mc.world.getWorldInfo().isHardcoreModeEnabled())
+                {
+                    this.mc.displayGuiScreen(new GuiMainMenu());
+                }
+                else
+                {
+                    GuiYesNo guiyesno = new GuiYesNo(this, I18n.format("deathScreen.quit.confirm"), "", I18n.format("deathScreen.titleScreen"), I18n.format("deathScreen.respawn"), 0);
+                    this.mc.displayGuiScreen(guiyesno);
+                    guiyesno.setButtonDelay(20);
+                }
+        }
+    }
 
-	/**+
-	 * Draws the screen and all the components in it. Args : mouseX,
-	 * mouseY, renderPartialTicks
-	 */
-	public void drawScreen(int i, int j, float f) {
-		this.drawGradientRect(0, 0, this.width, this.height, 1615855616, -1602211792);
-		GlStateManager.pushMatrix();
-		GlStateManager.scale(2.0F, 2.0F, 2.0F);
-		boolean flag = this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled();
-		String s = flag ? I18n.format("deathScreen.title.hardcore", new Object[0])
-				: I18n.format("deathScreen.title", new Object[0]);
-		this.drawCenteredString(this.fontRendererObj, s, this.width / 2 / 2, 30, 16777215);
-		GlStateManager.popMatrix();
-		if (flag) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("deathScreen.hardcoreInfo", new Object[0]),
-					this.width / 2, 144, 16777215);
-		}
+    public void confirmClicked(boolean result, int id)
+    {
+        if (result)
+        {
+            if (this.mc.world != null)
+            {
+                this.mc.world.sendQuittingDisconnectingPacket();
+            }
 
-		this.drawCenteredString(this.fontRendererObj, I18n.format("deathScreen.score", new Object[0]) + ": "
-				+ EnumChatFormatting.YELLOW + this.mc.thePlayer.getScore(), this.width / 2, 100, 16777215);
-		super.drawScreen(i, j, f);
-	}
+            this.mc.loadWorld((WorldClient)null);
+            this.mc.displayGuiScreen(new GuiMainMenu());
+        }
+        else
+        {
+            this.mc.player.respawnPlayer();
+            this.mc.displayGuiScreen((GuiScreen)null);
+        }
+    }
 
-	/**+
-	 * Returns true if this GUI should pause the game when it is
-	 * displayed in single-player
-	 */
-	public boolean doesGuiPauseGame() {
-		return false;
-	}
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    {
+        boolean flag = this.mc.world.getWorldInfo().isHardcoreModeEnabled();
+        this.drawGradientRect(0, 0, this.width, this.height, 1615855616, -1602211792);
+        GlStateManager.pushMatrix();
+        GlStateManager.scale(2.0F, 2.0F, 2.0F);
+        this.drawCenteredString(this.fontRenderer, I18n.format(flag ? "deathScreen.title.hardcore" : "deathScreen.title"), this.width / 2 / 2, 30, 16777215);
+        GlStateManager.popMatrix();
 
-	/**+
-	 * Called from the main game loop to update the screen.
-	 */
-	public void updateScreen() {
-		super.updateScreen();
-		++this.enableButtonsTimer;
-		if (this.enableButtonsTimer == 20) {
-			for (int i = 0, l = this.buttonList.size(); i < l; ++i) {
-				this.buttonList.get(i).enabled = true;
-			}
-		}
+        if (this.causeOfDeath != null)
+        {
+            this.drawCenteredString(this.fontRenderer, this.causeOfDeath.getFormattedText(), this.width / 2, 85, 16777215);
+        }
 
-	}
+        this.drawCenteredString(this.fontRenderer, I18n.format("deathScreen.score") + ": " + TextFormatting.YELLOW + this.mc.player.getScore(), this.width / 2, 100, 16777215);
+
+        if (this.causeOfDeath != null && mouseY > 85 && mouseY < 85 + this.fontRenderer.FONT_HEIGHT)
+        {
+            ITextComponent itextcomponent = this.getClickedComponentAt(mouseX);
+
+            if (itextcomponent != null && itextcomponent.getStyle().getHoverEvent() != null)
+            {
+                this.handleComponentHover(itextcomponent, mouseX, mouseY);
+            }
+        }
+
+        super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+
+    @Nullable
+    public ITextComponent getClickedComponentAt(int p_184870_1_)
+    {
+        if (this.causeOfDeath == null)
+        {
+            return null;
+        }
+        else
+        {
+            int i = this.mc.fontRenderer.getStringWidth(this.causeOfDeath.getFormattedText());
+            int j = this.width / 2 - i / 2;
+            int k = this.width / 2 + i / 2;
+            int l = j;
+
+            if (p_184870_1_ >= j && p_184870_1_ <= k)
+            {
+                for (ITextComponent itextcomponent : this.causeOfDeath)
+                {
+                    l += this.mc.fontRenderer.getStringWidth(GuiUtilRenderComponents.removeTextColorsIfConfigured(itextcomponent.getUnformattedComponentText(), false));
+
+                    if (l > p_184870_1_)
+                    {
+                        return itextcomponent;
+                    }
+                }
+
+                return null;
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
+
+    public boolean doesGuiPauseGame()
+    {
+        return false;
+    }
+
+    public void updateScreen()
+    {
+        super.updateScreen();
+        ++this.enableButtonsTimer;
+
+        if (this.enableButtonsTimer == 20)
+        {
+            for (GuiButton guibutton : this.buttonList)
+            {
+                guibutton.enabled = true;
+            }
+        }
+    }
 }

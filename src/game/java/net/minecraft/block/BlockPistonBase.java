@@ -1,444 +1,451 @@
 package net.minecraft.block;
 
+import com.google.common.collect.Lists;
 import java.util.List;
-
+import javax.annotation.Nullable;
+import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockPistonStructureHelper;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityPiston;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class BlockPistonBase extends Block {
-	public static final PropertyDirection FACING = PropertyDirection.create("facing");
-	public static final PropertyBool EXTENDED = PropertyBool.create("extended");
-	private final boolean isSticky;
+public class BlockPistonBase extends BlockDirectional
+{
+    public static final PropertyBool EXTENDED = PropertyBool.create("extended");
+    protected static final AxisAlignedBB PISTON_BASE_EAST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.75D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB PISTON_BASE_WEST_AABB = new AxisAlignedBB(0.25D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB PISTON_BASE_SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.75D);
+    protected static final AxisAlignedBB PISTON_BASE_NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.25D, 1.0D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB PISTON_BASE_UP_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D);
+    protected static final AxisAlignedBB PISTON_BASE_DOWN_AABB = new AxisAlignedBB(0.0D, 0.25D, 0.0D, 1.0D, 1.0D, 1.0D);
+    private final boolean isSticky;
 
-	public BlockPistonBase(boolean isSticky) {
-		super(Material.piston);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH)
-				.withProperty(EXTENDED, Boolean.valueOf(false)));
-		this.isSticky = isSticky;
-		this.setStepSound(soundTypePiston);
-		this.setHardness(0.5F);
-		this.setCreativeTab(CreativeTabs.tabRedstone);
-	}
+    public BlockPistonBase(boolean isSticky)
+    {
+        super(Material.PISTON);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(EXTENDED, Boolean.valueOf(false)));
+        this.isSticky = isSticky;
+        this.setSoundType(SoundType.STONE);
+        this.setHardness(0.5F);
+        this.setCreativeTab(CreativeTabs.REDSTONE);
+    }
 
-	/**+
-	 * Used to determine ambient occlusion and culling when
-	 * rebuilding chunks for render
-	 */
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    public boolean causesSuffocation(IBlockState state)
+    {
+        return !((Boolean)state.getValue(EXTENDED)).booleanValue();
+    }
 
-	/**+
-	 * Called by ItemBlocks after a block is set in the world, to
-	 * allow post-place logic
-	 */
-	public void onBlockPlacedBy(World world, BlockPos blockpos, IBlockState iblockstate,
-			EntityLivingBase entitylivingbase, ItemStack var5) {
-		world.setBlockState(blockpos,
-				iblockstate.withProperty(FACING, getFacingFromEntity(world, blockpos, entitylivingbase)), 2);
-		if (!world.isRemote) {
-			this.checkForMove(world, blockpos, iblockstate);
-		}
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        if (((Boolean)state.getValue(EXTENDED)).booleanValue())
+        {
+            switch ((EnumFacing)state.getValue(FACING))
+            {
+                case DOWN:
+                    return PISTON_BASE_DOWN_AABB;
+                case UP:
+                default:
+                    return PISTON_BASE_UP_AABB;
+                case NORTH:
+                    return PISTON_BASE_NORTH_AABB;
+                case SOUTH:
+                    return PISTON_BASE_SOUTH_AABB;
+                case WEST:
+                    return PISTON_BASE_WEST_AABB;
+                case EAST:
+                    return PISTON_BASE_EAST_AABB;
+            }
+        }
+        else
+        {
+            return FULL_BLOCK_AABB;
+        }
+    }
 
-	}
+    public boolean isTopSolid(IBlockState state)
+    {
+        return !((Boolean)state.getValue(EXTENDED)).booleanValue() || state.getValue(FACING) == EnumFacing.DOWN;
+    }
 
-	/**+
-	 * Called when a neighboring block changes.
-	 */
-	public void onNeighborBlockChange(World world, BlockPos blockpos, IBlockState iblockstate, Block var4) {
-		if (!world.isRemote) {
-			this.checkForMove(world, blockpos, iblockstate);
-		}
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState)
+    {
+        addCollisionBoxToList(pos, entityBox, collidingBoxes, state.getBoundingBox(worldIn, pos));
+    }
 
-	}
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
 
-	public void onBlockAdded(World world, BlockPos blockpos, IBlockState iblockstate) {
-		if (!world.isRemote && world.getTileEntity(blockpos) == null) {
-			this.checkForMove(world, blockpos, iblockstate);
-		}
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+    {
+        worldIn.setBlockState(pos, state.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer)), 2);
 
-	}
+        if (!worldIn.isRemote)
+        {
+            this.checkForMove(worldIn, pos, state);
+        }
+    }
 
-	/**+
-	 * Called by ItemBlocks just before a block is actually set in
-	 * the world, to allow for adjustments to the IBlockstate
-	 */
-	public IBlockState onBlockPlaced(World world, BlockPos blockpos, EnumFacing var3, float var4, float var5,
-			float var6, int var7, EntityLivingBase entitylivingbase) {
-		return this.getDefaultState().withProperty(FACING, getFacingFromEntity(world, blockpos, entitylivingbase))
-				.withProperty(EXTENDED, Boolean.valueOf(false));
-	}
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
+    {
+        if (!worldIn.isRemote)
+        {
+            this.checkForMove(worldIn, pos, state);
+        }
+    }
 
-	private void checkForMove(World worldIn, BlockPos pos, IBlockState state) {
-		EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
-		boolean flag = this.shouldBeExtended(worldIn, pos, enumfacing);
-		if (flag && !((Boolean) state.getValue(EXTENDED)).booleanValue()) {
-			if ((new BlockPistonStructureHelper(worldIn, pos, enumfacing, true)).canMove()) {
-				worldIn.addBlockEvent(pos, this, 0, enumfacing.getIndex());
-			}
-		} else if (!flag && ((Boolean) state.getValue(EXTENDED)).booleanValue()) {
-			worldIn.setBlockState(pos, state.withProperty(EXTENDED, Boolean.valueOf(false)), 2);
-			worldIn.addBlockEvent(pos, this, 1, enumfacing.getIndex());
-		}
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    {
+        if (!worldIn.isRemote && worldIn.getTileEntity(pos) == null)
+        {
+            this.checkForMove(worldIn, pos, state);
+        }
+    }
 
-	}
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+    {
+        return this.getDefaultState().withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer)).withProperty(EXTENDED, Boolean.valueOf(false));
+    }
 
-	private boolean shouldBeExtended(World worldIn, BlockPos pos, EnumFacing facing) {
-		EnumFacing[] facings = EnumFacing._VALUES;
-		for (int i = 0; i < facings.length; ++i) {
-			EnumFacing enumfacing = facings[i];
-			if (enumfacing != facing && worldIn.isSidePowered(pos.offset(enumfacing), enumfacing)) {
-				return true;
-			}
-		}
+    private void checkForMove(World worldIn, BlockPos pos, IBlockState state)
+    {
+        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+        boolean flag = this.shouldBeExtended(worldIn, pos, enumfacing);
 
-		if (worldIn.isSidePowered(pos, EnumFacing.DOWN)) {
-			return true;
-		} else {
-			BlockPos blockpos = pos.up();
+        if (flag && !((Boolean)state.getValue(EXTENDED)).booleanValue())
+        {
+            if ((new BlockPistonStructureHelper(worldIn, pos, enumfacing, true)).canMove())
+            {
+                worldIn.addBlockEvent(pos, this, 0, enumfacing.getIndex());
+            }
+        }
+        else if (!flag && ((Boolean)state.getValue(EXTENDED)).booleanValue())
+        {
+            worldIn.addBlockEvent(pos, this, 1, enumfacing.getIndex());
+        }
+    }
 
-			for (int i = 0; i < facings.length; ++i) {
-				EnumFacing enumfacing1 = facings[i];
-				if (enumfacing1 != EnumFacing.DOWN
-						&& worldIn.isSidePowered(blockpos.offset(enumfacing1), enumfacing1)) {
-					return true;
-				}
-			}
+    private boolean shouldBeExtended(World worldIn, BlockPos pos, EnumFacing facing)
+    {
+        for (EnumFacing enumfacing : EnumFacing.values())
+        {
+            if (enumfacing != facing && worldIn.isSidePowered(pos.offset(enumfacing), enumfacing))
+            {
+                return true;
+            }
+        }
 
-			return false;
-		}
-	}
+        if (worldIn.isSidePowered(pos, EnumFacing.DOWN))
+        {
+            return true;
+        }
+        else
+        {
+            BlockPos blockpos = pos.up();
 
-	/**+
-	 * Called on both Client and Server when World#addBlockEvent is
-	 * called
-	 */
-	public boolean onBlockEventReceived(World world, BlockPos blockpos, IBlockState iblockstate, int i, int j) {
-		EnumFacing enumfacing = (EnumFacing) iblockstate.getValue(FACING);
-		if (!world.isRemote) {
-			boolean flag = this.shouldBeExtended(world, blockpos, enumfacing);
-			if (flag && i == 1) {
-				world.setBlockState(blockpos, iblockstate.withProperty(EXTENDED, Boolean.valueOf(true)), 2);
-				return false;
-			}
+            for (EnumFacing enumfacing1 : EnumFacing.values())
+            {
+                if (enumfacing1 != EnumFacing.DOWN && worldIn.isSidePowered(blockpos.offset(enumfacing1), enumfacing1))
+                {
+                    return true;
+                }
+            }
 
-			if (!flag && i == 0) {
-				return false;
-			}
-		}
+            return false;
+        }
+    }
 
-		if (i == 0) {
-			if (!this.doMove(world, blockpos, enumfacing, true)) {
-				return false;
-			}
+    public boolean eventReceived(IBlockState state, World worldIn, BlockPos pos, int id, int param)
+    {
+        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
 
-			world.setBlockState(blockpos, iblockstate.withProperty(EXTENDED, Boolean.valueOf(true)), 2);
-			world.playSoundEffect((double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.5D,
-					(double) blockpos.getZ() + 0.5D, "tile.piston.out", 0.5F, world.rand.nextFloat() * 0.25F + 0.6F);
-		} else if (i == 1) {
-			TileEntity tileentity1 = world.getTileEntity(blockpos.offset(enumfacing));
-			if (tileentity1 instanceof TileEntityPiston) {
-				((TileEntityPiston) tileentity1).clearPistonTileEntity();
-			}
+        if (!worldIn.isRemote)
+        {
+            boolean flag = this.shouldBeExtended(worldIn, pos, enumfacing);
 
-			world.setBlockState(blockpos,
-					Blocks.piston_extension.getDefaultState().withProperty(BlockPistonMoving.FACING, enumfacing)
-							.withProperty(BlockPistonMoving.TYPE,
-									this.isSticky ? BlockPistonExtension.EnumPistonType.STICKY
-											: BlockPistonExtension.EnumPistonType.DEFAULT),
-					3);
-			world.setTileEntity(blockpos,
-					BlockPistonMoving.newTileEntity(this.getStateFromMeta(j), enumfacing, false, true));
-			if (this.isSticky) {
-				BlockPos blockpos1 = blockpos.add(enumfacing.getFrontOffsetX() * 2, enumfacing.getFrontOffsetY() * 2,
-						enumfacing.getFrontOffsetZ() * 2);
-				Block block = world.getBlockState(blockpos1).getBlock();
-				boolean flag1 = false;
-				if (block == Blocks.piston_extension) {
-					TileEntity tileentity = world.getTileEntity(blockpos1);
-					if (tileentity instanceof TileEntityPiston) {
-						TileEntityPiston tileentitypiston = (TileEntityPiston) tileentity;
-						if (tileentitypiston.getFacing() == enumfacing && tileentitypiston.isExtending()) {
-							tileentitypiston.clearPistonTileEntity();
-							flag1 = true;
-						}
-					}
-				}
+            if (flag && id == 1)
+            {
+                worldIn.setBlockState(pos, state.withProperty(EXTENDED, Boolean.valueOf(true)), 2);
+                return false;
+            }
 
-				if (!flag1 && block.getMaterial() != Material.air
-						&& canPush(block, world, blockpos1, enumfacing.getOpposite(), false)
-						&& (block.getMobilityFlag() == 0 || block == Blocks.piston || block == Blocks.sticky_piston)) {
-					this.doMove(world, blockpos, enumfacing, false);
-				}
-			} else {
-				world.setBlockToAir(blockpos.offset(enumfacing));
-			}
+            if (!flag && id == 0)
+            {
+                return false;
+            }
+        }
 
-			world.playSoundEffect((double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.5D,
-					(double) blockpos.getZ() + 0.5D, "tile.piston.in", 0.5F, world.rand.nextFloat() * 0.15F + 0.6F);
-		}
+        if (id == 0)
+        {
+            if (!this.doMove(worldIn, pos, enumfacing, true))
+            {
+                return false;
+            }
 
-		return true;
-	}
+            worldIn.setBlockState(pos, state.withProperty(EXTENDED, Boolean.valueOf(true)), 3);
+            worldIn.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.BLOCKS, 0.5F, worldIn.rand.nextFloat() * 0.25F + 0.6F);
+        }
+        else if (id == 1)
+        {
+            TileEntity tileentity1 = worldIn.getTileEntity(pos.offset(enumfacing));
 
-	public void setBlockBoundsBasedOnState(IBlockAccess iblockaccess, BlockPos blockpos) {
-		IBlockState iblockstate = iblockaccess.getBlockState(blockpos);
-		if (iblockstate.getBlock() == this && ((Boolean) iblockstate.getValue(EXTENDED)).booleanValue()) {
-			float f = 0.25F;
-			EnumFacing enumfacing = (EnumFacing) iblockstate.getValue(FACING);
-			if (enumfacing != null) {
-				switch (enumfacing) {
-				case DOWN:
-					this.setBlockBounds(0.0F, 0.25F, 0.0F, 1.0F, 1.0F, 1.0F);
-					break;
-				case UP:
-					this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.75F, 1.0F);
-					break;
-				case NORTH:
-					this.setBlockBounds(0.0F, 0.0F, 0.25F, 1.0F, 1.0F, 1.0F);
-					break;
-				case SOUTH:
-					this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.75F);
-					break;
-				case WEST:
-					this.setBlockBounds(0.25F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-					break;
-				case EAST:
-					this.setBlockBounds(0.0F, 0.0F, 0.0F, 0.75F, 1.0F, 1.0F);
-				}
-			}
-		} else {
-			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-		}
+            if (tileentity1 instanceof TileEntityPiston)
+            {
+                ((TileEntityPiston)tileentity1).clearPistonTileEntity();
+            }
 
-	}
+            worldIn.setBlockState(pos, Blocks.PISTON_EXTENSION.getDefaultState().withProperty(BlockPistonMoving.FACING, enumfacing).withProperty(BlockPistonMoving.TYPE, this.isSticky ? BlockPistonExtension.EnumPistonType.STICKY : BlockPistonExtension.EnumPistonType.DEFAULT), 3);
+            worldIn.setTileEntity(pos, BlockPistonMoving.createTilePiston(this.getStateFromMeta(param), enumfacing, false, true));
 
-	/**+
-	 * Sets the block's bounds for rendering it as an item
-	 */
-	public void setBlockBoundsForItemRender() {
-		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-	}
+            if (this.isSticky)
+            {
+                BlockPos blockpos = pos.add(enumfacing.getFrontOffsetX() * 2, enumfacing.getFrontOffsetY() * 2, enumfacing.getFrontOffsetZ() * 2);
+                IBlockState iblockstate = worldIn.getBlockState(blockpos);
+                Block block = iblockstate.getBlock();
+                boolean flag1 = false;
 
-	/**+
-	 * Add all collision boxes of this Block to the list that
-	 * intersect with the given mask.
-	 */
-	public void addCollisionBoxesToList(World world, BlockPos blockpos, IBlockState iblockstate,
-			AxisAlignedBB axisalignedbb, List<AxisAlignedBB> list, Entity entity) {
-		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-		super.addCollisionBoxesToList(world, blockpos, iblockstate, axisalignedbb, list, entity);
-	}
+                if (block == Blocks.PISTON_EXTENSION)
+                {
+                    TileEntity tileentity = worldIn.getTileEntity(blockpos);
 
-	public AxisAlignedBB getCollisionBoundingBox(World world, BlockPos blockpos, IBlockState iblockstate) {
-		this.setBlockBoundsBasedOnState(world, blockpos);
-		return super.getCollisionBoundingBox(world, blockpos, iblockstate);
-	}
+                    if (tileentity instanceof TileEntityPiston)
+                    {
+                        TileEntityPiston tileentitypiston = (TileEntityPiston)tileentity;
 
-	public boolean isFullCube() {
-		return false;
-	}
+                        if (tileentitypiston.getFacing() == enumfacing && tileentitypiston.isExtending())
+                        {
+                            tileentitypiston.clearPistonTileEntity();
+                            flag1 = true;
+                        }
+                    }
+                }
 
-	public static EnumFacing getFacing(int meta) {
-		int i = meta & 7;
-		return i > 5 ? null : EnumFacing.getFront(i);
-	}
+                if (!flag1 && !iblockstate.getBlock().isAir(iblockstate, worldIn, blockpos) && canPush(iblockstate, worldIn, blockpos, enumfacing.getOpposite(), false, enumfacing) && (iblockstate.getMobilityFlag() == EnumPushReaction.NORMAL || block == Blocks.PISTON || block == Blocks.STICKY_PISTON))
+                {
+                    this.doMove(worldIn, pos, enumfacing, false);
+                }
+            }
+            else
+            {
+                worldIn.setBlockToAir(pos.offset(enumfacing));
+            }
 
-	public static EnumFacing getFacingFromEntity(World worldIn, BlockPos clickedBlock, EntityLivingBase entityIn) {
-		if (MathHelper.abs((float) entityIn.posX - (float) clickedBlock.getX()) < 2.0F
-				&& MathHelper.abs((float) entityIn.posZ - (float) clickedBlock.getZ()) < 2.0F) {
-			double d0 = entityIn.posY + (double) entityIn.getEyeHeight();
-			if (d0 - (double) clickedBlock.getY() > 2.0D) {
-				return EnumFacing.UP;
-			}
+            worldIn.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_PISTON_CONTRACT, SoundCategory.BLOCKS, 0.5F, worldIn.rand.nextFloat() * 0.15F + 0.6F);
+        }
 
-			if ((double) clickedBlock.getY() - d0 > 0.0D) {
-				return EnumFacing.DOWN;
-			}
-		}
+        return true;
+    }
 
-		return entityIn.getHorizontalFacing().getOpposite();
-	}
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
+    }
 
-	public static boolean canPush(Block blockIn, World worldIn, BlockPos pos, EnumFacing direction,
-			boolean allowDestroy) {
-		if (blockIn == Blocks.obsidian) {
-			return false;
-		} else if (!worldIn.getWorldBorder().contains(pos)) {
-			return false;
-		} else if (pos.getY() >= 0 && (direction != EnumFacing.DOWN || pos.getY() != 0)) {
-			if (pos.getY() <= worldIn.getHeight() - 1
-					&& (direction != EnumFacing.UP || pos.getY() != worldIn.getHeight() - 1)) {
-				if (blockIn != Blocks.piston && blockIn != Blocks.sticky_piston) {
-					if (blockIn.getBlockHardness(worldIn, pos) == -1.0F) {
-						return false;
-					}
+    @Nullable
+    public static EnumFacing getFacing(int meta)
+    {
+        int i = meta & 7;
+        return i > 5 ? null : EnumFacing.getFront(i);
+    }
 
-					if (blockIn.getMobilityFlag() == 2) {
-						return false;
-					}
+    public static boolean canPush(IBlockState blockStateIn, World worldIn, BlockPos pos, EnumFacing facing, boolean destroyBlocks, EnumFacing p_185646_5_)
+    {
+        Block block = blockStateIn.getBlock();
 
-					if (blockIn.getMobilityFlag() == 1) {
-						if (!allowDestroy) {
-							return false;
-						}
+        if (block == Blocks.OBSIDIAN)
+        {
+            return false;
+        }
+        else if (!worldIn.getWorldBorder().contains(pos))
+        {
+            return false;
+        }
+        else if (pos.getY() >= 0 && (facing != EnumFacing.DOWN || pos.getY() != 0))
+        {
+            if (pos.getY() <= worldIn.getHeight() - 1 && (facing != EnumFacing.UP || pos.getY() != worldIn.getHeight() - 1))
+            {
+                if (block != Blocks.PISTON && block != Blocks.STICKY_PISTON)
+                {
+                    if (blockStateIn.getBlockHardness(worldIn, pos) == -1.0F)
+                    {
+                        return false;
+                    }
 
-						return true;
-					}
-				} else if (((Boolean) worldIn.getBlockState(pos).getValue(EXTENDED)).booleanValue()) {
-					return false;
-				}
+                    switch (blockStateIn.getMobilityFlag())
+                    {
+                        case BLOCK:
+                            return false;
+                        case DESTROY:
+                            return destroyBlocks;
+                        case PUSH_ONLY:
+                            return facing == p_185646_5_;
+                    }
+                }
+                else if (((Boolean)blockStateIn.getValue(EXTENDED)).booleanValue())
+                {
+                    return false;
+                }
 
-				return !(blockIn instanceof ITileEntityProvider);
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
+                return !block.hasTileEntity(blockStateIn);
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	private boolean doMove(World worldIn, BlockPos pos, EnumFacing direction, boolean extending) {
-		if (!extending) {
-			worldIn.setBlockToAir(pos.offset(direction));
-		}
+    private boolean doMove(World worldIn, BlockPos pos, EnumFacing direction, boolean extending)
+    {
+        if (!extending)
+        {
+            worldIn.setBlockToAir(pos.offset(direction));
+        }
 
-		BlockPistonStructureHelper blockpistonstructurehelper = new BlockPistonStructureHelper(worldIn, pos, direction,
-				extending);
-		List list = blockpistonstructurehelper.getBlocksToMove();
-		List list1 = blockpistonstructurehelper.getBlocksToDestroy();
-		if (!blockpistonstructurehelper.canMove()) {
-			return false;
-		} else {
-			int i = list.size() + list1.size();
-			Block[] ablock = new Block[i];
-			EnumFacing enumfacing = extending ? direction : direction.getOpposite();
+        BlockPistonStructureHelper blockpistonstructurehelper = new BlockPistonStructureHelper(worldIn, pos, direction, extending);
 
-			for (int j = list1.size() - 1; j >= 0; --j) {
-				BlockPos blockpos = (BlockPos) list1.get(j);
-				Block block = worldIn.getBlockState(blockpos).getBlock();
-				block.dropBlockAsItem(worldIn, blockpos, worldIn.getBlockState(blockpos), 0);
-				worldIn.setBlockToAir(blockpos);
-				--i;
-				ablock[i] = block;
-			}
+        if (!blockpistonstructurehelper.canMove())
+        {
+            return false;
+        }
+        else
+        {
+            List<BlockPos> list = blockpistonstructurehelper.getBlocksToMove();
+            List<IBlockState> list1 = Lists.<IBlockState>newArrayList();
 
-			for (int k = list.size() - 1; k >= 0; --k) {
-				BlockPos blockpos2 = (BlockPos) list.get(k);
-				IBlockState iblockstate = worldIn.getBlockState(blockpos2);
-				Block block1 = iblockstate.getBlock();
-				block1.getMetaFromState(iblockstate);
-				worldIn.setBlockToAir(blockpos2);
-				blockpos2 = blockpos2.offset(enumfacing);
-				worldIn.setBlockState(blockpos2,
-						Blocks.piston_extension.getDefaultState().withProperty(FACING, direction), 4);
-				worldIn.setTileEntity(blockpos2,
-						BlockPistonMoving.newTileEntity(iblockstate, direction, extending, false));
-				--i;
-				ablock[i] = block1;
-			}
+            for (int i = 0; i < list.size(); ++i)
+            {
+                BlockPos blockpos = list.get(i);
+                list1.add(worldIn.getBlockState(blockpos).getActualState(worldIn, blockpos));
+            }
 
-			BlockPos blockpos1 = pos.offset(direction);
-			if (extending) {
-				BlockPistonExtension.EnumPistonType blockpistonextension$enumpistontype = this.isSticky
-						? BlockPistonExtension.EnumPistonType.STICKY
-						: BlockPistonExtension.EnumPistonType.DEFAULT;
-				IBlockState iblockstate1 = Blocks.piston_head.getDefaultState()
-						.withProperty(BlockPistonExtension.FACING, direction)
-						.withProperty(BlockPistonExtension.TYPE, blockpistonextension$enumpistontype);
-				IBlockState iblockstate2 = Blocks.piston_extension.getDefaultState()
-						.withProperty(BlockPistonMoving.FACING, direction)
-						.withProperty(BlockPistonMoving.TYPE, this.isSticky ? BlockPistonExtension.EnumPistonType.STICKY
-								: BlockPistonExtension.EnumPistonType.DEFAULT);
-				worldIn.setBlockState(blockpos1, iblockstate2, 4);
-				worldIn.setTileEntity(blockpos1, BlockPistonMoving.newTileEntity(iblockstate1, direction, true, false));
-			}
+            List<BlockPos> list2 = blockpistonstructurehelper.getBlocksToDestroy();
+            int k = list.size() + list2.size();
+            IBlockState[] aiblockstate = new IBlockState[k];
+            EnumFacing enumfacing = extending ? direction : direction.getOpposite();
 
-			for (int l = list1.size() - 1; l >= 0; --l) {
-				worldIn.notifyNeighborsOfStateChange((BlockPos) list1.get(l), ablock[i++]);
-			}
+            for (int j = list2.size() - 1; j >= 0; --j)
+            {
+                BlockPos blockpos1 = list2.get(j);
+                IBlockState iblockstate = worldIn.getBlockState(blockpos1);
+                // Forge: With our change to how snowballs are dropped this needs to disallow to mimic vanilla behavior.
+                float chance = iblockstate.getBlock() instanceof BlockSnow ? -1.0f : 1.0f;
+                iblockstate.getBlock().dropBlockAsItemWithChance(worldIn, blockpos1, iblockstate, chance, 0);
+                worldIn.setBlockState(blockpos1, Blocks.AIR.getDefaultState(), 4);
+                --k;
+                aiblockstate[k] = iblockstate;
+            }
 
-			for (int i1 = list.size() - 1; i1 >= 0; --i1) {
-				worldIn.notifyNeighborsOfStateChange((BlockPos) list.get(i1), ablock[i++]);
-			}
+            for (int l = list.size() - 1; l >= 0; --l)
+            {
+                BlockPos blockpos3 = list.get(l);
+                IBlockState iblockstate2 = worldIn.getBlockState(blockpos3);
+                worldIn.setBlockState(blockpos3, Blocks.AIR.getDefaultState(), 2);
+                blockpos3 = blockpos3.offset(enumfacing);
+                worldIn.setBlockState(blockpos3, Blocks.PISTON_EXTENSION.getDefaultState().withProperty(FACING, direction), 4);
+                worldIn.setTileEntity(blockpos3, BlockPistonMoving.createTilePiston(list1.get(l), direction, extending, false));
+                --k;
+                aiblockstate[k] = iblockstate2;
+            }
 
-			if (extending) {
-				worldIn.notifyNeighborsOfStateChange(blockpos1, Blocks.piston_head);
-				worldIn.notifyNeighborsOfStateChange(pos, this);
-			}
+            BlockPos blockpos2 = pos.offset(direction);
 
-			return true;
-		}
-	}
+            if (extending)
+            {
+                BlockPistonExtension.EnumPistonType blockpistonextension$enumpistontype = this.isSticky ? BlockPistonExtension.EnumPistonType.STICKY : BlockPistonExtension.EnumPistonType.DEFAULT;
+                IBlockState iblockstate3 = Blocks.PISTON_HEAD.getDefaultState().withProperty(BlockPistonExtension.FACING, direction).withProperty(BlockPistonExtension.TYPE, blockpistonextension$enumpistontype);
+                IBlockState iblockstate1 = Blocks.PISTON_EXTENSION.getDefaultState().withProperty(BlockPistonMoving.FACING, direction).withProperty(BlockPistonMoving.TYPE, this.isSticky ? BlockPistonExtension.EnumPistonType.STICKY : BlockPistonExtension.EnumPistonType.DEFAULT);
+                worldIn.setBlockState(blockpos2, iblockstate1, 4);
+                worldIn.setTileEntity(blockpos2, BlockPistonMoving.createTilePiston(iblockstate3, direction, true, true));
+            }
 
-	/**+
-	 * Possibly modify the given BlockState before rendering it on
-	 * an Entity (Minecarts, Endermen, ...)
-	 */
-	public IBlockState getStateForEntityRender(IBlockState var1) {
-		return this.getDefaultState().withProperty(FACING, EnumFacing.UP);
-	}
+            for (int i1 = list2.size() - 1; i1 >= 0; --i1)
+            {
+                worldIn.notifyNeighborsOfStateChange(list2.get(i1), aiblockstate[k++].getBlock(), false);
+            }
 
-	/**+
-	 * Convert the given metadata into a BlockState for this Block
-	 */
-	public IBlockState getStateFromMeta(int i) {
-		return this.getDefaultState().withProperty(FACING, getFacing(i)).withProperty(EXTENDED,
-				Boolean.valueOf((i & 8) > 0));
-	}
+            for (int j1 = list.size() - 1; j1 >= 0; --j1)
+            {
+                worldIn.notifyNeighborsOfStateChange(list.get(j1), aiblockstate[k++].getBlock(), false);
+            }
 
-	/**+
-	 * Convert the BlockState into the correct metadata value
-	 */
-	public int getMetaFromState(IBlockState iblockstate) {
-		int i = 0;
-		i = i | ((EnumFacing) iblockstate.getValue(FACING)).getIndex();
-		if (((Boolean) iblockstate.getValue(EXTENDED)).booleanValue()) {
-			i |= 8;
-		}
+            if (extending)
+            {
+                worldIn.notifyNeighborsOfStateChange(blockpos2, Blocks.PISTON_HEAD, false);
+            }
 
-		return i;
-	}
+            return true;
+        }
+    }
 
-	protected BlockState createBlockState() {
-		return new BlockState(this, new IProperty[] { FACING, EXTENDED });
-	}
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(EXTENDED, Boolean.valueOf((meta & 8) > 0));
+    }
+
+    public int getMetaFromState(IBlockState state)
+    {
+        int i = 0;
+        i = i | ((EnumFacing)state.getValue(FACING)).getIndex();
+
+        if (((Boolean)state.getValue(EXTENDED)).booleanValue())
+        {
+            i |= 8;
+        }
+
+        return i;
+    }
+
+    public IBlockState withRotation(IBlockState state, Rotation rot)
+    {
+        return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+    }
+
+    public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
+    {
+        return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
+    }
+
+    protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, new IProperty[] {FACING, EXTENDED});
+    }
+
+    /* ======================================== FORGE START =====================================*/
+    public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis)
+    {
+        IBlockState state = world.getBlockState(pos);
+        return !state.getValue(EXTENDED) && super.rotateBlock(world, pos, axis);
+    }
+
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+    {
+        state = this.getActualState(state, worldIn, pos);
+        return state.getValue(FACING) != face.getOpposite() && ((Boolean)state.getValue(EXTENDED)).booleanValue() ? BlockFaceShape.UNDEFINED : BlockFaceShape.SOLID;
+    }
 }

@@ -1,88 +1,137 @@
 package net.minecraft.client.renderer.tileentity;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
-
-import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
-import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import com.mojang.authlib.GameProfile;
+import java.util.UUID;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockChest;
+import net.minecraft.block.BlockShulkerBox;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelShield;
+import net.minecraft.client.renderer.BannerTextures;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntityBanner;
+import net.minecraft.tileentity.TileEntityBed;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityEnderChest;
+import net.minecraft.tileentity.TileEntityShulkerBox;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.StringUtils;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class TileEntityItemStackRenderer {
-	public static TileEntityItemStackRenderer instance = new TileEntityItemStackRenderer();
-	private TileEntityChest field_147717_b = new TileEntityChest(0);
-	private TileEntityChest field_147718_c = new TileEntityChest(1);
-	private TileEntityEnderChest enderChest = new TileEntityEnderChest();
-	private TileEntityBanner banner = new TileEntityBanner();
-	private TileEntitySkull skull = new TileEntitySkull();
+@SideOnly(Side.CLIENT)
+public class TileEntityItemStackRenderer
+{
+    private static final TileEntityShulkerBox[] SHULKER_BOXES = new TileEntityShulkerBox[16];
+    public static TileEntityItemStackRenderer instance;
+    private final TileEntityChest chestBasic = new TileEntityChest(BlockChest.Type.BASIC);
+    private final TileEntityChest chestTrap = new TileEntityChest(BlockChest.Type.TRAP);
+    private final TileEntityEnderChest enderChest = new TileEntityEnderChest();
+    private final TileEntityBanner banner = new TileEntityBanner();
+    private final TileEntityBed bed = new TileEntityBed();
+    private final TileEntitySkull skull = new TileEntitySkull();
+    private final ModelShield modelShield = new ModelShield();
 
-	public void renderByItem(ItemStack itemStackIn) {
-		if (itemStackIn.getItem() == Items.banner) {
-			this.banner.setItemValues(itemStackIn);
-			TileEntityRendererDispatcher.instance.renderTileEntityAt(this.banner, 0.0D, 0.0D, 0.0D, 0.0F);
-		} else if (itemStackIn.getItem() == Items.skull) {
-			GameProfile gameprofile = null;
-			if (itemStackIn.hasTagCompound()) {
-				NBTTagCompound nbttagcompound = itemStackIn.getTagCompound();
-				if (nbttagcompound.hasKey("SkullOwner", 10)) {
-					gameprofile = NBTUtil.readGameProfileFromNBT(nbttagcompound.getCompoundTag("SkullOwner"));
-				} else if (nbttagcompound.hasKey("SkullOwner", 8)
-						&& nbttagcompound.getString("SkullOwner").length() > 0) {
-					gameprofile = new GameProfile((EaglercraftUUID) null, nbttagcompound.getString("SkullOwner"));
-					gameprofile = TileEntitySkull.updateGameprofile(gameprofile);
-					nbttagcompound.removeTag("SkullOwner");
-					nbttagcompound.setTag("SkullOwner", NBTUtil.writeGameProfile(new NBTTagCompound(), gameprofile));
-				}
-			}
+    public void renderByItem(ItemStack itemStackIn)
+    {
+        this.renderByItem(itemStackIn, 1.0F);
+    }
 
-			if (TileEntitySkullRenderer.instance != null) {
-				GlStateManager.pushMatrix();
-				GlStateManager.translate(-0.5F, 0.0F, -0.5F);
-				GlStateManager.scale(2.0F, 2.0F, 2.0F);
-				GlStateManager.disableCull();
-				TileEntitySkullRenderer.instance.renderSkull(0.0F, 0.0F, 0.0F, EnumFacing.UP, 0.0F,
-						itemStackIn.getMetadata(), gameprofile, -1);
-				GlStateManager.enableCull();
-				GlStateManager.popMatrix();
-			}
-		} else {
-			Block block = Block.getBlockFromItem(itemStackIn.getItem());
-			if (block == Blocks.ender_chest) {
-				TileEntityRendererDispatcher.instance.renderTileEntityAt(this.enderChest, 0.0D, 0.0D, 0.0D, 0.0F);
-			} else if (block == Blocks.trapped_chest) {
-				TileEntityRendererDispatcher.instance.renderTileEntityAt(this.field_147718_c, 0.0D, 0.0D, 0.0D, 0.0F);
-			} else {
-				TileEntityRendererDispatcher.instance.renderTileEntityAt(this.field_147717_b, 0.0D, 0.0D, 0.0D, 0.0F);
-			}
-		}
+    public void renderByItem(ItemStack p_192838_1_, float partialTicks)
+    {
+        Item item = p_192838_1_.getItem();
 
-	}
+        if (item == Items.BANNER)
+        {
+            this.banner.setItemValues(p_192838_1_, false);
+            TileEntityRendererDispatcher.instance.render(this.banner, 0.0D, 0.0D, 0.0D, 0.0F, partialTicks);
+        }
+        else if (item == Items.BED)
+        {
+            this.bed.setItemValues(p_192838_1_);
+            TileEntityRendererDispatcher.instance.render(this.bed, 0.0D, 0.0D, 0.0D, 0.0F);
+        }
+        else if (item == Items.SHIELD)
+        {
+            if (p_192838_1_.getSubCompound("BlockEntityTag") != null)
+            {
+                this.banner.setItemValues(p_192838_1_, true);
+                Minecraft.getMinecraft().getTextureManager().bindTexture(BannerTextures.SHIELD_DESIGNS.getResourceLocation(this.banner.getPatternResourceLocation(), this.banner.getPatternList(), this.banner.getColorList()));
+            }
+            else
+            {
+                Minecraft.getMinecraft().getTextureManager().bindTexture(BannerTextures.SHIELD_BASE_TEXTURE);
+            }
+
+            GlStateManager.pushMatrix();
+            GlStateManager.scale(1.0F, -1.0F, -1.0F);
+            this.modelShield.render();
+            GlStateManager.popMatrix();
+        }
+        else if (item == Items.SKULL)
+        {
+            GameProfile gameprofile = null;
+
+            if (p_192838_1_.hasTagCompound())
+            {
+                NBTTagCompound nbttagcompound = p_192838_1_.getTagCompound();
+
+                if (nbttagcompound.hasKey("SkullOwner", 10))
+                {
+                    gameprofile = NBTUtil.readGameProfileFromNBT(nbttagcompound.getCompoundTag("SkullOwner"));
+                }
+                else if (nbttagcompound.hasKey("SkullOwner", 8) && !StringUtils.isBlank(nbttagcompound.getString("SkullOwner")))
+                {
+                    GameProfile gameprofile1 = new GameProfile((UUID)null, nbttagcompound.getString("SkullOwner"));
+                    gameprofile = TileEntitySkull.updateGameprofile(gameprofile1);
+                    nbttagcompound.removeTag("SkullOwner");
+                    nbttagcompound.setTag("SkullOwner", NBTUtil.writeGameProfile(new NBTTagCompound(), gameprofile));
+                }
+            }
+
+            if (TileEntitySkullRenderer.instance != null)
+            {
+                GlStateManager.pushMatrix();
+                GlStateManager.disableCull();
+                TileEntitySkullRenderer.instance.renderSkull(0.0F, 0.0F, 0.0F, EnumFacing.UP, 180.0F, p_192838_1_.getMetadata(), gameprofile, -1, 0.0F);
+                GlStateManager.enableCull();
+                GlStateManager.popMatrix();
+            }
+        }
+        else if (item == Item.getItemFromBlock(Blocks.ENDER_CHEST))
+        {
+            TileEntityRendererDispatcher.instance.render(this.enderChest, 0.0D, 0.0D, 0.0D, 0.0F, partialTicks);
+        }
+        else if (item == Item.getItemFromBlock(Blocks.TRAPPED_CHEST))
+        {
+            TileEntityRendererDispatcher.instance.render(this.chestTrap, 0.0D, 0.0D, 0.0D, 0.0F, partialTicks);
+        }
+        else if (Block.getBlockFromItem(item) instanceof BlockShulkerBox)
+        {
+            TileEntityRendererDispatcher.instance.render(SHULKER_BOXES[BlockShulkerBox.getColorFromItem(item).getMetadata()], 0.0D, 0.0D, 0.0D, 0.0F, partialTicks);
+        }
+        else if (Block.getBlockFromItem(item) != Blocks.CHEST) net.minecraftforge.client.ForgeHooksClient.renderTileItem(p_192838_1_.getItem(), p_192838_1_.getMetadata());
+        else
+        {
+            TileEntityRendererDispatcher.instance.render(this.chestBasic, 0.0D, 0.0D, 0.0D, 0.0F, partialTicks);
+        }
+    }
+
+    static
+    {
+        for (EnumDyeColor enumdyecolor : EnumDyeColor.values())
+        {
+            SHULKER_BOXES[enumdyecolor.getMetadata()] = new TileEntityShulkerBox(enumdyecolor);
+        }
+
+        instance = new TileEntityItemStackRenderer();
+    }
 }

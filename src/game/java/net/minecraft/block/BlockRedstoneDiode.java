@@ -1,284 +1,337 @@
 package net.minecraft.block;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-
+import java.util.Random;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public abstract class BlockRedstoneDiode extends BlockDirectional {
-	protected final boolean isRepeaterPowered;
+public abstract class BlockRedstoneDiode extends BlockHorizontal
+{
+    protected static final AxisAlignedBB REDSTONE_DIODE_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D);
+    protected final boolean isRepeaterPowered;
 
-	protected BlockRedstoneDiode(boolean powered) {
-		super(Material.circuits);
-		this.isRepeaterPowered = powered;
-		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);
-	}
+    protected BlockRedstoneDiode(boolean powered)
+    {
+        super(Material.CIRCUITS);
+        this.isRepeaterPowered = powered;
+    }
 
-	public boolean isFullCube() {
-		return false;
-	}
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return REDSTONE_DIODE_AABB;
+    }
 
-	public boolean canPlaceBlockAt(World world, BlockPos blockpos) {
-		return World.doesBlockHaveSolidTopSurface(world, blockpos.down()) ? super.canPlaceBlockAt(world, blockpos)
-				: false;
-	}
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
+    }
 
-	public boolean canBlockStay(World worldIn, BlockPos pos) {
-		return World.doesBlockHaveSolidTopSurface(worldIn, pos.down());
-	}
+    public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
+    {
+        IBlockState downState = worldIn.getBlockState(pos.down());
+        return (downState.isTopSolid() || downState.getBlockFaceShape(worldIn, pos.down(), EnumFacing.UP) == BlockFaceShape.SOLID) ? super.canPlaceBlockAt(worldIn, pos) : false;
+    }
 
-	/**+
-	 * Called randomly when setTickRandomly is set to true (used by
-	 * e.g. crops to grow, etc.)
-	 */
-	public void randomTick(World var1, BlockPos var2, IBlockState var3, EaglercraftRandom var4) {
-	}
+    public boolean canBlockStay(World worldIn, BlockPos pos)
+    {
+        IBlockState downState = worldIn.getBlockState(pos.down());
+        return downState.isTopSolid() || downState.getBlockFaceShape(worldIn, pos.down(), EnumFacing.UP) == BlockFaceShape.SOLID;
+    }
 
-	public void updateTick(World world, BlockPos blockpos, IBlockState iblockstate, EaglercraftRandom var4) {
-		if (!this.isLocked(world, blockpos, iblockstate)) {
-			boolean flag = this.shouldBePowered(world, blockpos, iblockstate);
-			if (this.isRepeaterPowered && !flag) {
-				world.setBlockState(blockpos, this.getUnpoweredState(iblockstate), 2);
-			} else if (!this.isRepeaterPowered) {
-				world.setBlockState(blockpos, this.getPoweredState(iblockstate), 2);
-				if (!flag) {
-					world.updateBlockTick(blockpos, this.getPoweredState(iblockstate).getBlock(),
-							this.getTickDelay(iblockstate), -1);
-				}
-			}
+    public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random)
+    {
+    }
 
-		}
-	}
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        if (!this.isLocked(worldIn, pos, state))
+        {
+            boolean flag = this.shouldBePowered(worldIn, pos, state);
 
-	public boolean shouldSideBeRendered(IBlockAccess var1, BlockPos var2, EnumFacing enumfacing) {
-		return enumfacing.getAxis() != EnumFacing.Axis.Y;
-	}
+            if (this.isRepeaterPowered && !flag)
+            {
+                worldIn.setBlockState(pos, this.getUnpoweredState(state), 2);
+            }
+            else if (!this.isRepeaterPowered)
+            {
+                worldIn.setBlockState(pos, this.getPoweredState(state), 2);
 
-	protected boolean isPowered(IBlockState var1) {
-		return this.isRepeaterPowered;
-	}
+                if (!flag)
+                {
+                    worldIn.updateBlockTick(pos, this.getPoweredState(state).getBlock(), this.getTickDelay(state), -1);
+                }
+            }
+        }
+    }
 
-	public int getStrongPower(IBlockAccess iblockaccess, BlockPos blockpos, IBlockState iblockstate,
-			EnumFacing enumfacing) {
-		return this.getWeakPower(iblockaccess, blockpos, iblockstate, enumfacing);
-	}
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
+    {
+        return side.getAxis() != EnumFacing.Axis.Y;
+    }
 
-	public int getWeakPower(IBlockAccess iblockaccess, BlockPos blockpos, IBlockState iblockstate,
-			EnumFacing enumfacing) {
-		return !this.isPowered(iblockstate) ? 0
-				: (iblockstate.getValue(FACING) == enumfacing
-						? this.getActiveSignal(iblockaccess, blockpos, iblockstate)
-						: 0);
-	}
+    protected boolean isPowered(IBlockState state)
+    {
+        return this.isRepeaterPowered;
+    }
 
-	/**+
-	 * Called when a neighboring block changes.
-	 */
-	public void onNeighborBlockChange(World world, BlockPos blockpos, IBlockState iblockstate, Block var4) {
-		if (this.canBlockStay(world, blockpos)) {
-			this.updateState(world, blockpos, iblockstate);
-		} else {
-			this.dropBlockAsItem(world, blockpos, iblockstate, 0);
-			world.setBlockToAir(blockpos);
+    public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
+    {
+        return blockState.getWeakPower(blockAccess, pos, side);
+    }
 
-			EnumFacing[] facings = EnumFacing._VALUES;
-			BlockPos tmp = new BlockPos(0, 0, 0);
-			for (int i = 0; i < facings.length; ++i) {
-				world.notifyNeighborsOfStateChange(blockpos.offsetEvenFaster(facings[i], tmp), this);
-			}
+    public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
+    {
+        if (!this.isPowered(blockState))
+        {
+            return 0;
+        }
+        else
+        {
+            return blockState.getValue(FACING) == side ? this.getActiveSignal(blockAccess, pos, blockState) : 0;
+        }
+    }
 
-		}
-	}
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
+    {
+        if (this.canBlockStay(worldIn, pos))
+        {
+            this.updateState(worldIn, pos, state);
+        }
+        else
+        {
+            this.dropBlockAsItem(worldIn, pos, state, 0);
+            worldIn.setBlockToAir(pos);
 
-	protected void updateState(World world, BlockPos blockpos, IBlockState iblockstate) {
-		if (!this.isLocked(world, blockpos, iblockstate)) {
-			boolean flag = this.shouldBePowered(world, blockpos, iblockstate);
-			if ((this.isRepeaterPowered && !flag || !this.isRepeaterPowered && flag)
-					&& !world.isBlockTickPending(blockpos, this)) {
-				byte b0 = -1;
-				if (this.isFacingTowardsRepeater(world, blockpos, iblockstate)) {
-					b0 = -3;
-				} else if (this.isRepeaterPowered) {
-					b0 = -2;
-				}
+            for (EnumFacing enumfacing : EnumFacing.values())
+            {
+                worldIn.notifyNeighborsOfStateChange(pos.offset(enumfacing), this, false);
+            }
+        }
+    }
 
-				world.updateBlockTick(blockpos, this, this.getDelay(iblockstate), b0);
-			}
+    protected void updateState(World worldIn, BlockPos pos, IBlockState state)
+    {
+        if (!this.isLocked(worldIn, pos, state))
+        {
+            boolean flag = this.shouldBePowered(worldIn, pos, state);
 
-		}
-	}
+            if (this.isRepeaterPowered != flag && !worldIn.isBlockTickPending(pos, this))
+            {
+                int i = -1;
 
-	public boolean isLocked(IBlockAccess worldIn, BlockPos pos, IBlockState state) {
-		return false;
-	}
+                if (this.isFacingTowardsRepeater(worldIn, pos, state))
+                {
+                    i = -3;
+                }
+                else if (this.isRepeaterPowered)
+                {
+                    i = -2;
+                }
 
-	protected boolean shouldBePowered(World world, BlockPos blockpos, IBlockState iblockstate) {
-		return this.calculateInputStrength(world, blockpos, iblockstate) > 0;
-	}
+                worldIn.updateBlockTick(pos, this, this.getDelay(state), i);
+            }
+        }
+    }
 
-	protected int calculateInputStrength(World world, BlockPos blockpos, IBlockState iblockstate) {
-		EnumFacing enumfacing = (EnumFacing) iblockstate.getValue(FACING);
-		BlockPos blockpos1 = blockpos.offset(enumfacing);
-		int i = world.getRedstonePower(blockpos1, enumfacing);
-		if (i >= 15) {
-			return i;
-		} else {
-			IBlockState iblockstate1 = world.getBlockState(blockpos1);
-			return Math.max(i,
-					iblockstate1.getBlock() == Blocks.redstone_wire
-							? ((Integer) iblockstate1.getValue(BlockRedstoneWire.POWER)).intValue()
-							: 0);
-		}
-	}
+    public boolean isLocked(IBlockAccess worldIn, BlockPos pos, IBlockState state)
+    {
+        return false;
+    }
 
-	protected int getPowerOnSides(IBlockAccess worldIn, BlockPos pos, IBlockState state) {
-		EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
-		EnumFacing enumfacing1 = enumfacing.rotateY();
-		EnumFacing enumfacing2 = enumfacing.rotateYCCW();
-		return Math.max(this.getPowerOnSide(worldIn, pos.offset(enumfacing1), enumfacing1),
-				this.getPowerOnSide(worldIn, pos.offset(enumfacing2), enumfacing2));
-	}
+    protected boolean shouldBePowered(World worldIn, BlockPos pos, IBlockState state)
+    {
+        return this.calculateInputStrength(worldIn, pos, state) > 0;
+    }
 
-	protected int getPowerOnSide(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
-		IBlockState iblockstate = worldIn.getBlockState(pos);
-		Block block = iblockstate.getBlock();
-		return this.canPowerSide(block)
-				? (block == Blocks.redstone_wire ? ((Integer) iblockstate.getValue(BlockRedstoneWire.POWER)).intValue()
-						: worldIn.getStrongPower(pos, side))
-				: 0;
-	}
+    protected int calculateInputStrength(World worldIn, BlockPos pos, IBlockState state)
+    {
+        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+        BlockPos blockpos = pos.offset(enumfacing);
+        int i = worldIn.getRedstonePower(blockpos, enumfacing);
 
-	/**+
-	 * Can this block provide power. Only wire currently seems to
-	 * have this change based on its state.
-	 */
-	public boolean canProvidePower() {
-		return true;
-	}
+        if (i >= 15)
+        {
+            return i;
+        }
+        else
+        {
+            IBlockState iblockstate = worldIn.getBlockState(blockpos);
+            return Math.max(i, iblockstate.getBlock() == Blocks.REDSTONE_WIRE ? ((Integer)iblockstate.getValue(BlockRedstoneWire.POWER)).intValue() : 0);
+        }
+    }
 
-	/**+
-	 * Called by ItemBlocks just before a block is actually set in
-	 * the world, to allow for adjustments to the IBlockstate
-	 */
-	public IBlockState onBlockPlaced(World var1, BlockPos var2, EnumFacing var3, float var4, float var5, float var6,
-			int var7, EntityLivingBase entitylivingbase) {
-		return this.getDefaultState().withProperty(FACING, entitylivingbase.getHorizontalFacing().getOpposite());
-	}
+    protected int getPowerOnSides(IBlockAccess worldIn, BlockPos pos, IBlockState state)
+    {
+        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+        EnumFacing enumfacing1 = enumfacing.rotateY();
+        EnumFacing enumfacing2 = enumfacing.rotateYCCW();
+        return Math.max(this.getPowerOnSide(worldIn, pos.offset(enumfacing1), enumfacing1), this.getPowerOnSide(worldIn, pos.offset(enumfacing2), enumfacing2));
+    }
 
-	/**+
-	 * Called by ItemBlocks after a block is set in the world, to
-	 * allow post-place logic
-	 */
-	public void onBlockPlacedBy(World world, BlockPos blockpos, IBlockState iblockstate, EntityLivingBase var4,
-			ItemStack var5) {
-		if (this.shouldBePowered(world, blockpos, iblockstate)) {
-			world.scheduleUpdate(blockpos, this, 1);
-		}
+    protected int getPowerOnSide(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
+    {
+        IBlockState iblockstate = worldIn.getBlockState(pos);
+        Block block = iblockstate.getBlock();
 
-	}
+        if (this.isAlternateInput(iblockstate))
+        {
+            if (block == Blocks.REDSTONE_BLOCK)
+            {
+                return 15;
+            }
+            else
+            {
+                return block == Blocks.REDSTONE_WIRE ? ((Integer)iblockstate.getValue(BlockRedstoneWire.POWER)).intValue() : worldIn.getStrongPower(pos, side);
+            }
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
-	public void onBlockAdded(World world, BlockPos blockpos, IBlockState iblockstate) {
-		this.notifyNeighbors(world, blockpos, iblockstate);
-	}
+    public boolean canProvidePower(IBlockState state)
+    {
+        return true;
+    }
 
-	protected void notifyNeighbors(World worldIn, BlockPos pos, IBlockState state) {
-		EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
-		BlockPos blockpos = pos.offset(enumfacing.getOpposite());
-		worldIn.notifyBlockOfStateChange(blockpos, this);
-		worldIn.notifyNeighborsOfStateExcept(blockpos, this, enumfacing);
-	}
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+    {
+        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+    }
 
-	/**+
-	 * Called when a player destroys this Block
-	 */
-	public void onBlockDestroyedByPlayer(World world, BlockPos blockpos, IBlockState iblockstate) {
-		if (this.isRepeaterPowered) {
-			EnumFacing[] facings = EnumFacing._VALUES;
-			BlockPos tmp = new BlockPos(0, 0, 0);
-			for (int i = 0; i < facings.length; ++i) {
-				world.notifyNeighborsOfStateChange(blockpos.offsetEvenFaster(facings[i], tmp), this);
-			}
-		}
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+    {
+        if (this.shouldBePowered(worldIn, pos, state))
+        {
+            worldIn.scheduleUpdate(pos, this, 1);
+        }
+    }
 
-		super.onBlockDestroyedByPlayer(world, blockpos, iblockstate);
-	}
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    {
+        this.notifyNeighbors(worldIn, pos, state);
+    }
 
-	/**+
-	 * Used to determine ambient occlusion and culling when
-	 * rebuilding chunks for render
-	 */
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    protected void notifyNeighbors(World worldIn, BlockPos pos, IBlockState state)
+    {
+        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+        BlockPos blockpos = pos.offset(enumfacing.getOpposite());
+        if(net.minecraftforge.event.ForgeEventFactory.onNeighborNotify(worldIn, pos, worldIn.getBlockState(pos), java.util.EnumSet.of(enumfacing.getOpposite()), false).isCanceled())
+            return;
+        worldIn.neighborChanged(blockpos, this, pos);
+        worldIn.notifyNeighborsOfStateExcept(blockpos, this, enumfacing);
+    }
 
-	protected boolean canPowerSide(Block blockIn) {
-		return blockIn.canProvidePower();
-	}
+    public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state)
+    {
+        if (this.isRepeaterPowered)
+        {
+            for (EnumFacing enumfacing : EnumFacing.values())
+            {
+                worldIn.notifyNeighborsOfStateChange(pos.offset(enumfacing), this, false);
+            }
+        }
 
-	protected int getActiveSignal(IBlockAccess var1, BlockPos var2, IBlockState var3) {
-		return 15;
-	}
+        super.onBlockDestroyedByPlayer(worldIn, pos, state);
+    }
 
-	public static boolean isRedstoneRepeaterBlockID(Block blockIn) {
-		return Blocks.unpowered_repeater.isAssociated(blockIn) || Blocks.unpowered_comparator.isAssociated(blockIn);
-	}
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
 
-	public boolean isAssociated(Block other) {
-		return other == this.getPoweredState(this.getDefaultState()).getBlock()
-				|| other == this.getUnpoweredState(this.getDefaultState()).getBlock();
-	}
+    protected boolean isAlternateInput(IBlockState state)
+    {
+        return state.canProvidePower();
+    }
 
-	public boolean isFacingTowardsRepeater(World worldIn, BlockPos pos, IBlockState state) {
-		EnumFacing enumfacing = ((EnumFacing) state.getValue(FACING)).getOpposite();
-		BlockPos blockpos = pos.offset(enumfacing);
-		return isRedstoneRepeaterBlockID(worldIn.getBlockState(blockpos).getBlock())
-				? worldIn.getBlockState(blockpos).getValue(FACING) != enumfacing
-				: false;
-	}
+    protected int getActiveSignal(IBlockAccess worldIn, BlockPos pos, IBlockState state)
+    {
+        return 15;
+    }
 
-	protected int getTickDelay(IBlockState state) {
-		return this.getDelay(state);
-	}
+    public static boolean isDiode(IBlockState state)
+    {
+        return Blocks.UNPOWERED_REPEATER.isSameDiode(state) || Blocks.UNPOWERED_COMPARATOR.isSameDiode(state);
+    }
 
-	protected abstract int getDelay(IBlockState var1);
+    public boolean isSameDiode(IBlockState state)
+    {
+        Block block = state.getBlock();
+        return block == this.getPoweredState(this.getDefaultState()).getBlock() || block == this.getUnpoweredState(this.getDefaultState()).getBlock();
+    }
 
-	protected abstract IBlockState getPoweredState(IBlockState var1);
+    public boolean isFacingTowardsRepeater(World worldIn, BlockPos pos, IBlockState state)
+    {
+        EnumFacing enumfacing = ((EnumFacing)state.getValue(FACING)).getOpposite();
+        BlockPos blockpos = pos.offset(enumfacing);
 
-	protected abstract IBlockState getUnpoweredState(IBlockState var1);
+        if (isDiode(worldIn.getBlockState(blockpos)))
+        {
+            return worldIn.getBlockState(blockpos).getValue(FACING) != enumfacing;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	public boolean isAssociatedBlock(Block block) {
-		return this.isAssociated(block);
-	}
+    protected int getTickDelay(IBlockState state)
+    {
+        return this.getDelay(state);
+    }
 
-	public EnumWorldBlockLayer getBlockLayer() {
-		return EnumWorldBlockLayer.CUTOUT;
-	}
+    protected abstract int getDelay(IBlockState state);
+
+    protected abstract IBlockState getPoweredState(IBlockState unpoweredState);
+
+    protected abstract IBlockState getUnpoweredState(IBlockState poweredState);
+
+    public boolean isAssociatedBlock(Block other)
+    {
+        return this.isSameDiode(other.getDefaultState());
+    }
+
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+    /* ======================================== FORGE START =====================================*/
+    @Override
+    public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis)
+    {
+        if (super.rotateBlock(world, pos, axis))
+        {
+            IBlockState state = world.getBlockState(pos);
+            state = getUnpoweredState(state);
+            world.setBlockState(pos, state);
+
+            if (shouldBePowered(world, pos, state))
+            {
+                world.scheduleUpdate(pos, this, 1);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+    {
+        return face == EnumFacing.DOWN ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
+    }
 }

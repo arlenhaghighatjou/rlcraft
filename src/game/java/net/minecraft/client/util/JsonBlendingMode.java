@@ -1,198 +1,300 @@
 package net.minecraft.client.util;
 
-import org.json.JSONObject;
+import com.google.gson.JsonObject;
+import java.util.Locale;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.JsonUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
-import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+@SideOnly(Side.CLIENT)
+public class JsonBlendingMode
+{
+    private static JsonBlendingMode lastApplied;
+    private final int srcColorFactor;
+    private final int srcAlphaFactor;
+    private final int destColorFactor;
+    private final int destAlphaFactor;
+    private final int blendFunction;
+    private final boolean separateBlend;
+    private final boolean opaque;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class JsonBlendingMode {
-	private static JsonBlendingMode field_148118_a = null;
-	private final int field_148116_b;
-	private final int field_148117_c;
-	private final int field_148114_d;
-	private final int field_148115_e;
-	private final int field_148112_f;
-	private final boolean field_148113_g;
-	private final boolean field_148119_h;
+    private JsonBlendingMode(boolean separateBlendIn, boolean opaqueIn, int srcColorFactorIn, int destColorFactorIn, int srcAlphaFactorIn, int destAlphaFactorIn, int blendFunctionIn)
+    {
+        this.separateBlend = separateBlendIn;
+        this.srcColorFactor = srcColorFactorIn;
+        this.destColorFactor = destColorFactorIn;
+        this.srcAlphaFactor = srcAlphaFactorIn;
+        this.destAlphaFactor = destAlphaFactorIn;
+        this.opaque = opaqueIn;
+        this.blendFunction = blendFunctionIn;
+    }
 
-	private JsonBlendingMode(boolean parFlag, boolean parFlag2, int parInt1, int parInt2, int parInt3, int parInt4,
-			int parInt5) {
-		this.field_148113_g = parFlag;
-		this.field_148116_b = parInt1;
-		this.field_148114_d = parInt2;
-		this.field_148117_c = parInt3;
-		this.field_148115_e = parInt4;
-		this.field_148119_h = parFlag2;
-		this.field_148112_f = parInt5;
-	}
+    public JsonBlendingMode()
+    {
+        this(false, true, 1, 0, 1, 0, 32774);
+    }
 
-	public JsonBlendingMode() {
-		this(false, true, 1, 0, 1, 0, '\u8006');
-	}
+    public JsonBlendingMode(int srcFactor, int dstFactor, int blendFunctionIn)
+    {
+        this(false, false, srcFactor, dstFactor, srcFactor, dstFactor, blendFunctionIn);
+    }
 
-	public JsonBlendingMode(int parInt1, int parInt2, int parInt3) {
-		this(false, false, parInt1, parInt2, parInt1, parInt2, parInt3);
-	}
+    public JsonBlendingMode(int srcColorFactorIn, int destColorFactorIn, int srcAlphaFactorIn, int destAlphaFactorIn, int blendFunctionIn)
+    {
+        this(true, false, srcColorFactorIn, destColorFactorIn, srcAlphaFactorIn, destAlphaFactorIn, blendFunctionIn);
+    }
 
-	public JsonBlendingMode(int parInt1, int parInt2, int parInt3, int parInt4, int parInt5) {
-		this(true, false, parInt1, parInt2, parInt3, parInt4, parInt5);
-	}
+    public void apply()
+    {
+        if (!this.equals(lastApplied))
+        {
+            if (lastApplied == null || this.opaque != lastApplied.isOpaque())
+            {
+                lastApplied = this;
 
-	public void func_148109_a() {
-		if (!this.equals(field_148118_a)) {
-			if (field_148118_a == null || this.field_148119_h != field_148118_a.func_148111_b()) {
-				field_148118_a = this;
-				if (this.field_148119_h) {
-					GlStateManager.disableBlend();
-					return;
-				}
+                if (this.opaque)
+                {
+                    GlStateManager.disableBlend();
+                    return;
+                }
 
-				GlStateManager.enableBlend();
-			}
+                GlStateManager.enableBlend();
+            }
 
-			EaglercraftGPU.glBlendEquation(this.field_148112_f);
-			if (this.field_148113_g) {
-				GlStateManager.tryBlendFuncSeparate(this.field_148116_b, this.field_148114_d, this.field_148117_c,
-						this.field_148115_e);
-			} else {
-				GlStateManager.blendFunc(this.field_148116_b, this.field_148114_d);
-			}
+            GlStateManager.glBlendEquation(this.blendFunction);
 
-		}
-	}
+            if (this.separateBlend)
+            {
+                GlStateManager.tryBlendFuncSeparate(this.srcColorFactor, this.destColorFactor, this.srcAlphaFactor, this.destAlphaFactor);
+            }
+            else
+            {
+                GlStateManager.blendFunc(this.srcColorFactor, this.destColorFactor);
+            }
+        }
+    }
 
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		} else if (!(object instanceof JsonBlendingMode)) {
-			return false;
-		} else {
-			JsonBlendingMode jsonblendingmode = (JsonBlendingMode) object;
-			return this.field_148112_f != jsonblendingmode.field_148112_f ? false
-					: (this.field_148115_e != jsonblendingmode.field_148115_e ? false
-							: (this.field_148114_d != jsonblendingmode.field_148114_d ? false
-									: (this.field_148119_h != jsonblendingmode.field_148119_h ? false
-											: (this.field_148113_g != jsonblendingmode.field_148113_g ? false
-													: (this.field_148117_c != jsonblendingmode.field_148117_c ? false
-															: this.field_148116_b == jsonblendingmode.field_148116_b)))));
-		}
-	}
+    public boolean equals(Object p_equals_1_)
+    {
+        if (this == p_equals_1_)
+        {
+            return true;
+        }
+        else if (!(p_equals_1_ instanceof JsonBlendingMode))
+        {
+            return false;
+        }
+        else
+        {
+            JsonBlendingMode jsonblendingmode = (JsonBlendingMode)p_equals_1_;
 
-	public int hashCode() {
-		int i = this.field_148116_b;
-		i = 31 * i + this.field_148117_c;
-		i = 31 * i + this.field_148114_d;
-		i = 31 * i + this.field_148115_e;
-		i = 31 * i + this.field_148112_f;
-		i = 31 * i + (this.field_148113_g ? 1 : 0);
-		i = 31 * i + (this.field_148119_h ? 1 : 0);
-		return i;
-	}
+            if (this.blendFunction != jsonblendingmode.blendFunction)
+            {
+                return false;
+            }
+            else if (this.destAlphaFactor != jsonblendingmode.destAlphaFactor)
+            {
+                return false;
+            }
+            else if (this.destColorFactor != jsonblendingmode.destColorFactor)
+            {
+                return false;
+            }
+            else if (this.opaque != jsonblendingmode.opaque)
+            {
+                return false;
+            }
+            else if (this.separateBlend != jsonblendingmode.separateBlend)
+            {
+                return false;
+            }
+            else if (this.srcAlphaFactor != jsonblendingmode.srcAlphaFactor)
+            {
+                return false;
+            }
+            else
+            {
+                return this.srcColorFactor == jsonblendingmode.srcColorFactor;
+            }
+        }
+    }
 
-	public boolean func_148111_b() {
-		return this.field_148119_h;
-	}
+    public int hashCode()
+    {
+        int i = this.srcColorFactor;
+        i = 31 * i + this.srcAlphaFactor;
+        i = 31 * i + this.destColorFactor;
+        i = 31 * i + this.destAlphaFactor;
+        i = 31 * i + this.blendFunction;
+        i = 31 * i + (this.separateBlend ? 1 : 0);
+        i = 31 * i + (this.opaque ? 1 : 0);
+        return i;
+    }
 
-	public static JsonBlendingMode func_148110_a(JSONObject parJsonObject) {
-		if (parJsonObject == null) {
-			return new JsonBlendingMode();
-		} else {
-			int i = '\u8006';
-			int j = 1;
-			int k = 0;
-			int l = 1;
-			int i1 = 0;
-			boolean flag = true;
-			boolean flag1 = false;
-			if (parJsonObject.get("func") instanceof String) {
-				i = func_148108_a(parJsonObject.getString("func"));
-				if (i != '\u8006') {
-					flag = false;
-				}
-			}
+    public boolean isOpaque()
+    {
+        return this.opaque;
+    }
 
-			if (parJsonObject.get("srcrgb") instanceof String) {
-				j = func_148107_b(parJsonObject.getString("srcrgb"));
-				if (j != 1) {
-					flag = false;
-				}
-			}
+    public static JsonBlendingMode parseBlendNode(JsonObject json)
+    {
+        if (json == null)
+        {
+            return new JsonBlendingMode();
+        }
+        else
+        {
+            int i = 32774;
+            int j = 1;
+            int k = 0;
+            int l = 1;
+            int i1 = 0;
+            boolean flag = true;
+            boolean flag1 = false;
 
-			if (parJsonObject.get("dstrgb") instanceof String) {
-				k = func_148107_b(parJsonObject.getString("dstrgb"));
-				if (k != 0) {
-					flag = false;
-				}
-			}
+            if (JsonUtils.isString(json, "func"))
+            {
+                i = stringToBlendFunction(json.get("func").getAsString());
 
-			if (parJsonObject.get("srcalpha") instanceof String) {
-				l = func_148107_b(parJsonObject.getString("srcalpha"));
-				if (l != 1) {
-					flag = false;
-				}
+                if (i != 32774)
+                {
+                    flag = false;
+                }
+            }
 
-				flag1 = true;
-			}
+            if (JsonUtils.isString(json, "srcrgb"))
+            {
+                j = stringToBlendFactor(json.get("srcrgb").getAsString());
 
-			if (parJsonObject.get("dstalpha") instanceof String) {
-				i1 = func_148107_b(parJsonObject.getString("dstalpha"));
-				if (i1 != 0) {
-					flag = false;
-				}
+                if (j != 1)
+                {
+                    flag = false;
+                }
+            }
 
-				flag1 = true;
-			}
+            if (JsonUtils.isString(json, "dstrgb"))
+            {
+                k = stringToBlendFactor(json.get("dstrgb").getAsString());
 
-			return flag ? new JsonBlendingMode()
-					: (flag1 ? new JsonBlendingMode(j, k, l, i1, i) : new JsonBlendingMode(j, k, i));
-		}
-	}
+                if (k != 0)
+                {
+                    flag = false;
+                }
+            }
 
-	private static int func_148108_a(String parString1) {
-		String s = parString1.trim().toLowerCase();
-		return s.equals("add") ? '\u8006'
-				: (s.equals("subtract") ? '\u800a'
-						: (s.equals("reversesubtract") ? '\u800b'
-								: (s.equals("reverse_subtract") ? '\u800b'
-										: (s.equals("min") ? '\u8007' : (s.equals("max") ? '\u8008' : '\u8006')))));
-	}
+            if (JsonUtils.isString(json, "srcalpha"))
+            {
+                l = stringToBlendFactor(json.get("srcalpha").getAsString());
 
-	private static int func_148107_b(String parString1) {
-		String s = parString1.trim().toLowerCase();
-		s = s.replaceAll("_", "");
-		s = s.replaceAll("one", "1");
-		s = s.replaceAll("zero", "0");
-		s = s.replaceAll("minus", "-");
-		return s.equals("0") ? 0
-				: (s.equals("1") ? 1
-						: (s.equals("srccolor") ? 768
-								: (s.equals("1-srccolor") ? 769
-										: (s.equals("dstcolor") ? 774
-												: (s.equals("1-dstcolor") ? 775
-														: (s.equals("srcalpha") ? 770
-																: (s.equals("1-srcalpha") ? 771
-																		: (s.equals("dstalpha") ? 772
-																				: (s.equals("1-dstalpha") ? 773
-																						: -1)))))))));
-	}
+                if (l != 1)
+                {
+                    flag = false;
+                }
+
+                flag1 = true;
+            }
+
+            if (JsonUtils.isString(json, "dstalpha"))
+            {
+                i1 = stringToBlendFactor(json.get("dstalpha").getAsString());
+
+                if (i1 != 0)
+                {
+                    flag = false;
+                }
+
+                flag1 = true;
+            }
+
+            if (flag)
+            {
+                return new JsonBlendingMode();
+            }
+            else
+            {
+                return flag1 ? new JsonBlendingMode(j, k, l, i1, i) : new JsonBlendingMode(j, k, i);
+            }
+        }
+    }
+
+    private static int stringToBlendFunction(String funcName)
+    {
+        String s = funcName.trim().toLowerCase(Locale.ROOT);
+
+        if ("add".equals(s))
+        {
+            return 32774;
+        }
+        else if ("subtract".equals(s))
+        {
+            return 32778;
+        }
+        else if ("reversesubtract".equals(s))
+        {
+            return 32779;
+        }
+        else if ("reverse_subtract".equals(s))
+        {
+            return 32779;
+        }
+        else if ("min".equals(s))
+        {
+            return 32775;
+        }
+        else
+        {
+            return "max".equals(s) ? 32776 : 32774;
+        }
+    }
+
+    private static int stringToBlendFactor(String factorName)
+    {
+        String s = factorName.trim().toLowerCase(Locale.ROOT);
+        s = s.replaceAll("_", "");
+        s = s.replaceAll("one", "1");
+        s = s.replaceAll("zero", "0");
+        s = s.replaceAll("minus", "-");
+
+        if ("0".equals(s))
+        {
+            return 0;
+        }
+        else if ("1".equals(s))
+        {
+            return 1;
+        }
+        else if ("srccolor".equals(s))
+        {
+            return 768;
+        }
+        else if ("1-srccolor".equals(s))
+        {
+            return 769;
+        }
+        else if ("dstcolor".equals(s))
+        {
+            return 774;
+        }
+        else if ("1-dstcolor".equals(s))
+        {
+            return 775;
+        }
+        else if ("srcalpha".equals(s))
+        {
+            return 770;
+        }
+        else if ("1-srcalpha".equals(s))
+        {
+            return 771;
+        }
+        else if ("dstalpha".equals(s))
+        {
+            return 772;
+        }
+        else
+        {
+            return "1-dstalpha".equals(s) ? 773 : -1;
+        }
+    }
 }

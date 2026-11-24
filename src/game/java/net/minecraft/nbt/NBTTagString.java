@@ -3,95 +3,94 @@ package net.minecraft.nbt;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.Objects;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class NBTTagString extends NBTBase {
-	private String data;
+public class NBTTagString extends NBTBase
+{
+    private String data;
 
-	public NBTTagString() {
-		this.data = "";
-	}
+    public NBTTagString()
+    {
+        this("");
+    }
 
-	public NBTTagString(String data) {
-		this.data = data;
-		if (data == null) {
-			throw new IllegalArgumentException("Empty string not allowed");
-		}
-	}
+    public NBTTagString(String data)
+    {
+        Objects.requireNonNull(data, "Null string not allowed");
+        this.data = data;
+    }
 
-	/**+
-	 * Write the actual data contents of the tag, implemented in NBT
-	 * extension classes
-	 */
-	void write(DataOutput parDataOutput) throws IOException {
-		parDataOutput.writeUTF(this.data);
-	}
+    void write(DataOutput output) throws IOException
+    {
+        output.writeUTF(this.data);
+    }
 
-	void read(DataInput parDataInput, int parInt1, NBTSizeTracker parNBTSizeTracker) throws IOException {
-		parNBTSizeTracker.read(288L);
-		this.data = parDataInput.readUTF();
-		parNBTSizeTracker.read((long) (16 * this.data.length()));
-	}
+    void read(DataInput input, int depth, NBTSizeTracker sizeTracker) throws IOException
+    {
+        sizeTracker.read(288L);
+        this.data = input.readUTF();
+        NBTSizeTracker.readUTF(sizeTracker, data); // Forge: Correctly read String length including header.
+    }
 
-	/**+
-	 * Gets the type byte for the tag.
-	 */
-	public byte getId() {
-		return (byte) 8;
-	}
+    public byte getId()
+    {
+        return 8;
+    }
 
-	public String toString() {
-		return "\"" + this.data.replace("\"", "\\\"") + "\"";
-	}
+    public String toString()
+    {
+        return quoteAndEscape(this.data);
+    }
 
-	/**+
-	 * Creates a clone of the tag.
-	 */
-	public NBTBase copy() {
-		return new NBTTagString(this.data);
-	}
+    public NBTTagString copy()
+    {
+        return new NBTTagString(this.data);
+    }
 
-	/**+
-	 * Return whether this compound has no tags.
-	 */
-	public boolean hasNoTags() {
-		return this.data.isEmpty();
-	}
+    public boolean hasNoTags()
+    {
+        return this.data.isEmpty();
+    }
 
-	public boolean equals(Object object) {
-		if (!super.equals(object)) {
-			return false;
-		} else {
-			NBTTagString nbttagstring = (NBTTagString) object;
-			return this.data == null && nbttagstring.data == null
-					|| this.data != null && this.data.equals(nbttagstring.data);
-		}
-	}
+    public boolean equals(Object p_equals_1_)
+    {
+        if (!super.equals(p_equals_1_))
+        {
+            return false;
+        }
+        else
+        {
+            NBTTagString nbttagstring = (NBTTagString)p_equals_1_;
+            return this.data == null && nbttagstring.data == null || Objects.equals(this.data, nbttagstring.data);
+        }
+    }
 
-	public int hashCode() {
-		return super.hashCode() ^ this.data.hashCode();
-	}
+    public int hashCode()
+    {
+        return super.hashCode() ^ this.data.hashCode();
+    }
 
-	public String getString() {
-		return this.data;
-	}
+    public String getString()
+    {
+        return this.data;
+    }
+
+    public static String quoteAndEscape(String p_193588_0_)
+    {
+        StringBuilder stringbuilder = new StringBuilder("\"");
+
+        for (int i = 0; i < p_193588_0_.length(); ++i)
+        {
+            char c0 = p_193588_0_.charAt(i);
+
+            if (c0 == '\\' || c0 == '"')
+            {
+                stringbuilder.append('\\');
+            }
+
+            stringbuilder.append(c0);
+        }
+
+        return stringbuilder.append('"').toString();
+    }
 }

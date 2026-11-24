@@ -1,124 +1,136 @@
 package net.minecraft.client.resources;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-
-import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
-import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
-import net.minecraft.client.resources.data.IMetadataSerializer;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.annotation.Nullable;
+import net.minecraft.client.resources.data.MetadataSerializer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class SimpleReloadableResourceManager implements IReloadableResourceManager {
-	private static final Logger logger = LogManager.getLogger();
-	private static final Joiner joinerResourcePacks = Joiner.on(", ");
-	private final Map<String, FallbackResourceManager> domainResourceManagers = Maps.newHashMap();
-	private final List<IResourceManagerReloadListener> reloadListeners = Lists.newArrayList();
-	private final Set<String> setResourceDomains = Sets.newLinkedHashSet();
-	private final IMetadataSerializer rmMetadataSerializer;
+@SideOnly(Side.CLIENT)
+public class SimpleReloadableResourceManager implements IReloadableResourceManager
+{
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Joiner JOINER_RESOURCE_PACKS = Joiner.on(", ");
+    private final Map<String, FallbackResourceManager> domainResourceManagers = Maps.<String, FallbackResourceManager>newHashMap();
+    private final List<IResourceManagerReloadListener> reloadListeners = Lists.<IResourceManagerReloadListener>newArrayList();
+    private final Set<String> setResourceDomains = Sets.<String>newLinkedHashSet();
+    private final MetadataSerializer rmMetadataSerializer;
 
-	public SimpleReloadableResourceManager(IMetadataSerializer rmMetadataSerializerIn) {
-		this.rmMetadataSerializer = rmMetadataSerializerIn;
-	}
+    public SimpleReloadableResourceManager(MetadataSerializer rmMetadataSerializerIn)
+    {
+        this.rmMetadataSerializer = rmMetadataSerializerIn;
+    }
 
-	public void reloadResourcePack(IResourcePack resourcePack) {
-		for (String s : resourcePack.getResourceDomains()) {
-			this.setResourceDomains.add(s);
-			FallbackResourceManager fallbackresourcemanager = (FallbackResourceManager) this.domainResourceManagers
-					.get(s);
-			if (fallbackresourcemanager == null) {
-				fallbackresourcemanager = new FallbackResourceManager(this.rmMetadataSerializer);
-				this.domainResourceManagers.put(s, fallbackresourcemanager);
-			}
+    public void reloadResourcePack(IResourcePack resourcePack)
+    {
+        for (String s : resourcePack.getResourceDomains())
+        {
+            this.setResourceDomains.add(s);
+            FallbackResourceManager fallbackresourcemanager = this.domainResourceManagers.get(s);
 
-			fallbackresourcemanager.addResourcePack(resourcePack);
-		}
+            if (fallbackresourcemanager == null)
+            {
+                fallbackresourcemanager = new FallbackResourceManager(this.rmMetadataSerializer);
+                this.domainResourceManagers.put(s, fallbackresourcemanager);
+            }
 
-	}
+            fallbackresourcemanager.addResourcePack(resourcePack);
+        }
+    }
 
-	public Set<String> getResourceDomains() {
-		return this.setResourceDomains;
-	}
+    public Set<String> getResourceDomains()
+    {
+        return this.setResourceDomains;
+    }
 
-	public IResource getResource(ResourceLocation parResourceLocation) throws IOException {
-		IResourceManager iresourcemanager = (IResourceManager) this.domainResourceManagers
-				.get(parResourceLocation.getResourceDomain());
-		if (iresourcemanager != null) {
-			return iresourcemanager.getResource(parResourceLocation);
-		} else {
-			throw new FileNotFoundException(parResourceLocation.toString());
-		}
-	}
+    public IResource getResource(ResourceLocation location) throws IOException
+    {
+        IResourceManager iresourcemanager = this.domainResourceManagers.get(location.getResourceDomain());
 
-	public List<IResource> getAllResources(ResourceLocation parResourceLocation) throws IOException {
-		IResourceManager iresourcemanager = (IResourceManager) this.domainResourceManagers
-				.get(parResourceLocation.getResourceDomain());
-		if (iresourcemanager != null) {
-			return iresourcemanager.getAllResources(parResourceLocation);
-		} else {
-			throw new FileNotFoundException(parResourceLocation.toString());
-		}
-	}
+        if (iresourcemanager != null)
+        {
+            return iresourcemanager.getResource(location);
+        }
+        else
+        {
+            throw new FileNotFoundException(location.toString());
+        }
+    }
 
-	private void clearResources() {
-		this.domainResourceManagers.clear();
-		this.setResourceDomains.clear();
-	}
+    public List<IResource> getAllResources(ResourceLocation location) throws IOException
+    {
+        IResourceManager iresourcemanager = this.domainResourceManagers.get(location.getResourceDomain());
 
-	public void reloadResources(List<IResourcePack> list) {
-		this.clearResources();
-		logger.info("Reloading ResourceManager: "
-				+ joinerResourcePacks.join(Iterables.transform(list, new Function<IResourcePack, String>() {
-					public String apply(IResourcePack iresourcepack1) {
-						return iresourcepack1.getPackName();
-					}
-				})));
+        if (iresourcemanager != null)
+        {
+            return iresourcemanager.getAllResources(location);
+        }
+        else
+        {
+            throw new FileNotFoundException(location.toString());
+        }
+    }
 
-		for (IResourcePack iresourcepack : list) {
-			this.reloadResourcePack(iresourcepack);
-		}
+    private void clearResources()
+    {
+        this.domainResourceManagers.clear();
+        this.setResourceDomains.clear();
+    }
 
-		this.notifyReloadListeners();
-	}
+    public void reloadResources(List<IResourcePack> resourcesPacksList)
+    {
+        net.minecraftforge.fml.common.ProgressManager.ProgressBar resReload = net.minecraftforge.fml.common.ProgressManager.push("Loading Resources", resourcesPacksList.size()+1, true);
+        this.clearResources();
+        LOGGER.info("Reloading ResourceManager: {}", (Object)JOINER_RESOURCE_PACKS.join(Iterables.transform(resourcesPacksList, new Function<IResourcePack, String>()
+        {
+            public String apply(@Nullable IResourcePack p_apply_1_)
+            {
+                return p_apply_1_ == null ? "<NULL>" : p_apply_1_.getPackName();
+            }
+        })));
 
-	public void registerReloadListener(IResourceManagerReloadListener iresourcemanagerreloadlistener) {
-		this.reloadListeners.add(iresourcemanagerreloadlistener);
-		iresourcemanagerreloadlistener.onResourceManagerReload(this);
-	}
+        for (IResourcePack iresourcepack : resourcesPacksList)
+        {
+            resReload.step(iresourcepack.getPackName());
+            this.reloadResourcePack(iresourcepack);
+        }
 
-	private void notifyReloadListeners() {
-		for (IResourceManagerReloadListener iresourcemanagerreloadlistener : this.reloadListeners) {
-			iresourcemanagerreloadlistener.onResourceManagerReload(this);
-		}
+        resReload.step("Reloading listeners");
+        this.notifyReloadListeners();
+        net.minecraftforge.fml.common.ProgressManager.pop(resReload);
+    }
 
-	}
+    public void registerReloadListener(IResourceManagerReloadListener reloadListener)
+    {
+        net.minecraftforge.fml.common.ProgressManager.ProgressBar resReload = net.minecraftforge.fml.common.ProgressManager.push("Loading Resource", 1);
+        resReload.step(reloadListener.getClass());
+        this.reloadListeners.add(reloadListener);
+        reloadListener.onResourceManagerReload(this);
+        net.minecraftforge.fml.common.ProgressManager.pop(resReload);
+    }
+
+    private void notifyReloadListeners()
+    {
+        net.minecraftforge.fml.common.ProgressManager.ProgressBar resReload = net.minecraftforge.fml.common.ProgressManager.push("Reloading", this.reloadListeners.size());
+        for (IResourceManagerReloadListener iresourcemanagerreloadlistener : this.reloadListeners)
+        {
+            resReload.step(iresourcemanagerreloadlistener.getClass());
+            if (!net.minecraftforge.client.ForgeHooksClient.shouldUseVanillaReloadableListener(iresourcemanagerreloadlistener)) continue; // Forge: Selective reloading for vanilla listeners
+            iresourcemanagerreloadlistener.onResourceManagerReload(this);
+        }
+        net.minecraftforge.fml.common.ProgressManager.pop(resReload);
+    }
 }

@@ -1,122 +1,115 @@
 package net.minecraft.item;
 
 import java.util.List;
-
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.stats.StatList;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ItemBoat extends Item {
-	public ItemBoat() {
-		this.maxStackSize = 1;
-		this.setCreativeTab(CreativeTabs.tabTransport);
-	}
+public class ItemBoat extends Item
+{
+    private final EntityBoat.Type type;
 
-	/**+
-	 * Called whenever this item is equipped and the right mouse
-	 * button is pressed. Args: itemStack, world, entityPlayer
-	 */
-	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		float f = 1.0F;
-		float f1 = entityplayer.prevRotationPitch + (entityplayer.rotationPitch - entityplayer.prevRotationPitch) * f;
-		float f2 = entityplayer.prevRotationYaw + (entityplayer.rotationYaw - entityplayer.prevRotationYaw) * f;
-		double d0 = entityplayer.prevPosX + (entityplayer.posX - entityplayer.prevPosX) * (double) f;
-		double d1 = entityplayer.prevPosY + (entityplayer.posY - entityplayer.prevPosY) * (double) f
-				+ (double) entityplayer.getEyeHeight();
-		double d2 = entityplayer.prevPosZ + (entityplayer.posZ - entityplayer.prevPosZ) * (double) f;
-		Vec3 vec3 = new Vec3(d0, d1, d2);
-		float f3 = MathHelper.cos(-f2 * 0.017453292F - 3.1415927F);
-		float f4 = MathHelper.sin(-f2 * 0.017453292F - 3.1415927F);
-		float f5 = -MathHelper.cos(-f1 * 0.017453292F);
-		float f6 = MathHelper.sin(-f1 * 0.017453292F);
-		float f7 = f4 * f5;
-		float f8 = f3 * f5;
-		double d3 = 5.0D;
-		Vec3 vec31 = vec3.addVector((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
-		MovingObjectPosition movingobjectposition = world.rayTraceBlocks(vec3, vec31, true);
-		if (movingobjectposition == null) {
-			return itemstack;
-		} else {
-			Vec3 vec32 = entityplayer.getLook(f);
-			boolean flag = false;
-			float f9 = 1.0F;
-			List list = world.getEntitiesWithinAABBExcludingEntity(entityplayer,
-					entityplayer.getEntityBoundingBox()
-							.addCoord(vec32.xCoord * d3, vec32.yCoord * d3, vec32.zCoord * d3)
-							.expand((double) f9, (double) f9, (double) f9));
+    public ItemBoat(EntityBoat.Type typeIn)
+    {
+        this.type = typeIn;
+        this.maxStackSize = 1;
+        this.setCreativeTab(CreativeTabs.TRANSPORTATION);
+        this.setUnlocalizedName("boat." + typeIn.getName());
+    }
 
-			for (int i = 0; i < list.size(); ++i) {
-				Entity entity = (Entity) list.get(i);
-				if (entity.canBeCollidedWith()) {
-					float f10 = entity.getCollisionBorderSize();
-					AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().expand((double) f10, (double) f10,
-							(double) f10);
-					if (axisalignedbb.isVecInside(vec3)) {
-						flag = true;
-					}
-				}
-			}
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+    {
+        ItemStack itemstack = playerIn.getHeldItem(handIn);
+        float f = 1.0F;
+        float f1 = playerIn.prevRotationPitch + (playerIn.rotationPitch - playerIn.prevRotationPitch) * 1.0F;
+        float f2 = playerIn.prevRotationYaw + (playerIn.rotationYaw - playerIn.prevRotationYaw) * 1.0F;
+        double d0 = playerIn.prevPosX + (playerIn.posX - playerIn.prevPosX) * 1.0D;
+        double d1 = playerIn.prevPosY + (playerIn.posY - playerIn.prevPosY) * 1.0D + (double)playerIn.getEyeHeight();
+        double d2 = playerIn.prevPosZ + (playerIn.posZ - playerIn.prevPosZ) * 1.0D;
+        Vec3d vec3d = new Vec3d(d0, d1, d2);
+        float f3 = MathHelper.cos(-f2 * 0.017453292F - (float)Math.PI);
+        float f4 = MathHelper.sin(-f2 * 0.017453292F - (float)Math.PI);
+        float f5 = -MathHelper.cos(-f1 * 0.017453292F);
+        float f6 = MathHelper.sin(-f1 * 0.017453292F);
+        float f7 = f4 * f5;
+        float f8 = f3 * f5;
+        double d3 = 5.0D;
+        Vec3d vec3d1 = vec3d.addVector((double)f7 * 5.0D, (double)f6 * 5.0D, (double)f8 * 5.0D);
+        RayTraceResult raytraceresult = worldIn.rayTraceBlocks(vec3d, vec3d1, true);
 
-			if (flag) {
-				return itemstack;
-			} else {
-				if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-					BlockPos blockpos = movingobjectposition.getBlockPos();
-					if (world.getBlockState(blockpos).getBlock() == Blocks.snow_layer) {
-						blockpos = blockpos.down();
-					}
+        if (raytraceresult == null)
+        {
+            return new ActionResult<ItemStack>(EnumActionResult.PASS, itemstack);
+        }
+        else
+        {
+            Vec3d vec3d2 = playerIn.getLook(1.0F);
+            boolean flag = false;
+            List<Entity> list = worldIn.getEntitiesWithinAABBExcludingEntity(playerIn, playerIn.getEntityBoundingBox().expand(vec3d2.x * 5.0D, vec3d2.y * 5.0D, vec3d2.z * 5.0D).grow(1.0D));
 
-					EntityBoat entityboat = new EntityBoat(world, (double) ((float) blockpos.getX() + 0.5F),
-							(double) ((float) blockpos.getY() + 1.0F), (double) ((float) blockpos.getZ() + 0.5F));
-					entityboat.rotationYaw = (float) (((MathHelper
-							.floor_double((double) (entityplayer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3) - 1) * 90);
-					if (!world.getCollidingBoundingBoxes(entityboat,
-							entityboat.getEntityBoundingBox().expand(-0.1D, -0.1D, -0.1D)).isEmpty()) {
-						return itemstack;
-					}
+            for (int i = 0; i < list.size(); ++i)
+            {
+                Entity entity = list.get(i);
 
-					if (!world.isRemote) {
-						world.spawnEntityInWorld(entityboat);
-					}
+                if (entity.canBeCollidedWith())
+                {
+                    AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().grow((double)entity.getCollisionBorderSize());
 
-					if (!entityplayer.capabilities.isCreativeMode) {
-						--itemstack.stackSize;
-					}
+                    if (axisalignedbb.contains(vec3d))
+                    {
+                        flag = true;
+                    }
+                }
+            }
 
-					entityplayer.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);
-				}
+            if (flag)
+            {
+                return new ActionResult<ItemStack>(EnumActionResult.PASS, itemstack);
+            }
+            else if (raytraceresult.typeOfHit != RayTraceResult.Type.BLOCK)
+            {
+                return new ActionResult<ItemStack>(EnumActionResult.PASS, itemstack);
+            }
+            else
+            {
+                Block block = worldIn.getBlockState(raytraceresult.getBlockPos()).getBlock();
+                boolean flag1 = block == Blocks.WATER || block == Blocks.FLOWING_WATER;
+                EntityBoat entityboat = new EntityBoat(worldIn, raytraceresult.hitVec.x, flag1 ? raytraceresult.hitVec.y - 0.12D : raytraceresult.hitVec.y, raytraceresult.hitVec.z);
+                entityboat.setBoatType(this.type);
+                entityboat.rotationYaw = playerIn.rotationYaw;
 
-				return itemstack;
-			}
-		}
-	}
+                if (!worldIn.getCollisionBoxes(entityboat, entityboat.getEntityBoundingBox().grow(-0.1D)).isEmpty())
+                {
+                    return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemstack);
+                }
+                else
+                {
+                    if (!worldIn.isRemote)
+                    {
+                        worldIn.spawnEntity(entityboat);
+                    }
+
+                    if (!playerIn.capabilities.isCreativeMode)
+                    {
+                        itemstack.shrink(1);
+                    }
+
+                    playerIn.addStat(StatList.getObjectUseStats(this));
+                    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
+                }
+            }
+        }
+    }
 }

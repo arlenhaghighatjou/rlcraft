@@ -1,93 +1,100 @@
 package net.minecraft.item;
 
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nullable;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ItemFirework extends Item {
+public class ItemFirework extends Item
+{
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        if (!worldIn.isRemote)
+        {
+            ItemStack itemstack = player.getHeldItem(hand);
+            EntityFireworkRocket entityfireworkrocket = new EntityFireworkRocket(worldIn, (double)((float)pos.getX() + hitX), (double)((float)pos.getY() + hitY), (double)((float)pos.getZ() + hitZ), itemstack);
+            worldIn.spawnEntity(entityfireworkrocket);
 
-	/**+
-	 * Called when a Block is right-clicked with this Item
-	 */
-	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos blockpos,
-			EnumFacing var5, float f, float f1, float f2) {
-		if (!world.isRemote) {
-			EntityFireworkRocket entityfireworkrocket = new EntityFireworkRocket(world,
-					(double) ((float) blockpos.getX() + f), (double) ((float) blockpos.getY() + f1),
-					(double) ((float) blockpos.getZ() + f2), itemstack);
-			world.spawnEntityInWorld(entityfireworkrocket);
-			if (!entityplayer.capabilities.isCreativeMode) {
-				--itemstack.stackSize;
-			}
+            if (!player.capabilities.isCreativeMode)
+            {
+                itemstack.shrink(1);
+            }
+        }
 
-			return true;
-		} else {
-			return false;
-		}
-	}
+        return EnumActionResult.SUCCESS;
+    }
 
-	/**+
-	 * allows items to add custom lines of information to the
-	 * mouseover description
-	 */
-	public void addInformation(ItemStack itemstack, EntityPlayer var2, List<String> list, boolean var4) {
-		if (itemstack.hasTagCompound()) {
-			NBTTagCompound nbttagcompound = itemstack.getTagCompound().getCompoundTag("Fireworks");
-			if (nbttagcompound != null) {
-				if (nbttagcompound.hasKey("Flight", 99)) {
-					list.add(StatCollector.translateToLocal("item.fireworks.flight") + " "
-							+ nbttagcompound.getByte("Flight"));
-				}
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+    {
+        if (playerIn.isElytraFlying())
+        {
+            ItemStack itemstack = playerIn.getHeldItem(handIn);
 
-				NBTTagList nbttaglist = nbttagcompound.getTagList("Explosions", 10);
-				if (nbttaglist != null && nbttaglist.tagCount() > 0) {
-					for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-						NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-						ArrayList arraylist = Lists.newArrayList();
-						ItemFireworkCharge.addExplosionInfo(nbttagcompound1, arraylist);
-						if (arraylist.size() > 0) {
-							for (int j = 1; j < arraylist.size(); ++j) {
-								arraylist.set(j, "  " + (String) arraylist.get(j));
-							}
+            if (!worldIn.isRemote)
+            {
+                EntityFireworkRocket entityfireworkrocket = new EntityFireworkRocket(worldIn, itemstack, playerIn);
+                worldIn.spawnEntity(entityfireworkrocket);
 
-							list.addAll(arraylist);
-						}
-					}
-				}
+                if (!playerIn.capabilities.isCreativeMode)
+                {
+                    itemstack.shrink(1);
+                }
+            }
 
-			}
-		}
-	}
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+        }
+        else
+        {
+            return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
+        }
+    }
 
-	public boolean shouldUseOnTouchEagler(ItemStack itemStack) {
-		return true;
-	}
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+        NBTTagCompound nbttagcompound = stack.getSubCompound("Fireworks");
+
+        if (nbttagcompound != null)
+        {
+            if (nbttagcompound.hasKey("Flight", 99))
+            {
+                tooltip.add(I18n.translateToLocal("item.fireworks.flight") + " " + nbttagcompound.getByte("Flight"));
+            }
+
+            NBTTagList nbttaglist = nbttagcompound.getTagList("Explosions", 10);
+
+            if (!nbttaglist.hasNoTags())
+            {
+                for (int i = 0; i < nbttaglist.tagCount(); ++i)
+                {
+                    NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
+                    List<String> list = Lists.<String>newArrayList();
+                    ItemFireworkCharge.addExplosionInfo(nbttagcompound1, list);
+
+                    if (!list.isEmpty())
+                    {
+                        for (int j = 1; j < list.size(); ++j)
+                        {
+                            list.set(j, "  " + (String)list.get(j));
+                        }
+
+                        tooltip.addAll(list);
+                    }
+                }
+            }
+        }
+    }
 }

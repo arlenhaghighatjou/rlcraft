@@ -1,48 +1,35 @@
 package net.minecraft.item;
 
-import java.util.Set;
-
 import com.google.common.collect.Sets;
-
+import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ItemAxe extends ItemTool {
-	private static Set<Block> EFFECTIVE_ON;
+public class ItemAxe extends ItemTool
+{
+    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.PLANKS, Blocks.BOOKSHELF, Blocks.LOG, Blocks.LOG2, Blocks.CHEST, Blocks.PUMPKIN, Blocks.LIT_PUMPKIN, Blocks.MELON_BLOCK, Blocks.LADDER, Blocks.WOODEN_BUTTON, Blocks.WOODEN_PRESSURE_PLATE);
+    private static final float[] ATTACK_DAMAGES = new float[] {6.0F, 8.0F, 8.0F, 8.0F, 6.0F};
+    private static final float[] ATTACK_SPEEDS = new float[] { -3.2F, -3.2F, -3.1F, -3.0F, -3.0F};
 
-	public static void bootstrap() {
-		EFFECTIVE_ON = Sets.newHashSet(new Block[] { Blocks.planks, Blocks.bookshelf, Blocks.log, Blocks.log2,
-				Blocks.chest, Blocks.pumpkin, Blocks.lit_pumpkin, Blocks.melon_block, Blocks.ladder });
-	}
+    protected ItemAxe(Item.ToolMaterial material)
+    {
+        super(material, EFFECTIVE_ON);
+        this.attackDamage = ATTACK_DAMAGES[material.ordinal()];
+        this.attackSpeed = ATTACK_SPEEDS[material.ordinal()];
+    }
 
-	protected ItemAxe(Item.ToolMaterial material) {
-		super(3.0F, material, EFFECTIVE_ON);
-	}
+    protected ItemAxe(Item.ToolMaterial material, float damage, float speed)
+    {
+        super(material, EFFECTIVE_ON);
+        this.attackDamage = damage;
+        this.attackSpeed = speed;
+    }
 
-	public float getStrVsBlock(ItemStack itemstack, Block block) {
-		return block.getMaterial() != Material.wood && block.getMaterial() != Material.plants
-				&& block.getMaterial() != Material.vine ? super.getStrVsBlock(itemstack, block)
-						: this.efficiencyOnProperMaterial;
-	}
+    public float getDestroySpeed(ItemStack stack, IBlockState state)
+    {
+        Material material = state.getMaterial();
+        return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE ? super.getDestroySpeed(stack, state) : this.efficiency;
+    }
 }

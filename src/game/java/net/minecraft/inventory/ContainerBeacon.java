@@ -2,142 +2,152 @@ package net.minecraft.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ContainerBeacon extends Container {
-	private IInventory tileBeacon;
-	private final ContainerBeacon.BeaconSlot beaconSlot;
+public class ContainerBeacon extends Container
+{
+    private final IInventory tileBeacon;
+    private final ContainerBeacon.BeaconSlot beaconSlot;
 
-	public ContainerBeacon(IInventory playerInventory, IInventory tileBeaconIn) {
-		this.tileBeacon = tileBeaconIn;
-		this.addSlotToContainer(this.beaconSlot = new ContainerBeacon.BeaconSlot(tileBeaconIn, 0, 136, 110));
-		byte b0 = 36;
-		short short1 = 137;
+    public ContainerBeacon(IInventory playerInventory, IInventory tileBeaconIn)
+    {
+        this.tileBeacon = tileBeaconIn;
+        this.beaconSlot = new ContainerBeacon.BeaconSlot(tileBeaconIn, 0, 136, 110);
+        this.addSlotToContainer(this.beaconSlot);
+        int i = 36;
+        int j = 137;
 
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 9; ++j) {
-				this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, b0 + j * 18, short1 + i * 18));
-			}
-		}
+        for (int k = 0; k < 3; ++k)
+        {
+            for (int l = 0; l < 9; ++l)
+            {
+                this.addSlotToContainer(new Slot(playerInventory, l + k * 9 + 9, 36 + l * 18, 137 + k * 18));
+            }
+        }
 
-		for (int k = 0; k < 9; ++k) {
-			this.addSlotToContainer(new Slot(playerInventory, k, b0 + k * 18, 58 + short1));
-		}
+        for (int i1 = 0; i1 < 9; ++i1)
+        {
+            this.addSlotToContainer(new Slot(playerInventory, i1, 36 + i1 * 18, 195));
+        }
+    }
 
-	}
+    public void addListener(IContainerListener listener)
+    {
+        super.addListener(listener);
+        listener.sendAllWindowProperties(this, this.tileBeacon);
+    }
 
-	public void onCraftGuiOpened(ICrafting icrafting) {
-		super.onCraftGuiOpened(icrafting);
-		icrafting.func_175173_a(this, this.tileBeacon);
-	}
+    @SideOnly(Side.CLIENT)
+    public void updateProgressBar(int id, int data)
+    {
+        this.tileBeacon.setField(id, data);
+    }
 
-	public void updateProgressBar(int i, int j) {
-		this.tileBeacon.setField(i, j);
-	}
+    public IInventory getTileEntity()
+    {
+        return this.tileBeacon;
+    }
 
-	public IInventory func_180611_e() {
-		return this.tileBeacon;
-	}
+    public void onContainerClosed(EntityPlayer playerIn)
+    {
+        super.onContainerClosed(playerIn);
 
-	/**+
-	 * Called when the container is closed.
-	 */
-	public void onContainerClosed(EntityPlayer entityplayer) {
-		super.onContainerClosed(entityplayer);
-		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			ItemStack itemstack = this.beaconSlot.decrStackSize(this.beaconSlot.getSlotStackLimit());
-			if (itemstack != null) {
-				entityplayer.dropPlayerItemWithRandomChoice(itemstack, false);
-			}
+        if (!playerIn.world.isRemote)
+        {
+            ItemStack itemstack = this.beaconSlot.decrStackSize(this.beaconSlot.getSlotStackLimit());
 
-		}
-	}
+            if (!itemstack.isEmpty())
+            {
+                playerIn.dropItem(itemstack, false);
+            }
+        }
+    }
 
-	public boolean canInteractWith(EntityPlayer entityplayer) {
-		return this.tileBeacon.isUseableByPlayer(entityplayer);
-	}
+    public boolean canInteractWith(EntityPlayer playerIn)
+    {
+        return this.tileBeacon.isUsableByPlayer(playerIn);
+    }
 
-	/**+
-	 * Take a stack from the specified inventory slot.
-	 */
-	public ItemStack transferStackInSlot(EntityPlayer entityplayer, int i) {
-		ItemStack itemstack = null;
-		Slot slot = (Slot) this.inventorySlots.get(i);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
-			itemstack = itemstack1.copy();
-			if (i == 0) {
-				if (!this.mergeItemStack(itemstack1, 1, 37, true)) {
-					return null;
-				}
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    {
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
 
-				slot.onSlotChange(itemstack1, itemstack);
-			} else if (!this.beaconSlot.getHasStack() && this.beaconSlot.isItemValid(itemstack1)
-					&& itemstack1.stackSize == 1) {
-				if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
-					return null;
-				}
-			} else if (i >= 1 && i < 28) {
-				if (!this.mergeItemStack(itemstack1, 28, 37, false)) {
-					return null;
-				}
-			} else if (i >= 28 && i < 37) {
-				if (!this.mergeItemStack(itemstack1, 1, 28, false)) {
-					return null;
-				}
-			} else if (!this.mergeItemStack(itemstack1, 1, 37, false)) {
-				return null;
-			}
+        if (slot != null && slot.getHasStack())
+        {
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
 
-			if (itemstack1.stackSize == 0) {
-				slot.putStack((ItemStack) null);
-			} else {
-				slot.onSlotChanged();
-			}
+            if (index == 0)
+            {
+                if (!this.mergeItemStack(itemstack1, 1, 37, true))
+                {
+                    return ItemStack.EMPTY;
+                }
 
-			if (itemstack1.stackSize == itemstack.stackSize) {
-				return null;
-			}
+                slot.onSlotChange(itemstack1, itemstack);
+            }
+            else if (this.mergeItemStack(itemstack1, 0, 1, false)) //Forge Fix Shift Clicking in beacons with stacks larger then 1.
+            {
+                return ItemStack.EMPTY;
+            }
+            else if (index >= 1 && index < 28)
+            {
+                if (!this.mergeItemStack(itemstack1, 28, 37, false))
+                {
+                    return ItemStack.EMPTY;
+                }
+            }
+            else if (index >= 28 && index < 37)
+            {
+                if (!this.mergeItemStack(itemstack1, 1, 28, false))
+                {
+                    return ItemStack.EMPTY;
+                }
+            }
+            else if (!this.mergeItemStack(itemstack1, 1, 37, false))
+            {
+                return ItemStack.EMPTY;
+            }
 
-			slot.onPickupFromSlot(entityplayer, itemstack1);
-		}
+            if (itemstack1.isEmpty())
+            {
+                slot.putStack(ItemStack.EMPTY);
+            }
+            else
+            {
+                slot.onSlotChanged();
+            }
 
-		return itemstack;
-	}
+            if (itemstack1.getCount() == itemstack.getCount())
+            {
+                return ItemStack.EMPTY;
+            }
 
-	class BeaconSlot extends Slot {
-		public BeaconSlot(IInventory parIInventory, int parInt1, int parInt2, int parInt3) {
-			super(parIInventory, parInt1, parInt2, parInt3);
-		}
+            slot.onTake(playerIn, itemstack1);
+        }
 
-		public boolean isItemValid(ItemStack itemstack) {
-			return itemstack == null ? false
-					: itemstack.getItem() == Items.emerald || itemstack.getItem() == Items.diamond
-							|| itemstack.getItem() == Items.gold_ingot || itemstack.getItem() == Items.iron_ingot;
-		}
+        return itemstack;
+    }
 
-		public int getSlotStackLimit() {
-			return 1;
-		}
-	}
+    class BeaconSlot extends Slot
+    {
+        public BeaconSlot(IInventory inventoryIn, int index, int xIn, int yIn)
+        {
+            super(inventoryIn, index, xIn, yIn);
+        }
+
+        public boolean isItemValid(ItemStack stack)
+        {
+            return stack.getItem().isBeaconPayment(stack);
+        }
+
+        public int getSlotStackLimit()
+        {
+            return 1;
+        }
+    }
 }

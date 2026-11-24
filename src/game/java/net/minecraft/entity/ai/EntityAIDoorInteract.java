@@ -3,111 +3,100 @@ package net.minecraft.entity.ai;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.pathfinding.PathPoint;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public abstract class EntityAIDoorInteract extends EntityAIBase {
-	protected EntityLiving theEntity;
-	protected BlockPos doorPosition = BlockPos.ORIGIN;
-	protected BlockDoor doorBlock;
-	boolean hasStoppedDoorInteraction;
-	float entityPositionX;
-	float entityPositionZ;
+public abstract class EntityAIDoorInteract extends EntityAIBase
+{
+    protected EntityLiving entity;
+    protected BlockPos doorPosition = BlockPos.ORIGIN;
+    protected BlockDoor doorBlock;
+    boolean hasStoppedDoorInteraction;
+    float entityPositionX;
+    float entityPositionZ;
 
-	public EntityAIDoorInteract(EntityLiving entityIn) {
-		this.theEntity = entityIn;
-		if (!(entityIn.getNavigator() instanceof PathNavigateGround)) {
-			throw new IllegalArgumentException("Unsupported mob type for DoorInteractGoal");
-		}
-	}
+    public EntityAIDoorInteract(EntityLiving entityIn)
+    {
+        this.entity = entityIn;
 
-	/**+
-	 * Returns whether the EntityAIBase should begin execution.
-	 */
-	public boolean shouldExecute() {
-		if (!this.theEntity.isCollidedHorizontally) {
-			return false;
-		} else {
-			PathNavigateGround pathnavigateground = (PathNavigateGround) this.theEntity.getNavigator();
-			PathEntity pathentity = pathnavigateground.getPath();
-			if (pathentity != null && !pathentity.isFinished() && pathnavigateground.getEnterDoors()) {
-				for (int i = 0; i < Math.min(pathentity.getCurrentPathIndex() + 2,
-						pathentity.getCurrentPathLength()); ++i) {
-					PathPoint pathpoint = pathentity.getPathPointFromIndex(i);
-					this.doorPosition = new BlockPos(pathpoint.xCoord, pathpoint.yCoord + 1, pathpoint.zCoord);
-					if (this.theEntity.getDistanceSq((double) this.doorPosition.getX(), this.theEntity.posY,
-							(double) this.doorPosition.getZ()) <= 2.25D) {
-						this.doorBlock = this.getBlockDoor(this.doorPosition);
-						if (this.doorBlock != null) {
-							return true;
-						}
-					}
-				}
+        if (!(entityIn.getNavigator() instanceof PathNavigateGround))
+        {
+            throw new IllegalArgumentException("Unsupported mob type for DoorInteractGoal");
+        }
+    }
 
-				this.doorPosition = (new BlockPos(this.theEntity)).up();
-				this.doorBlock = this.getBlockDoor(this.doorPosition);
-				return this.doorBlock != null;
-			} else {
-				return false;
-			}
-		}
-	}
+    public boolean shouldExecute()
+    {
+        if (!this.entity.collidedHorizontally)
+        {
+            return false;
+        }
+        else
+        {
+            PathNavigateGround pathnavigateground = (PathNavigateGround)this.entity.getNavigator();
+            Path path = pathnavigateground.getPath();
 
-	/**+
-	 * Returns whether an in-progress EntityAIBase should continue
-	 * executing
-	 */
-	public boolean continueExecuting() {
-		return !this.hasStoppedDoorInteraction;
-	}
+            if (path != null && !path.isFinished() && pathnavigateground.getEnterDoors())
+            {
+                for (int i = 0; i < Math.min(path.getCurrentPathIndex() + 2, path.getCurrentPathLength()); ++i)
+                {
+                    PathPoint pathpoint = path.getPathPointFromIndex(i);
+                    this.doorPosition = new BlockPos(pathpoint.x, pathpoint.y + 1, pathpoint.z);
 
-	/**+
-	 * Execute a one shot task or start executing a continuous task
-	 */
-	public void startExecuting() {
-		this.hasStoppedDoorInteraction = false;
-		this.entityPositionX = (float) ((double) ((float) this.doorPosition.getX() + 0.5F) - this.theEntity.posX);
-		this.entityPositionZ = (float) ((double) ((float) this.doorPosition.getZ() + 0.5F) - this.theEntity.posZ);
-	}
+                    if (this.entity.getDistanceSq((double)this.doorPosition.getX(), this.entity.posY, (double)this.doorPosition.getZ()) <= 2.25D)
+                    {
+                        this.doorBlock = this.getBlockDoor(this.doorPosition);
 
-	/**+
-	 * Updates the task
-	 */
-	public void updateTask() {
-		float f = (float) ((double) ((float) this.doorPosition.getX() + 0.5F) - this.theEntity.posX);
-		float f1 = (float) ((double) ((float) this.doorPosition.getZ() + 0.5F) - this.theEntity.posZ);
-		float f2 = this.entityPositionX * f + this.entityPositionZ * f1;
-		if (f2 < 0.0F) {
-			this.hasStoppedDoorInteraction = true;
-		}
+                        if (this.doorBlock != null)
+                        {
+                            return true;
+                        }
+                    }
+                }
 
-	}
+                this.doorPosition = (new BlockPos(this.entity)).up();
+                this.doorBlock = this.getBlockDoor(this.doorPosition);
+                return this.doorBlock != null;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 
-	private BlockDoor getBlockDoor(BlockPos pos) {
-		Block block = this.theEntity.worldObj.getBlockState(pos).getBlock();
-		return block instanceof BlockDoor && block.getMaterial() == Material.wood ? (BlockDoor) block : null;
-	}
+    public boolean shouldContinueExecuting()
+    {
+        return !this.hasStoppedDoorInteraction;
+    }
+
+    public void startExecuting()
+    {
+        this.hasStoppedDoorInteraction = false;
+        this.entityPositionX = (float)((double)((float)this.doorPosition.getX() + 0.5F) - this.entity.posX);
+        this.entityPositionZ = (float)((double)((float)this.doorPosition.getZ() + 0.5F) - this.entity.posZ);
+    }
+
+    public void updateTask()
+    {
+        float f = (float)((double)((float)this.doorPosition.getX() + 0.5F) - this.entity.posX);
+        float f1 = (float)((double)((float)this.doorPosition.getZ() + 0.5F) - this.entity.posZ);
+        float f2 = this.entityPositionX * f + this.entityPositionZ * f1;
+
+        if (f2 < 0.0F)
+        {
+            this.hasStoppedDoorInteraction = true;
+        }
+    }
+
+    private BlockDoor getBlockDoor(BlockPos pos)
+    {
+        IBlockState iblockstate = this.entity.world.getBlockState(pos);
+        Block block = iblockstate.getBlock();
+        return block instanceof BlockDoor && iblockstate.getMaterial() == Material.WOOD ? (BlockDoor)block : null;
+    }
 }

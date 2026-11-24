@@ -1,172 +1,284 @@
 package net.minecraft.entity.projectile;
 
+import com.google.common.base.Predicate;
 import java.util.List;
+import javax.annotation.Nullable;
+import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityBlaze;
+import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.potion.PotionType;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.datafix.DataFixer;
+import net.minecraft.util.datafix.FixTypes;
+import net.minecraft.util.datafix.walkers.ItemStackData;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class EntityPotion extends EntityThrowable {
-	private ItemStack potionDamage;
+public class EntityPotion extends EntityThrowable
+{
+    private static final DataParameter<ItemStack> ITEM = EntityDataManager.<ItemStack>createKey(EntityPotion.class, DataSerializers.ITEM_STACK);
+    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Predicate<EntityLivingBase> WATER_SENSITIVE = new Predicate<EntityLivingBase>()
+    {
+        public boolean apply(@Nullable EntityLivingBase p_apply_1_)
+        {
+            return EntityPotion.isWaterSensitiveEntity(p_apply_1_);
+        }
+    };
 
-	public EntityPotion(World worldIn) {
-		super(worldIn);
-	}
+    public EntityPotion(World worldIn)
+    {
+        super(worldIn);
+    }
 
-	public EntityPotion(World worldIn, EntityLivingBase throwerIn, int meta) {
-		this(worldIn, throwerIn, new ItemStack(Items.potionitem, 1, meta));
-	}
+    public EntityPotion(World worldIn, EntityLivingBase throwerIn, ItemStack potionDamageIn)
+    {
+        super(worldIn, throwerIn);
+        this.setItem(potionDamageIn);
+    }
 
-	public EntityPotion(World worldIn, EntityLivingBase throwerIn, ItemStack potionDamageIn) {
-		super(worldIn, throwerIn);
-		this.potionDamage = potionDamageIn;
-	}
+    public EntityPotion(World worldIn, double x, double y, double z, ItemStack potionDamageIn)
+    {
+        super(worldIn, x, y, z);
 
-	public EntityPotion(World worldIn, double x, double y, double z, int parInt1) {
-		this(worldIn, x, y, z, new ItemStack(Items.potionitem, 1, parInt1));
-	}
+        if (!potionDamageIn.isEmpty())
+        {
+            this.setItem(potionDamageIn);
+        }
+    }
 
-	public EntityPotion(World worldIn, double x, double y, double z, ItemStack potionDamageIn) {
-		super(worldIn, x, y, z);
-		this.potionDamage = potionDamageIn;
-	}
+    protected void entityInit()
+    {
+        this.getDataManager().register(ITEM, ItemStack.EMPTY);
+    }
 
-	/**+
-	 * Gets the amount of gravity to apply to the thrown entity with
-	 * each tick.
-	 */
-	protected float getGravityVelocity() {
-		return 0.05F;
-	}
+    public ItemStack getPotion()
+    {
+        ItemStack itemstack = (ItemStack)this.getDataManager().get(ITEM);
 
-	protected float getVelocity() {
-		return 0.5F;
-	}
+        if (itemstack.getItem() != Items.SPLASH_POTION && itemstack.getItem() != Items.LINGERING_POTION)
+        {
+            if (this.world != null)
+            {
+                LOGGER.error("ThrownPotion entity {} has no item?!", (int)this.getEntityId());
+            }
 
-	protected float getInaccuracy() {
-		return -20.0F;
-	}
+            return new ItemStack(Items.SPLASH_POTION);
+        }
+        else
+        {
+            return itemstack;
+        }
+    }
 
-	/**+
-	 * Sets the PotionEffect by the given id of the potion effect.
-	 */
-	public void setPotionDamage(int potionId) {
-		if (this.potionDamage == null) {
-			this.potionDamage = new ItemStack(Items.potionitem, 1, 0);
-		}
+    public void setItem(ItemStack stack)
+    {
+        this.getDataManager().set(ITEM, stack);
+        this.getDataManager().setDirty(ITEM);
+    }
 
-		this.potionDamage.setItemDamage(potionId);
-	}
+    protected float getGravityVelocity()
+    {
+        return 0.05F;
+    }
 
-	/**+
-	 * Returns the damage value of the thrown potion that this
-	 * EntityPotion represents.
-	 */
-	public int getPotionDamage() {
-		if (this.potionDamage == null) {
-			this.potionDamage = new ItemStack(Items.potionitem, 1, 0);
-		}
+    protected void onImpact(RayTraceResult result)
+    {
+        if (!this.world.isRemote)
+        {
+            ItemStack itemstack = this.getPotion();
+            PotionType potiontype = PotionUtils.getPotionFromItem(itemstack);
+            List<PotionEffect> list = PotionUtils.getEffectsFromStack(itemstack);
+            boolean flag = potiontype == PotionTypes.WATER && list.isEmpty();
 
-		return this.potionDamage.getMetadata();
-	}
+            if (result.typeOfHit == RayTraceResult.Type.BLOCK && flag)
+            {
+                BlockPos blockpos = result.getBlockPos().offset(result.sideHit);
+                this.extinguishFires(blockpos, result.sideHit);
 
-	/**+
-	 * Called when this EntityThrowable hits a block or entity.
-	 */
-	protected void onImpact(MovingObjectPosition movingobjectposition) {
-		if (!this.worldObj.isRemote) {
-			List list = Items.potionitem.getEffects(this.potionDamage);
-			if (list != null && !list.isEmpty()) {
-				AxisAlignedBB axisalignedbb = this.getEntityBoundingBox().expand(4.0D, 2.0D, 4.0D);
-				List list1 = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
-				if (!list1.isEmpty()) {
-					for (int k = 0, l = list1.size(); k < l; ++k) {
-						EntityLivingBase entitylivingbase = (EntityLivingBase) list1.get(k);
-						double d0 = this.getDistanceSqToEntity(entitylivingbase);
-						if (d0 < 16.0D) {
-							double d1 = 1.0D - Math.sqrt(d0) / 4.0D;
-							if (entitylivingbase == movingobjectposition.entityHit) {
-								d1 = 1.0D;
-							}
+                for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL)
+                {
+                    this.extinguishFires(blockpos.offset(enumfacing), enumfacing);
+                }
+            }
 
-							for (int m = 0, n = list.size(); m < n; ++m) {
-								PotionEffect potioneffect = (PotionEffect) list.get(m);
-								int i = potioneffect.getPotionID();
-								if (Potion.potionTypes[i].isInstant()) {
-									Potion.potionTypes[i].affectEntity(this, this.getThrower(), entitylivingbase,
-											potioneffect.getAmplifier(), d1);
-								} else {
-									int j = (int) (d1 * (double) potioneffect.getDuration() + 0.5D);
-									if (j > 20) {
-										entitylivingbase
-												.addPotionEffect(new PotionEffect(i, j, potioneffect.getAmplifier()));
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+            if (flag)
+            {
+                this.applyWater();
+            }
+            else if (!list.isEmpty())
+            {
+                if (this.isLingering())
+                {
+                    this.makeAreaOfEffectCloud(itemstack, potiontype);
+                }
+                else
+                {
+                    this.applySplash(result, list);
+                }
+            }
 
-			this.worldObj.playAuxSFX(2002, new BlockPos(this), this.getPotionDamage());
-			this.setDead();
-		}
+            int i = potiontype.hasInstantEffect() ? 2007 : 2002;
+            this.world.playEvent(i, new BlockPos(this), PotionUtils.getColor(itemstack));
+            this.setDead();
+        }
+    }
 
-	}
+    private void applyWater()
+    {
+        AxisAlignedBB axisalignedbb = this.getEntityBoundingBox().grow(4.0D, 2.0D, 4.0D);
+        List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb, WATER_SENSITIVE);
 
-	/**+
-	 * (abstract) Protected helper method to read subclass entity
-	 * data from NBT.
-	 */
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound) {
-		super.readEntityFromNBT(nbttagcompound);
-		if (nbttagcompound.hasKey("Potion", 10)) {
-			this.potionDamage = ItemStack.loadItemStackFromNBT(nbttagcompound.getCompoundTag("Potion"));
-		} else {
-			this.setPotionDamage(nbttagcompound.getInteger("potionValue"));
-		}
+        if (!list.isEmpty())
+        {
+            for (EntityLivingBase entitylivingbase : list)
+            {
+                double d0 = this.getDistanceSq(entitylivingbase);
 
-		if (this.potionDamage == null) {
-			this.setDead();
-		}
+                if (d0 < 16.0D && isWaterSensitiveEntity(entitylivingbase))
+                {
+                    entitylivingbase.attackEntityFrom(DamageSource.DROWN, 1.0F);
+                }
+            }
+        }
+    }
 
-	}
+    private void applySplash(RayTraceResult p_190543_1_, List<PotionEffect> p_190543_2_)
+    {
+        AxisAlignedBB axisalignedbb = this.getEntityBoundingBox().grow(4.0D, 2.0D, 4.0D);
+        List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
 
-	/**+
-	 * (abstract) Protected helper method to write subclass entity
-	 * data to NBT.
-	 */
-	public void writeEntityToNBT(NBTTagCompound nbttagcompound) {
-		super.writeEntityToNBT(nbttagcompound);
-		if (this.potionDamage != null) {
-			nbttagcompound.setTag("Potion", this.potionDamage.writeToNBT(new NBTTagCompound()));
-		}
+        if (!list.isEmpty())
+        {
+            for (EntityLivingBase entitylivingbase : list)
+            {
+                if (entitylivingbase.canBeHitWithPotion())
+                {
+                    double d0 = this.getDistanceSq(entitylivingbase);
 
-	}
+                    if (d0 < 16.0D)
+                    {
+                        double d1 = 1.0D - Math.sqrt(d0) / 4.0D;
+
+                        if (entitylivingbase == p_190543_1_.entityHit)
+                        {
+                            d1 = 1.0D;
+                        }
+
+                        for (PotionEffect potioneffect : p_190543_2_)
+                        {
+                            Potion potion = potioneffect.getPotion();
+
+                            if (potion.isInstant())
+                            {
+                                potion.affectEntity(this, this.getThrower(), entitylivingbase, potioneffect.getAmplifier(), d1);
+                            }
+                            else
+                            {
+                                int i = (int)(d1 * (double)potioneffect.getDuration() + 0.5D);
+
+                                if (i > 20)
+                                {
+                                    entitylivingbase.addPotionEffect(new PotionEffect(potion, i, potioneffect.getAmplifier(), potioneffect.getIsAmbient(), potioneffect.doesShowParticles()));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void makeAreaOfEffectCloud(ItemStack p_190542_1_, PotionType p_190542_2_)
+    {
+        EntityAreaEffectCloud entityareaeffectcloud = new EntityAreaEffectCloud(this.world, this.posX, this.posY, this.posZ);
+        entityareaeffectcloud.setOwner(this.getThrower());
+        entityareaeffectcloud.setRadius(3.0F);
+        entityareaeffectcloud.setRadiusOnUse(-0.5F);
+        entityareaeffectcloud.setWaitTime(10);
+        entityareaeffectcloud.setRadiusPerTick(-entityareaeffectcloud.getRadius() / (float)entityareaeffectcloud.getDuration());
+        entityareaeffectcloud.setPotion(p_190542_2_);
+
+        for (PotionEffect potioneffect : PotionUtils.getFullEffectsFromItem(p_190542_1_))
+        {
+            entityareaeffectcloud.addEffect(new PotionEffect(potioneffect));
+        }
+
+        NBTTagCompound nbttagcompound = p_190542_1_.getTagCompound();
+
+        if (nbttagcompound != null && nbttagcompound.hasKey("CustomPotionColor", 99))
+        {
+            entityareaeffectcloud.setColor(nbttagcompound.getInteger("CustomPotionColor"));
+        }
+
+        this.world.spawnEntity(entityareaeffectcloud);
+    }
+
+    private boolean isLingering()
+    {
+        return this.getPotion().getItem() == Items.LINGERING_POTION;
+    }
+
+    private void extinguishFires(BlockPos pos, EnumFacing p_184542_2_)
+    {
+        if (this.world.getBlockState(pos).getBlock() == Blocks.FIRE)
+        {
+            this.world.extinguishFire((EntityPlayer)null, pos.offset(p_184542_2_), p_184542_2_.getOpposite());
+        }
+    }
+
+    public static void registerFixesPotion(DataFixer fixer)
+    {
+        EntityThrowable.registerFixesThrowable(fixer, "ThrownPotion");
+        fixer.registerWalker(FixTypes.ENTITY, new ItemStackData(EntityPotion.class, new String[] {"Potion"}));
+    }
+
+    public void readEntityFromNBT(NBTTagCompound compound)
+    {
+        super.readEntityFromNBT(compound);
+        ItemStack itemstack = new ItemStack(compound.getCompoundTag("Potion"));
+
+        if (itemstack.isEmpty())
+        {
+            this.setDead();
+        }
+        else
+        {
+            this.setItem(itemstack);
+        }
+    }
+
+    public void writeEntityToNBT(NBTTagCompound compound)
+    {
+        super.writeEntityToNBT(compound);
+        ItemStack itemstack = this.getPotion();
+
+        if (!itemstack.isEmpty())
+        {
+            compound.setTag("Potion", itemstack.writeToNBT(new NBTTagCompound()));
+        }
+    }
+
+    private static boolean isWaterSensitiveEntity(EntityLivingBase p_190544_0_)
+    {
+        return p_190544_0_ instanceof EntityEnderman || p_190544_0_ instanceof EntityBlaze;
+    }
 }

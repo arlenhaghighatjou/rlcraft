@@ -1,82 +1,72 @@
 package net.minecraft.world.gen.feature;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class WorldGenBlockBlob extends WorldGenerator {
-	private final Block field_150545_a;
-	private final int field_150544_b;
+public class WorldGenBlockBlob extends WorldGenerator
+{
+    private final Block block;
+    private final int startRadius;
 
-	public WorldGenBlockBlob(Block parBlock, int parInt1) {
-		super(false);
-		this.field_150545_a = parBlock;
-		this.field_150544_b = parInt1;
-	}
+    public WorldGenBlockBlob(Block blockIn, int startRadiusIn)
+    {
+        super(false);
+        this.block = blockIn;
+        this.startRadius = startRadiusIn;
+    }
 
-	public boolean generate(World world, EaglercraftRandom random, BlockPos blockpos) {
-		while (true) {
-			label0: {
-				if (blockpos.getY() > 3) {
-					if (world.isAirBlock(blockpos.down())) {
-						break label0;
-					}
+    public boolean generate(World worldIn, Random rand, BlockPos position)
+    {
+        while (true)
+        {
+            label50:
+            {
+                if (position.getY() > 3)
+                {
+                    if (worldIn.isAirBlock(position.down()))
+                    {
+                        break label50;
+                    }
 
-					Block block = world.getBlockState(blockpos.down()).getBlock();
-					if (block != Blocks.grass && block != Blocks.dirt && block != Blocks.stone) {
-						break label0;
-					}
-				}
+                    Block block = worldIn.getBlockState(position.down()).getBlock();
 
-				if (blockpos.getY() <= 3) {
-					return false;
-				}
+                    if (block != Blocks.GRASS && block != Blocks.DIRT && block != Blocks.STONE)
+                    {
+                        break label50;
+                    }
+                }
 
-				int i1 = this.field_150544_b;
+                if (position.getY() <= 3)
+                {
+                    return false;
+                }
 
-				for (int i = 0; i1 >= 0 && i < 3; ++i) {
-					int j = i1 + random.nextInt(2);
-					int k = i1 + random.nextInt(2);
-					int l = i1 + random.nextInt(2);
-					float f = (float) (j + k + l) * 0.333F + 0.5F;
+                int i1 = this.startRadius;
 
-					for (BlockPos blockpos1 : BlockPos.getAllInBoxMutable(blockpos.add(-j, -k, -l),
-							blockpos.add(j, k, l))) {
-						if (blockpos1.distanceSq(blockpos) <= (double) (f * f)) {
-							world.setBlockState(blockpos1, this.field_150545_a.getDefaultState(), 4);
-						}
-					}
+                for (int i = 0; i1 >= 0 && i < 3; ++i)
+                {
+                    int j = i1 + rand.nextInt(2);
+                    int k = i1 + rand.nextInt(2);
+                    int l = i1 + rand.nextInt(2);
+                    float f = (float)(j + k + l) * 0.333F + 0.5F;
 
-					blockpos = blockpos.add(-(i1 + 1) + random.nextInt(2 + i1 * 2), 0 - random.nextInt(2),
-							-(i1 + 1) + random.nextInt(2 + i1 * 2));
-				}
+                    for (BlockPos blockpos : BlockPos.getAllInBox(position.add(-j, -k, -l), position.add(j, k, l)))
+                    {
+                        if (blockpos.distanceSq(position) <= (double)(f * f))
+                        {
+                            worldIn.setBlockState(blockpos, this.block.getDefaultState(), 4);
+                        }
+                    }
 
-				return true;
-			}
+                    position = position.add(-(i1 + 1) + rand.nextInt(2 + i1 * 2), 0 - rand.nextInt(2), -(i1 + 1) + rand.nextInt(2 + i1 * 2));
+                }
 
-			blockpos = blockpos.down();
-		}
-	}
+                return true;
+            }
+            position = position.down();
+        }
+    }
 }

@@ -1,76 +1,61 @@
 package net.minecraft.item;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ItemBucketMilk extends Item {
-	public ItemBucketMilk() {
-		this.setMaxStackSize(1);
-		this.setCreativeTab(CreativeTabs.tabMisc);
-	}
+public class ItemBucketMilk extends Item
+{
+    public ItemBucketMilk()
+    {
+        this.setMaxStackSize(1);
+        this.setCreativeTab(CreativeTabs.MISC);
+    }
 
-	/**+
-	 * Called when the player finishes using this Item (E.g.
-	 * finishes eating.). Not called when the player stops using the
-	 * Item before the action is complete.
-	 */
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityPlayer playerIn) {
-		if (!playerIn.capabilities.isCreativeMode) {
-			--stack.stackSize;
-		}
+    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving)
+    {
+        if (!worldIn.isRemote) entityLiving.curePotionEffects(stack); // FORGE - move up so stack.shrink does not turn stack into air
+        if (entityLiving instanceof EntityPlayerMP)
+        {
+            EntityPlayerMP entityplayermp = (EntityPlayerMP)entityLiving;
+            CriteriaTriggers.CONSUME_ITEM.trigger(entityplayermp, stack);
+            entityplayermp.addStat(StatList.getObjectUseStats(this));
+        }
 
-		if (!worldIn.isRemote) {
-			playerIn.clearActivePotions();
-		}
+        if (entityLiving instanceof EntityPlayer && !((EntityPlayer)entityLiving).capabilities.isCreativeMode)
+        {
+            stack.shrink(1);
+        }
 
-		playerIn.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);
-		return stack.stackSize <= 0 ? new ItemStack(Items.bucket) : stack;
-	}
+        return stack.isEmpty() ? new ItemStack(Items.BUCKET) : stack;
+    }
 
-	/**+
-	 * How long it takes to use or consume an item
-	 */
-	public int getMaxItemUseDuration(ItemStack stack) {
-		return 32;
-	}
+    public int getMaxItemUseDuration(ItemStack stack)
+    {
+        return 32;
+    }
 
-	/**+
-	 * returns the action that specifies what animation to play when
-	 * the items is being used
-	 */
-	public EnumAction getItemUseAction(ItemStack stack) {
-		return EnumAction.DRINK;
-	}
+    public EnumAction getItemUseAction(ItemStack stack)
+    {
+        return EnumAction.DRINK;
+    }
 
-	/**+
-	 * Called whenever this item is equipped and the right mouse
-	 * button is pressed. Args: itemStack, world, entityPlayer
-	 */
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-		playerIn.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
-		return itemStackIn;
-	}
+    @Override
+    public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack, net.minecraft.nbt.NBTTagCompound nbt) {
+        return new net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper(stack);
+    }
+
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+    {
+        playerIn.setActiveHand(handIn);
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+    }
 }

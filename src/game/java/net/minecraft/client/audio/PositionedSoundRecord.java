@@ -1,58 +1,60 @@
 package net.minecraft.client.audio;
 
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class PositionedSoundRecord extends PositionedSound {
-	public static PositionedSoundRecord create(ResourceLocation soundResource, float pitch) {
-		return new PositionedSoundRecord(soundResource, 0.25F, pitch, false, ISound.AttenuationType.NONE, 0.0F, 0.0F,
-				0.0F);
-	}
+@SideOnly(Side.CLIENT)
+public class PositionedSoundRecord extends PositionedSound
+{
+    public PositionedSoundRecord(SoundEvent soundIn, SoundCategory categoryIn, float volumeIn, float pitchIn, BlockPos pos)
+    {
+        this(soundIn, categoryIn, volumeIn, pitchIn, (float)pos.getX() + 0.5F, (float)pos.getY() + 0.5F, (float)pos.getZ() + 0.5F);
+    }
 
-	public static PositionedSoundRecord create(ResourceLocation soundResource) {
-		return new PositionedSoundRecord(soundResource, 1.0F, 1.0F, false, ISound.AttenuationType.NONE, 0.0F, 0.0F,
-				0.0F);
-	}
+    public static PositionedSoundRecord getMasterRecord(SoundEvent soundIn, float pitchIn)
+    {
+        return getRecord(soundIn, pitchIn, 0.25F);
+    }
 
-	public static PositionedSoundRecord create(ResourceLocation soundResource, float xPosition, float yPosition,
-			float zPosition) {
-		return new PositionedSoundRecord(soundResource, 4.0F, 1.0F, false, ISound.AttenuationType.LINEAR, xPosition,
-				yPosition, zPosition);
-	}
+    public static PositionedSoundRecord getRecord(SoundEvent soundIn, float pitchIn, float volumeIn)
+    {
+        return new PositionedSoundRecord(soundIn, SoundCategory.MASTER, volumeIn, pitchIn, false, 0, ISound.AttenuationType.NONE, 0.0F, 0.0F, 0.0F);
+    }
 
-	public PositionedSoundRecord(ResourceLocation soundResource, float volume, float pitch, float xPosition,
-			float yPosition, float zPosition) {
-		this(soundResource, volume, pitch, false, ISound.AttenuationType.LINEAR, xPosition, yPosition, zPosition);
-	}
+    public static PositionedSoundRecord getMusicRecord(SoundEvent soundIn)
+    {
+        return new PositionedSoundRecord(soundIn, SoundCategory.MUSIC, 1.0F, 1.0F, false, 0, ISound.AttenuationType.NONE, 0.0F, 0.0F, 0.0F);
+    }
 
-	private PositionedSoundRecord(ResourceLocation soundResource, float volume, float pitch, boolean repeat,
-			ISound.AttenuationType attenuationType, float xPosition, float yPosition, float zPosition) {
-		super(soundResource);
-		this.volume = volume;
-		this.pitch = pitch;
-		this.xPosF = xPosition;
-		this.yPosF = yPosition;
-		this.zPosF = zPosition;
-		this.repeat = repeat;
-		this.attenuationType = attenuationType;
-	}
+    public static PositionedSoundRecord getRecordSoundRecord(SoundEvent soundIn, float xIn, float yIn, float zIn)
+    {
+        return new PositionedSoundRecord(soundIn, SoundCategory.RECORDS, 4.0F, 1.0F, false, 0, ISound.AttenuationType.LINEAR, xIn, yIn, zIn);
+    }
+
+    public PositionedSoundRecord(SoundEvent soundIn, SoundCategory categoryIn, float volumeIn, float pitchIn, float xIn, float yIn, float zIn)
+    {
+        this(soundIn, categoryIn, volumeIn, pitchIn, false, 0, ISound.AttenuationType.LINEAR, xIn, yIn, zIn);
+    }
+
+    private PositionedSoundRecord(SoundEvent soundIn, SoundCategory categoryIn, float volumeIn, float pitchIn, boolean repeatIn, int repeatDelayIn, ISound.AttenuationType attenuationTypeIn, float xIn, float yIn, float zIn)
+    {
+        this(soundIn.getSoundName(), categoryIn, volumeIn, pitchIn, repeatIn, repeatDelayIn, attenuationTypeIn, xIn, yIn, zIn);
+    }
+
+    public PositionedSoundRecord(ResourceLocation soundId, SoundCategory categoryIn, float volumeIn, float pitchIn, boolean repeatIn, int repeatDelayIn, ISound.AttenuationType attenuationTypeIn, float xIn, float yIn, float zIn)
+    {
+        super(soundId, categoryIn);
+        this.volume = volumeIn;
+        this.pitch = pitchIn;
+        this.xPosF = xIn;
+        this.yPosF = yIn;
+        this.zPosF = zIn;
+        this.repeat = repeatIn;
+        this.repeatDelay = repeatDelayIn;
+        this.attenuationType = attenuationTypeIn;
+    }
 }

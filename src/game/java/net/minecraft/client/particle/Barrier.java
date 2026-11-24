@@ -1,97 +1,61 @@
 package net.minecraft.client.particle;
 
-import net.lax1dude.eaglercraft.v1_8.minecraft.IAcceleratedParticleEngine;
-import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class Barrier extends EntityFX {
-	protected Barrier(World worldIn, double parDouble1, double parDouble2, double parDouble3, Item parItem) {
-		super(worldIn, parDouble1, parDouble2, parDouble3, 0.0D, 0.0D, 0.0D);
-		this.setParticleIcon(Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getParticleIcon(parItem));
-		this.particleRed = this.particleGreen = this.particleBlue = 1.0F;
-		this.motionX = this.motionY = this.motionZ = 0.0D;
-		this.particleGravity = 0.0F;
-		this.particleMaxAge = 80;
-	}
+@SideOnly(Side.CLIENT)
+public class Barrier extends Particle
+{
+    protected Barrier(World worldIn, double p_i46286_2_, double p_i46286_4_, double p_i46286_6_, Item p_i46286_8_)
+    {
+        super(worldIn, p_i46286_2_, p_i46286_4_, p_i46286_6_, 0.0D, 0.0D, 0.0D);
+        this.setParticleTexture(Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getParticleIcon(p_i46286_8_));
+        this.particleRed = 1.0F;
+        this.particleGreen = 1.0F;
+        this.particleBlue = 1.0F;
+        this.motionX = 0.0D;
+        this.motionY = 0.0D;
+        this.motionZ = 0.0D;
+        this.particleGravity = 0.0F;
+        this.particleMaxAge = 80;
+    }
 
-	public int getFXLayer() {
-		return 1;
-	}
+    public int getFXLayer()
+    {
+        return 1;
+    }
 
-	/**+
-	 * Renders the particle
-	 */
-	public void renderParticle(WorldRenderer worldRendererIn, Entity entityIn, float partialTicks, float parFloat2,
-			float parFloat3, float parFloat4, float parFloat5, float parFloat6) {
-		float f = this.particleIcon.getMinU();
-		float f1 = this.particleIcon.getMaxU();
-		float f2 = this.particleIcon.getMinV();
-		float f3 = this.particleIcon.getMaxV();
-		float f4 = 0.5F;
-		float f5 = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks - interpPosX);
-		float f6 = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) partialTicks - interpPosY);
-		float f7 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) partialTicks - interpPosZ);
-		int i = this.getBrightnessForRender(partialTicks);
-		int j = i >> 16 & '\uffff';
-		int k = i & '\uffff';
-		worldRendererIn
-				.pos((double) (f5 - parFloat2 * 0.5F - parFloat5 * 0.5F), (double) (f6 - parFloat3 * 0.5F),
-						(double) (f7 - parFloat4 * 0.5F - parFloat6 * 0.5F))
-				.tex((double) f1, (double) f3).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F)
-				.lightmap(j, k).endVertex();
-		worldRendererIn
-				.pos((double) (f5 - parFloat2 * 0.5F + parFloat5 * 0.5F), (double) (f6 + parFloat3 * 0.5F),
-						(double) (f7 - parFloat4 * 0.5F + parFloat6 * 0.5F))
-				.tex((double) f1, (double) f2).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F)
-				.lightmap(j, k).endVertex();
-		worldRendererIn
-				.pos((double) (f5 + parFloat2 * 0.5F + parFloat5 * 0.5F), (double) (f6 + parFloat3 * 0.5F),
-						(double) (f7 + parFloat4 * 0.5F + parFloat6 * 0.5F))
-				.tex((double) f, (double) f2).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F)
-				.lightmap(j, k).endVertex();
-		worldRendererIn
-				.pos((double) (f5 + parFloat2 * 0.5F - parFloat5 * 0.5F), (double) (f6 - parFloat3 * 0.5F),
-						(double) (f7 + parFloat4 * 0.5F - parFloat6 * 0.5F))
-				.tex((double) f, (double) f3).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F)
-				.lightmap(j, k).endVertex();
-	}
+    public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+    {
+        float f = this.particleTexture.getMinU();
+        float f1 = this.particleTexture.getMaxU();
+        float f2 = this.particleTexture.getMinV();
+        float f3 = this.particleTexture.getMaxV();
+        float f4 = 0.5F;
+        float f5 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)partialTicks - interpPosX);
+        float f6 = (float)(this.prevPosY + (this.posY - this.prevPosY) * (double)partialTicks - interpPosY);
+        float f7 = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)partialTicks - interpPosZ);
+        int i = this.getBrightnessForRender(partialTicks);
+        int j = i >> 16 & 65535;
+        int k = i & 65535;
+        buffer.pos((double)(f5 - rotationX * 0.5F - rotationXY * 0.5F), (double)(f6 - rotationZ * 0.5F), (double)(f7 - rotationYZ * 0.5F - rotationXZ * 0.5F)).tex((double)f1, (double)f3).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).lightmap(j, k).endVertex();
+        buffer.pos((double)(f5 - rotationX * 0.5F + rotationXY * 0.5F), (double)(f6 + rotationZ * 0.5F), (double)(f7 - rotationYZ * 0.5F + rotationXZ * 0.5F)).tex((double)f1, (double)f2).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).lightmap(j, k).endVertex();
+        buffer.pos((double)(f5 + rotationX * 0.5F + rotationXY * 0.5F), (double)(f6 + rotationZ * 0.5F), (double)(f7 + rotationYZ * 0.5F + rotationXZ * 0.5F)).tex((double)f, (double)f2).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).lightmap(j, k).endVertex();
+        buffer.pos((double)(f5 + rotationX * 0.5F - rotationXY * 0.5F), (double)(f6 - rotationZ * 0.5F), (double)(f7 + rotationYZ * 0.5F - rotationXZ * 0.5F)).tex((double)f, (double)f3).color(this.particleRed, this.particleGreen, this.particleBlue, 1.0F).lightmap(j, k).endVertex();
+    }
 
-	public boolean renderAccelerated(IAcceleratedParticleEngine accelerator, Entity var2, float f, float f1, float f2,
-			float f3, float f4, float f5) {
-		accelerator.drawParticle(this, particleIcon.getOriginX(), particleIcon.getOriginY(), getBrightnessForRender(f),
-				Math.min(particleIcon.getIconWidth(), particleIcon.getIconHeight()), 0.5f, this.particleRed,
-				this.particleGreen, this.particleBlue, this.particleAlpha);
-		return true;
-	}
-
-	public static class Factory implements IParticleFactory {
-		public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn,
-				double xSpeedIn, double ySpeedIn, double zSpeedIn, int... parArrayOfInt) {
-			return new Barrier(worldIn, xCoordIn, yCoordIn, zCoordIn, Item.getItemFromBlock(Blocks.barrier));
-		}
-	}
+    @SideOnly(Side.CLIENT)
+    public static class Factory implements IParticleFactory
+        {
+            public Particle createParticle(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_)
+            {
+                return new Barrier(worldIn, xCoordIn, yCoordIn, zCoordIn, Item.getItemFromBlock(Blocks.BARRIER));
+            }
+        }
 }

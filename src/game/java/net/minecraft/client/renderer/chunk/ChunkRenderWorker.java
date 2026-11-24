@@ -1,122 +1,242 @@
 package net.minecraft.client.renderer.chunk;
 
-import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
-import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
-import net.lax1dude.eaglercraft.v1_8.minecraft.ChunkUpdateManager;
-import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DeferredStateManager;
+import com.google.common.collect.Lists;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CancellationException;
+import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RegionRenderCacheBuilder;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ChunkRenderWorker {
-	private static final Logger LOGGER = LogManager.getLogger();
-	private final ChunkUpdateManager chunkRenderDispatcher;
-	private final RegionRenderCacheBuilder regionRenderCacheBuilder;
+@SideOnly(Side.CLIENT)
+public class ChunkRenderWorker implements Runnable
+{
+    private static final Logger LOGGER = LogManager.getLogger();
+    private final ChunkRenderDispatcher chunkRenderDispatcher;
+    private final RegionRenderCacheBuilder regionRenderCacheBuilder;
+    private boolean shouldRun;
 
-	public ChunkRenderWorker(ChunkUpdateManager parChunkRenderDispatcher) {
-		this(parChunkRenderDispatcher, (RegionRenderCacheBuilder) null);
-	}
+    public ChunkRenderWorker(ChunkRenderDispatcher chunkRenderDispatcherIn)
+    {
+        this(chunkRenderDispatcherIn, (RegionRenderCacheBuilder)null);
+    }
 
-	public ChunkRenderWorker(ChunkUpdateManager chunkRenderDispatcherIn,
-			RegionRenderCacheBuilder regionRenderCacheBuilderIn) {
-		this.chunkRenderDispatcher = chunkRenderDispatcherIn;
-		this.regionRenderCacheBuilder = regionRenderCacheBuilderIn;
-	}
+    public ChunkRenderWorker(ChunkRenderDispatcher chunkRenderDispatcherIn, @Nullable RegionRenderCacheBuilder regionRenderCacheBuilderIn)
+    {
+        this.shouldRun = true;
+        this.chunkRenderDispatcher = chunkRenderDispatcherIn;
+        this.regionRenderCacheBuilder = regionRenderCacheBuilderIn;
+    }
 
-	protected void processTask(final ChunkCompileTaskGenerator generator) throws InterruptedException {
-		if (generator.getStatus() != ChunkCompileTaskGenerator.Status.PENDING) {
-			if (!generator.isFinished()) {
-				LOGGER.warn("Chunk render task was " + generator.getStatus()
-						+ " when I expected it to be pending; ignoring task");
-			}
+    public void run()
+    {
+        while (this.shouldRun)
+        {
+            try
+            {
+                this.processTask(this.chunkRenderDispatcher.getNextChunkUpdate());
+            }
+            catch (InterruptedException var3)
+            {
+                LOGGER.debug("Stopping chunk worker due to interrupt");
+                return;
+            }
+            catch (Throwable throwable)
+            {
+                CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Batching chunks");
+                Minecraft.getMinecraft().crashed(Minecraft.getMinecraft().addGraphicsAndWorldToCrashReport(crashreport));
+                return;
+            }
+        }
+    }
 
-			return;
-		}
+    protected void processTask(final ChunkCompileTaskGenerator generator) throws InterruptedException
+    {
+        generator.getLock().lock();
 
-		generator.setStatus(ChunkCompileTaskGenerator.Status.COMPILING);
+        try
+        {
+            if (generator.getStatus() != ChunkCompileTaskGenerator.Status.PENDING)
+            {
+                if (!generator.isFinished())
+                {
+                    LOGGER.warn("Chunk render task was {} when I expected it to be pending; ignoring task", (Object)generator.getStatus());
+                }
 
-		Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
-		if (entity == null) {
-			generator.finish();
-		} else {
-			generator.setRegionRenderCacheBuilder(this.getRegionRenderCacheBuilder());
-			float f = (float) entity.posX;
-			float f1 = (float) entity.posY + entity.getEyeHeight();
-			float f2 = (float) entity.posZ;
-			ChunkCompileTaskGenerator.Type chunkcompiletaskgenerator$type = generator.getType();
-			if (chunkcompiletaskgenerator$type == ChunkCompileTaskGenerator.Type.REBUILD_CHUNK) {
-				generator.getRenderChunk().rebuildChunk(f, f1, f2, generator);
-			} else if (chunkcompiletaskgenerator$type == ChunkCompileTaskGenerator.Type.RESORT_TRANSPARENCY) {
-				generator.getRenderChunk().resortTransparency(f, f1, f2, generator);
-			}
+                return;
+            }
 
-			if (generator.getStatus() != ChunkCompileTaskGenerator.Status.COMPILING) {
-				if (!generator.isFinished()) {
-					LOGGER.warn("Chunk render task was " + generator.getStatus()
-							+ " when I expected it to be compiling; aborting task");
-				}
+            BlockPos blockpos = new BlockPos(Minecraft.getMinecraft().player);
+            BlockPos blockpos1 = generator.getRenderChunk().getPosition();
+            int i = 16;
+            int j = 8;
+            int k = 24;
 
-				this.freeRenderBuilder(generator);
-				return;
-			}
+            if (blockpos1.add(8, 8, 8).distanceSq(blockpos) > 576.0D)
+            {
+                World world = generator.getRenderChunk().getWorld();
+                BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(blockpos1);
 
-			generator.setStatus(ChunkCompileTaskGenerator.Status.UPLOADING);
+                if (!this.isChunkExisting(blockpos$mutableblockpos.setPos(blockpos1).move(EnumFacing.WEST, 16), world) || !this.isChunkExisting(blockpos$mutableblockpos.setPos(blockpos1).move(EnumFacing.NORTH, 16), world) || !this.isChunkExisting(blockpos$mutableblockpos.setPos(blockpos1).move(EnumFacing.EAST, 16), world) || !this.isChunkExisting(blockpos$mutableblockpos.setPos(blockpos1).move(EnumFacing.SOUTH, 16), world))
+                {
+                    return;
+                }
+            }
 
-			final CompiledChunk compiledchunk = generator.getCompiledChunk();
-			if (chunkcompiletaskgenerator$type == ChunkCompileTaskGenerator.Type.REBUILD_CHUNK) {
-				EnumWorldBlockLayer[] layers = EnumWorldBlockLayer._VALUES;
-				for (int i = 0; i < layers.length; ++i) {
-					EnumWorldBlockLayer enumworldblocklayer = layers[i];
-					if (!compiledchunk.isLayerEmpty(enumworldblocklayer)) {
-						this.chunkRenderDispatcher.uploadChunk(enumworldblocklayer,
-								generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(enumworldblocklayer),
-								generator.getRenderChunk(), compiledchunk);
-						generator.setStatus(ChunkCompileTaskGenerator.Status.DONE);
-					}
-				}
-			} else if (chunkcompiletaskgenerator$type == ChunkCompileTaskGenerator.Type.RESORT_TRANSPARENCY) {
-				this.chunkRenderDispatcher.uploadChunk(
-						EnumWorldBlockLayer.TRANSLUCENT, generator.getRegionRenderCacheBuilder()
-								.getWorldRendererByLayer(EnumWorldBlockLayer.TRANSLUCENT),
-						generator.getRenderChunk(), compiledchunk);
-				if (DeferredStateManager.isRenderingRealisticWater()) {
-					this.chunkRenderDispatcher.uploadChunk(
-							EnumWorldBlockLayer.REALISTIC_WATER, generator.getRegionRenderCacheBuilder()
-									.getWorldRendererByLayer(EnumWorldBlockLayer.REALISTIC_WATER),
-							generator.getRenderChunk(), compiledchunk);
-				}
-				generator.setStatus(ChunkCompileTaskGenerator.Status.DONE);
-			}
+            generator.setStatus(ChunkCompileTaskGenerator.Status.COMPILING);
+        }
+        finally
+        {
+            generator.getLock().unlock();
+        }
 
-		}
-	}
+        Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
 
-	private RegionRenderCacheBuilder getRegionRenderCacheBuilder() throws InterruptedException {
-		return this.regionRenderCacheBuilder;
-	}
+        if (entity == null)
+        {
+            generator.finish();
+        }
+        else
+        {
+            generator.setRegionRenderCacheBuilder(this.getRegionRenderCacheBuilder());
+            float f = (float)entity.posX;
+            float f1 = (float)entity.posY + entity.getEyeHeight();
+            float f2 = (float)entity.posZ;
+            ChunkCompileTaskGenerator.Type chunkcompiletaskgenerator$type = generator.getType();
 
-	private void freeRenderBuilder(ChunkCompileTaskGenerator taskGenerator) {
+            if (chunkcompiletaskgenerator$type == ChunkCompileTaskGenerator.Type.REBUILD_CHUNK)
+            {
+                generator.getRenderChunk().rebuildChunk(f, f1, f2, generator);
+            }
+            else if (chunkcompiletaskgenerator$type == ChunkCompileTaskGenerator.Type.RESORT_TRANSPARENCY)
+            {
+                generator.getRenderChunk().resortTransparency(f, f1, f2, generator);
+            }
 
-	}
+            generator.getLock().lock();
+
+            try
+            {
+                if (generator.getStatus() != ChunkCompileTaskGenerator.Status.COMPILING)
+                {
+                    if (!generator.isFinished())
+                    {
+                        LOGGER.warn("Chunk render task was {} when I expected it to be compiling; aborting task", (Object)generator.getStatus());
+                    }
+
+                    this.freeRenderBuilder(generator);
+                    return;
+                }
+
+                generator.setStatus(ChunkCompileTaskGenerator.Status.UPLOADING);
+            }
+            finally
+            {
+                generator.getLock().unlock();
+            }
+
+            final CompiledChunk compiledchunk = generator.getCompiledChunk();
+            ArrayList arraylist = Lists.newArrayList();
+
+            if (chunkcompiletaskgenerator$type == ChunkCompileTaskGenerator.Type.REBUILD_CHUNK)
+            {
+                for (BlockRenderLayer blockrenderlayer : BlockRenderLayer.values())
+                {
+                    if (compiledchunk.isLayerStarted(blockrenderlayer))
+                    {
+                        arraylist.add(this.chunkRenderDispatcher.uploadChunk(blockrenderlayer, generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(blockrenderlayer), generator.getRenderChunk(), compiledchunk, generator.getDistanceSq()));
+                    }
+                }
+            }
+            else if (chunkcompiletaskgenerator$type == ChunkCompileTaskGenerator.Type.RESORT_TRANSPARENCY)
+            {
+                arraylist.add(this.chunkRenderDispatcher.uploadChunk(BlockRenderLayer.TRANSLUCENT, generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(BlockRenderLayer.TRANSLUCENT), generator.getRenderChunk(), compiledchunk, generator.getDistanceSq()));
+            }
+
+            final ListenableFuture<List<Object>> listenablefuture = Futures.allAsList(arraylist);
+            generator.addFinishRunnable(new Runnable()
+            {
+                public void run()
+                {
+                    listenablefuture.cancel(false);
+                }
+            });
+            Futures.addCallback(listenablefuture, new FutureCallback<List<Object>>()
+            {
+                public void onSuccess(@Nullable List<Object> p_onSuccess_1_)
+                {
+                    ChunkRenderWorker.this.freeRenderBuilder(generator);
+                    generator.getLock().lock();
+                    label49:
+                    {
+                        try
+                        {
+                            if (generator.getStatus() == ChunkCompileTaskGenerator.Status.UPLOADING)
+                            {
+                                generator.setStatus(ChunkCompileTaskGenerator.Status.DONE);
+                                break label49;
+                            }
+
+                            if (!generator.isFinished())
+                            {
+                                ChunkRenderWorker.LOGGER.warn("Chunk render task was {} when I expected it to be uploading; aborting task", (Object)generator.getStatus());
+                            }
+                        }
+                        finally
+                        {
+                            generator.getLock().unlock();
+                        }
+
+                        return;
+                    }
+                    generator.getRenderChunk().setCompiledChunk(compiledchunk);
+                }
+                public void onFailure(Throwable p_onFailure_1_)
+                {
+                    ChunkRenderWorker.this.freeRenderBuilder(generator);
+
+                    if (!(p_onFailure_1_ instanceof CancellationException) && !(p_onFailure_1_ instanceof InterruptedException))
+                    {
+                        Minecraft.getMinecraft().crashed(CrashReport.makeCrashReport(p_onFailure_1_, "Rendering chunk"));
+                    }
+                }
+            });
+        }
+    }
+
+    private boolean isChunkExisting(BlockPos pos, World worldIn)
+    {
+        return !worldIn.getChunkFromChunkCoords(pos.getX() >> 4, pos.getZ() >> 4).isEmpty();
+    }
+
+    private RegionRenderCacheBuilder getRegionRenderCacheBuilder() throws InterruptedException
+    {
+        return this.regionRenderCacheBuilder != null ? this.regionRenderCacheBuilder : this.chunkRenderDispatcher.allocateRenderBuilder();
+    }
+
+    private void freeRenderBuilder(ChunkCompileTaskGenerator taskGenerator)
+    {
+        if (this.regionRenderCacheBuilder == null)
+        {
+            this.chunkRenderDispatcher.freeRenderBuilder(taskGenerator.getRegionRenderCacheBuilder());
+        }
+    }
+
+    public void notifyToStop()
+    {
+        this.shouldRun = false;
+    }
 }

@@ -2,55 +2,91 @@ package net.minecraft.world.gen.structure;
 
 import java.util.Map;
 import java.util.Map.Entry;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeMesa;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class MapGenMineshaft extends MapGenStructure {
-	private double field_82673_e = 0.004D;
+public class MapGenMineshaft extends MapGenStructure
+{
+    private double chance = 0.004D;
 
-	public MapGenMineshaft(boolean scramble) {
-		super(scramble);
-	}
+    public MapGenMineshaft()
+    {
+    }
 
-	public String getStructureName() {
-		return "Mineshaft";
-	}
+    public String getStructureName()
+    {
+        return "Mineshaft";
+    }
 
-	public MapGenMineshaft(Map<String, String> parMap, boolean scramble) {
-		super(scramble);
-		for (Entry entry : parMap.entrySet()) {
-			if (((String) entry.getKey()).equals("chance")) {
-				this.field_82673_e = MathHelper.parseDoubleWithDefault((String) entry.getValue(), this.field_82673_e);
-			}
-		}
+    public MapGenMineshaft(Map<String, String> p_i2034_1_)
+    {
+        for (Entry<String, String> entry : p_i2034_1_.entrySet())
+        {
+            if (((String)entry.getKey()).equals("chance"))
+            {
+                this.chance = MathHelper.getDouble(entry.getValue(), this.chance);
+            }
+        }
+    }
 
-	}
+    protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ)
+    {
+        return this.rand.nextDouble() < this.chance && this.rand.nextInt(80) < Math.max(Math.abs(chunkX), Math.abs(chunkZ));
+    }
 
-	protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ) {
-		return this.rand.nextDouble() < this.field_82673_e
-				&& this.rand.nextInt(80) < Math.max(Math.abs(chunkX), Math.abs(chunkZ));
-	}
+    public BlockPos getNearestStructurePos(World worldIn, BlockPos pos, boolean findUnexplored)
+    {
+        int i = 1000;
+        int j = pos.getX() >> 4;
+        int k = pos.getZ() >> 4;
 
-	protected StructureStart getStructureStart(int chunkX, int chunkZ) {
-		return new StructureMineshaftStart(this.worldObj, this.rand, chunkX, chunkZ);
-	}
+        for (int l = 0; l <= 1000; ++l)
+        {
+            for (int i1 = -l; i1 <= l; ++i1)
+            {
+                boolean flag = i1 == -l || i1 == l;
+
+                for (int j1 = -l; j1 <= l; ++j1)
+                {
+                    boolean flag1 = j1 == -l || j1 == l;
+
+                    if (flag || flag1)
+                    {
+                        int k1 = j + i1;
+                        int l1 = k + j1;
+                        this.rand.setSeed((long)(k1 ^ l1) ^ worldIn.getSeed());
+                        this.rand.nextInt();
+
+                        if (this.canSpawnStructureAtCoords(k1, l1) && (!findUnexplored || !worldIn.isChunkGeneratedAt(k1, l1)))
+                        {
+                            return new BlockPos((k1 << 4) + 8, 64, (l1 << 4) + 8);
+                        }
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    protected StructureStart getStructureStart(int chunkX, int chunkZ)
+    {
+        Biome biome = this.world.getBiome(new BlockPos((chunkX << 4) + 8, 64, (chunkZ << 4) + 8));
+        MapGenMineshaft.Type mapgenmineshaft$type = biome instanceof BiomeMesa ? MapGenMineshaft.Type.MESA : MapGenMineshaft.Type.NORMAL;
+        return new StructureMineshaftStart(this.world, this.rand, chunkX, chunkZ, mapgenmineshaft$type);
+    }
+
+    public static enum Type
+    {
+        NORMAL,
+        MESA;
+
+        public static MapGenMineshaft.Type byId(int id)
+        {
+            return id >= 0 && id < values().length ? values()[id] : NORMAL;
+        }
+    }
 }

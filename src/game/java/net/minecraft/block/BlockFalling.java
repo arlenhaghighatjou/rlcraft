@@ -1,105 +1,128 @@
 package net.minecraft.block;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import java.util.Random;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class BlockFalling extends Block {
-	public static boolean fallInstantly;
+public class BlockFalling extends Block
+{
+    public static boolean fallInstantly;
 
-	public BlockFalling() {
-		super(Material.sand);
-		this.setCreativeTab(CreativeTabs.tabBlock);
-	}
+    public BlockFalling()
+    {
+        super(Material.SAND);
+        this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+    }
 
-	public BlockFalling(Material materialIn) {
-		super(materialIn);
-	}
+    public BlockFalling(Material materialIn)
+    {
+        super(materialIn);
+    }
 
-	public void onBlockAdded(World world, BlockPos blockpos, IBlockState var3) {
-		world.scheduleUpdate(blockpos, this, this.tickRate(world));
-	}
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    {
+        worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
+    }
 
-	/**+
-	 * Called when a neighboring block changes.
-	 */
-	public void onNeighborBlockChange(World world, BlockPos blockpos, IBlockState var3, Block var4) {
-		world.scheduleUpdate(blockpos, this, this.tickRate(world));
-	}
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
+    {
+        worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
+    }
 
-	public void updateTick(World world, BlockPos blockpos, IBlockState var3, EaglercraftRandom var4) {
-		if (!world.isRemote) {
-			this.checkFallable(world, blockpos);
-		}
-	}
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        if (!worldIn.isRemote)
+        {
+            this.checkFallable(worldIn, pos);
+        }
+    }
 
-	private void checkFallable(World worldIn, BlockPos pos) {
-		if (canFallInto(worldIn, pos.down()) && pos.getY() >= 0) {
-			byte b0 = 32;
-			if (!fallInstantly && worldIn.isAreaLoaded(pos.add(-b0, -b0, -b0), pos.add(b0, b0, b0))) {
-				EntityFallingBlock entityfallingblock = new EntityFallingBlock(worldIn, (double) pos.getX() + 0.5D,
-						(double) pos.getY(), (double) pos.getZ() + 0.5D, worldIn.getBlockState(pos));
-				this.onStartFalling(entityfallingblock);
-				worldIn.spawnEntityInWorld(entityfallingblock);
-			} else {
-				worldIn.setBlockToAir(pos);
+    private void checkFallable(World worldIn, BlockPos pos)
+    {
+        if ((worldIn.isAirBlock(pos.down()) || canFallThrough(worldIn.getBlockState(pos.down()))) && pos.getY() >= 0)
+        {
+            int i = 32;
 
-				BlockPos blockpos;
-				for (blockpos = pos.down(); canFallInto(worldIn, blockpos)
-						&& blockpos.getY() > 0; blockpos = blockpos.down()) {
-					;
-				}
+            if (!fallInstantly && worldIn.isAreaLoaded(pos.add(-32, -32, -32), pos.add(32, 32, 32)))
+            {
+                if (!worldIn.isRemote)
+                {
+                    EntityFallingBlock entityfallingblock = new EntityFallingBlock(worldIn, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, worldIn.getBlockState(pos));
+                    this.onStartFalling(entityfallingblock);
+                    worldIn.spawnEntity(entityfallingblock);
+                }
+            }
+            else
+            {
+                IBlockState state = worldIn.getBlockState(pos);
+                worldIn.setBlockToAir(pos);
+                BlockPos blockpos;
 
-				if (blockpos.getY() > 0) {
-					worldIn.setBlockState(blockpos.up(), this.getDefaultState());
-				}
-			}
+                for (blockpos = pos.down(); (worldIn.isAirBlock(blockpos) || canFallThrough(worldIn.getBlockState(blockpos))) && blockpos.getY() > 0; blockpos = blockpos.down())
+                {
+                    ;
+                }
 
-		}
-	}
+                if (blockpos.getY() > 0)
+                {
+                    worldIn.setBlockState(blockpos.up(), state); //Forge: Fix loss of state information during world gen.
+                }
+            }
+        }
+    }
 
-	protected void onStartFalling(EntityFallingBlock var1) {
-	}
+    protected void onStartFalling(EntityFallingBlock fallingEntity)
+    {
+    }
 
-	/**+
-	 * How many world ticks before ticking
-	 */
-	public int tickRate(World var1) {
-		return 2;
-	}
+    public int tickRate(World worldIn)
+    {
+        return 2;
+    }
 
-	public static boolean canFallInto(World worldIn, BlockPos pos) {
-		Block block = worldIn.getBlockState(pos).getBlock();
-		Material material = block.blockMaterial;
-		return block == Blocks.fire || material == Material.air || material == Material.water
-				|| material == Material.lava;
-	}
+    public static boolean canFallThrough(IBlockState state)
+    {
+        Block block = state.getBlock();
+        Material material = state.getMaterial();
+        return block == Blocks.FIRE || material == Material.AIR || material == Material.WATER || material == Material.LAVA;
+    }
 
-	public void onEndFalling(World var1, BlockPos var2) {
-	}
+    public void onEndFalling(World worldIn, BlockPos pos, IBlockState p_176502_3_, IBlockState p_176502_4_)
+    {
+    }
+
+    public void onBroken(World worldIn, BlockPos pos)
+    {
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    {
+        if (rand.nextInt(16) == 0)
+        {
+            BlockPos blockpos = pos.down();
+
+            if (canFallThrough(worldIn.getBlockState(blockpos)))
+            {
+                double d0 = (double)((float)pos.getX() + rand.nextFloat());
+                double d1 = (double)pos.getY() - 0.05D;
+                double d2 = (double)((float)pos.getZ() + rand.nextFloat());
+                worldIn.spawnParticle(EnumParticleTypes.FALLING_DUST, d0, d1, d2, 0.0D, 0.0D, 0.0D, Block.getStateId(stateIn));
+            }
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getDustColor(IBlockState state)
+    {
+        return -16777216;
+    }
 }

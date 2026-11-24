@@ -1,240 +1,275 @@
 package net.minecraft.entity.passive;
 
-import org.apache.commons.lang3.StringUtils;
-
-import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
-import net.lax1dude.eaglercraft.v1_8.sp.SingleplayerServerController;
+import com.google.common.base.Optional;
+import java.util.UUID;
+import javax.annotation.Nullable;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.ai.EntityAISit;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.scoreboard.Team;
+import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public abstract class EntityTameable extends EntityAnimal implements IEntityOwnable {
+public abstract class EntityTameable extends EntityAnimal implements IEntityOwnable
+{
+    protected static final DataParameter<Byte> TAMED = EntityDataManager.<Byte>createKey(EntityTameable.class, DataSerializers.BYTE);
+    protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityTameable.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+    protected EntityAISit aiSit;
 
-	protected EntityAISit aiSit = new EntityAISit(this);
+    public EntityTameable(World worldIn)
+    {
+        super(worldIn);
+        this.setupTamedAI();
+    }
 
-	public EntityTameable(World worldIn) {
-		super(worldIn);
-		this.setupTamedAI();
-	}
+    protected void entityInit()
+    {
+        super.entityInit();
+        this.dataManager.register(TAMED, Byte.valueOf((byte)0));
+        this.dataManager.register(OWNER_UNIQUE_ID, Optional.absent());
+    }
 
-	protected void entityInit() {
-		super.entityInit();
-		this.dataWatcher.addObject(16, Byte.valueOf((byte) 0));
-		this.dataWatcher.addObject(17, "");
-	}
+    public void writeEntityToNBT(NBTTagCompound compound)
+    {
+        super.writeEntityToNBT(compound);
 
-	/**+
-	 * (abstract) Protected helper method to write subclass entity
-	 * data to NBT.
-	 */
-	public void writeEntityToNBT(NBTTagCompound nbttagcompound) {
-		super.writeEntityToNBT(nbttagcompound);
-		if (worldObj.isRemote && !SingleplayerServerController.isClientInEaglerSingleplayerOrLAN()) {
-			if (this.getOwnerId() == null) {
-				nbttagcompound.setString("OwnerUUID", "");
-			} else {
-				nbttagcompound.setString("OwnerUUID", this.getOwnerId());
-			}
-		} else {
-			if (this.getOwnerId() == null) {
-				nbttagcompound.setString("Owner", "");
-			} else {
-				nbttagcompound.setString("Owner", this.getOwnerId());
-			}
-		}
+        if (this.getOwnerId() == null)
+        {
+            compound.setString("OwnerUUID", "");
+        }
+        else
+        {
+            compound.setString("OwnerUUID", this.getOwnerId().toString());
+        }
 
-		nbttagcompound.setBoolean("Sitting", this.isSitting());
-	}
+        compound.setBoolean("Sitting", this.isSitting());
+    }
 
-	/**+
-	 * (abstract) Protected helper method to read subclass entity
-	 * data from NBT.
-	 */
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound) {
-		super.readEntityFromNBT(nbttagcompound);
-		String s = "";
-		if (worldObj.isRemote && !SingleplayerServerController.isClientInEaglerSingleplayerOrLAN()) {
-			if (nbttagcompound.hasKey("OwnerUUID", 8)) {
-				s = nbttagcompound.getString("OwnerUUID");
-			}
-		} else {
-			if (nbttagcompound.hasKey("Owner", 8)) {
-				s = nbttagcompound.getString("Owner");
-			}
-		}
+    public void readEntityFromNBT(NBTTagCompound compound)
+    {
+        super.readEntityFromNBT(compound);
+        String s;
 
-		if (s.length() > 0) {
-			this.setOwnerId(s);
-			this.setTamed(true);
-		}
+        if (compound.hasKey("OwnerUUID", 8))
+        {
+            s = compound.getString("OwnerUUID");
+        }
+        else
+        {
+            String s1 = compound.getString("Owner");
+            s = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s1);
+        }
 
-		this.aiSit.setSitting(nbttagcompound.getBoolean("Sitting"));
-		this.setSitting(nbttagcompound.getBoolean("Sitting"));
-	}
+        if (!s.isEmpty())
+        {
+            try
+            {
+                this.setOwnerId(UUID.fromString(s));
+                this.setTamed(true);
+            }
+            catch (Throwable var4)
+            {
+                this.setTamed(false);
+            }
+        }
 
-	/**+
-	 * Play the taming effect, will either be hearts or smoke
-	 * depending on status
-	 */
-	protected void playTameEffect(boolean play) {
-		EnumParticleTypes enumparticletypes = EnumParticleTypes.HEART;
-		if (!play) {
-			enumparticletypes = EnumParticleTypes.SMOKE_NORMAL;
-		}
+        if (this.aiSit != null)
+        {
+            this.aiSit.setSitting(compound.getBoolean("Sitting"));
+        }
 
-		for (int i = 0; i < 7; ++i) {
-			double d0 = this.rand.nextGaussian() * 0.02D;
-			double d1 = this.rand.nextGaussian() * 0.02D;
-			double d2 = this.rand.nextGaussian() * 0.02D;
-			this.worldObj.spawnParticle(enumparticletypes,
-					this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width,
-					this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height),
-					this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d0, d1, d2,
-					new int[0]);
-		}
+        this.setSitting(compound.getBoolean("Sitting"));
+    }
 
-	}
+    public boolean canBeLeashedTo(EntityPlayer player)
+    {
+        return !this.getLeashed();
+    }
 
-	public void handleStatusUpdate(byte b0) {
-		if (b0 == 7) {
-			this.playTameEffect(true);
-		} else if (b0 == 6) {
-			this.playTameEffect(false);
-		} else {
-			super.handleStatusUpdate(b0);
-		}
+    protected void playTameEffect(boolean play)
+    {
+        EnumParticleTypes enumparticletypes = EnumParticleTypes.HEART;
 
-	}
+        if (!play)
+        {
+            enumparticletypes = EnumParticleTypes.SMOKE_NORMAL;
+        }
 
-	public boolean isTamed() {
-		return (this.dataWatcher.getWatchableObjectByte(16) & 4) != 0;
-	}
+        for (int i = 0; i < 7; ++i)
+        {
+            double d0 = this.rand.nextGaussian() * 0.02D;
+            double d1 = this.rand.nextGaussian() * 0.02D;
+            double d2 = this.rand.nextGaussian() * 0.02D;
+            this.world.spawnParticle(enumparticletypes, this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, this.posY + 0.5D + (double)(this.rand.nextFloat() * this.height), this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, d0, d1, d2);
+        }
+    }
 
-	public void setTamed(boolean tamed) {
-		byte b0 = this.dataWatcher.getWatchableObjectByte(16);
-		if (tamed) {
-			this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 | 4)));
-		} else {
-			this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 & -5)));
-		}
+    @SideOnly(Side.CLIENT)
+    public void handleStatusUpdate(byte id)
+    {
+        if (id == 7)
+        {
+            this.playTameEffect(true);
+        }
+        else if (id == 6)
+        {
+            this.playTameEffect(false);
+        }
+        else
+        {
+            super.handleStatusUpdate(id);
+        }
+    }
 
-		this.setupTamedAI();
-	}
+    public boolean isTamed()
+    {
+        return (((Byte)this.dataManager.get(TAMED)).byteValue() & 4) != 0;
+    }
 
-	protected void setupTamedAI() {
-	}
+    public void setTamed(boolean tamed)
+    {
+        byte b0 = ((Byte)this.dataManager.get(TAMED)).byteValue();
 
-	public boolean isSitting() {
-		return (this.dataWatcher.getWatchableObjectByte(16) & 1) != 0;
-	}
+        if (tamed)
+        {
+            this.dataManager.set(TAMED, Byte.valueOf((byte)(b0 | 4)));
+        }
+        else
+        {
+            this.dataManager.set(TAMED, Byte.valueOf((byte)(b0 & -5)));
+        }
 
-	public void setSitting(boolean sitting) {
-		byte b0 = this.dataWatcher.getWatchableObjectByte(16);
-		if (sitting) {
-			this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 | 1)));
-		} else {
-			this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 & -2)));
-		}
+        this.setupTamedAI();
+    }
 
-	}
+    protected void setupTamedAI()
+    {
+    }
 
-	public String getOwnerId() {
-		return this.dataWatcher.getWatchableObjectString(17);
-	}
+    public boolean isSitting()
+    {
+        return (((Byte)this.dataManager.get(TAMED)).byteValue() & 1) != 0;
+    }
 
-	public void setOwnerId(String ownerUuid) {
-		this.dataWatcher.updateObject(17, ownerUuid);
-	}
+    public void setSitting(boolean sitting)
+    {
+        byte b0 = ((Byte)this.dataManager.get(TAMED)).byteValue();
 
-	public EntityLivingBase getOwner() {
-		String ownerName = this.getOwnerId();
-		if (StringUtils.isEmpty(ownerName)) {
-			return null;
-		}
-		try {
-			EaglercraftUUID uuid = EaglercraftUUID.fromString(ownerName);
-			return uuid == null ? null : this.worldObj.getPlayerEntityByUUID(uuid);
-		} catch (IllegalArgumentException var2) {
-			return this.worldObj.getPlayerEntityByName(ownerName);
-		}
-	}
+        if (sitting)
+        {
+            this.dataManager.set(TAMED, Byte.valueOf((byte)(b0 | 1)));
+        }
+        else
+        {
+            this.dataManager.set(TAMED, Byte.valueOf((byte)(b0 & -2)));
+        }
+    }
 
-	public boolean isOwner(EntityLivingBase entityIn) {
-		return entityIn == this.getOwner();
-	}
+    @Nullable
+    public UUID getOwnerId()
+    {
+        return (UUID)((Optional)this.dataManager.get(OWNER_UNIQUE_ID)).orNull();
+    }
 
-	/**+
-	 * Returns the AITask responsible of the sit logic
-	 */
-	public EntityAISit getAISit() {
-		return this.aiSit;
-	}
+    public void setOwnerId(@Nullable UUID p_184754_1_)
+    {
+        this.dataManager.set(OWNER_UNIQUE_ID, Optional.fromNullable(p_184754_1_));
+    }
 
-	public boolean shouldAttackEntity(EntityLivingBase parEntityLivingBase, EntityLivingBase parEntityLivingBase2) {
-		return true;
-	}
+    public void setTamedBy(EntityPlayer player)
+    {
+        this.setTamed(true);
+        this.setOwnerId(player.getUniqueID());
 
-	public Team getTeam() {
-		if (this.isTamed()) {
-			EntityLivingBase entitylivingbase = this.getOwner();
-			if (entitylivingbase != null) {
-				return entitylivingbase.getTeam();
-			}
-		}
+        if (player instanceof EntityPlayerMP)
+        {
+            CriteriaTriggers.TAME_ANIMAL.trigger((EntityPlayerMP)player, this);
+        }
+    }
 
-		return super.getTeam();
-	}
+    @Nullable
+    public EntityLivingBase getOwner()
+    {
+        try
+        {
+            UUID uuid = this.getOwnerId();
+            return uuid == null ? null : this.world.getPlayerEntityByUUID(uuid);
+        }
+        catch (IllegalArgumentException var2)
+        {
+            return null;
+        }
+    }
 
-	public boolean isOnSameTeam(EntityLivingBase entitylivingbase) {
-		if (this.isTamed()) {
-			EntityLivingBase entitylivingbase1 = this.getOwner();
-			if (entitylivingbase == entitylivingbase1) {
-				return true;
-			}
+    public boolean isOwner(EntityLivingBase entityIn)
+    {
+        return entityIn == this.getOwner();
+    }
 
-			if (entitylivingbase1 != null) {
-				return entitylivingbase1.isOnSameTeam(entitylivingbase);
-			}
-		}
+    public EntityAISit getAISit()
+    {
+        return this.aiSit;
+    }
 
-		return super.isOnSameTeam(entitylivingbase);
-	}
+    public boolean shouldAttackEntity(EntityLivingBase target, EntityLivingBase owner)
+    {
+        return true;
+    }
 
-	/**+
-	 * Called when the mob's health reaches 0.
-	 */
-	public void onDeath(DamageSource damagesource) {
-		if (!this.worldObj.isRemote && this.worldObj.getGameRules().getBoolean("showDeathMessages")
-				&& this.hasCustomName() && this.getOwner() instanceof EntityPlayerMP) {
-			((EntityPlayerMP) this.getOwner()).addChatMessage(this.getCombatTracker().getDeathMessage());
-		}
+    public Team getTeam()
+    {
+        if (this.isTamed())
+        {
+            EntityLivingBase entitylivingbase = this.getOwner();
 
-		super.onDeath(damagesource);
-	}
+            if (entitylivingbase != null)
+            {
+                return entitylivingbase.getTeam();
+            }
+        }
+
+        return super.getTeam();
+    }
+
+    public boolean isOnSameTeam(Entity entityIn)
+    {
+        if (this.isTamed())
+        {
+            EntityLivingBase entitylivingbase = this.getOwner();
+
+            if (entityIn == entitylivingbase)
+            {
+                return true;
+            }
+
+            if (entitylivingbase != null)
+            {
+                return entitylivingbase.isOnSameTeam(entityIn);
+            }
+        }
+
+        return super.isOnSameTeam(entityIn);
+    }
+
+    public void onDeath(DamageSource cause)
+    {
+        if (!this.world.isRemote && this.world.getGameRules().getBoolean("showDeathMessages") && this.getOwner() instanceof EntityPlayerMP)
+        {
+            this.getOwner().sendMessage(this.getCombatTracker().getDeathMessage());
+        }
+
+        super.onDeath(cause);
+    }
 }

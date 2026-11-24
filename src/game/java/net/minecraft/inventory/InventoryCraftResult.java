@@ -1,164 +1,126 @@
 package net.minecraft.inventory;
 
+import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class InventoryCraftResult implements IInventory {
-	/**+
-	 * A list of one item containing the result of the crafting
-	 * formula
-	 */
-	private ItemStack[] stackResult = new ItemStack[1];
+public class InventoryCraftResult implements IInventory
+{
+    private final NonNullList<ItemStack> stackResult = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
+    private IRecipe recipeUsed;
 
-	/**+
-	 * Returns the number of slots in the inventory.
-	 */
-	public int getSizeInventory() {
-		return 1;
-	}
+    public int getSizeInventory()
+    {
+        return 1;
+    }
 
-	/**+
-	 * Returns the stack in the given slot.
-	 */
-	public ItemStack getStackInSlot(int var1) {
-		return this.stackResult[0];
-	}
+    public boolean isEmpty()
+    {
+        for (ItemStack itemstack : this.stackResult)
+        {
+            if (!itemstack.isEmpty())
+            {
+                return false;
+            }
+        }
 
-	/**+
-	 * Gets the name of this command sender (usually username, but
-	 * possibly "Rcon")
-	 */
-	public String getName() {
-		return "Result";
-	}
+        return true;
+    }
 
-	/**+
-	 * Returns true if this thing is named
-	 */
-	public boolean hasCustomName() {
-		return false;
-	}
+    public ItemStack getStackInSlot(int index)
+    {
+        return this.stackResult.get(0);
+    }
 
-	/**+
-	 * Get the formatted ChatComponent that will be used for the
-	 * sender's username in chat
-	 */
-	public IChatComponent getDisplayName() {
-		return (IChatComponent) (this.hasCustomName() ? new ChatComponentText(this.getName())
-				: new ChatComponentTranslation(this.getName(), new Object[0]));
-	}
+    public String getName()
+    {
+        return "Result";
+    }
 
-	/**+
-	 * Removes up to a specified number of items from an inventory
-	 * slot and returns them in a new stack.
-	 */
-	public ItemStack decrStackSize(int var1, int var2) {
-		if (this.stackResult[0] != null) {
-			ItemStack itemstack = this.stackResult[0];
-			this.stackResult[0] = null;
-			return itemstack;
-		} else {
-			return null;
-		}
-	}
+    public boolean hasCustomName()
+    {
+        return false;
+    }
 
-	/**+
-	 * Removes a stack from the given slot and returns it.
-	 */
-	public ItemStack removeStackFromSlot(int var1) {
-		if (this.stackResult[0] != null) {
-			ItemStack itemstack = this.stackResult[0];
-			this.stackResult[0] = null;
-			return itemstack;
-		} else {
-			return null;
-		}
-	}
+    public ITextComponent getDisplayName()
+    {
+        return (ITextComponent)(this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName(), new Object[0]));
+    }
 
-	/**+
-	 * Sets the given item stack to the specified slot in the
-	 * inventory (can be crafting or armor sections).
-	 */
-	public void setInventorySlotContents(int var1, ItemStack itemstack) {
-		this.stackResult[0] = itemstack;
-	}
+    public ItemStack decrStackSize(int index, int count)
+    {
+        return ItemStackHelper.getAndRemove(this.stackResult, 0);
+    }
 
-	/**+
-	 * Returns the maximum stack size for a inventory slot. Seems to
-	 * always be 64, possibly will be extended.
-	 */
-	public int getInventoryStackLimit() {
-		return 64;
-	}
+    public ItemStack removeStackFromSlot(int index)
+    {
+        return ItemStackHelper.getAndRemove(this.stackResult, 0);
+    }
 
-	/**+
-	 * For tile entities, ensures the chunk containing the tile
-	 * entity is saved to disk later - the game won't think it
-	 * hasn't changed and skip it.
-	 */
-	public void markDirty() {
-	}
+    public void setInventorySlotContents(int index, ItemStack stack)
+    {
+        this.stackResult.set(0, stack);
+    }
 
-	/**+
-	 * Do not make give this method the name canInteractWith because
-	 * it clashes with Container
-	 */
-	public boolean isUseableByPlayer(EntityPlayer var1) {
-		return true;
-	}
+    public int getInventoryStackLimit()
+    {
+        return 64;
+    }
 
-	public void openInventory(EntityPlayer var1) {
-	}
+    public void markDirty()
+    {
+    }
 
-	public void closeInventory(EntityPlayer var1) {
-	}
+    public boolean isUsableByPlayer(EntityPlayer player)
+    {
+        return true;
+    }
 
-	/**+
-	 * Returns true if automation is allowed to insert the given
-	 * stack (ignoring stack size) into the given slot.
-	 */
-	public boolean isItemValidForSlot(int var1, ItemStack var2) {
-		return true;
-	}
+    public void openInventory(EntityPlayer player)
+    {
+    }
 
-	public int getField(int var1) {
-		return 0;
-	}
+    public void closeInventory(EntityPlayer player)
+    {
+    }
 
-	public void setField(int var1, int var2) {
-	}
+    public boolean isItemValidForSlot(int index, ItemStack stack)
+    {
+        return true;
+    }
 
-	public int getFieldCount() {
-		return 0;
-	}
+    public int getField(int id)
+    {
+        return 0;
+    }
 
-	public void clear() {
-		for (int i = 0; i < this.stackResult.length; ++i) {
-			this.stackResult[i] = null;
-		}
+    public void setField(int id, int value)
+    {
+    }
 
-	}
+    public int getFieldCount()
+    {
+        return 0;
+    }
+
+    public void clear()
+    {
+        this.stackResult.clear();
+    }
+
+    public void setRecipeUsed(@Nullable IRecipe p_193056_1_)
+    {
+        this.recipeUsed = p_193056_1_;
+    }
+
+    @Nullable
+    public IRecipe getRecipeUsed()
+    {
+        return this.recipeUsed;
+    }
 }

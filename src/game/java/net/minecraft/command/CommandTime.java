@@ -1,132 +1,124 @@
 package net.minecraft.command;
 
+import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class CommandTime extends CommandBase {
+public class CommandTime extends CommandBase
+{
+    public String getName()
+    {
+        return "time";
+    }
 
-	/**+
-	 * Gets the name of the command
-	 */
-	public String getCommandName() {
-		return "time";
-	}
+    public int getRequiredPermissionLevel()
+    {
+        return 2;
+    }
 
-	/**+
-	 * Return the required permission level for this command.
-	 */
-	public int getRequiredPermissionLevel() {
-		return 2;
-	}
+    public String getUsage(ICommandSender sender)
+    {
+        return "commands.time.usage";
+    }
 
-	/**+
-	 * Gets the usage string for the command.
-	 */
-	public String getCommandUsage(ICommandSender var1) {
-		return "commands.time.usage";
-	}
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
+    {
+        if (args.length > 1)
+        {
+            if ("set".equals(args[0]))
+            {
+                int i1;
 
-	/**+
-	 * Callback when the command is invoked
-	 */
-	public void processCommand(ICommandSender parICommandSender, String[] parArrayOfString) throws CommandException {
-		if (parArrayOfString.length > 1) {
-			if (parArrayOfString[0].equals("set")) {
-				int l;
-				if (parArrayOfString[1].equals("day")) {
-					l = 1000;
-				} else if (parArrayOfString[1].equals("night")) {
-					l = 13000;
-				} else {
-					l = parseInt(parArrayOfString[1], 0);
-				}
+                if ("day".equals(args[1]))
+                {
+                    i1 = 1000;
+                }
+                else if ("night".equals(args[1]))
+                {
+                    i1 = 13000;
+                }
+                else
+                {
+                    i1 = parseInt(args[1], 0);
+                }
 
-				this.setTime(parICommandSender, l);
-				notifyOperators(parICommandSender, this, "commands.time.set", new Object[] { Integer.valueOf(l) });
-				return;
-			}
+                this.setAllWorldTimes(server, i1);
+                notifyCommandListener(sender, this, "commands.time.set", new Object[] {i1});
+                return;
+            }
 
-			if (parArrayOfString[0].equals("add")) {
-				int k = parseInt(parArrayOfString[1], 0);
-				this.addTime(parICommandSender, k);
-				notifyOperators(parICommandSender, this, "commands.time.added", new Object[] { Integer.valueOf(k) });
-				return;
-			}
+            if ("add".equals(args[0]))
+            {
+                int l = parseInt(args[1], 0);
+                this.incrementAllWorldTimes(server, l);
+                notifyCommandListener(sender, this, "commands.time.added", new Object[] {l});
+                return;
+            }
 
-			if (parArrayOfString[0].equals("query")) {
-				if (parArrayOfString[1].equals("daytime")) {
-					int j = (int) (parICommandSender.getEntityWorld().getWorldTime() % 2147483647L);
-					parICommandSender.setCommandStat(CommandResultStats.Type.QUERY_RESULT, j);
-					notifyOperators(parICommandSender, this, "commands.time.query",
-							new Object[] { Integer.valueOf(j) });
-					return;
-				}
+            if ("query".equals(args[0]))
+            {
+                if ("daytime".equals(args[1]))
+                {
+                    int k = (int)(sender.getEntityWorld().getWorldTime() % 24000L);
+                    sender.setCommandStat(CommandResultStats.Type.QUERY_RESULT, k);
+                    notifyCommandListener(sender, this, "commands.time.query", new Object[] {k});
+                    return;
+                }
 
-				if (parArrayOfString[1].equals("gametime")) {
-					int i = (int) (parICommandSender.getEntityWorld().getTotalWorldTime() % 2147483647L);
-					parICommandSender.setCommandStat(CommandResultStats.Type.QUERY_RESULT, i);
-					notifyOperators(parICommandSender, this, "commands.time.query",
-							new Object[] { Integer.valueOf(i) });
-					return;
-				}
-			}
-		}
+                if ("day".equals(args[1]))
+                {
+                    int j = (int)(sender.getEntityWorld().getWorldTime() / 24000L % 2147483647L);
+                    sender.setCommandStat(CommandResultStats.Type.QUERY_RESULT, j);
+                    notifyCommandListener(sender, this, "commands.time.query", new Object[] {j});
+                    return;
+                }
 
-		throw new WrongUsageException("commands.time.usage", new Object[0]);
-	}
+                if ("gametime".equals(args[1]))
+                {
+                    int i = (int)(sender.getEntityWorld().getTotalWorldTime() % 2147483647L);
+                    sender.setCommandStat(CommandResultStats.Type.QUERY_RESULT, i);
+                    notifyCommandListener(sender, this, "commands.time.query", new Object[] {i});
+                    return;
+                }
+            }
+        }
 
-	/**+
-	 * Return a list of options when the user types TAB
-	 */
-	public List<String> addTabCompletionOptions(ICommandSender var1, String[] astring, BlockPos var3) {
-		return astring.length == 1 ? getListOfStringsMatchingLastWord(astring, new String[] { "set", "add", "query" })
-				: (astring.length == 2 && astring[0].equals("set")
-						? getListOfStringsMatchingLastWord(astring, new String[] { "day", "night" })
-						: (astring.length == 2 && astring[0].equals("query")
-								? getListOfStringsMatchingLastWord(astring, new String[] { "daytime", "gametime" })
-								: null));
-	}
+        throw new WrongUsageException("commands.time.usage", new Object[0]);
+    }
 
-	/**+
-	 * Set the time in the server object.
-	 */
-	protected void setTime(ICommandSender parICommandSender, int parInt1) {
-		for (int i = 0; i < MinecraftServer.getServer().worldServers.length; ++i) {
-			MinecraftServer.getServer().worldServers[i].setWorldTime((long) parInt1);
-		}
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos)
+    {
+        if (args.length == 1)
+        {
+            return getListOfStringsMatchingLastWord(args, new String[] {"set", "add", "query"});
+        }
+        else if (args.length == 2 && "set".equals(args[0]))
+        {
+            return getListOfStringsMatchingLastWord(args, new String[] {"day", "night"});
+        }
+        else
+        {
+            return args.length == 2 && "query".equals(args[0]) ? getListOfStringsMatchingLastWord(args, new String[] {"daytime", "gametime", "day"}) : Collections.emptyList();
+        }
+    }
 
-	}
+    protected void setAllWorldTimes(MinecraftServer server, int time)
+    {
+        for (int i = 0; i < server.worlds.length; ++i)
+        {
+            server.worlds[i].setWorldTime((long)time);
+        }
+    }
 
-	/**+
-	 * Adds (or removes) time in the server object.
-	 */
-	protected void addTime(ICommandSender parICommandSender, int parInt1) {
-		for (int i = 0; i < MinecraftServer.getServer().worldServers.length; ++i) {
-			WorldServer worldserver = MinecraftServer.getServer().worldServers[i];
-			worldserver.setWorldTime(worldserver.getWorldTime() + (long) parInt1);
-		}
-
-	}
+    protected void incrementAllWorldTimes(MinecraftServer server, int amount)
+    {
+        for (int i = 0; i < server.worlds.length; ++i)
+        {
+            WorldServer worldserver = server.worlds[i];
+            worldserver.setWorldTime(worldserver.getWorldTime() + (long)amount);
+        }
+    }
 }

@@ -1,94 +1,118 @@
 package net.minecraft.pathfinding;
 
-import net.minecraft.util.MathHelper;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class PathPoint {
-	public final int xCoord;
-	public final int yCoord;
-	public final int zCoord;
-	private final int hash;
-	int index = -1;
-	float totalPathDistance;
-	float distanceToNext;
-	float distanceToTarget;
-	PathPoint previous;
-	public boolean visited;
+public class PathPoint
+{
+    public final int x;
+    public final int y;
+    public final int z;
+    private final int hash;
+    public int index = -1;
+    public float totalPathDistance;
+    public float distanceToNext;
+    public float distanceToTarget;
+    public PathPoint previous;
+    public boolean visited;
+    public float distanceFromOrigin;
+    public float cost;
+    public float costMalus;
+    public PathNodeType nodeType = PathNodeType.BLOCKED;
 
-	public PathPoint(int x, int y, int z) {
-		this.xCoord = x;
-		this.yCoord = y;
-		this.zCoord = z;
-		this.hash = makeHash(x, y, z);
-	}
+    public PathPoint(int x, int y, int z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.hash = makeHash(x, y, z);
+    }
 
-	public static int makeHash(int x, int y, int z) {
-		return y & 255 | (x & 32767) << 8 | (z & 32767) << 24 | (x < 0 ? Integer.MIN_VALUE : 0)
-				| (z < 0 ? '\u8000' : 0);
-	}
+    public PathPoint cloneMove(int x, int y, int z)
+    {
+        PathPoint pathpoint = new PathPoint(x, y, z);
+        pathpoint.index = this.index;
+        pathpoint.totalPathDistance = this.totalPathDistance;
+        pathpoint.distanceToNext = this.distanceToNext;
+        pathpoint.distanceToTarget = this.distanceToTarget;
+        pathpoint.previous = this.previous;
+        pathpoint.visited = this.visited;
+        pathpoint.distanceFromOrigin = this.distanceFromOrigin;
+        pathpoint.cost = this.cost;
+        pathpoint.costMalus = this.costMalus;
+        pathpoint.nodeType = this.nodeType;
+        return pathpoint;
+    }
 
-	/**+
-	 * Returns the linear distance to another path point
-	 */
-	public float distanceTo(PathPoint pathpointIn) {
-		float f = (float) (pathpointIn.xCoord - this.xCoord);
-		float f1 = (float) (pathpointIn.yCoord - this.yCoord);
-		float f2 = (float) (pathpointIn.zCoord - this.zCoord);
-		return MathHelper.sqrt_float(f * f + f1 * f1 + f2 * f2);
-	}
+    public static int makeHash(int x, int y, int z)
+    {
+        return y & 255 | (x & 32767) << 8 | (z & 32767) << 24 | (x < 0 ? Integer.MIN_VALUE : 0) | (z < 0 ? 32768 : 0);
+    }
 
-	/**+
-	 * Returns the squared distance to another path point
-	 */
-	public float distanceToSquared(PathPoint pathpointIn) {
-		float f = (float) (pathpointIn.xCoord - this.xCoord);
-		float f1 = (float) (pathpointIn.yCoord - this.yCoord);
-		float f2 = (float) (pathpointIn.zCoord - this.zCoord);
-		return f * f + f1 * f1 + f2 * f2;
-	}
+    public float distanceTo(PathPoint pathpointIn)
+    {
+        float f = (float)(pathpointIn.x - this.x);
+        float f1 = (float)(pathpointIn.y - this.y);
+        float f2 = (float)(pathpointIn.z - this.z);
+        return MathHelper.sqrt(f * f + f1 * f1 + f2 * f2);
+    }
 
-	public boolean equals(Object object) {
-		if (!(object instanceof PathPoint)) {
-			return false;
-		} else {
-			PathPoint pathpoint = (PathPoint) object;
-			return this.hash == pathpoint.hash && this.xCoord == pathpoint.xCoord && this.yCoord == pathpoint.yCoord
-					&& this.zCoord == pathpoint.zCoord;
-		}
-	}
+    public float distanceToSquared(PathPoint pathpointIn)
+    {
+        float f = (float)(pathpointIn.x - this.x);
+        float f1 = (float)(pathpointIn.y - this.y);
+        float f2 = (float)(pathpointIn.z - this.z);
+        return f * f + f1 * f1 + f2 * f2;
+    }
 
-	public int hashCode() {
-		return this.hash;
-	}
+    public float distanceManhattan(PathPoint p_186281_1_)
+    {
+        float f = (float)Math.abs(p_186281_1_.x - this.x);
+        float f1 = (float)Math.abs(p_186281_1_.y - this.y);
+        float f2 = (float)Math.abs(p_186281_1_.z - this.z);
+        return f + f1 + f2;
+    }
 
-	/**+
-	 * Returns true if this point has already been assigned to a
-	 * path
-	 */
-	public boolean isAssigned() {
-		return this.index >= 0;
-	}
+    public boolean equals(Object p_equals_1_)
+    {
+        if (!(p_equals_1_ instanceof PathPoint))
+        {
+            return false;
+        }
+        else
+        {
+            PathPoint pathpoint = (PathPoint)p_equals_1_;
+            return this.hash == pathpoint.hash && this.x == pathpoint.x && this.y == pathpoint.y && this.z == pathpoint.z;
+        }
+    }
 
-	public String toString() {
-		return this.xCoord + ", " + this.yCoord + ", " + this.zCoord;
-	}
+    public int hashCode()
+    {
+        return this.hash;
+    }
+
+    public boolean isAssigned()
+    {
+        return this.index >= 0;
+    }
+
+    public String toString()
+    {
+        return this.x + ", " + this.y + ", " + this.z;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static PathPoint createFromBuffer(PacketBuffer buf)
+    {
+        PathPoint pathpoint = new PathPoint(buf.readInt(), buf.readInt(), buf.readInt());
+        pathpoint.distanceFromOrigin = buf.readFloat();
+        pathpoint.cost = buf.readFloat();
+        pathpoint.costMalus = buf.readFloat();
+        pathpoint.visited = buf.readBoolean();
+        pathpoint.nodeType = PathNodeType.values()[buf.readInt()];
+        pathpoint.distanceToTarget = buf.readFloat();
+        return pathpoint;
+    }
 }

@@ -1,131 +1,153 @@
 package net.minecraft.entity.ai;
 
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.math.AxisAlignedBB;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class EntityAINearestAttackableTarget<T extends EntityLivingBase> extends EntityAITarget {
-	protected final Class<T> targetClass;
-	private final int targetChance;
-	protected final EntityAINearestAttackableTarget.Sorter theNearestAttackableTargetSorter;
-	protected Predicate<? super T> targetEntitySelector;
-	protected EntityLivingBase targetEntity;
+public class EntityAINearestAttackableTarget<T extends EntityLivingBase> extends EntityAITarget
+{
+    protected final Class<T> targetClass;
+    private final int targetChance;
+    protected final EntityAINearestAttackableTarget.Sorter sorter;
+    protected final Predicate <? super T > targetEntitySelector;
+    protected T targetEntity;
 
-	public EntityAINearestAttackableTarget(EntityCreature creature, Class<T> classTarget, boolean checkSight) {
-		this(creature, classTarget, checkSight, false);
-	}
+    public EntityAINearestAttackableTarget(EntityCreature creature, Class<T> classTarget, boolean checkSight)
+    {
+        this(creature, classTarget, checkSight, false);
+    }
 
-	public EntityAINearestAttackableTarget(EntityCreature creature, Class<T> classTarget, boolean checkSight,
-			boolean onlyNearby) {
-		this(creature, classTarget, 10, checkSight, onlyNearby, (Predicate<? super T>) null);
-	}
+    public EntityAINearestAttackableTarget(EntityCreature creature, Class<T> classTarget, boolean checkSight, boolean onlyNearby)
+    {
+        this(creature, classTarget, 10, checkSight, onlyNearby, (Predicate)null);
+    }
 
-	public EntityAINearestAttackableTarget(EntityCreature creature, Class<T> classTarget, int chance,
-			boolean checkSight, boolean onlyNearby, final Predicate<? super T> targetSelector) {
-		super(creature, checkSight, onlyNearby);
-		this.targetClass = classTarget;
-		this.targetChance = chance;
-		this.theNearestAttackableTargetSorter = new EntityAINearestAttackableTarget.Sorter(creature);
-		this.setMutexBits(1);
-		this.targetEntitySelector = new Predicate<T>() {
-			public boolean apply(T entitylivingbase) {
-				if (targetSelector != null && !targetSelector.apply(entitylivingbase)) {
-					return false;
-				} else {
-					if (entitylivingbase instanceof EntityPlayer) {
-						double d0 = EntityAINearestAttackableTarget.this.getTargetDistance();
-						if (entitylivingbase.isSneaking()) {
-							d0 *= 0.800000011920929D;
-						}
+    public EntityAINearestAttackableTarget(EntityCreature creature, Class<T> classTarget, int chance, boolean checkSight, boolean onlyNearby, @Nullable final Predicate <? super T > targetSelector)
+    {
+        super(creature, checkSight, onlyNearby);
+        this.targetClass = classTarget;
+        this.targetChance = chance;
+        this.sorter = new EntityAINearestAttackableTarget.Sorter(creature);
+        this.setMutexBits(1);
+        this.targetEntitySelector = new Predicate<T>()
+        {
+            public boolean apply(@Nullable T p_apply_1_)
+            {
+                if (p_apply_1_ == null)
+                {
+                    return false;
+                }
+                else if (targetSelector != null && !targetSelector.apply(p_apply_1_))
+                {
+                    return false;
+                }
+                else
+                {
+                    return !EntitySelectors.NOT_SPECTATING.apply(p_apply_1_) ? false : EntityAINearestAttackableTarget.this.isSuitableTarget(p_apply_1_, false);
+                }
+            }
+        };
+    }
 
-						if (entitylivingbase.isInvisible()) {
-							float f = ((EntityPlayer) entitylivingbase).getArmorVisibility();
-							if (f < 0.1F) {
-								f = 0.1F;
-							}
+    public boolean shouldExecute()
+    {
+        if (this.targetChance > 0 && this.taskOwner.getRNG().nextInt(this.targetChance) != 0)
+        {
+            return false;
+        }
+        else if (this.targetClass != EntityPlayer.class && this.targetClass != EntityPlayerMP.class)
+        {
+            List<T> list = this.taskOwner.world.<T>getEntitiesWithinAABB(this.targetClass, this.getTargetableArea(this.getTargetDistance()), this.targetEntitySelector);
 
-							d0 *= (double) (0.7F * f);
-						}
+            if (list.isEmpty())
+            {
+                return false;
+            }
+            else
+            {
+                Collections.sort(list, this.sorter);
+                this.targetEntity = list.get(0);
+                return true;
+            }
+        }
+        else
+        {
+            this.targetEntity = (T)this.taskOwner.world.getNearestAttackablePlayer(this.taskOwner.posX, this.taskOwner.posY + (double)this.taskOwner.getEyeHeight(), this.taskOwner.posZ, this.getTargetDistance(), this.getTargetDistance(), new Function<EntityPlayer, Double>()
+            {
+                @Nullable
+                public Double apply(@Nullable EntityPlayer p_apply_1_)
+                {
+                    ItemStack itemstack = p_apply_1_.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
 
-						if ((double) entitylivingbase
-								.getDistanceToEntity(EntityAINearestAttackableTarget.this.taskOwner) > d0) {
-							return false;
-						}
-					}
+                    if (itemstack.getItem() == Items.SKULL)
+                    {
+                        int i = itemstack.getItemDamage();
+                        boolean flag = EntityAINearestAttackableTarget.this.taskOwner instanceof EntitySkeleton && i == 0;
+                        boolean flag1 = EntityAINearestAttackableTarget.this.taskOwner instanceof EntityZombie && i == 2;
+                        boolean flag2 = EntityAINearestAttackableTarget.this.taskOwner instanceof EntityCreeper && i == 4;
 
-					return EntityAINearestAttackableTarget.this.isSuitableTarget(entitylivingbase, false);
-				}
-			}
-		};
-	}
+                        if (flag || flag1 || flag2)
+                        {
+                            return 0.5D;
+                        }
+                    }
 
-	/**+
-	 * Returns whether the EntityAIBase should begin execution.
-	 */
-	public boolean shouldExecute() {
-		if (this.targetChance > 0 && this.taskOwner.getRNG().nextInt(this.targetChance) != 0) {
-			return false;
-		} else {
-			double d0 = this.getTargetDistance();
-			List list = this.taskOwner.worldObj.getEntitiesWithinAABB(this.targetClass,
-					this.taskOwner.getEntityBoundingBox().expand(d0, 4.0D, d0),
-					Predicates.and(this.targetEntitySelector, EntitySelectors.NOT_SPECTATING));
-			Collections.sort(list, this.theNearestAttackableTargetSorter);
-			if (list.isEmpty()) {
-				return false;
-			} else {
-				this.targetEntity = (EntityLivingBase) list.get(0);
-				return true;
-			}
-		}
-	}
+                    return 1.0D;
+                }
+            }, (Predicate<EntityPlayer>)this.targetEntitySelector);
+            return this.targetEntity != null;
+        }
+    }
 
-	/**+
-	 * Execute a one shot task or start executing a continuous task
-	 */
-	public void startExecuting() {
-		this.taskOwner.setAttackTarget(this.targetEntity);
-		super.startExecuting();
-	}
+    protected AxisAlignedBB getTargetableArea(double targetDistance)
+    {
+        return this.taskOwner.getEntityBoundingBox().grow(targetDistance, 4.0D, targetDistance);
+    }
 
-	public static class Sorter implements Comparator<Entity> {
-		private final Entity theEntity;
+    public void startExecuting()
+    {
+        this.taskOwner.setAttackTarget(this.targetEntity);
+        super.startExecuting();
+    }
 
-		public Sorter(Entity theEntityIn) {
-			this.theEntity = theEntityIn;
-		}
+    public static class Sorter implements Comparator<Entity>
+        {
+            private final Entity entity;
 
-		public int compare(Entity entity, Entity entity1) {
-			double d0 = this.theEntity.getDistanceSqToEntity(entity);
-			double d1 = this.theEntity.getDistanceSqToEntity(entity1);
-			return d0 < d1 ? -1 : (d0 > d1 ? 1 : 0);
-		}
-	}
+            public Sorter(Entity entityIn)
+            {
+                this.entity = entityIn;
+            }
+
+            public int compare(Entity p_compare_1_, Entity p_compare_2_)
+            {
+                double d0 = this.entity.getDistanceSq(p_compare_1_);
+                double d1 = this.entity.getDistanceSq(p_compare_2_);
+
+                if (d0 < d1)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return d0 > d1 ? 1 : 0;
+                }
+            }
+        }
 }

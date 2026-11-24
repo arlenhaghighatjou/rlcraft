@@ -1,49 +1,79 @@
 package net.minecraft.util;
 
-import net.lax1dude.eaglercraft.v1_8.EagRuntime;
-import net.lax1dude.eaglercraft.v1_8.futures.ExecutionException;
-import net.lax1dude.eaglercraft.v1_8.futures.FutureTask;
-import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import javax.annotation.Nullable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.logging.log4j.Logger;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class Util {
-	public static Util.EnumOS getOSType() {
-		return EagRuntime.getPlatformOS().getMinecraftEnum();
-	}
+public class Util
+{
+    @SideOnly(Side.CLIENT)
+    public static Util.EnumOS getOSType()
+    {
+        String s = System.getProperty("os.name").toLowerCase(Locale.ROOT);
 
-	public static <V> V func_181617_a(FutureTask<V> parFutureTask, Logger parLogger) {
-		try {
-			parFutureTask.run();
-			return (V) parFutureTask.get();
-		} catch (ExecutionException executionexception) {
-			parLogger.fatal("Error executing task", executionexception);
-		} catch (InterruptedException interruptedexception) {
-			parLogger.fatal("Error executing task", interruptedexception);
-		}
+        if (s.contains("win"))
+        {
+            return Util.EnumOS.WINDOWS;
+        }
+        else if (s.contains("mac"))
+        {
+            return Util.EnumOS.OSX;
+        }
+        else if (s.contains("solaris"))
+        {
+            return Util.EnumOS.SOLARIS;
+        }
+        else if (s.contains("sunos"))
+        {
+            return Util.EnumOS.SOLARIS;
+        }
+        else if (s.contains("linux"))
+        {
+            return Util.EnumOS.LINUX;
+        }
+        else
+        {
+            return s.contains("unix") ? Util.EnumOS.LINUX : Util.EnumOS.UNKNOWN;
+        }
+    }
 
-		return (V) null;
-	}
+    @Nullable
+    public static <V> V runTask(FutureTask<V> task, Logger logger)
+    {
+        try
+        {
+            task.run();
+            return task.get();
+        }
+        catch (ExecutionException executionexception)
+        {
+            logger.fatal("Error executing task", (Throwable)executionexception);
+        }
+        catch (InterruptedException interruptedexception)
+        {
+            logger.fatal("Error executing task", (Throwable)interruptedexception);
+        }
 
-	public static enum EnumOS {
-		LINUX, SOLARIS, WINDOWS, OSX, UNKNOWN;
-	}
+        return (V)null;
+    }
+
+    public static <T> T getLastElement(List<T> list)
+    {
+        return list.get(list.size() - 1);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static enum EnumOS
+    {
+        LINUX,
+        SOLARIS,
+        WINDOWS,
+        OSX,
+        UNKNOWN;
+    }
 }

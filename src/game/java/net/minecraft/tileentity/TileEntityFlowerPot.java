@@ -1,85 +1,87 @@
 package net.minecraft.tileentity;
 
+import javax.annotation.Nullable;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.datafix.DataFixer;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class TileEntityFlowerPot extends TileEntity {
-	private Item flowerPotItem;
-	private int flowerPotData;
+public class TileEntityFlowerPot extends TileEntity
+{
+    private Item flowerPotItem;
+    private int flowerPotData;
 
-	public TileEntityFlowerPot() {
-	}
+    public TileEntityFlowerPot()
+    {
+    }
 
-	public TileEntityFlowerPot(Item potItem, int potData) {
-		this.flowerPotItem = potItem;
-		this.flowerPotData = potData;
-	}
+    public TileEntityFlowerPot(Item potItem, int potData)
+    {
+        this.flowerPotItem = potItem;
+        this.flowerPotData = potData;
+    }
 
-	public void writeToNBT(NBTTagCompound nbttagcompound) {
-		super.writeToNBT(nbttagcompound);
-		ResourceLocation resourcelocation = (ResourceLocation) Item.itemRegistry.getNameForObject(this.flowerPotItem);
-		nbttagcompound.setString("Item", resourcelocation == null ? "" : resourcelocation.toString());
-		nbttagcompound.setInteger("Data", this.flowerPotData);
-	}
+    public static void registerFixesFlowerPot(DataFixer fixer)
+    {
+    }
 
-	public void readFromNBT(NBTTagCompound nbttagcompound) {
-		super.readFromNBT(nbttagcompound);
-		if (nbttagcompound.hasKey("Item", 8)) {
-			this.flowerPotItem = Item.getByNameOrId(nbttagcompound.getString("Item"));
-		} else {
-			this.flowerPotItem = Item.getItemById(nbttagcompound.getInteger("Item"));
-		}
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
+        ResourceLocation resourcelocation = Item.REGISTRY.getNameForObject(this.flowerPotItem);
+        compound.setString("Item", resourcelocation == null ? "" : resourcelocation.toString());
+        compound.setInteger("Data", this.flowerPotData);
+        return compound;
+    }
 
-		this.flowerPotData = nbttagcompound.getInteger("Data");
-	}
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
 
-	/**+
-	 * Allows for a specialized description packet to be created.
-	 * This is often used to sync tile entity data from the server
-	 * to the client easily. For example this is used by signs to
-	 * synchronise the text to be displayed.
-	 */
-	public Packet getDescriptionPacket() {
-		NBTTagCompound nbttagcompound = new NBTTagCompound();
-		this.writeToNBT(nbttagcompound);
-		nbttagcompound.removeTag("Item");
-		nbttagcompound.setInteger("Item", Item.getIdFromItem(this.flowerPotItem));
-		return new S35PacketUpdateTileEntity(this.pos, 5, nbttagcompound);
-	}
+        if (compound.hasKey("Item", 8))
+        {
+            this.flowerPotItem = Item.getByNameOrId(compound.getString("Item"));
+        }
+        else
+        {
+            this.flowerPotItem = Item.getItemById(compound.getInteger("Item"));
+        }
 
-	public void setFlowerPotData(Item potItem, int potData) {
-		this.flowerPotItem = potItem;
-		this.flowerPotData = potData;
-	}
+        this.flowerPotData = compound.getInteger("Data");
+    }
 
-	public Item getFlowerPotItem() {
-		return this.flowerPotItem;
-	}
+    @Nullable
+    public SPacketUpdateTileEntity getUpdatePacket()
+    {
+        return new SPacketUpdateTileEntity(this.pos, 5, this.getUpdateTag());
+    }
 
-	public int getFlowerPotData() {
-		return this.flowerPotData;
-	}
+    public NBTTagCompound getUpdateTag()
+    {
+        return this.writeToNBT(new NBTTagCompound());
+    }
+
+    public void setItemStack(ItemStack stack)
+    {
+        this.flowerPotItem = stack.getItem();
+        this.flowerPotData = stack.getMetadata();
+    }
+
+    public ItemStack getFlowerItemStack()
+    {
+        return this.flowerPotItem == null ? ItemStack.EMPTY : new ItemStack(this.flowerPotItem, 1, this.flowerPotData);
+    }
+
+    @Nullable
+    public Item getFlowerPotItem()
+    {
+        return this.flowerPotItem;
+    }
+
+    public int getFlowerPotData()
+    {
+        return this.flowerPotData;
+    }
 }

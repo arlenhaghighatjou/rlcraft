@@ -1,107 +1,222 @@
 package net.minecraft.tileentity;
 
-import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import io.netty.buffer.ByteBuf;
+import javax.annotation.Nullable;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockCommandBlock;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandResultStats;
-import net.minecraft.command.server.CommandBlockLogic;
-import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.Vec3;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class TileEntityCommandBlock extends TileEntity {
-	private final CommandBlockLogic commandBlockLogic = new CommandBlockLogic() {
-		public BlockPos getPosition() {
-			return TileEntityCommandBlock.this.pos;
-		}
+public class TileEntityCommandBlock extends TileEntity
+{
+    private boolean powered;
+    private boolean auto;
+    private boolean conditionMet;
+    private boolean sendToClient;
+    private final CommandBlockBaseLogic commandBlockLogic = new CommandBlockBaseLogic()
+    {
+        public BlockPos getPosition()
+        {
+            return TileEntityCommandBlock.this.pos;
+        }
+        public Vec3d getPositionVector()
+        {
+            return new Vec3d((double)TileEntityCommandBlock.this.pos.getX() + 0.5D, (double)TileEntityCommandBlock.this.pos.getY() + 0.5D, (double)TileEntityCommandBlock.this.pos.getZ() + 0.5D);
+        }
+        public World getEntityWorld()
+        {
+            return TileEntityCommandBlock.this.getWorld();
+        }
+        public void setCommand(String command)
+        {
+            super.setCommand(command);
+            TileEntityCommandBlock.this.markDirty();
+        }
+        public void updateCommand()
+        {
+            IBlockState iblockstate = TileEntityCommandBlock.this.world.getBlockState(TileEntityCommandBlock.this.pos);
+            TileEntityCommandBlock.this.getWorld().notifyBlockUpdate(TileEntityCommandBlock.this.pos, iblockstate, iblockstate, 3);
+        }
+        @SideOnly(Side.CLIENT)
+        public int getCommandBlockType()
+        {
+            return 0;
+        }
+        @SideOnly(Side.CLIENT)
+        public void fillInInfo(ByteBuf buf)
+        {
+            buf.writeInt(TileEntityCommandBlock.this.pos.getX());
+            buf.writeInt(TileEntityCommandBlock.this.pos.getY());
+            buf.writeInt(TileEntityCommandBlock.this.pos.getZ());
+        }
+        public MinecraftServer getServer()
+        {
+            return TileEntityCommandBlock.this.world.getMinecraftServer();
+        }
+    };
 
-		public Vec3 getPositionVector() {
-			return new Vec3((double) TileEntityCommandBlock.this.pos.getX() + 0.5D,
-					(double) TileEntityCommandBlock.this.pos.getY() + 0.5D,
-					(double) TileEntityCommandBlock.this.pos.getZ() + 0.5D);
-		}
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
+        this.commandBlockLogic.writeToNBT(compound);
+        compound.setBoolean("powered", this.isPowered());
+        compound.setBoolean("conditionMet", this.isConditionMet());
+        compound.setBoolean("auto", this.isAuto());
+        return compound;
+    }
 
-		public World getEntityWorld() {
-			return TileEntityCommandBlock.this.getWorld();
-		}
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
+        this.commandBlockLogic.readDataFromNBT(compound);
+        this.powered = compound.getBoolean("powered");
+        this.conditionMet = compound.getBoolean("conditionMet");
+        this.setAuto(compound.getBoolean("auto"));
+    }
 
-		public void setCommand(String s) {
-			super.setCommand(s);
-			TileEntityCommandBlock.this.markDirty();
-		}
+    @Nullable
+    public SPacketUpdateTileEntity getUpdatePacket()
+    {
+        if (this.isSendToClient())
+        {
+            this.setSendToClient(false);
+            NBTTagCompound nbttagcompound = this.writeToNBT(new NBTTagCompound());
+            return new SPacketUpdateTileEntity(this.pos, 2, nbttagcompound);
+        }
+        else
+        {
+            return null;
+        }
+    }
 
-		public void updateCommand() {
-			TileEntityCommandBlock.this.getWorld().markBlockForUpdate(TileEntityCommandBlock.this.pos);
-		}
+    public boolean onlyOpsCanSetNbt()
+    {
+        return true;
+    }
 
-		public int func_145751_f() {
-			return 0;
-		}
+    public CommandBlockBaseLogic getCommandBlockLogic()
+    {
+        return this.commandBlockLogic;
+    }
 
-		public void func_145757_a(ByteBuf bytebuf) {
-			bytebuf.writeInt(TileEntityCommandBlock.this.pos.getX());
-			bytebuf.writeInt(TileEntityCommandBlock.this.pos.getY());
-			bytebuf.writeInt(TileEntityCommandBlock.this.pos.getZ());
-		}
+    public CommandResultStats getCommandResultStats()
+    {
+        return this.commandBlockLogic.getCommandResultStats();
+    }
 
-		public Entity getCommandSenderEntity() {
-			return null;
-		}
-	};
+    public void setPowered(boolean poweredIn)
+    {
+        this.powered = poweredIn;
+    }
 
-	public void writeToNBT(NBTTagCompound nbttagcompound) {
-		super.writeToNBT(nbttagcompound);
-		this.commandBlockLogic.writeDataToNBT(nbttagcompound);
-	}
+    public boolean isPowered()
+    {
+        return this.powered;
+    }
 
-	public void readFromNBT(NBTTagCompound nbttagcompound) {
-		super.readFromNBT(nbttagcompound);
-		this.commandBlockLogic.readDataFromNBT(nbttagcompound);
-	}
+    public boolean isAuto()
+    {
+        return this.auto;
+    }
 
-	/**+
-	 * Allows for a specialized description packet to be created.
-	 * This is often used to sync tile entity data from the server
-	 * to the client easily. For example this is used by signs to
-	 * synchronise the text to be displayed.
-	 */
-	public Packet getDescriptionPacket() {
-		NBTTagCompound nbttagcompound = new NBTTagCompound();
-		this.writeToNBT(nbttagcompound);
-		return new S35PacketUpdateTileEntity(this.pos, 2, nbttagcompound);
-	}
+    public void setAuto(boolean autoIn)
+    {
+        boolean flag = this.auto;
+        this.auto = autoIn;
 
-	public boolean func_183000_F() {
-		return true;
-	}
+        if (!flag && autoIn && !this.powered && this.world != null && this.getMode() != TileEntityCommandBlock.Mode.SEQUENCE)
+        {
+            Block block = this.getBlockType();
 
-	public CommandBlockLogic getCommandBlockLogic() {
-		return this.commandBlockLogic;
-	}
+            if (block instanceof BlockCommandBlock)
+            {
+                this.setConditionMet();
+                this.world.scheduleUpdate(this.pos, block, block.tickRate(this.world));
+            }
+        }
+    }
 
-	public CommandResultStats getCommandResultStats() {
-		return this.commandBlockLogic.getCommandResultStats();
-	}
+    public boolean isConditionMet()
+    {
+        return this.conditionMet;
+    }
+
+    public boolean setConditionMet()
+    {
+        this.conditionMet = true;
+
+        if (this.isConditional())
+        {
+            BlockPos blockpos = this.pos.offset(((EnumFacing)this.world.getBlockState(this.pos).getValue(BlockCommandBlock.FACING)).getOpposite());
+
+            if (this.world.getBlockState(blockpos).getBlock() instanceof BlockCommandBlock)
+            {
+                TileEntity tileentity = this.world.getTileEntity(blockpos);
+                this.conditionMet = tileentity instanceof TileEntityCommandBlock && ((TileEntityCommandBlock)tileentity).getCommandBlockLogic().getSuccessCount() > 0;
+            }
+            else
+            {
+                this.conditionMet = false;
+            }
+        }
+
+        return this.conditionMet;
+    }
+
+    public boolean isSendToClient()
+    {
+        return this.sendToClient;
+    }
+
+    public void setSendToClient(boolean p_184252_1_)
+    {
+        this.sendToClient = p_184252_1_;
+    }
+
+    public TileEntityCommandBlock.Mode getMode()
+    {
+        Block block = this.getBlockType();
+
+        if (block == Blocks.COMMAND_BLOCK)
+        {
+            return TileEntityCommandBlock.Mode.REDSTONE;
+        }
+        else if (block == Blocks.REPEATING_COMMAND_BLOCK)
+        {
+            return TileEntityCommandBlock.Mode.AUTO;
+        }
+        else
+        {
+            return block == Blocks.CHAIN_COMMAND_BLOCK ? TileEntityCommandBlock.Mode.SEQUENCE : TileEntityCommandBlock.Mode.REDSTONE;
+        }
+    }
+
+    public boolean isConditional()
+    {
+        IBlockState iblockstate = this.world.getBlockState(this.getPos());
+        return iblockstate.getBlock() instanceof BlockCommandBlock ? ((Boolean)iblockstate.getValue(BlockCommandBlock.CONDITIONAL)).booleanValue() : false;
+    }
+
+    public void validate()
+    {
+        this.blockType = null;
+        super.validate();
+    }
+
+    public static enum Mode
+    {
+        SEQUENCE,
+        AUTO,
+        REDSTONE;
+    }
 }

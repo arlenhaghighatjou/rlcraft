@@ -1,170 +1,214 @@
 package net.minecraft.client.renderer.tileentity;
 
-import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
-
-import net.lax1dude.eaglercraft.v1_8.internal.buffer.FloatBuffer;
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-
-import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
-import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DeferredStateManager;
-import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.ShadersRenderPassFuture;
+import java.nio.FloatBuffer;
+import java.util.Random;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GLAllocation;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntityEndPortal;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class TileEntityEndPortalRenderer extends TileEntitySpecialRenderer<TileEntityEndPortal> {
-	private static final ResourceLocation END_SKY_TEXTURE = new ResourceLocation("textures/environment/end_sky.png");
-	private static final ResourceLocation END_PORTAL_TEXTURE = new ResourceLocation("textures/entity/end_portal.png");
-	private static final EaglercraftRandom field_147527_e = new EaglercraftRandom(31100L);
-	FloatBuffer field_147528_b = GLAllocation.createDirectFloatBuffer(16);
+@SideOnly(Side.CLIENT)
+public class TileEntityEndPortalRenderer extends TileEntitySpecialRenderer<TileEntityEndPortal>
+{
+    private static final ResourceLocation END_SKY_TEXTURE = new ResourceLocation("textures/environment/end_sky.png");
+    private static final ResourceLocation END_PORTAL_TEXTURE = new ResourceLocation("textures/entity/end_portal.png");
+    private static final Random RANDOM = new Random(31100L);
+    private static final FloatBuffer MODELVIEW = GLAllocation.createDirectFloatBuffer(16);
+    private static final FloatBuffer PROJECTION = GLAllocation.createDirectFloatBuffer(16);
+    private final FloatBuffer buffer = GLAllocation.createDirectFloatBuffer(16);
 
-	public void renderTileEntityAt(TileEntityEndPortal var1, double d0, double d1, double d2, float var8, int var9) {
-		if (DeferredStateManager.isInDeferredPass()) {
-			if (!DeferredStateManager.isInParaboloidPass() && !DeferredStateManager.isEnableShadowRender()
-					&& DeferredStateManager.forwardCallbackHandler != null) {
-				DeferredStateManager.forwardCallbackHandler
-						.push(new ShadersRenderPassFuture((float) d0, (float) d1, (float) d2, var8) {
-							@Override
-							public void draw(PassType pass) {
-								if (pass == PassType.MAIN) {
-									DeferredStateManager.reportForwardRenderObjectPosition2(x, y, z);
-								}
-								DeferredStateManager.setDefaultMaterialConstants();
-								DeferredStateManager.setRoughnessConstant(0.3f);
-								DeferredStateManager.setMetalnessConstant(0.3f);
-								DeferredStateManager.setEmissionConstant(0.9f);
-								renderTileEntityAt0(var1, d0, d1, d2, var8, var9);
-								DeferredStateManager.setDefaultMaterialConstants();
-								DeferredStateManager.setHDRTranslucentPassBlendFunc();
-							}
-						});
-			}
-			return;
-		}
-		GlStateManager.enableBlend();
-		renderTileEntityAt0(var1, d0, d1, d2, var8, var9);
-		GlStateManager.disableBlend();
-	}
+    public void render(TileEntityEndPortal te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
+    {
+        GlStateManager.disableLighting();
+        RANDOM.setSeed(31100L);
+        GlStateManager.getFloat(2982, MODELVIEW);
+        GlStateManager.getFloat(2983, PROJECTION);
+        double d0 = x * x + y * y + z * z;
+        int i = this.getPasses(d0);
+        float f = this.getOffset();
+        boolean flag = false;
 
-	private void renderTileEntityAt0(TileEntityEndPortal var1, double d0, double d1, double d2, float var8, int var9) {
-		float f = (float) this.rendererDispatcher.entityX;
-		float f1 = (float) this.rendererDispatcher.entityY;
-		float f2 = (float) this.rendererDispatcher.entityZ;
-		GlStateManager.disableLighting();
-		field_147527_e.setSeed(31100L);
-		float f3 = 0.75F;
+        for (int j = 0; j < i; ++j)
+        {
+            GlStateManager.pushMatrix();
+            float f1 = 2.0F / (float)(18 - j);
 
-		for (int i = 0; i < 16; ++i) {
-			GlStateManager.pushMatrix();
-			float f4 = (float) (16 - i);
-			float f5 = 0.0625F;
-			float f6 = 1.0F / (f4 + 1.0F);
-			if (i == 0) {
-				this.bindTexture(END_SKY_TEXTURE);
-				f6 = 0.1F;
-				f4 = 65.0F;
-				f5 = 0.125F;
-				if (DeferredStateManager.isInDeferredPass()) {
-					DeferredStateManager.setHDRTranslucentPassBlendFunc();
-				} else {
-					GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				}
-			}
+            if (j == 0)
+            {
+                this.bindTexture(END_SKY_TEXTURE);
+                f1 = 0.15F;
+                GlStateManager.enableBlend();
+                GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            }
 
-			if (i >= 1) {
-				this.bindTexture(END_PORTAL_TEXTURE);
-			}
+            if (j >= 1)
+            {
+                this.bindTexture(END_PORTAL_TEXTURE);
+                flag = true;
+                Minecraft.getMinecraft().entityRenderer.setupFogColor(true);
+            }
 
-			if (i == 1) {
-				if (DeferredStateManager.isInDeferredPass()) {
-					GlStateManager.tryBlendFuncSeparate(GL_ONE, GL_ONE, GL_ZERO, GL_ZERO);
-				} else {
-					GlStateManager.blendFunc(GL_ONE, GL_ONE);
-				}
-				f5 = 0.5F;
-			}
+            if (j == 1)
+            {
+                GlStateManager.enableBlend();
+                GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+            }
 
-			float f7 = (float) (-(d1 + (double) f3 - 1.25));
-			float f8 = f7 + (float) ActiveRenderInfo.getPosition().yCoord;
-			float f9 = f7 + f4 + (float) ActiveRenderInfo.getPosition().yCoord;
-			float f10 = f8 / f9;
-			f10 = (float) (d1 + (double) f3) + f10;
-			GlStateManager.translate(f, f10, f2);
-			GlStateManager.texGen(GlStateManager.TexGen.S, GL_OBJECT_LINEAR);
-			GlStateManager.texGen(GlStateManager.TexGen.T, GL_OBJECT_LINEAR);
-			GlStateManager.texGen(GlStateManager.TexGen.R, GL_OBJECT_LINEAR);
-			GlStateManager.texGen(GlStateManager.TexGen.Q, GL_EYE_LINEAR);
-			GlStateManager.func_179105_a(GlStateManager.TexGen.S, GL_OBJECT_PLANE, this.func_147525_a(1.0F, 0.0F, 0.0F, 0.0F));
-			GlStateManager.func_179105_a(GlStateManager.TexGen.T, GL_OBJECT_PLANE, this.func_147525_a(0.0F, 0.0F, 1.0F, 0.0F));
-			GlStateManager.func_179105_a(GlStateManager.TexGen.R, GL_OBJECT_PLANE, this.func_147525_a(0.0F, 0.0F, 0.0F, 1.0F));
-			GlStateManager.func_179105_a(GlStateManager.TexGen.Q, GL_EYE_PLANE, this.func_147525_a(0.0F, 1.0F, 0.0F, 0.0F));
-			GlStateManager.enableTexGen();
-			GlStateManager.popMatrix();
-			GlStateManager.matrixMode(GL_TEXTURE);
-			GlStateManager.pushMatrix();
-			GlStateManager.loadIdentity();
-			GlStateManager.translate(0.0F, (float) (Minecraft.getSystemTime() % 700000L) / 700000.0F, 0.0F);
-			GlStateManager.scale(f5, f5, f5);
-			GlStateManager.translate(0.5F, 0.5F, 0.0F);
-			GlStateManager.rotate((float) (i * i * 4321 + i * 9) * 2.0F, 0.0F, 0.0F, 1.0F);
-			GlStateManager.translate(-0.5F, -0.5F, 0.0F);
-			GlStateManager.translate(-f, -f2, -f1);
-			f8 = f7 + (float) ActiveRenderInfo.getPosition().yCoord;
-			GlStateManager.translate((float) ActiveRenderInfo.getPosition().xCoord * f4 / f8,
-					(float) ActiveRenderInfo.getPosition().zCoord * f4 / f8, -f1);
-			Tessellator tessellator = Tessellator.getInstance();
-			WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-			worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-			float f11 = (field_147527_e.nextFloat() * 0.5F + 0.1F) * f6;
-			float f12 = (field_147527_e.nextFloat() * 0.5F + 0.4F) * f6;
-			float f13 = (field_147527_e.nextFloat() * 0.5F + 0.5F) * f6;
-			if (i == 0) {
-				f11 = f12 = f13 = 1.0F * f6;
-			}
+            GlStateManager.texGen(GlStateManager.TexGen.S, 9216);
+            GlStateManager.texGen(GlStateManager.TexGen.T, 9216);
+            GlStateManager.texGen(GlStateManager.TexGen.R, 9216);
+            GlStateManager.texGen(GlStateManager.TexGen.S, 9474, this.getBuffer(1.0F, 0.0F, 0.0F, 0.0F));
+            GlStateManager.texGen(GlStateManager.TexGen.T, 9474, this.getBuffer(0.0F, 1.0F, 0.0F, 0.0F));
+            GlStateManager.texGen(GlStateManager.TexGen.R, 9474, this.getBuffer(0.0F, 0.0F, 1.0F, 0.0F));
+            GlStateManager.enableTexGenCoord(GlStateManager.TexGen.S);
+            GlStateManager.enableTexGenCoord(GlStateManager.TexGen.T);
+            GlStateManager.enableTexGenCoord(GlStateManager.TexGen.R);
+            GlStateManager.popMatrix();
+            GlStateManager.matrixMode(5890);
+            GlStateManager.pushMatrix();
+            GlStateManager.loadIdentity();
+            GlStateManager.translate(0.5F, 0.5F, 0.0F);
+            GlStateManager.scale(0.5F, 0.5F, 1.0F);
+            float f2 = (float)(j + 1);
+            GlStateManager.translate(17.0F / f2, (2.0F + f2 / 1.5F) * ((float)Minecraft.getSystemTime() % 800000.0F / 800000.0F), 0.0F);
+            GlStateManager.rotate((f2 * f2 * 4321.0F + f2 * 9.0F) * 2.0F, 0.0F, 0.0F, 1.0F);
+            GlStateManager.scale(4.5F - f2 / 4.0F, 4.5F - f2 / 4.0F, 1.0F);
+            GlStateManager.multMatrix(PROJECTION);
+            GlStateManager.multMatrix(MODELVIEW);
+            Tessellator tessellator = Tessellator.getInstance();
+            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
+            float f3 = (RANDOM.nextFloat() * 0.5F + 0.1F) * f1;
+            float f4 = (RANDOM.nextFloat() * 0.5F + 0.4F) * f1;
+            float f5 = (RANDOM.nextFloat() * 0.5F + 0.5F) * f1;
 
-			worldrenderer.pos(d0, d1 + (double) f3, d2).color(f11, f12, f13, 1.0F).endVertex();
-			worldrenderer.pos(d0, d1 + (double) f3, d2 + 1.0D).color(f11, f12, f13, 1.0F).endVertex();
-			worldrenderer.pos(d0 + 1.0D, d1 + (double) f3, d2 + 1.0D).color(f11, f12, f13, 1.0F).endVertex();
-			worldrenderer.pos(d0 + 1.0D, d1 + (double) f3, d2).color(f11, f12, f13, 1.0F).endVertex();
-			tessellator.draw();
-			GlStateManager.popMatrix();
-			GlStateManager.matrixMode(GL_MODELVIEW);
-			this.bindTexture(END_SKY_TEXTURE);
-		}
+            if (te.shouldRenderFace(EnumFacing.SOUTH))
+            {
+                bufferbuilder.pos(x, y, z + 1.0D).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x + 1.0D, y, z + 1.0D).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x + 1.0D, y + 1.0D, z + 1.0D).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x, y + 1.0D, z + 1.0D).color(f3, f4, f5, 1.0F).endVertex();
+            }
 
-		GlStateManager.disableTexGen();
-		GlStateManager.enableLighting();
-	}
+            if (te.shouldRenderFace(EnumFacing.NORTH))
+            {
+                bufferbuilder.pos(x, y + 1.0D, z).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x + 1.0D, y + 1.0D, z).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x + 1.0D, y, z).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x, y, z).color(f3, f4, f5, 1.0F).endVertex();
+            }
 
-	private FloatBuffer func_147525_a(float parFloat1, float parFloat2, float parFloat3, float parFloat4) {
-		this.field_147528_b.clear();
-		this.field_147528_b.put(parFloat1).put(parFloat2).put(parFloat3).put(parFloat4);
-		this.field_147528_b.flip();
-		return this.field_147528_b;
-	}
+            if (te.shouldRenderFace(EnumFacing.EAST))
+            {
+                bufferbuilder.pos(x + 1.0D, y + 1.0D, z).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x + 1.0D, y + 1.0D, z + 1.0D).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x + 1.0D, y, z + 1.0D).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x + 1.0D, y, z).color(f3, f4, f5, 1.0F).endVertex();
+            }
+
+            if (te.shouldRenderFace(EnumFacing.WEST))
+            {
+                bufferbuilder.pos(x, y, z).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x, y, z + 1.0D).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x, y + 1.0D, z + 1.0D).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x, y + 1.0D, z).color(f3, f4, f5, 1.0F).endVertex();
+            }
+
+            if (te.shouldRenderFace(EnumFacing.DOWN))
+            {
+                bufferbuilder.pos(x, y, z).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x + 1.0D, y, z).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x + 1.0D, y, z + 1.0D).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x, y, z + 1.0D).color(f3, f4, f5, 1.0F).endVertex();
+            }
+
+            if (te.shouldRenderFace(EnumFacing.UP))
+            {
+                bufferbuilder.pos(x, y + (double)f, z + 1.0D).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x + 1.0D, y + (double)f, z + 1.0D).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x + 1.0D, y + (double)f, z).color(f3, f4, f5, 1.0F).endVertex();
+                bufferbuilder.pos(x, y + (double)f, z).color(f3, f4, f5, 1.0F).endVertex();
+            }
+
+            tessellator.draw();
+            GlStateManager.popMatrix();
+            GlStateManager.matrixMode(5888);
+            this.bindTexture(END_SKY_TEXTURE);
+        }
+
+        GlStateManager.disableBlend();
+        GlStateManager.disableTexGenCoord(GlStateManager.TexGen.S);
+        GlStateManager.disableTexGenCoord(GlStateManager.TexGen.T);
+        GlStateManager.disableTexGenCoord(GlStateManager.TexGen.R);
+        GlStateManager.enableLighting();
+
+        if (flag)
+        {
+            Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
+        }
+    }
+
+    protected int getPasses(double p_191286_1_)
+    {
+        int i;
+
+        if (p_191286_1_ > 36864.0D)
+        {
+            i = 1;
+        }
+        else if (p_191286_1_ > 25600.0D)
+        {
+            i = 3;
+        }
+        else if (p_191286_1_ > 16384.0D)
+        {
+            i = 5;
+        }
+        else if (p_191286_1_ > 9216.0D)
+        {
+            i = 7;
+        }
+        else if (p_191286_1_ > 4096.0D)
+        {
+            i = 9;
+        }
+        else if (p_191286_1_ > 1024.0D)
+        {
+            i = 11;
+        }
+        else if (p_191286_1_ > 576.0D)
+        {
+            i = 13;
+        }
+        else if (p_191286_1_ > 256.0D)
+        {
+            i = 14;
+        }
+        else
+        {
+            i = 15;
+        }
+
+        return i;
+    }
+
+    protected float getOffset()
+    {
+        return 0.75F;
+    }
+
+    private FloatBuffer getBuffer(float p_147525_1_, float p_147525_2_, float p_147525_3_, float p_147525_4_)
+    {
+        this.buffer.clear();
+        this.buffer.put(p_147525_1_).put(p_147525_2_).put(p_147525_3_).put(p_147525_4_);
+        this.buffer.flip();
+        return this.buffer;
+    }
 }

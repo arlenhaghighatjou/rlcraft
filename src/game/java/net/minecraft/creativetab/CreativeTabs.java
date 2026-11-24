@@ -1,264 +1,331 @@
 package net.minecraft.creativetab;
 
-import java.util.List;
-
+import javax.annotation.Nullable;
 import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public abstract class CreativeTabs {
-	public static final CreativeTabs[] creativeTabArray = new CreativeTabs[12];
-	public static final CreativeTabs tabBlock = new CreativeTabs(0, "buildingBlocks") {
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.brick_block);
-		}
-	};
-	public static final CreativeTabs tabDecorations = new CreativeTabs(1, "decorations") {
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.double_plant);
-		}
+public abstract class CreativeTabs
+{
+    public static CreativeTabs[] CREATIVE_TAB_ARRAY = new CreativeTabs[12];
+    public static final CreativeTabs BUILDING_BLOCKS = new CreativeTabs(0, "buildingBlocks")
+    {
+        @SideOnly(Side.CLIENT)
+        public ItemStack getTabIconItem()
+        {
+            return new ItemStack(Item.getItemFromBlock(Blocks.BRICK_BLOCK));
+        }
+    };
+    public static final CreativeTabs DECORATIONS = new CreativeTabs(1, "decorations")
+    {
+        @SideOnly(Side.CLIENT)
+        public ItemStack getTabIconItem()
+        {
+            return new ItemStack(Item.getItemFromBlock(Blocks.DOUBLE_PLANT), 1, BlockDoublePlant.EnumPlantType.PAEONIA.getMeta());
+        }
+    };
+    public static final CreativeTabs REDSTONE = new CreativeTabs(2, "redstone")
+    {
+        @SideOnly(Side.CLIENT)
+        public ItemStack getTabIconItem()
+        {
+            return new ItemStack(Items.REDSTONE);
+        }
+    };
+    public static final CreativeTabs TRANSPORTATION = new CreativeTabs(3, "transportation")
+    {
+        @SideOnly(Side.CLIENT)
+        public ItemStack getTabIconItem()
+        {
+            return new ItemStack(Item.getItemFromBlock(Blocks.GOLDEN_RAIL));
+        }
+    };
+    public static final CreativeTabs MISC = new CreativeTabs(6, "misc")
+    {
+        @SideOnly(Side.CLIENT)
+        public ItemStack getTabIconItem()
+        {
+            return new ItemStack(Items.LAVA_BUCKET);
+        }
+    };
+    public static final CreativeTabs SEARCH = (new CreativeTabs(5, "search")
+    {
+        @SideOnly(Side.CLIENT)
+        public ItemStack getTabIconItem()
+        {
+            return new ItemStack(Items.COMPASS);
+        }
+    }).setBackgroundImageName("item_search.png");
+    public static final CreativeTabs FOOD = new CreativeTabs(7, "food")
+    {
+        @SideOnly(Side.CLIENT)
+        public ItemStack getTabIconItem()
+        {
+            return new ItemStack(Items.APPLE);
+        }
+    };
+    public static final CreativeTabs TOOLS = (new CreativeTabs(8, "tools")
+    {
+        @SideOnly(Side.CLIENT)
+        public ItemStack getTabIconItem()
+        {
+            return new ItemStack(Items.IRON_AXE);
+        }
+    }).setRelevantEnchantmentTypes(new EnumEnchantmentType[] {EnumEnchantmentType.ALL, EnumEnchantmentType.DIGGER, EnumEnchantmentType.FISHING_ROD, EnumEnchantmentType.BREAKABLE});
+    public static final CreativeTabs COMBAT = (new CreativeTabs(9, "combat")
+    {
+        @SideOnly(Side.CLIENT)
+        public ItemStack getTabIconItem()
+        {
+            return new ItemStack(Items.GOLDEN_SWORD);
+        }
+    }).setRelevantEnchantmentTypes(new EnumEnchantmentType[] {EnumEnchantmentType.ALL, EnumEnchantmentType.ARMOR, EnumEnchantmentType.ARMOR_FEET, EnumEnchantmentType.ARMOR_HEAD, EnumEnchantmentType.ARMOR_LEGS, EnumEnchantmentType.ARMOR_CHEST, EnumEnchantmentType.BOW, EnumEnchantmentType.WEAPON, EnumEnchantmentType.WEARABLE, EnumEnchantmentType.BREAKABLE});
+    public static final CreativeTabs BREWING = new CreativeTabs(10, "brewing")
+    {
+        @SideOnly(Side.CLIENT)
+        public ItemStack getTabIconItem()
+        {
+            return PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER);
+        }
+    };
+    public static final CreativeTabs MATERIALS = MISC;
+    public static final CreativeTabs HOTBAR = new CreativeTabs(4, "hotbar")
+    {
+        @SideOnly(Side.CLIENT)
+        public ItemStack getTabIconItem()
+        {
+            return new ItemStack(Blocks.BOOKSHELF);
+        }
+        @SideOnly(Side.CLIENT)
+        public void displayAllRelevantItems(NonNullList<ItemStack> p_78018_1_)
+        {
+            throw new RuntimeException("Implement exception client-side.");
+        }
+        @SideOnly(Side.CLIENT)
+        public boolean isAlignedRight()
+        {
+            return true;
+        }
+    };
+    public static final CreativeTabs INVENTORY = (new CreativeTabs(11, "inventory")
+    {
+        @SideOnly(Side.CLIENT)
+        public ItemStack getTabIconItem()
+        {
+            return new ItemStack(Item.getItemFromBlock(Blocks.CHEST));
+        }
+    }).setBackgroundImageName("inventory.png").setNoScrollbar().setNoTitle();
+    private final int tabIndex;
+    private final String tabLabel;
+    private String backgroundTexture = "items.png";
+    private boolean hasScrollbar = true;
+    private boolean drawTitle = true;
+    private EnumEnchantmentType[] enchantmentTypes = new EnumEnchantmentType[0];
+    private ItemStack iconItemStack;
 
-		public int getIconItemDamage() {
-			return BlockDoublePlant.EnumPlantType.PAEONIA.getMeta();
-		}
-	};
-	public static final CreativeTabs tabRedstone = new CreativeTabs(2, "redstone") {
-		public Item getTabIconItem() {
-			return Items.redstone;
-		}
-	};
-	public static final CreativeTabs tabTransport = new CreativeTabs(3, "transportation") {
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.golden_rail);
-		}
-	};
-	public static final CreativeTabs tabMisc = (new CreativeTabs(4, "misc") {
-		public Item getTabIconItem() {
-			return Items.lava_bucket;
-		}
-	}).setRelevantEnchantmentTypes(new EnumEnchantmentType[] { EnumEnchantmentType.ALL });
-	public static final CreativeTabs tabAllSearch = (new CreativeTabs(5, "search") {
-		public Item getTabIconItem() {
-			return Items.compass;
-		}
-	}).setBackgroundImageName("item_search.png");
-	public static final CreativeTabs tabFood = new CreativeTabs(6, "food") {
-		public Item getTabIconItem() {
-			return Items.apple;
-		}
-	};
-	public static final CreativeTabs tabTools = (new CreativeTabs(7, "tools") {
-		public Item getTabIconItem() {
-			return Items.iron_axe;
-		}
-	}).setRelevantEnchantmentTypes(new EnumEnchantmentType[] { EnumEnchantmentType.DIGGER,
-			EnumEnchantmentType.FISHING_ROD, EnumEnchantmentType.BREAKABLE });
-	public static final CreativeTabs tabCombat = (new CreativeTabs(8, "combat") {
-		public Item getTabIconItem() {
-			return Items.golden_sword;
-		}
-	}).setRelevantEnchantmentTypes(new EnumEnchantmentType[] { EnumEnchantmentType.ARMOR,
-			EnumEnchantmentType.ARMOR_FEET, EnumEnchantmentType.ARMOR_HEAD, EnumEnchantmentType.ARMOR_LEGS,
-			EnumEnchantmentType.ARMOR_TORSO, EnumEnchantmentType.BOW, EnumEnchantmentType.WEAPON });
-	public static final CreativeTabs tabBrewing = new CreativeTabs(9, "brewing") {
-		public Item getTabIconItem() {
-			return Items.potionitem;
-		}
-	};
-	public static final CreativeTabs tabMaterials = new CreativeTabs(10, "materials") {
-		public Item getTabIconItem() {
-			return Items.stick;
-		}
-	};
-	public static final CreativeTabs tabInventory = (new CreativeTabs(11, "inventory") {
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.chest);
-		}
-	}).setBackgroundImageName("inventory.png").setNoScrollbar().setNoTitle();
-	private final int tabIndex;
-	private final String tabLabel;
-	/**+
-	 * Texture to use.
-	 */
-	private String theTexture = "items.png";
-	private boolean hasScrollbar = true;
-	/**+
-	 * Whether to draw the title in the foreground of the creative
-	 * GUI
-	 */
-	private boolean drawTitle = true;
-	private EnumEnchantmentType[] enchantmentTypes;
-	private ItemStack iconItemStack;
+    public CreativeTabs(String label)
+    {
+        this(getNextID(), label);
+    }
 
-	public CreativeTabs(int index, String label) {
-		this.tabIndex = index;
-		this.tabLabel = label;
-		creativeTabArray[index] = this;
-	}
+    public CreativeTabs(int index, String label)
+    {
+        if (index >= CREATIVE_TAB_ARRAY.length)
+        {
+            CreativeTabs[] tmp = new CreativeTabs[index + 1];
+            for (int x = 0; x < CREATIVE_TAB_ARRAY.length; x++)
+            {
+                tmp[x] = CREATIVE_TAB_ARRAY[x];
+            }
+            CREATIVE_TAB_ARRAY = tmp;
+        }
+        this.tabIndex = index;
+        this.tabLabel = label;
+        this.iconItemStack = ItemStack.EMPTY;
+        CREATIVE_TAB_ARRAY[index] = this;
+    }
 
-	public int getTabIndex() {
-		return this.tabIndex;
-	}
+    @SideOnly(Side.CLIENT)
+    public int getTabIndex()
+    {
+        return this.tabIndex;
+    }
 
-	public String getTabLabel() {
-		return this.tabLabel;
-	}
+    public CreativeTabs setBackgroundImageName(String texture)
+    {
+        this.backgroundTexture = texture;
+        return this;
+    }
 
-	/**+
-	 * Gets the translated Label.
-	 */
-	public String getTranslatedTabLabel() {
-		return "itemGroup." + this.getTabLabel();
-	}
+    @SideOnly(Side.CLIENT)
+    public String getTabLabel()
+    {
+        return this.tabLabel;
+    }
 
-	public ItemStack getIconItemStack() {
-		if (this.iconItemStack == null) {
-			this.iconItemStack = new ItemStack(this.getTabIconItem(), 1, this.getIconItemDamage());
-		}
+    @SideOnly(Side.CLIENT)
+    public String getTranslatedTabLabel()
+    {
+        return "itemGroup." + this.getTabLabel();
+    }
 
-		return this.iconItemStack;
-	}
+    @SideOnly(Side.CLIENT)
+    public ItemStack getIconItemStack()
+    {
+        if (this.iconItemStack.isEmpty())
+        {
+            this.iconItemStack = this.getTabIconItem();
+        }
 
-	public abstract Item getTabIconItem();
+        return this.iconItemStack;
+    }
 
-	public int getIconItemDamage() {
-		return 0;
-	}
+    @SideOnly(Side.CLIENT)
+    public abstract ItemStack getTabIconItem();
 
-	public String getBackgroundImageName() {
-		return this.theTexture;
-	}
+    @SideOnly(Side.CLIENT)
+    public String getBackgroundImageName()
+    {
+        return this.backgroundTexture;
+    }
 
-	public CreativeTabs setBackgroundImageName(String texture) {
-		this.theTexture = texture;
-		return this;
-	}
+    @SideOnly(Side.CLIENT)
+    public boolean drawInForegroundOfTab()
+    {
+        return this.drawTitle;
+    }
 
-	public boolean drawInForegroundOfTab() {
-		return this.drawTitle;
-	}
+    public CreativeTabs setNoTitle()
+    {
+        this.drawTitle = false;
+        return this;
+    }
 
-	public CreativeTabs setNoTitle() {
-		this.drawTitle = false;
-		return this;
-	}
+    @SideOnly(Side.CLIENT)
+    public boolean shouldHidePlayerInventory()
+    {
+        return this.hasScrollbar;
+    }
 
-	public boolean shouldHidePlayerInventory() {
-		return this.hasScrollbar;
-	}
+    public CreativeTabs setNoScrollbar()
+    {
+        this.hasScrollbar = false;
+        return this;
+    }
 
-	public CreativeTabs setNoScrollbar() {
-		this.hasScrollbar = false;
-		return this;
-	}
+    @SideOnly(Side.CLIENT)
+    public int getTabColumn()
+    {
+        if (tabIndex > 11)
+        {
+            return ((tabIndex - 12) % 10) % 5;
+        }
+        return this.tabIndex % 6;
+    }
 
-	/**+
-	 * returns index % 6
-	 */
-	public int getTabColumn() {
-		return this.tabIndex % 6;
-	}
+    @SideOnly(Side.CLIENT)
+    public boolean isTabInFirstRow()
+    {
+        if (tabIndex > 11)
+        {
+            return ((tabIndex - 12) % 10) < 5;
+        }
+        return this.tabIndex < 6;
+    }
 
-	/**+
-	 * returns tabIndex < 6
-	 */
-	public boolean isTabInFirstRow() {
-		return this.tabIndex < 6;
-	}
+    @SideOnly(Side.CLIENT)
+    public boolean isAlignedRight()
+    {
+        return this.getTabColumn() == 5;
+    }
 
-	/**+
-	 * Returns the enchantment types relevant to this tab
-	 */
-	public EnumEnchantmentType[] getRelevantEnchantmentTypes() {
-		return this.enchantmentTypes;
-	}
+    public EnumEnchantmentType[] getRelevantEnchantmentTypes()
+    {
+        return this.enchantmentTypes;
+    }
 
-	/**+
-	 * Sets the enchantment types for populating this tab with
-	 * enchanting books
-	 */
-	public CreativeTabs setRelevantEnchantmentTypes(EnumEnchantmentType... types) {
-		this.enchantmentTypes = types;
-		return this;
-	}
+    public CreativeTabs setRelevantEnchantmentTypes(EnumEnchantmentType... types)
+    {
+        this.enchantmentTypes = types;
+        return this;
+    }
 
-	public boolean hasRelevantEnchantmentType(EnumEnchantmentType enchantmentType) {
-		if (this.enchantmentTypes == null) {
-			return false;
-		} else {
-			for (int i = 0; i < this.enchantmentTypes.length; ++i) {
-				if (this.enchantmentTypes[i] == enchantmentType) {
-					return true;
-				}
-			}
+    public boolean hasRelevantEnchantmentType(@Nullable EnumEnchantmentType enchantmentType)
+    {
+        if (enchantmentType != null)
+        {
+            for (EnumEnchantmentType enumenchantmenttype : this.enchantmentTypes)
+            {
+                if (enumenchantmenttype == enchantmentType)
+                {
+                    return true;
+                }
+            }
+        }
 
-			return false;
-		}
-	}
+        return false;
+    }
 
-	/**+
-	 * only shows items which have tabToDisplayOn == this
-	 */
-	public void displayAllReleventItems(List<ItemStack> parList) {
-		for (Item item : Item.itemRegistry) {
-			if (item != null && item.getCreativeTab() == this) {
-				item.getSubItems(item, this, parList);
-			}
-		}
+    @SideOnly(Side.CLIENT)
+    public void displayAllRelevantItems(NonNullList<ItemStack> p_78018_1_)
+    {
+        for (Item item : Item.REGISTRY)
+        {
+            item.getSubItems(this, p_78018_1_);
+        }
+    }
 
-		if (this.getRelevantEnchantmentTypes() != null) {
-			this.addEnchantmentBooksToList(parList, this.getRelevantEnchantmentTypes());
-		}
+    public int getTabPage()
+    {
+        if (tabIndex > 11)
+        {
+            return ((tabIndex - 12) / 10) + 1;
+        }
+        return 0;
+    }
 
-	}
+    public static int getNextID()
+    {
+        return CREATIVE_TAB_ARRAY.length;
+    }
 
-	/**+
-	 * Adds the enchantment books from the supplied
-	 * EnumEnchantmentType to the given list.
-	 */
-	public void addEnchantmentBooksToList(List<ItemStack> itemList, EnumEnchantmentType... enchantmentType) {
-		for (int i = 0; i < Enchantment.enchantmentsBookList.length; ++i) {
-			Enchantment enchantment = Enchantment.enchantmentsBookList[i];
-			if (enchantment != null && enchantment.type != null) {
-				boolean flag = false;
+    /**
+     * Determines if the search bar should be shown for this tab.
+     *
+     * @return True to show the bar
+     */
+    public boolean hasSearchBar()
+    {
+        return tabIndex == CreativeTabs.SEARCH.tabIndex;
+    }
 
-				for (int j = 0; j < enchantmentType.length && !flag; ++j) {
-					if (enchantment.type == enchantmentType[j]) {
-						flag = true;
-					}
-				}
+    /**
+     * Gets the width of the search bar of the creative tab, use this if your
+     * creative tab name overflows together with a custom texture.
+     *
+     * @return The width of the search bar, 89 by default
+     */
+    public int getSearchbarWidth()
+    {
+        return 89;
+    }
 
-				if (flag) {
-					itemList.add(Items.enchanted_book
-							.getEnchantedItemStack(new EnchantmentData(enchantment, enchantment.getMaxLevel())));
-				}
-			}
-		}
+    @SideOnly(Side.CLIENT)
+    public net.minecraft.util.ResourceLocation getBackgroundImage()
+    {
+        return new net.minecraft.util.ResourceLocation("textures/gui/container/creative_inventory/tab_" + this.getBackgroundImageName());
+    }
 
-	}
+    public int getLabelColor()
+    {
+        return 4210752;
+    }
 }

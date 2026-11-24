@@ -1,135 +1,132 @@
 package net.minecraft.command;
 
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.scoreboard.IScoreObjectiveCriteria;
+import net.minecraft.scoreboard.IScoreCriteria;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class CommandTrigger extends CommandBase {
+public class CommandTrigger extends CommandBase
+{
+    public String getName()
+    {
+        return "trigger";
+    }
 
-	/**+
-	 * Gets the name of the command
-	 */
-	public String getCommandName() {
-		return "trigger";
-	}
+    public int getRequiredPermissionLevel()
+    {
+        return 0;
+    }
 
-	/**+
-	 * Return the required permission level for this command.
-	 */
-	public int getRequiredPermissionLevel() {
-		return 0;
-	}
+    public String getUsage(ICommandSender sender)
+    {
+        return "commands.trigger.usage";
+    }
 
-	/**+
-	 * Gets the usage string for the command.
-	 */
-	public String getCommandUsage(ICommandSender var1) {
-		return "commands.trigger.usage";
-	}
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
+    {
+        if (args.length < 3)
+        {
+            throw new WrongUsageException("commands.trigger.usage", new Object[0]);
+        }
+        else
+        {
+            EntityPlayerMP entityplayermp;
 
-	/**+
-	 * Callback when the command is invoked
-	 */
-	public void processCommand(ICommandSender parICommandSender, String[] parArrayOfString) throws CommandException {
-		if (parArrayOfString.length < 3) {
-			throw new WrongUsageException("commands.trigger.usage", new Object[0]);
-		} else {
-			EntityPlayerMP entityplayermp;
-			if (parICommandSender instanceof EntityPlayerMP) {
-				entityplayermp = (EntityPlayerMP) parICommandSender;
-			} else {
-				Entity entity = parICommandSender.getCommandSenderEntity();
-				if (!(entity instanceof EntityPlayerMP)) {
-					throw new CommandException("commands.trigger.invalidPlayer", new Object[0]);
-				}
+            if (sender instanceof EntityPlayerMP)
+            {
+                entityplayermp = (EntityPlayerMP)sender;
+            }
+            else
+            {
+                Entity entity = sender.getCommandSenderEntity();
 
-				entityplayermp = (EntityPlayerMP) entity;
-			}
+                if (!(entity instanceof EntityPlayerMP))
+                {
+                    throw new CommandException("commands.trigger.invalidPlayer", new Object[0]);
+                }
 
-			Scoreboard scoreboard = MinecraftServer.getServer().worldServerForDimension(0).getScoreboard();
-			ScoreObjective scoreobjective = scoreboard.getObjective(parArrayOfString[0]);
-			if (scoreobjective != null && scoreobjective.getCriteria() == IScoreObjectiveCriteria.TRIGGER) {
-				int i = parseInt(parArrayOfString[2]);
-				if (!scoreboard.entityHasObjective(entityplayermp.getName(), scoreobjective)) {
-					throw new CommandException("commands.trigger.invalidObjective",
-							new Object[] { parArrayOfString[0] });
-				} else {
-					Score score = scoreboard.getValueFromObjective(entityplayermp.getName(), scoreobjective);
-					if (score.isLocked()) {
-						throw new CommandException("commands.trigger.disabled", new Object[] { parArrayOfString[0] });
-					} else {
-						if ("set".equals(parArrayOfString[1])) {
-							score.setScorePoints(i);
-						} else {
-							if (!"add".equals(parArrayOfString[1])) {
-								throw new CommandException("commands.trigger.invalidMode",
-										new Object[] { parArrayOfString[1] });
-							}
+                entityplayermp = (EntityPlayerMP)entity;
+            }
 
-							score.increseScore(i);
-						}
+            Scoreboard scoreboard = server.getWorld(0).getScoreboard();
+            ScoreObjective scoreobjective = scoreboard.getObjective(args[0]);
 
-						score.setLocked(true);
-						if (entityplayermp.theItemInWorldManager.isCreative()) {
-							notifyOperators(parICommandSender, this, "commands.trigger.success",
-									new Object[] { parArrayOfString[0], parArrayOfString[1], parArrayOfString[2] });
-						}
+            if (scoreobjective != null && scoreobjective.getCriteria() == IScoreCriteria.TRIGGER)
+            {
+                int i = parseInt(args[2]);
 
-					}
-				}
-			} else {
-				throw new CommandException("commands.trigger.invalidObjective", new Object[] { parArrayOfString[0] });
-			}
-		}
-	}
+                if (!scoreboard.entityHasObjective(entityplayermp.getName(), scoreobjective))
+                {
+                    throw new CommandException("commands.trigger.invalidObjective", new Object[] {args[0]});
+                }
+                else
+                {
+                    Score score = scoreboard.getOrCreateScore(entityplayermp.getName(), scoreobjective);
 
-	/**+
-	 * Return a list of options when the user types TAB
-	 */
-	public List<String> addTabCompletionOptions(ICommandSender var1, String[] astring, BlockPos var3) {
-		if (astring.length == 1) {
-			Scoreboard scoreboard = MinecraftServer.getServer().worldServerForDimension(0).getScoreboard();
-			ArrayList arraylist = Lists.newArrayList();
+                    if (score.isLocked())
+                    {
+                        throw new CommandException("commands.trigger.disabled", new Object[] {args[0]});
+                    }
+                    else
+                    {
+                        if ("set".equals(args[1]))
+                        {
+                            score.setScorePoints(i);
+                        }
+                        else
+                        {
+                            if (!"add".equals(args[1]))
+                            {
+                                throw new CommandException("commands.trigger.invalidMode", new Object[] {args[1]});
+                            }
 
-			for (ScoreObjective scoreobjective : scoreboard.getScoreObjectives()) {
-				if (scoreobjective.getCriteria() == IScoreObjectiveCriteria.TRIGGER) {
-					arraylist.add(scoreobjective.getName());
-				}
-			}
+                            score.increaseScore(i);
+                        }
 
-			return getListOfStringsMatchingLastWord(astring,
-					(String[]) arraylist.toArray(new String[arraylist.size()]));
-		} else {
-			return astring.length == 2 ? getListOfStringsMatchingLastWord(astring, new String[] { "add", "set" })
-					: null;
-		}
-	}
+                        score.setLocked(true);
+
+                        if (entityplayermp.interactionManager.isCreative())
+                        {
+                            notifyCommandListener(sender, this, "commands.trigger.success", new Object[] {args[0], args[1], args[2]});
+                        }
+                    }
+                }
+            }
+            else
+            {
+                throw new CommandException("commands.trigger.invalidObjective", new Object[] {args[0]});
+            }
+        }
+    }
+
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos)
+    {
+        if (args.length == 1)
+        {
+            Scoreboard scoreboard = server.getWorld(0).getScoreboard();
+            List<String> list = Lists.<String>newArrayList();
+
+            for (ScoreObjective scoreobjective : scoreboard.getScoreObjectives())
+            {
+                if (scoreobjective.getCriteria() == IScoreCriteria.TRIGGER)
+                {
+                    list.add(scoreobjective.getName());
+                }
+            }
+
+            return getListOfStringsMatchingLastWord(args, (String[])list.toArray(new String[list.size()]));
+        }
+        else
+        {
+            return args.length == 2 ? getListOfStringsMatchingLastWord(args, new String[] {"add", "set"}) : Collections.emptyList();
+        }
+    }
 }

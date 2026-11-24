@@ -3,126 +3,123 @@ package net.minecraft.entity.effect;
 import java.util.List;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class EntityLightningBolt extends EntityWeatherEffect {
-	private int lightningState;
-	public long boltVertex;
-	private int boltLivingTime;
+public class EntityLightningBolt extends EntityWeatherEffect
+{
+    private int lightningState;
+    public long boltVertex;
+    private int boltLivingTime;
+    private final boolean effectOnly;
 
-	public EntityLightningBolt(World worldIn, double posX, double posY, double posZ) {
-		super(worldIn);
-		this.setLocationAndAngles(posX, posY, posZ, 0.0F, 0.0F);
-		this.lightningState = 2;
-		this.boltVertex = this.rand.nextLong();
-		this.boltLivingTime = this.rand.nextInt(3) + 1;
-		BlockPos blockpos = new BlockPos(this);
-		if (!worldIn.isRemote && worldIn.getGameRules().getBoolean("doFireTick")
-				&& (worldIn.getDifficulty() == EnumDifficulty.NORMAL || worldIn.getDifficulty() == EnumDifficulty.HARD)
-				&& worldIn.isAreaLoaded(blockpos, 10)) {
-			if (worldIn.getBlockState(blockpos).getBlock().getMaterial() == Material.air
-					&& Blocks.fire.canPlaceBlockAt(worldIn, blockpos)) {
-				worldIn.setBlockState(blockpos, Blocks.fire.getDefaultState());
-			}
+    public EntityLightningBolt(World worldIn, double x, double y, double z, boolean effectOnlyIn)
+    {
+        super(worldIn);
+        this.setLocationAndAngles(x, y, z, 0.0F, 0.0F);
+        this.lightningState = 2;
+        this.boltVertex = this.rand.nextLong();
+        this.boltLivingTime = this.rand.nextInt(3) + 1;
+        this.effectOnly = effectOnlyIn;
+        BlockPos blockpos = new BlockPos(this);
 
-			for (int i = 0; i < 4; ++i) {
-				BlockPos blockpos1 = blockpos.add(this.rand.nextInt(3) - 1, this.rand.nextInt(3) - 1,
-						this.rand.nextInt(3) - 1);
-				if (worldIn.getBlockState(blockpos1).getBlock().getMaterial() == Material.air
-						&& Blocks.fire.canPlaceBlockAt(worldIn, blockpos1)) {
-					worldIn.setBlockState(blockpos1, Blocks.fire.getDefaultState());
-				}
-			}
-		}
+        if (!effectOnlyIn && !worldIn.isRemote && worldIn.getGameRules().getBoolean("doFireTick") && (worldIn.getDifficulty() == EnumDifficulty.NORMAL || worldIn.getDifficulty() == EnumDifficulty.HARD) && worldIn.isAreaLoaded(blockpos, 10))
+        {
+            if (worldIn.getBlockState(blockpos).getMaterial() == Material.AIR && Blocks.FIRE.canPlaceBlockAt(worldIn, blockpos))
+            {
+                worldIn.setBlockState(blockpos, Blocks.FIRE.getDefaultState());
+            }
 
-	}
+            for (int i = 0; i < 4; ++i)
+            {
+                BlockPos blockpos1 = blockpos.add(this.rand.nextInt(3) - 1, this.rand.nextInt(3) - 1, this.rand.nextInt(3) - 1);
 
-	/**+
-	 * Called to update the entity's position/logic.
-	 */
-	public void onUpdate() {
-		super.onUpdate();
-		if (this.lightningState == 2) {
-			this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "ambient.weather.thunder", 10000.0F,
-					0.8F + this.rand.nextFloat() * 0.2F);
-			this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "random.explode", 2.0F,
-					0.5F + this.rand.nextFloat() * 0.2F);
-		}
+                if (worldIn.getBlockState(blockpos1).getMaterial() == Material.AIR && Blocks.FIRE.canPlaceBlockAt(worldIn, blockpos1))
+                {
+                    worldIn.setBlockState(blockpos1, Blocks.FIRE.getDefaultState());
+                }
+            }
+        }
+    }
 
-		--this.lightningState;
-		if (this.lightningState < 0) {
-			if (this.boltLivingTime == 0) {
-				this.setDead();
-			} else if (this.lightningState < -this.rand.nextInt(10)) {
-				--this.boltLivingTime;
-				this.lightningState = 1;
-				this.boltVertex = this.rand.nextLong();
-				BlockPos blockpos = new BlockPos(this);
-				if (!this.worldObj.isRemote && this.worldObj.getGameRules().getBoolean("doFireTick")
-						&& this.worldObj.isAreaLoaded(blockpos, 10)
-						&& this.worldObj.getBlockState(blockpos).getBlock().getMaterial() == Material.air
-						&& Blocks.fire.canPlaceBlockAt(this.worldObj, blockpos)) {
-					this.worldObj.setBlockState(blockpos, Blocks.fire.getDefaultState());
-				}
-			}
-		}
+    public SoundCategory getSoundCategory()
+    {
+        return SoundCategory.WEATHER;
+    }
 
-		if (this.lightningState >= 0) {
-			if (this.worldObj.isRemote) {
-				this.worldObj.setLastLightningBolt(2);
-			} else {
-				double d0 = 3.0D;
-				List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, new AxisAlignedBB(this.posX - d0,
-						this.posY - d0, this.posZ - d0, this.posX + d0, this.posY + 6.0D + d0, this.posZ + d0));
+    public void onUpdate()
+    {
+        super.onUpdate();
 
-				for (int i = 0; i < list.size(); ++i) {
-					Entity entity = (Entity) list.get(i);
-					entity.onStruckByLightning(this);
-				}
-			}
-		}
+        if (this.lightningState == 2)
+        {
+            this.world.playSound((EntityPlayer)null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.WEATHER, 10000.0F, 0.8F + this.rand.nextFloat() * 0.2F);
+            this.world.playSound((EntityPlayer)null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_LIGHTNING_IMPACT, SoundCategory.WEATHER, 2.0F, 0.5F + this.rand.nextFloat() * 0.2F);
+        }
 
-	}
+        --this.lightningState;
 
-	protected void entityInit() {
-	}
+        if (this.lightningState < 0)
+        {
+            if (this.boltLivingTime == 0)
+            {
+                this.setDead();
+            }
+            else if (this.lightningState < -this.rand.nextInt(10))
+            {
+                --this.boltLivingTime;
+                this.lightningState = 1;
 
-	/**+
-	 * (abstract) Protected helper method to read subclass entity
-	 * data from NBT.
-	 */
-	protected void readEntityFromNBT(NBTTagCompound var1) {
-	}
+                if (!this.effectOnly && !this.world.isRemote)
+                {
+                    this.boltVertex = this.rand.nextLong();
+                    BlockPos blockpos = new BlockPos(this);
 
-	/**+
-	 * (abstract) Protected helper method to write subclass entity
-	 * data to NBT.
-	 */
-	protected void writeEntityToNBT(NBTTagCompound var1) {
-	}
+                    if (this.world.getGameRules().getBoolean("doFireTick") && this.world.isAreaLoaded(blockpos, 10) && this.world.getBlockState(blockpos).getMaterial() == Material.AIR && Blocks.FIRE.canPlaceBlockAt(this.world, blockpos))
+                    {
+                        this.world.setBlockState(blockpos, Blocks.FIRE.getDefaultState());
+                    }
+                }
+            }
+        }
+
+        if (this.lightningState >= 0)
+        {
+            if (this.world.isRemote)
+            {
+                this.world.setLastLightningBolt(2);
+            }
+            else if (!this.effectOnly)
+            {
+                double d0 = 3.0D;
+                List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, new AxisAlignedBB(this.posX - 3.0D, this.posY - 3.0D, this.posZ - 3.0D, this.posX + 3.0D, this.posY + 6.0D + 3.0D, this.posZ + 3.0D));
+
+                for (int i = 0; i < list.size(); ++i)
+                {
+                    Entity entity = list.get(i);
+                    if (!net.minecraftforge.event.ForgeEventFactory.onEntityStruckByLightning(entity, this))
+                        entity.onStruckByLightning(this);
+                }
+            }
+        }
+    }
+
+    protected void entityInit()
+    {
+    }
+
+    protected void readEntityFromNBT(NBTTagCompound compound)
+    {
+    }
+
+    protected void writeEntityToNBT(NBTTagCompound compound)
+    {
+    }
 }

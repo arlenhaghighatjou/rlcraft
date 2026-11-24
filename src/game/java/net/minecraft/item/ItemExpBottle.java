@@ -3,57 +3,48 @@ package net.minecraft.item;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityExpBottle;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ItemExpBottle extends Item {
-	public ItemExpBottle() {
-		this.setCreativeTab(CreativeTabs.tabMisc);
-	}
+public class ItemExpBottle extends Item
+{
+    public ItemExpBottle()
+    {
+        this.setCreativeTab(CreativeTabs.MISC);
+    }
 
-	public boolean hasEffect(ItemStack var1) {
-		return true;
-	}
+    @SideOnly(Side.CLIENT)
+    public boolean hasEffect(ItemStack stack)
+    {
+        return true;
+    }
 
-	/**+
-	 * Called whenever this item is equipped and the right mouse
-	 * button is pressed. Args: itemStack, world, entityPlayer
-	 */
-	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		if (!entityplayer.capabilities.isCreativeMode) {
-			--itemstack.stackSize;
-		}
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+    {
+        ItemStack itemstack = playerIn.getHeldItem(handIn);
 
-		world.playSoundAtEntity(entityplayer, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-		if (!world.isRemote) {
-			world.spawnEntityInWorld(new EntityExpBottle(world, entityplayer));
-		}
+        if (!playerIn.capabilities.isCreativeMode)
+        {
+            itemstack.shrink(1);
+        }
 
-		entityplayer.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);
-		return itemstack;
-	}
+        worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_EXPERIENCE_BOTTLE_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
-	public boolean shouldUseOnTouchEagler(ItemStack itemStack) {
-		return true;
-	}
+        if (!worldIn.isRemote)
+        {
+            EntityExpBottle entityexpbottle = new EntityExpBottle(worldIn, playerIn);
+            entityexpbottle.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.7F, 1.0F);
+            worldIn.spawnEntity(entityexpbottle);
+        }
+
+        playerIn.addStat(StatList.getObjectUseStats(this));
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
+    }
 }

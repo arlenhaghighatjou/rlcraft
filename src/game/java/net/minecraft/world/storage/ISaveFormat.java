@@ -1,78 +1,48 @@
 package net.minecraft.world.storage;
 
+import java.io.File;
 import java.util.List;
+import javax.annotation.Nullable;
+import net.minecraft.client.AnvilConverterException;
 import net.minecraft.util.IProgressUpdate;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public interface ISaveFormat {
-	/**+
-	 * Returns the name of the save format.
-	 */
-	String getName();
+public interface ISaveFormat
+{
+    @SideOnly(Side.CLIENT)
+    String getName();
 
-	/**+
-	 * Returns back a loader for the specified save directory
-	 */
-	ISaveHandler getSaveLoader(String var1, boolean var2);
+    ISaveHandler getSaveLoader(String saveName, boolean storePlayerdata);
 
-	List<SaveFormatComparator> getSaveList();
+    @SideOnly(Side.CLIENT)
+    List<WorldSummary> getSaveList() throws AnvilConverterException;
 
-	void flushCache();
+    boolean isOldMapFormat(String saveName);
 
-	/**+
-	 * Returns the world's WorldInfo object
-	 */
-	WorldInfo getWorldInfo(String var1);
+    @SideOnly(Side.CLIENT)
+    void flushCache();
 
-	boolean func_154335_d(String var1);
+    @Nullable
+    @SideOnly(Side.CLIENT)
+    WorldInfo getWorldInfo(String saveName);
 
-	/**+
-	 * @args: Takes one argument - the name of the directory of the
-	 * world to delete. @desc: Delete the world by deleting the
-	 * associated directory recursively.
-	 */
-	boolean deleteWorldDirectory(String var1);
+    @SideOnly(Side.CLIENT)
+    boolean isNewLevelIdAcceptable(String saveName);
 
-	/**+
-	 * Renames the world by storing the new name in level.dat. It
-	 * does *not* rename the directory containing the world data.
-	 */
-	boolean renameWorld(String var1, String var2);
+    @SideOnly(Side.CLIENT)
+    boolean deleteWorldDirectory(String saveName);
 
-	boolean func_154334_a(String var1);
+    @SideOnly(Side.CLIENT)
+    void renameWorld(String dirName, String newName);
 
-	/**+
-	 * gets if the map is old chunk saving (true) or McRegion
-	 * (false)
-	 */
-	boolean isOldMapFormat(String var1);
+    @SideOnly(Side.CLIENT)
+    boolean isConvertible(String saveName);
 
-	/**+
-	 * converts the map to mcRegion
-	 */
-	boolean convertMapFormat(String var1, IProgressUpdate var2);
+    boolean convertMapFormat(String filename, IProgressUpdate progressCallback);
 
-	/**+
-	 * Return whether the given world can be loaded.
-	 */
-	boolean canLoadWorld(String var1);
+    File getFile(String p_186352_1_, String p_186352_2_);
+
+    @SideOnly(Side.CLIENT)
+    boolean canLoadWorld(String saveName);
 }

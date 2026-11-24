@@ -1,8 +1,7 @@
 package net.minecraft.item;
 
-import java.util.List;
-
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
@@ -12,167 +11,190 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ItemDye extends Item {
-	public static final int[] dyeColors = new int[] { 1973019, 11743532, 3887386, 5320730, 2437522, 8073150, 2651799,
-			11250603, 4408131, 14188952, 4312372, 14602026, 6719955, 12801229, 15435844, 15790320 };
+public class ItemDye extends Item
+{
+    public static final int[] DYE_COLORS = new int[] {1973019, 11743532, 3887386, 5320730, 2437522, 8073150, 2651799, 11250603, 4408131, 14188952, 4312372, 14602026, 6719955, 12801229, 15435844, 15790320};
 
-	public ItemDye() {
-		this.setHasSubtypes(true);
-		this.setMaxDamage(0);
-		this.setCreativeTab(CreativeTabs.tabMaterials);
-	}
+    public ItemDye()
+    {
+        this.setHasSubtypes(true);
+        this.setMaxDamage(0);
+        this.setCreativeTab(CreativeTabs.MATERIALS);
+    }
 
-	/**+
-	 * Returns the unlocalized name of this item. This version
-	 * accepts an ItemStack so different stacks can have different
-	 * names based on their damage or NBT.
-	 */
-	public String getUnlocalizedName(ItemStack itemstack) {
-		int i = itemstack.getMetadata();
-		return super.getUnlocalizedName() + "." + EnumDyeColor.byDyeDamage(i).getUnlocalizedName();
-	}
+    public String getUnlocalizedName(ItemStack stack)
+    {
+        int i = stack.getMetadata();
+        return super.getUnlocalizedName() + "." + EnumDyeColor.byDyeDamage(i).getUnlocalizedName();
+    }
 
-	/**+
-	 * Called when a Block is right-clicked with this Item
-	 */
-	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos blockpos,
-			EnumFacing enumfacing, float f, float f1, float f2) {
-		if (!entityplayer.canPlayerEdit(blockpos.offset(enumfacing), enumfacing, itemstack)) {
-			return false;
-		} else {
-			EnumDyeColor enumdyecolor = EnumDyeColor.byDyeDamage(itemstack.getMetadata());
-			if (enumdyecolor == EnumDyeColor.WHITE) {
-				if (applyBonemeal(itemstack, world, blockpos)) {
-					if (!world.isRemote) {
-						world.playAuxSFX(2005, blockpos, 0);
-					}
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        ItemStack itemstack = player.getHeldItem(hand);
 
-					return true;
-				}
-			} else if (enumdyecolor == EnumDyeColor.BROWN) {
-				IBlockState iblockstate = world.getBlockState(blockpos);
-				Block block = iblockstate.getBlock();
-				if (block == Blocks.log && iblockstate.getValue(BlockPlanks.VARIANT) == BlockPlanks.EnumType.JUNGLE) {
-					if (enumfacing == EnumFacing.DOWN) {
-						return false;
-					}
+        if (!player.canPlayerEdit(pos.offset(facing), facing, itemstack))
+        {
+            return EnumActionResult.FAIL;
+        }
+        else
+        {
+            EnumDyeColor enumdyecolor = EnumDyeColor.byDyeDamage(itemstack.getMetadata());
 
-					if (enumfacing == EnumFacing.UP) {
-						return false;
-					}
+            if (enumdyecolor == EnumDyeColor.WHITE)
+            {
+                if (applyBonemeal(itemstack, worldIn, pos, player, hand))
+                {
+                    if (!worldIn.isRemote)
+                    {
+                        worldIn.playEvent(2005, pos, 0);
+                    }
 
-					blockpos = blockpos.offset(enumfacing);
-					if (world.isAirBlock(blockpos)) {
-						IBlockState iblockstate1 = Blocks.cocoa.onBlockPlaced(world, blockpos, enumfacing, f, f1, f2, 0,
-								entityplayer);
-						world.setBlockState(blockpos, iblockstate1, 2);
-						if (!entityplayer.capabilities.isCreativeMode) {
-							--itemstack.stackSize;
-						}
-					}
+                    return EnumActionResult.SUCCESS;
+                }
+            }
+            else if (enumdyecolor == EnumDyeColor.BROWN)
+            {
+                IBlockState iblockstate = worldIn.getBlockState(pos);
+                Block block = iblockstate.getBlock();
 
-					return true;
-				}
-			}
+                if (block == Blocks.LOG && iblockstate.getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.JUNGLE)
+                {
+                    if (facing == EnumFacing.DOWN || facing == EnumFacing.UP)
+                    {
+                        return EnumActionResult.FAIL;
+                    }
 
-			return false;
-		}
-	}
+                    pos = pos.offset(facing);
 
-	public static boolean applyBonemeal(ItemStack stack, World worldIn, BlockPos target) {
-		IBlockState iblockstate = worldIn.getBlockState(target);
-		if (iblockstate.getBlock() instanceof IGrowable) {
-			IGrowable igrowable = (IGrowable) iblockstate.getBlock();
-			if (igrowable.canGrow(worldIn, target, iblockstate, worldIn.isRemote)) {
-				if (!worldIn.isRemote) {
-					if (igrowable.canUseBonemeal(worldIn, worldIn.rand, target, iblockstate)) {
-						igrowable.grow(worldIn, worldIn.rand, target, iblockstate);
-					}
+                    if (worldIn.isAirBlock(pos))
+                    {
+                        IBlockState iblockstate1 = Blocks.COCOA.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, 0, player, hand);
+                        worldIn.setBlockState(pos, iblockstate1, 10);
 
-					--stack.stackSize;
-				}
+                        if (!player.capabilities.isCreativeMode)
+                        {
+                            itemstack.shrink(1);
+                        }
 
-				return true;
-			}
-		}
+                        return EnumActionResult.SUCCESS;
+                    }
+                }
 
-		return false;
-	}
+                return EnumActionResult.FAIL;
+            }
 
-	public static void spawnBonemealParticles(World worldIn, BlockPos pos, int amount) {
-		if (amount == 0) {
-			amount = 15;
-		}
+            return EnumActionResult.PASS;
+        }
+    }
 
-		Block block = worldIn.getBlockState(pos).getBlock();
-		if (block.getMaterial() != Material.air) {
-			block.setBlockBoundsBasedOnState(worldIn, pos);
+    public static boolean applyBonemeal(ItemStack stack, World worldIn, BlockPos target)
+    {
+        if (worldIn instanceof net.minecraft.world.WorldServer)
+            return applyBonemeal(stack, worldIn, target, net.minecraftforge.common.util.FakePlayerFactory.getMinecraft((net.minecraft.world.WorldServer)worldIn), null);
+        return false;
+    }
 
-			for (int i = 0; i < amount; ++i) {
-				double d0 = itemRand.nextGaussian() * 0.02D;
-				double d1 = itemRand.nextGaussian() * 0.02D;
-				double d2 = itemRand.nextGaussian() * 0.02D;
-				worldIn.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY,
-						(double) ((float) pos.getX() + itemRand.nextFloat()),
-						(double) pos.getY() + (double) itemRand.nextFloat() * block.getBlockBoundsMaxY(),
-						(double) ((float) pos.getZ() + itemRand.nextFloat()), d0, d1, d2, new int[0]);
-			}
+    public static boolean applyBonemeal(ItemStack stack, World worldIn, BlockPos target, EntityPlayer player, @javax.annotation.Nullable EnumHand hand)
+    {
+        IBlockState iblockstate = worldIn.getBlockState(target);
 
-		}
-	}
+        int hook = net.minecraftforge.event.ForgeEventFactory.onApplyBonemeal(player, worldIn, target, iblockstate, stack, hand);
+        if (hook != 0) return hook > 0;
 
-	/**+
-	 * Returns true if the item can be used on the given entity,
-	 * e.g. shears on sheep.
-	 */
-	public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer var2, EntityLivingBase entitylivingbase) {
-		if (entitylivingbase instanceof EntitySheep) {
-			EntitySheep entitysheep = (EntitySheep) entitylivingbase;
-			EnumDyeColor enumdyecolor = EnumDyeColor.byDyeDamage(itemstack.getMetadata());
-			if (!entitysheep.getSheared() && entitysheep.getFleeceColor() != enumdyecolor) {
-				entitysheep.setFleeceColor(enumdyecolor);
-				--itemstack.stackSize;
-			}
+        if (iblockstate.getBlock() instanceof IGrowable)
+        {
+            IGrowable igrowable = (IGrowable)iblockstate.getBlock();
 
-			return true;
-		} else {
-			return false;
-		}
-	}
+            if (igrowable.canGrow(worldIn, target, iblockstate, worldIn.isRemote))
+            {
+                if (!worldIn.isRemote)
+                {
+                    if (igrowable.canUseBonemeal(worldIn, worldIn.rand, target, iblockstate))
+                    {
+                        igrowable.grow(worldIn, worldIn.rand, target, iblockstate);
+                    }
 
-	/**+
-	 * returns a list of items with the same ID, but different meta
-	 * (eg: dye returns 16 items)
-	 */
-	public void getSubItems(Item item, CreativeTabs var2, List<ItemStack> list) {
-		for (int i = 0; i < 16; ++i) {
-			list.add(new ItemStack(item, 1, i));
-		}
+                    stack.shrink(1);
+                }
 
-	}
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void spawnBonemealParticles(World worldIn, BlockPos pos, int amount)
+    {
+        if (amount == 0)
+        {
+            amount = 15;
+        }
+
+        IBlockState iblockstate = worldIn.getBlockState(pos);
+
+        if (iblockstate.getMaterial() != Material.AIR)
+        {
+            for (int i = 0; i < amount; ++i)
+            {
+                double d0 = itemRand.nextGaussian() * 0.02D;
+                double d1 = itemRand.nextGaussian() * 0.02D;
+                double d2 = itemRand.nextGaussian() * 0.02D;
+                worldIn.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double)((float)pos.getX() + itemRand.nextFloat()), (double)pos.getY() + (double)itemRand.nextFloat() * iblockstate.getBoundingBox(worldIn, pos).maxY, (double)((float)pos.getZ() + itemRand.nextFloat()), d0, d1, d2);
+            }
+        }
+        else
+        {
+            for (int i1 = 0; i1 < amount; ++i1)
+            {
+                double d0 = itemRand.nextGaussian() * 0.02D;
+                double d1 = itemRand.nextGaussian() * 0.02D;
+                double d2 = itemRand.nextGaussian() * 0.02D;
+                worldIn.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double)((float)pos.getX() + itemRand.nextFloat()), (double)pos.getY() + (double)itemRand.nextFloat() * 1.0f, (double)((float)pos.getZ() + itemRand.nextFloat()), d0, d1, d2, new int[0]);
+            }
+        }
+    }
+
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand)
+    {
+        if (target instanceof EntitySheep)
+        {
+            EntitySheep entitysheep = (EntitySheep)target;
+            EnumDyeColor enumdyecolor = EnumDyeColor.byDyeDamage(stack.getMetadata());
+
+            if (!entitysheep.getSheared() && entitysheep.getFleeceColor() != enumdyecolor)
+            {
+                entitysheep.setFleeceColor(enumdyecolor);
+                stack.shrink(1);
+            }
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
+    {
+        if (this.isInCreativeTab(tab))
+        {
+            for (int i = 0; i < 16; ++i)
+            {
+                items.add(new ItemStack(this, 1, i));
+            }
+        }
+    }
 }

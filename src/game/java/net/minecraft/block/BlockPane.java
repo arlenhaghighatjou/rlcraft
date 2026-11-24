@@ -1,208 +1,225 @@
 package net.minecraft.block;
 
 import java.util.List;
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DeferredStateManager;
+import java.util.Random;
+import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class BlockPane extends Block {
-	public static final PropertyBool NORTH = PropertyBool.create("north");
-	public static final PropertyBool EAST = PropertyBool.create("east");
-	public static final PropertyBool SOUTH = PropertyBool.create("south");
-	public static final PropertyBool WEST = PropertyBool.create("west");
-	private final boolean canDrop;
+public class BlockPane extends Block
+{
+    public static final PropertyBool NORTH = PropertyBool.create("north");
+    public static final PropertyBool EAST = PropertyBool.create("east");
+    public static final PropertyBool SOUTH = PropertyBool.create("south");
+    public static final PropertyBool WEST = PropertyBool.create("west");
+    protected static final AxisAlignedBB[] AABB_BY_INDEX = new AxisAlignedBB[] {new AxisAlignedBB(0.4375D, 0.0D, 0.4375D, 0.5625D, 1.0D, 0.5625D), new AxisAlignedBB(0.4375D, 0.0D, 0.4375D, 0.5625D, 1.0D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.4375D, 0.5625D, 1.0D, 0.5625D), new AxisAlignedBB(0.0D, 0.0D, 0.4375D, 0.5625D, 1.0D, 1.0D), new AxisAlignedBB(0.4375D, 0.0D, 0.0D, 0.5625D, 1.0D, 0.5625D), new AxisAlignedBB(0.4375D, 0.0D, 0.0D, 0.5625D, 1.0D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.5625D, 1.0D, 0.5625D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.5625D, 1.0D, 1.0D), new AxisAlignedBB(0.4375D, 0.0D, 0.4375D, 1.0D, 1.0D, 0.5625D), new AxisAlignedBB(0.4375D, 0.0D, 0.4375D, 1.0D, 1.0D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.4375D, 1.0D, 1.0D, 0.5625D), new AxisAlignedBB(0.0D, 0.0D, 0.4375D, 1.0D, 1.0D, 1.0D), new AxisAlignedBB(0.4375D, 0.0D, 0.0D, 1.0D, 1.0D, 0.5625D), new AxisAlignedBB(0.4375D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.5625D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D)};
+    private final boolean canDrop;
 
-	protected BlockPane(Material materialIn, boolean canDrop) {
-		super(materialIn);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(NORTH, Boolean.valueOf(false))
-				.withProperty(EAST, Boolean.valueOf(false)).withProperty(SOUTH, Boolean.valueOf(false))
-				.withProperty(WEST, Boolean.valueOf(false)));
-		this.canDrop = canDrop;
-		this.setCreativeTab(CreativeTabs.tabDecorations);
-	}
+    protected BlockPane(Material materialIn, boolean canDrop)
+    {
+        super(materialIn);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(NORTH, Boolean.valueOf(false)).withProperty(EAST, Boolean.valueOf(false)).withProperty(SOUTH, Boolean.valueOf(false)).withProperty(WEST, Boolean.valueOf(false)));
+        this.canDrop = canDrop;
+        this.setCreativeTab(CreativeTabs.DECORATIONS);
+    }
 
-	/**+
-	 * Get the actual Block state of this Block at the given
-	 * position. This applies properties not visible in the
-	 * metadata, such as fence connections.
-	 */
-	public IBlockState getActualState(IBlockState iblockstate, IBlockAccess iblockaccess, BlockPos blockpos) {
-		return iblockstate
-				.withProperty(NORTH,
-						Boolean.valueOf(
-								this.canPaneConnectToBlock(iblockaccess.getBlockState(blockpos.north()).getBlock())))
-				.withProperty(SOUTH,
-						Boolean.valueOf(
-								this.canPaneConnectToBlock(iblockaccess.getBlockState(blockpos.south()).getBlock())))
-				.withProperty(WEST,
-						Boolean.valueOf(
-								this.canPaneConnectToBlock(iblockaccess.getBlockState(blockpos.west()).getBlock())))
-				.withProperty(EAST, Boolean
-						.valueOf(this.canPaneConnectToBlock(iblockaccess.getBlockState(blockpos.east()).getBlock())));
-	}
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState)
+    {
+        if (!isActualState)
+        {
+            state = this.getActualState(state, worldIn, pos);
+        }
 
-	/**+
-	 * Get the Item that this Block should drop when harvested.
-	 */
-	public Item getItemDropped(IBlockState iblockstate, EaglercraftRandom random, int i) {
-		return !this.canDrop ? null : super.getItemDropped(iblockstate, random, i);
-	}
+        addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_BY_INDEX[0]);
 
-	/**+
-	 * Used to determine ambient occlusion and culling when
-	 * rebuilding chunks for render
-	 */
-	public boolean isOpaqueCube() {
-		return false;
-	}
+        if (((Boolean)state.getValue(NORTH)).booleanValue())
+        {
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_BY_INDEX[getBoundingBoxIndex(EnumFacing.NORTH)]);
+        }
 
-	public boolean isFullCube() {
-		return false;
-	}
+        if (((Boolean)state.getValue(SOUTH)).booleanValue())
+        {
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_BY_INDEX[getBoundingBoxIndex(EnumFacing.SOUTH)]);
+        }
 
-	public boolean shouldSideBeRendered(IBlockAccess iblockaccess, BlockPos blockpos, EnumFacing enumfacing) {
-		return iblockaccess.getBlockState(blockpos).getBlock() == this ? false
-				: super.shouldSideBeRendered(iblockaccess, blockpos, enumfacing);
-	}
+        if (((Boolean)state.getValue(EAST)).booleanValue())
+        {
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_BY_INDEX[getBoundingBoxIndex(EnumFacing.EAST)]);
+        }
 
-	/**+
-	 * Add all collision boxes of this Block to the list that
-	 * intersect with the given mask.
-	 */
-	public void addCollisionBoxesToList(World world, BlockPos blockpos, IBlockState iblockstate,
-			AxisAlignedBB axisalignedbb, List<AxisAlignedBB> list, Entity entity) {
-		boolean flag = this.canPaneConnectToBlock(world.getBlockState(blockpos.north()).getBlock());
-		boolean flag1 = this.canPaneConnectToBlock(world.getBlockState(blockpos.south()).getBlock());
-		boolean flag2 = this.canPaneConnectToBlock(world.getBlockState(blockpos.west()).getBlock());
-		boolean flag3 = this.canPaneConnectToBlock(world.getBlockState(blockpos.east()).getBlock());
-		if ((!flag2 || !flag3) && (flag2 || flag3 || flag || flag1)) {
-			if (flag2) {
-				this.setBlockBounds(0.0F, 0.0F, 0.4375F, 0.5F, 1.0F, 0.5625F);
-				super.addCollisionBoxesToList(world, blockpos, iblockstate, axisalignedbb, list, entity);
-			} else if (flag3) {
-				this.setBlockBounds(0.5F, 0.0F, 0.4375F, 1.0F, 1.0F, 0.5625F);
-				super.addCollisionBoxesToList(world, blockpos, iblockstate, axisalignedbb, list, entity);
-			}
-		} else {
-			this.setBlockBounds(0.0F, 0.0F, 0.4375F, 1.0F, 1.0F, 0.5625F);
-			super.addCollisionBoxesToList(world, blockpos, iblockstate, axisalignedbb, list, entity);
-		}
+        if (((Boolean)state.getValue(WEST)).booleanValue())
+        {
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_BY_INDEX[getBoundingBoxIndex(EnumFacing.WEST)]);
+        }
+    }
 
-		if ((!flag || !flag1) && (flag2 || flag3 || flag || flag1)) {
-			if (flag) {
-				this.setBlockBounds(0.4375F, 0.0F, 0.0F, 0.5625F, 1.0F, 0.5F);
-				super.addCollisionBoxesToList(world, blockpos, iblockstate, axisalignedbb, list, entity);
-			} else if (flag1) {
-				this.setBlockBounds(0.4375F, 0.0F, 0.5F, 0.5625F, 1.0F, 1.0F);
-				super.addCollisionBoxesToList(world, blockpos, iblockstate, axisalignedbb, list, entity);
-			}
-		} else {
-			this.setBlockBounds(0.4375F, 0.0F, 0.0F, 0.5625F, 1.0F, 1.0F);
-			super.addCollisionBoxesToList(world, blockpos, iblockstate, axisalignedbb, list, entity);
-		}
+    private static int getBoundingBoxIndex(EnumFacing p_185729_0_)
+    {
+        return 1 << p_185729_0_.getHorizontalIndex();
+    }
 
-	}
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        state = this.getActualState(state, source, pos);
+        return AABB_BY_INDEX[getBoundingBoxIndex(state)];
+    }
 
-	/**+
-	 * Sets the block's bounds for rendering it as an item
-	 */
-	public void setBlockBoundsForItemRender() {
-		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-	}
+    private static int getBoundingBoxIndex(IBlockState state)
+    {
+        int i = 0;
 
-	public void setBlockBoundsBasedOnState(IBlockAccess iblockaccess, BlockPos blockpos) {
-		float f = 0.4375F;
-		float f1 = 0.5625F;
-		float f2 = 0.4375F;
-		float f3 = 0.5625F;
-		boolean flag = this.canPaneConnectToBlock(iblockaccess.getBlockState(blockpos.north()).getBlock());
-		boolean flag1 = this.canPaneConnectToBlock(iblockaccess.getBlockState(blockpos.south()).getBlock());
-		boolean flag2 = this.canPaneConnectToBlock(iblockaccess.getBlockState(blockpos.west()).getBlock());
-		boolean flag3 = this.canPaneConnectToBlock(iblockaccess.getBlockState(blockpos.east()).getBlock());
-		if ((!flag2 || !flag3) && (flag2 || flag3 || flag || flag1)) {
-			if (flag2) {
-				f = 0.0F;
-			} else if (flag3) {
-				f1 = 1.0F;
-			}
-		} else {
-			f = 0.0F;
-			f1 = 1.0F;
-		}
+        if (((Boolean)state.getValue(NORTH)).booleanValue())
+        {
+            i |= getBoundingBoxIndex(EnumFacing.NORTH);
+        }
 
-		if ((!flag || !flag1) && (flag2 || flag3 || flag || flag1)) {
-			if (flag) {
-				f2 = 0.0F;
-			} else if (flag1) {
-				f3 = 1.0F;
-			}
-		} else {
-			f2 = 0.0F;
-			f3 = 1.0F;
-		}
+        if (((Boolean)state.getValue(EAST)).booleanValue())
+        {
+            i |= getBoundingBoxIndex(EnumFacing.EAST);
+        }
 
-		this.setBlockBounds(f, 0.0F, f2, f1, 1.0F, f3);
-	}
+        if (((Boolean)state.getValue(SOUTH)).booleanValue())
+        {
+            i |= getBoundingBoxIndex(EnumFacing.SOUTH);
+        }
 
-	public final boolean canPaneConnectToBlock(Block blockIn) {
-		return blockIn.isFullBlock() || blockIn == this || blockIn == Blocks.glass || blockIn == Blocks.stained_glass
-				|| blockIn == Blocks.stained_glass_pane || blockIn instanceof BlockPane;
-	}
+        if (((Boolean)state.getValue(WEST)).booleanValue())
+        {
+            i |= getBoundingBoxIndex(EnumFacing.WEST);
+        }
 
-	protected boolean canSilkHarvest() {
-		return true;
-	}
+        return i;
+    }
 
-	public EnumWorldBlockLayer getBlockLayer() {
-		return EnumWorldBlockLayer.CUTOUT_MIPPED;
-	}
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
+    {
+        return state.withProperty(NORTH, canPaneConnectTo(worldIn, pos, EnumFacing.NORTH))
+                    .withProperty(SOUTH, canPaneConnectTo(worldIn, pos, EnumFacing.SOUTH))
+                    .withProperty(WEST,  canPaneConnectTo(worldIn, pos, EnumFacing.WEST))
+                    .withProperty(EAST,  canPaneConnectTo(worldIn, pos, EnumFacing.EAST));
+    }
 
-	public boolean eaglerShadersShouldRenderGlassHighlights() {
-		return this == Blocks.glass_pane && DeferredStateManager.isRenderingGlassHighlights();
-	}
+    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    {
+        return !this.canDrop ? Items.AIR : super.getItemDropped(state, rand, fortune);
+    }
 
-	/**+
-	 * Convert the BlockState into the correct metadata value
-	 */
-	public int getMetaFromState(IBlockState var1) {
-		return 0;
-	}
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
 
-	protected BlockState createBlockState() {
-		return new BlockState(this, new IProperty[] { NORTH, EAST, WEST, SOUTH });
-	}
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
+    {
+        return blockAccess.getBlockState(pos.offset(side)).getBlock() == this ? false : super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+    }
+
+    public final boolean attachesTo(IBlockAccess p_193393_1_, IBlockState state, BlockPos pos, EnumFacing facing)
+    {
+        Block block = state.getBlock();
+        BlockFaceShape blockfaceshape = state.getBlockFaceShape(p_193393_1_, pos, facing);
+        return !isExcepBlockForAttachWithPiston(block) && blockfaceshape == BlockFaceShape.SOLID || blockfaceshape == BlockFaceShape.MIDDLE_POLE_THIN;
+    }
+
+    protected static boolean isExcepBlockForAttachWithPiston(Block p_193394_0_)
+    {
+        return p_193394_0_ instanceof BlockShulkerBox || p_193394_0_ instanceof BlockLeaves || p_193394_0_ == Blocks.BEACON || p_193394_0_ == Blocks.CAULDRON || p_193394_0_ == Blocks.GLOWSTONE || p_193394_0_ == Blocks.ICE || p_193394_0_ == Blocks.SEA_LANTERN || p_193394_0_ == Blocks.PISTON || p_193394_0_ == Blocks.STICKY_PISTON || p_193394_0_ == Blocks.PISTON_HEAD || p_193394_0_ == Blocks.MELON_BLOCK || p_193394_0_ == Blocks.PUMPKIN || p_193394_0_ == Blocks.LIT_PUMPKIN || p_193394_0_ == Blocks.BARRIER;
+    }
+
+    protected boolean canSilkHarvest()
+    {
+        return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.CUTOUT_MIPPED;
+    }
+
+    public int getMetaFromState(IBlockState state)
+    {
+        return 0;
+    }
+
+    public IBlockState withRotation(IBlockState state, Rotation rot)
+    {
+        switch (rot)
+        {
+            case CLOCKWISE_180:
+                return state.withProperty(NORTH, state.getValue(SOUTH)).withProperty(EAST, state.getValue(WEST)).withProperty(SOUTH, state.getValue(NORTH)).withProperty(WEST, state.getValue(EAST));
+            case COUNTERCLOCKWISE_90:
+                return state.withProperty(NORTH, state.getValue(EAST)).withProperty(EAST, state.getValue(SOUTH)).withProperty(SOUTH, state.getValue(WEST)).withProperty(WEST, state.getValue(NORTH));
+            case CLOCKWISE_90:
+                return state.withProperty(NORTH, state.getValue(WEST)).withProperty(EAST, state.getValue(NORTH)).withProperty(SOUTH, state.getValue(EAST)).withProperty(WEST, state.getValue(SOUTH));
+            default:
+                return state;
+        }
+    }
+
+    public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
+    {
+        switch (mirrorIn)
+        {
+            case LEFT_RIGHT:
+                return state.withProperty(NORTH, state.getValue(SOUTH)).withProperty(SOUTH, state.getValue(NORTH));
+            case FRONT_BACK:
+                return state.withProperty(EAST, state.getValue(WEST)).withProperty(WEST, state.getValue(EAST));
+            default:
+                return super.withMirror(state, mirrorIn);
+        }
+    }
+
+    protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, new IProperty[] {NORTH, EAST, WEST, SOUTH});
+    }
+
+    /* ======================================== FORGE START ======================================== */
+
+    @Override
+    public boolean canBeConnectedTo(IBlockAccess world, BlockPos pos, EnumFacing facing)
+    {
+        BlockPos offset = pos.offset(facing);
+        return attachesTo(world, world.getBlockState(offset), offset, facing.getOpposite());
+    }
+
+    public boolean canPaneConnectTo(IBlockAccess world, BlockPos pos, EnumFacing dir)
+    {
+        BlockPos other = pos.offset(dir);
+        IBlockState state = world.getBlockState(other);
+        return state.getBlock().canBeConnectedTo(world, other, dir.getOpposite()) || attachesTo(world, state, other, dir.getOpposite());
+    }
+
+    /* ======================================== FORGE END ======================================== */
+
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+    {
+        return face != EnumFacing.UP && face != EnumFacing.DOWN ? BlockFaceShape.MIDDLE_POLE_THIN : BlockFaceShape.CENTER_SMALL;
+    }
 }

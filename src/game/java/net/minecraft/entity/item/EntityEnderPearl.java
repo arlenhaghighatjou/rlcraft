@@ -1,112 +1,157 @@
 package net.minecraft.entity.item;
 
+import javax.annotation.Nullable;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityEndGateway;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.datafix.DataFixer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class EntityEnderPearl extends EntityThrowable {
-	private EntityLivingBase field_181555_c;
+public class EntityEnderPearl extends EntityThrowable
+{
+    private EntityLivingBase perlThrower;
 
-	public EntityEnderPearl(World parWorld) {
-		super(parWorld);
-	}
+    public EntityEnderPearl(World worldIn)
+    {
+        super(worldIn);
+    }
 
-	public EntityEnderPearl(World worldIn, EntityLivingBase parEntityLivingBase) {
-		super(worldIn, parEntityLivingBase);
-		this.field_181555_c = parEntityLivingBase;
-	}
+    public EntityEnderPearl(World worldIn, EntityLivingBase throwerIn)
+    {
+        super(worldIn, throwerIn);
+        this.perlThrower = throwerIn;
+    }
 
-	public EntityEnderPearl(World worldIn, double parDouble1, double parDouble2, double parDouble3) {
-		super(worldIn, parDouble1, parDouble2, parDouble3);
-	}
+    @SideOnly(Side.CLIENT)
+    public EntityEnderPearl(World worldIn, double x, double y, double z)
+    {
+        super(worldIn, x, y, z);
+    }
 
-	/**+
-	 * Called when this EntityThrowable hits a block or entity.
-	 */
-	protected void onImpact(MovingObjectPosition movingobjectposition) {
-		EntityLivingBase entitylivingbase = this.getThrower();
-		if (movingobjectposition.entityHit != null) {
-			if (movingobjectposition.entityHit == this.field_181555_c) {
-				return;
-			}
+    public static void registerFixesEnderPearl(DataFixer fixer)
+    {
+        EntityThrowable.registerFixesThrowable(fixer, "ThrownEnderpearl");
+    }
 
-			movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, entitylivingbase),
-					0.0F);
-		}
+    protected void onImpact(RayTraceResult result)
+    {
+        EntityLivingBase entitylivingbase = this.getThrower();
 
-		for (int i = 0; i < 32; ++i) {
-			this.worldObj.spawnParticle(EnumParticleTypes.PORTAL, this.posX, this.posY + this.rand.nextDouble() * 2.0D,
-					this.posZ, this.rand.nextGaussian(), 0.0D, this.rand.nextGaussian(), new int[0]);
-		}
+        if (result.entityHit != null)
+        {
+            if (result.entityHit == this.perlThrower)
+            {
+                return;
+            }
 
-		if (!this.worldObj.isRemote) {
-			if (entitylivingbase instanceof EntityPlayerMP) {
-				EntityPlayerMP entityplayermp = (EntityPlayerMP) entitylivingbase;
-				if (entityplayermp.playerNetServerHandler.getNetworkManager().isChannelOpen()
-						&& entityplayermp.worldObj == this.worldObj && !entityplayermp.isPlayerSleeping()) {
-					if (this.rand.nextFloat() < 0.05F && this.worldObj.getGameRules().getBoolean("doMobSpawning")) {
-						EntityEndermite entityendermite = new EntityEndermite(this.worldObj);
-						entityendermite.setSpawnedByPlayer(true);
-						entityendermite.setLocationAndAngles(entitylivingbase.posX, entitylivingbase.posY,
-								entitylivingbase.posZ, entitylivingbase.rotationYaw, entitylivingbase.rotationPitch);
-						this.worldObj.spawnEntityInWorld(entityendermite);
-					}
+            result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, entitylivingbase), 0.0F);
+        }
 
-					if (entitylivingbase.isRiding()) {
-						entitylivingbase.mountEntity((Entity) null);
-					}
+        if (result.typeOfHit == RayTraceResult.Type.BLOCK)
+        {
+            BlockPos blockpos = result.getBlockPos();
+            TileEntity tileentity = this.world.getTileEntity(blockpos);
 
-					entitylivingbase.setPositionAndUpdate(this.posX, this.posY, this.posZ);
-					entitylivingbase.fallDistance = 0.0F;
-					entitylivingbase.attackEntityFrom(DamageSource.fall, 5.0F);
-				}
-			} else if (entitylivingbase != null) {
-				entitylivingbase.setPositionAndUpdate(this.posX, this.posY, this.posZ);
-				entitylivingbase.fallDistance = 0.0F;
-			}
+            if (tileentity instanceof TileEntityEndGateway)
+            {
+                TileEntityEndGateway tileentityendgateway = (TileEntityEndGateway)tileentity;
 
-			this.setDead();
-		}
+                if (entitylivingbase != null)
+                {
+                    if (entitylivingbase instanceof EntityPlayerMP)
+                    {
+                        CriteriaTriggers.ENTER_BLOCK.trigger((EntityPlayerMP)entitylivingbase, this.world.getBlockState(blockpos));
+                    }
 
-	}
+                    tileentityendgateway.teleportEntity(entitylivingbase);
+                    this.setDead();
+                    return;
+                }
 
-	/**+
-	 * Called to update the entity's position/logic.
-	 */
-	public void onUpdate() {
-		EntityLivingBase entitylivingbase = this.getThrower();
-		if (entitylivingbase != null && entitylivingbase instanceof EntityPlayer && !entitylivingbase.isEntityAlive()) {
-			this.setDead();
-		} else {
-			super.onUpdate();
-		}
+                tileentityendgateway.teleportEntity(this);
+                return;
+            }
+        }
 
-	}
+        for (int i = 0; i < 32; ++i)
+        {
+            this.world.spawnParticle(EnumParticleTypes.PORTAL, this.posX, this.posY + this.rand.nextDouble() * 2.0D, this.posZ, this.rand.nextGaussian(), 0.0D, this.rand.nextGaussian());
+        }
+
+        if (!this.world.isRemote)
+        {
+            if (entitylivingbase instanceof EntityPlayerMP)
+            {
+                EntityPlayerMP entityplayermp = (EntityPlayerMP)entitylivingbase;
+
+                if (entityplayermp.connection.getNetworkManager().isChannelOpen() && entityplayermp.world == this.world && !entityplayermp.isPlayerSleeping())
+                {
+                    net.minecraftforge.event.entity.living.EnderTeleportEvent event = new net.minecraftforge.event.entity.living.EnderTeleportEvent(entityplayermp, this.posX, this.posY, this.posZ, 5.0F);
+                    if (!net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event))
+                    { // Don't indent to lower patch size
+                    if (this.rand.nextFloat() < 0.05F && this.world.getGameRules().getBoolean("doMobSpawning"))
+                    {
+                        EntityEndermite entityendermite = new EntityEndermite(this.world);
+                        entityendermite.setSpawnedByPlayer(true);
+                        entityendermite.setLocationAndAngles(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ, entitylivingbase.rotationYaw, entitylivingbase.rotationPitch);
+                        this.world.spawnEntity(entityendermite);
+                    }
+
+                    if (entitylivingbase.isRiding())
+                    {
+                        entitylivingbase.dismountRidingEntity();
+                    }
+
+                    entitylivingbase.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+                    entitylivingbase.fallDistance = 0.0F;
+                    entitylivingbase.attackEntityFrom(DamageSource.FALL, event.getAttackDamage());
+                    }
+                }
+            }
+            else if (entitylivingbase != null)
+            {
+                entitylivingbase.setPositionAndUpdate(this.posX, this.posY, this.posZ);
+                entitylivingbase.fallDistance = 0.0F;
+            }
+
+            this.setDead();
+        }
+    }
+
+    public void onUpdate()
+    {
+        EntityLivingBase entitylivingbase = this.getThrower();
+
+        if (entitylivingbase != null && entitylivingbase instanceof EntityPlayer && !entitylivingbase.isEntityAlive())
+        {
+            this.setDead();
+        }
+        else
+        {
+            super.onUpdate();
+        }
+    }
+
+    @Nullable
+    public Entity changeDimension(int dimensionIn, net.minecraftforge.common.util.ITeleporter teleporter)
+    {
+        if (this.thrower.dimension != dimensionIn)
+        {
+            this.thrower = null;
+        }
+
+        return super.changeDimension(dimensionIn, teleporter);
+    }
 }

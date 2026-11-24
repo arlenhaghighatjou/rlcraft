@@ -3,117 +3,125 @@ package net.minecraft.item.crafting;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class RecipesMapCloning implements IRecipe {
-	/**+
-	 * Used to check if a recipe matches current crafting inventory
-	 */
-	public boolean matches(InventoryCrafting inventorycrafting, World var2) {
-		int i = 0;
-		ItemStack itemstack = null;
+public class RecipesMapCloning extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
+{
+    public boolean matches(InventoryCrafting inv, World worldIn)
+    {
+        int i = 0;
+        ItemStack itemstack = ItemStack.EMPTY;
 
-		for (int j = 0; j < inventorycrafting.getSizeInventory(); ++j) {
-			ItemStack itemstack1 = inventorycrafting.getStackInSlot(j);
-			if (itemstack1 != null) {
-				if (itemstack1.getItem() == Items.filled_map) {
-					if (itemstack != null) {
-						return false;
-					}
+        for (int j = 0; j < inv.getSizeInventory(); ++j)
+        {
+            ItemStack itemstack1 = inv.getStackInSlot(j);
 
-					itemstack = itemstack1;
-				} else {
-					if (itemstack1.getItem() != Items.map) {
-						return false;
-					}
+            if (!itemstack1.isEmpty())
+            {
+                if (itemstack1.getItem() == Items.FILLED_MAP)
+                {
+                    if (!itemstack.isEmpty())
+                    {
+                        return false;
+                    }
 
-					++i;
-				}
-			}
-		}
+                    itemstack = itemstack1;
+                }
+                else
+                {
+                    if (itemstack1.getItem() != Items.MAP)
+                    {
+                        return false;
+                    }
 
-		return itemstack != null && i > 0;
-	}
+                    ++i;
+                }
+            }
+        }
 
-	/**+
-	 * Returns an Item that is the result of this recipe
-	 */
-	public ItemStack getCraftingResult(InventoryCrafting inventorycrafting) {
-		int i = 0;
-		ItemStack itemstack = null;
+        return !itemstack.isEmpty() && i > 0;
+    }
 
-		for (int j = 0; j < inventorycrafting.getSizeInventory(); ++j) {
-			ItemStack itemstack1 = inventorycrafting.getStackInSlot(j);
-			if (itemstack1 != null) {
-				if (itemstack1.getItem() == Items.filled_map) {
-					if (itemstack != null) {
-						return null;
-					}
+    public ItemStack getCraftingResult(InventoryCrafting inv)
+    {
+        int i = 0;
+        ItemStack itemstack = ItemStack.EMPTY;
 
-					itemstack = itemstack1;
-				} else {
-					if (itemstack1.getItem() != Items.map) {
-						return null;
-					}
+        for (int j = 0; j < inv.getSizeInventory(); ++j)
+        {
+            ItemStack itemstack1 = inv.getStackInSlot(j);
 
-					++i;
-				}
-			}
-		}
+            if (!itemstack1.isEmpty())
+            {
+                if (itemstack1.getItem() == Items.FILLED_MAP)
+                {
+                    if (!itemstack.isEmpty())
+                    {
+                        return ItemStack.EMPTY;
+                    }
 
-		if (itemstack != null && i >= 1) {
-			ItemStack itemstack2 = new ItemStack(Items.filled_map, i + 1, itemstack.getMetadata());
-			if (itemstack.hasDisplayName()) {
-				itemstack2.setStackDisplayName(itemstack.getDisplayName());
-			}
+                    itemstack = itemstack1;
+                }
+                else
+                {
+                    if (itemstack1.getItem() != Items.MAP)
+                    {
+                        return ItemStack.EMPTY;
+                    }
 
-			return itemstack2;
-		} else {
-			return null;
-		}
-	}
+                    ++i;
+                }
+            }
+        }
 
-	/**+
-	 * Returns the size of the recipe area
-	 */
-	public int getRecipeSize() {
-		return 9;
-	}
+        if (!itemstack.isEmpty() && i >= 1)
+        {
+            ItemStack itemstack2 = new ItemStack(Items.FILLED_MAP, i + 1, itemstack.getMetadata());
 
-	public ItemStack getRecipeOutput() {
-		return null;
-	}
+            if (itemstack.hasDisplayName())
+            {
+                itemstack2.setStackDisplayName(itemstack.getDisplayName());
+            }
 
-	public ItemStack[] getRemainingItems(InventoryCrafting inventorycrafting) {
-		ItemStack[] aitemstack = new ItemStack[inventorycrafting.getSizeInventory()];
+            if (itemstack.hasTagCompound())
+            {
+                itemstack2.setTagCompound(itemstack.getTagCompound());
+            }
 
-		for (int i = 0; i < aitemstack.length; ++i) {
-			ItemStack itemstack = inventorycrafting.getStackInSlot(i);
-			if (itemstack != null && itemstack.getItem().hasContainerItem()) {
-				aitemstack[i] = new ItemStack(itemstack.getItem().getContainerItem());
-			}
-		}
+            return itemstack2;
+        }
+        else
+        {
+            return ItemStack.EMPTY;
+        }
+    }
 
-		return aitemstack;
-	}
+    public ItemStack getRecipeOutput()
+    {
+        return ItemStack.EMPTY;
+    }
+
+    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
+    {
+        NonNullList<ItemStack> nonnulllist = NonNullList.<ItemStack>withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+
+        for (int i = 0; i < nonnulllist.size(); ++i)
+        {
+            ItemStack itemstack = inv.getStackInSlot(i);
+            nonnulllist.set(i, net.minecraftforge.common.ForgeHooks.getContainerItem(itemstack));
+        }
+
+        return nonnulllist;
+    }
+
+    public boolean isDynamic()
+    {
+        return true;
+    }
+
+    public boolean canFit(int width, int height)
+    {
+        return width >= 3 && height >= 3;
+    }
 }

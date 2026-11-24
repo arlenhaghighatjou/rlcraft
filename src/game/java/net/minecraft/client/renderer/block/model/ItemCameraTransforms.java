@@ -1,133 +1,190 @@
 package net.minecraft.client.renderer.block.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import java.lang.reflect.Type;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.util.vector.Quaternion;
 
-import net.lax1dude.eaglercraft.v1_8.json.JSONTypeDeserializer;
-import net.lax1dude.eaglercraft.v1_8.json.JSONTypeProvider;
-import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
+/*
+ * @deprecated use {@link net.minecraftforge.client.model.IPerspectiveAwareModel} instead
  */
-public class ItemCameraTransforms {
-	public static final ItemCameraTransforms DEFAULT = new ItemCameraTransforms();
-	public static float field_181690_b = 0.0F;
-	public static float field_181691_c = 0.0F;
-	public static float field_181692_d = 0.0F;
-	public static float field_181693_e = 0.0F;
-	public static float field_181694_f = 0.0F;
-	public static float field_181695_g = 0.0F;
-	public static float field_181696_h = 0.0F;
-	public static float field_181697_i = 0.0F;
-	public static float field_181698_j = 0.0F;
-	public final ItemTransformVec3f thirdPerson;
-	public final ItemTransformVec3f firstPerson;
-	public final ItemTransformVec3f head;
-	public final ItemTransformVec3f gui;
-	public final ItemTransformVec3f ground;
-	public final ItemTransformVec3f fixed;
+@SideOnly(Side.CLIENT)
+public class ItemCameraTransforms
+{
+    public static final ItemCameraTransforms DEFAULT = new ItemCameraTransforms();
+    public static float offsetTranslateX;
+    public static float offsetTranslateY;
+    public static float offsetTranslateZ;
+    public static float offsetRotationX;
+    public static float offsetRotationY;
+    public static float offsetRotationZ;
+    public static float offsetScaleX;
+    public static float offsetScaleY;
+    public static float offsetScaleZ;
+    public final ItemTransformVec3f thirdperson_left;
+    public final ItemTransformVec3f thirdperson_right;
+    public final ItemTransformVec3f firstperson_left;
+    public final ItemTransformVec3f firstperson_right;
+    public final ItemTransformVec3f head;
+    public final ItemTransformVec3f gui;
+    public final ItemTransformVec3f ground;
+    public final ItemTransformVec3f fixed;
 
-	private ItemCameraTransforms() {
-		this(ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT,
-				ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT);
-	}
+    private ItemCameraTransforms()
+    {
+        this(ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT);
+    }
 
-	public ItemCameraTransforms(ItemCameraTransforms parItemCameraTransforms) {
-		this.thirdPerson = parItemCameraTransforms.thirdPerson;
-		this.firstPerson = parItemCameraTransforms.firstPerson;
-		this.head = parItemCameraTransforms.head;
-		this.gui = parItemCameraTransforms.gui;
-		this.ground = parItemCameraTransforms.ground;
-		this.fixed = parItemCameraTransforms.fixed;
-	}
+    @Deprecated
+    public ItemCameraTransforms(ItemCameraTransforms transforms)
+    {
+        this.thirdperson_left = transforms.thirdperson_left;
+        this.thirdperson_right = transforms.thirdperson_right;
+        this.firstperson_left = transforms.firstperson_left;
+        this.firstperson_right = transforms.firstperson_right;
+        this.head = transforms.head;
+        this.gui = transforms.gui;
+        this.ground = transforms.ground;
+        this.fixed = transforms.fixed;
+    }
 
-	public ItemCameraTransforms(ItemTransformVec3f parItemTransformVec3f, ItemTransformVec3f parItemTransformVec3f_2,
-			ItemTransformVec3f parItemTransformVec3f_3, ItemTransformVec3f parItemTransformVec3f_4,
-			ItemTransformVec3f parItemTransformVec3f_5, ItemTransformVec3f parItemTransformVec3f_6) {
-		this.thirdPerson = parItemTransformVec3f;
-		this.firstPerson = parItemTransformVec3f_2;
-		this.head = parItemTransformVec3f_3;
-		this.gui = parItemTransformVec3f_4;
-		this.ground = parItemTransformVec3f_5;
-		this.fixed = parItemTransformVec3f_6;
-	}
+    @Deprecated
+    public ItemCameraTransforms(ItemTransformVec3f thirdperson_leftIn, ItemTransformVec3f thirdperson_rightIn, ItemTransformVec3f firstperson_leftIn, ItemTransformVec3f firstperson_rightIn, ItemTransformVec3f headIn, ItemTransformVec3f guiIn, ItemTransformVec3f groundIn, ItemTransformVec3f fixedIn)
+    {
+        this.thirdperson_left = thirdperson_leftIn;
+        this.thirdperson_right = thirdperson_rightIn;
+        this.firstperson_left = firstperson_leftIn;
+        this.firstperson_right = firstperson_rightIn;
+        this.head = headIn;
+        this.gui = guiIn;
+        this.ground = groundIn;
+        this.fixed = fixedIn;
+    }
 
-	public void applyTransform(ItemCameraTransforms.TransformType parTransformType) {
-		ItemTransformVec3f itemtransformvec3f = this.getTransform(parTransformType);
-		if (itemtransformvec3f != ItemTransformVec3f.DEFAULT) {
-			GlStateManager.translate(itemtransformvec3f.translation.x + field_181690_b,
-					itemtransformvec3f.translation.y + field_181691_c,
-					itemtransformvec3f.translation.z + field_181692_d);
-			GlStateManager.rotate(itemtransformvec3f.rotation.y + field_181694_f, 0.0F, 1.0F, 0.0F);
-			GlStateManager.rotate(itemtransformvec3f.rotation.x + field_181693_e, 1.0F, 0.0F, 0.0F);
-			GlStateManager.rotate(itemtransformvec3f.rotation.z + field_181695_g, 0.0F, 0.0F, 1.0F);
-			GlStateManager.scale(itemtransformvec3f.scale.x + field_181696_h,
-					itemtransformvec3f.scale.y + field_181697_i, itemtransformvec3f.scale.z + field_181698_j);
-		}
+    public void applyTransform(ItemCameraTransforms.TransformType type)
+    {
+        applyTransformSide(this.getTransform(type), false);
+    }
 
-	}
+    public static void applyTransformSide(ItemTransformVec3f vec, boolean leftHand)
+    {
+        if (vec != ItemTransformVec3f.DEFAULT)
+        {
+            int i = leftHand ? -1 : 1;
+            GlStateManager.translate((float)i * (offsetTranslateX + vec.translation.x), offsetTranslateY + vec.translation.y, offsetTranslateZ + vec.translation.z);
+            float f = offsetRotationX + vec.rotation.x;
+            float f1 = offsetRotationY + vec.rotation.y;
+            float f2 = offsetRotationZ + vec.rotation.z;
 
-	public ItemTransformVec3f getTransform(ItemCameraTransforms.TransformType parTransformType) {
-		switch (parTransformType) {
-		case THIRD_PERSON:
-			return this.thirdPerson;
-		case FIRST_PERSON:
-			return this.firstPerson;
-		case HEAD:
-			return this.head;
-		case GUI:
-			return this.gui;
-		case GROUND:
-			return this.ground;
-		case FIXED:
-			return this.fixed;
-		default:
-			return ItemTransformVec3f.DEFAULT;
-		}
-	}
+            if (leftHand)
+            {
+                f1 = -f1;
+                f2 = -f2;
+            }
 
-	public boolean func_181687_c(ItemCameraTransforms.TransformType parTransformType) {
-		return !this.getTransform(parTransformType).equals(ItemTransformVec3f.DEFAULT);
-	}
+            GlStateManager.rotate(makeQuaternion(f, f1, f2));
+            GlStateManager.scale(offsetScaleX + vec.scale.x, offsetScaleY + vec.scale.y, offsetScaleZ + vec.scale.z);
+        }
+    }
 
-	public static class Deserializer implements JSONTypeDeserializer<JSONObject, ItemCameraTransforms> {
-		public ItemCameraTransforms deserialize(JSONObject jsonobject) throws JSONException {
-			ItemTransformVec3f itemtransformvec3f = this.func_181683_a(jsonobject, "thirdperson");
-			ItemTransformVec3f itemtransformvec3f1 = this.func_181683_a(jsonobject, "firstperson");
-			ItemTransformVec3f itemtransformvec3f2 = this.func_181683_a(jsonobject, "head");
-			ItemTransformVec3f itemtransformvec3f3 = this.func_181683_a(jsonobject, "gui");
-			ItemTransformVec3f itemtransformvec3f4 = this.func_181683_a(jsonobject, "ground");
-			ItemTransformVec3f itemtransformvec3f5 = this.func_181683_a(jsonobject, "fixed");
-			return new ItemCameraTransforms(itemtransformvec3f, itemtransformvec3f1, itemtransformvec3f2,
-					itemtransformvec3f3, itemtransformvec3f4, itemtransformvec3f5);
-		}
+    private static Quaternion makeQuaternion(float p_188035_0_, float p_188035_1_, float p_188035_2_)
+    {
+        float f = p_188035_0_ * 0.017453292F;
+        float f1 = p_188035_1_ * 0.017453292F;
+        float f2 = p_188035_2_ * 0.017453292F;
+        float f3 = MathHelper.sin(0.5F * f);
+        float f4 = MathHelper.cos(0.5F * f);
+        float f5 = MathHelper.sin(0.5F * f1);
+        float f6 = MathHelper.cos(0.5F * f1);
+        float f7 = MathHelper.sin(0.5F * f2);
+        float f8 = MathHelper.cos(0.5F * f2);
+        return new Quaternion(f3 * f6 * f8 + f4 * f5 * f7, f4 * f5 * f8 - f3 * f6 * f7, f3 * f5 * f8 + f4 * f6 * f7, f4 * f6 * f8 - f3 * f5 * f7);
+    }
 
-		private ItemTransformVec3f func_181683_a(JSONObject parJsonObject, String parString1) {
-			return parJsonObject.has(parString1)
-					? JSONTypeProvider.deserialize(parJsonObject.get(parString1), ItemTransformVec3f.class)
-					: ItemTransformVec3f.DEFAULT;
-		}
-	}
+    @Deprecated
+    public ItemTransformVec3f getTransform(ItemCameraTransforms.TransformType type)
+    {
+        switch (type)
+        {
+            case THIRD_PERSON_LEFT_HAND:
+                return this.thirdperson_left;
+            case THIRD_PERSON_RIGHT_HAND:
+                return this.thirdperson_right;
+            case FIRST_PERSON_LEFT_HAND:
+                return this.firstperson_left;
+            case FIRST_PERSON_RIGHT_HAND:
+                return this.firstperson_right;
+            case HEAD:
+                return this.head;
+            case GUI:
+                return this.gui;
+            case GROUND:
+                return this.ground;
+            case FIXED:
+                return this.fixed;
+            default:
+                return ItemTransformVec3f.DEFAULT;
+        }
+    }
 
-	public static enum TransformType {
-		NONE, THIRD_PERSON, FIRST_PERSON, HEAD, GUI, GROUND, FIXED;
-	}
+    public boolean hasCustomTransform(ItemCameraTransforms.TransformType type)
+    {
+        return this.getTransform(type) != ItemTransformVec3f.DEFAULT;
+    }
+
+    @SideOnly(Side.CLIENT)
+    static class Deserializer implements JsonDeserializer<ItemCameraTransforms>
+        {
+            public ItemCameraTransforms deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException
+            {
+                JsonObject jsonobject = p_deserialize_1_.getAsJsonObject();
+                ItemTransformVec3f itemtransformvec3f = this.getTransform(p_deserialize_3_, jsonobject, "thirdperson_righthand");
+                ItemTransformVec3f itemtransformvec3f1 = this.getTransform(p_deserialize_3_, jsonobject, "thirdperson_lefthand");
+
+                if (itemtransformvec3f1 == ItemTransformVec3f.DEFAULT)
+                {
+                    itemtransformvec3f1 = itemtransformvec3f;
+                }
+
+                ItemTransformVec3f itemtransformvec3f2 = this.getTransform(p_deserialize_3_, jsonobject, "firstperson_righthand");
+                ItemTransformVec3f itemtransformvec3f3 = this.getTransform(p_deserialize_3_, jsonobject, "firstperson_lefthand");
+
+                if (itemtransformvec3f3 == ItemTransformVec3f.DEFAULT)
+                {
+                    itemtransformvec3f3 = itemtransformvec3f2;
+                }
+
+                ItemTransformVec3f itemtransformvec3f4 = this.getTransform(p_deserialize_3_, jsonobject, "head");
+                ItemTransformVec3f itemtransformvec3f5 = this.getTransform(p_deserialize_3_, jsonobject, "gui");
+                ItemTransformVec3f itemtransformvec3f6 = this.getTransform(p_deserialize_3_, jsonobject, "ground");
+                ItemTransformVec3f itemtransformvec3f7 = this.getTransform(p_deserialize_3_, jsonobject, "fixed");
+                return new ItemCameraTransforms(itemtransformvec3f1, itemtransformvec3f, itemtransformvec3f3, itemtransformvec3f2, itemtransformvec3f4, itemtransformvec3f5, itemtransformvec3f6, itemtransformvec3f7);
+            }
+
+            private ItemTransformVec3f getTransform(JsonDeserializationContext p_181683_1_, JsonObject p_181683_2_, String p_181683_3_)
+            {
+                return p_181683_2_.has(p_181683_3_) ? (ItemTransformVec3f)p_181683_1_.deserialize(p_181683_2_.get(p_181683_3_), ItemTransformVec3f.class) : ItemTransformVec3f.DEFAULT;
+            }
+        }
+
+    @SideOnly(Side.CLIENT)
+    public static enum TransformType implements net.minecraftforge.common.model.IModelPart
+    {
+        NONE,
+        THIRD_PERSON_LEFT_HAND,
+        THIRD_PERSON_RIGHT_HAND,
+        FIRST_PERSON_LEFT_HAND,
+        FIRST_PERSON_RIGHT_HAND,
+        HEAD,
+        GUI,
+        GROUND,
+        FIXED;
+    }
 }

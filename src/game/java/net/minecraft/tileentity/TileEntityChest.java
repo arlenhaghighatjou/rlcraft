@@ -1,443 +1,414 @@
 package net.minecraft.tileentity;
 
-import java.util.List;
-
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryLargeChest;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.datafix.DataFixer;
+import net.minecraft.util.datafix.FixTypes;
+import net.minecraft.util.datafix.walkers.ItemStackDataLists;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class TileEntityChest extends TileEntityLockable implements ITickable, IInventory {
-	private ItemStack[] chestContents = new ItemStack[27];
-	public boolean adjacentChestChecked;
-	public TileEntityChest adjacentChestZNeg;
-	public TileEntityChest adjacentChestXPos;
-	public TileEntityChest adjacentChestXNeg;
-	public TileEntityChest adjacentChestZPos;
-	public float lidAngle;
-	public float prevLidAngle;
-	public int numPlayersUsing;
-	private int ticksSinceSync;
-	private int cachedChestType;
-	private String customName;
+public class TileEntityChest extends TileEntityLockableLoot implements ITickable
+{
+    private NonNullList<ItemStack> chestContents = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
+    public boolean adjacentChestChecked;
+    public TileEntityChest adjacentChestZNeg;
+    public TileEntityChest adjacentChestXPos;
+    public TileEntityChest adjacentChestXNeg;
+    public TileEntityChest adjacentChestZPos;
+    public float lidAngle;
+    public float prevLidAngle;
+    public int numPlayersUsing;
+    private int ticksSinceSync;
+    private BlockChest.Type cachedChestType;
 
-	public TileEntityChest() {
-		this.cachedChestType = -1;
-	}
+    public TileEntityChest()
+    {
+    }
 
-	public TileEntityChest(int chestType) {
-		this.cachedChestType = chestType;
-	}
+    public TileEntityChest(BlockChest.Type typeIn)
+    {
+        this.cachedChestType = typeIn;
+    }
 
-	/**+
-	 * Returns the number of slots in the inventory.
-	 */
-	public int getSizeInventory() {
-		return 27;
-	}
+    public int getSizeInventory()
+    {
+        return 27;
+    }
 
-	/**+
-	 * Returns the stack in the given slot.
-	 */
-	public ItemStack getStackInSlot(int i) {
-		return this.chestContents[i];
-	}
+    public boolean isEmpty()
+    {
+        for (ItemStack itemstack : this.chestContents)
+        {
+            if (!itemstack.isEmpty())
+            {
+                return false;
+            }
+        }
 
-	/**+
-	 * Removes up to a specified number of items from an inventory
-	 * slot and returns them in a new stack.
-	 */
-	public ItemStack decrStackSize(int i, int j) {
-		if (this.chestContents[i] != null) {
-			if (this.chestContents[i].stackSize <= j) {
-				ItemStack itemstack1 = this.chestContents[i];
-				this.chestContents[i] = null;
-				this.markDirty();
-				return itemstack1;
-			} else {
-				ItemStack itemstack = this.chestContents[i].splitStack(j);
-				if (this.chestContents[i].stackSize == 0) {
-					this.chestContents[i] = null;
-				}
+        return true;
+    }
 
-				this.markDirty();
-				return itemstack;
-			}
-		} else {
-			return null;
-		}
-	}
+    public String getName()
+    {
+        return this.hasCustomName() ? this.customName : "container.chest";
+    }
 
-	/**+
-	 * Removes a stack from the given slot and returns it.
-	 */
-	public ItemStack removeStackFromSlot(int i) {
-		if (this.chestContents[i] != null) {
-			ItemStack itemstack = this.chestContents[i];
-			this.chestContents[i] = null;
-			return itemstack;
-		} else {
-			return null;
-		}
-	}
+    public static void registerFixesChest(DataFixer fixer)
+    {
+        fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(TileEntityChest.class, new String[] {"Items"}));
+    }
 
-	/**+
-	 * Sets the given item stack to the specified slot in the
-	 * inventory (can be crafting or armor sections).
-	 */
-	public void setInventorySlotContents(int i, ItemStack itemstack) {
-		this.chestContents[i] = itemstack;
-		if (itemstack != null && itemstack.stackSize > this.getInventoryStackLimit()) {
-			itemstack.stackSize = this.getInventoryStackLimit();
-		}
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
+        this.chestContents = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
-		this.markDirty();
-	}
+        if (!this.checkLootAndRead(compound))
+        {
+            ItemStackHelper.loadAllItems(compound, this.chestContents);
+        }
 
-	/**+
-	 * Gets the name of this command sender (usually username, but
-	 * possibly "Rcon")
-	 */
-	public String getName() {
-		return this.hasCustomName() ? this.customName : "container.chest";
-	}
+        if (compound.hasKey("CustomName", 8))
+        {
+            this.customName = compound.getString("CustomName");
+        }
+    }
 
-	/**+
-	 * Returns true if this thing is named
-	 */
-	public boolean hasCustomName() {
-		return this.customName != null && this.customName.length() > 0;
-	}
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
 
-	public void setCustomName(String name) {
-		this.customName = name;
-	}
+        if (!this.checkLootAndWrite(compound))
+        {
+            ItemStackHelper.saveAllItems(compound, this.chestContents);
+        }
 
-	public void readFromNBT(NBTTagCompound nbttagcompound) {
-		super.readFromNBT(nbttagcompound);
-		NBTTagList nbttaglist = nbttagcompound.getTagList("Items", 10);
-		this.chestContents = new ItemStack[this.getSizeInventory()];
-		if (nbttagcompound.hasKey("CustomName", 8)) {
-			this.customName = nbttagcompound.getString("CustomName");
-		}
+        if (this.hasCustomName())
+        {
+            compound.setString("CustomName", this.customName);
+        }
 
-		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-			int j = nbttagcompound1.getByte("Slot") & 255;
-			if (j >= 0 && j < this.chestContents.length) {
-				this.chestContents[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-			}
-		}
+        return compound;
+    }
 
-	}
+    public int getInventoryStackLimit()
+    {
+        return 64;
+    }
 
-	public void writeToNBT(NBTTagCompound nbttagcompound) {
-		super.writeToNBT(nbttagcompound);
-		NBTTagList nbttaglist = new NBTTagList();
+    public void updateContainingBlockInfo()
+    {
+        super.updateContainingBlockInfo();
+        this.adjacentChestChecked = false;
+        doubleChestHandler = null;
+    }
 
-		for (int i = 0; i < this.chestContents.length; ++i) {
-			if (this.chestContents[i] != null) {
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte) i);
-				this.chestContents[i].writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
-			}
-		}
+    @SuppressWarnings("incomplete-switch")
+    private void setNeighbor(TileEntityChest chestTe, EnumFacing side)
+    {
+        if (chestTe.isInvalid())
+        {
+            this.adjacentChestChecked = false;
+        }
+        else if (this.adjacentChestChecked)
+        {
+            switch (side)
+            {
+                case NORTH:
 
-		nbttagcompound.setTag("Items", nbttaglist);
-		if (this.hasCustomName()) {
-			nbttagcompound.setString("CustomName", this.customName);
-		}
+                    if (this.adjacentChestZNeg != chestTe)
+                    {
+                        this.adjacentChestChecked = false;
+                    }
 
-	}
+                    break;
+                case SOUTH:
 
-	/**+
-	 * Returns the maximum stack size for a inventory slot. Seems to
-	 * always be 64, possibly will be extended.
-	 */
-	public int getInventoryStackLimit() {
-		return 64;
-	}
+                    if (this.adjacentChestZPos != chestTe)
+                    {
+                        this.adjacentChestChecked = false;
+                    }
 
-	/**+
-	 * Do not make give this method the name canInteractWith because
-	 * it clashes with Container
-	 */
-	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-		return this.worldObj.getTileEntity(this.pos) != this ? false
-				: entityplayer.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D,
-						(double) this.pos.getZ() + 0.5D) <= 64.0D;
-	}
+                    break;
+                case EAST:
 
-	public void updateContainingBlockInfo() {
-		super.updateContainingBlockInfo();
-		this.adjacentChestChecked = false;
-	}
+                    if (this.adjacentChestXPos != chestTe)
+                    {
+                        this.adjacentChestChecked = false;
+                    }
 
-	private void func_174910_a(TileEntityChest chestTe, EnumFacing side) {
-		if (chestTe.isInvalid()) {
-			this.adjacentChestChecked = false;
-		} else if (this.adjacentChestChecked) {
-			switch (side) {
-			case NORTH:
-				if (this.adjacentChestZNeg != chestTe) {
-					this.adjacentChestChecked = false;
-				}
-				break;
-			case SOUTH:
-				if (this.adjacentChestZPos != chestTe) {
-					this.adjacentChestChecked = false;
-				}
-				break;
-			case EAST:
-				if (this.adjacentChestXPos != chestTe) {
-					this.adjacentChestChecked = false;
-				}
-				break;
-			case WEST:
-				if (this.adjacentChestXNeg != chestTe) {
-					this.adjacentChestChecked = false;
-				}
-			}
-		}
+                    break;
+                case WEST:
 
-	}
+                    if (this.adjacentChestXNeg != chestTe)
+                    {
+                        this.adjacentChestChecked = false;
+                    }
+            }
+        }
+    }
 
-	/**+
-	 * Performs the check for adjacent chests to determine if this
-	 * chest is double or not.
-	 */
-	public void checkForAdjacentChests() {
-		if (!this.adjacentChestChecked) {
-			this.adjacentChestChecked = true;
-			this.adjacentChestXNeg = this.getAdjacentChest(EnumFacing.WEST);
-			this.adjacentChestXPos = this.getAdjacentChest(EnumFacing.EAST);
-			this.adjacentChestZNeg = this.getAdjacentChest(EnumFacing.NORTH);
-			this.adjacentChestZPos = this.getAdjacentChest(EnumFacing.SOUTH);
-		}
-	}
+    public void checkForAdjacentChests()
+    {
+        if (!this.adjacentChestChecked)
+        {
+            if (this.world == null || !this.world.isAreaLoaded(this.pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbors
+            this.adjacentChestChecked = true;
+            this.adjacentChestXNeg = this.getAdjacentChest(EnumFacing.WEST);
+            this.adjacentChestXPos = this.getAdjacentChest(EnumFacing.EAST);
+            this.adjacentChestZNeg = this.getAdjacentChest(EnumFacing.NORTH);
+            this.adjacentChestZPos = this.getAdjacentChest(EnumFacing.SOUTH);
+        }
+    }
 
-	protected TileEntityChest getAdjacentChest(EnumFacing side) {
-		BlockPos blockpos = this.pos.offset(side);
-		if (this.isChestAt(blockpos)) {
-			TileEntity tileentity = this.worldObj.getTileEntity(blockpos);
-			if (tileentity instanceof TileEntityChest) {
-				TileEntityChest tileentitychest = (TileEntityChest) tileentity;
-				tileentitychest.func_174910_a(this, side.getOpposite());
-				return tileentitychest;
-			}
-		}
+    @Nullable
+    protected TileEntityChest getAdjacentChest(EnumFacing side)
+    {
+        BlockPos blockpos = this.pos.offset(side);
 
-		return null;
-	}
+        if (this.isChestAt(blockpos))
+        {
+            TileEntity tileentity = this.world.getTileEntity(blockpos);
 
-	private boolean isChestAt(BlockPos posIn) {
-		if (this.worldObj == null) {
-			return false;
-		} else {
-			Block block = this.worldObj.getBlockState(posIn).getBlock();
-			return block instanceof BlockChest && ((BlockChest) block).chestType == this.getChestType();
-		}
-	}
+            if (tileentity instanceof TileEntityChest)
+            {
+                TileEntityChest tileentitychest = (TileEntityChest)tileentity;
+                tileentitychest.setNeighbor(this, side.getOpposite());
+                return tileentitychest;
+            }
+        }
 
-	/**+
-	 * Like the old updateEntity(), except more generic.
-	 */
-	public void update() {
-		this.checkForAdjacentChests();
-		int i = this.pos.getX();
-		int j = this.pos.getY();
-		int k = this.pos.getZ();
-		++this.ticksSinceSync;
-		if (!this.worldObj.isRemote && this.numPlayersUsing != 0 && (this.ticksSinceSync + i + j + k) % 200 == 0) {
-			this.numPlayersUsing = 0;
-			float f = 5.0F;
+        return null;
+    }
 
-			List<EntityPlayer> players = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class,
-					new AxisAlignedBB((double) ((float) i - f), (double) ((float) j - f), (double) ((float) k - f),
-							(double) ((float) (i + 1) + f), (double) ((float) (j + 1) + f),
-							(double) ((float) (k + 1) + f)));
-			for (int m = 0, l = players.size(); m < l; ++m) {
-				EntityPlayer entityplayer = players.get(m);
-				if (entityplayer.openContainer instanceof ContainerChest) {
-					IInventory iinventory = ((ContainerChest) entityplayer.openContainer).getLowerChestInventory();
-					if (iinventory == this || iinventory instanceof InventoryLargeChest
-							&& ((InventoryLargeChest) iinventory).isPartOfLargeChest(this)) {
-						++this.numPlayersUsing;
-					}
-				}
-			}
-		}
+    private boolean isChestAt(BlockPos posIn)
+    {
+        if (this.world == null)
+        {
+            return false;
+        }
+        else
+        {
+            Block block = this.world.getBlockState(posIn).getBlock();
+            return block instanceof BlockChest && ((BlockChest)block).chestType == this.getChestType();
+        }
+    }
 
-		this.prevLidAngle = this.lidAngle;
-		float f1 = 0.1F;
-		if (this.numPlayersUsing > 0 && this.lidAngle == 0.0F && this.adjacentChestZNeg == null
-				&& this.adjacentChestXNeg == null) {
-			double d1 = (double) i + 0.5D;
-			double d2 = (double) k + 0.5D;
-			if (this.adjacentChestZPos != null) {
-				d2 += 0.5D;
-			}
+    public void update()
+    {
+        this.checkForAdjacentChests();
+        int i = this.pos.getX();
+        int j = this.pos.getY();
+        int k = this.pos.getZ();
+        ++this.ticksSinceSync;
 
-			if (this.adjacentChestXPos != null) {
-				d1 += 0.5D;
-			}
+        if (!this.world.isRemote && this.numPlayersUsing != 0 && (this.ticksSinceSync + i + j + k) % 200 == 0)
+        {
+            this.numPlayersUsing = 0;
+            float f = 5.0F;
 
-			this.worldObj.playSoundEffect(d1, (double) j + 0.5D, d2, "random.chestopen", 0.5F,
-					this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
-		}
+            for (EntityPlayer entityplayer : this.world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB((double)((float)i - 5.0F), (double)((float)j - 5.0F), (double)((float)k - 5.0F), (double)((float)(i + 1) + 5.0F), (double)((float)(j + 1) + 5.0F), (double)((float)(k + 1) + 5.0F))))
+            {
+                if (entityplayer.openContainer instanceof ContainerChest)
+                {
+                    IInventory iinventory = ((ContainerChest)entityplayer.openContainer).getLowerChestInventory();
 
-		if (this.numPlayersUsing == 0 && this.lidAngle > 0.0F || this.numPlayersUsing > 0 && this.lidAngle < 1.0F) {
-			float f2 = this.lidAngle;
-			if (this.numPlayersUsing > 0) {
-				this.lidAngle += f1;
-			} else {
-				this.lidAngle -= f1;
-			}
+                    if (iinventory == this || iinventory instanceof InventoryLargeChest && ((InventoryLargeChest)iinventory).isPartOfLargeChest(this))
+                    {
+                        ++this.numPlayersUsing;
+                    }
+                }
+            }
+        }
 
-			if (this.lidAngle > 1.0F) {
-				this.lidAngle = 1.0F;
-			}
+        this.prevLidAngle = this.lidAngle;
+        float f1 = 0.1F;
 
-			float f3 = 0.5F;
-			if (this.lidAngle < f3 && f2 >= f3 && this.adjacentChestZNeg == null && this.adjacentChestXNeg == null) {
-				double d3 = (double) i + 0.5D;
-				double d0 = (double) k + 0.5D;
-				if (this.adjacentChestZPos != null) {
-					d0 += 0.5D;
-				}
+        if (this.numPlayersUsing > 0 && this.lidAngle == 0.0F && this.adjacentChestZNeg == null && this.adjacentChestXNeg == null)
+        {
+            double d1 = (double)i + 0.5D;
+            double d2 = (double)k + 0.5D;
 
-				if (this.adjacentChestXPos != null) {
-					d3 += 0.5D;
-				}
+            if (this.adjacentChestZPos != null)
+            {
+                d2 += 0.5D;
+            }
 
-				this.worldObj.playSoundEffect(d3, (double) j + 0.5D, d0, "random.chestclosed", 0.5F,
-						this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
-			}
+            if (this.adjacentChestXPos != null)
+            {
+                d1 += 0.5D;
+            }
 
-			if (this.lidAngle < 0.0F) {
-				this.lidAngle = 0.0F;
-			}
-		}
+            this.world.playSound((EntityPlayer)null, d1, (double)j + 0.5D, d2, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+        }
 
-	}
+        if (this.numPlayersUsing == 0 && this.lidAngle > 0.0F || this.numPlayersUsing > 0 && this.lidAngle < 1.0F)
+        {
+            float f2 = this.lidAngle;
 
-	public boolean receiveClientEvent(int i, int j) {
-		if (i == 1) {
-			this.numPlayersUsing = j;
-			return true;
-		} else {
-			return super.receiveClientEvent(i, j);
-		}
-	}
+            if (this.numPlayersUsing > 0)
+            {
+                this.lidAngle += 0.1F;
+            }
+            else
+            {
+                this.lidAngle -= 0.1F;
+            }
 
-	public void openInventory(EntityPlayer entityplayer) {
-		if (!entityplayer.isSpectator()) {
-			if (this.numPlayersUsing < 0) {
-				this.numPlayersUsing = 0;
-			}
+            if (this.lidAngle > 1.0F)
+            {
+                this.lidAngle = 1.0F;
+            }
 
-			++this.numPlayersUsing;
-			this.worldObj.addBlockEvent(this.pos, this.getBlockType(), 1, this.numPlayersUsing);
-			this.worldObj.notifyNeighborsOfStateChange(this.pos, this.getBlockType());
-			this.worldObj.notifyNeighborsOfStateChange(this.pos.down(), this.getBlockType());
-		}
+            float f3 = 0.5F;
 
-	}
+            if (this.lidAngle < 0.5F && f2 >= 0.5F && this.adjacentChestZNeg == null && this.adjacentChestXNeg == null)
+            {
+                double d3 = (double)i + 0.5D;
+                double d0 = (double)k + 0.5D;
 
-	public void closeInventory(EntityPlayer entityplayer) {
-		if (!entityplayer.isSpectator() && this.getBlockType() instanceof BlockChest) {
-			--this.numPlayersUsing;
-			this.worldObj.addBlockEvent(this.pos, this.getBlockType(), 1, this.numPlayersUsing);
-			this.worldObj.notifyNeighborsOfStateChange(this.pos, this.getBlockType());
-			this.worldObj.notifyNeighborsOfStateChange(this.pos.down(), this.getBlockType());
-		}
+                if (this.adjacentChestZPos != null)
+                {
+                    d0 += 0.5D;
+                }
 
-	}
+                if (this.adjacentChestXPos != null)
+                {
+                    d3 += 0.5D;
+                }
 
-	/**+
-	 * Returns true if automation is allowed to insert the given
-	 * stack (ignoring stack size) into the given slot.
-	 */
-	public boolean isItemValidForSlot(int var1, ItemStack var2) {
-		return true;
-	}
+                this.world.playSound((EntityPlayer)null, d3, (double)j + 0.5D, d0, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+            }
 
-	/**+
-	 * invalidates a tile entity
-	 */
-	public void invalidate() {
-		super.invalidate();
-		this.updateContainingBlockInfo();
-		this.checkForAdjacentChests();
-	}
+            if (this.lidAngle < 0.0F)
+            {
+                this.lidAngle = 0.0F;
+            }
+        }
+    }
 
-	public int getChestType() {
-		if (this.cachedChestType == -1) {
-			if (this.worldObj == null || !(this.getBlockType() instanceof BlockChest)) {
-				return 0;
-			}
+    public boolean receiveClientEvent(int id, int type)
+    {
+        if (id == 1)
+        {
+            this.numPlayersUsing = type;
+            return true;
+        }
+        else
+        {
+            return super.receiveClientEvent(id, type);
+        }
+    }
 
-			this.cachedChestType = ((BlockChest) this.getBlockType()).chestType;
-		}
+    public void openInventory(EntityPlayer player)
+    {
+        if (!player.isSpectator())
+        {
+            if (this.numPlayersUsing < 0)
+            {
+                this.numPlayersUsing = 0;
+            }
 
-		return this.cachedChestType;
-	}
+            ++this.numPlayersUsing;
+            this.world.addBlockEvent(this.pos, this.getBlockType(), 1, this.numPlayersUsing);
+            this.world.notifyNeighborsOfStateChange(this.pos, this.getBlockType(), false);
 
-	public String getGuiID() {
-		return "minecraft:chest";
-	}
+            if (this.getChestType() == BlockChest.Type.TRAP)
+            {
+                this.world.notifyNeighborsOfStateChange(this.pos.down(), this.getBlockType(), false);
+            }
+        }
+    }
 
-	public Container createContainer(InventoryPlayer inventoryplayer, EntityPlayer entityplayer) {
-		return new ContainerChest(inventoryplayer, this, entityplayer);
-	}
+    public void closeInventory(EntityPlayer player)
+    {
+        if (!player.isSpectator() && this.getBlockType() instanceof BlockChest)
+        {
+            --this.numPlayersUsing;
+            this.world.addBlockEvent(this.pos, this.getBlockType(), 1, this.numPlayersUsing);
+            this.world.notifyNeighborsOfStateChange(this.pos, this.getBlockType(), false);
 
-	public int getField(int var1) {
-		return 0;
-	}
+            if (this.getChestType() == BlockChest.Type.TRAP)
+            {
+                this.world.notifyNeighborsOfStateChange(this.pos.down(), this.getBlockType(), false);
+            }
+        }
+    }
 
-	public void setField(int var1, int var2) {
-	}
+    public net.minecraftforge.items.VanillaDoubleChestItemHandler doubleChestHandler;
 
-	public int getFieldCount() {
-		return 0;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    @Nullable
+    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
+    {
+        if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        {
+            if(doubleChestHandler == null || doubleChestHandler.needsRefresh())
+                doubleChestHandler = net.minecraftforge.items.VanillaDoubleChestItemHandler.get(this);
+            if (doubleChestHandler != null && doubleChestHandler != net.minecraftforge.items.VanillaDoubleChestItemHandler.NO_ADJACENT_CHESTS_INSTANCE)
+                return (T) doubleChestHandler;
+        }
+        return super.getCapability(capability, facing);
+    }
 
-	public void clear() {
-		for (int i = 0; i < this.chestContents.length; ++i) {
-			this.chestContents[i] = null;
-		}
+    public net.minecraftforge.items.IItemHandler getSingleChestHandler()
+    {
+        return super.getCapability(net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+    }
 
-	}
+
+    public void invalidate()
+    {
+        super.invalidate();
+        this.updateContainingBlockInfo();
+        this.checkForAdjacentChests();
+    }
+
+    public BlockChest.Type getChestType()
+    {
+        if (this.cachedChestType == null)
+        {
+            if (this.world == null || !(this.getBlockType() instanceof BlockChest))
+            {
+                return BlockChest.Type.BASIC;
+            }
+
+            this.cachedChestType = ((BlockChest)this.getBlockType()).chestType;
+        }
+
+        return this.cachedChestType;
+    }
+
+    public String getGuiID()
+    {
+        return "minecraft:chest";
+    }
+
+    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
+    {
+        this.fillWithLoot(playerIn);
+        return new ContainerChest(playerInventory, this, playerIn);
+    }
+
+    protected NonNullList<ItemStack> getItems()
+    {
+        return this.chestContents;
+    }
 }

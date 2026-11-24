@@ -1,97 +1,105 @@
 package net.minecraft.block;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-
+import java.util.Random;
+import javax.annotation.Nullable;
+import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class BlockIce extends BlockBreakable {
-	public BlockIce() {
-		super(Material.ice, false);
-		this.slipperiness = 0.98F;
-		this.setTickRandomly(true);
-		this.setCreativeTab(CreativeTabs.tabBlock);
-	}
+public class BlockIce extends BlockBreakable
+{
+    public BlockIce()
+    {
+        super(Material.ICE, false);
+        this.slipperiness = 0.98F;
+        this.setTickRandomly(true);
+        this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+    }
 
-	public EnumWorldBlockLayer getBlockLayer() {
-		return EnumWorldBlockLayer.TRANSLUCENT;
-	}
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.TRANSLUCENT;
+    }
 
-	public void harvestBlock(World world, EntityPlayer entityplayer, BlockPos blockpos, IBlockState iblockstate,
-			TileEntity var5) {
-		entityplayer.triggerAchievement(StatList.mineBlockStatArray[Block.getIdFromBlock(this)]);
-		entityplayer.addExhaustion(0.025F);
-		if (this.canSilkHarvest() && EnchantmentHelper.getSilkTouchModifier(entityplayer)) {
-			ItemStack itemstack = this.createStackedBlock(iblockstate);
-			if (itemstack != null) {
-				spawnAsEntity(world, blockpos, itemstack);
-			}
-		} else {
-			if (world.provider.doesWaterVaporize()) {
-				world.setBlockToAir(blockpos);
-				return;
-			}
+    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack)
+    {
+        player.addStat(StatList.getBlockStats(this));
+        player.addExhaustion(0.005F);
 
-			int i = EnchantmentHelper.getFortuneModifier(entityplayer);
-			this.dropBlockAsItem(world, blockpos, iblockstate, i);
-			Material material = world.getBlockState(blockpos.down()).getBlock().getMaterial();
-			if (material.blocksMovement() || material.isLiquid()) {
-				world.setBlockState(blockpos, Blocks.flowing_water.getDefaultState());
-			}
-		}
+        if (this.canSilkHarvest(worldIn, pos, state, player) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0)
+        {
+            java.util.List<ItemStack> items = new java.util.ArrayList<ItemStack>();
+            items.add(this.getSilkTouchDrop(state));
 
-	}
+            net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, 0, 1.0f, true, player);
+            for (ItemStack is : items)
+                spawnAsEntity(worldIn, pos, is);
+        }
+        else
+        {
+            if (worldIn.provider.doesWaterVaporize())
+            {
+                worldIn.setBlockToAir(pos);
+                return;
+            }
 
-	/**+
-	 * Returns the quantity of items to drop on block destruction.
-	 */
-	public int quantityDropped(EaglercraftRandom var1) {
-		return 0;
-	}
+            int i = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);
+            harvesters.set(player);
+            this.dropBlockAsItem(worldIn, pos, state, i);
+            harvesters.set(null);
+            Material material = worldIn.getBlockState(pos.down()).getMaterial();
 
-	public void updateTick(World world, BlockPos blockpos, IBlockState var3, EaglercraftRandom var4) {
-		if (world.getLightFor(EnumSkyBlock.BLOCK, blockpos) > 11 - this.getLightOpacity()) {
-			if (world.provider.doesWaterVaporize()) {
-				world.setBlockToAir(blockpos);
-			} else {
-				this.dropBlockAsItem(world, blockpos, world.getBlockState(blockpos), 0);
-				world.setBlockState(blockpos, Blocks.water.getDefaultState());
-			}
-		}
-	}
+            if (material.blocksMovement() || material.isLiquid())
+            {
+                worldIn.setBlockState(pos, Blocks.FLOWING_WATER.getDefaultState());
+            }
+        }
+    }
 
-	public int getMobilityFlag() {
-		return 0;
-	}
+    public int quantityDropped(Random random)
+    {
+        return 0;
+    }
+
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        if (worldIn.getLightFor(EnumSkyBlock.BLOCK, pos) > 11 - this.getDefaultState().getLightOpacity())
+        {
+            this.turnIntoWater(worldIn, pos);
+        }
+    }
+
+    protected void turnIntoWater(World worldIn, BlockPos pos)
+    {
+        if (worldIn.provider.doesWaterVaporize())
+        {
+            worldIn.setBlockToAir(pos);
+        }
+        else
+        {
+            this.dropBlockAsItem(worldIn, pos, worldIn.getBlockState(pos), 0);
+            worldIn.setBlockState(pos, Blocks.WATER.getDefaultState());
+            worldIn.neighborChanged(pos, Blocks.WATER, pos);
+        }
+    }
+
+    public EnumPushReaction getMobilityFlag(IBlockState state)
+    {
+        return EnumPushReaction.NORMAL;
+    }
 }

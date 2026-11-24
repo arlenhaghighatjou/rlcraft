@@ -1,120 +1,116 @@
 package net.minecraft.item.crafting;
 
-import java.util.ArrayList;
-
 import com.google.common.collect.Lists;
-
+import java.util.List;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class RecipeRepairItem implements IRecipe {
-	/**+
-	 * Used to check if a recipe matches current crafting inventory
-	 */
-	public boolean matches(InventoryCrafting inventorycrafting, World var2) {
-		ArrayList arraylist = Lists.newArrayList();
+public class RecipeRepairItem extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
+{
+    public boolean matches(InventoryCrafting inv, World worldIn)
+    {
+        List<ItemStack> list = Lists.<ItemStack>newArrayList();
 
-		for (int i = 0; i < inventorycrafting.getSizeInventory(); ++i) {
-			ItemStack itemstack = inventorycrafting.getStackInSlot(i);
-			if (itemstack != null) {
-				arraylist.add(itemstack);
-				if (arraylist.size() > 1) {
-					ItemStack itemstack1 = (ItemStack) arraylist.get(0);
-					if (itemstack.getItem() != itemstack1.getItem() || itemstack1.stackSize != 1
-							|| itemstack.stackSize != 1 || !itemstack1.getItem().isDamageable()) {
-						return false;
-					}
-				}
-			}
-		}
+        for (int i = 0; i < inv.getSizeInventory(); ++i)
+        {
+            ItemStack itemstack = inv.getStackInSlot(i);
 
-		return arraylist.size() == 2;
-	}
+            if (!itemstack.isEmpty())
+            {
+                list.add(itemstack);
 
-	/**+
-	 * Returns an Item that is the result of this recipe
-	 */
-	public ItemStack getCraftingResult(InventoryCrafting inventorycrafting) {
-		ArrayList arraylist = Lists.newArrayList();
+                if (list.size() > 1)
+                {
+                    ItemStack itemstack1 = list.get(0);
 
-		for (int i = 0; i < inventorycrafting.getSizeInventory(); ++i) {
-			ItemStack itemstack = inventorycrafting.getStackInSlot(i);
-			if (itemstack != null) {
-				arraylist.add(itemstack);
-				if (arraylist.size() > 1) {
-					ItemStack itemstack1 = (ItemStack) arraylist.get(0);
-					if (itemstack.getItem() != itemstack1.getItem() || itemstack1.stackSize != 1
-							|| itemstack.stackSize != 1 || !itemstack1.getItem().isDamageable()) {
-						return null;
-					}
-				}
-			}
-		}
+                    if (itemstack.getItem() != itemstack1.getItem() || itemstack1.getCount() != 1 || itemstack.getCount() != 1 || !itemstack1.getItem().isRepairable())
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
 
-		if (arraylist.size() == 2) {
-			ItemStack itemstack2 = (ItemStack) arraylist.get(0);
-			ItemStack itemstack3 = (ItemStack) arraylist.get(1);
-			if (itemstack2.getItem() == itemstack3.getItem() && itemstack2.stackSize == 1 && itemstack3.stackSize == 1
-					&& itemstack2.getItem().isDamageable()) {
-				Item item = itemstack2.getItem();
-				int j = item.getMaxDamage() - itemstack2.getItemDamage();
-				int k = item.getMaxDamage() - itemstack3.getItemDamage();
-				int l = j + k + item.getMaxDamage() * 5 / 100;
-				int i1 = item.getMaxDamage() - l;
-				if (i1 < 0) {
-					i1 = 0;
-				}
+        return list.size() == 2;
+    }
 
-				return new ItemStack(itemstack2.getItem(), 1, i1);
-			}
-		}
+    public ItemStack getCraftingResult(InventoryCrafting inv)
+    {
+        List<ItemStack> list = Lists.<ItemStack>newArrayList();
 
-		return null;
-	}
+        for (int i = 0; i < inv.getSizeInventory(); ++i)
+        {
+            ItemStack itemstack = inv.getStackInSlot(i);
 
-	/**+
-	 * Returns the size of the recipe area
-	 */
-	public int getRecipeSize() {
-		return 4;
-	}
+            if (!itemstack.isEmpty())
+            {
+                list.add(itemstack);
 
-	public ItemStack getRecipeOutput() {
-		return null;
-	}
+                if (list.size() > 1)
+                {
+                    ItemStack itemstack1 = list.get(0);
 
-	public ItemStack[] getRemainingItems(InventoryCrafting inventorycrafting) {
-		ItemStack[] aitemstack = new ItemStack[inventorycrafting.getSizeInventory()];
+                    if (itemstack.getItem() != itemstack1.getItem() || itemstack1.getCount() != 1 || itemstack.getCount() != 1 || !itemstack1.getItem().isRepairable())
+                    {
+                        return ItemStack.EMPTY;
+                    }
+                }
+            }
+        }
 
-		for (int i = 0; i < aitemstack.length; ++i) {
-			ItemStack itemstack = inventorycrafting.getStackInSlot(i);
-			if (itemstack != null && itemstack.getItem().hasContainerItem()) {
-				aitemstack[i] = new ItemStack(itemstack.getItem().getContainerItem());
-			}
-		}
+        if (list.size() == 2)
+        {
+            ItemStack itemstack2 = list.get(0);
+            ItemStack itemstack3 = list.get(1);
 
-		return aitemstack;
-	}
+            if (itemstack2.getItem() == itemstack3.getItem() && itemstack2.getCount() == 1 && itemstack3.getCount() == 1 && itemstack2.getItem().isRepairable())
+            {
+                // FORGE: Make itemstack sensitive // Item item = itemstack2.getItem();
+                int j = itemstack2.getMaxDamage() - itemstack2.getItemDamage();
+                int k = itemstack2.getMaxDamage() - itemstack3.getItemDamage();
+                int l = j + k + itemstack2.getMaxDamage() * 5 / 100;
+                int i1 = itemstack2.getMaxDamage() - l;
+
+                if (i1 < 0)
+                {
+                    i1 = 0;
+                }
+
+                return new ItemStack(itemstack2.getItem(), 1, i1);
+            }
+        }
+
+        return ItemStack.EMPTY;
+    }
+
+    public ItemStack getRecipeOutput()
+    {
+        return ItemStack.EMPTY;
+    }
+
+    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
+    {
+        NonNullList<ItemStack> nonnulllist = NonNullList.<ItemStack>withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+
+        for (int i = 0; i < nonnulllist.size(); ++i)
+        {
+            ItemStack itemstack = inv.getStackInSlot(i);
+            nonnulllist.set(i, net.minecraftforge.common.ForgeHooks.getContainerItem(itemstack));
+        }
+
+        return nonnulllist;
+    }
+
+    public boolean isDynamic()
+    {
+        return true;
+    }
+
+    public boolean canFit(int width, int height)
+    {
+        return width * height >= 2;
+    }
 }

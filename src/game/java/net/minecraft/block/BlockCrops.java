@@ -1,203 +1,263 @@
 package net.minecraft.block;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-
+import java.util.Random;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class BlockCrops extends BlockBush implements IGrowable {
-	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
+public class BlockCrops extends BlockBush implements IGrowable
+{
+    public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
+    private static final AxisAlignedBB[] CROPS_AABB = new AxisAlignedBB[] {new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D)};
 
-	protected BlockCrops() {
-		this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, Integer.valueOf(0)));
-		this.setTickRandomly(true);
-		float f = 0.5F;
-		this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.25F, 0.5F + f);
-		this.setCreativeTab((CreativeTabs) null);
-		this.setHardness(0.0F);
-		this.setStepSound(soundTypeGrass);
-		this.disableStats();
-	}
+    protected BlockCrops()
+    {
+        this.setDefaultState(this.blockState.getBaseState().withProperty(this.getAgeProperty(), Integer.valueOf(0)));
+        this.setTickRandomly(true);
+        this.setCreativeTab((CreativeTabs)null);
+        this.setHardness(0.0F);
+        this.setSoundType(SoundType.PLANT);
+        this.disableStats();
+    }
 
-	/**+
-	 * is the block grass, dirt or farmland
-	 */
-	protected boolean canPlaceBlockOn(Block block) {
-		return block == Blocks.farmland;
-	}
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return CROPS_AABB[((Integer)state.getValue(this.getAgeProperty())).intValue()];
+    }
 
-	public void updateTick(World world, BlockPos blockpos, IBlockState iblockstate, EaglercraftRandom random) {
-		super.updateTick(world, blockpos, iblockstate, random);
-		if (world.getLightFromNeighbors(blockpos.up()) >= 9) {
-			int i = ((Integer) iblockstate.getValue(AGE)).intValue();
-			if (i < 7) {
-				float f = getGrowthChance(this, world, blockpos);
-				if (random.nextInt((int) (25.0F / f) + 1) == 0) {
-					world.setBlockState(blockpos, iblockstate.withProperty(AGE, Integer.valueOf(i + 1)), 2);
-				}
-			}
-		}
+    protected boolean canSustainBush(IBlockState state)
+    {
+        return state.getBlock() == Blocks.FARMLAND;
+    }
 
-	}
+    protected PropertyInteger getAgeProperty()
+    {
+        return AGE;
+    }
 
-	public void grow(World worldIn, BlockPos pos, IBlockState state) {
-		int i = ((Integer) state.getValue(AGE)).intValue() + MathHelper.getRandomIntegerInRange(worldIn.rand, 2, 5);
-		if (i > 7) {
-			i = 7;
-		}
+    public int getMaxAge()
+    {
+        return 7;
+    }
 
-		worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(i)), 2);
-	}
+    protected int getAge(IBlockState state)
+    {
+        return ((Integer)state.getValue(this.getAgeProperty())).intValue();
+    }
 
-	protected static float getGrowthChance(Block blockIn, World worldIn, BlockPos pos) {
-		float f = 1.0F;
-		BlockPos blockpos = pos.down();
+    public IBlockState withAge(int age)
+    {
+        return this.getDefaultState().withProperty(this.getAgeProperty(), Integer.valueOf(age));
+    }
 
-		for (int i = -1; i <= 1; ++i) {
-			for (int j = -1; j <= 1; ++j) {
-				float f1 = 0.0F;
-				IBlockState iblockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
-				if (iblockstate.getBlock() == Blocks.farmland) {
-					f1 = 1.0F;
-					if (((Integer) iblockstate.getValue(BlockFarmland.MOISTURE)).intValue() > 0) {
-						f1 = 3.0F;
-					}
-				}
+    public boolean isMaxAge(IBlockState state)
+    {
+        return ((Integer)state.getValue(this.getAgeProperty())).intValue() >= this.getMaxAge();
+    }
 
-				if (i != 0 || j != 0) {
-					f1 /= 4.0F;
-				}
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        super.updateTick(worldIn, pos, state, rand);
 
-				f += f1;
-			}
-		}
+        if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
+        if (worldIn.getLightFromNeighbors(pos.up()) >= 9)
+        {
+            int i = this.getAge(state);
 
-		BlockPos blockpos1 = pos.north();
-		BlockPos blockpos2 = pos.south();
-		BlockPos blockpos3 = pos.west();
-		BlockPos blockpos4 = pos.east();
-		boolean flag = blockIn == worldIn.getBlockState(blockpos3).getBlock()
-				|| blockIn == worldIn.getBlockState(blockpos4).getBlock();
-		boolean flag1 = blockIn == worldIn.getBlockState(blockpos1).getBlock()
-				|| blockIn == worldIn.getBlockState(blockpos2).getBlock();
-		if (flag && flag1) {
-			f /= 2.0F;
-		} else {
-			boolean flag2 = blockIn == worldIn.getBlockState(blockpos3.north()).getBlock()
-					|| blockIn == worldIn.getBlockState(blockpos4.north()).getBlock()
-					|| blockIn == worldIn.getBlockState(blockpos4.south()).getBlock()
-					|| blockIn == worldIn.getBlockState(blockpos3.south()).getBlock();
-			if (flag2) {
-				f /= 2.0F;
-			}
-		}
+            if (i < this.getMaxAge())
+            {
+                float f = getGrowthChance(this, worldIn, pos);
 
-		return f;
-	}
+                if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int)(25.0F / f) + 1) == 0))
+                {
+                    worldIn.setBlockState(pos, this.withAge(i + 1), 2);
+                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
+                }
+            }
+        }
+    }
 
-	public boolean canBlockStay(World world, BlockPos blockpos, IBlockState var3) {
-		return (world.getLight(blockpos) >= 8 || world.canSeeSky(blockpos))
-				&& this.canPlaceBlockOn(world.getBlockState(blockpos.down()).getBlock());
-	}
+    public void grow(World worldIn, BlockPos pos, IBlockState state)
+    {
+        int i = this.getAge(state) + this.getBonemealAgeIncrease(worldIn);
+        int j = this.getMaxAge();
 
-	protected Item getSeed() {
-		return Items.wheat_seeds;
-	}
+        if (i > j)
+        {
+            i = j;
+        }
 
-	protected Item getCrop() {
-		return Items.wheat;
-	}
+        worldIn.setBlockState(pos, this.withAge(i), 2);
+    }
 
-	/**+
-	 * Spawns this Block's drops into the World as EntityItems.
-	 */
-	public void dropBlockAsItemWithChance(World world, BlockPos blockpos, IBlockState iblockstate, float f, int i) {
-		super.dropBlockAsItemWithChance(world, blockpos, iblockstate, f, 0);
-		if (!world.isRemote) {
-			int j = ((Integer) iblockstate.getValue(AGE)).intValue();
-			if (j >= 7) {
-				int k = 3 + i;
+    protected int getBonemealAgeIncrease(World worldIn)
+    {
+        return MathHelper.getInt(worldIn.rand, 2, 5);
+    }
 
-				for (int l = 0; l < k; ++l) {
-					if (world.rand.nextInt(15) <= j) {
-						spawnAsEntity(world, blockpos, new ItemStack(this.getSeed(), 1, 0));
-					}
-				}
-			}
-		}
-	}
+    protected static float getGrowthChance(Block blockIn, World worldIn, BlockPos pos)
+    {
+        float f = 1.0F;
+        BlockPos blockpos = pos.down();
 
-	/**+
-	 * Get the Item that this Block should drop when harvested.
-	 */
-	public Item getItemDropped(IBlockState iblockstate, EaglercraftRandom var2, int var3) {
-		return ((Integer) iblockstate.getValue(AGE)).intValue() == 7 ? this.getCrop() : this.getSeed();
-	}
+        for (int i = -1; i <= 1; ++i)
+        {
+            for (int j = -1; j <= 1; ++j)
+            {
+                float f1 = 0.0F;
+                IBlockState iblockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
 
-	public Item getItem(World var1, BlockPos var2) {
-		return this.getSeed();
-	}
+                if (iblockstate.getBlock().canSustainPlant(iblockstate, worldIn, blockpos.add(i, 0, j), net.minecraft.util.EnumFacing.UP, (net.minecraftforge.common.IPlantable)blockIn))
+                {
+                    f1 = 1.0F;
 
-	/**+
-	 * Whether this IGrowable can grow
-	 */
-	public boolean canGrow(World var1, BlockPos var2, IBlockState iblockstate, boolean var4) {
-		return ((Integer) iblockstate.getValue(AGE)).intValue() < 7;
-	}
+                    if (iblockstate.getBlock().isFertile(worldIn, blockpos.add(i, 0, j)))
+                    {
+                        f1 = 3.0F;
+                    }
+                }
 
-	public boolean canUseBonemeal(World var1, EaglercraftRandom var2, BlockPos var3, IBlockState var4) {
-		return true;
-	}
+                if (i != 0 || j != 0)
+                {
+                    f1 /= 4.0F;
+                }
 
-	public void grow(World world, EaglercraftRandom var2, BlockPos blockpos, IBlockState iblockstate) {
-		this.grow(world, blockpos, iblockstate);
-	}
+                f += f1;
+            }
+        }
 
-	/**+
-	 * Convert the given metadata into a BlockState for this Block
-	 */
-	public IBlockState getStateFromMeta(int i) {
-		return this.getDefaultState().withProperty(AGE, Integer.valueOf(i));
-	}
+        BlockPos blockpos1 = pos.north();
+        BlockPos blockpos2 = pos.south();
+        BlockPos blockpos3 = pos.west();
+        BlockPos blockpos4 = pos.east();
+        boolean flag = blockIn == worldIn.getBlockState(blockpos3).getBlock() || blockIn == worldIn.getBlockState(blockpos4).getBlock();
+        boolean flag1 = blockIn == worldIn.getBlockState(blockpos1).getBlock() || blockIn == worldIn.getBlockState(blockpos2).getBlock();
 
-	/**+
-	 * Convert the BlockState into the correct metadata value
-	 */
-	public int getMetaFromState(IBlockState iblockstate) {
-		return ((Integer) iblockstate.getValue(AGE)).intValue();
-	}
+        if (flag && flag1)
+        {
+            f /= 2.0F;
+        }
+        else
+        {
+            boolean flag2 = blockIn == worldIn.getBlockState(blockpos3.north()).getBlock() || blockIn == worldIn.getBlockState(blockpos4.north()).getBlock() || blockIn == worldIn.getBlockState(blockpos4.south()).getBlock() || blockIn == worldIn.getBlockState(blockpos3.south()).getBlock();
 
-	protected BlockState createBlockState() {
-		return new BlockState(this, new IProperty[] { AGE });
-	}
+            if (flag2)
+            {
+                f /= 2.0F;
+            }
+        }
+
+        return f;
+    }
+
+    public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
+    {
+        IBlockState soil = worldIn.getBlockState(pos.down());
+        return (worldIn.getLight(pos) >= 8 || worldIn.canSeeSky(pos)) && soil.getBlock().canSustainPlant(soil, worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
+    }
+
+    protected Item getSeed()
+    {
+        return Items.WHEAT_SEEDS;
+    }
+
+    protected Item getCrop()
+    {
+        return Items.WHEAT;
+    }
+
+    @Override
+    public void getDrops(net.minecraft.util.NonNullList<ItemStack> drops, net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
+    {
+        super.getDrops(drops, world, pos, state, 0);
+        int age = getAge(state);
+        Random rand = world instanceof World ? ((World)world).rand : new Random();
+
+        if (age >= getMaxAge())
+        {
+            int k = 3 + fortune;
+
+            for (int i = 0; i < 3 + fortune; ++i)
+            {
+                if (rand.nextInt(2 * getMaxAge()) <= age)
+                {
+                    drops.add(new ItemStack(this.getSeed(), 1, 0));
+                }
+            }
+        }
+    }
+
+    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+    {
+        super.dropBlockAsItemWithChance(worldIn, pos, state, chance, fortune);
+
+        if (false && !worldIn.isRemote) // Forge: NOP all this.
+        {
+            int i = this.getAge(state);
+
+            if (i >= this.getMaxAge())
+            {
+                int j = 3 + fortune;
+
+                for (int k = 0; k < j; ++k)
+                {
+                    if (worldIn.rand.nextInt(2 * this.getMaxAge()) <= i)
+                    {
+                        spawnAsEntity(worldIn, pos, new ItemStack(this.getSeed()));
+                    }
+                }
+            }
+        }
+    }
+
+    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    {
+        return this.isMaxAge(state) ? this.getCrop() : this.getSeed();
+    }
+
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
+    {
+        return new ItemStack(this.getSeed());
+    }
+
+    public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient)
+    {
+        return !this.isMaxAge(state);
+    }
+
+    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    {
+        return true;
+    }
+
+    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    {
+        this.grow(worldIn, pos, state);
+    }
+
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.withAge(meta);
+    }
+
+    public int getMetaFromState(IBlockState state)
+    {
+        return this.getAge(state);
+    }
+
+    protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, new IProperty[] {AGE});
+    }
 }

@@ -1,166 +1,140 @@
 package net.minecraft.client.resources;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashSet;
-import java.util.IllegalFormatException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
-
-import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
-
-import net.lax1dude.eaglercraft.v1_8.EagRuntime;
-import net.lax1dude.eaglercraft.v1_8.HString;
-import net.lax1dude.eaglercraft.v1_8.IOUtils;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.IllegalFormatException;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.io.IOUtils;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class Locale {
-	/**+
-	 * Splits on "="
-	 */
-	private static final Splitter splitter = Splitter.on('=').limit(2);
-	private static final Pattern pattern = Pattern.compile("%(\\d+\\$)?[\\d\\.]*[df]");
-	Map<String, String> properties = Maps.newHashMap();
-	private boolean unicode;
+@SideOnly(Side.CLIENT)
+public class Locale
+{
+    private static final Splitter SPLITTER = Splitter.on('=').limit(2);
+    private static final Pattern PATTERN = Pattern.compile("%(\\d+\\$)?[\\d\\.]*[df]");
+    Map<String, String> properties = Maps.<String, String>newHashMap();
+    private boolean unicode;
 
-	private static final Set<String> hasShownMissing = new HashSet<>();
+    public synchronized void loadLocaleDataFiles(IResourceManager resourceManager, List<String> languageList)
+    {
+        this.properties.clear();
 
-	/**+
-	 * par2 is a list of languages. For each language $L and domain
-	 * $D, attempts to load the resource $D:lang/$L.lang
-	 */
-	public synchronized void loadLocaleDataFiles(IResourceManager resourceManager, List<String> parList) {
-		this.properties.clear();
+        for (String s : languageList)
+        {
+            String s1 = String.format("lang/%s.lang", s);
 
-		for (String s : parList) {
-			String s1 = HString.format("lang/%s.lang", new Object[] { s });
+            for (String s2 : resourceManager.getResourceDomains())
+            {
+                try
+                {
+                    this.loadLocaleData(resourceManager.getAllResources(new ResourceLocation(s2, s1)));
+                }
+                catch (IOException var9)
+                {
+                    ;
+                }
+            }
+        }
 
-			for (String s2 : resourceManager.getResourceDomains()) {
-				try {
-					List<IResource> res = resourceManager.getAllResources(new ResourceLocation(s2, s1));
-					if (res.size() > 0) {
-						this.loadLocaleData(res);
-					} else {
-						if (s2.equalsIgnoreCase("minecraft") && hasShownMissing.add(s)) {
-							EagRuntime.showPopup("ERROR: language \"" + s + "\" is not available on this site!");
-						}
-					}
-				} catch (IOException var9) {
-					if (s2.equalsIgnoreCase("minecraft") && hasShownMissing.add(s)) {
-						EagRuntime.showPopup("ERROR: language \"" + s + "\" is not available on this site!");
-					}
-				}
-			}
-		}
+        this.checkUnicode();
+    }
 
-		this.checkUnicode();
-	}
+    public boolean isUnicode()
+    {
+        return this.unicode;
+    }
 
-	public boolean isUnicode() {
-		return this.unicode;
-	}
+    private void checkUnicode()
+    {
+        this.unicode = false;
+        int i = 0;
+        int j = 0;
 
-	private void checkUnicode() {
-		this.unicode = false;
-		int i = 0;
-		int j = 0;
+        for (String s : this.properties.values())
+        {
+            int k = s.length();
+            j += k;
 
-		for (String s : this.properties.values()) {
-			int k = s.length();
-			j += k;
+            for (int l = 0; l < k; ++l)
+            {
+                if (s.charAt(l) >= 256)
+                {
+                    ++i;
+                }
+            }
+        }
 
-			for (int l = 0; l < k; ++l) {
-				if (s.charAt(l) >= 256) {
-					++i;
-				}
-			}
-		}
+        float f = (float)i / (float)j;
+        this.unicode = (double)f > 0.1D;
+    }
 
-		float f = (float) i / (float) j;
-		this.unicode = (double) f > 0.1D;
-	}
+    private void loadLocaleData(List<IResource> resourcesList) throws IOException
+    {
+        for (IResource iresource : resourcesList)
+        {
+            InputStream inputstream = iresource.getInputStream();
 
-	/**+
-	 * par1 is a list of Resources
-	 */
-	private void loadLocaleData(List<IResource> parList) throws IOException {
-		for (IResource iresource : parList) {
-			InputStream inputstream = iresource.getInputStream();
+            try
+            {
+                this.loadLocaleData(inputstream);
+            }
+            finally
+            {
+                IOUtils.closeQuietly(inputstream);
+            }
+        }
+    }
 
-			try {
-				this.loadLocaleData(inputstream);
-			} finally {
-				IOUtils.closeQuietly(inputstream);
-			}
-		}
+    private void loadLocaleData(InputStream inputStreamIn) throws IOException
+    {
+        inputStreamIn = net.minecraftforge.fml.common.FMLCommonHandler.instance().loadLanguage(properties, inputStreamIn);
+        if (inputStreamIn == null) return;
+        for (String s : IOUtils.readLines(inputStreamIn, StandardCharsets.UTF_8))
+        {
+            if (!s.isEmpty() && s.charAt(0) != '#')
+            {
+                String[] astring = (String[])Iterables.toArray(SPLITTER.split(s), String.class);
 
-	}
+                if (astring != null && astring.length == 2)
+                {
+                    String s1 = astring[0];
+                    String s2 = PATTERN.matcher(astring[1]).replaceAll("%$1s");
+                    this.properties.put(s1, s2);
+                }
+            }
+        }
+    }
 
-	/**+
-	 * par1 is a list of Resources
-	 */
-	private void loadLocaleData(InputStream parInputStream) throws IOException {
-		for (String s : IOUtils.readLines(parInputStream, Charsets.UTF_8)) {
-			if (!s.isEmpty() && s.charAt(0) != 35) {
-				String[] astring = (String[]) Iterables.toArray(splitter.split(s), String.class);
-				if (astring != null && astring.length == 2) {
-					String s1 = astring[0];
-					String s2 = pattern.matcher(astring[1]).replaceAll("%s"); // TODO: originally "%$1s" but must be
-																				// "%s" to work with TeaVM (why?)
-					this.properties.put(s1, s2);
-					if (s1.startsWith("eaglercraft.")) {
-						this.properties.put(s1.substring(12), s2);
-					}
-				}
-			}
-		}
+    private String translateKeyPrivate(String translateKey)
+    {
+        String s = this.properties.get(translateKey);
+        return s == null ? translateKey : s;
+    }
 
-	}
+    public String formatMessage(String translateKey, Object[] parameters)
+    {
+        String s = this.translateKeyPrivate(translateKey);
 
-	/**+
-	 * Returns the translation, or the key itself if the key could
-	 * not be translated.
-	 */
-	private String translateKeyPrivate(String parString1) {
-		String s = (String) this.properties.get(parString1);
-		return s == null ? parString1 : s;
-	}
+        try
+        {
+            return String.format(s, parameters);
+        }
+        catch (IllegalFormatException var5)
+        {
+            return "Format error: " + s;
+        }
+    }
 
-	/**+
-	 * Calls String.format(translateKey(key), params)
-	 */
-	public String formatMessage(String translateKey, Object[] parameters) {
-		String s = this.translateKeyPrivate(translateKey);
-
-		try {
-			return HString.format(s, parameters);
-		} catch (IllegalFormatException var5) {
-			return "Format error: " + s;
-		}
-	}
+    public boolean hasKey(String key)
+    {
+        return this.properties.containsKey(key);
+    }
 }

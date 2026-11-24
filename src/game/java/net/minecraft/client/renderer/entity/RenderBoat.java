@@ -1,83 +1,93 @@
 package net.minecraft.client.renderer.entity;
 
-import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.minecraft.client.model.IMultipassModel;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBoat;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.item.EntityBoat;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class RenderBoat extends Render<EntityBoat> {
-	private static final ResourceLocation boatTextures = new ResourceLocation("textures/entity/boat.png");
-	/**+
-	 * instance of ModelBoat for rendering
-	 */
-	protected ModelBase modelBoat = new ModelBoat();
+@SideOnly(Side.CLIENT)
+public class RenderBoat extends Render<EntityBoat>
+{
+    private static final ResourceLocation[] BOAT_TEXTURES = new ResourceLocation[] {new ResourceLocation("textures/entity/boat/boat_oak.png"), new ResourceLocation("textures/entity/boat/boat_spruce.png"), new ResourceLocation("textures/entity/boat/boat_birch.png"), new ResourceLocation("textures/entity/boat/boat_jungle.png"), new ResourceLocation("textures/entity/boat/boat_acacia.png"), new ResourceLocation("textures/entity/boat/boat_darkoak.png")};
+    protected ModelBase modelBoat = new ModelBoat();
 
-	public RenderBoat(RenderManager renderManagerIn) {
-		super(renderManagerIn);
-		this.shadowSize = 0.5F;
-	}
+    public RenderBoat(RenderManager renderManagerIn)
+    {
+        super(renderManagerIn);
+        this.shadowSize = 0.5F;
+    }
 
-	/**+
-	 * Actually renders the given argument. This is a synthetic
-	 * bridge method, always casting down its argument and then
-	 * handing it off to a worker function which does the actual
-	 * work. In all probabilty, the class Render is generic
-	 * (Render<T extends Entity>) and this method has signature
-	 * public void func_76986_a(T entity, double d, double d1,
-	 * double d2, float f, float f1). But JAD is pre 1.5 so doe
-	 */
-	public void doRender(EntityBoat entityboat, double d0, double d1, double d2, float f, float f1) {
-		GlStateManager.pushMatrix();
-		GlStateManager.translate((float) d0, (float) d1 + 0.25F, (float) d2);
-		GlStateManager.rotate(180.0F - f, 0.0F, 1.0F, 0.0F);
-		float f2 = (float) entityboat.getTimeSinceHit() - f1;
-		float f3 = entityboat.getDamageTaken() - f1;
-		if (f3 < 0.0F) {
-			f3 = 0.0F;
-		}
+    public void doRender(EntityBoat entity, double x, double y, double z, float entityYaw, float partialTicks)
+    {
+        GlStateManager.pushMatrix();
+        this.setupTranslation(x, y, z);
+        this.setupRotation(entity, entityYaw, partialTicks);
+        this.bindEntityTexture(entity);
 
-		if (f2 > 0.0F) {
-			GlStateManager.rotate(MathHelper.sin(f2) * f2 * f3 / 10.0F * (float) entityboat.getForwardDirection(), 1.0F,
-					0.0F, 0.0F);
-		}
+        if (this.renderOutlines)
+        {
+            GlStateManager.enableColorMaterial();
+            GlStateManager.enableOutlineMode(this.getTeamColor(entity));
+        }
 
-		float f4 = 0.75F;
-		GlStateManager.scale(f4, f4, f4);
-		GlStateManager.scale(1.0F / f4, 1.0F / f4, 1.0F / f4);
-		this.bindEntityTexture(entityboat);
-		GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-		this.modelBoat.render(entityboat, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
-		GlStateManager.popMatrix();
-		super.doRender(entityboat, d0, d1, d2, f, f1);
-	}
+        this.modelBoat.render(entity, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
-	/**+
-	 * Returns the location of an entity's texture. Doesn't seem to
-	 * be called unless you call Render.bindEntityTexture.
-	 */
-	protected ResourceLocation getEntityTexture(EntityBoat var1) {
-		return boatTextures;
-	}
+        if (this.renderOutlines)
+        {
+            GlStateManager.disableOutlineMode();
+            GlStateManager.disableColorMaterial();
+        }
+
+        GlStateManager.popMatrix();
+        super.doRender(entity, x, y, z, entityYaw, partialTicks);
+    }
+
+    public void setupRotation(EntityBoat p_188311_1_, float p_188311_2_, float p_188311_3_)
+    {
+        GlStateManager.rotate(180.0F - p_188311_2_, 0.0F, 1.0F, 0.0F);
+        float f = (float)p_188311_1_.getTimeSinceHit() - p_188311_3_;
+        float f1 = p_188311_1_.getDamageTaken() - p_188311_3_;
+
+        if (f1 < 0.0F)
+        {
+            f1 = 0.0F;
+        }
+
+        if (f > 0.0F)
+        {
+            GlStateManager.rotate(MathHelper.sin(f) * f * f1 / 10.0F * (float)p_188311_1_.getForwardDirection(), 1.0F, 0.0F, 0.0F);
+        }
+
+        GlStateManager.scale(-1.0F, -1.0F, 1.0F);
+    }
+
+    public void setupTranslation(double p_188309_1_, double p_188309_3_, double p_188309_5_)
+    {
+        GlStateManager.translate((float)p_188309_1_, (float)p_188309_3_ + 0.375F, (float)p_188309_5_);
+    }
+
+    protected ResourceLocation getEntityTexture(EntityBoat entity)
+    {
+        return BOAT_TEXTURES[entity.getBoatType().ordinal()];
+    }
+
+    public boolean isMultipass()
+    {
+        return true;
+    }
+
+    public void renderMultipass(EntityBoat p_188300_1_, double p_188300_2_, double p_188300_4_, double p_188300_6_, float p_188300_8_, float p_188300_9_)
+    {
+        GlStateManager.pushMatrix();
+        this.setupTranslation(p_188300_2_, p_188300_4_, p_188300_6_);
+        this.setupRotation(p_188300_1_, p_188300_8_, p_188300_9_);
+        this.bindEntityTexture(p_188300_1_);
+        ((IMultipassModel)this.modelBoat).renderMultipass(p_188300_1_, p_188300_9_, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        GlStateManager.popMatrix();
+    }
 }

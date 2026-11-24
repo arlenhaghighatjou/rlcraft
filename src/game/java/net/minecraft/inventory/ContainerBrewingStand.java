@@ -1,182 +1,245 @@
 package net.minecraft.inventory;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.AchievementList;
+import net.minecraft.potion.PotionHelper;
+import net.minecraft.potion.PotionType;
+import net.minecraft.potion.PotionUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ContainerBrewingStand extends Container {
-	private IInventory tileBrewingStand;
-	private final Slot theSlot;
-	private int brewTime;
+public class ContainerBrewingStand extends Container
+{
+    private final IInventory tileBrewingStand;
+    private final Slot slot;
+    private int prevBrewTime;
+    private int prevFuel;
 
-	public ContainerBrewingStand(InventoryPlayer playerInventory, IInventory tileBrewingStandIn) {
-		this.tileBrewingStand = tileBrewingStandIn;
-		this.addSlotToContainer(
-				new ContainerBrewingStand.Potion(playerInventory.player, tileBrewingStandIn, 0, 56, 46));
-		this.addSlotToContainer(
-				new ContainerBrewingStand.Potion(playerInventory.player, tileBrewingStandIn, 1, 79, 53));
-		this.addSlotToContainer(
-				new ContainerBrewingStand.Potion(playerInventory.player, tileBrewingStandIn, 2, 102, 46));
-		this.theSlot = this.addSlotToContainer(new ContainerBrewingStand.Ingredient(tileBrewingStandIn, 3, 79, 17));
+    public ContainerBrewingStand(InventoryPlayer playerInventory, IInventory tileBrewingStandIn)
+    {
+        this.tileBrewingStand = tileBrewingStandIn;
+        this.addSlotToContainer(new ContainerBrewingStand.Potion(tileBrewingStandIn, 0, 56, 51));
+        this.addSlotToContainer(new ContainerBrewingStand.Potion(tileBrewingStandIn, 1, 79, 58));
+        this.addSlotToContainer(new ContainerBrewingStand.Potion(tileBrewingStandIn, 2, 102, 51));
+        this.slot = this.addSlotToContainer(new ContainerBrewingStand.Ingredient(tileBrewingStandIn, 3, 79, 17));
+        this.addSlotToContainer(new ContainerBrewingStand.Fuel(tileBrewingStandIn, 4, 17, 17));
 
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 9; ++j) {
-				this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-			}
-		}
+        for (int i = 0; i < 3; ++i)
+        {
+            for (int j = 0; j < 9; ++j)
+            {
+                this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+            }
+        }
 
-		for (int k = 0; k < 9; ++k) {
-			this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 142));
-		}
+        for (int k = 0; k < 9; ++k)
+        {
+            this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 142));
+        }
+    }
 
-	}
+    public void addListener(IContainerListener listener)
+    {
+        super.addListener(listener);
+        listener.sendAllWindowProperties(this, this.tileBrewingStand);
+    }
 
-	public void onCraftGuiOpened(ICrafting icrafting) {
-		super.onCraftGuiOpened(icrafting);
-		icrafting.func_175173_a(this, this.tileBrewingStand);
-	}
+    public void detectAndSendChanges()
+    {
+        super.detectAndSendChanges();
 
-	/**+
-	 * Looks for changes made in the container, sends them to every
-	 * listener.
-	 */
-	public void detectAndSendChanges() {
-		super.detectAndSendChanges();
+        for (int i = 0; i < this.listeners.size(); ++i)
+        {
+            IContainerListener icontainerlistener = this.listeners.get(i);
 
-		for (int i = 0; i < this.crafters.size(); ++i) {
-			ICrafting icrafting = (ICrafting) this.crafters.get(i);
-			if (this.brewTime != this.tileBrewingStand.getField(0)) {
-				icrafting.sendProgressBarUpdate(this, 0, this.tileBrewingStand.getField(0));
-			}
-		}
+            if (this.prevBrewTime != this.tileBrewingStand.getField(0))
+            {
+                icontainerlistener.sendWindowProperty(this, 0, this.tileBrewingStand.getField(0));
+            }
 
-		this.brewTime = this.tileBrewingStand.getField(0);
-	}
+            if (this.prevFuel != this.tileBrewingStand.getField(1))
+            {
+                icontainerlistener.sendWindowProperty(this, 1, this.tileBrewingStand.getField(1));
+            }
+        }
 
-	public void updateProgressBar(int i, int j) {
-		this.tileBrewingStand.setField(i, j);
-	}
+        this.prevBrewTime = this.tileBrewingStand.getField(0);
+        this.prevFuel = this.tileBrewingStand.getField(1);
+    }
 
-	public boolean canInteractWith(EntityPlayer entityplayer) {
-		return this.tileBrewingStand.isUseableByPlayer(entityplayer);
-	}
+    @SideOnly(Side.CLIENT)
+    public void updateProgressBar(int id, int data)
+    {
+        this.tileBrewingStand.setField(id, data);
+    }
 
-	/**+
-	 * Take a stack from the specified inventory slot.
-	 */
-	public ItemStack transferStackInSlot(EntityPlayer entityplayer, int i) {
-		ItemStack itemstack = null;
-		Slot slot = (Slot) this.inventorySlots.get(i);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
-			itemstack = itemstack1.copy();
-			if ((i < 0 || i > 2) && i != 3) {
-				if (!this.theSlot.getHasStack() && this.theSlot.isItemValid(itemstack1)) {
-					if (!this.mergeItemStack(itemstack1, 3, 4, false)) {
-						return null;
-					}
-				} else if (ContainerBrewingStand.Potion.canHoldPotion(itemstack)) {
-					if (!this.mergeItemStack(itemstack1, 0, 3, false)) {
-						return null;
-					}
-				} else if (i >= 4 && i < 31) {
-					if (!this.mergeItemStack(itemstack1, 31, 40, false)) {
-						return null;
-					}
-				} else if (i >= 31 && i < 40) {
-					if (!this.mergeItemStack(itemstack1, 4, 31, false)) {
-						return null;
-					}
-				} else if (!this.mergeItemStack(itemstack1, 4, 40, false)) {
-					return null;
-				}
-			} else {
-				if (!this.mergeItemStack(itemstack1, 4, 40, true)) {
-					return null;
-				}
+    public boolean canInteractWith(EntityPlayer playerIn)
+    {
+        return this.tileBrewingStand.isUsableByPlayer(playerIn);
+    }
 
-				slot.onSlotChange(itemstack1, itemstack);
-			}
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    {
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
 
-			if (itemstack1.stackSize == 0) {
-				slot.putStack((ItemStack) null);
-			} else {
-				slot.onSlotChanged();
-			}
+        if (slot != null && slot.getHasStack())
+        {
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
 
-			if (itemstack1.stackSize == itemstack.stackSize) {
-				return null;
-			}
+            if ((index < 0 || index > 2) && index != 3 && index != 4)
+            {
+                if (this.slot.isItemValid(itemstack1))
+                {
+                    if (!this.mergeItemStack(itemstack1, 3, 4, false))
+                    {
+                        return ItemStack.EMPTY;
+                    }
+                }
+                else if (ContainerBrewingStand.Potion.canHoldPotion(itemstack) && itemstack.getCount() == 1)
+                {
+                    if (!this.mergeItemStack(itemstack1, 0, 3, false))
+                    {
+                        return ItemStack.EMPTY;
+                    }
+                }
+                else if (ContainerBrewingStand.Fuel.isValidBrewingFuel(itemstack))
+                {
+                    if (!this.mergeItemStack(itemstack1, 4, 5, false))
+                    {
+                        return ItemStack.EMPTY;
+                    }
+                }
+                else if (index >= 5 && index < 32)
+                {
+                    if (!this.mergeItemStack(itemstack1, 32, 41, false))
+                    {
+                        return ItemStack.EMPTY;
+                    }
+                }
+                else if (index >= 32 && index < 41)
+                {
+                    if (!this.mergeItemStack(itemstack1, 5, 32, false))
+                    {
+                        return ItemStack.EMPTY;
+                    }
+                }
+                else if (!this.mergeItemStack(itemstack1, 5, 41, false))
+                {
+                    return ItemStack.EMPTY;
+                }
+            }
+            else
+            {
+                if (!this.mergeItemStack(itemstack1, 5, 41, true))
+                {
+                    return ItemStack.EMPTY;
+                }
 
-			slot.onPickupFromSlot(entityplayer, itemstack1);
-		}
+                slot.onSlotChange(itemstack1, itemstack);
+            }
 
-		return itemstack;
-	}
+            if (itemstack1.isEmpty())
+            {
+                slot.putStack(ItemStack.EMPTY);
+            }
+            else
+            {
+                slot.onSlotChanged();
+            }
 
-	class Ingredient extends Slot {
-		public Ingredient(IInventory inventoryIn, int index, int xPosition, int yPosition) {
-			super(inventoryIn, index, xPosition, yPosition);
-		}
+            if (itemstack1.getCount() == itemstack.getCount())
+            {
+                return ItemStack.EMPTY;
+            }
 
-		public boolean isItemValid(ItemStack itemstack) {
-			return itemstack != null ? itemstack.getItem().isPotionIngredient(itemstack) : false;
-		}
+            slot.onTake(playerIn, itemstack1);
+        }
 
-		public int getSlotStackLimit() {
-			return 64;
-		}
-	}
+        return itemstack;
+    }
 
-	static class Potion extends Slot {
-		private EntityPlayer player;
+    static class Fuel extends Slot
+        {
+            public Fuel(IInventory iInventoryIn, int index, int xPosition, int yPosition)
+            {
+                super(iInventoryIn, index, xPosition, yPosition);
+            }
 
-		public Potion(EntityPlayer playerIn, IInventory inventoryIn, int index, int xPosition, int yPosition) {
-			super(inventoryIn, index, xPosition, yPosition);
-			this.player = playerIn;
-		}
+            public boolean isItemValid(ItemStack stack)
+            {
+                return isValidBrewingFuel(stack);
+            }
 
-		public boolean isItemValid(ItemStack itemstack) {
-			return canHoldPotion(itemstack);
-		}
+            public static boolean isValidBrewingFuel(ItemStack itemStackIn)
+            {
+                return itemStackIn.getItem() == Items.BLAZE_POWDER;
+            }
 
-		public int getSlotStackLimit() {
-			return 1;
-		}
+            public int getSlotStackLimit()
+            {
+                return 64;
+            }
+        }
 
-		public void onPickupFromSlot(EntityPlayer entityplayer, ItemStack itemstack) {
-			if (itemstack.getItem() == Items.potionitem && itemstack.getMetadata() > 0) {
-				this.player.triggerAchievement(AchievementList.potion);
-			}
+    static class Ingredient extends Slot
+        {
+            public Ingredient(IInventory iInventoryIn, int index, int xPosition, int yPosition)
+            {
+                super(iInventoryIn, index, xPosition, yPosition);
+            }
 
-			super.onPickupFromSlot(entityplayer, itemstack);
-		}
+            public boolean isItemValid(ItemStack stack)
+            {
+                return net.minecraftforge.common.brewing.BrewingRecipeRegistry.isValidIngredient(stack);
+            }
 
-		public static boolean canHoldPotion(ItemStack parItemStack) {
-			return parItemStack != null
-					&& (parItemStack.getItem() == Items.potionitem || parItemStack.getItem() == Items.glass_bottle);
-		}
-	}
+            public int getSlotStackLimit()
+            {
+                return 64;
+            }
+        }
+
+    static class Potion extends Slot
+        {
+            public Potion(IInventory p_i47598_1_, int p_i47598_2_, int p_i47598_3_, int p_i47598_4_)
+            {
+                super(p_i47598_1_, p_i47598_2_, p_i47598_3_, p_i47598_4_);
+            }
+
+            public boolean isItemValid(ItemStack stack)
+            {
+                return canHoldPotion(stack);
+            }
+
+            public int getSlotStackLimit()
+            {
+                return 1;
+            }
+
+            public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack)
+            {
+                PotionType potiontype = PotionUtils.getPotionFromItem(stack);
+
+                if (thePlayer instanceof EntityPlayerMP)
+                {
+                    net.minecraftforge.event.ForgeEventFactory.onPlayerBrewedPotion(thePlayer, stack);
+                    CriteriaTriggers.BREWED_POTION.trigger((EntityPlayerMP)thePlayer, potiontype);
+                }
+
+                super.onTake(thePlayer, stack);
+                return stack;
+            }
+
+            public static boolean canHoldPotion(ItemStack stack)
+            {
+                return net.minecraftforge.common.brewing.BrewingRecipeRegistry.isValidInput(stack);
+            }
+        }
 }

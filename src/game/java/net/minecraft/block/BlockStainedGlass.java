@@ -1,127 +1,101 @@
 package net.minecraft.block;
 
-import java.util.List;
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-
+import java.util.Random;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class BlockStainedGlass extends BlockBreakable {
-	public static final PropertyEnum<EnumDyeColor> COLOR = PropertyEnum.<EnumDyeColor>create("color",
-			EnumDyeColor.class);
+public class BlockStainedGlass extends BlockBreakable
+{
+    public static final PropertyEnum<EnumDyeColor> COLOR = PropertyEnum.<EnumDyeColor>create("color", EnumDyeColor.class);
 
-	public BlockStainedGlass(Material materialIn) {
-		super(materialIn, false);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(COLOR, EnumDyeColor.WHITE));
-		this.setCreativeTab(CreativeTabs.tabBlock);
-	}
+    public BlockStainedGlass(Material materialIn)
+    {
+        super(materialIn, false);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(COLOR, EnumDyeColor.WHITE));
+        this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+    }
 
-	/**+
-	 * Gets the metadata of the item this Block can drop. This
-	 * method is called when the block gets destroyed. It returns
-	 * the metadata of the dropped item based on the old metadata of
-	 * the block.
-	 */
-	public int damageDropped(IBlockState iblockstate) {
-		return ((EnumDyeColor) iblockstate.getValue(COLOR)).getMetadata();
-	}
+    public int damageDropped(IBlockState state)
+    {
+        return ((EnumDyeColor)state.getValue(COLOR)).getMetadata();
+    }
 
-	/**+
-	 * returns a list of blocks with the same ID, but different meta
-	 * (eg: wood returns 4 blocks)
-	 */
-	public void getSubBlocks(Item item, CreativeTabs var2, List<ItemStack> list) {
-		EnumDyeColor[] colors = EnumDyeColor.META_LOOKUP;
-		for (int i = 0; i < colors.length; ++i) {
-			list.add(new ItemStack(item, 1, colors[i].getMetadata()));
-		}
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items)
+    {
+        for (EnumDyeColor enumdyecolor : EnumDyeColor.values())
+        {
+            items.add(new ItemStack(this, 1, enumdyecolor.getMetadata()));
+        }
+    }
 
-	}
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos)
+    {
+        return MapColor.getBlockColor((EnumDyeColor)state.getValue(COLOR));
+    }
 
-	/**+
-	 * Get the MapColor for this Block and the given BlockState
-	 */
-	public MapColor getMapColor(IBlockState iblockstate) {
-		return ((EnumDyeColor) iblockstate.getValue(COLOR)).getMapColor();
-	}
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.TRANSLUCENT;
+    }
 
-	public EnumWorldBlockLayer getBlockLayer() {
-		return EnumWorldBlockLayer.TRANSLUCENT;
-	}
+    public int quantityDropped(Random random)
+    {
+        return 0;
+    }
 
-	/**+
-	 * Returns the quantity of items to drop on block destruction.
-	 */
-	public int quantityDropped(EaglercraftRandom var1) {
-		return 0;
-	}
+    protected boolean canSilkHarvest()
+    {
+        return true;
+    }
 
-	protected boolean canSilkHarvest() {
-		return true;
-	}
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
+    }
 
-	public boolean isFullCube() {
-		return false;
-	}
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.getDefaultState().withProperty(COLOR, EnumDyeColor.byMetadata(meta));
+    }
 
-	/**+
-	 * Convert the given metadata into a BlockState for this Block
-	 */
-	public IBlockState getStateFromMeta(int i) {
-		return this.getDefaultState().withProperty(COLOR, EnumDyeColor.byMetadata(i));
-	}
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    {
+        if (!worldIn.isRemote)
+        {
+            BlockBeacon.updateColorAsync(worldIn, pos);
+        }
+    }
 
-	public void onBlockAdded(World world, BlockPos blockpos, IBlockState var3) {
-		if (!world.isRemote) {
-			BlockBeacon.updateColorAsync(world, blockpos);
-		}
-	}
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    {
+        if (!worldIn.isRemote)
+        {
+            BlockBeacon.updateColorAsync(worldIn, pos);
+        }
+    }
 
-	public void breakBlock(World world, BlockPos blockpos, IBlockState var3) {
-		if (!world.isRemote) {
-			BlockBeacon.updateColorAsync(world, blockpos);
-		}
-	}
+    public int getMetaFromState(IBlockState state)
+    {
+        return ((EnumDyeColor)state.getValue(COLOR)).getMetadata();
+    }
 
-	/**+
-	 * Convert the BlockState into the correct metadata value
-	 */
-	public int getMetaFromState(IBlockState iblockstate) {
-		return ((EnumDyeColor) iblockstate.getValue(COLOR)).getMetadata();
-	}
-
-	protected BlockState createBlockState() {
-		return new BlockState(this, new IProperty[] { COLOR });
-	}
+    protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, new IProperty[] {COLOR});
+    }
 }

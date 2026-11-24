@@ -5,155 +5,139 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.EnumDifficulty;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class FoodStats {
-	/**+
-	 * The player's food level.
-	 */
-	private int foodLevel = 20;
-	/**+
-	 * The player's food saturation.
-	 */
-	private float foodSaturationLevel = 5.0F;
-	private float foodExhaustionLevel;
-	private int foodTimer;
-	private int prevFoodLevel = 20;
+public class FoodStats
+{
+    private int foodLevel = 20;
+    private float foodSaturationLevel = 5.0F;
+    private float foodExhaustionLevel;
+    private int foodTimer;
+    private int prevFoodLevel = 20;
 
-	/**+
-	 * Add food stats.
-	 */
-	public void addStats(int foodLevelIn, float foodSaturationModifier) {
-		this.foodLevel = Math.min(foodLevelIn + this.foodLevel, 20);
-		this.foodSaturationLevel = Math.min(
-				this.foodSaturationLevel + (float) foodLevelIn * foodSaturationModifier * 2.0F, (float) this.foodLevel);
-	}
+    public void addStats(int foodLevelIn, float foodSaturationModifier)
+    {
+        this.foodLevel = Math.min(foodLevelIn + this.foodLevel, 20);
+        this.foodSaturationLevel = Math.min(this.foodSaturationLevel + (float)foodLevelIn * foodSaturationModifier * 2.0F, (float)this.foodLevel);
+    }
 
-	/**+
-	 * Add food stats.
-	 */
-	public void addStats(ItemFood foodItem, ItemStack parItemStack) {
-		this.addStats(foodItem.getHealAmount(parItemStack), foodItem.getSaturationModifier(parItemStack));
-	}
+    public void addStats(ItemFood foodItem, ItemStack stack)
+    {
+        this.addStats(foodItem.getHealAmount(stack), foodItem.getSaturationModifier(stack));
+    }
 
-	/**+
-	 * Handles the food game logic.
-	 */
-	public void onUpdate(EntityPlayer player) {
-		EnumDifficulty enumdifficulty = player.worldObj.getDifficulty();
-		this.prevFoodLevel = this.foodLevel;
-		if (this.foodExhaustionLevel > 4.0F) {
-			this.foodExhaustionLevel -= 4.0F;
-			if (this.foodSaturationLevel > 0.0F) {
-				this.foodSaturationLevel = Math.max(this.foodSaturationLevel - 1.0F, 0.0F);
-			} else if (enumdifficulty != EnumDifficulty.PEACEFUL) {
-				this.foodLevel = Math.max(this.foodLevel - 1, 0);
-			}
-		}
+    public void onUpdate(EntityPlayer player)
+    {
+        EnumDifficulty enumdifficulty = player.world.getDifficulty();
+        this.prevFoodLevel = this.foodLevel;
 
-		if (player.worldObj.getGameRules().getBoolean("naturalRegeneration") && this.foodLevel >= 18
-				&& player.shouldHeal()) {
-			++this.foodTimer;
-			if (this.foodTimer >= 80) {
-				player.heal(1.0F);
-				this.addExhaustion(3.0F);
-				this.foodTimer = 0;
-			}
-		} else if (this.foodLevel <= 0) {
-			++this.foodTimer;
-			if (this.foodTimer >= 80) {
-				if (player.getHealth() > 10.0F || enumdifficulty == EnumDifficulty.HARD
-						|| player.getHealth() > 1.0F && enumdifficulty == EnumDifficulty.NORMAL) {
-					player.attackEntityFrom(DamageSource.starve, 1.0F);
-				}
+        if (this.foodExhaustionLevel > 4.0F)
+        {
+            this.foodExhaustionLevel -= 4.0F;
 
-				this.foodTimer = 0;
-			}
-		} else {
-			this.foodTimer = 0;
-		}
+            if (this.foodSaturationLevel > 0.0F)
+            {
+                this.foodSaturationLevel = Math.max(this.foodSaturationLevel - 1.0F, 0.0F);
+            }
+            else if (enumdifficulty != EnumDifficulty.PEACEFUL)
+            {
+                this.foodLevel = Math.max(this.foodLevel - 1, 0);
+            }
+        }
 
-	}
+        boolean flag = player.world.getGameRules().getBoolean("naturalRegeneration");
 
-	/**+
-	 * Reads the food data for the player.
-	 */
-	public void readNBT(NBTTagCompound parNBTTagCompound) {
-		if (parNBTTagCompound.hasKey("foodLevel", 99)) {
-			this.foodLevel = parNBTTagCompound.getInteger("foodLevel");
-			this.foodTimer = parNBTTagCompound.getInteger("foodTickTimer");
-			this.foodSaturationLevel = parNBTTagCompound.getFloat("foodSaturationLevel");
-			this.foodExhaustionLevel = parNBTTagCompound.getFloat("foodExhaustionLevel");
-		}
+        if (flag && this.foodSaturationLevel > 0.0F && player.shouldHeal() && this.foodLevel >= 20)
+        {
+            ++this.foodTimer;
 
-	}
+            if (this.foodTimer >= 10)
+            {
+                float f = Math.min(this.foodSaturationLevel, 6.0F);
+                player.heal(f / 6.0F);
+                this.addExhaustion(f);
+                this.foodTimer = 0;
+            }
+        }
+        else if (flag && this.foodLevel >= 18 && player.shouldHeal())
+        {
+            ++this.foodTimer;
 
-	/**+
-	 * Writes the food data for the player.
-	 */
-	public void writeNBT(NBTTagCompound parNBTTagCompound) {
-		parNBTTagCompound.setInteger("foodLevel", this.foodLevel);
-		parNBTTagCompound.setInteger("foodTickTimer", this.foodTimer);
-		parNBTTagCompound.setFloat("foodSaturationLevel", this.foodSaturationLevel);
-		parNBTTagCompound.setFloat("foodExhaustionLevel", this.foodExhaustionLevel);
-	}
+            if (this.foodTimer >= 80)
+            {
+                player.heal(1.0F);
+                this.addExhaustion(6.0F);
+                this.foodTimer = 0;
+            }
+        }
+        else if (this.foodLevel <= 0)
+        {
+            ++this.foodTimer;
 
-	/**+
-	 * Get the player's food level.
-	 */
-	public int getFoodLevel() {
-		return this.foodLevel;
-	}
+            if (this.foodTimer >= 80)
+            {
+                if (player.getHealth() > 10.0F || enumdifficulty == EnumDifficulty.HARD || player.getHealth() > 1.0F && enumdifficulty == EnumDifficulty.NORMAL)
+                {
+                    player.attackEntityFrom(DamageSource.STARVE, 1.0F);
+                }
 
-	public int getPrevFoodLevel() {
-		return this.prevFoodLevel;
-	}
+                this.foodTimer = 0;
+            }
+        }
+        else
+        {
+            this.foodTimer = 0;
+        }
+    }
 
-	/**+
-	 * Get whether the player must eat food.
-	 */
-	public boolean needFood() {
-		return this.foodLevel < 20;
-	}
+    public void readNBT(NBTTagCompound compound)
+    {
+        if (compound.hasKey("foodLevel", 99))
+        {
+            this.foodLevel = compound.getInteger("foodLevel");
+            this.foodTimer = compound.getInteger("foodTickTimer");
+            this.foodSaturationLevel = compound.getFloat("foodSaturationLevel");
+            this.foodExhaustionLevel = compound.getFloat("foodExhaustionLevel");
+        }
+    }
 
-	/**+
-	 * adds input to foodExhaustionLevel to a max of 40
-	 */
-	public void addExhaustion(float parFloat1) {
-		this.foodExhaustionLevel = Math.min(this.foodExhaustionLevel + parFloat1, 40.0F);
-	}
+    public void writeNBT(NBTTagCompound compound)
+    {
+        compound.setInteger("foodLevel", this.foodLevel);
+        compound.setInteger("foodTickTimer", this.foodTimer);
+        compound.setFloat("foodSaturationLevel", this.foodSaturationLevel);
+        compound.setFloat("foodExhaustionLevel", this.foodExhaustionLevel);
+    }
 
-	/**+
-	 * Get the player's food saturation level.
-	 */
-	public float getSaturationLevel() {
-		return this.foodSaturationLevel;
-	}
+    public int getFoodLevel()
+    {
+        return this.foodLevel;
+    }
 
-	public void setFoodLevel(int foodLevelIn) {
-		this.foodLevel = foodLevelIn;
-	}
+    public boolean needFood()
+    {
+        return this.foodLevel < 20;
+    }
 
-	public void setFoodSaturationLevel(float foodSaturationLevelIn) {
-		this.foodSaturationLevel = foodSaturationLevelIn;
-	}
+    public void addExhaustion(float exhaustion)
+    {
+        this.foodExhaustionLevel = Math.min(this.foodExhaustionLevel + exhaustion, 40.0F);
+    }
+
+    public float getSaturationLevel()
+    {
+        return this.foodSaturationLevel;
+    }
+
+    public void setFoodLevel(int foodLevelIn)
+    {
+        this.foodLevel = foodLevelIn;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void setFoodSaturationLevel(float foodSaturationLevelIn)
+    {
+        this.foodSaturationLevel = foodSaturationLevelIn;
+    }
 }

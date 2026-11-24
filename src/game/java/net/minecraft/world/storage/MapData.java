@@ -1,285 +1,348 @@
 package net.minecraft.world.storage;
 
-import java.util.List;
-import java.util.Map;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
+import java.util.List;
+import java.util.Map;
+import javax.annotation.Nullable;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S34PacketMaps;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec4b;
+import net.minecraft.network.play.server.SPacketMaps;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSavedData;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class MapData extends WorldSavedData {
-	public int xCenter;
-	public int zCenter;
-	public byte dimension;
-	public byte scale;
-	/**+
-	 * colours
-	 */
-	public byte[] colors = new byte[16384];
-	/**+
-	 * Holds a reference to the MapInfo of the players who own a
-	 * copy of the map
-	 */
-	public List<MapData.MapInfo> playersArrayList = Lists.newArrayList();
-	private Map<EntityPlayer, MapData.MapInfo> playersHashMap = Maps.newHashMap();
-	public Map<String, Vec4b> mapDecorations = Maps.newLinkedHashMap();
+public class MapData extends WorldSavedData
+{
+    public int xCenter;
+    public int zCenter;
+    public int dimension; //FML byte -> int
+    public boolean trackingPosition;
+    public boolean unlimitedTracking;
+    public byte scale;
+    public byte[] colors = new byte[16384];
+    public List<MapData.MapInfo> playersArrayList = Lists.<MapData.MapInfo>newArrayList();
+    private final Map<EntityPlayer, MapData.MapInfo> playersHashMap = Maps.<EntityPlayer, MapData.MapInfo>newHashMap();
+    public Map<String, MapDecoration> mapDecorations = Maps.<String, MapDecoration>newLinkedHashMap();
 
-	public MapData(String mapname) {
-		super(mapname);
-	}
+    public MapData(String mapname)
+    {
+        super(mapname);
+    }
 
-	public void calculateMapCenter(double x, double z, int mapScale) {
-		int i = 128 * (1 << mapScale);
-		int j = MathHelper.floor_double((x + 64.0D) / (double) i);
-		int k = MathHelper.floor_double((z + 64.0D) / (double) i);
-		this.xCenter = j * i + i / 2 - 64;
-		this.zCenter = k * i + i / 2 - 64;
-	}
+    public void calculateMapCenter(double x, double z, int mapScale)
+    {
+        int i = 128 * (1 << mapScale);
+        int j = MathHelper.floor((x + 64.0D) / (double)i);
+        int k = MathHelper.floor((z + 64.0D) / (double)i);
+        this.xCenter = j * i + i / 2 - 64;
+        this.zCenter = k * i + i / 2 - 64;
+    }
 
-	/**+
-	 * reads in data from the NBTTagCompound into this MapDataBase
-	 */
-	public void readFromNBT(NBTTagCompound nbttagcompound) {
-		this.dimension = nbttagcompound.getByte("dimension");
-		this.xCenter = nbttagcompound.getInteger("xCenter");
-		this.zCenter = nbttagcompound.getInteger("zCenter");
-		this.scale = nbttagcompound.getByte("scale");
-		this.scale = (byte) MathHelper.clamp_int(this.scale, 0, 4);
-		short short1 = nbttagcompound.getShort("width");
-		short short2 = nbttagcompound.getShort("height");
-		if (short1 == 128 && short2 == 128) {
-			this.colors = nbttagcompound.getByteArray("colors");
-		} else {
-			byte[] abyte = nbttagcompound.getByteArray("colors");
-			this.colors = new byte[16384];
-			int i = (128 - short1) / 2;
-			int j = (128 - short2) / 2;
+    public void readFromNBT(NBTTagCompound nbt)
+    {
+        this.dimension = nbt.getInteger("dimension");
+        this.xCenter = nbt.getInteger("xCenter");
+        this.zCenter = nbt.getInteger("zCenter");
+        this.scale = nbt.getByte("scale");
+        this.scale = (byte)MathHelper.clamp(this.scale, 0, 4);
 
-			for (int k = 0; k < short2; ++k) {
-				int l = k + j;
-				if (l >= 0 || l < 128) {
-					for (int i1 = 0; i1 < short1; ++i1) {
-						int j1 = i1 + i;
-						if (j1 >= 0 || j1 < 128) {
-							this.colors[j1 + l * 128] = abyte[i1 + k * short1];
-						}
-					}
-				}
-			}
-		}
+        if (nbt.hasKey("trackingPosition", 1))
+        {
+            this.trackingPosition = nbt.getBoolean("trackingPosition");
+        }
+        else
+        {
+            this.trackingPosition = true;
+        }
 
-	}
+        this.unlimitedTracking = nbt.getBoolean("unlimitedTracking");
+        int i = nbt.getShort("width");
+        int j = nbt.getShort("height");
 
-	/**+
-	 * write data to NBTTagCompound from this MapDataBase, similar
-	 * to Entities and TileEntities
-	 */
-	public void writeToNBT(NBTTagCompound nbttagcompound) {
-		nbttagcompound.setByte("dimension", this.dimension);
-		nbttagcompound.setInteger("xCenter", this.xCenter);
-		nbttagcompound.setInteger("zCenter", this.zCenter);
-		nbttagcompound.setByte("scale", this.scale);
-		nbttagcompound.setShort("width", (short) 128);
-		nbttagcompound.setShort("height", (short) 128);
-		nbttagcompound.setByteArray("colors", this.colors);
-	}
+        if (i == 128 && j == 128)
+        {
+            this.colors = nbt.getByteArray("colors");
+        }
+        else
+        {
+            byte[] abyte = nbt.getByteArray("colors");
+            this.colors = new byte[16384];
+            int k = (128 - i) / 2;
+            int l = (128 - j) / 2;
 
-	/**+
-	 * Adds the player passed to the list of visible players and
-	 * checks to see which players are visible
-	 */
-	public void updateVisiblePlayers(EntityPlayer player, ItemStack mapStack) {
-		if (!this.playersHashMap.containsKey(player)) {
-			MapData.MapInfo mapdata$mapinfo = new MapData.MapInfo(player);
-			this.playersHashMap.put(player, mapdata$mapinfo);
-			this.playersArrayList.add(mapdata$mapinfo);
-		}
+            for (int i1 = 0; i1 < j; ++i1)
+            {
+                int j1 = i1 + l;
 
-		if (!player.inventory.hasItemStack(mapStack)) {
-			this.mapDecorations.remove(player.getName());
-		}
+                if (j1 >= 0 || j1 < 128)
+                {
+                    for (int k1 = 0; k1 < i; ++k1)
+                    {
+                        int l1 = k1 + k;
 
-		for (int i = 0; i < this.playersArrayList.size(); ++i) {
-			MapData.MapInfo mapdata$mapinfo1 = (MapData.MapInfo) this.playersArrayList.get(i);
-			if (!mapdata$mapinfo1.entityplayerObj.isDead
-					&& (mapdata$mapinfo1.entityplayerObj.inventory.hasItemStack(mapStack)
-							|| mapStack.isOnItemFrame())) {
-				if (!mapStack.isOnItemFrame() && mapdata$mapinfo1.entityplayerObj.dimension == this.dimension) {
-					this.updateDecorations(0, mapdata$mapinfo1.entityplayerObj.worldObj,
-							mapdata$mapinfo1.entityplayerObj.getName(), mapdata$mapinfo1.entityplayerObj.posX,
-							mapdata$mapinfo1.entityplayerObj.posZ,
-							(double) mapdata$mapinfo1.entityplayerObj.rotationYaw);
-				}
-			} else {
-				this.playersHashMap.remove(mapdata$mapinfo1.entityplayerObj);
-				this.playersArrayList.remove(mapdata$mapinfo1);
-			}
-		}
+                        if (l1 >= 0 || l1 < 128)
+                        {
+                            this.colors[l1 + j1 * 128] = abyte[k1 + i1 * i];
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-		if (mapStack.isOnItemFrame()) {
-			EntityItemFrame entityitemframe = mapStack.getItemFrame();
-			BlockPos blockpos = entityitemframe.getHangingPosition();
-			this.updateDecorations(1, player.worldObj, "frame-" + entityitemframe.getEntityId(),
-					(double) blockpos.getX(), (double) blockpos.getZ(),
-					(double) (entityitemframe.facingDirection.getHorizontalIndex() * 90));
-		}
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
+        compound.setInteger("dimension", this.dimension);
+        compound.setInteger("xCenter", this.xCenter);
+        compound.setInteger("zCenter", this.zCenter);
+        compound.setByte("scale", this.scale);
+        compound.setShort("width", (short)128);
+        compound.setShort("height", (short)128);
+        compound.setByteArray("colors", this.colors);
+        compound.setBoolean("trackingPosition", this.trackingPosition);
+        compound.setBoolean("unlimitedTracking", this.unlimitedTracking);
+        return compound;
+    }
 
-		if (mapStack.hasTagCompound() && mapStack.getTagCompound().hasKey("Decorations", 9)) {
-			NBTTagList nbttaglist = mapStack.getTagCompound().getTagList("Decorations", 10);
+    public void updateVisiblePlayers(EntityPlayer player, ItemStack mapStack)
+    {
+        if (!this.playersHashMap.containsKey(player))
+        {
+            MapData.MapInfo mapdata$mapinfo = new MapData.MapInfo(player);
+            this.playersHashMap.put(player, mapdata$mapinfo);
+            this.playersArrayList.add(mapdata$mapinfo);
+        }
 
-			for (int j = 0; j < nbttaglist.tagCount(); ++j) {
-				NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(j);
-				if (!this.mapDecorations.containsKey(nbttagcompound.getString("id"))) {
-					this.updateDecorations(nbttagcompound.getByte("type"), player.worldObj,
-							nbttagcompound.getString("id"), nbttagcompound.getDouble("x"),
-							nbttagcompound.getDouble("z"), nbttagcompound.getDouble("rot"));
-				}
-			}
-		}
+        if (!player.inventory.hasItemStack(mapStack))
+        {
+            this.mapDecorations.remove(player.getName());
+        }
 
-	}
+        for (int i = 0; i < this.playersArrayList.size(); ++i)
+        {
+            MapData.MapInfo mapdata$mapinfo1 = this.playersArrayList.get(i);
 
-	private void updateDecorations(int type, World worldIn, String entityIdentifier, double worldX, double worldZ,
-			double rotation) {
-		int i = 1 << this.scale;
-		float f = (float) (worldX - (double) this.xCenter) / (float) i;
-		float f1 = (float) (worldZ - (double) this.zCenter) / (float) i;
-		byte b0 = (byte) ((int) ((double) (f * 2.0F) + 0.5D));
-		byte b1 = (byte) ((int) ((double) (f1 * 2.0F) + 0.5D));
-		byte b3 = 63;
-		byte b2;
-		if (f >= (float) (-b3) && f1 >= (float) (-b3) && f <= (float) b3 && f1 <= (float) b3) {
-			rotation = rotation + (rotation < 0.0D ? -8.0D : 8.0D);
-			b2 = (byte) ((int) (rotation * 16.0D / 360.0D));
-			if (this.dimension < 0) {
-				int j = (int) (worldIn.getWorldInfo().getWorldTime() / 10L);
-				b2 = (byte) (j * j * 34187121 + j * 121 >> 15 & 15);
-			}
-		} else {
-			if (Math.abs(f) >= 320.0F || Math.abs(f1) >= 320.0F) {
-				this.mapDecorations.remove(entityIdentifier);
-				return;
-			}
+            if (!mapdata$mapinfo1.player.isDead && (mapdata$mapinfo1.player.inventory.hasItemStack(mapStack) || mapStack.isOnItemFrame()))
+            {
+                if (!mapStack.isOnItemFrame() && mapdata$mapinfo1.player.dimension == this.dimension && this.trackingPosition)
+                {
+                    this.updateDecorations(MapDecoration.Type.PLAYER, mapdata$mapinfo1.player.world, mapdata$mapinfo1.player.getName(), mapdata$mapinfo1.player.posX, mapdata$mapinfo1.player.posZ, (double)mapdata$mapinfo1.player.rotationYaw);
+                }
+            }
+            else
+            {
+                this.playersHashMap.remove(mapdata$mapinfo1.player);
+                this.playersArrayList.remove(mapdata$mapinfo1);
+            }
+        }
 
-			type = 6;
-			b2 = 0;
-			if (f <= (float) (-b3)) {
-				b0 = (byte) ((int) ((double) (b3 * 2) + 2.5D));
-			}
+        if (mapStack.isOnItemFrame() && this.trackingPosition)
+        {
+            EntityItemFrame entityitemframe = mapStack.getItemFrame();
+            BlockPos blockpos = entityitemframe.getHangingPosition();
+            this.updateDecorations(MapDecoration.Type.FRAME, player.world, "frame-" + entityitemframe.getEntityId(), (double)blockpos.getX(), (double)blockpos.getZ(), (double)(entityitemframe.facingDirection.getHorizontalIndex() * 90));
+        }
 
-			if (f1 <= (float) (-b3)) {
-				b1 = (byte) ((int) ((double) (b3 * 2) + 2.5D));
-			}
+        if (mapStack.hasTagCompound() && mapStack.getTagCompound().hasKey("Decorations", 9))
+        {
+            NBTTagList nbttaglist = mapStack.getTagCompound().getTagList("Decorations", 10);
 
-			if (f >= (float) b3) {
-				b0 = (byte) (b3 * 2 + 1);
-			}
+            for (int j = 0; j < nbttaglist.tagCount(); ++j)
+            {
+                NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(j);
 
-			if (f1 >= (float) b3) {
-				b1 = (byte) (b3 * 2 + 1);
-			}
-		}
+                if (!this.mapDecorations.containsKey(nbttagcompound.getString("id")))
+                {
+                    this.updateDecorations(MapDecoration.Type.byIcon(nbttagcompound.getByte("type")), player.world, nbttagcompound.getString("id"), nbttagcompound.getDouble("x"), nbttagcompound.getDouble("z"), nbttagcompound.getDouble("rot"));
+                }
+            }
+        }
+    }
 
-		this.mapDecorations.put(entityIdentifier, new Vec4b((byte) type, b0, b1, b2));
-	}
+    public static void addTargetDecoration(ItemStack map, BlockPos target, String decorationName, MapDecoration.Type type)
+    {
+        NBTTagList nbttaglist;
 
-	public Packet getMapPacket(ItemStack mapStack, World worldIn, EntityPlayer player) {
-		MapData.MapInfo mapdata$mapinfo = (MapData.MapInfo) this.playersHashMap.get(player);
-		return mapdata$mapinfo == null ? null : mapdata$mapinfo.getPacket(mapStack);
-	}
+        if (map.hasTagCompound() && map.getTagCompound().hasKey("Decorations", 9))
+        {
+            nbttaglist = map.getTagCompound().getTagList("Decorations", 10);
+        }
+        else
+        {
+            nbttaglist = new NBTTagList();
+            map.setTagInfo("Decorations", nbttaglist);
+        }
 
-	public void updateMapData(int x, int y) {
-		super.markDirty();
+        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        nbttagcompound.setByte("type", type.getIcon());
+        nbttagcompound.setString("id", decorationName);
+        nbttagcompound.setDouble("x", (double)target.getX());
+        nbttagcompound.setDouble("z", (double)target.getZ());
+        nbttagcompound.setDouble("rot", 180.0D);
+        nbttaglist.appendTag(nbttagcompound);
 
-		for (int i = 0, l = this.playersArrayList.size(); i < l; ++i) {
-			this.playersArrayList.get(i).update(x, y);
-		}
+        if (type.hasMapColor())
+        {
+            NBTTagCompound nbttagcompound1 = map.getOrCreateSubCompound("display");
+            nbttagcompound1.setInteger("MapColor", type.getMapColor());
+        }
+    }
 
-	}
+    private void updateDecorations(MapDecoration.Type type, World worldIn, String decorationName, double worldX, double worldZ, double rotationIn)
+    {
+        int i = 1 << this.scale;
+        float f = (float)(worldX - (double)this.xCenter) / (float)i;
+        float f1 = (float)(worldZ - (double)this.zCenter) / (float)i;
+        byte b0 = (byte)((int)((double)(f * 2.0F) + 0.5D));
+        byte b1 = (byte)((int)((double)(f1 * 2.0F) + 0.5D));
+        int j = 63;
+        byte b2;
 
-	public MapData.MapInfo getMapInfo(EntityPlayer player) {
-		MapData.MapInfo mapdata$mapinfo = (MapData.MapInfo) this.playersHashMap.get(player);
-		if (mapdata$mapinfo == null) {
-			mapdata$mapinfo = new MapData.MapInfo(player);
-			this.playersHashMap.put(player, mapdata$mapinfo);
-			this.playersArrayList.add(mapdata$mapinfo);
-		}
+        if (f >= -63.0F && f1 >= -63.0F && f <= 63.0F && f1 <= 63.0F)
+        {
+            rotationIn = rotationIn + (rotationIn < 0.0D ? -8.0D : 8.0D);
+            b2 = (byte)((int)(rotationIn * 16.0D / 360.0D));
 
-		return mapdata$mapinfo;
-	}
+            if (worldIn.provider.shouldMapSpin(decorationName, worldX, worldZ, rotationIn))
+            {
+                int l = (int)(worldIn.getWorldTime() / 10L);
+                b2 = (byte)(l * l * 34187121 + l * 121 >> 15 & 15);
+            }
+        }
+        else
+        {
+            if (type != MapDecoration.Type.PLAYER)
+            {
+                this.mapDecorations.remove(decorationName);
+                return;
+            }
 
-	public class MapInfo {
-		public final EntityPlayer entityplayerObj;
-		private boolean field_176105_d = true;
-		private int minX = 0;
-		private int minY = 0;
-		private int maxX = 127;
-		private int maxY = 127;
-		private int field_176109_i;
-		public int field_82569_d;
+            int k = 320;
 
-		public MapInfo(EntityPlayer player) {
-			this.entityplayerObj = player;
-		}
+            if (Math.abs(f) < 320.0F && Math.abs(f1) < 320.0F)
+            {
+                type = MapDecoration.Type.PLAYER_OFF_MAP;
+            }
+            else
+            {
+                if (!this.unlimitedTracking)
+                {
+                    this.mapDecorations.remove(decorationName);
+                    return;
+                }
 
-		public Packet getPacket(ItemStack stack) {
-			if (this.field_176105_d) {
-				this.field_176105_d = false;
-				return new S34PacketMaps(stack.getMetadata(), MapData.this.scale, MapData.this.mapDecorations.values(),
-						MapData.this.colors, this.minX, this.minY, this.maxX + 1 - this.minX,
-						this.maxY + 1 - this.minY);
-			} else {
-				return this.field_176109_i++ % 5 == 0 ? new S34PacketMaps(stack.getMetadata(), MapData.this.scale,
-						MapData.this.mapDecorations.values(), MapData.this.colors, 0, 0, 0, 0) : null;
-			}
-		}
+                type = MapDecoration.Type.PLAYER_OFF_LIMITS;
+            }
 
-		public void update(int x, int y) {
-			if (this.field_176105_d) {
-				this.minX = Math.min(this.minX, x);
-				this.minY = Math.min(this.minY, y);
-				this.maxX = Math.max(this.maxX, x);
-				this.maxY = Math.max(this.maxY, y);
-			} else {
-				this.field_176105_d = true;
-				this.minX = x;
-				this.minY = y;
-				this.maxX = x;
-				this.maxY = y;
-			}
+            b2 = 0;
 
-		}
-	}
+            if (f <= -63.0F)
+            {
+                b0 = -128;
+            }
+
+            if (f1 <= -63.0F)
+            {
+                b1 = -128;
+            }
+
+            if (f >= 63.0F)
+            {
+                b0 = 127;
+            }
+
+            if (f1 >= 63.0F)
+            {
+                b1 = 127;
+            }
+        }
+
+        this.mapDecorations.put(decorationName, new MapDecoration(type, b0, b1, b2));
+    }
+
+    @Nullable
+    public Packet<?> getMapPacket(ItemStack mapStack, World worldIn, EntityPlayer player)
+    {
+        MapData.MapInfo mapdata$mapinfo = this.playersHashMap.get(player);
+        return mapdata$mapinfo == null ? null : mapdata$mapinfo.getPacket(mapStack);
+    }
+
+    public void updateMapData(int x, int y)
+    {
+        super.markDirty();
+
+        for (MapData.MapInfo mapdata$mapinfo : this.playersArrayList)
+        {
+            mapdata$mapinfo.update(x, y);
+        }
+    }
+
+    public MapData.MapInfo getMapInfo(EntityPlayer player)
+    {
+        MapData.MapInfo mapdata$mapinfo = this.playersHashMap.get(player);
+
+        if (mapdata$mapinfo == null)
+        {
+            mapdata$mapinfo = new MapData.MapInfo(player);
+            this.playersHashMap.put(player, mapdata$mapinfo);
+            this.playersArrayList.add(mapdata$mapinfo);
+        }
+
+        return mapdata$mapinfo;
+    }
+
+    public class MapInfo
+    {
+        public final EntityPlayer player;
+        private boolean isDirty = true;
+        private int minX;
+        private int minY;
+        private int maxX = 127;
+        private int maxY = 127;
+        private int tick;
+        public int step;
+
+        public MapInfo(EntityPlayer player)
+        {
+            this.player = player;
+        }
+
+        @Nullable
+        public Packet<?> getPacket(ItemStack stack)
+        {
+            if (this.isDirty)
+            {
+                this.isDirty = false;
+                return new SPacketMaps(stack.getMetadata(), MapData.this.scale, MapData.this.trackingPosition, MapData.this.mapDecorations.values(), MapData.this.colors, this.minX, this.minY, this.maxX + 1 - this.minX, this.maxY + 1 - this.minY);
+            }
+            else
+            {
+                return this.tick++ % 5 == 0 ? new SPacketMaps(stack.getMetadata(), MapData.this.scale, MapData.this.trackingPosition, MapData.this.mapDecorations.values(), MapData.this.colors, 0, 0, 0, 0) : null;
+            }
+        }
+
+        public void update(int x, int y)
+        {
+            if (this.isDirty)
+            {
+                this.minX = Math.min(this.minX, x);
+                this.minY = Math.min(this.minY, y);
+                this.maxX = Math.max(this.maxX, x);
+                this.maxY = Math.max(this.maxY, y);
+            }
+            else
+            {
+                this.isDirty = true;
+                this.minX = x;
+                this.minY = y;
+                this.maxX = x;
+                this.maxY = y;
+            }
+        }
+    }
 }

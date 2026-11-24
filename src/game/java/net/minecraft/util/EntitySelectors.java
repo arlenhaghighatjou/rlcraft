@@ -1,7 +1,8 @@
 package net.minecraft.util;
 
 import com.google.common.base.Predicate;
-
+import com.google.common.base.Predicates;
+import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -9,76 +10,168 @@ import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.scoreboard.Team;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public final class EntitySelectors {
-	public static final Predicate<Entity> selectAnything = new Predicate<Entity>() {
-		public boolean apply(Entity entity) {
-			return entity.isEntityAlive();
-		}
-	};
-	/**+
-	 * Selects only entities which are neither ridden by anything
-	 * nor ride on anything
-	 */
-	public static final Predicate<Entity> IS_STANDALONE = new Predicate<Entity>() {
-		public boolean apply(Entity entity) {
-			return entity.isEntityAlive() && entity.riddenByEntity == null && entity.ridingEntity == null;
-		}
-	};
-	public static final Predicate<Entity> selectInventories = new Predicate<Entity>() {
-		public boolean apply(Entity entity) {
-			return entity instanceof IInventory && entity.isEntityAlive();
-		}
-	};
-	/**+
-	 * Selects entities which are either not players or players that
-	 * are not spectating
-	 */
-	public static final Predicate<Entity> NOT_SPECTATING = new Predicate<Entity>() {
-		public boolean apply(Entity entity) {
-			return !(entity instanceof EntityPlayer) || !((EntityPlayer) entity).isSpectator();
-		}
-	};
+public final class EntitySelectors
+{
+    public static final Predicate<Entity> IS_ALIVE = new Predicate<Entity>()
+    {
+        public boolean apply(@Nullable Entity p_apply_1_)
+        {
+            return p_apply_1_.isEntityAlive();
+        }
+    };
+    public static final Predicate<Entity> IS_STANDALONE = new Predicate<Entity>()
+    {
+        public boolean apply(@Nullable Entity p_apply_1_)
+        {
+            return p_apply_1_.isEntityAlive() && !p_apply_1_.isBeingRidden() && !p_apply_1_.isRiding();
+        }
+    };
+    public static final Predicate<Entity> HAS_INVENTORY = new Predicate<Entity>()
+    {
+        public boolean apply(@Nullable Entity p_apply_1_)
+        {
+            return p_apply_1_ instanceof IInventory && p_apply_1_.isEntityAlive();
+        }
+    };
+    public static final Predicate<Entity> CAN_AI_TARGET = new Predicate<Entity>()
+    {
+        public boolean apply(@Nullable Entity p_apply_1_)
+        {
+            return !(p_apply_1_ instanceof EntityPlayer) || !((EntityPlayer)p_apply_1_).isSpectator() && !((EntityPlayer)p_apply_1_).isCreative();
+        }
+    };
+    public static final Predicate<Entity> NOT_SPECTATING = new Predicate<Entity>()
+    {
+        public boolean apply(@Nullable Entity p_apply_1_)
+        {
+            return !(p_apply_1_ instanceof EntityPlayer) || !((EntityPlayer)p_apply_1_).isSpectator();
+        }
+    };
 
-	public static class ArmoredMob implements Predicate<Entity> {
-		private final ItemStack armor;
+    public static <T extends Entity> Predicate<T> withinRange(final double x, final double y, final double z, double range)
+    {
+        final double d0 = range * range;
+        return new Predicate<T>()
+        {
+            public boolean apply(@Nullable T p_apply_1_)
+            {
+                return p_apply_1_ != null && p_apply_1_.getDistanceSq(x, y, z) <= d0;
+            }
+        };
+    }
 
-		public ArmoredMob(ItemStack armor) {
-			this.armor = armor;
-		}
+    public static <T extends Entity> Predicate<T> getTeamCollisionPredicate(final Entity entityIn)
+    {
+        final Team team = entityIn.getTeam();
+        final Team.CollisionRule team$collisionrule = team == null ? Team.CollisionRule.ALWAYS : team.getCollisionRule();
+        Predicate<?> ret = team$collisionrule == Team.CollisionRule.NEVER ? Predicates.alwaysFalse() : Predicates.and(NOT_SPECTATING, new Predicate<Entity>()
+        {
+            public boolean apply(@Nullable Entity p_apply_1_)
+            {
+                if (!p_apply_1_.canBePushed())
+                {
+                    return false;
+                }
+                else if (!entityIn.world.isRemote || p_apply_1_ instanceof EntityPlayer && ((EntityPlayer)p_apply_1_).isUser())
+                {
+                    Team team1 = p_apply_1_.getTeam();
+                    Team.CollisionRule team$collisionrule1 = team1 == null ? Team.CollisionRule.ALWAYS : team1.getCollisionRule();
 
-		public boolean apply(Entity entity) {
-			if (!entity.isEntityAlive()) {
-				return false;
-			} else if (!(entity instanceof EntityLivingBase)) {
-				return false;
-			} else {
-				EntityLivingBase entitylivingbase = (EntityLivingBase) entity;
-				return entitylivingbase.getEquipmentInSlot(EntityLiving.getArmorPosition(this.armor)) != null ? false
-						: (entitylivingbase instanceof EntityLiving ? ((EntityLiving) entitylivingbase).canPickUpLoot()
-								: (entitylivingbase instanceof EntityArmorStand ? true
-										: entitylivingbase instanceof EntityPlayer));
-			}
-		}
-	}
+                    if (team$collisionrule1 == Team.CollisionRule.NEVER)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        boolean flag = team != null && team.isSameTeam(team1);
+
+                        if ((team$collisionrule == Team.CollisionRule.HIDE_FOR_OWN_TEAM || team$collisionrule1 == Team.CollisionRule.HIDE_FOR_OWN_TEAM) && flag)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return team$collisionrule != Team.CollisionRule.HIDE_FOR_OTHER_TEAMS && team$collisionrule1 != Team.CollisionRule.HIDE_FOR_OTHER_TEAMS || flag;
+                        }
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        });
+        return (Predicate<T>)ret;
+    }
+
+    public static Predicate<Entity> notRiding(final Entity p_191324_0_)
+    {
+        return new Predicate<Entity>()
+        {
+            public boolean apply(@Nullable Entity p_apply_1_)
+            {
+                while (true)
+                {
+                    if (p_apply_1_.isRiding())
+                    {
+                        p_apply_1_ = p_apply_1_.getRidingEntity();
+
+                        if (p_apply_1_ != p_191324_0_)
+                        {
+                            continue;
+                        }
+
+                        return false;
+                    }
+
+                    return true;
+                }
+            }
+        };
+    }
+
+    public static class ArmoredMob implements Predicate<Entity>
+        {
+            private final ItemStack armor;
+
+            public ArmoredMob(ItemStack armor)
+            {
+                this.armor = armor;
+            }
+
+            public boolean apply(@Nullable Entity p_apply_1_)
+            {
+                if (!p_apply_1_.isEntityAlive())
+                {
+                    return false;
+                }
+                else if (!(p_apply_1_ instanceof EntityLivingBase))
+                {
+                    return false;
+                }
+                else
+                {
+                    EntityLivingBase entitylivingbase = (EntityLivingBase)p_apply_1_;
+
+                    if (!entitylivingbase.getItemStackFromSlot(EntityLiving.getSlotForItemStack(this.armor)).isEmpty())
+                    {
+                        return false;
+                    }
+                    else if (entitylivingbase instanceof EntityLiving)
+                    {
+                        return ((EntityLiving)entitylivingbase).canPickUpLoot();
+                    }
+                    else if (entitylivingbase instanceof EntityArmorStand)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return entitylivingbase instanceof EntityPlayer;
+                    }
+                }
+            }
+        }
 }

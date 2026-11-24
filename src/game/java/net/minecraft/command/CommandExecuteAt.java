@@ -1,165 +1,119 @@
 package net.minecraft.command;
 
+import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class CommandExecuteAt extends CommandBase {
+public class CommandExecuteAt extends CommandBase
+{
+    public String getName()
+    {
+        return "execute";
+    }
 
-	/**+
-	 * Gets the name of the command
-	 */
-	public String getCommandName() {
-		return "execute";
-	}
+    public int getRequiredPermissionLevel()
+    {
+        return 2;
+    }
 
-	/**+
-	 * Return the required permission level for this command.
-	 */
-	public int getRequiredPermissionLevel() {
-		return 2;
-	}
+    public String getUsage(ICommandSender sender)
+    {
+        return "commands.execute.usage";
+    }
 
-	/**+
-	 * Gets the usage string for the command.
-	 */
-	public String getCommandUsage(ICommandSender var1) {
-		return "commands.execute.usage";
-	}
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
+    {
+        if (args.length < 5)
+        {
+            throw new WrongUsageException("commands.execute.usage", new Object[0]);
+        }
+        else
+        {
+            Entity entity = getEntity(server, sender, args[0], Entity.class);
+            double d0 = parseDouble(entity.posX, args[1], false);
+            double d1 = parseDouble(entity.posY, args[2], false);
+            double d2 = parseDouble(entity.posZ, args[3], false);
+            new BlockPos(d0, d1, d2);
+            int i = 4;
 
-	/**+
-	 * Callback when the command is invoked
-	 */
-	public void processCommand(final ICommandSender parICommandSender, String[] parArrayOfString)
-			throws CommandException {
-		if (parArrayOfString.length < 5) {
-			throw new WrongUsageException("commands.execute.usage", new Object[0]);
-		} else {
-			final Entity entity = getEntity(parICommandSender, parArrayOfString[0], Entity.class);
-			final double d0 = parseDouble(entity.posX, parArrayOfString[1], false);
-			final double d1 = parseDouble(entity.posY, parArrayOfString[2], false);
-			final double d2 = parseDouble(entity.posZ, parArrayOfString[3], false);
-			final BlockPos blockpos = new BlockPos(d0, d1, d2);
-			byte b0 = 4;
-			if ("detect".equals(parArrayOfString[4]) && parArrayOfString.length > 10) {
-				World world = entity.getEntityWorld();
-				double d3 = parseDouble(d0, parArrayOfString[5], false);
-				double d4 = parseDouble(d1, parArrayOfString[6], false);
-				double d5 = parseDouble(d2, parArrayOfString[7], false);
-				Block block = getBlockByText(parICommandSender, parArrayOfString[8]);
-				int j = parseInt(parArrayOfString[9], -1, 15);
-				BlockPos blockpos1 = new BlockPos(d3, d4, d5);
-				IBlockState iblockstate = world.getBlockState(blockpos1);
-				if (iblockstate.getBlock() != block
-						|| j >= 0 && iblockstate.getBlock().getMetaFromState(iblockstate) != j) {
-					throw new CommandException("commands.execute.failed", new Object[] { "detect", entity.getName() });
-				}
+            if ("detect".equals(args[4]) && args.length > 10)
+            {
+                World world = entity.getEntityWorld();
+                double d3 = parseDouble(d0, args[5], false);
+                double d4 = parseDouble(d1, args[6], false);
+                double d5 = parseDouble(d2, args[7], false);
+                Block block = getBlockByText(sender, args[8]);
+                BlockPos blockpos = new BlockPos(d3, d4, d5);
 
-				b0 = 10;
-			}
+                if (!world.isBlockLoaded(blockpos))
+                {
+                    throw new CommandException("commands.execute.failed", new Object[] {"detect", entity.getName()});
+                }
 
-			String s = buildString(parArrayOfString, b0);
-			ICommandSender icommandsender = new ICommandSender() {
-				public String getName() {
-					return entity.getName();
-				}
+                IBlockState iblockstate = world.getBlockState(blockpos);
 
-				public IChatComponent getDisplayName() {
-					return entity.getDisplayName();
-				}
+                if (iblockstate.getBlock() != block)
+                {
+                    throw new CommandException("commands.execute.failed", new Object[] {"detect", entity.getName()});
+                }
 
-				public void addChatMessage(IChatComponent component) {
-					parICommandSender.addChatMessage(component);
-				}
+                if (!CommandBase.convertArgToBlockStatePredicate(block, args[9]).apply(iblockstate))
+                {
+                    throw new CommandException("commands.execute.failed", new Object[] {"detect", entity.getName()});
+                }
 
-				public boolean canCommandSenderUseCommand(int permLevel, String commandName) {
-					return parICommandSender.canCommandSenderUseCommand(permLevel, commandName);
-				}
+                i = 10;
+            }
 
-				public BlockPos getPosition() {
-					return blockpos;
-				}
+            String s = buildString(args, i);
+            ICommandSender icommandsender = CommandSenderWrapper.create(sender).withEntity(entity, new Vec3d(d0, d1, d2)).withSendCommandFeedback(server.worlds[0].getGameRules().getBoolean("commandBlockOutput"));
+            ICommandManager icommandmanager = server.getCommandManager();
 
-				public Vec3 getPositionVector() {
-					return new Vec3(d0, d1, d2);
-				}
+            try
+            {
+                int j = icommandmanager.executeCommand(icommandsender, s);
 
-				public World getEntityWorld() {
-					return entity.worldObj;
-				}
+                if (j < 1)
+                {
+                    throw new CommandException("commands.execute.allInvocationsFailed", new Object[] {s});
+                }
+            }
+            catch (Throwable var23)
+            {
+                throw new CommandException("commands.execute.failed", new Object[] {s, entity.getName()});
+            }
+        }
+    }
 
-				public Entity getCommandSenderEntity() {
-					return entity;
-				}
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos)
+    {
+        if (args.length == 1)
+        {
+            return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+        }
+        else if (args.length > 1 && args.length <= 4)
+        {
+            return getTabCompletionCoordinate(args, 1, targetPos);
+        }
+        else if (args.length > 5 && args.length <= 8 && "detect".equals(args[4]))
+        {
+            return getTabCompletionCoordinate(args, 5, targetPos);
+        }
+        else
+        {
+            return args.length == 9 && "detect".equals(args[4]) ? getListOfStringsMatchingLastWord(args, Block.REGISTRY.getKeys()) : Collections.emptyList();
+        }
+    }
 
-				public boolean sendCommandFeedback() {
-					MinecraftServer minecraftserver = MinecraftServer.getServer();
-					return minecraftserver == null
-							|| minecraftserver.worldServers[0].getGameRules().getBoolean("commandBlockOutput");
-				}
-
-				public void setCommandStat(CommandResultStats.Type type, int amount) {
-					entity.setCommandStat(type, amount);
-				}
-			};
-			ICommandManager icommandmanager = MinecraftServer.getServer().getCommandManager();
-
-			try {
-				int i = icommandmanager.executeCommand(icommandsender, s);
-				if (i < 1) {
-					throw new CommandException("commands.execute.allInvocationsFailed", new Object[] { s });
-				}
-			} catch (Throwable var23) {
-				throw new CommandException("commands.execute.failed", new Object[] { s, entity.getName() });
-			}
-		}
-	}
-
-	/**+
-	 * Return a list of options when the user types TAB
-	 */
-	public List<String> addTabCompletionOptions(ICommandSender var1, String[] astring, BlockPos blockpos) {
-		return astring.length == 1
-				? getListOfStringsMatchingLastWord(astring, MinecraftServer.getServer().getAllUsernames())
-				: (astring.length > 1 && astring.length <= 4 ? func_175771_a(astring, 1, blockpos)
-						: (astring.length > 5 && astring.length <= 8 && "detect".equals(astring[4])
-								? func_175771_a(astring, 5, blockpos)
-								: (astring.length == 9 && "detect".equals(astring[4])
-										? getListOfStringsMatchingLastWord(astring, Block.blockRegistry.getKeys())
-										: null)));
-	}
-
-	/**+
-	 * Return whether the specified command parameter index is a
-	 * username parameter.
-	 */
-	public boolean isUsernameIndex(String[] var1, int i) {
-		return i == 0;
-	}
+    public boolean isUsernameIndex(String[] args, int index)
+    {
+        return index == 0;
+    }
 }

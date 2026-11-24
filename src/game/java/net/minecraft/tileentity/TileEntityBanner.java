@@ -1,309 +1,214 @@
 package net.minecraft.tileentity;
 
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.google.common.collect.Lists;
-
-import net.minecraft.block.BlockFlower;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemBanner;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.IWorldNameable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class TileEntityBanner extends TileEntity {
-	private int baseColor;
-	private NBTTagList patterns;
-	private boolean field_175119_g;
-	private List<TileEntityBanner.EnumBannerPattern> patternList;
-	private List<EnumDyeColor> colorList;
-	private String patternResourceLocation;
+public class TileEntityBanner extends TileEntity implements IWorldNameable
+{
+    private String name;
+    private EnumDyeColor baseColor = EnumDyeColor.BLACK;
+    private NBTTagList patterns;
+    private boolean patternDataSet;
+    private List<BannerPattern> patternList;
+    private List<EnumDyeColor> colorList;
+    private String patternResourceLocation;
 
-	public void setItemValues(ItemStack stack) {
-		this.patterns = null;
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("BlockEntityTag", 10)) {
-			NBTTagCompound nbttagcompound = stack.getTagCompound().getCompoundTag("BlockEntityTag");
-			if (nbttagcompound.hasKey("Patterns")) {
-				this.patterns = (NBTTagList) nbttagcompound.getTagList("Patterns", 10).copy();
-			}
+    public void setItemValues(ItemStack stack, boolean p_175112_2_)
+    {
+        this.patterns = null;
+        NBTTagCompound nbttagcompound = stack.getSubCompound("BlockEntityTag");
 
-			if (nbttagcompound.hasKey("Base", 99)) {
-				this.baseColor = nbttagcompound.getInteger("Base");
-			} else {
-				this.baseColor = stack.getMetadata() & 15;
-			}
-		} else {
-			this.baseColor = stack.getMetadata() & 15;
-		}
+        if (nbttagcompound != null && nbttagcompound.hasKey("Patterns", 9))
+        {
+            this.patterns = nbttagcompound.getTagList("Patterns", 10).copy();
+        }
 
-		this.patternList = null;
-		this.colorList = null;
-		this.patternResourceLocation = "";
-		this.field_175119_g = true;
-	}
+        this.baseColor = p_175112_2_ ? getColor(stack) : ItemBanner.getBaseColor(stack);
+        this.patternList = null;
+        this.colorList = null;
+        this.patternResourceLocation = "";
+        this.patternDataSet = true;
+        this.name = stack.hasDisplayName() ? stack.getDisplayName() : null;
+    }
 
-	public void writeToNBT(NBTTagCompound nbttagcompound) {
-		super.writeToNBT(nbttagcompound);
-		func_181020_a(nbttagcompound, this.baseColor, this.patterns);
-	}
+    public String getName()
+    {
+        return this.hasCustomName() ? this.name : "banner";
+    }
 
-	public static void func_181020_a(NBTTagCompound parNBTTagCompound, int parInt1, NBTTagList parNBTTagList) {
-		parNBTTagCompound.setInteger("Base", parInt1);
-		if (parNBTTagList != null) {
-			parNBTTagCompound.setTag("Patterns", parNBTTagList);
-		}
+    public boolean hasCustomName()
+    {
+        return this.name != null && !this.name.isEmpty();
+    }
 
-	}
+    public ITextComponent getDisplayName()
+    {
+        return (ITextComponent)(this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName(), new Object[0]));
+    }
 
-	public void readFromNBT(NBTTagCompound nbttagcompound) {
-		super.readFromNBT(nbttagcompound);
-		this.baseColor = nbttagcompound.getInteger("Base");
-		this.patterns = nbttagcompound.getTagList("Patterns", 10);
-		this.patternList = null;
-		this.colorList = null;
-		this.patternResourceLocation = null;
-		this.field_175119_g = true;
-	}
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
+        compound.setInteger("Base", this.baseColor.getDyeDamage());
 
-	/**+
-	 * Allows for a specialized description packet to be created.
-	 * This is often used to sync tile entity data from the server
-	 * to the client easily. For example this is used by signs to
-	 * synchronise the text to be displayed.
-	 */
-	public Packet getDescriptionPacket() {
-		NBTTagCompound nbttagcompound = new NBTTagCompound();
-		this.writeToNBT(nbttagcompound);
-		return new S35PacketUpdateTileEntity(this.pos, 6, nbttagcompound);
-	}
+        if (this.patterns != null)
+        {
+            compound.setTag("Patterns", this.patterns);
+        }
 
-	public int getBaseColor() {
-		return this.baseColor;
-	}
+        if (this.hasCustomName())
+        {
+            compound.setString("CustomName", this.name);
+        }
 
-	public static int getBaseColor(ItemStack stack) {
-		NBTTagCompound nbttagcompound = stack.getSubCompound("BlockEntityTag", false);
-		return nbttagcompound != null && nbttagcompound.hasKey("Base") ? nbttagcompound.getInteger("Base")
-				: stack.getMetadata();
-	}
+        return compound;
+    }
 
-	/**+
-	 * Retrieves the amount of patterns stored on an ItemStack. If
-	 * the tag does not exist this value will be 0.
-	 */
-	public static int getPatterns(ItemStack stack) {
-		NBTTagCompound nbttagcompound = stack.getSubCompound("BlockEntityTag", false);
-		return nbttagcompound != null && nbttagcompound.hasKey("Patterns")
-				? nbttagcompound.getTagList("Patterns", 10).tagCount()
-				: 0;
-	}
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
 
-	/**+
-	 * Retrieves the list of patterns for this tile entity. The
-	 * banner data will be initialized/refreshed before this
-	 * happens.
-	 */
-	public List<TileEntityBanner.EnumBannerPattern> getPatternList() {
-		this.initializeBannerData();
-		return this.patternList;
-	}
+        if (compound.hasKey("CustomName", 8))
+        {
+            this.name = compound.getString("CustomName");
+        }
 
-	public NBTTagList func_181021_d() {
-		return this.patterns;
-	}
+        this.baseColor = EnumDyeColor.byDyeDamage(compound.getInteger("Base"));
+        this.patterns = compound.getTagList("Patterns", 10);
+        this.patternList = null;
+        this.colorList = null;
+        this.patternResourceLocation = null;
+        this.patternDataSet = true;
+    }
 
-	/**+
-	 * Retrieves the list of colors for this tile entity. The banner
-	 * data will be initialized/refreshed before this happens.
-	 */
-	public List<EnumDyeColor> getColorList() {
-		this.initializeBannerData();
-		return this.colorList;
-	}
+    @Nullable
+    public SPacketUpdateTileEntity getUpdatePacket()
+    {
+        return new SPacketUpdateTileEntity(this.pos, 6, this.getUpdateTag());
+    }
 
-	public String func_175116_e() {
-		this.initializeBannerData();
-		return this.patternResourceLocation;
-	}
+    public NBTTagCompound getUpdateTag()
+    {
+        return this.writeToNBT(new NBTTagCompound());
+    }
 
-	/**+
-	 * Establishes all of the basic properties for the banner. This
-	 * will also apply the data from the tile entities nbt tag
-	 * compounds.
-	 */
-	private void initializeBannerData() {
-		if (this.patternList == null || this.colorList == null || this.patternResourceLocation == null) {
-			if (!this.field_175119_g) {
-				this.patternResourceLocation = "";
-			} else {
-				this.patternList = Lists.newArrayList();
-				this.colorList = Lists.newArrayList();
-				this.patternList.add(TileEntityBanner.EnumBannerPattern.BASE);
-				this.colorList.add(EnumDyeColor.byDyeDamage(this.baseColor));
-				this.patternResourceLocation = "b" + this.baseColor;
-				if (this.patterns != null) {
-					for (int i = 0; i < this.patterns.tagCount(); ++i) {
-						NBTTagCompound nbttagcompound = this.patterns.getCompoundTagAt(i);
-						TileEntityBanner.EnumBannerPattern tileentitybanner$enumbannerpattern = TileEntityBanner.EnumBannerPattern
-								.getPatternByID(nbttagcompound.getString("Pattern"));
-						if (tileentitybanner$enumbannerpattern != null) {
-							this.patternList.add(tileentitybanner$enumbannerpattern);
-							int j = nbttagcompound.getInteger("Color");
-							this.colorList.add(EnumDyeColor.byDyeDamage(j));
-							this.patternResourceLocation = this.patternResourceLocation
-									+ tileentitybanner$enumbannerpattern.getPatternID() + j;
-						}
-					}
-				}
+    public static int getPatterns(ItemStack stack)
+    {
+        NBTTagCompound nbttagcompound = stack.getSubCompound("BlockEntityTag");
+        return nbttagcompound != null && nbttagcompound.hasKey("Patterns") ? nbttagcompound.getTagList("Patterns", 10).tagCount() : 0;
+    }
 
-			}
-		}
-	}
+    @SideOnly(Side.CLIENT)
+    public List<BannerPattern> getPatternList()
+    {
+        this.initializeBannerData();
+        return this.patternList;
+    }
 
-	/**+
-	 * Removes all the banner related data from a provided instance
-	 * of ItemStack.
-	 */
-	public static void removeBannerData(ItemStack stack) {
-		NBTTagCompound nbttagcompound = stack.getSubCompound("BlockEntityTag", false);
-		if (nbttagcompound != null && nbttagcompound.hasKey("Patterns", 9)) {
-			NBTTagList nbttaglist = nbttagcompound.getTagList("Patterns", 10);
-			if (nbttaglist.tagCount() > 0) {
-				nbttaglist.removeTag(nbttaglist.tagCount() - 1);
-				if (nbttaglist.hasNoTags()) {
-					stack.getTagCompound().removeTag("BlockEntityTag");
-					if (stack.getTagCompound().hasNoTags()) {
-						stack.setTagCompound((NBTTagCompound) null);
-					}
-				}
+    @SideOnly(Side.CLIENT)
+    public List<EnumDyeColor> getColorList()
+    {
+        this.initializeBannerData();
+        return this.colorList;
+    }
 
-			}
-		}
-	}
+    @SideOnly(Side.CLIENT)
+    public String getPatternResourceLocation()
+    {
+        this.initializeBannerData();
+        return this.patternResourceLocation;
+    }
 
-	public static enum EnumBannerPattern {
-		BASE("base", "b"), SQUARE_BOTTOM_LEFT("square_bottom_left", "bl", "   ", "   ", "#  "),
-		SQUARE_BOTTOM_RIGHT("square_bottom_right", "br", "   ", "   ", "  #"),
-		SQUARE_TOP_LEFT("square_top_left", "tl", "#  ", "   ", "   "),
-		SQUARE_TOP_RIGHT("square_top_right", "tr", "  #", "   ", "   "),
-		STRIPE_BOTTOM("stripe_bottom", "bs", "   ", "   ", "###"), STRIPE_TOP("stripe_top", "ts", "###", "   ", "   "),
-		STRIPE_LEFT("stripe_left", "ls", "#  ", "#  ", "#  "), STRIPE_RIGHT("stripe_right", "rs", "  #", "  #", "  #"),
-		STRIPE_CENTER("stripe_center", "cs", " # ", " # ", " # "),
-		STRIPE_MIDDLE("stripe_middle", "ms", "   ", "###", "   "),
-		STRIPE_DOWNRIGHT("stripe_downright", "drs", "#  ", " # ", "  #"),
-		STRIPE_DOWNLEFT("stripe_downleft", "dls", "  #", " # ", "#  "),
-		STRIPE_SMALL("small_stripes", "ss", "# #", "# #", "   "), CROSS("cross", "cr", "# #", " # ", "# #"),
-		STRAIGHT_CROSS("straight_cross", "sc", " # ", "###", " # "),
-		TRIANGLE_BOTTOM("triangle_bottom", "bt", "   ", " # ", "# #"),
-		TRIANGLE_TOP("triangle_top", "tt", "# #", " # ", "   "),
-		TRIANGLES_BOTTOM("triangles_bottom", "bts", "   ", "# #", " # "),
-		TRIANGLES_TOP("triangles_top", "tts", " # ", "# #", "   "),
-		DIAGONAL_LEFT("diagonal_left", "ld", "## ", "#  ", "   "),
-		DIAGONAL_RIGHT("diagonal_up_right", "rd", "   ", "  #", " ##"),
-		DIAGONAL_LEFT_MIRROR("diagonal_up_left", "lud", "   ", "#  ", "## "),
-		DIAGONAL_RIGHT_MIRROR("diagonal_right", "rud", " ##", "  #", "   "),
-		CIRCLE_MIDDLE("circle", "mc", "   ", " # ", "   "), RHOMBUS_MIDDLE("rhombus", "mr", " # ", "# #", " # "),
-		HALF_VERTICAL("half_vertical", "vh", "## ", "## ", "## "),
-		HALF_HORIZONTAL("half_horizontal", "hh", "###", "###", "   "),
-		HALF_VERTICAL_MIRROR("half_vertical_right", "vhr", " ##", " ##", " ##"),
-		HALF_HORIZONTAL_MIRROR("half_horizontal_bottom", "hhb", "   ", "###", "###"),
-		BORDER("border", "bo", "###", "# #", "###"),
-		CURLY_BORDER("curly_border", "cbo", () -> new ItemStack(Blocks.vine)),
-		CREEPER("creeper", "cre", () -> new ItemStack(Items.skull, 1, 4)),
-		GRADIENT("gradient", "gra", "# #", " # ", " # "), GRADIENT_UP("gradient_up", "gru", " # ", " # ", "# #"),
-		BRICKS("bricks", "bri", () -> new ItemStack(Blocks.brick_block)),
-		SKULL("skull", "sku", () -> new ItemStack(Items.skull, 1, 1)),
-		FLOWER("flower", "flo",
-				() -> new ItemStack(Blocks.red_flower, 1, BlockFlower.EnumFlowerType.OXEYE_DAISY.getMeta())),
-		MOJANG("mojang", "moj", () -> new ItemStack(Items.golden_apple, 1, 1));
+    @SideOnly(Side.CLIENT)
+    private void initializeBannerData()
+    {
+        if (this.patternList == null || this.colorList == null || this.patternResourceLocation == null)
+        {
+            if (!this.patternDataSet)
+            {
+                this.patternResourceLocation = "";
+            }
+            else
+            {
+                this.patternList = Lists.<BannerPattern>newArrayList();
+                this.colorList = Lists.<EnumDyeColor>newArrayList();
+                this.patternList.add(BannerPattern.BASE);
+                this.colorList.add(this.baseColor);
+                this.patternResourceLocation = "b" + this.baseColor.getDyeDamage();
 
-		public static final EnumBannerPattern[] _VALUES = values();
+                if (this.patterns != null)
+                {
+                    for (int i = 0; i < this.patterns.tagCount(); ++i)
+                    {
+                        NBTTagCompound nbttagcompound = this.patterns.getCompoundTagAt(i);
+                        BannerPattern bannerpattern = BannerPattern.byHash(nbttagcompound.getString("Pattern"));
 
-		private String patternName;
-		private String patternID;
-		private String[] craftingLayers;
-		private Supplier<ItemStack> patternCraftingStackSupplier;
-		private ItemStack patternCraftingStack;
+                        if (bannerpattern != null)
+                        {
+                            this.patternList.add(bannerpattern);
+                            int j = nbttagcompound.getInteger("Color");
+                            this.colorList.add(EnumDyeColor.byDyeDamage(j));
+                            this.patternResourceLocation = this.patternResourceLocation + bannerpattern.getHashname() + j;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-		private EnumBannerPattern(String name, String id) {
-			this.craftingLayers = new String[3];
-			this.patternName = name;
-			this.patternID = id;
-		}
+    public static void removeBannerData(ItemStack stack)
+    {
+        NBTTagCompound nbttagcompound = stack.getSubCompound("BlockEntityTag");
 
-		private EnumBannerPattern(String name, String id, Supplier<ItemStack> craftingItem) {
-			this(name, id);
-			this.patternCraftingStackSupplier = craftingItem;
-		}
+        if (nbttagcompound != null && nbttagcompound.hasKey("Patterns", 9))
+        {
+            NBTTagList nbttaglist = nbttagcompound.getTagList("Patterns", 10);
 
-		private EnumBannerPattern(String name, String id, String craftingTop, String craftingMid, String craftingBot) {
-			this(name, id);
-			this.craftingLayers[0] = craftingTop;
-			this.craftingLayers[1] = craftingMid;
-			this.craftingLayers[2] = craftingBot;
-		}
+            if (!nbttaglist.hasNoTags())
+            {
+                nbttaglist.removeTag(nbttaglist.tagCount() - 1);
 
-		public String getPatternName() {
-			return this.patternName;
-		}
+                if (nbttaglist.hasNoTags())
+                {
+                    stack.getTagCompound().removeTag("BlockEntityTag");
 
-		public String getPatternID() {
-			return this.patternID;
-		}
+                    if (stack.getTagCompound().hasNoTags())
+                    {
+                        stack.setTagCompound((NBTTagCompound)null);
+                    }
+                }
+            }
+        }
+    }
 
-		public String[] getCraftingLayers() {
-			return this.craftingLayers;
-		}
+    public ItemStack getItem()
+    {
+        ItemStack itemstack = ItemBanner.makeBanner(this.baseColor, this.patterns);
 
-		public boolean hasValidCrafting() {
-			return this.patternCraftingStackSupplier != null || this.craftingLayers[0] != null;
-		}
+        if (this.hasCustomName())
+        {
+            itemstack.setStackDisplayName(this.getName());
+        }
 
-		public boolean hasCraftingStack() {
-			return this.patternCraftingStackSupplier != null;
-		}
+        return itemstack;
+    }
 
-		public ItemStack getCraftingStack() {
-			if (patternCraftingStack == null) {
-				patternCraftingStack = patternCraftingStackSupplier.get();
-			}
-			return this.patternCraftingStack;
-		}
-
-		public static TileEntityBanner.EnumBannerPattern getPatternByID(String id) {
-			TileEntityBanner.EnumBannerPattern[] arr = _VALUES;
-			for (int i = 0; i < arr.length; ++i) {
-				TileEntityBanner.EnumBannerPattern tileentitybanner$enumbannerpattern = arr[i];
-				if (tileentitybanner$enumbannerpattern.patternID.equals(id)) {
-					return tileentitybanner$enumbannerpattern;
-				}
-			}
-
-			return null;
-		}
-	}
+    public static EnumDyeColor getColor(ItemStack p_190616_0_)
+    {
+        NBTTagCompound nbttagcompound = p_190616_0_.getSubCompound("BlockEntityTag");
+        return nbttagcompound != null && nbttagcompound.hasKey("Base") ? EnumDyeColor.byDyeDamage(nbttagcompound.getInteger("Base")) : EnumDyeColor.BLACK;
+    }
 }

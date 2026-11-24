@@ -1,136 +1,119 @@
 package net.minecraft.command;
 
+import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class CommandEnchant extends CommandBase {
+public class CommandEnchant extends CommandBase
+{
+    public String getName()
+    {
+        return "enchant";
+    }
 
-	/**+
-	 * Gets the name of the command
-	 */
-	public String getCommandName() {
-		return "enchant";
-	}
+    public int getRequiredPermissionLevel()
+    {
+        return 2;
+    }
 
-	/**+
-	 * Return the required permission level for this command.
-	 */
-	public int getRequiredPermissionLevel() {
-		return 2;
-	}
+    public String getUsage(ICommandSender sender)
+    {
+        return "commands.enchant.usage";
+    }
 
-	/**+
-	 * Gets the usage string for the command.
-	 */
-	public String getCommandUsage(ICommandSender var1) {
-		return "commands.enchant.usage";
-	}
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
+    {
+        if (args.length < 2)
+        {
+            throw new WrongUsageException("commands.enchant.usage", new Object[0]);
+        }
+        else
+        {
+            EntityLivingBase entitylivingbase = (EntityLivingBase)getEntity(server, sender, args[0], EntityLivingBase.class);
+            sender.setCommandStat(CommandResultStats.Type.AFFECTED_ITEMS, 0);
+            Enchantment enchantment;
 
-	/**+
-	 * Callback when the command is invoked
-	 */
-	public void processCommand(ICommandSender parICommandSender, String[] parArrayOfString) throws CommandException {
-		if (parArrayOfString.length < 2) {
-			throw new WrongUsageException("commands.enchant.usage", new Object[0]);
-		} else {
-			EntityPlayerMP entityplayermp = getPlayer(parICommandSender, parArrayOfString[0]);
-			parICommandSender.setCommandStat(CommandResultStats.Type.AFFECTED_ITEMS, 0);
+            try
+            {
+                enchantment = Enchantment.getEnchantmentByID(parseInt(args[1], 0));
+            }
+            catch (NumberInvalidException var12)
+            {
+                enchantment = Enchantment.getEnchantmentByLocation(args[1]);
+            }
 
-			int i;
-			try {
-				i = parseInt(parArrayOfString[1], 0);
-			} catch (NumberInvalidException numberinvalidexception) {
-				Enchantment enchantment = Enchantment.getEnchantmentByLocation(parArrayOfString[1]);
-				if (enchantment == null) {
-					throw numberinvalidexception;
-				}
+            if (enchantment == null)
+            {
+                throw new NumberInvalidException("commands.enchant.notFound", new Object[] {args[1]});
+            }
+            else
+            {
+                int i = 1;
+                ItemStack itemstack = entitylivingbase.getHeldItemMainhand();
 
-				i = enchantment.effectId;
-			}
+                if (itemstack.isEmpty())
+                {
+                    throw new CommandException("commands.enchant.noItem", new Object[0]);
+                }
+                else if (!enchantment.canApply(itemstack))
+                {
+                    throw new CommandException("commands.enchant.cantEnchant", new Object[0]);
+                }
+                else
+                {
+                    if (args.length >= 3)
+                    {
+                        i = parseInt(args[2], enchantment.getMinLevel(), enchantment.getMaxLevel());
+                    }
 
-			int j = 1;
-			ItemStack itemstack = entityplayermp.getCurrentEquippedItem();
-			if (itemstack == null) {
-				throw new CommandException("commands.enchant.noItem", new Object[0]);
-			} else {
-				Enchantment enchantment1 = Enchantment.getEnchantmentById(i);
-				if (enchantment1 == null) {
-					throw new NumberInvalidException("commands.enchant.notFound", new Object[] { Integer.valueOf(i) });
-				} else if (!enchantment1.canApply(itemstack)) {
-					throw new CommandException("commands.enchant.cantEnchant", new Object[0]);
-				} else {
-					if (parArrayOfString.length >= 3) {
-						j = parseInt(parArrayOfString[2], enchantment1.getMinLevel(), enchantment1.getMaxLevel());
-					}
+                    if (itemstack.hasTagCompound())
+                    {
+                        NBTTagList nbttaglist = itemstack.getEnchantmentTagList();
 
-					if (itemstack.hasTagCompound()) {
-						NBTTagList nbttaglist = itemstack.getEnchantmentTagList();
-						if (nbttaglist != null) {
-							for (int k = 0; k < nbttaglist.tagCount(); ++k) {
-								short short1 = nbttaglist.getCompoundTagAt(k).getShort("id");
-								if (Enchantment.getEnchantmentById(short1) != null) {
-									Enchantment enchantment2 = Enchantment.getEnchantmentById(short1);
-									if (!enchantment2.canApplyTogether(enchantment1)) {
-										throw new CommandException("commands.enchant.cantCombine",
-												new Object[] { enchantment1.getTranslatedName(j),
-														enchantment2.getTranslatedName(
-																nbttaglist.getCompoundTagAt(k).getShort("lvl")) });
-									}
-								}
-							}
-						}
-					}
+                        for (int j = 0; j < nbttaglist.tagCount(); ++j)
+                        {
+                            int k = nbttaglist.getCompoundTagAt(j).getShort("id");
 
-					itemstack.addEnchantment(enchantment1, j);
-					notifyOperators(parICommandSender, this, "commands.enchant.success", new Object[0]);
-					parICommandSender.setCommandStat(CommandResultStats.Type.AFFECTED_ITEMS, 1);
-				}
-			}
-		}
-	}
+                            if (Enchantment.getEnchantmentByID(k) != null)
+                            {
+                                Enchantment enchantment1 = Enchantment.getEnchantmentByID(k);
 
-	/**+
-	 * Return a list of options when the user types TAB
-	 */
-	public List<String> addTabCompletionOptions(ICommandSender var1, String[] astring, BlockPos var3) {
-		return astring.length == 1 ? getListOfStringsMatchingLastWord(astring, this.getListOfPlayers())
-				: (astring.length == 2 ? getListOfStringsMatchingLastWord(astring, Enchantment.func_181077_c()) : null);
-	}
+                                if (!enchantment.isCompatibleWith(enchantment1))
+                                {
+                                    throw new CommandException("commands.enchant.cantCombine", new Object[] {enchantment.getTranslatedName(i), enchantment1.getTranslatedName(nbttaglist.getCompoundTagAt(j).getShort("lvl"))});
+                                }
+                            }
+                        }
+                    }
 
-	protected String[] getListOfPlayers() {
-		return MinecraftServer.getServer().getAllUsernames();
-	}
+                    itemstack.addEnchantment(enchantment, i);
+                    notifyCommandListener(sender, this, "commands.enchant.success", new Object[0]);
+                    sender.setCommandStat(CommandResultStats.Type.AFFECTED_ITEMS, 1);
+                }
+            }
+        }
+    }
 
-	/**+
-	 * Return whether the specified command parameter index is a
-	 * username parameter.
-	 */
-	public boolean isUsernameIndex(String[] args, int index) {
-		return index == 0;
-	}
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos)
+    {
+        if (args.length == 1)
+        {
+            return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+        }
+        else
+        {
+            return args.length == 2 ? getListOfStringsMatchingLastWord(args, Enchantment.REGISTRY.getKeys()) : Collections.emptyList();
+        }
+    }
+
+    public boolean isUsernameIndex(String[] args, int index)
+    {
+        return index == 0;
+    }
 }

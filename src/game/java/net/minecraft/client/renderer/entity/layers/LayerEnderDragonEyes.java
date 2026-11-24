@@ -1,75 +1,50 @@
 package net.minecraft.client.renderer.entity.layers;
 
-import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
-
-import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
-import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DeferredStateManager;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderDragon;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class LayerEnderDragonEyes implements LayerRenderer<EntityDragon> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/enderdragon/dragon_eyes.png");
-	private final RenderDragon dragonRenderer;
+@SideOnly(Side.CLIENT)
+public class LayerEnderDragonEyes implements LayerRenderer<EntityDragon>
+{
+    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/enderdragon/dragon_eyes.png");
+    private final RenderDragon dragonRenderer;
 
-	public LayerEnderDragonEyes(RenderDragon dragonRendererIn) {
-		this.dragonRenderer = dragonRendererIn;
-	}
+    public LayerEnderDragonEyes(RenderDragon dragonRendererIn)
+    {
+        this.dragonRenderer = dragonRendererIn;
+    }
 
-	public void doRenderLayer(EntityDragon entitydragon, float f, float f1, float f2, float f3, float f4, float f5,
-			float f6) {
-		this.dragonRenderer.bindTexture(TEXTURE);
-		if (DeferredStateManager.isInDeferredPass()) {
-			DeferredStateManager.setEmissionConstant(0.5f);
-			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			GlStateManager.enablePolygonOffset();
-			GlStateManager.doPolygonOffset(-0.025f, 1.0f);
-			this.dragonRenderer.getMainModel().render(entitydragon, f, f1, f3, f4, f5, f6);
-			this.dragonRenderer.func_177105_a(entitydragon, f2);
-			GlStateManager.disablePolygonOffset();
-			DeferredStateManager.setEmissionConstant(0.0f);
-			return;
-		}
-		GlStateManager.enableBlend();
-		GlStateManager.disableAlpha();
-		GlStateManager.blendFunc(GL_ONE, GL_ONE);
-		GlStateManager.disableLighting();
-		GlStateManager.depthFunc(GL_EQUAL);
-		char c0 = '\uf0f0';
-		int i = c0 % 65536;
-		int j = c0 / 65536;
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) i / 1.0F, (float) j / 1.0F);
-		GlStateManager.enableLighting();
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		this.dragonRenderer.getMainModel().render(entitydragon, f, f1, f3, f4, f5, f6);
-		this.dragonRenderer.func_177105_a(entitydragon, f2);
-		GlStateManager.disableBlend();
-		GlStateManager.enableAlpha();
-		GlStateManager.depthFunc(GL_LEQUAL);
-	}
+    public void doRenderLayer(EntityDragon entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
+    {
+        this.dragonRenderer.bindTexture(TEXTURE);
+        GlStateManager.enableBlend();
+        GlStateManager.disableAlpha();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+        GlStateManager.disableLighting();
+        GlStateManager.depthFunc(514);
+        int i = 61680;
+        int j = 61680;
+        int k = 0;
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 61680.0F, 0.0F);
+        GlStateManager.enableLighting();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        Minecraft.getMinecraft().entityRenderer.setupFogColor(true);
+        this.dragonRenderer.getMainModel().render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+        Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
+        this.dragonRenderer.setLightmap(entitylivingbaseIn);
+        GlStateManager.disableBlend();
+        GlStateManager.enableAlpha();
+        GlStateManager.depthFunc(515);
+    }
 
-	public boolean shouldCombineTextures() {
-		return false;
-	}
+    public boolean shouldCombineTextures()
+    {
+        return false;
+    }
 }

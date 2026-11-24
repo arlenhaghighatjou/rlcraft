@@ -1,130 +1,122 @@
 package net.minecraft.block;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
+import java.util.List;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityNote;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class BlockNote extends BlockContainer {
-	private static final List<String> INSTRUMENTS = Lists
-			.newArrayList(new String[] { "harp", "bd", "snare", "hat", "bassattack" });
+public class BlockNote extends BlockContainer
+{
+    private static final List<SoundEvent> INSTRUMENTS = Lists.newArrayList(SoundEvents.BLOCK_NOTE_HARP, SoundEvents.BLOCK_NOTE_BASEDRUM, SoundEvents.BLOCK_NOTE_SNARE, SoundEvents.BLOCK_NOTE_HAT, SoundEvents.BLOCK_NOTE_BASS, SoundEvents.BLOCK_NOTE_FLUTE, SoundEvents.BLOCK_NOTE_BELL, SoundEvents.BLOCK_NOTE_GUITAR, SoundEvents.BLOCK_NOTE_CHIME, SoundEvents.BLOCK_NOTE_XYLOPHONE);
 
-	public BlockNote() {
-		super(Material.wood);
-		this.setCreativeTab(CreativeTabs.tabRedstone);
-	}
+    public BlockNote()
+    {
+        super(Material.WOOD);
+        this.setCreativeTab(CreativeTabs.REDSTONE);
+    }
 
-	/**+
-	 * Called when a neighboring block changes.
-	 */
-	public void onNeighborBlockChange(World world, BlockPos blockpos, IBlockState var3, Block var4) {
-		boolean flag = world.isBlockPowered(blockpos);
-		TileEntity tileentity = world.getTileEntity(blockpos);
-		if (tileentity instanceof TileEntityNote) {
-			TileEntityNote tileentitynote = (TileEntityNote) tileentity;
-			if (tileentitynote.previousRedstoneState != flag) {
-				if (flag) {
-					tileentitynote.triggerNote(world, blockpos);
-				}
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
+    {
+        boolean flag = worldIn.isBlockPowered(pos);
+        TileEntity tileentity = worldIn.getTileEntity(pos);
 
-				tileentitynote.previousRedstoneState = flag;
-			}
-		}
+        if (tileentity instanceof TileEntityNote)
+        {
+            TileEntityNote tileentitynote = (TileEntityNote)tileentity;
 
-	}
+            if (tileentitynote.previousRedstoneState != flag)
+            {
+                if (flag)
+                {
+                    tileentitynote.triggerNote(worldIn, pos);
+                }
 
-	public boolean onBlockActivated(World world, BlockPos blockpos, IBlockState var3, EntityPlayer entityplayer,
-			EnumFacing var5, float var6, float var7, float var8) {
-		if (world.isRemote) {
-			return true;
-		} else {
-			TileEntity tileentity = world.getTileEntity(blockpos);
-			if (tileentity instanceof TileEntityNote) {
-				TileEntityNote tileentitynote = (TileEntityNote) tileentity;
-				tileentitynote.changePitch();
-				tileentitynote.triggerNote(world, blockpos);
-				entityplayer.triggerAchievement(StatList.field_181735_S);
-			}
+                tileentitynote.previousRedstoneState = flag;
+            }
+        }
+    }
 
-			return true;
-		}
-	}
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        if (worldIn.isRemote)
+        {
+            return true;
+        }
+        else
+        {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
 
-	public void onBlockClicked(World world, BlockPos blockpos, EntityPlayer entityplayer) {
-		if (!world.isRemote) {
-			TileEntity tileentity = world.getTileEntity(blockpos);
-			if (tileentity instanceof TileEntityNote) {
-				((TileEntityNote) tileentity).triggerNote(world, blockpos);
-				entityplayer.triggerAchievement(StatList.field_181734_R);
-			}
-		}
-	}
+            if (tileentity instanceof TileEntityNote)
+            {
+                TileEntityNote tileentitynote = (TileEntityNote)tileentity;
+                int old = tileentitynote.note;
+                tileentitynote.changePitch();
+                if (old == tileentitynote.note) return false;
+                tileentitynote.triggerNote(worldIn, pos);
+                playerIn.addStat(StatList.NOTEBLOCK_TUNED);
+            }
 
-	/**+
-	 * Returns a new instance of a block's tile entity class. Called
-	 * on placing the block.
-	 */
-	public TileEntity createNewTileEntity(World var1, int var2) {
-		return new TileEntityNote();
-	}
+            return true;
+        }
+    }
 
-	private String getInstrument(int id) {
-		if (id < 0 || id >= INSTRUMENTS.size()) {
-			id = 0;
-		}
+    public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn)
+    {
+        if (!worldIn.isRemote)
+        {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
 
-		return (String) INSTRUMENTS.get(id);
-	}
+            if (tileentity instanceof TileEntityNote)
+            {
+                ((TileEntityNote)tileentity).triggerNote(worldIn, pos);
+                playerIn.addStat(StatList.NOTEBLOCK_PLAYED);
+            }
+        }
+    }
 
-	/**+
-	 * Called on both Client and Server when World#addBlockEvent is
-	 * called
-	 */
-	public boolean onBlockEventReceived(World world, BlockPos blockpos, IBlockState var3, int i, int j) {
-		float f = (float) Math.pow(2.0D, (double) (j - 12) / 12.0D);
-		world.playSoundEffect((double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.5D,
-				(double) blockpos.getZ() + 0.5D, "note." + this.getInstrument(i), 3.0F, f);
-		world.spawnParticle(EnumParticleTypes.NOTE, (double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 1.2D,
-				(double) blockpos.getZ() + 0.5D, (double) j / 24.0D, 0.0D, 0.0D, new int[0]);
-		return true;
-	}
+    public TileEntity createNewTileEntity(World worldIn, int meta)
+    {
+        return new TileEntityNote();
+    }
 
-	/**+
-	 * The type of render function called. 3 for standard block
-	 * models, 2 for TESR's, 1 for liquids, -1 is no render
-	 */
-	public int getRenderType() {
-		return 3;
-	}
+    private SoundEvent getInstrument(int eventId)
+    {
+        if (eventId < 0 || eventId >= INSTRUMENTS.size())
+        {
+            eventId = 0;
+        }
+
+        return INSTRUMENTS.get(eventId);
+    }
+
+    public boolean eventReceived(IBlockState state, World worldIn, BlockPos pos, int id, int param)
+    {
+        net.minecraftforge.event.world.NoteBlockEvent.Play e = new net.minecraftforge.event.world.NoteBlockEvent.Play(worldIn, pos, state, param, id);
+        if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(e)) return false;
+        id = e.getInstrument().ordinal();
+        param = e.getVanillaNoteId();
+        float f = (float)Math.pow(2.0D, (double)(param - 12) / 12.0D);
+        worldIn.playSound((EntityPlayer)null, pos, this.getInstrument(id), SoundCategory.RECORDS, 3.0F, f);
+        worldIn.spawnParticle(EnumParticleTypes.NOTE, (double)pos.getX() + 0.5D, (double)pos.getY() + 1.2D, (double)pos.getZ() + 0.5D, (double)param / 24.0D, 0.0D, 0.0D);
+        return true;
+    }
+
+    public EnumBlockRenderType getRenderType(IBlockState state)
+    {
+        return EnumBlockRenderType.MODEL;
+    }
 }

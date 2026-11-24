@@ -1,154 +1,166 @@
 package net.minecraft.block;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-
+import java.util.Random;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class BlockCactus extends Block {
-	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 15);
+public class BlockCactus extends Block implements net.minecraftforge.common.IPlantable
+{
+    public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 15);
+    protected static final AxisAlignedBB CACTUS_COLLISION_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.9375D, 0.9375D);
+    protected static final AxisAlignedBB CACTUS_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 1.0D, 0.9375D);
 
-	protected BlockCactus() {
-		super(Material.cactus);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, Integer.valueOf(0)));
-		this.setTickRandomly(true);
-		this.setCreativeTab(CreativeTabs.tabDecorations);
-	}
+    protected BlockCactus()
+    {
+        super(Material.CACTUS);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, Integer.valueOf(0)));
+        this.setTickRandomly(true);
+        this.setCreativeTab(CreativeTabs.DECORATIONS);
+    }
 
-	public void updateTick(World world, BlockPos blockpos, IBlockState iblockstate, EaglercraftRandom var4) {
-		BlockPos blockpos1 = blockpos.up();
-		if (world.isAirBlock(blockpos1)) {
-			int i;
-			for (i = 1; world.getBlockState(blockpos.down(i)).getBlock() == this; ++i) {
-				;
-			}
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent growing cactus from loading unloaded chunks with block update
+        BlockPos blockpos = pos.up();
 
-			if (i < 3) {
-				int j = ((Integer) iblockstate.getValue(AGE)).intValue();
-				if (j == 15) {
-					world.setBlockState(blockpos1, this.getDefaultState());
-					IBlockState iblockstate1 = iblockstate.withProperty(AGE, Integer.valueOf(0));
-					world.setBlockState(blockpos, iblockstate1, 4);
-					this.onNeighborBlockChange(world, blockpos1, iblockstate1, this);
-				} else {
-					world.setBlockState(blockpos, iblockstate.withProperty(AGE, Integer.valueOf(j + 1)), 4);
-				}
+        if (worldIn.isAirBlock(blockpos))
+        {
+            int i;
 
-			}
-		}
-	}
+            for (i = 1; worldIn.getBlockState(pos.down(i)).getBlock() == this; ++i)
+            {
+                ;
+            }
 
-	public AxisAlignedBB getCollisionBoundingBox(World var1, BlockPos blockpos, IBlockState var3) {
-		float f = 0.0625F;
-		return new AxisAlignedBB((double) ((float) blockpos.getX() + f), (double) blockpos.getY(),
-				(double) ((float) blockpos.getZ() + f), (double) ((float) (blockpos.getX() + 1) - f),
-				(double) ((float) (blockpos.getY() + 1) - f), (double) ((float) (blockpos.getZ() + 1) - f));
-	}
+            if (i < 3)
+            {
+                int j = ((Integer)state.getValue(AGE)).intValue();
 
-	public AxisAlignedBB getSelectedBoundingBox(World var1, BlockPos blockpos) {
-		float f = 0.0625F;
-		return new AxisAlignedBB((double) ((float) blockpos.getX() + f), (double) blockpos.getY(),
-				(double) ((float) blockpos.getZ() + f), (double) ((float) (blockpos.getX() + 1) - f),
-				(double) (blockpos.getY() + 1), (double) ((float) (blockpos.getZ() + 1) - f));
-	}
+                if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, blockpos, state, true))
+                {
+                if (j == 15)
+                {
+                    worldIn.setBlockState(blockpos, this.getDefaultState());
+                    IBlockState iblockstate = state.withProperty(AGE, Integer.valueOf(0));
+                    worldIn.setBlockState(pos, iblockstate, 4);
+                    iblockstate.neighborChanged(worldIn, blockpos, this, pos);
+                }
+                else
+                {
+                    worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(j + 1)), 4);
+                }
+                net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
+                }
+            }
+        }
+    }
 
-	public boolean isFullCube() {
-		return false;
-	}
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
+    {
+        return CACTUS_COLLISION_AABB;
+    }
 
-	/**+
-	 * Used to determine ambient occlusion and culling when
-	 * rebuilding chunks for render
-	 */
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    @SideOnly(Side.CLIENT)
+    public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos)
+    {
+        return CACTUS_AABB.offset(pos);
+    }
 
-	public boolean canPlaceBlockAt(World world, BlockPos blockpos) {
-		return super.canPlaceBlockAt(world, blockpos) ? this.canBlockStay(world, blockpos) : false;
-	}
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
+    }
 
-	/**+
-	 * Called when a neighboring block changes.
-	 */
-	public void onNeighborBlockChange(World world, BlockPos blockpos, IBlockState var3, Block var4) {
-		if (!this.canBlockStay(world, blockpos)) {
-			world.destroyBlock(blockpos, true);
-		}
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
 
-	}
+    public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
+    {
+        return super.canPlaceBlockAt(worldIn, pos) ? this.canBlockStay(worldIn, pos) : false;
+    }
 
-	public boolean canBlockStay(World worldIn, BlockPos pos) {
-		EnumFacing[] facings = EnumFacing.Plane.HORIZONTAL.facingsArray;
-		for (int i = 0; i < facings.length; ++i) {
-			EnumFacing enumfacing = facings[i];
-			if (worldIn.getBlockState(pos.offset(enumfacing)).getBlock().getMaterial().isSolid()) {
-				return false;
-			}
-		}
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
+    {
+        if (!this.canBlockStay(worldIn, pos))
+        {
+            worldIn.destroyBlock(pos, true);
+        }
+    }
 
-		Block block = worldIn.getBlockState(pos.down()).getBlock();
-		return block == Blocks.cactus || block == Blocks.sand;
-	}
+    public boolean canBlockStay(World worldIn, BlockPos pos)
+    {
+        for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL)
+        {
+            Material material = worldIn.getBlockState(pos.offset(enumfacing)).getMaterial();
 
-	/**+
-	 * Called When an Entity Collided with the Block
-	 */
-	public void onEntityCollidedWithBlock(World var1, BlockPos var2, IBlockState var3, Entity entity) {
-		entity.attackEntityFrom(DamageSource.cactus, 1.0F);
-	}
+            if (material.isSolid() || material == Material.LAVA)
+            {
+                return false;
+            }
+        }
 
-	public EnumWorldBlockLayer getBlockLayer() {
-		return EnumWorldBlockLayer.CUTOUT;
-	}
+        IBlockState state = worldIn.getBlockState(pos.down());
+        return state.getBlock().canSustainPlant(state, worldIn, pos.down(), EnumFacing.UP, this) && !worldIn.getBlockState(pos.up()).getMaterial().isLiquid();
+    }
 
-	/**+
-	 * Convert the given metadata into a BlockState for this Block
-	 */
-	public IBlockState getStateFromMeta(int i) {
-		return this.getDefaultState().withProperty(AGE, Integer.valueOf(i));
-	}
+    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
+    {
+        entityIn.attackEntityFrom(DamageSource.CACTUS, 1.0F);
+    }
 
-	/**+
-	 * Convert the BlockState into the correct metadata value
-	 */
-	public int getMetaFromState(IBlockState iblockstate) {
-		return ((Integer) iblockstate.getValue(AGE)).intValue();
-	}
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.getDefaultState().withProperty(AGE, Integer.valueOf(meta));
+    }
 
-	protected BlockState createBlockState() {
-		return new BlockState(this, new IProperty[] { AGE });
-	}
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+    public int getMetaFromState(IBlockState state)
+    {
+        return ((Integer)state.getValue(AGE)).intValue();
+    }
+
+    @Override
+    public net.minecraftforge.common.EnumPlantType getPlantType(net.minecraft.world.IBlockAccess world, BlockPos pos)
+    {
+        return net.minecraftforge.common.EnumPlantType.Desert;
+    }
+
+    @Override
+    public IBlockState getPlant(net.minecraft.world.IBlockAccess world, BlockPos pos)
+    {
+        return getDefaultState();
+    }
+
+    protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, new IProperty[] {AGE});
+    }
+
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+    {
+        return BlockFaceShape.UNDEFINED;
+    }
 }

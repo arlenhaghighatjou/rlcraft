@@ -1,70 +1,111 @@
 package net.minecraft.client.audio;
 
+import javax.annotation.Nullable;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public abstract class PositionedSound implements ISound {
-	protected final ResourceLocation positionedSoundLocation;
-	protected float volume = 1.0F;
-	protected float pitch = 1.0F;
-	protected float xPosF;
-	protected float yPosF;
-	protected float zPosF;
-	protected boolean repeat = false;
-	protected ISound.AttenuationType attenuationType = ISound.AttenuationType.LINEAR;
+@SideOnly(Side.CLIENT)
+public abstract class PositionedSound implements ISound
+{
+    protected Sound sound;
+    @Nullable
+    private SoundEventAccessor soundEvent;
+    protected SoundCategory category;
+    protected ResourceLocation positionedSoundLocation;
+    protected float volume;
+    protected float pitch;
+    protected float xPosF;
+    protected float yPosF;
+    protected float zPosF;
+    protected boolean repeat;
+    protected int repeatDelay;
+    protected ISound.AttenuationType attenuationType;
 
-	protected PositionedSound(ResourceLocation soundResource) {
-		this.positionedSoundLocation = soundResource;
-	}
+    protected PositionedSound(SoundEvent soundIn, SoundCategory categoryIn)
+    {
+        this(soundIn.getSoundName(), categoryIn);
+    }
 
-	public ResourceLocation getSoundLocation() {
-		return this.positionedSoundLocation;
-	}
+    protected PositionedSound(ResourceLocation soundId, SoundCategory categoryIn)
+    {
+        this.volume = 1.0F;
+        this.pitch = 1.0F;
+        this.attenuationType = ISound.AttenuationType.LINEAR;
+        this.positionedSoundLocation = soundId;
+        this.category = categoryIn;
+    }
 
-	public boolean canRepeat() {
-		return this.repeat;
-	}
+    public ResourceLocation getSoundLocation()
+    {
+        return this.positionedSoundLocation;
+    }
 
-	public float getVolume() {
-		return this.volume;
-	}
+    public SoundEventAccessor createAccessor(SoundHandler handler)
+    {
+        this.soundEvent = handler.getAccessor(this.positionedSoundLocation);
 
-	public float getPitch() {
-		return this.pitch;
-	}
+        if (this.soundEvent == null)
+        {
+            this.sound = SoundHandler.MISSING_SOUND;
+        }
+        else
+        {
+            this.sound = this.soundEvent.cloneEntry();
+        }
 
-	public float getXPosF() {
-		return this.xPosF;
-	}
+        return this.soundEvent;
+    }
 
-	public float getYPosF() {
-		return this.yPosF;
-	}
+    public Sound getSound()
+    {
+        return this.sound;
+    }
 
-	public float getZPosF() {
-		return this.zPosF;
-	}
+    public SoundCategory getCategory()
+    {
+        return this.category;
+    }
 
-	public ISound.AttenuationType getAttenuationType() {
-		return this.attenuationType;
-	}
+    public boolean canRepeat()
+    {
+        return this.repeat;
+    }
+
+    public int getRepeatDelay()
+    {
+        return this.repeatDelay;
+    }
+
+    public float getVolume()
+    {
+        return this.volume * this.sound.getVolume();
+    }
+
+    public float getPitch()
+    {
+        return this.pitch * this.sound.getPitch();
+    }
+
+    public float getXPosF()
+    {
+        return this.xPosF;
+    }
+
+    public float getYPosF()
+    {
+        return this.yPosF;
+    }
+
+    public float getZPosF()
+    {
+        return this.zPosF;
+    }
+
+    public ISound.AttenuationType getAttenuationType()
+    {
+        return this.attenuationType;
+    }
 }

@@ -1,226 +1,151 @@
 package net.minecraft.block.material;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class Material {
-	public static final Material air = new MaterialTransparent(MapColor.airColor);
-	public static final Material grass = new Material(MapColor.grassColor);
-	public static final Material ground = new Material(MapColor.dirtColor);
-	public static final Material wood = (new Material(MapColor.woodColor)).setBurning();
-	public static final Material rock = (new Material(MapColor.stoneColor)).setRequiresTool();
-	public static final Material iron = (new Material(MapColor.ironColor)).setRequiresTool();
-	public static final Material anvil = (new Material(MapColor.ironColor)).setRequiresTool().setImmovableMobility();
-	public static final Material water = (new MaterialLiquid(MapColor.waterColor)).setNoPushMobility();
-	public static final Material lava = (new MaterialLiquid(MapColor.tntColor)).setNoPushMobility();
-	public static final Material leaves = (new Material(MapColor.foliageColor)).setBurning().setTranslucent()
-			.setNoPushMobility();
-	public static final Material plants = (new MaterialLogic(MapColor.foliageColor)).setNoPushMobility();
-	public static final Material vine = (new MaterialLogic(MapColor.foliageColor)).setBurning().setNoPushMobility()
-			.setReplaceable();
-	public static final Material sponge = new Material(MapColor.yellowColor);
-	public static final Material cloth = (new Material(MapColor.clothColor)).setBurning();
-	public static final Material fire = (new MaterialTransparent(MapColor.airColor)).setNoPushMobility();
-	public static final Material sand = new Material(MapColor.sandColor);
-	public static final Material circuits = (new MaterialLogic(MapColor.airColor)).setNoPushMobility();
-	public static final Material carpet = (new MaterialLogic(MapColor.clothColor)).setBurning();
-	public static final Material glass = (new Material(MapColor.airColor)).setTranslucent().setAdventureModeExempt();
-	public static final Material redstoneLight = (new Material(MapColor.airColor)).setAdventureModeExempt();
-	public static final Material tnt = (new Material(MapColor.tntColor)).setBurning().setTranslucent();
-	public static final Material coral = (new Material(MapColor.foliageColor)).setNoPushMobility();
-	public static final Material ice = (new Material(MapColor.iceColor)).setTranslucent().setAdventureModeExempt();
-	public static final Material packedIce = (new Material(MapColor.iceColor)).setAdventureModeExempt();
-	public static final Material snow = (new MaterialLogic(MapColor.snowColor)).setReplaceable().setTranslucent()
-			.setRequiresTool().setNoPushMobility();
-	/**+
-	 * The material for crafted snow.
-	 */
-	public static final Material craftedSnow = (new Material(MapColor.snowColor)).setRequiresTool();
-	public static final Material cactus = (new Material(MapColor.foliageColor)).setTranslucent().setNoPushMobility();
-	public static final Material clay = new Material(MapColor.clayColor);
-	public static final Material gourd = (new Material(MapColor.foliageColor)).setNoPushMobility();
-	public static final Material dragonEgg = (new Material(MapColor.foliageColor)).setNoPushMobility();
-	public static final Material portal = (new MaterialPortal(MapColor.airColor)).setImmovableMobility();
-	public static final Material cake = (new Material(MapColor.airColor)).setNoPushMobility();
-	public static final Material web = (new Material(MapColor.clothColor) {
-		/**+
-		 * Returns if this material is considered solid or not
-		 */
-		public boolean blocksMovement() {
-			return false;
-		}
-	}).setRequiresTool().setNoPushMobility();
-	/**+
-	 * Pistons' material.
-	 */
-	public static final Material piston = (new Material(MapColor.stoneColor)).setImmovableMobility();
-	public static final Material barrier = (new Material(MapColor.airColor)).setRequiresTool().setImmovableMobility();
-	private boolean canBurn;
-	private boolean replaceable;
-	private boolean isTranslucent;
-	private final MapColor materialMapColor;
-	/**+
-	 * Determines if the material can be harvested without a tool
-	 * (or with the wrong tool)
-	 */
-	private boolean requiresNoTool = true;
-	private int mobilityFlag;
-	private boolean isAdventureModeExempt;
+public class Material
+{
+    public static final Material AIR = new MaterialTransparent(MapColor.AIR);
+    public static final Material GRASS = new Material(MapColor.GRASS);
+    public static final Material GROUND = new Material(MapColor.DIRT);
+    public static final Material WOOD = (new Material(MapColor.WOOD)).setBurning();
+    public static final Material ROCK = (new Material(MapColor.STONE)).setRequiresTool();
+    public static final Material IRON = (new Material(MapColor.IRON)).setRequiresTool();
+    public static final Material ANVIL = (new Material(MapColor.IRON)).setRequiresTool().setImmovableMobility();
+    public static final Material WATER = (new MaterialLiquid(MapColor.WATER)).setNoPushMobility();
+    public static final Material LAVA = (new MaterialLiquid(MapColor.TNT)).setNoPushMobility();
+    public static final Material LEAVES = (new Material(MapColor.FOLIAGE)).setBurning().setTranslucent().setNoPushMobility();
+    public static final Material PLANTS = (new MaterialLogic(MapColor.FOLIAGE)).setNoPushMobility();
+    public static final Material VINE = (new MaterialLogic(MapColor.FOLIAGE)).setBurning().setNoPushMobility().setReplaceable();
+    public static final Material SPONGE = new Material(MapColor.YELLOW);
+    public static final Material CLOTH = (new Material(MapColor.CLOTH)).setBurning();
+    public static final Material FIRE = (new MaterialTransparent(MapColor.AIR)).setNoPushMobility();
+    public static final Material SAND = new Material(MapColor.SAND);
+    public static final Material CIRCUITS = (new MaterialLogic(MapColor.AIR)).setNoPushMobility();
+    public static final Material CARPET = (new MaterialLogic(MapColor.CLOTH)).setBurning();
+    public static final Material GLASS = (new Material(MapColor.AIR)).setTranslucent().setAdventureModeExempt();
+    public static final Material REDSTONE_LIGHT = (new Material(MapColor.AIR)).setAdventureModeExempt();
+    public static final Material TNT = (new Material(MapColor.TNT)).setBurning().setTranslucent();
+    public static final Material CORAL = (new Material(MapColor.FOLIAGE)).setNoPushMobility();
+    public static final Material ICE = (new Material(MapColor.ICE)).setTranslucent().setAdventureModeExempt();
+    public static final Material PACKED_ICE = (new Material(MapColor.ICE)).setAdventureModeExempt();
+    public static final Material SNOW = (new MaterialLogic(MapColor.SNOW)).setReplaceable().setTranslucent().setRequiresTool().setNoPushMobility();
+    public static final Material CRAFTED_SNOW = (new Material(MapColor.SNOW)).setRequiresTool();
+    public static final Material CACTUS = (new Material(MapColor.FOLIAGE)).setTranslucent().setNoPushMobility();
+    public static final Material CLAY = new Material(MapColor.CLAY);
+    public static final Material GOURD = (new Material(MapColor.FOLIAGE)).setNoPushMobility();
+    public static final Material DRAGON_EGG = (new Material(MapColor.FOLIAGE)).setNoPushMobility();
+    public static final Material PORTAL = (new MaterialPortal(MapColor.AIR)).setImmovableMobility();
+    public static final Material CAKE = (new Material(MapColor.AIR)).setNoPushMobility();
+    public static final Material WEB = (new Material(MapColor.CLOTH)
+    {
+        public boolean blocksMovement()
+        {
+            return false;
+        }
+    }).setRequiresTool().setNoPushMobility();
+    public static final Material PISTON = (new Material(MapColor.STONE)).setImmovableMobility();
+    public static final Material BARRIER = (new Material(MapColor.AIR)).setRequiresTool().setImmovableMobility();
+    public static final Material STRUCTURE_VOID = new MaterialTransparent(MapColor.AIR);
+    private boolean canBurn;
+    private boolean replaceable;
+    private boolean isTranslucent;
+    private final MapColor materialMapColor;
+    private boolean requiresNoTool = true;
+    private EnumPushReaction mobilityFlag = EnumPushReaction.NORMAL;
+    private boolean isAdventureModeExempt;
 
-	public Material(MapColor color) {
-		this.materialMapColor = color;
-	}
+    public Material(MapColor color)
+    {
+        this.materialMapColor = color;
+    }
 
-	/**+
-	 * Returns if blocks of these materials are liquids.
-	 */
-	public boolean isLiquid() {
-		return false;
-	}
+    public boolean isLiquid()
+    {
+        return false;
+    }
 
-	/**+
-	 * Returns true if the block is a considered solid. This is true
-	 * by default.
-	 */
-	public boolean isSolid() {
-		return true;
-	}
+    public boolean isSolid()
+    {
+        return true;
+    }
 
-	/**+
-	 * Will prevent grass from growing on dirt underneath and kill
-	 * any grass below it if it returns true
-	 */
-	public boolean blocksLight() {
-		return true;
-	}
+    public boolean blocksLight()
+    {
+        return true;
+    }
 
-	/**+
-	 * Returns if this material is considered solid or not
-	 */
-	public boolean blocksMovement() {
-		return true;
-	}
+    public boolean blocksMovement()
+    {
+        return true;
+    }
 
-	/**+
-	 * Marks the material as translucent
-	 */
-	private Material setTranslucent() {
-		this.isTranslucent = true;
-		return this;
-	}
+    private Material setTranslucent()
+    {
+        this.isTranslucent = true;
+        return this;
+    }
 
-	/**+
-	 * Makes blocks with this material require the correct tool to
-	 * be harvested.
-	 */
-	protected Material setRequiresTool() {
-		this.requiresNoTool = false;
-		return this;
-	}
+    protected Material setRequiresTool()
+    {
+        this.requiresNoTool = false;
+        return this;
+    }
 
-	/**+
-	 * Set the canBurn bool to True and return the current object.
-	 */
-	protected Material setBurning() {
-		this.canBurn = true;
-		return this;
-	}
+    protected Material setBurning()
+    {
+        this.canBurn = true;
+        return this;
+    }
 
-	/**+
-	 * Returns if the block can burn or not.
-	 */
-	public boolean getCanBurn() {
-		return this.canBurn;
-	}
+    public boolean getCanBurn()
+    {
+        return this.canBurn;
+    }
 
-	/**+
-	 * Sets {@link #replaceable} to true.
-	 */
-	public Material setReplaceable() {
-		this.replaceable = true;
-		return this;
-	}
+    public Material setReplaceable()
+    {
+        this.replaceable = true;
+        return this;
+    }
 
-	/**+
-	 * Returns whether the material can be replaced by other blocks
-	 * when placed - eg snow, vines and tall grass.
-	 */
-	public boolean isReplaceable() {
-		return this.replaceable;
-	}
+    public boolean isReplaceable()
+    {
+        return this.replaceable;
+    }
 
-	/**+
-	 * Indicate if the material is opaque
-	 */
-	public boolean isOpaque() {
-		return this.isTranslucent ? false : this.blocksMovement();
-	}
+    public boolean isOpaque()
+    {
+        return this.isTranslucent ? false : this.blocksMovement();
+    }
 
-	/**+
-	 * Returns true if the material can be harvested without a tool
-	 * (or with the wrong tool)
-	 */
-	public boolean isToolNotRequired() {
-		return this.requiresNoTool;
-	}
+    public boolean isToolNotRequired()
+    {
+        return this.requiresNoTool;
+    }
 
-	/**+
-	 * Returns the mobility information of the material, 0 = free, 1
-	 * = can't push but can move over, 2 = total immobility and stop
-	 * pistons.
-	 */
-	public int getMaterialMobility() {
-		return this.mobilityFlag;
-	}
+    public EnumPushReaction getMobilityFlag()
+    {
+        return this.mobilityFlag;
+    }
 
-	/**+
-	 * This type of material can't be pushed, but pistons can move
-	 * over it.
-	 */
-	protected Material setNoPushMobility() {
-		this.mobilityFlag = 1;
-		return this;
-	}
+    protected Material setNoPushMobility()
+    {
+        this.mobilityFlag = EnumPushReaction.DESTROY;
+        return this;
+    }
 
-	/**+
-	 * This type of material can't be pushed, and pistons are
-	 * blocked to move.
-	 */
-	protected Material setImmovableMobility() {
-		this.mobilityFlag = 2;
-		return this;
-	}
+    protected Material setImmovableMobility()
+    {
+        this.mobilityFlag = EnumPushReaction.BLOCK;
+        return this;
+    }
 
-	/**+
-	 * @see #isAdventureModeExempt()
-	 */
-	protected Material setAdventureModeExempt() {
-		this.isAdventureModeExempt = true;
-		return this;
-	}
+    protected Material setAdventureModeExempt()
+    {
+        this.isAdventureModeExempt = true;
+        return this;
+    }
 
-	/**+
-	 * Retrieves the color index of the block. This is is the same
-	 * color used by vanilla maps to represent this block.
-	 */
-	public MapColor getMaterialMapColor() {
-		return this.materialMapColor;
-	}
+    public MapColor getMaterialMapColor()
+    {
+        return this.materialMapColor;
+    }
 }

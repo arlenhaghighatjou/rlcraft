@@ -2,123 +2,131 @@ package net.minecraft.item.crafting;
 
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.ItemEditableBook;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.item.ItemWrittenBook;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class RecipeBookCloning implements IRecipe {
-	/**+
-	 * Used to check if a recipe matches current crafting inventory
-	 */
-	public boolean matches(InventoryCrafting inventorycrafting, World var2) {
-		int i = 0;
-		ItemStack itemstack = null;
+public class RecipeBookCloning extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
+{
+    public boolean matches(InventoryCrafting inv, World worldIn)
+    {
+        int i = 0;
+        ItemStack itemstack = ItemStack.EMPTY;
 
-		for (int j = 0; j < inventorycrafting.getSizeInventory(); ++j) {
-			ItemStack itemstack1 = inventorycrafting.getStackInSlot(j);
-			if (itemstack1 != null) {
-				if (itemstack1.getItem() == Items.written_book) {
-					if (itemstack != null) {
-						return false;
-					}
+        for (int j = 0; j < inv.getSizeInventory(); ++j)
+        {
+            ItemStack itemstack1 = inv.getStackInSlot(j);
 
-					itemstack = itemstack1;
-				} else {
-					if (itemstack1.getItem() != Items.writable_book) {
-						return false;
-					}
+            if (!itemstack1.isEmpty())
+            {
+                if (itemstack1.getItem() == Items.WRITTEN_BOOK)
+                {
+                    if (!itemstack.isEmpty())
+                    {
+                        return false;
+                    }
 
-					++i;
-				}
-			}
-		}
+                    itemstack = itemstack1;
+                }
+                else
+                {
+                    if (itemstack1.getItem() != Items.WRITABLE_BOOK)
+                    {
+                        return false;
+                    }
 
-		return itemstack != null && i > 0;
-	}
+                    ++i;
+                }
+            }
+        }
 
-	/**+
-	 * Returns an Item that is the result of this recipe
-	 */
-	public ItemStack getCraftingResult(InventoryCrafting inventorycrafting) {
-		int i = 0;
-		ItemStack itemstack = null;
+        return !itemstack.isEmpty() && itemstack.hasTagCompound() && i > 0;
+    }
 
-		for (int j = 0; j < inventorycrafting.getSizeInventory(); ++j) {
-			ItemStack itemstack1 = inventorycrafting.getStackInSlot(j);
-			if (itemstack1 != null) {
-				if (itemstack1.getItem() == Items.written_book) {
-					if (itemstack != null) {
-						return null;
-					}
+    public ItemStack getCraftingResult(InventoryCrafting inv)
+    {
+        int i = 0;
+        ItemStack itemstack = ItemStack.EMPTY;
 
-					itemstack = itemstack1;
-				} else {
-					if (itemstack1.getItem() != Items.writable_book) {
-						return null;
-					}
+        for (int j = 0; j < inv.getSizeInventory(); ++j)
+        {
+            ItemStack itemstack1 = inv.getStackInSlot(j);
 
-					++i;
-				}
-			}
-		}
+            if (!itemstack1.isEmpty())
+            {
+                if (itemstack1.getItem() == Items.WRITTEN_BOOK)
+                {
+                    if (!itemstack.isEmpty())
+                    {
+                        return ItemStack.EMPTY;
+                    }
 
-		if (itemstack != null && i >= 1 && ItemEditableBook.getGeneration(itemstack) < 2) {
-			ItemStack itemstack2 = new ItemStack(Items.written_book, i);
-			itemstack2.setTagCompound((NBTTagCompound) itemstack.getTagCompound().copy());
-			itemstack2.getTagCompound().setInteger("generation", ItemEditableBook.getGeneration(itemstack) + 1);
-			if (itemstack.hasDisplayName()) {
-				itemstack2.setStackDisplayName(itemstack.getDisplayName());
-			}
+                    itemstack = itemstack1;
+                }
+                else
+                {
+                    if (itemstack1.getItem() != Items.WRITABLE_BOOK)
+                    {
+                        return ItemStack.EMPTY;
+                    }
 
-			return itemstack2;
-		} else {
-			return null;
-		}
-	}
+                    ++i;
+                }
+            }
+        }
 
-	/**+
-	 * Returns the size of the recipe area
-	 */
-	public int getRecipeSize() {
-		return 9;
-	}
+        if (!itemstack.isEmpty() && itemstack.hasTagCompound() && i >= 1 && ItemWrittenBook.getGeneration(itemstack) < 2)
+        {
+            ItemStack itemstack2 = new ItemStack(Items.WRITTEN_BOOK, i);
+            itemstack2.setTagCompound(itemstack.getTagCompound().copy());
+            itemstack2.getTagCompound().setInteger("generation", ItemWrittenBook.getGeneration(itemstack) + 1);
 
-	public ItemStack getRecipeOutput() {
-		return null;
-	}
+            if (itemstack.hasDisplayName())
+            {
+                itemstack2.setStackDisplayName(itemstack.getDisplayName());
+            }
 
-	public ItemStack[] getRemainingItems(InventoryCrafting inventorycrafting) {
-		ItemStack[] aitemstack = new ItemStack[inventorycrafting.getSizeInventory()];
+            return itemstack2;
+        }
+        else
+        {
+            return ItemStack.EMPTY;
+        }
+    }
 
-		for (int i = 0; i < aitemstack.length; ++i) {
-			ItemStack itemstack = inventorycrafting.getStackInSlot(i);
-			if (itemstack != null && itemstack.getItem() instanceof ItemEditableBook) {
-				aitemstack[i] = itemstack;
-				break;
-			}
-		}
+    public ItemStack getRecipeOutput()
+    {
+        return ItemStack.EMPTY;
+    }
 
-		return aitemstack;
-	}
+    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
+    {
+        NonNullList<ItemStack> nonnulllist = NonNullList.<ItemStack>withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+
+        for (int i = 0; i < nonnulllist.size(); ++i)
+        {
+            ItemStack itemstack = inv.getStackInSlot(i);
+
+            if (itemstack.getItem() instanceof ItemWrittenBook)
+            {
+                ItemStack itemstack1 = itemstack.copy();
+                itemstack1.setCount(1);
+                nonnulllist.set(i, itemstack1);
+                break;
+            }
+        }
+
+        return nonnulllist;
+    }
+
+    public boolean isDynamic()
+    {
+        return true;
+    }
+
+    public boolean canFit(int width, int height)
+    {
+        return width >= 3 && height >= 3;
+    }
 }

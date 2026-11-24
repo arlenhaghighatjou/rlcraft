@@ -1,138 +1,130 @@
 package net.minecraft.item;
 
 import java.util.List;
-import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-
+import javax.annotation.Nullable;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ItemEnchantedBook extends Item {
-	public boolean hasEffect(ItemStack var1) {
-		return true;
-	}
+public class ItemEnchantedBook extends Item
+{
+    @SideOnly(Side.CLIENT)
+    public boolean hasEffect(ItemStack stack)
+    {
+        return true;
+    }
 
-	/**+
-	 * Checks isDamagable and if it cannot be stacked
-	 */
-	public boolean isItemTool(ItemStack var1) {
-		return false;
-	}
+    public boolean isEnchantable(ItemStack stack)
+    {
+        return false;
+    }
 
-	/**+
-	 * Return an item rarity from EnumRarity
-	 */
-	public EnumRarity getRarity(ItemStack itemstack) {
-		return this.getEnchantments(itemstack).tagCount() > 0 ? EnumRarity.UNCOMMON : super.getRarity(itemstack);
-	}
+    public EnumRarity getRarity(ItemStack stack)
+    {
+        return getEnchantments(stack).hasNoTags() ? super.getRarity(stack) : EnumRarity.UNCOMMON;
+    }
 
-	public NBTTagList getEnchantments(ItemStack stack) {
-		NBTTagCompound nbttagcompound = stack.getTagCompound();
-		return nbttagcompound != null && nbttagcompound.hasKey("StoredEnchantments", 9)
-				? (NBTTagList) nbttagcompound.getTag("StoredEnchantments")
-				: new NBTTagList();
-	}
+    public static NBTTagList getEnchantments(ItemStack p_92110_0_)
+    {
+        NBTTagCompound nbttagcompound = p_92110_0_.getTagCompound();
+        return nbttagcompound != null ? nbttagcompound.getTagList("StoredEnchantments", 10) : new NBTTagList();
+    }
 
-	/**+
-	 * allows items to add custom lines of information to the
-	 * mouseover description
-	 */
-	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
-		super.addInformation(itemstack, entityplayer, list, flag);
-		NBTTagList nbttaglist = this.getEnchantments(itemstack);
-		if (nbttaglist != null) {
-			for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-				short short1 = nbttaglist.getCompoundTagAt(i).getShort("id");
-				short short2 = nbttaglist.getCompoundTagAt(i).getShort("lvl");
-				if (Enchantment.getEnchantmentById(short1) != null) {
-					list.add(Enchantment.getEnchantmentById(short1).getTranslatedName(short2));
-				}
-			}
-		}
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        NBTTagList nbttaglist = getEnchantments(stack);
 
-	}
+        for (int i = 0; i < nbttaglist.tagCount(); ++i)
+        {
+            NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
+            int j = nbttagcompound.getShort("id");
+            Enchantment enchantment = Enchantment.getEnchantmentByID(j);
 
-	/**+
-	 * Adds an stored enchantment to an enchanted book ItemStack
-	 */
-	public void addEnchantment(ItemStack stack, EnchantmentData enchantment) {
-		NBTTagList nbttaglist = this.getEnchantments(stack);
-		boolean flag = true;
+            if (enchantment != null)
+            {
+                tooltip.add(enchantment.getTranslatedName(nbttagcompound.getShort("lvl")));
+            }
+        }
+    }
 
-		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-			NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
-			if (nbttagcompound.getShort("id") == enchantment.enchantmentobj.effectId) {
-				if (nbttagcompound.getShort("lvl") < enchantment.enchantmentLevel) {
-					nbttagcompound.setShort("lvl", (short) enchantment.enchantmentLevel);
-				}
+    public static void addEnchantment(ItemStack p_92115_0_, EnchantmentData stack)
+    {
+        NBTTagList nbttaglist = getEnchantments(p_92115_0_);
+        boolean flag = true;
 
-				flag = false;
-				break;
-			}
-		}
+        for (int i = 0; i < nbttaglist.tagCount(); ++i)
+        {
+            NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
 
-		if (flag) {
-			NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-			nbttagcompound1.setShort("id", (short) enchantment.enchantmentobj.effectId);
-			nbttagcompound1.setShort("lvl", (short) enchantment.enchantmentLevel);
-			nbttaglist.appendTag(nbttagcompound1);
-		}
+            if (Enchantment.getEnchantmentByID(nbttagcompound.getShort("id")) == stack.enchantment)
+            {
+                if (nbttagcompound.getShort("lvl") < stack.enchantmentLevel)
+                {
+                    nbttagcompound.setShort("lvl", (short)stack.enchantmentLevel);
+                }
 
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-		}
+                flag = false;
+                break;
+            }
+        }
 
-		stack.getTagCompound().setTag("StoredEnchantments", nbttaglist);
-	}
+        if (flag)
+        {
+            NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+            nbttagcompound1.setShort("id", (short)Enchantment.getEnchantmentID(stack.enchantment));
+            nbttagcompound1.setShort("lvl", (short)stack.enchantmentLevel);
+            nbttaglist.appendTag(nbttagcompound1);
+        }
 
-	/**+
-	 * Returns the ItemStack of an enchanted version of this item.
-	 */
-	public ItemStack getEnchantedItemStack(EnchantmentData data) {
-		ItemStack itemstack = new ItemStack(this);
-		this.addEnchantment(itemstack, data);
-		return itemstack;
-	}
+        if (!p_92115_0_.hasTagCompound())
+        {
+            p_92115_0_.setTagCompound(new NBTTagCompound());
+        }
 
-	public void getAll(Enchantment enchantment, List<ItemStack> list) {
-		for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); ++i) {
-			list.add(this.getEnchantedItemStack(new EnchantmentData(enchantment, i)));
-		}
+        p_92115_0_.getTagCompound().setTag("StoredEnchantments", nbttaglist);
+    }
 
-	}
+    public static ItemStack getEnchantedItemStack(EnchantmentData p_92111_0_)
+    {
+        ItemStack itemstack = new ItemStack(Items.ENCHANTED_BOOK);
+        addEnchantment(itemstack, p_92111_0_);
+        return itemstack;
+    }
 
-	public WeightedRandomChestContent getRandom(EaglercraftRandom rand) {
-		return this.getRandom(rand, 1, 1, 1);
-	}
-
-	public WeightedRandomChestContent getRandom(EaglercraftRandom rand, int minChance, int maxChance, int weight) {
-		ItemStack itemstack = new ItemStack(Items.book, 1, 0);
-		EnchantmentHelper.addRandomEnchantment(rand, itemstack, 30);
-		return new WeightedRandomChestContent(itemstack, minChance, maxChance, weight);
-	}
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
+    {
+        if (tab == CreativeTabs.SEARCH)
+        {
+            for (Enchantment enchantment : Enchantment.REGISTRY)
+            {
+                if (enchantment.type != null)
+                {
+                    for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); ++i)
+                    {
+                        items.add(getEnchantedItemStack(new EnchantmentData(enchantment, i)));
+                    }
+                }
+            }
+        }
+        else if (tab.getRelevantEnchantmentTypes().length != 0)
+        {
+            for (Enchantment enchantment1 : Enchantment.REGISTRY)
+            {
+                if (tab.hasRelevantEnchantmentType(enchantment1.type))
+                {
+                    items.add(getEnchantedItemStack(new EnchantmentData(enchantment1, enchantment1.getMaxLevel())));
+                }
+            }
+        }
+    }
 }

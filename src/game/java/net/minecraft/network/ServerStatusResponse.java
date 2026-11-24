@@ -1,232 +1,293 @@
 package net.minecraft.network;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.mojang.authlib.GameProfile;
+import java.lang.reflect.Type;
+import java.util.UUID;
+import net.minecraft.util.JsonUtils;
+import net.minecraft.util.text.ITextComponent;
 
-import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
-import net.lax1dude.eaglercraft.v1_8.json.JSONTypeCodec;
-import net.lax1dude.eaglercraft.v1_8.json.JSONTypeProvider;
-import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
-import net.minecraft.util.IChatComponent;
+public class ServerStatusResponse
+{
+    private ITextComponent description;
+    private ServerStatusResponse.Players players;
+    private ServerStatusResponse.Version version;
+    private String favicon;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ServerStatusResponse {
-	private IChatComponent serverMotd;
-	private ServerStatusResponse.PlayerCountData playerCount;
-	private ServerStatusResponse.MinecraftProtocolVersionIdentifier protocolVersion;
-	private String favicon;
+    public ITextComponent getServerDescription()
+    {
+        return this.description;
+    }
 
-	public IChatComponent getServerDescription() {
-		return this.serverMotd;
-	}
+    public void setServerDescription(ITextComponent descriptionIn)
+    {
+        this.description = descriptionIn;
+        invalidateJson();
+    }
 
-	public void setServerDescription(IChatComponent motd) {
-		this.serverMotd = motd;
-	}
+    public ServerStatusResponse.Players getPlayers()
+    {
+        return this.players;
+    }
 
-	public ServerStatusResponse.PlayerCountData getPlayerCountData() {
-		return this.playerCount;
-	}
+    public void setPlayers(ServerStatusResponse.Players playersIn)
+    {
+        this.players = playersIn;
+        invalidateJson();
+    }
 
-	public void setPlayerCountData(ServerStatusResponse.PlayerCountData countData) {
-		this.playerCount = countData;
-	}
+    public ServerStatusResponse.Version getVersion()
+    {
+        return this.version;
+    }
 
-	public ServerStatusResponse.MinecraftProtocolVersionIdentifier getProtocolVersionInfo() {
-		return this.protocolVersion;
-	}
+    public void setVersion(ServerStatusResponse.Version versionIn)
+    {
+        this.version = versionIn;
+        invalidateJson();
+    }
 
-	public void setProtocolVersionInfo(ServerStatusResponse.MinecraftProtocolVersionIdentifier protocolVersionData) {
-		this.protocolVersion = protocolVersionData;
-	}
+    public void setFavicon(String faviconBlob)
+    {
+        this.favicon = faviconBlob;
+        invalidateJson();
+    }
 
-	public void setFavicon(String faviconBlob) {
-		this.favicon = faviconBlob;
-	}
+    public String getFavicon()
+    {
+        return this.favicon;
+    }
 
-	public String getFavicon() {
-		return this.favicon;
-	}
+    public static class Players
+        {
+            private final int maxPlayers;
+            private final int onlinePlayerCount;
+            private GameProfile[] players;
 
-	public static class MinecraftProtocolVersionIdentifier {
-		private final String name;
-		private final int protocol;
+            public Players(int maxOnlinePlayers, int onlinePlayers)
+            {
+                this.maxPlayers = maxOnlinePlayers;
+                this.onlinePlayerCount = onlinePlayers;
+            }
 
-		public MinecraftProtocolVersionIdentifier(String nameIn, int protocolIn) {
-			this.name = nameIn;
-			this.protocol = protocolIn;
-		}
+            public int getMaxPlayers()
+            {
+                return this.maxPlayers;
+            }
 
-		public String getName() {
-			return this.name;
-		}
+            public int getOnlinePlayerCount()
+            {
+                return this.onlinePlayerCount;
+            }
 
-		public int getProtocol() {
-			return this.protocol;
-		}
+            public GameProfile[] getPlayers()
+            {
+                return this.players;
+            }
 
-		public static class Serializer
-				implements JSONTypeCodec<ServerStatusResponse.MinecraftProtocolVersionIdentifier, JSONObject> {
-			public ServerStatusResponse.MinecraftProtocolVersionIdentifier deserialize(JSONObject jsonobject)
-					throws JSONException {
-				return new ServerStatusResponse.MinecraftProtocolVersionIdentifier(jsonobject.getString("name"),
-						jsonobject.getInt("protocol"));
-			}
+            public void setPlayers(GameProfile[] playersIn)
+            {
+                this.players = playersIn;
+            }
 
-			public JSONObject serialize(
-					ServerStatusResponse.MinecraftProtocolVersionIdentifier serverstatusresponse$minecraftprotocolversionidentifier) {
-				JSONObject jsonobject = new JSONObject();
-				jsonobject.put("name", serverstatusresponse$minecraftprotocolversionidentifier.getName());
-				jsonobject.put("protocol",
-						Integer.valueOf(serverstatusresponse$minecraftprotocolversionidentifier.getProtocol()));
-				return jsonobject;
-			}
-		}
-	}
+            public static class Serializer implements JsonDeserializer<ServerStatusResponse.Players>, JsonSerializer<ServerStatusResponse.Players>
+                {
+                    public ServerStatusResponse.Players deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException
+                    {
+                        JsonObject jsonobject = JsonUtils.getJsonObject(p_deserialize_1_, "players");
+                        ServerStatusResponse.Players serverstatusresponse$players = new ServerStatusResponse.Players(JsonUtils.getInt(jsonobject, "max"), JsonUtils.getInt(jsonobject, "online"));
 
-	public static class PlayerCountData {
-		private final int maxPlayers;
-		private final int onlinePlayerCount;
-		private GameProfile[] players;
+                        if (JsonUtils.isJsonArray(jsonobject, "sample"))
+                        {
+                            JsonArray jsonarray = JsonUtils.getJsonArray(jsonobject, "sample");
 
-		public PlayerCountData(int maxOnlinePlayers, int onlinePlayers) {
-			this.maxPlayers = maxOnlinePlayers;
-			this.onlinePlayerCount = onlinePlayers;
-		}
+                            if (jsonarray.size() > 0)
+                            {
+                                GameProfile[] agameprofile = new GameProfile[jsonarray.size()];
 
-		public int getMaxPlayers() {
-			return this.maxPlayers;
-		}
+                                for (int i = 0; i < agameprofile.length; ++i)
+                                {
+                                    JsonObject jsonobject1 = JsonUtils.getJsonObject(jsonarray.get(i), "player[" + i + "]");
+                                    String s = JsonUtils.getString(jsonobject1, "id");
+                                    agameprofile[i] = new GameProfile(UUID.fromString(s), JsonUtils.getString(jsonobject1, "name"));
+                                }
 
-		public int getOnlinePlayerCount() {
-			return this.onlinePlayerCount;
-		}
+                                serverstatusresponse$players.setPlayers(agameprofile);
+                            }
+                        }
 
-		public GameProfile[] getPlayers() {
-			return this.players;
-		}
+                        return serverstatusresponse$players;
+                    }
 
-		public void setPlayers(GameProfile[] playersIn) {
-			this.players = playersIn;
-		}
+                    public JsonElement serialize(ServerStatusResponse.Players p_serialize_1_, Type p_serialize_2_, JsonSerializationContext p_serialize_3_)
+                    {
+                        JsonObject jsonobject = new JsonObject();
+                        jsonobject.addProperty("max", Integer.valueOf(p_serialize_1_.getMaxPlayers()));
+                        jsonobject.addProperty("online", Integer.valueOf(p_serialize_1_.getOnlinePlayerCount()));
 
-		public static class Serializer implements JSONTypeCodec<ServerStatusResponse.PlayerCountData, JSONObject> {
-			public ServerStatusResponse.PlayerCountData deserialize(JSONObject jsonobject) throws JSONException {
-				ServerStatusResponse.PlayerCountData serverstatusresponse$playercountdata = new ServerStatusResponse.PlayerCountData(
-						jsonobject.getInt("max"), jsonobject.getInt("online"));
-				JSONArray jsonarray = jsonobject.optJSONArray("sample");
-				if (jsonarray != null) {
-					if (jsonarray.length() > 0) {
-						GameProfile[] agameprofile = new GameProfile[jsonarray.length()];
+                        if (p_serialize_1_.getPlayers() != null && p_serialize_1_.getPlayers().length > 0)
+                        {
+                            JsonArray jsonarray = new JsonArray();
 
-						for (int i = 0; i < agameprofile.length; ++i) {
-							JSONObject jsonobject1 = jsonarray.getJSONObject(i);
-							String s = jsonobject1.getString("id");
-							agameprofile[i] = new GameProfile(EaglercraftUUID.fromString(s),
-									jsonobject1.getString("name"));
-						}
+                            for (int i = 0; i < p_serialize_1_.getPlayers().length; ++i)
+                            {
+                                JsonObject jsonobject1 = new JsonObject();
+                                UUID uuid = p_serialize_1_.getPlayers()[i].getId();
+                                jsonobject1.addProperty("id", uuid == null ? "" : uuid.toString());
+                                jsonobject1.addProperty("name", p_serialize_1_.getPlayers()[i].getName());
+                                jsonarray.add(jsonobject1);
+                            }
 
-						serverstatusresponse$playercountdata.setPlayers(agameprofile);
-					}
-				}
+                            jsonobject.add("sample", jsonarray);
+                        }
 
-				return serverstatusresponse$playercountdata;
-			}
+                        return jsonobject;
+                    }
+                }
+        }
 
-			public JSONObject serialize(ServerStatusResponse.PlayerCountData serverstatusresponse$playercountdata)
-					throws JSONException {
-				JSONObject jsonobject = new JSONObject();
-				jsonobject.put("max", Integer.valueOf(serverstatusresponse$playercountdata.getMaxPlayers()));
-				jsonobject.put("online", Integer.valueOf(serverstatusresponse$playercountdata.getOnlinePlayerCount()));
-				if (serverstatusresponse$playercountdata.getPlayers() != null
-						&& serverstatusresponse$playercountdata.getPlayers().length > 0) {
-					JSONArray jsonarray = new JSONArray();
+    public static class Serializer implements JsonDeserializer<ServerStatusResponse>, JsonSerializer<ServerStatusResponse>
+        {
+            public ServerStatusResponse deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException
+            {
+                JsonObject jsonobject = JsonUtils.getJsonObject(p_deserialize_1_, "status");
+                ServerStatusResponse serverstatusresponse = new ServerStatusResponse();
 
-					for (int i = 0; i < serverstatusresponse$playercountdata.getPlayers().length; ++i) {
-						JSONObject jsonobject1 = new JSONObject();
-						EaglercraftUUID uuid = serverstatusresponse$playercountdata.getPlayers()[i].getId();
-						jsonobject1.put("id", uuid == null ? "" : uuid.toString());
-						jsonobject1.put("name", serverstatusresponse$playercountdata.getPlayers()[i].getName());
-						jsonarray.put(jsonobject1);
-					}
+                if (jsonobject.has("description"))
+                {
+                    serverstatusresponse.setServerDescription((ITextComponent)p_deserialize_3_.deserialize(jsonobject.get("description"), ITextComponent.class));
+                }
 
-					jsonobject.put("sample", jsonarray);
-				}
+                if (jsonobject.has("players"))
+                {
+                    serverstatusresponse.setPlayers((ServerStatusResponse.Players)p_deserialize_3_.deserialize(jsonobject.get("players"), ServerStatusResponse.Players.class));
+                }
 
-				return jsonobject;
-			}
-		}
-	}
+                if (jsonobject.has("version"))
+                {
+                    serverstatusresponse.setVersion((ServerStatusResponse.Version)p_deserialize_3_.deserialize(jsonobject.get("version"), ServerStatusResponse.Version.class));
+                }
 
-	public static class Serializer implements JSONTypeCodec<ServerStatusResponse, JSONObject> {
-		public ServerStatusResponse deserialize(JSONObject jsonobject) throws JSONException {
-			ServerStatusResponse serverstatusresponse = new ServerStatusResponse();
-			if (jsonobject.has("description")) {
-				serverstatusresponse.setServerDescription((IChatComponent) JSONTypeProvider
-						.deserialize(jsonobject.get("description"), IChatComponent.class));
-			}
+                if (jsonobject.has("favicon"))
+                {
+                    serverstatusresponse.setFavicon(JsonUtils.getString(jsonobject, "favicon"));
+                }
 
-			if (jsonobject.has("players")) {
-				serverstatusresponse.setPlayerCountData((ServerStatusResponse.PlayerCountData) JSONTypeProvider
-						.deserialize(jsonobject.get("players"), ServerStatusResponse.PlayerCountData.class));
-			}
+                net.minecraftforge.fml.client.FMLClientHandler.instance().captureAdditionalData(serverstatusresponse, jsonobject);
+                return serverstatusresponse;
+            }
 
-			if (jsonobject.has("version")) {
-				serverstatusresponse.setProtocolVersionInfo(
-						(ServerStatusResponse.MinecraftProtocolVersionIdentifier) JSONTypeProvider.deserialize(
-								jsonobject.get("version"),
-								ServerStatusResponse.MinecraftProtocolVersionIdentifier.class));
-			}
+            public JsonElement serialize(ServerStatusResponse p_serialize_1_, Type p_serialize_2_, JsonSerializationContext p_serialize_3_)
+            {
+                JsonObject jsonobject = new JsonObject();
 
-			if (jsonobject.has("favicon")) {
-				serverstatusresponse.setFavicon(jsonobject.getString("favicon"));
-			}
+                if (p_serialize_1_.getServerDescription() != null)
+                {
+                    jsonobject.add("description", p_serialize_3_.serialize(p_serialize_1_.getServerDescription()));
+                }
 
-			return serverstatusresponse;
-		}
+                if (p_serialize_1_.getPlayers() != null)
+                {
+                    jsonobject.add("players", p_serialize_3_.serialize(p_serialize_1_.getPlayers()));
+                }
 
-		public JSONObject serialize(ServerStatusResponse serverstatusresponse) {
-			JSONObject jsonobject = new JSONObject();
-			if (serverstatusresponse.getServerDescription() != null) {
-				jsonobject.put("description",
-						(Object) JSONTypeProvider.serialize(serverstatusresponse.getServerDescription()));
-			}
+                if (p_serialize_1_.getVersion() != null)
+                {
+                    jsonobject.add("version", p_serialize_3_.serialize(p_serialize_1_.getVersion()));
+                }
 
-			if (serverstatusresponse.getPlayerCountData() != null) {
-				jsonobject.put("players",
-						(Object) JSONTypeProvider.serialize(serverstatusresponse.getPlayerCountData()));
-			}
+                if (p_serialize_1_.getFavicon() != null)
+                {
+                    jsonobject.addProperty("favicon", p_serialize_1_.getFavicon());
+                }
 
-			if (serverstatusresponse.getProtocolVersionInfo() != null) {
-				jsonobject.put("version",
-						(Object) JSONTypeProvider.serialize(serverstatusresponse.getProtocolVersionInfo()));
-			}
+                net.minecraftforge.fml.common.network.internal.FMLNetworkHandler.enhanceStatusQuery(jsonobject);
+                return jsonobject;
+            }
+        }
 
-			if (serverstatusresponse.getFavicon() != null) {
-				jsonobject.put("favicon", serverstatusresponse.getFavicon());
-			}
+    private java.util.concurrent.Semaphore mutex = new java.util.concurrent.Semaphore(1);
+    private String json = null;
+    /**
+     * Returns this object as a Json string.
+     * Converting to JSON if a cached version is not available.
+     *
+     * Also to prevent potentially large memory allocations on the server
+     * this is moved from the S00PacketServerInfo writePacket function
+     *
+     * As this method is called from the network threads thread safety is important!
+     *
+     * @return
+     */
+    public String getJson()
+    {
+        String ret = this.json;
+        if (ret == null)
+        {
+            mutex.acquireUninterruptibly();
+            ret = this.json;
+            if (ret == null)
+            {
+                ret = net.minecraft.network.status.server.SPacketServerInfo.GSON.toJson(this);
+                this.json = ret;
+            }
+            mutex.release();
+        }
+        return ret;
+    }
 
-			return jsonobject;
-		}
-	}
+    /**
+     * Invalidates the cached json, causing the next call to getJson to rebuild it.
+     * This is needed externally because PlayerCountData.setPlayer's is public.
+     */
+    public void invalidateJson()
+    {
+        this.json = null;
+    }
+
+    public static class Version
+        {
+            private final String name;
+            private final int protocol;
+
+            public Version(String nameIn, int protocolIn)
+            {
+                this.name = nameIn;
+                this.protocol = protocolIn;
+            }
+
+            public String getName()
+            {
+                return this.name;
+            }
+
+            public int getProtocol()
+            {
+                return this.protocol;
+            }
+
+            public static class Serializer implements JsonDeserializer<ServerStatusResponse.Version>, JsonSerializer<ServerStatusResponse.Version>
+                {
+                    public ServerStatusResponse.Version deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException
+                    {
+                        JsonObject jsonobject = JsonUtils.getJsonObject(p_deserialize_1_, "version");
+                        return new ServerStatusResponse.Version(JsonUtils.getString(jsonobject, "name"), JsonUtils.getInt(jsonobject, "protocol"));
+                    }
+
+                    public JsonElement serialize(ServerStatusResponse.Version p_serialize_1_, Type p_serialize_2_, JsonSerializationContext p_serialize_3_)
+                    {
+                        JsonObject jsonobject = new JsonObject();
+                        jsonobject.addProperty("name", p_serialize_1_.getName());
+                        jsonobject.addProperty("protocol", Integer.valueOf(p_serialize_1_.getProtocol()));
+                        return jsonobject;
+                    }
+                }
+        }
 }

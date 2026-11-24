@@ -1,57 +1,52 @@
 package net.minecraft.item;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ItemFlintAndSteel extends Item {
-	public ItemFlintAndSteel() {
-		this.maxStackSize = 1;
-		this.setMaxDamage(64);
-		this.setCreativeTab(CreativeTabs.tabTools);
-	}
+public class ItemFlintAndSteel extends Item
+{
+    public ItemFlintAndSteel()
+    {
+        this.maxStackSize = 1;
+        this.setMaxDamage(64);
+        this.setCreativeTab(CreativeTabs.TOOLS);
+    }
 
-	/**+
-	 * Called when a Block is right-clicked with this Item
-	 */
-	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos blockpos,
-			EnumFacing enumfacing, float var6, float var7, float var8) {
-		blockpos = blockpos.offset(enumfacing);
-		if (!entityplayer.canPlayerEdit(blockpos, enumfacing, itemstack)) {
-			return false;
-		} else {
-			if (world.getBlockState(blockpos).getBlock().getMaterial() == Material.air) {
-				world.playSoundEffect((double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.5D,
-						(double) blockpos.getZ() + 0.5D, "fire.ignite", 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
-				world.setBlockState(blockpos, Blocks.fire.getDefaultState());
-			}
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        pos = pos.offset(facing);
+        ItemStack itemstack = player.getHeldItem(hand);
 
-			itemstack.damageItem(1, entityplayer);
-			return true;
-		}
-	}
+        if (!player.canPlayerEdit(pos, facing, itemstack))
+        {
+            return EnumActionResult.FAIL;
+        }
+        else
+        {
+            if (worldIn.isAirBlock(pos))
+            {
+                worldIn.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
+                worldIn.setBlockState(pos, Blocks.FIRE.getDefaultState(), 11);
+            }
+
+            if (player instanceof EntityPlayerMP)
+            {
+                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, itemstack);
+            }
+
+            itemstack.damageItem(1, player);
+            return EnumActionResult.SUCCESS;
+        }
+    }
 }

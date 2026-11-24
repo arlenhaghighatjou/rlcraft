@@ -1,183 +1,206 @@
 package net.minecraft.client.network;
 
-import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
-import net.lax1dude.eaglercraft.v1_8.profanity_filter.ProfanityFilter;
-import net.lax1dude.eaglercraft.v1_8.profile.SkinModel;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.Maps;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
+import java.util.Map;
+import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.play.server.S38PacketPlayerListItem;
+import net.minecraft.client.resources.DefaultPlayerSkin;
+import net.minecraft.client.resources.SkinManager;
+import net.minecraft.network.play.server.SPacketPlayerListItem;
 import net.minecraft.scoreboard.ScorePlayerTeam;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.WorldSettings;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.GameType;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class NetworkPlayerInfo {
-	private final GameProfile gameProfile;
-	private String gameProfileProfanityFilter;
-	private WorldSettings.GameType gameType;
-	private int responseTime;
-	private String skinType;
-	private IChatComponent displayName;
-	private IChatComponent displayNameProfanityFilter;
-	private int field_178873_i = 0;
-	private int field_178870_j = 0;
-	private long field_178871_k = 0L;
-	private long field_178868_l = 0L;
-	private long field_178869_m = 0L;
+@SideOnly(Side.CLIENT)
+public class NetworkPlayerInfo
+{
+    private final GameProfile gameProfile;
+    Map<Type, ResourceLocation> playerTextures = Maps.newEnumMap(Type.class);
+    private GameType gameType;
+    private int responseTime;
+    private boolean playerTexturesLoaded;
+    private String skinType;
+    private ITextComponent displayName;
+    private int lastHealth;
+    private int displayHealth;
+    private long lastHealthTime;
+    private long healthBlinkTime;
+    private long renderVisibilityId;
 
-	public NetworkPlayerInfo(GameProfile parGameProfile) {
-		this.gameProfile = parGameProfile;
-	}
+    public NetworkPlayerInfo(GameProfile profile)
+    {
+        this.gameProfile = profile;
+    }
 
-	public NetworkPlayerInfo(S38PacketPlayerListItem.AddPlayerData parAddPlayerData) {
-		this.gameProfile = parAddPlayerData.getProfile();
-		this.gameType = parAddPlayerData.getGameMode();
-		this.responseTime = parAddPlayerData.getPing();
-		this.displayName = parAddPlayerData.getDisplayName();
-		this.displayNameProfanityFilter = null;
-	}
+    public NetworkPlayerInfo(SPacketPlayerListItem.AddPlayerData entry)
+    {
+        this.gameProfile = entry.getProfile();
+        this.gameType = entry.getGameMode();
+        this.responseTime = entry.getPing();
+        this.displayName = entry.getDisplayName();
+    }
 
-	/**+
-	 * Returns the GameProfile for the player represented by this
-	 * NetworkPlayerInfo instance
-	 */
-	public GameProfile getGameProfile() {
-		return this.gameProfile;
-	}
+    public GameProfile getGameProfile()
+    {
+        return this.gameProfile;
+    }
 
-	public WorldSettings.GameType getGameType() {
-		return this.gameType;
-	}
+    public GameType getGameType()
+    {
+        return this.gameType;
+    }
 
-	public int getResponseTime() {
-		return this.responseTime;
-	}
+    protected void setGameType(GameType gameMode)
+    {
+        this.gameType = gameMode;
+    }
 
-	protected void setGameType(WorldSettings.GameType parGameType) {
-		this.gameType = parGameType;
-	}
+    public int getResponseTime()
+    {
+        return this.responseTime;
+    }
 
-	protected void setResponseTime(int parInt1) {
-		this.responseTime = parInt1;
-	}
+    protected void setResponseTime(int latency)
+    {
+        this.responseTime = latency;
+    }
 
-	public boolean hasLocationSkin() {
-		return true;
-	}
+    public boolean hasLocationSkin()
+    {
+        return this.getLocationSkin() != null;
+    }
 
-	public String getSkinType() {
-		return getEaglerSkinModel().profileSkinType;
-	}
+    public String getSkinType()
+    {
+        return this.skinType == null ? DefaultPlayerSkin.getSkinType(this.gameProfile.getId()) : this.skinType;
+    }
 
-	public SkinModel getEaglerSkinModel() {
-		return Minecraft.getMinecraft().getNetHandler().getTextureCache().getPlayerSkin(this.gameProfile).getModel();
-	}
+    public ResourceLocation getLocationSkin()
+    {
+        this.loadPlayerTextures();
+        return (ResourceLocation)MoreObjects.firstNonNull(this.playerTextures.get(Type.SKIN), DefaultPlayerSkin.getDefaultSkin(this.gameProfile.getId()));
+    }
 
-	public ResourceLocation getLocationSkin() {
-		return Minecraft.getMinecraft().getNetHandler().getTextureCache().getPlayerSkin(this.gameProfile).getLocation();
-	}
+    @Nullable
+    public ResourceLocation getLocationCape()
+    {
+        this.loadPlayerTextures();
+        return this.playerTextures.get(Type.CAPE);
+    }
 
-	public ResourceLocation getLocationCape() {
-		return Minecraft.getMinecraft().getNetHandler().getTextureCache().getPlayerCape(this.gameProfile);
-	}
+    @Nullable
+    public ResourceLocation getLocationElytra()
+    {
+        this.loadPlayerTextures();
+        return this.playerTextures.get(Type.ELYTRA);
+    }
 
-	public ScorePlayerTeam getPlayerTeam() {
-		return Minecraft.getMinecraft().theWorld.getScoreboard().getPlayersTeam(this.getGameProfile().getName());
-	}
+    @Nullable
+    public ScorePlayerTeam getPlayerTeam()
+    {
+        return Minecraft.getMinecraft().world.getScoreboard().getPlayersTeam(this.getGameProfile().getName());
+    }
 
-	public void setDisplayName(IChatComponent displayNameIn) {
-		this.displayName = displayNameIn;
-		this.displayNameProfanityFilter = null;
-	}
+    protected void loadPlayerTextures()
+    {
+        synchronized (this)
+        {
+            if (!this.playerTexturesLoaded)
+            {
+                this.playerTexturesLoaded = true;
+                Minecraft.getMinecraft().getSkinManager().loadProfileTextures(this.gameProfile, new SkinManager.SkinAvailableCallback()
+                {
+                    public void skinAvailable(Type typeIn, ResourceLocation location, MinecraftProfileTexture profileTexture)
+                    {
+                        switch (typeIn)
+                        {
+                            case SKIN:
+                                NetworkPlayerInfo.this.playerTextures.put(Type.SKIN, location);
+                                NetworkPlayerInfo.this.skinType = profileTexture.getMetadata("model");
 
-	public IChatComponent getDisplayName() {
-		return this.displayName;
-	}
+                                if (NetworkPlayerInfo.this.skinType == null)
+                                {
+                                    NetworkPlayerInfo.this.skinType = "default";
+                                }
 
-	public IChatComponent getDisplayNameProfanityFilter() {
-		if (Minecraft.getMinecraft().isEnableProfanityFilter()) {
-			if (this.displayName != null) {
-				if (this.displayNameProfanityFilter == null) {
-					this.displayNameProfanityFilter = ProfanityFilter.getInstance()
-							.profanityFilterChatComponent(this.displayName);
-				}
-				return this.displayNameProfanityFilter;
-			} else {
-				return null;
-			}
-		} else {
-			return this.displayName;
-		}
-	}
+                                break;
+                            case CAPE:
+                                NetworkPlayerInfo.this.playerTextures.put(Type.CAPE, location);
+                                break;
+                            case ELYTRA:
+                                NetworkPlayerInfo.this.playerTextures.put(Type.ELYTRA, location);
+                        }
+                    }
+                }, true);
+            }
+        }
+    }
 
-	public String getGameProfileNameProfanityFilter() {
-		if (Minecraft.getMinecraft().isEnableProfanityFilter()) {
-			if (this.gameProfileProfanityFilter == null) {
-				this.gameProfileProfanityFilter = ProfanityFilter.getInstance()
-						.profanityFilterString(this.gameProfile.getName());
-			}
-			return this.gameProfileProfanityFilter;
-		} else {
-			return this.gameProfile.getName();
-		}
-	}
+    public void setDisplayName(@Nullable ITextComponent displayNameIn)
+    {
+        this.displayName = displayNameIn;
+    }
 
-	public int func_178835_l() {
-		return this.field_178873_i;
-	}
+    @Nullable
+    public ITextComponent getDisplayName()
+    {
+        return this.displayName;
+    }
 
-	public void func_178836_b(int parInt1) {
-		this.field_178873_i = parInt1;
-	}
+    public int getLastHealth()
+    {
+        return this.lastHealth;
+    }
 
-	public int func_178860_m() {
-		return this.field_178870_j;
-	}
+    public void setLastHealth(int p_178836_1_)
+    {
+        this.lastHealth = p_178836_1_;
+    }
 
-	public void func_178857_c(int parInt1) {
-		this.field_178870_j = parInt1;
-	}
+    public int getDisplayHealth()
+    {
+        return this.displayHealth;
+    }
 
-	public long func_178847_n() {
-		return this.field_178871_k;
-	}
+    public void setDisplayHealth(int p_178857_1_)
+    {
+        this.displayHealth = p_178857_1_;
+    }
 
-	public void func_178846_a(long parLong1) {
-		this.field_178871_k = parLong1;
-	}
+    public long getLastHealthTime()
+    {
+        return this.lastHealthTime;
+    }
 
-	public long func_178858_o() {
-		return this.field_178868_l;
-	}
+    public void setLastHealthTime(long p_178846_1_)
+    {
+        this.lastHealthTime = p_178846_1_;
+    }
 
-	public void func_178844_b(long parLong1) {
-		this.field_178868_l = parLong1;
-	}
+    public long getHealthBlinkTime()
+    {
+        return this.healthBlinkTime;
+    }
 
-	public long func_178855_p() {
-		return this.field_178869_m;
-	}
+    public void setHealthBlinkTime(long p_178844_1_)
+    {
+        this.healthBlinkTime = p_178844_1_;
+    }
 
-	public void func_178843_c(long parLong1) {
-		this.field_178869_m = parLong1;
-	}
+    public long getRenderVisibilityId()
+    {
+        return this.renderVisibilityId;
+    }
+
+    public void setRenderVisibilityId(long p_178843_1_)
+    {
+        this.renderVisibilityId = p_178843_1_;
+    }
 }

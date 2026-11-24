@@ -1,301 +1,465 @@
 package net.minecraft.client.renderer.chunk;
 
-import java.util.EnumMap;
+import com.google.common.collect.Sets;
+import java.nio.FloatBuffer;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-
-import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
-import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
-import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DeferredStateManager;
+import java.util.concurrent.locks.ReentrantLock;
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.RegionRenderCache;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GLAllocation;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ChunkCache;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class RenderChunk {
-	public static enum ShadowFrustumState {
-		OUTSIDE, OUTSIDE_BB, INTERSECT, INSIDE
-	}
+@SideOnly(Side.CLIENT)
+public class RenderChunk
+{
+    private World world;
+    private final RenderGlobal renderGlobal;
+    public static int renderChunksUpdated;
+    public CompiledChunk compiledChunk = CompiledChunk.DUMMY;
+    private final ReentrantLock lockCompileTask = new ReentrantLock();
+    private final ReentrantLock lockCompiledChunk = new ReentrantLock();
+    private ChunkCompileTaskGenerator compileTask;
+    private final Set<TileEntity> setTileEntities = Sets.<TileEntity>newHashSet();
+    private final int index;
+    private final FloatBuffer modelviewMatrix = GLAllocation.createDirectFloatBuffer(16);
+    private final VertexBuffer[] vertexBuffers = new VertexBuffer[BlockRenderLayer.values().length];
+    public AxisAlignedBB boundingBox;
+    private int frameIndex = -1;
+    private boolean needsUpdate = true;
+    private final BlockPos.MutableBlockPos position = new BlockPos.MutableBlockPos(-1, -1, -1);
+    private final BlockPos.MutableBlockPos[] mapEnumFacing = new BlockPos.MutableBlockPos[6];
+    private boolean needsImmediateUpdate;
+    private ChunkCache worldView;
 
-	private World world;
-	private final RenderGlobal renderGlobal;
-	public static int renderChunksUpdated;
-	private BlockPos position;
-	public CompiledChunk compiledChunk = CompiledChunk.DUMMY;
-	private ChunkCompileTaskGenerator compileTask = null;
-	private final Set<TileEntity> field_181056_j = Sets.newHashSet();
-	private final int index;
-	public AxisAlignedBB boundingBox;
-	private int frameIndex = -1;
-	private boolean needsUpdate = true;
-	public int shadowLOD0FrameIndex = -1;
-	public int shadowLOD1FrameIndex = -1;
-	public int shadowLOD2FrameIndex = -1;
-	public ShadowFrustumState shadowLOD0InFrustum = ShadowFrustumState.OUTSIDE;
-	public ShadowFrustumState shadowLOD1InFrustum = ShadowFrustumState.OUTSIDE;
-	public ShadowFrustumState shadowLOD2InFrustum = ShadowFrustumState.OUTSIDE;
-	private EnumMap<EnumFacing, BlockPos> field_181702_p = Maps.newEnumMap(EnumFacing.class);
+    public RenderChunk(World worldIn, RenderGlobal renderGlobalIn, int indexIn)
+    {
+        for (int i = 0; i < this.mapEnumFacing.length; ++i)
+        {
+            this.mapEnumFacing[i] = new BlockPos.MutableBlockPos();
+        }
 
-	public RenderChunk(World worldIn, RenderGlobal renderGlobalIn, BlockPos blockPosIn, int indexIn) {
-		this.world = worldIn;
-		this.renderGlobal = renderGlobalIn;
-		this.index = indexIn;
-		if (!blockPosIn.equals(this.getPosition())) {
-			this.setPosition(blockPosIn);
-		}
+        this.world = worldIn;
+        this.renderGlobal = renderGlobalIn;
+        this.index = indexIn;
 
-	}
+        if (OpenGlHelper.useVbo())
+        {
+            for (int j = 0; j < BlockRenderLayer.values().length; ++j)
+            {
+                this.vertexBuffers[j] = new VertexBuffer(DefaultVertexFormats.BLOCK);
+            }
+        }
+    }
 
-	public boolean setFrameIndex(int frameIndexIn) {
-		if (this.frameIndex == frameIndexIn) {
-			return false;
-		} else {
-			this.frameIndex = frameIndexIn;
-			return true;
-		}
-	}
+    public boolean setFrameIndex(int frameIndexIn)
+    {
+        if (this.frameIndex == frameIndexIn)
+        {
+            return false;
+        }
+        else
+        {
+            this.frameIndex = frameIndexIn;
+            return true;
+        }
+    }
 
-	public void setPosition(BlockPos pos) {
-		this.stopCompileTask();
-		this.position = pos;
-		this.boundingBox = new AxisAlignedBB(pos, pos.add(16, 16, 16));
+    public VertexBuffer getVertexBufferByLayer(int layer)
+    {
+        return this.vertexBuffers[layer];
+    }
 
-		EnumFacing[] facings = EnumFacing._VALUES;
-		for (int i = 0; i < facings.length; ++i) {
-			this.field_181702_p.put(facings[i], pos.offset(facings[i], 16));
-		}
-	}
+    public void setPosition(int x, int y, int z)
+    {
+        if (x != this.position.getX() || y != this.position.getY() || z != this.position.getZ())
+        {
+            this.stopCompileTask();
+            this.position.setPos(x, y, z);
+            this.boundingBox = new AxisAlignedBB((double)x, (double)y, (double)z, (double)(x + 16), (double)(y + 16), (double)(z + 16));
 
-	public void resortTransparency(float x, float y, float z, ChunkCompileTaskGenerator generator) {
-		CompiledChunk compiledchunk = generator.getCompiledChunk();
-		if (compiledchunk.getState() != null && !compiledchunk.isLayerEmpty(EnumWorldBlockLayer.TRANSLUCENT)) {
-			this.preRenderBlocks(
-					generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(EnumWorldBlockLayer.TRANSLUCENT),
-					this.position);
-			generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(EnumWorldBlockLayer.TRANSLUCENT)
-					.setVertexState(compiledchunk.getState());
-			this.postRenderBlocks(EnumWorldBlockLayer.TRANSLUCENT, x, y, z,
-					generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(EnumWorldBlockLayer.TRANSLUCENT),
-					compiledchunk);
-		}
-		if (DeferredStateManager.isRenderingRealisticWater() && compiledchunk.getStateRealisticWater() != null
-				&& !compiledchunk.isLayerEmpty(EnumWorldBlockLayer.REALISTIC_WATER)) {
-			this.preRenderBlocks(generator.getRegionRenderCacheBuilder()
-					.getWorldRendererByLayer(EnumWorldBlockLayer.REALISTIC_WATER), this.position);
-			generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(EnumWorldBlockLayer.REALISTIC_WATER)
-					.setVertexState(compiledchunk.getStateRealisticWater());
-			this.postRenderBlocks(EnumWorldBlockLayer.REALISTIC_WATER, x, y, z, generator.getRegionRenderCacheBuilder()
-					.getWorldRendererByLayer(EnumWorldBlockLayer.REALISTIC_WATER), compiledchunk);
-		}
-	}
+            for (EnumFacing enumfacing : EnumFacing.values())
+            {
+                this.mapEnumFacing[enumfacing.ordinal()].setPos(this.position).move(enumfacing, 16);
+            }
 
-	public void rebuildChunk(float x, float y, float z, ChunkCompileTaskGenerator generator) {
-		if (compiledChunk == CompiledChunk.DUMMY) {
-			compiledChunk = new CompiledChunk(this);
-		} else {
-			compiledChunk.reset();
-		}
-		boolean flag = true;
-		BlockPos blockpos = this.position;
-		BlockPos blockpos1 = blockpos.add(15, 15, 15);
+            this.initModelviewMatrix();
+        }
+    }
 
-		RegionRenderCache regionrendercache;
-		if (generator.getStatus() != ChunkCompileTaskGenerator.Status.COMPILING) {
-			return;
-		}
+    public void resortTransparency(float x, float y, float z, ChunkCompileTaskGenerator generator)
+    {
+        CompiledChunk compiledchunk = generator.getCompiledChunk();
 
-		regionrendercache = new RegionRenderCache(this.world, blockpos.add(-1, -1, -1), blockpos1.add(1, 1, 1), 1);
-		generator.setCompiledChunk(compiledChunk);
+        if (compiledchunk.getState() != null && !compiledchunk.isLayerEmpty(BlockRenderLayer.TRANSLUCENT))
+        {
+            this.preRenderBlocks(generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(BlockRenderLayer.TRANSLUCENT), this.position);
+            generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(BlockRenderLayer.TRANSLUCENT).setVertexState(compiledchunk.getState());
+            this.postRenderBlocks(BlockRenderLayer.TRANSLUCENT, x, y, z, generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(BlockRenderLayer.TRANSLUCENT), compiledchunk);
+        }
+    }
 
-		VisGraph visgraph = new VisGraph();
-		HashSet hashset = Sets.newHashSet();
-		if (!regionrendercache.extendedLevelsInChunkCache()) {
-			++renderChunksUpdated;
-			boolean[] aboolean = new boolean[EnumWorldBlockLayer._VALUES.length];
-			BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
+    public void rebuildChunk(float x, float y, float z, ChunkCompileTaskGenerator generator)
+    {
+        CompiledChunk compiledchunk = new CompiledChunk();
+        int i = 1;
+        BlockPos blockpos = this.position;
+        BlockPos blockpos1 = blockpos.add(15, 15, 15);
+        generator.getLock().lock();
 
-			for (BlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(blockpos, blockpos1)) {
-				IBlockState iblockstate = regionrendercache.getBlockStateFaster(blockpos$mutableblockpos);
-				Block block = iblockstate.getBlock();
-				if (block.isOpaqueCube()) {
-					visgraph.func_178606_a(blockpos$mutableblockpos);
-				}
+        try
+        {
+            if (generator.getStatus() != ChunkCompileTaskGenerator.Status.COMPILING)
+            {
+                return;
+            }
 
-				if (block.hasTileEntity()) {
-					TileEntity tileentity = regionrendercache.getTileEntity(blockpos$mutableblockpos);
-					TileEntitySpecialRenderer tileentityspecialrenderer = TileEntityRendererDispatcher.instance
-							.getSpecialRenderer(tileentity);
-					if (tileentity != null && tileentityspecialrenderer != null) {
-						compiledChunk.addTileEntity(tileentity);
-						if (tileentityspecialrenderer.func_181055_a()) {
-							hashset.add(tileentity);
-						}
-					}
-				}
+            generator.setCompiledChunk(compiledchunk);
+        }
+        finally
+        {
+            generator.getLock().unlock();
+        }
 
-				EnumWorldBlockLayer enumworldblocklayer1 = block.getBlockLayer();
-				int i = enumworldblocklayer1.ordinal();
-				if (block.getRenderType() != -1) {
-					WorldRenderer worldrenderer = generator.getRegionRenderCacheBuilder().getWorldRendererByLayerId(i);
-					if (!compiledChunk.isLayerStarted(enumworldblocklayer1)) {
-						compiledChunk.setLayerStarted(enumworldblocklayer1);
-						this.preRenderBlocks(worldrenderer, blockpos);
-					}
+        VisGraph lvt_9_1_ = new VisGraph();
+        HashSet lvt_10_1_ = Sets.newHashSet();
 
-					aboolean[i] |= blockrendererdispatcher.renderBlock(iblockstate, blockpos$mutableblockpos,
-							regionrendercache, worldrenderer);
+        if (!this.worldView.isEmpty())
+        {
+            ++renderChunksUpdated;
+            boolean[] aboolean = new boolean[BlockRenderLayer.values().length];
+            BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
 
-					if (block.eaglerShadersShouldRenderGlassHighlights()) {
-						enumworldblocklayer1 = EnumWorldBlockLayer.GLASS_HIGHLIGHTS;
-						worldrenderer = generator.getRegionRenderCacheBuilder()
-								.getWorldRendererByLayerId(enumworldblocklayer1.ordinal());
-						if (!compiledChunk.isLayerStarted(enumworldblocklayer1)) {
-							compiledChunk.setLayerStarted(enumworldblocklayer1);
-							this.preRenderBlocks(worldrenderer, blockpos);
-						}
+            for (BlockPos.MutableBlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(blockpos, blockpos1))
+            {
+                IBlockState iblockstate = this.worldView.getBlockState(blockpos$mutableblockpos);
+                Block block = iblockstate.getBlock();
 
-						aboolean[enumworldblocklayer1.ordinal()] |= blockrendererdispatcher.renderBlock(iblockstate,
-								blockpos$mutableblockpos, regionrendercache, worldrenderer);
-					}
-				}
-			}
+                if (iblockstate.isOpaqueCube())
+                {
+                    lvt_9_1_.setOpaqueCube(blockpos$mutableblockpos);
+                }
 
-			EnumWorldBlockLayer[] layers = EnumWorldBlockLayer._VALUES;
-			for (int i = 0; i < layers.length; ++i) {
-				EnumWorldBlockLayer enumworldblocklayer = layers[i];
-				if (aboolean[enumworldblocklayer.ordinal()]) {
-					compiledChunk.setLayerUsed(enumworldblocklayer);
-				}
+                if (block.hasTileEntity(iblockstate))
+                {
+                    TileEntity tileentity = this.worldView.getTileEntity(blockpos$mutableblockpos, Chunk.EnumCreateEntityType.CHECK);
 
-				if (compiledChunk.isLayerStarted(enumworldblocklayer)) {
-					this.postRenderBlocks(enumworldblocklayer, x, y, z,
-							generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(enumworldblocklayer),
-							compiledChunk);
-				}
-			}
-		}
+                    if (tileentity != null)
+                    {
+                        TileEntitySpecialRenderer<TileEntity> tileentityspecialrenderer = TileEntityRendererDispatcher.instance.<TileEntity>getRenderer(tileentity);
 
-		compiledChunk.setVisibility(visgraph.computeVisibility());
+                        if (tileentityspecialrenderer != null)
+                        {
 
-		HashSet hashset1 = Sets.newHashSet(hashset);
-		HashSet hashset2 = Sets.newHashSet(this.field_181056_j);
-		hashset1.removeAll(this.field_181056_j);
-		hashset2.removeAll(hashset);
-		this.field_181056_j.clear();
-		this.field_181056_j.addAll(hashset);
-		this.renderGlobal.func_181023_a(hashset2, hashset1);
+                            if (tileentityspecialrenderer.isGlobalRenderer(tileentity))
+                            {
+                                lvt_10_1_.add(tileentity);
+                            }
+                            else compiledchunk.addTileEntity(tileentity); // FORGE: Fix MC-112730
+                        }
+                    }
+                }
 
-	}
+                for(BlockRenderLayer blockrenderlayer1 : BlockRenderLayer.values()) {
+                     if(!block.canRenderInLayer(iblockstate, blockrenderlayer1)) continue;
+                     net.minecraftforge.client.ForgeHooksClient.setRenderLayer(blockrenderlayer1);
+                int j = blockrenderlayer1.ordinal();
 
-	protected void finishCompileTask() {
-		if (this.compileTask != null && this.compileTask.getStatus() != ChunkCompileTaskGenerator.Status.DONE) {
-			this.compileTask.finish();
-			this.compileTask = null;
-		}
-	}
+                if (block.getDefaultState().getRenderType() != EnumBlockRenderType.INVISIBLE)
+                {
+                    BufferBuilder bufferbuilder = generator.getRegionRenderCacheBuilder().getWorldRendererByLayerId(j);
 
-	public ChunkCompileTaskGenerator makeCompileTaskChunk() {
-		ChunkCompileTaskGenerator chunkcompiletaskgenerator;
-		this.finishCompileTask();
-		this.compileTask = new ChunkCompileTaskGenerator(this, ChunkCompileTaskGenerator.Type.REBUILD_CHUNK);
-		chunkcompiletaskgenerator = this.compileTask;
-		return chunkcompiletaskgenerator;
-	}
+                    if (!compiledchunk.isLayerStarted(blockrenderlayer1))
+                    {
+                        compiledchunk.setLayerStarted(blockrenderlayer1);
+                        this.preRenderBlocks(bufferbuilder, blockpos);
+                    }
 
-	public ChunkCompileTaskGenerator makeCompileTaskTransparency() {
-		this.compileTask = new ChunkCompileTaskGenerator(this, ChunkCompileTaskGenerator.Type.RESORT_TRANSPARENCY);
-		this.compileTask.setCompiledChunk(this.compiledChunk);
-		return this.compileTask;
-	}
+                    aboolean[j] |= blockrendererdispatcher.renderBlock(iblockstate, blockpos$mutableblockpos, this.worldView, bufferbuilder);
+                }
+                }
+                net.minecraftforge.client.ForgeHooksClient.setRenderLayer(null);
+            }
 
-	private void preRenderBlocks(WorldRenderer worldRendererIn, BlockPos pos) {
-		worldRendererIn.begin(7,
-				(DeferredStateManager.isDeferredRenderer() /* || DynamicLightsStateManager.isDynamicLightsRender() */)
-						? VertexFormat.BLOCK_SHADERS
-						: DefaultVertexFormats.BLOCK);
-		worldRendererIn.setTranslation((double) (-pos.getX()), (double) (-pos.getY()), (double) (-pos.getZ()));
-	}
+            for (BlockRenderLayer blockrenderlayer : BlockRenderLayer.values())
+            {
+                if (aboolean[blockrenderlayer.ordinal()])
+                {
+                    compiledchunk.setLayerUsed(blockrenderlayer);
+                }
 
-	private void postRenderBlocks(EnumWorldBlockLayer layer, float x, float y, float z, WorldRenderer worldRendererIn,
-			CompiledChunk compiledChunkIn) {
-		if ((layer == EnumWorldBlockLayer.TRANSLUCENT || layer == EnumWorldBlockLayer.REALISTIC_WATER)
-				&& !compiledChunkIn.isLayerEmpty(layer)) {
-			worldRendererIn.func_181674_a(x, y, z);
-			if (layer == EnumWorldBlockLayer.REALISTIC_WATER) {
-				compiledChunkIn.setStateRealisticWater(worldRendererIn.func_181672_a());
-			} else {
-				compiledChunkIn.setState(worldRendererIn.func_181672_a());
-			}
-		}
+                if (compiledchunk.isLayerStarted(blockrenderlayer))
+                {
+                    this.postRenderBlocks(blockrenderlayer, x, y, z, generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(blockrenderlayer), compiledchunk);
+                }
+            }
+        }
 
-		worldRendererIn.finishDrawing();
-	}
+        compiledchunk.setVisibility(lvt_9_1_.computeVisibility());
+        this.lockCompileTask.lock();
 
-	public CompiledChunk getCompiledChunk() {
-		return this.compiledChunk;
-	}
+        try
+        {
+            Set<TileEntity> set = Sets.newHashSet(lvt_10_1_);
+            Set<TileEntity> set1 = Sets.newHashSet(this.setTileEntities);
+            set.removeAll(this.setTileEntities);
+            set1.removeAll(lvt_10_1_);
+            this.setTileEntities.clear();
+            this.setTileEntities.addAll(lvt_10_1_);
+            this.renderGlobal.updateTileEntities(set1, set);
+        }
+        finally
+        {
+            this.lockCompileTask.unlock();
+        }
+    }
 
-	public void stopCompileTask() {
-		this.finishCompileTask();
-		if (this.compiledChunk != CompiledChunk.DUMMY) {
-			this.compiledChunk.setState(null);
-			this.compiledChunk.setStateRealisticWater(null);
-			this.compiledChunk = CompiledChunk.DUMMY;
-		}
-	}
+    protected void finishCompileTask()
+    {
+        this.lockCompileTask.lock();
 
-	public void deleteGlResources() {
-		this.stopCompileTask();
-		this.world = null;
-	}
+        try
+        {
+            if (this.compileTask != null && this.compileTask.getStatus() != ChunkCompileTaskGenerator.Status.DONE)
+            {
+                this.compileTask.finish();
+                this.compileTask = null;
+            }
+        }
+        finally
+        {
+            this.lockCompileTask.unlock();
+        }
+    }
 
-	public BlockPos getPosition() {
-		return this.position;
-	}
+    public ReentrantLock getLockCompileTask()
+    {
+        return this.lockCompileTask;
+    }
 
-	public void setNeedsUpdate(boolean needsUpdateIn) {
-		this.needsUpdate = needsUpdateIn;
-	}
+    public ChunkCompileTaskGenerator makeCompileTaskChunk()
+    {
+        this.lockCompileTask.lock();
+        ChunkCompileTaskGenerator chunkcompiletaskgenerator;
 
-	public boolean isNeedsUpdate() {
-		return this.needsUpdate;
-	}
+        try
+        {
+            this.finishCompileTask();
+            this.compileTask = new ChunkCompileTaskGenerator(this, ChunkCompileTaskGenerator.Type.REBUILD_CHUNK, this.getDistanceSq());
+            this.rebuildWorldView();
+            chunkcompiletaskgenerator = this.compileTask;
+        }
+        finally
+        {
+            this.lockCompileTask.unlock();
+        }
 
-	public BlockPos func_181701_a(EnumFacing parEnumFacing) {
-		return (BlockPos) this.field_181702_p.get(parEnumFacing);
-	}
+        return chunkcompiletaskgenerator;
+    }
+
+    private void rebuildWorldView()
+    {
+        int i = 1;
+        ChunkCache cache = createRegionRenderCache(this.world, this.position.add(-1, -1, -1), this.position.add(16, 16, 16), 1);
+        net.minecraftforge.client.MinecraftForgeClient.onRebuildChunk(this.world, this.position, cache);
+        this.worldView = cache;
+    }
+
+    @Nullable
+    public ChunkCompileTaskGenerator makeCompileTaskTransparency()
+    {
+        this.lockCompileTask.lock();
+        ChunkCompileTaskGenerator chunkcompiletaskgenerator;
+
+        try
+        {
+            if (this.compileTask == null || this.compileTask.getStatus() != ChunkCompileTaskGenerator.Status.PENDING)
+            {
+                if (this.compileTask != null && this.compileTask.getStatus() != ChunkCompileTaskGenerator.Status.DONE)
+                {
+                    this.compileTask.finish();
+                    this.compileTask = null;
+                }
+
+                this.compileTask = new ChunkCompileTaskGenerator(this, ChunkCompileTaskGenerator.Type.RESORT_TRANSPARENCY, this.getDistanceSq());
+                this.compileTask.setCompiledChunk(this.compiledChunk);
+                chunkcompiletaskgenerator = this.compileTask;
+                return chunkcompiletaskgenerator;
+            }
+
+            chunkcompiletaskgenerator = null;
+        }
+        finally
+        {
+            this.lockCompileTask.unlock();
+        }
+
+        return chunkcompiletaskgenerator;
+    }
+
+    protected double getDistanceSq()
+    {
+        EntityPlayerSP entityplayersp = Minecraft.getMinecraft().player;
+        double d0 = this.boundingBox.minX + 8.0D - entityplayersp.posX;
+        double d1 = this.boundingBox.minY + 8.0D - entityplayersp.posY;
+        double d2 = this.boundingBox.minZ + 8.0D - entityplayersp.posZ;
+        return d0 * d0 + d1 * d1 + d2 * d2;
+    }
+
+    private void preRenderBlocks(BufferBuilder bufferBuilderIn, BlockPos pos)
+    {
+        bufferBuilderIn.begin(7, DefaultVertexFormats.BLOCK);
+        bufferBuilderIn.setTranslation((double)(-pos.getX()), (double)(-pos.getY()), (double)(-pos.getZ()));
+    }
+
+    private void postRenderBlocks(BlockRenderLayer layer, float x, float y, float z, BufferBuilder bufferBuilderIn, CompiledChunk compiledChunkIn)
+    {
+        if (layer == BlockRenderLayer.TRANSLUCENT && !compiledChunkIn.isLayerEmpty(layer))
+        {
+            bufferBuilderIn.sortVertexData(x, y, z);
+            compiledChunkIn.setState(bufferBuilderIn.getVertexState());
+        }
+
+        bufferBuilderIn.finishDrawing();
+    }
+
+    private void initModelviewMatrix()
+    {
+        GlStateManager.pushMatrix();
+        GlStateManager.loadIdentity();
+        float f = 1.000001F;
+        GlStateManager.translate(-8.0F, -8.0F, -8.0F);
+        GlStateManager.scale(1.000001F, 1.000001F, 1.000001F);
+        GlStateManager.translate(8.0F, 8.0F, 8.0F);
+        GlStateManager.getFloat(2982, this.modelviewMatrix);
+        GlStateManager.popMatrix();
+    }
+
+    public void multModelviewMatrix()
+    {
+        GlStateManager.multMatrix(this.modelviewMatrix);
+    }
+
+    public CompiledChunk getCompiledChunk()
+    {
+        return this.compiledChunk;
+    }
+
+    public void setCompiledChunk(CompiledChunk compiledChunkIn)
+    {
+        this.lockCompiledChunk.lock();
+
+        try
+        {
+            this.compiledChunk = compiledChunkIn;
+        }
+        finally
+        {
+            this.lockCompiledChunk.unlock();
+        }
+    }
+
+    public void stopCompileTask()
+    {
+        this.finishCompileTask();
+        this.compiledChunk = CompiledChunk.DUMMY;
+    }
+
+    public void deleteGlResources()
+    {
+        this.stopCompileTask();
+        this.world = null;
+
+        for (int i = 0; i < BlockRenderLayer.values().length; ++i)
+        {
+            if (this.vertexBuffers[i] != null)
+            {
+                this.vertexBuffers[i].deleteGlBuffers();
+            }
+        }
+    }
+
+    public BlockPos getPosition()
+    {
+        return this.position;
+    }
+
+    public void setNeedsUpdate(boolean immediate)
+    {
+        if (this.needsUpdate)
+        {
+            immediate |= this.needsImmediateUpdate;
+        }
+
+        this.needsUpdate = true;
+        this.needsImmediateUpdate = immediate;
+    }
+
+    public void clearNeedsUpdate()
+    {
+        this.needsUpdate = false;
+        this.needsImmediateUpdate = false;
+    }
+
+    public boolean needsUpdate()
+    {
+        return this.needsUpdate;
+    }
+
+    public boolean needsImmediateUpdate()
+    {
+        return this.needsUpdate && this.needsImmediateUpdate;
+    }
+
+    /* ======================================== FORGE START =====================================*/
+    /**
+     * Creates a new RegionRenderCache instance.<br>
+     * Extending classes can change the behavior of the cache, allowing to visually change
+     * blocks (schematics etc).
+     *
+     * @see RegionRenderCache
+     * @param world The world to cache.
+     * @param from The starting position of the chunk minus one on each axis.
+     * @param to The ending position of the chunk plus one on each axis.
+     * @param subtract Padding used internally by the RegionRenderCache constructor to make
+     *                 the cache a 20x20x20 cube, for a total of 8000 states in the cache.
+     * @return new RegionRenderCache instance
+     */
+    protected ChunkCache createRegionRenderCache(World world, BlockPos from, BlockPos to, int subtract)
+    {
+        return new ChunkCache(world, from, to, subtract);
+    }
+    /* ========================================= FORGE END ======================================*/
+
+    public BlockPos getBlockPosOffset16(EnumFacing facing)
+    {
+        return this.mapEnumFacing[facing.ordinal()];
+    }
+
+    public World getWorld()
+    {
+        return this.world;
+    }
 }

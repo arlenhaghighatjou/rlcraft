@@ -1,58 +1,42 @@
 package net.minecraft.client.resources;
 
 import net.minecraft.client.gui.GuiScreenResourcePacks;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ResourcePackListEntryFound extends ResourcePackListEntry {
-	private final ResourcePackRepository.Entry field_148319_c;
+@SideOnly(Side.CLIENT)
+public class ResourcePackListEntryFound extends ResourcePackListEntry
+{
+    private final ResourcePackRepository.Entry resourcePackEntry;
 
-	public ResourcePackListEntryFound(GuiScreenResourcePacks resourcePacksGUIIn,
-			ResourcePackRepository.Entry parEntry) {
-		super(resourcePacksGUIIn);
-		this.field_148319_c = parEntry;
-	}
+    public ResourcePackListEntryFound(GuiScreenResourcePacks resourcePacksGUIIn, ResourcePackRepository.Entry entry)
+    {
+        super(resourcePacksGUIIn);
+        this.resourcePackEntry = entry;
+    }
 
-	protected void func_148313_c() {
-		this.field_148319_c.bindTexturePackIcon(this.mc.getTextureManager());
-	}
+    protected void bindResourcePackIcon()
+    {
+        this.resourcePackEntry.bindTexturePackIcon(this.mc.getTextureManager());
+    }
 
-	protected int func_183019_a() {
-		return this.field_148319_c.func_183027_f();
-	}
+    protected int getResourcePackFormat()
+    {
+        return this.resourcePackEntry.getPackFormat();
+    }
 
-	protected String func_148311_a() {
-		return this.field_148319_c.getTexturePackDescription();
-	}
+    protected String getResourcePackDescription()
+    {
+        return this.resourcePackEntry.getTexturePackDescription();
+    }
 
-	protected String func_148312_b() {
-		return this.field_148319_c.getResourcePackEaglerDisplayName();
-	}
+    protected String getResourcePackName()
+    {
+        return this.resourcePackEntry.getResourcePackName();
+    }
 
-	public ResourcePackRepository.Entry func_148318_i() {
-		return this.field_148319_c;
-	}
-
-	@Override
-	protected String getEaglerFolderName() {
-		return field_148319_c.getResourcePackName();
-	}
+    public ResourcePackRepository.Entry getResourcePackEntry()
+    {
+        return this.resourcePackEntry;
+    }
 }

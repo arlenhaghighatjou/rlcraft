@@ -1,243 +1,195 @@
 package net.minecraft.client.renderer.block.model;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.Set;
+import java.util.Map.Entry;
+import javax.annotation.Nullable;
+import net.minecraft.client.renderer.block.model.multipart.Multipart;
+import net.minecraft.client.renderer.block.model.multipart.Selector;
+import net.minecraft.util.JsonUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+@SideOnly(Side.CLIENT)
+public class ModelBlockDefinition
+{
+    @VisibleForTesting
+    static final Gson GSON = (new GsonBuilder()).registerTypeAdapter(ModelBlockDefinition.class, new ModelBlockDefinition.Deserializer()).registerTypeAdapter(Variant.class, new Variant.Deserializer()).registerTypeAdapter(VariantList.class, new VariantList.Deserializer()).registerTypeAdapter(Multipart.class, new Multipart.Deserializer()).registerTypeAdapter(Selector.class, new Selector.Deserializer()).create();
+    private final Map<String, VariantList> mapVariants = Maps.<String, VariantList>newHashMap();
+    private Multipart multipart;
 
-import net.lax1dude.eaglercraft.v1_8.json.JSONTypeDeserializer;
-import net.lax1dude.eaglercraft.v1_8.json.JSONTypeProvider;
-import net.minecraft.client.resources.model.ModelRotation;
-import net.minecraft.util.ResourceLocation;
+    @Deprecated
+    public static ModelBlockDefinition parseFromReader(Reader reader)
+    {
+        return parseFromReader(reader, null);
+    }
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class ModelBlockDefinition {
+    public static ModelBlockDefinition parseFromReader(Reader reader, net.minecraft.util.ResourceLocation location) {
+        return net.minecraftforge.client.model.BlockStateLoader.load(reader, location, GSON);
+    }
 
-	private final Map<String, ModelBlockDefinition.Variants> mapVariants = Maps.newHashMap();
+    public ModelBlockDefinition(Map<String, VariantList> variants, Multipart multipartIn)
+    {
+        this.multipart = multipartIn;
+        this.mapVariants.putAll(variants);
+    }
 
-	public static ModelBlockDefinition parseFromReader(Reader parReader) {
-		return (ModelBlockDefinition) JSONTypeProvider.deserialize(parReader, ModelBlockDefinition.class);
-	}
+    public ModelBlockDefinition(List<ModelBlockDefinition> p_i46222_1_)
+    {
+        ModelBlockDefinition modelblockdefinition = null;
 
-	public ModelBlockDefinition(Collection<ModelBlockDefinition.Variants> parCollection) {
-		for (ModelBlockDefinition.Variants modelblockdefinition$variants : parCollection) {
-			this.mapVariants.put(modelblockdefinition$variants.name, modelblockdefinition$variants);
-		}
+        for (ModelBlockDefinition modelblockdefinition1 : p_i46222_1_)
+        {
+            if (modelblockdefinition1.hasMultipartData())
+            {
+                this.mapVariants.clear();
+                modelblockdefinition = modelblockdefinition1;
+            }
 
-	}
+            this.mapVariants.putAll(modelblockdefinition1.mapVariants);
+        }
 
-	public ModelBlockDefinition(List<ModelBlockDefinition> parList) {
-		for (int i = 0, l = parList.size(); i < l; ++i) {
-			this.mapVariants.putAll(parList.get(i).mapVariants);
-		}
+        if (modelblockdefinition != null)
+        {
+            this.multipart = modelblockdefinition.multipart;
+        }
+    }
 
-	}
+    public boolean hasVariant(String p_188000_1_)
+    {
+        return this.mapVariants.get(p_188000_1_) != null;
+    }
 
-	public ModelBlockDefinition.Variants getVariants(String parString1) {
-		ModelBlockDefinition.Variants modelblockdefinition$variants = (ModelBlockDefinition.Variants) this.mapVariants
-				.get(parString1);
-		if (modelblockdefinition$variants == null) {
-			throw new ModelBlockDefinition.MissingVariantException();
-		} else {
-			return modelblockdefinition$variants;
-		}
-	}
+    public VariantList getVariant(String p_188004_1_)
+    {
+        VariantList variantlist = this.mapVariants.get(p_188004_1_);
 
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		} else if (object instanceof ModelBlockDefinition) {
-			ModelBlockDefinition modelblockdefinition = (ModelBlockDefinition) object;
-			return this.mapVariants.equals(modelblockdefinition.mapVariants);
-		} else {
-			return false;
-		}
-	}
+        if (variantlist == null)
+        {
+            throw new ModelBlockDefinition.MissingVariantException();
+        }
+        else
+        {
+            return variantlist;
+        }
+    }
 
-	public int hashCode() {
-		return this.mapVariants.hashCode();
-	}
+    public boolean equals(Object p_equals_1_)
+    {
+        if (this == p_equals_1_)
+        {
+            return true;
+        }
+        else
+        {
+            if (p_equals_1_ instanceof ModelBlockDefinition)
+            {
+                ModelBlockDefinition modelblockdefinition = (ModelBlockDefinition)p_equals_1_;
 
-	public static class Deserializer implements JSONTypeDeserializer<JSONObject, ModelBlockDefinition> {
-		public ModelBlockDefinition deserialize(JSONObject jsonobject) throws JSONException {
-			List list = this.parseVariantsList(jsonobject);
-			return new ModelBlockDefinition((Collection<ModelBlockDefinition.Variants>) list);
-		}
+                if (this.mapVariants.equals(modelblockdefinition.mapVariants))
+                {
+                    return this.hasMultipartData() ? this.multipart.equals(modelblockdefinition.multipart) : !modelblockdefinition.hasMultipartData();
+                }
+            }
 
-		protected List<ModelBlockDefinition.Variants> parseVariantsList(JSONObject parJsonObject) {
-			JSONObject jsonobject = parJsonObject.getJSONObject("variants");
-			ArrayList arraylist = Lists.newArrayList();
+            return false;
+        }
+    }
 
-			for (String entry : jsonobject.keySet()) {
-				arraylist.add(this.parseVariants(entry, jsonobject.get(entry)));
-			}
+    public int hashCode()
+    {
+        return 31 * this.mapVariants.hashCode() + (this.hasMultipartData() ? this.multipart.hashCode() : 0);
+    }
 
-			return arraylist;
-		}
+    public Set<VariantList> getMultipartVariants()
+    {
+        Set<VariantList> set = Sets.newHashSet(this.mapVariants.values());
 
-		protected ModelBlockDefinition.Variants parseVariants(String s, Object jsonelement) {
-			ArrayList arraylist = Lists.newArrayList();
-			if (jsonelement instanceof JSONArray) {
-				for (Object jsonelement1 : (JSONArray) jsonelement) {
-					arraylist.add(JSONTypeProvider.deserialize(jsonelement1, ModelBlockDefinition.Variant.class));
-				}
-			} else {
-				arraylist.add(JSONTypeProvider.deserialize(jsonelement, ModelBlockDefinition.Variant.class));
-			}
+        if (this.hasMultipartData())
+        {
+            set.addAll(this.multipart.getVariants());
+        }
 
-			return new ModelBlockDefinition.Variants(s, arraylist);
-		}
-	}
+        return set;
+    }
 
-	public class MissingVariantException extends RuntimeException {
-	}
+    public boolean hasMultipartData()
+    {
+        return this.multipart != null;
+    }
 
-	public static class Variant {
-		private final ResourceLocation modelLocation;
-		private final ModelRotation modelRotation;
-		private final boolean uvLock;
-		private final int weight;
+    public Multipart getMultipartData()
+    {
+        return this.multipart;
+    }
 
-		public Variant(ResourceLocation modelLocationIn, ModelRotation modelRotationIn, boolean uvLockIn,
-				int weightIn) {
-			this.modelLocation = modelLocationIn;
-			this.modelRotation = modelRotationIn;
-			this.uvLock = uvLockIn;
-			this.weight = weightIn;
-		}
+    @SideOnly(Side.CLIENT)
+    public static class Deserializer implements JsonDeserializer<ModelBlockDefinition>
+        {
+            public ModelBlockDefinition deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException
+            {
+                JsonObject jsonobject = p_deserialize_1_.getAsJsonObject();
+                Map<String, VariantList> map = this.parseMapVariants(p_deserialize_3_, jsonobject);
+                Multipart multipart = this.parseMultipart(p_deserialize_3_, jsonobject);
 
-		public ResourceLocation getModelLocation() {
-			return this.modelLocation;
-		}
+                if (!map.isEmpty() || multipart != null && !multipart.getVariants().isEmpty())
+                {
+                    return new ModelBlockDefinition(map, multipart);
+                }
+                else
+                {
+                    throw new JsonParseException("Neither 'variants' nor 'multipart' found");
+                }
+            }
 
-		public ModelRotation getRotation() {
-			return this.modelRotation;
-		}
+            protected Map<String, VariantList> parseMapVariants(JsonDeserializationContext deserializationContext, JsonObject object)
+            {
+                Map<String, VariantList> map = Maps.<String, VariantList>newHashMap();
 
-		public boolean isUvLocked() {
-			return this.uvLock;
-		}
+                if (object.has("variants"))
+                {
+                    JsonObject jsonobject = JsonUtils.getJsonObject(object, "variants");
 
-		public int getWeight() {
-			return this.weight;
-		}
+                    for (Entry<String, JsonElement> entry : jsonobject.entrySet())
+                    {
+                        map.put(entry.getKey(), (VariantList)deserializationContext.deserialize(entry.getValue(), VariantList.class));
+                    }
+                }
 
-		public boolean equals(Object object) {
-			if (this == object) {
-				return true;
-			} else if (!(object instanceof ModelBlockDefinition.Variant)) {
-				return false;
-			} else {
-				ModelBlockDefinition.Variant modelblockdefinition$variant = (ModelBlockDefinition.Variant) object;
-				return this.modelLocation.equals(modelblockdefinition$variant.modelLocation)
-						&& this.modelRotation == modelblockdefinition$variant.modelRotation
-						&& this.uvLock == modelblockdefinition$variant.uvLock;
-			}
-		}
+                return map;
+            }
 
-		public int hashCode() {
-			int i = this.modelLocation.hashCode();
-			i = 31 * i + (this.modelRotation != null ? this.modelRotation.hashCode() : 0);
-			i = 31 * i + (this.uvLock ? 1 : 0);
-			return i;
-		}
+            @Nullable
+            protected Multipart parseMultipart(JsonDeserializationContext deserializationContext, JsonObject object)
+            {
+                if (!object.has("multipart"))
+                {
+                    return null;
+                }
+                else
+                {
+                    JsonArray jsonarray = JsonUtils.getJsonArray(object, "multipart");
+                    return (Multipart)deserializationContext.deserialize(jsonarray, Multipart.class);
+                }
+            }
+        }
 
-		public static class Deserializer implements JSONTypeDeserializer<JSONObject, ModelBlockDefinition.Variant> {
-			public ModelBlockDefinition.Variant deserialize(JSONObject jsonobject) throws JSONException {
-				String s = this.parseModel(jsonobject);
-				ModelRotation modelrotation = this.parseRotation(jsonobject);
-				boolean flag = this.parseUvLock(jsonobject);
-				int i = this.parseWeight(jsonobject);
-				return new ModelBlockDefinition.Variant(this.makeModelLocation(s), modelrotation, flag, i);
-			}
-
-			private ResourceLocation makeModelLocation(String parString1) {
-				ResourceLocation resourcelocation = new ResourceLocation(parString1);
-				resourcelocation = new ResourceLocation(resourcelocation.getResourceDomain(),
-						"block/" + resourcelocation.getResourcePath());
-				return resourcelocation;
-			}
-
-			private boolean parseUvLock(JSONObject parJsonObject) {
-				return parJsonObject.optBoolean("uvlock", false);
-			}
-
-			protected ModelRotation parseRotation(JSONObject parJsonObject) {
-				int i = parJsonObject.optInt("x", 0);
-				int j = parJsonObject.optInt("y", 0);
-				ModelRotation modelrotation = ModelRotation.getModelRotation(i, j);
-				if (modelrotation == null) {
-					throw new JSONException("Invalid BlockModelRotation x: " + i + ", y: " + j);
-				} else {
-					return modelrotation;
-				}
-			}
-
-			protected String parseModel(JSONObject parJsonObject) {
-				return parJsonObject.getString("model");
-			}
-
-			protected int parseWeight(JSONObject parJsonObject) {
-				return parJsonObject.optInt("weight", 1);
-			}
-		}
-	}
-
-	public static class Variants {
-		private final String name;
-		private final List<ModelBlockDefinition.Variant> listVariants;
-
-		public Variants(String nameIn, List<ModelBlockDefinition.Variant> listVariantsIn) {
-			this.name = nameIn;
-			this.listVariants = listVariantsIn;
-		}
-
-		public List<ModelBlockDefinition.Variant> getVariants() {
-			return this.listVariants;
-		}
-
-		public boolean equals(Object object) {
-			if (this == object) {
-				return true;
-			} else if (!(object instanceof ModelBlockDefinition.Variants)) {
-				return false;
-			} else {
-				ModelBlockDefinition.Variants modelblockdefinition$variants = (ModelBlockDefinition.Variants) object;
-				return !this.name.equals(modelblockdefinition$variants.name) ? false
-						: this.listVariants.equals(modelblockdefinition$variants.listVariants);
-			}
-		}
-
-		public int hashCode() {
-			int i = this.name.hashCode();
-			i = 31 * i + this.listVariants.hashCode();
-			return i;
-		}
-	}
+    @SideOnly(Side.CLIENT)
+    public class MissingVariantException extends RuntimeException
+    {
+    }
 }

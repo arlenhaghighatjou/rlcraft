@@ -1,162 +1,222 @@
 package net.minecraft.client.gui.inventory;
 
-import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
+import java.io.IOException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.achievement.GuiAchievements;
-import net.minecraft.client.gui.achievement.GuiStats;
+import net.minecraft.client.gui.GuiButtonImage;
+import net.minecraft.client.gui.recipebook.GuiRecipeBook;
+import net.minecraft.client.gui.recipebook.IRecipeShownListener;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ClickType;
+import net.minecraft.inventory.ContainerPlayer;
+import net.minecraft.inventory.Slot;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**+
- * This portion of EaglercraftX contains deobfuscated Minecraft 1.8 source code.
- * 
- * Minecraft 1.8.8 bytecode is (c) 2015 Mojang AB. "Do not distribute!"
- * Mod Coder Pack v9.18 deobfuscation configs are (c) Copyright by the MCP Team
- * 
- * EaglercraftX 1.8 patch files (c) 2022-2025 lax1dude, ayunami2000. All Rights Reserved.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * 
- */
-public class GuiInventory extends InventoryEffectRenderer {
-	private float oldMouseX;
-	private float oldMouseY;
+@SideOnly(Side.CLIENT)
+public class GuiInventory extends InventoryEffectRenderer implements IRecipeShownListener
+{
+    private float oldMouseX;
+    private float oldMouseY;
+    private GuiButtonImage recipeButton;
+    private final GuiRecipeBook recipeBookGui = new GuiRecipeBook();
+    private boolean widthTooNarrow;
+    private boolean buttonClicked;
 
-	public GuiInventory(EntityPlayer parEntityPlayer) {
-		super(parEntityPlayer.inventoryContainer);
-		this.allowUserInput = true;
-	}
+    public GuiInventory(EntityPlayer player)
+    {
+        super(player.inventoryContainer);
+        this.allowUserInput = true;
+    }
 
-	/**+
-	 * Called from the main game loop to update the screen.
-	 */
-	public void updateScreen() {
-		if (this.mc.playerController.isInCreativeMode()) {
-			this.mc.displayGuiScreen(new GuiContainerCreative(this.mc.thePlayer));
-		}
+    public void updateScreen()
+    {
+        if (this.mc.playerController.isInCreativeMode())
+        {
+            this.mc.displayGuiScreen(new GuiContainerCreative(this.mc.player));
+        }
 
-		this.updateActivePotionEffects();
-	}
+        this.recipeBookGui.tick();
+    }
 
-	/**+
-	 * Adds the buttons (and other controls) to the screen in
-	 * question. Called when the GUI is displayed and when the
-	 * window resizes, the buttonList is cleared beforehand.
-	 */
-	public void initGui() {
-		this.buttonList.clear();
-		if (this.mc.playerController.isInCreativeMode()) {
-			this.mc.displayGuiScreen(new GuiContainerCreative(this.mc.thePlayer));
-		} else {
-			super.initGui();
-		}
+    public void initGui()
+    {
+        this.buttonList.clear();
 
-	}
+        if (this.mc.playerController.isInCreativeMode())
+        {
+            this.mc.displayGuiScreen(new GuiContainerCreative(this.mc.player));
+        }
+        else
+        {
+            super.initGui();
+        }
 
-	/**+
-	 * Draw the foreground layer for the GuiContainer (everything in
-	 * front of the items). Args : mouseX, mouseY
-	 */
-	protected void drawGuiContainerForegroundLayer(int var1, int var2) {
-		this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 86, 16, 4210752);
-	}
+        this.widthTooNarrow = this.width < 379;
+        this.recipeBookGui.func_194303_a(this.width, this.height, this.mc, this.widthTooNarrow, ((ContainerPlayer)this.inventorySlots).craftMatrix);
+        this.guiLeft = this.recipeBookGui.updateScreenPosition(this.widthTooNarrow, this.width, this.xSize);
+        this.recipeButton = new GuiButtonImage(10, this.guiLeft + 104, this.height / 2 - 22, 20, 18, 178, 0, 19, INVENTORY_BACKGROUND);
+        this.buttonList.add(this.recipeButton);
+    }
 
-	/**+
-	 * Draws the screen and all the components in it. Args : mouseX,
-	 * mouseY, renderPartialTicks
-	 */
-	public void drawScreen(int i, int j, float f) {
-		super.drawScreen(i, j, f);
-		this.oldMouseX = (float) i;
-		this.oldMouseY = (float) j;
-	}
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
+    {
+        this.fontRenderer.drawString(I18n.format("container.crafting"), 97, 8, 4210752);
+    }
 
-	/**+
-	 * Args : renderPartialTicks, mouseX, mouseY
-	 */
-	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		this.mc.getTextureManager().bindTexture(inventoryBackground);
-		int i = this.guiLeft;
-		int j = this.guiTop;
-		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
-		GlStateManager.enableDepth();
-		drawEntityOnScreen(i + 51, j + 75, 30, (float) (i + 51) - this.oldMouseX,
-				(float) (j + 75 - 50) - this.oldMouseY, this.mc.thePlayer);
-		GlStateManager.disableDepth();
-	}
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    {
+        this.drawDefaultBackground();
+        this.hasActivePotionEffects = !this.recipeBookGui.isVisible();
 
-	/**+
-	 * Draws the entity to the screen. Args: xPos, yPos, scale,
-	 * mouseX, mouseY, entityLiving
-	 */
-	public static void drawEntityOnScreen(int posX, int posY, int scale, float mouseX, float mouseY,
-			EntityLivingBase ent) {
-		GlStateManager.enableColorMaterial();
-		GlStateManager.pushMatrix();
-		GlStateManager.translate((float) posX, (float) posY, 50.0F);
-		GlStateManager.scale((float) (-scale), (float) scale, (float) scale);
-		GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
-		float f = ent.renderYawOffset;
-		float f1 = ent.rotationYaw;
-		float f2 = ent.rotationPitch;
-		float f3 = ent.prevRotationYawHead;
-		float f4 = ent.rotationYawHead;
-		GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
-		RenderHelper.enableStandardItemLighting();
-		GlStateManager.rotate(-135.0F, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(-((float) Math.atan((double) (mouseY / 40.0F))) * 20.0F, 1.0F, 0.0F, 0.0F);
-		ent.renderYawOffset = (float) Math.atan((double) (mouseX / 40.0F)) * 20.0F;
-		ent.rotationYaw = (float) Math.atan((double) (mouseX / 40.0F)) * 40.0F;
-		ent.rotationPitch = -((float) Math.atan((double) (mouseY / 40.0F))) * 20.0F;
-		ent.rotationYawHead = ent.rotationYaw;
-		ent.prevRotationYawHead = ent.rotationYaw;
-		GlStateManager.translate(0.0F, 0.0F, 0.0F);
-		RenderManager rendermanager = Minecraft.getMinecraft().getRenderManager();
-		rendermanager.setPlayerViewY(180.0F);
-		rendermanager.setRenderShadow(false);
-		rendermanager.renderEntityWithPosYaw(ent, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F);
-		rendermanager.setRenderShadow(true);
-		ent.renderYawOffset = f;
-		ent.rotationYaw = f1;
-		ent.rotationPitch = f2;
-		ent.prevRotationYawHead = f3;
-		ent.rotationYawHead = f4;
-		GlStateManager.popMatrix();
-		RenderHelper.disableStandardItemLighting();
-		GlStateManager.disableRescaleNormal();
-		GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-		GlStateManager.disableTexture2D();
-		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
-	}
+        if (this.recipeBookGui.isVisible() && this.widthTooNarrow)
+        {
+            this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+            this.recipeBookGui.render(mouseX, mouseY, partialTicks);
+        }
+        else
+        {
+            this.recipeBookGui.render(mouseX, mouseY, partialTicks);
+            super.drawScreen(mouseX, mouseY, partialTicks);
+            this.recipeBookGui.renderGhostRecipe(this.guiLeft, this.guiTop, false, partialTicks);
+        }
 
-	/**+
-	 * Called by the controls from the buttonList when activated.
-	 * (Mouse pressed for buttons)
-	 */
-	protected void actionPerformed(GuiButton parGuiButton) {
-		if (parGuiButton.id == 0) {
-			this.mc.displayGuiScreen(new GuiAchievements(this, this.mc.thePlayer.getStatFileWriter()));
-		}
+        this.renderHoveredToolTip(mouseX, mouseY);
+        this.recipeBookGui.renderTooltip(this.guiLeft, this.guiTop, mouseX, mouseY);
+        this.oldMouseX = (float)mouseX;
+        this.oldMouseY = (float)mouseY;
+    }
 
-		if (parGuiButton.id == 1) {
-			this.mc.displayGuiScreen(new GuiStats(this, this.mc.thePlayer.getStatFileWriter()));
-		}
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
+    {
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        this.mc.getTextureManager().bindTexture(INVENTORY_BACKGROUND);
+        int i = this.guiLeft;
+        int j = this.guiTop;
+        this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
+        drawEntityOnScreen(i + 51, j + 75, 30, (float)(i + 51) - this.oldMouseX, (float)(j + 75 - 50) - this.oldMouseY, this.mc.player);
+    }
 
-	}
+    public static void drawEntityOnScreen(int posX, int posY, int scale, float mouseX, float mouseY, EntityLivingBase ent)
+    {
+        GlStateManager.enableColorMaterial();
+        GlStateManager.pushMatrix();
+        GlStateManager.translate((float)posX, (float)posY, 50.0F);
+        GlStateManager.scale((float)(-scale), (float)scale, (float)scale);
+        GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
+        float f = ent.renderYawOffset;
+        float f1 = ent.rotationYaw;
+        float f2 = ent.rotationPitch;
+        float f3 = ent.prevRotationYawHead;
+        float f4 = ent.rotationYawHead;
+        GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
+        RenderHelper.enableStandardItemLighting();
+        GlStateManager.rotate(-135.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(-((float)Math.atan((double)(mouseY / 40.0F))) * 20.0F, 1.0F, 0.0F, 0.0F);
+        ent.renderYawOffset = (float)Math.atan((double)(mouseX / 40.0F)) * 20.0F;
+        ent.rotationYaw = (float)Math.atan((double)(mouseX / 40.0F)) * 40.0F;
+        ent.rotationPitch = -((float)Math.atan((double)(mouseY / 40.0F))) * 20.0F;
+        ent.rotationYawHead = ent.rotationYaw;
+        ent.prevRotationYawHead = ent.rotationYaw;
+        GlStateManager.translate(0.0F, 0.0F, 0.0F);
+        RenderManager rendermanager = Minecraft.getMinecraft().getRenderManager();
+        rendermanager.setPlayerViewY(180.0F);
+        rendermanager.setRenderShadow(false);
+        rendermanager.renderEntity(ent, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
+        rendermanager.setRenderShadow(true);
+        ent.renderYawOffset = f;
+        ent.rotationYaw = f1;
+        ent.rotationPitch = f2;
+        ent.prevRotationYawHead = f3;
+        ent.rotationYawHead = f4;
+        GlStateManager.popMatrix();
+        RenderHelper.disableStandardItemLighting();
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+        GlStateManager.disableTexture2D();
+        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+    }
+
+    protected boolean isPointInRegion(int rectX, int rectY, int rectWidth, int rectHeight, int pointX, int pointY)
+    {
+        return (!this.widthTooNarrow || !this.recipeBookGui.isVisible()) && super.isPointInRegion(rectX, rectY, rectWidth, rectHeight, pointX, pointY);
+    }
+
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+    {
+        if (!this.recipeBookGui.mouseClicked(mouseX, mouseY, mouseButton))
+        {
+            if (!this.widthTooNarrow || !this.recipeBookGui.isVisible())
+            {
+                super.mouseClicked(mouseX, mouseY, mouseButton);
+            }
+        }
+    }
+
+    protected void mouseReleased(int mouseX, int mouseY, int state)
+    {
+        if (this.buttonClicked)
+        {
+            this.buttonClicked = false;
+        }
+        else
+        {
+            super.mouseReleased(mouseX, mouseY, state);
+        }
+    }
+
+    protected boolean hasClickedOutside(int p_193983_1_, int p_193983_2_, int p_193983_3_, int p_193983_4_)
+    {
+        boolean flag = p_193983_1_ < p_193983_3_ || p_193983_2_ < p_193983_4_ || p_193983_1_ >= p_193983_3_ + this.xSize || p_193983_2_ >= p_193983_4_ + this.ySize;
+        return this.recipeBookGui.hasClickedOutside(p_193983_1_, p_193983_2_, this.guiLeft, this.guiTop, this.xSize, this.ySize) && flag;
+    }
+
+    protected void actionPerformed(GuiButton button) throws IOException
+    {
+        if (button.id == 10)
+        {
+            this.recipeBookGui.initVisuals(this.widthTooNarrow, ((ContainerPlayer)this.inventorySlots).craftMatrix);
+            this.recipeBookGui.toggleVisibility();
+            this.guiLeft = this.recipeBookGui.updateScreenPosition(this.widthTooNarrow, this.width, this.xSize);
+            this.recipeButton.setPosition(this.guiLeft + 104, this.height / 2 - 22);
+            this.buttonClicked = true;
+        }
+    }
+
+    protected void keyTyped(char typedChar, int keyCode) throws IOException
+    {
+        if (!this.recipeBookGui.keyPressed(typedChar, keyCode))
+        {
+            super.keyTyped(typedChar, keyCode);
+        }
+    }
+
+    protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type)
+    {
+        super.handleMouseClick(slotIn, slotId, mouseButton, type);
+        this.recipeBookGui.slotClicked(slotIn);
+    }
+
+    public void recipesUpdated()
+    {
+        this.recipeBookGui.recipesUpdated();
+    }
+
+    public void onGuiClosed()
+    {
+        this.recipeBookGui.removed();
+        super.onGuiClosed();
+    }
+
+    public GuiRecipeBook func_194310_f()
+    {
+        return this.recipeBookGui;
+    }
 }
