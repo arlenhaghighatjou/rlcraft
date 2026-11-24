@@ -1,5 +1,10 @@
 package net.minecraft.client;
 
+import static net.lax1dude.eaglercraft.v1_8.internal.PlatformOpenGL._wglBindFramebuffer;
+import net.lax1dude.eaglercraft.v1_8.internal.ContextLostError;
+import net.lax1dude.eaglercraft.v1_8.internal.EnumPlatformType;
+import net.lax1dude.eaglercraft.v1_8.internal.PlatformRuntime;
+import net.lax1dude.eaglercraft.v1_8.internal.PlatformWebRTC;
 import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import com.google.common.collect.Lists;
@@ -8,26 +13,17 @@ import com.google.common.hash.Hashing;
 import net.lax1dude.eaglercraft.v1_8.futures.Futures;
 import net.lax1dude.eaglercraft.v1_8.futures.ListenableFuture;
 import net.lax1dude.eaglercraft.v1_8.futures.ListenableFutureTask;
-import com.mojang.authlib.AuthenticationService;
+import net.lax1dude.eaglercraft.v1_8.futures.Executors;
+import net.lax1dude.eaglercraft.v1_8.futures.FutureTask;
 import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
-import com.mojang.authlib.GameProfileRepository;
-import com.mojang.authlib.minecraft.MinecraftSessionService;
-import com.mojang.authlib.properties.PropertyMap;
-import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.Proxy;
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayDeque;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -35,14 +31,11 @@ import java.util.Queue;
 import java.util.Set;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
-import javax.imageio.ImageIO;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -56,11 +49,9 @@ import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiMemoryErrorScreen;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiScreenWorking;
 import net.minecraft.client.gui.GuiSleepMP;
 import net.minecraft.client.gui.GuiWinGame;
 import net.minecraft.client.gui.ScaledResolution;
@@ -72,11 +63,12 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.gui.recipebook.RecipeList;
 import net.minecraft.client.gui.toasts.GuiToast;
 import net.minecraft.client.main.GameConfiguration;
-import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.network.NetHandlerLoginClient;
+import net.minecraft.client.multiplayer.GuiConnecting;
+import net.minecraft.client.multiplayer.ServerAddress;
+import net.minecraft.client.multiplayer.ServerList;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
@@ -85,6 +77,17 @@ import net.minecraft.client.renderer.EntityRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglerMeshLoader;
+import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.BlockVertexIDs;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DebugFramebufferView;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.EaglerDeferredPipeline;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.ShaderPackInfoReloadListener;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.program.ShaderSource;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.texture.EmissiveItems;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.texture.MetalsLUT;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.texture.PBRTextureMapUtils;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.texture.TemperaturesLUT;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
@@ -109,7 +112,6 @@ import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.LanguageManager;
 import net.minecraft.client.resources.ResourcePackRepository;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
-import net.minecraft.client.resources.SkinManager;
 import net.minecraft.client.resources.data.AnimationMetadataSection;
 import net.minecraft.client.resources.data.AnimationMetadataSectionSerializer;
 import net.minecraft.client.resources.data.FontMetadataSection;
@@ -124,7 +126,6 @@ import net.minecraft.client.resources.data.TextureMetadataSectionSerializer;
 import net.minecraft.client.settings.CreativeSettings;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.tutorial.Tutorial;
 import net.minecraft.client.util.ISearchTree;
 import net.minecraft.client.util.ITooltipFlag;
@@ -155,16 +156,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.network.EnumConnectionState;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.CPacketLoginStart;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
-import net.minecraft.profiler.ISnooperInfo;
 import net.minecraft.profiler.Profiler;
-import net.minecraft.profiler.Snooper;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.integrated.IntegratedServer;
-import net.minecraft.server.management.PlayerProfileCache;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.stats.StatisticsManager;
 import net.minecraft.tileentity.TileEntity;
@@ -195,58 +190,81 @@ import net.minecraft.util.text.TextComponentKeybind;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.LanguageMap;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.WorldProviderEnd;
 import net.minecraft.world.WorldProviderHell;
 import net.minecraft.world.WorldSettings;
-import net.minecraft.world.chunk.storage.AnvilSaveConverter;
-import net.minecraft.world.storage.ISaveFormat;
-import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.io.Charsets;
 import net.lax1dude.eaglercraft.v1_8.IOUtils;
 import org.apache.commons.lang3.Validate;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.Sys;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
-import org.lwjgl.opengl.ContextCapabilities;
 import net.lax1dude.eaglercraft.v1_8.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GLContext;
-import org.lwjgl.opengl.OpenGLException;
-import org.lwjgl.opengl.PixelFormat;
-import org.lwjgl.util.glu.GLU;
+import net.lax1dude.eaglercraft.v1_8.ClientUUIDLoadingCache;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.EagUtils;
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.lax1dude.eaglercraft.v1_8.PauseMenuCustomizeState;
+import net.lax1dude.eaglercraft.v1_8.PointerInputAbstraction;
+import net.lax1dude.eaglercraft.v1_8.Touch;
+import net.lax1dude.eaglercraft.v1_8.cookie.ServerCookieDataStore;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerFolderResourcePack;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerFontRenderer;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EnumInputEvent;
+import net.lax1dude.eaglercraft.v1_8.minecraft.GuiScreenGenericErrorMessage;
+import net.lax1dude.eaglercraft.v1_8.minecraft.GuiScreenVSyncReEnabled;
+import net.lax1dude.eaglercraft.v1_8.minecraft.GuiScreenVideoSettingsWarning;
+import net.lax1dude.eaglercraft.v1_8.notifications.ServerNotificationRenderer;
+import net.lax1dude.eaglercraft.v1_8.profanity_filter.GuiScreenContentWarning;
+import net.lax1dude.eaglercraft.v1_8.profile.EaglerProfile;
+import net.lax1dude.eaglercraft.v1_8.profile.GuiScreenEditProfile;
+import net.lax1dude.eaglercraft.v1_8.profile.SkinPreviewRenderer;
+import net.lax1dude.eaglercraft.v1_8.socket.AddressResolver;
+import net.lax1dude.eaglercraft.v1_8.socket.EaglercraftNetworkManager;
+import net.lax1dude.eaglercraft.v1_8.socket.RateLimitTracker;
+import net.lax1dude.eaglercraft.v1_8.socket.protocol.client.StateFlags;
+import net.lax1dude.eaglercraft.v1_8.sp.IntegratedServerState;
+import net.lax1dude.eaglercraft.v1_8.sp.SingleplayerServerController;
+import net.lax1dude.eaglercraft.v1_8.sp.SkullCommand;
+import net.lax1dude.eaglercraft.v1_8.sp.gui.GuiScreenIntegratedServerBusy;
+import net.lax1dude.eaglercraft.v1_8.sp.gui.GuiScreenSingleplayerConnecting;
+import net.lax1dude.eaglercraft.v1_8.sp.lan.LANServerController;
+import net.lax1dude.eaglercraft.v1_8.touch_gui.TouchControls;
+import net.lax1dude.eaglercraft.v1_8.touch_gui.TouchOverlayRenderer;
+import net.lax1dude.eaglercraft.v1_8.update.GuiUpdateDownloadSuccess;
+import net.lax1dude.eaglercraft.v1_8.update.GuiUpdateInstallOptions;
+import net.lax1dude.eaglercraft.v1_8.update.RelayUpdateChecker;
+import net.lax1dude.eaglercraft.v1_8.update.UpdateDataObj;
+import net.lax1dude.eaglercraft.v1_8.update.UpdateResultObj;
+import net.lax1dude.eaglercraft.v1_8.update.UpdateService;
+import net.lax1dude.eaglercraft.v1_8.voice.GuiVoiceOverlay;
+import net.lax1dude.eaglercraft.v1_8.voice.VoiceClientController;
+import net.lax1dude.eaglercraft.v1_8.webview.WebViewOverlayController;
+import net.optifine.Config;
 
 @SideOnly(Side.CLIENT)
-public class Minecraft implements IThreadListener, ISnooperInfo
+public class Minecraft implements IThreadListener
 {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ResourceLocation LOCATION_MOJANG_PNG = new ResourceLocation("textures/gui/title/mojang.png");
-    public static final boolean IS_RUNNING_ON_MAC = Util.getOSType() == Util.EnumOS.OSX;
-    public static byte[] memoryReserve = new byte[10485760];
-    private static final List<DisplayMode> MAC_DISPLAY_MODES = Lists.newArrayList(new DisplayMode(2560, 1600), new DisplayMode(2880, 1800));
-    private final File fileResourcepacks;
-    private final PropertyMap twitchDetails;
-    private final PropertyMap profileProperties;
     private ServerData currentServerData;
     public TextureManager renderEngine;
     private static Minecraft instance;
     private final DataFixer dataFixer;
     public PlayerControllerMP playerController;
     private boolean fullscreen;
-    private final boolean enableGLErrorChecking = true;
+    private boolean enableGLErrorChecking = false;
     private boolean hasCrashed;
     private CrashReport crashReporter;
     public int displayWidth;
     public int displayHeight;
-    private boolean connectedToRealms;
+    public float displayDPI;
     private final Timer timer = new Timer(20.0F);
-    private final Snooper usageSnooper = new Snooper("client", this, MinecraftServer.getCurrentTimeMillis());
     public WorldClient world;
     public RenderGlobal renderGlobal;
     private RenderManager renderManager;
@@ -260,6 +278,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
     private SearchTreeManager searchTreeManager = new SearchTreeManager();
     private final Session session;
     private boolean isGamePaused;
+    private boolean wasPaused;
     private float renderPartialTicksPaused;
     public FontRenderer fontRenderer;
     public FontRenderer standardGalacticFontRenderer;
@@ -271,20 +290,14 @@ public class Minecraft implements IThreadListener, ISnooperInfo
     private int leftClickCounter;
     private final int tempDisplayWidth;
     private final int tempDisplayHeight;
-    @Nullable
-    private IntegratedServer integratedServer;
     public GuiIngame ingameGUI;
     public boolean skipRenderWorld;
     public RayTraceResult objectMouseOver;
     public GameSettings gameSettings;
     public CreativeSettings creativeSettings;
     public MouseHelper mouseHelper;
-    public final File mcDataDir;
-    private final File fileAssets;
     private final String launchedVersion;
     private final String versionType;
-    private final Proxy proxy;
-    private ISaveFormat saveLoader;
     private static int debugFPS;
     private int rightClickDelayTimer;
     private String serverName;
@@ -295,9 +308,8 @@ public class Minecraft implements IThreadListener, ISnooperInfo
     public final FrameTimer frameTimer = new FrameTimer();
     long startNanoTime = System.nanoTime();
     private final boolean jvm64bit;
-    private final boolean isDemo;
     @Nullable
-    private NetworkManager myNetworkManager;
+    private EaglercraftNetworkManager myNetworkManager;
     private boolean integratedServerIsRunning;
     public final Profiler mcProfiler = new Profiler();
     private long debugCrashKeyPressTime = -1L;
@@ -309,13 +321,10 @@ public class Minecraft implements IThreadListener, ISnooperInfo
     private LanguageManager mcLanguageManager;
     private BlockColors blockColors;
     private ItemColors itemColors;
-    private Framebuffer framebufferMc;
     private TextureMap textureMapBlocks;
     private SoundHandler mcSoundHandler;
     private MusicTicker mcMusicTicker;
     private ResourceLocation mojangLogo;
-    private final MinecraftSessionService sessionService;
-    private SkinManager skinManager;
     private final Queue < FutureTask<? >> scheduledTasks = new ArrayDeque<>();
     private final Thread mcThread = Thread.currentThread();
     private ModelManager modelManager;
@@ -329,7 +338,22 @@ public class Minecraft implements IThreadListener, ISnooperInfo
     private boolean actionKeyF3;
     private final Tutorial tutorial;
     long prevFrameTime = -1L;
-    private String debugProfilerName = "root";
+    public int joinWorldTickCounter = 0;
+    private int dontPauseTimer = 0;
+    private boolean isLANOpen = false;
+    public SkullCommand eagskullCommand;
+    public GuiVoiceOverlay voiceOverlay;
+    public ServerNotificationRenderer notifRenderer;
+    public TouchOverlayRenderer touchOverlayRenderer;
+    public float startZoomValue = 18.0f;
+    public float adjustedZoomValue = 18.0f;
+    public boolean isZoomKey = false;
+    private String reconnectURI = null;
+    public boolean mouseGrabSupported = false;
+    public ScaledResolution scaledResolution = null;
+    private long placeTouchStartTime = -1L;
+    private long mineTouchStartTime = -1L;
+    private boolean wasMiningTouch = false;
 
     public Minecraft(GameConfiguration gameConfig)
     {
@@ -644,11 +668,6 @@ public class Minecraft implements IThreadListener, ISnooperInfo
     private static boolean isJvm64bit()
     {
         return true;
-    }
-
-    public Framebuffer getFramebuffer()
-    {
-        return this.framebufferMc;
     }
 
     public String getVersion()
@@ -1126,11 +1145,6 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         if (this.currentScreen == null)
         {
             this.displayGuiScreen(new GuiIngameMenu());
-
-            if (this.isSingleplayer() && !this.integratedServer.getPublic())
-            {
-                this.mcSoundHandler.pauseSounds();
-            }
         }
     }
 
@@ -1277,11 +1291,6 @@ public class Minecraft implements IThreadListener, ISnooperInfo
     public void toggleFullscreen()
     {
         Display.toggleFullscreen();
-    }
-
-    public boolean isFullScreen()
-    {
-        return Display.isFullscreen();
     }
 
     private void resize(int width, int height)
@@ -2282,89 +2291,13 @@ public class Minecraft implements IThreadListener, ISnooperInfo
 
     public void launchIntegratedServer(String folderName, String worldName, @Nullable WorldSettings worldSettingsIn)
     {
-        net.minecraftforge.fml.client.FMLClientHandler.instance().startIntegratedServer(folderName, worldName, worldSettingsIn);
         this.loadWorld((WorldClient)null);
-        System.gc();
-        ISaveHandler isavehandler = this.saveLoader.getSaveLoader(folderName, false);
-        WorldInfo worldinfo = isavehandler.loadWorldInfo();
-
-        if (worldinfo == null && worldSettingsIn != null)
-        {
-            worldinfo = new WorldInfo(worldSettingsIn, folderName);
-            isavehandler.saveWorldInfo(worldinfo);
-        }
-
-        if (worldSettingsIn == null)
-        {
-            worldSettingsIn = new WorldSettings(worldinfo);
-        }
-
-        try
-        {
-            YggdrasilAuthenticationService yggdrasilauthenticationservice = new YggdrasilAuthenticationService(this.proxy, EaglercraftUUID.randomUUID().toString());
-            MinecraftSessionService minecraftsessionservice = yggdrasilauthenticationservice.createMinecraftSessionService();
-            GameProfileRepository gameprofilerepository = yggdrasilauthenticationservice.createProfileRepository();
-            PlayerProfileCache playerprofilecache = new PlayerProfileCache(gameprofilerepository, new File(this.mcDataDir, MinecraftServer.USER_CACHE_FILE.getName()));
-            TileEntitySkull.setProfileCache(playerprofilecache);
-            TileEntitySkull.setSessionService(minecraftsessionservice);
-            PlayerProfileCache.setOnlineMode(false);
-            this.integratedServer = new IntegratedServer(this, folderName, worldName, worldSettingsIn, yggdrasilauthenticationservice, minecraftsessionservice, gameprofilerepository, playerprofilecache);
-            this.integratedServer.startServerThread();
-            this.integratedServerIsRunning = true;
-        }
-        catch (Throwable throwable)
-        {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Starting integrated server");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("Starting integrated server");
-            crashreportcategory.addCrashSection("Level ID", folderName);
-            crashreportcategory.addCrashSection("Level Name", worldName);
-            throw new ReportedException(crashreport);
-        }
-
-        this.loadingScreen.displaySavingString(I18n.format("menu.loadingLevel"));
-
-        while (!this.integratedServer.serverIsInRunLoop())
-        {
-            if (!net.minecraftforge.fml.common.StartupQuery.check() || this.integratedServer.isServerStopped())
-            {
-                loadWorld(null);
-                displayGuiScreen(null);
-                return;
-            }
-            String s = this.integratedServer.getUserMessage();
-
-            if (s != null)
-            {
-                this.loadingScreen.displayLoadingString(I18n.format(s));
-            }
-            else
-            {
-                this.loadingScreen.displayLoadingString("");
-            }
-
-            try
-            {
-                Thread.sleep(200L);
-            }
-            catch (InterruptedException var10)
-            {
-                ;
-            }
-        }
-
-        this.displayGuiScreen(new GuiScreenWorking());
-        SocketAddress socketaddress = this.integratedServer.getNetworkSystem().addLocalEndpoint();
-        NetworkManager networkmanager = NetworkManager.provideLocalClient(socketaddress);
-        networkmanager.setNetHandler(new NetHandlerLoginClient(networkmanager, this, (GuiScreen)null));
-        networkmanager.sendPacket(new C00Handshake(socketaddress.toString(), 0, EnumConnectionState.LOGIN, true));
-        net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile gameProfile = this.getSession().getProfile();
-        if (!this.getSession().hasCachedProperties())
-        {
-            gameProfile = sessionService.fillProfileProperties(gameProfile, true); //Forge: Fill profile properties upon game load. Fixes MC-52974.
-            this.getSession().setProperties(gameProfile.getProperties());
-        }
-        networkmanager.sendPacket(new CPacketLoginStart(gameProfile));
-        this.myNetworkManager = networkmanager;
+        this.renderManager.setEnableFNAWSkins(this.gameSettings.enableFNAWSkins);
+        SingleplayerServerController.launchEaglercraftServer(folderName, this.gameSettings.difficulty.getDifficultyId(), Math.max(this.gameSettings.renderDistanceChunks, 2), worldSettingsIn);
+        EagRuntime.setMCServerWindowGlobal("singleplayer");
+        this.displayGuiScreen(new GuiScreenIntegratedServerBusy(new GuiScreenSingleplayerConnecting(new GuiMainMenu(), "Connecting to " + folderName), "singleplayer.busy.startingIntegratedServer", "singleplayer.failed.startingIntegratedServer", () -> SingleplayerServerController.isWorldReady(), (t, u) -> {
+            Minecraft.this.displayGuiScreen(GuiScreenIntegratedServerBusy.createException(new GuiMainMenu(), ((GuiScreenIntegratedServerBusy)t).failMessage, u));
+        }));
     }
 
     public void loadWorld(@Nullable WorldClient worldClientIn)
@@ -2385,25 +2318,14 @@ public class Minecraft implements IThreadListener, ISnooperInfo
                 nethandlerplayclient.cleanup();
             }
 
-            if (this.integratedServer != null && this.integratedServer.isAnvilFileSet())
-            {
-                this.integratedServer.initiateShutdown();
-                if (loadingScreen != null && this.running)
-                {
-                    this.loadingScreen.displayLoadingString(I18n.format("forge.client.shutdown.internal"));
-                }
-                while (!integratedServer.isServerStopped())
-                {
-                    try
-                    {
-                        Thread.sleep(10);
-                    }
-                    catch (InterruptedException ie) {}
-                }
-            }
-
-            this.integratedServer = null;
+            this.session.reset();
+            EaglerProfile.clearServerSkinOverride();
+            PauseMenuCustomizeState.reset();
+            ClientUUIDLoadingCache.flushRequestCache();
+            StateFlags.reset();
+            WebViewOverlayController.setPacketSendCallback(null);
             this.entityRenderer.resetData();
+            this.entityRenderer.getMapItemRenderer().clearLoadedMaps();
             this.playerController = null;
             NarratorChatListener.INSTANCE.clear();
         }
@@ -2444,17 +2366,6 @@ public class Minecraft implements IThreadListener, ISnooperInfo
 
         if (worldClientIn != null)
         {
-            if (!this.integratedServerIsRunning)
-            {
-                AuthenticationService authenticationservice = new YggdrasilAuthenticationService(this.proxy, EaglercraftUUID.randomUUID().toString());
-                MinecraftSessionService minecraftsessionservice = authenticationservice.createMinecraftSessionService();
-                GameProfileRepository gameprofilerepository = authenticationservice.createProfileRepository();
-                PlayerProfileCache playerprofilecache = new PlayerProfileCache(gameprofilerepository, new File(this.mcDataDir, MinecraftServer.USER_CACHE_FILE.getName()));
-                TileEntitySkull.setProfileCache(playerprofilecache);
-                TileEntitySkull.setSessionService(minecraftsessionservice);
-                PlayerProfileCache.setOnlineMode(false);
-            }
-
             if (this.player == null)
             {
                 this.player = this.playerController.createPlayer(worldClientIn, new StatisticsManager(), new RecipeBookClient());
@@ -2469,7 +2380,6 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         }
         else
         {
-            this.saveLoader.flushCache();
             this.player = null;
         }
 
@@ -2511,11 +2421,6 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         {
             this.displayGuiScreen((GuiScreen)null);
         }
-    }
-
-    public final boolean isDemo()
-    {
-        return this.isDemo;
     }
 
     @Nullable
@@ -2585,44 +2490,98 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         {
             public String call() throws Exception
             {
-                return Sys.getVersion();
+                return EagRuntime.getVersion();
             }
         });
         theCrash.getCategory().addDetail("OpenGL", new ICrashReportDetail<String>()
         {
-            public String call()
+            public String call() throws Exception
             {
                 return EaglercraftGPU.glGetString(7937) + " GL version " + EaglercraftGPU.glGetString(7938) + ", " + EaglercraftGPU.glGetString(7936);
             }
         });
-        theCrash.getCategory().addDetail("GL Caps", new ICrashReportDetail<String>()
+        theCrash.getCategory().addDetail("Is Eagler Shaders", new ICrashReportDetail<String>()
         {
-            public String call()
+            public String call() throws Exception
             {
-                return OpenGlHelper.getLogText();
+                return Minecraft.this.gameSettings.shaders ? "Yes" : "No";
             }
         });
-        theCrash.getCategory().addDetail("Using VBOs", new ICrashReportDetail<String>()
+        theCrash.getCategory().addDetail("Is Dynamic Lights", new ICrashReportDetail<String>()
         {
-            public String call()
+            public String call() throws Exception
             {
-                return Minecraft.this.gameSettings.useVbo ? "Yes" : "No";
+                return !Minecraft.this.gameSettings.shaders && Minecraft.this.gameSettings.enableDynamicLights ? "Yes" : "No";
+            }
+        });
+        theCrash.getCategory().addDetail("In Ext. Pipeline", new ICrashReportDetail<String>()
+        {
+            public String call() throws Exception
+            {
+                return GlStateManager.isExtensionPipeline() ? "Yes" : "No";
+            }
+        });
+        theCrash.getCategory().addDetail("GPU Shader5 Capable", new ICrashReportDetail<String>()
+        {
+            public String call() throws Exception
+            {
+                return EaglercraftGPU.checkShader5Capable() ? "Yes" : "No";
+            }
+        });
+        theCrash.getCategory().addDetail("GPU TexStorage Capable", new ICrashReportDetail<String>()
+        {
+            public String call() throws Exception
+            {
+                return EaglercraftGPU.checkTexStorageCapable() ? "Yes" : "No";
+            }
+        });
+        theCrash.getCategory().addDetail("GPU TextureLOD Capable", new ICrashReportDetail<String>()
+        {
+            public String call() throws Exception
+            {
+                return EaglercraftGPU.checkTextureLODCapable() ? "Yes" : "No";
+            }
+        });
+        theCrash.getCategory().addDetail("GPU Instancing Capable", new ICrashReportDetail<String>()
+        {
+            public String call() throws Exception
+            {
+                return EaglercraftGPU.checkInstancingCapable() ? "Yes" : "No";
+            }
+        });
+        theCrash.getCategory().addDetail("GPU VAO Capable", new ICrashReportDetail<String>()
+        {
+            public String call() throws Exception
+            {
+                return EaglercraftGPU.checkVAOCapable() ? "Yes" : "No";
+            }
+        });
+        theCrash.getCategory().addDetail("Is Software VAOs", new ICrashReportDetail<String>()
+        {
+            public String call() throws Exception
+            {
+                return EaglercraftGPU.areVAOsEmulated() ? "Yes" : "No";
+            }
+        });
+        theCrash.getCategory().addDetail("GPU Render-to-MipMap", new ICrashReportDetail<String>()
+        {
+            public String call() throws Exception
+            {
+                return EaglercraftGPU.checkFBORenderMipmapCapable() ? "Yes" : "No";
+            }
+        });
+        theCrash.getCategory().addDetail("Touch Mode", new ICrashReportDetail<String>()
+        {
+            public String call() throws Exception
+            {
+                return PointerInputAbstraction.isTouchMode() ? "Yes" : "No";
             }
         });
         theCrash.getCategory().addDetail("Is Modded", new ICrashReportDetail<String>()
         {
             public String call() throws Exception
             {
-                String s = ClientBrandRetriever.getClientModName();
-
-                if (!"vanilla".equals(s))
-                {
-                    return "Definitely; Client brand changed to '" + s + "'";
-                }
-                else
-                {
-                    return Minecraft.class.getSigners() == null ? "Very likely; Jar signature invalidated" : "Probably not. Jar signature remains and client brand is untouched.";
-                }
+                return "Definitely Not; You're an eagler";
             }
         });
         theCrash.getCategory().addDetail("Type", new ICrashReportDetail<String>()
@@ -2670,13 +2629,6 @@ public class Minecraft implements IThreadListener, ISnooperInfo
                 return Minecraft.this.mcProfiler.profilingEnabled ? Minecraft.this.mcProfiler.getNameOfLastSection() : "N/A (disabled)";
             }
         });
-        theCrash.getCategory().addDetail("CPU", new ICrashReportDetail<String>()
-        {
-            public String call() throws Exception
-            {
-                return OpenGlHelper.getCpu();
-            }
-        });
 
         if (this.world != null)
         {
@@ -2703,177 +2655,9 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         });
     }
 
-    public void addServerStatsToSnooper(Snooper playerSnooper)
-    {
-        playerSnooper.addClientStat("fps", Integer.valueOf(debugFPS));
-        playerSnooper.addClientStat("vsync_enabled", Boolean.valueOf(this.gameSettings.enableVsync));
-        playerSnooper.addClientStat("display_frequency", Integer.valueOf(Display.getDisplayMode().getFrequency()));
-        playerSnooper.addClientStat("display_type", this.fullscreen ? "fullscreen" : "windowed");
-        playerSnooper.addClientStat("run_time", Long.valueOf((MinecraftServer.getCurrentTimeMillis() - playerSnooper.getMinecraftStartTimeMillis()) / 60L * 1000L));
-        playerSnooper.addClientStat("current_action", this.getCurrentAction());
-        playerSnooper.addClientStat("language", this.gameSettings.language == null ? "en_us" : this.gameSettings.language);
-        String s = ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN ? "little" : "big";
-        playerSnooper.addClientStat("endianness", s);
-        playerSnooper.addClientStat("subtitles", Boolean.valueOf(this.gameSettings.showSubtitles));
-        playerSnooper.addClientStat("touch", this.gameSettings.touchscreen ? "touch" : "mouse");
-        playerSnooper.addClientStat("resource_packs", Integer.valueOf(this.mcResourcePackRepository.getRepositoryEntries().size()));
-        int i = 0;
-
-        for (ResourcePackRepository.Entry resourcepackrepository$entry : this.mcResourcePackRepository.getRepositoryEntries())
-        {
-            playerSnooper.addClientStat("resource_pack[" + i++ + "]", resourcepackrepository$entry.getResourcePackName());
-        }
-
-        if (this.integratedServer != null && this.integratedServer.getPlayerUsageSnooper() != null)
-        {
-            playerSnooper.addClientStat("snooper_partner", this.integratedServer.getPlayerUsageSnooper().getUniqueID());
-        }
-    }
-
-    private String getCurrentAction()
-    {
-        if (this.integratedServer != null)
-        {
-            return this.integratedServer.getPublic() ? "hosting_lan" : "singleplayer";
-        }
-        else if (this.currentServerData != null)
-        {
-            return this.currentServerData.isOnLAN() ? "playing_lan" : "multiplayer";
-        }
-        else
-        {
-            return "out_of_game";
-        }
-    }
-
-    public void addServerTypeToSnooper(Snooper playerSnooper)
-    {
-        playerSnooper.addStatToSnooper("opengl_version", EaglercraftGPU.glGetString(7938));
-        playerSnooper.addStatToSnooper("opengl_vendor", EaglercraftGPU.glGetString(7936));
-        playerSnooper.addStatToSnooper("client_brand", ClientBrandRetriever.getClientModName());
-        playerSnooper.addStatToSnooper("launched_version", this.launchedVersion);
-        ContextCapabilities contextcapabilities = GLContext.getCapabilities();
-        playerSnooper.addStatToSnooper("gl_caps[ARB_arrays_of_arrays]", Boolean.valueOf(contextcapabilities.GL_ARB_arrays_of_arrays));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_base_instance]", Boolean.valueOf(contextcapabilities.GL_ARB_base_instance));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_blend_func_extended]", Boolean.valueOf(contextcapabilities.GL_ARB_blend_func_extended));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_clear_buffer_object]", Boolean.valueOf(contextcapabilities.GL_ARB_clear_buffer_object));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_color_buffer_float]", Boolean.valueOf(contextcapabilities.GL_ARB_color_buffer_float));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_compatibility]", Boolean.valueOf(contextcapabilities.GL_ARB_compatibility));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_compressed_texture_pixel_storage]", Boolean.valueOf(contextcapabilities.GL_ARB_compressed_texture_pixel_storage));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_compute_shader]", Boolean.valueOf(contextcapabilities.GL_ARB_compute_shader));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_copy_buffer]", Boolean.valueOf(contextcapabilities.GL_ARB_copy_buffer));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_copy_image]", Boolean.valueOf(contextcapabilities.GL_ARB_copy_image));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_depth_buffer_float]", Boolean.valueOf(contextcapabilities.GL_ARB_depth_buffer_float));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_compute_shader]", Boolean.valueOf(contextcapabilities.GL_ARB_compute_shader));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_copy_buffer]", Boolean.valueOf(contextcapabilities.GL_ARB_copy_buffer));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_copy_image]", Boolean.valueOf(contextcapabilities.GL_ARB_copy_image));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_depth_buffer_float]", Boolean.valueOf(contextcapabilities.GL_ARB_depth_buffer_float));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_depth_clamp]", Boolean.valueOf(contextcapabilities.GL_ARB_depth_clamp));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_depth_texture]", Boolean.valueOf(contextcapabilities.GL_ARB_depth_texture));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_draw_buffers]", Boolean.valueOf(contextcapabilities.GL_ARB_draw_buffers));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_draw_buffers_blend]", Boolean.valueOf(contextcapabilities.GL_ARB_draw_buffers_blend));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_draw_elements_base_vertex]", Boolean.valueOf(contextcapabilities.GL_ARB_draw_elements_base_vertex));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_draw_indirect]", Boolean.valueOf(contextcapabilities.GL_ARB_draw_indirect));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_draw_instanced]", Boolean.valueOf(contextcapabilities.GL_ARB_draw_instanced));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_explicit_attrib_location]", Boolean.valueOf(contextcapabilities.GL_ARB_explicit_attrib_location));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_explicit_uniform_location]", Boolean.valueOf(contextcapabilities.GL_ARB_explicit_uniform_location));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_fragment_layer_viewport]", Boolean.valueOf(contextcapabilities.GL_ARB_fragment_layer_viewport));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_fragment_program]", Boolean.valueOf(contextcapabilities.GL_ARB_fragment_program));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_fragment_shader]", Boolean.valueOf(contextcapabilities.GL_ARB_fragment_shader));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_fragment_program_shadow]", Boolean.valueOf(contextcapabilities.GL_ARB_fragment_program_shadow));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_framebuffer_object]", Boolean.valueOf(contextcapabilities.GL_ARB_framebuffer_object));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_framebuffer_sRGB]", Boolean.valueOf(contextcapabilities.GL_ARB_framebuffer_sRGB));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_geometry_shader4]", Boolean.valueOf(contextcapabilities.GL_ARB_geometry_shader4));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_gpu_shader5]", Boolean.valueOf(contextcapabilities.GL_ARB_gpu_shader5));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_half_float_pixel]", Boolean.valueOf(contextcapabilities.GL_ARB_half_float_pixel));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_half_float_vertex]", Boolean.valueOf(contextcapabilities.GL_ARB_half_float_vertex));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_instanced_arrays]", Boolean.valueOf(contextcapabilities.GL_ARB_instanced_arrays));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_map_buffer_alignment]", Boolean.valueOf(contextcapabilities.GL_ARB_map_buffer_alignment));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_map_buffer_range]", Boolean.valueOf(contextcapabilities.GL_ARB_map_buffer_range));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_multisample]", Boolean.valueOf(contextcapabilities.GL_ARB_multisample));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_multitexture]", Boolean.valueOf(contextcapabilities.GL_ARB_multitexture));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_occlusion_query2]", Boolean.valueOf(contextcapabilities.GL_ARB_occlusion_query2));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_pixel_buffer_object]", Boolean.valueOf(contextcapabilities.GL_ARB_pixel_buffer_object));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_seamless_cube_map]", Boolean.valueOf(contextcapabilities.GL_ARB_seamless_cube_map));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_shader_objects]", Boolean.valueOf(contextcapabilities.GL_ARB_shader_objects));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_shader_stencil_export]", Boolean.valueOf(contextcapabilities.GL_ARB_shader_stencil_export));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_shader_texture_lod]", Boolean.valueOf(contextcapabilities.GL_ARB_shader_texture_lod));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_shadow]", Boolean.valueOf(contextcapabilities.GL_ARB_shadow));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_shadow_ambient]", Boolean.valueOf(contextcapabilities.GL_ARB_shadow_ambient));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_stencil_texturing]", Boolean.valueOf(contextcapabilities.GL_ARB_stencil_texturing));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_sync]", Boolean.valueOf(contextcapabilities.GL_ARB_sync));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_tessellation_shader]", Boolean.valueOf(contextcapabilities.GL_ARB_tessellation_shader));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_texture_border_clamp]", Boolean.valueOf(contextcapabilities.GL_ARB_texture_border_clamp));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_texture_buffer_object]", Boolean.valueOf(contextcapabilities.GL_ARB_texture_buffer_object));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_texture_cube_map]", Boolean.valueOf(contextcapabilities.GL_ARB_texture_cube_map));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_texture_cube_map_array]", Boolean.valueOf(contextcapabilities.GL_ARB_texture_cube_map_array));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_texture_non_power_of_two]", Boolean.valueOf(contextcapabilities.GL_ARB_texture_non_power_of_two));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_uniform_buffer_object]", Boolean.valueOf(contextcapabilities.GL_ARB_uniform_buffer_object));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_vertex_blend]", Boolean.valueOf(contextcapabilities.GL_ARB_vertex_blend));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_vertex_buffer_object]", Boolean.valueOf(contextcapabilities.GL_ARB_vertex_buffer_object));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_vertex_program]", Boolean.valueOf(contextcapabilities.GL_ARB_vertex_program));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_vertex_shader]", Boolean.valueOf(contextcapabilities.GL_ARB_vertex_shader));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_bindable_uniform]", Boolean.valueOf(contextcapabilities.GL_EXT_bindable_uniform));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_blend_equation_separate]", Boolean.valueOf(contextcapabilities.GL_EXT_blend_equation_separate));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_blend_func_separate]", Boolean.valueOf(contextcapabilities.GL_EXT_blend_func_separate));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_blend_minmax]", Boolean.valueOf(contextcapabilities.GL_EXT_blend_minmax));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_blend_subtract]", Boolean.valueOf(contextcapabilities.GL_EXT_blend_subtract));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_draw_instanced]", Boolean.valueOf(contextcapabilities.GL_EXT_draw_instanced));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_framebuffer_multisample]", Boolean.valueOf(contextcapabilities.GL_EXT_framebuffer_multisample));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_framebuffer_object]", Boolean.valueOf(contextcapabilities.GL_EXT_framebuffer_object));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_framebuffer_sRGB]", Boolean.valueOf(contextcapabilities.GL_EXT_framebuffer_sRGB));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_geometry_shader4]", Boolean.valueOf(contextcapabilities.GL_EXT_geometry_shader4));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_gpu_program_parameters]", Boolean.valueOf(contextcapabilities.GL_EXT_gpu_program_parameters));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_gpu_shader4]", Boolean.valueOf(contextcapabilities.GL_EXT_gpu_shader4));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_multi_draw_arrays]", Boolean.valueOf(contextcapabilities.GL_EXT_multi_draw_arrays));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_packed_depth_stencil]", Boolean.valueOf(contextcapabilities.GL_EXT_packed_depth_stencil));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_paletted_texture]", Boolean.valueOf(contextcapabilities.GL_EXT_paletted_texture));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_rescale_normal]", Boolean.valueOf(contextcapabilities.GL_EXT_rescale_normal));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_separate_shader_objects]", Boolean.valueOf(contextcapabilities.GL_EXT_separate_shader_objects));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_shader_image_load_store]", Boolean.valueOf(contextcapabilities.GL_EXT_shader_image_load_store));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_shadow_funcs]", Boolean.valueOf(contextcapabilities.GL_EXT_shadow_funcs));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_shared_texture_palette]", Boolean.valueOf(contextcapabilities.GL_EXT_shared_texture_palette));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_stencil_clear_tag]", Boolean.valueOf(contextcapabilities.GL_EXT_stencil_clear_tag));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_stencil_two_side]", Boolean.valueOf(contextcapabilities.GL_EXT_stencil_two_side));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_stencil_wrap]", Boolean.valueOf(contextcapabilities.GL_EXT_stencil_wrap));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_texture_3d]", Boolean.valueOf(contextcapabilities.GL_EXT_texture_3d));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_texture_array]", Boolean.valueOf(contextcapabilities.GL_EXT_texture_array));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_texture_buffer_object]", Boolean.valueOf(contextcapabilities.GL_EXT_texture_buffer_object));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_texture_integer]", Boolean.valueOf(contextcapabilities.GL_EXT_texture_integer));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_texture_lod_bias]", Boolean.valueOf(contextcapabilities.GL_EXT_texture_lod_bias));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_texture_sRGB]", Boolean.valueOf(contextcapabilities.GL_EXT_texture_sRGB));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_vertex_shader]", Boolean.valueOf(contextcapabilities.GL_EXT_vertex_shader));
-        playerSnooper.addStatToSnooper("gl_caps[EXT_vertex_weighting]", Boolean.valueOf(contextcapabilities.GL_EXT_vertex_weighting));
-        playerSnooper.addStatToSnooper("gl_caps[gl_max_vertex_uniforms]", Integer.valueOf(EaglercraftGPU.glGetInteger(35658)));
-        EaglercraftGPU.glGetError();
-        playerSnooper.addStatToSnooper("gl_caps[gl_max_fragment_uniforms]", Integer.valueOf(EaglercraftGPU.glGetInteger(35657)));
-        EaglercraftGPU.glGetError();
-        playerSnooper.addStatToSnooper("gl_caps[gl_max_vertex_attribs]", Integer.valueOf(EaglercraftGPU.glGetInteger(34921)));
-        EaglercraftGPU.glGetError();
-        playerSnooper.addStatToSnooper("gl_caps[gl_max_vertex_texture_image_units]", Integer.valueOf(EaglercraftGPU.glGetInteger(35660)));
-        EaglercraftGPU.glGetError();
-        playerSnooper.addStatToSnooper("gl_caps[gl_max_texture_image_units]", Integer.valueOf(EaglercraftGPU.glGetInteger(34930)));
-        EaglercraftGPU.glGetError();
-        playerSnooper.addStatToSnooper("gl_caps[gl_max_array_texture_layers]", Integer.valueOf(EaglercraftGPU.glGetInteger(35071)));
-        EaglercraftGPU.glGetError();
-        playerSnooper.addStatToSnooper("gl_max_texture_size", Integer.valueOf(getGLMaximumTextureSize()));
-        GameProfile gameprofile = this.session.getProfile();
-
-        if (gameprofile != null && gameprofile.getId() != null)
-        {
-            playerSnooper.addStatToSnooper("uuid", Hashing.sha1().hashBytes(gameprofile.getId().toString().getBytes(Charsets.ISO_8859_1)).toString());
-        }
-    }
-
     public static int getGLMaximumTextureSize()
     {
-        //Forge we redirect this to our code which caches the value before any splash screen stuff is done.
-        return net.minecraftforge.fml.client.SplashProgress.getMaxTextureSize();
-    }
-
-    public boolean isSnooperEnabled()
-    {
-        return this.gameSettings.snooperEnabled;
+        return EaglercraftGPU.glGetInteger(GL_MAX_TEXTURE_SIZE);
     }
 
     public void setServerData(ServerData serverDataIn)
@@ -2889,67 +2673,65 @@ public class Minecraft implements IThreadListener, ISnooperInfo
 
     public boolean isIntegratedServerRunning()
     {
-        return this.integratedServerIsRunning;
+        return SingleplayerServerController.isWorldRunning();
+    }
+
+    public DefaultResourcePack getDefaultResourcePack()
+    {
+        return this.mcDefaultResourcePack;
+    }
+
+    public boolean getEnableFNAWSkins()
+    {
+        boolean ret = this.gameSettings.enableFNAWSkins;
+
+        if (this.player != null)
+        {
+            if (this.player.connection.currentFNAWSkinForcedState)
+            {
+                ret = true;
+            }
+            else
+            {
+                ret &= this.player.connection.currentFNAWSkinAllowedState;
+            }
+        }
+
+        return ret;
+    }
+
+    public boolean isEnableProfanityFilter()
+    {
+        return EagRuntime.getConfiguration().isForceProfanityFilter() || this.gameSettings.enableProfanityFilter;
+    }
+
+    public void clearTitles()
+    {
+        this.ingameGUI.displayTitle((String)null, (String)null, -1, -1, -1);
     }
 
     public boolean isSingleplayer()
     {
-        return this.integratedServerIsRunning && this.integratedServer != null;
-    }
-
-    @Nullable
-    public IntegratedServer getIntegratedServer()
-    {
-        return this.integratedServer;
+        return SingleplayerServerController.isWorldRunning();
     }
 
     public static void stopIntegratedServer()
     {
-        if (instance != null)
-        {
-            IntegratedServer integratedserver = instance.getIntegratedServer();
-
-            if (integratedserver != null)
-            {
-                integratedserver.stopServer();
-            }
-        }
-    }
-
-    public Snooper getPlayerUsageSnooper()
-    {
-        return this.usageSnooper;
     }
 
     public static long getSystemTime()
     {
-        return Sys.getTime() * 1000L / Sys.getTimerResolution();
+        return EagRuntime.steadyTimeMillis();
     }
 
     public boolean isFullScreen()
     {
-        return this.fullscreen;
+        return Display.isFullscreen();
     }
 
     public Session getSession()
     {
         return this.session;
-    }
-
-    public PropertyMap getProfileProperties()
-    {
-        if (this.profileProperties.isEmpty())
-        {
-            GameProfile gameprofile = this.getSessionService().fillProfileProperties(this.session.getProfile(), false);
-            this.profileProperties.putAll(gameprofile.getProperties());
-        }
-
-        return this.profileProperties;
-    }
-
-    public Proxy getProxy()
-    {
-        return this.proxy;
     }
 
     public TextureManager getTextureManager()
@@ -3055,16 +2837,6 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         }
     }
 
-    public MinecraftSessionService getSessionService()
-    {
-        return this.sessionService;
-    }
-
-    public SkinManager getSkinManager()
-    {
-        return this.skinManager;
-    }
-
     @Nullable
     public Entity getRenderViewEntity()
     {
@@ -3089,7 +2861,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
             }
             catch (Exception exception)
             {
-                return Futures.immediateFailedCheckedFuture(exception);
+                return Futures.immediateFailedFuture(exception);
             }
         }
         else
@@ -3148,16 +2920,6 @@ public class Minecraft implements IThreadListener, ISnooperInfo
     public FrameTimer getFrameTimer()
     {
         return this.frameTimer;
-    }
-
-    public boolean isConnectedToRealms()
-    {
-        return this.connectedToRealms;
-    }
-
-    public void setConnectedToRealms(boolean isConnected)
-    {
-        this.connectedToRealms = isConnected;
     }
 
     public DataFixer getDataFixer()
