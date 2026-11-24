@@ -681,7 +681,7 @@ public class GuiIngame extends Gui
 
         if (this.remainingHighlightTicks > 0 && !this.highlightingItemStack.isEmpty())
         {
-            String s = this.highlightingItemStack.getDisplayName();
+            String s = this.highlightingItemStack.getDisplayNameProfanityFilter();
 
             if (this.highlightingItemStack.hasDisplayName())
             {

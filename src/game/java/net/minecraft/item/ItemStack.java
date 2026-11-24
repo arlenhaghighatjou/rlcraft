@@ -1,5 +1,7 @@
 package net.minecraft.item;
 
+import net.minecraft.client.Minecraft;
+import net.lax1dude.eaglercraft.v1_8.profanity_filter.ProfanityFilter;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -69,6 +71,8 @@ public final class ItemStack implements net.minecraftforge.common.capabilities.I
     private net.minecraftforge.registries.IRegistryDelegate<Item> delegate;
     private net.minecraftforge.common.capabilities.CapabilityDispatcher capabilities;
     private NBTTagCompound capNBT;
+    private String profanityFilteredName;
+    private String profanityFilteredNameFiltered;
 
     public ItemStack(Block blockIn)
     {
@@ -617,6 +621,37 @@ public final class ItemStack implements net.minecraftforge.common.capabilities.I
         return this.getItem().getItemStackDisplayName(this);
     }
 
+    @SideOnly(Side.CLIENT)
+    public String getDisplayNameProfanityFilter()
+    {
+        NBTTagCompound nbttagcompound = this.getSubCompound("display");
+
+        if (nbttagcompound != null && nbttagcompound.hasKey("Name", 8))
+        {
+            String s = nbttagcompound.getString("Name");
+
+            if (Minecraft.getMinecraft().isEnableProfanityFilter())
+            {
+                if (!s.equals(this.profanityFilteredName))
+                {
+                    this.profanityFilteredName = s;
+                    this.profanityFilteredNameFiltered = ProfanityFilter.getInstance().profanityFilterString(s);
+                }
+
+                if (this.profanityFilteredNameFiltered != null)
+                {
+                    s = this.profanityFilteredNameFiltered;
+                }
+            }
+
+            return s;
+        }
+        else
+        {
+            return this.getDisplayName();
+        }
+    }
+
     public ItemStack setTranslatableName(String p_190924_1_)
     {
         this.getOrCreateSubCompound("display").setString("LocName", p_190924_1_);
@@ -658,8 +693,20 @@ public final class ItemStack implements net.minecraftforge.common.capabilities.I
     @SideOnly(Side.CLIENT)
     public List<String> getTooltip(@Nullable EntityPlayer playerIn, ITooltipFlag advanced)
     {
+        return this.getTooltipImpl(playerIn, advanced, false);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public List<String> getTooltipProfanityFilter(@Nullable EntityPlayer playerIn, ITooltipFlag advanced)
+    {
+        return this.getTooltipImpl(playerIn, advanced, true);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public List<String> getTooltipImpl(@Nullable EntityPlayer playerIn, ITooltipFlag advanced, boolean profanityFilter)
+    {
         List<String> list = Lists.<String>newArrayList();
-        String s = this.getDisplayName();
+        String s = profanityFilter ? this.getDisplayNameProfanityFilter() : this.getDisplayName();
 
         if (this.hasDisplayName())
         {

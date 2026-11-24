@@ -649,7 +649,7 @@ public class GuiIngameForge extends GuiIngame
 
             if (this.remainingHighlightTicks > 0 && !this.highlightingItemStack.isEmpty())
             {
-                String name = this.highlightingItemStack.getDisplayName();
+                String name = this.highlightingItemStack.getDisplayNameProfanityFilter();
                 if (this.highlightingItemStack.hasDisplayName())
                     name = TextFormatting.ITALIC + name;
 

@@ -318,16 +318,20 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
 				.add(new GuiButton(1, this.width / 2 - 100, parInt1, I18n.format("menu.singleplayer", new Object[0])));
 		this.buttonList.add(new GuiButton(2, this.width / 2 - 100, parInt1 + parInt2 * 1,
 				I18n.format("menu.multiplayer", new Object[0])));
+		GuiButton modButton = new GuiButton(6, this.width / 2 - 100, parInt1 + parInt2 * 2, I18n.format("fml.menu.mods"));
+		this.buttonList.add(modButton);
 		if (EaglercraftVersion.mainMenuEnableGithubButton) {
-			this.buttonList.add(
-					new GuiButton(14, this.width / 2 - 100, parInt1 + parInt2 * 2, I18n.format("menu.forkOnGitlab")));
+			modButton.setWidth(98);
+			this.buttonList.add(new GuiButton(14, this.width / 2 + 2, parInt1 + parInt2 * 2, 98, 20,
+					I18n.format("menu.forkOnGitlab")));
 		} else {
 			if (EagRuntime.getConfiguration().isEnableDownloadOfflineButton()
 					&& (EagRuntime.getConfiguration().getDownloadOfflineButtonLink() != null
 							|| (!EagRuntime.isOfflineDownloadURL() && UpdateService.supported()
 									&& UpdateService.getClientSignatureData() != null))) {
-				this.buttonList.add(downloadOfflineButton = new GuiButton(15, this.width / 2 - 100,
-						parInt1 + parInt2 * 2, I18n.format("update.downloadOffline")));
+				modButton.setWidth(98);
+				this.buttonList.add(downloadOfflineButton = new GuiButton(15, this.width / 2 + 2,
+						parInt1 + parInt2 * 2, 98, 20, I18n.format("update.downloadOffline")));
 				downloadOfflineButton.enabled = !UpdateService.shouldDisableDownloadButton();
 			}
 		}
@@ -352,6 +356,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
 	protected void actionPerformed(GuiButton parGuiButton) {
 		if (parGuiButton.id == 0) {
 			this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings));
+		}
+
+		if (parGuiButton.id == 6) {
+			this.mc.displayGuiScreen(new net.minecraftforge.fml.client.GuiModList(this));
 		}
 
 		if (parGuiButton.id == 5) {

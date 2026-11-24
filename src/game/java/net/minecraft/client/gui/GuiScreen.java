@@ -200,7 +200,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
 
     public List<String> getItemToolTip(ItemStack p_191927_1_)
     {
-        List<String> list = p_191927_1_.getTooltip(this.mc.player, this.mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
+        List<String> list = p_191927_1_.getTooltipProfanityFilter(this.mc.player, this.mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
 
         for (int i = 0; i < list.size(); ++i)
         {
