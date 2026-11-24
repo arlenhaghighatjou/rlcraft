@@ -41,8 +41,6 @@ public interface IFMLSidedHandler
 
     void showGuiScreen(Object clientGuiElement);
 
-    void queryUser(StartupQuery query) throws InterruptedException;
-
     void beginServerLoading(MinecraftServer server);
 
     void finishServerLoading();

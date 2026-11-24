@@ -76,7 +76,6 @@ public class Loader
     private MinecraftDummyContainer minecraft;
     private MCPDummyContainer mcp;
     private ImmutableMap<String, String> fmlBrandingProperties;
-    private VFile2 forcedModFile;
     private ProgressBar progressBar;
 
     public static Loader instance()
@@ -204,7 +203,6 @@ public class Loader
         modController = new LoadController(this);
         modController.transition(LoaderState.LOADING, false);
         identifyMods();
-        disableRequestedMods();
         modController.buildModList();
         sortModList();
         mods = ImmutableList.copyOf(mods);
@@ -230,35 +228,6 @@ public class Loader
         ItemStackHolderInjector.INSTANCE.inject();
         modController.transition(LoaderState.INITIALIZATION, false);
         progressBar.step("Initializing Minecraft Engine");
-    }
-
-    private void disableRequestedMods()
-    {
-        forcedModFile = new VFile2(canonicalConfigDir, "fmlModState.properties");
-        if (!forcedModFile.exists())
-        {
-            return;
-        }
-        Properties forcedModListProperties = new Properties();
-        try (Reader reader = new InputStreamReader(forcedModFile.getInputStream(), StandardCharsets.UTF_8))
-        {
-            forcedModListProperties.load(reader);
-        }
-        catch (Exception e)
-        {
-            FMLLog.log.info("An error occurred reading the fmlModState.properties file", e);
-            return;
-        }
-        for (String modId : forcedModListProperties.stringPropertyNames())
-        {
-            ModContainer mod = namedMods.get(modId);
-            if (mod != null)
-            {
-                boolean enabled = Boolean.parseBoolean(forcedModListProperties.getProperty(modId));
-                FMLLog.log.info("Setting mod {} to enabled state {}", modId, enabled);
-                mod.setEnabledState(enabled);
-            }
-        }
     }
 
     public static boolean isModLoaded(String modname)
@@ -485,27 +454,6 @@ public class Loader
             List<ModContainer> localmods = Lists.newArrayList(mods);
             localmods.remove(mc);
             mods = ImmutableList.copyOf(localmods);
-        }
-
-        Properties props = new Properties();
-        try
-        {
-            if (forcedModFile.exists())
-            {
-                try (Reader reader = new InputStreamReader(forcedModFile.getInputStream(), StandardCharsets.UTF_8))
-                {
-                    props.load(reader);
-                }
-            }
-            props.put(modId, "false");
-            try (Writer writer = new OutputStreamWriter(forcedModFile.getOutputStream(), StandardCharsets.UTF_8))
-            {
-                props.store(writer, null);
-            }
-        }
-        catch (Exception e)
-        {
-            FMLLog.log.info("An error occurred writing the fml mod states file, your disabled change won't persist", e);
         }
     }
 

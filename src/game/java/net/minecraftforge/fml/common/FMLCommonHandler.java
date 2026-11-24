@@ -38,6 +38,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.item.EntityItem;
@@ -69,7 +70,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.thread.SidedThreadGroup;
 import net.minecraftforge.fml.relauncher.Side;
 
 import net.lax1dude.eaglercraft.v1_8.IOUtils;
@@ -115,7 +115,7 @@ public class FMLCommonHandler
     private Set<SaveHandler> handlerSet = Collections.newSetFromMap(new MapMaker().weakKeys().<SaveHandler,Boolean>makeMap());
     private WeakReference<SaveHandler> handlerToCheck;
     private EventBus eventBus = MinecraftForge.EVENT_BUS;
-    private volatile CountDownLatch exitLatch = null;
+    private Side effectiveSide = Side.CLIENT;
 
     private FMLCommonHandler()
     {
@@ -186,8 +186,7 @@ public class FMLCommonHandler
      */
     public Side getEffectiveSide()
     {
-        final ThreadGroup group = Thread.currentThread().getThreadGroup();
-        return group instanceof SidedThreadGroup ? ((SidedThreadGroup) group).getSide() : Side.CLIENT;
+        return effectiveSide;
     }
     /**
      * Raise an exception
@@ -300,13 +299,9 @@ public class FMLCommonHandler
         sidedDelegate.showGuiScreen(clientGuiElement);
     }
 
-    public void queryUser(StartupQuery query) throws InterruptedException
-    {
-        sidedDelegate.queryUser(query);
-    }
-
     public void onServerStart(MinecraftServer server)
     {
+        effectiveSide = Side.SERVER;
         sidedDelegate.beginServerLoading(server);
     }
 
@@ -434,63 +429,11 @@ public class FMLCommonHandler
         return sidedDelegate.shouldServerShouldBeKilledQuietly();
     }
 
-    /**
-     * Make handleExit() wait for handleServerStopped().
-     *
-     * For internal use only!
-     */
-    public void expectServerStopped()
-    {
-        exitLatch = new CountDownLatch(1);
-    }
-
-    /**
-     * Delayed System.exit() until the server is actually stopped/done saving.
-     *
-     * For internal use only!
-     *
-     * @param retVal Exit code for System.exit()
-     */
-    public void handleExit(int retVal)
-    {
-        CountDownLatch latch = exitLatch;
-
-        if (latch != null)
-        {
-            try
-            {
-                FMLLog.log.info("Waiting for the server to terminate/save.");
-                if (!latch.await(10, TimeUnit.SECONDS))
-                {
-                    FMLLog.log.warn("The server didn't stop within 10 seconds, exiting anyway.");
-                }
-                else
-                {
-                    FMLLog.log.info("Server terminated.");
-                }
-            }
-            catch (InterruptedException e)
-            {
-                FMLLog.log.warn("Interrupted wait, exiting.");
-            }
-        }
-
-        System.exit(retVal);
-    }
-
     public void handleServerStopped()
     {
         sidedDelegate.serverStopped();
         Loader.instance().serverStopped();
-
-        // allow any pending exit to continue, clear exitLatch
-        CountDownLatch latch = exitLatch;
-
-        if (latch != null)
-        {
-            latch.countDown();
-            exitLatch = null;
-        }
+        effectiveSide = Side.CLIENT;
     }
 
     public String getModName()
@@ -647,21 +590,7 @@ public class FMLCommonHandler
         {
             FMLLog.log.warn("This is an abortive exit and could cause world corruption or other things");
         }
-        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
-        FMLLog.log.warn("Exit trace:");
-        //The first 2 elements are Thread#getStackTrace and FMLCommonHandler#exitJava and aren't relevant
-        for (int i = 2; i < stack.length; i++)
-        {
-            FMLLog.log.warn("\t{}", stack[i]);
-        }
-        if (hardExit)
-        {
-            Runtime.getRuntime().halt(exitCode);
-        }
-        else
-        {
-            Runtime.getRuntime().exit(exitCode);
-        }
+        EagRuntime.exit();
     }
 
     public IThreadListener getWorldThread(INetHandler net)
@@ -682,47 +611,6 @@ public class FMLCommonHandler
         }
     }
 
-    /**
-     * Loads a lang file, first searching for a marker to enable the 'extended' format {escape characters}
-     * If the marker is not found it simply returns and let the vanilla code load things.
-     * The Marker is 'PARSE_ESCAPES' by itself on a line starting with '#' as such:
-     * #PARSE_ESCAPES
-     *
-     * @param table The Map to load each key/value pair into.
-     * @param inputstream Input stream containing the lang file.
-     * @return A new InputStream that vanilla uses to load normal Lang files, Null if this is a 'enhanced' file and loading is done.
-     */
-    @Nullable
-    public InputStream loadLanguage(Map<String, String> table, InputStream inputstream) throws IOException
-    {
-        byte[] data = inputstream.readAllBytes();
-
-        boolean isEnhanced = false;
-        for (String line : IOUtils.readLines(new ByteArrayInputStream(data), StandardCharsets.UTF_8))
-        {
-            if (!line.isEmpty() && line.charAt(0) == '#')
-            {
-                line = line.substring(1).trim();
-                if (line.equals("PARSE_ESCAPES"))
-                {
-                    isEnhanced = true;
-                    break;
-                }
-            }
-        }
-
-        if (!isEnhanced)
-            return new ByteArrayInputStream(data);
-
-        Properties props = new Properties();
-        props.load(new InputStreamReader(new ByteArrayInputStream(data), StandardCharsets.UTF_8));
-        for (Entry<Object, Object> e : props.entrySet())
-        {
-            table.put((String)e.getKey(), (String)e.getValue());
-        }
-        props.clear();
-        return null;
-    }
     public String stripSpecialChars(String message)
     {
         return sidedDelegate != null ? sidedDelegate.stripSpecialChars(message) : message;

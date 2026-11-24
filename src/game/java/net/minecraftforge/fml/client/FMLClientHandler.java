@@ -407,53 +407,6 @@ public class FMLClientHandler implements IFMLSidedHandler
         client.displayGuiScreen(gui);
     }
 
-    @Override
-    public void queryUser(StartupQuery query) throws InterruptedException
-    {
-        if (query.getResult() == null)
-        {
-            client.displayGuiScreen(new GuiNotification(query));
-        }
-        else
-        {
-            client.displayGuiScreen(new GuiConfirmation(query));
-        }
-
-        if (query.isSynchronous())
-        {
-            while (client.currentScreen instanceof GuiNotification)
-            {
-                if (Thread.interrupted()) throw new InterruptedException();
-
-                client.loadingScreen.displayLoadingString("");
-
-                Thread.sleep(50);
-            }
-
-            client.loadingScreen.displayLoadingString(""); // make sure the blank screen is being drawn at the end
-        }
-    }
-
-    public boolean handleLoadingScreen(ScaledResolution scaledResolution) throws IOException
-    {
-        if (client.currentScreen instanceof GuiNotification)
-        {
-            int width = scaledResolution.getScaledWidth();
-            int height = scaledResolution.getScaledHeight();
-            int mouseX = Mouse.getX() * width / client.displayWidth;
-            int mouseZ = height - Mouse.getY() * height / client.displayHeight - 1;
-
-            client.currentScreen.drawScreen(mouseX, mouseZ, 0);
-            client.currentScreen.handleInput();
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     public WorldClient getWorldClient()
     {
         return client.world;

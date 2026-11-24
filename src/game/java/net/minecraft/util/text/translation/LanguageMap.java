@@ -80,9 +80,6 @@ public class LanguageMap
         Map<String, String> table = Maps.newHashMap();
         try
         {
-            inputstream = net.minecraftforge.fml.common.FMLCommonHandler.instance().loadLanguage(table, inputstream);
-            if (inputstream == null) return table;
-
             parseLines(IOUtils.readLines(inputstream, StandardCharsets.UTF_8), table);
         }
         catch (Exception ex) {}

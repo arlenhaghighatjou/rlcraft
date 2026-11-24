@@ -95,8 +95,6 @@ public class Locale
 
     private void loadLocaleData(InputStream inputStreamIn) throws IOException
     {
-        inputStreamIn = net.minecraftforge.fml.common.FMLCommonHandler.instance().loadLanguage(properties, inputStreamIn);
-        if (inputStreamIn == null) return;
         for (String s : IOUtils.readLines(inputStreamIn, StandardCharsets.UTF_8))
         {
             if (!s.isEmpty() && s.charAt(0) != '#')
