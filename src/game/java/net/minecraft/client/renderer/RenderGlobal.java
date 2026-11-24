@@ -54,6 +54,7 @@ import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DeferredStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.EaglerDeferredConfig;
 import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.EaglerDeferredPipeline;
 import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.program.SharedPipelineShaders;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DynamicLightManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.ext.dynamiclights.DynamicLightsStateManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
@@ -630,6 +631,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         }
         else
         {
+            boolean light = DynamicLightManager.isRenderingLights();
             double d0 = renderViewEntity.prevPosX + (renderViewEntity.posX - renderViewEntity.prevPosX) * (double)partialTicks;
             double d1 = renderViewEntity.prevPosY + (renderViewEntity.posY - renderViewEntity.prevPosY) * (double)partialTicks;
             double d2 = renderViewEntity.prevPosZ + (renderViewEntity.posZ - renderViewEntity.prevPosZ) * (double)partialTicks;
@@ -668,6 +670,11 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
 
                     if (entity1.isInRangeToRender3d(d0, d1, d2))
                     {
+                        if (light)
+                        {
+                            entity1.renderDynamicLightsEagler(partialTicks, true);
+                        }
+
                         this.renderManager.renderEntityStatic(entity1, partialTicks, false);
                     }
                 }
@@ -688,6 +695,11 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
                     {
                         if(!entity2.shouldRenderInPass(pass)) continue;
                         boolean flag = this.renderManager.shouldRender(entity2, camera, d0, d1, d2) || entity2.isRidingOrBeingRiddenBy(this.mc.player);
+
+                        if (light)
+                        {
+                            entity2.renderDynamicLightsEagler(partialTicks, flag);
+                        }
 
                         if (flag)
                         {

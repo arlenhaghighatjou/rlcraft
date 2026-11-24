@@ -298,4 +298,9 @@ public class EntityFireworkRocket extends Entity
     {
         return false;
     }
+
+    protected float getEaglerDynamicLightsValueSimple(float partialTicks)
+    {
+        return 1.0F;
+    }
 }

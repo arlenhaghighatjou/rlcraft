@@ -18,14 +18,13 @@ package net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred;
 
 import net.lax1dude.eaglercraft.v1_8.minecraft.IAcceleratedParticleEngine;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.entity.Entity;
 
 public abstract class AbstractAcceleratedEffectRenderer implements IAcceleratedParticleEngine {
 
 	public float partialTicks;
 
 	@Override
-	public void drawParticle(Entity entityIn, int particleIndexX, int particleIndexY, int lightMapData,
+	public void drawParticle(Particle entityIn, int particleIndexX, int particleIndexY, int lightMapData,
 			int texSize, float particleSize, float r, float g, float b, float a) {
 		float xx = (float) (entityIn.prevPosX + (entityIn.posX - entityIn.prevPosX) * (double) partialTicks - Particle.interpPosX);
 		float yy = (float) (entityIn.prevPosY + (entityIn.posY - entityIn.prevPosY) * (double) partialTicks - Particle.interpPosY);
@@ -34,7 +33,7 @@ public abstract class AbstractAcceleratedEffectRenderer implements IAcceleratedP
 	}
 
 	@Override
-	public void drawParticle(Entity entityIn, int particleIndexX, int particleIndexY, int lightMapData,
+	public void drawParticle(Particle entityIn, int particleIndexX, int particleIndexY, int lightMapData,
 			int texSize, float particleSize, int rgba) {
 		float xx = (float) (entityIn.prevPosX + (entityIn.posX - entityIn.prevPosX) * (double) partialTicks - Particle.interpPosX);
 		float yy = (float) (entityIn.prevPosY + (entityIn.posY - entityIn.prevPosY) * (double) partialTicks - Particle.interpPosY);

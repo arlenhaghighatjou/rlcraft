@@ -2,11 +2,13 @@ package net.minecraft.client.particle;
 
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.minecraft.IAcceleratedParticleEngine;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -38,6 +40,17 @@ public class ParticleBreaking extends Particle
         this.particleBlue = 1.0F;
         this.particleGravity = Blocks.SNOW.blockParticleGravity;
         this.particleScale /= 2.0F;
+    }
+
+    public boolean renderAccelerated(IAcceleratedParticleEngine accelerator, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+    {
+        int w = this.particleTexture.getIconWidth();
+        int h = this.particleTexture.getIconHeight();
+        int xOffset = MathHelper.floor((float)w * this.particleTextureJitterX * 4.0F * 0.0625F);
+        int yOffset = MathHelper.floor((float)h * this.particleTextureJitterY * 4.0F * 0.0625F);
+        int texSize = Math.min(w, h) / 4;
+        accelerator.drawParticle(this, this.particleTexture.getOriginX() + xOffset, this.particleTexture.getOriginY() + yOffset, this.getBrightnessForRender(partialTicks), texSize, this.particleScale * 0.1F, this.particleRed, this.particleGreen, this.particleBlue, 1.0F);
+        return true;
     }
 
     public int getFXLayer()

@@ -15,6 +15,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DeferredStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.GBufferAcceleratedEffectRenderer;
+import net.lax1dude.eaglercraft.v1_8.minecraft.AcceleratedEffectRenderer;
+import net.lax1dude.eaglercraft.v1_8.minecraft.IAcceleratedParticleEngine;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -38,6 +43,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ParticleManager
 {
+    private static final ResourceLocation PARTICLE_MATERIALS_TEXTURES = new ResourceLocation("eagler:glsl/deferred/particles_s.png");
+    public static final AcceleratedEffectRenderer vanillaAcceleratedParticleRenderer = new AcceleratedEffectRenderer();
+    public IAcceleratedParticleEngine acceleratedParticleRenderer = null;
     private static final ResourceLocation PARTICLE_TEXTURES = new ResourceLocation("textures/particle/particles.png");
     protected World world;
     private final ArrayDeque<Particle>[][] fxLayers = new ArrayDeque[4][];
@@ -63,6 +71,7 @@ public class ParticleManager
         }
 
         this.registerVanillaParticles();
+        this.acceleratedParticleRenderer = EaglercraftGPU.checkInstancingCapable() ? vanillaAcceleratedParticleRenderer : null;
     }
 
     private void registerVanillaParticles()
@@ -273,6 +282,11 @@ public class ParticleManager
 
     public void renderParticles(Entity entityIn, float partialTicks)
     {
+        this.renderParticles(entityIn, partialTicks, 2);
+    }
+
+    public void renderParticles(Entity entityIn, float partialTicks, int pass)
+    {
         float f = ActiveRenderInfo.getRotationX();
         float f1 = ActiveRenderInfo.getRotationZ();
         float f2 = ActiveRenderInfo.getRotationYZ();
@@ -282,8 +296,13 @@ public class ParticleManager
         Particle.interpPosY = entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double)partialTicks;
         Particle.interpPosZ = entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * (double)partialTicks;
         Particle.cameraViewDir = entityIn.getLook(partialTicks);
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        if (!DeferredStateManager.isDeferredRenderer())
+        {
+            GlStateManager.enableBlend();
+            GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        }
+
         GlStateManager.alphaFunc(516, 0.003921569F);
 
         for (int i_nf = 0; i_nf < 3; ++i_nf)
@@ -292,6 +311,11 @@ public class ParticleManager
 
             for (int j = 0; j < 2; ++j)
             {
+                if (pass != 2 && j != pass)
+                {
+                    continue;
+                }
+
                 if (!this.fxLayers[i][j].isEmpty())
                 {
                     switch (j)
@@ -303,26 +327,53 @@ public class ParticleManager
                             GlStateManager.depthMask(true);
                     }
 
+                    float texCoordWidth = 0.001F;
+                    float texCoordHeight = 0.001F;
+
                     switch (i)
                     {
                         case 0:
                         default:
+                            GBufferAcceleratedEffectRenderer.isMaterialNormalTexture = false;
                             this.renderer.bindTexture(PARTICLE_TEXTURES);
+
+                            if (DeferredStateManager.isDeferredRenderer())
+                            {
+                                GlStateManager.setActiveTexture(GL_TEXTURE2);
+                                this.renderer.bindTexture(PARTICLE_MATERIALS_TEXTURES);
+                                GlStateManager.setActiveTexture(GL_TEXTURE0);
+                            }
+
+                            texCoordWidth = texCoordHeight = 0.00390625F;
                             break;
                         case 1:
+                            GBufferAcceleratedEffectRenderer.isMaterialNormalTexture = true;
                             this.renderer.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+                            TextureMap blockMap = (TextureMap)this.renderer.getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+                            texCoordWidth = 1.0F / (float)blockMap.getWidth();
+                            texCoordHeight = 1.0F / (float)blockMap.getHeight();
                     }
 
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                     Tessellator tessellator = Tessellator.getInstance();
                     WorldRenderer bufferbuilder = tessellator.getBuffer();
                     bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+                    boolean legacyRenderingHasOccured = false;
+
+                    if (this.acceleratedParticleRenderer != null)
+                    {
+                        this.acceleratedParticleRenderer.begin(partialTicks);
+                    }
 
                     for (final Particle particle : this.fxLayers[i][j])
                     {
                         try
                         {
-                            particle.renderParticle(bufferbuilder, entityIn, partialTicks, f, f4, f1, f2, f3);
+                            if (this.acceleratedParticleRenderer == null || !particle.renderAccelerated(this.acceleratedParticleRenderer, entityIn, partialTicks, f, f4, f1, f2, f3))
+                            {
+                                particle.renderParticle(bufferbuilder, entityIn, partialTicks, f, f4, f1, f2, f3);
+                                legacyRenderingHasOccured = true;
+                            }
                         }
                         catch (Throwable throwable)
                         {
@@ -357,7 +408,19 @@ public class ParticleManager
                         }
                     }
 
-                    tessellator.draw();
+                    if (legacyRenderingHasOccured)
+                    {
+                        tessellator.draw();
+                    }
+                    else
+                    {
+                        bufferbuilder.finishDrawing();
+                    }
+
+                    if (this.acceleratedParticleRenderer != null)
+                    {
+                        this.acceleratedParticleRenderer.draw(texCoordWidth, texCoordHeight);
+                    }
                 }
             }
         }

@@ -22,6 +22,7 @@ import net.minecraft.util.datafix.walkers.ItemStackData;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapData;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -30,6 +31,7 @@ public class EntityItemFrame extends EntityHanging
     private static final DataParameter<ItemStack> ITEM = EntityDataManager.<ItemStack>createKey(EntityItemFrame.class, DataSerializers.ITEM_STACK);
     private static final DataParameter<Integer> ROTATION = EntityDataManager.<Integer>createKey(EntityItemFrame.class, DataSerializers.VARINT);
     private float itemDropChance = 1.0F;
+    public boolean eaglerEmissiveFlag = false;
 
     public EntityItemFrame(World worldIn)
     {
@@ -283,5 +285,29 @@ public class EntityItemFrame extends EntityHanging
     public int getAnalogOutput()
     {
         return this.getDisplayedItem().isEmpty() ? 0 : this.getRotation() % 8 + 1;
+    }
+
+    protected void renderDynamicLightsEaglerAt(double entityX, double entityY, double entityZ, double renderX, double renderY, double renderZ, float partialTicks, boolean isInFrustum)
+    {
+        super.renderDynamicLightsEaglerAt(entityX, entityY, entityZ, renderX, renderY, renderZ, partialTicks, isInFrustum);
+        this.eaglerEmissiveFlag = Minecraft.getMinecraft().entityRenderer.renderItemEntityLight(this, 0.1F);
+    }
+
+    protected float getEaglerDynamicLightsValueSimple(float partialTicks)
+    {
+        float f = super.getEaglerDynamicLightsValueSimple(partialTicks);
+        float f2 = getItemBrightnessEagler(this.getDisplayedItem()) * 0.75F;
+
+        if (f2 > 0.0F)
+        {
+            f = Math.min(f + f2 * 0.5F, 1.0F) + f2 * 0.5F;
+        }
+
+        return f;
+    }
+
+    private static float getItemBrightnessEagler(ItemStack itm)
+    {
+        return itm.isEmpty() ? 0.0F : itm.getItem().getHeldItemBrightnessEagler(itm);
     }
 }

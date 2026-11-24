@@ -80,10 +80,13 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DynamicLightManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.dynamiclights.DynamicLightsStateManager;
 
 public abstract class Entity implements ICommandSender, net.minecraftforge.common.capabilities.ICapabilitySerializable<NBTTagCompound>
 {
@@ -1340,15 +1343,21 @@ public abstract class Entity implements ICommandSender, net.minecraftforge.commo
     public int getBrightnessForRender()
     {
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(MathHelper.floor(this.posX), 0, MathHelper.floor(this.posZ));
+        int i = 0;
+
+        if (DynamicLightsStateManager.isDynamicLightsRender())
+        {
+            i += (int)(this.getEaglerDynamicLightsValueSimple(0.0F) * 15.0F);
+        }
 
         if (this.world.isBlockLoaded(blockpos$mutableblockpos))
         {
             blockpos$mutableblockpos.setY(MathHelper.floor(this.posY + (double)this.getEyeHeight()));
-            return this.world.getCombinedLight(blockpos$mutableblockpos, 0);
+            return this.world.getCombinedLight(blockpos$mutableblockpos, -i);
         }
         else
         {
-            return 0;
+            return i > 15 ? 240 : i << 4;
         }
     }
 
@@ -1359,7 +1368,14 @@ public abstract class Entity implements ICommandSender, net.minecraftforge.commo
         if (this.world.isBlockLoaded(blockpos$mutableblockpos))
         {
             blockpos$mutableblockpos.setY(MathHelper.floor(this.posY + (double)this.getEyeHeight()));
-            return this.world.getLightBrightness(blockpos$mutableblockpos);
+            float f = this.world.getLightBrightness(blockpos$mutableblockpos);
+
+            if (DynamicLightsStateManager.isDynamicLightsRender())
+            {
+                f = Math.min(f + this.getEaglerDynamicLightsValueSimple(0.0F), 1.0F);
+            }
+
+            return f;
         }
         else
         {
@@ -3322,5 +3338,70 @@ public abstract class Entity implements ICommandSender, net.minecraftforge.commo
     protected int getFireImmuneTicks()
     {
         return 1;
+    }
+
+    public void renderDynamicLightsEagler(float partialTicks, boolean isInFrustum)
+    {
+        double entityX = this.prevPosX + (this.posX - this.prevPosX) * (double)partialTicks;
+        double entityY = this.prevPosY + (this.posY - this.prevPosY) * (double)partialTicks;
+        double entityZ = this.prevPosZ + (this.posZ - this.prevPosZ) * (double)partialTicks;
+        double entityX2 = entityX - TileEntityRendererDispatcher.staticPlayerX;
+        double entityY2 = entityY - TileEntityRendererDispatcher.staticPlayerY;
+        double entityZ2 = entityZ - TileEntityRendererDispatcher.staticPlayerZ;
+
+        if (entityX2 * entityX2 + entityY2 * entityY2 + entityZ2 * entityZ2 < (isInFrustum ? 4096.0D : 576.0D))
+        {
+            this.renderDynamicLightsEaglerAt(entityX, entityY, entityZ, entityX2, entityY2, entityZ2, partialTicks, isInFrustum);
+        }
+    }
+
+    protected void renderDynamicLightsEaglerAt(double entityX, double entityY, double entityZ, double renderX, double renderY, double renderZ, float partialTicks, boolean isInFrustum)
+    {
+        float size = Math.max(this.width, this.height);
+
+        if (size >= 1.0F || isInFrustum)
+        {
+            if (this.isBurning())
+            {
+                float mag = 5.0F * size;
+                DynamicLightManager.renderDynamicLight("entity_" + this.entityId + "_fire", entityX, entityY + (double)(this.height * 0.75F), entityZ, mag, 0.487F * mag, 0.1411F * mag, false);
+            }
+        }
+    }
+
+    public void renderDynamicLightsEaglerSimple(float partialTicks)
+    {
+        double entityX = this.prevPosX + (this.posX - this.prevPosX) * (double)partialTicks;
+        double entityY = this.prevPosY + (this.posY - this.prevPosY) * (double)partialTicks;
+        double entityZ = this.prevPosZ + (this.posZ - this.prevPosZ) * (double)partialTicks;
+        this.renderDynamicLightsEaglerSimpleAt(entityX, entityY, entityZ, partialTicks);
+    }
+
+    protected void renderDynamicLightsEaglerSimpleAt(double entityX, double entityY, double entityZ, float partialTicks)
+    {
+        float renderBrightness = this.getEaglerDynamicLightsValueSimple(partialTicks);
+
+        if (renderBrightness > 0.1F)
+        {
+            DynamicLightsStateManager.renderDynamicLight("entity_" + this.entityId + "_lightmap", entityX, entityY + (double)(this.height * 0.85F), entityZ, renderBrightness * 13.0F);
+        }
+    }
+
+    protected float getEaglerDynamicLightsValueSimple(float partialTicks)
+    {
+        float size = Math.max(this.width, this.height);
+
+        if (size < 1.0F)
+        {
+            return 0.0F;
+        }
+        else if (this.isBurning())
+        {
+            return size / 2.0F;
+        }
+        else
+        {
+            return 0.0F;
+        }
     }
 }

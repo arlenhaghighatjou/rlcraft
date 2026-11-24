@@ -2,6 +2,7 @@ package net.minecraft.client.particle;
 
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.minecraft.IAcceleratedParticleEngine;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -24,6 +25,12 @@ public class Barrier extends Particle
         this.motionZ = 0.0D;
         this.particleGravity = 0.0F;
         this.particleMaxAge = 80;
+    }
+
+    public boolean renderAccelerated(IAcceleratedParticleEngine accelerator, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+    {
+        accelerator.drawParticle(this, this.particleTexture.getOriginX(), this.particleTexture.getOriginY(), this.getBrightnessForRender(partialTicks), Math.min(this.particleTexture.getIconWidth(), this.particleTexture.getIconHeight()), 0.5F, this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha);
+        return true;
     }
 
     public int getFXLayer()

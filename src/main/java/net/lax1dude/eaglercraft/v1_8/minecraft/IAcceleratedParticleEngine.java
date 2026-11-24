@@ -16,7 +16,7 @@
 
 package net.lax1dude.eaglercraft.v1_8.minecraft;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.client.particle.Particle;
 
 public interface IAcceleratedParticleEngine {
 
@@ -24,10 +24,10 @@ public interface IAcceleratedParticleEngine {
 
 	void draw(float texCoordWidth, float texCoordHeight);
 
-	void drawParticle(Entity entityIn, int particleIndexX, int particleIndexY,
+	void drawParticle(Particle entityIn, int particleIndexX, int particleIndexY,
 			int lightMapData, int texSize, float particleSize, float r, float g, float b, float a);
 
-	void drawParticle(Entity entityIn, int particleIndexX, int particleIndexY,
+	void drawParticle(Particle entityIn, int particleIndexX, int particleIndexY,
 			int lightMapData, int texSize, float particleSize, int rgba);
 
 	void drawParticle(float posX, float posY, float posZ, int particleIndexX, int particleIndexY,

@@ -4,6 +4,7 @@ import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.IAcceleratedParticleEngine;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -18,12 +19,12 @@ public class Particle
 {
     private static final AxisAlignedBB EMPTY_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
     protected World world;
-    protected double prevPosX;
-    protected double prevPosY;
-    protected double prevPosZ;
-    protected double posX;
-    protected double posY;
-    protected double posZ;
+    public double prevPosX;
+    public double prevPosY;
+    public double prevPosZ;
+    public double posX;
+    public double posY;
+    public double posZ;
     protected double motionX;
     protected double motionY;
     protected double motionZ;
@@ -210,6 +211,19 @@ public class Particle
         buffer.pos((double)f5 + avec3d[1].x, (double)f6 + avec3d[1].y, (double)f7 + avec3d[1].z).tex((double)f1, (double)f2).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
         buffer.pos((double)f5 + avec3d[2].x, (double)f6 + avec3d[2].y, (double)f7 + avec3d[2].z).tex((double)f, (double)f2).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
         buffer.pos((double)f5 + avec3d[3].x, (double)f6 + avec3d[3].y, (double)f7 + avec3d[3].z).tex((double)f, (double)f3).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
+    }
+
+    public boolean renderAccelerated(IAcceleratedParticleEngine accelerator, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+    {
+        if (this.getFXLayer() != 0 || this.particleAngle != 0.0F)
+        {
+            return false;
+        }
+        else
+        {
+            accelerator.drawParticle(this, this.particleTextureIndexX * 16, this.particleTextureIndexY * 16, this.getBrightnessForRender(partialTicks), 16, this.particleScale * 0.1F, this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha);
+            return true;
+        }
     }
 
     public int getFXLayer()

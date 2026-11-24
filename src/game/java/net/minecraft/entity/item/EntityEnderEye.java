@@ -11,6 +11,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.DynamicLightManager;
 
 public class EntityEnderEye extends Entity
 {
@@ -215,5 +216,21 @@ public class EntityEnderEye extends Entity
     public boolean canBeAttackedWithItem()
     {
         return false;
+    }
+
+    protected float getEaglerDynamicLightsValueSimple(float partialTicks)
+    {
+        return 0.5F;
+    }
+
+    protected void renderDynamicLightsEaglerAt(double entityX, double entityY, double entityZ, double renderX, double renderY, double renderZ, float partialTicks, boolean isInFrustum)
+    {
+        super.renderDynamicLightsEaglerAt(entityX, entityY, entityZ, renderX, renderY, renderZ, partialTicks, isInFrustum);
+
+        if (isInFrustum && renderX * renderX + renderY * renderY + renderZ * renderZ < 150.0D)
+        {
+            float mag = 0.5F;
+            DynamicLightManager.renderDynamicLight("entity_" + this.getEntityId() + "_endereye", entityX, entityY + 0.2D, entityZ, mag * 0.199F, mag * 0.775F, mag * 0.413F, false);
+        }
     }
 }

@@ -673,4 +673,9 @@ public class EntityWither extends EntityMob implements IRangedAttackMob
             return EntityWither.this.getInvulTime() > 0;
         }
     }
+
+    protected float getEaglerDynamicLightsValueSimple(float partialTicks)
+    {
+        return 1.0F;
+    }
 }

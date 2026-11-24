@@ -3,6 +3,7 @@ package net.minecraft.client.particle;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.minecraft.IAcceleratedParticleEngine;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemDye;
@@ -36,6 +37,12 @@ public class ParticleFirework
             {
                 super(p_i46466_1_, p_i46466_2_, p_i46466_4_, p_i46466_6_);
                 this.particleMaxAge = 4;
+            }
+
+            public boolean renderAccelerated(IAcceleratedParticleEngine accelerator, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+            {
+                accelerator.drawParticle(this, 64, 32, this.getBrightnessForRender(partialTicks), 64, 7.1F * MathHelper.sin(((float)this.particleAge + partialTicks - 1.0F) * 0.25F * (float)Math.PI) * 0.0625F * 0.25F, this.particleRed, this.particleGreen, this.particleBlue, 0.6F - ((float)this.particleAge + partialTicks - 1.0F) * 0.25F * 0.5F);
+                return true;
             }
 
             public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
@@ -94,6 +101,11 @@ public class ParticleFirework
             public boolean shouldDisableDepth()
             {
                 return true;
+            }
+
+            public boolean renderAccelerated(IAcceleratedParticleEngine accelerator, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+            {
+                return this.twinkle && this.particleAge >= this.particleMaxAge / 3 && (this.particleAge + this.particleMaxAge) / 3 % 2 != 0 || super.renderAccelerated(accelerator, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
             }
 
             public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)

@@ -5,9 +5,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.minecraft.IAcceleratedParticleEngine;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -67,6 +69,17 @@ public class ParticleDigging extends Particle
         this.particleRed *= (float)(i >> 16 & 255) / 255.0F;
         this.particleGreen *= (float)(i >> 8 & 255) / 255.0F;
         this.particleBlue *= (float)(i & 255) / 255.0F;
+    }
+
+    public boolean renderAccelerated(IAcceleratedParticleEngine accelerator, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+    {
+        int w = this.particleTexture.getIconWidth();
+        int h = this.particleTexture.getIconHeight();
+        int xOffset = MathHelper.floor((float)w * this.particleTextureJitterX * 4.0F * 0.0625F);
+        int yOffset = MathHelper.floor((float)h * this.particleTextureJitterY * 4.0F * 0.0625F);
+        int texSize = Math.min(w, h) / 4;
+        accelerator.drawParticle(this, this.particleTexture.getOriginX() + xOffset, this.particleTexture.getOriginY() + yOffset, this.getBrightnessForRender(partialTicks), texSize, this.particleScale * 0.1F, this.particleRed, this.particleGreen, this.particleBlue, 1.0F);
+        return true;
     }
 
     public int getFXLayer()

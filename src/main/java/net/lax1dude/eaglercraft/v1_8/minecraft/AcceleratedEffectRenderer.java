@@ -52,7 +52,7 @@ public class AcceleratedEffectRenderer implements IAcceleratedParticleEngine {
 	}
 
 	@Override
-	public void drawParticle(Entity entityIn, int particleIndexX, int particleIndexY, int lightMapData,
+	public void drawParticle(Particle entityIn, int particleIndexX, int particleIndexY, int lightMapData,
 			int texSize, float particleSize, float r, float g, float b, float a) {
 		float xx = (float) (entityIn.prevPosX + (entityIn.posX - entityIn.prevPosX) * (double) partialTicks - Particle.interpPosX);
 		float yy = (float) (entityIn.prevPosY + (entityIn.posY - entityIn.prevPosY) * (double) partialTicks - Particle.interpPosY);
@@ -61,7 +61,7 @@ public class AcceleratedEffectRenderer implements IAcceleratedParticleEngine {
 	}
 
 	@Override
-	public void drawParticle(Entity entityIn, int particleIndexX, int particleIndexY, int lightMapData,
+	public void drawParticle(Particle entityIn, int particleIndexX, int particleIndexY, int lightMapData,
 			int texSize, float particleSize, int rgba) {
 		float xx = (float) (entityIn.prevPosX + (entityIn.posX - entityIn.prevPosX) * (double) partialTicks - Particle.interpPosX);
 		float yy = (float) (entityIn.prevPosY + (entityIn.posY - entityIn.prevPosY) * (double) partialTicks - Particle.interpPosY);

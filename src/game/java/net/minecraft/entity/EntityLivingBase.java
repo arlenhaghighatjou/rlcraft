@@ -72,6 +72,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
@@ -3000,5 +3001,34 @@ public abstract class EntityLivingBase extends Entity
             this.motionY += (double)up;
             this.motionZ += (double)(forward * f2 + strafe * f1);
         }
+    }
+
+    protected void renderDynamicLightsEaglerAt(double entityX, double entityY, double entityZ, double renderX, double renderY, double renderZ, float partialTicks, boolean isInFrustum)
+    {
+        super.renderDynamicLightsEaglerAt(entityX, entityY, entityZ, renderX, renderY, renderZ, partialTicks, isInFrustum);
+        Minecraft mc = Minecraft.getMinecraft();
+
+        if (mc.gameSettings.thirdPersonView != 0 || mc.getRenderViewEntity() != this)
+        {
+            mc.entityRenderer.renderHeldItemLight(this, 1.0F);
+        }
+    }
+
+    protected float getEaglerDynamicLightsValueSimple(float partialTicks)
+    {
+        float f = super.getEaglerDynamicLightsValueSimple(partialTicks);
+        float f2 = Math.max(getItemBrightnessEagler(this.getHeldItemMainhand()), getItemBrightnessEagler(this.getHeldItemOffhand()));
+
+        if (f2 > 0.0F)
+        {
+            f = Math.min(f + f2 * 0.5F, 1.0F) + f2 * 0.5F;
+        }
+
+        return f;
+    }
+
+    private static float getItemBrightnessEagler(ItemStack itm)
+    {
+        return itm.isEmpty() ? 0.0F : itm.getItem().getHeldItemBrightnessEagler(itm);
     }
 }

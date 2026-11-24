@@ -887,7 +887,16 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
         int i = this.getLightFromNeighborsFor(EnumSkyBlock.SKY, pos);
         int j = this.getLightFromNeighborsFor(EnumSkyBlock.BLOCK, pos);
 
-        if (j < lightValue)
+        if (lightValue < 0)
+        {
+            j += -lightValue;
+
+            if (j > 15)
+            {
+                j = 15;
+            }
+        }
+        else if (j < lightValue)
         {
             j = lightValue;
         }
