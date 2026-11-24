@@ -60,9 +60,9 @@ class GuiSlotRelay extends GuiSlot {
 	}
 
 	@Override
-	protected void drawSlot(int id, int xx, int yy, int width, int height, int ii) {
+	protected void drawSlot(int id, int xx, int yy, int width, int height, int ii, float partialTicks) {
 		if(id < relayManager.count()) {
-			this.mc.getTextureManager().bindTexture(Gui.icons);
+			this.mc.getTextureManager().bindTexture(Gui.ICONS);
 			RelayServer srv = relayManager.get(id);
 			String comment = srv.comment;
 			int var15 = 0;

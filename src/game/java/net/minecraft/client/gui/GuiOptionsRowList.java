@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.lax1dude.eaglercraft.v1_8.PointerInputAbstraction;
 
 @SideOnly(Side.CLIENT)
 public class GuiOptionsRowList extends GuiListExtended
@@ -25,6 +26,46 @@ public class GuiOptionsRowList extends GuiListExtended
             GuiButton guibutton1 = this.createButton(mcIn, p_i45015_2_ / 2 - 155 + 160, 0, gamesettings$options1);
             this.options.add(new GuiOptionsRowList.Row(guibutton, guibutton1));
         }
+    }
+
+    public GuiOptionButton getButtonFor(GameSettings.Options enumOption)
+    {
+        for (int i = 0, l = this.options.size(); i < l; ++i)
+        {
+            GuiOptionsRowList.Row r = this.options.get(i);
+
+            if (r.buttonA instanceof GuiOptionButton && ((GuiOptionButton)r.buttonA).getOption() == enumOption)
+            {
+                return (GuiOptionButton)r.buttonA;
+            }
+
+            if (r.buttonB instanceof GuiOptionButton && ((GuiOptionButton)r.buttonB).getOption() == enumOption)
+            {
+                return (GuiOptionButton)r.buttonB;
+            }
+        }
+
+        return null;
+    }
+
+    public GuiOptionSlider getSliderFor(GameSettings.Options enumOption)
+    {
+        for (int i = 0, l = this.options.size(); i < l; ++i)
+        {
+            GuiOptionsRowList.Row r = this.options.get(i);
+
+            if (r.buttonA instanceof GuiOptionSlider && ((GuiOptionSlider)r.buttonA).getEnumOptions() == enumOption)
+            {
+                return (GuiOptionSlider)r.buttonA;
+            }
+
+            if (r.buttonB instanceof GuiOptionSlider && ((GuiOptionSlider)r.buttonB).getEnumOptions() == enumOption)
+            {
+                return (GuiOptionSlider)r.buttonB;
+            }
+        }
+
+        return null;
     }
 
     private GuiButton createButton(Minecraft mcIn, int p_148182_2_, int p_148182_3_, GameSettings.Options options)
@@ -90,7 +131,14 @@ public class GuiOptionsRowList extends GuiListExtended
 
             public boolean mousePressed(int slotIndex, int mouseX, int mouseY, int mouseEvent, int relativeX, int relativeY)
             {
-                if (this.buttonA.mousePressed(this.client, mouseX, mouseY))
+                if (mouseEvent != 0 && mouseEvent != 12345)
+                {
+                    return false;
+                }
+
+                boolean touchMode = PointerInputAbstraction.isTouchMode();
+
+                if ((!touchMode || this.buttonA.isSliderTouchEvents() == (mouseEvent == 12345)) && this.buttonA.mousePressed(this.client, mouseX, mouseY))
                 {
                     if (this.buttonA instanceof GuiOptionButton)
                     {
@@ -100,7 +148,7 @@ public class GuiOptionsRowList extends GuiListExtended
 
                     return true;
                 }
-                else if (this.buttonB != null && this.buttonB.mousePressed(this.client, mouseX, mouseY))
+                else if (this.buttonB != null && (!touchMode || this.buttonB.isSliderTouchEvents() == (mouseEvent == 12345)) && this.buttonB.mousePressed(this.client, mouseX, mouseY))
                 {
                     if (this.buttonB instanceof GuiOptionButton)
                     {
@@ -118,12 +166,19 @@ public class GuiOptionsRowList extends GuiListExtended
 
             public void mouseReleased(int slotIndex, int x, int y, int mouseEvent, int relativeX, int relativeY)
             {
-                if (this.buttonA != null)
+                if (mouseEvent != 0 && mouseEvent != 12345)
+                {
+                    return;
+                }
+
+                boolean touchMode = PointerInputAbstraction.isTouchMode();
+
+                if (this.buttonA != null && (!touchMode || this.buttonA.isSliderTouchEvents() == (mouseEvent == 12345)))
                 {
                     this.buttonA.mouseReleased(x, y);
                 }
 
-                if (this.buttonB != null)
+                if (this.buttonB != null && (!touchMode || this.buttonB.isSliderTouchEvents() == (mouseEvent == 12345)))
                 {
                     this.buttonB.mouseReleased(x, y);
                 }

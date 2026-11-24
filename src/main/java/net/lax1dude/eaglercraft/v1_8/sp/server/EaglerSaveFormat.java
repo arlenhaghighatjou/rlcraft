@@ -61,9 +61,7 @@ public class EaglerSaveFormat extends SaveFormatOld {
 						s1 = s;
 					}
 
-					arraylist.add(new WorldSummary(s, s1, worldinfo.getLastTimePlayed(), 0l,
-							worldinfo.getGameType(), flag, worldinfo.isHardcoreModeEnabled(),
-							worldinfo.areCommandsAllowed(), null));
+					arraylist.add(new WorldSummary(worldinfo, s, s1, 0l, flag));
 				}
 			}
 		}

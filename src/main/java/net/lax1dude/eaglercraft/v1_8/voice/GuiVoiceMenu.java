@@ -27,6 +27,7 @@ import net.lax1dude.eaglercraft.v1_8.Keyboard;
 import net.lax1dude.eaglercraft.v1_8.PointerInputAbstraction;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.sp.gui.GuiSlider2;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
@@ -143,10 +144,10 @@ public class GuiVoiceMenu extends Gui {
 	}
 	
 	private void drawButtons(int mx, int my, float partialTicks) {
-		applyRadiusButton.drawButton(mc, mx, my);
-		applyVolumeButton.drawButton(mc, mx, my);
-		noticeContinueButton.drawButton(mc, mx, my);
-		noticeCancelButton.drawButton(mc, mx, my);
+		applyRadiusButton.drawButton(mc, mx, my, partialTicks);
+		applyVolumeButton.drawButton(mc, mx, my, partialTicks);
+		noticeContinueButton.drawButton(mc, mx, my, partialTicks);
+		noticeCancelButton.drawButton(mc, mx, my, partialTicks);
 	}
 	
 	public void drawScreen(int mx, int my, float partialTicks) {
@@ -167,7 +168,7 @@ public class GuiVoiceMenu extends Gui {
 				
 				drawCenteredString(this.fontRenderer, I18n.format("voice.radiusTitle"), this.width / 2, height / 4 + 9, 16777215);
 				drawString(this.fontRenderer, I18n.format("voice.radiusLabel"), (this.width - 150) / 2 + 3, height / 3 + 6, 0xCCCCCC);
-				sliderBlocks.drawButton(mc, mx, my);
+				sliderBlocks.drawButton(mc, mx, my, partialTicks);
 				
 			}else if(showSliderVolume) {
 				
@@ -176,10 +177,10 @@ public class GuiVoiceMenu extends Gui {
 				
 				drawCenteredString(this.fontRenderer, I18n.format("voice.volumeTitle"), this.width / 2, height / 4 - 1, 16777215);
 				drawString(this.fontRenderer, I18n.format("voice.volumeListen"), (this.width - 150) / 2 + 3, height / 3 - 4, 0xCCCCCC);
-				sliderListenVolume.drawButton(mc, mx, my);
+				sliderListenVolume.drawButton(mc, mx, my, partialTicks);
 				
 				drawString(this.fontRenderer, I18n.format("voice.volumeSpeak"), (this.width - 150) / 2 + 3, height / 3 + 42, 0xCCCCCC);
-				sliderSpeakVolume.drawButton(mc, mx, my);
+				sliderSpeakVolume.drawButton(mc, mx, my, partialTicks);
 				
 			}else if(showPTTKeyConfig) {
 				
@@ -649,7 +650,7 @@ public class GuiVoiceMenu extends Gui {
 				if(mx >= voiceScreenButtonOFFposX && my >= voiceScreenButtonOFFposY && mx < voiceScreenButtonOFFposX +
 						voiceScreenButtonOFFposW && my < voiceScreenButtonOFFposY + voiceScreenButtonOFFposH) {
 					VoiceClientController.setVoiceChannel(EnumVoiceChannelType.NONE);
-					this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+					this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 				}else if(mx >= voiceScreenButtonRADIUSposX && my >= voiceScreenButtonRADIUSposY && mx < voiceScreenButtonRADIUSposX +
 						voiceScreenButtonRADIUSposW && my < voiceScreenButtonRADIUSposY + voiceScreenButtonRADIUSposH) {
 					
@@ -663,7 +664,7 @@ public class GuiVoiceMenu extends Gui {
 						VoiceClientController.setVoiceChannel(EnumVoiceChannelType.PROXIMITY);
 					}
 					
-					this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+					this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 					
 				}else if(mx >= voiceScreenButtonGLOBALposX && my >= voiceScreenButtonGLOBALposY && mx < voiceScreenButtonGLOBALposX +
 						voiceScreenButtonGLOBALposW && my < voiceScreenButtonGLOBALposY + voiceScreenButtonGLOBALposH) {
@@ -678,27 +679,27 @@ public class GuiVoiceMenu extends Gui {
 						VoiceClientController.setVoiceChannel(EnumVoiceChannelType.GLOBAL);
 					}
 					
-					this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+					this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 					
-					this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+					this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 				}else if(channel == EnumVoiceChannelType.PROXIMITY && status == EnumVoiceChannelStatus.CONNECTED && mx >= voiceScreenButtonChangeRadiusposX &&
 						my >= voiceScreenButtonChangeRadiusposY && mx < voiceScreenButtonChangeRadiusposX + voiceScreenButtonChangeRadiusposW &&
 						my < voiceScreenButtonChangeRadiusposY + voiceScreenButtonChangeRadiusposH) {
 					showSliderBlocks = true;
 					sliderBlocks.sliderValue = (VoiceClientController.getVoiceProximity() - 5) / 17.0f;
-					this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+					this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 				}else if(status == EnumVoiceChannelStatus.CONNECTED && channel != EnumVoiceChannelType.NONE && mx >= voiceScreenVolumeIndicatorX &&
 						my >= voiceScreenVolumeIndicatorY && mx < voiceScreenVolumeIndicatorX + voiceScreenVolumeIndicatorW &&
 						my < voiceScreenVolumeIndicatorY + voiceScreenVolumeIndicatorH) {
 					showSliderVolume = true;
 					sliderListenVolume.sliderValue = VoiceClientController.getVoiceListenVolume();
 					sliderSpeakVolume.sliderValue = VoiceClientController.getVoiceSpeakVolume();
-					this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+					this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 				}else if(status == EnumVoiceChannelStatus.CONNECTED && channel != EnumVoiceChannelType.NONE && mx >= voiceScreenVolumeIndicatorX - 1 &&
 						my >= voiceScreenVolumeIndicatorY + voiceScreenVolumeIndicatorH + 2 && mx < voiceScreenVolumeIndicatorX + voiceScreenVolumeIndicatorW + 2 &&
 						my < voiceScreenVolumeIndicatorY + voiceScreenVolumeIndicatorH + 12) {
 					showPTTKeyConfig = true;
-					this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+					this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 				}else if(status == EnumVoiceChannelStatus.CONNECTED) {
 					List<EaglercraftUUID> playersToRender = VoiceClientController.getVoiceRecent();
 					if(playersToRender.size() > 0) {
@@ -710,7 +711,7 @@ public class GuiVoiceMenu extends Gui {
 							int mhy = voiceScreenVolumeIndicatorY + voiceScreenVolumeIndicatorH + 33 + i * 9;
 							if(mx >= voiceScreenVolumeIndicatorX - 3 && my >= mhy && mx < voiceScreenVolumeIndicatorX + voiceScreenVolumeIndicatorW + 2 && my < mhy + 9) {
 								VoiceClientController.setVoiceMuted(uuid, !muted);
-								this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+								this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 								break;
 							}
 						}

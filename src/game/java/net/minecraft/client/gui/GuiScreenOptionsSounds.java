@@ -114,6 +114,11 @@ public class GuiScreenOptionsSounds extends GuiScreen
             return 0;
         }
 
+        public boolean isSliderTouchEvents()
+        {
+            return true;
+        }
+
         protected void mouseDragged(Minecraft mc, int mouseX, int mouseY)
         {
             if (this.visible)

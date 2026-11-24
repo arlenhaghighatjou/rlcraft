@@ -24,6 +24,7 @@ import net.lax1dude.eaglercraft.v1_8.internal.EnumCursorType;
 import net.lax1dude.eaglercraft.v1_8.internal.FileChooserResult;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -306,7 +307,7 @@ public class GuiScreenEditCape extends GuiScreen {
 				if(mx > 1 && my > 1 && mx < (w * 3 / 4) + 7 && my < 12) {
 					safeProfile();
 					mc.displayGuiScreen(new GuiScreenImportExportProfile(parent));
-					mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 					return;
 				}
 			}

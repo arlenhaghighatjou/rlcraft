@@ -53,11 +53,11 @@ public class ResourcePackListEntryDefault extends ResourcePackListEntry {
 				dynamictexture);
 	}
 
-	protected int func_183019_a() {
-		return 1;
+	protected int getResourcePackFormat() {
+		return 3;
 	}
 
-	protected String func_148311_a() {
+	protected String getResourcePackDescription() {
 		try {
 			PackMetadataSection packmetadatasection = (PackMetadataSection) this.field_148320_d
 					.getPackMetadata(this.mc.getResourcePackRepository().rprMetadataSerializer, "pack");
@@ -73,31 +73,31 @@ public class ResourcePackListEntryDefault extends ResourcePackListEntry {
 		return TextFormatting.RED + "Missing " + "pack.mcmeta" + " :(";
 	}
 
-	protected boolean func_148309_e() {
+	protected boolean canMoveRight() {
 		return false;
 	}
 
-	protected boolean func_148308_f() {
+	protected boolean canMoveLeft() {
 		return false;
 	}
 
-	protected boolean func_148314_g() {
+	protected boolean canMoveUp() {
 		return false;
 	}
 
-	protected boolean func_148307_h() {
+	protected boolean canMoveDown() {
 		return false;
 	}
 
-	protected String func_148312_b() {
+	protected String getResourcePackName() {
 		return "Default";
 	}
 
-	protected void func_148313_c() {
+	protected void bindResourcePackIcon() {
 		this.mc.getTextureManager().bindTexture(this.resourcePackIcon);
 	}
 
-	protected boolean func_148310_d() {
+	protected boolean showHoverOverlay() {
 		return false;
 	}
 

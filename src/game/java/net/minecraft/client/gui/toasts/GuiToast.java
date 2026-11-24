@@ -86,6 +86,23 @@ public class GuiToast extends Gui
         return this.mc;
     }
 
+    public int getHeight()
+    {
+        long i = Minecraft.getSystemTime();
+
+        for (int j = this.visible.length - 1; j >= 0; --j)
+        {
+            GuiToast.ToastInstance<?> toastinstance = this.visible[j];
+
+            if (toastinstance != null && toastinstance.animationTime != -1L)
+            {
+                return (int)(((float)j + toastinstance.getVisibility(i)) * 32.0F);
+            }
+        }
+
+        return 0;
+    }
+
     @SideOnly(Side.CLIENT)
     class ToastInstance<T extends IToast>
     {

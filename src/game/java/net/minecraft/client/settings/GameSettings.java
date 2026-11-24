@@ -157,6 +157,7 @@ public class GameSettings
     public int narrator;
     public String language;
     public boolean forceUnicodeFont;
+    public boolean hasCreatedDemoWorld;
     public int relayTimeout;
     public boolean hideJoinCode;
     public boolean hudFps = true;
@@ -1251,6 +1252,11 @@ public class GameSettings
                         this.narrator = Integer.parseInt(s2);
                     }
 
+                    if ("hasCreatedDemoWorld".equals(s1))
+                    {
+                        this.hasCreatedDemoWorld = "true".equals(s2);
+                    }
+
                     if ("relayTimeout".equals(s1))
                     {
                         this.relayTimeout = Integer.parseInt(s2);
@@ -1634,6 +1640,7 @@ public class GameSettings
             printwriter.println("narrator:" + this.narrator);
             printwriter.println("tutorialStep:" + this.tutorialStep.getName());
 
+            printwriter.println("hasCreatedDemoWorld:" + this.hasCreatedDemoWorld);
             printwriter.println("relayTimeout:" + this.relayTimeout);
             printwriter.println("hideJoinCode:" + this.hideJoinCode);
             printwriter.println("enableVsyncEag:" + this.enableVsync);

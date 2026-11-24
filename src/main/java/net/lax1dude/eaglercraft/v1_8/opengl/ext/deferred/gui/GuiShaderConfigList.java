@@ -413,7 +413,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 	private class ListEntryPackInfo implements IGuiListEntry {
 
 		@Override
-		public void drawEntry(int entryID, int x, int y, int getListWidth, int var5, int var6, int var7, boolean var8) {
+		public void drawEntry(int entryID, int x, int y, int getListWidth, int var5, int var6, int var7, boolean var8, float partialTicks) {
 			Minecraft mc = Minecraft.getMinecraft();
 			ShaderPackInfo info = mc.gameSettings.deferredShaderConf.shaderPackInfo;
 			String packNameString = info.name;
@@ -435,7 +435,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 		}
 
 		@Override
-		public void setSelected(int var1, int var2, int var3) {
+		public void updatePosition(int var1, int var2, int var3, float partialTicks) {
 			
 		}
 
@@ -454,12 +454,12 @@ public class GuiShaderConfigList extends GuiListExtended {
 	private class ListEntrySpacing implements IGuiListEntry {
 
 		@Override
-		public void setSelected(int var1, int var2, int var3) {
+		public void updatePosition(int var1, int var2, int var3, float partialTicks) {
 			
 		}
 
 		@Override
-		public void drawEntry(int var1, int var2, int var3, int var4, int var5, int var6, int var7, boolean var8) {
+		public void drawEntry(int var1, int var2, int var3, int var4, int var5, int var6, int var7, boolean var8, float partialTicks) {
 			
 		}
 
@@ -484,12 +484,12 @@ public class GuiShaderConfigList extends GuiListExtended {
 		}
 
 		@Override
-		public void setSelected(int var1, int var2, int var3) {
+		public void updatePosition(int var1, int var2, int var3, float partialTicks) {
 			
 		}
 
 		@Override
-		public void drawEntry(int entryID, int x, int y, int getListWidth, int var5, int var6, int var7, boolean var8) {
+		public void drawEntry(int entryID, int x, int y, int getListWidth, int var5, int var6, int var7, boolean var8, float partialTicks) {
 			screen.drawString(screen.getFontRenderer(), text, x, y + 10, 0xFFFFFF);
 		}
 
@@ -534,16 +534,16 @@ public class GuiShaderConfigList extends GuiListExtended {
 		}
 
 		@Override
-		public void setSelected(int var1, int var2, int var3) {
+		public void updatePosition(int var1, int var2, int var3, float partialTicks) {
 			
 		}
 
 		@Override
-		public void drawEntry(int entryID, int x, int y, int getListWidth, int var5, int var6, int var7, boolean var8) {
+		public void drawEntry(int entryID, int x, int y, int getListWidth, int var5, int var6, int var7, boolean var8, float partialTicks) {
 			if(this.button1 != null) {
 				this.button1.x = x;
 				this.button1.y = y;
-				this.button1.drawButton(mc, var6, var7);
+				this.button1.drawButton(mc, var6, var7, partialTicks);
 				if(this.button1.isMouseOver() && this.button1.y + 10 < bottom && this.button1.y + 10 > top) {
 					renderTooltip(var6, var7 + 15, this.opt1.desc);
 				}
@@ -551,7 +551,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 			if(this.button2 != null) {
 				this.button2.x = x + 75;
 				this.button2.y = y;
-				this.button2.drawButton(mc, var6, var7);
+				this.button2.drawButton(mc, var6, var7, partialTicks);
 				if(this.button2.isMouseOver() && this.button2.y + 10 < bottom && this.button2.y + 10 > top) {
 					renderTooltip(var6, var7 + 15, this.opt2.desc);
 				}
@@ -559,7 +559,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 			if(this.button3 != null) {
 				this.button3.x = x + 150;
 				this.button3.y = y;
-				this.button3.drawButton(mc, var6, var7);
+				this.button3.drawButton(mc, var6, var7, partialTicks);
 				if(this.button3.isMouseOver() && this.button3.y + 10 < bottom && this.button3.y + 10 > top) {
 					renderTooltip(var6, var7 + 15, this.opt3.desc);
 				}

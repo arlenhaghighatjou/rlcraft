@@ -15,6 +15,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EnumInputEvent;
 
 @SideOnly(Side.CLIENT)
 public class GuiCommandBlock extends GuiScreen implements ITabCompleter
@@ -290,5 +291,21 @@ public class GuiCommandBlock extends GuiScreen implements ITabCompleter
     public void setCompletions(String... newCompletions)
     {
         this.tabCompleter.setCompletions(newCompletions);
+    }
+
+    public boolean blockPTTKey()
+    {
+        return this.commandTextField.isFocused() || this.previousOutputTextField.isFocused();
+    }
+
+    public boolean showCopyPasteButtons()
+    {
+        return this.commandTextField.isFocused() || this.previousOutputTextField.isFocused();
+    }
+
+    public void fireInputEvent(EnumInputEvent event, String param)
+    {
+        this.commandTextField.fireInputEvent(event, param);
+        this.previousOutputTextField.fireInputEvent(event, param);
     }
 }

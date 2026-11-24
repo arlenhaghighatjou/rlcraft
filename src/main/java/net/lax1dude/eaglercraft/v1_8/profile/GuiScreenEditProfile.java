@@ -25,6 +25,7 @@ import net.lax1dude.eaglercraft.v1_8.internal.FileChooserResult;
 import net.lax1dude.eaglercraft.v1_8.minecraft.EnumInputEvent;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -430,7 +431,7 @@ public class GuiScreenEditProfile extends GuiScreen {
 					safeProfile();
 					EaglerProfile.save();
 					mc.displayGuiScreen(new GuiScreenImportExportProfile(this));
-					mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 					return;
 				}
 			}
@@ -445,7 +446,7 @@ public class GuiScreenEditProfile extends GuiScreen {
 				if(mx > skinX - 10 && my > skinY - 16 && mx < skinX + (fontRenderer.getStringWidth(capesText) * 0.75f) + 10 && my < skinY + 7) {
 					safeProfile();
 					this.mc.displayGuiScreen(new GuiScreenEditCape(this));
-					mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 					return;
 				}
 			}

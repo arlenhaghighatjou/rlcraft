@@ -13,6 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.StringUtils;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EnumInputEvent;
 
 @SideOnly(Side.CLIENT)
 public class GuiCreateWorld extends GuiScreen
@@ -485,5 +486,16 @@ public class GuiCreateWorld extends GuiScreen
         {
             this.gameMode = "creative";
         }
+    }
+
+    public boolean showCopyPasteButtons()
+    {
+        return this.worldNameField.isFocused() || this.worldSeedField.isFocused();
+    }
+
+    public void fireInputEvent(EnumInputEvent event, String param)
+    {
+        this.worldNameField.fireInputEvent(event, param);
+        this.worldSeedField.fireInputEvent(event, param);
     }
 }

@@ -262,7 +262,7 @@ public class Config {
 
 	public static IResourcePack getDefiningResourcePack(ResourceLocation p_getDefiningResourcePack_0_) {
 		ResourcePackRepository resourcepackrepository = mc.getResourcePackRepository();
-		IResourcePack iresourcepack = resourcepackrepository.getResourcePackInstance();
+		IResourcePack iresourcepack = resourcepackrepository.getServerResourcePack();
 
 		if (iresourcepack != null && iresourcepack.resourceExists(p_getDefiningResourcePack_0_)) {
 			return iresourcepack;
@@ -306,8 +306,8 @@ public class Config {
 			list1.add(resourcepackrepository$entry.getResourcePack());
 		}
 
-		if (resourcepackrepository.getResourcePackInstance() != null) {
-			list1.add(resourcepackrepository.getResourcePackInstance());
+		if (resourcepackrepository.getServerResourcePack() != null) {
+			list1.add(resourcepackrepository.getServerResourcePack());
 		}
 
 		IResourcePack[] airesourcepack = (IResourcePack[]) ((IResourcePack[]) list1

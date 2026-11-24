@@ -77,7 +77,7 @@ public abstract class AbstractResourcePack implements IResourcePack {
 			throws IOException {
 		try {
 			return readMetadata(parIMetadataSerializer, this.getInputStreamByName("pack.mcmeta"), parString1);
-		} catch (JSONException e) {
+		} catch (JsonParseException e) {
 			if (this instanceof EaglerFolderResourcePack) {
 				EaglerFolderResourcePack.deleteResourcePack((EaglerFolderResourcePack) this);
 			}

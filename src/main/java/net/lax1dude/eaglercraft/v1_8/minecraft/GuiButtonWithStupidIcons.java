@@ -77,10 +77,10 @@ public class GuiButtonWithStupidIcons extends GuiButton {
 		this.rightIconAspect = aspectRatio;
 	}
 
-	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 		if (this.visible) {
 			FontRenderer fontrenderer = mc.fontRenderer;
-			mc.getTextureManager().bindTexture(buttonTextures);
+			mc.getTextureManager().bindTexture(BUTTON_TEXTURES);
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width
 					&& mouseY < this.y + this.height;

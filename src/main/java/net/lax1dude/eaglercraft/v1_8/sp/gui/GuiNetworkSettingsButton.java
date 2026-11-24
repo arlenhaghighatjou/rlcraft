@@ -20,6 +20,7 @@ import net.lax1dude.eaglercraft.v1_8.Mouse;
 import net.lax1dude.eaglercraft.v1_8.internal.EnumCursorType;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.sp.lan.LANServerController;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.Gui;
@@ -64,7 +65,7 @@ public class GuiNetworkSettingsButton extends Gui {
 			}else {
 				mc.displayGuiScreen(new GuiScreenLANNotSupported(screen));
 			}
-			this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+			this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 		}
 	}
 

@@ -28,6 +28,7 @@ import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiChat;
@@ -82,7 +83,7 @@ public class ServerNotificationRenderer {
 		ServerNotificationManager mgr = mc.player.connection.getNotifManager();
 		List<NotificationBadge> lst = mgr.getNotifBadgesToDisplay();
 		if(!lst.isEmpty()) {
-			int baseOffset = mc.guiAchievement.getHeight();
+			int baseOffset = mc.getToastGui().getHeight();
 			boolean showX = (currentScreen instanceof GuiChat);
 			if(showX) {
 				baseOffset += 25; // exit button in chat screen;
@@ -112,13 +113,13 @@ public class ServerNotificationRenderer {
 								int xposY = baseOffset + 5;
 								if(posX >= xposX && posY >= xposY && posX < xposX + 16 && posY < xposY + 16) {
 									badge.hideNotif();
-									mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+									mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 									return true;
 								}
 							}
 							if(tex.rootClickEvent != null) {
 								if(currentScreen.handleComponentClick(tex.rootClickEvent)) {
-									mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+									mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 									return true;
 								}
 							}
@@ -131,7 +132,7 @@ public class ServerNotificationRenderer {
 										int offsetPosY = baseOffset + evt.posY;
 										if(posX >= offsetPosX && posY >= offsetPosY && posX < offsetPosX + evt.width && posY < offsetPosY + evt.height) {
 											if(currentScreen.handleComponentClick(evt.chatComponent)) {
-												mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+												mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 												return true;
 											}
 										}
@@ -154,7 +155,7 @@ public class ServerNotificationRenderer {
 		if(!lst.isEmpty()) {
 			GlStateManager.clear(GL_DEPTH_BUFFER_BIT);
 			boolean showXButtons = false;
-			int baseOffset = mc.guiAchievement.getHeight();
+			int baseOffset = mc.getToastGui().getHeight();
 			if(mc.currentScreen != null) {
 				if(mc.currentScreen instanceof GuiChat) {
 					baseOffset += 25; // exit button in chat screen;
@@ -290,7 +291,7 @@ public class ServerNotificationRenderer {
 					&& bodyComponent.getStyle().getClickEvent().getAction().shouldAllowInChat()) {
 				rootClickEvt = bodyComponent;
 			}
-			bodyLines = GuiUtilRenderComponents.func_178908_a(bodyComponent, (int) (textZoneWidth / bodyFontSize),
+			bodyLines = GuiUtilRenderComponents.splitText(bodyComponent, (int) (textZoneWidth / bodyFontSize),
 					mc.fontRenderer, true, true);
 			
 			int maxHeight = BADGE_HEIGHT - 32;
@@ -434,7 +435,7 @@ public class ServerNotificationRenderer {
 				int startXReal = leftPadding;
 				for(ITextComponent comp : bodyLines.get(i)) {
 					int w = mc.fontRenderer.drawStringWithShadow(
-							comp.getStyle().getFormattingCode() + comp.getUnformattedTextForChat(), startXLocal,
+							comp.getStyle().getFormattingCode() + comp.getUnformattedComponentText(), startXLocal,
 							i * 9, badge.bodyTxtColor) - startXLocal;
 					ClickEvent clickEvent = comp.getStyle().getClickEvent();
 					HoverEvent hoverEvent = comp.getStyle().getHoverEvent();

@@ -17,6 +17,7 @@
 package net.lax1dude.eaglercraft.v1_8.webview;
 
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -96,7 +97,7 @@ public class GuiScreenPhishingWarning extends GuiScreen {
 	protected void mouseClicked(int mx, int my, int btn) {
 		if(btn == 0 && mouseOverCheck) {
 			hasCheckedBox = !hasCheckedBox;
-			mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+			mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 			return;
 		}
 		super.mouseClicked(mx, my, btn);

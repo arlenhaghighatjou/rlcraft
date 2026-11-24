@@ -18,6 +18,7 @@ public class GuiYesNo extends GuiScreen
     protected String cancelButtonText;
     protected int parentButtonClickedId;
     private int ticksUntilEnable;
+    private boolean opaqueBackground = false;
 
     public GuiYesNo(GuiYesNoCallback parentScreenIn, String messageLine1In, String messageLine2In, int parentButtonClickedIdIn)
     {
@@ -54,7 +55,15 @@ public class GuiYesNo extends GuiScreen
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        this.drawDefaultBackground();
+        if (this.opaqueBackground)
+        {
+            this.drawBackground(0);
+        }
+        else
+        {
+            this.drawDefaultBackground();
+        }
+
         this.drawCenteredString(this.fontRenderer, this.messageLine1, this.width / 2, 70, 16777215);
         int i = 90;
 
@@ -88,5 +97,11 @@ public class GuiYesNo extends GuiScreen
                 guibutton.enabled = true;
             }
         }
+    }
+
+    public GuiYesNo withOpaqueBackground()
+    {
+        this.opaqueBackground = true;
+        return this;
     }
 }

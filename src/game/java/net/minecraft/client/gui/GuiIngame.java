@@ -18,6 +18,7 @@ import net.minecraft.client.gui.chat.NarratorChatListener;
 import net.minecraft.client.gui.chat.NormalChatListener;
 import net.minecraft.client.gui.chat.OverlayChatListener;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
@@ -25,6 +26,11 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
 import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.PointerInputAbstraction;
+import net.lax1dude.eaglercraft.v1_8.Touch;
+import net.lax1dude.eaglercraft.v1_8.touch_gui.TouchControls;
+import net.lax1dude.eaglercraft.v1_8.touch_gui.TouchOverlayRenderer;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
@@ -76,7 +82,7 @@ public class GuiIngame extends Gui
     public float prevVignetteBrightness = 1.0F;
     protected int remainingHighlightTicks;
     protected ItemStack highlightingItemStack = ItemStack.EMPTY;
-    protected final GuiOverlayDebug overlayDebug;
+    public final GuiOverlayDebug overlayDebug;
     protected final GuiSubtitleOverlay overlaySubtitle;
     protected final GuiSpectator spectatorGui;
     protected final GuiPlayerTabOverlay overlayPlayerList;
@@ -160,6 +166,8 @@ public class GuiIngame extends Gui
             }
         }
 
+        this.onBeginHotbarDraw();
+
         if (this.mc.playerController.isSpectator())
         {
             this.spectatorGui.renderTooltip(scaledresolution, partialTicks);
@@ -229,6 +237,10 @@ public class GuiIngame extends Gui
             this.spectatorGui.renderSelectedItem(scaledresolution);
         }
 
+        this.onEndHotbarDraw();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        this.drawEaglerInteractButton(scaledresolution);
+
         if (this.mc.isDemo())
         {
             this.renderDemo(scaledresolution);
@@ -236,10 +248,7 @@ public class GuiIngame extends Gui
 
         this.renderPotionEffects(scaledresolution);
 
-        if (this.mc.gameSettings.showDebugInfo)
-        {
-            this.overlayDebug.renderDebugInfo(scaledresolution);
-        }
+        this.overlayDebug.renderDebugInfo(scaledresolution);
 
         if (this.overlayMessageTime > 0)
         {
@@ -521,6 +530,28 @@ public class GuiIngame extends Gui
             int k = 91;
             this.zLevel = -90.0F;
             this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
+            int touchOffset = 0;
+
+            if (PointerInputAbstraction.isTouchMode())
+            {
+                this.mc.getTextureManager().bindTexture(TouchOverlayRenderer.spriteSheet);
+                this.drawTexturedModalRect(i + 89, sr.getScaledHeight() - 22, 234, 0, 22, 22);
+                int areaHAdd = 12;
+                this.hotbarAreaX = (i - 91) * this.mc.displayWidth / sr.getScaledWidth();
+                this.hotbarAreaY = (sr.getScaledHeight() - 22 - areaHAdd) * this.mc.displayHeight / sr.getScaledHeight();
+                this.hotbarAreaW = 203 * this.mc.displayWidth / sr.getScaledWidth();
+                this.hotbarAreaH = (22 + areaHAdd) * this.mc.displayHeight / sr.getScaledHeight();
+                this.mc.getTextureManager().bindTexture(WIDGETS_TEX_PATH);
+                touchOffset = 22;
+            }
+            else
+            {
+                this.hotbarAreaX = -1;
+                this.hotbarAreaY = -1;
+                this.hotbarAreaW = -1;
+                this.hotbarAreaH = -1;
+            }
+
             this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
 
             if (!itemstack.isEmpty())
@@ -531,7 +562,7 @@ public class GuiIngame extends Gui
                 }
                 else
                 {
-                    this.drawTexturedModalRect(i + 91, sr.getScaledHeight() - 23, 53, 22, 29, 24);
+                    this.drawTexturedModalRect(i + 91 + touchOffset, sr.getScaledHeight() - 23, 53, 22, 29, 24);
                 }
             }
 
@@ -558,7 +589,7 @@ public class GuiIngame extends Gui
                 }
                 else
                 {
-                    this.renderHotbarItem(i + 91 + 10, l1, partialTicks, entityplayer, itemstack);
+                    this.renderHotbarItem(i + 91 + 10 + touchOffset, l1, partialTicks, entityplayer, itemstack);
                 }
             }
 
@@ -569,7 +600,7 @@ public class GuiIngame extends Gui
                 if (f1 < 1.0F)
                 {
                     int i2 = sr.getScaledHeight() - 20;
-                    int j2 = i + 91 + 6;
+                    int j2 = i + 91 + 6 + touchOffset;
 
                     if (enumhandside == EnumHandSide.RIGHT)
                     {
@@ -1314,5 +1345,280 @@ public class GuiIngame extends Gui
     public GuiBossOverlay getBossOverlay()
     {
         return this.overlayBoss;
+    }
+
+    private int hotbarAreaX = -1;
+    private int hotbarAreaY = -1;
+    private int hotbarAreaW = -1;
+    private int hotbarAreaH = -1;
+    private int currentHotbarSlotTouch = -1;
+    private long hotbarSlotTouchStart = -1L;
+    private boolean hotbarSlotTouchAlreadySelected = false;
+    private int interactButtonX = -1;
+    private int interactButtonY = -1;
+    private int interactButtonW = -1;
+    private int interactButtonH = -1;
+    private int touchVPosX = -1;
+    private int touchVPosY = -1;
+    private int touchEventUID = -1;
+
+    protected void drawEaglerInteractButton(ScaledResolution parScaledResolution)
+    {
+        if (PointerInputAbstraction.isTouchMode() && this.mc.objectMouseOver != null && this.mc.objectMouseOver.typeOfHit == RayTraceResult.Type.ENTITY)
+        {
+            int scale = parScaledResolution.getScaleFactor();
+            this.interactButtonW = 118 * scale;
+            this.interactButtonH = 20 * scale;
+            int xx = (parScaledResolution.getScaledWidth() - 118) / 2;
+            int yy = parScaledResolution.getScaledHeight() - 70;
+            this.interactButtonX = xx * scale;
+            this.interactButtonY = yy * scale;
+            this.mc.getTextureManager().bindTexture(TouchOverlayRenderer.spriteSheet);
+            boolean hover = this.touchVPosX >= this.interactButtonX && this.touchVPosY >= this.interactButtonY && this.touchVPosX < this.interactButtonX + this.interactButtonW && this.touchVPosY < this.interactButtonY + this.interactButtonH;
+            float f = MathHelper.clamp(this.mc.gameSettings.touchControlOpacity, 0.0F, 1.0F);
+
+            if (f > 0.0F)
+            {
+                if (f < 1.0F)
+                {
+                    GlStateManager.enableBlend();
+                }
+
+                GlStateManager.color(1.0F, 1.0F, 1.0F, f);
+                this.drawTexturedModalRect(xx, yy, 0, hover ? 216 : 236, 118, 20);
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                this.drawCenteredString(this.mc.fontRenderer, I18n.format("touch.interact.entity"), parScaledResolution.getScaledWidth() / 2, yy + 6, (hover ? 16777120 : 14737632) | ((int)(f * 255.0F) << 24));
+
+                if (f < 1.0F)
+                {
+                    GlStateManager.disableBlend();
+                }
+            }
+        }
+        else
+        {
+            this.interactButtonX = -1;
+            this.interactButtonY = -1;
+            this.interactButtonW = -1;
+            this.interactButtonH = -1;
+        }
+    }
+
+    private int applyTouchHotbarTransformX(int posX)
+    {
+        return (posX + this.mc.displayWidth / 4) * 2 / 3;
+    }
+
+    private int applyTouchHotbarTransformY(int posY)
+    {
+        return (posY + this.mc.displayHeight / 2) * 2 / 3;
+    }
+
+    protected void onBeginHotbarDraw()
+    {
+        if (PointerInputAbstraction.isTouchMode())
+        {
+            GlStateManager.pushMatrix();
+            ScaledResolution res = this.mc.scaledResolution;
+            GlStateManager.translate((float)(res.getScaledWidth() / -4), (float)(res.getScaledHeight() / -2), (float)this.titleFadeIn);
+            GlStateManager.scale(1.5F, 1.5F, 1.5F);
+        }
+    }
+
+    protected void onEndHotbarDraw()
+    {
+        if (PointerInputAbstraction.isTouchMode())
+        {
+            GlStateManager.popMatrix();
+        }
+    }
+
+    private int getHotbarSlotTouched(int pointX)
+    {
+        int xx = pointX - this.hotbarAreaX - 2;
+        xx /= 20 * this.mc.scaledResolution.getScaleFactor();
+
+        if (xx < 0)
+        {
+            xx = 0;
+        }
+
+        if (xx > 9)
+        {
+            xx = 9;
+        }
+
+        return xx;
+    }
+
+    public boolean handleTouchBeginEagler(int uid, int pointX, int pointY)
+    {
+        if (this.mc.player == null)
+        {
+            return false;
+        }
+
+        if (this.touchEventUID == -1)
+        {
+            pointX = this.applyTouchHotbarTransformX(pointX);
+            pointY = this.applyTouchHotbarTransformY(pointY);
+
+            if (pointX >= this.hotbarAreaX && pointY >= this.hotbarAreaY && pointX < this.hotbarAreaX + this.hotbarAreaW && pointY < this.hotbarAreaY + this.hotbarAreaH)
+            {
+                this.touchEventUID = uid;
+                this.currentHotbarSlotTouch = this.getHotbarSlotTouched(pointX);
+                this.hotbarSlotTouchStart = EagRuntime.steadyTimeMillis();
+
+                if (this.currentHotbarSlotTouch >= 0 && this.currentHotbarSlotTouch < 9)
+                {
+                    if (this.mc.player.isSpectator())
+                    {
+                        this.hotbarSlotTouchAlreadySelected = false;
+                        this.spectatorGui.onHotbarSelected(this.currentHotbarSlotTouch);
+                    }
+                    else
+                    {
+                        this.hotbarSlotTouchAlreadySelected = this.mc.player.inventory.currentItem == this.currentHotbarSlotTouch;
+                        this.mc.player.inventory.currentItem = this.currentHotbarSlotTouch;
+                    }
+                }
+                else if (this.currentHotbarSlotTouch == 9)
+                {
+                    this.hotbarSlotTouchAlreadySelected = false;
+                    this.currentHotbarSlotTouch = 69;
+
+                    if (this.mc.playerController.isRidingHorse())
+                    {
+                        this.mc.player.sendHorseInventory();
+                    }
+                    else
+                    {
+                        this.mc.getTutorial().openInventory();
+                        this.mc.displayGuiScreen(new GuiInventory(this.mc.player));
+                    }
+                }
+
+                return true;
+            }
+
+            if (pointX >= this.interactButtonX && pointY >= this.interactButtonY && pointX < this.interactButtonX + this.interactButtonW && pointY < this.interactButtonY + this.interactButtonH)
+            {
+                this.touchEventUID = uid;
+                this.mc.rightClickMouse();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean handleTouchEndEagler(int uid, int pointX, int pointY)
+    {
+        if (uid == this.touchEventUID)
+        {
+            if (this.hotbarSlotTouchStart != -1L && this.currentHotbarSlotTouch != 69)
+            {
+                if (EagRuntime.steadyTimeMillis() - this.hotbarSlotTouchStart < 350L)
+                {
+                    if (this.hotbarSlotTouchAlreadySelected && this.mc.player != null)
+                    {
+                        this.mc.player.dropItem(false);
+                    }
+                }
+            }
+
+            this.touchVPosX = -1;
+            this.touchVPosY = -1;
+            this.touchEventUID = -1;
+            this.currentHotbarSlotTouch = -1;
+            this.hotbarSlotTouchStart = -1L;
+            this.hotbarSlotTouchAlreadySelected = false;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void updateTouchEagler(boolean screenTouched)
+    {
+        if (screenTouched)
+        {
+            int pointCount = Touch.touchPointCount();
+
+            for (int i = 0; i < pointCount; ++i)
+            {
+                int uid = Touch.touchPointUID(i);
+
+                if (TouchControls.touchControls.containsKey(uid))
+                {
+                    continue;
+                }
+
+                if (this.touchEventUID == -1 || this.touchEventUID == uid)
+                {
+                    this.touchVPosX = this.applyTouchHotbarTransformX(Touch.touchPointX(i));
+                    this.touchVPosY = this.applyTouchHotbarTransformY(this.mc.displayHeight - Touch.touchPointY(i) - 1);
+                    long millis = EagRuntime.steadyTimeMillis();
+
+                    if (this.touchEventUID != -1 && this.hotbarSlotTouchStart != -1L && this.currentHotbarSlotTouch != 69)
+                    {
+                        int slot = this.getHotbarSlotTouched(this.touchVPosX);
+
+                        if (slot != this.currentHotbarSlotTouch)
+                        {
+                            this.hotbarSlotTouchAlreadySelected = false;
+                            this.currentHotbarSlotTouch = slot;
+                            this.hotbarSlotTouchStart = millis;
+
+                            if (slot >= 0 && slot < 9)
+                            {
+                                if (this.mc.player.isSpectator())
+                                {
+                                    this.spectatorGui.onHotbarSelected(slot);
+                                }
+                                else
+                                {
+                                    this.mc.player.inventory.currentItem = slot;
+                                }
+                            }
+                        }
+                        else if (millis - this.hotbarSlotTouchStart > 1200L && !this.mc.player.isSpectator())
+                        {
+                            this.hotbarSlotTouchStart = millis;
+                            this.mc.player.dropItem(true);
+                        }
+                    }
+
+                    return;
+                }
+            }
+        }
+
+        if (this.touchEventUID != -1)
+        {
+            this.handleTouchEndEagler(this.touchEventUID, this.touchVPosX, this.touchVPosY);
+        }
+
+        this.touchVPosX = -1;
+        this.touchVPosY = -1;
+        this.touchEventUID = -1;
+        this.currentHotbarSlotTouch = -1;
+        this.hotbarSlotTouchStart = -1L;
+        this.hotbarSlotTouchAlreadySelected = false;
+    }
+
+    public boolean isTouchOverlapEagler(int uid, int tx, int ty)
+    {
+        if (this.touchEventUID == uid)
+        {
+            return true;
+        }
+
+        ty = this.mc.displayHeight - ty - 1;
+        tx = this.applyTouchHotbarTransformX(tx);
+        ty = this.applyTouchHotbarTransformY(ty);
+        return (tx >= this.hotbarAreaX && ty >= this.hotbarAreaY && tx < this.hotbarAreaX + this.hotbarAreaW && ty < this.hotbarAreaY + this.hotbarAreaH) || (tx >= this.interactButtonX && ty >= this.interactButtonY && tx < this.interactButtonX + this.interactButtonW && ty < this.interactButtonY + this.interactButtonH);
     }
 }

@@ -6,11 +6,13 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 
 @SideOnly(Side.CLIENT)
 public class ScreenChatOptions extends GuiScreen
 {
-    private static final GameSettings.Options[] CHAT_OPTIONS = new GameSettings.Options[] {GameSettings.Options.CHAT_VISIBILITY, GameSettings.Options.CHAT_COLOR, GameSettings.Options.CHAT_LINKS, GameSettings.Options.CHAT_OPACITY, GameSettings.Options.CHAT_LINKS_PROMPT, GameSettings.Options.CHAT_SCALE, GameSettings.Options.CHAT_HEIGHT_FOCUSED, GameSettings.Options.CHAT_HEIGHT_UNFOCUSED, GameSettings.Options.CHAT_WIDTH, GameSettings.Options.REDUCED_DEBUG_INFO, GameSettings.Options.NARRATOR};
+    private static final GameSettings.Options[] CHAT_OPTIONS = new GameSettings.Options[] {GameSettings.Options.CHAT_VISIBILITY, GameSettings.Options.CHAT_COLOR, GameSettings.Options.CHAT_LINKS, GameSettings.Options.CHAT_OPACITY, GameSettings.Options.CHAT_LINKS_PROMPT, GameSettings.Options.CHAT_SCALE, GameSettings.Options.CHAT_HEIGHT_FOCUSED, GameSettings.Options.CHAT_HEIGHT_UNFOCUSED, GameSettings.Options.CHAT_WIDTH, GameSettings.Options.REDUCED_DEBUG_INFO, GameSettings.Options.NARRATOR, GameSettings.Options.EAGLER_PROFANITY_FILTER};
+    private static final GameSettings.Options[] NO_PROFANITY_FILTER = new GameSettings.Options[] {GameSettings.Options.CHAT_VISIBILITY, GameSettings.Options.CHAT_COLOR, GameSettings.Options.CHAT_LINKS, GameSettings.Options.CHAT_OPACITY, GameSettings.Options.CHAT_LINKS_PROMPT, GameSettings.Options.CHAT_SCALE, GameSettings.Options.CHAT_HEIGHT_FOCUSED, GameSettings.Options.CHAT_HEIGHT_UNFOCUSED, GameSettings.Options.CHAT_WIDTH, GameSettings.Options.REDUCED_DEBUG_INFO, GameSettings.Options.NARRATOR};
     private final GuiScreen parentScreen;
     private final GameSettings game_settings;
     private String chatTitle;
@@ -26,8 +28,9 @@ public class ScreenChatOptions extends GuiScreen
     {
         this.chatTitle = I18n.format("options.chat.title");
         int i = 0;
+        GameSettings.Options[] opts = EagRuntime.getConfiguration().isForceProfanityFilter() ? NO_PROFANITY_FILTER : CHAT_OPTIONS;
 
-        for (GameSettings.Options gamesettings$options : CHAT_OPTIONS)
+        for (GameSettings.Options gamesettings$options : opts)
         {
             if (gamesettings$options.isFloat())
             {

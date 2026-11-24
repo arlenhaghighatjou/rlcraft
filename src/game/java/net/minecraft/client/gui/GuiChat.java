@@ -3,6 +3,7 @@ package net.minecraft.client.gui;
 import java.io.IOException;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ITabCompleter;
 import net.minecraft.util.TabCompleter;
 import net.minecraft.util.math.BlockPos;
@@ -16,9 +17,15 @@ import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
+import net.lax1dude.eaglercraft.v1_8.PointerInputAbstraction;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EnumInputEvent;
+import net.lax1dude.eaglercraft.v1_8.minecraft.GuiScreenVisualViewport;
+import net.lax1dude.eaglercraft.v1_8.notifications.GuiButtonNotifBell;
+import net.lax1dude.eaglercraft.v1_8.notifications.GuiScreenNotifications;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 @SideOnly(Side.CLIENT)
-public class GuiChat extends GuiScreen implements ITabCompleter
+public class GuiChat extends GuiScreenVisualViewport implements ITabCompleter
 {
     private static final Logger LOGGER = LogManager.getLogger();
     private String historyBuffer = "";
@@ -26,6 +33,8 @@ public class GuiChat extends GuiScreen implements ITabCompleter
     private TabCompleter tabCompleter;
     protected GuiTextField inputField;
     private String defaultInputFieldText = "";
+    private GuiButton exitButton;
+    private GuiButtonNotifBell notifBellButton;
 
     public GuiChat()
     {
@@ -39,6 +48,18 @@ public class GuiChat extends GuiScreen implements ITabCompleter
     public void initGui()
     {
         Keyboard.enableRepeatEvents(true);
+
+        if (!(this instanceof GuiSleepMP))
+        {
+            this.exitButton = this.addButton(new GuiButton(69, this.width - 100, 3, 97, 20, I18n.format("chat.exit")));
+
+            if (!this.mc.isIntegratedServerRunning() && this.mc.player != null && this.mc.player.connection.getEaglerMessageProtocol().ver >= 4)
+            {
+                this.notifBellButton = this.addButton(new GuiButtonNotifBell(70, this.width - 122, 3));
+                this.notifBellButton.setUnread(this.mc.player.connection.getNotifManager().getUnread());
+            }
+        }
+
         this.sentHistoryCursor = this.mc.ingameGUI.getChatGUI().getSentMessages().size();
         this.inputField = new GuiTextField(0, this.fontRenderer, 4, this.height - 12, this.width - 4, 12);
         this.inputField.setMaxStringLength(256);
@@ -55,9 +76,14 @@ public class GuiChat extends GuiScreen implements ITabCompleter
         this.mc.ingameGUI.getChatGUI().resetScroll();
     }
 
-    public void updateScreen()
+    public void updateScreen0()
     {
         this.inputField.updateCursorCounter();
+
+        if (this.notifBellButton != null && this.mc.player != null)
+        {
+            this.notifBellButton.setUnread(this.mc.player.connection.getNotifManager().getUnread());
+        }
     }
 
     protected void keyTyped(char typedChar, int keyCode) throws IOException
@@ -73,7 +99,7 @@ public class GuiChat extends GuiScreen implements ITabCompleter
             this.tabCompleter.resetDidComplete();
         }
 
-        if (keyCode == 1)
+        if (keyCode == 1 && (this.mc.gameSettings.keyBindClose.getKeyCode() == 0 || Keyboard.areKeysLocked()))
         {
             this.mc.displayGuiScreen((GuiScreen)null);
         }
@@ -139,20 +165,37 @@ public class GuiChat extends GuiScreen implements ITabCompleter
         }
     }
 
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+    protected void mouseClicked0(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         if (mouseButton == 0)
         {
-            ITextComponent itextcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
+            ITextComponent itextcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(PointerInputAbstraction.getVCursorX(), PointerInputAbstraction.getVCursorY());
 
             if (itextcomponent != null && this.handleComponentClick(itextcomponent))
+            {
+                return;
+            }
+
+            if (this.mc.notifRenderer.handleClicked(this, mouseX, mouseY))
             {
                 return;
             }
         }
 
         this.inputField.mouseClicked(mouseX, mouseY, mouseButton);
-        super.mouseClicked(mouseX, mouseY, mouseButton);
+        super.mouseClicked0(mouseX, mouseY, mouseButton);
+    }
+
+    protected void actionPerformed(GuiButton button) throws IOException
+    {
+        if (button.id == 69)
+        {
+            this.mc.displayGuiScreen((GuiScreen)null);
+        }
+        else if (button.id == 70)
+        {
+            this.mc.displayGuiScreen(new GuiScreenNotifications(this));
+        }
     }
 
     protected void setText(String newChatText, boolean shouldOverwrite)
@@ -193,18 +236,24 @@ public class GuiChat extends GuiScreen implements ITabCompleter
         }
     }
 
-    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    public void drawScreen0(int mouseX, int mouseY, float partialTicks)
     {
         drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
         this.inputField.drawTextBox();
-        ITextComponent itextcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        ITextComponent itextcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(PointerInputAbstraction.getVCursorX(), PointerInputAbstraction.getVCursorY());
 
         if (itextcomponent != null && itextcomponent.getStyle().getHoverEvent() != null)
         {
             this.handleComponentHover(itextcomponent, mouseX, mouseY);
         }
 
-        super.drawScreen(mouseX, mouseY, partialTicks);
+        if (this.exitButton != null)
+        {
+            this.exitButton.y = 3 + this.mc.getToastGui().getHeight();
+        }
+
+        super.drawScreen0(mouseX, mouseY, partialTicks);
     }
 
     public boolean doesGuiPauseGame()
@@ -215,6 +264,21 @@ public class GuiChat extends GuiScreen implements ITabCompleter
     public void setCompletions(String... newCompletions)
     {
         this.tabCompleter.setCompletions(newCompletions);
+    }
+
+    public boolean blockPTTKey()
+    {
+        return true;
+    }
+
+    public boolean showCopyPasteButtons()
+    {
+        return true;
+    }
+
+    public void fireInputEvent(EnumInputEvent event, String param)
+    {
+        this.inputField.fireInputEvent(event, param);
     }
 
     @SideOnly(Side.CLIENT)

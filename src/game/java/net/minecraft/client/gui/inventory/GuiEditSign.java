@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.client.renderer.tileentity.TileEntitySignRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.CPacketUpdateSign;
@@ -16,9 +17,12 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Display;
+import net.lax1dude.eaglercraft.v1_8.PointerInputAbstraction;
+import net.lax1dude.eaglercraft.v1_8.minecraft.GuiScreenVisualViewport;
 
 @SideOnly(Side.CLIENT)
-public class GuiEditSign extends GuiScreen
+public class GuiEditSign extends GuiScreenVisualViewport
 {
     private final TileEntitySign tileSign;
     private int updateCounter;
@@ -51,7 +55,7 @@ public class GuiEditSign extends GuiScreen
         this.tileSign.setEditable(true);
     }
 
-    public void updateScreen()
+    public void updateScreen0()
     {
         ++this.updateCounter;
     }
@@ -100,7 +104,7 @@ public class GuiEditSign extends GuiScreen
         }
     }
 
-    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    public void drawScreen0(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, I18n.format("sign.edit"), this.width / 2, 40, 16777215);
@@ -147,9 +151,23 @@ public class GuiEditSign extends GuiScreen
             this.tileSign.lineBeingEdited = this.editLine;
         }
 
-        TileEntityRendererDispatcher.instance.render(this.tileSign, -0.5D, -0.75D, -0.5D, 0.0F);
+        try
+        {
+            TileEntitySignRenderer.disableProfanityFilter = true;
+            TileEntityRendererDispatcher.instance.render(this.tileSign, -0.5D, (PointerInputAbstraction.isTouchMode() && (Display.getVisualViewportH() / this.mc.displayHeight) < 0.75F) ? -0.25D : -0.75D, -0.5D, 0.0F);
+        }
+        finally
+        {
+            TileEntitySignRenderer.disableProfanityFilter = false;
+        }
+
         this.tileSign.lineBeingEdited = -1;
         GlStateManager.popMatrix();
-        super.drawScreen(mouseX, mouseY, partialTicks);
+        super.drawScreen0(mouseX, mouseY, partialTicks);
+    }
+
+    public boolean blockPTTKey()
+    {
+        return true;
     }
 }

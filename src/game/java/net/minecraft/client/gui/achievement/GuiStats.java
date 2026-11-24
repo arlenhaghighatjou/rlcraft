@@ -29,7 +29,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.stats.StatisticsManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.lax1dude.eaglercraft.v1_8.Mouse;
+import net.lax1dude.eaglercraft.v1_8.PointerInputAbstraction;
 
 @SideOnly(Side.CLIENT)
 public class GuiStats extends GuiScreen implements IProgressMeter
@@ -241,7 +241,7 @@ public class GuiStats extends GuiScreen implements IProgressMeter
 
         protected void drawListHeader(int insideLeft, int insideTop, Tessellator tessellatorIn)
         {
-            if (!Mouse.isButtonDown(0))
+            if (!PointerInputAbstraction.getVCursorButtonDown(0))
             {
                 this.headerPressed = -1;
             }

@@ -196,6 +196,7 @@ import net.minecraft.world.WorldProviderEnd;
 import net.minecraft.world.WorldProviderHell;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.storage.WorldInfo;
+import net.minecraft.world.storage.ISaveFormat;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.IOUtils;
@@ -1220,7 +1221,7 @@ public class Minecraft implements IThreadListener
     }
 
     @SuppressWarnings("incomplete-switch")
-    private void rightClickMouse()
+    public void rightClickMouse()
     {
         if (!this.playerController.getIsHittingBlock())
         {
@@ -2674,6 +2675,16 @@ public class Minecraft implements IThreadListener
     public boolean isIntegratedServerRunning()
     {
         return SingleplayerServerController.isWorldRunning();
+    }
+
+    public final boolean isDemo()
+    {
+        return EagRuntime.getConfiguration().isDemo();
+    }
+
+    public ISaveFormat getSaveLoader()
+    {
+        return SingleplayerServerController.instance;
     }
 
     public DefaultResourcePack getDefaultResourcePack()

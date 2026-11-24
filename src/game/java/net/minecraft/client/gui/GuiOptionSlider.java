@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiOptionSlider extends GuiButton
 {
-    private float sliderValue;
+    public float sliderValue;
     public boolean dragging;
     private final GameSettings.Options options;
     private final float minValue;
@@ -79,5 +79,15 @@ public class GuiOptionSlider extends GuiButton
     public void mouseReleased(int mouseX, int mouseY)
     {
         this.dragging = false;
+    }
+
+    public GameSettings.Options getEnumOptions()
+    {
+        return this.options;
+    }
+
+    public boolean isSliderTouchEvents()
+    {
+        return true;
     }
 }

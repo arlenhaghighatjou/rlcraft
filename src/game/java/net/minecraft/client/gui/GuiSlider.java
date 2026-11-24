@@ -132,4 +132,9 @@ public class GuiSlider extends GuiButton
     {
         String getText(int id, String name, float value);
     }
+
+    public boolean isSliderTouchEvents()
+    {
+        return true;
+    }
 }

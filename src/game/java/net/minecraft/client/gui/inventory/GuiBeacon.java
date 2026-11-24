@@ -24,6 +24,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
+import net.lax1dude.eaglercraft.v1_8.internal.EnumCursorType;
 
 @SideOnly(Side.CLIENT)
 public class GuiBeacon extends GuiContainer
@@ -279,6 +281,11 @@ public class GuiBeacon extends GuiContainer
 
         public void drawButtonForegroundLayer(int mouseX, int mouseY)
         {
+            if (this.enabled)
+            {
+                Mouse.showCursor(EnumCursorType.HAND);
+            }
+
             GuiBeacon.this.drawHoveringText(I18n.format("gui.cancel"), mouseX, mouseY);
         }
     }
@@ -293,6 +300,11 @@ public class GuiBeacon extends GuiContainer
 
         public void drawButtonForegroundLayer(int mouseX, int mouseY)
         {
+            if (this.enabled)
+            {
+                Mouse.showCursor(EnumCursorType.HAND);
+            }
+
             GuiBeacon.this.drawHoveringText(I18n.format("gui.done"), mouseX, mouseY);
         }
     }
@@ -312,6 +324,11 @@ public class GuiBeacon extends GuiContainer
 
         public void drawButtonForegroundLayer(int mouseX, int mouseY)
         {
+            if (this.enabled)
+            {
+                Mouse.showCursor(EnumCursorType.HAND);
+            }
+
             String s = I18n.format(this.effect.getName());
 
             if (this.tier >= 3 && this.effect != MobEffects.REGENERATION)

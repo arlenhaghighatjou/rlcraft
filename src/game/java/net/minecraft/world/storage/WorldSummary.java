@@ -1,5 +1,6 @@
 package net.minecraft.world.storage;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.GameType;
@@ -20,9 +21,16 @@ public class WorldSummary implements Comparable<WorldSummary>
     private final String versionName;
     private final int versionId;
     private final boolean versionSnapshot;
+    public final NBTTagCompound levelDat;
 
     public WorldSummary(WorldInfo info, String fileNameIn, String displayNameIn, long sizeOnDiskIn, boolean requiresConversionIn)
     {
+        this(info, fileNameIn, displayNameIn, sizeOnDiskIn, requiresConversionIn, (NBTTagCompound)null);
+    }
+
+    public WorldSummary(WorldInfo info, String fileNameIn, String displayNameIn, long sizeOnDiskIn, boolean requiresConversionIn, NBTTagCompound levelDat)
+    {
+        this.levelDat = levelDat;
         this.fileName = fileNameIn;
         this.displayName = displayNameIn;
         this.lastTimePlayed = info.getLastTimePlayed();

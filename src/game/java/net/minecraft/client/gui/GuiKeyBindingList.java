@@ -8,6 +8,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.lax1dude.eaglercraft.v1_8.PointerInputAbstraction;
 import org.apache.commons.lang3.ArrayUtils;
 
 @SideOnly(Side.CLIENT)
@@ -157,12 +158,19 @@ public class GuiKeyBindingList extends GuiListExtended
 
         public boolean mousePressed(int slotIndex, int mouseX, int mouseY, int mouseEvent, int relativeX, int relativeY)
         {
-            if (this.btnChangeKeyBinding.mousePressed(GuiKeyBindingList.this.mc, mouseX, mouseY))
+            if (mouseEvent != 0 && mouseEvent != 12345)
+            {
+                return false;
+            }
+
+            boolean touchMode = PointerInputAbstraction.isTouchMode();
+
+            if ((!touchMode || this.btnChangeKeyBinding.isSliderTouchEvents() == (mouseEvent == 12345)) && this.btnChangeKeyBinding.mousePressed(GuiKeyBindingList.this.mc, mouseX, mouseY))
             {
                 GuiKeyBindingList.this.controlsScreen.buttonId = this.keybinding;
                 return true;
             }
-            else if (this.btnReset.mousePressed(GuiKeyBindingList.this.mc, mouseX, mouseY))
+            else if ((!touchMode || this.btnReset.isSliderTouchEvents() == (mouseEvent == 12345)) && this.btnReset.mousePressed(GuiKeyBindingList.this.mc, mouseX, mouseY))
             {
                 this.keybinding.setToDefault();
                 GuiKeyBindingList.this.mc.gameSettings.setOptionKeyBinding(this.keybinding, this.keybinding.getKeyCodeDefault());
@@ -177,8 +185,22 @@ public class GuiKeyBindingList extends GuiListExtended
 
         public void mouseReleased(int slotIndex, int x, int y, int mouseEvent, int relativeX, int relativeY)
         {
-            this.btnChangeKeyBinding.mouseReleased(x, y);
-            this.btnReset.mouseReleased(x, y);
+            if (mouseEvent != 0 && mouseEvent != 12345)
+            {
+                return;
+            }
+
+            boolean touchMode = PointerInputAbstraction.isTouchMode();
+
+            if (!touchMode || this.btnChangeKeyBinding.isSliderTouchEvents() == (mouseEvent == 12345))
+            {
+                this.btnChangeKeyBinding.mouseReleased(x, y);
+            }
+
+            if (!touchMode || this.btnReset.isSliderTouchEvents() == (mouseEvent == 12345))
+            {
+                this.btnReset.mouseReleased(x, y);
+            }
         }
 
         public void updatePosition(int slotIndex, int x, int y, float partialTicks)

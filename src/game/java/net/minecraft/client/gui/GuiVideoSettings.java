@@ -1,7 +1,11 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
-import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import net.lax1dude.eaglercraft.v1_8.opengl.ext.dynamiclights.DynamicLightsStateManager;
+import net.lax1dude.eaglercraft.v1_8.Display;
+import net.lax1dude.eaglercraft.v1_8.minecraft.GuiScreenVideoSettingsWarning;
+import net.lax1dude.eaglercraft.v1_8.recording.ScreenRecordingController;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraftforge.fml.relauncher.Side;
@@ -14,7 +18,8 @@ public class GuiVideoSettings extends GuiScreen
     protected String screenTitle = "Video Settings";
     private final GameSettings guiGameSettings;
     private GuiListExtended optionsRowList;
-    private static final GameSettings.Options[] VIDEO_OPTIONS = new GameSettings.Options[] {GameSettings.Options.GRAPHICS, GameSettings.Options.RENDER_DISTANCE, GameSettings.Options.AMBIENT_OCCLUSION, GameSettings.Options.FRAMERATE_LIMIT, GameSettings.Options.ANAGLYPH, GameSettings.Options.VIEW_BOBBING, GameSettings.Options.GUI_SCALE, GameSettings.Options.ATTACK_INDICATOR, GameSettings.Options.GAMMA, GameSettings.Options.RENDER_CLOUDS, GameSettings.Options.PARTICLES, GameSettings.Options.USE_FULLSCREEN, GameSettings.Options.ENABLE_VSYNC, GameSettings.Options.MIPMAP_LEVELS, GameSettings.Options.USE_VBO, GameSettings.Options.ENTITY_SHADOWS};
+    private boolean vsyncLock = false;
+    private static final GameSettings.Options[] VIDEO_OPTIONS = new GameSettings.Options[] {GameSettings.Options.GRAPHICS, GameSettings.Options.RENDER_DISTANCE, GameSettings.Options.AMBIENT_OCCLUSION, GameSettings.Options.FRAMERATE_LIMIT, GameSettings.Options.EAGLER_VSYNC, GameSettings.Options.ANAGLYPH, GameSettings.Options.VIEW_BOBBING, GameSettings.Options.GUI_SCALE, GameSettings.Options.GAMMA, GameSettings.Options.RENDER_CLOUDS, GameSettings.Options.PARTICLES, GameSettings.Options.FXAA, GameSettings.Options.MIPMAP_LEVELS, GameSettings.Options.BLOCK_ALTERNATIVES, GameSettings.Options.ENTITY_SHADOWS, GameSettings.Options.FOG, GameSettings.Options.EAGLER_DYNAMIC_LIGHTS, GameSettings.Options.FULLSCREEN, GameSettings.Options.OF_CONNECTED_TEXTURES, GameSettings.Options.OF_BETTER_GRASS, GameSettings.Options.OF_CUSTOM_SKIES, GameSettings.Options.OF_SMART_LEAVES, GameSettings.Options.OF_CUSTOM_ITEMS, GameSettings.Options.FNAW_SKINS, GameSettings.Options.HUD_FPS, GameSettings.Options.HUD_COORDS, GameSettings.Options.HUD_PLAYER, GameSettings.Options.HUD_STATS, GameSettings.Options.HUD_WORLD, GameSettings.Options.HUD_24H, GameSettings.Options.CHUNK_FIX, GameSettings.Options.ATTACK_INDICATOR};
 
     public GuiVideoSettings(GuiScreen parentScreenIn, GameSettings gameSettingsIn)
     {
@@ -28,27 +33,39 @@ public class GuiVideoSettings extends GuiScreen
         this.buttonList.clear();
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height - 27, I18n.format("gui.done")));
 
-        if (OpenGlHelper.vboSupported)
-        {
-            this.optionsRowList = new GuiOptionsRowList(this.mc, this.width, this.height, 32, this.height - 32, 25, VIDEO_OPTIONS);
-        }
-        else
-        {
-            GameSettings.Options[] agamesettings$options = new GameSettings.Options[VIDEO_OPTIONS.length - 1];
-            int i = 0;
+        this.optionsRowList = new GuiOptionsRowList(this.mc, this.width, this.height, 32, this.height - 32, 25, VIDEO_OPTIONS);
 
-            for (GameSettings.Options gamesettings$options : VIDEO_OPTIONS)
+        if (!DynamicLightsStateManager.isSupported())
+        {
+            GuiOptionButton btn = ((GuiOptionsRowList)this.optionsRowList).getButtonFor(GameSettings.Options.EAGLER_DYNAMIC_LIGHTS);
+
+            if (btn != null)
             {
-                if (gamesettings$options == GameSettings.Options.USE_VBO)
-                {
-                    break;
-                }
-
-                agamesettings$options[i] = gamesettings$options;
-                ++i;
+                btn.enabled = false;
             }
+        }
 
-            this.optionsRowList = new GuiOptionsRowList(this.mc, this.width, this.height, 32, this.height - 32, 25, agamesettings$options);
+        if (EaglercraftGPU.checkOpenGLESVersion() < 300)
+        {
+            GuiOptionSlider btn = ((GuiOptionsRowList)this.optionsRowList).getSliderFor(GameSettings.Options.MIPMAP_LEVELS);
+
+            if (btn != null)
+            {
+                btn.displayString = I18n.format(GameSettings.Options.MIPMAP_LEVELS.getTranslation()) + ": N/A";
+                btn.sliderValue = 0.0F;
+                btn.enabled = false;
+            }
+        }
+
+        if (!Display.supportsFullscreen())
+        {
+            GuiOptionButton btn = ((GuiOptionsRowList)this.optionsRowList).getButtonFor(GameSettings.Options.FULLSCREEN);
+
+            if (btn != null)
+            {
+                btn.displayString = I18n.format(GameSettings.Options.FULLSCREEN.getTranslation()) + ": " + I18n.format("options.off");
+                btn.enabled = false;
+            }
         }
     }
 
@@ -56,6 +73,12 @@ public class GuiVideoSettings extends GuiScreen
     {
         super.handleMouseInput();
         this.optionsRowList.handleMouseInput();
+    }
+
+    public void handleTouchInput() throws IOException
+    {
+        super.handleTouchInput();
+        this.optionsRowList.handleTouchInput();
     }
 
     protected void keyTyped(char typedChar, int keyCode) throws IOException
@@ -75,7 +98,15 @@ public class GuiVideoSettings extends GuiScreen
             if (button.id == 200)
             {
                 this.mc.gameSettings.saveOptions();
-                this.mc.displayGuiScreen(this.parentGuiScreen);
+                GuiScreen contScreen = this.parentGuiScreen;
+                int vidIssues = this.mc.gameSettings.checkBadVideoSettings();
+
+                if (vidIssues != 0)
+                {
+                    contScreen = new GuiScreenVideoSettingsWarning(contScreen, vidIssues);
+                }
+
+                this.mc.displayGuiScreen(contScreen);
             }
         }
     }
@@ -88,10 +119,12 @@ public class GuiVideoSettings extends GuiScreen
 
         if (this.guiGameSettings.guiScale != i)
         {
-            ScaledResolution scaledresolution = new ScaledResolution(this.mc);
+            ScaledResolution scaledresolution = this.mc.scaledResolution = new ScaledResolution(this.mc);
             int j = scaledresolution.getScaledWidth();
             int k = scaledresolution.getScaledHeight();
             this.setWorldAndResolution(this.mc, j, k);
+            this.mc.voiceOverlay.setResolution(j, k);
+            this.mc.notifRenderer.setResolution(this.mc, j, k, scaledresolution.getScaleFactor());
         }
     }
 
@@ -103,7 +136,7 @@ public class GuiVideoSettings extends GuiScreen
 
         if (this.guiGameSettings.guiScale != i)
         {
-            ScaledResolution scaledresolution = new ScaledResolution(this.mc);
+            ScaledResolution scaledresolution = this.mc.scaledResolution = new ScaledResolution(this.mc);
             int j = scaledresolution.getScaledWidth();
             int k = scaledresolution.getScaledHeight();
             this.setWorldAndResolution(this.mc, j, k);
@@ -116,6 +149,22 @@ public class GuiVideoSettings extends GuiScreen
         this.optionsRowList.drawScreen(mouseX, mouseY, partialTicks);
         this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 5, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+
+    public void updateScreen()
+    {
+        boolean vsyncLockEn = ScreenRecordingController.isVSyncLocked();
+
+        if (vsyncLockEn != this.vsyncLock)
+        {
+            this.vsyncLock = vsyncLockEn;
+            GuiOptionButton btn = ((GuiOptionsRowList)this.optionsRowList).getButtonFor(GameSettings.Options.EAGLER_VSYNC);
+
+            if (btn != null)
+            {
+                btn.enabled = !vsyncLockEn;
+            }
+        }
     }
 
     // FORGE: fix for MC-64581 very laggy mipmap slider

@@ -21,6 +21,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.Touch;
 
 @SideOnly(Side.CLIENT)
 public abstract class GuiContainer extends GuiScreen
@@ -32,6 +34,9 @@ public abstract class GuiContainer extends GuiScreen
     protected int guiLeft;
     protected int guiTop;
     private Slot hoveredSlot;
+    private int primaryTouchPoint = -1;
+    private int lastTouchX = -1;
+    private int lastTouchY = -1;
     private Slot clickedSlot;
     private boolean isRightMouseClick;
     private ItemStack draggedStack = ItemStack.EMPTY;
@@ -63,6 +68,13 @@ public abstract class GuiContainer extends GuiScreen
     public void initGui()
     {
         super.initGui();
+
+        if (this.primaryTouchPoint != -1 && Touch.fetchPointIdx(this.primaryTouchPoint) == -1)
+        {
+            this.primaryTouchPoint = -1;
+            this.mouseReleased(this.lastTouchX, this.lastTouchY, 0);
+        }
+
         this.mc.player.openContainer = this.inventorySlots;
         this.guiLeft = (this.width - this.xSize) / 2;
         this.guiTop = (this.height - this.ySize) / 2;
@@ -98,7 +110,7 @@ public abstract class GuiContainer extends GuiScreen
                 this.drawSlot(slot);
             }
 
-            if (this.isMouseOverSlot(slot, mouseX, mouseY) && slot.isEnabled())
+            if (!this.mc.gameSettings.touchscreen && this.isMouseOverSlot(slot, mouseX, mouseY) && slot.isEnabled())
             {
                 this.hoveredSlot = slot;
                 GlStateManager.disableLighting();
@@ -170,7 +182,7 @@ public abstract class GuiContainer extends GuiScreen
 
     protected void renderHoveredToolTip(int p_191948_1_, int p_191948_2_)
     {
-        if (this.mc.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null && this.hoveredSlot.getHasStack())
+        if (!this.mc.gameSettings.touchscreen && this.mc.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null && this.hoveredSlot.getHasStack())
         {
             this.renderToolTip(this.hoveredSlot.getStack(), p_191948_1_, p_191948_2_);
         }
@@ -343,12 +355,6 @@ public abstract class GuiContainer extends GuiScreen
             if (flag1)
             {
                 l = -999;
-            }
-
-            if (this.mc.gameSettings.touchscreen && flag1 && this.mc.player.inventory.getItemStack().isEmpty())
-            {
-                this.mc.displayGuiScreen((GuiScreen)null);
-                return;
             }
 
             if (l != -1)
@@ -640,22 +646,33 @@ public abstract class GuiContainer extends GuiScreen
 
     protected void keyTyped(char typedChar, int keyCode) throws IOException
     {
-        if (keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode))
+        if (keyCode == this.mc.gameSettings.keyBindClose.getKeyCode() || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) || (keyCode == 1 && (this.mc.gameSettings.keyBindClose.getKeyCode() == 0 || Keyboard.areKeysLocked())))
         {
             this.mc.player.closeScreen();
-        }
 
-        this.checkHotbarKeys(keyCode);
-
-        if (this.hoveredSlot != null && this.hoveredSlot.getHasStack())
-        {
-            if (this.mc.gameSettings.keyBindPickBlock.isActiveAndMatches(keyCode))
+            if (this.mc.currentScreen == null)
             {
-                this.handleMouseClick(this.hoveredSlot, this.hoveredSlot.slotNumber, 0, ClickType.CLONE);
+                this.mc.setIngameFocus();
             }
-            else if (this.mc.gameSettings.keyBindDrop.isActiveAndMatches(keyCode))
+        }
+        else if (keyCode == 1)
+        {
+            this.showingCloseKey = EagRuntime.steadyTimeMillis();
+        }
+        else
+        {
+            this.checkHotbarKeys(keyCode);
+
+            if (this.hoveredSlot != null && this.hoveredSlot.getHasStack())
             {
-                this.handleMouseClick(this.hoveredSlot, this.hoveredSlot.slotNumber, isCtrlKeyDown() ? 1 : 0, ClickType.THROW);
+                if (this.mc.gameSettings.keyBindPickBlock.isActiveAndMatches(keyCode))
+                {
+                    this.handleMouseClick(this.hoveredSlot, this.hoveredSlot.slotNumber, 0, ClickType.CLONE);
+                }
+                else if (this.mc.gameSettings.keyBindDrop.isActiveAndMatches(keyCode))
+                {
+                    this.handleMouseClick(this.hoveredSlot, this.hoveredSlot.slotNumber, isCtrlKeyDown() ? 1 : 0, ClickType.THROW);
+                }
             }
         }
     }
@@ -697,7 +714,67 @@ public abstract class GuiContainer extends GuiScreen
         if (!this.mc.player.isEntityAlive() || this.mc.player.isDead)
         {
             this.mc.player.closeScreen();
+            return;
         }
+
+        if (this.primaryTouchPoint != -1 && Touch.fetchPointIdx(this.primaryTouchPoint) == -1)
+        {
+            this.primaryTouchPoint = -1;
+            this.mouseReleased(this.lastTouchX, this.lastTouchY, 0);
+        }
+    }
+
+    protected float getTouchModeScale()
+    {
+        return 1.25F;
+    }
+
+    protected void touchStarted(int touchX, int touchY, int uid) throws IOException
+    {
+        if (this.primaryTouchPoint == -1)
+        {
+            this.primaryTouchPoint = uid;
+            this.lastTouchX = touchX;
+            this.lastTouchY = touchY;
+            this.mouseClicked(touchX, touchY, 0);
+        }
+    }
+
+    protected void touchMoved(int touchX, int touchY, int uid)
+    {
+        if (this.primaryTouchPoint == uid)
+        {
+            this.lastTouchX = touchX;
+            this.lastTouchY = touchY;
+            this.mouseClickMove(touchX, touchY, 0, 0L);
+        }
+    }
+
+    protected void touchEndMove(int touchX, int touchY, int uid)
+    {
+        if (this.primaryTouchPoint == uid)
+        {
+            this.primaryTouchPoint = -1;
+            this.lastTouchX = touchX;
+            this.lastTouchY = touchY;
+            this.mouseReleased(touchX, touchY, 0);
+        }
+    }
+
+    protected void touchTapped(int touchX, int touchY, int uid) throws IOException
+    {
+        if (this.primaryTouchPoint == uid)
+        {
+            this.primaryTouchPoint = -1;
+            this.lastTouchX = touchX;
+            this.lastTouchY = touchY;
+            this.mouseReleased(touchX, touchY, 0);
+        }
+    }
+
+    protected boolean shouldTouchGenerateMouseEvents()
+    {
+        return false;
     }
 
     /* ======================================== FORGE START =====================================*/

@@ -528,9 +528,7 @@ public class SingleplayerServerController implements ISaveFormat {
 				}
 
 				long i = 0L;
-				saveListCache.add(new WorldSummary(folderName, s1, worldinfo.getLastTimePlayed(), i,
-						worldinfo.getGameType(), false, worldinfo.isHardcoreModeEnabled(),
-						worldinfo.areCommandsAllowed(), nbt));
+				saveListCache.add(new WorldSummary(worldinfo, folderName, s1, i, false, nbt));
 			}
 		}
 	}

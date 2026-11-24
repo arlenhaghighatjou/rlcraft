@@ -1,20 +1,14 @@
 package net.minecraft.client.gui;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
+
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import java.awt.Toolkit;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-import java.io.File;
+import com.carrotsearch.hppc.IntObjectHashMap;
+import com.carrotsearch.hppc.IntObjectMap;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
@@ -24,6 +18,8 @@ import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTBase;
@@ -33,6 +29,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.StringUtils;
@@ -40,12 +37,20 @@ import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.PauseMenuCustomizeState;
+import net.lax1dude.eaglercraft.v1_8.PointerInputAbstraction;
+import net.lax1dude.eaglercraft.v1_8.Touch;
+import net.lax1dude.eaglercraft.v1_8.internal.EnumTouchEvent;
+import net.lax1dude.eaglercraft.v1_8.internal.KeyboardConstants;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EnumInputEvent;
+import net.lax1dude.eaglercraft.v1_8.touch_gui.TouchControls;
+import net.lax1dude.eaglercraft.v1_8.webview.GuiScreenServerInfo;
 
 @SideOnly(Side.CLIENT)
 public abstract class GuiScreen extends Gui implements GuiYesNoCallback
 {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Set<String> PROTOCOLS = Sets.newHashSet("http", "https");
     private static final Splitter NEWLINE_SPLITTER = Splitter.on('\n');
     public Minecraft mc;
     protected RenderItem itemRender;
@@ -59,9 +64,14 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     private int eventButton;
     private long lastMouseEvent;
     private int touchValue;
-    private URI clickedLinkURI;
+    private String clickedLinkURI;
     private boolean focused;
     protected boolean keyHandled, mouseHandled; // Forge: allow canceling key and mouse Post events from handleMouseInput and handleKeyboardInput
+    protected long showingCloseKey = 0;
+    protected int touchModeCursorPosX = -1;
+    protected int touchModeCursorPosY = -1;
+    private long lastTouchEvent;
+    public final IntObjectMap<int[]> touchStarts = new IntObjectHashMap<int[]>();
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
@@ -74,11 +84,79 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         {
             ((GuiLabel)this.labelList.get(j)).drawLabel(this.mc, mouseX, mouseY);
         }
+
+        long millis = EagRuntime.steadyTimeMillis();
+        long closeKeyTimeout = millis - this.showingCloseKey;
+
+        if (closeKeyTimeout < 3000L && this.showingCloseKey != 0L)
+        {
+            int alpha1 = 0xC0000000;
+            int alpha2 = 0xFF000000;
+
+            if (closeKeyTimeout > 2500L)
+            {
+                float f = (float)(3000L - closeKeyTimeout) * 0.002F;
+
+                if (f < 0.03F)
+                {
+                    f = 0.03F;
+                }
+
+                alpha1 = (int)(f * 192.0F) << 24;
+                alpha2 = (int)(f * 255.0F) << 24;
+            }
+
+            String str;
+            int k = this.getCloseKey();
+
+            if (k == KeyboardConstants.KEY_GRAVE)
+            {
+                str = I18n.format("gui.exitKeyRetarded");
+            }
+            else
+            {
+                str = I18n.format("gui.exitKey", Keyboard.getKeyName(k));
+            }
+
+            int w = this.fontRenderer.getStringWidth(str);
+            int x = (this.width - w - 4) / 2;
+            int y = 10;
+            drawRect(x, y, x + w + 4, y + 12, alpha1);
+
+            if (closeKeyTimeout > 2500L)
+            {
+                GlStateManager.enableBlend();
+            }
+
+            this.fontRenderer.drawStringWithShadow(str, (float)(x + 2), (float)(y + 2), 0xFFAAAA | alpha2);
+
+            if (closeKeyTimeout > 2500L)
+            {
+                GlStateManager.disableBlend();
+            }
+        }
+    }
+
+    protected int getCloseKey()
+    {
+        if (this instanceof GuiContainer)
+        {
+            return this.mc.gameSettings.keyBindInventory.getKeyCode();
+        }
+        else
+        {
+            return this.mc.gameSettings.keyBindClose.getKeyCode();
+        }
     }
 
     protected void keyTyped(char typedChar, int keyCode) throws IOException
     {
-        if (keyCode == 1)
+        if (!this.canCloseGui())
+        {
+            return;
+        }
+
+        if (((this.mc.world == null || this.mc.player.getHealth() <= 0.0F) && keyCode == 1) || keyCode == this.mc.gameSettings.keyBindClose.getKeyCode() || (keyCode == 1 && (this.mc.gameSettings.keyBindClose.getKeyCode() == 0 || Keyboard.areKeysLocked())))
         {
             this.mc.displayGuiScreen((GuiScreen)null);
 
@@ -86,6 +164,10 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
             {
                 this.mc.setIngameFocus();
             }
+        }
+        else if (keyCode == 1)
+        {
+            this.showingCloseKey = EagRuntime.steadyTimeMillis();
         }
     }
 
@@ -97,36 +179,14 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
 
     public static String getClipboardString()
     {
-        try
-        {
-            Transferable transferable = Toolkit.getDefaultToolkit().getSystemClipboard().getContents((Object)null);
-
-            if (transferable != null && transferable.isDataFlavorSupported(DataFlavor.stringFlavor))
-            {
-                return (String)transferable.getTransferData(DataFlavor.stringFlavor);
-            }
-        }
-        catch (Exception var1)
-        {
-            ;
-        }
-
-        return "";
+        return EagRuntime.getClipboard();
     }
 
     public static void setClipboardString(String copyText)
     {
         if (!StringUtils.isEmpty(copyText))
         {
-            try
-            {
-                StringSelection stringselection = new StringSelection(copyText);
-                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringselection, (ClipboardOwner)null);
-            }
-            catch (Exception var2)
-            {
-                ;
-            }
+            EagRuntime.setClipboard(copyText);
         }
     }
 
@@ -254,7 +314,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         }
     }
 
-    protected void handleComponentHover(ITextComponent component, int x, int y)
+    public void handleComponentHover(ITextComponent component, int x, int y)
     {
         if (component != null && component.getStyle().getHoverEvent() != null)
         {
@@ -351,40 +411,21 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
                         return false;
                     }
 
-                    try
+                    String uri = clickevent.getValue();
+
+                    if (this.mc.gameSettings.chatLinksPrompt)
                     {
-                        URI uri = new URI(clickevent.getValue());
-                        String s = uri.getScheme();
-
-                        if (s == null)
-                        {
-                            throw new URISyntaxException(clickevent.getValue(), "Missing protocol");
-                        }
-
-                        if (!PROTOCOLS.contains(s.toLowerCase(Locale.ROOT)))
-                        {
-                            throw new URISyntaxException(clickevent.getValue(), "Unsupported protocol: " + s.toLowerCase(Locale.ROOT));
-                        }
-
-                        if (this.mc.gameSettings.chatLinksPrompt)
-                        {
-                            this.clickedLinkURI = uri;
-                            this.mc.displayGuiScreen(new GuiConfirmOpenLink(this, clickevent.getValue(), 31102009, false));
-                        }
-                        else
-                        {
-                            this.openWebLink(uri);
-                        }
+                        this.clickedLinkURI = uri;
+                        this.mc.displayGuiScreen(new GuiConfirmOpenLink(this, uri, 31102009, false));
                     }
-                    catch (URISyntaxException urisyntaxexception)
+                    else
                     {
-                        LOGGER.error("Can't open url for {}", clickevent, urisyntaxexception);
+                        this.openWebLink(uri);
                     }
                 }
                 else if (clickevent.getAction() == ClickEvent.Action.OPEN_FILE)
                 {
-                    URI uri1 = (new File(clickevent.getValue())).toURI();
-                    this.openWebLink(uri1);
+                    // rip
                 }
                 else if (clickevent.getAction() == ClickEvent.Action.SUGGEST_COMMAND)
                 {
@@ -424,13 +465,49 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         this.mc.player.sendChatMessage(msg);
     }
 
+    protected void touchStarted(int touchX, int touchY, int uid) throws IOException
+    {
+        if (this.shouldTouchGenerateMouseEvents())
+        {
+            this.mouseClicked(touchX, touchY, 12345);
+        }
+    }
+
+    protected void touchTapped(int touchX, int touchY, int uid) throws IOException
+    {
+        if (this.shouldTouchGenerateMouseEvents())
+        {
+            this.mouseClicked(touchX, touchY, 0);
+            this.mouseReleased(touchX, touchY, 0);
+        }
+    }
+
+    protected void touchMoved(int touchX, int touchY, int uid)
+    {
+    }
+
+    protected void touchEndMove(int touchX, int touchY, int uid)
+    {
+        if (this.shouldTouchGenerateMouseEvents())
+        {
+            this.mouseReleased(touchX, touchY, 12345);
+        }
+    }
+
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
-        if (mouseButton == 0)
+        boolean touchMode = PointerInputAbstraction.isTouchMode();
+
+        if (mouseButton == 0 || mouseButton == 12345)
         {
             for (int i = 0; i < this.buttonList.size(); ++i)
             {
                 GuiButton guibutton = this.buttonList.get(i);
+
+                if (touchMode && (mouseButton == 12345) != guibutton.isSliderTouchEvents())
+                {
+                    continue;
+                }
 
                 if (guibutton.mousePressed(this.mc, mouseX, mouseY))
                 {
@@ -450,7 +527,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
 
     protected void mouseReleased(int mouseX, int mouseY, int state)
     {
-        if (this.selectedButton != null && state == 0)
+        if (this.selectedButton != null && (state == 0 || state == 12345) && (!PointerInputAbstraction.isTouchMode() || (state == 12345) == this.selectedButton.isSliderTouchEvents()))
         {
             this.selectedButton.mouseReleased(mouseX, mouseY);
             this.selectedButton = null;
@@ -492,10 +569,24 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
 
     public void handleInput() throws IOException
     {
+        boolean noTouch = true;
+
+        while (Touch.next())
+        {
+            noTouch = false;
+            this.handleTouchInput();
+            TouchControls.handleInput();
+        }
+
         if (Mouse.isCreated())
         {
             while (Mouse.next())
             {
+                if (!noTouch)
+                {
+                    continue;
+                }
+
                 this.mouseHandled = false;
                 if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent.Pre(this))) continue;
                 this.handleMouseInput();
@@ -515,14 +606,135 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         }
     }
 
+    public void handleTouchInput() throws IOException
+    {
+        EnumTouchEvent et = Touch.getEventType();
+
+        if (et == EnumTouchEvent.TOUCHSTART)
+        {
+            PointerInputAbstraction.enterTouchModeHook();
+        }
+
+        float scaleFac = this.getEaglerScale();
+
+        for (int t = 0, c = Touch.getEventTouchPointCount(); t < c; ++t)
+        {
+            int u = Touch.getEventTouchPointUID(t);
+            int i = Touch.getEventTouchX(t);
+            int j = Touch.getEventTouchY(t);
+
+            if (et == EnumTouchEvent.TOUCHSTART)
+            {
+                if (TouchControls.handleTouchBegin(u, i, j))
+                {
+                    continue;
+                }
+            }
+            else if (et == EnumTouchEvent.TOUCHEND)
+            {
+                if (TouchControls.handleTouchEnd(u, i, j))
+                {
+                    continue;
+                }
+            }
+
+            i = applyEaglerScale(scaleFac, i * this.width / this.mc.displayWidth, this.width);
+            j = applyEaglerScale(scaleFac, this.height - j * this.height / this.mc.displayHeight - 1, this.height);
+            float rad = Touch.getEventTouchRadiusMixed(t);
+            float si = rad * this.width / this.mc.displayWidth / scaleFac;
+
+            if (si < 1.0F)
+            {
+                si = 1.0F;
+            }
+
+            float sj = rad * this.height / this.mc.displayHeight / scaleFac;
+
+            if (sj < 1.0F)
+            {
+                sj = 1.0F;
+            }
+
+            int[] ck = this.touchStarts.remove(u);
+
+            switch (et)
+            {
+                case TOUCHSTART:
+                    if (t == 0)
+                    {
+                        this.touchModeCursorPosX = i;
+                        this.touchModeCursorPosY = j;
+                    }
+
+                    this.lastTouchEvent = EagRuntime.steadyTimeMillis();
+                    this.touchStarts.put(u, new int[] {i, j, 0});
+                    this.touchStarted(i, j, u);
+                    break;
+                case TOUCHMOVE:
+                    if (t == 0)
+                    {
+                        this.touchModeCursorPosX = i;
+                        this.touchModeCursorPosY = j;
+                    }
+
+                    if (ck != null && Math.abs(ck[0] - i) < si && Math.abs(ck[1] - j) < sj)
+                    {
+                        this.touchStarts.put(u, ck);
+                        break;
+                    }
+
+                    this.touchStarts.put(u, new int[] {i, j, (ck != null && this.isTouchDraggingStateLocked(u)) ? ck[2] : 1});
+                    this.touchMoved(i, j, u);
+
+                    if (t == 0 && this.shouldTouchGenerateMouseEvents())
+                    {
+                        this.mouseClickMove(i, j, 0, EagRuntime.steadyTimeMillis() - this.lastTouchEvent);
+                    }
+
+                    break;
+                case TOUCHEND:
+                    if (ck == null)
+                    {
+                        break;
+                    }
+
+                    if (t == 0)
+                    {
+                        this.touchModeCursorPosX = -1;
+                        this.touchModeCursorPosY = -1;
+                    }
+
+                    if (ck[2] == 1)
+                    {
+                        this.touchEndMove(i, j, u);
+                    }
+                    else
+                    {
+                        this.touchTapped(ck[0], ck[1], u);
+                    }
+
+                    break;
+            }
+        }
+    }
+
+    public boolean isTouchPointDragging(int uid)
+    {
+        int[] ret = this.touchStarts.get(uid);
+        return ret != null && ret[2] == 1;
+    }
+
     public void handleMouseInput() throws IOException
     {
-        int i = Mouse.getEventX() * this.width / this.mc.displayWidth;
-        int j = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+        float f = this.getEaglerScale();
+        int i = applyEaglerScale(f, Mouse.getEventX() * this.width / this.mc.displayWidth, this.width);
+        int j = applyEaglerScale(f, this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1, this.height);
         int k = Mouse.getEventButton();
 
         if (Mouse.getEventButtonState())
         {
+            PointerInputAbstraction.enterMouseModeHook();
+
             if (this.mc.gameSettings.touchscreen && this.touchValue++ > 0)
             {
                 return;
@@ -575,11 +787,62 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.GuiScreenEvent.BackgroundDrawnEvent(this));
     }
 
+    protected boolean isPartOfPauseMenu()
+    {
+        return false;
+    }
+
     public void drawWorldBackground(int tint)
     {
         if (this.mc.world != null)
         {
-            this.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
+            boolean ingame = this.isPartOfPauseMenu();
+            ResourceLocation loc = (ingame && PauseMenuCustomizeState.icon_background_pause != null) ? PauseMenuCustomizeState.icon_background_pause : PauseMenuCustomizeState.icon_background_all;
+            float aspect = (ingame && PauseMenuCustomizeState.icon_background_pause != null) ? 1.0F / PauseMenuCustomizeState.icon_background_pause_aspect : 1.0F / PauseMenuCustomizeState.icon_background_all_aspect;
+
+            if (loc != null)
+            {
+                GlStateManager.disableLighting();
+                GlStateManager.disableFog();
+                GlStateManager.enableBlend();
+                GlStateManager.disableAlpha();
+                GlStateManager.enableTexture2D();
+                GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+                Tessellator tessellator = Tessellator.getInstance();
+                WorldRenderer bufferbuilder = tessellator.getBuffer();
+                this.mc.getTextureManager().bindTexture(loc);
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                float f = 64.0F;
+                bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+                bufferbuilder.pos(0.0D, (double)this.height, 0.0D).tex(0.0D, (double)((float)this.height / f)).color(64, 64, 64, 192).endVertex();
+                bufferbuilder.pos((double)this.width, (double)this.height, 0.0D).tex((double)((float)this.width / f * aspect), (double)((float)this.height / f)).color(64, 64, 64, 192).endVertex();
+                bufferbuilder.pos((double)this.width, 0.0D, 0.0D).tex((double)((float)this.width / f * aspect), 0.0D).color(64, 64, 64, 192).endVertex();
+                bufferbuilder.pos(0.0D, 0.0D, 0.0D).tex(0.0D, 0.0D).color(64, 64, 64, 192).endVertex();
+                tessellator.draw();
+                GlStateManager.enableAlpha();
+            }
+            else
+            {
+                this.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
+            }
+
+            if (!(this instanceof GuiScreenServerInfo))
+            {
+                loc = (ingame && PauseMenuCustomizeState.icon_watermark_pause != null) ? PauseMenuCustomizeState.icon_watermark_pause : PauseMenuCustomizeState.icon_watermark_all;
+                aspect = (ingame && PauseMenuCustomizeState.icon_watermark_pause != null) ? PauseMenuCustomizeState.icon_watermark_pause_aspect : PauseMenuCustomizeState.icon_watermark_all_aspect;
+
+                if (loc != null)
+                {
+                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                    this.mc.getTextureManager().bindTexture(loc);
+                    GlStateManager.pushMatrix();
+                    GlStateManager.translate(8.0F, (float)(this.height - 72), 0.0F);
+                    float f2 = 0.25F;
+                    GlStateManager.scale(f2 * aspect, f2, f2);
+                    this.drawTexturedModalRect(0, 0, 0, 0, 256, 256);
+                    GlStateManager.popMatrix();
+                }
+            }
         }
         else
         {
@@ -623,31 +886,14 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         }
     }
 
-    private void openWebLink(URI url)
+    private void openWebLink(String url)
     {
-        try
-        {
-            Class<?> oclass = Class.forName("java.awt.Desktop");
-            Object object = oclass.getMethod("getDesktop").invoke((Object)null);
-            oclass.getMethod("browse", URI.class).invoke(object, url);
-        }
-        catch (Throwable throwable1)
-        {
-            Throwable throwable = throwable1.getCause();
-            LOGGER.error("Couldn't open link: {}", (Object)(throwable == null ? "<UNKNOWN>" : throwable.getMessage()));
-        }
+        EagRuntime.openLink(url);
     }
 
     public static boolean isCtrlKeyDown()
     {
-        if (Minecraft.IS_RUNNING_ON_MAC)
-        {
-            return Keyboard.isKeyDown(219) || Keyboard.isKeyDown(220);
-        }
-        else
-        {
-            return Keyboard.isKeyDown(29) || Keyboard.isKeyDown(157);
-        }
+        return Keyboard.isKeyDown(29) || Keyboard.isKeyDown(157);
     }
 
     public static boolean isShiftKeyDown()
@@ -683,5 +929,54 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     public void onResize(Minecraft mcIn, int w, int h)
     {
         this.setWorldAndResolution(mcIn, w, h);
+    }
+
+    public boolean shouldHangupIntegratedServer()
+    {
+        return true;
+    }
+
+    public boolean blockPTTKey()
+    {
+        return false;
+    }
+
+    public void fireInputEvent(EnumInputEvent event, String param)
+    {
+    }
+
+    public boolean showCopyPasteButtons()
+    {
+        return false;
+    }
+
+    public static int applyEaglerScale(float scaleFac, int coord, int screenDim)
+    {
+        return (int)((coord - (1.0F - scaleFac) * screenDim * 0.5F) / scaleFac);
+    }
+
+    public float getEaglerScale()
+    {
+        return PointerInputAbstraction.isTouchMode() ? this.getTouchModeScale() : 1.0F;
+    }
+
+    protected float getTouchModeScale()
+    {
+        return 1.0F;
+    }
+
+    public boolean canCloseGui()
+    {
+        return true;
+    }
+
+    protected boolean isTouchDraggingStateLocked(int uid)
+    {
+        return false;
+    }
+
+    protected boolean shouldTouchGenerateMouseEvents()
+    {
+        return true;
     }
 }

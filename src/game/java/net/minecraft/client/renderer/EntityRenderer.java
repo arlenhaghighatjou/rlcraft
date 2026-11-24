@@ -79,7 +79,6 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
 import net.lax1dude.eaglercraft.v1_8.Display;
 import org.lwjgl.opengl.GLContext;
-import org.lwjgl.util.glu.Project;
 
 @SideOnly(Side.CLIENT)
 public class EntityRenderer implements IResourceManagerReloadListener
@@ -684,7 +683,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             GlStateManager.scale(this.cameraZoom, this.cameraZoom, 1.0D);
         }
 
-        Project.gluPerspective(this.getFOVModifier(partialTicks, true), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance * MathHelper.SQRT_2);
+        GlStateManager.gluPerspective(this.getFOVModifier(partialTicks, true), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance * MathHelper.SQRT_2);
         GlStateManager.matrixMode(5888);
         GlStateManager.loadIdentity();
 
@@ -755,7 +754,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 GlStateManager.translate((float)(-(pass * 2 - 1)) * 0.07F, 0.0F, 0.0F);
             }
 
-            Project.gluPerspective(this.getFOVModifier(partialTicks, false), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance * 2.0F);
+            GlStateManager.gluPerspective(this.getFOVModifier(partialTicks, false), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance * 2.0F);
             GlStateManager.matrixMode(5888);
             GlStateManager.loadIdentity();
 
@@ -1296,12 +1295,12 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.mc.mcProfiler.endStartSection("sky");
             GlStateManager.matrixMode(5889);
             GlStateManager.loadIdentity();
-            Project.gluPerspective(this.getFOVModifier(partialTicks, true), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance * 2.0F);
+            GlStateManager.gluPerspective(this.getFOVModifier(partialTicks, true), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance * 2.0F);
             GlStateManager.matrixMode(5888);
             renderglobal.renderSky(partialTicks, pass);
             GlStateManager.matrixMode(5889);
             GlStateManager.loadIdentity();
-            Project.gluPerspective(this.getFOVModifier(partialTicks, true), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance * MathHelper.SQRT_2);
+            GlStateManager.gluPerspective(this.getFOVModifier(partialTicks, true), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance * MathHelper.SQRT_2);
             GlStateManager.matrixMode(5888);
         }
 
@@ -1452,7 +1451,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.mc.mcProfiler.endStartSection("clouds");
             GlStateManager.matrixMode(5889);
             GlStateManager.loadIdentity();
-            Project.gluPerspective(this.getFOVModifier(partialTicks, true), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance * 4.0F);
+            GlStateManager.gluPerspective(this.getFOVModifier(partialTicks, true), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance * 4.0F);
             GlStateManager.matrixMode(5888);
             GlStateManager.pushMatrix();
             this.setupFog(0, partialTicks);
@@ -1461,7 +1460,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             GlStateManager.popMatrix();
             GlStateManager.matrixMode(5889);
             GlStateManager.loadIdentity();
-            Project.gluPerspective(this.getFOVModifier(partialTicks, true), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance * MathHelper.SQRT_2);
+            GlStateManager.gluPerspective(this.getFOVModifier(partialTicks, true), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance * MathHelper.SQRT_2);
             GlStateManager.matrixMode(5888);
         }
     }

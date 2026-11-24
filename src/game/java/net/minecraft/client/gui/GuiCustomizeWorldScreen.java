@@ -7,6 +7,7 @@ import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EnumInputEvent;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
@@ -898,5 +899,15 @@ public class GuiCustomizeWorldScreen extends GuiScreen implements GuiSlider.Form
             this.confirm.drawButton(this.mc, mouseX, mouseY, partialTicks);
             this.cancel.drawButton(this.mc, mouseX, mouseY, partialTicks);
         }
+    }
+
+    public boolean showCopyPasteButtons()
+    {
+        return this.list.isTextFieldFocused();
+    }
+
+    public void fireInputEvent(EnumInputEvent event, String param)
+    {
+        this.list.fireInputEvent(event, param);
     }
 }

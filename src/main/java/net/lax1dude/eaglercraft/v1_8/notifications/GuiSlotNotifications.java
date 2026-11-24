@@ -23,6 +23,7 @@ import java.util.List;
 
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.socket.protocol.pkt.server.SPacketNotifBadgeShowV4EAG.EnumBadgePriority;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
@@ -82,7 +83,7 @@ public class GuiSlotNotifications extends GuiSlot {
 				int localY = yy - slot.currentScreenY;
 				if(localX >= w - 22 && localX < w - 5 && localY >= 5 && localY < 21) {
 					slot.badge.removeNotif();
-					mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 					return;
 				}
 				ITextComponent cmp = slot.badge.bodyComponent;
@@ -91,7 +92,7 @@ public class GuiSlotNotifications extends GuiSlot {
 						if (cmp.getStyle().getClickEvent() != null
 								&& cmp.getStyle().getClickEvent().getAction().shouldAllowInChat()) {
 							if(parent.handleComponentClick(cmp)) {
-								mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+								mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 								return;
 							}
 						}
@@ -108,7 +109,7 @@ public class GuiSlotNotifications extends GuiSlot {
 										int offsetPosY = slot.currentScreenY + evt.posY;
 										if(xx >= offsetPosX && yy >= offsetPosY && xx < offsetPosX + evt.width && yy < offsetPosY + evt.height) {
 											if(parent.handleComponentClick(evt.chatComponent)) {
-												mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+												mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 												return;
 											}
 										}
@@ -133,7 +134,7 @@ public class GuiSlotNotifications extends GuiSlot {
 	}
 
 	@Override
-	protected void drawSlot(int id, int xx, int yy, int width, int height, int ii) {
+	protected void drawSlot(int id, int xx, int yy, int width, int height, int ii, float partialTicks) {
 		if(id < currentDisplayNotifs.size()) {
 			NotifBadgeSlot slot = currentDisplayNotifs.get(id);
 			slot.currentScreenX = xx;
@@ -235,7 +236,7 @@ public class GuiSlotNotifications extends GuiSlot {
 			float bodyFontSize = (sourceText != null || titleIconEn) ? 0.75f : 1.0f;
 			ITextComponent bodyComponent = bd.getBodyProfanityFilter();
 			if(bodyComponent != null) {
-				bodyLines = GuiUtilRenderComponents.func_178908_a(bodyComponent, (int) (textZoneWidth / bodyFontSize),
+				bodyLines = GuiUtilRenderComponents.splitText(bodyComponent, (int) (textZoneWidth / bodyFontSize),
 						mc.fontRenderer, true, true);
 				
 				int maxHeight = badgeHeight - (sourceText != null ? 32 : 22);
@@ -264,7 +265,7 @@ public class GuiSlotNotifications extends GuiSlot {
 					int startXReal = leftPadding;
 					for(ITextComponent comp : bodyLines.get(i)) {
 						int w = mc.fontRenderer.drawStringWithShadow(
-								comp.getStyle().getFormattingCode() + comp.getUnformattedTextForChat(), startXLocal,
+								comp.getStyle().getFormattingCode() + comp.getUnformattedComponentText(), startXLocal,
 								i * 9, bd.bodyTxtColor) - startXLocal;
 						ClickEvent clickEvent = comp.getStyle().getClickEvent();
 						HoverEvent hoverEvent = toolTip == null ? comp.getStyle().getHoverEvent() : null;

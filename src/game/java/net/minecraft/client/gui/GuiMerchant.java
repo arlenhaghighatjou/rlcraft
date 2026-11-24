@@ -22,6 +22,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
+import net.lax1dude.eaglercraft.v1_8.internal.EnumCursorType;
 
 @SideOnly(Side.CLIENT)
 public class GuiMerchant extends GuiContainer
@@ -224,6 +226,12 @@ public class GuiMerchant extends GuiContainer
                     mc.getTextureManager().bindTexture(GuiMerchant.MERCHANT_GUI_TEXTURE);
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                     boolean flag = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+
+                    if (flag && this.enabled)
+                    {
+                        Mouse.showCursor(EnumCursorType.HAND);
+                    }
+
                     int i = 0;
                     int j = 176;
 

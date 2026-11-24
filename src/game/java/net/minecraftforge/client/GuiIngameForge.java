@@ -60,7 +60,6 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 
-import org.lwjgl.opengl.GL11;
 
 public class GuiIngameForge extends GuiIngame
 {
@@ -140,7 +139,9 @@ public class GuiIngameForge extends GuiIngame
             renderPortal(res, partialTicks);
         }
 
+        this.onBeginHotbarDraw();
         if (renderHotbar) renderHotbar(res, partialTicks);
+        this.onEndHotbarDraw();
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         zLevel = -90.0F;
@@ -150,6 +151,7 @@ public class GuiIngameForge extends GuiIngame
         if (renderBossHealth) renderBossHealth();
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        this.onBeginHotbarDraw();
         if (this.mc.playerController.shouldDrawHUD() && this.mc.getRenderViewEntity() instanceof EntityPlayer)
         {
             if (renderHealth) renderHealth(width, height);
@@ -171,13 +173,15 @@ public class GuiIngameForge extends GuiIngame
         }
 
         renderToolHighlight(res);
+        renderRecordOverlay(width, height, partialTicks);
+        this.onEndHotbarDraw();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        this.drawEaglerInteractButton(res);
         renderHUDText(width, height);
         renderFPSGraph();
         renderPotionIcons(res);
-        renderRecordOverlay(width, height, partialTicks);
         renderSubtitles(res);
         renderTitle(width, height, partialTicks);
-
 
         Scoreboard scoreboard = this.mc.world.getScoreboard();
         ScoreObjective objective = null;
@@ -194,7 +198,7 @@ public class GuiIngameForge extends GuiIngame
         }
 
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0);
         GlStateManager.disableAlpha();
 
         renderChat(width, height);
@@ -587,7 +591,6 @@ public class GuiIngameForge extends GuiIngame
 
             this.mc.mcProfiler.endSection();
 
-
             if (mc.playerController.gameIsSurvivalOrAdventure() && mc.player.experienceLevel > 0)
             {
                 mc.mcProfiler.startSection("expLevel");
@@ -614,7 +617,7 @@ public class GuiIngameForge extends GuiIngame
     {
         bind(ICONS);
         if (pre(JUMPBAR)) return;
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.disableBlend();
 
         mc.mcProfiler.startSection("jumpBar");
@@ -633,7 +636,7 @@ public class GuiIngameForge extends GuiIngame
 
         GlStateManager.enableBlend();
         mc.mcProfiler.endSection();
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         post(JUMPBAR);
     }
@@ -690,7 +693,7 @@ public class GuiIngameForge extends GuiIngame
     protected void renderHUDText(int width, int height)
     {
         mc.mcProfiler.startSection("forgeHudText");
-        OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0);
         ArrayList<String> listL = new ArrayList<String>();
         ArrayList<String> listR = new ArrayList<String>();
 
@@ -738,6 +741,7 @@ public class GuiIngameForge extends GuiIngame
             }
         }
 
+        this.overlayDebug.renderEaglerHUD(res);
         mc.mcProfiler.endSection();
         post(TEXT);
     }

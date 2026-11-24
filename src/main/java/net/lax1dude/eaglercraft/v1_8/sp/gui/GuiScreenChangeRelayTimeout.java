@@ -66,7 +66,7 @@ public class GuiScreenChangeRelayTimeout extends GuiScreen {
 	public void drawScreen(int par1, int par2, float par3) {
 		drawBackground(0);
 		drawCenteredString(fontRenderer, title, width / 2, height / 3 - 20, 0xFFFFFF);
-		slider.drawButton(mc, par1, par2);
+		slider.drawButton(mc, par1, par2, par3);
 		super.drawScreen(par1, par2, par3);
 	}
 

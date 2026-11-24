@@ -166,10 +166,10 @@ public class GuiUpdateCheckerOverlay extends Gui {
 			}
 		}
 
-		checkForUpdatesButton.drawButton(mc, mx, my);
-		startDownloadButton.drawButton(mc, mx, my);
-		viewAllUpdatesButton.drawButton(mc, mx, my);
-		dismissUpdatesButton.drawButton(mc, mx, my);
+		checkForUpdatesButton.drawButton(mc, mx, my, partialTicks);
+		startDownloadButton.drawButton(mc, mx, my, partialTicks);
+		viewAllUpdatesButton.drawButton(mc, mx, my, partialTicks);
+		dismissUpdatesButton.drawButton(mc, mx, my, partialTicks);
 	}
 
 	public void drawScreenBusy(int mx, int my, float partialTicks, UpdateProgressStruct progressState) {

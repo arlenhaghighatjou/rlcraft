@@ -6,6 +6,7 @@ import com.google.common.base.Predicates;
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EnumInputEvent;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ChatAllowedCharacters;
@@ -22,7 +23,7 @@ public class GuiTextField extends Gui
     public int y;
     public int width;
     public int height;
-    private String text = "";
+    protected String text = "";
     private int maxStringLength = 32;
     private int cursorCounter;
     private boolean enableBackgroundDrawing = true;
@@ -56,6 +57,23 @@ public class GuiTextField extends Gui
     public void updateCursorCounter()
     {
         ++this.cursorCounter;
+    }
+
+    public void updateText(String textIn)
+    {
+        if (this.validator.apply(textIn))
+        {
+            if (textIn.length() > this.maxStringLength)
+            {
+                this.text = textIn.substring(0, this.maxStringLength);
+            }
+            else
+            {
+                this.text = textIn;
+            }
+
+            this.setCursorPosition(this.cursorPosition);
+        }
     }
 
     public void setText(String textIn)
@@ -706,5 +724,29 @@ public class GuiTextField extends Gui
     public void setVisible(boolean isVisible)
     {
         this.visible = isVisible;
+    }
+
+    public void fireInputEvent(EnumInputEvent event, String param)
+    {
+        if (!this.isFocused)
+        {
+            return;
+        }
+
+        switch (event)
+        {
+            case CLIPBOARD_COPY:
+                GuiScreen.setClipboardString(this.getSelectedText());
+                break;
+            case CLIPBOARD_PASTE:
+                if (this.isEnabled)
+                {
+                    this.writeText(param != null ? param : GuiScreen.getClipboardString());
+                }
+
+                break;
+            default:
+                break;
+        }
     }
 }

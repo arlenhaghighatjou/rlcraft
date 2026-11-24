@@ -10,10 +10,17 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
+import net.lax1dude.eaglercraft.v1_8.PointerInputAbstraction;
+import net.lax1dude.eaglercraft.v1_8.Touch;
+import net.lax1dude.eaglercraft.v1_8.internal.EnumCursorType;
+import net.lax1dude.eaglercraft.v1_8.internal.EnumTouchEvent;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 @SideOnly(Side.CLIENT)
 public abstract class GuiSlot
 {
+    private static final Logger EXC_LOGGER = LogManager.getLogger("GuiSlotRenderer");
     protected final Minecraft mc;
     public int width;
     public int height;
@@ -192,7 +199,7 @@ public abstract class GuiSlot
                 this.drawListHeader(k, l, tessellator);
             }
 
-            this.drawSelectionBox(k, l, mouseXIn, mouseYIn, partialTicks);
+            this.drawSelectionBox(k, l, mouseXIn, mouseYIn, partialTicks, this.getSize());
             GlStateManager.disableDepth();
             this.overlayBackground(0, this.top, 255, 255);
             this.overlayBackground(this.bottom, this.height, 255, 255);
@@ -257,9 +264,21 @@ public abstract class GuiSlot
 
     public void handleMouseInput()
     {
+        this.handleInput(Mouse.getEventButton(), Mouse.getEventButtonState(), Mouse.getEventDWheel());
+    }
+
+    public void handleTouchInput()
+    {
+        this.mouseX = PointerInputAbstraction.getVCursorX() * this.width / this.mc.displayWidth;
+        this.mouseY = this.height - PointerInputAbstraction.getVCursorY() * this.height / this.mc.displayHeight - 1;
+        this.handleInput(0, Touch.getEventType() == EnumTouchEvent.TOUCHSTART, 0);
+    }
+
+    protected void handleInput(int eventButton, boolean eventState, int dWheel)
+    {
         if (this.isMouseYWithinSlotBounds(this.mouseY))
         {
-            if (Mouse.getEventButton() == 0 && Mouse.getEventButtonState() && this.mouseY >= this.top && this.mouseY <= this.bottom)
+            if (eventButton == 0 && eventState && this.mouseY >= this.top && this.mouseY <= this.bottom)
             {
                 int i = (this.width - this.getListWidth()) / 2;
                 int j = (this.width + this.getListWidth()) / 2;
@@ -277,7 +296,7 @@ public abstract class GuiSlot
                 }
             }
 
-            if (Mouse.isButtonDown(0) && this.getEnabled())
+            if (PointerInputAbstraction.getVCursorButtonDown(0) && this.getEnabled())
             {
                 if (this.initialClickY == -1)
                 {
@@ -350,20 +369,18 @@ public abstract class GuiSlot
                 this.initialClickY = -1;
             }
 
-            int i2 = Mouse.getEventDWheel();
-
-            if (i2 != 0)
+            if (dWheel != 0)
             {
-                if (i2 > 0)
+                if (dWheel > 0)
                 {
-                    i2 = -1;
+                    dWheel = -1;
                 }
-                else if (i2 < 0)
+                else if (dWheel < 0)
                 {
-                    i2 = 1;
+                    dWheel = 1;
                 }
 
-                this.amountScrolled += (float)(i2 * this.slotHeight / 2);
+                this.amountScrolled += (float)(dWheel * this.slotHeight / 2);
             }
         }
     }
@@ -383,9 +400,8 @@ public abstract class GuiSlot
         return 220;
     }
 
-    protected void drawSelectionBox(int insideLeft, int insideTop, int mouseXIn, int mouseYIn, float partialTicks)
+    protected void drawSelectionBox(int insideLeft, int insideTop, int mouseXIn, int mouseYIn, float partialTicks, int i)
     {
-        int i = this.getSize();
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer bufferbuilder = tessellator.getBuffer();
 
@@ -416,9 +432,22 @@ public abstract class GuiSlot
                 bufferbuilder.pos((double)(i1 + 1), (double)(k - 1), 0.0D).tex(0.0D, 0.0D).color(0, 0, 0, 255).endVertex();
                 tessellator.draw();
                 GlStateManager.enableTexture2D();
+
+                if (mouseXIn >= i1 && mouseXIn <= j1 && mouseYIn >= k - 2 && mouseYIn <= k + l + 1)
+                {
+                    Mouse.showCursor(EnumCursorType.HAND);
+                }
             }
 
-            this.drawSlot(j, insideLeft, k, l, mouseXIn, mouseYIn, partialTicks);
+            try
+            {
+                this.drawSlot(j, insideLeft, k, l, mouseXIn, mouseYIn, partialTicks);
+            }
+            catch (Throwable t)
+            {
+                EXC_LOGGER.error("Exception caught rendering a slot of a list on the screen! Game will continue running due to the suspicion that this could be an intentional crash attempt, and therefore it would be inconvenient if the user were to be locked out of this gui due to repeatedly triggering a full crash report");
+                EXC_LOGGER.error(t);
+            }
         }
     }
 

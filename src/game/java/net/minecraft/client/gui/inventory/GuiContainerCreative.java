@@ -42,6 +42,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EnumInputEvent;
 
 @SideOnly(Side.CLIENT)
 public class GuiContainerCreative extends InventoryEffectRenderer
@@ -1200,4 +1201,19 @@ public class GuiContainerCreative extends InventoryEffectRenderer
                 }
             }
         }
+
+    public boolean blockPTTKey()
+    {
+        return this.searchField.isFocused();
+    }
+
+    public boolean showCopyPasteButtons()
+    {
+        return this.searchField.isFocused();
+    }
+
+    public void fireInputEvent(EnumInputEvent event, String param)
+    {
+        this.searchField.fireInputEvent(event, param);
+    }
 }

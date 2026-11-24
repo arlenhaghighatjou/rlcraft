@@ -139,7 +139,7 @@ public class GuiScreenRevokeSessionToken extends GuiScreen {
 			GuiScreenRevokeSessionToken.this.drawDefaultBackground();
 		}
 
-		protected void drawSlot(int i, int var2, int j, int var4, int var5, int var6) {
+		protected void drawSlot(int i, int var2, int j, int var4, int var5, int var6, float partialTicks) {
 			GuiScreenRevokeSessionToken.this.drawCenteredString(GuiScreenRevokeSessionToken.this.fontRenderer,
 					this.cookieNames.get(i), this.width / 2, j + 1, 16777215);
 		}

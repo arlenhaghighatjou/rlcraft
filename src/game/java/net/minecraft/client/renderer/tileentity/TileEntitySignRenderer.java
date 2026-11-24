@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntitySign>
 {
+    public static boolean disableProfanityFilter = false;
     private static final ResourceLocation SIGN_TEXTURE = new ResourceLocation("textures/entity/sign.png");
     private final ModelSign model = new ModelSign();
 
@@ -88,22 +89,24 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer<TileEntity
 
         if (destroyStage < 0)
         {
-            for (int j = 0; j < te.signText.length; ++j)
+            ITextComponent[] signText = disableProfanityFilter ? te.signText : te.getSignTextProfanityFilter();
+
+            for (int j = 0; j < signText.length; ++j)
             {
-                if (te.signText[j] != null)
+                if (signText[j] != null)
                 {
-                    ITextComponent itextcomponent = te.signText[j];
+                    ITextComponent itextcomponent = signText[j];
                     List<ITextComponent> list = GuiUtilRenderComponents.splitText(itextcomponent, 90, fontrenderer, false, true);
                     String s = list != null && !list.isEmpty() ? ((ITextComponent)list.get(0)).getFormattedText() : "";
 
                     if (j == te.lineBeingEdited)
                     {
                         s = "> " + s + " <";
-                        fontrenderer.drawString(s, -fontrenderer.getStringWidth(s) / 2, j * 10 - te.signText.length * 5, 0);
+                        fontrenderer.drawString(s, -fontrenderer.getStringWidth(s) / 2, j * 10 - signText.length * 5, 0);
                     }
                     else
                     {
-                        fontrenderer.drawString(s, -fontrenderer.getStringWidth(s) / 2, j * 10 - te.signText.length * 5, 0);
+                        fontrenderer.drawString(s, -fontrenderer.getStringWidth(s) / 2, j * 10 - signText.length * 5, 0);
                     }
                 }
             }

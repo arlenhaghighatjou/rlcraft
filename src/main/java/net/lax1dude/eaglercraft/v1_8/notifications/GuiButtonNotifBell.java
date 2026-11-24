@@ -37,7 +37,7 @@ public class GuiButtonNotifBell extends GuiButton {
 		unread = num;
 	}
 
-	public void drawButton(Minecraft minecraft, int i, int j) {
+	public void drawButton(Minecraft minecraft, int i, int j, float partialTicks) {
 		if (this.visible) {
 			minecraft.getTextureManager().bindTexture(eaglerTextures);
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -51,11 +51,11 @@ public class GuiButtonNotifBell extends GuiButton {
 				Mouse.showCursor(EnumCursorType.HAND);
 			}
 
-			drawTexturedModalRect(xPosition, yPosition, unread > 0 ? 116 : 136, k, width, height);
+			drawTexturedModalRect(x, y, unread > 0 ? 116 : 136, k, width, height);
 			
 			if(unread > 0) {
 				GlStateManager.pushMatrix();
-				GlStateManager.translate(xPosition + 15.5f, yPosition + 11.0f, 0.0f);
+				GlStateManager.translate(x + 15.5f, y + 11.0f, 0.0f);
 				if(unread >= 10) {
 					GlStateManager.translate(0.0f, 1.0f, 0.0f);
 					GlStateManager.scale(0.5f, 0.5f, 0.5f);

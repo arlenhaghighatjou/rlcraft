@@ -22,6 +22,7 @@ import net.lax1dude.eaglercraft.v1_8.internal.EnumCursorType;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.sp.relay.RelayManager;
 import net.lax1dude.eaglercraft.v1_8.sp.relay.RelayServer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.*;
@@ -173,7 +174,7 @@ public class GuiScreenRelay extends GuiScreen implements GuiYesNoCallback {
 			int w2 = fontRenderer.getStringWidth(str);
 			if(par1 > w + 5 && par1 < w + 7 + w2 * 3 / 4 && par2 > 3 && par2 < 11) {
 				this.mc.displayGuiScreen(new GuiScreenChangeRelayTimeout(this));
-				this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+				this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 			}
 		}
 	}

@@ -20,6 +20,7 @@ import net.lax1dude.eaglercraft.v1_8.Display;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import java.io.IOException;
 
 public class GuiScreenVisualViewport extends GuiScreen {
 
@@ -66,13 +67,13 @@ public class GuiScreenVisualViewport extends GuiScreen {
 	}
 
 	@Override
-	protected final void mouseClicked(int parInt1, int parInt2, int parInt3) {
+	protected final void mouseClicked(int parInt1, int parInt2, int parInt3) throws IOException {
 		parInt1 -= offsetX;
 		parInt2 -= offsetY;
 		mouseClicked0(parInt1, parInt2, parInt3);
 	}
 
-	protected void mouseClicked0(int parInt1, int parInt2, int parInt3) {
+	protected void mouseClicked0(int parInt1, int parInt2, int parInt3) throws IOException {
 		super.mouseClicked(parInt1, parInt2, parInt3);
 	}
 
@@ -121,25 +122,24 @@ public class GuiScreenVisualViewport extends GuiScreen {
 	}
 
 	@Override
-	protected final void touchStarted(int parInt1, int parInt2, int parInt3) {
+	protected final void touchStarted(int parInt1, int parInt2, int parInt3) throws IOException {
 		parInt1 -= offsetX;
 		parInt2 -= offsetY;
 		touchStarted0(parInt1, parInt2, parInt3);
 	}
 
-	protected void touchStarted0(int parInt1, int parInt2, int parInt3) {
+	protected void touchStarted0(int parInt1, int parInt2, int parInt3) throws IOException {
 		super.touchStarted(parInt1, parInt2, parInt3);
 	}
 
 	@Override
-	protected void touchTapped(int parInt1, int parInt2, int parInt3) {
+	protected void touchTapped(int parInt1, int parInt2, int parInt3) throws IOException {
 		parInt1 -= offsetX;
 		parInt2 -= offsetY;
 		touchTapped0(parInt1, parInt2, parInt3);
 	}
 
-	protected void touchTapped0(int parInt1, int parInt2, int parInt3) {
+	protected void touchTapped0(int parInt1, int parInt2, int parInt3) throws IOException {
 		super.touchTapped(parInt1, parInt2, parInt3);
 	}
-
 }

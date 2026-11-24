@@ -24,6 +24,7 @@ import net.minecraft.world.gen.FlatLayerInfo;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EnumInputEvent;
 
 @SideOnly(Side.CLIENT)
 public class GuiFlatPresets extends GuiScreen
@@ -248,5 +249,15 @@ public class GuiFlatPresets extends GuiScreen
             this.renderIcon(xPos, yPos, guiflatpresets$layeritem.icon, guiflatpresets$layeritem.iconMetadata);
             GuiFlatPresets.this.fontRenderer.drawString(guiflatpresets$layeritem.name, xPos + 18 + 5, yPos + 6, 16777215);
         }
+    }
+
+    public boolean showCopyPasteButtons()
+    {
+        return this.export.isFocused();
+    }
+
+    public void fireInputEvent(EnumInputEvent event, String param)
+    {
+        this.export.fireInputEvent(event, param);
     }
 }

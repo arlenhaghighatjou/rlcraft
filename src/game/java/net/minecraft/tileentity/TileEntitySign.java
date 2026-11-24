@@ -17,16 +17,48 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentUtils;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.world.World;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.lax1dude.eaglercraft.v1_8.profanity_filter.ProfanityFilter;
 
 public class TileEntitySign extends TileEntity
 {
     public final ITextComponent[] signText = new ITextComponent[] {new TextComponentString(""), new TextComponentString(""), new TextComponentString(""), new TextComponentString("")};
+    protected ITextComponent[] signTextProfanityFilter = null;
     public int lineBeingEdited = -1;
     private boolean isEditable = true;
     private EntityPlayer player;
     private final CommandResultStats stats = new CommandResultStats();
+
+    @SideOnly(Side.CLIENT)
+    public ITextComponent[] getSignTextProfanityFilter()
+    {
+        if (Minecraft.getMinecraft().isEnableProfanityFilter())
+        {
+            if (this.signTextProfanityFilter == null)
+            {
+                this.signTextProfanityFilter = new ITextComponent[4];
+                ProfanityFilter filter = ProfanityFilter.getInstance();
+
+                for (int i = 0; i < 4; ++i)
+                {
+                    this.signTextProfanityFilter[i] = filter.profanityFilterChatComponent(this.signText[i]);
+                }
+            }
+
+            return this.signTextProfanityFilter;
+        }
+        else
+        {
+            return this.signText;
+        }
+    }
+
+    public void clearProfanityFilterCache()
+    {
+        this.signTextProfanityFilter = null;
+    }
 
     public NBTTagCompound writeToNBT(NBTTagCompound compound)
     {
@@ -51,6 +83,7 @@ public class TileEntitySign extends TileEntity
     {
         this.isEditable = false;
         super.readFromNBT(compound);
+        this.signTextProfanityFilter = null;
         ICommandSender icommandsender = new ICommandSender()
         {
             public String getName()

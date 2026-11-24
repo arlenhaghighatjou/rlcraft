@@ -28,9 +28,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.minecraft.GuiScreenVisualViewport;
 
 @SideOnly(Side.CLIENT)
-public class GuiScreenBook extends GuiScreen
+public class GuiScreenBook extends GuiScreenVisualViewport
 {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ResourceLocation BOOK_GUI_TEXTURES = new ResourceLocation("textures/gui/book.png");
@@ -82,9 +83,9 @@ public class GuiScreenBook extends GuiScreen
         }
     }
 
-    public void updateScreen()
+    public void updateScreen0()
     {
-        super.updateScreen();
+        super.updateScreen0();
         ++this.updateCount;
     }
 
@@ -346,7 +347,7 @@ public class GuiScreenBook extends GuiScreen
         }
     }
 
-    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    public void drawScreen0(int mouseX, int mouseY, float partialTicks)
     {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(BOOK_GUI_TEXTURES);
@@ -455,10 +456,10 @@ public class GuiScreenBook extends GuiScreen
             }
         }
 
-        super.drawScreen(mouseX, mouseY, partialTicks);
+        super.drawScreen0(mouseX, mouseY, partialTicks);
     }
 
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+    protected void mouseClicked0(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         if (mouseButton == 0)
         {
@@ -470,7 +471,7 @@ public class GuiScreenBook extends GuiScreen
             }
         }
 
-        super.mouseClicked(mouseX, mouseY, mouseButton);
+        super.mouseClicked0(mouseX, mouseY, mouseButton);
     }
 
     public boolean handleComponentClick(ITextComponent component)
@@ -604,4 +605,9 @@ public class GuiScreenBook extends GuiScreen
                 }
             }
         }
+
+    public boolean blockPTTKey()
+    {
+        return this.bookIsUnsigned;
+    }
 }

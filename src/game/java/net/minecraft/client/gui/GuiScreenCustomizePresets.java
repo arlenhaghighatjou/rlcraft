@@ -13,6 +13,7 @@ import net.minecraft.world.gen.ChunkGeneratorSettings;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EnumInputEvent;
 
 @SideOnly(Side.CLIENT)
 public class GuiScreenCustomizePresets extends GuiScreen
@@ -210,5 +211,15 @@ public class GuiScreenCustomizePresets extends GuiScreen
             this.blitIcon(xPos, yPos, guiscreencustomizepresets$info.texture);
             GuiScreenCustomizePresets.this.fontRenderer.drawString(guiscreencustomizepresets$info.name, xPos + 32 + 10, yPos + 14, 16777215);
         }
+    }
+
+    public boolean showCopyPasteButtons()
+    {
+        return this.export.isFocused();
+    }
+
+    public void fireInputEvent(EnumInputEvent event, String param)
+    {
+        this.export.fireInputEvent(event, param);
     }
 }

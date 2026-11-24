@@ -59,7 +59,7 @@ public class GuiScreenDemoPlayWorldSelection extends GuiScreen {
 		}else if(par1GuiButton.id == 1) {
 			this.mc.gameSettings.hasCreatedDemoWorld = true;
 			this.mc.gameSettings.saveOptions();
-			this.mc.launchIntegratedServer("Demo World", "Demo World", WorldServerDemo.demoWorldSettings);
+			this.mc.launchIntegratedServer("Demo World", "Demo World", WorldServerDemo.DEMO_WORLD_SETTINGS);
 		}else if(par1GuiButton.id == 2) {
 			if(LANServerController.supported()) {
 				this.mc.displayGuiScreen(GuiScreenLANInfo.showLANInfoScreen(new GuiScreenLANConnect(mainmenu)));

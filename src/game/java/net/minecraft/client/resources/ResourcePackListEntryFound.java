@@ -31,23 +31,23 @@ public class ResourcePackListEntryFound extends ResourcePackListEntry {
 		this.field_148319_c = parEntry;
 	}
 
-	protected void func_148313_c() {
+	protected void bindResourcePackIcon() {
 		this.field_148319_c.bindTexturePackIcon(this.mc.getTextureManager());
 	}
 
-	protected int func_183019_a() {
-		return this.field_148319_c.func_183027_f();
+	protected int getResourcePackFormat() {
+		return this.field_148319_c.getPackFormat();
 	}
 
-	protected String func_148311_a() {
+	protected String getResourcePackDescription() {
 		return this.field_148319_c.getTexturePackDescription();
 	}
 
-	protected String func_148312_b() {
+	protected String getResourcePackName() {
 		return this.field_148319_c.getResourcePackEaglerDisplayName();
 	}
 
-	public ResourcePackRepository.Entry func_148318_i() {
+	public ResourcePackRepository.Entry getResourcePackEntry() {
 		return this.field_148319_c;
 	}
 

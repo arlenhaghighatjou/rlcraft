@@ -90,7 +90,7 @@ public class GuiUpdateVersionSlot extends GuiSlot {
 	private static final char[] hexChars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
 	@Override
-	protected void drawSlot(int id, int xx, int yy, int width, int height, int ii) {
+	protected void drawSlot(int id, int xx, int yy, int width, int height, int ii, float partialTicks) {
 		if(id < certList.size()) {
 			this.mc.getTextureManager().bindTexture(eaglerGuiTex);
 			GlStateManager.pushMatrix();

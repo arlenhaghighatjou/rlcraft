@@ -26,7 +26,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.WorldSettings;
+import net.minecraft.world.GameType;
 
 public class GuiShareToLan extends GuiScreen {
 	/**
@@ -154,7 +154,7 @@ public class GuiShareToLan extends GuiScreen {
 			LoadingScreenRenderer ls = mc.loadingScreen;
 			String code = LANServerController.shareToLAN((msg) -> ls.eaglerShow(msg, null), worldName, hiddenToggle);
 			if (code != null) {
-				SingleplayerServerController.configureLAN(WorldSettings.GameType.getByName(this.gameMode), this.allowCommands);
+				SingleplayerServerController.configureLAN(GameType.getByName(this.gameMode), this.allowCommands);
 				this.mc.ingameGUI.getChatGUI().printChatMessage(new TextComponentString(I18n.format("lanServer.opened")
 						.replace("$relay$", LANServerController.getCurrentURI()).replace("$code$", code)));
 			} else {

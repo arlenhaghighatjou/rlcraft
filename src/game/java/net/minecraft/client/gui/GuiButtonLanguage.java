@@ -2,6 +2,8 @@ package net.minecraft.client.gui;
 
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
+import net.lax1dude.eaglercraft.v1_8.internal.EnumCursorType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,6 +27,7 @@ public class GuiButtonLanguage extends GuiButton
             if (flag)
             {
                 i += this.height;
+                Mouse.showCursor(EnumCursorType.HAND);
             }
 
             this.drawTexturedModalRect(this.x, this.y, 0, i, this.width, this.height);

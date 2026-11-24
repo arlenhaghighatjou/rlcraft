@@ -22,6 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.IOUtils;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.profile.EaglerProfile;
 
 @SideOnly(Side.CLIENT)
 public class GuiWinGame extends GuiScreen
@@ -104,7 +105,7 @@ public class GuiWinGame extends GuiScreen
                         String s2;
                         String s3;
 
-                        for (s1 = s1.replaceAll("PLAYERNAME", this.mc.getSession().getUsername()); s1.contains(s); s1 = s2 + TextFormatting.WHITE + TextFormatting.OBFUSCATED + "XXXXXXXX".substring(0, random.nextInt(4) + 3) + s3)
+                        for (s1 = s1.replaceAll("PLAYERNAME", EaglerProfile.getName()); s1.contains(s); s1 = s2 + TextFormatting.WHITE + TextFormatting.OBFUSCATED + "XXXXXXXX".substring(0, random.nextInt(4) + 3) + s3)
                         {
                             int j = s1.indexOf(s);
                             s2 = s1.substring(0, j);
@@ -129,7 +130,7 @@ public class GuiWinGame extends GuiScreen
 
                 while ((s4 = bufferedreader1.readLine()) != null)
                 {
-                    s4 = s4.replaceAll("PLAYERNAME", this.mc.getSession().getUsername());
+                    s4 = s4.replaceAll("PLAYERNAME", EaglerProfile.getName());
                     s4 = s4.replaceAll("\t", "    ");
                     this.lines.addAll(this.mc.fontRenderer.listFormattedStringToWidth(s4, 274));
                     this.lines.add("");

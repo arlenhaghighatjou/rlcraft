@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EnumInputEvent;
 
 @SideOnly(Side.CLIENT)
 public class GuiRepair extends GuiContainer implements IContainerListener
@@ -192,5 +193,20 @@ public class GuiRepair extends GuiContainer implements IContainerListener
 
     public void sendAllWindowProperties(Container containerIn, IInventory inventory)
     {
+    }
+
+    public boolean blockPTTKey()
+    {
+        return this.nameField.isFocused();
+    }
+
+    public boolean showCopyPasteButtons()
+    {
+        return this.nameField.isFocused();
+    }
+
+    public void fireInputEvent(EnumInputEvent event, String param)
+    {
+        this.nameField.fireInputEvent(event, param);
     }
 }

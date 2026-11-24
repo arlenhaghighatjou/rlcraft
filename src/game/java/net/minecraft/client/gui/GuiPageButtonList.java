@@ -10,6 +10,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.IntHashMap;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EnumInputEvent;
+import net.lax1dude.eaglercraft.v1_8.PointerInputAbstraction;
 
 @SideOnly(Side.CLIENT)
 public class GuiPageButtonList extends GuiListExtended
@@ -491,9 +493,27 @@ public class GuiPageButtonList extends GuiListExtended
 
             public boolean mousePressed(int slotIndex, int mouseX, int mouseY, int mouseEvent, int relativeX, int relativeY)
             {
-                boolean flag = this.clickComponent(this.component1, mouseX, mouseY, mouseEvent);
-                boolean flag1 = this.clickComponent(this.component2, mouseX, mouseY, mouseEvent);
+                if (mouseEvent != 0 && mouseEvent != 12345)
+                {
+                    return false;
+                }
+
+                boolean touchMode = PointerInputAbstraction.isTouchMode();
+                boolean flag = this.component1 != null && (!touchMode || isTouchEventFor(this.component1, mouseEvent)) && this.clickComponent(this.component1, mouseX, mouseY, mouseEvent);
+                boolean flag1 = this.component2 != null && (!touchMode || isTouchEventFor(this.component2, mouseEvent)) && this.clickComponent(this.component2, mouseX, mouseY, mouseEvent);
                 return flag || flag1;
+            }
+
+            private static boolean isTouchEventFor(Gui gui, int mouseEvent)
+            {
+                if (gui instanceof GuiButton)
+                {
+                    return ((GuiButton)gui).isSliderTouchEvents() == (mouseEvent == 12345);
+                }
+                else
+                {
+                    return mouseEvent != 12345;
+                }
             }
 
             private boolean clickComponent(Gui p_178026_1_, int p_178026_2_, int p_178026_3_, int p_178026_4_)
@@ -541,8 +561,22 @@ public class GuiPageButtonList extends GuiListExtended
 
             public void mouseReleased(int slotIndex, int x, int y, int mouseEvent, int relativeX, int relativeY)
             {
-                this.releaseComponent(this.component1, x, y, mouseEvent);
-                this.releaseComponent(this.component2, x, y, mouseEvent);
+                if (mouseEvent != 0 && mouseEvent != 12345)
+                {
+                    return;
+                }
+
+                boolean touchMode = PointerInputAbstraction.isTouchMode();
+
+                if (!touchMode || isTouchEventFor(this.component1, mouseEvent))
+                {
+                    this.releaseComponent(this.component1, x, y, mouseEvent);
+                }
+
+                if (!touchMode || isTouchEventFor(this.component2, mouseEvent))
+                {
+                    this.releaseComponent(this.component2, x, y, mouseEvent);
+                }
             }
 
             private void releaseComponent(Gui p_178016_1_, int p_178016_2_, int p_178016_3_, int p_178016_4_)
@@ -648,4 +682,25 @@ public class GuiPageButtonList extends GuiListExtended
                 return this.initialValue;
             }
         }
+
+    public boolean isTextFieldFocused()
+    {
+        for (int i = 0, l = this.editBoxes.size(); i < l; ++i)
+        {
+            if (this.editBoxes.get(i).isFocused())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void fireInputEvent(EnumInputEvent event, String param)
+    {
+        for (int i = 0, l = this.editBoxes.size(); i < l; ++i)
+        {
+            this.editBoxes.get(i).fireInputEvent(event, param);
+        }
+    }
 }

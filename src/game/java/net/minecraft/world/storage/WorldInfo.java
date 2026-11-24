@@ -66,6 +66,8 @@ public class WorldInfo
     private final Map<Integer, NBTTagCompound> dimensionData = Maps.newHashMap();
     private GameRules gameRules = new GameRules();
     private java.util.Map<String, net.minecraft.nbt.NBTBase> additionalProperties;
+    public static final int eaglerVersionCurrent = 1;
+    private int eaglerVersion = eaglerVersionCurrent;
 
     protected WorldInfo()
     {
@@ -255,6 +257,8 @@ public class WorldInfo
                 this.dimensionData.put(Integer.parseInt(s), nbttagcompound1.getCompoundTag(s));
             }
         }
+
+        this.eaglerVersion = nbt.getInteger("eaglerVersionSerial");
     }
 
     public WorldInfo(WorldSettings settings, String name)
@@ -367,6 +371,7 @@ public class WorldInfo
         nbt.setDouble("BorderSizeLerpTarget", this.borderSizeLerpTarget);
         nbt.setDouble("BorderWarningBlocks", (double)this.borderWarningDistance);
         nbt.setDouble("BorderWarningTime", (double)this.borderWarningTime);
+        nbt.setInteger("eaglerVersionSerial", this.eaglerVersion);
         net.minecraftforge.fml.common.FMLCommonHandler.instance().getDataFixer().writeVersionData(nbt);
 
         if (this.difficulty != null)
@@ -868,5 +873,23 @@ public class WorldInfo
     public String getVersionName()
     {
         return this.versionName;
+    }
+
+    public int getEaglerVersion()
+    {
+        return this.eaglerVersion;
+    }
+
+    public boolean isOldEaglercraftRandom()
+    {
+        return this.eaglerVersion == 0;
+    }
+
+    public static void initEaglerVersion(NBTTagCompound compound)
+    {
+        if (!compound.hasKey("eaglerVersionSerial", 99))
+        {
+            compound.setInteger("eaglerVersionSerial", eaglerVersionCurrent);
+        }
     }
 }
