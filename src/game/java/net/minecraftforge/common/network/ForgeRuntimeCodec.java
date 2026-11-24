@@ -26,8 +26,9 @@ import net.minecraftforge.fml.common.network.FMLIndexedMessageToMessageCodec;
 public class ForgeRuntimeCodec extends FMLIndexedMessageToMessageCodec<ForgeMessage> {
     public ForgeRuntimeCodec()
     {
-        addDiscriminator(1, ForgeMessage.DimensionRegisterMessage.class);
-        addDiscriminator(2, ForgeMessage.FluidIdMapMessage.class);
+        super(ForgeMessage.class);
+        addDiscriminator(1, ForgeMessage.DimensionRegisterMessage.class, ForgeMessage.DimensionRegisterMessage::new);
+        addDiscriminator(2, ForgeMessage.FluidIdMapMessage.class, ForgeMessage.FluidIdMapMessage::new);
     }
     @Override
     public void encodeInto(ChannelHandlerContext ctx, ForgeMessage msg, ByteBuf target) throws Exception

@@ -105,7 +105,10 @@ public class ClientIntegratedServerNetworkManager extends EaglercraftNetworkMana
 				}
 				
 				try {
-					pkt.processPacket(nethandler);
+					Packet handled = dispatchInbound(pkt);
+					if(handled != null) {
+						handled.processPacket(nethandler);
+					}
 				}catch(Throwable t) {
 					logger.error("Failed to process {}! It'll be skipped for debug purposes.", pkt.getClass().getSimpleName());
 					logger.error(t);

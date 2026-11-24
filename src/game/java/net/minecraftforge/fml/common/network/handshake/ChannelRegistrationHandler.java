@@ -25,7 +25,7 @@ import com.arlenh7.eaglercraft.netty.SimpleChannelInboundHandler;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
@@ -34,11 +34,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import com.google.common.collect.ImmutableSet;
 
 public class ChannelRegistrationHandler extends SimpleChannelInboundHandler<FMLProxyPacket> {
+    public ChannelRegistrationHandler()
+    {
+        super(FMLProxyPacket.class);
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, FMLProxyPacket msg) throws Exception
     {
         Side side = msg.getTarget();
-        NetworkManager manager = msg.getOrigin();
+        INetworkManager manager = msg.getOrigin();
         if (msg.channel().equals("REGISTER") || msg.channel().equals("UNREGISTER"))
         {
             byte[] data = new byte[msg.payload().readableBytes()];
@@ -47,7 +52,6 @@ public class ChannelRegistrationHandler extends SimpleChannelInboundHandler<FMLP
             String[] split = channels.split("\0");
             Set<String> channelSet = ImmutableSet.copyOf(split);
             FMLCommonHandler.instance().fireNetRegistrationEvent(manager, channelSet, msg.channel(), side);
-            msg.payload().release();
         }
         else
         {

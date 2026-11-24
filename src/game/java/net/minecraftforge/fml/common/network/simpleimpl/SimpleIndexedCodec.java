@@ -24,6 +24,11 @@ import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
 
 public class SimpleIndexedCodec extends FMLIndexedMessageToMessageCodec<IMessage> {
+    public SimpleIndexedCodec()
+    {
+        super(IMessage.class);
+    }
+
     @Override
     public void encodeInto(ChannelHandlerContext ctx, IMessage msg, ByteBuf target) throws Exception
     {
@@ -35,5 +40,4 @@ public class SimpleIndexedCodec extends FMLIndexedMessageToMessageCodec<IMessage
     {
         msg.fromBytes(source);
     }
-
 }

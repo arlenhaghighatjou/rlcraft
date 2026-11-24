@@ -42,6 +42,7 @@ public class NetworkEventFiringHandler extends SimpleChannelInboundHandler<FMLPr
 
     NetworkEventFiringHandler(FMLEventChannel fmlEventChannel)
     {
+        super(FMLProxyPacket.class);
         this.eventChannel = fmlEventChannel;
     }
 

@@ -21,14 +21,13 @@ package net.minecraftforge.fml.common.network.simpleimpl;
 
 import com.arlenh7.eaglercraft.netty.ChannelFutureListener;
 
-import java.lang.reflect.Method;
 import java.util.EnumMap;
+import java.util.function.Supplier;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.IThreadListener;
 
 import com.arlenh7.eaglercraft.netty.ChannelHandler;
-import com.arlenh7.eaglercraft.netty.ChannelPipeline;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.Packet;
@@ -113,76 +112,20 @@ import net.minecraftforge.fml.relauncher.Side;
 public class SimpleNetworkWrapper {
     private EnumMap<Side, FMLEmbeddedChannel> channels;
     private SimpleIndexedCodec packetCodec;
-    private static Class<?> defaultChannelPipeline;
-    private static Method generateName;
-    {
-        try
-        {
-            defaultChannelPipeline = Class.forName("io.netty.channel.DefaultChannelPipeline");
-            generateName = defaultChannelPipeline.getDeclaredMethod("generateName", ChannelHandler.class);
-            generateName.setAccessible(true);
-        }
-        catch (Exception e)
-        {
-            // How is this possible?
-            throw new RuntimeException("What? Netty isn't installed, what magic is this?", e);
-        }
-    }
+    private int handlerCount;
     public SimpleNetworkWrapper(String channelName)
     {
         packetCodec = new SimpleIndexedCodec();
         channels = NetworkRegistry.INSTANCE.newChannel(channelName, packetCodec);
     }
-
-    private String generateName(ChannelPipeline pipeline, ChannelHandler handler)
+    private String generateName(ChannelHandler handler)
     {
-        try
-        {
-            return (String)generateName.invoke(defaultChannelPipeline.cast(pipeline), handler);
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException("It appears we somehow have a not-standard pipeline. Huh", e);
-        }
-    }
-    /**
-     * Register a message and it's associated handler. The message will have the supplied discriminator byte. The message handler will
-     * be registered on the supplied side (this is the side where you want the message to be processed and acted upon).
-     *
-     * @param messageHandler the message handler type
-     * @param requestMessageType the message type
-     * @param discriminator a discriminator byte
-     * @param side the side for the handler
-     */
-    public <REQ extends IMessage, REPLY extends IMessage> void registerMessage(Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, int discriminator, Side side)
-    {
-        registerMessage(instantiate(messageHandler), requestMessageType, discriminator, side);
+        return handler.getClass().getSimpleName() + "#" + handlerCount++;
     }
     
-    static <REQ extends IMessage, REPLY extends IMessage> IMessageHandler<? super REQ, ? extends REPLY> instantiate(Class<? extends IMessageHandler<? super REQ, ? extends REPLY>> handler)
+    public <REQ extends IMessage, REPLY extends IMessage> void registerMessage(IMessageHandler<? super REQ, ? extends REPLY> messageHandler, Class<REQ> requestMessageType, Supplier<REQ> requestFactory, int discriminator, Side side)
     {
-        try
-        {
-            return handler.newInstance();
-        }
-        catch (ReflectiveOperationException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-    
-    /**
-     * Register a message and it's associated handler. The message will have the supplied discriminator byte. The message handler will
-     * be registered on the supplied side (this is the side where you want the message to be processed and acted upon).
-     *
-     * @param messageHandler the message handler instance
-     * @param requestMessageType the message type
-     * @param discriminator a discriminator byte
-     * @param side the side for the handler
-     */
-    public <REQ extends IMessage, REPLY extends IMessage> void registerMessage(IMessageHandler<? super REQ, ? extends REPLY> messageHandler, Class<REQ> requestMessageType, int discriminator, Side side)
-    {
-        packetCodec.addDiscriminator(discriminator, requestMessageType);
+        packetCodec.addDiscriminator(discriminator, requestMessageType, requestFactory);
         FMLEmbeddedChannel channel = channels.get(side);
         String type = channel.findChannelHandlerNameForType(SimpleIndexedCodec.class);
         if (side == Side.SERVER)
@@ -198,13 +141,13 @@ public class SimpleNetworkWrapper {
     private <REQ extends IMessage, REPLY extends IMessage, NH extends INetHandler> void addServerHandlerAfter(FMLEmbeddedChannel channel, String type, IMessageHandler<? super REQ, ? extends REPLY> messageHandler, Class<REQ> requestType)
     {
         SimpleChannelHandlerWrapper<REQ, REPLY> handler = getHandlerWrapper(messageHandler, Side.SERVER, requestType);
-        channel.pipeline().addAfter(type, generateName(channel.pipeline(), handler), handler);
+        channel.pipeline().addAfter(type, generateName(handler), handler);
     }
 
     private <REQ extends IMessage, REPLY extends IMessage, NH extends INetHandler> void addClientHandlerAfter(FMLEmbeddedChannel channel, String type, IMessageHandler<? super REQ, ? extends REPLY> messageHandler, Class<REQ> requestType)
     {
         SimpleChannelHandlerWrapper<REQ, REPLY> handler = getHandlerWrapper(messageHandler, Side.CLIENT, requestType);
-        channel.pipeline().addAfter(type, generateName(channel.pipeline(), handler), handler);
+        channel.pipeline().addAfter(type, generateName(handler), handler);
     }
 
     private <REPLY extends IMessage, REQ extends IMessage> SimpleChannelHandlerWrapper<REQ, REPLY> getHandlerWrapper(IMessageHandler<? super REQ, ? extends REPLY> messageHandler, Side side, Class<REQ> requestType)

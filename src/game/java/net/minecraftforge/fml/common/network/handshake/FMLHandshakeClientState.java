@@ -27,7 +27,6 @@ import java.util.function.Consumer;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
-import net.lax1dude.eaglercraft.v1_8.futures.Futures;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
@@ -154,9 +153,7 @@ enum FMLHandshakeClientState implements IHandshakeState<FMLHandshakeClientState>
 
             ctx.channel().attr(NetworkDispatcher.FML_GAMEDATA_SNAPSHOT).set(null);
 
-            //Do the remapping on the Client's thread in case things are reset while the client is running. We stall the network thread until this is finished which can cause the IO thread to time out... Not sure if we can do anything about that.
-            final Map<ResourceLocation, ForgeRegistry.Snapshot> snap_f = snap;
-            Multimap<ResourceLocation, ResourceLocation> locallyMissing = Futures.getUnchecked(Minecraft.getMinecraft().addScheduledTask(() -> GameData.injectSnapshot(snap_f, false, false)));
+            Multimap<ResourceLocation, ResourceLocation> locallyMissing = GameData.injectSnapshot(snap, false, false);
             if (!locallyMissing.isEmpty())
             {
                 cons.accept(ERROR);

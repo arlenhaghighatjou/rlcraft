@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import com.arlenh7.eaglercraft.network.INetworkManager;
+import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher;
 
 import net.lax1dude.eaglercraft.v1_8.EaglerOutputStream;
 import net.lax1dude.eaglercraft.v1_8.EaglerZLIB;
@@ -44,9 +46,10 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.ITickable;
 import net.lax1dude.eaglercraft.v1_8.sp.server.internal.ServerPlatformSingleplayer;
 
-public class IntegratedServerPlayerNetworkManager {
+public class IntegratedServerPlayerNetworkManager implements INetworkManager {
 
 	private INetHandler nethandler = null;
+	private NetworkDispatcher dispatcher = null;
 	public final String playerChannel;
 	private EnumConnectionState packetState = EnumConnectionState.HANDSHAKING;
 	private static PacketBuffer temporaryBuffer;
@@ -88,6 +91,9 @@ public class IntegratedServerPlayerNetworkManager {
 	
 	public void closeChannel(ITextComponent reason) {
 		EaglerIntegratedServerWorker.closeChannel(playerChannel);
+		if(dispatcher != null) {
+			dispatcher.onClose();
+		}
 		if(nethandler != null) {
 			nethandler.onDisconnect(reason);
 		}
@@ -193,7 +199,10 @@ public class IntegratedServerPlayerNetworkManager {
 				}
 				
 				try {
-					pkt.processPacket(nethandler);
+					Packet handled = dispatchInbound(pkt);
+					if(handled != null) {
+						handled.processPacket(nethandler);
+					}
 				}catch(Throwable t) {
 					logger.error("Failed to process {}! It'll be skipped for debug purposes.", pkt.getClass().getSimpleName());
 					logger.error(t);
@@ -346,6 +355,22 @@ public class IntegratedServerPlayerNetworkManager {
 	
 	public void setNetHandler(INetHandler nethandler) {
 		this.nethandler = nethandler;
+	}
+
+	public INetHandler getNetHandler() {
+		return nethandler;
+	}
+
+	public NetworkDispatcher getDispatcher() {
+		return dispatcher;
+	}
+
+	public void setDispatcher(NetworkDispatcher dispatcher) {
+		this.dispatcher = dispatcher;
+	}
+
+	public boolean hasFMLMarker() {
+		return true;
 	}
 	
 	public boolean isLocalChannel() {

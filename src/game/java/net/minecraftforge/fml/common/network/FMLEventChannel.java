@@ -23,6 +23,7 @@ import com.arlenh7.eaglercraft.netty.ChannelFutureListener;
 import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
 
 import java.util.EnumMap;
+import java.util.function.Consumer;
 
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.entity.Entity;
@@ -103,14 +104,9 @@ public class FMLEventChannel {
         this.eventBus = new EventBus();
     }
 
-    /**
-     * Register an event listener with this channel and bus. See {@link SubscribeEvent}
-     *
-     * @param object
-     */
-    public void register(Object object)
+    public <T extends FMLNetworkEvent.CustomPacketEvent<?>> void register(Class<T> eventType, Consumer<T> handler)
     {
-        this.eventBus.register(object);
+        this.eventBus.register(eventType, handler);
     }
 
     /**

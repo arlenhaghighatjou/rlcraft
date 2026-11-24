@@ -32,9 +32,10 @@ import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
 public class FMLRuntimeCodec extends FMLIndexedMessageToMessageCodec<FMLMessage> {
     public FMLRuntimeCodec()
     {
-        addDiscriminator(0,FMLMessage.CompleteHandshake.class);
-        addDiscriminator(1,FMLMessage.OpenGui.class);
-        addDiscriminator(2,FMLMessage.EntitySpawnMessage.class);
+        super(FMLMessage.class);
+        addDiscriminator(0, FMLMessage.CompleteHandshake.class, FMLMessage.CompleteHandshake::new);
+        addDiscriminator(1, FMLMessage.OpenGui.class, FMLMessage.OpenGui::new);
+        addDiscriminator(2, FMLMessage.EntitySpawnMessage.class, FMLMessage.EntitySpawnMessage::new);
     }
     @Override
     public void encodeInto(ChannelHandlerContext ctx, FMLMessage msg, ByteBuf target) throws Exception

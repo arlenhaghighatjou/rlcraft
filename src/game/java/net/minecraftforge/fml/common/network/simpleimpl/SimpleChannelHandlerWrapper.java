@@ -37,11 +37,6 @@ public class SimpleChannelHandlerWrapper<REQ extends IMessage, REPLY extends IMe
     private final IMessageHandler<? super REQ, ? extends REPLY> messageHandler;
     private final Side side;
     
-    public SimpleChannelHandlerWrapper(Class<? extends IMessageHandler<? super REQ, ? extends REPLY>> handler, Side side, Class<REQ> requestType)
-    {
-        this(SimpleNetworkWrapper.instantiate(handler), side, requestType);
-    }
-    
     public SimpleChannelHandlerWrapper(IMessageHandler<? super REQ, ? extends REPLY> handler, Side side, Class<REQ> requestType)
     {
         super(requestType);

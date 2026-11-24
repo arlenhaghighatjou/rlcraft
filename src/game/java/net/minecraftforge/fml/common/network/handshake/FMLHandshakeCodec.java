@@ -26,12 +26,13 @@ import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
 public class FMLHandshakeCodec extends FMLIndexedMessageToMessageCodec<FMLHandshakeMessage> {
     public FMLHandshakeCodec()
     {
-        addDiscriminator((byte)0, FMLHandshakeMessage.ServerHello.class);
-        addDiscriminator((byte)1, FMLHandshakeMessage.ClientHello.class);
-        addDiscriminator((byte)2, FMLHandshakeMessage.ModList.class);
-        addDiscriminator((byte)3, FMLHandshakeMessage.RegistryData.class);
-        addDiscriminator((byte)-1, FMLHandshakeMessage.HandshakeAck.class);
-        addDiscriminator((byte)-2, FMLHandshakeMessage.HandshakeReset.class);
+        super(FMLHandshakeMessage.class);
+        addDiscriminator((byte)0, FMLHandshakeMessage.ServerHello.class, FMLHandshakeMessage.ServerHello::new);
+        addDiscriminator((byte)1, FMLHandshakeMessage.ClientHello.class, FMLHandshakeMessage.ClientHello::new);
+        addDiscriminator((byte)2, FMLHandshakeMessage.ModList.class, FMLHandshakeMessage.ModList::new);
+        addDiscriminator((byte)3, FMLHandshakeMessage.RegistryData.class, FMLHandshakeMessage.RegistryData::new);
+        addDiscriminator((byte)-1, FMLHandshakeMessage.HandshakeAck.class, FMLHandshakeMessage.HandshakeAck::new);
+        addDiscriminator((byte)-2, FMLHandshakeMessage.HandshakeReset.class, FMLHandshakeMessage.HandshakeReset::new);
     }
     @Override
     public void encodeInto(ChannelHandlerContext ctx, FMLHandshakeMessage msg, ByteBuf target) throws Exception

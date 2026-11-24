@@ -29,6 +29,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.function.BiPredicate;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -38,7 +39,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.network.FMLOutboundHandler.OutboundTarget;
 import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
@@ -78,8 +78,8 @@ public enum NetworkRegistry
 
     private NetworkRegistry()
     {
-        channels.put(Side.CLIENT, Maps.<String,FMLEmbeddedChannel>newConcurrentMap());
-        channels.put(Side.SERVER, Maps.<String,FMLEmbeddedChannel>newConcurrentMap());
+        channels.put(Side.CLIENT, Maps.<String,FMLEmbeddedChannel>newHashMap());
+        channels.put(Side.SERVER, Maps.<String,FMLEmbeddedChannel>newHashMap());
     }
 
     /**
@@ -287,16 +287,16 @@ public enum NetworkRegistry
         return channels.get(source).containsKey(channelName);
     }
 
-    /**
-     * INTERNAL method for registering a mod as a network capable thing
-     * @param fmlModContainer The fml mod container
-     * @param clazz a class
-     * @param remoteVersionRange the acceptable remote range
-     * @param asmHarvestedData internal data
-     */
-    public void register(ModContainer fmlModContainer, Class<?> clazz, @Nullable String remoteVersionRange, ASMDataTable asmHarvestedData)
+    public void register(ModContainer fmlModContainer, @Nullable String remoteVersionRange)
     {
-        NetworkModHolder networkModHolder = new NetworkModHolder(fmlModContainer, clazz, remoteVersionRange, asmHarvestedData);
+        NetworkModHolder networkModHolder = new NetworkModHolder(fmlModContainer, remoteVersionRange);
+        registry.put(fmlModContainer, networkModHolder);
+        networkModHolder.testVanillaAcceptance();
+    }
+
+    public void register(ModContainer fmlModContainer, BiPredicate<Map<String,String>, Side> checkHandler)
+    {
+        NetworkModHolder networkModHolder = new NetworkModHolder(fmlModContainer, checkHandler);
         registry.put(fmlModContainer, networkModHolder);
         networkModHolder.testVanillaAcceptance();
     }

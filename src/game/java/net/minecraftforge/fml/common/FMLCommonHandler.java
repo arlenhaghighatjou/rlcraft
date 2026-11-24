@@ -48,7 +48,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.INetHandler;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.server.SPacketDisconnect;
 import net.minecraft.server.MinecraftServer;
@@ -550,7 +550,7 @@ public class FMLCommonHandler
     {
     }
 
-    public NetworkManager getClientToServerNetworkManager()
+    public INetworkManager getClientToServerNetworkManager()
     {
         return sidedDelegate.getClientToServerNetworkManager();
     }
@@ -605,7 +605,7 @@ public class FMLCommonHandler
         return sidedDelegate.getClientPlayHandler();
     }
 
-    public void fireNetRegistrationEvent(NetworkManager manager, Set<String> channelSet, String channel, Side side)
+    public void fireNetRegistrationEvent(INetworkManager manager, Set<String> channelSet, String channel, Side side)
     {
         sidedDelegate.fireNetRegistrationEvent(bus(), manager, channelSet, channel, side);
     }
@@ -615,7 +615,7 @@ public class FMLCommonHandler
         return sidedDelegate.shouldAllowPlayerLogins();
     }
 
-    public void fireServerConnectionEvent(NetworkManager manager)
+    public void fireServerConnectionEvent(INetworkManager manager)
     {
         bus().post(new FMLNetworkEvent.ServerConnectionFromClientEvent(manager));
     }
@@ -628,7 +628,7 @@ public class FMLCommonHandler
      * @param manager Network connection
      * @return True to allow connection, otherwise False.
      */
-    public boolean handleServerHandshake(C00Handshake packet, NetworkManager manager)
+    public boolean handleServerHandshake(C00Handshake packet, INetworkManager manager)
     {
         if (!shouldAllowPlayerLogins())
         {

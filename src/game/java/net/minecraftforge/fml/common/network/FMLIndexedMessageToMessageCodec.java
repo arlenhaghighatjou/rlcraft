@@ -28,6 +28,7 @@ import com.arlenh7.eaglercraft.netty.AttributeKey;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.function.Supplier;
 
 import it.unimi.dsi.fastutil.bytes.Byte2ObjectMap;
 import it.unimi.dsi.fastutil.bytes.Byte2ObjectOpenHashMap;
@@ -41,7 +42,7 @@ import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 @Sharable
 public abstract class FMLIndexedMessageToMessageCodec<A> extends MessageToMessageCodec<FMLProxyPacket, A>
 {
-    private final Byte2ObjectMap<Class<? extends A>> discriminators = new Byte2ObjectOpenHashMap<>();
+    private final Byte2ObjectMap<Supplier<? extends A>> discriminators = new Byte2ObjectOpenHashMap<>();
     private final Object2ByteMap<Class<? extends A>> types = new Object2ByteOpenHashMap<>();
 
     /**
@@ -50,16 +51,19 @@ public abstract class FMLIndexedMessageToMessageCodec<A> extends MessageToMessag
 
     public static final AttributeKey<ThreadLocal<WeakReference<FMLProxyPacket>>> INBOUNDPACKETTRACKER = AttributeKey.valueOf("fml:inboundpacket");
 
+    protected FMLIndexedMessageToMessageCodec(Class<? super A> messageType)
+    {
+        super(FMLProxyPacket.class, messageType);
+    }
+
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception
     {
-        super.handlerAdded(ctx);
         ctx.channel().attr(INBOUNDPACKETTRACKER).set(new ThreadLocal<WeakReference<FMLProxyPacket>>());
     }
-
-    public FMLIndexedMessageToMessageCodec<A> addDiscriminator(int discriminator, Class<? extends A> type)
+    public FMLIndexedMessageToMessageCodec<A> addDiscriminator(int discriminator, Class<? extends A> type, Supplier<? extends A> factory)
     {
-        discriminators.put((byte)discriminator, type);
+        discriminators.put((byte)discriminator, factory);
         types.put(type, (byte)discriminator);
         return this;
     }
@@ -101,16 +105,15 @@ public abstract class FMLIndexedMessageToMessageCodec<A> extends MessageToMessag
             FMLLog.log.error("The FMLIndexedCodec has received an empty buffer on channel {}, likely a result of a LAN server issue. Pipeline parts : {}", ctx.channel().attr(NetworkRegistry.FML_CHANNEL), ctx.pipeline().toString());
         }
         byte discriminator = payload.readByte();
-        Class<? extends A> clazz = discriminators.get(discriminator);
-        if(clazz == null)
+        Supplier<? extends A> factory = discriminators.get(discriminator);
+        if(factory == null)
         {
             throw new NullPointerException("Undefined message for discriminator " + discriminator + " in channel " + msg.channel());
         }
-        A newMsg = clazz.newInstance();
+        A newMsg = factory.get();
         ctx.channel().attr(INBOUNDPACKETTRACKER).get().set(new WeakReference<FMLProxyPacket>(msg));
         decodeInto(ctx, payload.slice(), newMsg);
         out.add(newMsg);
-        payload.release();
     }
 
     /**

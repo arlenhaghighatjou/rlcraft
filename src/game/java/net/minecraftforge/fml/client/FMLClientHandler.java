@@ -67,7 +67,7 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.NetHandlerPlayServer;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.ServerStatusResponse;
 import net.minecraft.network.handshake.INetHandlerHandshakeServer;
 import net.minecraft.network.login.INetHandlerLoginClient;
@@ -679,14 +679,14 @@ public class FMLClientHandler implements IFMLSidedHandler
         return this.currentPlayClient == null ? null : this.currentPlayClient.get();
     }
     @Override
-    public NetworkManager getClientToServerNetworkManager()
+    public INetworkManager getClientToServerNetworkManager()
     {
         return this.client.getConnection()!=null ? this.client.getConnection().getNetworkManager() : null;
     }
 
     public void handleClientWorldClosing(WorldClient world)
     {
-        NetworkManager client = getClientToServerNetworkManager();
+        INetworkManager client = getClientToServerNetworkManager();
         // ONLY revert a non-local connection
         if (client != null && !client.isLocalChannel())
         {
@@ -894,7 +894,7 @@ public class FMLClientHandler implements IFMLSidedHandler
     }
 
     @Override
-    public void fireNetRegistrationEvent(EventBus bus, NetworkManager manager, Set<String> channelSet, String channel, Side side)
+    public void fireNetRegistrationEvent(EventBus bus, INetworkManager manager, Set<String> channelSet, String channel, Side side)
     {
         if (side == Side.CLIENT)
         {

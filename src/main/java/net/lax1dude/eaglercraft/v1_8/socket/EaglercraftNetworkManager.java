@@ -17,6 +17,8 @@
 package net.lax1dude.eaglercraft.v1_8.socket;
 
 import java.io.IOException;
+import com.arlenh7.eaglercraft.network.INetworkManager;
+import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher;
 
 import net.lax1dude.eaglercraft.v1_8.internal.EnumEaglerConnectionState;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
@@ -30,7 +32,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.text.ITextComponent;
 
-public abstract class EaglercraftNetworkManager {
+public abstract class EaglercraftNetworkManager implements INetworkManager {
 	
 	protected final String address;
 	protected INetHandler nethandler = null;
@@ -43,6 +45,7 @@ public abstract class EaglercraftNetworkManager {
 	protected InjectedMessageController injectedController = null;
 
 	protected ServerCapabilities serverCapabilities = null;
+	protected NetworkDispatcher dispatcher = null;
 	
 	public static final Logger logger = LogManager.getLogger("NetworkManager");
 
@@ -100,6 +103,22 @@ public abstract class EaglercraftNetworkManager {
 	public void setNetHandler(INetHandler nethandler) {
 		this.nethandler = nethandler;
 	}
+
+	public INetHandler getNetHandler() {
+		return nethandler;
+	}
+
+	public NetworkDispatcher getDispatcher() {
+		return dispatcher;
+	}
+
+	public void setDispatcher(NetworkDispatcher dispatcher) {
+		this.dispatcher = dispatcher;
+	}
+
+	public boolean hasFMLMarker() {
+		return false;
+	}
 	
 	public boolean isLocalChannel() {
 		return false;
@@ -124,6 +143,9 @@ public abstract class EaglercraftNetworkManager {
 	protected void doClientDisconnect(ITextComponent msg) {
 		if(!clientDisconnected) {
 			clientDisconnected = true;
+			if(dispatcher != null) {
+				dispatcher.onClose();
+			}
 			if(nethandler != null) {
 				this.nethandler.onDisconnect(msg);
 			}

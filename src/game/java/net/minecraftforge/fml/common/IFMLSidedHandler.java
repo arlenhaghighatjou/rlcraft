@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.minecraft.network.INetHandler;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.IThreadListener;
 import net.minecraftforge.common.util.CompoundDataFixer;
@@ -61,11 +61,11 @@ public interface IFMLSidedHandler
 
     void serverStopped();
 
-    NetworkManager getClientToServerNetworkManager();
+    INetworkManager getClientToServerNetworkManager();
 
     INetHandler getClientPlayHandler();
 
-    void fireNetRegistrationEvent(EventBus bus, NetworkManager manager, Set<String> channelSet, String channel, Side side);
+    void fireNetRegistrationEvent(EventBus bus, INetworkManager manager, Set<String> channelSet, String channel, Side side);
 
     boolean shouldAllowPlayerLogins();
 

@@ -28,6 +28,11 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import net.minecraftforge.fml.common.FMLLog;
 
 public class DimensionMessageHandler extends SimpleChannelInboundHandler<ForgeMessage.DimensionRegisterMessage>{
+    public DimensionMessageHandler()
+    {
+        super(ForgeMessage.DimensionRegisterMessage.class);
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, DimensionRegisterMessage msg) throws Exception
     {

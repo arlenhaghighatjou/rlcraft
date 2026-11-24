@@ -47,7 +47,8 @@ public abstract class FMLHandshakeMessage {
     public static FMLProxyPacket makeCustomChannelRegistration(Set<String> channels)
     {
         String salutation = Joiner.on('\0').join(Iterables.concat(Arrays.asList("FML|HS","FML", "FML|MP"),channels));
-        FMLProxyPacket proxy = new FMLProxyPacket(new PacketBuffer(Unpooled.wrappedBuffer(salutation.getBytes(StandardCharsets.UTF_8))), "REGISTER");
+        byte[] data = salutation.getBytes(StandardCharsets.UTF_8);
+        FMLProxyPacket proxy = new FMLProxyPacket(new PacketBuffer(Unpooled.buffer(data, data.length).writerIndex(data.length)), "REGISTER");
         return proxy;
     }
     public static class ServerHello extends FMLHandshakeMessage {

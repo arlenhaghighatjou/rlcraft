@@ -8,6 +8,9 @@ import java.lang.annotation.Target;
 
 public interface ChannelHandler {
 
+	default void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+	}
+
 	default void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		ctx.fireExceptionCaught(cause);
 	}

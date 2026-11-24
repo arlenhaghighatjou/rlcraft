@@ -51,6 +51,22 @@ public final class ChannelHandlerContext {
 		return this;
 	}
 
+	public ChannelHandlerContext fireChannelActive() {
+		ChannelHandlerContext ctx = next;
+		while(ctx != null) {
+			if(ctx.handler instanceof ChannelInboundHandler) {
+				try {
+					((ChannelInboundHandler) ctx.handler).channelActive(ctx);
+				}catch(Throwable t) {
+					ctx.invokeExceptionCaught(t);
+				}
+				return this;
+			}
+			ctx = ctx.next;
+		}
+		return this;
+	}
+
 	public ChannelHandlerContext fireUserEventTriggered(Object evt) {
 		ChannelHandlerContext ctx = next;
 		while(ctx != null) {

@@ -19,15 +19,12 @@
 
 package net.minecraftforge.fml.common.network.internal;
 
-import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiPredicate;
 
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
-import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
-import net.minecraftforge.fml.common.network.NetworkCheckHandler;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationException;
 import net.minecraftforge.fml.common.versioning.VersionRange;
@@ -36,8 +33,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.SetMultimap;
 
 import javax.annotation.Nullable;
 
@@ -151,8 +146,7 @@ public class NetworkModHolder
         {
             try
             {
-                Boolean result = (Boolean) checkHandler.invoke(container.getMod(), remoteVersions, side);
-                if (result != null && result)
+                if (checkHandler.test(remoteVersions, side))
                 {
                     return null;
                 }
@@ -160,15 +154,15 @@ public class NetworkModHolder
             }
             catch (Exception e)
             {
-                FMLLog.log.error("Error occurred invoking NetworkCheckHandler {} at {}", checkHandler.getName(), container, e);
-                return String.format("Error occurred invoking NetworkCheckHandler %s at %s", checkHandler.getName(), container);
+                FMLLog.log.error("Error occurred invoking NetworkCheckHandler at {}", container, e);
+                return String.format("Error occurred invoking NetworkCheckHandler at %s", container);
             }
         }
 
         @Override
         public String toString()
         {
-            return String.format("Invoking method %s", checkHandler.getName());
+            return "Invoking custom network check handler";
         }
     }
     private static int assignedIds = 1;
@@ -177,7 +171,7 @@ public class NetworkModHolder
     private int networkId;
 
     private ModContainer container;
-    private Method checkHandler;
+    private BiPredicate<Map<String,String>, Side> checkHandler;
 
     private VersionRange acceptableRange;
 
@@ -198,67 +192,18 @@ public class NetworkModHolder
         this.checker = Preconditions.checkNotNull(checker);
         FMLLog.log.debug("The mod {} is using a custom checker {}", container.getModId(), checker.getClass().getName());
     }
-    public NetworkModHolder(ModContainer container, Class<?> modClass, @Nullable String acceptableVersionRange, ASMDataTable table)
+    public NetworkModHolder(ModContainer container, BiPredicate<Map<String,String>, Side> checkHandler)
     {
         this(container);
-        SetMultimap<String, ASMData> annotationTable = table.getAnnotationsFor(container);
-        Set<ASMData> versionCheckHandlers;
-        if (annotationTable != null)
-        {
-            versionCheckHandlers = annotationTable.get(NetworkCheckHandler.class.getName());
-        }
-        else
-        {
-            versionCheckHandlers = ImmutableSet.of();
-        }
-        String networkCheckHandlerMethod = null;
-        for (ASMData vch : versionCheckHandlers)
-        {
-            if (vch.getClassName().equals(modClass.getName()))
-            {
-                networkCheckHandlerMethod = vch.getObjectName();
-                networkCheckHandlerMethod = networkCheckHandlerMethod.substring(0,networkCheckHandlerMethod.indexOf('('));
-                break;
-            }
-        }
-        if (versionCheckHandlers.isEmpty())
-        {
-            for (Method m : modClass.getMethods())
-            {
-                if (m.isAnnotationPresent(NetworkCheckHandler.class))
-                {
-                    if (m.getParameterTypes().length == 2 && m.getParameterTypes()[0].equals(Map.class) && m.getParameterTypes()[1].equals(Side.class))
-                    {
-                        this.checkHandler = m;
-                        break;
-                    }
-                    else
-                    {
-                        FMLLog.log.fatal("Found unexpected method signature for annotation NetworkCheckHandler");
-                    }
-                }
-            }
-        }
-        if (networkCheckHandlerMethod != null)
-        {
-            try
-            {
-                Method checkHandlerMethod = modClass.getDeclaredMethod(networkCheckHandlerMethod, Map.class, Side.class);
-                if (checkHandlerMethod.isAnnotationPresent(NetworkCheckHandler.class))
-                {
-                    this.checkHandler = checkHandlerMethod;
-                }
-            }
-            catch (Exception e)
-            {
-                FMLLog.log.warn("The declared version check handler method {} on network mod id {} is not accessible", networkCheckHandlerMethod, container.getModId(), e);
-            }
-        }
-        if (this.checkHandler != null)
-        {
-            this.checker = new MethodNetworkChecker();
-        }
-        else if (!Strings.isNullOrEmpty(acceptableVersionRange) && acceptableVersionRange.equals("*"))
+        this.checkHandler = checkHandler;
+        this.checker = new MethodNetworkChecker();
+        verifySelf();
+    }
+
+    public NetworkModHolder(ModContainer container, @Nullable String acceptableVersionRange)
+    {
+        this(container);
+        if (!Strings.isNullOrEmpty(acceptableVersionRange) && acceptableVersionRange.equals("*"))
         {
             this.checker = new IgnoredChecker();
         }
@@ -274,6 +219,11 @@ public class NetworkModHolder
             }
             this.checker = new DefaultNetworkChecker();
         }
+        verifySelf();
+    }
+
+    private void verifySelf()
+    {
         FMLLog.log.trace("Mod {} is using network checker : {}", container.getModId(), this.checker);
         FMLLog.log.trace("Testing mod {} to verify it accepts its own version in a remote connection", container.getModId());
         boolean acceptsSelf = acceptVersion(container.getVersion());
@@ -335,5 +285,4 @@ public class NetworkModHolder
     public boolean acceptsVanilla(Side from) {
         return from == Side.CLIENT ? acceptsVanillaClient : acceptsVanillaServer;
     }
-
 }

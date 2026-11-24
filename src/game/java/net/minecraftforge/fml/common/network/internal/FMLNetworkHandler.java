@@ -33,7 +33,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.world.World;
@@ -67,13 +67,13 @@ public class FMLNetworkHandler
     public static final int LOGIN_TIMEOUT = Integer.parseInt(System.getProperty("fml.loginTimeout","600"));
     private static EnumMap<Side, FMLEmbeddedChannel> channelPair;
 
-    public static void fmlServerHandshake(PlayerList scm, NetworkManager manager, EntityPlayerMP player)
+    public static void fmlServerHandshake(PlayerList scm, INetworkManager manager, EntityPlayerMP player)
     {
         NetworkDispatcher dispatcher = NetworkDispatcher.allocAndSet(manager, scm);
         dispatcher.serverToClientHandshake(player);
     }
 
-    public static void fmlClientHandshake(NetworkManager networkManager)
+    public static void fmlClientHandshake(INetworkManager networkManager)
     {
         NetworkDispatcher dispatcher = NetworkDispatcher.allocAndSet(networkManager);
         dispatcher.clientToServerHandshake();

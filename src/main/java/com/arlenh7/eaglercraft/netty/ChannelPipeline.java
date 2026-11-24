@@ -26,6 +26,11 @@ public final class ChannelPipeline implements Iterable<Map.Entry<String, Channel
 		ctx.next = base.next;
 		base.next.prev = ctx;
 		base.next = ctx;
+		try {
+			handler.handlerAdded(ctx);
+		}catch(Throwable t) {
+			ctx.invokeExceptionCaught(t);
+		}
 	}
 
 	private ChannelHandlerContext find(String name) {
@@ -85,6 +90,11 @@ public final class ChannelPipeline implements Iterable<Map.Entry<String, Channel
 
 	public ChannelPipeline fireChannelRead(Object msg) {
 		head.fireChannelRead(msg);
+		return this;
+	}
+
+	public ChannelPipeline fireChannelActive() {
+		head.fireChannelActive();
 		return this;
 	}
 

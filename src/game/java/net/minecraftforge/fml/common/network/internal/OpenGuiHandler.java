@@ -30,6 +30,11 @@ import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
 import com.arlenh7.eaglercraft.netty.SimpleChannelInboundHandler;
 
 public class OpenGuiHandler extends SimpleChannelInboundHandler<FMLMessage.OpenGui> {
+    public OpenGuiHandler()
+    {
+        super(FMLMessage.OpenGui.class);
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, final OpenGui msg) throws Exception
     {

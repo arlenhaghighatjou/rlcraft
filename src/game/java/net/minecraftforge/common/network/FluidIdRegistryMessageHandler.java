@@ -28,6 +28,11 @@ import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
 import com.arlenh7.eaglercraft.netty.SimpleChannelInboundHandler;
 
 public class FluidIdRegistryMessageHandler extends SimpleChannelInboundHandler<ForgeMessage.FluidIdMapMessage> {
+    public FluidIdRegistryMessageHandler()
+    {
+        super(ForgeMessage.FluidIdMapMessage.class);
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ForgeMessage.FluidIdMapMessage msg) throws Exception
     {

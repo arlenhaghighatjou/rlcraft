@@ -42,6 +42,11 @@ import net.minecraftforge.fml.common.registry.IThrowableEntity;
 import net.minecraftforge.fml.common.registry.EntityRegistry.EntityRegistration;
 
 public class EntitySpawnHandler extends SimpleChannelInboundHandler<FMLMessage.EntityMessage> {
+    public EntitySpawnHandler()
+    {
+        super(FMLMessage.EntityMessage.class);
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, final EntityMessage msg) throws Exception
     {
@@ -62,7 +67,6 @@ public class EntitySpawnHandler extends SimpleChannelInboundHandler<FMLMessage.E
         {
             FMLMessage.EntitySpawnMessage spawnMsg = (FMLMessage.EntitySpawnMessage) msg;
             spawnEntity(spawnMsg);
-            spawnMsg.dataStream.release();
         }
     }
 

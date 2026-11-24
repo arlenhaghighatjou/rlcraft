@@ -24,7 +24,7 @@ import java.util.Set;
 import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.network.INetHandler;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.network.play.INetHandlerPlayServer;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -33,10 +33,10 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class FMLNetworkEvent<T extends INetHandler> extends Event {
     private final T handler;
-    private final NetworkManager manager;
+    private final INetworkManager manager;
     private final Class<T> type;
 
-    FMLNetworkEvent(T thing, Class<T> type, NetworkManager manager)
+    FMLNetworkEvent(T thing, Class<T> type, INetworkManager manager)
     {
         this.handler = thing;
         this.type = type;
@@ -53,7 +53,7 @@ public class FMLNetworkEvent<T extends INetHandler> extends Event {
         return handler;
     }
 
-    public NetworkManager getManager()
+    public INetworkManager getManager()
     {
         return manager;
     }
@@ -69,7 +69,7 @@ public class FMLNetworkEvent<T extends INetHandler> extends Event {
     public static class ClientConnectedToServerEvent extends FMLNetworkEvent<INetHandlerPlayClient> {
         private final boolean isLocal;
         private final String connectionType;
-        public ClientConnectedToServerEvent(NetworkManager manager, String connectionType)
+        public ClientConnectedToServerEvent(INetworkManager manager, String connectionType)
         {
             super((INetHandlerPlayClient) manager.getNetHandler(), INetHandlerPlayClient.class, manager);
             this.isLocal = manager.isLocalChannel();
@@ -95,7 +95,7 @@ public class FMLNetworkEvent<T extends INetHandler> extends Event {
      */
     public static class ServerConnectionFromClientEvent extends FMLNetworkEvent<INetHandlerPlayServer> {
         private final boolean isLocal;
-        public ServerConnectionFromClientEvent(NetworkManager manager)
+        public ServerConnectionFromClientEvent(INetworkManager manager)
         {
             super((INetHandlerPlayServer) manager.getNetHandler(), INetHandlerPlayServer.class, manager);
             this.isLocal = manager.isLocalChannel();
@@ -113,7 +113,7 @@ public class FMLNetworkEvent<T extends INetHandler> extends Event {
      *
      */
     public static class ServerDisconnectionFromClientEvent extends FMLNetworkEvent<INetHandlerPlayServer> {
-        public ServerDisconnectionFromClientEvent(NetworkManager manager)
+        public ServerDisconnectionFromClientEvent(INetworkManager manager)
         {
             super((INetHandlerPlayServer) manager.getNetHandler(), INetHandlerPlayServer.class, manager);
         }
@@ -125,7 +125,7 @@ public class FMLNetworkEvent<T extends INetHandler> extends Event {
      *
      */
     public static class ClientDisconnectionFromServerEvent extends FMLNetworkEvent<INetHandlerPlayClient> {
-        public ClientDisconnectionFromServerEvent(NetworkManager manager)
+        public ClientDisconnectionFromServerEvent(INetworkManager manager)
         {
             super((INetHandlerPlayClient) manager.getNetHandler(), INetHandlerPlayClient.class, manager);
         }
@@ -142,7 +142,7 @@ public class FMLNetworkEvent<T extends INetHandler> extends Event {
         private final ImmutableSet<String> registrations;
         private final String operation;
         private final Side side;
-        public CustomPacketRegistrationEvent(NetworkManager manager, Set<String> registrations, String operation, Side side, Class<S> type)
+        public CustomPacketRegistrationEvent(INetworkManager manager, Set<String> registrations, String operation, Side side, Class<S> type)
         {
             super(type.cast(manager.getNetHandler()), type, manager);
             this.registrations = ImmutableSet.copyOf(registrations);
@@ -170,7 +170,7 @@ public class FMLNetworkEvent<T extends INetHandler> extends Event {
         private final FMLProxyPacket packet;
 
         private FMLProxyPacket reply;
-        CustomPacketEvent(S thing, Class<S> type, NetworkManager manager, FMLProxyPacket packet)
+        CustomPacketEvent(S thing, Class<S> type, INetworkManager manager, FMLProxyPacket packet)
         {
             super(thing, type, manager);
             this.packet = packet;
@@ -206,7 +206,7 @@ public class FMLNetworkEvent<T extends INetHandler> extends Event {
      *
      */
     public static class ClientCustomPacketEvent extends CustomPacketEvent<INetHandlerPlayClient> {
-        public ClientCustomPacketEvent(NetworkManager manager, FMLProxyPacket packet)
+        public ClientCustomPacketEvent(INetworkManager manager, FMLProxyPacket packet)
         {
             super((INetHandlerPlayClient) manager.getNetHandler(), INetHandlerPlayClient.class, manager, packet);
         }
@@ -224,7 +224,7 @@ public class FMLNetworkEvent<T extends INetHandler> extends Event {
      *
      */
     public static class ServerCustomPacketEvent extends CustomPacketEvent<INetHandlerPlayServer> {
-        public ServerCustomPacketEvent(NetworkManager manager, FMLProxyPacket packet)
+        public ServerCustomPacketEvent(INetworkManager manager, FMLProxyPacket packet)
         {
             super((INetHandlerPlayServer) manager.getNetHandler(), INetHandlerPlayServer.class, manager, packet);
         }

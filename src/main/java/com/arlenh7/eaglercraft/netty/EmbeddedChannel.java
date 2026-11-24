@@ -21,6 +21,7 @@ public class EmbeddedChannel {
 	public EmbeddedChannel(ChannelHandler... handlers) {
 		pipeline = new ChannelPipeline(this);
 		pipeline.addLast(handlers);
+		pipeline.fireChannelActive();
 	}
 
 	public ChannelPipeline pipeline() {

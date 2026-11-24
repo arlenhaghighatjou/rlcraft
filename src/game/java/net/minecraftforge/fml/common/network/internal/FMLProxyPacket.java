@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.List;
 
 import net.minecraft.network.INetHandler;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
@@ -40,7 +40,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher;
 import net.minecraftforge.fml.relauncher.Side;
 
-import com.google.common.collect.ConcurrentHashMultiset;
+import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multiset.Entry;
@@ -54,7 +54,7 @@ public class FMLProxyPacket implements Packet<INetHandler> {
     private final PacketBuffer payload;
     private INetHandler netHandler;
     private NetworkDispatcher dispatcher;
-    private static Multiset<String> badPackets = ConcurrentHashMultiset.create();
+    private static Multiset<String> badPackets = HashMultiset.create();
     private static int packetCountWarning = Integer.parseInt(System.getProperty("fml.badPacketCounter", "100"));
 
     public FMLProxyPacket(SPacketCustomPayload original)
@@ -175,7 +175,7 @@ public class FMLProxyPacket implements Packet<INetHandler> {
                 tmp[0] = (byte)(x & 0xFF);
                 System.arraycopy(data, offset, tmp, 1, tmp.length - 1);
                 offset += tmp.length - 1;
-                ret.add(new SPacketCustomPayload("FML|MP", new PacketBuffer(Unpooled.wrappedBuffer(tmp))));
+                ret.add(new SPacketCustomPayload("FML|MP", new PacketBuffer(Unpooled.buffer(tmp, tmp.length).writerIndex(tmp.length))));
             }
         }
         return ret;
@@ -192,7 +192,7 @@ public class FMLProxyPacket implements Packet<INetHandler> {
     }
 
     @Nullable
-    public NetworkManager getOrigin()
+    public INetworkManager getOrigin()
     {
         return this.dispatcher != null ? this.dispatcher.manager : null;
     }

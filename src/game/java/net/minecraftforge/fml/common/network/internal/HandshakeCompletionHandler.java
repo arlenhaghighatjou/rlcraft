@@ -29,6 +29,11 @@ import com.arlenh7.eaglercraft.netty.ChannelHandler.Sharable;
 
 @Sharable
 public class HandshakeCompletionHandler extends SimpleChannelInboundHandler<FMLMessage.CompleteHandshake> {
+    public HandshakeCompletionHandler()
+    {
+        super(FMLMessage.CompleteHandshake.class);
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CompleteHandshake msg) throws Exception
     {

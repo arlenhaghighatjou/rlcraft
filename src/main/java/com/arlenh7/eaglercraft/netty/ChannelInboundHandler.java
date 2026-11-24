@@ -6,4 +6,8 @@ public interface ChannelInboundHandler extends ChannelHandler {
 
 	void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception;
 
+	default void channelActive(ChannelHandlerContext ctx) throws Exception {
+		ctx.fireChannelActive();
+	}
+
 }

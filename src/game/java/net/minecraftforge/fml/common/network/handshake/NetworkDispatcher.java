@@ -20,29 +20,20 @@
 package net.minecraftforge.fml.common.network.handshake;
 
 import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
-import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
-import com.arlenh7.eaglercraft.netty.ChannelOutboundHandler;
-import com.arlenh7.eaglercraft.netty.ChannelPromise;
-import com.arlenh7.eaglercraft.netty.SimpleChannelInboundHandler;
+import net.lax1dude.eaglercraft.v1_8.sp.server.socket.IntegratedServerPlayerNetworkManager;
 import com.arlenh7.eaglercraft.netty.EmbeddedChannel;
 import com.arlenh7.eaglercraft.netty.AttributeKey;
-import io.netty.util.concurrent.Future;
-import io.netty.util.concurrent.GenericFutureListener;
-
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import java.io.IOException;
-import java.net.SocketAddress;
-import java.nio.channels.ClosedChannelException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.NetHandlerPlayServer;
-import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
@@ -59,18 +50,14 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkException;
-import net.minecraftforge.fml.common.network.FMLOutboundHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.PacketLoggingHandler;
 import net.minecraftforge.fml.common.network.internal.FMLMessage;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.ForgeRegistry;
 
-// TODO build test suites to validate the behaviour of this stuff and make it less annoyingly magical
-public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> implements ChannelOutboundHandler {
-    private static boolean DEBUG_HANDSHAKE = Boolean.parseBoolean(System.getProperty("fml.debugNetworkHandshake", "false"));
+public class NetworkDispatcher {
     private static enum ConnectionState {
         OPENING, AWAITING_HANDSHAKE, HANDSHAKING, HANDSHAKECOMPLETE, FINALIZING, CONNECTED
     }
@@ -79,29 +66,29 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
         MODDED, BUKKIT, VANILLA
     }
 
-    public static NetworkDispatcher get(NetworkManager manager)
+    public static NetworkDispatcher get(INetworkManager manager)
     {
-        return manager.channel().attr(FML_DISPATCHER).get();
+        return manager.getDispatcher();
     }
 
-    public static NetworkDispatcher allocAndSet(NetworkManager manager)
+    public static NetworkDispatcher allocAndSet(INetworkManager manager)
     {
         NetworkDispatcher net = new NetworkDispatcher(manager);
-        manager.channel().attr(FML_DISPATCHER).getAndSet(net);
+        manager.setDispatcher(net);
         return net;
     }
 
-    public static NetworkDispatcher allocAndSet(NetworkManager manager, PlayerList scm)
+    public static NetworkDispatcher allocAndSet(INetworkManager manager, PlayerList scm)
     {
         NetworkDispatcher net = new NetworkDispatcher(manager, scm);
-        manager.channel().attr(FML_DISPATCHER).getAndSet(net);
+        manager.setDispatcher(net);
         return net;
     }
 
     public static final AttributeKey<NetworkDispatcher> FML_DISPATCHER = AttributeKey.valueOf("fml:dispatcher");
     public static final AttributeKey<Boolean> IS_LOCAL = AttributeKey.valueOf("fml:isLocal");
     public static final AttributeKey<Map<ResourceLocation, ForgeRegistry.Snapshot>> FML_GAMEDATA_SNAPSHOT = AttributeKey.valueOf("fml:gameDataSnapshot");
-    public final NetworkManager manager;
+    public final INetworkManager manager;
     private final PlayerList scm;
     private EntityPlayerMP player;
     private ConnectionState state;
@@ -113,9 +100,8 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
     private Map<String,String> modList = Collections.emptyMap();
     private int overrideLoginDim;
 
-    public NetworkDispatcher(NetworkManager manager)
+    public NetworkDispatcher(INetworkManager manager)
     {
-        super(false);
         this.manager = manager;
         this.scm = null;
         this.side = Side.CLIENT;
@@ -124,13 +110,10 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
         this.handshakeChannel.attr(NetworkRegistry.CHANNEL_SOURCE).set(Side.SERVER);
         this.handshakeChannel.attr(NetworkRegistry.FML_CHANNEL).set("FML|HS");
         this.handshakeChannel.attr(IS_LOCAL).set(manager.isLocalChannel());
-        if (DEBUG_HANDSHAKE)
-            PacketLoggingHandler.register(manager);
     }
 
-    public NetworkDispatcher(NetworkManager manager, PlayerList scm)
+    public NetworkDispatcher(INetworkManager manager, PlayerList scm)
     {
-        super(false);
         this.manager = manager;
         this.scm = scm;
         this.side = Side.SERVER;
@@ -139,18 +122,13 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
         this.handshakeChannel.attr(NetworkRegistry.CHANNEL_SOURCE).set(Side.CLIENT);
         this.handshakeChannel.attr(NetworkRegistry.FML_CHANNEL).set("FML|HS");
         this.handshakeChannel.attr(IS_LOCAL).set(manager.isLocalChannel());
-        if (DEBUG_HANDSHAKE)
-            PacketLoggingHandler.register(manager);
     }
 
     public void serverToClientHandshake(EntityPlayerMP player)
     {
         this.player = player;
-        Boolean fml = this.manager.channel().attr(NetworkRegistry.FML_MARKER).get();
-        if (fml != null && fml)
+        if (manager.hasFMLMarker())
         {
-            //FML on client, send server hello
-            //TODO: Make this cleaner as it uses netty magic 0.o
             insertIntoChannel();
         }
         else
@@ -169,19 +147,13 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
 
     private void insertIntoChannel()
     {
-        this.manager.channel().config().setAutoRead(false);
-        // Insert ourselves into the pipeline
-        this.manager.channel().pipeline().addBefore("packet_handler", "fml:packet_handler", this);
         if (this.state != null) {
             FMLLog.log.info("Opening channel which already seems to have a state set. This is a vanilla connection. Handshake handler will stop now");
-            this.manager.channel().config().setAutoRead(true);
             return;
         }
         FMLLog.log.trace("Handshake channel activating");
         this.state = ConnectionState.OPENING;
-        // send ourselves as a user event, to kick the pipeline active
         this.handshakeChannel.pipeline().fireUserEventTriggered(this);
-        this.manager.channel().config().setAutoRead(true);
     }
 
     public void clientToServerHandshake()
@@ -191,11 +163,8 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
 
     int serverInitiateHandshake()
     {
-        // Send mod salutation to the client
-        // This will be ignored by vanilla clients
         this.state = ConnectionState.AWAITING_HANDSHAKE;
-        // Need to start the handler here, so we can send custompayload packets
-        serverHandler = new NetHandlerPlayServer(scm.getServerInstance(), manager, player)
+        serverHandler = new NetHandlerPlayServer(scm.getServerInstance(), (IntegratedServerPlayerNetworkManager)manager, player)
         {
             @Override
             public void update()
@@ -204,19 +173,14 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
                 {
                     completeServerSideConnection(ConnectionType.MODDED);
                 }
-                // FORGE: sometimes the netqueue will tick while login is occurring, causing an NPE. We shouldn't tick until the connection is complete
                 if (this.player.connection != this) return;
                 super.update();
             }
         };
         this.netHandler = serverHandler;
-        // NULL the play server here - we restore it further on. If not, there are packets sent before the login
         player.connection = null;
-        // manually for the manager into the PLAY state, so we can send packets later
         this.manager.setConnectionState(EnumConnectionState.PLAY);
 
-        // Return the dimension the player is in, so it can be pre-sent to the client in the ServerHello v2 packet
-        // Requires some hackery to the serverconfigmanager and stuff for this to work
         NBTTagCompound playerNBT = scm.getPlayerNBT(player);
         if (playerNBT!=null)
         {
@@ -232,7 +196,6 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
     void clientListenForServerHandshake()
     {
         manager.setConnectionState(EnumConnectionState.PLAY);
-        //FMLCommonHandler.instance().waitForPlayClient();
         this.netHandler = FMLCommonHandler.instance().getClientPlayHandler();
         this.state = ConnectionState.AWAITING_HANDSHAKE;
     }
@@ -240,44 +203,37 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
     private void completeClientSideConnection(ConnectionType type)
     {
         this.connectionType = type;
-        FMLLog.log.info("[{}] Client side {} connection established", Thread.currentThread().getName(), this.connectionType.name().toLowerCase(Locale.ENGLISH));
+        FMLLog.log.info("Client side {} connection established", this.connectionType.name().toLowerCase(Locale.ENGLISH));
         this.state = ConnectionState.CONNECTED;
         MinecraftForge.EVENT_BUS.post(new FMLNetworkEvent.ClientConnectedToServerEvent(manager, this.connectionType.name()));
     }
 
-    private synchronized void completeServerSideConnection(ConnectionType type)
+    private void completeServerSideConnection(ConnectionType type)
     {
         this.connectionType = type;
-        FMLLog.log.info("[{}] Server side {} connection established", Thread.currentThread().getName(), this.connectionType.name().toLowerCase(Locale.ENGLISH));
+        FMLLog.log.info("Server side {} connection established", this.connectionType.name().toLowerCase(Locale.ENGLISH));
         this.state = ConnectionState.CONNECTED;
-        if (DEBUG_HANDSHAKE)
-            manager.closeChannel(new TextComponentString("Handshake Complete review log file for details."));
-        scm.initializeConnectionToPlayer(manager, player, serverHandler);
+        scm.initializeConnectionToPlayer((IntegratedServerPlayerNetworkManager)manager, player, serverHandler);
     }
 
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, Packet<?> msg) throws Exception
+    public Packet<?> handleInbound(Packet<?> msg)
     {
-        boolean handled = false;
         if (msg instanceof CPacketCustomPayload)
         {
-            handled = handleServerSideCustomPacket((CPacketCustomPayload) msg, ctx);
+            return handleServerSideCustomPacket((CPacketCustomPayload) msg);
         }
         else if (msg instanceof SPacketCustomPayload)
         {
-            handled = handleClientSideCustomPacket((SPacketCustomPayload)msg, ctx);
+            return handleClientSideCustomPacket((SPacketCustomPayload)msg);
         }
         else if (state != ConnectionState.CONNECTED && state != ConnectionState.HANDSHAKECOMPLETE)
         {
-            handled = handleVanilla(msg);
+            handleVanilla(msg);
         }
-        if (!handled)
-        {
-            ctx.fireChannelRead(msg);
-        }
+        return msg;
     }
 
-    private boolean handleVanilla(Packet<?> msg)
+    private void handleVanilla(Packet<?> msg)
     {
         if (state == ConnectionState.AWAITING_HANDSHAKE && msg instanceof SPacketJoinGame)
         {
@@ -287,7 +243,6 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
         {
             FMLLog.log.info("Unexpected packet during modded negotiation - assuming vanilla or keepalives : {}", msg.getClass().getName());
         }
-        return false;
     }
 
     public INetHandler getNetHandler()
@@ -295,97 +250,48 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
         return netHandler;
     }
 
-    /**
-     * The mod list returned by this method is in no way reliable because it is provided by the client
-     *
-     * @return a map that will contain String keys and values listing all mods and their versions
-     */
     public Map<String,String> getModList()
     {
         return Collections.unmodifiableMap(modList);
     }
 
-    @Override
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception
-    {
-        if (evt instanceof ConnectionType && side == Side.SERVER)
-        {
-            FMLLog.log.info("Timeout occurred, assuming a vanilla client");
-            kickVanilla();
-        }
-    }
-
-    private void kickVanilla()
-    {
-        kickWithMessage("This is modded. No modded response received. Bye!");
-    }
-
     private void kickWithMessage(String message)
     {
         FMLLog.log.error("Network Disconnect: {}", message);
-        final TextComponentString TextComponentString = new TextComponentString(message);
-        if (side == Side.CLIENT)
+        final TextComponentString textComponent = new TextComponentString(message);
+        if (side == Side.SERVER)
         {
-            manager.closeChannel(TextComponentString);
+            manager.sendPacket(new SPacketDisconnect(textComponent));
         }
-        else
-        {
-            manager.sendPacket(new SPacketDisconnect(TextComponentString), new GenericFutureListener<Future<? super Void>>()
-            {
-                @Override
-                public void operationComplete(Future<? super Void> result)
-                {
-                    manager.closeChannel(TextComponentString);
-                }
-            }, (GenericFutureListener<? extends Future<? super Void>>[])null);
-        }
-        manager.channel().config().setAutoRead(false);
+        manager.closeChannel(textComponent);
     }
 
     private MultiPartCustomPayload multipart = null;
 
-    private boolean handleClientSideCustomPacket(SPacketCustomPayload msg, ChannelHandlerContext context)
+    private Packet<?> handleClientSideCustomPacket(SPacketCustomPayload msg)
     {
         String channelName = msg.getChannelName();
         if ("FML|MP".equals(channelName))
         {
-            boolean result = handleMultiPartCustomPacket(msg, context);
-            if (result)
-            {
-                msg.getBufferData().release();
-            }
-            return result;
+            return handleMultiPartCustomPacket(msg);
         }
         if ("FML|HS".equals(channelName) || "REGISTER".equals(channelName) || "UNREGISTER".equals(channelName))
         {
             FMLProxyPacket proxy = new FMLProxyPacket(msg);
             proxy.setDispatcher(this);
-            handshakeChannel.writeInbound(proxy);
-            // forward any messages into the regular channel
-            for (Object push : handshakeChannel.inboundMessages())
-            {
-                List<FMLProxyPacket> messageResult = FMLNetworkHandler.forwardHandshake((FMLMessage.CompleteHandshake)push, this, Side.CLIENT);
-                for (FMLProxyPacket result: messageResult)
-                {
-                    result.setTarget(Side.CLIENT);
-                    result.payload().resetReaderIndex();
-                    context.fireChannelRead(result);
-                }
-            }
-            handshakeChannel.inboundMessages().clear();
-            return true;
+            forwardHandshake(proxy, Side.CLIENT);
+            return null;
         }
         else if (NetworkRegistry.INSTANCE.hasChannel(channelName, Side.CLIENT))
         {
             FMLProxyPacket proxy = new FMLProxyPacket(msg);
             proxy.setDispatcher(this);
-            context.fireChannelRead(proxy);
-            return true;
+            return proxy;
         }
-        return false;
+        return msg;
     }
 
-    private boolean handleMultiPartCustomPacket(SPacketCustomPayload msg, ChannelHandlerContext context)
+    private Packet<?> handleMultiPartCustomPacket(SPacketCustomPayload msg)
     {
         try
         {
@@ -402,64 +308,73 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
         {
             this.kickWithMessage(e.getMessage());
             multipart = null;
-            return true;
+            return null;
         }
+
         if (multipart.isComplete())
         {
-            boolean result = handleClientSideCustomPacket(multipart, context);
+            Packet<?> result = handleClientSideCustomPacket(multipart);
             multipart = null;
             return result;
         }
-        else
-        {
-            return true; // Haven't received all so return till we have.
-        }
+        return null;
     }
 
-    private boolean handleServerSideCustomPacket(CPacketCustomPayload msg, ChannelHandlerContext context)
+    private Packet<?> handleServerSideCustomPacket(CPacketCustomPayload msg)
     {
         if (state == ConnectionState.AWAITING_HANDSHAKE)
         {
-            synchronized (this) { // guard from other threads changing the state on us
-                if (state == ConnectionState.AWAITING_HANDSHAKE) {
-                    state = ConnectionState.HANDSHAKING;
-                }
-            }
+            state = ConnectionState.HANDSHAKING;
         }
         String channelName = msg.getChannelName();
         if ("FML|HS".equals(channelName) || "REGISTER".equals(channelName) || "UNREGISTER".equals(channelName))
         {
             FMLProxyPacket proxy = new FMLProxyPacket(msg);
             proxy.setDispatcher(this);
-            handshakeChannel.writeInbound(proxy);
-            for (Object push : handshakeChannel.inboundMessages())
-            {
-                List<FMLProxyPacket> messageResult = FMLNetworkHandler.forwardHandshake((FMLMessage.CompleteHandshake)push, this, Side.SERVER);
-                for (FMLProxyPacket result: messageResult)
-                {
-                    result.setTarget(Side.SERVER);
-                    result.payload().resetReaderIndex();
-                    context.fireChannelRead(result);
-                }
-            }
-            handshakeChannel.inboundMessages().clear();
-            return true;
+            forwardHandshake(proxy, Side.SERVER);
+            return null;
         }
         else if (NetworkRegistry.INSTANCE.hasChannel(channelName, Side.SERVER))
         {
             FMLProxyPacket proxy = new FMLProxyPacket(msg);
             proxy.setDispatcher(this);
-            context.fireChannelRead(proxy);
-            return true;
+            return proxy;
         }
-        return false;
+        return msg;
+    }
+
+    private void forwardHandshake(FMLProxyPacket proxy, Side target)
+    {
+        handshakeChannel.writeInbound(proxy);
+        INetHandler handler = manager.getNetHandler();
+        for (Object push : handshakeChannel.inboundMessages())
+        {
+            List<FMLProxyPacket> messageResult = FMLNetworkHandler.forwardHandshake((FMLMessage.CompleteHandshake)push, this, target);
+            for (int i = 0, l = messageResult.size(); i < l; ++i)
+            {
+                FMLProxyPacket result = messageResult.get(i);
+                result.setTarget(target);
+                result.payload().resetReaderIndex();
+                result.processPacket(handler);
+            }
+        }
+        handshakeChannel.inboundMessages().clear();
     }
 
     public void sendProxy(FMLProxyPacket msg)
     {
-        if (!manager.isChannelOpen())
-            msg = msg.copy();
-        manager.sendPacket(msg);
+        if (side == Side.CLIENT)
+        {
+            manager.sendPacket(msg.toC17Packet());
+        }
+        else
+        {
+            List<Packet<INetHandlerPlayClient>> parts = msg.toS3FPackets();
+            for (int i = 0, l = parts.size(); i < l; ++i)
+            {
+                manager.sendPacket(parts.get(i));
+            }
+        }
     }
 
     public void rejectHandshake(String result)
@@ -467,20 +382,7 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
         kickWithMessage(result);
     }
 
-    @Override
-    public void bind(ChannelHandlerContext ctx, SocketAddress localAddress, ChannelPromise promise) throws Exception
-    {
-        ctx.bind(localAddress, promise);
-    }
-
-    @Override
-    public void connect(ChannelHandlerContext ctx, SocketAddress remoteAddress, SocketAddress localAddress, ChannelPromise promise) throws Exception
-    {
-        ctx.connect(remoteAddress, localAddress, promise);
-    }
-
-    @Override
-    public void disconnect(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception
+    public void onClose()
     {
         if (side == Side.CLIENT)
         {
@@ -490,69 +392,9 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
         {
             MinecraftForge.EVENT_BUS.post(new FMLNetworkEvent.ServerDisconnectionFromClientEvent(manager));
         }
-        cleanAttributes(ctx);
-        ctx.disconnect(promise);
-    }
-
-    @Override
-    public void close(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception
-    {
-        if (side == Side.CLIENT)
-        {
-            MinecraftForge.EVENT_BUS.post(new FMLNetworkEvent.ClientDisconnectionFromServerEvent(manager));
-        }
-        else
-        {
-            MinecraftForge.EVENT_BUS.post(new FMLNetworkEvent.ServerDisconnectionFromClientEvent(manager));
-        }
-        cleanAttributes(ctx);
-        ctx.close(promise);
-    }
-
-    @Override
-    @Deprecated
-    public void deregister(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception
-    {
-        ctx.deregister(promise);
-    }
-
-    @Override
-    public void read(ChannelHandlerContext ctx) throws Exception
-    {
-        ctx.read();
-    }
-
-    @Override
-    public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception
-    {
-        if (msg instanceof FMLProxyPacket)
-        {
-            if (side == Side.CLIENT)
-            {
-                //Client to server large packets are not supported to prevent client being bad.
-                ctx.write(((FMLProxyPacket) msg).toC17Packet(), promise);
-            }
-            else
-            {
-                List<Packet<INetHandlerPlayClient>> parts = ((FMLProxyPacket)msg).toS3FPackets();
-                int sizeMinusOne = parts.size() - 1;
-                for (int i = 0; i < sizeMinusOne; i++)
-                {
-                    ctx.write(parts.get(i), ctx.voidPromise());
-                }
-                ctx.write(parts.get(sizeMinusOne), promise);
-            }
-        }
-        else
-        {
-            ctx.write(msg, promise);
-        }
-    }
-
-    @Override
-    public void flush(ChannelHandlerContext ctx) throws Exception
-    {
-        ctx.flush();
+        this.handshakeChannel.attr(FML_DISPATCHER).set(null);
+        this.manager.setDispatcher(null);
+        NetworkRegistry.INSTANCE.cleanAttributes();
     }
 
     public void completeHandshake(Side target)
@@ -580,39 +422,7 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
     public void abortClientHandshake(String type)
     {
         FMLLog.log.info("Aborting client handshake \"{}\"", type);
-        //FMLCommonHandler.instance().waitForPlayClient();
         completeClientSideConnection(ConnectionType.valueOf(type));
-    }
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception
-    {
-        // Stop the epic channel closed spam at close
-        if (!(cause instanceof ClosedChannelException))
-        {
-            // Mute the reset by peer exception - it's disconnection noise
-            if (cause.getMessage() != null && cause.getMessage().contains("Connection reset by peer"))
-            {
-                FMLLog.log.debug("Muted NetworkDispatcher exception", cause);
-            }
-            else
-            {
-                FMLLog.log.error("NetworkDispatcher exception", cause);
-            }
-        }
-        super.exceptionCaught(ctx, cause);
-    }
-
-    // If we add any attributes, we should force removal of them here so that
-    // they do not hold references to the world and cause it to leak.
-    private void cleanAttributes(ChannelHandlerContext ctx)
-    {
-        ctx.channel().attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(null);
-        ctx.channel().attr(NetworkRegistry.NET_HANDLER).set(null);
-        ctx.channel().attr(NetworkDispatcher.FML_DISPATCHER).set(null);
-        this.handshakeChannel.attr(FML_DISPATCHER).set(null);
-        this.manager.channel().attr(FML_DISPATCHER).set(null);
-        NetworkRegistry.INSTANCE.cleanAttributes();
     }
 
     public void setOverrideDimension(int overrideDim) {
@@ -644,7 +454,7 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
                 throw new IOException("The received FML MultiPart packet outside of valid length bounds, Max: " + FMLProxyPacket.MAX_LENGTH + ", Received: " + length);
             }
             data = new byte[length];
-            data_buf = new PacketBuffer(Unpooled.wrappedBuffer(data));
+            data_buf = new PacketBuffer(Unpooled.buffer(data, data.length).writerIndex(data.length));
         }
 
         public void processPart(PacketBuffer input) throws IOException
@@ -666,13 +476,13 @@ public class NetworkDispatcher extends SimpleChannelInboundHandler<Packet<?>> im
         }
 
         @Override
-        public String getChannelName() // getChannel
+        public String getChannelName()
         {
             return this.channel;
         }
 
         @Override
-        public PacketBuffer getBufferData() // getData
+        public PacketBuffer getBufferData()
         {
             return this.data_buf;
         }
