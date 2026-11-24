@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.resources.ResourcePackListEntry;
 import net.minecraft.client.resources.ResourcePackListEntryDefault;

@@ -1,9 +1,10 @@
 package net.minecraft.client.renderer.entity;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelPlayer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerArrow;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
 import net.minecraft.client.renderer.entity.layers.LayerCape;
@@ -67,9 +68,10 @@ public class RenderPlayer extends RenderLivingBase<AbstractClientPlayer>
             }
 
             this.setModelVisibilities(entity);
-            GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
+            GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
             super.doRender(entity, x, d0, z, entityYaw, partialTicks);
-            GlStateManager.disableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
+            GlStateManager.disableBlend();
         }
         net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Post(entity, this, partialTicks, x, y, z));
     }

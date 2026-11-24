@@ -1,5 +1,6 @@
 package net.minecraft.util;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.IntBuffer;
@@ -8,8 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.annotation.Nullable;
 import javax.imageio.ImageIO;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.text.ITextComponent;
@@ -97,7 +98,7 @@ public class ScreenShotHelper
         }
         else
         {
-            GlStateManager.glReadPixels(0, 0, width, height, 32993, 33639, pixelBuffer);
+            EaglercraftGPU.glReadPixels(0, 0, width, height, 32993, 33639, pixelBuffer);
         }
 
         pixelBuffer.get(pixelValues);

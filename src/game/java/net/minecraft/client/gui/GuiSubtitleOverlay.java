@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
@@ -7,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.ISoundEventListener;
 import net.minecraft.client.audio.SoundEventAccessor;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
@@ -42,7 +43,7 @@ public class GuiSubtitleOverlay extends Gui implements ISoundEventListener
         {
             GlStateManager.pushMatrix();
             GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
             Vec3d vec3d = new Vec3d(this.client.player.posX, this.client.player.posY + (double)this.client.player.getEyeHeight(), this.client.player.posZ);
             Vec3d vec3d1 = (new Vec3d(0.0D, 0.0D, -1.0D)).rotatePitch(-this.client.player.rotationPitch * 0.017453292F).rotateYaw(-this.client.player.rotationYaw * 0.017453292F);
             Vec3d vec3d2 = (new Vec3d(0.0D, 1.0D, 0.0D)).rotatePitch(-this.client.player.rotationPitch * 0.017453292F).rotateYaw(-this.client.player.rotationYaw * 0.017453292F);

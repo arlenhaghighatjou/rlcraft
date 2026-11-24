@@ -1,10 +1,11 @@
 package net.minecraft.client.model;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import com.google.common.collect.Lists;
 import java.util.List;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -271,15 +272,15 @@ public class ModelRenderer
     private void compileDisplayList(float scale)
     {
         this.displayList = GLAllocation.generateDisplayLists(1);
-        GlStateManager.glNewList(this.displayList, 4864);
-        BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
+        EaglercraftGPU.glNewList(this.displayList, 4864);
+        WorldRenderer bufferbuilder = Tessellator.getInstance().getBuffer();
 
         for (int i = 0; i < this.cubeList.size(); ++i)
         {
             ((ModelBox)this.cubeList.get(i)).render(bufferbuilder, scale);
         }
 
-        GlStateManager.glEndList();
+        EaglercraftGPU.glEndList();
         this.compiled = true;
     }
 

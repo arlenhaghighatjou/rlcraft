@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import com.google.common.collect.Lists;
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -9,8 +10,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.IResource;
@@ -151,7 +152,7 @@ public class GuiWinGame extends GuiScreen
     private void drawWinGameScreen(int p_146575_1_, int p_146575_2_, float p_146575_3_)
     {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         this.mc.getTextureManager().bindTexture(Gui.OPTIONS_BACKGROUND);
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
         int i = this.width;
@@ -185,7 +186,7 @@ public class GuiWinGame extends GuiScreen
     {
         this.drawWinGameScreen(mouseX, mouseY, partialTicks);
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         int i = 274;
         int j = this.width / 2 - 137;
         int k = this.height + 50;
@@ -236,7 +237,7 @@ public class GuiWinGame extends GuiScreen
         GlStateManager.popMatrix();
         this.mc.getTextureManager().bindTexture(VIGNETTE_TEXTURE);
         GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR);
+        GlStateManager.blendFunc(GL_ZERO, GL_ONE_MINUS_SRC_COLOR);
         int j1 = this.width;
         int k1 = this.height;
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);

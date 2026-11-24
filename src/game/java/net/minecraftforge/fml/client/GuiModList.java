@@ -37,9 +37,9 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureUtil;
@@ -554,7 +554,7 @@ public class GuiModList extends GuiScreen
             {
                 GlStateManager.enableBlend();
                 GuiModList.this.mc.renderEngine.bindTexture(logoPath);
-                BufferBuilder wr = tess.getBuffer();
+                WorldRenderer wr = tess.getBuffer();
                 int offset = (this.left + this.listWidth/2) - (logoDims.width / 2);
                 wr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
                 wr.pos(offset,                  top + logoDims.height, zLevel).tex(0, 1).endVertex();

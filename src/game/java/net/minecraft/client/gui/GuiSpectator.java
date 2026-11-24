@@ -1,11 +1,12 @@
 package net.minecraft.client.gui;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.spectator.ISpectatorMenuObject;
 import net.minecraft.client.gui.spectator.ISpectatorMenuRecipient;
 import net.minecraft.client.gui.spectator.SpectatorMenu;
 import net.minecraft.client.gui.spectator.categories.SpectatorDetails;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.ResourceLocation;
@@ -74,7 +75,7 @@ public class GuiSpectator extends Gui implements ISpectatorMenuRecipient
     {
         GlStateManager.enableRescaleNormal();
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         GlStateManager.color(1.0F, 1.0F, 1.0F, p_175258_2_);
         this.mc.getTextureManager().bindTexture(WIDGETS);
         this.drawTexturedModalRect((float)(p_175258_3_ - 91), p_175258_4_, 0, 0, 182, 22);
@@ -133,7 +134,7 @@ public class GuiSpectator extends Gui implements ISpectatorMenuRecipient
                 int k = p_175263_1_.getScaledHeight() - 35;
                 GlStateManager.pushMatrix();
                 GlStateManager.enableBlend();
-                GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+                GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
                 this.mc.fontRenderer.drawStringWithShadow(s, (float)j, (float)k, 16777215 + (i << 24));
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();

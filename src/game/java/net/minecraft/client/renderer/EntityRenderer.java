@@ -1,5 +1,10 @@
 package net.minecraft.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
@@ -809,10 +814,10 @@ public class EntityRenderer implements IResourceManagerReloadListener
         GlStateManager.translate(8.0F, 8.0F, 8.0F);
         GlStateManager.matrixMode(5888);
         this.mc.getTextureManager().bindTexture(this.locationLightMap);
-        GlStateManager.glTexParameteri(3553, 10241, 9729);
-        GlStateManager.glTexParameteri(3553, 10240, 9729);
-        GlStateManager.glTexParameteri(3553, 10242, 10496);
-        GlStateManager.glTexParameteri(3553, 10243, 10496);
+        EaglercraftGPU.glTexParameteri(3553, 10241, 9729);
+        EaglercraftGPU.glTexParameteri(3553, 10240, 9729);
+        EaglercraftGPU.glTexParameteri(3553, 10242, 10496);
+        EaglercraftGPU.glTexParameteri(3553, 10243, 10496);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.enableTexture2D();
         GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
@@ -1370,7 +1375,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         this.mc.mcProfiler.endStartSection("destroyProgress");
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE, GL_ONE, GL_ZERO);
         this.mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
         renderglobal.drawBlockDamageTexture(Tessellator.getInstance(), Tessellator.getInstance().getBuffer(), entity, partialTicks);
         this.mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
@@ -1396,7 +1401,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
         renderglobal.renderWorldBorder(entity, partialTicks);
         GlStateManager.disableBlend();
         GlStateManager.enableCull();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         GlStateManager.alphaFunc(516, 0.1F);
         this.setupFog(0, partialTicks);
         GlStateManager.enableBlend();
@@ -1412,7 +1417,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             net.minecraftforge.client.ForgeHooksClient.setRenderPass(1);
             renderglobal.renderEntities(entity, icamera, partialTicks);
             // restore blending function changed by RenderGlobal.preRenderDamagedBlocks
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
             net.minecraftforge.client.ForgeHooksClient.setRenderPass(-1);
             RenderHelper.disableStandardItemLighting();
         }
@@ -1564,11 +1569,11 @@ public class EntityRenderer implements IResourceManagerReloadListener
             int j = MathHelper.floor(entity.posY);
             int k = MathHelper.floor(entity.posZ);
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
             GlStateManager.disableCull();
-            GlStateManager.glNormal3f(0.0F, 1.0F, 0.0F);
+            EaglercraftGPU.glNormal3f(0.0F, 1.0F, 0.0F);
             GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
             GlStateManager.alphaFunc(516, 0.1F);
             double d0 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double)partialTicks;
             double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double)partialTicks;
@@ -1887,7 +1892,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
     {
         Entity entity = this.mc.getRenderViewEntity();
         this.setupFogColor(false);
-        GlStateManager.glNormal3f(0.0F, -1.0F, 0.0F);
+        EaglercraftGPU.glNormal3f(0.0F, -1.0F, 0.0F);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         IBlockState iblockstate = ActiveRenderInfo.getBlockStateAtEntityViewpoint(this.mc.world, entity, partialTicks);
         float hook = net.minecraftforge.client.ForgeHooksClient.getFogDensity(this, entity, iblockstate, partialTicks, 0.1F);
@@ -1903,7 +1908,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 f1 = 5.0F + (this.farPlaneDistance - 5.0F) * (1.0F - (float)i / 20.0F);
             }
 
-            GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
+            GlStateManager.setFog(GL_LINEAR);
 
             if (startCoords == -1)
             {
@@ -1923,12 +1928,12 @@ public class EntityRenderer implements IResourceManagerReloadListener
         }
         else if (this.cloudFog)
         {
-            GlStateManager.setFog(GlStateManager.FogMode.EXP);
+            GlStateManager.setFog(GL_EXP);
             GlStateManager.setFogDensity(0.1F);
         }
         else if (iblockstate.getMaterial() == Material.WATER)
         {
-            GlStateManager.setFog(GlStateManager.FogMode.EXP);
+            GlStateManager.setFog(GL_EXP);
 
             if (entity instanceof EntityLivingBase)
             {
@@ -1948,13 +1953,13 @@ public class EntityRenderer implements IResourceManagerReloadListener
         }
         else if (iblockstate.getMaterial() == Material.LAVA)
         {
-            GlStateManager.setFog(GlStateManager.FogMode.EXP);
+            GlStateManager.setFog(GL_EXP);
             GlStateManager.setFogDensity(2.0F);
         }
         else
         {
             float f = this.farPlaneDistance;
-            GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
+            GlStateManager.setFog(GL_LINEAR);
 
             if (startCoords == -1)
             {
@@ -2020,7 +2025,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
     {
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
-        GlStateManager.glNormal3f(0.0F, 1.0F, 0.0F);
+        EaglercraftGPU.glNormal3f(0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(-viewerYaw, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate((float)(isThirdPersonFrontal ? -1 : 1) * viewerPitch, 1.0F, 0.0F, 0.0F);
         GlStateManager.scale(-0.025F, -0.025F, 0.025F);
@@ -2033,11 +2038,11 @@ public class EntityRenderer implements IResourceManagerReloadListener
         }
 
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         int i = fontRendererIn.getStringWidth(str) / 2;
         GlStateManager.disableTexture2D();
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
         bufferbuilder.pos((double)(-i - 1), (double)(-1 + verticalShift), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
         bufferbuilder.pos((double)(-i - 1), (double)(8 + verticalShift), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();

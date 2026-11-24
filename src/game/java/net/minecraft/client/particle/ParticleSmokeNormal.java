@@ -1,6 +1,6 @@
 package net.minecraft.client.particle;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -37,7 +37,7 @@ public class ParticleSmokeNormal extends Particle
         this.particleMaxAge = (int)((float)this.particleMaxAge * p_i46348_14_);
     }
 
-    public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+    public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
     {
         float f = ((float)this.particleAge + partialTicks) / (float)this.particleMaxAge * 32.0F;
         f = MathHelper.clamp(f, 0.0F, 1.0F);

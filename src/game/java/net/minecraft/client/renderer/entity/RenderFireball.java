@@ -1,8 +1,8 @@
 package net.minecraft.client.renderer.entity;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -33,7 +33,7 @@ public class RenderFireball extends Render<EntityFireball>
         GlStateManager.scale(this.scale, this.scale, this.scale);
         TextureAtlasSprite textureatlassprite = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getParticleIcon(Items.FIRE_CHARGE);
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         float f = textureatlassprite.getMinU();
         float f1 = textureatlassprite.getMaxU();
         float f2 = textureatlassprite.getMinV();

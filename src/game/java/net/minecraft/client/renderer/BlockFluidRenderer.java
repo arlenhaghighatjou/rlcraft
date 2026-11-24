@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -40,7 +41,7 @@ public class BlockFluidRenderer
         this.atlasSpriteWaterOverlay = texturemap.getAtlasSprite("minecraft:blocks/water_overlay");
     }
 
-    public boolean renderFluid(IBlockAccess blockAccess, IBlockState blockStateIn, BlockPos blockPosIn, BufferBuilder bufferBuilderIn)
+    public boolean renderFluid(IBlockAccess blockAccess, IBlockState blockStateIn, BlockPos blockPosIn, WorldRenderer bufferBuilderIn)
     {
         BlockLiquid blockliquid = (BlockLiquid)blockStateIn.getBlock();
         boolean flag = blockStateIn.getMaterial() == Material.LAVA;

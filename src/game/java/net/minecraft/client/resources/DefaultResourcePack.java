@@ -1,5 +1,6 @@
 package net.minecraft.client.resources;
 
+import net.lax1dude.eaglercraft.v1_8.minecraft.ResourceIndex;
 import com.google.common.collect.ImmutableSet;
 import java.awt.image.BufferedImage;
 import java.io.File;

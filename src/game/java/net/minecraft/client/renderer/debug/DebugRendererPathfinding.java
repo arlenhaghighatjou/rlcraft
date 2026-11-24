@@ -1,10 +1,12 @@
 package net.minecraft.client.renderer.debug;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import com.google.common.collect.Maps;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -51,10 +53,10 @@ public class DebugRendererPathfinding implements DebugRenderer.IDebugRenderer
             this.zo = this.player.lastTickPosZ + (this.player.posZ - this.player.lastTickPosZ) * (double)partialTicks;
             GlStateManager.pushMatrix();
             GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
             GlStateManager.color(0.0F, 1.0F, 0.0F, 0.75F);
             GlStateManager.disableTexture2D();
-            GlStateManager.glLineWidth(6.0F);
+            EaglercraftGPU.glLineWidth(6.0F);
 
             for (Integer integer : this.pathMap.keySet())
             {
@@ -133,7 +135,7 @@ public class DebugRendererPathfinding implements DebugRenderer.IDebugRenderer
     public void renderPathLine(float finishTimeNano, Path pathIn)
     {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(3, DefaultVertexFormats.POSITION_COLOR);
 
         for (int i = 0; i < pathIn.getCurrentPathLength(); ++i)

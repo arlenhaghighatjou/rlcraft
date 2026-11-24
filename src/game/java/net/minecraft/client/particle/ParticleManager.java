@@ -1,5 +1,6 @@
 package net.minecraft.client.particle;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import java.util.ArrayDeque;
@@ -12,8 +13,8 @@ import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -282,7 +283,7 @@ public class ParticleManager
         Particle.interpPosZ = entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * (double)partialTicks;
         Particle.cameraViewDir = entityIn.getLook(partialTicks);
         GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         GlStateManager.alphaFunc(516, 0.003921569F);
 
         for (int i_nf = 0; i_nf < 3; ++i_nf)
@@ -314,7 +315,7 @@ public class ParticleManager
 
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                     Tessellator tessellator = Tessellator.getInstance();
-                    BufferBuilder bufferbuilder = tessellator.getBuffer();
+                    WorldRenderer bufferbuilder = tessellator.getBuffer();
                     bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
                     for (final Particle particle : this.fxLayers[i][j])
@@ -382,7 +383,7 @@ public class ParticleManager
             if (!queue.isEmpty())
             {
                 Tessellator tessellator = Tessellator.getInstance();
-                BufferBuilder bufferbuilder = tessellator.getBuffer();
+                WorldRenderer bufferbuilder = tessellator.getBuffer();
 
                 for (Particle particle : queue)
                 {

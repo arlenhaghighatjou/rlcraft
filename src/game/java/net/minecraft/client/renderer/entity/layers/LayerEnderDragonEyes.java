@@ -1,8 +1,9 @@
 package net.minecraft.client.renderer.entity.layers;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderDragon;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.util.ResourceLocation;
@@ -25,7 +26,7 @@ public class LayerEnderDragonEyes implements LayerRenderer<EntityDragon>
         this.dragonRenderer.bindTexture(TEXTURE);
         GlStateManager.enableBlend();
         GlStateManager.disableAlpha();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+        GlStateManager.blendFunc(GL_ONE, GL_ONE);
         GlStateManager.disableLighting();
         GlStateManager.depthFunc(514);
         int i = 61680;

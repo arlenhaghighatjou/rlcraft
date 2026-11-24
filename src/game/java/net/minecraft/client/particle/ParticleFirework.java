@@ -2,7 +2,7 @@ package net.minecraft.client.particle;
 
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemDye;
@@ -38,7 +38,7 @@ public class ParticleFirework
                 this.particleMaxAge = 4;
             }
 
-            public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+            public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
             {
                 float f = 0.25F;
                 float f1 = 0.5F;
@@ -96,7 +96,7 @@ public class ParticleFirework
                 return true;
             }
 
-            public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+            public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
             {
                 if (!this.twinkle || this.particleAge < this.particleMaxAge / 3 || (this.particleAge + this.particleMaxAge) / 3 % 2 == 0)
                 {
@@ -173,7 +173,7 @@ public class ParticleFirework
                 }
             }
 
-            public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+            public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
             {
             }
 

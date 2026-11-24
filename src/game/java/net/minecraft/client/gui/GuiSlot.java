@@ -1,8 +1,9 @@
 package net.minecraft.client.gui;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.MathHelper;
@@ -180,7 +181,7 @@ public abstract class GuiSlot
             GlStateManager.disableLighting();
             GlStateManager.disableFog();
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
             // Forge: background rendering moved into separate method.
             this.drawContainerBackground(tessellator);
             int k = this.left + this.width / 2 - this.getListWidth() / 2 + 2;
@@ -196,7 +197,7 @@ public abstract class GuiSlot
             this.overlayBackground(0, this.top, 255, 255);
             this.overlayBackground(this.bottom, this.height, 255, 255);
             GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
             GlStateManager.disableAlpha();
             GlStateManager.shadeModel(7425);
             GlStateManager.disableTexture2D();
@@ -386,7 +387,7 @@ public abstract class GuiSlot
     {
         int i = this.getSize();
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
 
         for (int j = 0; j < i; ++j)
         {
@@ -429,7 +430,7 @@ public abstract class GuiSlot
     protected void overlayBackground(int startY, int endY, int startAlpha, int endAlpha)
     {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         this.mc.getTextureManager().bindTexture(Gui.OPTIONS_BACKGROUND);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         float f = 32.0F;
@@ -454,7 +455,7 @@ public abstract class GuiSlot
 
     protected void drawContainerBackground(Tessellator tessellator)
     {
-        BufferBuilder buffer = tessellator.getBuffer();
+        WorldRenderer buffer = tessellator.getBuffer();
         this.mc.getTextureManager().bindTexture(Gui.OPTIONS_BACKGROUND);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         float f = 32.0F;

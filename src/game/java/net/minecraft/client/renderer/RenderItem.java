@@ -1,5 +1,8 @@
 package net.minecraft.client.renderer;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -119,7 +122,7 @@ public class RenderItem implements IResourceManagerReloadListener
             return;
         }
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(7, DefaultVertexFormats.ITEM);
 
         for (EnumFacing enumfacing : EnumFacing.values())
@@ -163,7 +166,7 @@ public class RenderItem implements IResourceManagerReloadListener
         GlStateManager.depthMask(false);
         GlStateManager.depthFunc(514);
         GlStateManager.disableLighting();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_COLOR, GlStateManager.DestFactor.ONE);
+        GlStateManager.blendFunc(GL_SRC_COLOR, GL_ONE);
         this.textureManager.bindTexture(RES_ITEM_GLINT);
         GlStateManager.matrixMode(5890);
         GlStateManager.pushMatrix();
@@ -181,27 +184,27 @@ public class RenderItem implements IResourceManagerReloadListener
         this.renderModel(model, -8372020);
         GlStateManager.popMatrix();
         GlStateManager.matrixMode(5888);
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         GlStateManager.enableLighting();
         GlStateManager.depthFunc(515);
         GlStateManager.depthMask(true);
         this.textureManager.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
     }
 
-    private void putQuadNormal(BufferBuilder renderer, BakedQuad quad)
+    private void putQuadNormal(WorldRenderer renderer, BakedQuad quad)
     {
         Vec3i vec3i = quad.getFace().getDirectionVec();
         renderer.putNormal((float)vec3i.getX(), (float)vec3i.getY(), (float)vec3i.getZ());
     }
 
-    private void renderQuad(BufferBuilder renderer, BakedQuad quad, int color)
+    private void renderQuad(WorldRenderer renderer, BakedQuad quad, int color)
     {
         renderer.addVertexData(quad.getVertexData());
         renderer.putColor4(color);
         this.putQuadNormal(renderer, quad);
     }
 
-    public void renderQuads(BufferBuilder renderer, List<BakedQuad> quads, int color, ItemStack stack)
+    public void renderQuads(WorldRenderer renderer, List<BakedQuad> quads, int color, ItemStack stack)
     {
         boolean flag = color == -1 && !stack.isEmpty();
         int i = 0;
@@ -267,13 +270,13 @@ public class RenderItem implements IResourceManagerReloadListener
             GlStateManager.enableRescaleNormal();
             GlStateManager.alphaFunc(516, 0.1F);
             GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
             GlStateManager.pushMatrix();
             // TODO: check if negative scale is a thing
             bakedmodel = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(bakedmodel, transform, leftHanded);
 
             this.renderItem(stack, bakedmodel);
-            GlStateManager.cullFace(GlStateManager.CullFace.BACK);
+            GlStateManager.cullFace(GL_BACK);
             GlStateManager.popMatrix();
             GlStateManager.disableRescaleNormal();
             GlStateManager.disableBlend();
@@ -301,7 +304,7 @@ public class RenderItem implements IResourceManagerReloadListener
         GlStateManager.enableAlpha();
         GlStateManager.alphaFunc(516, 0.1F);
         GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.setupGuiTransform(x, y, bakedmodel.isGui3d());
         bakedmodel = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(bakedmodel, ItemCameraTransforms.TransformType.GUI, false);
@@ -417,7 +420,7 @@ public class RenderItem implements IResourceManagerReloadListener
                 GlStateManager.disableAlpha();
                 GlStateManager.disableBlend();
                 Tessellator tessellator = Tessellator.getInstance();
-                BufferBuilder bufferbuilder = tessellator.getBuffer();
+                WorldRenderer bufferbuilder = tessellator.getBuffer();
                 double health = stack.getItem().getDurabilityForDisplay(stack);
                 int rgbfordisplay = stack.getItem().getRGBDurabilityForDisplay(stack);
                 int i = Math.round(13.0F - (float)health * 13.0F);
@@ -440,7 +443,7 @@ public class RenderItem implements IResourceManagerReloadListener
                 GlStateManager.disableDepth();
                 GlStateManager.disableTexture2D();
                 Tessellator tessellator1 = Tessellator.getInstance();
-                BufferBuilder bufferbuilder1 = tessellator1.getBuffer();
+                WorldRenderer bufferbuilder1 = tessellator1.getBuffer();
                 this.draw(bufferbuilder1, xPosition, yPosition + MathHelper.floor(16.0F * (1.0F - f3)), 16, MathHelper.ceil(16.0F * f3), 255, 255, 255, 127);
                 GlStateManager.enableTexture2D();
                 GlStateManager.enableLighting();
@@ -449,7 +452,7 @@ public class RenderItem implements IResourceManagerReloadListener
         }
     }
 
-    private void draw(BufferBuilder renderer, int x, int y, int width, int height, int red, int green, int blue, int alpha)
+    private void draw(WorldRenderer renderer, int x, int y, int width, int height, int red, int green, int blue, int alpha)
     {
         renderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
         renderer.pos((double)(x + 0), (double)(y + 0), 0.0D).color(red, green, blue, alpha).endVertex();

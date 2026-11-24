@@ -1,8 +1,9 @@
 package net.minecraft.client.gui;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.realms.RealmsSimpleScrolledSelectionList;
@@ -89,7 +90,7 @@ public class GuiSimpleScrolledSelectionListProxy extends GuiSlot
             GlStateManager.disableLighting();
             GlStateManager.disableFog();
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
             int k = this.left + this.width / 2 - this.getListWidth() / 2 + 2;
             int l = this.top + 4 - (int)this.amountScrolled;
 
@@ -103,7 +104,7 @@ public class GuiSimpleScrolledSelectionListProxy extends GuiSlot
             this.overlayBackground(0, this.top, 255, 255);
             this.overlayBackground(this.bottom, this.height, 255, 255);
             GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
             GlStateManager.disableAlpha();
             GlStateManager.shadeModel(7425);
             GlStateManager.disableTexture2D();

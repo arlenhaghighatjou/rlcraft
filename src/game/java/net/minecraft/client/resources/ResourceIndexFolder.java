@@ -1,5 +1,6 @@
 package net.minecraft.client.resources;
 
+import net.lax1dude.eaglercraft.v1_8.minecraft.ResourceIndex;
 import java.io.File;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;

@@ -1,5 +1,7 @@
 package net.minecraft.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import java.util.BitSet;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -33,12 +35,12 @@ public class BlockModelRenderer
         this.blockColors = blockColorsIn;
     }
 
-    public boolean renderModel(IBlockAccess blockAccessIn, IBakedModel modelIn, IBlockState blockStateIn, BlockPos blockPosIn, BufferBuilder buffer, boolean checkSides)
+    public boolean renderModel(IBlockAccess blockAccessIn, IBakedModel modelIn, IBlockState blockStateIn, BlockPos blockPosIn, WorldRenderer buffer, boolean checkSides)
     {
         return this.renderModel(blockAccessIn, modelIn, blockStateIn, blockPosIn, buffer, checkSides, MathHelper.getPositionRandom(blockPosIn));
     }
 
-    public boolean renderModel(IBlockAccess worldIn, IBakedModel modelIn, IBlockState stateIn, BlockPos posIn, BufferBuilder buffer, boolean checkSides, long rand)
+    public boolean renderModel(IBlockAccess worldIn, IBakedModel modelIn, IBlockState stateIn, BlockPos posIn, WorldRenderer buffer, boolean checkSides, long rand)
     {
         boolean flag = Minecraft.isAmbientOcclusionEnabled() && stateIn.getLightValue(worldIn, posIn) == 0 && modelIn.isAmbientOcclusion(stateIn);
 
@@ -56,7 +58,7 @@ public class BlockModelRenderer
         }
     }
 
-    public boolean renderModelSmooth(IBlockAccess worldIn, IBakedModel modelIn, IBlockState stateIn, BlockPos posIn, BufferBuilder buffer, boolean checkSides, long rand)
+    public boolean renderModelSmooth(IBlockAccess worldIn, IBakedModel modelIn, IBlockState stateIn, BlockPos posIn, WorldRenderer buffer, boolean checkSides, long rand)
     {
         boolean flag = false;
         float[] afloat = new float[EnumFacing.values().length * 2];
@@ -85,7 +87,7 @@ public class BlockModelRenderer
         return flag;
     }
 
-    public boolean renderModelFlat(IBlockAccess worldIn, IBakedModel modelIn, IBlockState stateIn, BlockPos posIn, BufferBuilder buffer, boolean checkSides, long rand)
+    public boolean renderModelFlat(IBlockAccess worldIn, IBakedModel modelIn, IBlockState stateIn, BlockPos posIn, WorldRenderer buffer, boolean checkSides, long rand)
     {
         boolean flag = false;
         BitSet bitset = new BitSet(3);
@@ -113,7 +115,7 @@ public class BlockModelRenderer
         return flag;
     }
 
-    private void renderQuadsSmooth(IBlockAccess blockAccessIn, IBlockState stateIn, BlockPos posIn, BufferBuilder buffer, List<BakedQuad> list, float[] quadBounds, BitSet bitSet, BlockModelRenderer.AmbientOcclusionFace aoFace)
+    private void renderQuadsSmooth(IBlockAccess blockAccessIn, IBlockState stateIn, BlockPos posIn, WorldRenderer buffer, List<BakedQuad> list, float[] quadBounds, BitSet bitSet, BlockModelRenderer.AmbientOcclusionFace aoFace)
     {
         Vec3d vec3d = stateIn.getOffset(blockAccessIn, posIn);
         double d0 = (double)posIn.getX() + vec3d.x;
@@ -235,7 +237,7 @@ public class BlockModelRenderer
         }
     }
 
-    private void renderQuadsFlat(IBlockAccess blockAccessIn, IBlockState stateIn, BlockPos posIn, int brightnessIn, boolean ownBrightness, BufferBuilder buffer, List<BakedQuad> list, BitSet bitSet)
+    private void renderQuadsFlat(IBlockAccess blockAccessIn, IBlockState stateIn, BlockPos posIn, int brightnessIn, boolean ownBrightness, WorldRenderer buffer, List<BakedQuad> list, BitSet bitSet)
     {
         Vec3d vec3d = stateIn.getOffset(blockAccessIn, posIn);
         double d0 = (double)posIn.getX() + vec3d.x;
@@ -335,7 +337,7 @@ public class BlockModelRenderer
     private void renderModelBrightnessColorQuads(float brightness, float red, float green, float blue, List<BakedQuad> listQuads)
     {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         int i = 0;
 
         for (int j = listQuads.size(); i < j; ++i)

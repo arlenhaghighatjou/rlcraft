@@ -1,5 +1,7 @@
 package net.minecraft.client;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.hash.Hashing;
@@ -78,11 +80,11 @@ import net.minecraft.client.network.NetHandlerLoginClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
@@ -497,7 +499,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         GlStateManager.depthFunc(515);
         GlStateManager.enableAlpha();
         GlStateManager.alphaFunc(516, 0.1F);
-        GlStateManager.cullFace(GlStateManager.CullFace.BACK);
+        GlStateManager.cullFace(GL_BACK);
         GlStateManager.matrixMode(5889);
         GlStateManager.loadIdentity();
         GlStateManager.matrixMode(5888);
@@ -929,7 +931,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         }
 
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
         bufferbuilder.pos(0.0D, (double)this.displayHeight, 0.0D).tex(0.0D, 0.0D).color(255, 255, 255, 255).endVertex();
         bufferbuilder.pos((double)this.displayWidth, (double)this.displayHeight, 0.0D).tex(0.0D, 0.0D).color(255, 255, 255, 255).endVertex();
@@ -951,7 +953,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
 
     public void draw(int posX, int posY, int texU, int texV, int width, int height, int red, int green, int blue, int alpha)
     {
-        BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
+        WorldRenderer bufferbuilder = Tessellator.getInstance().getBuffer();
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
         float f = 0.00390625F;
         float f1 = 0.00390625F;
@@ -1027,7 +1029,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
 
     private void checkGLError(String message)
     {
-        int i = GlStateManager.glGetError();
+        int i = EaglercraftGPU.glGetError();
 
         if (i != 0)
         {
@@ -1319,10 +1321,10 @@ public class Minecraft implements IThreadListener, ISnooperInfo
             GlStateManager.matrixMode(5888);
             GlStateManager.loadIdentity();
             GlStateManager.translate(0.0F, 0.0F, -2000.0F);
-            GlStateManager.glLineWidth(1.0F);
+            EaglercraftGPU.glLineWidth(1.0F);
             GlStateManager.disableTexture2D();
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
             int i = 160;
             int j = this.displayWidth - 160 - 10;
             int k = this.displayHeight - 320;
@@ -2650,7 +2652,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         {
             public String call()
             {
-                return GlStateManager.glGetString(7937) + " GL version " + GlStateManager.glGetString(7938) + ", " + GlStateManager.glGetString(7936);
+                return EaglercraftGPU.glGetString(7937) + " GL version " + EaglercraftGPU.glGetString(7938) + ", " + EaglercraftGPU.glGetString(7936);
             }
         });
         theCrash.getCategory().addDetail("GL Caps", new ICrashReportDetail<String>()
@@ -2806,8 +2808,8 @@ public class Minecraft implements IThreadListener, ISnooperInfo
 
     public void addServerTypeToSnooper(Snooper playerSnooper)
     {
-        playerSnooper.addStatToSnooper("opengl_version", GlStateManager.glGetString(7938));
-        playerSnooper.addStatToSnooper("opengl_vendor", GlStateManager.glGetString(7936));
+        playerSnooper.addStatToSnooper("opengl_version", EaglercraftGPU.glGetString(7938));
+        playerSnooper.addStatToSnooper("opengl_vendor", EaglercraftGPU.glGetString(7936));
         playerSnooper.addStatToSnooper("client_brand", ClientBrandRetriever.getClientModName());
         playerSnooper.addStatToSnooper("launched_version", this.launchedVersion);
         ContextCapabilities contextcapabilities = GLContext.getCapabilities();
@@ -2902,18 +2904,18 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         playerSnooper.addStatToSnooper("gl_caps[EXT_texture_sRGB]", Boolean.valueOf(contextcapabilities.GL_EXT_texture_sRGB));
         playerSnooper.addStatToSnooper("gl_caps[EXT_vertex_shader]", Boolean.valueOf(contextcapabilities.GL_EXT_vertex_shader));
         playerSnooper.addStatToSnooper("gl_caps[EXT_vertex_weighting]", Boolean.valueOf(contextcapabilities.GL_EXT_vertex_weighting));
-        playerSnooper.addStatToSnooper("gl_caps[gl_max_vertex_uniforms]", Integer.valueOf(GlStateManager.glGetInteger(35658)));
-        GlStateManager.glGetError();
-        playerSnooper.addStatToSnooper("gl_caps[gl_max_fragment_uniforms]", Integer.valueOf(GlStateManager.glGetInteger(35657)));
-        GlStateManager.glGetError();
-        playerSnooper.addStatToSnooper("gl_caps[gl_max_vertex_attribs]", Integer.valueOf(GlStateManager.glGetInteger(34921)));
-        GlStateManager.glGetError();
-        playerSnooper.addStatToSnooper("gl_caps[gl_max_vertex_texture_image_units]", Integer.valueOf(GlStateManager.glGetInteger(35660)));
-        GlStateManager.glGetError();
-        playerSnooper.addStatToSnooper("gl_caps[gl_max_texture_image_units]", Integer.valueOf(GlStateManager.glGetInteger(34930)));
-        GlStateManager.glGetError();
-        playerSnooper.addStatToSnooper("gl_caps[gl_max_array_texture_layers]", Integer.valueOf(GlStateManager.glGetInteger(35071)));
-        GlStateManager.glGetError();
+        playerSnooper.addStatToSnooper("gl_caps[gl_max_vertex_uniforms]", Integer.valueOf(EaglercraftGPU.glGetInteger(35658)));
+        EaglercraftGPU.glGetError();
+        playerSnooper.addStatToSnooper("gl_caps[gl_max_fragment_uniforms]", Integer.valueOf(EaglercraftGPU.glGetInteger(35657)));
+        EaglercraftGPU.glGetError();
+        playerSnooper.addStatToSnooper("gl_caps[gl_max_vertex_attribs]", Integer.valueOf(EaglercraftGPU.glGetInteger(34921)));
+        EaglercraftGPU.glGetError();
+        playerSnooper.addStatToSnooper("gl_caps[gl_max_vertex_texture_image_units]", Integer.valueOf(EaglercraftGPU.glGetInteger(35660)));
+        EaglercraftGPU.glGetError();
+        playerSnooper.addStatToSnooper("gl_caps[gl_max_texture_image_units]", Integer.valueOf(EaglercraftGPU.glGetInteger(34930)));
+        EaglercraftGPU.glGetError();
+        playerSnooper.addStatToSnooper("gl_caps[gl_max_array_texture_layers]", Integer.valueOf(EaglercraftGPU.glGetInteger(35071)));
+        EaglercraftGPU.glGetError();
         playerSnooper.addStatToSnooper("gl_max_texture_size", Integer.valueOf(getGLMaximumTextureSize()));
         GameProfile gameprofile = this.session.getProfile();
 

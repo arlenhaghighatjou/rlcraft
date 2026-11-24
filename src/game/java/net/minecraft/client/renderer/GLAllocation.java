@@ -1,5 +1,7 @@
 package net.minecraft.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -14,11 +16,11 @@ public class GLAllocation
 
     public static synchronized int generateDisplayLists(int range)
     {
-        int i = GlStateManager.glGenLists(range);
+        int i = EaglercraftGPU.glGenLists(range);
 
         if (i == 0)
         {
-            int j = GlStateManager.glGetError();
+            int j = EaglercraftGPU.glGetError();
             String s = "No error code reported";
 
             if (j != 0)
@@ -36,7 +38,7 @@ public class GLAllocation
 
     public static synchronized void deleteDisplayLists(int list, int range)
     {
-        GlStateManager.glDeleteLists(list, range);
+        EaglercraftGPU.glDeleteLists(list, range);
     }
 
     public static synchronized void deleteDisplayLists(int list)

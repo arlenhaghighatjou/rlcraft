@@ -1,5 +1,9 @@
 package net.minecraft.client.renderer;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import com.google.common.base.MoreObjects;
 import java.util.Objects;
 import net.minecraft.block.Block;
@@ -207,7 +211,7 @@ public class ItemRenderer
         GlStateManager.disableLighting();
         this.mc.getTextureManager().bindTexture(RES_MAP_BACKGROUND);
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         GlStateManager.translate(-0.5F, -0.5F, 0.0F);
         GlStateManager.scale(0.0078125F, 0.0078125F, 0.0078125F);
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
@@ -489,7 +493,7 @@ public class ItemRenderer
     {
         this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         float f = 0.1F;
         GlStateManager.color(0.1F, 0.1F, 0.1F, 0.5F);
         GlStateManager.pushMatrix();
@@ -516,11 +520,11 @@ public class ItemRenderer
     {
         this.mc.getTextureManager().bindTexture(RES_UNDERWATER_OVERLAY);
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         float f = this.mc.player.getBrightness();
         GlStateManager.color(f, f, f, 0.5F);
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         GlStateManager.pushMatrix();
         float f1 = 4.0F;
         float f2 = -1.0F;
@@ -544,12 +548,12 @@ public class ItemRenderer
     private void renderFireInFirstPerson()
     {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 0.9F);
         GlStateManager.depthFunc(519);
         GlStateManager.depthMask(false);
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         float f = 1.0F;
 
         for (int i = 0; i < 2; ++i)

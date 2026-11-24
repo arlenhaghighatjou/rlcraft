@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Locale;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureUtil;
@@ -459,7 +459,7 @@ public class FontRenderer implements IResourceManagerReloadListener
                 if (this.strikethroughStyle)
                 {
                     Tessellator tessellator = Tessellator.getInstance();
-                    BufferBuilder bufferbuilder = tessellator.getBuffer();
+                    WorldRenderer bufferbuilder = tessellator.getBuffer();
                     GlStateManager.disableTexture2D();
                     bufferbuilder.begin(7, DefaultVertexFormats.POSITION);
                     bufferbuilder.pos((double)this.posX, (double)(this.posY + (float)(this.FONT_HEIGHT / 2)), 0.0D).endVertex();
@@ -473,7 +473,7 @@ public class FontRenderer implements IResourceManagerReloadListener
                 if (this.underlineStyle)
                 {
                     Tessellator tessellator1 = Tessellator.getInstance();
-                    BufferBuilder bufferbuilder1 = tessellator1.getBuffer();
+                    WorldRenderer bufferbuilder1 = tessellator1.getBuffer();
                     GlStateManager.disableTexture2D();
                     bufferbuilder1.begin(7, DefaultVertexFormats.POSITION);
                     int l = this.underlineStyle ? -1 : 0;

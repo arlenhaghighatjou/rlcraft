@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.SimpleBakedModel;
@@ -48,7 +49,7 @@ public class BlockRendererDispatcher implements IResourceManagerReloadListener
         }
     }
 
-    public boolean renderBlock(IBlockState state, BlockPos pos, IBlockAccess blockAccess, BufferBuilder bufferBuilderIn)
+    public boolean renderBlock(IBlockState state, BlockPos pos, IBlockAccess blockAccess, WorldRenderer bufferBuilderIn)
     {
         try
         {

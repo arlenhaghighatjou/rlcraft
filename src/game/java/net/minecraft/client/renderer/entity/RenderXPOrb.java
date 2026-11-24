@@ -1,8 +1,8 @@
 package net.minecraft.client.renderer.entity;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -56,7 +56,7 @@ public class RenderXPOrb extends Render<EntityXPOrb>
             float f7 = 0.3F;
             GlStateManager.scale(0.3F, 0.3F, 0.3F);
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
             bufferbuilder.pos(-0.5D, -0.25D, 0.0D).tex((double)f, (double)f3).color(l, 255, j1, 128).normal(0.0F, 1.0F, 0.0F).endVertex();
             bufferbuilder.pos(0.5D, -0.25D, 0.0D).tex((double)f1, (double)f3).color(l, 255, j1, 128).normal(0.0F, 1.0F, 0.0F).endVertex();

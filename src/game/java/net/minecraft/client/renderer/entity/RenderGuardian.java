@@ -1,9 +1,11 @@
 package net.minecraft.client.renderer.entity;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.minecraft.client.model.ModelGuardian;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -71,17 +73,17 @@ public class RenderGuardian extends RenderLiving<EntityGuardian>
         {
             float f = entity.getAttackAnimationScale(partialTicks);
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
             this.bindTexture(GUARDIAN_BEAM_TEXTURE);
-            GlStateManager.glTexParameteri(3553, 10242, 10497);
-            GlStateManager.glTexParameteri(3553, 10243, 10497);
+            EaglercraftGPU.glTexParameteri(3553, 10242, 10497);
+            EaglercraftGPU.glTexParameteri(3553, 10243, 10497);
             GlStateManager.disableLighting();
             GlStateManager.disableCull();
             GlStateManager.disableBlend();
             GlStateManager.depthMask(true);
             float f1 = 240.0F;
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE, GL_ONE, GL_ZERO);
             float f2 = (float)entity.world.getTotalWorldTime() + partialTicks;
             float f3 = f2 * 0.5F % 1.0F;
             float f4 = entity.getEyeHeight();

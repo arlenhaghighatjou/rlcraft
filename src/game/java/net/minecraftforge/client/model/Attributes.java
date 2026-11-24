@@ -19,7 +19,7 @@
 
 package net.minecraftforge.client.model;
 
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumType;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumUsage;

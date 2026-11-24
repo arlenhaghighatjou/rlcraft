@@ -1,12 +1,13 @@
 package net.minecraft.client.renderer.entity;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -134,7 +135,7 @@ public abstract class Render<T extends Entity>
         float f = entity.width * 1.4F;
         GlStateManager.scale(f, f, f);
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         float f1 = 0.5F;
         float f2 = 0.0F;
         float f3 = entity.height / f;
@@ -181,7 +182,7 @@ public abstract class Render<T extends Entity>
     private void renderShadow(Entity entityIn, double x, double y, double z, float shadowAlpha, float partialTicks)
     {
         GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         this.renderManager.renderEngine.bindTexture(SHADOW_TEXTURES);
         World world = this.getWorldFromRenderManager();
         GlStateManager.depthMask(false);
@@ -211,7 +212,7 @@ public abstract class Render<T extends Entity>
         double d3 = y - d0;
         double d4 = z - d1;
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
 
         for (BlockPos blockpos : BlockPos.getAllInBoxMutable(new BlockPos(i, k, i1), new BlockPos(j, l, j1)))
@@ -240,7 +241,7 @@ public abstract class Render<T extends Entity>
         if (state.isFullCube())
         {
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
             double d0 = ((double)p_188299_9_ - (p_188299_4_ - ((double)p_188299_8_.getY() + p_188299_13_)) / 2.0D) * 0.5D * (double)this.getWorldFromRenderManager().getLightBrightness(p_188299_8_);
 
             if (d0 >= 0.0D)
@@ -272,7 +273,7 @@ public abstract class Render<T extends Entity>
     {
         GlStateManager.disableTexture2D();
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         bufferbuilder.setTranslation(x, y, z);
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_NORMAL);

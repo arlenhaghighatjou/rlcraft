@@ -19,6 +19,8 @@
 
 package net.minecraftforge.client;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import javax.annotation.Nonnull;
 import java.nio.ByteBuffer;
 import java.util.function.Predicate;
@@ -28,16 +30,16 @@ import net.minecraftforge.client.resource.VanillaResourceType;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.entity.Entity;
@@ -93,7 +95,7 @@ public class CloudRenderer implements ISelectiveResourceReloadListener
         return MathHelper.ceil(value / scale) * scale;
     }
 
-    private void vertices(BufferBuilder buffer)
+    private void vertices(WorldRenderer buffer)
     {
         boolean fancy = cloudMode == 2;    // Defines whether to hide all but the bottom.
 
@@ -236,12 +238,12 @@ public class CloudRenderer implements ISelectiveResourceReloadListener
     private void build()
     {
         Tessellator tess = Tessellator.getInstance();
-        BufferBuilder buffer = tess.getBuffer();
+        WorldRenderer buffer = tess.getBuffer();
 
         if (OpenGlHelper.useVbo())
             vbo = new VertexBuffer(FORMAT);
         else
-            GlStateManager.glNewList(displayList = GLAllocation.generateDisplayLists(1), GL11.GL_COMPILE);
+            EaglercraftGPU.glNewList(displayList = GLAllocation.generateDisplayLists(1), GL11.GL_COMPILE);
 
         vertices(buffer);
 
@@ -254,7 +256,7 @@ public class CloudRenderer implements ISelectiveResourceReloadListener
         else
         {
             tess.draw();
-            GlStateManager.glEndList();
+            EaglercraftGPU.glEndList();
         }
     }
 
@@ -335,8 +337,8 @@ public class CloudRenderer implements ISelectiveResourceReloadListener
 
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(
-                GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
-                GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+                GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,
+                GL_ONE, GL_ZERO);
 
         // Color multiplier.
         Vec3d color = mc.world.getCloudColour(partialTicks);
@@ -424,7 +426,7 @@ public class CloudRenderer implements ISelectiveResourceReloadListener
         if (WIREFRAME)
         {
             GlStateManager.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
-            GlStateManager.glLineWidth(2.0F);
+            EaglercraftGPU.glLineWidth(2.0F);
             GlStateManager.disableTexture2D();
             GlStateManager.depthMask(false);
             GlStateManager.disableFog();

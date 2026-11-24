@@ -1,5 +1,11 @@
 package net.minecraft.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
+import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -46,7 +52,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
@@ -158,8 +164,8 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         this.renderManager = mcIn.getRenderManager();
         this.renderEngine = mcIn.getTextureManager();
         this.renderEngine.bindTexture(FORCEFIELD_TEXTURES);
-        GlStateManager.glTexParameteri(3553, 10242, 10497);
-        GlStateManager.glTexParameteri(3553, 10243, 10497);
+        EaglercraftGPU.glTexParameteri(3553, 10242, 10497);
+        EaglercraftGPU.glTexParameteri(3553, 10243, 10497);
         GlStateManager.bindTexture(0);
         this.updateDestroyBlockIcons();
         this.vboEnabled = OpenGlHelper.useVbo();
@@ -239,7 +245,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         if (this.isRenderEntityOutlines())
         {
             GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
             this.entityOutlineFramebuffer.framebufferRenderExt(this.mc.displayWidth, this.mc.displayHeight, false);
             GlStateManager.disableBlend();
         }
@@ -253,7 +259,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
     private void generateSky2()
     {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
 
         if (this.sky2VBO != null)
         {
@@ -277,17 +283,17 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         else
         {
             this.glSkyList2 = GLAllocation.generateDisplayLists(1);
-            GlStateManager.glNewList(this.glSkyList2, 4864);
+            EaglercraftGPU.glNewList(this.glSkyList2, 4864);
             this.renderSky(bufferbuilder, -16.0F, true);
             tessellator.draw();
-            GlStateManager.glEndList();
+            EaglercraftGPU.glEndList();
         }
     }
 
     private void generateSky()
     {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
 
         if (this.skyVBO != null)
         {
@@ -311,14 +317,14 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         else
         {
             this.glSkyList = GLAllocation.generateDisplayLists(1);
-            GlStateManager.glNewList(this.glSkyList, 4864);
+            EaglercraftGPU.glNewList(this.glSkyList, 4864);
             this.renderSky(bufferbuilder, 16.0F, false);
             tessellator.draw();
-            GlStateManager.glEndList();
+            EaglercraftGPU.glEndList();
         }
     }
 
-    private void renderSky(BufferBuilder bufferBuilderIn, float posY, boolean reverseX)
+    private void renderSky(WorldRenderer bufferBuilderIn, float posY, boolean reverseX)
     {
         int i = 64;
         int j = 6;
@@ -348,7 +354,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
     private void generateStars()
     {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
 
         if (this.starVBO != null)
         {
@@ -373,15 +379,15 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         {
             this.starGLCallList = GLAllocation.generateDisplayLists(1);
             GlStateManager.pushMatrix();
-            GlStateManager.glNewList(this.starGLCallList, 4864);
+            EaglercraftGPU.glNewList(this.starGLCallList, 4864);
             this.renderStars(bufferbuilder);
             tessellator.draw();
-            GlStateManager.glEndList();
+            EaglercraftGPU.glEndList();
             GlStateManager.popMatrix();
         }
     }
 
-    private void renderStars(BufferBuilder bufferBuilderIn)
+    private void renderStars(WorldRenderer bufferBuilderIn)
     {
         EaglercraftRandom random = new EaglercraftRandom(10842L);
         bufferBuilderIn.begin(7, DefaultVertexFormats.POSITION);
@@ -1216,12 +1222,12 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         GlStateManager.disableFog();
         GlStateManager.disableAlpha();
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         RenderHelper.disableStandardItemLighting();
         GlStateManager.depthMask(false);
         this.renderEngine.bindTexture(END_SKY_TEXTURES);
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
 
         for (int k1 = 0; k1 < 6; ++k1)
         {
@@ -1299,7 +1305,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
 
             GlStateManager.color(f, f1, f2);
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
             GlStateManager.depthMask(false);
             GlStateManager.enableFog();
             GlStateManager.color(f, f1, f2);
@@ -1321,7 +1327,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
             GlStateManager.disableFog();
             GlStateManager.disableAlpha();
             GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
             RenderHelper.disableStandardItemLighting();
             float[] afloat = this.world.provider.calcSunriseSunsetColors(this.world.getCelestialAngle(partialTicks), partialTicks);
 
@@ -1365,7 +1371,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
             }
 
             GlStateManager.enableTexture2D();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE, GL_ONE, GL_ZERO);
             GlStateManager.pushMatrix();
             float f16 = 1.0F - this.world.getRainStrength(partialTicks);
             GlStateManager.color(1.0F, 1.0F, 1.0F, f16);
@@ -1505,10 +1511,10 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
                 int k1 = 32;
                 int l1 = 8;
                 Tessellator tessellator = Tessellator.getInstance();
-                BufferBuilder bufferbuilder = tessellator.getBuffer();
+                WorldRenderer bufferbuilder = tessellator.getBuffer();
                 this.renderEngine.bindTexture(CLOUDS_TEXTURES);
                 GlStateManager.enableBlend();
-                GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+                GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
                 Vec3d vec3d = this.world.getCloudColour(partialTicks);
                 float f = (float)vec3d.x;
                 float f1 = (float)vec3d.y;
@@ -1564,7 +1570,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
     {
         GlStateManager.disableCull();
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         float f = 12.0F;
         float f1 = 4.0F;
         double d3 = (double)((float)this.cloudTickCounter + partialTicks);
@@ -1577,7 +1583,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         d5 = d5 - (double)(l1 * 2048);
         this.renderEngine.bindTexture(CLOUDS_TEXTURES);
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         Vec3d vec3d = this.world.getCloudColour(partialTicks);
         float f3 = (float)vec3d.x;
         float f4 = (float)vec3d.y;
@@ -1755,7 +1761,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
     public void renderWorldBorder(Entity entityIn, float partialTicks)
     {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         WorldBorder worldborder = this.world.getWorldBorder();
         double d3 = (double)(this.mc.gameSettings.renderDistanceChunks * 16);
 
@@ -1767,7 +1773,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
             double d6 = entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double)partialTicks;
             double d7 = entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * (double)partialTicks;
             GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE, GL_ONE, GL_ZERO);
             this.renderEngine.bindTexture(FORCEFIELD_TEXTURES);
             GlStateManager.depthMask(false);
             GlStateManager.pushMatrix();
@@ -1872,7 +1878,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
 
     private void preRenderDamagedBlocks()
     {
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.DST_COLOR, GlStateManager.DestFactor.SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.tryBlendFuncSeparate(GL_DST_COLOR, GL_SRC_COLOR, GL_ONE, GL_ZERO);
         GlStateManager.enableBlend();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 0.5F);
         // FORGE: Fix MC-234
@@ -1893,7 +1899,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         GlStateManager.popMatrix();
     }
 
-    public void drawBlockDamageTexture(Tessellator tessellatorIn, BufferBuilder bufferBuilderIn, Entity entityIn, float partialTicks)
+    public void drawBlockDamageTexture(Tessellator tessellatorIn, WorldRenderer bufferBuilderIn, Entity entityIn, float partialTicks)
     {
         double d3 = entityIn.lastTickPosX + (entityIn.posX - entityIn.lastTickPosX) * (double)partialTicks;
         double d4 = entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double)partialTicks;
@@ -1952,8 +1958,8 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         if (execute == 0 && movingObjectPositionIn.typeOfHit == RayTraceResult.Type.BLOCK)
         {
             GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-            GlStateManager.glLineWidth(2.0F);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+            EaglercraftGPU.glLineWidth(2.0F);
             GlStateManager.disableTexture2D();
             GlStateManager.depthMask(false);
             BlockPos blockpos = movingObjectPositionIn.getBlockPos();
@@ -1981,13 +1987,13 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
     public static void drawBoundingBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, float red, float green, float blue, float alpha)
     {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(3, DefaultVertexFormats.POSITION_COLOR);
         drawBoundingBox(bufferbuilder, minX, minY, minZ, maxX, maxY, maxZ, red, green, blue, alpha);
         tessellator.draw();
     }
 
-    public static void drawBoundingBox(BufferBuilder buffer, double minX, double minY, double minZ, double maxX, double maxY, double maxZ, float red, float green, float blue, float alpha)
+    public static void drawBoundingBox(WorldRenderer buffer, double minX, double minY, double minZ, double maxX, double maxY, double maxZ, float red, float green, float blue, float alpha)
     {
         buffer.pos(minX, minY, minZ).color(red, green, blue, 0.0F).endVertex();
         buffer.pos(minX, minY, minZ).color(red, green, blue, alpha).endVertex();
@@ -2017,13 +2023,13 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
     public static void renderFilledBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, float red, float green, float blue, float alpha)
     {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(5, DefaultVertexFormats.POSITION_COLOR);
         addChainedFilledBoxVertices(bufferbuilder, minX, minY, minZ, maxX, maxY, maxZ, red, green, blue, alpha);
         tessellator.draw();
     }
 
-    public static void addChainedFilledBoxVertices(BufferBuilder builder, double p_189693_1_, double p_189693_3_, double p_189693_5_, double p_189693_7_, double p_189693_9_, double p_189693_11_, float red, float green, float blue, float alpha)
+    public static void addChainedFilledBoxVertices(WorldRenderer builder, double p_189693_1_, double p_189693_3_, double p_189693_5_, double p_189693_7_, double p_189693_9_, double p_189693_11_, float red, float green, float blue, float alpha)
     {
         builder.pos(p_189693_1_, p_189693_3_, p_189693_5_).color(red, green, blue, alpha).endVertex();
         builder.pos(p_189693_1_, p_189693_3_, p_189693_5_).color(red, green, blue, alpha).endVertex();

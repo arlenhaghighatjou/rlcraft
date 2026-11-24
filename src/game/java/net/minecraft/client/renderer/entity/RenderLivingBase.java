@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import com.google.common.collect.Lists;
 import java.nio.FloatBuffer;
 import java.util.List;
@@ -7,8 +8,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.entity.EntityLivingBase;
@@ -244,14 +245,20 @@ public abstract class RenderLivingBase<T extends EntityLivingBase> extends Rende
 
             if (flag1)
             {
-                GlStateManager.enableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 0.15F);
+                GlStateManager.depthMask(false);
+                GlStateManager.enableBlend();
+                GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                GlStateManager.alphaFunc(516, 0.003921569F);
             }
 
             this.mainModel.render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
 
             if (flag1)
             {
-                GlStateManager.disableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
+                GlStateManager.disableBlend();
+                GlStateManager.alphaFunc(516, 0.1F);
+                GlStateManager.depthMask(true);
             }
         }
     }

@@ -1,8 +1,9 @@
 package net.minecraft.client.renderer.entity.layers;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderEnderman;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.util.ResourceLocation;
@@ -25,7 +26,7 @@ public class LayerEndermanEyes implements LayerRenderer<EntityEnderman>
         this.endermanRenderer.bindTexture(RES_ENDERMAN_EYES);
         GlStateManager.enableBlend();
         GlStateManager.disableAlpha();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+        GlStateManager.blendFunc(GL_ONE, GL_ONE);
         GlStateManager.disableLighting();
         GlStateManager.depthMask(!entitylivingbaseIn.isInvisible());
         int i = 61680;

@@ -11,10 +11,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -189,7 +189,7 @@ public class RenderChunk
 
                 if (block.getDefaultState().getRenderType() != EnumBlockRenderType.INVISIBLE)
                 {
-                    BufferBuilder bufferbuilder = generator.getRegionRenderCacheBuilder().getWorldRendererByLayerId(j);
+                    WorldRenderer bufferbuilder = generator.getRegionRenderCacheBuilder().getWorldRendererByLayerId(j);
 
                     if (!compiledchunk.isLayerStarted(blockrenderlayer1))
                     {
@@ -328,13 +328,13 @@ public class RenderChunk
         return d0 * d0 + d1 * d1 + d2 * d2;
     }
 
-    private void preRenderBlocks(BufferBuilder bufferBuilderIn, BlockPos pos)
+    private void preRenderBlocks(WorldRenderer bufferBuilderIn, BlockPos pos)
     {
         bufferBuilderIn.begin(7, DefaultVertexFormats.BLOCK);
         bufferBuilderIn.setTranslation((double)(-pos.getX()), (double)(-pos.getY()), (double)(-pos.getZ()));
     }
 
-    private void postRenderBlocks(BlockRenderLayer layer, float x, float y, float z, BufferBuilder bufferBuilderIn, CompiledChunk compiledChunkIn)
+    private void postRenderBlocks(BlockRenderLayer layer, float x, float y, float z, WorldRenderer bufferBuilderIn, CompiledChunk compiledChunkIn)
     {
         if (layer == BlockRenderLayer.TRANSLUCENT && !compiledChunkIn.isLayerEmpty(layer))
         {

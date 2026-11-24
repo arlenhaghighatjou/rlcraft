@@ -19,28 +19,28 @@
 
 package net.minecraftforge.client.model.pipeline;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumUsage;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 /**
- * Assumes VertexFormatElement is present in the BufferBuilder's vertex format.
+ * Assumes VertexFormatElement is present in the WorldRenderer's vertex format.
  */
 public class VertexBufferConsumer implements IVertexConsumer
 {
     private static final float[] dummyColor = new float[]{ 1, 1, 1, 1 };
 
-    private BufferBuilder renderer;
+    private WorldRenderer renderer;
     private int[] quadData;
     private int v = 0;
     private BlockPos offset = BlockPos.ORIGIN;
 
     public VertexBufferConsumer() {}
 
-    public VertexBufferConsumer(BufferBuilder buffer)
+    public VertexBufferConsumer(WorldRenderer buffer)
     {
         setBuffer(buffer);
     }
@@ -81,7 +81,7 @@ public class VertexBufferConsumer implements IVertexConsumer
         }
     }
 
-    public void setBuffer(BufferBuilder buffer)
+    public void setBuffer(WorldRenderer buffer)
     {
         this.renderer = buffer;
         checkVertexFormat();

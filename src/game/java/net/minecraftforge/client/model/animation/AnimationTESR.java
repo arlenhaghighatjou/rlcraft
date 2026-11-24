@@ -22,7 +22,7 @@ package net.minecraftforge.client.model.animation;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -46,7 +46,7 @@ public class AnimationTESR<T extends TileEntity> extends FastTESR<T> implements 
     protected static BlockRendererDispatcher blockRenderer;
 
     @Override
-    public void renderTileEntityFast(T te, double x, double y, double z, float partialTick, int breakStage, float partial, BufferBuilder renderer)
+    public void renderTileEntityFast(T te, double x, double y, double z, float partialTick, int breakStage, float partial, WorldRenderer renderer)
    {
         if(!te.hasCapability(CapabilityAnimation.ANIMATION_CAPABILITY, null))
         {

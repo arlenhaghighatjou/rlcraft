@@ -1,9 +1,10 @@
 package net.minecraft.client.shader;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import java.nio.IntBuffer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -111,7 +112,7 @@ public class Framebuffer
 
             this.setFramebufferFilter(9728);
             GlStateManager.bindTexture(this.framebufferTexture);
-            GlStateManager.glTexImage2D(3553, 0, 32856, this.framebufferTextureWidth, this.framebufferTextureHeight, 0, 6408, 5121, (IntBuffer)null);
+            EaglercraftGPU.glTexImage2D(3553, 0, 32856, this.framebufferTextureWidth, this.framebufferTextureHeight, 0, 6408, 5121, (IntBuffer)null);
             OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, this.framebufferObject);
             OpenGlHelper.glFramebufferTexture2D(OpenGlHelper.GL_FRAMEBUFFER, OpenGlHelper.GL_COLOR_ATTACHMENT0, 3553, this.framebufferTexture, 0);
 
@@ -142,10 +143,10 @@ public class Framebuffer
         {
             this.framebufferFilter = framebufferFilterIn;
             GlStateManager.bindTexture(this.framebufferTexture);
-            GlStateManager.glTexParameteri(3553, 10241, framebufferFilterIn);
-            GlStateManager.glTexParameteri(3553, 10240, framebufferFilterIn);
-            GlStateManager.glTexParameteri(3553, 10242, 10496);
-            GlStateManager.glTexParameteri(3553, 10243, 10496);
+            EaglercraftGPU.glTexParameteri(3553, 10241, framebufferFilterIn);
+            EaglercraftGPU.glTexParameteri(3553, 10240, framebufferFilterIn);
+            EaglercraftGPU.glTexParameteri(3553, 10242, 10496);
+            EaglercraftGPU.glTexParameteri(3553, 10243, 10496);
             GlStateManager.bindTexture(0);
         }
     }
@@ -260,7 +261,7 @@ public class Framebuffer
             float f2 = (float)this.framebufferWidth / (float)this.framebufferTextureWidth;
             float f3 = (float)this.framebufferHeight / (float)this.framebufferTextureHeight;
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
             bufferbuilder.pos(0.0D, (double)f1, 0.0D).tex(0.0D, 0.0D).color(255, 255, 255, 255).endVertex();
             bufferbuilder.pos((double)f, (double)f1, 0.0D).tex((double)f2, 0.0D).color(255, 255, 255, 255).endVertex();

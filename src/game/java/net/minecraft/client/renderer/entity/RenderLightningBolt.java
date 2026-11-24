@@ -1,9 +1,10 @@
 package net.minecraft.client.renderer.entity;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -22,11 +23,11 @@ public class RenderLightningBolt extends Render<EntityLightningBolt>
     public void doRender(EntityLightningBolt entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         GlStateManager.disableTexture2D();
         GlStateManager.disableLighting();
         GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+        GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE);
         double[] adouble = new double[8];
         double[] adouble1 = new double[8];
         double d0 = 0.0D;

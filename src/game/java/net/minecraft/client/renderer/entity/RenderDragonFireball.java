@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer.entity;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.projectile.EntityDragonFireball;
@@ -27,7 +27,7 @@ public class RenderDragonFireball extends Render<EntityDragonFireball>
         GlStateManager.enableRescaleNormal();
         GlStateManager.scale(2.0F, 2.0F, 2.0F);
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         float f = 1.0F;
         float f1 = 0.5F;
         float f2 = 0.25F;

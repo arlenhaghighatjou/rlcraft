@@ -1,6 +1,6 @@
 package net.minecraft.client.particle;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -35,7 +35,7 @@ public class ParticleFlame extends Particle
         this.resetPositionToBB();
     }
 
-    public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+    public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
     {
         float f = ((float)this.particleAge + partialTicks) / (float)this.particleMaxAge;
         this.particleScale = this.flameScale * (1.0F - f * f * 0.5F);

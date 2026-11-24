@@ -22,8 +22,8 @@ package net.minecraftforge.client.model.animation;
 import java.util.List;
 
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -84,7 +84,7 @@ public class AnimationModelBase<T extends Entity> extends ModelBase implements I
         GlStateManager.pushMatrix();
         GlStateManager.rotate(180, 0, 0, 1);
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder builder = tessellator.getBuffer();
+        WorldRenderer builder = tessellator.getBuffer();
         builder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
         builder.setTranslation(-0.5, -1.5, -0.5);
 

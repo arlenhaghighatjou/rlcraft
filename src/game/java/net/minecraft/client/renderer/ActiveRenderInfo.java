@@ -1,5 +1,7 @@
 package net.minecraft.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import net.minecraft.block.BlockLiquid;
@@ -37,7 +39,7 @@ public class ActiveRenderInfo
     {
         GlStateManager.getFloat(2982, MODELVIEW);
         GlStateManager.getFloat(2983, PROJECTION);
-        GlStateManager.glGetInteger(2978, VIEWPORT);
+        EaglercraftGPU.glGetInteger(2978, VIEWPORT);
         float f = (float)((VIEWPORT.get(0) + VIEWPORT.get(2)) / 2);
         float f1 = (float)((VIEWPORT.get(1) + VIEWPORT.get(3)) / 2);
         GLU.gluUnProject(f, f1, 0.0F, MODELVIEW, PROJECTION, VIEWPORT, OBJECTCOORDS);

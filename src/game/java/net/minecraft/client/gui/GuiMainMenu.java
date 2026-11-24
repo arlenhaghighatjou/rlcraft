@@ -1,5 +1,7 @@
 package net.minecraft.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.Runnables;
 import java.io.BufferedReader;
@@ -13,9 +15,9 @@ import java.util.Date;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -334,7 +336,7 @@ public class GuiMainMenu extends GuiScreen
     private void drawPanorama(int mouseX, int mouseY, float partialTicks)
     {
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         GlStateManager.matrixMode(5889);
         GlStateManager.pushMatrix();
         GlStateManager.loadIdentity();
@@ -349,7 +351,7 @@ public class GuiMainMenu extends GuiScreen
         GlStateManager.disableAlpha();
         GlStateManager.disableCull();
         GlStateManager.depthMask(false);
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         int i = 8;
 
         for (int j = 0; j < 64; ++j)
@@ -421,14 +423,14 @@ public class GuiMainMenu extends GuiScreen
     private void rotateAndBlurSkybox()
     {
         this.mc.getTextureManager().bindTexture(this.backgroundTexture);
-        GlStateManager.glTexParameteri(3553, 10241, 9729);
-        GlStateManager.glTexParameteri(3553, 10240, 9729);
-        GlStateManager.glCopyTexSubImage2D(3553, 0, 0, 0, 0, 0, 256, 256);
+        EaglercraftGPU.glTexParameteri(3553, 10241, 9729);
+        EaglercraftGPU.glTexParameteri(3553, 10240, 9729);
+        EaglercraftGPU.glCopyTexSubImage2D(3553, 0, 0, 0, 0, 0, 256, 256);
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         GlStateManager.colorMask(true, true, true, false);
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
         GlStateManager.disableAlpha();
         int i = 3;
@@ -470,7 +472,7 @@ public class GuiMainMenu extends GuiScreen
         int i = this.width;
         int j = this.height;
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
         bufferbuilder.pos(0.0D, (double)j, (double)this.zLevel).tex((double)(0.5F - f1), (double)(0.5F + f2)).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();
         bufferbuilder.pos((double)i, (double)j, (double)this.zLevel).tex((double)(0.5F - f1), (double)(0.5F - f2)).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();

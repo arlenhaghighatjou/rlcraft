@@ -19,6 +19,7 @@
 
 package net.minecraftforge.client;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import static net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.*;
 
 import java.awt.Color;
@@ -33,8 +34,8 @@ import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiOverlayDebug;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -129,7 +130,7 @@ public class GuiIngameForge extends GuiIngame
         else
         {
             GlStateManager.enableDepth();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         }
 
         if (renderHelmet) renderHelmet(res, partialTicks);
@@ -240,7 +241,7 @@ public class GuiIngameForge extends GuiIngame
     {
         if (pre(BOSSHEALTH)) return;
         bind(Gui.ICONS);
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         mc.mcProfiler.startSection("bossHealth");
         GlStateManager.enableBlend();
         this.overlayBoss.renderBossHealth();
@@ -256,7 +257,7 @@ public class GuiIngameForge extends GuiIngame
         {
             // Need to put this here, since Vanilla assumes this state after the vignette was rendered.
             GlStateManager.enableDepth();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
             return;
         }
         super.renderVignette(lightLevel, scaledRes);
@@ -661,7 +662,7 @@ public class GuiIngameForge extends GuiIngame
 
                     GlStateManager.pushMatrix();
                     GlStateManager.enableBlend();
-                    GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+                    GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
                     FontRenderer font = highlightingItemStack.getItem().getFontRenderer(highlightingItemStack);
                     if (font != null)
                     {
@@ -764,7 +765,7 @@ public class GuiIngameForge extends GuiIngame
                 GlStateManager.pushMatrix();
                 GlStateManager.translate((float)(width / 2), (float)(height - 68), 0.0F);
                 GlStateManager.enableBlend();
-                GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+                GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
                 int color = (animateOverlayMessageColor ? Color.HSBtoRGB(hue / 50.0F, 0.7F, 0.6F) & WHITE : WHITE);
                 fontrenderer.drawString(overlayMessage, -fontrenderer.getStringWidth(overlayMessage) / 2, -4, color | (opacity << 24));
                 GlStateManager.disableBlend();
@@ -797,7 +798,7 @@ public class GuiIngameForge extends GuiIngame
                 GlStateManager.pushMatrix();
                 GlStateManager.translate((float)(width / 2), (float)(height / 2), 0.0F);
                 GlStateManager.enableBlend();
-                GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+                GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(4.0F, 4.0F, 4.0F);
                 int l = opacity << 24 & -16777216;

@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer.entity;
 
 import net.minecraft.client.model.ModelLeashKnot;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.EntityLeashKnot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;

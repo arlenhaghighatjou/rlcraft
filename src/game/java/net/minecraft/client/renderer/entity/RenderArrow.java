@@ -1,7 +1,8 @@
 package net.minecraft.client.renderer.entity;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -27,7 +28,7 @@ public abstract class RenderArrow<T extends EntityArrow> extends Render<T>
         GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks - 90.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks, 0.0F, 0.0F, 1.0F);
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         int i = 0;
         float f = 0.0F;
         float f1 = 0.5F;
@@ -57,14 +58,14 @@ public abstract class RenderArrow<T extends EntityArrow> extends Render<T>
             GlStateManager.enableOutlineMode(this.getTeamColor(entity));
         }
 
-        GlStateManager.glNormal3f(0.05625F, 0.0F, 0.0F);
+        EaglercraftGPU.glNormal3f(0.05625F, 0.0F, 0.0F);
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
         bufferbuilder.pos(-7.0D, -2.0D, -2.0D).tex(0.0D, 0.15625D).endVertex();
         bufferbuilder.pos(-7.0D, -2.0D, 2.0D).tex(0.15625D, 0.15625D).endVertex();
         bufferbuilder.pos(-7.0D, 2.0D, 2.0D).tex(0.15625D, 0.3125D).endVertex();
         bufferbuilder.pos(-7.0D, 2.0D, -2.0D).tex(0.0D, 0.3125D).endVertex();
         tessellator.draw();
-        GlStateManager.glNormal3f(-0.05625F, 0.0F, 0.0F);
+        EaglercraftGPU.glNormal3f(-0.05625F, 0.0F, 0.0F);
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
         bufferbuilder.pos(-7.0D, 2.0D, -2.0D).tex(0.0D, 0.15625D).endVertex();
         bufferbuilder.pos(-7.0D, 2.0D, 2.0D).tex(0.15625D, 0.15625D).endVertex();
@@ -75,7 +76,7 @@ public abstract class RenderArrow<T extends EntityArrow> extends Render<T>
         for (int j = 0; j < 4; ++j)
         {
             GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
-            GlStateManager.glNormal3f(0.0F, 0.0F, 0.05625F);
+            EaglercraftGPU.glNormal3f(0.0F, 0.0F, 0.05625F);
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
             bufferbuilder.pos(-8.0D, -2.0D, 0.0D).tex(0.0D, 0.0D).endVertex();
             bufferbuilder.pos(8.0D, -2.0D, 0.0D).tex(0.5D, 0.0D).endVertex();

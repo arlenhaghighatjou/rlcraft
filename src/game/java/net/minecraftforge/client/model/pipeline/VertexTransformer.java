@@ -20,7 +20,7 @@
 package net.minecraftforge.client.model.pipeline;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.EnumFacing;
 
 public class VertexTransformer implements IVertexConsumer

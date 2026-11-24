@@ -23,8 +23,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.client.config.GuiUtils;
@@ -277,7 +277,7 @@ public abstract class GuiScrollingList
         this.applyScrollLimits();
 
         Tessellator tess = Tessellator.getInstance();
-        BufferBuilder worldr = tess.getBuffer();
+        WorldRenderer worldr = tess.getBuffer();
 
         ScaledResolution res = new ScaledResolution(client);
         double scaleW = client.displayWidth / res.getScaledWidth_double();

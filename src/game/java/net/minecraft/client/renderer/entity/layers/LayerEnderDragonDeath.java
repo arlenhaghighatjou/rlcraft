@@ -1,8 +1,9 @@
 package net.minecraft.client.renderer.entity.layers;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -18,7 +19,7 @@ public class LayerEnderDragonDeath implements LayerRenderer<EntityDragon>
         if (entitylivingbaseIn.deathTicks > 0)
         {
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
             RenderHelper.disableStandardItemLighting();
             float f = ((float)entitylivingbaseIn.deathTicks + partialTicks) / 200.0F;
             float f1 = 0.0F;
@@ -32,7 +33,7 @@ public class LayerEnderDragonDeath implements LayerRenderer<EntityDragon>
             GlStateManager.disableTexture2D();
             GlStateManager.shadeModel(7425);
             GlStateManager.enableBlend();
-            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+            GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE);
             GlStateManager.disableAlpha();
             GlStateManager.enableCull();
             GlStateManager.depthMask(false);

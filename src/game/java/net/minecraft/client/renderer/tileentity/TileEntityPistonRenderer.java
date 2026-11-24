@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.tileentity;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonExtension;
@@ -7,8 +8,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -35,10 +36,10 @@ public class TileEntityPistonRenderer extends TileEntitySpecialRenderer<TileEnti
         if (iblockstate.getMaterial() != Material.AIR && te.getProgress(partialTicks) < 1.0F)
         {
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
             this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
             RenderHelper.disableStandardItemLighting();
-            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.enableBlend();
             GlStateManager.disableCull();
 
@@ -81,7 +82,7 @@ public class TileEntityPistonRenderer extends TileEntitySpecialRenderer<TileEnti
         }
     }
 
-    private boolean renderStateModel(BlockPos pos, IBlockState state, BufferBuilder buffer, World p_188186_4_, boolean checkSides)
+    private boolean renderStateModel(BlockPos pos, IBlockState state, WorldRenderer buffer, World p_188186_4_, boolean checkSides)
     {
         return this.blockRenderer.getBlockModelRenderer().renderModel(p_188186_4_, this.blockRenderer.getModelForState(state), state, pos, buffer, checkSides);
     }

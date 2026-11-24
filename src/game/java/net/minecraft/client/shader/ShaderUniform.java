@@ -2,7 +2,7 @@ package net.minecraft.client.shader;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;

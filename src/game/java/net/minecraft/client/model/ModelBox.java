@@ -1,6 +1,6 @@
 package net.minecraft.client.model;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -81,7 +81,7 @@ public class ModelBox
     }
 
     @SideOnly(Side.CLIENT)
-    public void render(BufferBuilder renderer, float scale)
+    public void render(WorldRenderer renderer, float scale)
     {
         for (TexturedQuad texturedquad : this.quadList)
         {

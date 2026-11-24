@@ -1,11 +1,12 @@
 package net.minecraft.client.renderer.tileentity;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import java.nio.FloatBuffer;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntityEndPortal;
@@ -45,7 +46,7 @@ public class TileEntityEndPortalRenderer extends TileEntitySpecialRenderer<TileE
                 this.bindTexture(END_SKY_TEXTURE);
                 f1 = 0.15F;
                 GlStateManager.enableBlend();
-                GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+                GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             }
 
             if (j >= 1)
@@ -58,7 +59,7 @@ public class TileEntityEndPortalRenderer extends TileEntitySpecialRenderer<TileE
             if (j == 1)
             {
                 GlStateManager.enableBlend();
-                GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+                GlStateManager.blendFunc(GL_ONE, GL_ONE);
             }
 
             GlStateManager.texGen(GlStateManager.TexGen.S, 9216);
@@ -83,7 +84,7 @@ public class TileEntityEndPortalRenderer extends TileEntitySpecialRenderer<TileE
             GlStateManager.multMatrix(PROJECTION);
             GlStateManager.multMatrix(MODELVIEW);
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
             float f3 = (RANDOM.nextFloat() * 0.5F + 0.1F) * f1;
             float f4 = (RANDOM.nextFloat() * 0.5F + 0.4F) * f1;

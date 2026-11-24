@@ -1,8 +1,9 @@
 package net.minecraft.client.renderer.entity.layers;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelElytra;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EnumPlayerModelParts;
@@ -33,7 +34,7 @@ public class LayerElytra implements LayerRenderer<EntityLivingBase>
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.enableBlend();
-            GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.blendFunc(GL_ONE, GL_ZERO);
 
             if (entitylivingbaseIn instanceof AbstractClientPlayer)
             {

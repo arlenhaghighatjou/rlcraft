@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.texture;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import java.awt.image.BufferedImage;
 import java.io.Closeable;
 import java.io.IOException;
@@ -8,7 +9,7 @@ import java.nio.IntBuffer;
 import javax.imageio.ImageIO;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
@@ -188,7 +189,7 @@ public class TextureUtil
             l = Math.min(i, p_147947_3_ - k);
             int i1 = p_147947_2_ * l;
             copyToBufferPos(p_147947_1_, j, i1);
-            GlStateManager.glTexSubImage2D(3553, p_147947_0_, p_147947_4_, p_147947_5_ + k, p_147947_2_, l, 32993, 33639, DATA_BUFFER);
+            EaglercraftGPU.glTexSubImage2D(3553, p_147947_0_, p_147947_4_, p_147947_5_ + k, p_147947_2_, l, 32993, 33639, DATA_BUFFER);
         }
     }
 
@@ -212,15 +213,15 @@ public class TextureUtil
         }
         if (mipmapLevels >= 0)
         {
-            GlStateManager.glTexParameteri(3553, 33085, mipmapLevels);
-            GlStateManager.glTexParameteri(3553, 33082, 0);
-            GlStateManager.glTexParameteri(3553, 33083, mipmapLevels);
-            GlStateManager.glTexParameterf(3553, 34049, 0.0F);
+            EaglercraftGPU.glTexParameteri(3553, 33085, mipmapLevels);
+            EaglercraftGPU.glTexParameteri(3553, 33082, 0);
+            EaglercraftGPU.glTexParameteri(3553, 33083, mipmapLevels);
+            EaglercraftGPU.glTexParameterf(3553, 34049, 0.0F);
         }
 
         for (int i = 0; i <= mipmapLevels; ++i)
         {
-            GlStateManager.glTexImage2D(3553, i, 6408, width >> i, height >> i, 0, 32993, 33639, (IntBuffer)null);
+            EaglercraftGPU.glTexImage2D(3553, i, 6408, width >> i, height >> i, 0, 32993, 33639, (IntBuffer)null);
         }
     }
 
@@ -247,7 +248,7 @@ public class TextureUtil
             int k1 = i * j1;
             p_110993_0_.getRGB(0, i1, i, j1, aint, 0, i);
             copyToBuffer(aint, k1);
-            GlStateManager.glTexSubImage2D(3553, 0, p_110993_1_, p_110993_2_ + i1, i, j1, 32993, 33639, DATA_BUFFER);
+            EaglercraftGPU.glTexSubImage2D(3553, 0, p_110993_1_, p_110993_2_ + i1, i, j1, 32993, 33639, DATA_BUFFER);
         }
     }
 
@@ -255,13 +256,13 @@ public class TextureUtil
     {
         if (p_110997_0_)
         {
-            GlStateManager.glTexParameteri(3553, 10242, 10496);
-            GlStateManager.glTexParameteri(3553, 10243, 10496);
+            EaglercraftGPU.glTexParameteri(3553, 10242, 10496);
+            EaglercraftGPU.glTexParameteri(3553, 10243, 10496);
         }
         else
         {
-            GlStateManager.glTexParameteri(3553, 10242, 10497);
-            GlStateManager.glTexParameteri(3553, 10243, 10497);
+            EaglercraftGPU.glTexParameteri(3553, 10242, 10497);
+            EaglercraftGPU.glTexParameteri(3553, 10243, 10497);
         }
     }
 
@@ -274,13 +275,13 @@ public class TextureUtil
     {
         if (p_147954_0_)
         {
-            GlStateManager.glTexParameteri(3553, 10241, p_147954_1_ ? 9987 : 9729);
-            GlStateManager.glTexParameteri(3553, 10240, 9729);
+            EaglercraftGPU.glTexParameteri(3553, 10241, p_147954_1_ ? 9987 : 9729);
+            EaglercraftGPU.glTexParameteri(3553, 10240, 9729);
         }
         else
         {
-            GlStateManager.glTexParameteri(3553, 10241, p_147954_1_ ? 9986 : 9728);
-            GlStateManager.glTexParameteri(3553, 10240, 9728);
+            EaglercraftGPU.glTexParameteri(3553, 10241, p_147954_1_ ? 9986 : 9728);
+            EaglercraftGPU.glTexParameteri(3553, 10240, 9728);
         }
     }
 

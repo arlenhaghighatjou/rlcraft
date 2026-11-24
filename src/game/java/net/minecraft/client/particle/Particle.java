@@ -2,7 +2,7 @@ package net.minecraft.client.particle;
 
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -167,7 +167,7 @@ public class Particle
         }
     }
 
-    public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+    public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
     {
         float f = (float)this.particleTextureIndexX / 16.0F;
         float f1 = f + 0.0624375F;

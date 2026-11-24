@@ -49,7 +49,7 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.ServerPinger;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.resources.AbstractResourcePack;
 import net.minecraft.client.resources.FallbackResourceManager;
 import net.minecraft.client.resources.IReloadableResourceManager;

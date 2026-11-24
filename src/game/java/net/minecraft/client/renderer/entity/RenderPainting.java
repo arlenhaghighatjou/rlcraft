@@ -1,8 +1,8 @@
 package net.minecraft.client.renderer.entity;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.item.EntityPainting;
@@ -90,7 +90,7 @@ public class RenderPainting extends Render<EntityPainting>
                 float f21 = (float)(textureV + height - j * 16) / 256.0F;
                 float f22 = (float)(textureV + height - (j + 1) * 16) / 256.0F;
                 Tessellator tessellator = Tessellator.getInstance();
-                BufferBuilder bufferbuilder = tessellator.getBuffer();
+                WorldRenderer bufferbuilder = tessellator.getBuffer();
                 bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
                 bufferbuilder.pos((double)f15, (double)f18, -0.5D).tex((double)f20, (double)f21).normal(0.0F, 0.0F, -1.0F).endVertex();
                 bufferbuilder.pos((double)f16, (double)f18, -0.5D).tex((double)f19, (double)f21).normal(0.0F, 0.0F, -1.0F).endVertex();

@@ -6,7 +6,7 @@ import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.model.ModelBook;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;

@@ -1,8 +1,9 @@
 package net.minecraft.client.renderer.debug;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +24,7 @@ public class DebugRendererChunkBorder implements DebugRenderer.IDebugRenderer
     {
         EntityPlayer entityplayer = this.minecraft.player;
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         double d0 = entityplayer.lastTickPosX + (entityplayer.posX - entityplayer.lastTickPosX) * (double)partialTicks;
         double d1 = entityplayer.lastTickPosY + (entityplayer.posY - entityplayer.lastTickPosY) * (double)partialTicks;
         double d2 = entityplayer.lastTickPosZ + (entityplayer.posZ - entityplayer.lastTickPosZ) * (double)partialTicks;
@@ -33,7 +34,7 @@ public class DebugRendererChunkBorder implements DebugRenderer.IDebugRenderer
         GlStateManager.disableBlend();
         double d5 = (double)(entityplayer.chunkCoordX << 4) - d0;
         double d6 = (double)(entityplayer.chunkCoordZ << 4) - d2;
-        GlStateManager.glLineWidth(1.0F);
+        EaglercraftGPU.glLineWidth(1.0F);
         bufferbuilder.begin(3, DefaultVertexFormats.POSITION_COLOR);
 
         for (int i = -16; i <= 32; i += 16)
@@ -84,7 +85,7 @@ public class DebugRendererChunkBorder implements DebugRenderer.IDebugRenderer
         }
 
         tessellator.draw();
-        GlStateManager.glLineWidth(2.0F);
+        EaglercraftGPU.glLineWidth(2.0F);
         bufferbuilder.begin(3, DefaultVertexFormats.POSITION_COLOR);
 
         for (int j1 = 0; j1 <= 16; j1 += 16)
@@ -111,7 +112,7 @@ public class DebugRendererChunkBorder implements DebugRenderer.IDebugRenderer
         }
 
         tessellator.draw();
-        GlStateManager.glLineWidth(1.0F);
+        EaglercraftGPU.glLineWidth(1.0F);
         GlStateManager.enableBlend();
         GlStateManager.enableTexture2D();
     }

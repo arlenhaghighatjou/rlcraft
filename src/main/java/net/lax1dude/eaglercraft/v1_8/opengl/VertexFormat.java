@@ -18,6 +18,12 @@ package net.lax1dude.eaglercraft.v1_8.opengl;
 
 import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import net.minecraft.client.renderer.vertex.VertexFormatElement;
+
 public enum VertexFormat {
 
 	BLOCK(true, true, false, true),
@@ -98,6 +104,11 @@ public enum VertexFormat {
 	public final int attribStride;
 	
 	public final int eaglercraftAttribBits;
+
+	private final VertexFormatElement[] elements;
+	private final int[] elementOffsets;
+	private final List<VertexFormatElement> elementList;
+	private final int[] uvOffsets = new int[] { -1, -1 };
 
 	private VertexFormat(boolean texture, boolean color, boolean normal, boolean lightmap) {
 		
@@ -192,7 +203,85 @@ public enum VertexFormat {
 		attribNormalStride = normal ? bytes : -1;
 		attribLightmapStride = lightmap ? bytes : -1;
 		eaglercraftAttribBits = bitfield;
-		
+
+		int cnt = 1 + (color ? 1 : 0) + (texture ? 1 : 0) + (normal ? 2 : 0) + (lightmap ? 1 : 0);
+		elements = new VertexFormatElement[cnt];
+		elementOffsets = new int[cnt];
+		int i = 0;
+		elements[i++] = VertexFormatElement.POSITION_3F;
+		if(color) {
+			elementOffsets[i] = attribColorOffset;
+			elements[i++] = VertexFormatElement.COLOR_4UB;
+		}
+		if(texture) {
+			uvOffsets[0] = attribTextureOffset;
+			elementOffsets[i] = attribTextureOffset;
+			elements[i++] = VertexFormatElement.TEX_2F;
+		}
+		if(normal) {
+			elementOffsets[i] = attribNormalOffset;
+			elements[i++] = VertexFormatElement.NORMAL_3B;
+			elementOffsets[i] = attribNormalOffset + 3;
+			elements[i++] = VertexFormatElement.PADDING_1B;
+		}
+		if(lightmap) {
+			uvOffsets[1] = attribLightmapOffset;
+			elementOffsets[i] = attribLightmapOffset;
+			elements[i++] = VertexFormatElement.TEX_2S;
+		}
+		elementList = Collections.unmodifiableList(Arrays.asList(elements));
+	}
+
+	public List<VertexFormatElement> getElements() {
+		return elementList;
+	}
+
+	public int getElementCount() {
+		return elements.length;
+	}
+
+	public VertexFormatElement getElement(int index) {
+		return elements[index];
+	}
+
+	public int getOffset(int index) {
+		return elementOffsets[index];
+	}
+
+	public int getNextOffset() {
+		return attribStride;
+	}
+
+	public int getSize() {
+		return attribStride;
+	}
+
+	public int getIntegerSize() {
+		return attribStride >> 2;
+	}
+
+	public boolean hasNormal() {
+		return attribNormalEnabled;
+	}
+
+	public boolean hasColor() {
+		return attribColorEnabled;
+	}
+
+	public int getNormalOffset() {
+		return attribNormalOffset;
+	}
+
+	public int getColorOffset() {
+		return attribColorOffset;
+	}
+
+	public boolean hasUvOffset(int id) {
+		return uvOffsets[id] != -1;
+	}
+
+	public int getUvOffsetById(int id) {
+		return uvOffsets[id];
 	}
 	
 }

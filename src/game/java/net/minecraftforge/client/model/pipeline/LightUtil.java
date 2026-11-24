@@ -19,11 +19,11 @@
 
 package net.minecraftforge.client.model.pipeline;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumUsage;
 import net.minecraft.util.EnumFacing;
@@ -256,7 +256,7 @@ public class LightUtil
         if(tessellator == null)
         {
             Tessellator tes = Tessellator.getInstance();
-            BufferBuilder wr = tes.getBuffer();
+            WorldRenderer wr = tes.getBuffer();
             tessellator = new VertexBufferConsumer(wr);
         }
         return tessellator;
@@ -288,7 +288,7 @@ public class LightUtil
     private static final ThreadLocal<ItemPipeline> itemPipeline = ThreadLocal.withInitial(ItemPipeline::new);
 
     // renders quad in any Vertex Format, but is slower
-    public static void renderQuadColorSlow(BufferBuilder buffer, BakedQuad quad, int auxColor)
+    public static void renderQuadColorSlow(WorldRenderer buffer, BakedQuad quad, int auxColor)
     {
         ItemPipeline pipeline = itemPipeline.get();
         pipeline.bufferConsumer.setBuffer(buffer);
@@ -303,7 +303,7 @@ public class LightUtil
         quad.pipe(cons);
     }
 
-    public static void renderQuadColor(BufferBuilder buffer, BakedQuad quad, int auxColor)
+    public static void renderQuadColor(WorldRenderer buffer, BakedQuad quad, int auxColor)
     {
         if (quad.getFormat().equals(buffer.getVertexFormat()))
         {

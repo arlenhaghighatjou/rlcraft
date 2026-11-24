@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.sp.gui.GuiShareToLan;
 import java.io.IOException;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.gui.advancements.GuiScreenAdvancements;

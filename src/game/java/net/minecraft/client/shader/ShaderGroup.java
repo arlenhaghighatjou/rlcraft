@@ -1,5 +1,6 @@
 package net.minecraft.client.shader;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.IResource;
@@ -204,13 +205,13 @@ public class ShaderGroup
 
                             if (lvt_23_1_)
                             {
-                                GlStateManager.glTexParameteri(3553, 10241, 9729);
-                                GlStateManager.glTexParameteri(3553, 10240, 9729);
+                                EaglercraftGPU.glTexParameteri(3553, 10241, 9729);
+                                EaglercraftGPU.glTexParameteri(3553, 10240, 9729);
                             }
                             else
                             {
-                                GlStateManager.glTexParameteri(3553, 10241, 9728);
-                                GlStateManager.glTexParameteri(3553, 10240, 9728);
+                                EaglercraftGPU.glTexParameteri(3553, 10241, 9728);
+                                EaglercraftGPU.glTexParameteri(3553, 10240, 9728);
                             }
 
                             shader.addAuxFramebuffer(s4, Integer.valueOf(lvt_20_2_.getGlTextureId()), lvt_21_1_, lvt_22_1_);

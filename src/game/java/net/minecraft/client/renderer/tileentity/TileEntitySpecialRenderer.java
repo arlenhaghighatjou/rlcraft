@@ -2,8 +2,8 @@ package net.minecraft.client.renderer.tileentity;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
@@ -77,7 +77,7 @@ public abstract class TileEntitySpecialRenderer<T extends TileEntity>
         return false;
     }
 
-    public void renderTileEntityFast(T te, double x, double y, double z, float partialTicks, int destroyStage, float partial, net.minecraft.client.renderer.BufferBuilder buffer) {}
+    public void renderTileEntityFast(T te, double x, double y, double z, float partialTicks, int destroyStage, float partial, net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer buffer) {}
 
     protected void drawNameplate(T te, String str, double x, double y, double z, int maxDistance)
     {

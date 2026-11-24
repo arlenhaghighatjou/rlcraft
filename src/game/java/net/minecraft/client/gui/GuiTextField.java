@@ -1,10 +1,11 @@
 package net.minecraft.client.gui;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ChatAllowedCharacters;
@@ -557,11 +558,11 @@ public class GuiTextField extends Gui
         }
 
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        WorldRenderer bufferbuilder = tessellator.getBuffer();
         GlStateManager.color(0.0F, 0.0F, 255.0F, 255.0F);
         GlStateManager.disableTexture2D();
         GlStateManager.enableColorLogic();
-        GlStateManager.colorLogicOp(GlStateManager.LogicOp.OR_REVERSE);
+        GlStateManager.colorLogicOp(GL_OR_REVERSE);
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION);
         bufferbuilder.pos((double)startX, (double)endY, 0.0D).endVertex();
         bufferbuilder.pos((double)endX, (double)endY, 0.0D).endVertex();

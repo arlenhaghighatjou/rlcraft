@@ -1,8 +1,8 @@
 package net.minecraft.client.renderer.entity;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +38,7 @@ public class RenderFish extends Render<EntityFishHook>
             GlStateManager.scale(0.5F, 0.5F, 0.5F);
             this.bindEntityTexture(entity);
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
             int i = 1;
             int j = 2;
             float f = 0.0625F;

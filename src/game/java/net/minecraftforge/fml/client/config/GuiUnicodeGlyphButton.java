@@ -21,7 +21,7 @@ package net.minecraftforge.fml.client.config;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 /**
  * This class provides a button that shows a string glyph at the beginning. The glyph can be scaled using the glyphScale parameter.

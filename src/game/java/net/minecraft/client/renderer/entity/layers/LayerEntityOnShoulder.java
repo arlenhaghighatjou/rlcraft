@@ -4,7 +4,7 @@ import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelParrot;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderParrot;

@@ -22,7 +22,7 @@ public class BakedQuad implements net.minecraftforge.client.model.pipeline.IVert
         this(vertexDataIn, tintIndexIn, faceIn, spriteIn, true, net.minecraft.client.renderer.vertex.DefaultVertexFormats.ITEM);
     }
 
-    public BakedQuad(int[] vertexDataIn, int tintIndexIn, EnumFacing faceIn, TextureAtlasSprite spriteIn, boolean applyDiffuseLighting, net.minecraft.client.renderer.vertex.VertexFormat format)
+    public BakedQuad(int[] vertexDataIn, int tintIndexIn, EnumFacing faceIn, TextureAtlasSprite spriteIn, boolean applyDiffuseLighting, net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat format)
     {
         this.format = format;
         this.applyDiffuseLighting = applyDiffuseLighting;
@@ -57,7 +57,7 @@ public class BakedQuad implements net.minecraftforge.client.model.pipeline.IVert
         return this.face;
     }
 
-    protected final net.minecraft.client.renderer.vertex.VertexFormat format;
+    protected final net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat format;
     protected final boolean applyDiffuseLighting;
 
     @Override
@@ -66,7 +66,7 @@ public class BakedQuad implements net.minecraftforge.client.model.pipeline.IVert
         net.minecraftforge.client.model.pipeline.LightUtil.putBakedQuad(consumer, this);
     }
 
-    public net.minecraft.client.renderer.vertex.VertexFormat getFormat()
+    public net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat getFormat()
     {
         return format;
     }

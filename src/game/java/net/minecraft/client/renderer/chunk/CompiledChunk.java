@@ -2,7 +2,7 @@ package net.minecraft.client.renderer.chunk;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -32,7 +32,7 @@ public class CompiledChunk
     private boolean empty = true;
     private final List<TileEntity> tileEntities = Lists.<TileEntity>newArrayList();
     private SetVisibility setVisibility = new SetVisibility();
-    private BufferBuilder.State state;
+    private WorldRenderer.State state;
 
     public boolean isEmpty()
     {
@@ -80,12 +80,12 @@ public class CompiledChunk
         this.setVisibility = visibility;
     }
 
-    public BufferBuilder.State getState()
+    public WorldRenderer.State getState()
     {
         return this.state;
     }
 
-    public void setState(BufferBuilder.State stateIn)
+    public void setState(WorldRenderer.State stateIn)
     {
         this.state = stateIn;
     }

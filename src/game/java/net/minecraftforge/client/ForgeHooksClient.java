@@ -56,10 +56,10 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.RenderHelper;
@@ -82,7 +82,7 @@ import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumUsage;
 import net.minecraft.client.resources.FoliageColorReloadListener;
@@ -548,7 +548,7 @@ public class ForgeHooksClient
         return ret;
     }
 
-    public static void putQuadColor(BufferBuilder renderer, BakedQuad quad, int color)
+    public static void putQuadColor(WorldRenderer renderer, BakedQuad quad, int color)
     {
         float cb = color & 0xFF;
         float cg = (color >>> 8) & 0xFF;
@@ -725,7 +725,7 @@ public class ForgeHooksClient
 
     private static void drawSegment(RenderItem ri, int baseColor, ItemStack stack, List<BakedQuad> segment, int bl, int sl, boolean shade, boolean updateLighting, boolean updateShading)
     {
-        BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
+        WorldRenderer bufferbuilder = Tessellator.getInstance().getBuffer();
         bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
 
         float lastBl = OpenGlHelper.lastBrightnessX;

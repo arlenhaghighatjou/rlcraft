@@ -1,6 +1,6 @@
 package net.minecraft.client.model;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.Vec3d;
@@ -43,7 +43,7 @@ public class TexturedQuad
     }
 
     @SideOnly(Side.CLIENT)
-    public void draw(BufferBuilder renderer, float scale)
+    public void draw(WorldRenderer renderer, float scale)
     {
         Vec3d vec3d = this.vertexPositions[1].vector3D.subtractReverse(this.vertexPositions[0].vector3D);
         Vec3d vec3d1 = this.vertexPositions[1].vector3D.subtractReverse(this.vertexPositions[2].vector3D);

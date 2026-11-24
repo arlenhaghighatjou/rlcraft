@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.tileentity;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
@@ -11,7 +12,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelDragonHead;
 import net.minecraft.client.model.ModelHumanoidHead;
 import net.minecraft.client.model.ModelSkeletonHead;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -142,7 +143,8 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer<TileEntit
 
         if (skullType == 3)
         {
-            GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
+            GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         }
 
         modelbase.render((Entity)null, animateTicks, 0.0F, 0.0F, rotationIn, 0.0F, 0.0625F);

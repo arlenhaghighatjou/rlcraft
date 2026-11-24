@@ -1,13 +1,14 @@
 package net.minecraft.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldVertexBufferUploader;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class Tessellator
 {
-    private final BufferBuilder buffer;
-    private final WorldVertexBufferUploader vboUploader = new WorldVertexBufferUploader();
+    private final WorldRenderer buffer;
     private static final Tessellator INSTANCE = new Tessellator(2097152);
 
     public static Tessellator getInstance()
@@ -17,16 +18,22 @@ public class Tessellator
 
     public Tessellator(int bufferSize)
     {
-        this.buffer = new BufferBuilder(bufferSize);
+        this.buffer = new WorldRenderer(bufferSize);
     }
 
     public void draw()
     {
         this.buffer.finishDrawing();
-        this.vboUploader.draw(this.buffer);
+        WorldVertexBufferUploader.func_181679_a(this.buffer);
     }
 
-    public BufferBuilder getBuffer()
+    public void uploadDisplayList(int displayList)
+    {
+        this.buffer.finishDrawing();
+        WorldVertexBufferUploader.uploadDisplayList(displayList, this.buffer);
+    }
+
+    public WorldRenderer getBuffer()
     {
         return this.buffer;
     }

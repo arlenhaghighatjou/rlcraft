@@ -1,6 +1,7 @@
 package net.minecraft.client.model;
 
-import net.minecraft.client.renderer.GlStateManager;
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
@@ -180,12 +181,12 @@ public class ModelDragon extends ModelBase
 
             if (j == 0)
             {
-                GlStateManager.cullFace(GlStateManager.CullFace.FRONT);
+                GlStateManager.cullFace(GL_FRONT);
             }
         }
 
         GlStateManager.popMatrix();
-        GlStateManager.cullFace(GlStateManager.CullFace.BACK);
+        GlStateManager.cullFace(GL_BACK);
         GlStateManager.disableCull();
         float f10 = -((float)Math.sin((double)(f * ((float)Math.PI * 2F)))) * 0.0F;
         f8 = f * ((float)Math.PI * 2F);

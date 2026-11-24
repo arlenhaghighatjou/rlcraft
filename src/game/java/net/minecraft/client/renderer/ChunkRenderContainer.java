@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import com.google.common.collect.Lists;
 import java.util.List;
 import net.minecraft.client.renderer.chunk.RenderChunk;
