@@ -34,7 +34,7 @@ import static net.minecraftforge.fml.client.config.GuiUtils.RESET_CHAR;
 import static net.minecraftforge.fml.client.config.GuiUtils.UNDO_CHAR;
 
 import net.minecraftforge.fml.common.FMLLog;
-import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.internal.KeyboardConstants;
 
 /**
  * This class is the base screen used for editing an array-type property. It provides a list of array entries for the user to edit.
@@ -179,7 +179,7 @@ public class GuiEditArray extends GuiScreen
     @Override
     protected void keyTyped(char eventChar, int eventKey)
     {
-        if (eventKey == Keyboard.KEY_ESCAPE)
+        if (eventKey == KeyboardConstants.KEY_ESCAPE)
             this.mc.displayGuiScreen(parentScreen);
         else
             this.entryList.keyTyped(eventChar, eventKey);

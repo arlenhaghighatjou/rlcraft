@@ -25,7 +25,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
-import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.internal.KeyboardConstants;
 
 public enum KeyModifier {
     CONTROL {
@@ -34,11 +34,11 @@ public enum KeyModifier {
         {
             if (Minecraft.IS_RUNNING_ON_MAC)
             {
-                return keyCode == Keyboard.KEY_LMETA || keyCode == Keyboard.KEY_RMETA;
+                return keyCode == KeyboardConstants.KEY_LMETA || keyCode == KeyboardConstants.KEY_RMETA;
             }
             else
             {
-                return keyCode == Keyboard.KEY_LCONTROL || keyCode == Keyboard.KEY_RCONTROL;
+                return keyCode == KeyboardConstants.KEY_LCONTROL || keyCode == KeyboardConstants.KEY_RCONTROL;
             }
         }
 
@@ -66,7 +66,7 @@ public enum KeyModifier {
         @Override
         public boolean matches(int keyCode)
         {
-            return keyCode == Keyboard.KEY_LSHIFT || keyCode == Keyboard.KEY_RSHIFT;
+            return keyCode == KeyboardConstants.KEY_LSHIFT || keyCode == KeyboardConstants.KEY_RSHIFT;
         }
 
         @Override
@@ -92,7 +92,7 @@ public enum KeyModifier {
         @Override
         public boolean matches(int keyCode)
         {
-            return keyCode == Keyboard.KEY_LMENU || keyCode == Keyboard.KEY_RMENU;
+            return keyCode == KeyboardConstants.KEY_LMENU || keyCode == KeyboardConstants.KEY_RMENU;
         }
 
         @Override

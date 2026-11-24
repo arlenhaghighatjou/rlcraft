@@ -19,6 +19,8 @@
 
 package net.minecraftforge.fml.client;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -29,7 +31,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
-import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 import java.util.List;
@@ -185,7 +186,6 @@ public abstract class GuiScrollingList
         }
     }
 
-
     public void handleMouseInput(int mouseX, int mouseY) throws IOException
     {
         boolean isHovering = mouseX >= this.left && mouseX <= this.left + this.listWidth &&
@@ -279,12 +279,7 @@ public abstract class GuiScrollingList
         Tessellator tess = Tessellator.getInstance();
         WorldRenderer worldr = tess.getBuffer();
 
-        ScaledResolution res = new ScaledResolution(client);
-        double scaleW = client.displayWidth / res.getScaledWidth_double();
-        double scaleH = client.displayHeight / res.getScaledHeight_double();
-        GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        GL11.glScissor((int)(left      * scaleW), (int)(client.displayHeight - (bottom * scaleH)),
-                       (int)(listWidth * scaleW), (int)(viewHeight * scaleH));
+        this.beginClip(tess, worldr);
 
         if (this.client.world != null)
         {
@@ -297,7 +292,7 @@ public abstract class GuiScrollingList
             this.client.renderEngine.bindTexture(Gui.OPTIONS_BACKGROUND);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             final float scale = 32.0F;
-            worldr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+            worldr.begin(GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
             worldr.pos(this.left,  this.bottom, 0.0D).tex(this.left  / scale, (this.bottom + (int)this.scrollDistance) / scale).color(0x20, 0x20, 0x20, 0xFF).endVertex();
             worldr.pos(this.right, this.bottom, 0.0D).tex(this.right / scale, (this.bottom + (int)this.scrollDistance) / scale).color(0x20, 0x20, 0x20, 0xFF).endVertex();
             worldr.pos(this.right, this.top,    0.0D).tex(this.right / scale, (this.top    + (int)this.scrollDistance) / scale).color(0x20, 0x20, 0x20, 0xFF).endVertex();
@@ -324,7 +319,7 @@ public abstract class GuiScrollingList
                     int max = entryRight;
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                     GlStateManager.disableTexture2D();
-                    worldr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+                    worldr.begin(GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
                     worldr.pos(min,     slotTop + slotBuffer + 2, 0).tex(0, 1).color(0x80, 0x80, 0x80, 0xFF).endVertex();
                     worldr.pos(max,     slotTop + slotBuffer + 2, 0).tex(1, 1).color(0x80, 0x80, 0x80, 0xFF).endVertex();
                     worldr.pos(max,     slotTop              - 2, 0).tex(1, 0).color(0x80, 0x80, 0x80, 0xFF).endVertex();
@@ -360,19 +355,19 @@ public abstract class GuiScrollingList
             }
 
             GlStateManager.disableTexture2D();
-            worldr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+            worldr.begin(GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
             worldr.pos(scrollBarLeft,  this.bottom, 0.0D).tex(0.0D, 1.0D).color(0x00, 0x00, 0x00, 0xFF).endVertex();
             worldr.pos(scrollBarRight, this.bottom, 0.0D).tex(1.0D, 1.0D).color(0x00, 0x00, 0x00, 0xFF).endVertex();
             worldr.pos(scrollBarRight, this.top,    0.0D).tex(1.0D, 0.0D).color(0x00, 0x00, 0x00, 0xFF).endVertex();
             worldr.pos(scrollBarLeft,  this.top,    0.0D).tex(0.0D, 0.0D).color(0x00, 0x00, 0x00, 0xFF).endVertex();
             tess.draw();
-            worldr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+            worldr.begin(GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
             worldr.pos(scrollBarLeft,  barTop + height, 0.0D).tex(0.0D, 1.0D).color(0x80, 0x80, 0x80, 0xFF).endVertex();
             worldr.pos(scrollBarRight, barTop + height, 0.0D).tex(1.0D, 1.0D).color(0x80, 0x80, 0x80, 0xFF).endVertex();
             worldr.pos(scrollBarRight, barTop,          0.0D).tex(1.0D, 0.0D).color(0x80, 0x80, 0x80, 0xFF).endVertex();
             worldr.pos(scrollBarLeft,  barTop,          0.0D).tex(0.0D, 0.0D).color(0x80, 0x80, 0x80, 0xFF).endVertex();
             tess.draw();
-            worldr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+            worldr.begin(GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
             worldr.pos(scrollBarLeft,      barTop + height - 1, 0.0D).tex(0.0D, 1.0D).color(0xC0, 0xC0, 0xC0, 0xFF).endVertex();
             worldr.pos(scrollBarRight - 1, barTop + height - 1, 0.0D).tex(1.0D, 1.0D).color(0xC0, 0xC0, 0xC0, 0xFF).endVertex();
             worldr.pos(scrollBarRight - 1, barTop,              0.0D).tex(1.0D, 0.0D).color(0xC0, 0xC0, 0xC0, 0xFF).endVertex();
@@ -382,10 +377,41 @@ public abstract class GuiScrollingList
 
         this.drawScreen(mouseX, mouseY);
         GlStateManager.enableTexture2D();
-        GlStateManager.shadeModel(GL11.GL_FLAT);
+        GlStateManager.shadeModel(GL_FLAT);
         GlStateManager.enableAlpha();
         GlStateManager.disableBlend();
-        GL11.glDisable(GL11.GL_SCISSOR_TEST);
+        this.endClip();
+    }
+
+    private void beginClip(Tessellator tess, WorldRenderer worldr)
+    {
+        GlStateManager.clear(GL_DEPTH_BUFFER_BIT);
+        GlStateManager.enableDepth();
+        GlStateManager.depthMask(true);
+        GlStateManager.depthFunc(GL_ALWAYS);
+        GlStateManager.colorMask(false, false, false, false);
+        GlStateManager.disableTexture2D();
+        worldr.begin(GL_QUADS, DefaultVertexFormats.POSITION);
+        worldr.pos(this.left, this.top, 100.0D).endVertex();
+        worldr.pos(this.right, this.top, 100.0D).endVertex();
+        worldr.pos(this.right, 0.0D, 100.0D).endVertex();
+        worldr.pos(this.left, 0.0D, 100.0D).endVertex();
+        worldr.pos(this.left, this.screenHeight, 100.0D).endVertex();
+        worldr.pos(this.right, this.screenHeight, 100.0D).endVertex();
+        worldr.pos(this.right, this.bottom, 100.0D).endVertex();
+        worldr.pos(this.left, this.bottom, 100.0D).endVertex();
+        tess.draw();
+        GlStateManager.enableTexture2D();
+        GlStateManager.colorMask(true, true, true, true);
+        GlStateManager.depthFunc(GL_LEQUAL);
+        GlStateManager.depthMask(false);
+    }
+
+    private void endClip()
+    {
+        GlStateManager.depthMask(true);
+        GlStateManager.clear(GL_DEPTH_BUFFER_BIT);
+        GlStateManager.disableDepth();
     }
 
     protected void drawGradientRect(int left, int top, int right, int bottom, int color1, int color2)

@@ -19,6 +19,8 @@
 
 package net.minecraftforge.fml.client;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
+
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -64,7 +66,6 @@ import static net.minecraft.util.text.TextFormatting.*;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 import com.google.common.base.Strings;
-import org.lwjgl.opengl.GL11;
 
 /**
  * @author cpw
@@ -544,7 +545,6 @@ public class GuiModList extends GuiScreen
           return height;
         }
 
-
         @Override
         protected void drawHeader(int entryRight, int relativeY, Tessellator tess)
         {
@@ -556,7 +556,7 @@ public class GuiModList extends GuiScreen
                 GuiModList.this.mc.renderEngine.bindTexture(logoPath);
                 WorldRenderer wr = tess.getBuffer();
                 int offset = (this.left + this.listWidth/2) - (logoDims.width / 2);
-                wr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+                wr.begin(GL_QUADS, DefaultVertexFormats.POSITION_TEX);
                 wr.pos(offset,                  top + logoDims.height, zLevel).tex(0, 1).endVertex();
                 wr.pos(offset + logoDims.width, top + logoDims.height, zLevel).tex(1, 1).endVertex();
                 wr.pos(offset + logoDims.width, top,                   zLevel).tex(1, 0).endVertex();

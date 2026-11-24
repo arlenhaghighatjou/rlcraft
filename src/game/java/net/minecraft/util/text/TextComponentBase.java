@@ -43,6 +43,11 @@ public abstract class TextComponentBase implements ITextComponent
         return this;
     }
 
+    public Style getStyleIfPresent()
+    {
+        return this.style;
+    }
+
     public Style getStyle()
     {
         if (this.style == null)

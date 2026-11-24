@@ -39,7 +39,7 @@ import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 
-import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.internal.KeyboardConstants;
 
 /**
  * This class implements the scrolling list functionality of the config GUI screens. It also provides all the default control handlers
@@ -994,15 +994,15 @@ public class GuiConfigEntries extends GuiListExtended
         @Override
         public void keyTyped(char eventChar, int eventKey)
         {
-            if (enabled() || eventKey == Keyboard.KEY_LEFT || eventKey == Keyboard.KEY_RIGHT || eventKey == Keyboard.KEY_HOME || eventKey == Keyboard.KEY_END)
+            if (enabled() || eventKey == KeyboardConstants.KEY_LEFT || eventKey == KeyboardConstants.KEY_RIGHT || eventKey == KeyboardConstants.KEY_HOME || eventKey == KeyboardConstants.KEY_END)
             {
                 String validChars = "0123456789";
                 String before = this.textFieldValue.getText();
                 if (validChars.contains(String.valueOf(eventChar))
                         || (!before.startsWith("-") && this.textFieldValue.getCursorPosition() == 0 && eventChar == '-')
-                        || eventKey == Keyboard.KEY_BACK || eventKey == Keyboard.KEY_DELETE
-                        || eventKey == Keyboard.KEY_LEFT || eventKey == Keyboard.KEY_RIGHT || eventKey == Keyboard.KEY_HOME || eventKey == Keyboard.KEY_END)
-                    this.textFieldValue.textboxKeyTyped((enabled() ? eventChar : Keyboard.CHAR_NONE), eventKey);
+                        || eventKey == KeyboardConstants.KEY_BACK || eventKey == KeyboardConstants.KEY_DELETE
+                        || eventKey == KeyboardConstants.KEY_LEFT || eventKey == KeyboardConstants.KEY_RIGHT || eventKey == KeyboardConstants.KEY_HOME || eventKey == KeyboardConstants.KEY_END)
+                    this.textFieldValue.textboxKeyTyped((enabled() ? eventChar : '\0'), eventKey);
 
                 if (!textFieldValue.getText().trim().isEmpty() && !textFieldValue.getText().trim().equals("-"))
                 {
@@ -1099,16 +1099,16 @@ public class GuiConfigEntries extends GuiListExtended
         @Override
         public void keyTyped(char eventChar, int eventKey)
         {
-            if (enabled() || eventKey == Keyboard.KEY_LEFT || eventKey == Keyboard.KEY_RIGHT || eventKey == Keyboard.KEY_HOME || eventKey == Keyboard.KEY_END)
+            if (enabled() || eventKey == KeyboardConstants.KEY_LEFT || eventKey == KeyboardConstants.KEY_RIGHT || eventKey == KeyboardConstants.KEY_HOME || eventKey == KeyboardConstants.KEY_END)
             {
                 String validChars = "0123456789";
                 String before = this.textFieldValue.getText();
                 if (validChars.contains(String.valueOf(eventChar)) ||
                         (!before.startsWith("-") && this.textFieldValue.getCursorPosition() == 0 && eventChar == '-')
                         || (!before.contains(".") && eventChar == '.')
-                        || eventKey == Keyboard.KEY_BACK || eventKey == Keyboard.KEY_DELETE || eventKey == Keyboard.KEY_LEFT || eventKey == Keyboard.KEY_RIGHT
-                        || eventKey == Keyboard.KEY_HOME || eventKey == Keyboard.KEY_END)
-                    this.textFieldValue.textboxKeyTyped((enabled() ? eventChar : Keyboard.CHAR_NONE), eventKey);
+                        || eventKey == KeyboardConstants.KEY_BACK || eventKey == KeyboardConstants.KEY_DELETE || eventKey == KeyboardConstants.KEY_LEFT || eventKey == KeyboardConstants.KEY_RIGHT
+                        || eventKey == KeyboardConstants.KEY_HOME || eventKey == KeyboardConstants.KEY_END)
+                    this.textFieldValue.textboxKeyTyped((enabled() ? eventChar : '\0'), eventKey);
 
                 if (!textFieldValue.getText().trim().isEmpty() && !textFieldValue.getText().trim().equals("-"))
                 {
@@ -1219,9 +1219,9 @@ public class GuiConfigEntries extends GuiListExtended
         @Override
         public void keyTyped(char eventChar, int eventKey)
         {
-            if (enabled() || eventKey == Keyboard.KEY_LEFT || eventKey == Keyboard.KEY_RIGHT || eventKey == Keyboard.KEY_HOME || eventKey == Keyboard.KEY_END)
+            if (enabled() || eventKey == KeyboardConstants.KEY_LEFT || eventKey == KeyboardConstants.KEY_RIGHT || eventKey == KeyboardConstants.KEY_HOME || eventKey == KeyboardConstants.KEY_END)
             {
-                this.textFieldValue.textboxKeyTyped((enabled() ? eventChar : Keyboard.CHAR_NONE), eventKey);
+                this.textFieldValue.textboxKeyTyped((enabled() ? eventChar : '\0'), eventKey);
 
                 if (configElement.getValidationPattern() != null)
                 {
@@ -1258,7 +1258,7 @@ public class GuiConfigEntries extends GuiListExtended
             if (enabled())
             {
                 this.textFieldValue.setText(this.configElement.getDefault().toString());
-                keyTyped((char) Keyboard.CHAR_NONE, Keyboard.KEY_HOME);
+                keyTyped('\0', KeyboardConstants.KEY_HOME);
             }
         }
 

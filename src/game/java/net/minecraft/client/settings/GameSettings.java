@@ -447,7 +447,7 @@ public class GameSettings
         if (settingsOption == GameSettings.Options.ENABLE_VSYNC)
         {
             this.enableVsync = !this.enableVsync;
-            Display.setVSyncEnabled(this.enableVsync);
+            Display.setVSync(this.enableVsync);
         }
 
         if (settingsOption == GameSettings.Options.USE_VBO)

@@ -101,14 +101,14 @@ public class ProfanityFilter {
 			boolean flag = false;
 			if(componentIn instanceof TextComponentString) {
 				TextComponentString comp = (TextComponentString)componentIn;
-				String str = comp.getChatComponentText_TextValue();
+				String str = comp.getText();
 				if(StringUtils.isEmpty(str) && componentIn.getSiblings().isEmpty()) {
 					return componentIn;
 				}
 				str = profanityFilterString0(str);
 				if(str != null) {
 					ITextComponent replacedComponent = new TextComponentString(str);
-					replacedComponent.setStyle(comp.getChatStyleIfPresent());
+					replacedComponent.setStyle(comp.getStyleIfPresent());
 					replacedComponent.getSiblings().addAll(componentIn.getSiblings());
 					componentIn = replacedComponent;
 					flag = true;
@@ -116,7 +116,7 @@ public class ProfanityFilter {
 			}else if(componentIn instanceof TextComponentTranslation) {
 				TextComponentTranslation comp = (TextComponentTranslation)componentIn;
 				ITextComponent replacedComponent = new TextComponentTranslation(comp.getKey(), profanityFilterFormatArgs(comp.getFormatArgs()));
-				replacedComponent.setStyle(comp.getChatStyleIfPresent());
+				replacedComponent.setStyle(comp.getStyleIfPresent());
 				replacedComponent.getSiblings().addAll(componentIn.getSiblings());
 				componentIn = replacedComponent;
 				flag = true;
@@ -133,7 +133,7 @@ public class ProfanityFilter {
 					siblings.set(i, cmp);
 				}
 			}
-			Style styleOpt = ((TextComponentBase)componentIn).getChatStyleIfPresent();
+			Style styleOpt = ((TextComponentBase)componentIn).getStyleIfPresent();
 			if(styleOpt != null) {
 				HoverEvent hoverEvent = styleOpt.getHoverEvent();
 				if(hoverEvent != null) {
@@ -196,26 +196,26 @@ public class ProfanityFilter {
 		if(comp instanceof TextComponentBase) {
 			if(comp instanceof TextComponentString) {
 				TextComponentString old = (TextComponentString)comp;
-				ITextComponent ret = new TextComponentString(old.getChatComponentText_TextValue());
-				ret.setStyle(old.getChatStyleIfPresent());
+				ITextComponent ret = new TextComponentString(old.getText());
+				ret.setStyle(old.getStyleIfPresent());
 				ret.getSiblings().addAll(comp.getSiblings());
 				return ret;
 			}else if(comp instanceof TextComponentTranslation) {
 				TextComponentTranslation old = (TextComponentTranslation)comp;
 				ITextComponent ret = new TextComponentTranslation(old.getKey(), old.getFormatArgs());
-				ret.setStyle(old.getChatStyleIfPresent());
+				ret.setStyle(old.getStyleIfPresent());
 				ret.getSiblings().addAll(comp.getSiblings());
 				return ret;
 			}else if(comp instanceof TextComponentScore) {
 				TextComponentScore old = (TextComponentScore)comp;
 				ITextComponent ret = new TextComponentScore(old.getName(), old.getObjective());
-				ret.setStyle(old.getChatStyleIfPresent());
+				ret.setStyle(old.getStyleIfPresent());
 				ret.getSiblings().addAll(comp.getSiblings());
 				return ret;
 			}else if(comp instanceof TextComponentSelector) {
 				TextComponentSelector old = (TextComponentSelector)comp;
 				ITextComponent ret = new TextComponentSelector(old.getSelector());
-				ret.setStyle(old.getChatStyleIfPresent());
+				ret.setStyle(old.getStyleIfPresent());
 				ret.getSiblings().addAll(comp.getSiblings());
 				return ret;
 			}

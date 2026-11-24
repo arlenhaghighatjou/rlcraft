@@ -251,6 +251,7 @@ import net.optifine.Config;
 @SideOnly(Side.CLIENT)
 public class Minecraft implements IThreadListener
 {
+    public static final boolean IS_RUNNING_ON_MAC = false;
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ResourceLocation LOCATION_MOJANG_PNG = new ResourceLocation("textures/gui/title/mojang.png");
     private ServerData currentServerData;

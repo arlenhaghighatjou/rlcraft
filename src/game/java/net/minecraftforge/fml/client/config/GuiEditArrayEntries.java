@@ -31,7 +31,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiConfigEntries.ArrayEntry;
 import net.minecraftforge.fml.common.FMLLog;
 
-import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.internal.KeyboardConstants;
 
 import static net.minecraftforge.fml.client.config.GuiUtils.INVALID;
 import static net.minecraftforge.fml.client.config.GuiUtils.VALID;
@@ -168,7 +168,7 @@ public class GuiEditArrayEntries extends GuiListExtended
             listEntries.add(index, new StringEntry(this.owningGui, this, this.configElement, ""));
         this.canAddMoreEntries = !configElement.isListLengthFixed()
                 && (configElement.getMaxListLength() == -1 || this.listEntries.size() - 1 < configElement.getMaxListLength());
-        keyTyped((char) Keyboard.CHAR_NONE, Keyboard.KEY_END);
+        keyTyped('\0', KeyboardConstants.KEY_END);
     }
 
     public void removeEntry(int index)
@@ -176,7 +176,7 @@ public class GuiEditArrayEntries extends GuiListExtended
         this.listEntries.remove(index);
         this.canAddMoreEntries = !configElement.isListLengthFixed()
                 && (configElement.getMaxListLength() == -1 || this.listEntries.size() - 1 < configElement.getMaxListLength());
-        keyTyped((char) Keyboard.CHAR_NONE, Keyboard.KEY_END);
+        keyTyped('\0', KeyboardConstants.KEY_END);
     }
 
     public boolean isChanged()
@@ -325,17 +325,17 @@ public class GuiEditArrayEntries extends GuiListExtended
         @Override
         public void keyTyped(char eventChar, int eventKey)
         {
-            if (owningScreen.enabled || eventKey == Keyboard.KEY_LEFT || eventKey == Keyboard.KEY_RIGHT
-                    || eventKey == Keyboard.KEY_HOME || eventKey == Keyboard.KEY_END)
+            if (owningScreen.enabled || eventKey == KeyboardConstants.KEY_LEFT || eventKey == KeyboardConstants.KEY_RIGHT
+                    || eventKey == KeyboardConstants.KEY_HOME || eventKey == KeyboardConstants.KEY_END)
             {
                 String validChars = "0123456789";
                 String before = this.textFieldValue.getText();
                 if (validChars.contains(String.valueOf(eventChar)) ||
                         (!before.startsWith("-") && this.textFieldValue.getCursorPosition() == 0 && eventChar == '-')
                         || (!before.contains(".") && eventChar == '.')
-                        || eventKey == Keyboard.KEY_BACK || eventKey == Keyboard.KEY_DELETE || eventKey == Keyboard.KEY_LEFT || eventKey == Keyboard.KEY_RIGHT
-                        || eventKey == Keyboard.KEY_HOME || eventKey == Keyboard.KEY_END)
-                    this.textFieldValue.textboxKeyTyped((owningScreen.enabled ? eventChar : Keyboard.CHAR_NONE), eventKey);
+                        || eventKey == KeyboardConstants.KEY_BACK || eventKey == KeyboardConstants.KEY_DELETE || eventKey == KeyboardConstants.KEY_LEFT || eventKey == KeyboardConstants.KEY_RIGHT
+                        || eventKey == KeyboardConstants.KEY_HOME || eventKey == KeyboardConstants.KEY_END)
+                    this.textFieldValue.textboxKeyTyped((owningScreen.enabled ? eventChar : '\0'), eventKey);
 
                 if (!textFieldValue.getText().trim().isEmpty() && !textFieldValue.getText().trim().equals("-"))
                 {
@@ -382,16 +382,16 @@ public class GuiEditArrayEntries extends GuiListExtended
         @Override
         public void keyTyped(char eventChar, int eventKey)
         {
-            if (owningScreen.enabled || eventKey == Keyboard.KEY_LEFT || eventKey == Keyboard.KEY_RIGHT
-                    || eventKey == Keyboard.KEY_HOME || eventKey == Keyboard.KEY_END)
+            if (owningScreen.enabled || eventKey == KeyboardConstants.KEY_LEFT || eventKey == KeyboardConstants.KEY_RIGHT
+                    || eventKey == KeyboardConstants.KEY_HOME || eventKey == KeyboardConstants.KEY_END)
             {
                 String validChars = "0123456789";
                 String before = this.textFieldValue.getText();
                 if (validChars.contains(String.valueOf(eventChar))
                         || (!before.startsWith("-") && this.textFieldValue.getCursorPosition() == 0 && eventChar == '-')
-                        || eventKey == Keyboard.KEY_BACK || eventKey == Keyboard.KEY_DELETE
-                        || eventKey == Keyboard.KEY_LEFT || eventKey == Keyboard.KEY_RIGHT || eventKey == Keyboard.KEY_HOME || eventKey == Keyboard.KEY_END)
-                    this.textFieldValue.textboxKeyTyped((owningScreen.enabled ? eventChar : Keyboard.CHAR_NONE), eventKey);
+                        || eventKey == KeyboardConstants.KEY_BACK || eventKey == KeyboardConstants.KEY_DELETE
+                        || eventKey == KeyboardConstants.KEY_LEFT || eventKey == KeyboardConstants.KEY_RIGHT || eventKey == KeyboardConstants.KEY_HOME || eventKey == KeyboardConstants.KEY_END)
+                    this.textFieldValue.textboxKeyTyped((owningScreen.enabled ? eventChar : '\0'), eventKey);
 
                 if (!textFieldValue.getText().trim().isEmpty() && !textFieldValue.getText().trim().equals("-"))
                 {
@@ -465,10 +465,10 @@ public class GuiEditArrayEntries extends GuiListExtended
         @Override
         public void keyTyped(char eventChar, int eventKey)
         {
-            if (owningScreen.enabled || eventKey == Keyboard.KEY_LEFT || eventKey == Keyboard.KEY_RIGHT
-                    || eventKey == Keyboard.KEY_HOME || eventKey == Keyboard.KEY_END)
+            if (owningScreen.enabled || eventKey == KeyboardConstants.KEY_LEFT || eventKey == KeyboardConstants.KEY_RIGHT
+                    || eventKey == KeyboardConstants.KEY_HOME || eventKey == KeyboardConstants.KEY_END)
             {
-                this.textFieldValue.textboxKeyTyped((owningScreen.enabled ? eventChar : Keyboard.CHAR_NONE), eventKey);
+                this.textFieldValue.textboxKeyTyped((owningScreen.enabled ? eventChar : '\0'), eventKey);
 
                 if (configElement.getValidationPattern() != null)
                 {

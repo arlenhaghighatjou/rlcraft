@@ -19,6 +19,8 @@
 
 package net.minecraftforge.client.model.animation;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
+
 import java.util.List;
 
 import net.minecraft.client.model.ModelBase;
@@ -46,7 +48,6 @@ import net.minecraftforge.common.model.animation.CapabilityAnimation;
 
 import net.minecraftforge.common.model.animation.IAnimationStateMachine;
 import org.apache.commons.lang3.tuple.Pair;
-import org.lwjgl.opengl.GL11;
 
 /**
  * ModelBase that works with the Forge model system and animations.
@@ -85,7 +86,7 @@ public class AnimationModelBase<T extends Entity> extends ModelBase implements I
         GlStateManager.rotate(180, 0, 0, 1);
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer builder = tessellator.getBuffer();
-        builder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+        builder.begin(GL_QUADS, DefaultVertexFormats.BLOCK);
         builder.setTranslation(-0.5, -1.5, -0.5);
 
         lighter.setParent(new VertexBufferConsumer(builder));

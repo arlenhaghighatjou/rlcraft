@@ -46,6 +46,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.internal.KeyboardConstants;
 
 import javax.annotation.Nullable;
 
@@ -248,11 +249,7 @@ public class GuiConfig extends GuiScreen
 
     public static String getAbridgedConfigPath(String path)
     {
-        Minecraft mc = Minecraft.getMinecraft();
-        if (mc.mcDataDir.getAbsolutePath().endsWith("."))
-            return path.replace("\\", "/").replace(mc.mcDataDir.getAbsolutePath().replace("\\", "/").substring(0, mc.mcDataDir.getAbsolutePath().length() - 1), "/.minecraft/");
-        else
-            return path.replace("\\", "/").replace(mc.mcDataDir.getAbsolutePath().replace("\\", "/"), "/.minecraft");
+        return path.replace("\\", "/");
     }
 
     @Override
@@ -382,7 +379,7 @@ public class GuiConfig extends GuiScreen
     @Override
     protected void keyTyped(char eventChar, int eventKey)
     {
-        if (eventKey == Keyboard.KEY_ESCAPE)
+        if (eventKey == KeyboardConstants.KEY_ESCAPE)
             this.mc.displayGuiScreen(parentScreen);
         else
             this.entryList.keyTyped(eventChar, eventKey);

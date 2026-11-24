@@ -19,7 +19,7 @@
 
 package net.minecraftforge.client.model.animation;
 
-import org.lwjgl.opengl.GL11;
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
@@ -40,20 +40,20 @@ public abstract class FastTESR<T extends TileEntity> extends TileEntitySpecialRe
         WorldRenderer buffer = tessellator.getBuffer();
         this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         RenderHelper.disableStandardItemLighting();
-        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         GlStateManager.enableBlend();
         GlStateManager.disableCull();
 
         if (Minecraft.isAmbientOcclusionEnabled())
         {
-            GlStateManager.shadeModel(GL11.GL_SMOOTH);
+            GlStateManager.shadeModel(GL_SMOOTH);
         }
         else
         {
-            GlStateManager.shadeModel(GL11.GL_FLAT);
+            GlStateManager.shadeModel(GL_FLAT);
         }
 
-        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+        buffer.begin(GL_QUADS, DefaultVertexFormats.BLOCK);
 
         renderTileEntityFast(te, x, y, z, partialTicks, destroyStage, partial, buffer);
         buffer.setTranslation(0, 0, 0);

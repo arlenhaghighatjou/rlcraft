@@ -1,5 +1,7 @@
 package net.minecraft.client.renderer.tileentity;
 
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
+
 import com.google.common.collect.Maps;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -193,7 +195,7 @@ public class TileEntityRendererDispatcher
      */
     public void preDrawBatch()
     {
-        batchBuffer.getBuffer().begin(org.lwjgl.opengl.GL11.GL_QUADS, net.minecraft.client.renderer.vertex.DefaultVertexFormats.BLOCK);
+        batchBuffer.getBuffer().begin(GL_QUADS, net.minecraft.client.renderer.vertex.DefaultVertexFormats.BLOCK);
         drawingBatch = true;
     }
 
@@ -205,17 +207,17 @@ public class TileEntityRendererDispatcher
     {
         renderEngine.bindTexture(net.minecraft.client.renderer.texture.TextureMap.LOCATION_BLOCKS_TEXTURE);
         net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
-        GlStateManager.blendFunc(org.lwjgl.opengl.GL11.GL_SRC_ALPHA, org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         GlStateManager.enableBlend();
         GlStateManager.disableCull();
 
         if (net.minecraft.client.Minecraft.isAmbientOcclusionEnabled())
         {
-            GlStateManager.shadeModel(org.lwjgl.opengl.GL11.GL_SMOOTH);
+            GlStateManager.shadeModel(GL_SMOOTH);
         }
         else
         {
-            GlStateManager.shadeModel(org.lwjgl.opengl.GL11.GL_FLAT);
+            GlStateManager.shadeModel(GL_FLAT);
         }
 
         if(pass > 0)
