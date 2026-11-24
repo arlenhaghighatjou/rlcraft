@@ -52,7 +52,7 @@ public class GuiSlotSelectCodec extends GuiSlot {
 	@Override
 	protected void drawSlot(int id, int xx, int yy, int width, int height, int ii) {
 		if(id < screen.codecs.size()) {
-			this.screen.drawString(mc.fontRendererObj, screen.codecs.get(id).name, xx + 4, yy + 3, 0xFFFFFF);
+			this.screen.drawString(mc.fontRenderer, screen.codecs.get(id).name, xx + 4, yy + 3, 0xFFFFFF);
 		}
 	}
 

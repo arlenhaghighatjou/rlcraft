@@ -17,8 +17,8 @@
 package net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.texture;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class TextureCompassPBRImpl extends EaglerTextureAtlasSpritePBR {
@@ -31,9 +31,9 @@ public class TextureCompassPBRImpl extends EaglerTextureAtlasSpritePBR {
 
 	public void updateAnimationPBR() {
 		Minecraft minecraft = Minecraft.getMinecraft();
-		if (minecraft.theWorld != null && minecraft.thePlayer != null) {
-			this.updateCompassPBR(minecraft.theWorld, minecraft.thePlayer.posX, minecraft.thePlayer.posZ,
-					(double) minecraft.thePlayer.rotationYaw, false);
+		if (minecraft.world != null && minecraft.player != null) {
+			this.updateCompassPBR(minecraft.world, minecraft.player.posX, minecraft.player.posZ,
+					(double) minecraft.player.rotationYaw, false);
 		} else {
 			this.updateCompassPBR((World) null, 0.0, 0.0, 0.0, true);
 		}

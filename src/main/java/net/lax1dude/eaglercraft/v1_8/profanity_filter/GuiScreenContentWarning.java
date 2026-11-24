@@ -19,7 +19,7 @@ package net.lax1dude.eaglercraft.v1_8.profanity_filter;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 
 public class GuiScreenContentWarning extends GuiScreen {
 
@@ -53,7 +53,7 @@ public class GuiScreenContentWarning extends GuiScreen {
 
 	public void drawScreen(int mx, int my, float pt) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, EnumChatFormatting.BOLD + I18n.format("profanityFilterWarning.title"), this.width / 2, 50, 0xFF4444);
+		this.drawCenteredString(fontRendererObj, TextFormatting.BOLD + I18n.format("profanityFilterWarning.title"), this.width / 2, 50, 0xFF4444);
 		this.drawCenteredString(fontRendererObj, I18n.format("profanityFilterWarning.text0"), this.width / 2, 70, 16777215);
 		this.drawCenteredString(fontRendererObj, I18n.format("profanityFilterWarning.text1"), this.width / 2, 82, 16777215);
 		this.drawCenteredString(fontRendererObj, I18n.format("profanityFilterWarning.text2"), this.width / 2, 94, 16777215);

@@ -73,8 +73,8 @@ public class GuiScreenNotifications extends GuiScreen {
 	}
 
 	void updateList() {
-		if(mc.thePlayer == null) return;
-		ServerNotificationManager mgr = mc.thePlayer.sendQueue.getNotifManager();
+		if(mc.player == null) return;
+		ServerNotificationManager mgr = mc.player.sendQueue.getNotifManager();
 		int verHash = showPriority | (mgr.getNotifListUpdateCount() << 2);
 		if(verHash != lastUpdate) {
 			lastUpdate = verHash;
@@ -106,7 +106,7 @@ public class GuiScreenNotifications extends GuiScreen {
 	}
 
 	public void updateScreen() {
-		if(mc.thePlayer == null) {
+		if(mc.player == null) {
 			mc.displayGuiScreen(parent);
 			return;
 		}
@@ -123,8 +123,8 @@ public class GuiScreenNotifications extends GuiScreen {
 			mc.displayGuiScreen(parent);
 			break;
 		case 1:
-			if(mc.thePlayer != null) {
-				ServerNotificationManager mgr = mc.thePlayer.sendQueue.getNotifManager();
+			if(mc.player != null) {
+				ServerNotificationManager mgr = mc.player.sendQueue.getNotifManager();
 				mgr.removeAllNotifFromActiveList(mgr.getNotifLongHistory());
 				clearAllButton.enabled = false;
 			}
@@ -142,7 +142,7 @@ public class GuiScreenNotifications extends GuiScreen {
 	}
 
 	public void drawScreen(int par1, int par2, float par3) {
-		if(mc.thePlayer == null) return;
+		if(mc.player == null) return;
 		slots.drawScreen(par1, par2, par3);
 		this.drawCenteredString(fontRendererObj, I18n.format("notifications.title"), this.width / 2, 16, 16777215);
 		super.drawScreen(par1, par2, par3);
@@ -159,8 +159,8 @@ public class GuiScreenNotifications extends GuiScreen {
 	}
 
 	public void onGuiClosed() {
-		if(mc.thePlayer != null) {
-			mc.thePlayer.sendQueue.getNotifManager().commitUnreadFlag();
+		if(mc.player != null) {
+			mc.player.sendQueue.getNotifManager().commitUnreadFlag();
 		}
 	}
 }

@@ -26,7 +26,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.ResourceLocation;
 
 import java.io.IOException;
@@ -90,7 +90,7 @@ public class GuiScreenRelay extends GuiScreen implements GuiYesNoCallback {
 			if(selected >= 0) {
 				RelayServer srv = RelayManager.relayManager.get(selected);
 				mc.displayGuiScreen(new GuiYesNo(this, I18n.format("networkSettings.delete"), I18n.format("addRelay.removeText1") +
-						EnumChatFormatting.GRAY + " '" + srv.comment + "' (" + srv.address + ")", selected));
+						TextFormatting.GRAY + " '" + srv.comment + "' (" + srv.address + ")", selected));
 				deleting = true;
 			}
 		} else if(btn.id == 3) {
@@ -139,9 +139,9 @@ public class GuiScreenRelay extends GuiScreen implements GuiYesNoCallback {
 		slots.drawScreen(par1, par2, par3);
 
 		if(tooltipString != null) {
-			int ww = mc.fontRendererObj.getStringWidth(tooltipString);
+			int ww = mc.fontRenderer.getStringWidth(tooltipString);
 			Gui.drawRect(par1 + 1, par2 - 14, par1 + ww + 7, par2 - 2, 0xC0000000);
-			screen.drawString(mc.fontRendererObj, tooltipString, par1 + 4, par2 - 12, 0xFF999999);
+			screen.drawString(mc.fontRenderer, tooltipString, par1 + 4, par2 - 12, 0xFF999999);
 			tooltipString = null;
 		}
 
@@ -154,11 +154,11 @@ public class GuiScreenRelay extends GuiScreen implements GuiYesNoCallback {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(w + 7, 4, 0.0f);
 		GlStateManager.scale(0.75f, 0.75f, 0.75f);
-		str = EnumChatFormatting.UNDERLINE + I18n.format("networkSettings.relayTimeoutChange");
+		str = TextFormatting.UNDERLINE + I18n.format("networkSettings.relayTimeoutChange");
 		int w2 = fontRendererObj.getStringWidth(str);
 		boolean b = par1 > w + 5 && par1 < w + 7 + w2 * 3 / 4 && par2 > 3 && par2 < 11;
 		if(b) Mouse.showCursor(EnumCursorType.HAND);
-		this.drawString(fontRendererObj, EnumChatFormatting.UNDERLINE + I18n.format("networkSettings.relayTimeoutChange"), 0, 0, b ? 0xCCCCCC : 0x999999);
+		this.drawString(fontRendererObj, TextFormatting.UNDERLINE + I18n.format("networkSettings.relayTimeoutChange"), 0, 0, b ? 0xCCCCCC : 0x999999);
 		GlStateManager.popMatrix();
 
 		super.drawScreen(par1, par2, par3);

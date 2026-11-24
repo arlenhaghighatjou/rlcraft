@@ -32,8 +32,8 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.network.EnumConnectionState;
-import net.minecraft.network.login.client.C00PacketLoginStart;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.network.login.client.CPacketLoginStart;
+import net.minecraft.util.text.TextComponentString;
 
 import java.io.IOException;
 
@@ -78,7 +78,7 @@ public class GuiScreenLANConnecting extends GuiScreen {
 					this.mc.getSession().reset();
 					if (mc.currentScreen == this) {
 						mc.loadWorld(null);
-						mc.displayGuiScreen(new GuiDisconnected(parent, "connect.failed", new ChatComponentText("LAN Connection Refused")));
+						mc.displayGuiScreen(new GuiDisconnected(parent, "connect.failed", new TextComponentString("LAN Connection Refused")));
 					}
 				}
 			}
@@ -89,12 +89,12 @@ public class GuiScreenLANConnecting extends GuiScreen {
 		this.drawDefaultBackground();
 		if(completed) {
 			String message = I18n.format("connect.authorizing");
-			this.drawString(fontRendererObj, message, (this.width - this.fontRendererObj.getStringWidth(message)) / 2, this.height / 3 + 10, 0xFFFFFF);
+			this.drawString(fontRendererObj, message, (this.width - this.fontRenderer.getStringWidth(message)) / 2, this.height / 3 + 10, 0xFFFFFF);
 		}else {
 			LoadingScreenRenderer ls = mc.loadingScreen;
 
 			String message = I18n.format("lanServer.pleaseWait");
-			this.drawString(fontRendererObj, message, (this.width - this.fontRendererObj.getStringWidth(message)) / 2, this.height / 3 + 10, 0xFFFFFF);
+			this.drawString(fontRendererObj, message, (this.width - this.fontRenderer.getStringWidth(message)) / 2, this.height / 3 + 10, 0xFFFFFF);
 
 			PlatformWebRTC.startRTCLANClient();
 
@@ -116,7 +116,7 @@ public class GuiScreenLANConnecting extends GuiScreen {
 
 				networkManager = LANClientNetworkManager.connectToWorld(sock, code, sock.getURI());
 				if(networkManager == null) {
-					this.mc.displayGuiScreen(new GuiDisconnected(parent, "connect.failed", new ChatComponentText(I18n.format("noRelay.worldFail").replace("$code$", code))));
+					this.mc.displayGuiScreen(new GuiDisconnected(parent, "connect.failed", new TextComponentString(I18n.format("noRelay.worldFail").replace("$code$", code))));
 					return;
 				}
 
@@ -126,7 +126,7 @@ public class GuiScreenLANConnecting extends GuiScreen {
 				this.mc.clearTitles();
 				networkManager.setConnectionState(EnumConnectionState.LOGIN);
 				networkManager.setNetHandler(new NetHandlerSingleplayerLogin(networkManager, mc, parent));
-				networkManager.sendPacket(new C00PacketLoginStart(this.mc.getSession().getProfile(),
+				networkManager.sendPacket(new CPacketLoginStart(this.mc.getSession().getProfile(),
 						EaglerProfile.getSkinPacket(3), EaglerProfile.getCapePacket(),
 						HandshakerHandler.getSPHandshakeProtocolData(), EaglercraftVersion.clientBrandUUID));
 			}

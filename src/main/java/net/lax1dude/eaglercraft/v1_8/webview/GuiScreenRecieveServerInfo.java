@@ -84,7 +84,7 @@ public class GuiScreenRecieveServerInfo extends GuiScreen {
 				progress = 100;
 			}
 			Tessellator tessellator = Tessellator.getInstance();
-			WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+			WorldRenderer worldrenderer = tessellator.getBuffer();
 			byte b0 = 100;
 			byte b1 = 2;
 			int i1 = width / 2 - b0 / 2;
@@ -115,11 +115,11 @@ public class GuiScreenRecieveServerInfo extends GuiScreen {
 	}
 
 	public void updateScreen() {
-		if(mc.thePlayer == null) {
+		if(mc.player == null) {
 			mc.displayGuiScreen(parent);
 			return;
 		}
-		NetHandlerPlayClient sendQueue = mc.thePlayer.sendQueue;
+		NetHandlerPlayClient sendQueue = mc.player.sendQueue;
 		++timer;
 		if(timer == 1) {
 			byte[] data = ServerInfoCache.loadFromCache(expectHash);

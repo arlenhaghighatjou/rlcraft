@@ -31,8 +31,8 @@ import net.lax1dude.eaglercraft.v1_8.profile.EaglerProfile;
 import net.lax1dude.eaglercraft.v1_8.socket.HandshakePacketTypes;
 import net.lax1dude.eaglercraft.v1_8.update.UpdateService;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.ITextComponent;
 
 public abstract class HandshakerInstance {
 
@@ -66,17 +66,17 @@ public abstract class HandshakerInstance {
 				break;
 			case HandshakePacketTypes.AUTH_METHOD_PLAINTEXT:
 				if(!handler.allowPlaintext) {
-					handleError("disconnect.loginFailed", new ChatComponentText("Server attempted insecure plaintext authentication without user consent!"));
+					handleError("disconnect.loginFailed", new TextComponentString("Server attempted insecure plaintext authentication without user consent!"));
 					return;
 				}
 				password = handler.password.getBytes(StandardCharsets.UTF_8);
 				if(password.length > 255) {
-					handleError("disconnect.loginFailed", new ChatComponentText("Password is too long!"));
+					handleError("disconnect.loginFailed", new TextComponentString("Password is too long!"));
 					return;
 				}
 				break;
 			default:
-				handleError("disconnect.loginFailed", new ChatComponentText("Unknown auth method #" + authType + " requested"));
+				handleError("disconnect.loginFailed", new TextComponentString("Unknown auth method #" + authType + " requested"));
 				return;
 			}
 		}
@@ -98,7 +98,7 @@ public abstract class HandshakerInstance {
 			handleInboundPacket(frame.getByteArray());
 		}
 		if(handler.websocket.isClosed()) {
-			handleError("Connection Closed", (IChatComponent) null);
+			handleError("Connection Closed", (ITextComponent) null);
 		}
 	}
 
@@ -127,7 +127,7 @@ public abstract class HandshakerInstance {
 				break;
 			}
 		}catch(Exception ex) {
-			handler.handleError("connect.failed", new ChatComponentText("Invalid packet received"));
+			handler.handleError("connect.failed", new TextComponentString("Invalid packet received"));
 			HandshakerHandler.logger.error("Invalid packet received");
 			HandshakerHandler.logger.error(ex);
 		}
@@ -135,10 +135,10 @@ public abstract class HandshakerInstance {
 
 	protected void handleError(String message, String detail) {
 		state = HandshakePacketTypes.STATE_FINISHED;
-		handler.handleError(message, IChatComponent.Serializer.jsonToComponent(detail));
+		handler.handleError(message, ITextComponent.Serializer.jsonToComponent(detail));
 	}
 
-	protected void handleError(String message, IChatComponent detail) {
+	protected void handleError(String message, ITextComponent detail) {
 		state = HandshakePacketTypes.STATE_FINISHED;
 		handler.handleError(message, detail);
 	}
@@ -172,14 +172,14 @@ public abstract class HandshakerInstance {
 
 		byte[] packetSkin = EaglerProfile.getSkinPacket(getVersion());
 		if(packetSkin.length > 0xFFFF) {
-			handleError("connect.failed", new ChatComponentText("Skin packet is too long: " + packetSkin.length));
+			handleError("connect.failed", new TextComponentString("Skin packet is too long: " + packetSkin.length));
 			return;
 		}
 		profileDataToSend.put(getVersion() >= 4 ? "skin_v2" : "skin_v1", packetSkin);
 
 		byte[] packetCape = EaglerProfile.getCapePacket();
 		if(packetCape.length > 0xFFFF) {
-			handleError("connect.failed", new ChatComponentText("Cape packet is too long: " + packetCape.length));
+			handleError("connect.failed", new TextComponentString("Cape packet is too long: " + packetCape.length));
 			return;
 		}
 		profileDataToSend.put("cape_v1", packetCape);

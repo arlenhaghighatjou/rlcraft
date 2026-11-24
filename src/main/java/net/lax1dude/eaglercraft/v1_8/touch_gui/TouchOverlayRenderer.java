@@ -26,7 +26,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
@@ -140,7 +140,7 @@ public class TouchOverlayRenderer {
 		GlStateManager.enableAlpha();
 		GlStateManager.color(1.0f, 1.0f, 1.0f, MathHelper.clamp_float(mc.gameSettings.touchControlOpacity, 0.0f, 1.0f));
 		Tessellator tessellator = Tessellator.getInstance();
-		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		WorldRenderer worldrenderer = tessellator.getBuffer();
 		worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
 		worldrenderer.pos(0.0D, (double) sh, 500.0D).tex(0.0D, 0.0D).endVertex();
 		worldrenderer.pos((double) sw, (double) sh, 500.0D).tex(1.0D, 0.0D).endVertex();
@@ -158,7 +158,7 @@ public class TouchOverlayRenderer {
 					: (mc.currentScreen.canCloseGui() ? EnumTouchLayoutState.IN_GUI
 							: EnumTouchLayoutState.IN_GUI_NO_BACK);
 		}
-		EntityPlayerSP player = mc.thePlayer;
+		EntityPlayerSP player = mc.player;
 		if(player != null) {
 			if(player.capabilities.isFlying) {
 				 return showDiagButtons() ? EnumTouchLayoutState.IN_GAME_WALK_FLYING : EnumTouchLayoutState.IN_GAME_FLYING;
@@ -184,7 +184,7 @@ public class TouchOverlayRenderer {
 		float f = 0.00390625F;
 		float f1 = 0.00390625F;
 		Tessellator tessellator = Tessellator.getInstance();
-		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		WorldRenderer worldrenderer = tessellator.getBuffer();
 		worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
 		worldrenderer.pos((double) (xCoord + 0.0F), (double) (yCoord + (float) maxV * scaleFac), 0.0)
 				.tex((double) ((float) (minU + 0) * f), (double) ((float) (minV + maxV) * f1)).endVertex();

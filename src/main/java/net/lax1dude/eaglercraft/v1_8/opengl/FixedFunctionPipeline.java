@@ -35,7 +35,7 @@ import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
 import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 
 import static net.lax1dude.eaglercraft.v1_8.opengl.FixedFunctionShader.FixedFunctionState.*;
 import static net.lax1dude.eaglercraft.v1_8.opengl.FixedFunctionShader.FixedFunctionConstants.*;

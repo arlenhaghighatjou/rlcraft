@@ -41,7 +41,7 @@ public class GuiScreenLANConnect extends GuiScreen {
 		this.buttonList.clear();
 		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + 12, I18n.format("directConnect.lanWorldJoin")));
 		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + 12, I18n.format("gui.cancel")));
-		this.codeTextField = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 100, this.height / 4 + 27, 200, 20);
+		this.codeTextField = new GuiTextField(2, this.fontRenderer, this.width / 2 - 100, this.height / 4 + 27, 200, 20);
 		this.codeTextField.setMaxStringLength(48);
 		this.codeTextField.setFocused(true);
 		this.codeTextField.setText(lastCode);
@@ -73,10 +73,10 @@ public class GuiScreenLANConnect extends GuiScreen {
 
 	public void drawScreen(int xx, int yy, float pt) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRendererObj, I18n.format("selectServer.direct"), this.width / 2, this.height / 4 - 60 + 20, 16777215);
-		this.drawString(this.fontRendererObj, I18n.format("directConnect.lanWorldCode"), this.width / 2 - 100, this.height / 4 + 12, 10526880);
-		this.drawCenteredString(this.fontRendererObj, I18n.format("directConnect.networkSettingsNote"), this.width / 2, this.height / 4 + 63, 10526880);
-		this.drawCenteredString(this.fontRendererObj, I18n.format("directConnect.ipGrabNote"), this.width / 2, this.height / 4 + 77, 10526880);
+		this.drawCenteredString(this.fontRenderer, I18n.format("selectServer.direct"), this.width / 2, this.height / 4 - 60 + 20, 16777215);
+		this.drawString(this.fontRenderer, I18n.format("directConnect.lanWorldCode"), this.width / 2 - 100, this.height / 4 + 12, 10526880);
+		this.drawCenteredString(this.fontRenderer, I18n.format("directConnect.networkSettingsNote"), this.width / 2, this.height / 4 + 63, 10526880);
+		this.drawCenteredString(this.fontRenderer, I18n.format("directConnect.ipGrabNote"), this.width / 2, this.height / 4 + 77, 10526880);
 		this.codeTextField.drawTextBox();
 		super.drawScreen(xx, yy, pt);
 		this.relaysButton.drawScreen(xx, yy);

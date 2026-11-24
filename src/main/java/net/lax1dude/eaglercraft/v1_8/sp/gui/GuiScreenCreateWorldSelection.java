@@ -56,15 +56,15 @@ public class GuiScreenCreateWorldSelection extends GuiScreen {
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
 		
-		this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.create.title"), this.width / 2, this.height / 4, 16777215);
+		this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.create.title"), this.width / 2, this.height / 4, 16777215);
 		
 		int toolTipColor = 0xDDDDAA;
 		if(worldCreate.isMouseOver()) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.create.create.tooltip"), this.width / 2, this.height / 4 + 20, toolTipColor);
+			this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.create.create.tooltip"), this.width / 2, this.height / 4 + 20, toolTipColor);
 		}else if(worldImport.isMouseOver()) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.create.import.tooltip"), this.width / 2, this.height / 4 + 20, toolTipColor);
+			this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.create.import.tooltip"), this.width / 2, this.height / 4 + 20, toolTipColor);
 		}else if(worldVanilla.isMouseOver()) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.create.vanilla.tooltip"), this.width / 2, this.height / 4 + 20, toolTipColor);
+			this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.create.vanilla.tooltip"), this.width / 2, this.height / 4 + 20, toolTipColor);
 		}
 		
 		super.drawScreen(par1, par2, par3);

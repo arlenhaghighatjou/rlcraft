@@ -12,9 +12,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.optifine.config.ConnectedParser;
 import net.optifine.config.MatchBlock;
 import net.optifine.config.Matches;
@@ -34,7 +34,7 @@ public class ConnectedProperties {
 	public String[] tiles = null;
 	public int connect = 0;
 	public int faces = 63;
-	public BiomeGenBase[] biomes = null;
+	public Biome[] biomes = null;
 	public RangeListInt heights = null;
 	public int renderPass = 0;
 	public boolean innerSeams = false;
@@ -55,7 +55,7 @@ public class ConnectedProperties {
 	public EaglerTextureAtlasSprite[] connectTileIcons = null;
 	public int tintIndex = -1;
 	public IBlockState tintBlockState = Blocks.air.getDefaultState();
-	public EnumWorldBlockLayer layer = null;
+	public BlockRenderLayer layer = null;
 	public static final int METHOD_NONE = 0;
 	public static final int METHOD_CTM = 1;
 	public static final int METHOD_HORIZONTAL = 2;
@@ -132,7 +132,7 @@ public class ConnectedProperties {
 		this.tintBlockState = connectedparser.parseBlockState(props.getProperty("tintBlock"),
 				Blocks.air.getDefaultState());
 		this.layer = connectedparser.parseBlockRenderLayer(props.getProperty("layer"),
-				EnumWorldBlockLayer.CUTOUT_MIPPED);
+				BlockRenderLayer.CUTOUT_MIPPED);
 	}
 
 	private int[] parseCtmTileIndexes(Properties props) {
@@ -637,7 +637,7 @@ public class ConnectedProperties {
 		if (this.tiles.length < 17) {
 			Config.warn("Invalid tiles, must be at least 17: " + path);
 			return false;
-		} else if (this.layer != null && this.layer != EnumWorldBlockLayer.SOLID) {
+		} else if (this.layer != null && this.layer != BlockRenderLayer.SOLID) {
 			return true;
 		} else {
 			Config.warn("Invalid overlay layer: " + this.layer);
@@ -648,7 +648,7 @@ public class ConnectedProperties {
 	private boolean isValidOverlayFixed(String path) {
 		if (!this.isValidFixed(path)) {
 			return false;
-		} else if (this.layer != null && this.layer != EnumWorldBlockLayer.SOLID) {
+		} else if (this.layer != null && this.layer != BlockRenderLayer.SOLID) {
 			return true;
 		} else {
 			Config.warn("Invalid overlay layer: " + this.layer);
@@ -659,7 +659,7 @@ public class ConnectedProperties {
 	private boolean isValidOverlayRandom(String path) {
 		if (!this.isValidRandom(path)) {
 			return false;
-		} else if (this.layer != null && this.layer != EnumWorldBlockLayer.SOLID) {
+		} else if (this.layer != null && this.layer != BlockRenderLayer.SOLID) {
 			return true;
 		} else {
 			Config.warn("Invalid overlay layer: " + this.layer);
@@ -670,7 +670,7 @@ public class ConnectedProperties {
 	private boolean isValidOverlayRepeat(String path) {
 		if (!this.isValidRepeat(path)) {
 			return false;
-		} else if (this.layer != null && this.layer != EnumWorldBlockLayer.SOLID) {
+		} else if (this.layer != null && this.layer != BlockRenderLayer.SOLID) {
 			return true;
 		} else {
 			Config.warn("Invalid overlay layer: " + this.layer);
@@ -681,7 +681,7 @@ public class ConnectedProperties {
 	private boolean isValidOverlayCtm(String path) {
 		if (!this.isValidCtm(path)) {
 			return false;
-		} else if (this.layer != null && this.layer != EnumWorldBlockLayer.SOLID) {
+		} else if (this.layer != null && this.layer != BlockRenderLayer.SOLID) {
 			return true;
 		} else {
 			Config.warn("Invalid overlay layer: " + this.layer);
@@ -954,7 +954,7 @@ public class ConnectedProperties {
 				+ Config.arrayToString((Object[]) this.matchTiles);
 	}
 
-	public boolean matchesBiome(BiomeGenBase biome) {
+	public boolean matchesBiome(Biome biome) {
 		return Matches.biome(biome, this.biomes);
 	}
 

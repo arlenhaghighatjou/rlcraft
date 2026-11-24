@@ -18,10 +18,10 @@ package net.lax1dude.eaglercraft.v1_8.sp.server;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.management.ServerConfigurationManager;
+import net.minecraft.server.management.PlayerList;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class EaglerPlayerList extends ServerConfigurationManager {
+public class EaglerPlayerList extends PlayerList {
 	
 	private NBTTagCompound hostPlayerNBT = null;
 

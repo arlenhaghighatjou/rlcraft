@@ -29,13 +29,13 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.login.INetHandlerLoginClient;
-import net.minecraft.network.login.server.S00PacketDisconnect;
-import net.minecraft.network.login.server.S01PacketEncryptionRequest;
-import net.minecraft.network.login.server.S02PacketLoginSuccess;
-import net.minecraft.network.login.server.S03PacketEnableCompression;
-import net.minecraft.network.play.client.C17PacketCustomPayload;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.network.login.server.SPacketDisconnect;
+import net.minecraft.network.login.server.SPacketEncryptionRequest;
+import net.minecraft.network.login.server.SPacketLoginSuccess;
+import net.minecraft.network.login.server.SPacketEnableCompression;
+import net.minecraft.network.play.client.CPacketCustomPayload;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.ITextComponent;
 
 public class NetHandlerSingleplayerLogin implements INetHandlerLoginClient {
 
@@ -52,22 +52,22 @@ public class NetHandlerSingleplayerLogin implements INetHandlerLoginClient {
 	}
 
 	@Override
-	public void onDisconnect(IChatComponent var1) {
+	public void onDisconnect(ITextComponent var1) {
 		this.mc.displayGuiScreen(new GuiDisconnected(this.previousGuiScreen, "connect.failed", var1));
 	}
 
 	@Override
-	public void handleEncryptionRequest(S01PacketEncryptionRequest var1) {
+	public void handleEncryptionRequest(SPacketEncryptionRequest var1) {
 		
 	}
 
 	@Override
-	public void handleLoginSuccess(S02PacketLoginSuccess var1) {
+	public void handleLoginSuccess(SPacketLoginSuccess var1) {
 		this.networkManager.setConnectionState(EnumConnectionState.PLAY);
 		int p = var1.getSelectedProtocol();
 		GamePluginMessageProtocol mp = GamePluginMessageProtocol.getByVersion(p);
 		if(mp == null) {
-			this.networkManager.closeChannel(new ChatComponentText("Unknown protocol selected: " + p));
+			this.networkManager.closeChannel(new TextComponentString("Unknown protocol selected: " + p));
 			return;
 		}
 		logger.info("Server is using protocol: {}", p);
@@ -77,18 +77,18 @@ public class NetHandlerSingleplayerLogin implements INetHandlerLoginClient {
 		this.networkManager.setNetHandler(netHandler);
 		byte[] b = UpdateService.getClientSignatureData();
 		if(b != null) {
-			this.networkManager.sendPacket(new C17PacketCustomPayload("EAG|MyUpdCert-1.8",
+			this.networkManager.sendPacket(new CPacketCustomPayload("EAG|MyUpdCert-1.8",
 					new PacketBuffer(Unpooled.buffer(b, b.length).writerIndex(b.length))));
 		}
 	}
 
 	@Override
-	public void handleDisconnect(S00PacketDisconnect var1) {
+	public void handleDisconnect(SPacketDisconnect var1) {
 		networkManager.closeChannel(var1.func_149603_c());
 	}
 
 	@Override
-	public void handleEnableCompression(S03PacketEnableCompression var1) {
+	public void handleEnableCompression(SPacketEnableCompression var1) {
 		
 	}
 

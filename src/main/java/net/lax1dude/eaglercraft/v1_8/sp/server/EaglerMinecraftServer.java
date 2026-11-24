@@ -33,7 +33,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.WorldSettings;
-import net.minecraft.world.WorldSettings.GameType;
+import net.minecraft.world.GameType;
 import net.lax1dude.eaglercraft.v1_8.sp.server.skins.IntegratedTextureService;
 import net.lax1dude.eaglercraft.v1_8.sp.server.voice.IntegratedVoiceService;
 

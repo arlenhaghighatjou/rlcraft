@@ -24,7 +24,7 @@ import net.lax1dude.eaglercraft.v1_8.sp.ipc.IPCPacket1CIssueDetected;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiSelectWorld;
+import net.minecraft.client.gui.GuiWorldSelection;
 import net.minecraft.client.resources.I18n;
 
 public class GuiScreenIntegratedServerStartup extends GuiScreen {
@@ -70,7 +70,7 @@ public class GuiScreenIntegratedServerStartup extends GuiScreen {
 			if(crashReport != null) {
 				mc.displayGuiScreen(GuiScreenIntegratedServerBusy.createException(new GuiMainMenu(), "singleplayer.failed.notStarted", crashReport));
 			}else if(SingleplayerServerController.isIntegratedServerWorkerStarted()) {
-				GuiScreen cont = new GuiSelectWorld(backScreen);
+				GuiScreen cont = new GuiWorldSelection(backScreen);
 				if(SingleplayerServerController.isRunningSingleThreadMode()) {
 					cont = new GuiScreenIntegratedServerFailed("singleplayer.failed.singleThreadWarning.1", "singleplayer.failed.singleThreadWarning.2", cont);
 				} else if (!EagRuntime.getConfiguration().isRamdiskMode()
@@ -93,8 +93,8 @@ public class GuiScreenIntegratedServerStartup extends GuiScreen {
 	public void drawScreen(int i, int j, float f) {
 		this.drawBackground(0);
 		String txt = I18n.format("singleplayer.integratedStartup");
-		int w = this.fontRendererObj.getStringWidth(txt);
-		this.drawString(this.fontRendererObj, txt + dotDotDot[(int)((EagRuntime.steadyTimeMillis() / 300L) % 4L)], (this.width - w) / 2, this.height / 2 - 50, 16777215);
+		int w = this.fontRenderer.getStringWidth(txt);
+		this.drawString(this.fontRenderer, txt + dotDotDot[(int)((EagRuntime.steadyTimeMillis() / 300L) % 4L)], (this.width - w) / 2, this.height / 2 - 50, 16777215);
 		super.drawScreen(i, j, f);
 	}
 

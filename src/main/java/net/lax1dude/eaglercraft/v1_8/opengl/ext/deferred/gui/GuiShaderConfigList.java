@@ -27,7 +27,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiListExtended;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiShaderConfigList extends GuiListExtended {
@@ -72,7 +72,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 			++i;
 		}
 		if(ret.size() == 0) {
-			ret.add("" + EnumChatFormatting.GRAY + EnumChatFormatting.ITALIC + "(no description found)");
+			ret.add("" + TextFormatting.GRAY + TextFormatting.ITALIC + "(no description found)");
 		}
 		return ret;
 	}
@@ -85,7 +85,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 		return loadDescription("shaders.gui.option." + key + ".desc");
 	}
 
-	private static String getColoredOnOff(boolean state, EnumChatFormatting on, EnumChatFormatting off) {
+	private static String getColoredOnOff(boolean state, TextFormatting on, TextFormatting off) {
 		return state ? "" + on + I18n.format("options.on") : "" + off + I18n.format("options.off");
 	}
 
@@ -120,7 +120,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.wavingBlocks;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.wavingBlocks, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.wavingBlocks, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -137,7 +137,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.dynamicLights;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.dynamicLights, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.dynamicLights, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -154,7 +154,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.ssao;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.ssao, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.ssao, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -171,7 +171,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final int originalValue = conf.shadowsSun;
 				@Override
 				protected String getDisplayValue() {
-					return conf.shadowsSun == 0 ? "" + EnumChatFormatting.RED + "0" : "" + EnumChatFormatting.YELLOW + (1 << (conf.shadowsSun + 3));
+					return conf.shadowsSun == 0 ? "" + TextFormatting.RED + "0" : "" + TextFormatting.YELLOW + (1 << (conf.shadowsSun + 3));
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -188,7 +188,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.useEnvMap;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.useEnvMap, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.useEnvMap, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -205,7 +205,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.lensDistortion;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.lensDistortion, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.lensDistortion, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -222,7 +222,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.subsurfaceScattering;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.subsurfaceScattering, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.subsurfaceScattering, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -239,7 +239,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.lensFlares;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.lensFlares, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.lensFlares, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -256,7 +256,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.fxaa;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.fxaa, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.fxaa, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -276,7 +276,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.shadowsColored;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.shadowsColored, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.shadowsColored, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -293,7 +293,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.shadowsSmoothed;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.shadowsSmoothed, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.shadowsSmoothed, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -310,7 +310,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.realisticWater;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.realisticWater, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.realisticWater, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -327,7 +327,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.bloom;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.bloom, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.bloom, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -344,7 +344,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.lightShafts;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.lightShafts, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.lightShafts, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -361,7 +361,7 @@ public class GuiShaderConfigList extends GuiListExtended {
 				private final boolean originalValue = conf.raytracing;
 				@Override
 				protected String getDisplayValue() {
-					return getColoredOnOff(conf.raytracing, EnumChatFormatting.GREEN, EnumChatFormatting.RED);
+					return getColoredOnOff(conf.raytracing, TextFormatting.GREEN, TextFormatting.RED);
 				}
 				@Override
 				protected void toggleOption(GuiButton button, int dir) {
@@ -417,17 +417,17 @@ public class GuiShaderConfigList extends GuiListExtended {
 			Minecraft mc = Minecraft.getMinecraft();
 			ShaderPackInfo info = mc.gameSettings.deferredShaderConf.shaderPackInfo;
 			String packNameString = info.name;
-			int strWidth = mc.fontRendererObj.getStringWidth(packNameString) + 40;
+			int strWidth = mc.fontRenderer.getStringWidth(packNameString) + 40;
 			if(strWidth < 210) {
 				strWidth = 210;
 			}
 			int x2 = strWidth > getListWidth * 2 ? x : x + (getListWidth - strWidth) / 2;
-			screen.drawString(mc.fontRendererObj, packNameString, x2 + 38, y + 3, 0xFFFFFF);
-			screen.drawString(mc.fontRendererObj, "Author: " + info.author, x2 + 38, y + 14, 0xBBBBBB);
-			screen.drawString(mc.fontRendererObj, "Version: " + info.vers, x2 + 38, y + 25, 0x888888);
-			List<String> descLines = mc.fontRendererObj.listFormattedStringToWidth(info.desc, strWidth);
+			screen.drawString(mc.fontRenderer, packNameString, x2 + 38, y + 3, 0xFFFFFF);
+			screen.drawString(mc.fontRenderer, "Author: " + info.author, x2 + 38, y + 14, 0xBBBBBB);
+			screen.drawString(mc.fontRenderer, "Version: " + info.vers, x2 + 38, y + 25, 0x888888);
+			List<String> descLines = mc.fontRenderer.listFormattedStringToWidth(info.desc, strWidth);
 			for(int i = 0, l = descLines.size(); i < l; ++i) {
-				screen.drawString(mc.fontRendererObj, descLines.get(i), x2, y + 43 + i * 9, 0xBBBBBB);
+				screen.drawString(mc.fontRenderer, descLines.get(i), x2, y + 43 + i * 9, 0xBBBBBB);
 			}
 			mc.getTextureManager().bindTexture(shaderPackIcon);
 			GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);

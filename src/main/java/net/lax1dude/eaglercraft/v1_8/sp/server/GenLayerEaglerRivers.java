@@ -16,7 +16,7 @@
 
 package net.lax1dude.eaglercraft.v1_8.sp.server;
 
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
@@ -96,7 +96,7 @@ public class GenLayerEaglerRivers extends GenLayer {
 						break;
 					}
 					if((pattern[(int)yyy] & (1 << (int)xxx)) != 0) {
-						aint1[i] = BiomeGenBase.river.biomeID;
+						aint1[i] = Biome.river.biomeID;
 					}
 				}
 			}

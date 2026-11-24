@@ -34,7 +34,7 @@ import net.lax1dude.eaglercraft.v1_8.opengl.ext.dynamiclights.program.DynamicLig
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 
 public class DynamicLightsAcceleratedEffectRenderer extends AbstractAcceleratedEffectRenderer {
 

@@ -36,12 +36,12 @@ import net.lax1dude.eaglercraft.v1_8.sp.SingleplayerServerController;
 import net.lax1dude.eaglercraft.v1_8.sp.ipc.*;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.server.network.NetHandlerLoginServer;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.ReportedException;
-import net.minecraft.util.StringTranslate;
+import net.minecraft.util.text.translation.LanguageMap;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.WorldSettings;
-import net.minecraft.world.WorldSettings.GameType;
+import net.minecraft.world.GameType;
 import net.minecraft.world.WorldType;
 import net.lax1dude.eaglercraft.v1_8.sp.server.export.WorldConverterEPK;
 import net.lax1dude.eaglercraft.v1_8.sp.server.export.WorldConverterMCA;
@@ -113,7 +113,7 @@ public class EaglerIntegratedServerWorker {
 	public static void closeChannel(String channel) {
 		IntegratedServerPlayerNetworkManager netmanager = openChannels.remove(channel);
 		if(netmanager != null) {
-			netmanager.closeChannel(new ChatComponentText("End of stream"));
+			netmanager.closeChannel(new TextComponentString("End of stream"));
 			sendIPCPacket(new IPCPacket0CPlayerChannel(channel, false));
 		}
 	}
@@ -355,7 +355,7 @@ public class EaglerIntegratedServerWorker {
 				IPCPacket14StringList pkt = (IPCPacket14StringList)ipc;
 				switch(pkt.opCode) {
 				case IPCPacket14StringList.LOCALE:
-					StringTranslate.initServer(pkt.stringList);
+					LanguageMap.initServer(pkt.stringList);
 					break;
 				//case IPCPacket14StringList.STAT_GUID:
 				//	AchievementMap.init(pkt.stringList);

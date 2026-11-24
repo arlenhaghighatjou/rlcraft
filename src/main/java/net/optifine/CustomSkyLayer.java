@@ -11,10 +11,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.optifine.config.ConnectedParser;
 import net.optifine.config.Matches;
 import net.optifine.config.RangeListInt;
@@ -38,7 +38,7 @@ public class CustomSkyLayer {
 	private boolean weatherClear;
 	private boolean weatherRain;
 	private boolean weatherThunder;
-	public BiomeGenBase[] biomes;
+	public Biome[] biomes;
 	public RangeListInt heights;
 	private float transition;
 	private SmoothFloat smoothPositionBrightness;
@@ -329,7 +329,7 @@ public class CustomSkyLayer {
 			BlockPos blockpos = entity.getPosition();
 
 			if (this.biomes != null) {
-				BiomeGenBase biomegenbase = world.getBiomeGenForCoords(blockpos);
+				Biome biomegenbase = world.getBiomeGenForCoords(blockpos);
 
 				if (biomegenbase == null) {
 					return 0.0F;
@@ -382,7 +382,7 @@ public class CustomSkyLayer {
 	}
 
 	private void renderSide(Tessellator tess, int side) {
-		WorldRenderer worldrenderer = tess.getWorldRenderer();
+		WorldRenderer worldrenderer = tess.getBuffer();
 		double d0 = (double) (side % 3) / 3.0D;
 		double d1 = (double) (side / 3) / 2.0D;
 		worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);

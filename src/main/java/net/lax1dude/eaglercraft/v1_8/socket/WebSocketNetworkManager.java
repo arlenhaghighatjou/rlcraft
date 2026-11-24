@@ -27,8 +27,8 @@ import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.ITextComponent;
 
 public class WebSocketNetworkManager extends EaglercraftNetworkManager {
 
@@ -46,7 +46,7 @@ public class WebSocketNetworkManager extends EaglercraftNetworkManager {
 		return webSocketClient.getState();
 	}
 
-	public void closeChannel(IChatComponent reason) {
+	public void closeChannel(ITextComponent reason) {
 		webSocketClient.close();
 		if(nethandler != null) {
 			nethandler.onDisconnect(reason);
@@ -148,7 +148,7 @@ public class WebSocketNetworkManager extends EaglercraftNetworkManager {
 				processReceivedPackets(); // catch kick message
 			} catch (IOException e) {
 			}
-			doClientDisconnect(new ChatComponentTranslation("disconnect.endOfStream"));
+			doClientDisconnect(new TextComponentTranslation("disconnect.endOfStream"));
 			return true;
 		}else {
 			return false;

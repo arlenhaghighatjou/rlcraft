@@ -29,9 +29,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 
 public class EaglerCloudRenderer {
 
@@ -61,7 +61,7 @@ public class EaglerCloudRenderer {
 	}
 
 	public void renderClouds(float partialTicks, int pass) {
-		if (!this.mc.theWorld.provider.isSurfaceWorld()) {
+		if (!this.mc.world.provider.isSurfaceWorld()) {
 			return;
 		}
 		
@@ -73,7 +73,7 @@ public class EaglerCloudRenderer {
 		int newState;
 		Entity rve = this.mc.getRenderViewEntity();
 		float f = (float) (rve.lastTickPosY + (rve.posY - rve.lastTickPosY) * (double) partialTicks);
-		float f3 = this.mc.theWorld.provider.getCloudHeight() - f + 0.33F;
+		float f3 = this.mc.world.provider.getCloudHeight() - f + 0.33F;
 		if(c == 2) {
 			if (f3 > -5.0F) {
 				if (f3 <= 5.0F) {
@@ -98,7 +98,7 @@ public class EaglerCloudRenderer {
 		GlStateManager.enableBlend();
 		GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 		
-		Vec3 vec3 = mc.theWorld.getCloudColour(partialTicks);
+		Vec3d vec3 = mc.world.getCloudColour(partialTicks);
 		float _f1 = (float) vec3.xCoord;
 		float _f2 = (float) vec3.yCoord;
 		float _f3 = (float) vec3.zCoord;
@@ -233,7 +233,7 @@ public class EaglerCloudRenderer {
 
 	private void rebuild(int newState) {
 		Tessellator tessellator = Tessellator.getInstance();
-		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		WorldRenderer worldrenderer = tessellator.getBuffer();
 		if(newState != RENDER_STATE_FAST) {
 			if(renderList != -1) {
 				EaglercraftGPU.glDeleteLists(renderList);

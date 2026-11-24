@@ -17,7 +17,7 @@
 package net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.texture;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 
 public class TextureClockPBRImpl extends EaglerTextureAtlasSpritePBR {
 	private double smoothParam1;
@@ -31,9 +31,9 @@ public class TextureClockPBRImpl extends EaglerTextureAtlasSpritePBR {
 		if (!this.frameTextureDataPBR[0].isEmpty()) {
 			Minecraft minecraft = Minecraft.getMinecraft();
 			double d0 = 0.0;
-			if (minecraft.theWorld != null && minecraft.thePlayer != null) {
-				d0 = (double) minecraft.theWorld.getCelestialAngle(1.0f);
-				if (!minecraft.theWorld.provider.isSurfaceWorld()) {
+			if (minecraft.world != null && minecraft.player != null) {
+				d0 = (double) minecraft.world.getCelestialAngle(1.0f);
+				if (!minecraft.world.provider.isSurfaceWorld()) {
 					d0 = Math.random();
 				}
 			}

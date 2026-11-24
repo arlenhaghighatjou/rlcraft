@@ -62,7 +62,7 @@ public class GuiButtonNotifBell extends GuiButton {
 				}else {
 					GlStateManager.scale(0.75f, 0.75f, 0.75f);
 				}
-				drawCenteredString(minecraft.fontRendererObj, Integer.toString(unread), 0, 0, c);
+				drawCenteredString(minecraft.fontRenderer, Integer.toString(unread), 0, 0, c);
 				GlStateManager.popMatrix();
 			}
 		}

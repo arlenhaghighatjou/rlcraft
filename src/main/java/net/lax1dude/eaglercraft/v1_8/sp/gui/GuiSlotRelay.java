@@ -134,8 +134,8 @@ class GuiSlotRelay extends GuiSlot {
 				GlStateManager.popMatrix();
 			}
 
-			screen.drawString(mc.fontRendererObj, comment, xx + 22, yy + 2, 0xFFFFFFFF);
-			screen.drawString(mc.fontRendererObj, srv.address, xx + 22, yy + 12, 0xFF999999);
+			screen.drawString(mc.fontRenderer, comment, xx + 22, yy + 2, 0xFFFFFFFF);
+			screen.drawString(mc.fontRenderer, srv.address, xx + 22, yy + 12, 0xFF999999);
 
 			if(str != null) {
 				int mx = screen.getFrameMouseX();

@@ -129,8 +129,8 @@ public class VoiceClientInstance {
 
 	private void recheckNearby(VoicePlayerState voiceState) {
 		Minecraft mc = Minecraft.getMinecraft();
-		if(mc.theWorld != null) {
-			EntityPlayer player = mc.theWorld.getPlayerEntityByUUID(voiceState.uuid);
+		if(mc.world != null) {
+			EntityPlayer player = mc.world.getPlayerEntityByUUID(voiceState.uuid);
 			if(player != null) {
 				voiceState.nearby = goddamnManhattanDistance(mc, player);
 				if(voiceState.nearby) {
@@ -145,8 +145,8 @@ public class VoiceClientInstance {
 	// Must perform these ham-fisted manhattan distance calculations to work with old clients
 	private boolean goddamnManhattanDistance(Minecraft mc, Entity player) {
 		final int prox = 22;
-		return Math.abs(mc.thePlayer.posX - player.posX) <= prox && Math.abs(mc.thePlayer.posY - player.posY) <= prox
-				&& Math.abs(mc.thePlayer.posZ - player.posZ) <= prox;
+		return Math.abs(mc.player.posX - player.posX) <= prox && Math.abs(mc.player.posY - player.posY) <= prox
+				&& Math.abs(mc.player.posZ - player.posZ) <= prox;
 	}
 
 	private void dropPlayer(EaglercraftUUID uuid) {

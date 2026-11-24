@@ -25,8 +25,8 @@ import net.lax1dude.eaglercraft.v1_8.sp.gui.GuiSlider2;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.math.MathHelper;
 
 public class GuiScreenRecordingSettings extends GuiScreen {
 
@@ -180,7 +180,7 @@ public class GuiScreenRecordingSettings extends GuiScreen {
 		microphoneVolumeSlider.enabled = !ScreenRecordingController.isMicVolumeLocked();
 		recordButton.displayString = I18n.format(isRecording ? "options.screenRecording.stop" : "options.screenRecording.start");
 		String statusString = I18n.format("options.screenRecording.status",
-				(isRecording ? EnumChatFormatting.GREEN : EnumChatFormatting.RED) + I18n.format(isRecording ? "options.screenRecording.status.1" : "options.screenRecording.status.0"));
+				(isRecording ? TextFormatting.GREEN : TextFormatting.RED) + I18n.format(isRecording ? "options.screenRecording.status.1" : "options.screenRecording.status.0"));
 		int statusStringWidth = fontRendererObj.getStringWidth(statusString);
 		drawString(fontRendererObj, statusString, this.width / 2 + 10 - statusStringWidth, this.height / 6 + 34, 0xFFFFFF);
 		

@@ -40,8 +40,8 @@ import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.ITextComponent;
 
 public class HandshakerHandler {
 	
@@ -168,11 +168,11 @@ public class HandshakerHandler {
 				handleServerError(packet, false);
 				break;
 			default:
-				handleError("connect.failed", new ChatComponentText("Unknown packet type " + pktId + " received"));
+				handleError("connect.failed", new TextComponentString("Unknown packet type " + pktId + " received"));
 				break;
 			}
 		}catch(Exception ex) {
-			handleError("connect.failed", new ChatComponentText("Invalid packet received"));
+			handleError("connect.failed", new TextComponentString("Invalid packet received"));
 			logger.error("Invalid packet received");
 			logger.error(ex);
 		}
@@ -183,14 +183,14 @@ public class HandshakerHandler {
 		
 		if(protocolVersion != protocolV3 && protocolVersion != protocolV4 && protocolVersion != protocolV5) {
 			logger.info("Incompatible server version: {}", protocolVersion);
-			handleError("connect.failed", new ChatComponentText(protocolVersion < protocolV3 ? "Outdated Server" : "Outdated Client"));
+			handleError("connect.failed", new TextComponentString(protocolVersion < protocolV3 ? "Outdated Server" : "Outdated Client"));
 			return;
 		}
 		
 		int gameVers = packet.readUnsignedShort();
 		if(gameVers != 47) {
 			logger.info("Incompatible minecraft protocol version: {}", gameVers);
-			handleError("connect.failed", new ChatComponentText("This server does not support 1.8!"));
+			handleError("connect.failed", new TextComponentString("This server does not support 1.8!"));
 			return;
 		}
 		
@@ -263,7 +263,7 @@ public class HandshakerHandler {
 		packet.readBytes(dat);
 		String msg = new String(dat, StandardCharsets.UTF_8);
 		
-		handleError("connect.failed", new ChatComponentText(msg));
+		handleError("connect.failed", new TextComponentString(msg));
 	}
 
 	protected void handleServerError(PacketBuffer packet, boolean v3) {
@@ -286,15 +286,15 @@ public class HandshakerHandler {
 		packet.readBytes(dat);
 		String msg = new String(dat, StandardCharsets.UTF_8);
 		if(errCode == HandshakePacketTypes.SERVER_ERROR_RATELIMIT_BLOCKED) {
-			handleRatelimit(false, new ChatComponentText(msg));
+			handleRatelimit(false, new TextComponentString(msg));
 		}else if(errCode == HandshakePacketTypes.SERVER_ERROR_RATELIMIT_LOCKED) {
-			handleRatelimit(true, new ChatComponentText(msg));
+			handleRatelimit(true, new TextComponentString(msg));
 		}else if(errCode == HandshakePacketTypes.SERVER_ERROR_AUTHENTICATION_REQUIRED) {
 			handleAuthRequired(msg);
 		}else if(errCode == HandshakePacketTypes.SERVER_ERROR_CUSTOM_MESSAGE) {
-			handleError("connect.failed", v3 ? IChatComponent.Serializer.jsonToComponent(msg) : new ChatComponentText(msg));
+			handleError("connect.failed", v3 ? ITextComponent.Serializer.jsonToComponent(msg) : new TextComponentString(msg));
 		}else {
-			handleError("connect.failed", new ChatComponentText("Server Error Code " + errCode + "\n" + msg));
+			handleError("connect.failed", new TextComponentString("Server Error Code " + errCode + "\n" + msg));
 		}
 	}
 
@@ -324,7 +324,7 @@ public class HandshakerHandler {
 		}
 	}
 
-	protected void handleRatelimit(boolean locked, IChatComponent detail) {
+	protected void handleRatelimit(boolean locked, ITextComponent detail) {
 		if(locked) {
 			RateLimitTracker.registerLockOut(websocket.getCurrentURI());
 		}else {
@@ -337,11 +337,11 @@ public class HandshakerHandler {
 		}
 	}
 
-	protected void handleError(String message, IChatComponent detail) {
+	protected void handleError(String message, ITextComponent detail) {
 		websocket.close();
 		if(baseState != FINISHED) {
 			baseState = FINISHED;
-			mc.displayGuiScreen(new GuiDisconnected(ret, message, detail != null ? detail : new ChatComponentText("")));
+			mc.displayGuiScreen(new GuiDisconnected(ret, message, detail != null ? detail : new TextComponentString("")));
 		}
 	}
 

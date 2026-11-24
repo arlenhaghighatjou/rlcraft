@@ -19,7 +19,7 @@ package net.lax1dude.eaglercraft.v1_8.update;
 import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.sp.lan.LANServerController;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -99,13 +99,13 @@ public class GuiUpdateCheckerOverlay extends Gui {
 				dismissUpdatesButton.visible = true;
 				viewAllUpdatesButton.displayString = I18n.format("update.viewAll", i);
 				str = I18n.format("update.found");
-				mc.fontRendererObj.drawStringWithShadow(str, 3, 22, 0xFFFFAA);
+				mc.fontRenderer.drawStringWithShadow(str, 3, 22, 0xFFFFAA);
 				
 				int embedY = 35;
 				int embedWidth = 115;
 				int embedWidth2 = (int)(embedWidth / 0.75f);
 				
-				List<String> lst = cert.bundleVersionComment.length() == 0 ? null : mc.fontRendererObj.listFormattedStringToWidth(cert.bundleVersionComment, embedWidth2 - 14);
+				List<String> lst = cert.bundleVersionComment.length() == 0 ? null : mc.fontRenderer.listFormattedStringToWidth(cert.bundleVersionComment, embedWidth2 - 14);
 				
 				int embedHeight = 44;
 				if(lst != null) {
@@ -133,16 +133,16 @@ public class GuiUpdateCheckerOverlay extends Gui {
 				EaglercraftGPU.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 				GlStateManager.popMatrix();
 	
-				mc.fontRendererObj.drawString(EnumChatFormatting.UNDERLINE + cert.bundleDisplayName, 45, 11, 0x000000);
-				mc.fontRendererObj.drawString(I18n.format("update.update") + " " + EnumChatFormatting.DARK_RED + cert.bundleDisplayVersion, 45, 25, 0x000000);
+				mc.fontRenderer.drawString(TextFormatting.UNDERLINE + cert.bundleDisplayName, 45, 11, 0x000000);
+				mc.fontRenderer.drawString(I18n.format("update.update") + " " + TextFormatting.DARK_RED + cert.bundleDisplayVersion, 45, 25, 0x000000);
 				
 				if(lst != null) {
 					for(int j = 0, l = lst.size(); j < l; ++j) {
-						mc.fontRendererObj.drawString(lst.get(j), 5, 42 + j * 8, 0x000000);
+						mc.fontRenderer.drawString(lst.get(j), 5, 42 + j * 8, 0x000000);
 					}
 				}
 				
-				mc.fontRendererObj.drawString(I18n.format("update.author") + " " + cert.bundleAuthorName, 5, 44 + (lst == null ? 0 : (3 + lst.size() * 8)), 0x777777);
+				mc.fontRenderer.drawString(I18n.format("update.author") + " " + cert.bundleAuthorName, 5, 44 + (lst == null ? 0 : (3 + lst.size() * 8)), 0x777777);
 				
 				startDownloadButton.yPosition = embedHeight + embedY + 5;
 				viewAllUpdatesButton.yPosition = startDownloadButton.yPosition + 22;
@@ -153,7 +153,7 @@ public class GuiUpdateCheckerOverlay extends Gui {
 			}else if(isIngame) {
 				if(shownSP) {
 					str = I18n.format("update.noneNew");
-					mc.fontRendererObj.drawString(str, 3, 22, 0xDDDDDD);
+					mc.fontRenderer.drawString(str, 3, 22, 0xDDDDDD);
 					if(i > 0) {
 						viewAllUpdatesButton.yPosition = 40;
 						viewAllUpdatesButton.visible = true;
@@ -183,17 +183,17 @@ public class GuiUpdateCheckerOverlay extends Gui {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(1.0f, isIngame ? 0.0f : 18.0f, 0.0f);
 		String str = I18n.format("update.downloading");
-		mc.fontRendererObj.drawStringWithShadow(str, 2, 2, 0xFFFFAA);
+		mc.fontRenderer.drawStringWithShadow(str, 2, 2, 0xFFFFAA);
 		GlStateManager.translate(0.0f, 14.0f, 0.0f);
 		GlStateManager.scale(0.75f, 0.75f, 0.75f);
 		if(!StringUtils.isAllBlank(progressState.statusString1)) {
 			str = progressState.statusString1;
-			mc.fontRendererObj.drawStringWithShadow(str, 3, 0, 0xFFFFFF);
+			mc.fontRenderer.drawStringWithShadow(str, 3, 0, 0xFFFFFF);
 		}
 		int cc = isIngame ? 0xBBBBBB : 0xFFFFFF;
 		if(!StringUtils.isAllBlank(progressState.statusString2)) {
 			str = progressState.statusString2;
-			mc.fontRendererObj.drawStringWithShadow(str, 3, 11, cc);
+			mc.fontRenderer.drawStringWithShadow(str, 3, 11, cc);
 		}
 		int progX1 = 3;
 		int progY1 = 22;
@@ -215,10 +215,10 @@ public class GuiUpdateCheckerOverlay extends Gui {
 			GlStateManager.translate(0.0f, progY2 + 2, 0.0f);
 			GlStateManager.scale(0.66f, 0.66f, 0.66f);
 			str = progressState.statusString3;
-			List<String> wrappedURL = mc.fontRendererObj.listFormattedStringToWidth(str, (int)((progX2 - progX1) * 1.5f));
+			List<String> wrappedURL = mc.fontRenderer.listFormattedStringToWidth(str, (int)((progX2 - progX1) * 1.5f));
 			for(int i = 0, l = wrappedURL.size(); i < l; ++i) {
 				str = wrappedURL.get(i);
-				mc.fontRendererObj.drawStringWithShadow(str, 5, i * 11, cc);
+				mc.fontRenderer.drawStringWithShadow(str, 5, i * 11, cc);
 			}
 			totalHeightOffset += (int)(wrappedURL.size() * 5.5f);
 		}

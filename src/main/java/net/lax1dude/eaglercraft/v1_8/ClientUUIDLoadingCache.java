@@ -53,7 +53,7 @@ public class ClientUUIDLoadingCache {
 			ret = ((AbstractClientPlayer)player).clientBrandUUIDCache;
 			if(ret == null) {
 				Minecraft mc = Minecraft.getMinecraft();
-				if(mc != null && mc.thePlayer != null && mc.thePlayer.sendQueue.getEaglerMessageProtocol().ver >= 4) {
+				if(mc != null && mc.player != null && mc.player.sendQueue.getEaglerMessageProtocol().ver >= 4) {
 					if(StateFlags.eaglerPlayerFlag && player.getGameProfile().getTextures().eaglerPlayer != (byte) 2) {
 						ret = VANILLA_UUID;
 					}else {
@@ -65,7 +65,7 @@ public class ClientUUIDLoadingCache {
 									(AbstractClientPlayer) player);
 							waitingIDs.put(reqID, newLookup);
 							waitingUUIDs.put(playerUUID, newLookup);
-							mc.thePlayer.sendQueue.sendEaglerMessage(
+							mc.player.sendQueue.sendEaglerMessage(
 									new CPacketGetOtherClientUUIDV4EAG(reqID, newLookup.uuid.msb, newLookup.uuid.lsb));
 						}
 					}
@@ -130,7 +130,7 @@ public class ClientUUIDLoadingCache {
 		}else {
 			if (requestId == -1 && StateFlags.LEGACY_EAGLER_PLAYER_FLAG_PRESENT.equals(clientId)) {
 				Minecraft mc = Minecraft.getMinecraft();
-				if (mc != null && (mc.thePlayer == null || mc.thePlayer.sendQueue.getEaglerMessageProtocol().ver < 5)) {
+				if (mc != null && (mc.player == null || mc.player.sendQueue.getEaglerMessageProtocol().ver < 5)) {
 					StateFlags.eaglerPlayerFlag = true;
 					StateFlags.eaglerPlayerFlagSupervisor = true;
 					return;

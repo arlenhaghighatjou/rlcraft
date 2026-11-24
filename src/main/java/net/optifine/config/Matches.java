@@ -2,7 +2,7 @@ package net.optifine.config;
 
 import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.block.state.BlockStateBase;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 
 public class Matches {
 	public static boolean block(BlockStateBase blockStateBase, MatchBlock[] matchBlocks) {
@@ -81,7 +81,7 @@ public class Matches {
 		}
 	}
 
-	public static boolean biome(BiomeGenBase biome, BiomeGenBase[] biomes) {
+	public static boolean biome(Biome biome, Biome[] biomes) {
 		if (biomes == null) {
 			return true;
 		} else {

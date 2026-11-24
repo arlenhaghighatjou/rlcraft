@@ -28,7 +28,7 @@ import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 
 public abstract class EaglercraftNetworkManager {
 	
@@ -87,7 +87,7 @@ public abstract class EaglercraftNetworkManager {
 		return address;
 	}
 	
-	public abstract void closeChannel(IChatComponent reason);
+	public abstract void closeChannel(ITextComponent reason);
 	
 	public void setConnectionState(EnumConnectionState state) {
 		packetState = state;
@@ -121,7 +121,7 @@ public abstract class EaglercraftNetworkManager {
 	
 	protected boolean clientDisconnected = false;
 	
-	protected void doClientDisconnect(IChatComponent msg) {
+	protected void doClientDisconnect(ITextComponent msg) {
 		if(!clientDisconnected) {
 			clientDisconnected = true;
 			if(nethandler != null) {

@@ -22,7 +22,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiScreenRequestDisplay extends GuiScreen {
@@ -49,7 +49,7 @@ public class GuiScreenRequestDisplay extends GuiScreen {
 
 	public void drawScreen(int mx, int my, float pt) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, EnumChatFormatting.BOLD + I18n.format("webviewDisplayWarning.title"), this.width / 2, 70, 0xFF4444);
+		this.drawCenteredString(fontRendererObj, TextFormatting.BOLD + I18n.format("webviewDisplayWarning.title"), this.width / 2, 70, 0xFF4444);
 		this.drawCenteredString(fontRendererObj, I18n.format("webviewDisplayWarning.text0"), this.width / 2, 90, 16777215);
 		this.drawCenteredString(fontRendererObj, I18n.format("webviewDisplayWarning.text1"), this.width / 2, 102, 16777215);
 		

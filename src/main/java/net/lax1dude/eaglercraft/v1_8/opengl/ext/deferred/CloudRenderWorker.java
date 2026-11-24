@@ -38,7 +38,7 @@ import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
 import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 
 public class CloudRenderWorker {
 
@@ -221,7 +221,7 @@ public class CloudRenderWorker {
 		float playerCoordsNoiseMapScale = 0.02f;
 		FloatBuffer matrixCopyBuffer = EaglerDeferredPipeline.matrixCopyBuffer;
 
-		WorldClient wc = Minecraft.getMinecraft().theWorld;
+		WorldClient wc = Minecraft.getMinecraft().world;
 		float rain = wc.getRainStrength(0.0f);
 		if(cloudRenderProgress == 0) {
 			shader_clouds_noise3d.useProgram();

@@ -72,7 +72,7 @@ public class GuiScreenSelectCodec extends GuiScreen {
 
 	public void drawScreen(int i, int j, float var3) {
 		slots.drawScreen(i, j, var3);
-		this.drawCenteredString(this.fontRendererObj, I18n.format("options.recordingCodec.title"), this.width / 2, 16, 16777215);
+		this.drawCenteredString(this.fontRenderer, I18n.format("options.recordingCodec.title"), this.width / 2, 16, 16777215);
 		super.drawScreen(i, j, var3);
 	}
 

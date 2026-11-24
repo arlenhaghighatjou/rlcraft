@@ -53,7 +53,7 @@ public class VoiceTagRenderer {
 			GlStateManager.scale(16.0f, 16.0f, 16.0f);
 
 			Tessellator tessellator = Tessellator.getInstance();
-			WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+			WorldRenderer worldrenderer = tessellator.getBuffer();
 			worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
 			float a = 0.25F;
 			worldrenderer.pos(-0.02, -0.02, 0.0).color(0.0F, 0.0F, 0.0F, a).endVertex();

@@ -26,15 +26,15 @@ import org.apache.commons.lang3.StringUtils;
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
-import net.minecraft.event.HoverEvent;
-import net.minecraft.util.ChatComponentScore;
-import net.minecraft.util.ChatComponentSelector;
-import net.minecraft.util.ChatComponentStyle;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.text.event.HoverEvent;
+import net.minecraft.util.text.TextComponentScore;
+import net.minecraft.util.text.TextComponentSelector;
+import net.minecraft.util.text.TextComponentBase;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.math.MathHelper;
 
 public class ProfanityFilter {
 
@@ -82,9 +82,9 @@ public class ProfanityFilter {
 		logger.info("Processed {} entries after {}ms", j, (EagRuntime.steadyTimeMillis() - start));
 	}
 
-	public IChatComponent profanityFilterChatComponent(IChatComponent componentIn) {
+	public ITextComponent profanityFilterChatComponent(ITextComponent componentIn) {
 		if(componentIn == null) return null;
-		IChatComponent cmp = null;
+		ITextComponent cmp = null;
 		//long start = System.nanoTime();
 		try {
 			cmp = profanityFilterChatComponent0(componentIn);
@@ -96,34 +96,34 @@ public class ProfanityFilter {
 		return cmp != null ? cmp : componentIn;
 	}
 
-	protected IChatComponent profanityFilterChatComponent0(IChatComponent componentIn) {
-		if(componentIn instanceof ChatComponentStyle) {
+	protected ITextComponent profanityFilterChatComponent0(ITextComponent componentIn) {
+		if(componentIn instanceof TextComponentBase) {
 			boolean flag = false;
-			if(componentIn instanceof ChatComponentText) {
-				ChatComponentText comp = (ChatComponentText)componentIn;
+			if(componentIn instanceof TextComponentString) {
+				TextComponentString comp = (TextComponentString)componentIn;
 				String str = comp.getChatComponentText_TextValue();
 				if(StringUtils.isEmpty(str) && componentIn.getSiblings().isEmpty()) {
 					return componentIn;
 				}
 				str = profanityFilterString0(str);
 				if(str != null) {
-					IChatComponent replacedComponent = new ChatComponentText(str);
-					replacedComponent.setChatStyle(comp.getChatStyleIfPresent());
+					ITextComponent replacedComponent = new TextComponentString(str);
+					replacedComponent.setStyle(comp.getChatStyleIfPresent());
 					replacedComponent.getSiblings().addAll(componentIn.getSiblings());
 					componentIn = replacedComponent;
 					flag = true;
 				}
-			}else if(componentIn instanceof ChatComponentTranslation) {
-				ChatComponentTranslation comp = (ChatComponentTranslation)componentIn;
-				IChatComponent replacedComponent = new ChatComponentTranslation(comp.getKey(), profanityFilterFormatArgs(comp.getFormatArgs()));
-				replacedComponent.setChatStyle(comp.getChatStyleIfPresent());
+			}else if(componentIn instanceof TextComponentTranslation) {
+				TextComponentTranslation comp = (TextComponentTranslation)componentIn;
+				ITextComponent replacedComponent = new TextComponentTranslation(comp.getKey(), profanityFilterFormatArgs(comp.getFormatArgs()));
+				replacedComponent.setStyle(comp.getChatStyleIfPresent());
 				replacedComponent.getSiblings().addAll(componentIn.getSiblings());
 				componentIn = replacedComponent;
 				flag = true;
 			}
-			List<IChatComponent> siblings = componentIn.getSiblings();
+			List<ITextComponent> siblings = componentIn.getSiblings();
 			for(int i = 0, l = siblings.size(); i < l; ++i) {
-				IChatComponent cmp = profanityFilterChatComponent0(siblings.get(i));
+				ITextComponent cmp = profanityFilterChatComponent0(siblings.get(i));
 				if(cmp != null) {
 					if(!flag) {
 						componentIn = shallowCopy(componentIn);
@@ -133,7 +133,7 @@ public class ProfanityFilter {
 					siblings.set(i, cmp);
 				}
 			}
-			ChatStyle styleOpt = ((ChatComponentStyle)componentIn).getChatStyleIfPresent();
+			Style styleOpt = ((TextComponentBase)componentIn).getChatStyleIfPresent();
 			if(styleOpt != null) {
 				HoverEvent hoverEvent = styleOpt.getChatHoverEvent();
 				if(hoverEvent != null) {
@@ -143,9 +143,9 @@ public class ProfanityFilter {
 							componentIn = shallowCopy(componentIn);
 							flag = true;
 						}
-						ChatStyle newStyle = styleOpt.createShallowCopy();
+						Style newStyle = styleOpt.createShallowCopy();
 						newStyle.setChatHoverEvent(filteredHoverEvent);
-						componentIn.setChatStyle(newStyle);
+						componentIn.setStyle(newStyle);
 					}
 				}
 			}
@@ -181,7 +181,7 @@ public class ProfanityFilter {
 
 	protected HoverEvent profanityFilterHoverEvent(HoverEvent evtIn) {
 		if(evtIn.getAction() == HoverEvent.Action.SHOW_TEXT) {
-			IChatComponent filtered = evtIn.getValue();
+			ITextComponent filtered = evtIn.getValue();
 			if(filtered != null) {
 				filtered = profanityFilterChatComponent0(filtered);
 				if(filtered != null) {
@@ -192,30 +192,30 @@ public class ProfanityFilter {
 		return null;
 	}
 
-	private static IChatComponent shallowCopy(IChatComponent comp) {
-		if(comp instanceof ChatComponentStyle) {
-			if(comp instanceof ChatComponentText) {
-				ChatComponentText old = (ChatComponentText)comp;
-				IChatComponent ret = new ChatComponentText(old.getChatComponentText_TextValue());
-				ret.setChatStyle(old.getChatStyleIfPresent());
+	private static ITextComponent shallowCopy(ITextComponent comp) {
+		if(comp instanceof TextComponentBase) {
+			if(comp instanceof TextComponentString) {
+				TextComponentString old = (TextComponentString)comp;
+				ITextComponent ret = new TextComponentString(old.getChatComponentText_TextValue());
+				ret.setStyle(old.getChatStyleIfPresent());
 				ret.getSiblings().addAll(comp.getSiblings());
 				return ret;
-			}else if(comp instanceof ChatComponentTranslation) {
-				ChatComponentTranslation old = (ChatComponentTranslation)comp;
-				IChatComponent ret = new ChatComponentTranslation(old.getKey(), old.getFormatArgs());
-				ret.setChatStyle(old.getChatStyleIfPresent());
+			}else if(comp instanceof TextComponentTranslation) {
+				TextComponentTranslation old = (TextComponentTranslation)comp;
+				ITextComponent ret = new TextComponentTranslation(old.getKey(), old.getFormatArgs());
+				ret.setStyle(old.getChatStyleIfPresent());
 				ret.getSiblings().addAll(comp.getSiblings());
 				return ret;
-			}else if(comp instanceof ChatComponentScore) {
-				ChatComponentScore old = (ChatComponentScore)comp;
-				IChatComponent ret = new ChatComponentScore(old.getName(), old.getObjective());
-				ret.setChatStyle(old.getChatStyleIfPresent());
+			}else if(comp instanceof TextComponentScore) {
+				TextComponentScore old = (TextComponentScore)comp;
+				ITextComponent ret = new TextComponentScore(old.getName(), old.getObjective());
+				ret.setStyle(old.getChatStyleIfPresent());
 				ret.getSiblings().addAll(comp.getSiblings());
 				return ret;
-			}else if(comp instanceof ChatComponentSelector) {
-				ChatComponentSelector old = (ChatComponentSelector)comp;
-				IChatComponent ret = new ChatComponentSelector(old.getSelector());
-				ret.setChatStyle(old.getChatStyleIfPresent());
+			}else if(comp instanceof TextComponentSelector) {
+				TextComponentSelector old = (TextComponentSelector)comp;
+				ITextComponent ret = new TextComponentSelector(old.getSelector());
+				ret.setStyle(old.getChatStyleIfPresent());
 				ret.getSiblings().addAll(comp.getSiblings());
 				return ret;
 			}

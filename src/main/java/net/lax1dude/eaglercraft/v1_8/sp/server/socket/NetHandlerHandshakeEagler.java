@@ -20,7 +20,7 @@ import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerMinecraftServer;
 import net.minecraft.network.handshake.INetHandlerHandshakeServer;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.server.network.NetHandlerLoginServer;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 
 public class NetHandlerHandshakeEagler implements INetHandlerHandshakeServer {
 
@@ -33,7 +33,7 @@ public class NetHandlerHandshakeEagler implements INetHandlerHandshakeServer {
 	}
 
 	@Override
-	public void onDisconnect(IChatComponent var1) {
+	public void onDisconnect(ITextComponent var1) {
 		
 	}
 

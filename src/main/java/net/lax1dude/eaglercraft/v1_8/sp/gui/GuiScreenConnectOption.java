@@ -63,8 +63,8 @@ public class GuiScreenConnectOption extends GuiScreen {
 
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRendererObj, title, this.width / 2, this.height / 4 - 60 + 20, 16777215);
-		this.drawCenteredString(this.fontRendererObj, prompt, this.width / 2, this.height / 4 - 60 + 55, 0x999999);
+		this.drawCenteredString(this.fontRenderer, title, this.width / 2, this.height / 4 - 60 + 20, 16777215);
+		this.drawCenteredString(this.fontRenderer, prompt, this.width / 2, this.height / 4 - 60 + 55, 0x999999);
 		super.drawScreen(par1, par2, par3);
 		relaysButton.drawScreen(par1, par2);
 	}

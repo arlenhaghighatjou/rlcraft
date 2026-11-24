@@ -34,11 +34,11 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.event.ClickEvent;
-import net.minecraft.event.HoverEvent;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.event.HoverEvent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 import static net.lax1dude.eaglercraft.v1_8.internal.PlatformOpenGL.*;
@@ -78,8 +78,8 @@ public class ServerNotificationRenderer {
 	}
 
 	public boolean handleClicked(GuiScreen currentScreen, int posX, int posY) {
-		if(mc.thePlayer == null) return false;
-		ServerNotificationManager mgr = mc.thePlayer.sendQueue.getNotifManager();
+		if(mc.player == null) return false;
+		ServerNotificationManager mgr = mc.player.sendQueue.getNotifManager();
 		List<NotificationBadge> lst = mgr.getNotifBadgesToDisplay();
 		if(!lst.isEmpty()) {
 			int baseOffset = mc.guiAchievement.getHeight();
@@ -148,8 +148,8 @@ public class ServerNotificationRenderer {
 	}
 
 	public void renderOverlay(int mouseX, int mouseY) {
-		if(mc.thePlayer == null) return;
-		ServerNotificationManager mgr = mc.thePlayer.sendQueue.getNotifManager();
+		if(mc.player == null) return;
+		ServerNotificationManager mgr = mc.player.sendQueue.getNotifManager();
 		List<NotificationBadge> lst = mgr.getNotifBadgesToDisplay();
 		if(!lst.isEmpty()) {
 			GlStateManager.clear(GL_DEPTH_BUFFER_BIT);
@@ -259,7 +259,7 @@ public class ServerNotificationRenderer {
 		int bodyYOffset = 5;
 		
 		String titleText = null;
-		IChatComponent titleComponent = badge.getTitleProfanityFilter();
+		ITextComponent titleComponent = badge.getTitleProfanityFilter();
 		if(titleComponent != null) {
 			titleText = titleComponent.getFormattedText();
 			if(titleText.length() > 0) {
@@ -276,32 +276,32 @@ public class ServerNotificationRenderer {
 		}
 		
 		float bodyFontSize = 0.75f;
-		List<IChatComponent> bodyLines = null;
+		List<ITextComponent> bodyLines = null;
 		List<ClickEventZone> clickEvents = null;
-		IChatComponent rootClickEvt = null;
+		ITextComponent rootClickEvt = null;
 		boolean hasClickEvents = false;
 		boolean hasHoverEvents = false;
 		
 		int bodyHeight = 0;
 		
-		IChatComponent bodyComponent = badge.getBodyProfanityFilter();
+		ITextComponent bodyComponent = badge.getBodyProfanityFilter();
 		if(bodyComponent != null) {
-			if (bodyComponent.getChatStyle().getChatClickEvent() != null
-					&& bodyComponent.getChatStyle().getChatClickEvent().getAction().shouldAllowInChat()) {
+			if (bodyComponent.getStyle().getChatClickEvent() != null
+					&& bodyComponent.getStyle().getChatClickEvent().getAction().shouldAllowInChat()) {
 				rootClickEvt = bodyComponent;
 			}
 			bodyLines = GuiUtilRenderComponents.func_178908_a(bodyComponent, (int) (textZoneWidth / bodyFontSize),
-					mc.fontRendererObj, true, true);
+					mc.fontRenderer, true, true);
 			
 			int maxHeight = BADGE_HEIGHT - 32;
 			int maxLines = MathHelper.floor_float(maxHeight / (9 * bodyFontSize));
 			if(bodyLines.size() > maxLines) {
 				bodyLines = bodyLines.subList(0, maxLines);
 				bodyComponent = bodyLines.get(maxLines - 1);
-				List<IChatComponent> siblings = bodyComponent.getSiblings();
-				IChatComponent dots = new ChatComponentText("...");
+				List<ITextComponent> siblings = bodyComponent.getSiblings();
+				ITextComponent dots = new TextComponentString("...");
 				if(siblings != null && siblings.size() > 0) {
-					dots.setChatStyle(siblings.get(siblings.size() - 1).getChatStyle());
+					dots.setStyle(siblings.get(siblings.size() - 1).getStyle());
 				}
 				bodyComponent.appendSibling(dots);
 			}
@@ -309,7 +309,7 @@ public class ServerNotificationRenderer {
 		}
 
 		String sourceText = null;
-		IChatComponent sourceComponent = badge.getSourceProfanityFilter();
+		ITextComponent sourceComponent = badge.getSourceProfanityFilter();
 		if(sourceComponent != null) {
 			sourceText = sourceComponent.getFormattedText();
 			if(sourceText.length() == 0) {
@@ -367,7 +367,7 @@ public class ServerNotificationRenderer {
 		GlStateManager.translate(0.0F, 0.0F, -2000.0F);
 
 		Tessellator tess = Tessellator.getInstance();
-		WorldRenderer worldRenderer = tess.getWorldRenderer();
+		WorldRenderer worldRenderer = tess.getBuffer();
 
 		worldRenderer.begin(GL_QUADS, VertexFormat.POSITION_TEX_COLOR);
 		
@@ -417,7 +417,7 @@ public class ServerNotificationRenderer {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(6 + (badge.titleIcon != null ? 10 : 0), 6, 0.0f);
 			GlStateManager.scale(0.75f, 0.75f, 0.75f);
-			mc.fontRendererObj.drawStringWithShadow(titleText, 0, 0, badge.titleTxtColor);
+			mc.fontRenderer.drawStringWithShadow(titleText, 0, 0, badge.titleTxtColor);
 			GlStateManager.popMatrix();
 		}
 		
@@ -432,12 +432,12 @@ public class ServerNotificationRenderer {
 			for(int i = 0; i < l; ++i) {
 				int startXLocal = 0;
 				int startXReal = leftPadding;
-				for(IChatComponent comp : bodyLines.get(i)) {
-					int w = mc.fontRendererObj.drawStringWithShadow(
-							comp.getChatStyle().getFormattingCode() + comp.getUnformattedTextForChat(), startXLocal,
+				for(ITextComponent comp : bodyLines.get(i)) {
+					int w = mc.fontRenderer.drawStringWithShadow(
+							comp.getStyle().getFormattingCode() + comp.getUnformattedTextForChat(), startXLocal,
 							i * 9, badge.bodyTxtColor) - startXLocal;
-					ClickEvent clickEvent = comp.getChatStyle().getChatClickEvent();
-					HoverEvent hoverEvent = comp.getChatStyle().getChatHoverEvent();
+					ClickEvent clickEvent = comp.getStyle().getChatClickEvent();
+					HoverEvent hoverEvent = comp.getStyle().getChatHoverEvent();
 					if(clickEvent != null && !clickEvent.getAction().shouldAllowInChat()) {
 						clickEvent = null;
 					}
@@ -464,7 +464,7 @@ public class ServerNotificationRenderer {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(badgeWidth - 21, badgeHeight - 5, 0.0f);
 			GlStateManager.scale(0.5f, 0.5f, 0.5f);
-			mc.fontRendererObj.drawStringWithShadow(sourceText, -mc.fontRendererObj.getStringWidth(sourceText) - 4, -10, badge.sourceTxtColor);
+			mc.fontRenderer.drawStringWithShadow(sourceText, -mc.fontRenderer.getStringWidth(sourceText) - 4, -10, badge.sourceTxtColor);
 			GlStateManager.popMatrix();
 		}
 		
@@ -506,7 +506,7 @@ public class ServerNotificationRenderer {
 		int bottomB = rgbaBottom & 0xFF;
 		int bottomA = (rgbaBottom >>> 24) & 0xFF;
 		Tessellator tess = Tessellator.getInstance();
-		WorldRenderer worldRenderer = tess.getWorldRenderer();
+		WorldRenderer worldRenderer = tess.getBuffer();
 		worldRenderer.begin(GL_QUADS, VertexFormat.POSITION_TEX_COLOR);
 		worldRenderer.pos((double) (xCoord + 0.0F), (double) (yCoord + (float) height), zIndex)
 				.color(bottomR, bottomG, bottomB, bottomA).tex(0.0, 0.0).endVertex();
@@ -521,7 +521,7 @@ public class ServerNotificationRenderer {
 
 	static void drawTexturedRect(float xCoord, float yCoord, int width, int height) {
 		Tessellator tess = Tessellator.getInstance();
-		WorldRenderer worldRenderer = tess.getWorldRenderer();
+		WorldRenderer worldRenderer = tess.getBuffer();
 		worldRenderer.begin(GL_QUADS, VertexFormat.POSITION_TEX);
 		worldRenderer.pos((double) (xCoord + 0.0F), (double) (yCoord + (float) height), 0.0).tex(0.0, 1.0).endVertex();
 		worldRenderer.pos((double) (xCoord + (float) width), (double) (yCoord + (float) height), 0.0).tex(1.0, 1.0).endVertex();

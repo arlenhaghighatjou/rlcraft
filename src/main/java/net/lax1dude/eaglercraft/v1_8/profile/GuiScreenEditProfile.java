@@ -30,7 +30,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.ResourceLocation;
 
 import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
@@ -130,7 +130,7 @@ public class GuiScreenEditProfile extends GuiScreen {
 				color = 0xFFCCCC44;
 				Mouse.showCursor(EnumCursorType.HAND);
 			}
-			this.drawString(this.fontRendererObj, EnumChatFormatting.UNDERLINE + capesText, 0, 0, color);
+			this.drawString(this.fontRenderer, TextFormatting.UNDERLINE + capesText, 0, 0, color);
 		}
 		
 		GlStateManager.popMatrix();
@@ -203,13 +203,13 @@ public class GuiScreenEditProfile extends GuiScreen {
 			GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 			String text = I18n.format("editProfile.importExport");
 			
-			int w = mc.fontRendererObj.getStringWidth(text);
+			int w = mc.fontRenderer.getStringWidth(text);
 			boolean hover = mx > 1 && my > 1 && mx < (w * 3 / 4) + 7 && my < 12;
 			if(hover) {
 				Mouse.showCursor(EnumCursorType.HAND);
 			}
 	
-			drawString(mc.fontRendererObj, EnumChatFormatting.UNDERLINE + text, 5, 5, hover ? 0xFFEEEE22 : 0xFFCCCCCC);
+			drawString(mc.fontRenderer, TextFormatting.UNDERLINE + text, 5, 5, hover ? 0xFFEEEE22 : 0xFFCCCCCC);
 			
 			GlStateManager.popMatrix();
 		}
@@ -425,7 +425,7 @@ public class GuiScreenEditProfile extends GuiScreen {
 		usernameField.mouseClicked(mx, my, button);
 		if (button == 0) {
 			if(!EagRuntime.getConfiguration().isDemo()) {
-				int w = mc.fontRendererObj.getStringWidth(I18n.format("editProfile.importExport"));
+				int w = mc.fontRenderer.getStringWidth(I18n.format("editProfile.importExport"));
 				if(mx > 1 && my > 1 && mx < (w * 3 / 4) + 7 && my < 12) {
 					safeProfile();
 					EaglerProfile.save();

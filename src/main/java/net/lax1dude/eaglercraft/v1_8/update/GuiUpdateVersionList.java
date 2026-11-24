@@ -82,7 +82,7 @@ public class GuiUpdateVersionList extends GuiScreen {
 		this.drawCenteredString(fontRendererObj, I18n.format("updateList.note.1"), this.width / 2, this.height - 45, 0x888888);
 		super.drawScreen(par1, par2, par3);
 		if(tooltip != null) {
-			drawHoveringText(mc.fontRendererObj.listFormattedStringToWidth(tooltip, 180), par1, par2);
+			drawHoveringText(mc.fontRenderer.listFormattedStringToWidth(tooltip, 180), par1, par2);
 			GlStateManager.disableLighting();
 			tooltip = null;
 		}

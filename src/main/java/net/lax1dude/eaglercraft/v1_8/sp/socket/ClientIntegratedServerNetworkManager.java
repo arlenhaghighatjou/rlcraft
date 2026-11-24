@@ -31,8 +31,8 @@ import net.lax1dude.eaglercraft.v1_8.sp.lan.LANServerController;
 import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.ITextComponent;
 
 public class ClientIntegratedServerNetworkManager extends EaglercraftNetworkManager {
 
@@ -56,7 +56,7 @@ public class ClientIntegratedServerNetworkManager extends EaglercraftNetworkMana
 	}
 
 	@Override
-	public void closeChannel(IChatComponent reason) {
+	public void closeChannel(ITextComponent reason) {
 		LANServerController.closeLAN();
 		SingleplayerServerController.closeLocalPlayerChannel();
 		if(nethandler != null) {
@@ -157,7 +157,7 @@ public class ClientIntegratedServerNetworkManager extends EaglercraftNetworkMana
 			} catch (IOException e) {
 			}
 			clearRecieveQueue();
-			doClientDisconnect(new ChatComponentTranslation("disconnect.endOfStream"));
+			doClientDisconnect(new TextComponentTranslation("disconnect.endOfStream"));
 			return true;
 		}else {
 			return false;

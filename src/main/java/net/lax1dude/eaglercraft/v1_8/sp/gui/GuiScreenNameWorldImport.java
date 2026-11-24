@@ -74,7 +74,7 @@ public class GuiScreenNameWorldImport extends GuiScreen {
 			this.buttonList.clear();
 			this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + 12, I18n.format("singleplayer.import.continue")));
 			this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + 12, I18n.format("gui.cancel")));
-			this.theGuiTextField = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 100, this.height / 4 + 3, 200, 20);
+			this.theGuiTextField = new GuiTextField(2, this.fontRenderer, this.width / 2 - 100, this.height / 4 + 3, 200, 20);
 			this.theGuiTextField.setFocused(true);
 			this.theGuiTextField.setText(name);
 			this.buttonList.add(loadSpawnChunksBtn = new GuiButton(2, this.width / 2 - 100, this.height / 4 + 24 + 12, I18n.format("singleplayer.import.loadSpawnChunks", loadSpawnChunks ? I18n.format("gui.yes") : I18n.format("gui.no"))));
@@ -140,15 +140,15 @@ public class GuiScreenNameWorldImport extends GuiScreen {
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
 		if(!timeToImport) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.import.title"), this.width / 2, this.height / 4 - 60 + 20, 16777215);
-			this.drawString(this.fontRendererObj, I18n.format("singleplayer.import.enterName"), this.width / 2 - 100, this.height / 4 - 60 + 50, 10526880);
-			this.drawCenteredString(this.fontRendererObj, I18n.format("createWorld.seedNote"), this.width / 2, this.height / 4 + 90, -6250336);
+			this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.import.title"), this.width / 2, this.height / 4 - 60 + 20, 16777215);
+			this.drawString(this.fontRenderer, I18n.format("singleplayer.import.enterName"), this.width / 2 - 100, this.height / 4 - 60 + 50, 10526880);
+			this.drawCenteredString(this.fontRenderer, I18n.format("createWorld.seedNote"), this.width / 2, this.height / 4 + 90, -6250336);
 			this.theGuiTextField.drawTextBox();
 		}else {
 			definetlyTimeToImport = true;
 			long dots = (EagRuntime.steadyTimeMillis() / 500l) % 4l;
 			String str = I18n.format("singleplayer.import.reading", world.fileName);
-			this.drawString(fontRendererObj, str + (dots > 0 ? "." : "") + (dots > 1 ? "." : "") + (dots > 2 ? "." : ""), (this.width - this.fontRendererObj.getStringWidth(str)) / 2, this.height / 3 + 10, 0xFFFFFF);
+			this.drawString(fontRendererObj, str + (dots > 0 ? "." : "") + (dots > 1 ? "." : "") + (dots > 2 ? "." : ""), (this.width - this.fontRenderer.getStringWidth(str)) / 2, this.height / 3 + 10, 0xFFFFFF);
 		}
 		super.drawScreen(par1, par2, par3);
 	}

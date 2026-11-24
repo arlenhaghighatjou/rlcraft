@@ -30,9 +30,9 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.math.MathHelper;
 import net.optifine.render.RenderEnv;
 
 public class WorldRenderer {
@@ -55,7 +55,7 @@ public class WorldRenderer {
 	
 	private boolean hasBeenFreed = false;
 
-	private EnumWorldBlockLayer blockLayer = null;
+	private BlockRenderLayer blockLayer = null;
 	public RenderEnv renderEnv = null;
 
 	public WorldRenderer(int bufferSizeIn) {
@@ -573,7 +573,7 @@ public class WorldRenderer {
 		}
 	}
 
-	public EnumWorldBlockLayer getBlockLayer() {
+	public BlockRenderLayer getBlockLayer() {
 		return this.blockLayer;
 	}
 

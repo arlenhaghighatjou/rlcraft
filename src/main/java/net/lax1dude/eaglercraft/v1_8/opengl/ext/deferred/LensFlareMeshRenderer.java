@@ -34,7 +34,7 @@ import net.lax1dude.eaglercraft.v1_8.opengl.ext.deferred.program.PipelineShaderL
 import net.lax1dude.eaglercraft.v1_8.vector.Matrix3f;
 import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 public class LensFlareMeshRenderer {

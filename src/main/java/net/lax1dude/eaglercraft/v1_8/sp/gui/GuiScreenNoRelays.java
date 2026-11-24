@@ -49,12 +49,12 @@ public class GuiScreenNoRelays extends GuiScreen {
 
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRendererObj, I18n.format(title1), this.width / 2, this.height / 4 - 60 + 70, 16777215);
+		this.drawCenteredString(this.fontRenderer, I18n.format(title1), this.width / 2, this.height / 4 - 60 + 70, 16777215);
 		if(title2 != null) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format(title2), this.width / 2, this.height / 4 - 60 + 80, 0xCCCCCC);
+			this.drawCenteredString(this.fontRenderer, I18n.format(title2), this.width / 2, this.height / 4 - 60 + 80, 0xCCCCCC);
 		}
 		if(title3 != null) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format(title3), this.width / 2, this.height / 4 - 60 + 90, 0xCCCCCC);
+			this.drawCenteredString(this.fontRenderer, I18n.format(title3), this.width / 2, this.height / 4 - 60 + 90, 0xCCCCCC);
 		}
 		super.drawScreen(par1, par2, par3);
 	}

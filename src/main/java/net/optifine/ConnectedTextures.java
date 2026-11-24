@@ -27,13 +27,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.IResourcePack;
-import net.minecraft.client.resources.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.optifine.config.Matches;
 import net.optifine.model.BlockModelUtils;
 import net.optifine.model.ListQuadsOverlay;
@@ -485,7 +485,7 @@ public class ConnectedTextures {
 				return null;
 			} else {
 				if (cp.biomes != null) {
-					BiomeGenBase biomegenbase = blockAccess.getBiomeGenForCoords(blockPos);
+					Biome biomegenbase = blockAccess.getBiomeGenForCoords(blockPos);
 
 					if (!cp.matchesBiome(biomegenbase)) {
 						return null;

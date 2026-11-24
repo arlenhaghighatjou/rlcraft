@@ -31,8 +31,8 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.network.EnumConnectionState;
-import net.minecraft.network.login.client.C00PacketLoginStart;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.network.login.client.CPacketLoginStart;
+import net.minecraft.util.text.TextComponentString;
 
 public class GuiScreenSingleplayerConnecting extends GuiScreen {
 
@@ -64,7 +64,7 @@ public class GuiScreenSingleplayerConnecting extends GuiScreen {
 		long millis = EagRuntime.steadyTimeMillis();
 		
 		long dots = (millis / 500l) % 4l;
-		this.drawString(fontRendererObj, message + (dots > 0 ? "." : "") + (dots > 1 ? "." : "") + (dots > 2 ? "." : ""), (this.width - this.fontRendererObj.getStringWidth(message)) / 2, top + 10, 0xFFFFFF);
+		this.drawString(fontRendererObj, message + (dots > 0 ? "." : "") + (dots > 1 ? "." : "") + (dots > 2 ? "." : ""), (this.width - this.fontRenderer.getStringWidth(message)) / 2, top + 10, 0xFFFFFF);
 		
 		long elapsed = (millis - startStartTime) / 1000l;
 		if(elapsed > 3) {
@@ -92,7 +92,7 @@ public class GuiScreenSingleplayerConnecting extends GuiScreen {
 						this.mc.clearTitles();
 						this.networkManager.setConnectionState(EnumConnectionState.LOGIN);
 						this.networkManager.setNetHandler(new NetHandlerSingleplayerLogin(this.networkManager, this.mc, this.menu));
-						this.networkManager.sendPacket(new C00PacketLoginStart(this.mc.getSession().getProfile(),
+						this.networkManager.sendPacket(new CPacketLoginStart(this.mc.getSession().getProfile(),
 								EaglerProfile.getSkinPacket(3), EaglerProfile.getCapePacket(),
 								HandshakerHandler.getSPHandshakeProtocolData(), EaglercraftVersion.clientBrandUUID));
 					}
@@ -105,7 +105,7 @@ public class GuiScreenSingleplayerConnecting extends GuiScreen {
 						this.mc.getSession().reset();
 						if (mc.currentScreen == this) {
 							mc.loadWorld(null);
-							mc.displayGuiScreen(new GuiDisconnected(menu, "connect.failed", new ChatComponentText("Worker Connection Refused")));
+							mc.displayGuiScreen(new GuiDisconnected(menu, "connect.failed", new TextComponentString("Worker Connection Refused")));
 						}
 					}
 				}

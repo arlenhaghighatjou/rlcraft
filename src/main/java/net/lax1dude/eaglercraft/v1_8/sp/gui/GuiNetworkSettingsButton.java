@@ -25,7 +25,7 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiNetworkSettingsButton extends Gui {
@@ -45,19 +45,19 @@ public class GuiNetworkSettingsButton extends Gui {
 		GlStateManager.scale(0.75f, 0.75f, 0.75f);
 		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 
-		int w = mc.fontRendererObj.getStringWidth(text);
+		int w = mc.fontRenderer.getStringWidth(text);
 		boolean hover = xx > 1 && yy > 1 && xx < (w * 3 / 4) + 7 && yy < 12;
 		if(hover) {
 			Mouse.showCursor(EnumCursorType.HAND);
 		}
 
-		drawString(mc.fontRendererObj, EnumChatFormatting.UNDERLINE + text, 5, 5, hover ? 0xFFEEEE22 : 0xFFCCCCCC);
+		drawString(mc.fontRenderer, TextFormatting.UNDERLINE + text, 5, 5, hover ? 0xFFEEEE22 : 0xFFCCCCCC);
 
 		GlStateManager.popMatrix();
 	}
 
 	public void mouseClicked(int xx, int yy, int btn) {
-		int w = mc.fontRendererObj.getStringWidth(text);
+		int w = mc.fontRenderer.getStringWidth(text);
 		if(xx > 2 && yy > 2 && xx < (w * 3 / 4) + 5 && yy < 12) {
 			if(LANServerController.supported()) {
 				mc.displayGuiScreen(GuiScreenLANInfo.showLANInfoScreen(new GuiScreenRelay(screen)));

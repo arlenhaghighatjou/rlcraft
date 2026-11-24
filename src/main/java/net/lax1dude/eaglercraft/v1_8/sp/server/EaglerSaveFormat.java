@@ -25,7 +25,7 @@ import com.google.common.collect.Lists;
 
 import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraft.world.storage.ISaveHandler;
-import net.minecraft.world.storage.SaveFormatComparator;
+import net.minecraft.world.storage.WorldSummary;
 import net.minecraft.world.storage.SaveFormatOld;
 import net.minecraft.world.storage.WorldInfo;
 
@@ -46,8 +46,8 @@ public class EaglerSaveFormat extends SaveFormatOld {
 		return new EaglerSaveHandler(this.savesDirectory, s);
 	}
 
-	public List<SaveFormatComparator> getSaveList() {
-		ArrayList<SaveFormatComparator> arraylist = Lists.newArrayList();
+	public List<WorldSummary> getSaveList() {
+		ArrayList<WorldSummary> arraylist = Lists.newArrayList();
 		if(worldsList.exists()) {
 			String[] lines = worldsList.getAllLines();
 			for (int i = 0; i < lines.length; ++i) {
@@ -61,7 +61,7 @@ public class EaglerSaveFormat extends SaveFormatOld {
 						s1 = s;
 					}
 
-					arraylist.add(new SaveFormatComparator(s, s1, worldinfo.getLastTimePlayed(), 0l,
+					arraylist.add(new WorldSummary(s, s1, worldinfo.getLastTimePlayed(), 0l,
 							worldinfo.getGameType(), flag, worldinfo.isHardcoreModeEnabled(),
 							worldinfo.areCommandsAllowed(), null));
 				}

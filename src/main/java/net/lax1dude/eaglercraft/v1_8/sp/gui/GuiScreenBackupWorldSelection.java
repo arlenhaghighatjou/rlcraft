@@ -22,12 +22,12 @@ import net.lax1dude.eaglercraft.v1_8.sp.SingleplayerServerController;
 import net.lax1dude.eaglercraft.v1_8.sp.ipc.IPCPacket05RequestData;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiCreateWorld;
-import net.minecraft.client.gui.GuiRenameWorld;
+import net.minecraft.client.gui.GuiWorldEdit;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiYesNo;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.storage.WorldInfo;
 
 public class GuiScreenBackupWorldSelection extends GuiScreen {
@@ -65,24 +65,24 @@ public class GuiScreenBackupWorldSelection extends GuiScreen {
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
 
-		this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.backup.title", worldName), this.width / 2, this.height / 5 - 35, 16777215);
+		this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.backup.title", worldName), this.width / 2, this.height / 5 - 35, 16777215);
 		if(oldRNG) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.backup.seed") + " " + worldSeed + " " + EnumChatFormatting.RED + "(pre-u34)", this.width / 2, this.height / 5 + 62, 0xAAAAFF);
+			this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.backup.seed") + " " + worldSeed + " " + TextFormatting.RED + "(pre-u34)", this.width / 2, this.height / 5 + 62, 0xAAAAFF);
 		}else {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.backup.seed") + " " + worldSeed, this.width / 2, this.height / 5 + 62, 0xAAAAFF);
+			this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.backup.seed") + " " + worldSeed, this.width / 2, this.height / 5 + 62, 0xAAAAFF);
 		}
 		
 		int toolTipColor = 0xDDDDAA;
 		if(worldRecreate.isMouseOver()) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.backup.recreate.tooltip"), this.width / 2, this.height / 5 - 12, toolTipColor);
+			this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.backup.recreate.tooltip"), this.width / 2, this.height / 5 - 12, toolTipColor);
 		}else if(worldDuplicate.isMouseOver()) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.backup.duplicate.tooltip"), this.width / 2, this.height / 5 - 12, toolTipColor);
+			this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.backup.duplicate.tooltip"), this.width / 2, this.height / 5 - 12, toolTipColor);
 		}else if(worldExport.isMouseOver()) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.backup.export.tooltip"), this.width / 2, this.height / 5 - 12, toolTipColor);
+			this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.backup.export.tooltip"), this.width / 2, this.height / 5 - 12, toolTipColor);
 		}else if(worldConvert.isMouseOver()) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.backup.vanilla.tooltip"), this.width / 2, this.height / 5 - 12, toolTipColor);
+			this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.backup.vanilla.tooltip"), this.width / 2, this.height / 5 - 12, toolTipColor);
 		}else if(worldBackup.isMouseOver()) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.backup.clearPlayerData.tooltip"), this.width / 2, this.height / 5 - 12, toolTipColor);
+			this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.backup.clearPlayerData.tooltip"), this.width / 2, this.height / 5 - 12, toolTipColor);
 		}
 		
 		super.drawScreen(par1, par2, par3);
@@ -101,7 +101,7 @@ public class GuiScreenBackupWorldSelection extends GuiScreen {
 				this.mc.displayGuiScreen(cw);
 			}
 		}else if(par1GuiButton.id == 2) {
-			this.mc.displayGuiScreen(new GuiRenameWorld(this.selectWorld, this.worldName, true));
+			this.mc.displayGuiScreen(new GuiWorldEdit(this.selectWorld, this.worldName, true));
 		}else if(par1GuiButton.id == 3) {
 			SingleplayerServerController.exportWorld(worldName, IPCPacket05RequestData.REQUEST_LEVEL_EAG);
 			this.mc.displayGuiScreen(new GuiScreenIntegratedServerBusy(selectWorld, "singleplayer.busy.exporting.1", "singleplayer.failed.exporting.1", () -> {

@@ -39,8 +39,8 @@ import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.ITickable;
 import net.lax1dude.eaglercraft.v1_8.sp.server.internal.ServerPlatformSingleplayer;
 
@@ -86,7 +86,7 @@ public class IntegratedServerPlayerNetworkManager {
 		return EaglerIntegratedServerWorker.getChannelExists(playerChannel) ? EnumEaglerConnectionState.CONNECTED : EnumEaglerConnectionState.CLOSED;
 	}
 	
-	public void closeChannel(IChatComponent reason) {
+	public void closeChannel(ITextComponent reason) {
 		EaglerIntegratedServerWorker.closeChannel(playerChannel);
 		if(nethandler != null) {
 			nethandler.onDisconnect(reason);
@@ -126,7 +126,7 @@ public class IntegratedServerPlayerNetworkManager {
 							throw new RuntimeException(ex);
 						}
 						ServerPlatformSingleplayer.sendPacket(new IPCPacketData(playerChannel, kickPacketBAO.toByteArray()));
-						closeChannel(new ChatComponentText("Recieved unsuppoorted connection from an Eaglercraft 1.5.2 client!"));
+						closeChannel(new TextComponentString("Recieved unsuppoorted connection from an Eaglercraft 1.5.2 client!"));
 						firstPacket = false;
 						return;
 					}

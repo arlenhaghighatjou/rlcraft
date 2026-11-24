@@ -24,7 +24,7 @@ import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import net.lax1dude.eaglercraft.v1_8.socket.HandshakePacketTypes;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 
 public class HandshakerV3 extends HandshakerInstance {
 
@@ -69,7 +69,7 @@ public class HandshakerV3 extends HandshakerInstance {
 		byte[] dat = new byte[buffer.readUnsignedShort()];
 		buffer.readBytes(dat);
 		handleError("disconnect.loginFailed",
-				IChatComponent.Serializer.jsonToComponent(new String(dat, StandardCharsets.UTF_8)));
+				ITextComponent.Serializer.jsonToComponent(new String(dat, StandardCharsets.UTF_8)));
 	}
 
 	@Override

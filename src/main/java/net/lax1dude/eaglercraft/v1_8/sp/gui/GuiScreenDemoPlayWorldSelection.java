@@ -20,7 +20,7 @@ import net.lax1dude.eaglercraft.v1_8.sp.lan.LANServerController;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.world.demo.DemoWorldServer;
+import net.minecraft.world.WorldServerDemo;
 
 public class GuiScreenDemoPlayWorldSelection extends GuiScreen {
 
@@ -41,13 +41,13 @@ public class GuiScreenDemoPlayWorldSelection extends GuiScreen {
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
 		
-		this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.demo.create.title"), this.width / 2, this.height / 4, 16777215);
+		this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.demo.create.title"), this.width / 2, this.height / 4, 16777215);
 		
 		int toolTipColor = 0xDDDDAA;
 		if(playWorld.isMouseOver()) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.demo.create.create.tooltip"), this.width / 2, this.height / 4 + 20, toolTipColor);
+			this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.demo.create.create.tooltip"), this.width / 2, this.height / 4 + 20, toolTipColor);
 		}else if(joinWorld.isMouseOver()) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("singleplayer.demo.create.join.tooltip"), this.width / 2, this.height / 4 + 20, toolTipColor);
+			this.drawCenteredString(this.fontRenderer, I18n.format("singleplayer.demo.create.join.tooltip"), this.width / 2, this.height / 4 + 20, toolTipColor);
 		}
 		
 		super.drawScreen(par1, par2, par3);
@@ -59,7 +59,7 @@ public class GuiScreenDemoPlayWorldSelection extends GuiScreen {
 		}else if(par1GuiButton.id == 1) {
 			this.mc.gameSettings.hasCreatedDemoWorld = true;
 			this.mc.gameSettings.saveOptions();
-			this.mc.launchIntegratedServer("Demo World", "Demo World", DemoWorldServer.demoWorldSettings);
+			this.mc.launchIntegratedServer("Demo World", "Demo World", WorldServerDemo.demoWorldSettings);
 		}else if(par1GuiButton.id == 2) {
 			if(LANServerController.supported()) {
 				this.mc.displayGuiScreen(GuiScreenLANInfo.showLANInfoScreen(new GuiScreenLANConnect(mainmenu)));

@@ -34,8 +34,8 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiVoiceMenu extends Gui {
@@ -119,7 +119,7 @@ public class GuiVoiceMenu extends Gui {
 	
 	public void setResolution(Minecraft mc, int w, int h) {
 		this.mc = mc;
-		this.fontRendererObj = mc.fontRendererObj;
+		this.fontRenderer = mc.fontRenderer;
 		this.width = w;
 		this.height = h;
 		initGui();
@@ -165,8 +165,8 @@ public class GuiVoiceMenu extends Gui {
 				drawRect(width / 2 - 86, height / 4 - 1, this.width / 2 + 86, height / 3 + 64 + height / 16, 0xFFDDDDDD);
 				drawRect(width / 2 - 85, height / 4 + 0, this.width / 2 + 85, height / 3 + 63 + height / 16, 0xFF333333);
 				
-				drawCenteredString(this.fontRendererObj, I18n.format("voice.radiusTitle"), this.width / 2, height / 4 + 9, 16777215);
-				drawString(this.fontRendererObj, I18n.format("voice.radiusLabel"), (this.width - 150) / 2 + 3, height / 3 + 6, 0xCCCCCC);
+				drawCenteredString(this.fontRenderer, I18n.format("voice.radiusTitle"), this.width / 2, height / 4 + 9, 16777215);
+				drawString(this.fontRenderer, I18n.format("voice.radiusLabel"), (this.width - 150) / 2 + 3, height / 3 + 6, 0xCCCCCC);
 				sliderBlocks.drawButton(mc, mx, my);
 				
 			}else if(showSliderVolume) {
@@ -174,11 +174,11 @@ public class GuiVoiceMenu extends Gui {
 				drawRect(width / 2 - 86, height / 4 - 11, this.width / 2 + 86, height / 3 + 104 + height / 16, 0xFFDDDDDD);
 				drawRect(width / 2 - 85, height / 4 - 10, this.width / 2 + 85, height / 3 + 103 + height / 16, 0xFF333333);
 				
-				drawCenteredString(this.fontRendererObj, I18n.format("voice.volumeTitle"), this.width / 2, height / 4 - 1, 16777215);
-				drawString(this.fontRendererObj, I18n.format("voice.volumeListen"), (this.width - 150) / 2 + 3, height / 3 - 4, 0xCCCCCC);
+				drawCenteredString(this.fontRenderer, I18n.format("voice.volumeTitle"), this.width / 2, height / 4 - 1, 16777215);
+				drawString(this.fontRenderer, I18n.format("voice.volumeListen"), (this.width - 150) / 2 + 3, height / 3 - 4, 0xCCCCCC);
 				sliderListenVolume.drawButton(mc, mx, my);
 				
-				drawString(this.fontRendererObj, I18n.format("voice.volumeSpeak"), (this.width - 150) / 2 + 3, height / 3 + 42, 0xCCCCCC);
+				drawString(this.fontRenderer, I18n.format("voice.volumeSpeak"), (this.width - 150) / 2 + 3, height / 3 + 42, 0xCCCCCC);
 				sliderSpeakVolume.drawButton(mc, mx, my);
 				
 			}else if(showPTTKeyConfig) {
@@ -190,10 +190,10 @@ public class GuiVoiceMenu extends Gui {
 					GlStateManager.pushMatrix();
 					GlStateManager.translate(this.width / 2, height / 3 + 5, 0.0f);
 					GlStateManager.scale(2.0f, 2.0f, 2.0f);
-					drawCenteredString(this.fontRendererObj, Keyboard.getKeyName(mc.gameSettings.voicePTTKey), 0, 0, 0xFFCC11);
+					drawCenteredString(this.fontRenderer, Keyboard.getKeyName(mc.gameSettings.voicePTTKey), 0, 0, 0xFFCC11);
 					GlStateManager.popMatrix();
 				}else {
-					drawCenteredString(this.fontRendererObj, I18n.format("voice.pttChangeDesc"), this.width / 2, height / 3 + 8, 16777215);
+					drawCenteredString(this.fontRenderer, I18n.format("voice.pttChangeDesc"), this.width / 2, height / 3 + 8, 16777215);
 				}
 			}
 			
@@ -256,7 +256,7 @@ public class GuiVoiceMenu extends Gui {
 					voiceScreenButtonChangeRadiusposH = 12;
 					if(mx >= xx && my >= yy && mx < xx + voiceScreenButtonChangeRadiusposW && my < yy + 12) {
 						txt = I18n.format("voice.connectedRadius").replace("$radius$", "" + VoiceClientController.getVoiceProximity())
-								.replace("$f$", "" + EnumChatFormatting.UNDERLINE) + EnumChatFormatting.RESET;
+								.replace("$f$", "" + TextFormatting.UNDERLINE) + TextFormatting.RESET;
 					}
 				}else {
 					txt = I18n.format("voice.connectedGlobal");
@@ -526,7 +526,7 @@ public class GuiVoiceMenu extends Gui {
 		drawRect(x - margin, y - margin, x + widthAccum + margin,
 				y + lines.length * 10 + 48 + margin, 0xFF111111);
 		
-		drawCenteredString(fontRendererObj, EnumChatFormatting.BOLD + title, width / 2, y, 0xFF7766);
+		drawCenteredString(fontRendererObj, TextFormatting.BOLD + title, width / 2, y, 0xFF7766);
 		
 		for(int i = 0; i < lines.length; ++i) {
 			drawString(fontRendererObj, lines[i], x, y + i * 10 + 18, 0xDDAAAA);

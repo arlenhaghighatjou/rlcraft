@@ -22,7 +22,7 @@ import java.util.List;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 
 public class GuiScreenVideoSettingsWarning extends GuiScreen {
 
@@ -42,10 +42,10 @@ public class GuiScreenVideoSettingsWarning extends GuiScreen {
 
 	public void initGui() {
 		messages.clear();
-		messages.add(EnumChatFormatting.RED + I18n.format("options.badVideoSettingsDetected.title"));
+		messages.add(TextFormatting.RED + I18n.format("options.badVideoSettingsDetected.title"));
 		messages.add(null);
-		messages.add(EnumChatFormatting.GRAY + I18n.format("options.badVideoSettingsDetected.0"));
-		messages.add(EnumChatFormatting.GRAY + I18n.format("options.badVideoSettingsDetected.1"));
+		messages.add(TextFormatting.GRAY + I18n.format("options.badVideoSettingsDetected.0"));
+		messages.add(TextFormatting.GRAY + I18n.format("options.badVideoSettingsDetected.1"));
 		if((mask & WARNING_VSYNC) != 0) {
 			messages.add(null);
 			messages.add(I18n.format("options.badVideoSettingsDetected.vsync.0"));

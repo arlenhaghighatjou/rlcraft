@@ -98,9 +98,9 @@ public class GuiScreenRevokeSessionToken extends GuiScreen {
 
 	public void drawScreen(int i, int j, float f) {
 		this.list.drawScreen(i, j, f);
-		this.drawCenteredString(this.fontRendererObj, I18n.format("revokeSessionToken.title"), this.width / 2, 16, 16777215);
-		this.drawCenteredString(this.fontRendererObj, I18n.format("revokeSessionToken.note.0"), this.width / 2, this.height - 66, 8421504);
-		this.drawCenteredString(this.fontRendererObj, I18n.format("revokeSessionToken.note.1"), this.width / 2, this.height - 56, 8421504);
+		this.drawCenteredString(this.fontRenderer, I18n.format("revokeSessionToken.title"), this.width / 2, 16, 16777215);
+		this.drawCenteredString(this.fontRenderer, I18n.format("revokeSessionToken.note.0"), this.width / 2, this.height - 66, 8421504);
+		this.drawCenteredString(this.fontRenderer, I18n.format("revokeSessionToken.note.1"), this.width / 2, this.height - 56, 8421504);
 		super.drawScreen(i, j, f);
 	}
 
@@ -140,7 +140,7 @@ public class GuiScreenRevokeSessionToken extends GuiScreen {
 		}
 
 		protected void drawSlot(int i, int var2, int j, int var4, int var5, int var6) {
-			GuiScreenRevokeSessionToken.this.drawCenteredString(GuiScreenRevokeSessionToken.this.fontRendererObj,
+			GuiScreenRevokeSessionToken.this.drawCenteredString(GuiScreenRevokeSessionToken.this.fontRenderer,
 					this.cookieNames.get(i), this.width / 2, j + 1, 16777215);
 		}
 	}

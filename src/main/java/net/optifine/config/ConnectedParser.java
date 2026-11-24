@@ -19,10 +19,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.optifine.Config;
 import net.optifine.ConnectedProperties;
 
@@ -386,7 +386,7 @@ public class ConnectedParser {
 		return true;
 	}
 
-	public BiomeGenBase[] parseBiomes(String str) {
+	public Biome[] parseBiomes(String str) {
 		if (str == null) {
 			return null;
 		} else {
@@ -403,7 +403,7 @@ public class ConnectedParser {
 
 			for (int i = 0; i < astring.length; ++i) {
 				String s = astring[i];
-				BiomeGenBase biomegenbase = this.findBiome(s);
+				Biome biomegenbase = this.findBiome(s);
 
 				if (biomegenbase == null) {
 					this.warn("Biome not found: " + s);
@@ -413,27 +413,27 @@ public class ConnectedParser {
 			}
 
 			if (flag) {
-				List<BiomeGenBase> list1 = new ArrayList(Arrays.asList(BiomeGenBase.getBiomeGenArray()));
+				List<Biome> list1 = new ArrayList(Arrays.asList(Biome.getBiomeGenArray()));
 				list1.removeAll(list);
 				list = list1;
 			}
 
-			BiomeGenBase[] abiomegenbase = (BiomeGenBase[]) ((BiomeGenBase[]) list
-					.toArray(new BiomeGenBase[list.size()]));
+			Biome[] abiomegenbase = (Biome[]) ((Biome[]) list
+					.toArray(new Biome[list.size()]));
 			return abiomegenbase;
 		}
 	}
 
-	public BiomeGenBase findBiome(String biomeName) {
+	public Biome findBiome(String biomeName) {
 		biomeName = biomeName.toLowerCase();
 
 		if (biomeName.equals("nether")) {
-			return BiomeGenBase.hell;
+			return Biome.hell;
 		} else {
-			BiomeGenBase[] abiomegenbase = BiomeGenBase.getBiomeGenArray();
+			Biome[] abiomegenbase = Biome.getBiomeGenArray();
 
 			for (int i = 0; i < abiomegenbase.length; ++i) {
-				BiomeGenBase biomegenbase = abiomegenbase[i];
+				Biome biomegenbase = abiomegenbase[i];
 
 				if (biomegenbase != null) {
 					String s = biomegenbase.biomeName.replace(" ", "").toLowerCase();
@@ -699,15 +699,15 @@ public class ConnectedParser {
 		}
 	}
 
-	public EnumWorldBlockLayer parseBlockRenderLayer(String str, EnumWorldBlockLayer def) {
+	public BlockRenderLayer parseBlockRenderLayer(String str, BlockRenderLayer def) {
 		if (str == null) {
 			return def;
 		} else {
 			str = str.toLowerCase().trim();
-			EnumWorldBlockLayer[] aenumworldblocklayer = EnumWorldBlockLayer.values();
+			BlockRenderLayer[] aenumworldblocklayer = BlockRenderLayer.values();
 
 			for (int i = 0; i < aenumworldblocklayer.length; ++i) {
-				EnumWorldBlockLayer enumworldblocklayer = aenumworldblocklayer[i];
+				BlockRenderLayer enumworldblocklayer = aenumworldblocklayer[i];
 
 				if (str.equals(enumworldblocklayer.name().toLowerCase())) {
 					return enumworldblocklayer;

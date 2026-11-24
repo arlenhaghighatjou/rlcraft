@@ -83,7 +83,7 @@ public class EaglerFontRenderer extends FontRenderer {
 		InstancedFontRenderer.begin();
 		
 		Tessellator tessellator = Tessellator.getInstance();
-		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		WorldRenderer worldrenderer = tessellator.getBuffer();
 		worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
 		
 		boolean hasStrike = false;

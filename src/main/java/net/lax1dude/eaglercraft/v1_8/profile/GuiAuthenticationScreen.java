@@ -79,7 +79,7 @@ public class GuiAuthenticationScreen extends GuiScreen {
 		continueButton.enabled = false;
 		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 80 + 37,
 				I18n.format("gui.cancel", new Object[0])));
-		this.password = new GuiPasswordTextField(2, this.fontRendererObj, this.width / 2 - 100, this.height / 4 + 40, 200, 20); // 116
+		this.password = new GuiPasswordTextField(2, this.fontRenderer, this.width / 2 - 100, this.height / 4 + 40, 200, 20); // 116
 		this.password.setFocused(true);
 		this.password.setCanLoseFocus(false);
 	}
@@ -99,9 +99,9 @@ public class GuiAuthenticationScreen extends GuiScreen {
 	public void drawScreen(int i, int j, float var3) {
 		drawBackground(0);
 		this.password.drawTextBox();
-		this.drawCenteredString(this.fontRendererObj, I18n.format("auth.required", new Object[0]), this.width / 2,
+		this.drawCenteredString(this.fontRenderer, I18n.format("auth.required", new Object[0]), this.width / 2,
 				this.height / 4 - 5, 16777215);
-		this.drawCenteredString(this.fontRendererObj, message, this.width / 2, this.height / 4 + 15, 0xAAAAAA);
+		this.drawCenteredString(this.fontRenderer, message, this.width / 2, this.height / 4 + 15, 0xAAAAAA);
 		super.drawScreen(i, j, var3);
 	}
 

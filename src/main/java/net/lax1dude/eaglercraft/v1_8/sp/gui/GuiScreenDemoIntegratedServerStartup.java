@@ -91,8 +91,8 @@ public class GuiScreenDemoIntegratedServerStartup extends GuiScreen {
 	public void drawScreen(int i, int j, float f) {
 		this.drawBackground(0);
 		String txt = I18n.format("singleplayer.integratedStartup");
-		int w = this.fontRendererObj.getStringWidth(txt);
-		this.drawString(this.fontRendererObj, txt + dotDotDot[(int)((EagRuntime.steadyTimeMillis() / 300L) % 4L)], (this.width - w) / 2, this.height / 2 - 50, 16777215);
+		int w = this.fontRenderer.getStringWidth(txt);
+		this.drawString(this.fontRenderer, txt + dotDotDot[(int)((EagRuntime.steadyTimeMillis() / 300L) % 4L)], (this.width - w) / 2, this.height / 2 - 50, 16777215);
 		super.drawScreen(i, j, f);
 	}
 

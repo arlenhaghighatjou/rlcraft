@@ -4,10 +4,10 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.resources.model.IBakedModel;
-import net.minecraft.util.BlockPos;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.world.IBlockAccess;
 import net.optifine.BetterGrass;
 import net.optifine.Config;
@@ -27,7 +27,7 @@ public class BlockModelCustomizer {
 	}
 
 	public static List<BakedQuad> getRenderQuads(List<BakedQuad> quads, IBlockAccess worldIn, IBlockState stateIn,
-			BlockPos posIn, EnumFacing enumfacing, EnumWorldBlockLayer layer, long rand, RenderEnv renderEnv) {
+			BlockPos posIn, EnumFacing enumfacing, BlockRenderLayer layer, long rand, RenderEnv renderEnv) {
 		if (enumfacing != null) {
 			if (renderEnv.isSmartLeaves()
 					&& SmartLeaves.isSameLeaves(worldIn.getBlockState(posIn.offset(enumfacing)), stateIn)) {
@@ -66,8 +66,8 @@ public class BlockModelCustomizer {
 		return list;
 	}
 
-	private static EnumWorldBlockLayer getEmissiveLayer(EnumWorldBlockLayer layer) {
-		return layer != null && layer != EnumWorldBlockLayer.SOLID ? layer : EnumWorldBlockLayer.CUTOUT_MIPPED;
+	private static BlockRenderLayer getEmissiveLayer(BlockRenderLayer layer) {
+		return layer != null && layer != BlockRenderLayer.SOLID ? layer : BlockRenderLayer.CUTOUT_MIPPED;
 	}
 
 	private static BakedQuad[] getRenderQuads(BakedQuad quad, IBlockAccess worldIn, IBlockState stateIn, BlockPos posIn,

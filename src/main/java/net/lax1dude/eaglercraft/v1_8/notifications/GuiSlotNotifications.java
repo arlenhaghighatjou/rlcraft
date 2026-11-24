@@ -26,12 +26,12 @@ import net.lax1dude.eaglercraft.v1_8.socket.protocol.pkt.server.SPacketNotifBadg
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
-import net.minecraft.event.ClickEvent;
-import net.minecraft.event.HoverEvent;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.event.HoverEvent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiSlotNotifications extends GuiSlot {
@@ -85,11 +85,11 @@ public class GuiSlotNotifications extends GuiSlot {
 					mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
 					return;
 				}
-				IChatComponent cmp = slot.badge.bodyComponent;
+				ITextComponent cmp = slot.badge.bodyComponent;
 				if(cmp != null) {
 					if(doubleClk) {
-						if (cmp.getChatStyle().getChatClickEvent() != null
-								&& cmp.getChatStyle().getChatClickEvent().getAction().shouldAllowInChat()) {
+						if (cmp.getStyle().getChatClickEvent() != null
+								&& cmp.getStyle().getChatClickEvent().getAction().shouldAllowInChat()) {
 							if(parent.handleComponentClick(cmp)) {
 								mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
 								return;
@@ -207,23 +207,23 @@ public class GuiSlotNotifications extends GuiSlot {
 			}
 			
 			String titleText = "";
-			IChatComponent titleComponent = bd.getTitleProfanityFilter();
+			ITextComponent titleComponent = bd.getTitleProfanityFilter();
 			if(titleComponent != null) {
 				titleText = titleComponent.getFormattedText();
 			}
 			
-			titleText += EnumChatFormatting.GRAY + (titleText.length() > 0 ? " @ " : "@ ")
-					+ (bd.unreadFlagRender ? EnumChatFormatting.YELLOW : EnumChatFormatting.GRAY)
+			titleText += TextFormatting.GRAY + (titleText.length() > 0 ? " @ " : "@ ")
+					+ (bd.unreadFlagRender ? TextFormatting.YELLOW : TextFormatting.GRAY)
 					+ formatAge(bd.serverTimestamp);
 
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(6 + (titleIconEn ? 10 : 0), 6, 0.0f);
 			GlStateManager.scale(0.75f, 0.75f, 0.75f);
-			mc.fontRendererObj.drawStringWithShadow(titleText, 0, 0, bd.titleTxtColor);
+			mc.fontRenderer.drawStringWithShadow(titleText, 0, 0, bd.titleTxtColor);
 			GlStateManager.popMatrix();
 			
 			String sourceText = null;
-			IChatComponent sourceComponent = bd.getSourceProfanityFilter();
+			ITextComponent sourceComponent = bd.getSourceProfanityFilter();
 			if(sourceComponent != null) {
 				sourceText = sourceComponent.getFormattedText();
 				if(sourceText.length() == 0) {
@@ -231,22 +231,22 @@ public class GuiSlotNotifications extends GuiSlot {
 				}
 			}
 			
-			List<IChatComponent> bodyLines = null;
+			List<ITextComponent> bodyLines = null;
 			float bodyFontSize = (sourceText != null || titleIconEn) ? 0.75f : 1.0f;
-			IChatComponent bodyComponent = bd.getBodyProfanityFilter();
+			ITextComponent bodyComponent = bd.getBodyProfanityFilter();
 			if(bodyComponent != null) {
 				bodyLines = GuiUtilRenderComponents.func_178908_a(bodyComponent, (int) (textZoneWidth / bodyFontSize),
-						mc.fontRendererObj, true, true);
+						mc.fontRenderer, true, true);
 				
 				int maxHeight = badgeHeight - (sourceText != null ? 32 : 22);
 				int maxLines = MathHelper.floor_float(maxHeight / (9 * bodyFontSize));
 				if(bodyLines.size() > maxLines) {
 					bodyLines = bodyLines.subList(0, maxLines);
-					IChatComponent cmp = bodyLines.get(maxLines - 1);
-					List<IChatComponent> siblings = cmp.getSiblings();
-					IChatComponent dots = new ChatComponentText("...");
+					ITextComponent cmp = bodyLines.get(maxLines - 1);
+					List<ITextComponent> siblings = cmp.getSiblings();
+					ITextComponent dots = new TextComponentString("...");
 					if(siblings != null && siblings.size() > 0) {
-						dots.setChatStyle(siblings.get(siblings.size() - 1).getChatStyle());
+						dots.setStyle(siblings.get(siblings.size() - 1).getStyle());
 					}
 					cmp.appendSibling(dots);
 				}
@@ -258,16 +258,16 @@ public class GuiSlotNotifications extends GuiSlot {
 				GlStateManager.translate(leftPadding, bodyYOffset, 0.0f);
 				int l = bodyLines.size();
 				GlStateManager.scale(bodyFontSize, bodyFontSize, bodyFontSize);
-				IChatComponent toolTip = null;
+				ITextComponent toolTip = null;
 				for(int i = 0; i < l; ++i) {
 					int startXLocal = 0;
 					int startXReal = leftPadding;
-					for(IChatComponent comp : bodyLines.get(i)) {
-						int w = mc.fontRendererObj.drawStringWithShadow(
-								comp.getChatStyle().getFormattingCode() + comp.getUnformattedTextForChat(), startXLocal,
+					for(ITextComponent comp : bodyLines.get(i)) {
+						int w = mc.fontRenderer.drawStringWithShadow(
+								comp.getStyle().getFormattingCode() + comp.getUnformattedTextForChat(), startXLocal,
 								i * 9, bd.bodyTxtColor) - startXLocal;
-						ClickEvent clickEvent = comp.getChatStyle().getChatClickEvent();
-						HoverEvent hoverEvent = toolTip == null ? comp.getChatStyle().getChatHoverEvent() : null;
+						ClickEvent clickEvent = comp.getStyle().getChatClickEvent();
+						HoverEvent hoverEvent = toolTip == null ? comp.getStyle().getChatHoverEvent() : null;
 						if(clickEvent != null && !clickEvent.getAction().shouldAllowInChat()) {
 							clickEvent = null;
 						}
@@ -300,7 +300,7 @@ public class GuiSlotNotifications extends GuiSlot {
 				GlStateManager.pushMatrix();
 				GlStateManager.translate(badgeWidth - 21, badgeHeight - 5, 0.0f);
 				GlStateManager.scale(0.75f, 0.75f, 0.75f);
-				mc.fontRendererObj.drawStringWithShadow(sourceText, -mc.fontRendererObj.getStringWidth(sourceText) - 4, -10, bd.sourceTxtColor);
+				mc.fontRenderer.drawStringWithShadow(sourceText, -mc.fontRenderer.getStringWidth(sourceText) - 4, -10, bd.sourceTxtColor);
 				GlStateManager.popMatrix();
 			}
 			

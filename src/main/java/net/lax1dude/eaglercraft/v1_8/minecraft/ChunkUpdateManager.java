@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.chunk.CompiledChunk;
 import net.minecraft.client.renderer.chunk.ListedRenderChunk;
 import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
 
 public class ChunkUpdateManager {
 
@@ -54,7 +54,7 @@ public class ChunkUpdateManager {
 			try {
 				r.resortTransparency(f, f1, f2, generator);
 				CompiledChunk ch = generator.getCompiledChunk();
-				if(ch.isLayerEmpty(EnumWorldBlockLayer.TRANSLUCENT) && ch.isLayerEmpty(EnumWorldBlockLayer.REALISTIC_WATER)) {
+				if(ch.isLayerEmpty(BlockRenderLayer.TRANSLUCENT) && ch.isLayerEmpty(BlockRenderLayer.REALISTIC_WATER)) {
 					throw new EmptyBlockLayerException();
 				}
 			}catch(EmptyBlockLayerException ex) {
@@ -68,9 +68,9 @@ public class ChunkUpdateManager {
 
 		final CompiledChunk compiledchunk = generator.getCompiledChunk();
 		if (chunkcompiletaskgenerator$type == ChunkCompileTaskGenerator.Type.REBUILD_CHUNK) {
-			EnumWorldBlockLayer[] en = EnumWorldBlockLayer._VALUES;
+			BlockRenderLayer[] en = BlockRenderLayer._VALUES;
 			for (int i = 0; i < en.length; ++i) {
-				EnumWorldBlockLayer enumworldblocklayer = en[i];
+				BlockRenderLayer enumworldblocklayer = en[i];
 				if (!compiledchunk.isLayerEmpty(enumworldblocklayer)) {
 					this.uploadChunk(enumworldblocklayer,
 							generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(enumworldblocklayer),
@@ -79,14 +79,14 @@ public class ChunkUpdateManager {
 				}
 			}
 		} else if (chunkcompiletaskgenerator$type == ChunkCompileTaskGenerator.Type.RESORT_TRANSPARENCY) {
-			if(!compiledchunk.isLayerEmpty(EnumWorldBlockLayer.TRANSLUCENT)) {
-				this.uploadChunk(EnumWorldBlockLayer.TRANSLUCENT, generator.getRegionRenderCacheBuilder()
-								.getWorldRendererByLayer(EnumWorldBlockLayer.TRANSLUCENT),
+			if(!compiledchunk.isLayerEmpty(BlockRenderLayer.TRANSLUCENT)) {
+				this.uploadChunk(BlockRenderLayer.TRANSLUCENT, generator.getRegionRenderCacheBuilder()
+								.getWorldRendererByLayer(BlockRenderLayer.TRANSLUCENT),
 						generator.getRenderChunk(), compiledchunk);
 			}
-			if(!compiledchunk.isLayerEmpty(EnumWorldBlockLayer.REALISTIC_WATER)) {
-				this.uploadChunk(EnumWorldBlockLayer.REALISTIC_WATER, generator.getRegionRenderCacheBuilder()
-								.getWorldRendererByLayer(EnumWorldBlockLayer.REALISTIC_WATER),
+			if(!compiledchunk.isLayerEmpty(BlockRenderLayer.REALISTIC_WATER)) {
+				this.uploadChunk(BlockRenderLayer.REALISTIC_WATER, generator.getRegionRenderCacheBuilder()
+								.getWorldRendererByLayer(BlockRenderLayer.REALISTIC_WATER),
 						generator.getRenderChunk(), compiledchunk);
 			}
 			generator.setStatus(ChunkCompileTaskGenerator.Status.DONE);
@@ -187,7 +187,7 @@ public class ChunkUpdateManager {
 		}
 	}
 
-	public void uploadChunk(final EnumWorldBlockLayer player, final WorldRenderer chunkRenderer,
+	public void uploadChunk(final BlockRenderLayer player, final WorldRenderer chunkRenderer,
 			final RenderChunk compiledChunkIn, final CompiledChunk parCompiledChunk) {
 		this.uploadDisplayList(chunkRenderer,
 				((ListedRenderChunk) compiledChunkIn).getDisplayList(player, parCompiledChunk), compiledChunkIn);

@@ -31,8 +31,8 @@ import net.lax1dude.eaglercraft.v1_8.sp.relay.pkt.*;
 import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.ITextComponent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -311,7 +311,7 @@ public class LANClientNetworkManager extends EaglercraftNetworkManager {
 					// 1.5 kick packet
 					if(data.length == 31 && data[0] == (byte)0xFF && data[1] == (byte)0x00 && data[2] == (byte)0x0E) {
 						logger.error("Detected a 1.5 LAN server!");
-						this.closeChannel(new ChatComponentTranslation("singleplayer.outdatedLANServerKick"));
+						this.closeChannel(new TextComponentTranslation("singleplayer.outdatedLANServerKick"));
 						firstPacket = false;
 						return;
 					}
@@ -430,7 +430,7 @@ public class LANClientNetworkManager extends EaglercraftNetworkManager {
 	}
 
 	@Override
-	public void closeChannel(IChatComponent reason) {
+	public void closeChannel(ITextComponent reason) {
 		if(!PlatformWebRTC.clientLANClosed()) {
 			PlatformWebRTC.clientLANCloseConnection();
 		}
@@ -448,7 +448,7 @@ public class LANClientNetworkManager extends EaglercraftNetworkManager {
 				processReceivedPackets(); // catch kick message
 			} catch (IOException e) {
 			}
-			doClientDisconnect(new ChatComponentTranslation("disconnect.endOfStream"));
+			doClientDisconnect(new TextComponentTranslation("disconnect.endOfStream"));
 		}
 		return clientDisconnected;
 	}

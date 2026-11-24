@@ -25,7 +25,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldSettings;
 
 public class GuiShareToLan extends GuiScreen {
@@ -77,8 +77,8 @@ public class GuiShareToLan extends GuiScreen {
 		this.buttonGameMode.enabled = this.buttonAllowCommandsToggle.enabled = !mc.isDemo();
 		this.buttonList.add(this.buttonHiddenToggle = new GuiButton(105, this.width / 2 - 75, 165, 140, 20,
 				I18n.format("lanServer.hidden")));
-		this.codeTextField = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 100, 80, 200, 20);
-		this.codeTextField.setText(mc.thePlayer.getName() + "'s World");
+		this.codeTextField = new GuiTextField(0, this.fontRenderer, this.width / 2 - 100, 80, 200, 20);
+		this.codeTextField.setText(mc.player.getName() + "'s World");
 		this.codeTextField.setFocused(true);
 		this.codeTextField.setMaxStringLength(252);
 		this.func_74088_g();
@@ -145,7 +145,7 @@ public class GuiShareToLan extends GuiScreen {
 			PlatformWebRTC.startRTCLANServer();
 			String worldName = this.codeTextField.getText().trim();
 			if (worldName.isEmpty()) {
-				worldName = mc.thePlayer.getName() + "'s World";
+				worldName = mc.player.getName() + "'s World";
 			}
 			if (worldName.length() >= 252) {
 				worldName = worldName.substring(0, 252);
@@ -155,7 +155,7 @@ public class GuiShareToLan extends GuiScreen {
 			String code = LANServerController.shareToLAN((msg) -> ls.eaglerShow(msg, null), worldName, hiddenToggle);
 			if (code != null) {
 				SingleplayerServerController.configureLAN(WorldSettings.GameType.getByName(this.gameMode), this.allowCommands);
-				this.mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(I18n.format("lanServer.opened")
+				this.mc.ingameGUI.getChatGUI().printChatMessage(new TextComponentString(I18n.format("lanServer.opened")
 						.replace("$relay$", LANServerController.getCurrentURI()).replace("$code$", code)));
 			} else {
 				this.mc.displayGuiScreen(new GuiScreenNoRelays(this, "noRelay.titleFail"));
@@ -168,13 +168,13 @@ public class GuiShareToLan extends GuiScreen {
 	 */
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRendererObj, I18n.format("lanServer.title"), this.width / 2,
+		this.drawCenteredString(this.fontRenderer, I18n.format("lanServer.title"), this.width / 2,
 				35, 16777215);
-		this.drawCenteredString(this.fontRendererObj, I18n.format("lanServer.worldName"), this.width / 2,
+		this.drawCenteredString(this.fontRenderer, I18n.format("lanServer.worldName"), this.width / 2,
 				62, 16777215);
-		this.drawCenteredString(this.fontRendererObj, I18n.format("lanServer.otherPlayers"),
+		this.drawCenteredString(this.fontRenderer, I18n.format("lanServer.otherPlayers"),
 				this.width / 2, 112, 16777215);
-		this.drawCenteredString(this.fontRendererObj, I18n.format("lanServer.ipGrabNote"),
+		this.drawCenteredString(this.fontRenderer, I18n.format("lanServer.ipGrabNote"),
 				this.width / 2, 195, 16777215);
 		super.drawScreen(par1, par2, par3);
 		this.relaysButton.drawScreen(par1, par2);

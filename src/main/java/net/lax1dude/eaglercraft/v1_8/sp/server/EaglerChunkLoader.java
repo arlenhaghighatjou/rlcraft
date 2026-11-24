@@ -23,7 +23,7 @@ import java.io.OutputStream;
 import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
-import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.AnvilChunkLoader;
@@ -48,7 +48,7 @@ public class EaglerChunkLoader extends AnvilChunkLoader {
 		return new String(path);
 	}
 
-	public static ChunkCoordIntPair getChunkCoords(String filename) {
+	public static ChunkPos getChunkCoords(String filename) {
 		String strX = filename.substring(0, 6);
 		String strZ = filename.substring(6);
 
@@ -60,7 +60,7 @@ public class EaglerChunkLoader extends AnvilChunkLoader {
 			retZ |= hex.indexOf(strZ.charAt(i)) << (i << 2);
 		}
 
-		return new ChunkCoordIntPair(retX - 1900000, retZ - 1900000);
+		return new ChunkPos(retX - 1900000, retZ - 1900000);
 	}
 
 	public final VFile2 chunkDirectory;

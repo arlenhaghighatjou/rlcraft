@@ -31,13 +31,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.ISound.AttenuationType;
 import net.minecraft.client.audio.ITickableSound;
-import net.minecraft.client.audio.SoundCategory;
-import net.minecraft.client.audio.SoundEventAccessorComposite;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.client.audio.SoundEventAccessor;
 import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.audio.SoundPoolEntry;
+import net.minecraft.client.audio.Sound;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 public class EaglercraftSoundManager {
@@ -48,7 +48,7 @@ public class EaglercraftSoundManager {
 		
 		protected final ISound soundInstance;
 		protected final SoundCategory soundCategory;
-		protected final SoundPoolEntry soundConfig;
+		protected final Sound soundConfig;
 		protected IAudioHandle soundHandle;
 		
 		protected float activeX;
@@ -62,7 +62,7 @@ public class EaglercraftSoundManager {
 		protected boolean paused = false;
 		
 		protected ActiveSoundEvent(EaglercraftSoundManager manager, ISound soundInstance,
-				SoundCategory soundCategory, SoundPoolEntry soundConfig, IAudioHandle soundHandle) {
+				SoundCategory soundCategory, Sound soundConfig, IAudioHandle soundHandle) {
 			this.manager = manager;
 			this.soundInstance = soundInstance;
 			this.soundCategory = soundCategory;
@@ -295,11 +295,11 @@ public class EaglercraftSoundManager {
 			return;
 		}
 		if(sound != null && categoryVolumes[SoundCategory.MASTER.getCategoryId()] > 0.0f) {
-			SoundEventAccessorComposite accessor = handler.getSound(sound.getSoundLocation());
+			SoundEventAccessor accessor = handler.getSound(sound.getSoundLocation());
 			if(accessor == null) {
 				logger.warn("Unable to play unknown soundEvent(1): {}", sound.getSoundLocation().toString());
 			}else {
-				SoundPoolEntry etr = accessor.cloneEntry();
+				Sound etr = accessor.cloneEntry();
 				if (etr == SoundHandler.missing_sound) {
 					logger.warn("Unable to play empty soundEvent(2): {}", etr.getSoundPoolEntryLocation().toString());
 				}else {
@@ -344,14 +344,14 @@ public class EaglercraftSoundManager {
 		queuedSounds.add(new WaitingSoundEvent(sound, delay));
 	}
 	
-	private float getNormalizedVolume(ISound sound, SoundPoolEntry entry, SoundCategory category) {
+	private float getNormalizedVolume(ISound sound, Sound entry, SoundCategory category) {
 		return (float) MathHelper.clamp_double((double) sound.getVolume() * entry.getVolume(), 0.0D, 1.0D)
 				* (category.getCategoryId() == SoundCategory.MASTER.getCategoryId() ? 1.0f
 						: categoryVolumes[category.getCategoryId()])
 				* categoryVolumes[SoundCategory.MASTER.getCategoryId()];
 	}
 	
-	private float getNormalizedPitch(ISound sound, SoundPoolEntry entry) {
+	private float getNormalizedPitch(ISound sound, Sound entry) {
 		return MathHelper.clamp_float(sound.getPitch() * (float)entry.getPitch(), 0.5f, 2.0f);
 	}
 	

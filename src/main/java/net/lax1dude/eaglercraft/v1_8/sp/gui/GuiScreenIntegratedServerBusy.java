@@ -108,7 +108,7 @@ public class GuiScreenIntegratedServerBusy extends GuiScreen {
 		String str = I18n.format(currentStatus);
 		
 		long dots = (millis / 500l) % 4l;
-		this.drawString(fontRendererObj, str + (dots > 0 ? "." : "") + (dots > 1 ? "." : "") + (dots > 2 ? "." : ""), (this.width - this.fontRendererObj.getStringWidth(str)) / 2, top + 10, 0xFFFFFF);
+		this.drawString(fontRendererObj, str + (dots > 0 ? "." : "") + (dots > 1 ? "." : "") + (dots > 2 ? "." : ""), (this.width - this.fontRenderer.getStringWidth(str)) / 2, top + 10, 0xFFFFFF);
 		
 		if(areYouSure > 0) {
 			this.drawCenteredString(fontRendererObj, I18n.format("singleplayer.busy.cancelWarning"), this.width / 2, top + 25, 0xFF8888);

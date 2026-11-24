@@ -34,8 +34,8 @@ public class GuiScreenLANInfo extends GuiScreen {
 
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRendererObj, I18n.format("lanInfo.title"), this.width / 2, this.height / 4 - 60 + 20, 16777215);
-		this.fontRendererObj.drawSplitString(I18n.format("lanInfo.desc.0") + "\n\n\n" + I18n.format("lanInfo.desc.1", I18n.format("menu.multiplayer"), I18n.format("menu.openToLan")), this.width / 2 - 100, this.height / 4 - 60 + 60, 200, -6250336);
+		this.drawCenteredString(this.fontRenderer, I18n.format("lanInfo.title"), this.width / 2, this.height / 4 - 60 + 20, 16777215);
+		this.fontRenderer.drawSplitString(I18n.format("lanInfo.desc.0") + "\n\n\n" + I18n.format("lanInfo.desc.1", I18n.format("menu.multiplayer"), I18n.format("menu.openToLan")), this.width / 2 - 100, this.height / 4 - 60 + 60, 200, -6250336);
 		super.drawScreen(par1, par2, par3);
 	}
 

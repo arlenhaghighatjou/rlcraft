@@ -75,8 +75,8 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
@@ -1536,7 +1536,7 @@ public class EaglerDeferredPipeline {
 
 		Entity renderViewEntity = mc.getRenderViewEntity();
 		if(renderViewEntity == null) {
-			renderViewEntity = mc.thePlayer;
+			renderViewEntity = mc.player;
 		}
 
 		double entityPosX = renderViewEntity.prevPosX + (renderViewEntity.posX - renderViewEntity.prevPosX) * partialTicks;
@@ -1548,10 +1548,10 @@ public class EaglerDeferredPipeline {
 
 		Vector3f currentSunAngle = DeferredStateManager.currentSunAngle;
 		float sunKelvin = 1500.0f + (2500.0f * Math.max(-currentSunAngle.y, 0.0f));
-		float fff = mc.theWorld.getRainStrength(partialTicks);
-		float ff2 = mc.theWorld.getThunderStrength(partialTicks);
+		float fff = mc.world.getRainStrength(partialTicks);
+		float ff2 = mc.world.getThunderStrength(partialTicks);
 		long millis = EagRuntime.steadyTimeMillis();
-		int dim = Minecraft.getMinecraft().theWorld.provider.getDimensionId();
+		int dim = Minecraft.getMinecraft().world.provider.getDimensionId();
 
 		// ==================== UPDATE CLOUD RENDERER ===================== //
 
@@ -1600,7 +1600,7 @@ public class EaglerDeferredPipeline {
 				shader_skybox_render_paraboloid.useProgram();
 				uniformMatrixHelper(shader_skybox_render_paraboloid.uniforms.u_viewMatrix4f, DeferredStateManager.paraboloidTopViewMatrix);
 				_wglUniform1f(shader_skybox_render_paraboloid.uniforms.u_farPlane1f, 2.0f);
-				if (mc.theWorld.getLastLightningBolt() > 0) {
+				if (mc.world.getLastLightningBolt() > 0) {
 					float f = 0.3f + fff;
 					_wglUniform4f(shader_skybox_render_paraboloid.uniforms.u_lightningColor4f, 0.02f * f, 0.02f * f, 0.02f * f, 1.0f - f * 0.25f);
 				}else {
@@ -1624,7 +1624,7 @@ public class EaglerDeferredPipeline {
 					shader_skybox_render_paraboloid_noclouds.useProgram();
 					uniformMatrixHelper(shader_skybox_render_paraboloid_noclouds.uniforms.u_viewMatrix4f, DeferredStateManager.paraboloidTopViewMatrix);
 					_wglUniform1f(shader_skybox_render_paraboloid_noclouds.uniforms.u_farPlane1f, 2.0f);
-					if (mc.theWorld.getLastLightningBolt() > 0) {
+					if (mc.world.getLastLightningBolt() > 0) {
 						float f = 0.3f + fff;
 						_wglUniform4f(shader_skybox_render_paraboloid_noclouds.uniforms.u_lightningColor4f, 0.02f * f, 0.02f * f, 0.02f * f, 1.0f - f * 0.25f);
 					}else {
@@ -2007,7 +2007,7 @@ public class EaglerDeferredPipeline {
 			float mag = 25.0f;
 			float[] sunRGB2 = TemperaturesLUT.getColorTemperature((int)sunKelvin - 1000);
 			_wglUniform3f(shader_skybox_render.uniforms.u_sunColor3f, sunRGB2[0] * mag, sunRGB2[1] * mag, sunRGB2[2] * mag);
-			if (mc.theWorld.getLastLightningBolt() > 0) {
+			if (mc.world.getLastLightningBolt() > 0) {
 				float f = 0.3f + fff;
 				_wglUniform4f(shader_skybox_render.uniforms.u_lightningColor4f, 0.02f * f, 0.02f * f, 0.02f * f, 1.0f - f * 0.25f);
 			}else {
@@ -2096,7 +2096,7 @@ public class EaglerDeferredPipeline {
 			float fffff = 0.1f + MathHelper.clamp_float((-currentSunAngle.y + 0.1f) * 6.0f, 0.0f, 0.375f);
 			_wglUniform3f(shader_moon_render.uniforms.u_moonColor3f, 1.4f * fffff, 1.2f * fffff, 1.0f * fffff);
 			
-			float f = (float)(Minecraft.getMinecraft().theWorld.getWorldTime() - 18000f) / 24000f / 4f * 3.14159f;
+			float f = (float)(Minecraft.getMinecraft().world.getWorldTime() - 18000f) / 24000f / 4f * 3.14159f;
 			_wglUniform3f(shader_moon_render.uniforms.u_lightDir3f, MathHelper.sin(f), 0.0f, MathHelper.cos(f));
 			
 			GlStateManager.enableBlend();
@@ -2150,7 +2150,7 @@ public class EaglerDeferredPipeline {
 		uniformMatrixHelper(shader_deferred_combine.uniforms.u_inverseViewMatrix4f, DeferredStateManager.inverseViewMatrix);
 		uniformMatrixHelper(shader_deferred_combine.uniforms.u_inverseProjMatrix4f, DeferredStateManager.inverseProjMatrix);
 		_wglUniform3f(shader_deferred_combine.uniforms.u_sunDirection3f, DeferredStateManager.currentSunAngle.x, DeferredStateManager.currentSunAngle.y, DeferredStateManager.currentSunAngle.z);
-		float lightningBoost = mc.theWorld.getLastLightningBolt() > 0 ? 1.0f : 0.0f;
+		float lightningBoost = mc.world.getLastLightningBolt() > 0 ? 1.0f : 0.0f;
 		lightningBoost *= 0.3f + fff;
 		_wglUniform1f(shader_deferred_combine.uniforms.u_skyLightFactor1f, getSkyBrightnessTimeParam() + lightningBoost);
 		DrawUtils.drawStandardQuad2D();
@@ -2608,8 +2608,8 @@ public class EaglerDeferredPipeline {
 			worldLightingDataCopyBuffer.putFloat(DeferredStateManager.currentSunLightColor.y * f);
 			worldLightingDataCopyBuffer.putFloat(DeferredStateManager.currentSunLightColor.z * f);
 		}
-		float lightningBoost = mc.theWorld.getLastLightningBolt() > 0 ? 1.0f : 0.0f;
-		lightningBoost *= 0.3f + mc.theWorld.getRainStrength(partialTicks);
+		float lightningBoost = mc.world.getLastLightningBolt() > 0 ? 1.0f : 0.0f;
+		lightningBoost *= 0.3f + mc.world.getRainStrength(partialTicks);
 		worldLightingDataCopyBuffer.putFloat(getSkyBrightnessTimeParam() + lightningBoost);
 		worldLightingDataCopyBuffer.putFloat((float)DeferredStateManager.fogLinearExp);
 		worldLightingDataCopyBuffer.putFloat(DeferredStateManager.fogDensity);
@@ -2658,8 +2658,8 @@ public class EaglerDeferredPipeline {
 	}
 
 	private float getSkyBrightnessParam() {
-		float fff = mc.theWorld.getRainStrength(partialTicks) * 0.9f;
-		fff += mc.theWorld.getThunderStrength(partialTicks) * 0.05f;
+		float fff = mc.world.getRainStrength(partialTicks) * 0.9f;
+		fff += mc.world.getThunderStrength(partialTicks) * 0.05f;
 		return 1.0f - fff;
 	}
 
@@ -3170,8 +3170,8 @@ public class EaglerDeferredPipeline {
 	public void endDrawDeferred() {
 		DeferredStateManager.checkGLError("Pre: endDrawDeferred()");
 
-		if(config.is_rendering_lensFlares && mc.theWorld.provider.getDimensionId() == 0 &&
-				DeferredStateManager.currentSunAngle.y < 0.2f && mc.theWorld.getRainStrength(partialTicks) < 1.0f) {
+		if(config.is_rendering_lensFlares && mc.world.provider.getDimensionId() == 0 &&
+				DeferredStateManager.currentSunAngle.y < 0.2f && mc.world.getRainStrength(partialTicks) < 1.0f) {
 
 			// =============== CALCULATE SUN COORDINATES ================ //
 
@@ -4148,15 +4148,15 @@ public class EaglerDeferredPipeline {
 		GlStateManager.enableAlpha();
 		GlStateManager.pushMatrix();
 		String str = "Shaders Suspended";
-		GlStateManager.translate((w - mc.fontRendererObj.getStringWidth(str) * 2) * 0.5f, 45.0f, 0.0f);
+		GlStateManager.translate((w - mc.fontRenderer.getStringWidth(str) * 2) * 0.5f, 45.0f, 0.0f);
 		GlStateManager.scale(2.0f, 2.0f, 2.0f);
-		mc.fontRendererObj.drawStringWithShadow(str, 0, 0, 0xFFFFFF);
+		mc.fontRenderer.drawStringWithShadow(str, 0, 0, 0xFFFFFF);
 		GlStateManager.popMatrix();
 		GlStateManager.pushMatrix();
 		str = "(check console)";
-		GlStateManager.translate((w - mc.fontRendererObj.getStringWidth(str) * 1.5) * 0.5f, 80.0f, 0.0f);
+		GlStateManager.translate((w - mc.fontRenderer.getStringWidth(str) * 1.5) * 0.5f, 80.0f, 0.0f);
 		GlStateManager.scale(1.5f, 1.5f, 1.5f);
-		mc.fontRendererObj.drawStringWithShadow(str, 0, 0, 0xFFFFFF);
+		mc.fontRenderer.drawStringWithShadow(str, 0, 0, 0xFFFFFF);
 		GlStateManager.popMatrix();
 		GlStateManager.matrixMode(GL_PROJECTION);
 		GlStateManager.popMatrix();

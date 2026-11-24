@@ -44,11 +44,11 @@ import net.lax1dude.eaglercraft.v1_8.sp.socket.ClientIntegratedServerNetworkMana
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IProgressUpdate;
-import net.minecraft.util.StringTranslate;
+import net.minecraft.util.text.translation.LanguageMap;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.ISaveHandler;
-import net.minecraft.world.storage.SaveFormatComparator;
+import net.minecraft.world.storage.WorldSummary;
 import net.minecraft.world.storage.WorldInfo;
 
 public class SingleplayerServerController implements ISaveFormat {
@@ -65,7 +65,7 @@ public class SingleplayerServerController implements ISaveFormat {
 
 	public static final SingleplayerServerController instance = new SingleplayerServerController();
 	public static final Logger logger = LogManager.getLogger("SingleplayerServerController");
-	public static final List<SaveFormatComparator> saveListCache = new ArrayList<>();
+	public static final List<WorldSummary> saveListCache = new ArrayList<>();
 	public static final Map<String, WorldInfo> saveListMap = new HashMap<>();
 	public static final List<NBTTagCompound> saveListNBT = new ArrayList<>();
 
@@ -320,7 +320,7 @@ public class SingleplayerServerController implements ISaveFormat {
 			switch(pkt.ack) {
 				case 0xFF:
 					logger.info("Integrated server signaled a successful boot");
-					sendIPCPacket(new IPCPacket14StringList(IPCPacket14StringList.LOCALE, StringTranslate.dump()));
+					sendIPCPacket(new IPCPacket14StringList(IPCPacket14StringList.LOCALE, LanguageMap.dump()));
 					statusState = IntegratedServerState.WORLD_NONE;
 					break;
 				case IPCPacket00StartServer.ID:
@@ -528,7 +528,7 @@ public class SingleplayerServerController implements ISaveFormat {
 				}
 
 				long i = 0L;
-				saveListCache.add(new SaveFormatComparator(folderName, s1, worldinfo.getLastTimePlayed(), i,
+				saveListCache.add(new WorldSummary(folderName, s1, worldinfo.getLastTimePlayed(), i,
 						worldinfo.getGameType(), false, worldinfo.isHardcoreModeEnabled(),
 						worldinfo.areCommandsAllowed(), nbt));
 			}
@@ -546,7 +546,7 @@ public class SingleplayerServerController implements ISaveFormat {
 	}
 
 	@Override
-	public List<SaveFormatComparator> getSaveList() {
+	public List<WorldSummary> getSaveList() {
 		return saveListCache;
 	}
 
@@ -627,12 +627,12 @@ public class SingleplayerServerController implements ISaveFormat {
 		}
 	}
 
-	public static void configureLAN(net.minecraft.world.WorldSettings.GameType enumGameType, boolean allowCommands) {
+	public static void configureLAN(net.minecraft.world.GameType enumGameType, boolean allowCommands) {
 		sendIPCPacket(new IPCPacket17ConfigureLAN(enumGameType.getID(), allowCommands, LANServerController.currentICEServers));
 	}
 
 	public static boolean isClientInEaglerSingleplayerOrLAN() {
 		Minecraft mc = Minecraft.getMinecraft();
-		return mc != null && mc.thePlayer != null && mc.thePlayer.sendQueue.isClientInEaglerSingleplayerOrLAN();
+		return mc != null && mc.player != null && mc.player.sendQueue.isClientInEaglerSingleplayerOrLAN();
 	}
 }

@@ -113,7 +113,7 @@ public class GuiScreenImportProfile extends GuiScreen {
 
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRendererObj, I18n.format("settingsBackup.import.title"), this.width / 2, this.height / 4 - 25, 16777215);
+		this.drawCenteredString(this.fontRenderer, I18n.format("settingsBackup.import.title"), this.width / 2, this.height / 4 - 25, 16777215);
 		super.drawScreen(par1, par2, par3);
 	}
 }

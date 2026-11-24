@@ -19,7 +19,7 @@ package net.lax1dude.eaglercraft.v1_8.sp.server;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class ClientCommandDummy extends CommandBase {
 
@@ -50,7 +50,7 @@ public class ClientCommandDummy extends CommandBase {
 
 	@Override
 	public void processCommand(ICommandSender var1, String[] var2) throws CommandException {
-		var1.addChatMessage(new ChatComponentTranslation("command.clientStub"));
+		var1.sendMessage(new TextComponentTranslation("command.clientStub"));
 	}
 
 }

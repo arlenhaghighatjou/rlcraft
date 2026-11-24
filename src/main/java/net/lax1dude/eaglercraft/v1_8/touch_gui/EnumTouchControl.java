@@ -101,7 +101,7 @@ public enum EnumTouchControl {
 				Touch.closeDeviceKeyboard();
 			}else {
 				Minecraft mc = Minecraft.getMinecraft();
-				if(mc.thePlayer != null) {
+				if(mc.player != null) {
 					mc.setIngameFocus();
 				}else if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiMainMenu)) {
 					mc.displayGuiScreen(null);
@@ -220,7 +220,7 @@ public enum EnumTouchControl {
 	FLY(EnumTouchControlPos.BOTTOM_LEFT, 16, 16, 36, (enumIn, x, y) -> {
 		if(!TouchControls.isPressed(enumIn)) {
 			TouchControls.resetSneak();
-			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+			EntityPlayerSP player = Minecraft.getMinecraft().player;
 			player.jump();
 			player.capabilities.isFlying = true;
 		}
@@ -247,7 +247,7 @@ public enum EnumTouchControl {
 	
 	FLY_END(EnumTouchControlPos.BOTTOM_RIGHT, 64, 64, 36, (enumIn, x, y) -> {
 		if(!TouchControls.isPressed(enumIn)) {
-			Minecraft.getMinecraft().thePlayer.capabilities.isFlying = false;
+			Minecraft.getMinecraft().player.capabilities.isFlying = false;
 		}
 	}, (enumIn, x, y, pressed, mc, res) -> {
 		mc.getTextureManager().bindTexture(TouchOverlayRenderer.spriteSheet);

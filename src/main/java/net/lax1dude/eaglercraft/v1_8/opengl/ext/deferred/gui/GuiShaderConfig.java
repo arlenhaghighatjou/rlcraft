@@ -122,7 +122,7 @@ public class GuiShaderConfig extends GuiScreen {
 	public void drawScreen(int i, int j, float f) {
 		this.drawBackground(0);
 		listView.drawScreen(i, j, f);
-		drawCenteredString(this.fontRendererObj, title, this.width / 2, 15, 16777215);
+		drawCenteredString(this.fontRenderer, title, this.width / 2, 15, 16777215);
 		super.drawScreen(i, j, f);
 		listView.postRender(i, j, f);
 	}

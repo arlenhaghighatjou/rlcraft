@@ -49,9 +49,9 @@ import net.minecraft.client.resources.data.PackMetadataSectionSerializer;
 import net.minecraft.client.resources.data.TextureMetadataSection;
 import net.minecraft.client.resources.data.TextureMetadataSectionSerializer;
 import net.minecraft.network.ServerStatusResponse;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.world.gen.ChunkProviderSettings;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.gen.ChunkGeneratorSettings;
 
 public class JSONTypeProvider {
 
@@ -129,8 +129,8 @@ public class JSONTypeProvider {
 	
 	static {
 		
-		registerType(IChatComponent.class, new IChatComponent.Serializer());
-		registerType(ChatStyle.class, new ChatStyle.Serializer());
+		registerType(ITextComponent.class, new ITextComponent.Serializer());
+		registerType(Style.class, new Style.Serializer());
 		registerType(ServerStatusResponse.class, new ServerStatusResponse.Serializer());
 		registerType(ServerStatusResponse.MinecraftProtocolVersionIdentifier.class,
 				new ServerStatusResponse.MinecraftProtocolVersionIdentifier.Serializer());
@@ -151,7 +151,7 @@ public class JSONTypeProvider {
 		registerType(LanguageMetadataSection.class, new LanguageMetadataSectionSerializer());
 		registerType(PackMetadataSection.class, new PackMetadataSectionSerializer());
 		registerType(AnimationMetadataSection.class, new AnimationMetadataSectionSerializer());
-		registerType(ChunkProviderSettings.Factory.class, new ChunkProviderSettings.Serializer());
+		registerType(ChunkGeneratorSettings.Factory.class, new ChunkGeneratorSettings.Serializer());
 
 		registerParser(new JSONDataParserString());
 		registerParser(new JSONDataParserReader());

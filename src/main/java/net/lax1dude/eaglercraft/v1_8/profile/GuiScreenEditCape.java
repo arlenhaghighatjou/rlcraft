@@ -28,7 +28,7 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.ResourceLocation;
 
 import java.io.IOException;
@@ -180,13 +180,13 @@ public class GuiScreenEditCape extends GuiScreen {
 			GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 			String text = I18n.format("editProfile.importExport");
 			
-			int w = mc.fontRendererObj.getStringWidth(text);
+			int w = mc.fontRenderer.getStringWidth(text);
 			boolean hover = mx > 1 && my > 1 && mx < (w * 3 / 4) + 7 && my < 12;
 			if(hover) {
 				Mouse.showCursor(EnumCursorType.HAND);
 			}
 	
-			drawString(mc.fontRendererObj, EnumChatFormatting.UNDERLINE + text, 5, 5, hover ? 0xFFEEEE22 : 0xFFCCCCCC);
+			drawString(mc.fontRenderer, TextFormatting.UNDERLINE + text, 5, 5, hover ? 0xFFEEEE22 : 0xFFCCCCCC);
 			
 			GlStateManager.popMatrix();
 		}
@@ -302,7 +302,7 @@ public class GuiScreenEditCape extends GuiScreen {
 	protected void mouseClicked(int mx, int my, int button) {
 		if (button == 0) {
 			if(!EagRuntime.getConfiguration().isDemo()) {
-				int w = mc.fontRendererObj.getStringWidth(I18n.format("editProfile.importExport"));
+				int w = mc.fontRenderer.getStringWidth(I18n.format("editProfile.importExport"));
 				if(mx > 1 && my > 1 && mx < (w * 3 / 4) + 7 && my < 12) {
 					safeProfile();
 					mc.displayGuiScreen(new GuiScreenImportExportProfile(parent));

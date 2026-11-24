@@ -33,8 +33,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 
 public class IntegratedTextureService {
 
@@ -133,9 +133,9 @@ public class IntegratedTextureService {
 
 	public void handleInstallNewSkin(EntityPlayerMP requester, byte[] skullData) {
 		if (!requester.canCommandSenderUseCommand(2, "give")) {
-			ChatComponentTranslation cc = new ChatComponentTranslation("command.skull.nopermission");
-			cc.getChatStyle().setColor(EnumChatFormatting.RED);
-			requester.addChatMessage(cc);
+			TextComponentTranslation cc = new TextComponentTranslation("command.skull.nopermission");
+			cc.getStyle().setColor(TextFormatting.RED);
+			requester.sendMessage(cc);
 			return;
 		}
 		String fileName = "eagler://" + skullHandler.installNewSkull(skullData);
@@ -153,9 +153,9 @@ public class IntegratedTextureService {
 		ownerTagCompound.setTag("Properties", propertiesTagCompound);
 		rootTagCompound.setTag("SkullOwner", ownerTagCompound);
 		NBTTagCompound displayTagCompound = new NBTTagCompound();
-		displayTagCompound.setString("Name", EnumChatFormatting.RESET + "Custom Eaglercraft Skull");
+		displayTagCompound.setString("Name", TextFormatting.RESET + "Custom Eaglercraft Skull");
 		NBTTagList loreList = new NBTTagList();
-		loreList.appendTag(new NBTTagString(EnumChatFormatting.GRAY + (fileName.length() > 24 ? (fileName.substring(0, 22) + "...") : fileName)));
+		loreList.appendTag(new NBTTagString(TextFormatting.GRAY + (fileName.length() > 24 ? (fileName.substring(0, 22) + "...") : fileName)));
 		displayTagCompound.setTag("Lore", loreList);
 		rootTagCompound.setTag("display", displayTagCompound);
 		ItemStack stack = new ItemStack(Items.skull, 1, 3);
@@ -167,7 +167,7 @@ public class IntegratedTextureService {
 							* 2.0F);
 			requester.inventoryContainer.detectAndSendChanges();
 		}
-		requester.addChatMessage(new ChatComponentTranslation("command.skull.feedback", fileName));
+		requester.sendMessage(new TextComponentTranslation("command.skull.feedback", fileName));
 	}
 
 	public void flushCache() {

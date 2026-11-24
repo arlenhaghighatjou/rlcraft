@@ -40,7 +40,7 @@ import net.lax1dude.eaglercraft.v1_8.socket.protocol.pkt.server.SPacketNotifIcon
 import net.lax1dude.eaglercraft.v1_8.socket.protocol.pkt.server.SPacketNotifIconsReleaseV4EAG;
 import net.lax1dude.eaglercraft.v1_8.socket.protocol.util.PacketImageData;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 
 public class ServerNotificationManager {
 
@@ -102,9 +102,9 @@ public class ServerNotificationManager {
 			return;
 		}
 		NotificationBadge newBadge = new NotificationBadge(this, newUuid,
-				!StringUtils.isAllBlank(packet.bodyComponent) ? IChatComponent.Serializer.jsonToComponent(packet.bodyComponent) : null,
-				!StringUtils.isAllBlank(packet.titleComponent) ? IChatComponent.Serializer.jsonToComponent(packet.titleComponent) : null,
-				!StringUtils.isAllBlank(packet.sourceComponent) ? IChatComponent.Serializer.jsonToComponent(packet.sourceComponent) : null,
+				!StringUtils.isAllBlank(packet.bodyComponent) ? ITextComponent.Serializer.jsonToComponent(packet.bodyComponent) : null,
+				!StringUtils.isAllBlank(packet.titleComponent) ? ITextComponent.Serializer.jsonToComponent(packet.titleComponent) : null,
+				!StringUtils.isAllBlank(packet.sourceComponent) ? ITextComponent.Serializer.jsonToComponent(packet.sourceComponent) : null,
 				EagRuntime.steadyTimeMillis(), packet.originalTimestampSec * 1000l, packet.silent, packet.priority,
 				getIcon(packet.mainIconUUIDMost, packet.mainIconUUIDLeast),
 				getIcon(packet.titleIconUUIDMost, packet.titleIconUUIDLeast), packet.hideAfterSec, packet.expireAfterSec,

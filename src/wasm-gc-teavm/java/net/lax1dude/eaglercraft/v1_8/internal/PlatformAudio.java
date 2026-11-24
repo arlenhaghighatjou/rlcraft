@@ -48,7 +48,7 @@ import net.lax1dude.eaglercraft.v1_8.internal.wasm_gc_teavm.JOrbisAudioBufferDec
 import net.lax1dude.eaglercraft.v1_8.internal.wasm_gc_teavm.WASMGCClientConfigAdapter;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 
 public class PlatformAudio {
 

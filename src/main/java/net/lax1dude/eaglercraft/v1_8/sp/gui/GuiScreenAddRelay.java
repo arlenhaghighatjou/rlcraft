@@ -57,8 +57,8 @@ public class GuiScreenAddRelay extends GuiScreen {
 		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + 12 + sslOff, I18n.format("addRelay.add")));
 		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + 12 + sslOff, I18n.format("gui.cancel")));
 		this.buttonList.add(new GuiButton(2, this.width / 2 - 100, 142, I18n.format("addRelay.primary") + ": " + (this.parentGui.addNewPrimary ? I18n.format("gui.yes") : I18n.format("gui.no"))));
-		this.serverName = new GuiTextField(3, this.fontRendererObj, this.width / 2 - 100, 106, 200, 20);
-		this.serverAddress = new GuiTextField(4, this.fontRendererObj, this.width / 2 - 100, 66, 200, 20);
+		this.serverName = new GuiTextField(3, this.fontRenderer, this.width / 2 - 100, 106, 200, 20);
+		this.serverAddress = new GuiTextField(4, this.fontRenderer, this.width / 2 - 100, 66, 200, 20);
 		this.serverAddress.setMaxStringLength(128);
 		this.serverAddress.setFocused(true);
 		((GuiButton) this.buttonList.get(0)).enabled = this.serverAddress.getText().length() > 0 && this.serverAddress.getText().split(":").length > 0 && this.serverName.getText().length() > 0;
@@ -130,12 +130,12 @@ public class GuiScreenAddRelay extends GuiScreen {
 	 */
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawBackground(0);
-		this.drawCenteredString(this.fontRendererObj, I18n.format("addRelay.title"), this.width / 2, 17, 16777215);
-		this.drawString(this.fontRendererObj, I18n.format("addRelay.address"), this.width / 2 - 100, 53, 10526880);
-		this.drawString(this.fontRendererObj, I18n.format("addRelay.name"), this.width / 2 - 100, 94, 10526880);
+		this.drawCenteredString(this.fontRenderer, I18n.format("addRelay.title"), this.width / 2, 17, 16777215);
+		this.drawString(this.fontRenderer, I18n.format("addRelay.address"), this.width / 2 - 100, 53, 10526880);
+		this.drawString(this.fontRenderer, I18n.format("addRelay.name"), this.width / 2 - 100, 94, 10526880);
 		if(EagRuntime.requireSSL()) {
-			this.drawCenteredString(this.fontRendererObj, I18n.format("addServer.SSLWarn1"), this.width / 2, 169, 0xccccff);
-			this.drawCenteredString(this.fontRendererObj, I18n.format("addServer.SSLWarn2"), this.width / 2, 181, 0xccccff);
+			this.drawCenteredString(this.fontRenderer, I18n.format("addServer.SSLWarn1"), this.width / 2, 169, 0xccccff);
+			this.drawCenteredString(this.fontRenderer, I18n.format("addServer.SSLWarn2"), this.width / 2, 181, 0xccccff);
 		}
 		this.serverName.drawTextBox();
 		this.serverAddress.drawTextBox();

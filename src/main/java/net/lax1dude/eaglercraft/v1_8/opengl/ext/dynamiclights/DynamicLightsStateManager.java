@@ -26,9 +26,9 @@ import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import net.lax1dude.eaglercraft.v1_8.opengl.FixedFunctionPipeline;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
-import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 
 public class DynamicLightsStateManager {
 
@@ -60,7 +60,7 @@ public class DynamicLightsStateManager {
 		maxListLengthTracker = 0;
 	}
 
-	public static void bindAcceleratedEffectRenderer(EffectRenderer renderer) {
+	public static void bindAcceleratedEffectRenderer(ParticleManager renderer) {
 		renderer.acceleratedParticleRenderer = accelParticleRenderer;
 	}
 

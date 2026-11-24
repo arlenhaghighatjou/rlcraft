@@ -52,7 +52,7 @@ public class GuiVoiceOverlay extends Gui {
 	private static final ResourceLocation voiceGuiIcons = new ResourceLocation("eagler:gui/eagler_gui.png");
 
 	public void drawOverlay() {
-		if(mc.theWorld != null && VoiceClientController.getVoiceStatus() == EnumVoiceChannelStatus.CONNECTED && VoiceClientController.getVoiceChannel() != EnumVoiceChannelType.NONE &&
+		if(mc.world != null && VoiceClientController.getVoiceStatus() == EnumVoiceChannelStatus.CONNECTED && VoiceClientController.getVoiceChannel() != EnumVoiceChannelType.NONE &&
 				!(mc.currentScreen != null && (mc.currentScreen instanceof GuiIngameMenu))) {
 			
 			if(mc.currentScreen != null && mc.currentScreen.doesGuiPauseGame()) {
@@ -67,7 +67,7 @@ public class GuiVoiceOverlay extends Gui {
 			
 			if(mc.currentScreen == null || (mc.currentScreen instanceof GuiChat)) {
 				GlStateManager.translate(width / 2 + 77, height - 56, 0.0f);
-				if(mc.thePlayer == null || mc.thePlayer.capabilities.isCreativeMode) {
+				if(mc.player == null || mc.player.capabilities.isCreativeMode) {
 					GlStateManager.translate(0.0f, 16.0f, 0.0f);
 				}
 			}else {
@@ -77,7 +77,7 @@ public class GuiVoiceOverlay extends Gui {
 			GlStateManager.scale(0.75f, 0.75f, 0.75f);
 			
 			String txxt = "press '" + Keyboard.getKeyName(mc.gameSettings.voicePTTKey) + "'";
-			drawString(mc.fontRendererObj, txxt, -3 - mc.fontRendererObj.getStringWidth(txxt), 9, 0xDDDDDD);
+			drawString(mc.fontRenderer, txxt, -3 - mc.fontRenderer.getStringWidth(txxt), 9, 0xDDDDDD);
 
 			GlStateManager.scale(0.66f, 0.66f, 0.66f);
 			
@@ -153,7 +153,7 @@ public class GuiVoiceOverlay extends Gui {
 					for(int i = 0, l = listenerList.size(); i < l && i < 5; ++i) {
 						String txt = VoiceClientController.getVoiceUsername(listenerList.get(i));
 						listenerListStr.add(txt);
-						int j = mc.fontRendererObj.getStringWidth(txt) + 4;
+						int j = mc.fontRenderer.getStringWidth(txt) + 4;
 						if(j > left) {
 							left = j;
 						}
@@ -163,7 +163,7 @@ public class GuiVoiceOverlay extends Gui {
 						GlStateManager.pushMatrix();
 						GlStateManager.translate(ww - left + 3, hh - 10, left);
 						GlStateManager.scale(0.75f, 0.75f, 0.75f);
-						drawString(mc.fontRendererObj, "(" + more + " more)", 0, 0, 0xBBBBBB);
+						drawString(mc.fontRenderer, "(" + more + " more)", 0, 0, 0xBBBBBB);
 						GlStateManager.popMatrix();
 						hh -= 9;
 					}
@@ -172,7 +172,7 @@ public class GuiVoiceOverlay extends Gui {
 						boolean speaking = speakers.contains(listenerList.get(i));
 						float speakf = speaking ? 1.0f : 0.75f;
 						
-						drawString(mc.fontRendererObj, listenerListStr.get(i), ww - left, hh - 13 - i * 11, speaking ? 0xEEEEEE : 0xBBBBBB);
+						drawString(mc.fontRenderer, listenerListStr.get(i), ww - left, hh - 13 - i * 11, speaking ? 0xEEEEEE : 0xBBBBBB);
 						
 						mc.getTextureManager().bindTexture(voiceGuiIcons);
 						
@@ -217,7 +217,7 @@ public class GuiVoiceOverlay extends Gui {
 				for(int i = 0, l = listenerList.size(); i < l && i < 5; ++i) {
 					String txt = VoiceClientController.getVoiceUsername(listenerList.get(i));
 					listenerListStr.add(txt);
-					int j = mc.fontRendererObj.getStringWidth(txt) + 4;
+					int j = mc.fontRenderer.getStringWidth(txt) + 4;
 					if(j > left) {
 						left = j;
 					}
@@ -227,13 +227,13 @@ public class GuiVoiceOverlay extends Gui {
 					GlStateManager.pushMatrix();
 					GlStateManager.translate(ww - left + 3, hh - 10, left);
 					GlStateManager.scale(0.75f, 0.75f, 0.75f);
-					drawString(mc.fontRendererObj, "(" + more + " more)", 0, 0, 0xBBBBBB);
+					drawString(mc.fontRenderer, "(" + more + " more)", 0, 0, 0xBBBBBB);
 					GlStateManager.popMatrix();
 					hh -= 9;
 				}
 				
 				for(int i = 0, l = listenerList.size(); i < l && i < 5; ++i) {
-					drawString(mc.fontRendererObj, listenerListStr.get(i), ww - left, hh - 13 - i * 11, 0xEEEEEE);
+					drawString(mc.fontRenderer, listenerListStr.get(i), ww - left, hh - 13 - i * 11, 0xEEEEEE);
 					
 					mc.getTextureManager().bindTexture(voiceGuiIcons);
 					
