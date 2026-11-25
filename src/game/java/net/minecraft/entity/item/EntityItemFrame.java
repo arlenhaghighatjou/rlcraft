@@ -264,6 +264,11 @@ public class EntityItemFrame extends EntityHanging
             {
                 if (!itemstack.isEmpty())
                 {
+                    if (framevoidpatch.core.FrameVoidPatch.shouldCancelInteract(this))
+                    {
+                        return false;
+                    }
+
                     this.setDisplayedItem(itemstack);
 
                     if (!player.capabilities.isCreativeMode)
