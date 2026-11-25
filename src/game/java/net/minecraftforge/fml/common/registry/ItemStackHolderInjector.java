@@ -19,17 +19,13 @@
 
 package net.minecraftforge.fml.common.registry;
 
-import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.function.Consumer;
 
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
-import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public enum ItemStackHolderInjector
 {
@@ -39,58 +35,14 @@ public enum ItemStackHolderInjector
 
     public void inject() {
         FMLLog.log.info("Injecting itemstacks");
-        for (ItemStackHolderRef ishr: itemStackHolders) {
-            ishr.apply();
+        for (int i = 0, l = itemStackHolders.size(); i < l; ++i) {
+            itemStackHolders.get(i).apply();
         }
         FMLLog.log.info("Itemstack injection complete");
     }
 
-    public void findHolders(ASMDataTable table) {
-        FMLLog.log.info("Identifying ItemStackHolder annotations");
-        Set<ASMData> allItemStackHolders = table.getAll(GameRegistry.ItemStackHolder.class.getName());
-        Map<String, Class<?>> classCache = Maps.newHashMap();
-        for (ASMData data : allItemStackHolders)
-        {
-            String className = data.getClassName();
-            String annotationTarget = data.getObjectName();
-            String value = (String) data.getAnnotationInfo().get("value");
-            int meta = data.getAnnotationInfo().containsKey("meta") ? (Integer) data.getAnnotationInfo().get("meta") : 0;
-            String nbt = data.getAnnotationInfo().containsKey("nbt") ? (String) data.getAnnotationInfo().get("nbt") : "";
-            addHolder(classCache, className, annotationTarget, value, meta, nbt);
-        }
-        FMLLog.log.info("Found {} ItemStackHolder annotations", allItemStackHolders.size());
-
-    }
-
-    private void addHolder(Map<String, Class<?>> classCache, String className, String annotationTarget, String value, Integer meta, String nbt)
+    public void register(String itemName, int meta, String nbt, Consumer<ItemStack> setter)
     {
-        Class<?> clazz;
-        if (classCache.containsKey(className))
-        {
-            clazz = classCache.get(className);
-        }
-        else
-        {
-            try
-            {
-                clazz = Class.forName(className, true, getClass().getClassLoader());
-                classCache.put(className, clazz);
-            }
-            catch (ClassNotFoundException ex)
-            {
-                // unpossible?
-                throw new RuntimeException(ex);
-            }
-        }
-        try
-        {
-            Field f = clazz.getField(annotationTarget);
-            itemStackHolders.add(new ItemStackHolderRef(f, value, meta, nbt));
-        }
-        catch (NoSuchFieldException ex)
-        {
-            // unpossible?
-            throw new RuntimeException(ex);
-        }
+        itemStackHolders.add(new ItemStackHolderRef(itemName, meta, nbt, setter));
     }
 }
