@@ -4,7 +4,7 @@ import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import java.util.ArrayDeque;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -48,7 +48,7 @@ public class ParticleManager
     public IAcceleratedParticleEngine acceleratedParticleRenderer = null;
     private static final ResourceLocation PARTICLE_TEXTURES = new ResourceLocation("textures/particle/particles.png");
     protected World world;
-    private final ArrayDeque<Particle>[][] fxLayers = new ArrayDeque[4][];
+    private final List<Particle>[][] fxLayers = new List[4][];
     private final Queue<ParticleEmitter> particleEmitters = new ArrayDeque<>();
     private final TextureManager renderer;
     private final EaglercraftRandom rand = new EaglercraftRandom();
@@ -62,11 +62,11 @@ public class ParticleManager
 
         for (int i = 0; i < 4; ++i)
         {
-            this.fxLayers[i] = new ArrayDeque[2];
+            this.fxLayers[i] = new List[2];
 
             for (int j = 0; j < 2; ++j)
             {
-                this.fxLayers[i][j] = new ArrayDeque<>();
+                this.fxLayers[i][j] = new ArrayList<>();
             }
         }
 
@@ -199,7 +199,7 @@ public class ParticleManager
 
                 if (this.fxLayers[j][k].size() >= 16384)
                 {
-                    this.fxLayers[j][k].removeFirst();
+                    this.fxLayers[j][k].remove(0);
                 }
 
                 this.fxLayers[j][k].add(particle);
@@ -221,21 +221,16 @@ public class ParticleManager
         this.world.profiler.endSection();
     }
 
-    private void tickParticleList(Queue<Particle> p_187240_1_)
+    private void tickParticleList(List<Particle> p_187240_1_)
     {
-        if (!p_187240_1_.isEmpty())
+        for (int i = 0; i < p_187240_1_.size(); ++i)
         {
-            Iterator<Particle> iterator = p_187240_1_.iterator();
+            Particle particle = p_187240_1_.get(i);
+            this.tickParticle(particle);
 
-            while (iterator.hasNext())
+            if (!particle.isAlive())
             {
-                Particle particle = iterator.next();
-                this.tickParticle(particle);
-
-                if (!particle.isAlive())
-                {
-                    iterator.remove();
-                }
+                p_187240_1_.remove(i--);
             }
         }
     }
@@ -374,8 +369,11 @@ public class ParticleManager
                         this.acceleratedParticleRenderer.begin(partialTicks);
                     }
 
-                    for (final Particle particle : this.fxLayers[i][j])
+                    List<Particle> particleList = this.fxLayers[i][j];
+
+                    for (int index = 0; index < particleList.size(); ++index)
                     {
+                        final Particle particle = particleList.get(index);
                         try
                         {
                             if (this.acceleratedParticleRenderer == null || !particle.renderAccelerated(this.acceleratedParticleRenderer, entityIn, partialTicks, f, f4, f1, f2, f3))
@@ -450,15 +448,16 @@ public class ParticleManager
 
         for (int i = 0; i < 2; ++i)
         {
-            Queue<Particle> queue = this.fxLayers[3][i];
+            List<Particle> queue = this.fxLayers[3][i];
 
             if (!queue.isEmpty())
             {
                 Tessellator tessellator = Tessellator.getInstance();
                 WorldRenderer bufferbuilder = tessellator.getBuffer();
 
-                for (Particle particle : queue)
+                for (int index = 0; index < queue.size(); ++index)
                 {
+                    Particle particle = queue.get(index);
                     particle.renderParticle(bufferbuilder, entityIn, partialTick, f1, f5, f2, f3, f4);
                 }
             }
