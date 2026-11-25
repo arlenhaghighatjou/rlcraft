@@ -22,7 +22,7 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 public class EntityDataManager
 {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Map < Class <? extends Entity > , Integer > NEXT_ID_MAP = Maps. < Class <? extends Entity > , Integer > newHashMap();
+    private static final Map < Class <? extends Entity > , Integer > KEY_COUNT = Maps. < Class <? extends Entity > , Integer > newHashMap();
     private final Entity entity;
     private final Map < Integer, EntityDataManager.DataEntry<? >> entries = Maps. < Integer, EntityDataManager.DataEntry<? >> newHashMap();
     private boolean empty = true;
@@ -35,40 +35,36 @@ public class EntityDataManager
 
     public static <T> DataParameter<T> createKey(Class <? extends Entity > clazz, DataSerializer<T> serializer)
     {
-        int j;
+        Integer count = KEY_COUNT.get(clazz);
+        int index = count == null ? 0 : count.intValue();
+        KEY_COUNT.put(clazz, Integer.valueOf(index + 1));
+        DataParameter<T> key = serializer.createKey(-1);
+        key.bind(clazz, index);
+        return key;
+    }
 
-        if (NEXT_ID_MAP.containsKey(clazz))
-        {
-            j = ((Integer)NEXT_ID_MAP.get(clazz)).intValue() + 1;
-        }
-        else
-        {
-            int i = 0;
-            Class<?> oclass1 = clazz;
+    static int resolveId(Class <? extends Entity > owner, int index)
+    {
+        int id = index;
+        Class<?> oclass = owner;
 
-            while (oclass1 != Entity.class)
+        while (oclass != Entity.class)
+        {
+            oclass = oclass.getSuperclass();
+            Integer count = KEY_COUNT.get(oclass);
+
+            if (count != null)
             {
-                oclass1 = oclass1.getSuperclass();
-
-                if (NEXT_ID_MAP.containsKey(oclass1))
-                {
-                    i = ((Integer)NEXT_ID_MAP.get(oclass1)).intValue() + 1;
-                    break;
-                }
+                id += count.intValue();
             }
-
-            j = i;
         }
 
-        if (j > 254)
+        if (id > 254)
         {
-            throw new IllegalArgumentException("Data value id is too big with " + j + "! (Max is " + 254 + ")");
+            throw new IllegalArgumentException("Data value id is too big with " + id + "! (Max is " + 254 + ")");
         }
-        else
-        {
-            NEXT_ID_MAP.put(clazz, Integer.valueOf(j));
-            return serializer.createKey(j);
-        }
+
+        return id;
     }
 
     public <T> void register(DataParameter<T> key, T value)
