@@ -1,9 +1,9 @@
 package com.realgecko.xpfromharvest;
 
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(
@@ -19,37 +19,46 @@ public class XPFromHarvest {
    private BlockBreakHandler blockBreakHandler;
    private SimpleHarvestHandler simpleHarvestHandler;
    private CuriosityHandler curiosityHandler;
-   @Instance("xpfromharvest")
    public static XPFromHarvest instance;
 
    public XPFromHarvest() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         com.realgecko.xpfromharvest.ModConfig.register();
+         com.realgecko.xpfromharvest.ModConfig.EventHandler.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       this.blockBreakHandler = new BlockBreakHandler();
       this.simpleHarvestHandler = new SimpleHarvestHandler();
       this.curiosityHandler = new CuriosityHandler();
-      MinecraftForge.EVENT_BUS.register(this.blockBreakHandler);
+      this.blockBreakHandler.register(MinecraftForge.EVENT_BUS);
       if (ModConfig.simpleHarvest) {
-         MinecraftForge.EVENT_BUS.register(this.simpleHarvestHandler);
+         this.simpleHarvestHandler.register(MinecraftForge.EVENT_BUS);
       }
 
       if (ModConfig.curiosity) {
-         MinecraftForge.EVENT_BUS.register(this.curiosityHandler);
+         this.curiosityHandler.register(MinecraftForge.EVENT_BUS);
       }
 
    }
 
    public void ConfigUpdated() {
       if (ModConfig.simpleHarvest) {
-         MinecraftForge.EVENT_BUS.register(this.simpleHarvestHandler);
+         this.simpleHarvestHandler.register(MinecraftForge.EVENT_BUS);
       } else {
          MinecraftForge.EVENT_BUS.unregister(this.simpleHarvestHandler);
       }
 
       if (ModConfig.curiosity) {
-         MinecraftForge.EVENT_BUS.register(this.curiosityHandler);
+         this.curiosityHandler.register(MinecraftForge.EVENT_BUS);
       } else {
          MinecraftForge.EVENT_BUS.unregister(this.curiosityHandler);
       }

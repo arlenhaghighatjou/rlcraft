@@ -1,5 +1,6 @@
 package com.realgecko.xpfromharvest;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.Arrays;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
@@ -14,15 +15,15 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SimpleHarvestHandler {
    public SimpleHarvestHandler() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(RightClickBlock.class, EventPriority.HIGHEST, false, this::handleRightClick);
+   }
+
    public void handleRightClick(RightClickBlock event) {
       if (event.getWorld() instanceof WorldServer) {
          World world = event.getWorld();

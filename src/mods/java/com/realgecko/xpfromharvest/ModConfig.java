@@ -1,5 +1,7 @@
 package com.realgecko.xpfromharvest;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraftforge.common.config.ConfigEntry;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Config.Comment;
@@ -7,8 +9,6 @@ import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.common.config.Config.RangeInt;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Config(
    modid = "xpfromharvest"
@@ -40,12 +40,14 @@ public class ModConfig {
    public ModConfig() {
    }
 
-   @EventBusSubscriber
-   private static class EventHandler {
+   public static class EventHandler {
       private EventHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.register(OnConfigChangedEvent.class, EventHandler::onConfigChanged);
+      }
+
       public static void onConfigChanged(OnConfigChangedEvent event) {
          if (event.getModID().equals("xpfromharvest")) {
             ConfigManager.sync("xpfromharvest", Type.INSTANCE);
@@ -53,5 +55,14 @@ public class ModConfig {
          }
 
       }
+   }
+
+   public static void register() {
+      ConfigManager.register("xpfromharvest", "", "general", null,
+         ConfigEntry.value("Chance", int.class, () -> ModConfig.chance, v -> ModConfig.chance = (Integer)v).comment("Chance in % of XP orb spawning after harvest done").langKey("xpfromharvest.general.chance").range(1, 100),
+         ConfigEntry.value("XP Amount", int.class, () -> ModConfig.xpAmount, v -> ModConfig.xpAmount = (Integer)v).comment("Amount of XP given").langKey("xpfromharvest.general.xpamount").range(1, Integer.MAX_VALUE),
+         ConfigEntry.value("Simple Harvest", boolean.class, () -> ModConfig.simpleHarvest, v -> ModConfig.simpleHarvest = (Boolean)v).comment("Enable simple harvesting and replanting with right click").langKey("xpfromharvest.general.simpleharvest"),
+         ConfigEntry.value("Crops List", String[].class, () -> ModConfig.crops, v -> ModConfig.crops = (String[])v).comment("List of crops to process with their ages").langKey("xpfromharvest.general.crops"),
+         ConfigEntry.value("Curiosity", boolean.class, () -> ModConfig.curiosity, v -> ModConfig.curiosity = (Boolean)v).comment("Curiosity Mode: sneak + right click with on block to get info in chat").langKey("xpfromharvest.general.curiosity"));
    }
 }
