@@ -1,10 +1,6 @@
 package bl4ckscor3.mod.sit;
 
-import blusunrize.immersiveengineering.common.blocks.BlockIESlab;
-import com.elytradev.architecture.common.block.BlockShape;
-import com.elytradev.architecture.common.shape.Shape;
-import com.elytradev.architecture.common.tile.TileShape;
-import java.util.Arrays;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockSlab;
@@ -15,7 +11,6 @@ import net.minecraft.block.BlockStairs.EnumHalf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -23,18 +18,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@EventBusSubscriber(
-   modid = "sit"
-)
 public class SitHandler {
    public SitHandler() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(RightClickBlock.class, SitHandler::onRightClickBlock);
+      bus.register(BreakEvent.class, SitHandler::onBreak);
+      bus.register(EntityMountEvent.class, SitHandler::onEntityMount);
+   }
+
    public static void onRightClickBlock(RightClickBlock event) {
       if (!event.getWorld().isRemote && event.getFace() == EnumFacing.UP && !SitUtil.isPlayerSitting(event.getEntityPlayer())) {
          World world = event.getWorld();
@@ -66,7 +60,6 @@ public class SitHandler {
 
    }
 
-   @SubscribeEvent
    public static void onBreak(BreakEvent event) {
       if (!event.getWorld().isRemote) {
          EntitySit entity = SitUtil.getSitEntity(event.getWorld(), event.getPos());
@@ -77,7 +70,6 @@ public class SitHandler {
 
    }
 
-   @SubscribeEvent
    public static void onEntityMount(EntityMountEvent event) {
       if (!event.getWorldObj().isRemote && event.isDismounting()) {
          Entity entity = event.getEntityBeingMounted();
@@ -89,7 +81,7 @@ public class SitHandler {
    }
 
    private static boolean isValidBlock(World world, BlockPos pos, IBlockState state, Block block) {
-      boolean isValid = block instanceof BlockSlab || block instanceof BlockStairs || isModBlock(world, pos, block);
+      boolean isValid = block instanceof BlockSlab || block instanceof BlockStairs;
       if (!isValid && block instanceof BlockBed) {
          state = world.getBlockState(pos.offset(state.getValue(BlockBed.PART) == EnumPartType.HEAD ? ((EnumFacing)state.getValue(BlockBed.FACING)).getOpposite() : (EnumFacing)state.getValue(BlockBed.FACING)));
          if (!(state.getBlock() instanceof BlockBed)) {
@@ -98,21 +90,6 @@ public class SitHandler {
       }
 
       return isValid;
-   }
-
-   private static boolean isModBlock(World world, BlockPos pos, Block block) {
-      if (Loader.isModLoaded("immersiveengineering") && block instanceof BlockIESlab) {
-         return true;
-      } else {
-         if (Loader.isModLoaded("architecturecraft") && block instanceof BlockShape) {
-            TileEntity te = world.getTileEntity(pos);
-            if (te instanceof TileShape) {
-               return Arrays.asList(Shape.SLAB, Shape.STAIRS, Shape.STAIRS_INNER_CORNER, Shape.STAIRS_OUTER_CORNER).contains(((TileShape)te).getShape());
-            }
-         }
-
-         return false;
-      }
    }
 
    private static boolean isPlayerInRange(EntityPlayer player, BlockPos pos) {

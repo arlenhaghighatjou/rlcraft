@@ -1,11 +1,12 @@
 package bl4ckscor3.mod.sit;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import java.util.Arrays;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModMetadata;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -21,13 +22,23 @@ public class Sit {
    public static final String NAME = "Sit";
    public static final String VERSION = "v1.3";
    public static final String MC_VERSION = "1.12.2";
-   @Instance("sit")
-   public Sit instance;
 
    public Sit() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         Configuration.register();
+         Configuration.register(MinecraftForge.EVENT_BUS);
+         SitHandler.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       ModMetadata meta = event.getModMetadata();
       meta.authorList = Arrays.asList("bl4ckscor3");
@@ -38,8 +49,7 @@ public class Sit {
       meta.version = "v1.3";
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
-      EntityRegistry.registerModEntity(new ResourceLocation("sit", "entity_sit"), EntitySit.class, "entity_sit", 0, this.instance, 256, 20, false);
+      EntityRegistry.registerModEntity(new ResourceLocation("sit", "entity_sit"), EntitySit.class, "entity_sit", 0, this, 256, 20, false, EntitySit::new);
    }
 }
