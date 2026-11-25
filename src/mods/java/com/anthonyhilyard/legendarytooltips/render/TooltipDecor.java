@@ -8,6 +8,7 @@ import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.texture.SimpleTexture;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -111,8 +112,9 @@ public class TooltipDecor {
       if (frameLevel < 16 && frameLevel >= 0) {
          Minecraft mc = Minecraft.getMinecraft();
          mc.getTextureManager().bindTexture(TEXTURE_TOOLTIP_BORDERS);
-         int textureWidth = GlStateManager.glGetTexLevelParameteri(3553, 0, 4096);
-         int textureHeight = GlStateManager.glGetTexLevelParameteri(3553, 0, 4097);
+         SimpleTexture borderTexture = (SimpleTexture)mc.getTextureManager().getTexture(TEXTURE_TOOLTIP_BORDERS);
+         int textureWidth = borderTexture.getWidth();
+         int textureHeight = borderTexture.getHeight();
          if (LegendaryTooltipsConfig.INSTANCE.shineEffect) {
             if (!shineTimers.containsKey(Integer.valueOf(index))) {
                shineTimers.put(Integer.valueOf(index), Integer.valueOf(LegendaryTooltipsConfig.INSTANCE.shineTicks));

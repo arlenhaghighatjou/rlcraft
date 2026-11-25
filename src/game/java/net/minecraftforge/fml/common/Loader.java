@@ -214,6 +214,7 @@ public class Loader
         mods.add(new FMLModContainer<>("custommainmenu", "Custom Main Menu", "2.0.9.1", "", "[1.12.2]", "custommainmenu", lumien.custommainmenu.CustomMainMenu::new, lumien.custommainmenu.CustomMainMenu::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("trumpetskeleton", "Trumpet Skeleton", "1.12-1.0.2.1", "required-after:forge@[14.21.1.2387,)", "[1.12,1.13)", "trumpetskeleton", com.jamieswhiteshirt.trumpetskeleton.TrumpetSkeleton::new, com.jamieswhiteshirt.trumpetskeleton.TrumpetSkeleton::handleModStateEvent));
         mods.add(new FMLModContainer<>("playerbosses", "playerbosses", "1.0", "", "[1.12.2]", "examplemod", com.lothrazar.playerbosses.ModBosses::new, com.lothrazar.playerbosses.ModBosses::handleModStateEvent));
+        mods.add(new FMLModContainer<>("legendarytooltips", "Legendary Tooltips", "1.1.9", "", "[1.12.2]", "legendarytooltips", com.anthonyhilyard.legendarytooltips.LegendaryTooltips::new, com.anthonyhilyard.legendarytooltips.LegendaryTooltips::handleModStateEvent).clientSideOnly());
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }

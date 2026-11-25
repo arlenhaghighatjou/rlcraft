@@ -1,9 +1,9 @@
 package com.anthonyhilyard.legendarytooltips;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.anthonyhilyard.legendarytooltips.util.Selectors;
 import com.anthonyhilyard.legendarytooltips.util.TextColor;
-import java.io.File;
-import java.lang.reflect.Field;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,14 +22,8 @@ import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@EventBusSubscriber(
-   modid = "legendarytooltips",
-   value = {Side.CLIENT}
-)
 public class LegendaryTooltipsConfig extends Configuration {
    public static LegendaryTooltipsConfig INSTANCE;
    public static final String DEFAULT_START_COLOR = "#FF996922";
@@ -49,27 +43,20 @@ public class LegendaryTooltipsConfig extends Configuration {
    private String[] bgColors = new String[16];
    private final transient Map<ItemStack, Integer> frameLevelCache = new HashMap();
 
-   public static void loadConfig(File file) {
+   public static void loadConfig(VFile2 file) {
       INSTANCE = new LegendaryTooltipsConfig(file);
    }
 
-   private LegendaryTooltipsConfig(File file) {
+   private LegendaryTooltipsConfig(VFile2 file) {
       super(file);
       this.load();
 
-      try {
-         Field categoriesField = Configuration.class.getDeclaredField("categories");
-         categoriesField.setAccessible(true);
-         Map<String, ConfigCategory> categories = new LinkedHashMap();
-         categories.put("visual_options", this.getCategory("visual_options"));
-         categories.put("definitions", this.getCategory("definitions"));
-         categories.put("priorities", this.getCategory("priorities"));
-         categories.put("colors", this.getCategory("colors"));
-         categoriesField.set(this, categories);
-      } catch (Exception var4) {
-         Loader.LOGGER.error(var4);
-      }
-
+      Map<String, ConfigCategory> ordered = new LinkedHashMap();
+      ordered.put("visual_options", this.getCategory("visual_options"));
+      ordered.put("definitions", this.getCategory("definitions"));
+      ordered.put("priorities", this.getCategory("priorities"));
+      ordered.put("colors", this.getCategory("colors"));
+      this.categories = ordered;
       this.getCategory("visual_options").setComment(" Legendary Tooltips Configuration Instructions\n\n *** READ THIS FIRST ***\n\n By default, this mod does not apply special borders to most items.  It was designed to work well with mod packs\n where the available selection of items can vary widely, so it is up to the user or mod pack designer to customize as needed.\n There are many options available for setting up which custom borders (also called frames) apply to which items.  Follow these steps:\n   1. Decide which items you want to have custom borders, and which borders.  Note that each custom border has a number associated with it (starting at 0).\n   2. For each custom border you want to use, fill out the associated list in the \"definitions\" section.  This will be filled out with a list of \"selectors\",\n      each of which tell the mod what items have that border.  Please read the information above the definitions section for specifics.\n   3. Selectors for borders are checked in the order provided in the \"priorities\" section.  Once a match is found, that border is displayed.\n      For example, if border 0 had the selector \"%Diamond\" and border 1 had the selector \"diamond_sword\", they would both match for diamond swords.\n      In this case, whichever border number came first in the priority list would be the border that would get drawn in-game.\n   4. Optionally, border colors associated with custom borders can be set in the \"colors\" section.  The start color is the color at the top of the tooltip,\n      and the end color is the bottom, with a smooth transition between.  Please read the information above the color section for specifics.");
       this.getCategory("definitions").setPropertyOrder((List)IntStream.rangeClosed(0, 15).boxed().map((x) -> {
          return String.format("level%d_entries", x);
@@ -116,7 +103,7 @@ public class LegendaryTooltipsConfig extends Configuration {
             if (i < this.framePriorities.size()) {
                int frameIndex = ((Integer)this.framePriorities.get(i)).intValue();
                if (frameIndex < this.itemSelectors.size()) {
-                  for(String entry : (List)this.itemSelectors.get(frameIndex)) {
+                  for(String entry : (List<String>)this.itemSelectors.get(frameIndex)) {
                      if (Selectors.itemMatches(item, entry)) {
                         this.frameLevelCache.put(item, Integer.valueOf(frameIndex));
                         return frameIndex;
@@ -131,7 +118,10 @@ public class LegendaryTooltipsConfig extends Configuration {
       }
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, LegendaryTooltipsConfig::onLoad);
+   }
+
    public static void onLoad(OnConfigChangedEvent e) {
       if (e.getModID().equals("legendarytooltips")) {
          ConfigManager.sync("legendarytooltips", Type.INSTANCE);
