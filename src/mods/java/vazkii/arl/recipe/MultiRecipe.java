@@ -23,7 +23,7 @@ public class MultiRecipe extends ModRecipe {
    }
 
    public boolean matches(@Nonnull InventoryCrafting inv, @Nonnull World worldIn) {
-      this.matched.set((Object)null);
+      this.matched.set(null);
 
       for(IRecipe recipe : this.subRecipes) {
          if (recipe.matches(inv, worldIn)) {

@@ -1,5 +1,6 @@
 package vazkii.arl.util;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.concurrent.Callable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -17,8 +18,6 @@ import net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent.Pre;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
@@ -26,10 +25,6 @@ import vazkii.arl.interf.IDropInItem;
 import vazkii.arl.network.NetworkHandler;
 import vazkii.arl.network.message.MessageDropIn;
 
-@EventBusSubscriber(
-   value = {Side.CLIENT},
-   modid = "autoreglib"
-)
 public final class DropInHandler {
    public DropInHandler() {
    }
@@ -38,7 +33,11 @@ public final class DropInHandler {
       CapabilityManager.INSTANCE.register(IDropInItem.class, DropInHandler.CapabilityFactory.INSTANCE, DropInHandler.CapabilityFactory.INSTANCE);
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(Post.class, DropInHandler::onDrawScreen);
+      bus.register(Pre.class, DropInHandler::onRightClick);
+   }
+
    @SideOnly(Side.CLIENT)
    public static void onDrawScreen(Post event) {
       Minecraft mc = Minecraft.getMinecraft();
@@ -71,7 +70,6 @@ public final class DropInHandler {
 
    }
 
-   @SubscribeEvent
    @SideOnly(Side.CLIENT)
    public static void onRightClick(Pre event) {
       Minecraft mc = Minecraft.getMinecraft();

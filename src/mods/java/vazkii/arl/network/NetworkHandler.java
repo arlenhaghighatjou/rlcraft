@@ -1,5 +1,6 @@
 package vazkii.arl.network;
 
+import java.util.function.Supplier;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -12,11 +13,11 @@ public class NetworkHandler {
    public NetworkHandler() {
    }
 
-   public static <T extends NetworkMessage<T>> void register(Class<T> clazz, Side handlerSide) {
-      INSTANCE.registerMessage(clazz, clazz, i++, handlerSide);
+   public static <T extends NetworkMessage<T>> void register(Class<T> clazz, Supplier<T> factory, Side handlerSide) {
+      INSTANCE.registerMessage(factory.get(), clazz, factory, i++, handlerSide);
    }
 
    public static void initARLMessages() {
-      register(MessageDropIn.class, Side.SERVER);
+      register(MessageDropIn.class, MessageDropIn::new, Side.SERVER);
    }
 }

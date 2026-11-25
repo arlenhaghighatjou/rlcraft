@@ -24,7 +24,7 @@ public abstract class BlockMetaVariants<T extends Enum<T> & IStringSerializable>
       super(name, materialIn, asVariantArray(variantsEnum));
       this.variantsEnum = variantsEnum;
       this.variantProp = temporaryVariantProp;
-      this.setDefaultState(this.blockState.getBaseState().withProperty(this.variantProp, ((Enum[])variantsEnum.getEnumConstants())[0]));
+      this.setDefaultState(this.blockState.getBaseState().withProperty(this.variantProp, variantsEnum.getEnumConstants()[0]));
       this.setUnlocalizedName(name);
    }
 
@@ -47,7 +47,7 @@ public abstract class BlockMetaVariants<T extends Enum<T> & IStringSerializable>
          meta = 0;
       }
 
-      return this.getDefaultState().withProperty(this.variantProp, ((Enum[])this.variantsEnum.getEnumConstants())[meta]);
+      return this.getDefaultState().withProperty(this.variantProp, this.variantsEnum.getEnumConstants()[meta]);
    }
 
    public int damageDropped(IBlockState state) {

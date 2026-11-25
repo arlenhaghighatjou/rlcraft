@@ -1,5 +1,6 @@
 package vazkii.arl.util;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
@@ -18,8 +19,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.ColorHandlerEvent.Item;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import vazkii.arl.interf.IBlockColorProvider;
@@ -30,17 +29,18 @@ import vazkii.arl.interf.IVariantHolder;
 import vazkii.arl.item.ItemMod;
 
 @SideOnly(Side.CLIENT)
-@EventBusSubscriber(
-   value = {Side.CLIENT},
-   modid = "autoreglib"
-)
 public final class ModelHandler {
    public static final HashMap<String, ModelResourceLocation> resourceLocations = new HashMap();
 
    public ModelHandler() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, ModelHandler::onRegister);
+      bus.register(Item.class, ModelHandler::onItemColorRegister);
+      bus.register(net.minecraftforge.client.event.ColorHandlerEvent.Block.class, ModelHandler::onBlockColorRegister);
+   }
+
    public static void onRegister(ModelRegistryEvent event) {
       for(IVariantHolder holder : ItemMod.variantHolders) {
          registerModels(holder);
@@ -48,7 +48,6 @@ public final class ModelHandler {
 
    }
 
-   @SubscribeEvent
    public static void onItemColorRegister(Item event) {
       Iterator var1 = ItemMod.variantHolders.iterator();
 
@@ -80,7 +79,6 @@ public final class ModelHandler {
       }
    }
 
-   @SubscribeEvent
    public static void onBlockColorRegister(net.minecraftforge.client.event.ColorHandlerEvent.Block event) {
       Iterator var1 = ItemMod.variantHolders.iterator();
 
@@ -194,7 +192,7 @@ public final class ModelHandler {
    private static <T extends Enum<T> & IStringSerializable> void registerVariantsDefaulted(net.minecraft.item.Item item, Block b, Class<T> enumclazz, String variantHeader) {
       String baseName = ((ResourceLocation)Objects.requireNonNull(b.getRegistryName())).toString();
 
-      for(T e : (Enum[])enumclazz.getEnumConstants()) {
+      for(T e : enumclazz.getEnumConstants()) {
          String variantName = variantHeader + "=" + ((IStringSerializable)e).getName();
          ModelResourceLocation loc = new ModelResourceLocation(baseName, variantName);
          int i = e.ordinal();

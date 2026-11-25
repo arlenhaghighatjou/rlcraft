@@ -1,5 +1,6 @@
 package vazkii.arl.util;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.MultimapBuilder;
 import java.util.HashMap;
@@ -9,15 +10,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import vazkii.arl.interf.IVariantHolder;
 import vazkii.arl.item.ItemMod;
 
-@EventBusSubscriber(
-   modid = "autoreglib"
-)
 public class ProxyRegistry {
    private static Multimap<Class<?>, IForgeRegistryEntry<?>> entries = MultimapBuilder.hashKeys().arrayListValues().build();
    private static HashMap<Block, Item> temporaryItemBlockMap = new HashMap();
@@ -70,7 +66,10 @@ public class ProxyRegistry {
       return new ItemStack(item, size, meta);
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(Register.class, ProxyRegistry::onRegistryEvent);
+   }
+
    public static void onRegistryEvent(Register event) {
       Class<?> type = event.getRegistry().getRegistrySuperType();
       if (entries.containsKey(type)) {

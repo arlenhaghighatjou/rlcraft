@@ -13,7 +13,6 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public final class RenderHelper {
@@ -39,7 +38,7 @@ public final class RenderHelper {
    }
 
    public static void renderTooltip(int x, int y, List<String> tooltipData, int color, int color2) {
-      boolean lighting = GL11.glGetBoolean(2896);
+      boolean lighting = GlStateManager.isLightingEnabled();
       if (lighting) {
          net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
       }

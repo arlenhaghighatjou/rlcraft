@@ -1,9 +1,9 @@
 package vazkii.arl.block.tile;
 
 import javax.annotation.Nonnull;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -51,7 +51,7 @@ public abstract class TileMod extends TileEntity {
       return new SPacketUpdateTileEntity(this.getPos(), this.getBlockMetadata(), cmp);
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity packet) {
       super.onDataPacket(net, packet);
       this.readSharedNBT(packet.getNbtCompound());
    }

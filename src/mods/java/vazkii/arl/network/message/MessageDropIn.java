@@ -1,5 +1,6 @@
 package vazkii.arl.network.message;
 
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -10,6 +11,16 @@ import vazkii.arl.util.DropInHandler;
 public class MessageDropIn extends NetworkMessage<MessageDropIn> {
    public int slot;
    public ItemStack stack;
+
+   public void toBytes(ByteBuf buf) {
+      writeInt(this.slot, buf);
+      writeItemStack(this.stack, buf);
+   }
+
+   public void fromBytes(ByteBuf buf) {
+      this.slot = readInt(buf);
+      this.stack = readItemStack(buf);
+   }
 
    public MessageDropIn() {
       this.stack = ItemStack.EMPTY;

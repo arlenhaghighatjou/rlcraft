@@ -1,5 +1,6 @@
 package vazkii.arl.network;
 
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -11,6 +12,14 @@ public abstract class TileEntityMessage<T extends TileEntity> extends NetworkMes
    public BlockPos pos;
    public transient T tile;
    public transient MessageContext context;
+
+   public void toBytes(ByteBuf buf) {
+      writeBlockPos(this.pos, buf);
+   }
+
+   public void fromBytes(ByteBuf buf) {
+      this.pos = readBlockPos(buf);
+   }
 
    public TileEntityMessage() {
    }
@@ -25,7 +34,7 @@ public abstract class TileEntityMessage<T extends TileEntity> extends NetworkMes
       TileEntity tile = world.getTileEntity(this.pos);
       if (tile != null) {
          try {
-            this.tile = tile;
+            this.tile = (T)tile;
             ((WorldServer)world).addScheduledTask(this.getAction());
          } catch (ClassCastException var5) {
             ;
