@@ -79,7 +79,24 @@ public class ItemFoodBasic extends ItemFood {
       }
 
       stack.shrink(1);
-      return this.returnItem != null ? this.returnItem : stack;
+      if (this.returnItem == null) {
+         return stack;
+      }
+      if (stack.isEmpty()) {
+         return this.returnItem.copy();
+      }
+      if (!world.isRemote) {
+         ItemStack container = this.returnItem.copy();
+         if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entity;
+            if (!player.inventory.addItemStackToInventory(container)) {
+               player.dropItem(container, false);
+            }
+         } else {
+            entity.entityDropItem(container, 0.0F);
+         }
+      }
+      return stack;
    }
 
    public int getMaxItemUseDuration(ItemStack stack) {

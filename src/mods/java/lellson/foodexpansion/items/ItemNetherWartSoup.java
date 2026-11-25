@@ -1,6 +1,7 @@
 package lellson.foodexpansion.items;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -15,12 +16,13 @@ public class ItemNetherWartSoup extends ItemFoodBasic {
 
    public ItemStack onItemUseFinish(ItemStack item, World world, EntityLivingBase player) {
       player.setFire(5);
-      Iterator<PotionEffect> it = player.getActivePotionEffects().iterator();
-
-      while(it.hasNext()) {
-         PotionEffect effect = (PotionEffect)it.next();
-         if (!effect.getPotion().isBeneficial()) {
-            it.remove();
+      if (!world.isRemote) {
+         List<PotionEffect> effects = new ArrayList<>(player.getActivePotionEffects());
+         for (int i = 0; i < effects.size(); ++i) {
+            PotionEffect effect = effects.get(i);
+            if (effect.getPotion().isBadEffect()) {
+               player.removePotionEffect(effect.getPotion());
+            }
          }
       }
 

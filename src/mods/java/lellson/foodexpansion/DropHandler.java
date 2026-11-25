@@ -1,5 +1,6 @@
 package lellson.foodexpansion;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,7 +17,6 @@ import net.minecraft.entity.passive.EntityZombieHorse;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DropHandler {
    public static final List<DropHandler.Drop> DROP_LIST = new ArrayList();
@@ -36,7 +36,10 @@ public class DropHandler {
       DROP_LIST.add(new DropHandler.Drop(cfgDisable, entityClass, uncooked, cooked, maxDropAmount));
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingDropsEvent.class, this::onEntityDrop);
+   }
+
    public void onEntityDrop(LivingDropsEvent event) {
       for(DropHandler.Drop drop : DROP_LIST) {
          drop.tryDrop(event.getEntityLiving());

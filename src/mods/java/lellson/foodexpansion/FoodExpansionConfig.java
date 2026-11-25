@@ -1,7 +1,6 @@
 package lellson.foodexpansion;
 
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class FoodExpansionConfig {
    public static boolean disableRecipeBacon;
@@ -89,7 +88,6 @@ public class FoodExpansionConfig {
    }
 
    public static void syncConfig() {
-      FMLCommonHandler.instance().bus().register(FoodExpansion.instance);
       StringBuilder var10000 = new StringBuilder();
       Configuration var10001 = FoodExpansion.config;
       var10000 = var10000.append("general");

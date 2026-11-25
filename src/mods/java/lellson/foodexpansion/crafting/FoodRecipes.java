@@ -9,16 +9,31 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class FoodRecipes {
    public FoodRecipes() {
    }
 
-   public static void initShapelessRecipes() {
-   }
-
-   public static void initShapedRecipes() {
+   public static void registerConditions() {
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableJelly"), new FactoryJelly());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableBacon"), new FactoryBacon());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableBaconAndEgg"), new FactoryBaconAndEgg());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableCarrotSeedSoup"), new FactoryCarrotSeedSoup());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableCompressedFlesh"), new FactoryCompressedFlesh());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableChocolateBar"), new FactoryChocolateBar());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableSpiderSoup"), new FactorySpiderSoup());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableNetherWartSoup"), new FactoryNetherWartSoup());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableCactusFruit"), new FactoryCactusFruit());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableCarrotPie"), new FactoryCarrotPie());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableBlazeCream"), new FactoryBlazeCream());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableMelonSalad"), new FactoryMelonSalad());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableDough"), new FactoryDough());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableLollipop"), new FactoryLollipop());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableBeetrootNoodles"), new FactoryBeetrootNoodles());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableForbiddenFruit"), new FactoryForbiddenFruit());
+      CraftingHelper.register(new ResourceLocation("foodexpansion", "EnableStarvingFruit"), new FactoryStarvingFruit());
    }
 
    public static void initSmeltingRecipes() {

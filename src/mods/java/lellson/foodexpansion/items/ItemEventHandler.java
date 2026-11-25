@@ -1,16 +1,19 @@
 package lellson.foodexpansion.items;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import lellson.foodexpansion.FoodExpansionConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent.Finish;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemEventHandler {
    public ItemEventHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Finish.class, this::itemUsed);
+   }
+
    public void itemUsed(Finish event) {
       if (event.getEntity() instanceof EntityPlayer) {
          EntityPlayer player = (EntityPlayer)event.getEntity();
