@@ -14,7 +14,7 @@ import com.endertech.minecraft.forge.tools.ForgeTool;
 import com.endertech.minecraft.forge.units.ItemState;
 import com.endertech.minecraft.forge.units.UnitId;
 import com.endertech.minecraft.forge.world.ForgeWorld;
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.block.Block;
@@ -239,11 +239,11 @@ public class DevInfo {
    }
 
    protected static String underlined(String string) {
-      return ChatFormatting.UNDERLINE + string + ChatFormatting.RESET;
+      return TextFormatting.UNDERLINE + string + TextFormatting.RESET;
    }
 
-   protected static ChatFormatting reset() {
-      return ChatFormatting.RESET;
+   protected static TextFormatting reset() {
+      return TextFormatting.RESET;
    }
 
    protected static String formatedId(UnitId id) {

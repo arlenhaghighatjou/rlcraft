@@ -8,7 +8,7 @@ import com.creativemd.creativecore.common.gui.client.style.Style;
 import com.creativemd.creativecore.common.gui.client.style.TextureDisplayStyle;
 import com.creativemd.creativecore.common.gui.controls.container.SlotControl;
 import com.creativemd.creativecore.common.slots.SlotInput;
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.gui.GuiScreen;
@@ -112,7 +112,7 @@ public class GuiSlotControl extends GuiControl {
                if (k == 0) {
                   list.set(k, stack.getRarity().rarityColor + (String)list.get(k));
                } else {
-                  list.set(k, ChatFormatting.GRAY + (String)list.get(k));
+                  list.set(k, TextFormatting.GRAY + (String)list.get(k));
                }
 
                tips.add(list.get(k));

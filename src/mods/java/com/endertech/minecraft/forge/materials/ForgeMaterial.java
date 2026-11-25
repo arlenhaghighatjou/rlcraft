@@ -12,7 +12,7 @@ import com.endertech.minecraft.forge.configs.UnitConfig;
 import com.endertech.minecraft.forge.economy.IValuable;
 import com.endertech.minecraft.forge.items.ForgeItem;
 import com.endertech.minecraft.forge.units.UnitId;
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
@@ -71,9 +71,9 @@ public class ForgeMaterial extends ForgeItem implements IValuable {
 
    @SideOnly(Side.CLIENT)
    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-      tooltip.add(ChatFormatting.GREEN + "Strength: " + this.getStrength());
-      tooltip.add(ChatFormatting.YELLOW + "Heaviness: " + this.getHeaviness());
-      tooltip.add(ChatFormatting.LIGHT_PURPLE + "Magicability: " + this.getMagicability());
+      tooltip.add(TextFormatting.GREEN + "Strength: " + this.getStrength());
+      tooltip.add(TextFormatting.YELLOW + "Heaviness: " + this.getHeaviness());
+      tooltip.add(TextFormatting.LIGHT_PURPLE + "Magicability: " + this.getMagicability());
       super.addInformation(stack, world, tooltip, flag);
    }
 

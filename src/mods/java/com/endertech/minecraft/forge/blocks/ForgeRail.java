@@ -10,7 +10,7 @@ import com.endertech.minecraft.forge.units.IForgeUnit;
 import com.endertech.minecraft.forge.units.UnitEnabled;
 import com.endertech.minecraft.forge.units.UnitId;
 import com.endertech.minecraft.forge.units.UnitVariant;
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -131,8 +131,8 @@ public abstract class ForgeRail extends BlockRailBase implements IForgeUnit {
 
    @SideOnly(Side.CLIENT)
    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-      tooltip.add(ChatFormatting.YELLOW + "Max Speed: " + this.getMaxSpeed());
-      tooltip.add(ChatFormatting.RED + "Signal Max Distance: " + this.getSignalMaxDistance());
+      tooltip.add(TextFormatting.YELLOW + "Max Speed: " + this.getMaxSpeed());
+      tooltip.add(TextFormatting.RED + "Signal Max Distance: " + this.getSignalMaxDistance());
       super.addInformation(stack, world, tooltip, advanced);
    }
 

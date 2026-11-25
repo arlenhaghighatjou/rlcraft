@@ -1,7 +1,7 @@
 package team.creative.enhancedvisuals.client.render;
 
 import com.creativemd.creativecore.client.mods.optifine.OptifineHelper;
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -37,15 +37,15 @@ public class EVRenderer {
       if (event.phase == Phase.END && EVClient.shouldRender()) {
          List<String> warnings = new ArrayList();
          if (OptifineHelper.isActive() && OptifineHelper.isFastRender()) {
-            warnings.add(ChatFormatting.RED + "(EnhancedVisuals) Optifine detected - Disable Fast Render");
+            warnings.add(TextFormatting.RED + "(EnhancedVisuals) Optifine detected - Disable Fast Render");
          }
 
          if (OptifineHelper.isActive() && OptifineHelper.isAnisotropicFiltering()) {
-            warnings.add(ChatFormatting.RED + "(EnhancedVisuals) Optifine detected - Disable Anisotropic Filtering");
+            warnings.add(TextFormatting.RED + "(EnhancedVisuals) Optifine detected - Disable Anisotropic Filtering");
          }
 
          if (OptifineHelper.isActive() && OptifineHelper.isAntialiasing()) {
-            warnings.add(ChatFormatting.RED + "(EnhancedVisuals) Optifine detected - Disable Antialiasing");
+            warnings.add(TextFormatting.RED + "(EnhancedVisuals) Optifine detected - Disable Antialiasing");
          }
 
          if (!warnings.isEmpty()) {

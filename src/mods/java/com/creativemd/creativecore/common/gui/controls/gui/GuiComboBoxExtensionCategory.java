@@ -3,7 +3,7 @@ package com.creativemd.creativecore.common.gui.controls.gui;
 import com.creativemd.creativecore.common.utils.mc.ColorUtils;
 import com.creativemd.creativecore.common.utils.type.Pair;
 import com.creativemd.creativecore.common.utils.type.PairList;
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.util.Color;
 
@@ -36,7 +36,7 @@ public class GuiComboBoxExtensionCategory<T> extends GuiScrollBox {
 
       for(Pair<String, PairList<String, T>> category : this.comboBox.elements) {
          if (category.key != null && !((String)category.key).isEmpty()) {
-            this.controls.add(new GuiLabel((String)category.key, ChatFormatting.UNDERLINE + "" + ChatFormatting.ITALIC + translate((String)category.key), 0, height));
+            this.controls.add(new GuiLabel((String)category.key, TextFormatting.UNDERLINE + "" + TextFormatting.ITALIC + translate((String)category.key), 0, height));
             height += 15;
          }
 

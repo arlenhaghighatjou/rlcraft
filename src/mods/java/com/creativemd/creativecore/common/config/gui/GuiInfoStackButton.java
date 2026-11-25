@@ -17,7 +17,7 @@ import com.creativemd.creativecore.common.utils.stack.InfoMaterial;
 import com.creativemd.creativecore.common.utils.stack.InfoName;
 import com.creativemd.creativecore.common.utils.stack.InfoOre;
 import com.creativemd.creativecore.common.utils.stack.InfoStack;
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
@@ -42,19 +42,19 @@ public class GuiInfoStackButton extends GuiAvatarButton {
       if (value == null) {
          return "";
       } else if (value instanceof InfoBlock) {
-         return "Block: " + ChatFormatting.YELLOW + ((ResourceLocation)Block.REGISTRY.getNameForObject(((InfoBlock)value).block)).toString();
+         return "Block: " + TextFormatting.YELLOW + ((ResourceLocation)Block.REGISTRY.getNameForObject(((InfoBlock)value).block)).toString();
       } else if (value instanceof InfoItem) {
-         return "Item: " + ChatFormatting.YELLOW + ((ResourceLocation)Item.REGISTRY.getNameForObject(((InfoItem)value).item)).toString();
+         return "Item: " + TextFormatting.YELLOW + ((ResourceLocation)Item.REGISTRY.getNameForObject(((InfoItem)value).item)).toString();
       } else if (value instanceof InfoItemStack) {
          return "ItemStack";
       } else if (value instanceof InfoMaterial) {
-         return "Material: " + ChatFormatting.YELLOW + MaterialUtils.getNameOrDefault(((InfoMaterial)value).material, "unkown");
+         return "Material: " + TextFormatting.YELLOW + MaterialUtils.getNameOrDefault(((InfoMaterial)value).material, "unkown");
       } else if (value instanceof InfoOre) {
-         return "Ore: " + ChatFormatting.YELLOW + ((InfoOre)value).ore;
+         return "Ore: " + TextFormatting.YELLOW + ((InfoOre)value).ore;
       } else if (value instanceof InfoContainOre) {
-         return "Ore (Contains): " + ChatFormatting.YELLOW + ((InfoContainOre)value).ore;
+         return "Ore (Contains): " + TextFormatting.YELLOW + ((InfoContainOre)value).ore;
       } else if (value instanceof InfoName) {
-         return "Name (Contains): " + ChatFormatting.YELLOW + ((InfoName)value).name;
+         return "Name (Contains): " + TextFormatting.YELLOW + ((InfoName)value).name;
       } else {
          return value instanceof InfoFuel ? "All fuels" : "no description given.";
       }

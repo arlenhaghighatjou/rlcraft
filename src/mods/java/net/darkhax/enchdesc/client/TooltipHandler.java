@@ -1,6 +1,6 @@
 package net.darkhax.enchdesc.client;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
@@ -35,10 +35,10 @@ public class TooltipHandler {
                for(Enchantment enchant : this.getEnchantments(event.getItemStack())) {
                   tooltip.add(I18n.format("tooltip.enchdesc.name", new Object[0]) + ": " + I18n.format(enchant.getName(), new Object[0]));
                   tooltip.add(this.getDescription(enchant));
-                  tooltip.add(I18n.format("tooltip.enchdesc.addedby", new Object[0]) + ": " + ChatFormatting.BLUE + getModName(enchant));
+                  tooltip.add(I18n.format("tooltip.enchdesc.addedby", new Object[0]) + ": " + TextFormatting.BLUE + getModName(enchant));
                }
             } else {
-               tooltip.add(I18n.format("tooltip.enchdesc.activate", new Object[]{ChatFormatting.LIGHT_PURPLE, keyBindSneak.getDisplayName(), ChatFormatting.GRAY}));
+               tooltip.add(I18n.format("tooltip.enchdesc.activate", new Object[]{TextFormatting.LIGHT_PURPLE, keyBindSneak.getDisplayName(), TextFormatting.GRAY}));
             }
          }
 
