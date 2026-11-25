@@ -16,9 +16,9 @@ public class PacketHandler {
    }
 
    public static void registerPackets() {
-      INSTANCE.registerMessage(CPacketActionKey.ActionKeyPacketHandler.class, CPacketActionKey.class, id++, Side.SERVER);
-      INSTANCE.registerMessage(CPacketOpenCartGui.OpenCartGuiPacketHandler.class, CPacketOpenCartGui.class, id++, Side.SERVER);
-      INSTANCE.registerMessage(CPacketToggleSlow.ToggleSlowHandler.class, CPacketToggleSlow.class, id++, Side.SERVER);
-      INSTANCE.registerMessage(SPacketDrawnUpdate.DrawnUpdatePacketHandler.class, SPacketDrawnUpdate.class, id++, Side.CLIENT);
+      INSTANCE.registerMessage(new CPacketActionKey.ActionKeyPacketHandler(), CPacketActionKey.class, CPacketActionKey::new, id++, Side.SERVER);
+      INSTANCE.registerMessage(new CPacketOpenCartGui.OpenCartGuiPacketHandler(), CPacketOpenCartGui.class, CPacketOpenCartGui::new, id++, Side.SERVER);
+      INSTANCE.registerMessage(new CPacketToggleSlow.ToggleSlowHandler(), CPacketToggleSlow.class, CPacketToggleSlow::new, id++, Side.SERVER);
+      INSTANCE.registerMessage(new SPacketDrawnUpdate.DrawnUpdatePacketHandler(), SPacketDrawnUpdate.class, SPacketDrawnUpdate::new, id++, Side.CLIENT);
    }
 }

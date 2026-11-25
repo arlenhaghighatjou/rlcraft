@@ -191,6 +191,7 @@ public class Loader
         mods.add(new FMLModContainer<>("disenchanter", "Disenchanter", "1.8", "", "", "disenchanter", de.impelon.disenchanter.DisenchanterMain::new, de.impelon.disenchanter.DisenchanterMain::handleModStateEvent));
         mods.add(new FMLModContainer<>("pigstep", "Pigstep", "1.12", "", "[1.12.2]", "pigstep", com.daposeidonguy.pigstep.PigstepMod::new, com.daposeidonguy.pigstep.PigstepMod::handleModStateEvent));
         mods.add(new FMLModContainer<>("globalgamerules", "Global GameRules", "2.2", "", "[1.12.2]", "globalgamerules", se.gory_moon.globalgamerules.GlobalGR::new, se.gory_moon.globalgamerules.GlobalGR::handleModStateEvent).acceptableRemoteVersions("*").guiFactory(se.gory_moon.globalgamerules.config.GGRGuiFactory::new));
+        mods.add(new FMLModContainer<>("astikorcarts", "astikorcarts", "1.12.2-0.1.2.8", "", "[1.12,1.13)", "astikorcarts", de.mennomax.astikorcarts.AstikorCarts::new, de.mennomax.astikorcarts.AstikorCarts::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }

@@ -1,5 +1,7 @@
 package de.mennomax.astikorcarts.config;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraftforge.common.config.ConfigEntry;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Config.LangKey;
@@ -7,8 +9,6 @@ import net.minecraftforge.common.config.Config.RangeDouble;
 import net.minecraftforge.common.config.Config.RequiresMcRestart;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Config(
    modid = "astikorcarts"
@@ -38,12 +38,14 @@ public class ModConfig {
       }
    }
 
-   @EventBusSubscriber
-   private static class EventHandler {
+   public static class EventHandler {
       private EventHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.register(OnConfigChangedEvent.class, EventHandler::onConfigChanged);
+      }
+
       public static void onConfigChanged(OnConfigChangedEvent event) {
          if (event.getModID().equals("astikorcarts")) {
             ConfigManager.sync("astikorcarts", Type.INSTANCE);
@@ -64,5 +66,16 @@ public class ModConfig {
 
       public PlowCart() {
       }
+   }
+
+   public static void register() {
+      ConfigManager.register("astikorcarts", "", "general", null,
+         ConfigEntry.value("speedModifier", double.class, () -> ModConfig.speedModifier, v -> ModConfig.speedModifier = (Double)v).langKey("config.astikorcarts:speedmodifier").range(-1.0, 0.0).requiresMcRestart(),
+         ConfigEntry.category("cargoCart",
+            ConfigEntry.value("canPull", String[].class, () -> ModConfig.cargoCart.canPull, v -> ModConfig.cargoCart.canPull = (String[])v)).langKey("entity.astikorcarts:cargocart.name"),
+         ConfigEntry.category("plowCart",
+            ConfigEntry.value("canPull", String[].class, () -> ModConfig.plowCart.canPull, v -> ModConfig.plowCart.canPull = (String[])v)).langKey("entity.astikorcarts:plowcart.name"),
+         ConfigEntry.category("mobCart",
+            ConfigEntry.value("canPull", String[].class, () -> ModConfig.mobCart.canPull, v -> ModConfig.mobCart.canPull = (String[])v)).langKey("entity.astikorcarts:mobcart.name"));
    }
 }

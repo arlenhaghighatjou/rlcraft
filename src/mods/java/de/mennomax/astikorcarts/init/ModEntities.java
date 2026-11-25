@@ -1,5 +1,6 @@
 package de.mennomax.astikorcarts.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import de.mennomax.astikorcarts.client.render.RenderCargoCart;
 import de.mennomax.astikorcarts.client.render.RenderMobCart;
 import de.mennomax.astikorcarts.client.render.RenderPlowCart;
@@ -11,8 +12,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
@@ -28,16 +27,16 @@ public class ModEntities {
       RenderingRegistry.registerEntityRenderingHandler(EntityMobCart.class, RenderMobCart::new);
    }
 
-   @EventBusSubscriber(
-      modid = "astikorcarts"
-   )
    public static class EntityRegistrationHandler {
       private static int id = 0;
 
       public EntityRegistrationHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, EntityEntry.class, EntityRegistrationHandler::registerEntities);
+      }
+
       public static void registerEntities(Register<EntityEntry> event) {
          event.getRegistry().registerAll(new EntityEntry[]{createEntry(EntityCargoCart.class, "cargocart", 80, 3, false), createEntry(EntityPlowCart.class, "plowcart", 80, 3, false), createEntry(EntityMobCart.class, "mobcart", 80, 3, false)});
       }

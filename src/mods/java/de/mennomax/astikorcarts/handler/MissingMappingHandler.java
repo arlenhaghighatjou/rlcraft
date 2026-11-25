@@ -1,5 +1,6 @@
 package de.mennomax.astikorcarts.handler;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.UnmodifiableIterator;
 import de.mennomax.astikorcarts.entity.EntityCargoCart;
 import de.mennomax.astikorcarts.entity.EntityPlowCart;
@@ -7,19 +8,18 @@ import de.mennomax.astikorcarts.init.ModItems;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent.MissingMappings;
 import net.minecraftforge.event.RegistryEvent.MissingMappings.Mapping;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-@EventBusSubscriber(
-   modid = "astikorcarts"
-)
 public class MissingMappingHandler {
    public MissingMappingHandler() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(MissingMappings.class, Item.class, MissingMappingHandler::onMissingItemMapping);
+      bus.registerGeneric(MissingMappings.class, EntityEntry.class, MissingMappingHandler::onMissingEntityMapping);
+   }
+
    public static void onMissingItemMapping(MissingMappings<Item> event) {
       UnmodifiableIterator var1 = event.getAllMappings().iterator();
 
@@ -58,7 +58,6 @@ public class MissingMappingHandler {
 
    }
 
-   @SubscribeEvent
    public static void onMissingEntityMapping(MissingMappings<EntityEntry> event) {
       UnmodifiableIterator var1 = event.getAllMappings().iterator();
 

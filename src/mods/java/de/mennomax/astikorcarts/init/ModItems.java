@@ -1,5 +1,8 @@
 package de.mennomax.astikorcarts.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import de.mennomax.astikorcarts.item.ItemCargoCart;
 import de.mennomax.astikorcarts.item.ItemMobCart;
 import de.mennomax.astikorcarts.item.ItemPlowCart;
@@ -11,30 +14,27 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
-@ObjectHolder("astikorcarts")
 public class ModItems {
-   public static final Item WHEEL = null;
-   public static final Item CARGOCART = null;
-   public static final Item PLOWCART = null;
-   public static final Item MOBCART = null;
+   public static Item WHEEL = null;
+   public static Item CARGOCART = null;
+   public static Item PLOWCART = null;
+   public static Item MOBCART = null;
 
    public ModItems() {
    }
 
-   @EventBusSubscriber(
-      modid = "astikorcarts"
-   )
    public static class ItemRegistrationHandler {
       public static final Set<Item> ITEMSET = new HashSet();
 
       public ItemRegistrationHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, Item.class, ItemRegistrationHandler::registerItems);
+         bus.register(ModelRegistryEvent.class, ItemRegistrationHandler::registerItemModels);
+      }
+
       public static void registerItems(Register<Item> event) {
          Item[] ITEMS = new Item[]{new ItemWheel(), new ItemCargoCart(), new ItemPlowCart(), new ItemMobCart()};
 
@@ -45,12 +45,18 @@ public class ModItems {
 
       }
 
-      @SubscribeEvent
       public static void registerItemModels(ModelRegistryEvent event) {
          for(Item item : ITEMSET) {
             ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
          }
 
       }
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("astikorcarts:WHEEL"), v -> WHEEL = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("astikorcarts:CARGOCART"), v -> CARGOCART = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("astikorcarts:PLOWCART"), v -> PLOWCART = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("astikorcarts:MOBCART"), v -> MOBCART = v);
    }
 }
