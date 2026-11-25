@@ -639,7 +639,7 @@ public class GameData
         final Map<ResourceLocation, Map<ResourceLocation, Integer[]>> remaps = Maps.newHashMap();
         final LinkedHashMap<ResourceLocation, Map<ResourceLocation, Integer>> missing = Maps.newLinkedHashMap();
         // Load the snapshot into the "STAGING" registry
-        snapshot.forEach((key, value) ->
+        new java.util.TreeMap<>(snapshot).forEach((key, value) ->
         {
             final Class<? extends IForgeRegistryEntry> clazz = RegistryManager.ACTIVE.getSuperType(key);
             remaps.put(key, Maps.newLinkedHashMap());
