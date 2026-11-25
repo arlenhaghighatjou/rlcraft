@@ -11,6 +11,6 @@ public class ModNetworkHandler {
    }
 
    public static void registerPacketHandlers() {
-      INSTANCE.registerMessage(PacketConfigSync.Handler.class, PacketConfigSync.class, 0, Side.CLIENT);
+      INSTANCE.registerMessage(new PacketConfigSync.Handler(), PacketConfigSync.class, PacketConfigSync::new, 0, Side.CLIENT);
    }
 }

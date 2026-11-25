@@ -1,5 +1,6 @@
 package lumberwizard.anvilpatch.common;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.Map;
 import lumberwizard.anvilpatch.ModConfig;
 import net.minecraft.enchantment.Enchantment;
@@ -9,21 +10,18 @@ import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.StringUtils;
 
-@EventBusSubscriber(
-   modid = "anvilpatch"
-)
 public class AnvilEventHandler {
    public AnvilEventHandler() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public static void register(EventBus bus) {
+      bus.register(AnvilUpdateEvent.class, EventPriority.LOWEST, false, AnvilEventHandler::onAnvilUpdate);
+      bus.register(AnvilRepairEvent.class, AnvilEventHandler::onAnvilRepair);
+   }
+
    public static void onAnvilUpdate(AnvilUpdateEvent event) {
       if (event.getOutput().isEmpty()) {
          ItemStack left = event.getLeft();
@@ -198,7 +196,6 @@ public class AnvilEventHandler {
       }
    }
 
-   @SubscribeEvent
    public static void onAnvilRepair(AnvilRepairEvent event) {
       event.setBreakChance(ModConfig.getBreakChance());
    }

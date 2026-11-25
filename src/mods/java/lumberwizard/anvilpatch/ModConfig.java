@@ -1,5 +1,7 @@
 package lumberwizard.anvilpatch;
 
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.common.config.ConfigEntry;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.Ignore;
@@ -88,5 +90,13 @@ public class ModConfig {
 
       private EnumCostIncreaseSetting() {
       }
+   }
+
+   public static void register() {
+      ConfigManager.register("anvilpatch", "", "general", null,
+         ConfigEntry.value("New level cap", int.class, () -> ModConfig.levelCap, v -> ModConfig.levelCap = (Integer)v).comment("Set to -1 to remove the cap.", "This setting will be ignored if Apotheosis is installed.").langKey("anvilpatch.general.levelcap").range(-1, Integer.MAX_VALUE),
+         ConfigEntry.enumValue("XP cost increase", ModConfig.EnumCostIncreaseSetting.values(), () -> ModConfig.costIncreaseSetting, v -> ModConfig.costIncreaseSetting = v).comment("Valid values:", "KEEP - keeps the cumulative repair cost, same as vanilla.", "REMOVE_REPAIR_SCALING - repairs won't increase the xp cost, but enchantments will, even for repaired items.", "ENCHANTMENT_ONLY - repairs will always cost the same, but applying more enchantments will cost more.", "REMOVE - removes the cumulative repair cost entirely.").langKey("anvilpatch.general.costincreasesetting"),
+         ConfigEntry.value("Allow repairs beyond enchantment level cap.", boolean.class, () -> ModConfig.breakEnchantLevelCap, v -> ModConfig.breakEnchantLevelCap = (Boolean)v).comment("Vanilla behavior, when merging two items where the one on the right has an enchantment with a level beyond its max", "(for example power 8) is to reset the level to the max (so the resulting item would have power 5)", "This setting disables that.", "It does not, however, allow creating enchantments beyond the cap", "So, for example, merging two power V books would still result in power V").langKey("anvilpatch.general.breakenchantlevelcap"),
+         ConfigEntry.value("Anvil break chance", float.class, () -> ModConfig.breakChance, v -> ModConfig.breakChance = (Float)v).comment("Chance for the anvil to reach the next stage of breakage per use.", "Choose a value from 0 to 1. Vanilla default is 0.12 (= 12%).").langKey("anvilpatch.general.breakchance").range(0.0, 1.0));
    }
 }
