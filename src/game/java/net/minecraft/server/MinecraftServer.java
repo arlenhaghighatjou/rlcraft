@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import com.google.common.collect.Lists;
 import net.lax1dude.eaglercraft.v1_8.futures.Futures;
 import net.lax1dude.eaglercraft.v1_8.futures.ListenableFuture;
@@ -513,7 +514,7 @@ public abstract class MinecraftServer implements ICommandSender, IThreadListener
                 agameprofile[k] = ((EntityPlayerMP)this.playerList.getPlayers().get(j + k)).getGameProfile();
             }
 
-            Collections.shuffle(Arrays.asList(agameprofile));
+            ThreadLocalRandom.current().shuffle(Arrays.asList(agameprofile));
             this.statusResponse.getPlayers().setPlayers(agameprofile);
             this.statusResponse.invalidateJson();
         }

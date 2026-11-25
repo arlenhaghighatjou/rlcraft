@@ -1,5 +1,6 @@
 package net.minecraft.world;
 
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import com.google.common.collect.Sets;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
@@ -85,7 +86,7 @@ public final class WorldEntitySpawner
                     if (k4 <= l4)
                     {
                         java.util.ArrayList<ChunkPos> shuffled = com.google.common.collect.Lists.newArrayList(this.eligibleChunksForSpawning);
-                        java.util.Collections.shuffle(shuffled);
+                        ThreadLocalRandom.current().shuffle(shuffled);
                         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
                         label134:
 

@@ -1,5 +1,6 @@
 package net.minecraft.command;
 
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.base.Splitter;
@@ -688,7 +689,7 @@ public class EntitySelector
         {
             if (type.equals("r"))
             {
-                Collections.shuffle(matchingEntities);
+                ThreadLocalRandom.current().shuffle(matchingEntities);
             }
         }
         else
