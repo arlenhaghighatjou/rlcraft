@@ -195,6 +195,11 @@ public class EntityItem extends Entity
 
     private void searchForOtherItemsNearby()
     {
+        if (net.darkhax.surge.Surge.isFullStack(this))
+        {
+            return;
+        }
+
         for (EntityItem entityitem : this.world.getEntitiesWithinAABB(EntityItem.class, this.getEntityBoundingBox().grow(0.5D, 0.0D, 0.5D)))
         {
             this.combineItems(entityitem);
@@ -203,6 +208,11 @@ public class EntityItem extends Entity
 
     private boolean combineItems(EntityItem other)
     {
+        if (net.darkhax.surge.Surge.isFullStack(this))
+        {
+            return false;
+        }
+
         if (other == this)
         {
             return false;

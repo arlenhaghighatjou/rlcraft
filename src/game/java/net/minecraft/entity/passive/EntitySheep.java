@@ -381,6 +381,13 @@ public class EntitySheep extends EntityAnimal implements net.minecraftforge.comm
 
     private EnumDyeColor getDyeColorMixFromParents(EntityAnimal father, EntityAnimal mother)
     {
+        EnumDyeColor blended = net.darkhax.surge.Surge.blendSheepColors(father, mother);
+
+        if (blended != null)
+        {
+            return blended;
+        }
+
         int i = ((EntitySheep)father).getFleeceColor().getDyeDamage();
         int j = ((EntitySheep)mother).getFleeceColor().getDyeDamage();
         this.inventoryCrafting.getStackInSlot(0).setItemDamage(i);

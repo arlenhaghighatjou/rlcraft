@@ -551,6 +551,11 @@ public class ModelBlockAnimation
      */
     public static ModelBlockAnimation loadVanillaAnimation(IResourceManager manager, ResourceLocation armatureLocation)
     {
+        if (net.darkhax.surge.Surge.skipAnimatedModel(manager, armatureLocation))
+        {
+            return defaultModelBlockAnimation;
+        }
+
         try
         {
             try (IResource resource = manager.getResource(armatureLocation))

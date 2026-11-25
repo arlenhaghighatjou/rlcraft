@@ -1699,6 +1699,8 @@ public abstract class Entity implements ICommandSender, net.minecraftforge.commo
 
     public NBTTagCompound writeToNBT(NBTTagCompound compound)
     {
+        net.darkhax.surge.Surge.writeBoundingBox(this, compound);
+
         try
         {
             compound.setTag("Pos", this.newDoubleNBTList(this.posX, this.posY, this.posZ));
@@ -1893,6 +1895,8 @@ public abstract class Entity implements ICommandSender, net.minecraftforge.commo
             this.addEntityCrashInfo(crashreportcategory);
             throw new ReportedException(crashreport);
         }
+
+        net.darkhax.surge.Surge.readBoundingBox(this, compound);
     }
 
     protected boolean shouldSetPosAfterLoading()

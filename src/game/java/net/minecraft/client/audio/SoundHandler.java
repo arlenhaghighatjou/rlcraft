@@ -94,26 +94,29 @@ public class SoundHandler implements IResourceManagerReloadListener, ITickable
             }
         });
         net.minecraftforge.fml.common.ProgressManager.pop(resourcesBar);
-        for (ResourceLocation resourcelocation : this.soundRegistry.getKeys())
+        if (!net.darkhax.surge.Surge.disableDebugSoundInfo())
         {
-            SoundEventAccessor soundeventaccessor = (SoundEventAccessor)this.soundRegistry.getObject(resourcelocation);
-
-            if (soundeventaccessor.getSubtitle() instanceof TextComponentTranslation)
+            for (ResourceLocation resourcelocation : this.soundRegistry.getKeys())
             {
-                String s1 = ((TextComponentTranslation)soundeventaccessor.getSubtitle()).getKey();
+                SoundEventAccessor soundeventaccessor = (SoundEventAccessor)this.soundRegistry.getObject(resourcelocation);
 
-                if (!I18n.hasKey(s1))
+                if (soundeventaccessor.getSubtitle() instanceof TextComponentTranslation)
                 {
-                    LOGGER.debug("Missing subtitle {} for event: {}", s1, resourcelocation);
+                    String s1 = ((TextComponentTranslation)soundeventaccessor.getSubtitle()).getKey();
+
+                    if (!I18n.hasKey(s1))
+                    {
+                        LOGGER.debug("Missing subtitle {} for event: {}", s1, resourcelocation);
+                    }
                 }
             }
-        }
 
-        for (ResourceLocation resourcelocation1 : this.soundRegistry.getKeys())
-        {
-            if (SoundEvent.REGISTRY.getObject(resourcelocation1) == null)
+            for (ResourceLocation resourcelocation1 : this.soundRegistry.getKeys())
             {
-                LOGGER.debug("Not having sound event for: {}", (Object)resourcelocation1);
+                if (SoundEvent.REGISTRY.getObject(resourcelocation1) == null)
+                {
+                    LOGGER.debug("Not having sound event for: {}", (Object)resourcelocation1);
+                }
             }
         }
 

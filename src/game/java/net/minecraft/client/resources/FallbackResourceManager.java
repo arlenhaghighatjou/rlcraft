@@ -155,4 +155,17 @@ public class FallbackResourceManager implements IResourceManager
                 return this.inputStream.read();
             }
         }
+
+    public boolean hasResource(ResourceLocation location)
+    {
+        for (int i = 0, l = this.resourcePacks.size(); i < l; ++i)
+        {
+            if (this.resourcePacks.get(i).resourceExists(location))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -48,7 +48,7 @@ public class GuiRepair extends GuiContainer implements IContainerListener
         this.nameField.setTextColor(-1);
         this.nameField.setDisabledTextColour(-1);
         this.nameField.setEnableBackgroundDrawing(false);
-        this.nameField.setMaxStringLength(35);
+        this.nameField.setMaxStringLength(net.darkhax.surge.Surge.getMaxRenameLength());
         this.inventorySlots.removeListener(this);
         this.inventorySlots.addListener(this);
     }

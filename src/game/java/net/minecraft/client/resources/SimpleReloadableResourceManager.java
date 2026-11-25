@@ -138,4 +138,10 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
         }
         net.minecraftforge.fml.common.ProgressManager.pop(resReload);
     }
+
+    public boolean hasResource(ResourceLocation location)
+    {
+        FallbackResourceManager manager = this.domainResourceManagers.get(location.getResourceDomain());
+        return manager != null && manager.hasResource(location);
+    }
 }
