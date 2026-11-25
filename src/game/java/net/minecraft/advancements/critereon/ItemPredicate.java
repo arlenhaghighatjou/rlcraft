@@ -18,13 +18,13 @@ import net.minecraft.util.ResourceLocation;
 public class ItemPredicate
 {
     public static final ItemPredicate ANY = new ItemPredicate();
-    private final Item item;
-    private final Integer data;
-    private final MinMaxBounds count;
-    private final MinMaxBounds durability;
-    private final EnchantmentPredicate[] enchantments;
-    private final PotionType potion;
-    private final NBTPredicate nbt;
+    public final Item item;
+    public final Integer data;
+    public final MinMaxBounds count;
+    public final MinMaxBounds durability;
+    public final EnchantmentPredicate[] enchantments;
+    public final PotionType potion;
+    public final NBTPredicate nbt;
 
     public ItemPredicate()
     {

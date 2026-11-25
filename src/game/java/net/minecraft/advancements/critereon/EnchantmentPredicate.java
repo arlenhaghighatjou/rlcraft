@@ -13,8 +13,8 @@ import net.minecraft.util.ResourceLocation;
 public class EnchantmentPredicate
 {
     public static final EnchantmentPredicate ANY = new EnchantmentPredicate();
-    private final Enchantment enchantment;
-    private final MinMaxBounds levels;
+    public final Enchantment enchantment;
+    public final MinMaxBounds levels;
 
     public EnchantmentPredicate()
     {

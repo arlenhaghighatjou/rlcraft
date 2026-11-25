@@ -18,7 +18,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiTextField extends Gui
 {
     private final int id;
-    private final FontRenderer fontRenderer;
+    public final FontRenderer fontRenderer;
     public int x;
     public int y;
     public int width;
@@ -27,14 +27,14 @@ public class GuiTextField extends Gui
     private int maxStringLength = 32;
     private int cursorCounter;
     private boolean enableBackgroundDrawing = true;
-    private boolean canLoseFocus = true;
+    public boolean canLoseFocus = true;
     private boolean isFocused;
-    private boolean isEnabled = true;
+    public boolean isEnabled = true;
     private int lineScrollOffset;
     private int cursorPosition;
     private int selectionEnd;
-    private int enabledColor = 14737632;
-    private int disabledColor = 7368816;
+    public int enabledColor = 14737632;
+    public int disabledColor = 7368816;
     private boolean visible = true;
     private GuiPageButtonList.GuiResponder guiResponder;
     private Predicate<String> validator = Predicates.<String>alwaysTrue();

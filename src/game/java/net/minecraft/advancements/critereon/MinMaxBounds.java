@@ -8,8 +8,8 @@ import net.minecraft.util.JsonUtils;
 public class MinMaxBounds
 {
     public static final MinMaxBounds UNBOUNDED = new MinMaxBounds((Float)null, (Float)null);
-    private final Float min;
-    private final Float max;
+    public final Float min;
+    public final Float max;
 
     public MinMaxBounds(@Nullable Float min, @Nullable Float max)
     {

@@ -12,20 +12,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiLabel extends Gui
 {
-    protected int width = 200;
-    protected int height = 20;
+    public int width = 200;
+    public int height = 20;
     public int x;
     public int y;
     private final List<String> labels;
     public int id;
-    private boolean centered;
+    public boolean centered;
     public boolean visible = true;
-    private boolean labelBgEnabled;
-    private final int textColor;
+    public boolean labelBgEnabled;
+    public final int textColor;
     private int backColor;
     private int ulColor;
     private int brColor;
-    private final FontRenderer fontRenderer;
+    public final FontRenderer fontRenderer;
     private int border;
 
     public GuiLabel(FontRenderer fontRendererObj, int p_i45540_2_, int p_i45540_3_, int p_i45540_4_, int p_i45540_5_, int p_i45540_6_, int p_i45540_7_)
