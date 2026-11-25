@@ -4,6 +4,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
@@ -1766,14 +1767,17 @@ public class Item extends net.minecraftforge.registries.IForgeRegistryEntry.Impl
         return new ItemStack(this);
     }
 
-    public static enum ToolMaterial
+    public static final class ToolMaterial
     {
-        WOOD(0, 59, 2.0F, 0.0F, 15),
-        STONE(1, 131, 4.0F, 1.0F, 5),
-        IRON(2, 250, 6.0F, 2.0F, 14),
-        DIAMOND(3, 1561, 8.0F, 3.0F, 10),
-        GOLD(0, 32, 12.0F, 0.0F, 22);
+        private static final Map<String, ToolMaterial> MATERIALS = new LinkedHashMap<>();
+        public static final ToolMaterial WOOD = register("WOOD", 0, 59, 2.0F, 0.0F, 15);
+        public static final ToolMaterial STONE = register("STONE", 1, 131, 4.0F, 1.0F, 5);
+        public static final ToolMaterial IRON = register("IRON", 2, 250, 6.0F, 2.0F, 14);
+        public static final ToolMaterial DIAMOND = register("DIAMOND", 3, 1561, 8.0F, 3.0F, 10);
+        public static final ToolMaterial GOLD = register("GOLD", 0, 32, 12.0F, 0.0F, 22);
 
+        private final String name;
+        private final int ordinal;
         private final int harvestLevel;
         private final int maxUses;
         private final float efficiency;
@@ -1782,13 +1786,59 @@ public class Item extends net.minecraftforge.registries.IForgeRegistryEntry.Impl
         //Added by forge for custom Tool materials.
         private ItemStack repairMaterial = ItemStack.EMPTY;
 
-        private ToolMaterial(int harvestLevel, int maxUses, float efficiency, float damageVsEntity, int enchantability)
+        private ToolMaterial(String name, int ordinal, int harvestLevel, int maxUses, float efficiency, float damageVsEntity, int enchantability)
         {
+            this.name = name;
+            this.ordinal = ordinal;
             this.harvestLevel = harvestLevel;
             this.maxUses = maxUses;
             this.efficiency = efficiency;
             this.attackDamage = damageVsEntity;
             this.enchantability = enchantability;
+        }
+
+        public static ToolMaterial register(String name, int harvestLevel, int maxUses, float efficiency, float damage, int enchantability)
+        {
+            ToolMaterial existing = MATERIALS.get(name);
+            if (existing != null)
+            {
+                return existing;
+            }
+            ToolMaterial material = new ToolMaterial(name, MATERIALS.size(), harvestLevel, maxUses, efficiency, damage, enchantability);
+            MATERIALS.put(name, material);
+            return material;
+        }
+
+        public static ToolMaterial valueOf(String name)
+        {
+            java.util.Objects.requireNonNull(name, "name");
+            ToolMaterial material = MATERIALS.get(name);
+            if (material == null)
+            {
+                throw new IllegalArgumentException("Unknown tool material " + name);
+            }
+            return material;
+        }
+
+        public static ToolMaterial[] values()
+        {
+            return MATERIALS.values().toArray(new ToolMaterial[0]);
+        }
+
+        public String name()
+        {
+            return this.name;
+        }
+
+        public int ordinal()
+        {
+            return this.ordinal;
+        }
+
+        @Override
+        public String toString()
+        {
+            return this.name;
         }
 
         public int getMaxUses()

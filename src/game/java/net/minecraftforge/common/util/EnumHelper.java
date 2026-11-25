@@ -77,7 +77,6 @@ public class EnumHelper
         {RayTraceResult.Type.class},
         {EnumSkyBlock.class, int.class},
         {SleepResult.class},
-        {ToolMaterial.class, int.class, int.class, float.class, float.class, int.class},
         {EnumRarity.class, TextFormatting.class, String.class},
         {HorseArmorType.class, String.class, int.class},
         {EntityLiving.SpawnPlacementType.class, BiPredicate.class}
@@ -138,10 +137,9 @@ public class EnumHelper
     {
         return addEnum(SleepResult.class, name);
     }
-    @Nullable
     public static ToolMaterial addToolMaterial(String name, int harvestLevel, int maxUses, float efficiency, float damage, int enchantability)
     {
-        return addEnum(ToolMaterial.class, name, harvestLevel, maxUses, efficiency, damage, enchantability);
+        return ToolMaterial.register(name, harvestLevel, maxUses, efficiency, damage, enchantability);
     }
 
     /** @deprecated use {@link net.minecraftforge.common.IRarity} instead */
@@ -419,11 +417,4 @@ public class EnumHelper
         }
     }
 
-    static
-    {
-        if (!isSetup)
-        {
-            setup();
-        }
-    }
 }
