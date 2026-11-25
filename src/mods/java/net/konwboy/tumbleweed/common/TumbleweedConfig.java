@@ -1,5 +1,7 @@
 package net.konwboy.tumbleweed.common;
 
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.common.config.ConfigEntry;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -176,5 +178,16 @@ public class TumbleweedConfig {
          this.amount = amount;
          this.weight = weight;
       }
+   }
+
+   public static void register() {
+      ConfigManager.register("tumbleweed", "", "general", null,
+         ConfigEntry.value("Chance", double.class, () -> TumbleweedConfig.spawnChance, v -> TumbleweedConfig.spawnChance = (Double)v).comment("Chance a tumbleweed spawns in a chunk.").langKey("tumbleweed.general.spawnchance"),
+         ConfigEntry.value("Enable Drops", boolean.class, () -> TumbleweedConfig.enableDrops, v -> TumbleweedConfig.enableDrops = (Boolean)v).langKey("tumbleweed.general.enabledrops"),
+         ConfigEntry.value("Damage Crops", boolean.class, () -> TumbleweedConfig.damageCrops, v -> TumbleweedConfig.damageCrops = (Boolean)v).comment("Should tumbleweeds damage crops.").langKey("tumbleweed.general.damagecrops"),
+         ConfigEntry.value("Max Per Player", int.class, () -> TumbleweedConfig.maxPerPlayer, v -> TumbleweedConfig.maxPerPlayer = (Integer)v).comment("Maximum number of tumbleweeds existing per player (technically 17x17 loaded chunks).").langKey("tumbleweed.general.maxperplayer"),
+         ConfigEntry.value("Drops", String[].class, () -> TumbleweedConfig.dropsData, v -> TumbleweedConfig.dropsData = (String[])v).comment("These items will drop from a tumbleweed upon destroying.\n<weight> <mod>:<item>:[metadata] [amount]").langKey("tumbleweed.general.dropsdata"),
+         ConfigEntry.value("Spawning Blocks", String[].class, () -> TumbleweedConfig.spawningBlocksData, v -> TumbleweedConfig.spawningBlocksData = (String[])v).comment("Blocks from which tumbleweeds can spawn.\n<mod>:<block>:[metadata]").langKey("tumbleweed.general.spawningblocksdata"),
+         ConfigEntry.value("Biome Whitelist", String[].class, () -> TumbleweedConfig.biomeWhitelistData, v -> TumbleweedConfig.biomeWhitelistData = (String[])v).comment("If not empty, tumbleweeds spawn ONLY in the specified biomes. Else they appear in all hot, dry biomes.\nExample entry: minecraft:desert").langKey("tumbleweed.general.biomewhitelistdata"));
    }
 }

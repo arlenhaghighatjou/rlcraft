@@ -331,6 +331,12 @@ public class EntityTracker
         }
     }
 
+    @javax.annotation.Nullable
+    public EntityTrackerEntry getEntry(Entity entity)
+    {
+        return this.trackedEntityHashTable.lookup(entity.getEntityId());
+    }
+
     public void sendToTracking(Entity entityIn, Packet<?> packetIn)
     {
         EntityTrackerEntry entitytrackerentry = this.trackedEntityHashTable.lookup(entityIn.getEntityId());

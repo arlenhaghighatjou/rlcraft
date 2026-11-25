@@ -670,6 +670,21 @@ public class EntityTrackerEntry
         }
     }
 
+    public long getEncodedPosX()
+    {
+        return this.encodedPosX;
+    }
+
+    public long getEncodedPosY()
+    {
+        return this.encodedPosY;
+    }
+
+    public long getEncodedPosZ()
+    {
+        return this.encodedPosZ;
+    }
+
     public Entity getTrackedEntity()
     {
         return this.trackedEntity;

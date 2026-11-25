@@ -2,10 +2,7 @@ package net.konwboy.tumbleweed.common;
 
 import com.google.common.base.Predicate;
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
-import java.lang.reflect.Field;
-import java.util.Arrays;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import java.util.function.IntFunction;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.Entity;
@@ -24,7 +21,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.IntHashMap;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -32,7 +28,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.util.vector.Quaternion;
+import net.lax1dude.eaglercraft.v1_8.vector.Quaternion;
 import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class EntityTumbleweed extends Entity implements IEntityAdditionalSpawnData {
@@ -69,10 +65,10 @@ public class EntityTumbleweed extends Entity implements IEntityAdditionalSpawnDa
    public Quaternion quat;
    @SideOnly(Side.CLIENT)
    public Quaternion prevQuat;
-   private static Field trackedEntityHashTable = fieldsOfType(EntityTracker.class, IntHashMap.class)[0];
-   private static Field encodedPosX = fieldsOfType(EntityTrackerEntry.class, Long.TYPE)[0];
-   private static Field encodedPosY = fieldsOfType(EntityTrackerEntry.class, Long.TYPE)[1];
-   private static Field encodedPosZ = fieldsOfType(EntityTrackerEntry.class, Long.TYPE)[2];
+   @SideOnly(Side.CLIENT)
+   private Quaternion roll;
+   @SideOnly(Side.CLIENT)
+   private Vector4f rollAxis;
 
    public EntityTumbleweed(World world) {
       super(world);
@@ -92,6 +88,8 @@ public class EntityTumbleweed extends Entity implements IEntityAdditionalSpawnDa
       this.rot3 = 360.0F * this.world.rand.nextFloat();
       this.quat = new Quaternion();
       this.prevQuat = new Quaternion();
+      this.roll = new Quaternion();
+      this.rollAxis = new Vector4f();
    }
 
    protected void entityInit() {
@@ -241,7 +239,7 @@ public class EntityTumbleweed extends Entity implements IEntityAdditionalSpawnDa
          this.stretch = 1.0F;
       }
 
-      this.prevQuat = new Quaternion(this.quat);
+      this.prevQuat.set(this.quat);
    }
 
    @SideOnly(Side.CLIENT)
@@ -265,11 +263,12 @@ public class EntityTumbleweed extends Entity implements IEntityAdditionalSpawnDa
       float resistance = this.isInWater() ? 0.9F : 0.96F;
       this.angularX *= resistance;
       this.angularZ *= resistance;
-      Quaternion temp = new Quaternion();
-      temp.setFromAxisAngle(new Vector4f(1.0F, 0.0F, 0.0F, this.angularZ));
-      Quaternion.mul(temp, this.quat, this.quat);
-      temp.setFromAxisAngle(new Vector4f(0.0F, 0.0F, 1.0F, this.angularX));
-      Quaternion.mul(temp, this.quat, this.quat);
+      this.rollAxis.set(1.0F, 0.0F, 0.0F, this.angularZ);
+      this.roll.setFromAxisAngle(this.rollAxis);
+      Quaternion.mul(this.roll, this.quat, this.quat);
+      this.rollAxis.set(0.0F, 0.0F, 1.0F, this.angularX);
+      this.roll.setFromAxisAngle(this.rollAxis);
+      Quaternion.mul(this.roll, this.quat, this.quat);
    }
 
    private void trackerHack() {
@@ -387,37 +386,16 @@ public class EntityTumbleweed extends Entity implements IEntityAdditionalSpawnDa
       return ((Boolean)this.dataManager.get(FADING)).booleanValue();
    }
 
-   private static Field[] fieldsOfType(Class inClass, Class type) {
-      return (Field[])Arrays.stream(inClass.getDeclaredFields()).filter((f) -> {
-         return f.getType() == type;
-      }).toArray((x$0) -> {
-         return new Field[x$0];
-      });
-   }
-
    public EntityTrackerEntry getTrackerEntry() {
-      EntityTrackerEntry entry = null;
-
-      try {
-         entry = (EntityTrackerEntry)((IntHashMap)trackedEntityHashTable.get(((WorldServer)this.world).getEntityTracker())).lookup(this.getEntityId());
-      } catch (IllegalAccessException var3) {
-         ;
-      }
-
-      return entry;
+      return ((WorldServer)this.world).getEntityTracker().getEntry(this);
    }
 
    public void writeSpawnData(ByteBuf buffer) {
       EntityTrackerEntry entry = this.getTrackerEntry();
 
-      try {
-         buffer.writeLong(((Long)encodedPosX.get(entry)).longValue());
-         buffer.writeLong(((Long)encodedPosY.get(entry)).longValue());
-         buffer.writeLong(((Long)encodedPosZ.get(entry)).longValue());
-      } catch (IllegalAccessException var4) {
-         ;
-      }
-
+      buffer.writeLong(entry == null ? EntityTracker.getPositionLong(this.posX) : entry.getEncodedPosX());
+      buffer.writeLong(entry == null ? EntityTracker.getPositionLong(this.posY) : entry.getEncodedPosY());
+      buffer.writeLong(entry == null ? EntityTracker.getPositionLong(this.posZ) : entry.getEncodedPosZ());
    }
 
    public void readSpawnData(ByteBuf additionalData) {
@@ -426,10 +404,4 @@ public class EntityTumbleweed extends Entity implements IEntityAdditionalSpawnDa
       this.serverPosZ = additionalData.readLong();
    }
 
-   static {
-      trackedEntityHashTable.setAccessible(true);
-      encodedPosX.setAccessible(true);
-      encodedPosY.setAccessible(true);
-      encodedPosZ.setAccessible(true);
-   }
 }

@@ -2,7 +2,6 @@ package net.konwboy.tumbleweed.common;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import net.minecraft.block.Block;
@@ -20,7 +19,6 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.event.entity.EntityEvent.CanUpdate;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
@@ -57,7 +55,7 @@ public class TumbleweedSpawner {
       }
 
       List<ChunkPos> chunkList = Lists.newArrayList(eligibleChunksForSpawning);
-      Collections.shuffle(chunkList);
+      world.rand.shuffle(chunkList);
       BlockPos worldSpawn = world.getSpawnPoint();
       int current = world.countEntities(EntityTumbleweed.class);
       int max = MathHelper.ceil((double)(TumbleweedConfig.maxPerPlayer * eligibleChunksForSpawning.size()) / 289.0D);
@@ -132,10 +130,9 @@ public class TumbleweedSpawner {
       return world.isAreaLoaded(new BlockPos(x - 32, 0, z - 32), new BlockPos(x + 32, 0, z + 32));
    }
 
-   @SubscribeEvent
    public void onTick(WorldTickEvent event) {
-      WorldServer world = (WorldServer)event.world;
-      if (event.phase == Phase.END) {
+      if (event.phase == Phase.END && event.world instanceof WorldServer) {
+         WorldServer world = (WorldServer)event.world;
          if (world.getTotalWorldTime() % 200L == 7L && world.getGameRules().getBoolean("doMobSpawning")) {
             world.profiler.startSection("spawn_tumbleweed");
             trySpawn(world);
@@ -145,7 +142,6 @@ public class TumbleweedSpawner {
       }
    }
 
-   @SubscribeEvent
    public void onCanUpdate(CanUpdate event) {
       Entity entity = event.getEntity();
       World world = entity.getEntityWorld();

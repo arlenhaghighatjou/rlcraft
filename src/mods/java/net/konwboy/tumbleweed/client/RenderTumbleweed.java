@@ -6,12 +6,13 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
-import org.lwjgl.util.vector.Quaternion;
+import net.lax1dude.eaglercraft.v1_8.vector.Quaternion;
 
 public class RenderTumbleweed extends Render<EntityTumbleweed> {
    private static final ResourceLocation TEXTURE = new ResourceLocation("tumbleweed", "textures/entity/tumbleweed.png");
    private ModelTumbleweed tumbleweed;
    private int lastV = 0;
+   private final Quaternion interpolated = new Quaternion();
 
    public RenderTumbleweed(RenderManager manager) {
       super(manager);
@@ -40,7 +41,13 @@ public class RenderTumbleweed extends Render<EntityTumbleweed> {
       GlStateManager.scale(size, size, size);
       float stretch = entity.prevStretch + (entity.stretch - entity.prevStretch) * partialTicks;
       GlStateManager.scale(1.0F, stretch, 1.0F);
-      GlStateManager.rotate(lerp(entity.prevQuat, entity.quat, partialTicks));
+      lerp(entity.prevQuat, entity.quat, partialTicks, this.interpolated);
+      float axisLength = (float)Math.sqrt(this.interpolated.x * this.interpolated.x
+         + this.interpolated.y * this.interpolated.y + this.interpolated.z * this.interpolated.z);
+      if (axisLength > 0.0F) {
+         float angle = (float)Math.toDegrees(2.0D * Math.atan2(axisLength, this.interpolated.w));
+         GlStateManager.rotate(angle, this.interpolated.x / axisLength, this.interpolated.y / axisLength, this.interpolated.z / axisLength);
+      }
       GlStateManager.rotate(entity.rot1, 1.0F, 0.0F, 0.0F);
       GlStateManager.rotate(entity.rot2, 0.0F, 1.0F, 0.0F);
       GlStateManager.rotate(entity.rot3, 0.0F, 0.0F, 1.0F);
@@ -56,8 +63,7 @@ public class RenderTumbleweed extends Render<EntityTumbleweed> {
       return TEXTURE;
    }
 
-   public static Quaternion lerp(Quaternion start, Quaternion end, float alpha) {
-      Quaternion result = new Quaternion();
+   private static void lerp(Quaternion start, Quaternion end, float alpha, Quaternion result) {
       float d = start.x * end.x + start.y * end.y + start.z * end.z + start.w * end.w;
       float absDot = d < 0.0F ? -d : d;
       float scale0 = 1.0F - alpha;
@@ -77,7 +83,6 @@ public class RenderTumbleweed extends Render<EntityTumbleweed> {
       result.y = scale0 * start.y + scale1 * end.y;
       result.z = scale0 * start.z + scale1 * end.z;
       result.w = scale0 * start.w + scale1 * end.w;
-      return result;
    }
 
    public static class Factory implements IRenderFactory<EntityTumbleweed> {
