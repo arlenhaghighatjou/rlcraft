@@ -239,6 +239,12 @@ public class GameRegistry
         registerTileEntity(tileEntityClass, key.toString());
     }
 
+    public static <T extends TileEntity> void registerTileEntity(Class<T> tileEntityClass, ResourceLocation key, java.util.function.Supplier<T> factory)
+    {
+        GameData.checkPrefix(key.toString(), true);
+        TileEntity.register(key.toString(), tileEntityClass, factory);
+    }
+
     /**
      * @deprecated set your item's {@link Item#getItemBurnTime(ItemStack)} or subscribe to {@link FurnaceFuelBurnTimeEvent} instead.
      */

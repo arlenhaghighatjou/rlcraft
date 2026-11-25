@@ -170,7 +170,12 @@ public class EntityRegistry
      */
     public static void registerModEntity(ResourceLocation registryName, Class<? extends Entity> entityClass, String entityName, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
     {
-        instance().doModEntityRegistration(registryName, entityClass, entityName, id, mod, trackingRange, updateFrequency, sendsVelocityUpdates);
+        instance().doModEntityRegistration(registryName, entityClass, entityName, id, mod, trackingRange, updateFrequency, sendsVelocityUpdates, null);
+    }
+
+    public static <T extends Entity> void registerModEntity(ResourceLocation registryName, Class<T> entityClass, String entityName, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, Function<World, T> factory)
+    {
+        instance().doModEntityRegistration(registryName, entityClass, entityName, id, mod, trackingRange, updateFrequency, sendsVelocityUpdates, factory);
     }
 
     /**
@@ -189,20 +194,26 @@ public class EntityRegistry
      */
     public static void registerModEntity(ResourceLocation registryName, Class<? extends Entity> entityClass, String entityName, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggPrimary, int eggSecondary)
     {
-        instance().doModEntityRegistration(registryName, entityClass, entityName, id, mod, trackingRange, updateFrequency, sendsVelocityUpdates);
+        instance().doModEntityRegistration(registryName, entityClass, entityName, id, mod, trackingRange, updateFrequency, sendsVelocityUpdates, null);
         EntityRegistry.registerEgg(registryName, eggPrimary, eggSecondary);
     }
 
-    private void doModEntityRegistration(ResourceLocation registryName, Class<? extends Entity> entityClass, String entityName, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
+    public static <T extends Entity> void registerModEntity(ResourceLocation registryName, Class<T> entityClass, String entityName, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggPrimary, int eggSecondary, Function<World, T> factory)
+    {
+        instance().doModEntityRegistration(registryName, entityClass, entityName, id, mod, trackingRange, updateFrequency, sendsVelocityUpdates, factory);
+        EntityRegistry.registerEgg(registryName, eggPrimary, eggSecondary);
+    }
+
+    private <T extends Entity> void doModEntityRegistration(ResourceLocation registryName, Class<T> entityClass, String entityName, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, Function<World, T> factory)
     {
         ModContainer mc = FMLCommonHandler.instance().findContainerFor(mod);
-        EntityRegistration er = new EntityRegistration(mc, registryName, entityClass, entityName, id, trackingRange, updateFrequency, sendsVelocityUpdates);
+        EntityRegistration er = new EntityRegistration(mc, registryName, entityClass, entityName, id, trackingRange, updateFrequency, sendsVelocityUpdates, factory);
         try
         {
             entityClassRegistrations.put(entityClass, er);
             if (!ForgeRegistries.ENTITIES.containsKey(registryName))
             {
-                EntityEntry entry = new EntityEntry(entityClass, entityName).setRegistryName(registryName);
+                EntityEntry entry = (factory != null ? new EntityEntry(entityClass, entityName, factory) : new EntityEntry(entityClass, entityName)).setRegistryName(registryName);
                 ForgeRegistries.ENTITIES.register(entry);
                 FMLLog.log.trace("Automatically registered mod {} entity {} as {}", mc.getModId(), entityName, entry.getRegistryName());
             }

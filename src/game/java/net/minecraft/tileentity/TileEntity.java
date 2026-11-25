@@ -25,6 +25,7 @@ public abstract class TileEntity implements net.minecraftforge.common.capabiliti
 {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final RegistryNamespaced < ResourceLocation, Class <? extends TileEntity >> REGISTRY = new RegistryNamespaced < ResourceLocation, Class <? extends TileEntity >> ();
+    private static final java.util.Map<Class<? extends TileEntity>, java.util.function.Supplier<? extends TileEntity>> FACTORIES = new java.util.HashMap<>();
     protected World world;
     protected BlockPos pos = BlockPos.ORIGIN;
     protected boolean tileEntityInvalid;
@@ -34,6 +35,12 @@ public abstract class TileEntity implements net.minecraftforge.common.capabiliti
     public static void register(String id, Class <? extends TileEntity > clazz)
     {
         REGISTRY.putObject(new ResourceLocation(id), clazz);
+    }
+
+    public static <T extends TileEntity> void register(String id, Class<T> clazz, java.util.function.Supplier<T> factory)
+    {
+        REGISTRY.putObject(new ResourceLocation(id), clazz);
+        FACTORIES.put(clazz, factory);
     }
 
     @Nullable
@@ -102,7 +109,8 @@ public abstract class TileEntity implements net.minecraftforge.common.capabiliti
 
             if (oclass != null)
             {
-                tileentity = oclass.newInstance();
+                java.util.function.Supplier<? extends TileEntity> factory = FACTORIES.get(oclass);
+                tileentity = factory != null ? factory.get() : oclass.newInstance();
             }
         }
         catch (Throwable throwable1)
