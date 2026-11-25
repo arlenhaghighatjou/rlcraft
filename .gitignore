@@ -14,4 +14,11 @@ bin
 /desktopRuntime/filesystem/*
 /desktopRuntime/downloads/*
 /desktopRuntime/screenshots/*
-/target_*/RLCraft_*
+target_teavm_javascript/javascript/RLCraft_Offline_International.html
+target_teavm_javascript/javascript/RLCraft_Offline_en_US.html
+target_teavm_javascript/javascript/classes.js
+target_teavm_javascript/javascript/classes.js.map
+target_teavm_wasm_gc/javascript/classes.wasm
+target_teavm_wasm_gc/javascript/classes.wasm.teadbg
+target_teavm_wasm_gc/javascript/assets.epk
+target_teavm_wasm_gc/javascript_dist/RLCraft_WASM-GC_Offline_Download.html
