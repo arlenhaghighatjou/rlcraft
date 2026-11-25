@@ -14,4 +14,4 @@ bin
 /desktopRuntime/filesystem/*
 /desktopRuntime/downloads/*
 /desktopRuntime/screenshots/*
-/target_*/RLCraft_
+/target_*/RLCraft_*
