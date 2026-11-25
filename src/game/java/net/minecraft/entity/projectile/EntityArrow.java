@@ -39,7 +39,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class EntityArrow extends Entity implements IProjectile
 {
-    private static final Predicate<Entity> ARROW_TARGETS = Predicates.and(EntitySelectors.NOT_SPECTATING, EntitySelectors.IS_ALIVE, new Predicate<Entity>()
+    public static Predicate<Entity> ARROW_TARGETS = Predicates.and(EntitySelectors.NOT_SPECTATING, EntitySelectors.IS_ALIVE, new Predicate<Entity>()
     {
         public boolean apply(@Nullable Entity p_apply_1_)
         {
