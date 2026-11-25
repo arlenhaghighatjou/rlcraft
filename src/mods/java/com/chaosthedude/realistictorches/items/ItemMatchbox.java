@@ -1,7 +1,7 @@
 package com.chaosthedude.realistictorches.items;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
-import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.client.gui.GuiScreen;
@@ -73,7 +73,7 @@ public class ItemMatchbox extends Item {
    @SideOnly(Side.CLIENT)
    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
       if (GuiScreen.isShiftKeyDown()) {
-         tooltip.add(ChatFormatting.ITALIC + "It's lit");
+         tooltip.add(TextFormatting.ITALIC + "It's lit");
       }
 
    }

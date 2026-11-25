@@ -1,5 +1,6 @@
 package com.chaosthedude.realistictorches.events;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.chaosthedude.realistictorches.blocks.BlockMovingLightSource;
 import com.chaosthedude.realistictorches.blocks.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
@@ -10,7 +11,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
@@ -18,10 +18,11 @@ public class RealisticTorchesEvents {
    public RealisticTorchesEvents() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(PlayerTickEvent.class, EventPriority.LOW, true, this::movingLightHandler);
+      bus.register(HarvestDropsEvent.class, this::onBlockHarvest);
+   }
+
    public void movingLightHandler(PlayerTickEvent event) {
       if (ConfigHandler.handheldLightEnabled && event.phase == Phase.START && !event.player.world.isRemote && event.player.getHeldEquipment() != null && LightSourceHandler.containsLightSource(event.player.getHeldEquipment()) && event.player.world.getTotalWorldTime() % (long)ConfigHandler.handheldLightUpdateTicks == 0L) {
          int blockX = MathHelper.floor(event.player.posX);
@@ -36,7 +37,6 @@ public class RealisticTorchesEvents {
       }
    }
 
-   @SubscribeEvent
    public void onBlockHarvest(HarvestDropsEvent event) {
       if (ConfigHandler.vanillaTorchDropsUnlit && event.getState().getBlock() == Blocks.TORCH) {
          event.getDrops().clear();

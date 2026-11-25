@@ -1,12 +1,12 @@
 package com.chaosthedude.realistictorches.config;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.chaosthedude.realistictorches.RealisticTorches;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigHandler {
    public static Configuration config;
@@ -29,11 +29,11 @@ public class ConfigHandler {
    public ConfigHandler() {
    }
 
-   public static void loadConfig(File configFile) {
+   public static void loadConfig(VFile2 configFile) {
       config = new Configuration(configFile);
       config.load();
       init();
-      MinecraftForge.EVENT_BUS.register(new ConfigHandler.ChangeListener());
+      (new ConfigHandler.ChangeListener()).register(MinecraftForge.EVENT_BUS);
    }
 
    public static void init() {
@@ -115,7 +115,10 @@ public class ConfigHandler {
       public ChangeListener() {
       }
 
-      @SubscribeEvent
+      public void register(EventBus bus) {
+         bus.register(OnConfigChangedEvent.class, this::onConfigChanged);
+      }
+
       public void onConfigChanged(OnConfigChangedEvent eventArgs) {
          if (eventArgs.getModID().equals("realistictorches")) {
             ConfigHandler.init();
