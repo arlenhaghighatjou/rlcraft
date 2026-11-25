@@ -21,7 +21,6 @@ import crafttweaker.mc1120.network.MessageCopyClipboard;
 import crafttweaker.mc1120.network.MessageOpenBrowser;
 import crafttweaker.mc1120.oredict.MCOreDict;
 import crafttweaker.mc1120.preprocessors.ModLoadedPreprocessor;
-import crafttweaker.mc1120.preprocessors.ZsLintPreprocessor;
 import crafttweaker.mc1120.proxies.CommonProxy;
 import crafttweaker.mc1120.recipes.MCRecipeManager;
 import crafttweaker.mc1120.server.MCServer;
@@ -154,7 +153,6 @@ public class CraftTweaker {
       }
 
       CraftTweakerAPI.tweaker.getPreprocessorManager().registerPreprocessorAction("modloaded", ModLoadedPreprocessor::new);
-      CraftTweakerAPI.tweaker.getPreprocessorManager().registerPreprocessorAction("zslint", ZsLintPreprocessor::new);
    }
 
    @EventHandler

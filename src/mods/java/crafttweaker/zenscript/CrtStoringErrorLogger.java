@@ -1,6 +1,5 @@
 package crafttweaker.zenscript;
 
-import crafttweaker.socket.SingleError;
 import java.util.ArrayList;
 import java.util.List;
 import stanhebben.zenscript.util.ZenPosition;

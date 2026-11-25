@@ -1,7 +1,6 @@
 package crafttweaker.zenscript;
 
 import crafttweaker.CraftTweakerAPI;
-import crafttweaker.socket.SingleError;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;

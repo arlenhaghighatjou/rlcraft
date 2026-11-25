@@ -10,7 +10,7 @@ import crafttweaker.runtime.events.CrTLoadingScriptEventPost;
 import crafttweaker.runtime.events.CrTLoadingScriptEventPre;
 import crafttweaker.runtime.events.CrTLoadingStartedEvent;
 import crafttweaker.runtime.events.CrTScriptLoadingEvent;
-import crafttweaker.socket.SingleError;
+import crafttweaker.zenscript.SingleError;
 import crafttweaker.util.EventList;
 import crafttweaker.util.IEventHandler;
 import crafttweaker.util.SuppressErrorFlag;

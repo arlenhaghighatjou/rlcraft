@@ -1,4 +1,4 @@
-package crafttweaker.socket;
+package crafttweaker.zenscript;
 
 public class SingleError {
    public String fileName;
