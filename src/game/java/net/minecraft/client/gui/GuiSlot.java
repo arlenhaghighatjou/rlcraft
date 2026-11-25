@@ -264,7 +264,7 @@ public abstract class GuiSlot
 
     public void handleMouseInput()
     {
-        this.handleInput(Mouse.getEventButton(), Mouse.getEventButtonState(), Mouse.getEventDWheel());
+        this.handleInput(Mouse.getEventButton(), Mouse.getEventButtonState(), Mouse.getDWheel());
     }
 
     public void handleTouchInput()
