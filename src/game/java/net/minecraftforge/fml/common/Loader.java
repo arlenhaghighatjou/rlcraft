@@ -206,6 +206,7 @@ public class Loader
         mods.add(new FMLModContainer<>("notreepunching", "No Tree Punching", "2.0.21", com.alcatrazescapee.notreepunching.NoTreePunching.DEPENDENCIES, "[1.12.2]", "notreepunching", com.alcatrazescapee.notreepunching.NoTreePunching::new, com.alcatrazescapee.notreepunching.NoTreePunching::handleModStateEvent));
         mods.add(new FMLModContainer<>("toastcontrol", "Toast Control", "1.8.1", shadows.toaster.ToastControl.DEPS, "[1.12.2]", "toastcontrol", shadows.toaster.ToastControl::new, shadows.toaster.ToastControl::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("tumbleweed", "Tumbleweed", "1.12-0.4.7", "", "[1.12.2]", "tumbleweed", net.konwboy.tumbleweed.Tumbleweed::new, net.konwboy.tumbleweed.Tumbleweed::handleModStateEvent));
+        mods.add(new FMLModContainer<>("blockoverlayfix", "Block Overlay Fix", "1.0.0", "", "[1.12.2]", "blockoverlayfix", meldexun.blockoverlayfix.BlockOverlayFix::new, meldexun.blockoverlayfix.BlockOverlayFix::handleModStateEvent).clientSideOnly());
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }

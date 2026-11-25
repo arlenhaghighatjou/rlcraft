@@ -1,111 +1,109 @@
 package meldexun.blockoverlayfix;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
-import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.GlStateManager.CullFace;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
+
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.GL_BACK;
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.GL_FRONT;
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.GL_QUADS;
 
 @Mod(
-   modid = "blockoverlayfix"
+   modid = "blockoverlayfix",
+   name = "Block Overlay Fix",
+   version = "1.0.0",
+   clientSideOnly = true
 )
 public class BlockOverlayFix {
    public static final String MODID = "blockoverlayfix";
+   private static final double MARGIN = 0.175D;
+   private static final MutableBlockPos POS = new MutableBlockPos();
+   private static final List<AxisAlignedBB> COLLISIONS = new ArrayList<>();
+   private static boolean enabled;
 
-   public BlockOverlayFix() {
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         enabled = true;
+      }
+   }
+
+   public static boolean isEnabled() {
+      return enabled;
    }
 
    public static void renderNearbyBlocks(float partialTicks) {
       Minecraft mc = Minecraft.getMinecraft();
-      if (!mc.player.isPlayerSleeping()) {
-         if (!mc.player.isSpectator()) {
-            double error = 0.175D;
-            double x = mc.player.lastTickPosX + (mc.player.posX - mc.player.lastTickPosX) * (double)partialTicks;
-            double y = mc.player.lastTickPosY + (mc.player.posY - mc.player.lastTickPosY) * (double)partialTicks + (double)mc.player.getEyeHeight();
-            double z = mc.player.lastTickPosZ + (mc.player.posZ - mc.player.lastTickPosZ) * (double)partialTicks;
-            AxisAlignedBB aabb = new AxisAlignedBB(x - error, y - error, z - error, x + error, y + error, z + error);
-            Tessellator tessellator = Tessellator.getInstance();
-            WorldRenderer bufferBuilder = tessellator.getBuffer();
-            boolean[] startedBuilding = new boolean[1];
-            forEachNearbyPos(x, y, z, error, (pos) -> {
-               IBlockState state = mc.world.getBlockState(pos);
-               if (state.getRenderType() != EnumBlockRenderType.INVISIBLE) {
-                  if (!Arrays.stream(EnumFacing.VALUES).noneMatch((side) -> {
-                     return state.doesSideBlockRendering(mc.world, pos, side);
-                  })) {
-                     List<AxisAlignedBB> aabbs = new ArrayList();
-                     state.getBlock().addCollisionBoxToList(state, mc.world, pos, aabb, aabbs, mc.player, true);
-                     Vec3d vec = new Vec3d(x, y, z);
-                     if (!aabbs.stream().noneMatch((aabb1) -> {
-                        return aabb1.grow(error).contains(vec);
-                     })) {
-                        if (!startedBuilding[0]) {
-                           startedBuilding[0] = true;
-                           bufferBuilder.begin(7, DefaultVertexFormats.BLOCK);
-                           bufferBuilder.setTranslation(-x, -(y - (double)mc.player.getEyeHeight()), -z);
-                        }
+      EntityPlayerSP player = mc.player;
+      if (player == null || player.isPlayerSleeping() || player.isSpectator()) {
+         return;
+      }
 
-                        IBlockState state1 = state.getActualState(mc.world, pos);
-                        mc.getBlockRendererDispatcher().getBlockModelRenderer().renderModel(mc.world, mc.getBlockRendererDispatcher().getModelForState(state1), state1, pos, bufferBuilder, false);
-                     }
-                  }
+      double x = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
+      double feetY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
+      double y = feetY + player.getEyeHeight();
+      double z = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
+      AxisAlignedBB eyeBox = new AxisAlignedBB(x - MARGIN, y - MARGIN, z - MARGIN, x + MARGIN, y + MARGIN, z + MARGIN);
+      BlockRendererDispatcher dispatcher = mc.getBlockRendererDispatcher();
+      Tessellator tessellator = Tessellator.getInstance();
+      WorldRenderer buffer = tessellator.getBuffer();
+      boolean drawing = false;
+      for (int bx = MathHelper.floor(eyeBox.minX); bx <= MathHelper.floor(eyeBox.maxX); ++bx) {
+         for (int by = MathHelper.floor(eyeBox.minY); by <= MathHelper.floor(eyeBox.maxY); ++by) {
+            for (int bz = MathHelper.floor(eyeBox.minZ); bz <= MathHelper.floor(eyeBox.maxZ); ++bz) {
+               POS.setPos(bx, by, bz);
+               IBlockState state = mc.world.getBlockState(POS);
+               if (state.getRenderType() == EnumBlockRenderType.INVISIBLE || !blocksView(mc, state)) {
+                  continue;
                }
-            });
-            if (startedBuilding[0]) {
-               bufferBuilder.setTranslation(0.0D, 0.0D, 0.0D);
-               GlStateManager.cullFace(CullFace.FRONT);
-               tessellator.draw();
-               bufferBuilder.reset();
-               GlStateManager.cullFace(CullFace.BACK);
-               if (OpenGlHelper.useVbo()) {
-                  GlStateManager.glEnableClientState(32884);
-                  OpenGlHelper.setClientActiveTexture(OpenGlHelper.defaultTexUnit);
-                  GlStateManager.glEnableClientState(32888);
-                  OpenGlHelper.setClientActiveTexture(OpenGlHelper.lightmapTexUnit);
-                  GlStateManager.glEnableClientState(32888);
-                  OpenGlHelper.setClientActiveTexture(OpenGlHelper.defaultTexUnit);
-                  GlStateManager.glEnableClientState(32886);
+               COLLISIONS.clear();
+               state.addCollisionBoxToList(mc.world, POS, eyeBox, COLLISIONS, player, true);
+               if (COLLISIONS.isEmpty()) {
+                  continue;
                }
+               if (!drawing) {
+                  drawing = true;
+                  buffer.begin(GL_QUADS, DefaultVertexFormats.BLOCK);
+                  buffer.setTranslation(-x, -feetY, -z);
+               }
+               IBlockState actualState = state.getActualState(mc.world, POS);
+               dispatcher.getBlockModelRenderer().renderModel(mc.world, dispatcher.getModelForState(actualState),
+                  actualState, POS, buffer, false);
             }
-
+         }
+      }
+      COLLISIONS.clear();
+      if (drawing) {
+         buffer.setTranslation(0.0D, 0.0D, 0.0D);
+         GlStateManager.cullFace(GL_FRONT);
+         try {
+            tessellator.draw();
+         } finally {
+            GlStateManager.cullFace(GL_BACK);
          }
       }
    }
 
-   private static void forEachNearbyPos(double x, double y, double z, double error, Consumer<BlockPos> action) {
-      int bx = MathHelper.floor(x);
-      int by = MathHelper.floor(y);
-      int bz = MathHelper.floor(z);
-      MutableBlockPos pos = new MutableBlockPos();
-      int used = 0;
-
-      for(int i = 0; i < 8; ++i) {
-         double x1 = x + (double)((i >> 1 & 2) - 1) * error;
-         double y1 = y + (double)((i & 2) - 1) * error;
-         double z1 = z + (double)((i << 1 & 2) - 1) * error;
-         pos.setPos(x1, y1, z1);
-         int mask = 1 << ((pos.getX() + 1 - bx) * 3 + (pos.getY() + 1 - by)) * 3 + (pos.getZ() + 1 - bz);
-         if ((used & mask) == 0) {
-            used |= mask;
-            action.accept(pos);
+   private static boolean blocksView(Minecraft mc, IBlockState state) {
+      for (EnumFacing side : EnumFacing.VALUES) {
+         if (state.doesSideBlockRendering(mc.world, POS, side)) {
+            return true;
          }
       }
-
+      return false;
    }
 }

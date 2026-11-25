@@ -1420,6 +1420,10 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
     private void renderBlockLayer(BlockRenderLayer blockLayerIn)
     {
         this.mc.entityRenderer.enableLightmap();
+        if (blockLayerIn == BlockRenderLayer.SOLID && meldexun.blockoverlayfix.BlockOverlayFix.isEnabled())
+        {
+            meldexun.blockoverlayfix.BlockOverlayFix.renderNearbyBlocks(this.mc.getRenderPartialTicks());
+        }
         this.renderContainer.renderChunkLayer(blockLayerIn);
         this.mc.entityRenderer.disableLightmap();
     }
