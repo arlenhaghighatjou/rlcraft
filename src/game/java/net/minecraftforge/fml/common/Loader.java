@@ -188,6 +188,7 @@ public class Loader
         mods.add(new FMLModContainer<>("collisiondamage", "CollisionDamage", "1.2.2", "", "", "collisiondamage", collisiondamage.core.CollisionDamage::new, collisiondamage.core.CollisionDamage::handleModStateEvent));
         mods.add(new FMLModContainer<>("bedbreakbegone", "BedBreakBegone", "1.0.2", "", "", "bedbreakbegone", bedbreakbegone.core.BedBreakBegone::new, bedbreakbegone.core.BedBreakBegone::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("framevoidpatch", "Frame Void Patch", "1.0.0", "", "", "framevoidpatch", framevoidpatch.core.FrameVoidPatch::new, framevoidpatch.core.FrameVoidPatch::handleModStateEvent).acceptableRemoteVersions("*"));
+        mods.add(new FMLModContainer<>("disenchanter", "Disenchanter", "1.8", "", "", "disenchanter", de.impelon.disenchanter.DisenchanterMain::new, de.impelon.disenchanter.DisenchanterMain::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }

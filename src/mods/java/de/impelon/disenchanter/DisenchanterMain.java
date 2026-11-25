@@ -1,5 +1,11 @@
 package de.impelon.disenchanter;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import de.impelon.disenchanter.proxy.CommonProxy;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -7,16 +13,10 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@EventBusSubscriber
 @Mod(
    modid = "disenchanter",
    name = "Disenchanter",
@@ -28,48 +28,60 @@ public class DisenchanterMain {
    public static final String MODID = "disenchanter";
    public static final String VERSION = "1.8";
    public static final String UPDATE_JSON = "https://raw.githubusercontent.com/Impelon/Disenchanter/meta/versions.json";
-   @Instance("disenchanter")
    public static DisenchanterMain instance;
-   @SidedProxy(
-      clientSide = "de.impelon.disenchanter.proxy.CombinedClientProxy",
-      serverSide = "de.impelon.disenchanter.proxy.ServerProxy"
-   )
    public static CommonProxy proxy;
 
    public DisenchanterMain() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new de.impelon.disenchanter.proxy.CombinedClientProxy() : new de.impelon.disenchanter.proxy.ServerProxy();
+         de.impelon.disenchanter.DisenchanterConfig.register();
+         de.impelon.disenchanter.DisenchanterConfig.EventHandler.register(MinecraftForge.EVENT_BUS);
+         de.impelon.disenchanter.DisenchanterMain.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         DisenchanterMain.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         DisenchanterMain.load((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         DisenchanterMain.postInit((FMLPostInitializationEvent)event);
+      }
+
+   }
+
    public static void preInit(FMLPreInitializationEvent ev) {
       proxy.preInit(ev);
    }
 
-   @EventHandler
    public static void load(FMLInitializationEvent ev) {
       proxy.load(ev);
    }
 
-   @EventHandler
    public static void postInit(FMLPostInitializationEvent ev) {
       proxy.postInit(ev);
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, DisenchanterMain::registerBlocks);
+      bus.registerGeneric(Register.class, Item.class, DisenchanterMain::registerItems);
+      bus.registerGeneric(Register.class, SoundEvent.class, DisenchanterMain::registerSoundEvents);
+      bus.registerGeneric(Register.class, IRecipe.class, DisenchanterMain::registerRecipes);
+   }
+
    public static void registerBlocks(Register<Block> ev) {
       proxy.registerBlocks(ev);
    }
 
-   @SubscribeEvent
    public static void registerItems(Register<Item> ev) {
       proxy.registerItems(ev);
    }
 
-   @SubscribeEvent
    public static void registerSoundEvents(Register<SoundEvent> ev) {
       proxy.registerSoundEvents(ev);
    }
 
-   @SubscribeEvent
    public static void registerRecipes(Register<IRecipe> ev) {
       proxy.registerRecipes(ev);
    }
