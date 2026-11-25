@@ -1,6 +1,7 @@
 package se.gory_moon.globalgamerules.config;
 
-import java.io.File;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.common.config.Property.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import se.gory_moon.globalgamerules.reference.Reference;
@@ -31,7 +31,7 @@ public class GGRConfig extends Configuration {
    public HashMap<String, String> comments = new HashMap();
    public HashMap<String, Pair<String, GGRConfig.Value>> custom = new HashMap();
 
-   public GGRConfig(File name) {
+   public GGRConfig(VFile2 name) {
       super(name);
       this.rules.put("commandBlockOutput", this.defaultValue(true));
       this.rules.put("disableElytraMovementCheck", this.defaultValue(false));
@@ -174,7 +174,10 @@ public class GGRConfig extends Configuration {
       return this.comments.get(s) != null ? (String)this.comments.get(s) : "GameRule added by another mod or from commands";
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, this::onConfigChanged);
+   }
+
    public void onConfigChanged(OnConfigChangedEvent event) {
       if (event.getModID().equals("globalgamerules")) {
          this.syncConfigs();

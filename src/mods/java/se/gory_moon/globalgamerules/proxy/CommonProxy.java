@@ -10,6 +10,6 @@ public abstract class CommonProxy {
    public abstract void setConfigEntryClasses();
 
    public void registerEvents() {
-      MinecraftForge.EVENT_BUS.register(GlobalGR.getConfig());
+      GlobalGR.getConfig().register(MinecraftForge.EVENT_BUS);
    }
 }

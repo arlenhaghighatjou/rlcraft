@@ -1,5 +1,6 @@
 package se.gory_moon.globalgamerules;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.Arrays;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -15,21 +16,21 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.event.world.WorldEvent.Unload;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import se.gory_moon.globalgamerules.config.GGRConfig;
 import se.gory_moon.globalgamerules.reference.Reference;
 
-@EventBusSubscriber(
-   modid = "globalgamerules"
-)
 public class WorldEvents {
    public WorldEvents() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(EntityJoinWorldEvent.class, WorldEvents::onWorldJoin);
+      bus.register(Load.class, WorldEvents::onWorldLoad);
+      bus.register(Unload.class, WorldEvents::onWorldUnLoad);
+   }
+
    public static void onWorldJoin(EntityJoinWorldEvent event) {
       if (!event.getWorld().isRemote && event.getEntity() instanceof EntityPlayer) {
          World world = event.getWorld();
@@ -48,7 +49,6 @@ public class WorldEvents {
 
    }
 
-   @SubscribeEvent
    public static void onWorldLoad(Load event) {
       World world = event.getWorld();
       WorldInfo info = world.getWorldInfo();
@@ -75,7 +75,6 @@ public class WorldEvents {
 
    }
 
-   @SubscribeEvent
    public static void onWorldUnLoad(Unload event) {
       World world = event.getWorld();
       WorldInfo info = world.getWorldInfo();
