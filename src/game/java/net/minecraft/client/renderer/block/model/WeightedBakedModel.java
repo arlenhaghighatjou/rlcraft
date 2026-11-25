@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.WeightedRandom;
@@ -33,7 +34,8 @@ public class WeightedBakedModel implements IBakedModel
 
     public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand)
     {
-        return this.getRandomModel(rand).getQuads(state, side, rand);
+        IBakedModel model = state != null && !Minecraft.getMinecraft().gameSettings.allowBlockAlternatives ? this.baseModel : this.getRandomModel(rand);
+        return model.getQuads(state, side, rand);
     }
 
     public boolean isAmbientOcclusion()

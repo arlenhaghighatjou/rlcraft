@@ -118,11 +118,16 @@ public class ForgeGuiFactory implements IModGuiFactory
         private static List<IConfigElement> getConfigElements()
         {
             List<IConfigElement> list = new ArrayList<IConfigElement>();
-            list.add(new DummyCategoryElement("forgeCfg", "forge.configgui.ctgy.forgeGeneralConfig", GeneralEntry.class));
-            list.add(new DummyCategoryElement("forgeClientCfg", "forge.configgui.ctgy.forgeClientConfig", ClientEntry.class));
-            list.add(new DummyCategoryElement("forgeChunkLoadingCfg", "forge.configgui.ctgy.forgeChunkLoadingConfig", ChunkLoaderEntry.class));
-            list.add(new DummyCategoryElement("forgeVersionCheckCfg", "forge.configgui.ctgy.VersionCheckConfig", VersionCheckEntry.class));
+            list.add(category("forgeCfg", "forge.configgui.ctgy.forgeGeneralConfig", GeneralEntry::new));
+            list.add(category("forgeClientCfg", "forge.configgui.ctgy.forgeClientConfig", ClientEntry::new));
+            list.add(category("forgeChunkLoadingCfg", "forge.configgui.ctgy.forgeChunkLoadingConfig", ChunkLoaderEntry::new));
+            list.add(category("forgeVersionCheckCfg", "forge.configgui.ctgy.VersionCheckConfig", VersionCheckEntry::new));
             return list;
+        }
+
+        private static IConfigElement category(String name, String langKey, GuiConfigEntries.EntryFactory factory)
+        {
+            return new DummyCategoryElement(name, langKey, java.util.Collections.emptyList()).setConfigEntryFactory(factory);
         }
 
         /**
@@ -189,8 +194,7 @@ public class ForgeGuiFactory implements IModGuiFactory
             {
                 List<IConfigElement> list = new ArrayList<IConfigElement>();
 
-                list.add(new DummyCategoryElement("forgeChunkLoadingModCfg", "forge.configgui.ctgy.forgeChunkLoadingModConfig",
-                        ModOverridesEntry.class));
+                list.add(category("forgeChunkLoadingModCfg", "forge.configgui.ctgy.forgeChunkLoadingModConfig", ModOverridesEntry::new));
                 list.addAll((new ConfigElement(ForgeChunkManager.getDefaultsCategory())).getChildElements());
 
                 // This GuiConfig object specifies the configID of the object and as such will force-save when it is closed. The parent
@@ -269,8 +273,7 @@ public class ForgeGuiFactory implements IModGuiFactory
             {
                 List<IConfigElement> list = new ArrayList<IConfigElement>();
 
-                list.add(new DummyCategoryElement("addForgeChunkLoadingModCfg", "forge.configgui.ctgy.forgeChunkLoadingAddModConfig",
-                        AddModOverrideEntry.class));
+                list.add(category("addForgeChunkLoadingModCfg", "forge.configgui.ctgy.forgeChunkLoadingAddModConfig", AddModOverrideEntry::new));
                 for (ConfigCategory cc : ForgeChunkManager.getModCategories())
                     list.add(new ConfigElement(cc));
 
@@ -346,7 +349,7 @@ public class ForgeGuiFactory implements IModGuiFactory
             {
                 List<IConfigElement> list = new ArrayList<IConfigElement>();
 
-                list.add(new DummyConfigElement("modID", "", ConfigGuiType.STRING, "forge.configgui.modID").setCustomListEntryClass(ModIDEntry.class));
+                list.add(new DummyConfigElement("modID", "", ConfigGuiType.STRING, "forge.configgui.modID").setConfigEntryFactory(ModIDEntry::new));
                 list.add(new ConfigElement(new Property("maximumTicketCount", "200", Property.Type.INTEGER, "forge.configgui.maximumTicketCount")));
                 list.add(new ConfigElement(new Property("maximumChunksPerTicket", "25", Property.Type.INTEGER, "forge.configgui.maximumChunksPerTicket")));
 

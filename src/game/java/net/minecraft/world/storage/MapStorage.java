@@ -2,15 +2,33 @@ package net.minecraft.world.storage;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import javax.annotation.Nullable;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagShort;
+import net.minecraft.scoreboard.ScoreboardSaveData;
+import net.minecraft.village.VillageCollection;
+import net.minecraft.world.gen.structure.MapGenStructureData;
+import net.minecraftforge.common.util.WorldCapabilityData;
 
 public class MapStorage
 {
+    public static final Map<Class<? extends WorldSavedData>, Function<String, ? extends WorldSavedData>> storageProviders = new HashMap<>();
+
+    static
+    {
+        storageProviders.put(MapData.class, MapData::new);
+        storageProviders.put(MapGenStructureData.class, MapGenStructureData::new);
+        storageProviders.put(ScoreboardSaveData.class, ScoreboardSaveData::new);
+        storageProviders.put(VillageCollection.class, VillageCollection::new);
+        storageProviders.put(WorldCapabilityData.class, WorldCapabilityData::new);
+    }
+
     private final ISaveHandler saveHandler;
     protected Map<String, WorldSavedData> loadedDataMap = Maps.<String, WorldSavedData>newHashMap();
     private final List<WorldSavedData> loadedDataList = Lists.<WorldSavedData>newArrayList();
@@ -43,7 +61,8 @@ public class MapStorage
                     {
                         try
                         {
-                            worldsaveddata = clazz.getConstructor(String.class).newInstance(dataIdentifier);
+                            Function<String, ? extends WorldSavedData> provider = storageProviders.get(clazz);
+                            worldsaveddata = provider != null ? provider.apply(dataIdentifier) : clazz.getConstructor(String.class).newInstance(dataIdentifier);
                         }
                         catch (Exception exception)
                         {
@@ -55,7 +74,7 @@ public class MapStorage
                 }
                 catch (Exception exception1)
                 {
-                    exception1.printStackTrace();
+                    EagRuntime.debugPrintStackTrace(exception1);
                 }
             }
 

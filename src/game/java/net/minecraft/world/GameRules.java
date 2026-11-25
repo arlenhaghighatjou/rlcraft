@@ -20,6 +20,7 @@ public class GameRules
         this.addGameRule("commandBlockOutput", "true", GameRules.ValueType.BOOLEAN_VALUE);
         this.addGameRule("naturalRegeneration", "true", GameRules.ValueType.BOOLEAN_VALUE);
         this.addGameRule("doDaylightCycle", "true", GameRules.ValueType.BOOLEAN_VALUE);
+        this.addGameRule("loadSpawnChunks", "false", GameRules.ValueType.BOOLEAN_VALUE);
         this.addGameRule("logAdminCommands", "true", GameRules.ValueType.BOOLEAN_VALUE);
         this.addGameRule("showDeathMessages", "true", GameRules.ValueType.BOOLEAN_VALUE);
         this.addGameRule("randomTickSpeed", "3", GameRules.ValueType.NUMERICAL_VALUE);

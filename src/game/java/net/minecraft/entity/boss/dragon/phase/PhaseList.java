@@ -1,50 +1,37 @@
 package net.minecraft.entity.boss.dragon.phase;
 
-import java.lang.reflect.Constructor;
 import java.util.Arrays;
+import java.util.function.Function;
 import net.minecraft.entity.boss.EntityDragon;
 
 public class PhaseList<T extends IPhase>
 {
     private static PhaseList<?>[] phases = new PhaseList[0];
-    public static final PhaseList<PhaseHoldingPattern> HOLDING_PATTERN = create(PhaseHoldingPattern.class, "HoldingPattern");
-    public static final PhaseList<PhaseStrafePlayer> STRAFE_PLAYER = create(PhaseStrafePlayer.class, "StrafePlayer");
-    public static final PhaseList<PhaseLandingApproach> LANDING_APPROACH = create(PhaseLandingApproach.class, "LandingApproach");
-    public static final PhaseList<PhaseLanding> LANDING = create(PhaseLanding.class, "Landing");
-    public static final PhaseList<PhaseTakeoff> TAKEOFF = create(PhaseTakeoff.class, "Takeoff");
-    public static final PhaseList<PhaseSittingFlaming> SITTING_FLAMING = create(PhaseSittingFlaming.class, "SittingFlaming");
-    public static final PhaseList<PhaseSittingScanning> SITTING_SCANNING = create(PhaseSittingScanning.class, "SittingScanning");
-    public static final PhaseList<PhaseSittingAttacking> SITTING_ATTACKING = create(PhaseSittingAttacking.class, "SittingAttacking");
-    public static final PhaseList<PhaseChargingPlayer> CHARGING_PLAYER = create(PhaseChargingPlayer.class, "ChargingPlayer");
-    public static final PhaseList<PhaseDying> DYING = create(PhaseDying.class, "Dying");
-    public static final PhaseList<PhaseHover> HOVER = create(PhaseHover.class, "Hover");
-    private final Class <? extends IPhase > clazz;
+    public static final PhaseList<PhaseHoldingPattern> HOLDING_PATTERN = create(PhaseHoldingPattern::new, "HoldingPattern");
+    public static final PhaseList<PhaseStrafePlayer> STRAFE_PLAYER = create(PhaseStrafePlayer::new, "StrafePlayer");
+    public static final PhaseList<PhaseLandingApproach> LANDING_APPROACH = create(PhaseLandingApproach::new, "LandingApproach");
+    public static final PhaseList<PhaseLanding> LANDING = create(PhaseLanding::new, "Landing");
+    public static final PhaseList<PhaseTakeoff> TAKEOFF = create(PhaseTakeoff::new, "Takeoff");
+    public static final PhaseList<PhaseSittingFlaming> SITTING_FLAMING = create(PhaseSittingFlaming::new, "SittingFlaming");
+    public static final PhaseList<PhaseSittingScanning> SITTING_SCANNING = create(PhaseSittingScanning::new, "SittingScanning");
+    public static final PhaseList<PhaseSittingAttacking> SITTING_ATTACKING = create(PhaseSittingAttacking::new, "SittingAttacking");
+    public static final PhaseList<PhaseChargingPlayer> CHARGING_PLAYER = create(PhaseChargingPlayer::new, "ChargingPlayer");
+    public static final PhaseList<PhaseDying> DYING = create(PhaseDying::new, "Dying");
+    public static final PhaseList<PhaseHover> HOVER = create(PhaseHover::new, "Hover");
+    private final Function<EntityDragon, T> factory;
     private final int id;
     private final String name;
 
-    private PhaseList(int idIn, Class <? extends IPhase > clazzIn, String nameIn)
+    private PhaseList(int idIn, Function<EntityDragon, T> factoryIn, String nameIn)
     {
         this.id = idIn;
-        this.clazz = clazzIn;
+        this.factory = factoryIn;
         this.name = nameIn;
     }
 
     public IPhase createPhase(EntityDragon dragon)
     {
-        try
-        {
-            Constructor <? extends IPhase > constructor = this.getConstructor();
-            return constructor.newInstance(dragon);
-        }
-        catch (Exception exception)
-        {
-            throw new Error(exception);
-        }
-    }
-
-    protected Constructor <? extends IPhase > getConstructor() throws NoSuchMethodException
-    {
-        return this.clazz.getConstructor(EntityDragon.class);
+        return this.factory.apply(dragon);
     }
 
     public int getId()
@@ -67,7 +54,7 @@ public class PhaseList<T extends IPhase>
         return phases.length;
     }
 
-    private static <T extends IPhase> PhaseList<T> create(Class<T> phaseIn, String nameIn)
+    private static <T extends IPhase> PhaseList<T> create(Function<EntityDragon, T> phaseIn, String nameIn)
     {
         PhaseList<T> phaselist = new PhaseList<T>(phases.length, phaseIn, nameIn);
         phases = (PhaseList[])Arrays.copyOf(phases, phases.length + 1);

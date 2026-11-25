@@ -120,7 +120,10 @@ public class GuiConfigEntries extends GuiListExtended
         {
             if (configElement != null && configElement.showInGui())
             {
-                if (configElement.getConfigEntryClass() != null)
+                EntryFactory factory = configElement.getConfigEntryFactory();
+                if (factory != null)
+                    this.listEntries.add(factory.create(this.owningScreen, this, configElement));
+                else if (configElement.getConfigEntryClass() != null)
                     try
                     {
                         this.listEntries.add(configElement.getConfigEntryClass()
@@ -178,6 +181,11 @@ public class GuiConfigEntries extends GuiListExtended
                     this.listEntries.add(new CategoryEntry(this.owningScreen, this, configElement));
             }
         }
+    }
+
+    public interface EntryFactory
+    {
+        IConfigEntry create(GuiConfig screen, GuiConfigEntries entries, IConfigElement element);
     }
 
     protected void initGui()

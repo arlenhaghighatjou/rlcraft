@@ -9,6 +9,6 @@ public class WorldProviderSurface extends WorldProvider
 
     public boolean canDropChunk(int x, int z)
     {
-        return !this.world.isSpawnChunk(x, z) || !this.world.provider.getDimensionType().shouldLoadSpawn();
+        return !this.world.getGameRules().getBoolean("loadSpawnChunks") || !this.world.isSpawnChunk(x, z) || !this.getDimensionType().shouldLoadSpawn();
     }
 }

@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.crash.ICrashReportDetail;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.datafix.IDataFixer;
@@ -351,7 +350,7 @@ public class WorldInfo
         nbt.setLong("Time", this.totalTime);
         nbt.setLong("DayTime", this.worldTime);
         nbt.setLong("SizeOnDisk", this.sizeOnDisk);
-        nbt.setLong("LastPlayed", MinecraftServer.getCurrentTimeMillis());
+        nbt.setLong("LastPlayed", System.currentTimeMillis());
         nbt.setString("LevelName", this.levelName);
         nbt.setInteger("version", this.saveVersion);
         nbt.setInteger("clearWeatherTime", this.cleanWeatherTime);

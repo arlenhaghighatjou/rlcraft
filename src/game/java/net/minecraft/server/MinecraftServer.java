@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Queue;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
+import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerIntegratedServerWorker;
 import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.concurrent.Callable;
 import net.lax1dude.eaglercraft.v1_8.futures.Executors;
@@ -126,6 +127,7 @@ public abstract class MinecraftServer implements ICommandSender, IThreadListener
     private long nanoTimeSinceStatusRefresh;
     public final Queue < FutureTask<? >> futureTaskQueue = new ArrayDeque<>();
     protected long currentTime = getCurrentTimeMillis();
+    private boolean spawnChunksLoaded;
     @SideOnly(Side.CLIENT)
 
     public MinecraftServer(String worldName)
@@ -287,7 +289,41 @@ public abstract class MinecraftServer implements ICommandSender, IThreadListener
 
         this.playerList.setPlayerManager(new WorldServer[]{ overWorld });
         this.setDifficultyForAllWorlds(this.getDifficulty());
-        this.initialWorldChunkLoad();
+        this.updateSpawnChunks(overWorld);
+    }
+
+    private void updateSpawnChunks(WorldServer world)
+    {
+        boolean keepLoaded = world.getGameRules().getBoolean("loadSpawnChunks");
+        if (keepLoaded != this.spawnChunksLoaded)
+        {
+            if (keepLoaded)
+            {
+                this.initialWorldChunkLoad();
+            }
+            else
+            {
+                BlockPos spawn = world.getSpawnPoint();
+                net.minecraft.world.gen.ChunkProviderServer provider = world.getChunkProvider();
+                for (int x = -192; x <= 192; x += 16)
+                {
+                    for (int z = -192; z <= 192; z += 16)
+                    {
+                        int chunkX = (spawn.getX() + x) >> 4;
+                        int chunkZ = (spawn.getZ() + z) >> 4;
+                        if (!world.getPlayerChunkMap().contains(chunkX, chunkZ))
+                        {
+                            net.minecraft.world.chunk.Chunk chunk = provider.getLoadedChunk(chunkX, chunkZ);
+                            if (chunk != null)
+                            {
+                                provider.queueUnload(chunk);
+                            }
+                        }
+                    }
+                }
+            }
+            this.spawnChunksLoaded = keepLoaded;
+        }
     }
 
     public void initialWorldChunkLoad()
@@ -360,6 +396,7 @@ public abstract class MinecraftServer implements ICommandSender, IThreadListener
         this.currentTask = message;
         this.percentDone = percent;
         LOGGER.info("{}: {}%", message, Integer.valueOf(percent));
+        EaglerIntegratedServerWorker.sendProgress("singleplayer.busy.startingIntegratedServer", percent * 0.01F);
     }
 
     protected void clearCurrentTask()
@@ -488,6 +525,7 @@ public abstract class MinecraftServer implements ICommandSender, IThreadListener
 
     public void tick()
     {
+        this.updateSpawnChunks(this.worlds[0]);
         long i = System.nanoTime();
         net.minecraftforge.fml.common.FMLCommonHandler.instance().onPreServerTick();
         ++this.tickCounter;

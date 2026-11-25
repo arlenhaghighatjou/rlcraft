@@ -48,6 +48,11 @@ public interface IConfigElement
      * @see GuiConfigEntries.IntegerEntry
      */
     Class<? extends IConfigEntry> getConfigEntryClass();
+
+    default GuiConfigEntries.EntryFactory getConfigEntryFactory()
+    {
+        return null;
+    }
     
     /**
      * This method returns a class that implements {@link IArrayEntry}. This class MUST provide a constructor with the

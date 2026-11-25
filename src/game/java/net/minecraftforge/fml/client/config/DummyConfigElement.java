@@ -61,6 +61,7 @@ public class DummyConfigElement implements IConfigElement
     protected List<IConfigElement> childElements;
     @Nullable
     protected Class<? extends IConfigEntry> configEntryClass;
+    private GuiConfigEntries.EntryFactory configEntryFactory;
     protected Class<? extends IArrayEntry> arrayEntryClass;
     
     /**
@@ -227,6 +228,18 @@ public class DummyConfigElement implements IConfigElement
         this(name, defaultValue, type, langKey, null, null, minValue, maxValue);
     }
     
+    public DummyConfigElement setConfigEntryFactory(GuiConfigEntries.EntryFactory factory)
+    {
+        this.configEntryFactory = factory;
+        return this;
+    }
+
+    @Override
+    public GuiConfigEntries.EntryFactory getConfigEntryFactory()
+    {
+        return this.configEntryFactory;
+    }
+
     public DummyConfigElement setCustomListEntryClass(Class<? extends IConfigEntry> clazz)
     {
         this.configEntryClass = clazz;

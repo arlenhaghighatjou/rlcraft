@@ -1083,6 +1083,7 @@ public class EaglercraftGPU {
 			InstancedParticleRenderer.initialize();
 		}
 		EffectPipelineFXAA.initialize();
+		EffectPipelineEntityOutline.initialize();
 		TextureCopyUtil.initialize();
 		DrawUtils.vshLocal.free();
 		DrawUtils.vshLocal = null;
