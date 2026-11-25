@@ -13,7 +13,7 @@ public class PacketHandler {
    }
 
    public static void init() {
-      instance.registerMessage(MessageSyncSeasonCycle.class, MessageSyncSeasonCycle.class, 3, Side.CLIENT);
-      instance.registerMessage(MessageSyncConfigs.class, MessageSyncConfigs.class, 4, Side.CLIENT);
+      instance.registerMessage(new MessageSyncSeasonCycle(), MessageSyncSeasonCycle.class, MessageSyncSeasonCycle::new, 3, Side.CLIENT);
+      instance.registerMessage(new MessageSyncConfigs(), MessageSyncConfigs.class, MessageSyncConfigs::new, 4, Side.CLIENT);
    }
 }

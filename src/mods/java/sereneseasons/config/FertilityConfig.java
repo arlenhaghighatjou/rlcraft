@@ -1,19 +1,18 @@
 package sereneseasons.config;
 
+import net.minecraftforge.common.config.ConfigEntry;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Config(
    modid = "sereneseasons",
    name = "sereneseasons/cropfertility",
    category = ""
 )
-@EventBusSubscriber
 public class FertilityConfig {
    public static FertilityConfig.General general_category = new FertilityConfig.General();
    public static FertilityConfig.SeasonFertility seasonal_fertility = new FertilityConfig.SeasonFertility();
@@ -21,7 +20,10 @@ public class FertilityConfig {
    public FertilityConfig() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, FertilityConfig::onConfigChanged);
+   }
+
    public static void onConfigChanged(OnConfigChangedEvent event) {
       if (event.getModID().equals("sereneseasons")) {
          ConfigManager.sync(event.getModID(), Type.INSTANCE);
@@ -57,5 +59,20 @@ public class FertilityConfig {
 
       public SeasonFertility() {
       }
+   }
+
+   public static void register() {
+      ConfigManager.register("sereneseasons", "sereneseasons/cropfertility", "", null,
+         ConfigEntry.category("general_category",
+            ConfigEntry.value("seasonal_crops", boolean.class, () -> FertilityConfig.general_category.seasonal_crops, v -> FertilityConfig.general_category.seasonal_crops = (Boolean)v).comment("Whether crops are affected by seasons."),
+            ConfigEntry.value("crops_break", boolean.class, () -> FertilityConfig.general_category.crops_break, v -> FertilityConfig.general_category.crops_break = (Boolean)v).comment("Whether crops break if out of season. If false, they simply don't grow"),
+            ConfigEntry.value("ignore_unlisted_crops", boolean.class, () -> FertilityConfig.general_category.ignore_unlisted_crops, v -> FertilityConfig.general_category.ignore_unlisted_crops = (Boolean)v).comment("Whether unlisted seeds are fertile every season. False means they're fertile every season except Winter"),
+            ConfigEntry.value("crop_tooltips", boolean.class, () -> FertilityConfig.general_category.crop_tooltips, v -> FertilityConfig.general_category.crop_tooltips = (Boolean)v).comment("Whether to include tooltips on crops listing which seasons they're fertile in. Note: This only applies to listed crops."),
+            ConfigEntry.value("greenhouse_glass_max_height", int.class, () -> FertilityConfig.general_category.greenhouse_glass_max_height, v -> FertilityConfig.general_category.greenhouse_glass_max_height = (Integer)v).comment("Maximum height greenhouse glass can be above a crop for it to be fertile out of season")),
+         ConfigEntry.category("seasonal_fertility",
+            ConfigEntry.value("spring_crops", String[].class, () -> FertilityConfig.seasonal_fertility.spring_crops, v -> FertilityConfig.seasonal_fertility.spring_crops = (String[])v).comment("Crops growable in Spring (List either the seed item for the crop, or the crop block itself)"),
+            ConfigEntry.value("summer_crops", String[].class, () -> FertilityConfig.seasonal_fertility.summer_crops, v -> FertilityConfig.seasonal_fertility.summer_crops = (String[])v).comment("Crops growable in Summer (List either the seed item for the crop, or the crop block itself)"),
+            ConfigEntry.value("autumn_crops", String[].class, () -> FertilityConfig.seasonal_fertility.autumn_crops, v -> FertilityConfig.seasonal_fertility.autumn_crops = (String[])v).comment("Crops growable in Autumn (List either the seed item for the crop, or the crop block itself)"),
+            ConfigEntry.value("winter_crops", String[].class, () -> FertilityConfig.seasonal_fertility.winter_crops, v -> FertilityConfig.seasonal_fertility.winter_crops = (String[])v).comment("Crops growable in Winter (List either the seed item for the crop, or the crop block itself)")));
    }
 }

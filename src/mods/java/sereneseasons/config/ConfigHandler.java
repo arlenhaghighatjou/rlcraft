@@ -1,10 +1,10 @@
 package sereneseasons.config;
 
-import java.io.File;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import sereneseasons.api.config.ISyncedOption;
 import sereneseasons.api.config.SyncedConfig;
 import sereneseasons.init.ModConfig;
@@ -13,10 +13,10 @@ public abstract class ConfigHandler {
    public Configuration config;
    public final String description;
 
-   protected ConfigHandler(File configFile, String description) {
+   protected ConfigHandler(VFile2 configFile, String description) {
       this.config = new Configuration(configFile);
       this.loadConfiguration();
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
       this.description = description;
       ModConfig.configHandlers.add(this);
    }
@@ -38,7 +38,10 @@ public abstract class ConfigHandler {
       SyncedConfig.addOption(option, value);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, this::onConfigurationChangedEvent);
+   }
+
    public void onConfigurationChangedEvent(OnConfigChangedEvent event) {
       if (event.getModID().equalsIgnoreCase("sereneseasons")) {
          this.loadConfiguration();

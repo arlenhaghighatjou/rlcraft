@@ -1,7 +1,7 @@
 package sereneseasons.handler.season;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -11,7 +11,10 @@ public class SeasonSleepHandler {
    public SeasonSleepHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(WorldTickEvent.class, this::onWorldTick);
+   }
+
    public void onWorldTick(WorldTickEvent event) {
       if (event.phase == Phase.START && event.side == Side.SERVER) {
          WorldServer world = (WorldServer)event.world;

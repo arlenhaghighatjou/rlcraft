@@ -86,7 +86,7 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
     protected final IntHashMap<Entity> entitiesById = new IntHashMap<Entity>();
     private final long cloudColour = 16777215L;
     private int skylightSubtracted;
-    protected int updateLCG = (new EaglercraftRandom()).nextInt();
+    public int updateLCG = (new EaglercraftRandom()).nextInt();
     protected final int DIST_HASH_MAGIC = 1013904223;
     public float prevRainingStrength;
     public float rainingStrength;
@@ -2704,7 +2704,7 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
 
     public boolean canBlockFreeze(BlockPos pos, boolean noWaterAdj)
     {
-        return this.provider.canBlockFreeze(pos, noWaterAdj);
+        return sereneseasons.season.SeasonASMHelper.canBlockFreezeInSeason(this, pos, noWaterAdj, sereneseasons.api.season.SeasonHelper.getSeasonState(this));
     }
 
     public boolean canBlockFreezeBody(BlockPos pos, boolean noWaterAdj)
@@ -2743,14 +2743,14 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
         }
     }
 
-    private boolean isWater(BlockPos pos)
+    public boolean isWater(BlockPos pos)
     {
         return this.getBlockState(pos).getMaterial() == Material.WATER;
     }
 
     public boolean canSnowAt(BlockPos pos, boolean checkLight)
     {
-        return this.provider.canSnowAt(pos, checkLight);
+        return sereneseasons.season.SeasonASMHelper.canSnowAtInSeason(this, pos, checkLight, sereneseasons.api.season.SeasonHelper.getSeasonState(this));
     }
 
     public boolean canSnowAtBody(BlockPos pos, boolean checkLight)
@@ -3656,16 +3656,7 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
         }
         else
         {
-            Biome biome = this.getBiome(position);
-
-            if (biome.getEnableSnow())
-            {
-                return false;
-            }
-            else
-            {
-                return this.canSnowAt(position, false) ? false : biome.canRain();
-            }
+            return sereneseasons.season.SeasonASMHelper.isRainingAtInSeason(this, position, sereneseasons.api.season.SeasonHelper.getSeasonState(this));
         }
     }
 

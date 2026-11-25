@@ -1,5 +1,6 @@
 package sereneseasons.handler.season;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockReed;
@@ -8,7 +9,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.world.BlockEvent.CropGrowEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,13 +20,17 @@ public class SeasonalCropGrowthHandler {
    public SeasonalCropGrowthHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ItemTooltipEvent.class, this::onItemTooltipAdded);
+      bus.register(CropGrowEvent.class, this::onCropGrowth);
+      bus.register(BonemealEvent.class, this::onApplyBonemeal);
+   }
+
    @SideOnly(Side.CLIENT)
    public void onItemTooltipAdded(ItemTooltipEvent event) {
       ModFertility.setupTooltips(event);
    }
 
-   @SubscribeEvent
    public void onCropGrowth(CropGrowEvent event) {
       Block plant = event.getState().getBlock();
       boolean isFertile = ModFertility.isCropFertile(plant.getRegistryName().toString(), event.getWorld(), event.getPos());
@@ -40,7 +44,6 @@ public class SeasonalCropGrowthHandler {
 
    }
 
-   @SubscribeEvent
    public void onApplyBonemeal(BonemealEvent event) {
       Block plant = event.getBlock().getBlock();
       boolean isFertile = ModFertility.isCropFertile(plant.getRegistryName().toString(), event.getWorld(), event.getPos());

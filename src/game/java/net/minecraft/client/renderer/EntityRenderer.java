@@ -1603,7 +1603,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 BlockPos blockpos2 = blockpos1.down();
                 IBlockState iblockstate = world.getBlockState(blockpos2);
 
-                if (blockpos1.getY() <= blockpos.getY() + 10 && blockpos1.getY() >= blockpos.getY() - 10 && biome.canRain() && biome.getTemperature(blockpos1) >= 0.15F)
+                if (blockpos1.getY() <= blockpos.getY() + 10 && blockpos1.getY() >= blockpos.getY() - 10 && sereneseasons.season.SeasonASMHelper.shouldAddRainParticles(world, biome) && sereneseasons.season.SeasonASMHelper.getFloatTemperature(world, biome, blockpos1) >= 0.15F)
                 {
                     double d3 = this.random.nextDouble();
                     double d4 = this.random.nextDouble();
@@ -1712,7 +1712,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
                     blockpos$mutableblockpos.setPos(l1, 0, k1);
                     Biome biome = world.getBiome(blockpos$mutableblockpos);
 
-                    if (biome.canRain() || biome.getEnableSnow())
+                    if (sereneseasons.season.SeasonASMHelper.shouldRenderRainSnow(world, biome))
                     {
                         int j2 = world.getPrecipitationHeight(blockpos$mutableblockpos).getY();
                         int k2 = j - i1;
@@ -1739,7 +1739,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
                         {
                             this.random.setSeed((long)(l1 * l1 * 3121 + l1 * 45238971 ^ k1 * k1 * 418711 + k1 * 13761));
                             blockpos$mutableblockpos.setPos(l1, k2, k1);
-                            float f2 = biome.getTemperature(blockpos$mutableblockpos);
+                            float f2 = sereneseasons.season.SeasonASMHelper.getFloatTemperature(world, biome, blockpos$mutableblockpos);
 
                             if (world.getBiomeProvider().getTemperatureAtHeight(f2, j2) >= 0.15F)
                             {

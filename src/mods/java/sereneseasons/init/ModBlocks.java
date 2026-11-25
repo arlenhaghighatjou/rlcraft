@@ -30,7 +30,7 @@ public class ModBlocks {
       SSBlocks.season_sensors[1] = registerBlock(new BlockSeasonSensor(BlockSeasonSensor.DetectorType.SUMMER), "season_sensor_summer").setCreativeTab((CreativeTabs)null);
       SSBlocks.season_sensors[2] = registerBlock(new BlockSeasonSensor(BlockSeasonSensor.DetectorType.AUTUMN), "season_sensor_autumn").setCreativeTab((CreativeTabs)null);
       SSBlocks.season_sensors[3] = registerBlock(new BlockSeasonSensor(BlockSeasonSensor.DetectorType.WINTER), "season_sensor_winter").setCreativeTab((CreativeTabs)null);
-      GameRegistry.registerTileEntity(TileEntitySeasonSensor.class, "season_sensor");
+      GameRegistry.registerTileEntity(TileEntitySeasonSensor.class, new ResourceLocation("season_sensor"), TileEntitySeasonSensor::new);
    }
 
    public static void registerBlockItemModel(Block block, String stateName, int stateMeta) {

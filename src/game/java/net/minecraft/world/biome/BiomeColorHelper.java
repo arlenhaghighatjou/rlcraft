@@ -8,14 +8,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class BiomeColorHelper
 {
-    private static final BiomeColorHelper.ColorResolver GRASS_COLOR = new BiomeColorHelper.ColorResolver()
+    public static BiomeColorHelper.ColorResolver GRASS_COLOR = new BiomeColorHelper.ColorResolver()
     {
         public int getColorAtPos(Biome biome, BlockPos blockPosition)
         {
             return biome.getGrassColorAtPos(blockPosition);
         }
     };
-    private static final BiomeColorHelper.ColorResolver FOLIAGE_COLOR = new BiomeColorHelper.ColorResolver()
+    public static BiomeColorHelper.ColorResolver FOLIAGE_COLOR = new BiomeColorHelper.ColorResolver()
     {
         public int getColorAtPos(Biome biome, BlockPos blockPosition)
         {
@@ -63,7 +63,7 @@ public class BiomeColorHelper
     }
 
     @SideOnly(Side.CLIENT)
-    interface ColorResolver
+    public interface ColorResolver
     {
         int getColorAtPos(Biome biome, BlockPos blockPosition);
     }

@@ -1,6 +1,6 @@
 package sereneseasons.config;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import sereneseasons.api.config.SeasonsOption;
 import sereneseasons.core.SereneSeasons;
 import sereneseasons.init.ModConfig;
@@ -17,7 +17,7 @@ public class SeasonsConfig extends ConfigHandler {
    public boolean changeBirchColour;
    public String[] whitelistedDimensions;
 
-   public SeasonsConfig(File configFile) {
+   public SeasonsConfig(VFile2 configFile) {
       super(configFile, "Seasons Settings");
    }
 

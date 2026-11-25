@@ -1,5 +1,6 @@
 package sereneseasons.handler.season;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.Iterator;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockIce;
@@ -8,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,7 +23,10 @@ public class RandomUpdateHandler {
    public RandomUpdateHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(WorldTickEvent.class, this::onWorldTick);
+   }
+
    public void onWorldTick(WorldTickEvent event) {
       if (event.phase == Phase.END && event.side == Side.SERVER) {
          Season.SubSeason subSeason = SeasonHelper.getSeasonState(event.world).getSubSeason();

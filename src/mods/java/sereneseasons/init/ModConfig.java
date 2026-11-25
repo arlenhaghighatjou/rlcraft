@@ -1,7 +1,7 @@
 package sereneseasons.init;
 
 import com.google.common.collect.Lists;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.List;
 import sereneseasons.config.BiomeConfig;
 import sereneseasons.config.ConfigHandler;
@@ -14,11 +14,11 @@ public class ModConfig {
    public ModConfig() {
    }
 
-   public static void preInit(File configDir) {
-      seasons = new SeasonsConfig(new File(configDir, "seasons.cfg"));
+   public static void preInit(VFile2 configDir) {
+      seasons = new SeasonsConfig(new VFile2(configDir, "seasons.cfg"));
    }
 
-   public static void init(File configDir) {
+   public static void init(VFile2 configDir) {
       BiomeConfig.init(configDir);
    }
 }

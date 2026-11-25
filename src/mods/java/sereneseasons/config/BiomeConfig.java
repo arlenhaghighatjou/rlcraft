@@ -2,8 +2,9 @@ package sereneseasons.config;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.gson.reflect.TypeToken;
-import java.io.File;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.Map;
 import java.util.Map.Entry;
 import net.minecraft.util.ResourceLocation;
@@ -17,20 +18,35 @@ public class BiomeConfig {
    public BiomeConfig() {
    }
 
-   public static void init(File configDir) {
+   public static void init(VFile2 configDir) {
       Map<String, BiomeData> defaultBiomeData = Maps.newHashMap();
       addBlacklistedBiomes(defaultBiomeData);
       addTropicalBiomes(defaultBiomeData);
       addDisabledCropBiomes(defaultBiomeData);
       biomeDataMap.clear();
-      Map<String, BiomeData> tmpBiomeDataMap = (Map)JsonUtil.getOrCreateConfigFile(configDir, "biome_info.json", defaultBiomeData, (new TypeToken<Map<String, BiomeData>>() {
-      }).getType());
-      if (tmpBiomeDataMap != null && !tmpBiomeDataMap.isEmpty()) {
-         for(Entry<String, BiomeData> entry : tmpBiomeDataMap.entrySet()) {
-            biomeDataMap.put(new ResourceLocation((String)entry.getKey()), entry.getValue());
+      JsonObject defaults = new JsonObject();
+
+      for(Entry<String, BiomeData> entry : defaultBiomeData.entrySet()) {
+         JsonObject data = new JsonObject();
+         data.addProperty("enable_seasonal_effects", Boolean.valueOf(entry.getValue().enableSeasonalEffects));
+         data.addProperty("use_tropical_seasons", Boolean.valueOf(entry.getValue().useTropicalSeasons));
+         data.addProperty("disable_crops", Boolean.valueOf(entry.getValue().disableCrops));
+         defaults.add(entry.getKey(), data);
+      }
+
+      JsonObject loaded = JsonUtil.getOrCreateConfigFile(configDir, "biome_info.json", defaults);
+      if (loaded != null) {
+         for(Entry<String, JsonElement> entry : loaded.entrySet()) {
+            JsonObject data = entry.getValue().getAsJsonObject();
+            biomeDataMap.put(new ResourceLocation(entry.getKey()), new BiomeData(readFlag(data, "enable_seasonal_effects"), readFlag(data, "use_tropical_seasons"), readFlag(data, "disable_crops")));
          }
       }
 
+   }
+
+   private static boolean readFlag(JsonObject data, String name) {
+      JsonElement flag = data.get(name);
+      return flag != null && flag.getAsBoolean();
    }
 
    public static boolean enablesSeasonalEffects(Biome biome) {

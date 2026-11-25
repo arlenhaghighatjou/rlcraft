@@ -84,7 +84,7 @@ public class BlockIce extends BlockBreakable
         }
     }
 
-    protected void turnIntoWater(World worldIn, BlockPos pos)
+    public void turnIntoWater(World worldIn, BlockPos pos)
     {
         if (worldIn.provider.doesWaterVaporize())
         {

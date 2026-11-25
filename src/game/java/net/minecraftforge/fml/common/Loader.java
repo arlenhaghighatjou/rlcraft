@@ -222,6 +222,7 @@ public class Loader
         mods.add(new FMLModContainer<>("surge", "Surge", "2.0.79", "", "[1.12.2]", "surge", net.darkhax.surge.Surge::new, net.darkhax.surge.Surge::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("tnt_utilities", "TNTUtils", "1.2.3", "", "[1.12,1.13)", "tnt_utilities", ljfa.tntutils.TNTUtils::new, ljfa.tntutils.TNTUtils::handleModStateEvent).acceptableRemoteVersions("*").guiFactory(ljfa.tntutils.gui.TntuGuiFactory::new));
         mods.add(new FMLModContainer<>("waystones", "Waystones", "1.0", "", "[1.12]", "waystones", net.blay09.mods.waystones.Waystones::new, net.blay09.mods.waystones.Waystones::handleModStateEvent));
+        mods.add(new FMLModContainer<>("sereneseasons", "Serene Seasons", "1.2.18", "required-after:forge@[14.23.5.2768,)", "[1.12.2]", "sereneseasons", sereneseasons.core.SereneSeasons::new, sereneseasons.core.SereneSeasons::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }

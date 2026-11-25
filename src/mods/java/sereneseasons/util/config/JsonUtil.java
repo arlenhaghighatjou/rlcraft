@@ -2,9 +2,9 @@ package sereneseasons.util.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.File;
-import java.lang.reflect.Type;
-import org.apache.commons.io.FileUtils;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import sereneseasons.core.SereneSeasons;
 
 public class JsonUtil {
@@ -13,27 +13,22 @@ public class JsonUtil {
    public JsonUtil() {
    }
 
-   public static <T> T getOrCreateConfigFile(File configDir, String configName, T defaults, Type type) {
-      File configFile = new File(configDir, configName);
+   public static JsonObject getOrCreateConfigFile(VFile2 configDir, String configName, JsonObject defaults) {
+      VFile2 configFile = new VFile2(configDir, configName);
       if (!configFile.exists()) {
          writeFile(configFile, defaults);
       }
 
       try {
-         return (T)SERIALIZER.fromJson(FileUtils.readFileToString(configFile), type);
+         return JsonParser.parseString(configFile.getAllChars()).getAsJsonObject();
       } catch (Exception var6) {
          SereneSeasons.logger.error("Error parsing config from json: " + configFile.toString(), var6);
-         return (T)null;
+         return null;
       }
    }
 
-   protected static boolean writeFile(File outputFile, Object obj) {
-      try {
-         FileUtils.write(outputFile, SERIALIZER.toJson(obj));
-         return true;
-      } catch (Exception var3) {
-         SereneSeasons.logger.error("Error writing config file " + outputFile.getAbsolutePath() + ": " + var3.getMessage());
-         return false;
-      }
+   protected static boolean writeFile(VFile2 outputFile, JsonObject obj) {
+      outputFile.setAllChars(SERIALIZER.toJson(obj));
+      return true;
    }
 }

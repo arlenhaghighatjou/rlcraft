@@ -30,12 +30,12 @@ public class ModHandlers {
 
    public static void init() {
       PacketHandler.init();
-      MinecraftForge.EVENT_BUS.register(SEASON_HANDLER);
-      MinecraftForge.TERRAIN_GEN_BUS.register(SEASON_HANDLER);
+      SEASON_HANDLER.register(MinecraftForge.EVENT_BUS);
+      SEASON_HANDLER.register(MinecraftForge.TERRAIN_GEN_BUS);
       SeasonHelper.dataProvider = SEASON_HANDLER;
-      MinecraftForge.EVENT_BUS.register(new RandomUpdateHandler());
-      MinecraftForge.EVENT_BUS.register(new SeasonSleepHandler());
-      MinecraftForge.EVENT_BUS.register(new SeasonalCropGrowthHandler());
+      (new RandomUpdateHandler()).register(MinecraftForge.EVENT_BUS);
+      (new SeasonSleepHandler()).register(MinecraftForge.EVENT_BUS);
+      (new SeasonalCropGrowthHandler()).register(MinecraftForge.EVENT_BUS);
       if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
          registerSeasonColourHandlers();
       }

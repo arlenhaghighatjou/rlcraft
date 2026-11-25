@@ -1,8 +1,8 @@
 package sereneseasons.util;
 
+import com.arlenh7.eaglercraft.awt.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.biome.Biome;
-import org.lwjgl.util.Color;
 import sereneseasons.api.season.ISeasonColorProvider;
 import sereneseasons.api.season.Season;
 import sereneseasons.config.BiomeConfig;
@@ -37,11 +37,9 @@ public class SeasonColourUtil {
    }
 
    public static int saturateColour(int colour, float saturationMultiplier) {
-      Color newColour = getColourFromInt(colour);
-      float[] hsb = newColour.toHSB((float[])null);
+      float[] hsb = Color.RGBtoHSB(colour >> 16 & 255, colour >> 8 & 255, colour & 255, (float[])null);
       hsb[1] *= saturationMultiplier;
-      newColour.fromHSB(hsb[0], hsb[1], hsb[2]);
-      return getIntFromColour(newColour);
+      return Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]) & 16777215;
    }
 
    public static int applySeasonalGrassColouring(ISeasonColorProvider colorProvider, Biome biome, int originalColour) {
@@ -74,13 +72,5 @@ public class SeasonColourUtil {
       } else {
          return originalColour;
       }
-   }
-
-   private static Color getColourFromInt(int colour) {
-      return new Color(colour >> 16 & 255, colour >> 8 & 255, colour & 255);
-   }
-
-   private static int getIntFromColour(Color colour) {
-      return (colour.getRed() & 255) << 16 | (colour.getGreen() & 255) << 8 | colour.getBlue() & 255;
    }
 }

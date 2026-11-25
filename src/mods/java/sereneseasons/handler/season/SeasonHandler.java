@@ -1,5 +1,6 @@
 package sereneseasons.handler.season;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.HashMap;
 import java.util.function.BiFunction;
 import net.minecraft.client.Minecraft;
@@ -11,7 +12,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
@@ -36,7 +36,13 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider {
    public SeasonHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(WorldTickEvent.class, this::onWorldTick);
+      bus.register(PlayerLoggedInEvent.class, this::onPlayerLogin);
+      bus.register(ClientTickEvent.class, this::onClientTick);
+      bus.register(Populate.class, this::onPopulateChunk);
+   }
+
    public void onWorldTick(WorldTickEvent event) {
       World world = event.world;
       if (event.phase == Phase.END && !world.isRemote) {
@@ -61,7 +67,6 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider {
 
    }
 
-   @SubscribeEvent
    public void onPlayerLogin(PlayerLoggedInEvent event) {
       EntityPlayer player = event.player;
       World world = player.world;
@@ -73,7 +78,6 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider {
       return new SeasonTime(i == null ? 0 : i.intValue());
    }
 
-   @SubscribeEvent
    public void onClientTick(ClientTickEvent event) {
       if (Minecraft.getMinecraft().player != null) {
          int dimension = Minecraft.getMinecraft().player.dimension;
@@ -95,7 +99,6 @@ public class SeasonHandler implements SeasonHelper.ISeasonDataProvider {
       }
    }
 
-   @SubscribeEvent
    public void onPopulateChunk(Populate event) {
       if ((event.getWorld().isRemote || event.getType() == EventType.ICE) && SeasonsConfig.isDimensionWhitelisted(event.getWorld().provider.getDimension())) {
          event.setResult(Result.DENY);
