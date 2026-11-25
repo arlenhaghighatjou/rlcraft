@@ -1,10 +1,3 @@
-package mezz.jei.api;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-import mcp.MethodsReturnNonnullByDefault;
-import net.minecraftforge.fml.common.API;
-
-// $FF: synthetic class
 @API(
    apiVersion = "4.13.0",
    owner = "jei",
@@ -12,5 +5,8 @@ import net.minecraftforge.fml.common.API;
 )
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-interface package-info {
-}
+package mezz.jei.api;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import mcp.MethodsReturnNonnullByDefault;
+import net.minecraftforge.fml.common.API;
