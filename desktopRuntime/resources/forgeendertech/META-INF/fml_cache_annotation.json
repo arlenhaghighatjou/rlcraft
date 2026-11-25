@@ -1,0 +1,628 @@
+{
+  "com/endertech/common/CommonTime$Interval": {
+    "name": "com/endertech/common/CommonTime$Interval",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "com/endertech/common/CommonTime$Stamp": {
+    "name": "com/endertech/common/CommonTime$Stamp",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "com/endertech/common/FloatBounds": {
+    "name": "com/endertech/common/FloatBounds",
+    "interfaces": [
+      "com/endertech/common/IBounds"
+    ]
+  },
+  "com/endertech/common/IntBounds": {
+    "name": "com/endertech/common/IntBounds",
+    "interfaces": [
+      "com/endertech/common/IBounds",
+      "java/lang/Iterable"
+    ]
+  },
+  "com/endertech/common/IntBounds$Iter": {
+    "name": "com/endertech/common/IntBounds$Iter",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "com/endertech/common/Ordered": {
+    "name": "com/endertech/common/Ordered",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "com/endertech/minecraft/forge/ForgeGui": {
+    "name": "com/endertech/minecraft/forge/ForgeGui",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "com/endertech/minecraft/forge/ForgeLocating$Extensions": {
+    "name": "com/endertech/minecraft/forge/ForgeLocating$Extensions",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IForgeEnum"
+    ]
+  },
+  "com/endertech/minecraft/forge/ForgeLocating$Folders": {
+    "name": "com/endertech/minecraft/forge/ForgeLocating$Folders",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IForgeEnum"
+    ]
+  },
+  "com/endertech/minecraft/forge/ForgeMain": {
+    "name": "com/endertech/minecraft/forge/ForgeMain",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/endertech/minecraft/forge/ForgeMain",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "guiFactory": {
+            "value": "com.endertech.minecraft.forge.Config$Factory"
+          },
+          "modid": {
+            "value": "forgeendertech"
+          },
+          "name": {
+            "value": "Forge Endertech"
+          },
+          "version": {
+            "value": "1.12.2-4.5.6.1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "forgeendertech"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "initClient(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/forge/ForgeMod": {
+    "name": "com/endertech/minecraft/forge/ForgeMod",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "initClient(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "interModCom(Lnet/minecraftforge/fml/common/event/FMLInterModComms$IMCEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/forge/ForgeRecipe": {
+    "name": "com/endertech/minecraft/forge/ForgeRecipe",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IHaveConfig",
+      "com/endertech/minecraft/forge/regs/INeedToRegister"
+    ]
+  },
+  "com/endertech/minecraft/forge/ForgeRecipe$Type": {
+    "name": "com/endertech/minecraft/forge/ForgeRecipe$Type",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IForgeEnum"
+    ]
+  },
+  "com/endertech/minecraft/forge/api/IBaubleWear": {
+    "name": "com/endertech/minecraft/forge/api/IBaubleWear",
+    "interfaces": [
+      "baubles/api/IBauble",
+      "baubles/api/render/IRenderBauble"
+    ]
+  },
+  "com/endertech/minecraft/forge/api/IEmitter": {
+    "name": "com/endertech/minecraft/forge/api/IEmitter",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IRelatedUnit",
+      "com/endertech/minecraft/forge/regs/IPostInit"
+    ]
+  },
+  "com/endertech/minecraft/forge/api/ISmokeContainer": {
+    "name": "com/endertech/minecraft/forge/api/ISmokeContainer",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IRelatedUnit"
+    ]
+  },
+  "com/endertech/minecraft/forge/api/package-info": {
+    "name": "com/endertech/minecraft/forge/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "com/endertech/minecraft/forge/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "1.0"
+          },
+          "owner": {
+            "value": "Endertech"
+          },
+          "provides": {
+            "value": "ForgeEndertechAPI"
+          }
+        }
+      }
+    ]
+  },
+  "com/endertech/minecraft/forge/blocks/BlockState": {
+    "name": "com/endertech/minecraft/forge/blocks/BlockState",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IWithMeta"
+    ]
+  },
+  "com/endertech/minecraft/forge/blocks/FluidBlock": {
+    "name": "com/endertech/minecraft/forge/blocks/FluidBlock",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IForgeUnit",
+      "com/endertech/minecraft/forge/regs/INeedRender"
+    ]
+  },
+  "com/endertech/minecraft/forge/blocks/ForgeBlock": {
+    "name": "com/endertech/minecraft/forge/blocks/ForgeBlock",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IForgeUnit"
+    ]
+  },
+  "com/endertech/minecraft/forge/blocks/ForgeBlockContainer": {
+    "name": "com/endertech/minecraft/forge/blocks/ForgeBlockContainer",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "com/endertech/minecraft/forge/blocks/ForgeEntityBlock": {
+    "name": "com/endertech/minecraft/forge/blocks/ForgeEntityBlock",
+    "interfaces": [
+      "com/endertech/minecraft/forge/regs/INeedRender"
+    ]
+  },
+  "com/endertech/minecraft/forge/blocks/ForgeRail": {
+    "name": "com/endertech/minecraft/forge/blocks/ForgeRail",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IForgeUnit"
+    ]
+  },
+  "com/endertech/minecraft/forge/blocks/RelatedBlock": {
+    "name": "com/endertech/minecraft/forge/blocks/RelatedBlock",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IRelatedUnit"
+    ]
+  },
+  "com/endertech/minecraft/forge/combat/ForgeArmor": {
+    "name": "com/endertech/minecraft/forge/combat/ForgeArmor",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IForgeUnit",
+      "com/endertech/minecraft/forge/materials/IMaterialBased"
+    ]
+  },
+  "com/endertech/minecraft/forge/configs/AbstractParsableList": {
+    "name": "com/endertech/minecraft/forge/configs/AbstractParsableList",
+    "interfaces": [
+      "com/endertech/minecraft/forge/data/IReloadableData"
+    ]
+  },
+  "com/endertech/minecraft/forge/configs/ForgeKeys$KeyCategories": {
+    "name": "com/endertech/minecraft/forge/configs/ForgeKeys$KeyCategories",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IForgeEnum"
+    ]
+  },
+  "com/endertech/minecraft/forge/configs/IForgeEnum": {
+    "name": "com/endertech/minecraft/forge/configs/IForgeEnum",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/endertech/minecraft/forge/configs/ModConfigGui": {
+    "name": "com/endertech/minecraft/forge/configs/ModConfigGui",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/forge/configs/ModConfigGui$Factory": {
+    "name": "com/endertech/minecraft/forge/configs/ModConfigGui$Factory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "com/endertech/minecraft/forge/coremod/CorePlugin": {
+    "name": "com/endertech/minecraft/forge/coremod/CorePlugin",
+    "interfaces": [
+      "net/minecraftforge/fml/relauncher/IFMLLoadingPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$SortingIndex;",
+        "target": "com/endertech/minecraft/forge/coremod/CorePlugin",
+        "value": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$TransformerExclusions;",
+        "target": "com/endertech/minecraft/forge/coremod/CorePlugin",
+        "value": {
+          "values": [
+            "com.endertech.minecraft.forge.configs"
+          ]
+        }
+      }
+    ]
+  },
+  "com/endertech/minecraft/forge/coremod/ForgeClassTransformer": {
+    "name": "com/endertech/minecraft/forge/coremod/ForgeClassTransformer",
+    "interfaces": [
+      "net/minecraft/launchwrapper/IClassTransformer"
+    ]
+  },
+  "com/endertech/minecraft/forge/data/ForgeEnergyStorage": {
+    "name": "com/endertech/minecraft/forge/data/ForgeEnergyStorage",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "com/endertech/minecraft/forge/data/TileInventory$GuiHandler": {
+    "name": "com/endertech/minecraft/forge/data/TileInventory$GuiHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "com/endertech/minecraft/forge/economy/ForgeTrades$TradeList": {
+    "name": "com/endertech/minecraft/forge/economy/ForgeTrades$TradeList",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "com/endertech/minecraft/forge/entities/FuseEntity$Renderer$Factory": {
+    "name": "com/endertech/minecraft/forge/entities/FuseEntity$Renderer$Factory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/endertech/minecraft/forge/entities/LivingHealthRegen": {
+    "name": "com/endertech/minecraft/forge/entities/LivingHealthRegen",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IHaveConfig"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingHurt(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/forge/items/ChestWearItem$LayerChestWear": {
+    "name": "com/endertech/minecraft/forge/items/ChestWearItem$LayerChestWear",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/endertech/minecraft/forge/items/DamageableItem": {
+    "name": "com/endertech/minecraft/forge/items/DamageableItem",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/endertech/minecraft/forge/items/DamageableItem"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/forge/items/ForgeItem": {
+    "name": "com/endertech/minecraft/forge/items/ForgeItem",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IForgeUnit"
+    ]
+  },
+  "com/endertech/minecraft/forge/items/GlassMeter": {
+    "name": "com/endertech/minecraft/forge/items/GlassMeter",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IUnitWithMeshDefinition"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/endertech/minecraft/forge/items/GlassMeter"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLeftClickBlock(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$LeftClickBlock;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/forge/materials/ForgeMaterial": {
+    "name": "com/endertech/minecraft/forge/materials/ForgeMaterial",
+    "interfaces": [
+      "com/endertech/minecraft/forge/economy/IValuable"
+    ]
+  },
+  "com/endertech/minecraft/forge/materials/ForgeMaterial$Type": {
+    "name": "com/endertech/minecraft/forge/materials/ForgeMaterial$Type",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IForgeEnum"
+    ]
+  },
+  "com/endertech/minecraft/forge/materials/NullRecipe": {
+    "name": "com/endertech/minecraft/forge/materials/NullRecipe",
+    "interfaces": [
+      "net/minecraft/item/crafting/IRecipe"
+    ]
+  },
+  "com/endertech/minecraft/forge/materials/SmeltingData": {
+    "name": "com/endertech/minecraft/forge/materials/SmeltingData",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IHaveConfig"
+    ]
+  },
+  "com/endertech/minecraft/forge/materials/SmeltingRecipe": {
+    "name": "com/endertech/minecraft/forge/materials/SmeltingRecipe",
+    "interfaces": [
+      "com/endertech/minecraft/forge/materials/ISmeltable"
+    ]
+  },
+  "com/endertech/minecraft/forge/math/Percentage": {
+    "name": "com/endertech/minecraft/forge/math/Percentage",
+    "interfaces": [
+      "com/endertech/common/Ordered"
+    ]
+  },
+  "com/endertech/minecraft/forge/messages/DevInfo": {
+    "name": "com/endertech/minecraft/forge/messages/DevInfo",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/endertech/minecraft/forge/messages/DevInfo",
+        "value": {
+          "type": "ENUM",
+          "values": [
+            "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyPressed(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInventoryTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderGameOverlay(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/forge/messages/ForgeNetMsg": {
+    "name": "com/endertech/minecraft/forge/messages/ForgeNetMsg",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/endertech/minecraft/forge/messages/ForgeNetMsgHandler": {
+    "name": "com/endertech/minecraft/forge/messages/ForgeNetMsgHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/endertech/minecraft/forge/player/MotionController": {
+    "name": "com/endertech/minecraft/forge/player/MotionController",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/endertech/minecraft/forge/player/MotionController"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/forge/tools/ForgeTool": {
+    "name": "com/endertech/minecraft/forge/tools/ForgeTool",
+    "interfaces": [
+      "com/endertech/minecraft/forge/materials/IMaterialBased"
+    ]
+  },
+  "com/endertech/minecraft/forge/units/ForgeEmitter": {
+    "name": "com/endertech/minecraft/forge/units/ForgeEmitter",
+    "interfaces": [
+      "com/endertech/minecraft/forge/api/IEmitter"
+    ]
+  },
+  "com/endertech/minecraft/forge/units/IForgeUnit": {
+    "name": "com/endertech/minecraft/forge/units/IForgeUnit",
+    "interfaces": [
+      "com/endertech/minecraft/forge/regs/INeedToRegister",
+      "com/endertech/minecraft/forge/configs/IHaveConfig"
+    ]
+  },
+  "com/endertech/minecraft/forge/units/IForgeUnit$Variants": {
+    "name": "com/endertech/minecraft/forge/units/IForgeUnit$Variants",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IForgeEnum"
+    ]
+  },
+  "com/endertech/minecraft/forge/units/IRelatedUnit": {
+    "name": "com/endertech/minecraft/forge/units/IRelatedUnit",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IHaveConfig"
+    ]
+  },
+  "com/endertech/minecraft/forge/units/ItemState": {
+    "name": "com/endertech/minecraft/forge/units/ItemState",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IWithMeta"
+    ]
+  },
+  "com/endertech/minecraft/forge/units/RelatedUnit": {
+    "name": "com/endertech/minecraft/forge/units/RelatedUnit",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IRelatedUnit"
+    ]
+  },
+  "com/endertech/minecraft/forge/units/RelatedUnitsInit": {
+    "name": "com/endertech/minecraft/forge/units/RelatedUnitsInit",
+    "interfaces": [
+      "com/endertech/minecraft/forge/regs/IPostInit"
+    ]
+  },
+  "com/endertech/minecraft/forge/units/UnitId": {
+    "name": "com/endertech/minecraft/forge/units/UnitId",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IWithMeta"
+    ]
+  },
+  "com/endertech/minecraft/forge/versions/Dependencies": {
+    "name": "com/endertech/minecraft/forge/versions/Dependencies",
+    "interfaces": [
+      "java/io/Closeable"
+    ]
+  },
+  "com/endertech/minecraft/forge/versions/UserAgent": {
+    "name": "com/endertech/minecraft/forge/versions/UserAgent",
+    "interfaces": [
+      "com/endertech/common/CommonCollect$IWeighted"
+    ]
+  },
+  "com/endertech/minecraft/forge/world/Biomes": {
+    "name": "com/endertech/minecraft/forge/world/Biomes",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IForgeEnum"
+    ]
+  },
+  "com/endertech/minecraft/forge/world/ChunkLoc": {
+    "name": "com/endertech/minecraft/forge/world/ChunkLoc",
+    "interfaces": [
+      "com/endertech/minecraft/forge/data/INetSerializable",
+      "com/endertech/minecraft/forge/data/INBTSerializable"
+    ]
+  },
+  "com/endertech/minecraft/forge/world/ForgeWorld$WorldData": {
+    "name": "com/endertech/minecraft/forge/world/ForgeWorld$WorldData",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/endertech/minecraft/forge/world/ForgeWorld$WorldData"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldUnload(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLoggedIn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/forge/world/Wind": {
+    "name": "com/endertech/minecraft/forge/world/Wind",
+    "interfaces": [
+      "com/endertech/minecraft/forge/api/IWind",
+      "com/endertech/minecraft/forge/configs/IHaveConfig"
+    ]
+  },
+  "com/endertech/minecraft/forge/world/Wind$StaticWind": {
+    "name": "com/endertech/minecraft/forge/world/Wind$StaticWind",
+    "interfaces": [
+      "com/endertech/minecraft/forge/api/IWind"
+    ]
+  }
+}

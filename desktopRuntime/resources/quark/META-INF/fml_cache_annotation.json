@@ -1,0 +1,3571 @@
+{
+  "vazkii/aurelienribon/tweenengine/Timeline$1": {
+    "name": "vazkii/aurelienribon/tweenengine/Timeline$1",
+    "interfaces": [
+      "vazkii/aurelienribon/tweenengine/Pool$Callback"
+    ]
+  },
+  "vazkii/aurelienribon/tweenengine/Tween$1": {
+    "name": "vazkii/aurelienribon/tweenengine/Tween$1",
+    "interfaces": [
+      "vazkii/aurelienribon/tweenengine/Pool$Callback"
+    ]
+  },
+  "vazkii/aurelienribon/tweenengine/paths/CatmullRom": {
+    "name": "vazkii/aurelienribon/tweenengine/paths/CatmullRom",
+    "interfaces": [
+      "vazkii/aurelienribon/tweenengine/TweenPath"
+    ]
+  },
+  "vazkii/aurelienribon/tweenengine/paths/Linear": {
+    "name": "vazkii/aurelienribon/tweenengine/paths/Linear",
+    "interfaces": [
+      "vazkii/aurelienribon/tweenengine/TweenPath"
+    ]
+  },
+  "vazkii/aurelienribon/tweenengine/primitives/MutableFloat": {
+    "name": "vazkii/aurelienribon/tweenengine/primitives/MutableFloat",
+    "interfaces": [
+      "vazkii/aurelienribon/tweenengine/TweenAccessor"
+    ]
+  },
+  "vazkii/aurelienribon/tweenengine/primitives/MutableInteger": {
+    "name": "vazkii/aurelienribon/tweenengine/primitives/MutableInteger",
+    "interfaces": [
+      "vazkii/aurelienribon/tweenengine/TweenAccessor"
+    ]
+  },
+  "vazkii/quark/api/ICustomSorting": {
+    "name": "vazkii/quark/api/ICustomSorting",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Lvazkii/quark/api/ICustomSorting;"
+        }
+      }
+    ]
+  },
+  "vazkii/quark/api/IDropoffManager": {
+    "name": "vazkii/quark/api/IDropoffManager",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Lvazkii/quark/api/IDropoffManager;"
+        }
+      }
+    ]
+  },
+  "vazkii/quark/api/IPistonCallback": {
+    "name": "vazkii/quark/api/IPistonCallback",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Lvazkii/quark/api/IPistonCallback;"
+        }
+      }
+    ]
+  },
+  "vazkii/quark/api/capability/IBoatBanner": {
+    "name": "vazkii/quark/api/capability/IBoatBanner",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Lvazkii/quark/api/capability/IBoatBanner;"
+        }
+      }
+    ]
+  },
+  "vazkii/quark/api/capability/IEnchantColorProvider": {
+    "name": "vazkii/quark/api/capability/IEnchantColorProvider",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Lvazkii/quark/api/capability/IEnchantColorProvider;"
+        }
+      }
+    ]
+  },
+  "vazkii/quark/api/capability/ISearchHandler": {
+    "name": "vazkii/quark/api/capability/ISearchHandler",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Lvazkii/quark/api/capability/ISearchHandler;"
+        }
+      }
+    ]
+  },
+  "vazkii/quark/api/module/FeatureEvent$Loaded": {
+    "name": "vazkii/quark/api/module/FeatureEvent$Loaded",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "vazkii/quark/api/module/FeatureEvent$Loaded"
+      }
+    ]
+  },
+  "vazkii/quark/api/module/IFeature": {
+    "name": "vazkii/quark/api/module/IFeature",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "vazkii/quark/api/module/IModule": {
+    "name": "vazkii/quark/api/module/IModule",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "vazkii/quark/api/module/ModuleLoadedEvent": {
+    "name": "vazkii/quark/api/module/ModuleLoadedEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "vazkii/quark/api/module/ModuleLoadedEvent"
+      }
+    ]
+  },
+  "vazkii/quark/api/package-info": {
+    "name": "vazkii/quark/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "vazkii/quark/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "4"
+          },
+          "owner": {
+            "value": "quark"
+          },
+          "provides": {
+            "value": "QuarkAPI"
+          }
+        }
+      }
+    ]
+  },
+  "vazkii/quark/automation/block/BlockChute": {
+    "name": "vazkii/quark/automation/block/BlockChute",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/automation/block/BlockColorSlime": {
+    "name": "vazkii/quark/automation/block/BlockColorSlime",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock",
+      "vazkii/quark/api/INonSticky"
+    ]
+  },
+  "vazkii/quark/automation/block/BlockColorSlime$Variants": {
+    "name": "vazkii/quark/automation/block/BlockColorSlime$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/automation/block/BlockEnderWatcher": {
+    "name": "vazkii/quark/automation/block/BlockEnderWatcher",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/automation/block/BlockGravisand": {
+    "name": "vazkii/quark/automation/block/BlockGravisand",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/automation/block/BlockIronRod": {
+    "name": "vazkii/quark/automation/block/BlockIronRod",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock",
+      "vazkii/quark/api/ICollateralMover"
+    ]
+  },
+  "vazkii/quark/automation/block/BlockRainDetector": {
+    "name": "vazkii/quark/automation/block/BlockRainDetector",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/automation/block/BlockRedstoneInductor": {
+    "name": "vazkii/quark/automation/block/BlockRedstoneInductor",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock",
+      "vazkii/arl/interf/IBlockColorProvider"
+    ]
+  },
+  "vazkii/quark/automation/block/BlockRedstoneRandomizer": {
+    "name": "vazkii/quark/automation/block/BlockRedstoneRandomizer",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/automation/block/BlockSugar": {
+    "name": "vazkii/quark/automation/block/BlockSugar",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/automation/feature/AnimalsEatFloorFood": {
+    "name": "vazkii/quark/automation/feature/AnimalsEatFloorFood",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityTick(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/automation/feature/ChainLinkage": {
+    "name": "vazkii/quark/automation/feature/ChainLinkage",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientUpdateTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onVehicleSeen(Lnet/minecraftforge/event/entity/player/PlayerEvent$StartTracking;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onVehicleArrive(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMinecartUpdate(Lnet/minecraftforge/event/entity/minecart/MinecartUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/automation/feature/PistonsMoveTEs": {
+    "name": "vazkii/quark/automation/feature/PistonsMoveTEs",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/automation/tile/TileEnderWatcher": {
+    "name": "vazkii/quark/automation/tile/TileEnderWatcher",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "vazkii/quark/automation/tile/TileRainDetector": {
+    "name": "vazkii/quark/automation/tile/TileRainDetector",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "vazkii/quark/base/Quark": {
+    "name": "vazkii/quark/base/Quark",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "vazkii/quark/base/Quark",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2831,);required-before:autoreglib@[1.3-32,);after:jei@[4.6.0,);"
+          },
+          "guiFactory": {
+            "value": "vazkii.quark.base.client.gui.GuiFactory"
+          },
+          "modid": {
+            "value": "quark"
+          },
+          "name": {
+            "value": "quark"
+          },
+          "version": {
+            "value": "r1.6-179"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "quark"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "vazkii.quark.base.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "vazkii.quark.base.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/network/NetworkCheckHandler;",
+        "target": "acceptsMods(Ljava/util/Map;Lnet/minecraftforge/fml/relauncher/Side;)Z"
+      }
+    ]
+  },
+  "vazkii/quark/base/asm/ClassTransformer": {
+    "name": "vazkii/quark/base/asm/ClassTransformer",
+    "interfaces": [
+      "net/minecraft/launchwrapper/IClassTransformer",
+      "org/objectweb/asm/Opcodes"
+    ]
+  },
+  "vazkii/quark/base/asm/ClassTransformer$MethodAction": {
+    "name": "vazkii/quark/base/asm/ClassTransformer$MethodAction",
+    "interfaces": [
+      "java/util/function/Predicate"
+    ]
+  },
+  "vazkii/quark/base/asm/ClassTransformer$MethodInjectorAction": {
+    "name": "vazkii/quark/base/asm/ClassTransformer$MethodInjectorAction",
+    "interfaces": [
+      "vazkii/quark/base/asm/ClassTransformer$TransformerAction"
+    ]
+  },
+  "vazkii/quark/base/asm/ClassTransformer$MethodTransformerAction": {
+    "name": "vazkii/quark/base/asm/ClassTransformer$MethodTransformerAction",
+    "interfaces": [
+      "vazkii/quark/base/asm/ClassTransformer$TransformerAction"
+    ]
+  },
+  "vazkii/quark/base/asm/ClassTransformer$NewMethodAction": {
+    "name": "vazkii/quark/base/asm/ClassTransformer$NewMethodAction",
+    "interfaces": [
+      "java/util/function/BiPredicate"
+    ]
+  },
+  "vazkii/quark/base/asm/ClassTransformer$NodeAction": {
+    "name": "vazkii/quark/base/asm/ClassTransformer$NodeAction",
+    "interfaces": [
+      "java/util/function/BiPredicate"
+    ]
+  },
+  "vazkii/quark/base/asm/ClassTransformer$NodeFilter": {
+    "name": "vazkii/quark/base/asm/ClassTransformer$NodeFilter",
+    "interfaces": [
+      "java/util/function/Predicate"
+    ]
+  },
+  "vazkii/quark/base/asm/ClassTransformer$Transformer": {
+    "name": "vazkii/quark/base/asm/ClassTransformer$Transformer",
+    "interfaces": [
+      "java/util/function/Function"
+    ]
+  },
+  "vazkii/quark/base/asm/ClassTransformer$TransformerAction": {
+    "name": "vazkii/quark/base/asm/ClassTransformer$TransformerAction",
+    "interfaces": [
+      "java/util/function/Predicate"
+    ]
+  },
+  "vazkii/quark/base/asm/LoadingPlugin": {
+    "name": "vazkii/quark/base/asm/LoadingPlugin",
+    "interfaces": [
+      "net/minecraftforge/fml/relauncher/IFMLLoadingPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$MCVersion;",
+        "target": "vazkii/quark/base/asm/LoadingPlugin",
+        "value": {
+          "value": "1.12.2"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$Name;",
+        "target": "vazkii/quark/base/asm/LoadingPlugin",
+        "value": {
+          "value": "Quark Plugin"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$TransformerExclusions;",
+        "target": "vazkii/quark/base/asm/LoadingPlugin",
+        "value": {
+          "values": [
+            "vazkii.quark.base.asm"
+          ]
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$SortingIndex;",
+        "target": "vazkii/quark/base/asm/LoadingPlugin",
+        "value": {
+          "type": "INT",
+          "value": "1001"
+        }
+      }
+    ]
+  },
+  "vazkii/quark/base/block/BlockQuarkBush": {
+    "name": "vazkii/quark/base/block/BlockQuarkBush",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/base/block/BlockQuarkButton": {
+    "name": "vazkii/quark/base/block/BlockQuarkButton",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/base/block/BlockQuarkDust": {
+    "name": "vazkii/quark/base/block/BlockQuarkDust",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/base/block/BlockQuarkFenceGate": {
+    "name": "vazkii/quark/base/block/BlockQuarkFenceGate",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/base/block/BlockQuarkPane": {
+    "name": "vazkii/quark/base/block/BlockQuarkPane",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/base/block/BlockQuarkPillar": {
+    "name": "vazkii/quark/base/block/BlockQuarkPillar",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/base/block/BlockQuarkPressurePlate": {
+    "name": "vazkii/quark/base/block/BlockQuarkPressurePlate",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/base/block/BlockQuarkSlab": {
+    "name": "vazkii/quark/base/block/BlockQuarkSlab",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/base/block/BlockQuarkStairs": {
+    "name": "vazkii/quark/base/block/BlockQuarkStairs",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/base/block/BlockQuarkTrapdoor": {
+    "name": "vazkii/quark/base/block/BlockQuarkTrapdoor",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/base/block/BlockQuarkWall": {
+    "name": "vazkii/quark/base/block/BlockQuarkWall",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/base/block/IQuarkBlock": {
+    "name": "vazkii/quark/base/block/IQuarkBlock",
+    "interfaces": [
+      "vazkii/arl/interf/IModBlock"
+    ]
+  },
+  "vazkii/quark/base/capability/BackedUpBoatBanner": {
+    "name": "vazkii/quark/base/capability/BackedUpBoatBanner",
+    "interfaces": [
+      "vazkii/quark/api/capability/IBoatBanner"
+    ]
+  },
+  "vazkii/quark/base/capability/BoatBanner": {
+    "name": "vazkii/quark/base/capability/BoatBanner",
+    "interfaces": [
+      "vazkii/quark/api/capability/IBoatBanner",
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "vazkii/quark/base/capability/CapabilityHandler": {
+    "name": "vazkii/quark/base/capability/CapabilityHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "vazkii/quark/base/capability/CapabilityHandler",
+        "values": {
+          "modid": {
+            "value": "quark"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachItemCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachTileCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/base/capability/CapabilityHandler$CapabilityFactory": {
+    "name": "vazkii/quark/base/capability/CapabilityHandler$CapabilityFactory",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "vazkii/quark/base/capability/DummySorting": {
+    "name": "vazkii/quark/base/capability/DummySorting",
+    "interfaces": [
+      "vazkii/quark/api/ICustomSorting"
+    ]
+  },
+  "vazkii/quark/base/capability/EnchantColorWrapper": {
+    "name": "vazkii/quark/base/capability/EnchantColorWrapper",
+    "interfaces": [
+      "vazkii/quark/api/capability/IEnchantColorProvider",
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "vazkii/quark/base/capability/SearchWrapper": {
+    "name": "vazkii/quark/base/capability/SearchWrapper",
+    "interfaces": [
+      "vazkii/quark/api/capability/ISearchHandler",
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "vazkii/quark/base/capability/SelfProvider": {
+    "name": "vazkii/quark/base/capability/SelfProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "vazkii/quark/base/capability/SimpleProvider": {
+    "name": "vazkii/quark/base/capability/SimpleProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "vazkii/quark/base/client/ContributorRewardHandler": {
+    "name": "vazkii/quark/base/client/ContributorRewardHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "vazkii/quark/base/client/ContributorRewardHandler",
+        "values": {
+          "modid": {
+            "value": "quark"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderPlayer(Lnet/minecraftforge/client/event/RenderPlayerEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerJoin(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/base/client/ModKeybinds$KeybindButtonHandler": {
+    "name": "vazkii/quark/base/client/ModKeybinds$KeybindButtonHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyInput(Lnet/minecraftforge/client/event/GuiScreenEvent$KeyboardInputEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMouseInput(Lnet/minecraftforge/client/event/GuiScreenEvent$MouseInputEvent$Post;)V"
+      }
+    ]
+  },
+  "vazkii/quark/base/client/gui/GuiFactory": {
+    "name": "vazkii/quark/base/client/gui/GuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "vazkii/quark/base/client/gui/config/ConfigEvents": {
+    "name": "vazkii/quark/base/client/gui/config/ConfigEvents",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiOpen(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiInit(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onButtonClick(Lnet/minecraftforge/client/event/GuiScreenEvent$ActionPerformedEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/base/handler/ProxiedItemStackHandler": {
+    "name": "vazkii/quark/base/handler/ProxiedItemStackHandler",
+    "interfaces": [
+      "net/minecraftforge/items/IItemHandler",
+      "net/minecraftforge/items/IItemHandlerModifiable",
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "vazkii/quark/base/item/IQuarkItem": {
+    "name": "vazkii/quark/base/item/IQuarkItem",
+    "interfaces": [
+      "vazkii/arl/interf/IVariantHolder"
+    ]
+  },
+  "vazkii/quark/base/item/ItemQuarkFood": {
+    "name": "vazkii/quark/base/item/ItemQuarkFood",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/base/module/Feature": {
+    "name": "vazkii/quark/base/module/Feature",
+    "interfaces": [
+      "vazkii/quark/api/module/IFeature"
+    ]
+  },
+  "vazkii/quark/base/module/Module": {
+    "name": "vazkii/quark/base/module/Module",
+    "interfaces": [
+      "vazkii/quark/api/module/IModule"
+    ]
+  },
+  "vazkii/quark/base/module/ModuleLoader$EventHandler": {
+    "name": "vazkii/quark/base/module/ModuleLoader$EventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "vazkii/quark/base/module/ModuleLoader$EventHandler",
+        "values": {
+          "modid": {
+            "value": "quark"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegistered(Lnet/minecraftforge/event/RegistryEvent$Register;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "vazkii/quark/base/network/GuiHandler": {
+    "name": "vazkii/quark/base/network/GuiHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "vazkii/quark/base/network/message/MessageRequestEmote$EmoteCommandSender": {
+    "name": "vazkii/quark/base/network/message/MessageRequestEmote$EmoteCommandSender",
+    "interfaces": [
+      "net/minecraft/command/ICommandSender"
+    ]
+  },
+  "vazkii/quark/building/block/BlockBark": {
+    "name": "vazkii/quark/building/block/BlockBark",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockBark$Variants": {
+    "name": "vazkii/quark/building/block/BlockBark$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/BlockCarvedWood": {
+    "name": "vazkii/quark/building/block/BlockCarvedWood",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockCarvedWood$Variants": {
+    "name": "vazkii/quark/building/block/BlockCarvedWood$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/BlockCharredNetherBricks": {
+    "name": "vazkii/quark/building/block/BlockCharredNetherBricks",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockDuskbound": {
+    "name": "vazkii/quark/building/block/BlockDuskbound",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockDuskboundLantern": {
+    "name": "vazkii/quark/building/block/BlockDuskboundLantern",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockFramedGlass": {
+    "name": "vazkii/quark/building/block/BlockFramedGlass",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockHardenedClayTiles": {
+    "name": "vazkii/quark/building/block/BlockHardenedClayTiles",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockIronPlate": {
+    "name": "vazkii/quark/building/block/BlockIronPlate",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockIronPlate$Variants": {
+    "name": "vazkii/quark/building/block/BlockIronPlate$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/BlockMagmaBricks": {
+    "name": "vazkii/quark/building/block/BlockMagmaBricks",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockMidori": {
+    "name": "vazkii/quark/building/block/BlockMidori",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockNewSandstone": {
+    "name": "vazkii/quark/building/block/BlockNewSandstone",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockNewSandstone$Variants": {
+    "name": "vazkii/quark/building/block/BlockNewSandstone$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/BlockPolishedNetherrack": {
+    "name": "vazkii/quark/building/block/BlockPolishedNetherrack",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockPolishedNetherrack$Variants": {
+    "name": "vazkii/quark/building/block/BlockPolishedNetherrack$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/BlockPolishedStone": {
+    "name": "vazkii/quark/building/block/BlockPolishedStone",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockQuiltedWool": {
+    "name": "vazkii/quark/building/block/BlockQuiltedWool",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockQuiltedWool$Variants": {
+    "name": "vazkii/quark/building/block/BlockQuiltedWool$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/BlockSandyBricks": {
+    "name": "vazkii/quark/building/block/BlockSandyBricks",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockSnowBricks": {
+    "name": "vazkii/quark/building/block/BlockSnowBricks",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockSoulSandstone": {
+    "name": "vazkii/quark/building/block/BlockSoulSandstone",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockSoulSandstone$Variants": {
+    "name": "vazkii/quark/building/block/BlockSoulSandstone$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/BlockStainedClayTiles": {
+    "name": "vazkii/quark/building/block/BlockStainedClayTiles",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockStainedClayTiles$Variants": {
+    "name": "vazkii/quark/building/block/BlockStainedClayTiles$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/BlockStainedPlanks": {
+    "name": "vazkii/quark/building/block/BlockStainedPlanks",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockStainedPlanks$Variants": {
+    "name": "vazkii/quark/building/block/BlockStainedPlanks$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/BlockSturdyStone": {
+    "name": "vazkii/quark/building/block/BlockSturdyStone",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockThatch": {
+    "name": "vazkii/quark/building/block/BlockThatch",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockTurf": {
+    "name": "vazkii/quark/building/block/BlockTurf",
+    "interfaces": [
+      "vazkii/quark/building/feature/Turf$ITurfBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockVerticalPlanks": {
+    "name": "vazkii/quark/building/block/BlockVerticalPlanks",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockVerticalPlanks$Variants": {
+    "name": "vazkii/quark/building/block/BlockVerticalPlanks$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/BlockVerticalStainedPlanks": {
+    "name": "vazkii/quark/building/block/BlockVerticalStainedPlanks",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockVerticalStainedPlanks$Variants": {
+    "name": "vazkii/quark/building/block/BlockVerticalStainedPlanks$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/BlockWorldStoneBricks": {
+    "name": "vazkii/quark/building/block/BlockWorldStoneBricks",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockWorldStoneBricks$Variants": {
+    "name": "vazkii/quark/building/block/BlockWorldStoneBricks$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/BlockWorldStoneCarved": {
+    "name": "vazkii/quark/building/block/BlockWorldStoneCarved",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockWorldStoneCarved$Variants": {
+    "name": "vazkii/quark/building/block/BlockWorldStoneCarved$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/BlockWorldStonePavement": {
+    "name": "vazkii/quark/building/block/BlockWorldStonePavement",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/building/block/BlockWorldStonePavement$Variants": {
+    "name": "vazkii/quark/building/block/BlockWorldStonePavement$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/building/block/slab/BlockBarkSlab": {
+    "name": "vazkii/quark/building/block/slab/BlockBarkSlab",
+    "interfaces": [
+      "vazkii/arl/interf/IRecipeGrouped"
+    ]
+  },
+  "vazkii/quark/building/block/slab/BlockStainedClayTilesSlab": {
+    "name": "vazkii/quark/building/block/slab/BlockStainedClayTilesSlab",
+    "interfaces": [
+      "vazkii/arl/interf/IRecipeGrouped"
+    ]
+  },
+  "vazkii/quark/building/block/slab/BlockStainedPlanksSlab": {
+    "name": "vazkii/quark/building/block/slab/BlockStainedPlanksSlab",
+    "interfaces": [
+      "vazkii/arl/interf/IRecipeGrouped"
+    ]
+  },
+  "vazkii/quark/building/block/slab/BlockTurfSlab": {
+    "name": "vazkii/quark/building/block/slab/BlockTurfSlab",
+    "interfaces": [
+      "vazkii/quark/building/feature/Turf$ITurfBlock"
+    ]
+  },
+  "vazkii/quark/building/block/stairs/BlockBarkStairs": {
+    "name": "vazkii/quark/building/block/stairs/BlockBarkStairs",
+    "interfaces": [
+      "vazkii/arl/interf/IRecipeGrouped"
+    ]
+  },
+  "vazkii/quark/building/block/stairs/BlockStainedClayTilesStairs": {
+    "name": "vazkii/quark/building/block/stairs/BlockStainedClayTilesStairs",
+    "interfaces": [
+      "vazkii/arl/interf/IRecipeGrouped"
+    ]
+  },
+  "vazkii/quark/building/block/stairs/BlockStainedPlanksStairs": {
+    "name": "vazkii/quark/building/block/stairs/BlockStainedPlanksStairs",
+    "interfaces": [
+      "vazkii/arl/interf/IRecipeGrouped"
+    ]
+  },
+  "vazkii/quark/building/block/stairs/BlockTurfStairs": {
+    "name": "vazkii/quark/building/block/stairs/BlockTurfStairs",
+    "interfaces": [
+      "vazkii/quark/building/feature/Turf$ITurfBlock"
+    ]
+  },
+  "vazkii/quark/building/feature/Turf$ITurfBlock": {
+    "name": "vazkii/quark/building/feature/Turf$ITurfBlock",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock",
+      "vazkii/arl/interf/IBlockColorProvider"
+    ]
+  },
+  "vazkii/quark/building/item/ItemTrowel": {
+    "name": "vazkii/quark/building/item/ItemTrowel",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/client/feature/AutoJumpHotkey": {
+    "name": "vazkii/quark/client/feature/AutoJumpHotkey",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyInput(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderOverlay(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      }
+    ]
+  },
+  "vazkii/quark/client/feature/BetterFireEffect": {
+    "name": "vazkii/quark/client/feature/BetterFireEffect",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/client/feature/ChestSearchBar": {
+    "name": "vazkii/quark/client/feature/ChestSearchBar",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "initGui(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeypress(Lnet/minecraftforge/client/event/GuiScreenEvent$KeyboardInputEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClick(Lnet/minecraftforge/client/event/GuiScreenEvent$MouseInputEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRender(Lnet/minecraftforge/client/event/GuiScreenEvent$DrawScreenEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "drawTooltipEvent(Lnet/minecraftforge/client/event/RenderTooltipEvent$Pre;)V"
+      }
+    ]
+  },
+  "vazkii/quark/client/feature/EnchantedBooksShowItems": {
+    "name": "vazkii/quark/client/feature/EnchantedBooksShowItems",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "makeTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTooltip(Lnet/minecraftforge/client/event/RenderTooltipEvent$PostText;)V"
+      }
+    ]
+  },
+  "vazkii/quark/client/feature/FoodTooltip": {
+    "name": "vazkii/quark/client/feature/FoodTooltip",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "bwmFeatureEnabled(Lbetterwithmods/api/FeatureEnabledEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "bwmFeatureEnabled(Lbetterwithmods/api/FeatureEnabledEvent;)V",
+        "values": {
+          "modid": {
+            "value": "betterwithmods"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "makeTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTooltip(Lnet/minecraftforge/client/event/RenderTooltipEvent$PostText;)V"
+      }
+    ]
+  },
+  "vazkii/quark/client/feature/ImprovedMountHUD": {
+    "name": "vazkii/quark/client/feature/ImprovedMountHUD",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderHUD(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V"
+      }
+    ]
+  },
+  "vazkii/quark/client/feature/ImprovedSignEdit": {
+    "name": "vazkii/quark/client/feature/ImprovedSignEdit",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onOpenGUI(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/client/feature/LessIntrusiveShields$1": {
+    "name": "vazkii/quark/client/feature/LessIntrusiveShields$1",
+    "interfaces": [
+      "net/minecraft/client/renderer/ItemMeshDefinition"
+    ]
+  },
+  "vazkii/quark/client/feature/MapTooltip": {
+    "name": "vazkii/quark/client/feature/MapTooltip",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "makeTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTooltip(Lnet/minecraftforge/client/event/RenderTooltipEvent$PostText;)V"
+      }
+    ]
+  },
+  "vazkii/quark/client/feature/NoPotionShift": {
+    "name": "vazkii/quark/client/feature/NoPotionShift",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPotionShiftEvent(Lnet/minecraftforge/client/event/GuiScreenEvent$PotionShiftEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/client/feature/PanoramaMaker": {
+    "name": "vazkii/quark/client/feature/PanoramaMaker",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "loadMainMenu(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "takeScreenshot(Lnet/minecraftforge/client/event/ScreenshotEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/client/feature/RenderItemsInChat": {
+    "name": "vazkii/quark/client/feature/RenderItemsInChat",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "getChatPos(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Chat;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderSymbols(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      }
+    ]
+  },
+  "vazkii/quark/client/feature/ShulkerBoxTooltip": {
+    "name": "vazkii/quark/client/feature/ShulkerBoxTooltip",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "makeTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTooltip(Lnet/minecraftforge/client/event/RenderTooltipEvent$PostText;)V"
+      }
+    ]
+  },
+  "vazkii/quark/client/feature/UsageTicker": {
+    "name": "vazkii/quark/client/feature/UsageTicker",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderHUD(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      }
+    ]
+  },
+  "vazkii/quark/client/feature/VisualStatDisplay": {
+    "name": "vazkii/quark/client/feature/VisualStatDisplay",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "makeTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTooltip(Lnet/minecraftforge/client/event/RenderTooltipEvent$PostText;)V"
+      }
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockBlazeLantern": {
+    "name": "vazkii/quark/decoration/block/BlockBlazeLantern",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockBlazeRod": {
+    "name": "vazkii/quark/decoration/block/BlockBlazeRod",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockCandle": {
+    "name": "vazkii/quark/decoration/block/BlockCandle",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockCandle$Variants": {
+    "name": "vazkii/quark/decoration/block/BlockCandle$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockCharcoal": {
+    "name": "vazkii/quark/decoration/block/BlockCharcoal",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockColoredFlowerPot": {
+    "name": "vazkii/quark/decoration/block/BlockColoredFlowerPot",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock",
+      "vazkii/arl/interf/IBlockColorProvider",
+      "vazkii/arl/interf/IRecipeGrouped"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockCustomBookshelf": {
+    "name": "vazkii/quark/decoration/block/BlockCustomBookshelf",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockCustomBookshelf$Variants": {
+    "name": "vazkii/quark/decoration/block/BlockCustomBookshelf$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockCustomChest": {
+    "name": "vazkii/quark/decoration/block/BlockCustomChest",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockCustomFlowerPot": {
+    "name": "vazkii/quark/decoration/block/BlockCustomFlowerPot",
+    "interfaces": [
+      "vazkii/arl/interf/IBlockColorProvider",
+      "vazkii/arl/interf/IStateMapperProvider"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockGrate": {
+    "name": "vazkii/quark/decoration/block/BlockGrate",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockIronLadder": {
+    "name": "vazkii/quark/decoration/block/BlockIronLadder",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockLeafCarpet": {
+    "name": "vazkii/quark/decoration/block/BlockLeafCarpet",
+    "interfaces": [
+      "vazkii/arl/interf/IBlockColorProvider",
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockLeafCarpet$Variants": {
+    "name": "vazkii/quark/decoration/block/BlockLeafCarpet$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockLitLamp": {
+    "name": "vazkii/quark/decoration/block/BlockLitLamp",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock",
+      "vazkii/quark/experimental/lighting/IColoredLightSource"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockPaperLantern": {
+    "name": "vazkii/quark/decoration/block/BlockPaperLantern",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockPaperLantern$Variants": {
+    "name": "vazkii/quark/decoration/block/BlockPaperLantern$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/decoration/block/BlockRope": {
+    "name": "vazkii/quark/decoration/block/BlockRope",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/decoration/entity/EntityFlatItemFrame": {
+    "name": "vazkii/quark/decoration/entity/EntityFlatItemFrame",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IEntityAdditionalSpawnData"
+    ]
+  },
+  "vazkii/quark/decoration/feature/BetterVanillaFlowerPot": {
+    "name": "vazkii/quark/decoration/feature/BetterVanillaFlowerPot",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelRegister(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelRegister(Lnet/minecraftforge/client/event/ColorHandlerEvent$Block;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelBake(Lnet/minecraftforge/client/event/ModelBakeEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/decoration/feature/ColoredFlowerPots": {
+    "name": "vazkii/quark/decoration/feature/ColoredFlowerPots",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelBake(Lnet/minecraftforge/client/event/ModelBakeEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/decoration/feature/FlatItemFrames": {
+    "name": "vazkii/quark/decoration/feature/FlatItemFrames",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "vazkii/quark/decoration/feature/PlaceBlazeRods": {
+    "name": "vazkii/quark/decoration/feature/PlaceBlazeRods",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickItem;)V"
+      }
+    ]
+  },
+  "vazkii/quark/decoration/feature/TallowAndCandles": {
+    "name": "vazkii/quark/decoration/feature/TallowAndCandles",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onFurnaceTimeCheck(Lnet/minecraftforge/event/furnace/FurnaceFuelBurnTimeEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/decoration/feature/TieFences": {
+    "name": "vazkii/quark/decoration/feature/TieFences",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "vazkii/quark/decoration/feature/VariedChests": {
+    "name": "vazkii/quark/decoration/feature/VariedChests",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelBake(Lnet/minecraftforge/client/event/ModelBakeEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClickEntity(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteractSpecific;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityJoinWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/decoration/item/ItemChestBlock": {
+    "name": "vazkii/quark/decoration/item/ItemChestBlock",
+    "interfaces": [
+      "vazkii/arl/interf/IExtraVariantHolder"
+    ]
+  },
+  "vazkii/quark/decoration/item/ItemColoredItemFrame": {
+    "name": "vazkii/quark/decoration/item/ItemColoredItemFrame",
+    "interfaces": [
+      "vazkii/arl/interf/IItemColorProvider",
+      "vazkii/arl/interf/IExtraVariantHolder",
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/decoration/item/ItemGlassItemFrame": {
+    "name": "vazkii/quark/decoration/item/ItemGlassItemFrame",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem",
+      "vazkii/arl/interf/IExtraVariantHolder"
+    ]
+  },
+  "vazkii/quark/decoration/item/ItemTallow": {
+    "name": "vazkii/quark/decoration/item/ItemTallow",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/experimental/block/BlockFramed": {
+    "name": "vazkii/quark/experimental/block/BlockFramed",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock",
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "vazkii/quark/experimental/block/BlockFramedSlab": {
+    "name": "vazkii/quark/experimental/block/BlockFramedSlab",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock",
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "vazkii/quark/experimental/client/TextureDump": {
+    "name": "vazkii/quark/experimental/client/TextureDump",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "postTextureStitch(Lnet/minecraftforge/client/event/TextureStitchEvent$Post;)V"
+      }
+    ]
+  },
+  "vazkii/quark/experimental/client/model/FramedBlockModel$FramedBlockColor": {
+    "name": "vazkii/quark/experimental/client/model/FramedBlockModel$FramedBlockColor",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IBlockColor"
+    ]
+  },
+  "vazkii/quark/experimental/features/BetterNausea": {
+    "name": "vazkii/quark/experimental/features/BetterNausea",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTick(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V"
+      }
+    ]
+  },
+  "vazkii/quark/experimental/features/BiggerCaves": {
+    "name": "vazkii/quark/experimental/features/BiggerCaves",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "getCaveGenerator(Lnet/minecraftforge/event/terraingen/InitMapGenEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/experimental/features/ColoredLights": {
+    "name": "vazkii/quark/experimental/features/ColoredLights",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "preRenderTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/experimental/features/CustomSplashes": {
+    "name": "vazkii/quark/experimental/features/CustomSplashes",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/experimental/features/FramedBlocks": {
+    "name": "vazkii/quark/experimental/features/FramedBlocks",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelBake(Lnet/minecraftforge/client/event/ModelBakeEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/experimental/features/ParrotsSayDespacito": {
+    "name": "vazkii/quark/experimental/features/ParrotsSayDespacito",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      }
+    ]
+  },
+  "vazkii/quark/experimental/features/ReactiveCursor": {
+    "name": "vazkii/quark/experimental/features/ReactiveCursor",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/integration/jei/BackpackRecipeTransferHandler": {
+    "name": "vazkii/quark/integration/jei/BackpackRecipeTransferHandler",
+    "interfaces": [
+      "mezz/jei/api/recipe/transfer/IRecipeTransferHandler"
+    ]
+  },
+  "vazkii/quark/integration/jei/ElytraDuplicationRecipeWrapper": {
+    "name": "vazkii/quark/integration/jei/ElytraDuplicationRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/wrapper/ICraftingRecipeWrapper"
+    ]
+  },
+  "vazkii/quark/integration/jei/QuarkJeiPlugin": {
+    "name": "vazkii/quark/integration/jei/QuarkJeiPlugin",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "vazkii/quark/integration/jei/QuarkJeiPlugin"
+      }
+    ]
+  },
+  "vazkii/quark/integration/jei/QuarkJeiPlugin$GlobalTrashGuiHandler": {
+    "name": "vazkii/quark/integration/jei/QuarkJeiPlugin$GlobalTrashGuiHandler",
+    "interfaces": [
+      "mezz/jei/api/gui/IGlobalGuiHandler"
+    ]
+  },
+  "vazkii/quark/management/client/gui/GuiButtonChest": {
+    "name": "vazkii/quark/management/client/gui/GuiButtonChest",
+    "interfaces": [
+      "vazkii/quark/base/client/IParentedGui"
+    ]
+  },
+  "vazkii/quark/management/client/gui/GuiButtonTrash": {
+    "name": "vazkii/quark/management/client/gui/GuiButtonTrash",
+    "interfaces": [
+      "vazkii/quark/base/client/IParentedGui"
+    ]
+  },
+  "vazkii/quark/management/entity/EntityChestPassenger": {
+    "name": "vazkii/quark/management/entity/EntityChestPassenger",
+    "interfaces": [
+      "net/minecraft/inventory/IInventory"
+    ]
+  },
+  "vazkii/quark/management/feature/AutomaticToolRestock": {
+    "name": "vazkii/quark/management/feature/AutomaticToolRestock",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onToolBreak(Lnet/minecraftforge/event/entity/player/PlayerDestroyItemEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/management/feature/ChangeHotbarKeybind": {
+    "name": "vazkii/quark/management/feature/ChangeHotbarKeybind",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyInput(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "hudPre(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "hudPost(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/management/feature/ChestButtons": {
+    "name": "vazkii/quark/management/feature/ChestButtons",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "initGui(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "performAction(Lnet/minecraftforge/client/event/GuiScreenEvent$ActionPerformedEvent$Pre;)V"
+      }
+    ]
+  },
+  "vazkii/quark/management/feature/ChestsInBoats": {
+    "name": "vazkii/quark/management/feature/ChestsInBoats",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteractSpecific;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onOpenGUI(Lnet/minecraftforge/client/event/GuiOpenEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "vazkii/quark/management/feature/DeleteItems": {
+    "name": "vazkii/quark/management/feature/DeleteItems",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "initGui(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "mouseEvent(Lnet/minecraftforge/client/event/GuiScreenEvent$MouseInputEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "keyboardEvent(Lnet/minecraftforge/client/event/GuiScreenEvent$KeyboardInputEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "update(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/management/feature/FToSwitchItems": {
+    "name": "vazkii/quark/management/feature/FToSwitchItems",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "keyboardEvent(Lnet/minecraftforge/client/event/GuiScreenEvent$KeyboardInputEvent$Post;)V"
+      }
+    ]
+  },
+  "vazkii/quark/management/feature/FavoriteItems": {
+    "name": "vazkii/quark/management/feature/FavoriteItems",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "itemPickedUp(Lnet/minecraftforge/event/entity/player/EntityItemPickupEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "mouseEvent(Lnet/minecraftforge/client/event/GuiScreenEvent$MouseInputEvent$Pre;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "drawEvent(Lnet/minecraftforge/client/event/GuiScreenEvent$DrawScreenEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "makeTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTooltip(Lnet/minecraftforge/client/event/RenderTooltipEvent$PostText;)V"
+      }
+    ]
+  },
+  "vazkii/quark/management/feature/InventorySorting": {
+    "name": "vazkii/quark/management/feature/InventorySorting",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "initGui(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "performAction(Lnet/minecraftforge/client/event/GuiScreenEvent$ActionPerformedEvent$Pre;)V"
+      }
+    ]
+  },
+  "vazkii/quark/management/feature/LinkItems": {
+    "name": "vazkii/quark/management/feature/LinkItems",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "keyboardEvent(Lnet/minecraftforge/client/event/GuiScreenEvent$KeyboardInputEvent$Post;)V"
+      }
+    ]
+  },
+  "vazkii/quark/management/feature/RightClickAddToShulkerBox": {
+    "name": "vazkii/quark/management/feature/RightClickAddToShulkerBox",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAttachCapability(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/management/feature/RotateArrowTypes": {
+    "name": "vazkii/quark/management/feature/RotateArrowTypes",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMouseInput(Lnet/minecraftforge/client/event/MouseEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/management/feature/StoreToChests": {
+    "name": "vazkii/quark/management/feature/StoreToChests",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "initGui(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "performAction(Lnet/minecraftforge/client/event/GuiScreenEvent$ActionPerformedEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "update(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/management/gamerule/DropoffGamerule": {
+    "name": "vazkii/quark/management/gamerule/DropoffGamerule",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "worldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "login(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/AncientTomes": {
+    "name": "vazkii/quark/misc/feature/AncientTomes",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLootTableLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/BlackAsh": {
+    "name": "vazkii/quark/misc/feature/BlackAsh",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSpawnCheck(Lnet/minecraftforge/event/entity/living/LivingSpawnEvent$CheckSpawn;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/ColorRunes": {
+    "name": "vazkii/quark/misc/feature/ColorRunes",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLootTableLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/EnderdragonScales": {
+    "name": "vazkii/quark/misc/feature/EnderdragonScales",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityTick(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/EndermitesIntoShulkers": {
+    "name": "vazkii/quark/misc/feature/EndermitesIntoShulkers",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEnterChunk(Lnet/minecraftforge/event/entity/EntityEvent$EnteringChunk;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/ExtraPotions": {
+    "name": "vazkii/quark/misc/feature/ExtraPotions",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiOpen(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/HorseWhistle": {
+    "name": "vazkii/quark/misc/feature/HorseWhistle",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityTick(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/LockDirectionHotkey": {
+    "name": "vazkii/quark/misc/feature/LockDirectionHotkey",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockPlaced(Lnet/minecraftforge/event/world/BlockEvent$PlaceEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogoff(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedOutEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyInput(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHUDRender(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/MapMarkers": {
+    "name": "vazkii/quark/misc/feature/MapMarkers",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "rightClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickItem;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/NoteBlockInterface": {
+    "name": "vazkii/quark/misc/feature/NoteBlockInterface",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/NoteBlocksMobSounds": {
+    "name": "vazkii/quark/misc/feature/NoteBlocksMobSounds",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "noteBlockPlayed(Lnet/minecraftforge/event/world/NoteBlockEvent$Play;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/ParrotEggs": {
+    "name": "vazkii/quark/misc/feature/ParrotEggs",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/PlaceVanillaDusts": {
+    "name": "vazkii/quark/misc/feature/PlaceVanillaDusts",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickItem;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "missingItemMappings(Lnet/minecraftforge/event/RegistryEvent$MissingMappings;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/PoisonPotatoUsage": {
+    "name": "vazkii/quark/misc/feature/PoisonPotatoUsage",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/ReacharoundPlacing": {
+    "name": "vazkii/quark/misc/feature/ReacharoundPlacing",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRender(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickItem;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/SlimeBucket": {
+    "name": "vazkii/quark/misc/feature/SlimeBucket",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/SnowGolemPlayerHeads": {
+    "name": "vazkii/quark/misc/feature/SnowGolemPlayerHeads",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/feature/ThrowableDragonBreath": {
+    "name": "vazkii/quark/misc/feature/ThrowableDragonBreath",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerRightClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickItem;)V"
+      }
+    ]
+  },
+  "vazkii/quark/misc/item/ItemAncientTome": {
+    "name": "vazkii/quark/misc/item/ItemAncientTome",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/misc/item/ItemBlackAshBlock": {
+    "name": "vazkii/quark/misc/item/ItemBlackAshBlock",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/misc/item/ItemEnderdragonScale": {
+    "name": "vazkii/quark/misc/item/ItemEnderdragonScale",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/misc/item/ItemHorseWhistle": {
+    "name": "vazkii/quark/misc/item/ItemHorseWhistle",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/misc/item/ItemModArrow": {
+    "name": "vazkii/quark/misc/item/ItemModArrow",
+    "interfaces": [
+      "vazkii/arl/interf/IVariantHolder",
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/misc/item/ItemParrotEgg": {
+    "name": "vazkii/quark/misc/item/ItemParrotEgg",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem",
+      "vazkii/arl/interf/IItemColorProvider"
+    ]
+  },
+  "vazkii/quark/misc/item/ItemPickarang": {
+    "name": "vazkii/quark/misc/item/ItemPickarang",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/misc/item/ItemRune": {
+    "name": "vazkii/quark/misc/item/ItemRune",
+    "interfaces": [
+      "vazkii/arl/interf/IItemColorProvider",
+      "vazkii/quark/api/ICustomEnchantColor",
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/misc/item/ItemSlimeBucket": {
+    "name": "vazkii/quark/misc/item/ItemSlimeBucket",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/misc/item/ItemSoulPowder": {
+    "name": "vazkii/quark/misc/item/ItemSoulPowder",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/oddities/block/BlockPipe": {
+    "name": "vazkii/quark/oddities/block/BlockPipe",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/oddities/block/BlockPipe$ConnectionType": {
+    "name": "vazkii/quark/oddities/block/BlockPipe$ConnectionType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/oddities/block/BlockTinyPotato": {
+    "name": "vazkii/quark/oddities/block/BlockTinyPotato",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/oddities/client/bakery/WrapperWithParticleTexture": {
+    "name": "vazkii/quark/oddities/client/bakery/WrapperWithParticleTexture",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "vazkii/quark/oddities/feature/Backpacks": {
+    "name": "vazkii/quark/oddities/feature/Backpacks",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegisterVillagers(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onOpenGUI(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "removeCurseTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/oddities/feature/Backpacks$BackpackTrade": {
+    "name": "vazkii/quark/oddities/feature/Backpacks$BackpackTrade",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "vazkii/quark/oddities/feature/MatrixEnchanting": {
+    "name": "vazkii/quark/oddities/feature/MatrixEnchanting",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/oddities/feature/TotemOfHolding": {
+    "name": "vazkii/quark/oddities/feature/TotemOfHolding",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTextureStitch(Lnet/minecraftforge/client/event/TextureStitchEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerDrops(Lnet/minecraftforge/event/entity/player/PlayerDropsEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "vazkii/quark/oddities/item/ItemBackpack": {
+    "name": "vazkii/quark/oddities/item/ItemBackpack",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem",
+      "vazkii/arl/interf/IItemColorProvider"
+    ]
+  },
+  "vazkii/quark/oddities/item/ItemBlockTinyPotato$1": {
+    "name": "vazkii/quark/oddities/item/ItemBlockTinyPotato$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "vazkii/quark/oddities/item/ItemSoulCompass": {
+    "name": "vazkii/quark/oddities/item/ItemSoulCompass",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem",
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "vazkii/quark/oddities/tile/TileMatrixEnchanterBase": {
+    "name": "vazkii/quark/oddities/tile/TileMatrixEnchanterBase",
+    "interfaces": [
+      "net/minecraft/util/ITickable",
+      "net/minecraft/world/IInteractionObject"
+    ]
+  },
+  "vazkii/quark/oddities/tile/TilePipe": {
+    "name": "vazkii/quark/oddities/tile/TilePipe",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "vazkii/quark/oddities/tile/TileTinyPotato": {
+    "name": "vazkii/quark/oddities/tile/TileTinyPotato",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "vazkii/quark/tweaks/client/item/ClockTimeGetter": {
+    "name": "vazkii/quark/tweaks/client/item/ClockTimeGetter",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "vazkii/quark/tweaks/client/item/CompassAngleGetter": {
+    "name": "vazkii/quark/tweaks/client/item/CompassAngleGetter",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "vazkii/quark/tweaks/feature/ArmedArmorStands": {
+    "name": "vazkii/quark/tweaks/feature/ArmedArmorStands",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityConstruct(Lnet/minecraftforge/event/entity/EntityEvent$EntityConstructing;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/AutomaticRecipeUnlock": {
+    "name": "vazkii/quark/tweaks/feature/AutomaticRecipeUnlock",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLoggedIn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInitGui(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/AxesBreakLeaves": {
+    "name": "vazkii/quark/tweaks/feature/AxesBreakLeaves",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "calcBreakSpeed(Lnet/minecraftforge/event/entity/player/PlayerEvent$BreakSpeed;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/BabyZombiesBurn": {
+    "name": "vazkii/quark/tweaks/feature/BabyZombiesBurn",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/ChickensShedFeathers": {
+    "name": "vazkii/quark/tweaks/feature/ChickensShedFeathers",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/CompassesWorkEverywhere": {
+    "name": "vazkii/quark/tweaks/feature/CompassesWorkEverywhere",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onUpdate(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/DeployLaddersDown": {
+    "name": "vazkii/quark/tweaks/feature/DeployLaddersDown",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/DirtToPath": {
+    "name": "vazkii/quark/tweaks/feature/DirtToPath",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/DoubleDoors": {
+    "name": "vazkii/quark/tweaks/feature/DoubleDoors",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityTick(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/EndermenAntiCheese": {
+    "name": "vazkii/quark/tweaks/feature/EndermenAntiCheese",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/GlassShards": {
+    "name": "vazkii/quark/tweaks/feature/GlassShards",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrops(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/HoeSickle": {
+    "name": "vazkii/quark/tweaks/feature/HoeSickle",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockBroken(Lnet/minecraftforge/event/world/BlockEvent$BreakEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/ImprovedSleeping": {
+    "name": "vazkii/quark/tweaks/feature/ImprovedSleeping",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogout(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedOutEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeystroke(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeystroke(Lnet/minecraftforge/client/event/GuiScreenEvent$KeyboardInputEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMousePress(Lnet/minecraftforge/fml/common/gameevent/InputEvent$MouseInputEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/JumpBoostStepAssist": {
+    "name": "vazkii/quark/tweaks/feature/JumpBoostStepAssist",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "updatePlayerStepStatus(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerLoggedOut(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedOutEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/KnockOnDoors": {
+    "name": "vazkii/quark/tweaks/feature/KnockOnDoors",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "leftClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$LeftClickBlock;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/LookDownLadders": {
+    "name": "vazkii/quark/tweaks/feature/LookDownLadders",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInput(Lnet/minecraftforge/client/event/InputUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/MinecartInteraction": {
+    "name": "vazkii/quark/tweaks/feature/MinecartInteraction",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/PatTheDogs": {
+    "name": "vazkii/quark/tweaks/feature/PatTheDogs",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWolfAppear(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTame(Lnet/minecraftforge/event/entity/living/AnimalTameEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/QuickArmorSwapping": {
+    "name": "vazkii/quark/tweaks/feature/QuickArmorSwapping",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityInteractSpecific(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteractSpecific;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/RemoveSnowLayers": {
+    "name": "vazkii/quark/tweaks/feature/RemoveSnowLayers",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRightClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/RightClickHarvest": {
+    "name": "vazkii/quark/tweaks/feature/RightClickHarvest",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCropClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/RightClickSignEdit": {
+    "name": "vazkii/quark/tweaks/feature/RightClickSignEdit",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/ShearableChickens": {
+    "name": "vazkii/quark/tweaks/feature/ShearableChickens",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/SheepArmor": {
+    "name": "vazkii/quark/tweaks/feature/SheepArmor",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/SlabsToBlocks": {
+    "name": "vazkii/quark/tweaks/feature/SlabsToBlocks",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRecipe(Lnet/minecraftforge/event/RegistryEvent$Register;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/SpongeDriesInNether": {
+    "name": "vazkii/quark/tweaks/feature/SpongeDriesInNether",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemPlaced(Lnet/minecraftforge/event/world/BlockEvent$PlaceEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/SquidsInkYou": {
+    "name": "vazkii/quark/tweaks/feature/SquidsInkYou",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHurt(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/StackableItems": {
+    "name": "vazkii/quark/tweaks/feature/StackableItems",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "finishEvent(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Finish;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/TorchesBurnInFurnaces": {
+    "name": "vazkii/quark/tweaks/feature/TorchesBurnInFurnaces",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "burnTorch(Lnet/minecraftforge/event/furnace/FurnaceFuelBurnTimeEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/feature/VillagerPursueEmeralds": {
+    "name": "vazkii/quark/tweaks/feature/VillagerPursueEmeralds",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityTick(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/tweaks/item/ItemGlassShard": {
+    "name": "vazkii/quark/tweaks/item/ItemGlassShard",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/vanity/client/emotes/EmoteSound": {
+    "name": "vazkii/quark/vanity/client/emotes/EmoteSound",
+    "interfaces": [
+      "net/minecraft/client/audio/ITickableSound"
+    ]
+  },
+  "vazkii/quark/vanity/client/emotes/ModelAccessor": {
+    "name": "vazkii/quark/vanity/client/emotes/ModelAccessor",
+    "interfaces": [
+      "vazkii/aurelienribon/tweenengine/TweenAccessor"
+    ]
+  },
+  "vazkii/quark/vanity/client/layer/LayerBetterElytra": {
+    "name": "vazkii/quark/vanity/client/layer/LayerBetterElytra",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "vazkii/quark/vanity/feature/BoatSails": {
+    "name": "vazkii/quark/vanity/feature/BoatSails",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBoatGenesis(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBoatSeen(Lnet/minecraftforge/event/entity/player/PlayerEvent$StartTracking;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBoatArrive(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      }
+    ]
+  },
+  "vazkii/quark/vanity/feature/DyableElytra": {
+    "name": "vazkii/quark/vanity/feature/DyableElytra",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/vanity/feature/DyeItemNames": {
+    "name": "vazkii/quark/vanity/feature/DyeItemNames",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "makeTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTooltip(Lnet/minecraftforge/client/event/RenderTooltipEvent$PostText;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/vanity/feature/EmoteSystem": {
+    "name": "vazkii/quark/vanity/feature/EmoteSystem",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "initGui(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "performAction(Lnet/minecraftforge/client/event/GuiScreenEvent$ActionPerformedEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyInput(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "drawHUD(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "preRenderLiving(Lnet/minecraftforge/client/event/RenderLivingEvent$Pre;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "postRenderLiving(Lnet/minecraftforge/client/event/RenderLivingEvent$Post;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "vazkii/quark/vanity/feature/SitInStairs": {
+    "name": "vazkii/quark/vanity/feature/SitInStairs",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "vazkii/quark/vanity/feature/WitchHat": {
+    "name": "vazkii/quark/vanity/feature/WitchHat",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDamage(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/vanity/item/ItemWitchHat": {
+    "name": "vazkii/quark/vanity/item/ItemWitchHat",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/world/base/EnumStonelingVariant": {
+    "name": "vazkii/quark/world/base/EnumStonelingVariant",
+    "interfaces": [
+      "net/minecraft/entity/IEntityLivingData"
+    ]
+  },
+  "vazkii/quark/world/block/BlockBasalt": {
+    "name": "vazkii/quark/world/block/BlockBasalt",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockBasalt$Variants": {
+    "name": "vazkii/quark/world/block/BlockBasalt$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockBiomeBrick": {
+    "name": "vazkii/quark/world/block/BlockBiomeBrick",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockBiomeBrick$Variants": {
+    "name": "vazkii/quark/world/block/BlockBiomeBrick$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockBiomeCobblestone": {
+    "name": "vazkii/quark/world/block/BlockBiomeCobblestone",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockBiomeCobblestone$Variants": {
+    "name": "vazkii/quark/world/block/BlockBiomeCobblestone$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockBiotite": {
+    "name": "vazkii/quark/world/block/BlockBiotite",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockBiotiteOre": {
+    "name": "vazkii/quark/world/block/BlockBiotiteOre",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockCrystal": {
+    "name": "vazkii/quark/world/block/BlockCrystal",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockCrystal$Variants": {
+    "name": "vazkii/quark/world/block/BlockCrystal$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockElderPrismarine": {
+    "name": "vazkii/quark/world/block/BlockElderPrismarine",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockElderPrismarine$Variants": {
+    "name": "vazkii/quark/world/block/BlockElderPrismarine$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockElderSeaLantern": {
+    "name": "vazkii/quark/world/block/BlockElderSeaLantern",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockGlowcelium": {
+    "name": "vazkii/quark/world/block/BlockGlowcelium",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockGlowshroom": {
+    "name": "vazkii/quark/world/block/BlockGlowshroom",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockHugeGlowshroom": {
+    "name": "vazkii/quark/world/block/BlockHugeGlowshroom",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockJasper": {
+    "name": "vazkii/quark/world/block/BlockJasper",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockJasper$Variants": {
+    "name": "vazkii/quark/world/block/BlockJasper$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockLimestone": {
+    "name": "vazkii/quark/world/block/BlockLimestone",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockLimestone$Variants": {
+    "name": "vazkii/quark/world/block/BlockLimestone$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockMarble": {
+    "name": "vazkii/quark/world/block/BlockMarble",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockMarble$Variants": {
+    "name": "vazkii/quark/world/block/BlockMarble$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockMonsterBox": {
+    "name": "vazkii/quark/world/block/BlockMonsterBox",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockRoots": {
+    "name": "vazkii/quark/world/block/BlockRoots",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock",
+      "net/minecraftforge/common/IShearable",
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockSlate": {
+    "name": "vazkii/quark/world/block/BlockSlate",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockSlate$Variants": {
+    "name": "vazkii/quark/world/block/BlockSlate$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockSmoker": {
+    "name": "vazkii/quark/world/block/BlockSmoker",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockSpeleothem": {
+    "name": "vazkii/quark/world/block/BlockSpeleothem",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock"
+    ]
+  },
+  "vazkii/quark/world/block/BlockSpeleothem$EnumSize": {
+    "name": "vazkii/quark/world/block/BlockSpeleothem$EnumSize",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockVariantLeaves": {
+    "name": "vazkii/quark/world/block/BlockVariantLeaves",
+    "interfaces": [
+      "vazkii/quark/base/block/IQuarkBlock",
+      "vazkii/arl/interf/IBlockColorProvider"
+    ]
+  },
+  "vazkii/quark/world/block/BlockVariantLeaves$Variant": {
+    "name": "vazkii/quark/world/block/BlockVariantLeaves$Variant",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockVariantSapling": {
+    "name": "vazkii/quark/world/block/BlockVariantSapling",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "vazkii/quark/world/block/BlockVariantSapling$Variant": {
+    "name": "vazkii/quark/world/block/BlockVariantSapling$Variant",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/quark/world/client/layer/LayerArchaeologistHat": {
+    "name": "vazkii/quark/world/client/layer/LayerArchaeologistHat",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "vazkii/quark/world/client/layer/LayerAshenClothes": {
+    "name": "vazkii/quark/world/client/layer/LayerAshenClothes",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "vazkii/quark/world/client/layer/LayerAshenHeldItem": {
+    "name": "vazkii/quark/world/client/layer/LayerAshenHeldItem",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "vazkii/quark/world/client/layer/LayerFoxhoundCollar": {
+    "name": "vazkii/quark/world/client/layer/LayerFoxhoundCollar",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "vazkii/quark/world/client/layer/LayerPirateClothes": {
+    "name": "vazkii/quark/world/client/layer/LayerPirateClothes",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "vazkii/quark/world/client/layer/LayerStonelingItem": {
+    "name": "vazkii/quark/world/client/layer/LayerStonelingItem",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "vazkii/quark/world/effects/PotionColorizer": {
+    "name": "vazkii/quark/world/effects/PotionColorizer",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onStartTracking(Lnet/minecraftforge/event/entity/player/PlayerEvent$StartTracking;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCalculateColor(Lnet/minecraftforge/event/entity/living/PotionColorCalculationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "colorize(Lnet/minecraftforge/client/event/RenderLivingEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "colorize(Lnet/minecraftforge/client/event/RenderLivingEvent$Post;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/entity/EntityArchaeologist": {
+    "name": "vazkii/quark/world/entity/EntityArchaeologist",
+    "interfaces": [
+      "net/minecraft/entity/IMerchant"
+    ]
+  },
+  "vazkii/quark/world/entity/EntityFoxhound": {
+    "name": "vazkii/quark/world/entity/EntityFoxhound",
+    "interfaces": [
+      "net/minecraft/entity/monster/IMob"
+    ]
+  },
+  "vazkii/quark/world/feature/Archaeologist": {
+    "name": "vazkii/quark/world/feature/Archaeologist",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiOpen(Lnet/minecraftforge/client/event/GuiOpenEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrops(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "missingItemMappings(Lnet/minecraftforge/event/RegistryEvent$MissingMappings;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "missingEntityMappings(Lnet/minecraftforge/event/RegistryEvent$MissingMappings;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/Biotite": {
+    "name": "vazkii/quark/world/feature/Biotite",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityTick(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/BuriedTreasure": {
+    "name": "vazkii/quark/world/feature/BuriedTreasure",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLootTableLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/Crabs": {
+    "name": "vazkii/quark/world/feature/Crabs",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onNewWorld(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/DefaultWorldOptions": {
+    "name": "vazkii/quark/world/feature/DefaultWorldOptions",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "guiOpenEvent(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/MushroomsInSwamps": {
+    "name": "vazkii/quark/world/feature/MushroomsInSwamps",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "decorate(Lnet/minecraftforge/event/terraingen/DecorateBiomeEvent$Decorate;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/NaturalBlazesInNether": {
+    "name": "vazkii/quark/world/feature/NaturalBlazesInNether",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSpawn(Lnet/minecraftforge/event/entity/living/LivingSpawnEvent$CheckSpawn;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/OceanGuardians": {
+    "name": "vazkii/quark/world/feature/OceanGuardians",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSound(Lnet/minecraftforge/client/event/sound/PlaySoundEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/PathfinderMaps": {
+    "name": "vazkii/quark/world/feature/PathfinderMaps",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegisterVillagers(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/PathfinderMaps$PathfinderMapTrade": {
+    "name": "vazkii/quark/world/feature/PathfinderMaps$PathfinderMapTrade",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "vazkii/quark/world/feature/RealisticWorldType": {
+    "name": "vazkii/quark/world/feature/RealisticWorldType",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "openGUI(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Pre;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/RevampStoneGen": {
+    "name": "vazkii/quark/world/feature/RevampStoneGen",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onOreGenerate(Lnet/minecraftforge/event/terraingen/OreGenEvent$GenerateMinable;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/TreeVariants": {
+    "name": "vazkii/quark/world/feature/TreeVariants",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderEvent(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/UndergroundBiomes": {
+    "name": "vazkii/quark/world/feature/UndergroundBiomes",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onOreGenerate(Lnet/minecraftforge/event/terraingen/OreGenEvent$GenerateMinable;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/VariedDungeons": {
+    "name": "vazkii/quark/world/feature/VariedDungeons",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDungeonSpawn(Lnet/minecraftforge/event/terraingen/PopulateChunkEvent$Populate;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/feature/Wraiths": {
+    "name": "vazkii/quark/world/feature/Wraiths",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSpawn(Lnet/minecraftforge/event/entity/living/LivingSpawnEvent$CheckSpawn;)V"
+      }
+    ]
+  },
+  "vazkii/quark/world/item/ItemArchaeologistHat": {
+    "name": "vazkii/quark/world/item/ItemArchaeologistHat",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/world/item/ItemBiotite": {
+    "name": "vazkii/quark/world/item/ItemBiotite",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/world/item/ItemChain": {
+    "name": "vazkii/quark/world/item/ItemChain",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/world/item/ItemCrabShell": {
+    "name": "vazkii/quark/world/item/ItemCrabShell",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/world/item/ItemDiamondHeart": {
+    "name": "vazkii/quark/world/item/ItemDiamondHeart",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/world/item/ItemPirateHat": {
+    "name": "vazkii/quark/world/item/ItemPirateHat",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/world/item/ItemRootDye": {
+    "name": "vazkii/quark/world/item/ItemRootDye",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/world/item/ItemRootFlower": {
+    "name": "vazkii/quark/world/item/ItemRootFlower",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/world/item/ItemSoulBead": {
+    "name": "vazkii/quark/world/item/ItemSoulBead",
+    "interfaces": [
+      "vazkii/quark/base/item/IQuarkItem"
+    ]
+  },
+  "vazkii/quark/world/tile/TileMonsterBox": {
+    "name": "vazkii/quark/world/tile/TileMonsterBox",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "vazkii/quark/world/tile/TileSmoker": {
+    "name": "vazkii/quark/world/tile/TileSmoker",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "vazkii/quark/world/world/ArchaeologistHouseGenerator": {
+    "name": "vazkii/quark/world/world/ArchaeologistHouseGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/BasaltGenerator": {
+    "name": "vazkii/quark/world/world/BasaltGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/BiotiteGenerator": {
+    "name": "vazkii/quark/world/world/BiotiteGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/BrokenPortalGenerator": {
+    "name": "vazkii/quark/world/world/BrokenPortalGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/CaveRootGenerator": {
+    "name": "vazkii/quark/world/world/CaveRootGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/ClayGenerator": {
+    "name": "vazkii/quark/world/world/ClayGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/CrystalCaveGenerator": {
+    "name": "vazkii/quark/world/world/CrystalCaveGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/FairyRingGenerator": {
+    "name": "vazkii/quark/world/world/FairyRingGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/MonsterBoxGenerator": {
+    "name": "vazkii/quark/world/world/MonsterBoxGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/NetherFossilGenerator": {
+    "name": "vazkii/quark/world/world/NetherFossilGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/ObsidianSpikeGenerator": {
+    "name": "vazkii/quark/world/world/ObsidianSpikeGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/PirateShipGenerator": {
+    "name": "vazkii/quark/world/world/PirateShipGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/SakuraTreeGenerator": {
+    "name": "vazkii/quark/world/world/SakuraTreeGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/SmokerGenerator": {
+    "name": "vazkii/quark/world/world/SmokerGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/SpeleothemGenerator": {
+    "name": "vazkii/quark/world/world/SpeleothemGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "vazkii/quark/world/world/event/RaveEventListener": {
+    "name": "vazkii/quark/world/world/event/RaveEventListener",
+    "interfaces": [
+      "net/minecraft/world/IWorldEventListener"
+    ]
+  }
+}

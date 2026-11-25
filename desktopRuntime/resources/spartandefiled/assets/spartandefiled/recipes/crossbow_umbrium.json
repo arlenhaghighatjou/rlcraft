@@ -1,0 +1,32 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "bsi",
+    "sw ",
+    "i h"
+  ],
+  "key": {
+    "i": {
+      "type": "forge:ore_dict",
+      "ore": "ingotUmbrium"
+    },
+    "h": {
+      "item": "spartanweaponry:material",
+      "data": 0
+    },
+    "b": {
+      "item": "minecraft:bow"
+    },
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "string"
+    },
+    "w": {
+      "type": "forge:ore_dict",
+      "ore": "logWood"
+    }
+  },
+  "result": {
+    "item": "spartandefiled:crossbow_umbrium"
+  }
+}

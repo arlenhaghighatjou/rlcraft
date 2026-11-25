@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "srparasites:parasiterubble_bone"
+  },
+  "variants": {
+    "variant=default":  { "model": "srparasites:parasiterubble_bone" },
+    "inventory": [{}]
+  }
+}

@@ -1,0 +1,20 @@
+package com.creativemd.creativecore.common.gui.controls.gui;
+
+import com.creativemd.creativecore.common.gui.GuiControl;
+
+public abstract class GuiFocusControl extends GuiControl {
+   public boolean focused = false;
+
+   public GuiFocusControl(String name, int x, int y, int width, int height) {
+      super(name, x, y, width, height);
+   }
+
+   public void onLoseFocus() {
+      this.focused = false;
+   }
+
+   public boolean mousePressed(int posX, int posY, int button) {
+      this.focused = true;
+      return true;
+   }
+}

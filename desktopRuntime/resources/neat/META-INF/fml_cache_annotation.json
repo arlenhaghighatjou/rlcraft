@@ -1,0 +1,77 @@
+{
+  "vazkii/neat/GuiFactory": {
+    "name": "vazkii/neat/GuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "vazkii/neat/HealthBarRenderer": {
+    "name": "vazkii/neat/HealthBarRenderer",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderWorldLast(Lnet/minecraftforge/client/event/RenderWorldLastEvent;)V"
+      }
+    ]
+  },
+  "vazkii/neat/Neat": {
+    "name": "vazkii/neat/Neat",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "vazkii/neat/Neat",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "dependencies": {
+            "value": ""
+          },
+          "guiFactory": {
+            "value": "vazkii.neat.GuiFactory"
+          },
+          "modid": {
+            "value": "neat"
+          },
+          "name": {
+            "value": "Neat"
+          },
+          "version": {
+            "value": "1.4-17"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      }
+    ]
+  },
+  "vazkii/neat/NeatConfig$ChangeListener": {
+    "name": "vazkii/neat/NeatConfig$ChangeListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "vazkii/neat/ToggleKeybind": {
+    "name": "vazkii/neat/ToggleKeybind",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyInput(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      }
+    ]
+  }
+}

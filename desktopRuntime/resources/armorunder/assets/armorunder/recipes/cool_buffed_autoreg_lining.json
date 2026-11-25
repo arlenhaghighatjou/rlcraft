@@ -1,0 +1,14 @@
+{ "_comment": ["Buffs auto-regulating liner with cooling" ],
+  "result": {
+    "item": "armorunder:auto_leggings_liner"
+  },
+  "type": "armorunder:autoreg_lining_shaped",
+  "modifier": -1,
+  "pattern": [
+    "xxx", "xLx", "xxx"
+  ],
+  "key": {
+    "L": { "type": "forge:ore_dict", "ore": "itemAutoregLining" },
+    "x": { "item": "armorunder:cooling_goo" }
+  }
+}

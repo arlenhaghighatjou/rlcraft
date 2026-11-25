@@ -1,0 +1,101 @@
+package svenhjol.charm.enchanting.feature;
+
+import java.util.HashMap;
+import java.util.Map;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import svenhjol.charm.enchanting.enchantment.EnchantmentMagnetic;
+import svenhjol.charm.enchanting.message.MessageMagneticPickup;
+import svenhjol.meson.Feature;
+import svenhjol.meson.handler.NetworkHandler;
+import svenhjol.meson.helper.EnchantmentHelper;
+import svenhjol.meson.helper.SoundHelper;
+import svenhjol.meson.helper.WorldHelper;
+
+public class Magnetic extends Feature {
+   public static EnchantmentMagnetic enchantment;
+   public static int minEnchantability;
+   public static Map<BlockPos, EntityPlayer> dropmap = new HashMap();
+
+   public Magnetic() {
+   }
+
+   public String getDescription() {
+      return "Tools with the Magnetic enchantment automatically pick up drops.";
+   }
+
+   public void configure() {
+      super.configure();
+      minEnchantability = 15;
+   }
+
+   public void preInit(FMLPreInitializationEvent event) {
+      super.preInit(event);
+      enchantment = new EnchantmentMagnetic();
+      NetworkHandler.register(MessageMagneticPickup.class, Side.CLIENT);
+   }
+
+   @SubscribeEvent
+   public void onBreak(BreakEvent event) {
+      if (EnchantmentHelper.hasEnchantment(enchantment, event.getPlayer().getHeldItemMainhand())) {
+         dropmap.put(event.getPos(), event.getPlayer());
+      } else {
+         dropmap.values().remove(event.getPlayer());
+      }
+
+   }
+
+   @SubscribeEvent
+   public void onEntityCreate(EntityJoinWorldEvent event) {
+      if (event.getEntity() instanceof EntityItem && !event.getWorld().isRemote) {
+         int range = 5;
+         BlockPos got = null;
+
+         for(BlockPos pos : dropmap.keySet()) {
+            double dist = WorldHelper.getDistanceSq(pos, event.getEntity().getPosition());
+            if (dist <= (double)range) {
+               got = pos;
+               break;
+            }
+         }
+
+         if (got != null) {
+            EntityPlayer player = (EntityPlayer)dropmap.get(got);
+            EntityItem fake = new EntityItem(player.world, player.posX, player.posY, player.posZ);
+            ItemStack item = ((EntityItem)event.getEntity()).getItem();
+            fake.setItem(item);
+            dropmap.remove(got);
+            if (!MinecraftForge.EVENT_BUS.post(new EntityItemPickupEvent(player, fake)) && player.inventory.addItemStackToInventory(item)) {
+               NetworkHandler.INSTANCE.sendTo(new MessageMagneticPickup(player.getPosition()), (EntityPlayerMP)player);
+               event.setCanceled(true);
+            }
+         }
+      }
+
+   }
+
+   public boolean hasSubscriptions() {
+      return true;
+   }
+
+   @SideOnly(Side.CLIENT)
+   public static void effectPickup(BlockPos pos) {
+      WorldClient world = Minecraft.getMinecraft().world;
+      SoundHelper.playSoundAtPos(world, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.25F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+   }
+}

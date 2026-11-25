@@ -1,0 +1,12 @@
+{ "_comment": ["Lined chestplate to provide +1 warming" ],
+  "result": {
+    "item": "minecraft:leather_chestplate",
+    "nbt": {"carrots:ArmorTLining":"WARM"}
+  },
+  "type": "armorunder:lined_armor_shapeless",
+  "limit": "WARMEST",
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemChestplate" },
+    { "item": "armorunder:warm_chestplate_liner" }
+  ]
+}

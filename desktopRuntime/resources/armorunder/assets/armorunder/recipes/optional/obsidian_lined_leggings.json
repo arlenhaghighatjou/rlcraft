@@ -1,0 +1,15 @@
+{ "_comment": ["Leggings with obsidian wrap liner" ],
+  "conditions": [{
+     "type": "armorunder:is_allowed",
+     "value": "special_sets"
+  }],
+  "result": {
+    "item": "minecraft:diamond_leggings",
+    "nbt": {"carrots:ArmorXLining":"OBSIDIAN_SHIELD"}
+  },
+  "type": "armorunder:barrier_shielded_armor_shapeless",
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemLeggings" },
+    { "item": "armorunder:barrier_leggings_liner" }
+  ]
+}

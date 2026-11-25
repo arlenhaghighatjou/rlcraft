@@ -1,0 +1,20 @@
+package mezz.jei.config;
+
+import java.util.Locale;
+import net.minecraft.util.ResourceLocation;
+
+public final class Constants {
+   public static final String MINECRAFT_NAME = "Minecraft";
+   public static final String MOD_ID = "jei";
+   public static final String NAME = "Just Enough Items";
+   public static final String VERSION = "4.16.1.302";
+   public static final String RESOURCE_DOMAIN = "jei".toLowerCase(Locale.ENGLISH);
+   public static final String TEXTURE_GUI_PATH = "textures/gui/";
+   public static final String TEXTURE_GUI_VANILLA = "textures/gui/gui_vanilla.png";
+   public static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation(RESOURCE_DOMAIN, "textures/gui/gui_vanilla.png");
+   public static final int MAX_TOOLTIP_WIDTH = 150;
+   public static final String UNIVERSAL_RECIPE_TRANSFER_UID = "universal recipe transfer handler";
+
+   private Constants() {
+   }
+}

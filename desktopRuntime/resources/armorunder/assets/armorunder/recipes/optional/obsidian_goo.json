@@ -1,0 +1,17 @@
+{ "_comment": ["Mysterious goo that acts as a heat barrier" ],
+  "conditions": [{
+     "type": "armorunder:is_allowed",
+     "value": "craft_smart_lining"
+  }],
+  "result": {
+    "item": "armorunder:obsidian_goo"
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "Ms", "ss"
+  ],
+  "key": {
+    "M": { "item": "minecraft:obsidian" },
+    "s": { "item": "minecraft:slime_ball" }
+  }
+}

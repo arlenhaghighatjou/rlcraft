@@ -1,0 +1,16 @@
+[
+{
+  "modid": "mobends",
+  "name": "Mo' Bends",
+  "description": "If you think that Minecraft characters could be more realistic, instead of steady and rigid animations, this mod is just for you! It makes players seem alive, and adds epic sword animations!",
+  "version": "1.2.1",
+  "mcversion": "1.12.2",
+  "url": "https://mobends.com",
+  "updateJSON": "https://mobends.com/mod-update.json",
+  "authorList": ["GoblinBob"],
+  "credits": "Tommsy64 - coding support",
+  "logoFile": "assets/mobends/textures/logo512.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]

@@ -1,0 +1,33 @@
+package codersafterdark.compatskills.common.compats.betterquesting.gui;
+
+import betterquesting.api2.client.gui.misc.GuiAlign;
+import betterquesting.api2.client.gui.misc.GuiPadding;
+import betterquesting.api2.client.gui.misc.GuiTransform;
+import betterquesting.api2.client.gui.misc.IGuiRect;
+import betterquesting.api2.client.gui.panels.CanvasEmpty;
+import betterquesting.api2.client.gui.panels.content.PanelTextBox;
+import codersafterdark.compatskills.common.compats.betterquesting.TaskRequirement;
+import codersafterdark.reskillable.api.data.PlayerDataHandler;
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.client.Minecraft;
+
+public class PanelTaskRequirement extends CanvasEmpty {
+   private final TaskRequirement task;
+
+   public PanelTaskRequirement(IGuiRect rect, TaskRequirement task) {
+      super(rect);
+      this.task = task;
+   }
+
+   public void initPanel() {
+      super.initPanel();
+      List<String> tooltip = new ArrayList();
+      this.task.getRequirementHolder().addRequirementsIgnoreShift(PlayerDataHandler.get(Minecraft.getMinecraft().player), tooltip);
+
+      for(int i = 0; i < tooltip.size(); ++i) {
+         this.addPanel(new PanelTextBox(new GuiTransform(GuiAlign.TOP_EDGE, new GuiPadding(0, 16 * i, 0, -16 * (i + 1)), 0), (String)tooltip.get(i)));
+      }
+
+   }
+}

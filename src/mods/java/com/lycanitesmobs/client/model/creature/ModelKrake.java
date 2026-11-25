@@ -1,0 +1,31 @@
+package com.lycanitesmobs.client.model.creature;
+
+import com.lycanitesmobs.LycanitesMobs;
+import com.lycanitesmobs.client.model.template.ModelTemplateBiped;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
+public class ModelKrake extends ModelTemplateBiped {
+   public ModelKrake() {
+      this(1.0F);
+   }
+
+   public ModelKrake(float shadowSize) {
+      this.initModel("krake", LycanitesMobs.modInfo, "entity/krake");
+      this.mouthScale = 2.5F;
+      this.bigChildHead = false;
+      this.trophyScale = 0.8F;
+      this.trophyOffset = new float[]{0.0F, -0.2F, 0.0F};
+   }
+
+   public void animatePart(String partName, EntityLiving entity, float time, float distance, float loop, float lookY, float lookX, float scale) {
+      super.animatePart(partName, entity, time, distance * 0.5F, loop, lookY, lookX, scale);
+      if (partName.contains("spike")) {
+         this.rotate((float)(-Math.toDegrees((double)(MathHelper.sin(loop * 0.2F) * 0.1F))), 0.0F, 0.0F);
+      }
+
+   }
+}

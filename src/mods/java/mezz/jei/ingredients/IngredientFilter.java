@@ -1,0 +1,406 @@
+package mezz.jei.ingredients;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
+import it.unimi.dsi.fastutil.chars.Char2ObjectMap;
+import it.unimi.dsi.fastutil.chars.Char2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.ints.IntIterator;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
+import it.unimi.dsi.fastutil.objects.ObjectIterator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.annotation.Nullable;
+import mezz.jei.api.IIngredientFilter;
+import mezz.jei.api.ingredients.IIngredientHelper;
+import mezz.jei.config.Config;
+import mezz.jei.config.EditModeToggleEvent;
+import mezz.jei.gui.ingredients.IIngredientListElement;
+import mezz.jei.gui.overlay.IIngredientGridSource;
+import mezz.jei.startup.PlayerJoinedWorldEvent;
+import mezz.jei.suffixtree.CombinedSearchTrees;
+import mezz.jei.suffixtree.GeneralizedSuffixTree;
+import mezz.jei.suffixtree.ISearchTree;
+import mezz.jei.util.ErrorUtil;
+import mezz.jei.util.Translator;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.common.ProgressManager;
+import net.minecraftforge.fml.common.ProgressManager.ProgressBar;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+public class IngredientFilter implements IIngredientFilter, IIngredientGridSource {
+   private static final Pattern QUOTE_PATTERN = Pattern.compile("\"");
+   private static final Pattern FILTER_SPLIT_PATTERN = Pattern.compile("(-?\".*?(?:\"|$)|\\S+)");
+   private final IngredientBlacklistInternal blacklist;
+   private final NonNullList<IIngredientListElement> elementList;
+   private final GeneralizedSuffixTree searchTree;
+   private final Char2ObjectMap<PrefixedSearchTree> prefixedSearchTrees = new Char2ObjectOpenHashMap();
+   private final IngredientFilterBackgroundBuilder backgroundBuilder;
+   private CombinedSearchTrees combinedSearchTrees;
+   @Nullable
+   private String filterCached;
+   private List<IIngredientListElement> ingredientListCached = Collections.emptyList();
+   private final List<IIngredientGridSource.Listener> listeners = new ArrayList();
+
+   public IngredientFilter(IngredientBlacklistInternal blacklist) {
+      this.blacklist = blacklist;
+      this.elementList = NonNullList.create();
+      this.searchTree = new GeneralizedSuffixTree();
+      this.createPrefixedSearchTree('@', Config::getModNameSearchMode, IIngredientListElement::getModNameStrings);
+      this.createPrefixedSearchTree('#', Config::getTooltipSearchMode, IIngredientListElement::getTooltipStrings);
+      this.createPrefixedSearchTree('$', Config::getOreDictSearchMode, IIngredientListElement::getOreDictStrings);
+      this.createPrefixedSearchTree('%', Config::getCreativeTabSearchMode, IIngredientListElement::getCreativeTabsStrings);
+      this.createPrefixedSearchTree('^', Config::getColorSearchMode, IIngredientListElement::getColorStrings);
+      this.createPrefixedSearchTree('&', Config::getResourceIdSearchMode, (element) -> {
+         return Collections.singleton(element.getResourceId());
+      });
+      this.combinedSearchTrees = buildCombinedSearchTrees(this.searchTree, this.prefixedSearchTrees.values());
+      this.backgroundBuilder = new IngredientFilterBackgroundBuilder(this.prefixedSearchTrees, this.elementList);
+   }
+
+   private static CombinedSearchTrees buildCombinedSearchTrees(ISearchTree searchTree, Collection<PrefixedSearchTree> prefixedSearchTrees) {
+      CombinedSearchTrees combinedSearchTrees = new CombinedSearchTrees();
+      combinedSearchTrees.addSearchTree(searchTree);
+
+      for(PrefixedSearchTree prefixedTree : prefixedSearchTrees) {
+         if (prefixedTree.getMode() == Config.SearchMode.ENABLED) {
+            combinedSearchTrees.addSearchTree(prefixedTree.getTree());
+         }
+      }
+
+      return combinedSearchTrees;
+   }
+
+   private void createPrefixedSearchTree(char prefix, PrefixedSearchTree.IModeGetter modeGetter, PrefixedSearchTree.IStringsGetter stringsGetter) {
+      GeneralizedSuffixTree tree = new GeneralizedSuffixTree();
+      PrefixedSearchTree prefixedTree = new PrefixedSearchTree(tree, stringsGetter, modeGetter);
+      this.prefixedSearchTrees.put(prefix, prefixedTree);
+   }
+
+   public void trimToSize() {
+      this.searchTree.trimToSize();
+      ObjectIterator var1 = this.prefixedSearchTrees.values().iterator();
+
+      while(var1.hasNext()) {
+         PrefixedSearchTree tree = (PrefixedSearchTree)var1.next();
+         tree.getTree().trimToSize();
+      }
+
+   }
+
+   public void addIngredients(NonNullList<IIngredientListElement> ingredients) {
+      ingredients.sort(IngredientListElementComparator.INSTANCE);
+      long modNameCount = ingredients.stream().map(IIngredientListElement::getModNameForSorting).distinct().count();
+      ProgressBar progressBar = ProgressManager.push("Indexing ingredients", (int)modNameCount);
+      String currentModName = null;
+
+      for(IIngredientListElement<?> element : ingredients) {
+         String modname = element.getModNameForSorting();
+         if (!Objects.equals(currentModName, modname)) {
+            currentModName = modname;
+            progressBar.step(modname);
+         }
+
+         this.addIngredient(element);
+      }
+
+      ProgressManager.pop(progressBar);
+   }
+
+   public <V> void addIngredient(IIngredientListElement<V> element) {
+      this.updateHiddenState(element);
+      int index = this.elementList.size();
+      this.elementList.add(element);
+      this.searchTree.put(Translator.toLowercaseWithLocale(element.getDisplayName()), index);
+      ObjectIterator var3 = this.prefixedSearchTrees.values().iterator();
+
+      while(var3.hasNext()) {
+         PrefixedSearchTree prefixedSearchTree = (PrefixedSearchTree)var3.next();
+         Config.SearchMode searchMode = prefixedSearchTree.getMode();
+         if (searchMode != Config.SearchMode.DISABLED) {
+            for(String string : prefixedSearchTree.getStringsGetter().getStrings(element)) {
+               prefixedSearchTree.getTree().put(string, index);
+            }
+         }
+      }
+
+      this.filterCached = null;
+   }
+
+   public void invalidateCache() {
+      this.filterCached = null;
+   }
+
+   public <V> List<IIngredientListElement<V>> findMatchingElements(IIngredientListElement<V> element) {
+      IIngredientHelper<V> ingredientHelper = element.getIngredientHelper();
+      V ingredient = element.getIngredient();
+      String ingredientUid = ingredientHelper.getUniqueId(ingredient);
+      Class<? extends V> ingredientClass = ingredient.getClass();
+      List<IIngredientListElement<V>> matchingElements = new ArrayList();
+      IntSet matchingIndexes = this.searchTree.search(Translator.toLowercaseWithLocale(element.getDisplayName()));
+      IntIterator iterator = matchingIndexes.iterator();
+
+      while(iterator.hasNext()) {
+         int index = iterator.nextInt();
+         IIngredientListElement matchingElement = (IIngredientListElement)this.elementList.get(index);
+         Object matchingIngredient = matchingElement.getIngredient();
+         if (ingredientClass.isInstance(matchingIngredient)) {
+            V castMatchingIngredient = (V)ingredientClass.cast(matchingIngredient);
+            String matchingUid = ingredientHelper.getUniqueId(castMatchingIngredient);
+            if (ingredientUid.equals(matchingUid)) {
+               matchingElements.add(matchingElement);
+            }
+         }
+      }
+
+      return matchingElements;
+   }
+
+   public void modesChanged() {
+      this.combinedSearchTrees = buildCombinedSearchTrees(this.searchTree, this.prefixedSearchTrees.values());
+      this.backgroundBuilder.start();
+      this.filterCached = null;
+   }
+
+   @SubscribeEvent
+   public void onEditModeToggleEvent(EditModeToggleEvent event) {
+      this.filterCached = null;
+      this.updateHidden();
+   }
+
+   @SubscribeEvent
+   public void onPlayerJoinedWorldEvent(PlayerJoinedWorldEvent event) {
+      this.filterCached = null;
+      this.updateHidden();
+   }
+
+   public void updateHidden() {
+      for(IIngredientListElement<?> element : this.elementList) {
+         this.updateHiddenState(element);
+      }
+
+   }
+
+   public <V> void updateHiddenState(IIngredientListElement<V> element) {
+      V ingredient = element.getIngredient();
+      IIngredientHelper<V> ingredientHelper = element.getIngredientHelper();
+      boolean visible = !this.blacklist.isIngredientBlacklistedByApi(ingredient, ingredientHelper) && ingredientHelper.isIngredientOnServer(ingredient) && (Config.isEditModeEnabled() || !Config.isIngredientOnConfigBlacklist(ingredient, ingredientHelper));
+      if (element.isVisible() != visible) {
+         element.setVisible(visible);
+         this.filterCached = null;
+      }
+
+   }
+
+   public List<IIngredientListElement> getIngredientList() {
+      String filterText = Translator.toLowercaseWithLocale(Config.getFilterText());
+      if (!filterText.equals(this.filterCached)) {
+         List<IIngredientListElement> ingredientList = this.getIngredientListUncached(filterText);
+         ingredientList.sort(IngredientListElementComparator.INSTANCE);
+         this.ingredientListCached = Collections.unmodifiableList(ingredientList);
+         this.filterCached = filterText;
+      }
+
+      return this.ingredientListCached;
+   }
+
+   public ImmutableList<Object> getFilteredIngredients() {
+      List<IIngredientListElement> elements = this.getIngredientList();
+      Builder<Object> builder = ImmutableList.builder();
+
+      for(IIngredientListElement element : elements) {
+         Object ingredient = element.getIngredient();
+         builder.add(ingredient);
+      }
+
+      return builder.build();
+   }
+
+   public String getFilterText() {
+      return Config.getFilterText();
+   }
+
+   public void setFilterText(String filterText) {
+      ErrorUtil.checkNotNull(filterText, "filterText");
+      if (Config.setFilterText(filterText)) {
+         this.notifyListenersOfChange();
+      }
+
+   }
+
+   private List<IIngredientListElement> getIngredientListUncached(String filterText) {
+      String[] filters = filterText.split("\\|");
+      IntSet matches = null;
+
+      for(String filter : filters) {
+         IntSet elements = this.getElements(filter);
+         if (elements != null) {
+            if (matches == null) {
+               matches = elements;
+            } else {
+               matches.addAll(elements);
+            }
+         }
+      }
+
+      List<IIngredientListElement> matchingIngredients = new ArrayList();
+      if (matches == null) {
+         for(IIngredientListElement element : this.elementList) {
+            if (element.isVisible()) {
+               matchingIngredients.add(element);
+            }
+         }
+      } else {
+         int[] matchesList = matches.toIntArray();
+         Arrays.sort(matchesList);
+
+         for(int match : matchesList) {
+            IIngredientListElement<?> element = (IIngredientListElement)this.elementList.get(match);
+            if (element.isVisible()) {
+               matchingIngredients.add(element);
+            }
+         }
+      }
+
+      return matchingIngredients;
+   }
+
+   public <T> List<IIngredientListElement<T>> getMatches(IIngredientListElement<T> ingredientListElement, Function<IIngredientListElement<?>, String> uidFunction) {
+      String uid = (String)uidFunction.apply(ingredientListElement);
+      List<IIngredientListElement<T>> matchingElements = this.findMatchingElements(ingredientListElement);
+      IntSet matchingIndexes = new IntOpenHashSet(50);
+      IntSet startingIndexes = new IntOpenHashSet(matchingElements.size());
+
+      for(IIngredientListElement matchingElement : matchingElements) {
+         int index = this.elementList.indexOf(matchingElement);
+         startingIndexes.add(index);
+         matchingIndexes.add(index);
+      }
+
+      IntIterator iterator = startingIndexes.iterator();
+
+      while(iterator.hasNext()) {
+         int startingIndex = iterator.nextInt();
+
+         for(int i = startingIndex - 1; i >= 0 && !matchingIndexes.contains(i); --i) {
+            IIngredientListElement<?> element = (IIngredientListElement)this.elementList.get(i);
+            String elementWildcardId = (String)uidFunction.apply(element);
+            if (!uid.equals(elementWildcardId)) {
+               break;
+            }
+
+            matchingIndexes.add(i);
+            matchingElements.add(element);
+         }
+
+         for(int i = startingIndex + 1; i < this.elementList.size() && !matchingIndexes.contains(i); ++i) {
+            IIngredientListElement<?> element = (IIngredientListElement)this.elementList.get(i);
+            String elementWildcardId = (String)uidFunction.apply(element);
+            if (!uid.equals(elementWildcardId)) {
+               break;
+            }
+
+            matchingIndexes.add(i);
+            matchingElements.add(element);
+         }
+      }
+
+      return matchingElements;
+   }
+
+   @Nullable
+   private IntSet getElements(String filterText) {
+      Matcher filterMatcher = FILTER_SPLIT_PATTERN.matcher(filterText);
+      IntSet matches = null;
+      IntSet removeMatches = null;
+
+      while(filterMatcher.find()) {
+         String token = filterMatcher.group(1);
+         boolean remove = token.startsWith("-");
+         if (remove) {
+            token = token.substring(1);
+         }
+
+         token = QUOTE_PATTERN.matcher(token).replaceAll("");
+         IntSet searchResults = this.getSearchResults(token);
+         if (searchResults != null) {
+            if (remove) {
+               if (removeMatches == null) {
+                  removeMatches = searchResults;
+               } else {
+                  removeMatches.addAll(searchResults);
+               }
+            } else {
+               if (matches == null) {
+                  matches = searchResults;
+               } else {
+                  matches = intersection(matches, searchResults);
+               }
+
+               if (matches.isEmpty()) {
+                  break;
+               }
+            }
+         }
+      }
+
+      if (matches != null && removeMatches != null) {
+         matches.removeAll(removeMatches);
+      }
+
+      return matches;
+   }
+
+   @Nullable
+   private IntSet getSearchResults(String token) {
+      if (token.isEmpty()) {
+         return null;
+      } else {
+         char firstChar = token.charAt(0);
+         PrefixedSearchTree prefixedSearchTree = (PrefixedSearchTree)this.prefixedSearchTrees.get(firstChar);
+         if (prefixedSearchTree != null && prefixedSearchTree.getMode() != Config.SearchMode.DISABLED) {
+            token = token.substring(1);
+            if (token.isEmpty()) {
+               return null;
+            } else {
+               GeneralizedSuffixTree tree = prefixedSearchTree.getTree();
+               return tree.search(token);
+            }
+         } else {
+            return this.combinedSearchTrees.search(token);
+         }
+      }
+   }
+
+   private static IntSet intersection(IntSet set1, IntSet set2) {
+      if (set1.size() > set2.size()) {
+         set2.retainAll(set1);
+         return set2;
+      } else {
+         set1.retainAll(set2);
+         return set1;
+      }
+   }
+
+   public int size() {
+      return this.getIngredientList().size();
+   }
+
+   public void addListener(IIngredientGridSource.Listener listener) {
+      this.listeners.add(listener);
+   }
+
+   private void notifyListenersOfChange() {
+      for(IIngredientGridSource.Listener listener : this.listeners) {
+         listener.onChange();
+      }
+
+   }
+}

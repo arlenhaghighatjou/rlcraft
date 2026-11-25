@@ -1,0 +1,38 @@
+package rustic.compat.crafttweaker;
+
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import rustic.common.crafting.IEvaporatingBasinRecipe;
+
+public class CrTEvaporatingBasinRecipe implements IEvaporatingBasinRecipe {
+   protected FluidStack input;
+   protected ItemStack output;
+   protected int time;
+
+   public CrTEvaporatingBasinRecipe(ItemStack out, FluidStack in, int time) {
+      this.output = out;
+      this.input = in;
+      this.time = time;
+   }
+
+   public Fluid getFluid() {
+      return this.input.getFluid();
+   }
+
+   public int getAmount() {
+      return this.input.amount;
+   }
+
+   public FluidStack getInput() {
+      return this.input.copy();
+   }
+
+   public ItemStack getOutput() {
+      return this.output.copy();
+   }
+
+   public int getTime() {
+      return this.time;
+   }
+}

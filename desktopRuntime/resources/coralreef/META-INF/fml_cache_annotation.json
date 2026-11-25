@@ -1,0 +1,216 @@
+{
+  "primetoxinz/coralreef/BlockCoral": {
+    "name": "primetoxinz/coralreef/BlockCoral",
+    "interfaces": [
+      "net/minecraftforge/common/IPlantable"
+    ]
+  },
+  "primetoxinz/coralreef/CoralReef": {
+    "name": "primetoxinz/coralreef/CoralReef",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "primetoxinz/coralreef/CoralReef",
+        "values": {
+          "modid": {
+            "value": "coralreef"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "primetoxinz/coralreef/CoralReef",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12, 1.13)"
+          },
+          "modid": {
+            "value": "coralreef"
+          },
+          "name": {
+            "value": "CoralReef"
+          },
+          "version": {
+            "value": "2.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "primetoxinz.coralreef.CoralReef$ClientProxy"
+          },
+          "serverSide": {
+            "value": "primetoxinz.coralreef.CoralReef$CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItem(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChange(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "primetoxinz/coralreef/CoralReef$ConfigHandler": {
+    "name": "primetoxinz/coralreef/CoralReef$ConfigHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "primetoxinz/coralreef/CoralReef$ConfigHandler",
+        "values": {
+          "modid": {
+            "value": "coralreef"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "dimensions",
+        "value": {
+          "values": [
+            "Array of dimension ids in which Coral Reefs will spawn. Empty will allow all dimensions"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "coralLightLevel",
+        "value": {
+          "values": [
+            "Light level of coral"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "coralLightLevel"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "biomes",
+        "value": {
+          "values": [
+            "Array of biomes which will allow coral reefs to spawn if there is water. Empty will allow all biomes"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "bubbles",
+        "value": {
+          "values": [
+            "Bubble Particles from coral"
+          ]
+        }
+      }
+    ]
+  },
+  "primetoxinz/coralreef/CoralReef$ConfigHandler$Reef": {
+    "name": "primetoxinz/coralreef/CoralReef$ConfigHandler$Reef",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "coralSparsity",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "coralSparsity",
+        "value": {
+          "values": [
+            "Percentage of the sparsity of the coral on a reef"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "reefSparsity",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "reefSparsity",
+        "value": {
+          "values": [
+            "Percentage of the sparsity of the reef blocks"
+          ]
+        }
+      }
+    ]
+  },
+  "primetoxinz/coralreef/CoralReef$ConfigHandler$Rock": {
+    "name": "primetoxinz/coralreef/CoralReef$ConfigHandler$Rock",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "chance",
+        "value": {
+          "values": [
+            "Chance for a Dry Reef to spawn"
+          ]
+        }
+      }
+    ]
+  },
+  "primetoxinz/coralreef/GeneratorReef": {
+    "name": "primetoxinz/coralreef/GeneratorReef",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  }
+}

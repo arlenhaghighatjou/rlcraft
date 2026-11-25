@@ -1,0 +1,562 @@
+{
+  "mappings": {
+    "rlmixins/mixin/lycanites/boundingbox/EntityEpionRenderMixin": {
+      "getRenderBoundingBox": "Lcom/lycanitesmobs/core/entity/creature/EntityEpion;func_184177_bl()Lnet/minecraft/util/math/AxisAlignedBB;"
+    },
+    "rlmixins/mixin/quark/LinkItemsClientMixin": {
+      "Lnet/minecraft/inventory/Slot;getStack()Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/inventory/Slot;func_75211_c()Lnet/minecraft/item/ItemStack;"
+    },
+    "rlmixins/mixin/bountifulbaubles/ItemAmuletSinGluttonyMixin": {
+      "Lnet/minecraft/item/Item;getItemUseAction(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/EnumAction;": "Lnet/minecraft/item/Item;func_77661_b(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/EnumAction;"
+    },
+    "rlmixins/mixin/vanilla/EntityZombieVillagerMixin": {
+      "finishConversion": "Lnet/minecraft/entity/monster/EntityZombieVillager;func_190738_dp()V"
+    },
+    "rlmixins/mixin/icenfire/ItemModSwordMixin": {
+      "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+      "hitEntity": "Lcom/github/alexthe666/iceandfire/item/ItemModSword;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+    },
+    "rlmixins/mixin/vanilla/MinecraftMixin": {
+      "processKeyF3": "Lnet/minecraft/client/Minecraft;func_184122_c(I)Z"
+    },
+    "rlmixins/mixin/icenfire/IceExplosionMixin": {
+      "doExplosionB": "Lcom/github/alexthe666/iceandfire/entity/IceExplosion;func_77279_a(Z)V",
+      "Lnet/minecraft/world/World;spawnParticle(Lnet/minecraft/util/EnumParticleTypes;DDDDDD[I)V": "Lnet/minecraft/world/World;func_175688_a(Lnet/minecraft/util/EnumParticleTypes;DDDDDD[I)V"
+    },
+    "rlmixins/mixin/vanilla/EntityMixin": {
+      "handleWaterMovement": "Lnet/minecraft/entity/Entity;func_70072_I()Z"
+    },
+    "rlmixins/mixin/vanilla/EnchantmentHelperOffhandMixin": {
+      "applyArthropodEnchantments": "Lnet/minecraft/enchantment/EnchantmentHelper;func_151385_b(Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/Entity;)V",
+      "Lnet/minecraft/entity/EntityLivingBase;getHeldItemMainhand()Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/entity/EntityLivingBase;func_184614_ca()Lnet/minecraft/item/ItemStack;",
+      "getFireAspectModifier": "Lnet/minecraft/enchantment/EnchantmentHelper;func_90036_a(Lnet/minecraft/entity/EntityLivingBase;)I",
+      "applyThornEnchantments": "Lnet/minecraft/enchantment/EnchantmentHelper;func_151384_a(Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/Entity;)V"
+    },
+    "rlmixins/mixin/icenfire/EntityDragonBaseCheeseMixin": {
+      "attackEntityFrom": "Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+      "onUpdate": "Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;func_70071_h_()V"
+    },
+    "rlmixins/mixin/icenfire/ItemGorgonHeadMixin": {
+      "Lnet/minecraft/entity/EntityLivingBase;playSound(Lnet/minecraft/util/SoundEvent;FF)V": "Lnet/minecraft/entity/EntityLivingBase;func_184185_a(Lnet/minecraft/util/SoundEvent;FF)V",
+      "onPlayerStoppedUsing": "Lcom/github/alexthe666/iceandfire/item/ItemGorgonHead;func_77615_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/EntityLivingBase;I)V"
+    },
+    "rlmixins/mixin/vanilla/AnvilChunkLoaderMixin": {
+      "addChunkToPending": "Lnet/minecraft/world/chunk/storage/AnvilChunkLoader;func_75824_a(Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/nbt/NBTTagCompound;)V",
+      "writeNextIO": "Lnet/minecraft/world/chunk/storage/AnvilChunkLoader;func_75814_c()Z",
+      "isChunkGeneratedAt": "Lnet/minecraft/world/chunk/storage/AnvilChunkLoader;func_191063_a(II)Z"
+    },
+    "rlmixins/mixin/vanilla/InventoryEffectRendererMixin": {
+      "Lnet/minecraft/client/Minecraft;getTextureManager()Lnet/minecraft/client/renderer/texture/TextureManager;": "Lnet/minecraft/client/Minecraft;func_110434_K()Lnet/minecraft/client/renderer/texture/TextureManager;",
+      "drawActivePotionEffects": "Lnet/minecraft/client/renderer/InventoryEffectRenderer;func_147044_g()V",
+      "Lnet/minecraft/client/gui/FontRenderer;drawStringWithShadow(Ljava/lang/String;FFI)I": "Lnet/minecraft/client/gui/FontRenderer;func_175063_a(Ljava/lang/String;FFI)I"
+    },
+    "rlmixins/mixin/champions/AffixEventsMixin": {
+      "Lnet/minecraft/entity/EntityLiving;addPotionEffect(Lnet/minecraft/potion/PotionEffect;)V": "Lnet/minecraft/entity/EntityLiving;func_70690_d(Lnet/minecraft/potion/PotionEffect;)V"
+    },
+    "rlmixins/mixin/vanilla/GuiRepairMixin": {
+      "drawGuiContainerForegroundLayer": "Lnet/minecraft/client/gui/GuiRepair;func_146979_b(II)V",
+      "Lnet/minecraft/entity/player/PlayerCapabilities;isCreativeMode:Z": "Lnet/minecraft/entity/player/PlayerCapabilities;field_75098_d:Z"
+    },
+    "rlmixins/mixin/quark/LinkItemsServerMixin": {
+      "Lnet/minecraft/item/ItemStack;getTextComponent()Lnet/minecraft/util/text/ITextComponent;": "Lnet/minecraft/item/ItemStack;func_151000_E()Lnet/minecraft/util/text/ITextComponent;"
+    },
+    "rlmixins/mixin/vanilla/ItemStackMixin": {
+      "damageItem": "Lnet/minecraft/item/ItemStack;func_77972_a(ILnet/minecraft/entity/EntityLivingBase;)V"
+    },
+    "rlmixins/mixin/icenfire/EntityDragonBaseBiteMixin": {
+      "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+      "onUpdate": "Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;func_70071_h_()V"
+    },
+    "rlmixins/mixin/simpledifficulty/BlockRainCollectorMixin": {
+      "onBlockActivated": "Lcom/charles445/simpledifficulty/block/BlockRainCollector;func_180639_a(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;Lnet/minecraft/util/EnumFacing;FFF)Z"
+    },
+    "rlmixins/mixin/vanilla/EntityMinecartMixin": {
+      "Lnet/minecraft/entity/Entity;startRiding(Lnet/minecraft/entity/Entity;)Z": "Lnet/minecraft/entity/Entity;func_184220_m(Lnet/minecraft/entity/Entity;)Z",
+      "onUpdate": "Lnet/minecraft/entity/item/EntityMinecart;func_70071_h_()V"
+    },
+    "rlmixins/mixin/vanilla/ServerWorldEventHandlerAccessor": {
+      "world": "field_72782_b:Lnet/minecraft/world/WorldServer;"
+    },
+    "rlmixins/mixin/potioncore/PotionReachMixin": {
+      "Lcom/tmtravlr/potioncore/potion/PotionReach;registerPotionAttributeModifier(Lnet/minecraft/entity/ai/attributes/IAttribute;Ljava/lang/String;DI)Lnet/minecraft/potion/Potion;": "Lcom/tmtravlr/potioncore/potion/PotionReach;func_111184_a(Lnet/minecraft/entity/ai/attributes/IAttribute;Ljava/lang/String;DI)Lnet/minecraft/potion/Potion;"
+    },
+    "rlmixins/mixin/reskillable/TraitGoldenOsmosisMixin": {
+      "Lnet/minecraft/item/Item;getIsRepairable(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z": "Lnet/minecraft/item/Item;func_82789_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z"
+    },
+    "rlmixins/mixin/lycanites/boundingbox/EntityAmalgalichRenderMixin": {
+      "getRenderBoundingBox": "Lcom/lycanitesmobs/core/entity/creature/EntityAmalgalich;func_184177_bl()Lnet/minecraft/util/math/AxisAlignedBB;"
+    },
+    "rlmixins/mixin/lycanites/boundingbox/EntityRahovartRenderMixin": {
+      "getRenderBoundingBox": "Lcom/lycanitesmobs/core/entity/creature/EntityRahovart;func_184177_bl()Lnet/minecraft/util/math/AxisAlignedBB;"
+    },
+    "rlmixins/mixin/defiledlands/ItemSwordScarliteMixin": {
+      "Lnet/minecraft/entity/EntityLivingBase;addPotionEffect(Lnet/minecraft/potion/PotionEffect;)V": "Lnet/minecraft/entity/EntityLivingBase;func_70690_d(Lnet/minecraft/potion/PotionEffect;)V",
+      "hitEntity": "Llykrast/defiledlands/common/item/ItemSwordScarlite;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+    },
+    "rlmixins/mixin/quark/ChickenShedFeathersMixin": {
+      "Lnet/minecraft/entity/passive/EntityChicken;dropItem(Lnet/minecraft/item/Item;I)Lnet/minecraft/entity/item/EntityItem;": "Lnet/minecraft/entity/passive/EntityChicken;func_145779_a(Lnet/minecraft/item/Item;I)Lnet/minecraft/entity/item/EntityItem;"
+    },
+    "rlmixins/mixin/icenfire/ItemDragonSkullMixin": {
+      "Lnet/minecraft/entity/player/InventoryPlayer;setInventorySlotContents(ILnet/minecraft/item/ItemStack;)V": "Lnet/minecraft/entity/player/InventoryPlayer;func_70299_a(ILnet/minecraft/item/ItemStack;)V",
+      "onItemUse": "Lcom/github/alexthe666/iceandfire/item/ItemDragonSkull;func_180614_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumHand;Lnet/minecraft/util/EnumFacing;FFF)Lnet/minecraft/util/EnumActionResult;"
+    },
+    "rlmixins/mixin/bountifulbaubles/EventHandlerMixin": {
+      "Lnet/minecraft/util/DamageSource;isFireDamage()Z": "Lnet/minecraft/util/DamageSource;func_76347_k()Z"
+    },
+    "rlmixins/mixin/vanilla/EntityCollisionMixin": {
+      "move": "Lnet/minecraft/entity/Entity;func_70091_d(Lnet/minecraft/entity/MoverType;DDD)V",
+      "Lnet/minecraft/util/math/AxisAlignedBB;expand(DDD)Lnet/minecraft/util/math/AxisAlignedBB;": "Lnet/minecraft/util/math/AxisAlignedBB;func_72321_a(DDD)Lnet/minecraft/util/math/AxisAlignedBB;"
+    },
+    "rlmixins/mixin/champions/AffixInfestedMixin": {
+      "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z": "Lnet/minecraft/world/World;func_72838_d(Lnet/minecraft/entity/Entity;)Z"
+    },
+    "rlmixins/mixin/icenfire/EntityIceDragonMixin": {
+      "attackEntityAsMob": "Lcom/github/alexthe666/iceandfire/entity/EntityIceDragon;func_70652_k(Lnet/minecraft/entity/Entity;)Z",
+      "Lnet/minecraft/entity/Entity;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/Entity;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z"
+    },
+    "rlmixins/mixin/vanilla/EntityPlayerMixin": {
+      "getEyeHeight": "Lnet/minecraft/entity/player/EntityPlayer;func_70047_e()F"
+    },
+    "rlmixins/mixin/vanilla/BlockPortalMixin": {
+      "Lnet/minecraft/block/BlockBreakable;updateTick(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V": "Lnet/minecraft/block/BlockBreakable;func_180650_b(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V",
+      "updateTick": "Lnet/minecraft/block/BlockPortal;func_180650_b(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V"
+    },
+    "rlmixins/mixin/foodexpansion/ItemFoodBasicMixin": {
+      "onItemUseFinish": "Llellson/foodexpansion/items/ItemFoodBasic;func_77654_b(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/EntityLivingBase;)Lnet/minecraft/item/ItemStack;"
+    },
+    "rlmixins/mixin/icenfire/ItemModShovelMixin": {
+      "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+      "hitEntity": "Lcom/github/alexthe666/iceandfire/item/ItemModShovel;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+    },
+    "rlmixins/mixin/vanilla/EntityPlayerDismountMixin": {
+      "Lnet/minecraft/entity/player/EntityPlayer;isRiding()Z": "Lnet/minecraft/entity/player/EntityPlayer;func_184218_aH()Z",
+      "updateRidden": "Lnet/minecraft/entity/player/EntityPlayer;func_70098_U()V"
+    },
+    "rlmixins/mixin/somanyenchantments/EnchantmentPurificationMixin": {
+      "Lnet/minecraft/entity/EntityLivingBase;setSilent(Z)V": "Lnet/minecraft/entity/EntityLivingBase;func_174810_b(Z)V"
+    },
+    "rlmixins/mixin/icenfire/EntityHippogryphDupeMixin": {
+      "onDeath": "Lcom/github/alexthe666/iceandfire/entity/EntityHippogryph;func_70645_a(Lnet/minecraft/util/DamageSource;)V",
+      "Lcom/github/alexthe666/iceandfire/entity/EntityHippogryph$HippogryphInventory;getSizeInventory()I": "Lcom/github/alexthe666/iceandfire/entity/EntityHippogryph$HippogryphInventory;func_70302_i_()I"
+    },
+    "rlmixins/mixin/icenfire/ItemMyrmexEggOffhandMixin": {
+      "Lnet/minecraft/entity/player/InventoryPlayer;setInventorySlotContents(ILnet/minecraft/item/ItemStack;)V": "Lnet/minecraft/entity/player/InventoryPlayer;func_70299_a(ILnet/minecraft/item/ItemStack;)V",
+      "onItemUse": "Lcom/github/alexthe666/iceandfire/item/ItemMyrmexEgg;func_180614_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumHand;Lnet/minecraft/util/EnumFacing;FFF)Lnet/minecraft/util/EnumActionResult;"
+    },
+    "rlmixins/mixin/vanilla/EntityRendererMixin": {
+      "updateRenderer": "Lnet/minecraft/client/renderer/EntityRenderer;func_78464_a()V",
+      "Lnet/minecraft/client/multiplayer/WorldClient;getLightBrightness(Lnet/minecraft/util/math/BlockPos;)F": "Lnet/minecraft/client/multiplayer/WorldClient;func_175724_o(Lnet/minecraft/util/math/BlockPos;)F",
+      "Lnet/minecraft/entity/Entity;getEyeHeight()F": "Lnet/minecraft/entity/Entity;func_70047_e()F",
+      "orientCamera": "Lnet/minecraft/client/renderer/EntityRenderer;func_78467_g(F)V"
+    },
+    "rlmixins/mixin/icenfire/ItemDragonHornActiveMixin": {
+      "Lnet/minecraft/nbt/NBTTagCompound;setBoolean(Ljava/lang/String;Z)V": "Lnet/minecraft/nbt/NBTTagCompound;func_74757_a(Ljava/lang/String;Z)V",
+      "onPlayerStoppedUsing": "Lcom/github/alexthe666/iceandfire/item/ItemDragonHornActive;func_77615_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/EntityLivingBase;I)V"
+    },
+    "rlmixins/mixin/vanilla/PlayerListMixin": {
+      "Lnet/minecraft/world/WorldServer;updateEntityWithOptionalForce(Lnet/minecraft/entity/Entity;Z)V": "Lnet/minecraft/world/WorldServer;func_72866_a(Lnet/minecraft/entity/Entity;Z)V"
+    },
+    "rlmixins/mixin/lycanites/boundingbox/EntityAsmodeusRenderMixin": {
+      "getRenderBoundingBox": "Lcom/lycanitesmobs/core/entity/creature/EntityAsmodeus;func_184177_bl()Lnet/minecraft/util/math/AxisAlignedBB;"
+    },
+    "rlmixins/mixin/vanilla/WorldMixin": {
+      "Lnet/minecraft/entity/Entity;setPositionNonDirty()Z": "Lnet/minecraft/entity/Entity;func_184189_br()Z",
+      "Lnet/minecraft/world/World;getChunk(II)Lnet/minecraft/world/chunk/Chunk;": "Lnet/minecraft/world/World;func_72964_e(II)Lnet/minecraft/world/chunk/Chunk;",
+      "updateEntityWithOptionalForce": "Lnet/minecraft/world/World;func_72866_a(Lnet/minecraft/entity/Entity;Z)V"
+    },
+    "rlmixins/mixin/bettersurvival/EnchantmentVampirismMixin": {
+      "onEntityDamaged": "Lcom/mujmajnkraft/bettersurvival/enchantments/EnchantmentVampirism;func_151368_a(Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/Entity;I)V"
+    },
+    "rlmixins/mixin/somanyenchantments/EnchantmentTillingPowerMixin": {
+      "getMinEnchantability": "Lcom/Shultrea/Rin/Ench0_4_0/EnchantmentTillingPower;func_77321_a(I)I"
+    },
+    "rlmixins/mixin/icenfire/EntityDragonBaseWaterMixin": {
+      "onLivingUpdate": "Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;func_70636_d()V"
+    },
+    "rlmixins/mixin/potioncore/PotionLaunchMixin": {
+      "performEffect": "Lcom/tmtravlr/potioncore/potion/PotionLaunch;func_76394_a(Lnet/minecraft/entity/EntityLivingBase;I)V"
+    },
+    "rlmixins/mixin/icenfire/EntityDragonBaseBreedingMixin": {
+      "processInteract": "Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;func_184645_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Z",
+      "Lnet/minecraft/entity/passive/EntityTameable;processInteract(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Z": "Lnet/minecraft/entity/passive/EntityTameable;func_184645_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Z"
+    },
+    "rlmixins/mixin/vanilla/EntityPlayerSPMixin": {
+      "setPlayerSPHealth": "Lnet/minecraft/client/entity/EntityPlayerSP;func_71150_b(F)V",
+      "Lnet/minecraft/client/entity/EntityPlayerSP;damageEntity(Lnet/minecraft/util/DamageSource;F)V": "Lnet/minecraft/client/entity/EntityPlayerSP;func_70665_d(Lnet/minecraft/util/DamageSource;F)V"
+    },
+    "rlmixins/mixin/champions/EventHandlerCommonMixin": {
+      "Lnet/minecraft/server/management/PlayerList;sendMessage(Lnet/minecraft/util/text/ITextComponent;)V": "Lnet/minecraft/server/management/PlayerList;func_148539_a(Lnet/minecraft/util/text/ITextComponent;)V"
+    },
+    "rlmixins/mixin/vanilla/EntityLivingBaseMixin": {
+      "attemptTeleport": "Lnet/minecraft/entity/EntityLivingBase;func_184595_k(DDD)Z"
+    },
+    "rlmixins/mixin/vanilla/TileEntityPistonMixin": {
+      "moveCollidedEntities": "Lnet/minecraft/tileentity/TileEntityPiston;func_184322_i(F)V"
+    },
+    "rlmixins/mixin/icenfire/ItemModAxeMixin": {
+      "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+      "hitEntity": "Lcom/github/alexthe666/iceandfire/item/ItemModAxe;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+    },
+    "rlmixins/mixin/icenfire/ItemModHoeMixin": {
+      "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+      "hitEntity": "Lcom/github/alexthe666/iceandfire/item/ItemModHoe;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+    },
+    "rlmixins/mixin/lycanites/boundingbox/EntityTreantRenderMixin": {
+      "getRenderBoundingBox": "Lcom/lycanitesmobs/core/entity/creature/EntityTreant;func_184177_bl()Lnet/minecraft/util/math/AxisAlignedBB;"
+    },
+    "rlmixins/mixin/quark/ShearableChickensMixin": {
+      "Lnet/minecraft/entity/player/EntityPlayer;getHeldItemMainhand()Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/entity/player/EntityPlayer;func_184614_ca()Lnet/minecraft/item/ItemStack;"
+    },
+    "rlmixins/mixin/icenfire/FireExplosionMixin": {
+      "doExplosionB": "Lcom/github/alexthe666/iceandfire/entity/FireExplosion;func_77279_a(Z)V",
+      "Lnet/minecraft/world/World;spawnParticle(Lnet/minecraft/util/EnumParticleTypes;DDDDDD[I)V": "Lnet/minecraft/world/World;func_175688_a(Lnet/minecraft/util/EnumParticleTypes;DDDDDD[I)V"
+    },
+    "rlmixins/mixin/somanyenchantments/EnchantmentAdvancedMendingMixin": {
+      "Lnet/minecraft/enchantment/EnchantmentHelper;getEnchantedItem(Lnet/minecraft/enchantment/Enchantment;Lnet/minecraft/entity/EntityLivingBase;)Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/enchantment/EnchantmentHelper;func_92099_a(Lnet/minecraft/enchantment/Enchantment;Lnet/minecraft/entity/EntityLivingBase;)Lnet/minecraft/item/ItemStack;"
+    },
+    "rlmixins/mixin/vanilla/GameSettingsMixin": {
+      "setOptionFloatValue": "Lnet/minecraft/client/settings/GameSettings;func_74304_a(Lnet/minecraft/client/settings/GameSettings$Options;F)V",
+      "setOptionValue": "Lnet/minecraft/client/settings/GameSettings;func_74306_a(Lnet/minecraft/client/settings/GameSettings$Options;I)V"
+    },
+    "rlmixins/mixin/vanilla/EntityBoatMixin": {
+      "Lnet/minecraft/entity/Entity;startRiding(Lnet/minecraft/entity/Entity;)Z": "Lnet/minecraft/entity/Entity;func_184220_m(Lnet/minecraft/entity/Entity;)Z",
+      "onUpdate": "Lnet/minecraft/entity/item/EntityBoat;func_70071_h_()V"
+    },
+    "rlmixins/mixin/icenfire/EntityFireDragonMixin": {
+      "attackEntityAsMob": "Lcom/github/alexthe666/iceandfire/entity/EntityFireDragon;func_70652_k(Lnet/minecraft/entity/Entity;)Z",
+      "Lnet/minecraft/entity/Entity;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/Entity;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z"
+    },
+    "rlmixins/mixin/vanilla/EntityStrayMixin": {
+      "getCanSpawnHere": "Lnet/minecraft/entity/monster/EntityStray;func_70601_bi()Z"
+    },
+    "rlmixins/mixin/vanilla/EntityTippedArrowMixin": {
+      "Lnet/minecraft/entity/EntityLivingBase;addPotionEffect(Lnet/minecraft/potion/PotionEffect;)V": "Lnet/minecraft/entity/EntityLivingBase;func_70690_d(Lnet/minecraft/potion/PotionEffect;)V",
+      "arrowHit": "Lnet/minecraft/entity/projectile/EntityTippedArrow;func_184548_a(Lnet/minecraft/entity/EntityLivingBase;)V"
+    },
+    "rlmixins/mixin/vanilla/ServerWorldEventHandlerMixin": {
+      "spawnParticle(IZDDDDDD[I)V": "Lnet/minecraft/world/ServerWorldEventHandler;func_180442_a(IZDDDDDD[I)V"
+    },
+    "rlmixins/mixin/icenfire/ItemModPickaxeMixin": {
+      "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+      "hitEntity": "Lcom/github/alexthe666/iceandfire/item/ItemModPickaxe;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+    },
+    "rlmixins/mixin/icenfire/EntityDragonBaseDupeMixin": {
+      "onDeath": "Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;func_70645_a(Lnet/minecraft/util/DamageSource;)V",
+      "Lnet/minecraft/inventory/ContainerHorseChest;getSizeInventory()I": "Lnet/minecraft/inventory/ContainerHorseChest;func_70302_i_()I"
+    },
+    "rlmixins/mixin/quark/EntityStonelingMixin": {
+      "dropEquipment": "Lvazkii/quark/world/entity/EntityStoneling;func_82160_b(ZI)V",
+      "applyPlayerInteraction": "Lvazkii/quark/world/entity/EntityStoneling;func_184199_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/EnumHand;)Lnet/minecraft/util/EnumActionResult;",
+      "Lnet/minecraft/entity/player/EntityPlayer;setHeldItem(Lnet/minecraft/util/EnumHand;Lnet/minecraft/item/ItemStack;)V": "Lnet/minecraft/entity/player/EntityPlayer;func_184611_a(Lnet/minecraft/util/EnumHand;Lnet/minecraft/item/ItemStack;)V"
+    },
+    "rlmixins/mixin/scalinghealth/DifficultyHandlerMixin": {
+      "Lnet/minecraft/entity/EntityLivingBase;getEntityAttribute(Lnet/minecraft/entity/ai/attributes/IAttribute;)Lnet/minecraft/entity/ai/attributes/IAttributeInstance;": "Lnet/minecraft/entity/EntityLivingBase;func_110148_a(Lnet/minecraft/entity/ai/attributes/IAttribute;)Lnet/minecraft/entity/ai/attributes/IAttributeInstance;"
+    },
+    "rlmixins/mixin/simpledifficulty/ItemCanteenMixin": {
+      "onItemRightClick": "Lcom/charles445/simpledifficulty/item/ItemCanteen;func_77659_a(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Lnet/minecraft/util/ActionResult;"
+    },
+    "rlmixins/mixin/icenfire/ItemAlchemySwordMixin": {
+      "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+      "hitEntity": "Lcom/github/alexthe666/iceandfire/item/ItemAlchemySword;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+    },
+    "rlmixins/mixin/bountifulbaubles/ItemFlareGunMixin": {
+      "onItemRightClick": "Lcursedflames/bountifulbaubles/item/ItemFlareGun;func_77659_a(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Lnet/minecraft/util/ActionResult;",
+      "Lnet/minecraft/world/World;isRemote:Z": "Lnet/minecraft/world/World;field_72995_K:Z"
+    },
+    "rlmixins/mixin/vanilla/TileEntityShulkerBoxMixin": {
+      "canInsertItem": "Lnet/minecraft/tileentity/TileEntityShulkerBox;func_180462_a(ILnet/minecraft/item/ItemStack;Lnet/minecraft/util/EnumFacing;)Z"
+    },
+    "rlmixins/mixin/vanilla/EntityHuskMixin": {
+      "getCanSpawnHere": "Lnet/minecraft/entity/monster/EntityHusk;func_70601_bi()Z"
+    },
+    "rlmixins/mixin/icenfire/ItemDragonEggOffhandMixin": {
+      "Lnet/minecraft/entity/player/InventoryPlayer;setInventorySlotContents(ILnet/minecraft/item/ItemStack;)V": "Lnet/minecraft/entity/player/InventoryPlayer;func_70299_a(ILnet/minecraft/item/ItemStack;)V",
+      "onItemUse": "Lcom/github/alexthe666/iceandfire/item/ItemDragonEgg;func_180614_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumHand;Lnet/minecraft/util/EnumFacing;FFF)Lnet/minecraft/util/EnumActionResult;"
+    },
+    "rlmixins/mixin/vanilla/EntityXPOrbMixin": {
+      "onCollideWithPlayer": "Lnet/minecraft/entity/item/EntityXPOrb;func_70100_b_(Lnet/minecraft/entity/player/EntityPlayer;)V",
+      "Lnet/minecraft/enchantment/EnchantmentHelper;getEnchantedItem(Lnet/minecraft/enchantment/Enchantment;Lnet/minecraft/entity/EntityLivingBase;)Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/enchantment/EnchantmentHelper;func_92099_a(Lnet/minecraft/enchantment/Enchantment;Lnet/minecraft/entity/EntityLivingBase;)Lnet/minecraft/item/ItemStack;"
+    }
+  },
+  "data": {
+    "searge": {
+      "rlmixins/mixin/lycanites/boundingbox/EntityEpionRenderMixin": {
+        "getRenderBoundingBox": "Lcom/lycanitesmobs/core/entity/creature/EntityEpion;func_184177_bl()Lnet/minecraft/util/math/AxisAlignedBB;"
+      },
+      "rlmixins/mixin/quark/LinkItemsClientMixin": {
+        "Lnet/minecraft/inventory/Slot;getStack()Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/inventory/Slot;func_75211_c()Lnet/minecraft/item/ItemStack;"
+      },
+      "rlmixins/mixin/bountifulbaubles/ItemAmuletSinGluttonyMixin": {
+        "Lnet/minecraft/item/Item;getItemUseAction(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/EnumAction;": "Lnet/minecraft/item/Item;func_77661_b(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/EnumAction;"
+      },
+      "rlmixins/mixin/vanilla/EntityZombieVillagerMixin": {
+        "finishConversion": "Lnet/minecraft/entity/monster/EntityZombieVillager;func_190738_dp()V"
+      },
+      "rlmixins/mixin/icenfire/ItemModSwordMixin": {
+        "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+        "hitEntity": "Lcom/github/alexthe666/iceandfire/item/ItemModSword;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+      },
+      "rlmixins/mixin/vanilla/MinecraftMixin": {
+        "processKeyF3": "Lnet/minecraft/client/Minecraft;func_184122_c(I)Z"
+      },
+      "rlmixins/mixin/icenfire/IceExplosionMixin": {
+        "doExplosionB": "Lcom/github/alexthe666/iceandfire/entity/IceExplosion;func_77279_a(Z)V",
+        "Lnet/minecraft/world/World;spawnParticle(Lnet/minecraft/util/EnumParticleTypes;DDDDDD[I)V": "Lnet/minecraft/world/World;func_175688_a(Lnet/minecraft/util/EnumParticleTypes;DDDDDD[I)V"
+      },
+      "rlmixins/mixin/vanilla/EntityMixin": {
+        "handleWaterMovement": "Lnet/minecraft/entity/Entity;func_70072_I()Z"
+      },
+      "rlmixins/mixin/vanilla/EnchantmentHelperOffhandMixin": {
+        "applyArthropodEnchantments": "Lnet/minecraft/enchantment/EnchantmentHelper;func_151385_b(Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/Entity;)V",
+        "Lnet/minecraft/entity/EntityLivingBase;getHeldItemMainhand()Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/entity/EntityLivingBase;func_184614_ca()Lnet/minecraft/item/ItemStack;",
+        "getFireAspectModifier": "Lnet/minecraft/enchantment/EnchantmentHelper;func_90036_a(Lnet/minecraft/entity/EntityLivingBase;)I",
+        "applyThornEnchantments": "Lnet/minecraft/enchantment/EnchantmentHelper;func_151384_a(Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/Entity;)V"
+      },
+      "rlmixins/mixin/icenfire/EntityDragonBaseCheeseMixin": {
+        "attackEntityFrom": "Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+        "onUpdate": "Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;func_70071_h_()V"
+      },
+      "rlmixins/mixin/icenfire/ItemGorgonHeadMixin": {
+        "Lnet/minecraft/entity/EntityLivingBase;playSound(Lnet/minecraft/util/SoundEvent;FF)V": "Lnet/minecraft/entity/EntityLivingBase;func_184185_a(Lnet/minecraft/util/SoundEvent;FF)V",
+        "onPlayerStoppedUsing": "Lcom/github/alexthe666/iceandfire/item/ItemGorgonHead;func_77615_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/EntityLivingBase;I)V"
+      },
+      "rlmixins/mixin/vanilla/AnvilChunkLoaderMixin": {
+        "addChunkToPending": "Lnet/minecraft/world/chunk/storage/AnvilChunkLoader;func_75824_a(Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/nbt/NBTTagCompound;)V",
+        "writeNextIO": "Lnet/minecraft/world/chunk/storage/AnvilChunkLoader;func_75814_c()Z",
+        "isChunkGeneratedAt": "Lnet/minecraft/world/chunk/storage/AnvilChunkLoader;func_191063_a(II)Z"
+      },
+      "rlmixins/mixin/vanilla/InventoryEffectRendererMixin": {
+        "Lnet/minecraft/client/Minecraft;getTextureManager()Lnet/minecraft/client/renderer/texture/TextureManager;": "Lnet/minecraft/client/Minecraft;func_110434_K()Lnet/minecraft/client/renderer/texture/TextureManager;",
+        "drawActivePotionEffects": "Lnet/minecraft/client/renderer/InventoryEffectRenderer;func_147044_g()V",
+        "Lnet/minecraft/client/gui/FontRenderer;drawStringWithShadow(Ljava/lang/String;FFI)I": "Lnet/minecraft/client/gui/FontRenderer;func_175063_a(Ljava/lang/String;FFI)I"
+      },
+      "rlmixins/mixin/champions/AffixEventsMixin": {
+        "Lnet/minecraft/entity/EntityLiving;addPotionEffect(Lnet/minecraft/potion/PotionEffect;)V": "Lnet/minecraft/entity/EntityLiving;func_70690_d(Lnet/minecraft/potion/PotionEffect;)V"
+      },
+      "rlmixins/mixin/vanilla/GuiRepairMixin": {
+        "drawGuiContainerForegroundLayer": "Lnet/minecraft/client/gui/GuiRepair;func_146979_b(II)V",
+        "Lnet/minecraft/entity/player/PlayerCapabilities;isCreativeMode:Z": "Lnet/minecraft/entity/player/PlayerCapabilities;field_75098_d:Z"
+      },
+      "rlmixins/mixin/quark/LinkItemsServerMixin": {
+        "Lnet/minecraft/item/ItemStack;getTextComponent()Lnet/minecraft/util/text/ITextComponent;": "Lnet/minecraft/item/ItemStack;func_151000_E()Lnet/minecraft/util/text/ITextComponent;"
+      },
+      "rlmixins/mixin/vanilla/ItemStackMixin": {
+        "damageItem": "Lnet/minecraft/item/ItemStack;func_77972_a(ILnet/minecraft/entity/EntityLivingBase;)V"
+      },
+      "rlmixins/mixin/icenfire/EntityDragonBaseBiteMixin": {
+        "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+        "onUpdate": "Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;func_70071_h_()V"
+      },
+      "rlmixins/mixin/simpledifficulty/BlockRainCollectorMixin": {
+        "onBlockActivated": "Lcom/charles445/simpledifficulty/block/BlockRainCollector;func_180639_a(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;Lnet/minecraft/util/EnumFacing;FFF)Z"
+      },
+      "rlmixins/mixin/vanilla/EntityMinecartMixin": {
+        "Lnet/minecraft/entity/Entity;startRiding(Lnet/minecraft/entity/Entity;)Z": "Lnet/minecraft/entity/Entity;func_184220_m(Lnet/minecraft/entity/Entity;)Z",
+        "onUpdate": "Lnet/minecraft/entity/item/EntityMinecart;func_70071_h_()V"
+      },
+      "rlmixins/mixin/vanilla/ServerWorldEventHandlerAccessor": {
+        "world": "field_72782_b:Lnet/minecraft/world/WorldServer;"
+      },
+      "rlmixins/mixin/potioncore/PotionReachMixin": {
+        "Lcom/tmtravlr/potioncore/potion/PotionReach;registerPotionAttributeModifier(Lnet/minecraft/entity/ai/attributes/IAttribute;Ljava/lang/String;DI)Lnet/minecraft/potion/Potion;": "Lcom/tmtravlr/potioncore/potion/PotionReach;func_111184_a(Lnet/minecraft/entity/ai/attributes/IAttribute;Ljava/lang/String;DI)Lnet/minecraft/potion/Potion;"
+      },
+      "rlmixins/mixin/reskillable/TraitGoldenOsmosisMixin": {
+        "Lnet/minecraft/item/Item;getIsRepairable(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z": "Lnet/minecraft/item/Item;func_82789_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z"
+      },
+      "rlmixins/mixin/lycanites/boundingbox/EntityAmalgalichRenderMixin": {
+        "getRenderBoundingBox": "Lcom/lycanitesmobs/core/entity/creature/EntityAmalgalich;func_184177_bl()Lnet/minecraft/util/math/AxisAlignedBB;"
+      },
+      "rlmixins/mixin/lycanites/boundingbox/EntityRahovartRenderMixin": {
+        "getRenderBoundingBox": "Lcom/lycanitesmobs/core/entity/creature/EntityRahovart;func_184177_bl()Lnet/minecraft/util/math/AxisAlignedBB;"
+      },
+      "rlmixins/mixin/defiledlands/ItemSwordScarliteMixin": {
+        "Lnet/minecraft/entity/EntityLivingBase;addPotionEffect(Lnet/minecraft/potion/PotionEffect;)V": "Lnet/minecraft/entity/EntityLivingBase;func_70690_d(Lnet/minecraft/potion/PotionEffect;)V",
+        "hitEntity": "Llykrast/defiledlands/common/item/ItemSwordScarlite;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+      },
+      "rlmixins/mixin/quark/ChickenShedFeathersMixin": {
+        "Lnet/minecraft/entity/passive/EntityChicken;dropItem(Lnet/minecraft/item/Item;I)Lnet/minecraft/entity/item/EntityItem;": "Lnet/minecraft/entity/passive/EntityChicken;func_145779_a(Lnet/minecraft/item/Item;I)Lnet/minecraft/entity/item/EntityItem;"
+      },
+      "rlmixins/mixin/icenfire/ItemDragonSkullMixin": {
+        "Lnet/minecraft/entity/player/InventoryPlayer;setInventorySlotContents(ILnet/minecraft/item/ItemStack;)V": "Lnet/minecraft/entity/player/InventoryPlayer;func_70299_a(ILnet/minecraft/item/ItemStack;)V",
+        "onItemUse": "Lcom/github/alexthe666/iceandfire/item/ItemDragonSkull;func_180614_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumHand;Lnet/minecraft/util/EnumFacing;FFF)Lnet/minecraft/util/EnumActionResult;"
+      },
+      "rlmixins/mixin/bountifulbaubles/EventHandlerMixin": {
+        "Lnet/minecraft/util/DamageSource;isFireDamage()Z": "Lnet/minecraft/util/DamageSource;func_76347_k()Z"
+      },
+      "rlmixins/mixin/vanilla/EntityCollisionMixin": {
+        "move": "Lnet/minecraft/entity/Entity;func_70091_d(Lnet/minecraft/entity/MoverType;DDD)V",
+        "Lnet/minecraft/util/math/AxisAlignedBB;expand(DDD)Lnet/minecraft/util/math/AxisAlignedBB;": "Lnet/minecraft/util/math/AxisAlignedBB;func_72321_a(DDD)Lnet/minecraft/util/math/AxisAlignedBB;"
+      },
+      "rlmixins/mixin/champions/AffixInfestedMixin": {
+        "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z": "Lnet/minecraft/world/World;func_72838_d(Lnet/minecraft/entity/Entity;)Z"
+      },
+      "rlmixins/mixin/icenfire/EntityIceDragonMixin": {
+        "attackEntityAsMob": "Lcom/github/alexthe666/iceandfire/entity/EntityIceDragon;func_70652_k(Lnet/minecraft/entity/Entity;)Z",
+        "Lnet/minecraft/entity/Entity;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/Entity;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z"
+      },
+      "rlmixins/mixin/vanilla/EntityPlayerMixin": {
+        "getEyeHeight": "Lnet/minecraft/entity/player/EntityPlayer;func_70047_e()F"
+      },
+      "rlmixins/mixin/vanilla/BlockPortalMixin": {
+        "Lnet/minecraft/block/BlockBreakable;updateTick(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V": "Lnet/minecraft/block/BlockBreakable;func_180650_b(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V",
+        "updateTick": "Lnet/minecraft/block/BlockPortal;func_180650_b(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V"
+      },
+      "rlmixins/mixin/foodexpansion/ItemFoodBasicMixin": {
+        "onItemUseFinish": "Llellson/foodexpansion/items/ItemFoodBasic;func_77654_b(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/EntityLivingBase;)Lnet/minecraft/item/ItemStack;"
+      },
+      "rlmixins/mixin/icenfire/ItemModShovelMixin": {
+        "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+        "hitEntity": "Lcom/github/alexthe666/iceandfire/item/ItemModShovel;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+      },
+      "rlmixins/mixin/vanilla/EntityPlayerDismountMixin": {
+        "Lnet/minecraft/entity/player/EntityPlayer;isRiding()Z": "Lnet/minecraft/entity/player/EntityPlayer;func_184218_aH()Z",
+        "updateRidden": "Lnet/minecraft/entity/player/EntityPlayer;func_70098_U()V"
+      },
+      "rlmixins/mixin/somanyenchantments/EnchantmentPurificationMixin": {
+        "Lnet/minecraft/entity/EntityLivingBase;setSilent(Z)V": "Lnet/minecraft/entity/EntityLivingBase;func_174810_b(Z)V"
+      },
+      "rlmixins/mixin/icenfire/EntityHippogryphDupeMixin": {
+        "onDeath": "Lcom/github/alexthe666/iceandfire/entity/EntityHippogryph;func_70645_a(Lnet/minecraft/util/DamageSource;)V",
+        "Lcom/github/alexthe666/iceandfire/entity/EntityHippogryph$HippogryphInventory;getSizeInventory()I": "Lcom/github/alexthe666/iceandfire/entity/EntityHippogryph$HippogryphInventory;func_70302_i_()I"
+      },
+      "rlmixins/mixin/icenfire/ItemMyrmexEggOffhandMixin": {
+        "Lnet/minecraft/entity/player/InventoryPlayer;setInventorySlotContents(ILnet/minecraft/item/ItemStack;)V": "Lnet/minecraft/entity/player/InventoryPlayer;func_70299_a(ILnet/minecraft/item/ItemStack;)V",
+        "onItemUse": "Lcom/github/alexthe666/iceandfire/item/ItemMyrmexEgg;func_180614_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumHand;Lnet/minecraft/util/EnumFacing;FFF)Lnet/minecraft/util/EnumActionResult;"
+      },
+      "rlmixins/mixin/vanilla/EntityRendererMixin": {
+        "updateRenderer": "Lnet/minecraft/client/renderer/EntityRenderer;func_78464_a()V",
+        "Lnet/minecraft/client/multiplayer/WorldClient;getLightBrightness(Lnet/minecraft/util/math/BlockPos;)F": "Lnet/minecraft/client/multiplayer/WorldClient;func_175724_o(Lnet/minecraft/util/math/BlockPos;)F",
+        "Lnet/minecraft/entity/Entity;getEyeHeight()F": "Lnet/minecraft/entity/Entity;func_70047_e()F",
+        "orientCamera": "Lnet/minecraft/client/renderer/EntityRenderer;func_78467_g(F)V"
+      },
+      "rlmixins/mixin/icenfire/ItemDragonHornActiveMixin": {
+        "Lnet/minecraft/nbt/NBTTagCompound;setBoolean(Ljava/lang/String;Z)V": "Lnet/minecraft/nbt/NBTTagCompound;func_74757_a(Ljava/lang/String;Z)V",
+        "onPlayerStoppedUsing": "Lcom/github/alexthe666/iceandfire/item/ItemDragonHornActive;func_77615_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/EntityLivingBase;I)V"
+      },
+      "rlmixins/mixin/vanilla/PlayerListMixin": {
+        "Lnet/minecraft/world/WorldServer;updateEntityWithOptionalForce(Lnet/minecraft/entity/Entity;Z)V": "Lnet/minecraft/world/WorldServer;func_72866_a(Lnet/minecraft/entity/Entity;Z)V"
+      },
+      "rlmixins/mixin/lycanites/boundingbox/EntityAsmodeusRenderMixin": {
+        "getRenderBoundingBox": "Lcom/lycanitesmobs/core/entity/creature/EntityAsmodeus;func_184177_bl()Lnet/minecraft/util/math/AxisAlignedBB;"
+      },
+      "rlmixins/mixin/vanilla/WorldMixin": {
+        "Lnet/minecraft/entity/Entity;setPositionNonDirty()Z": "Lnet/minecraft/entity/Entity;func_184189_br()Z",
+        "Lnet/minecraft/world/World;getChunk(II)Lnet/minecraft/world/chunk/Chunk;": "Lnet/minecraft/world/World;func_72964_e(II)Lnet/minecraft/world/chunk/Chunk;",
+        "updateEntityWithOptionalForce": "Lnet/minecraft/world/World;func_72866_a(Lnet/minecraft/entity/Entity;Z)V"
+      },
+      "rlmixins/mixin/bettersurvival/EnchantmentVampirismMixin": {
+        "onEntityDamaged": "Lcom/mujmajnkraft/bettersurvival/enchantments/EnchantmentVampirism;func_151368_a(Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/Entity;I)V"
+      },
+      "rlmixins/mixin/somanyenchantments/EnchantmentTillingPowerMixin": {
+        "getMinEnchantability": "Lcom/Shultrea/Rin/Ench0_4_0/EnchantmentTillingPower;func_77321_a(I)I"
+      },
+      "rlmixins/mixin/icenfire/EntityDragonBaseWaterMixin": {
+        "onLivingUpdate": "Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;func_70636_d()V"
+      },
+      "rlmixins/mixin/potioncore/PotionLaunchMixin": {
+        "performEffect": "Lcom/tmtravlr/potioncore/potion/PotionLaunch;func_76394_a(Lnet/minecraft/entity/EntityLivingBase;I)V"
+      },
+      "rlmixins/mixin/icenfire/EntityDragonBaseBreedingMixin": {
+        "processInteract": "Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;func_184645_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Z",
+        "Lnet/minecraft/entity/passive/EntityTameable;processInteract(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Z": "Lnet/minecraft/entity/passive/EntityTameable;func_184645_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Z"
+      },
+      "rlmixins/mixin/vanilla/EntityPlayerSPMixin": {
+        "setPlayerSPHealth": "Lnet/minecraft/client/entity/EntityPlayerSP;func_71150_b(F)V",
+        "Lnet/minecraft/client/entity/EntityPlayerSP;damageEntity(Lnet/minecraft/util/DamageSource;F)V": "Lnet/minecraft/client/entity/EntityPlayerSP;func_70665_d(Lnet/minecraft/util/DamageSource;F)V"
+      },
+      "rlmixins/mixin/champions/EventHandlerCommonMixin": {
+        "Lnet/minecraft/server/management/PlayerList;sendMessage(Lnet/minecraft/util/text/ITextComponent;)V": "Lnet/minecraft/server/management/PlayerList;func_148539_a(Lnet/minecraft/util/text/ITextComponent;)V"
+      },
+      "rlmixins/mixin/vanilla/EntityLivingBaseMixin": {
+        "attemptTeleport": "Lnet/minecraft/entity/EntityLivingBase;func_184595_k(DDD)Z"
+      },
+      "rlmixins/mixin/vanilla/TileEntityPistonMixin": {
+        "moveCollidedEntities": "Lnet/minecraft/tileentity/TileEntityPiston;func_184322_i(F)V"
+      },
+      "rlmixins/mixin/icenfire/ItemModAxeMixin": {
+        "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+        "hitEntity": "Lcom/github/alexthe666/iceandfire/item/ItemModAxe;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+      },
+      "rlmixins/mixin/icenfire/ItemModHoeMixin": {
+        "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+        "hitEntity": "Lcom/github/alexthe666/iceandfire/item/ItemModHoe;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+      },
+      "rlmixins/mixin/lycanites/boundingbox/EntityTreantRenderMixin": {
+        "getRenderBoundingBox": "Lcom/lycanitesmobs/core/entity/creature/EntityTreant;func_184177_bl()Lnet/minecraft/util/math/AxisAlignedBB;"
+      },
+      "rlmixins/mixin/quark/ShearableChickensMixin": {
+        "Lnet/minecraft/entity/player/EntityPlayer;getHeldItemMainhand()Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/entity/player/EntityPlayer;func_184614_ca()Lnet/minecraft/item/ItemStack;"
+      },
+      "rlmixins/mixin/icenfire/FireExplosionMixin": {
+        "doExplosionB": "Lcom/github/alexthe666/iceandfire/entity/FireExplosion;func_77279_a(Z)V",
+        "Lnet/minecraft/world/World;spawnParticle(Lnet/minecraft/util/EnumParticleTypes;DDDDDD[I)V": "Lnet/minecraft/world/World;func_175688_a(Lnet/minecraft/util/EnumParticleTypes;DDDDDD[I)V"
+      },
+      "rlmixins/mixin/somanyenchantments/EnchantmentAdvancedMendingMixin": {
+        "Lnet/minecraft/enchantment/EnchantmentHelper;getEnchantedItem(Lnet/minecraft/enchantment/Enchantment;Lnet/minecraft/entity/EntityLivingBase;)Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/enchantment/EnchantmentHelper;func_92099_a(Lnet/minecraft/enchantment/Enchantment;Lnet/minecraft/entity/EntityLivingBase;)Lnet/minecraft/item/ItemStack;"
+      },
+      "rlmixins/mixin/vanilla/GameSettingsMixin": {
+        "setOptionFloatValue": "Lnet/minecraft/client/settings/GameSettings;func_74304_a(Lnet/minecraft/client/settings/GameSettings$Options;F)V",
+        "setOptionValue": "Lnet/minecraft/client/settings/GameSettings;func_74306_a(Lnet/minecraft/client/settings/GameSettings$Options;I)V"
+      },
+      "rlmixins/mixin/vanilla/EntityBoatMixin": {
+        "Lnet/minecraft/entity/Entity;startRiding(Lnet/minecraft/entity/Entity;)Z": "Lnet/minecraft/entity/Entity;func_184220_m(Lnet/minecraft/entity/Entity;)Z",
+        "onUpdate": "Lnet/minecraft/entity/item/EntityBoat;func_70071_h_()V"
+      },
+      "rlmixins/mixin/icenfire/EntityFireDragonMixin": {
+        "attackEntityAsMob": "Lcom/github/alexthe666/iceandfire/entity/EntityFireDragon;func_70652_k(Lnet/minecraft/entity/Entity;)Z",
+        "Lnet/minecraft/entity/Entity;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/Entity;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z"
+      },
+      "rlmixins/mixin/vanilla/EntityStrayMixin": {
+        "getCanSpawnHere": "Lnet/minecraft/entity/monster/EntityStray;func_70601_bi()Z"
+      },
+      "rlmixins/mixin/vanilla/EntityTippedArrowMixin": {
+        "Lnet/minecraft/entity/EntityLivingBase;addPotionEffect(Lnet/minecraft/potion/PotionEffect;)V": "Lnet/minecraft/entity/EntityLivingBase;func_70690_d(Lnet/minecraft/potion/PotionEffect;)V",
+        "arrowHit": "Lnet/minecraft/entity/projectile/EntityTippedArrow;func_184548_a(Lnet/minecraft/entity/EntityLivingBase;)V"
+      },
+      "rlmixins/mixin/vanilla/ServerWorldEventHandlerMixin": {
+        "spawnParticle(IZDDDDDD[I)V": "Lnet/minecraft/world/ServerWorldEventHandler;func_180442_a(IZDDDDDD[I)V"
+      },
+      "rlmixins/mixin/icenfire/ItemModPickaxeMixin": {
+        "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+        "hitEntity": "Lcom/github/alexthe666/iceandfire/item/ItemModPickaxe;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+      },
+      "rlmixins/mixin/icenfire/EntityDragonBaseDupeMixin": {
+        "onDeath": "Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;func_70645_a(Lnet/minecraft/util/DamageSource;)V",
+        "Lnet/minecraft/inventory/ContainerHorseChest;getSizeInventory()I": "Lnet/minecraft/inventory/ContainerHorseChest;func_70302_i_()I"
+      },
+      "rlmixins/mixin/quark/EntityStonelingMixin": {
+        "dropEquipment": "Lvazkii/quark/world/entity/EntityStoneling;func_82160_b(ZI)V",
+        "applyPlayerInteraction": "Lvazkii/quark/world/entity/EntityStoneling;func_184199_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/EnumHand;)Lnet/minecraft/util/EnumActionResult;",
+        "Lnet/minecraft/entity/player/EntityPlayer;setHeldItem(Lnet/minecraft/util/EnumHand;Lnet/minecraft/item/ItemStack;)V": "Lnet/minecraft/entity/player/EntityPlayer;func_184611_a(Lnet/minecraft/util/EnumHand;Lnet/minecraft/item/ItemStack;)V"
+      },
+      "rlmixins/mixin/scalinghealth/DifficultyHandlerMixin": {
+        "Lnet/minecraft/entity/EntityLivingBase;getEntityAttribute(Lnet/minecraft/entity/ai/attributes/IAttribute;)Lnet/minecraft/entity/ai/attributes/IAttributeInstance;": "Lnet/minecraft/entity/EntityLivingBase;func_110148_a(Lnet/minecraft/entity/ai/attributes/IAttribute;)Lnet/minecraft/entity/ai/attributes/IAttributeInstance;"
+      },
+      "rlmixins/mixin/simpledifficulty/ItemCanteenMixin": {
+        "onItemRightClick": "Lcom/charles445/simpledifficulty/item/ItemCanteen;func_77659_a(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Lnet/minecraft/util/ActionResult;"
+      },
+      "rlmixins/mixin/icenfire/ItemAlchemySwordMixin": {
+        "Lnet/minecraft/entity/EntityLivingBase;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z": "Lnet/minecraft/entity/EntityLivingBase;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z",
+        "hitEntity": "Lcom/github/alexthe666/iceandfire/item/ItemAlchemySword;func_77644_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)Z"
+      },
+      "rlmixins/mixin/bountifulbaubles/ItemFlareGunMixin": {
+        "onItemRightClick": "Lcursedflames/bountifulbaubles/item/ItemFlareGun;func_77659_a(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Lnet/minecraft/util/ActionResult;",
+        "Lnet/minecraft/world/World;isRemote:Z": "Lnet/minecraft/world/World;field_72995_K:Z"
+      },
+      "rlmixins/mixin/vanilla/TileEntityShulkerBoxMixin": {
+        "canInsertItem": "Lnet/minecraft/tileentity/TileEntityShulkerBox;func_180462_a(ILnet/minecraft/item/ItemStack;Lnet/minecraft/util/EnumFacing;)Z"
+      },
+      "rlmixins/mixin/vanilla/EntityHuskMixin": {
+        "getCanSpawnHere": "Lnet/minecraft/entity/monster/EntityHusk;func_70601_bi()Z"
+      },
+      "rlmixins/mixin/icenfire/ItemDragonEggOffhandMixin": {
+        "Lnet/minecraft/entity/player/InventoryPlayer;setInventorySlotContents(ILnet/minecraft/item/ItemStack;)V": "Lnet/minecraft/entity/player/InventoryPlayer;func_70299_a(ILnet/minecraft/item/ItemStack;)V",
+        "onItemUse": "Lcom/github/alexthe666/iceandfire/item/ItemDragonEgg;func_180614_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumHand;Lnet/minecraft/util/EnumFacing;FFF)Lnet/minecraft/util/EnumActionResult;"
+      },
+      "rlmixins/mixin/vanilla/EntityXPOrbMixin": {
+        "onCollideWithPlayer": "Lnet/minecraft/entity/item/EntityXPOrb;func_70100_b_(Lnet/minecraft/entity/player/EntityPlayer;)V",
+        "Lnet/minecraft/enchantment/EnchantmentHelper;getEnchantedItem(Lnet/minecraft/enchantment/Enchantment;Lnet/minecraft/entity/EntityLivingBase;)Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/enchantment/EnchantmentHelper;func_92099_a(Lnet/minecraft/enchantment/Enchantment;Lnet/minecraft/entity/EntityLivingBase;)Lnet/minecraft/item/ItemStack;"
+      }
+    }
+  }
+}

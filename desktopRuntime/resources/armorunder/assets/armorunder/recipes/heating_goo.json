@@ -1,0 +1,14 @@
+{ "_comment": ["Mysterious goo that warms to touch" ],
+  "result": {
+    "item": "armorunder:heating_goo",
+    "count": 2
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "Ms", "s "
+  ],
+  "key": {
+    "M": { "item": "minecraft:magma" },
+    "s": { "item": "minecraft:slime_ball" }
+  }
+}

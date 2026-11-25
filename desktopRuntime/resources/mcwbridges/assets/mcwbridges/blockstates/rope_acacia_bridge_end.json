@@ -1,0 +1,48 @@
+{
+	"variants":
+	{
+
+		
+		"facing=south,lit=false":
+		{
+			 "model": "mcwbridges:rope_acacia_bridge_end","y":270
+		},
+		
+		"facing=east,lit=false":
+		{
+			 "model": "mcwbridges:rope_acacia_bridge_end","y":180
+		},
+		
+		"facing=west,lit=false":
+		{
+			 "model": "mcwbridges:rope_acacia_bridge_end","y":0
+		},
+		
+		"facing=north,lit=false":
+		{
+			 "model": "mcwbridges:rope_acacia_bridge_end","y":90
+		},
+		
+		
+		
+		"facing=south,lit=true":
+		{
+			 "model": "mcwbridges:lit/rope_acacia_bridge_end","y":270
+		},
+		
+		"facing=east,lit=true":
+		{
+			 "model": "mcwbridges:lit/rope_acacia_bridge_end","y":180
+		},
+		
+		"facing=west,lit=true":
+		{
+			 "model": "mcwbridges:lit/rope_acacia_bridge_end","y":0
+		},
+		
+		"facing=north,lit=true":
+		{
+			 "model": "mcwbridges:lit/rope_acacia_bridge_end","y":90
+		}
+	}
+}

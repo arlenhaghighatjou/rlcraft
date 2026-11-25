@@ -1,0 +1,16 @@
+[
+{
+  "modid": "realistictorches",
+  "name": "Realistic Torches",
+  "description": "Increases the difficulty of the early game by adding realism mechanics to torches.",
+  "version": "1.12.2-2.1.2",
+  "mcversion": "1.12.2",
+  "url": "https://minecraft.curseforge.com/projects/realistic-torches",
+  "updateUrl": "",
+  "authorList": ["ChaosTheDude"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

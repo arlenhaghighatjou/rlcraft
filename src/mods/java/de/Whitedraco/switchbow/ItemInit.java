@@ -1,0 +1,200 @@
+package de.Whitedraco.switchbow;
+
+import de.Whitedraco.switchbow.Config.ArrowConfig;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowAir;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowBone;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowBouncy;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowBurial;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowChorus;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowDiamond;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowDragonBreath;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowEnderperle;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowFire;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowFrost;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowKnockback;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowLightningBolt;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowLove;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowLuck;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowPiercing;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowProtector;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowRedstone;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowSplit;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowSplitLove;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowSprinkler;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowTNT;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowTorch;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowTriple;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowUnderwater;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowVampier;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowWither;
+import de.Whitedraco.switchbow.entity.arrow.EntityArrowoftheSearcher;
+import de.Whitedraco.switchbow.entity.arrow.upgrade.EntityArrowAirUpgrade;
+import de.Whitedraco.switchbow.entity.arrow.upgrade.EntityArrowBoneAOE;
+import de.Whitedraco.switchbow.entity.arrow.upgrade.EntityArrowBurialAOE;
+import de.Whitedraco.switchbow.entity.arrow.upgrade.EntityArrowFireUpgrade;
+import de.Whitedraco.switchbow.entity.arrow.upgrade.EntityArrowLightningBoltStorm;
+import de.Whitedraco.switchbow.entity.arrow.upgrade.EntityArrowLuckUpgrade;
+import de.Whitedraco.switchbow.entity.arrow.upgrade.EntityArrowSplitLoveUpgrade;
+import de.Whitedraco.switchbow.entity.arrow.upgrade.EntityArrowSplitUpgrade;
+import de.Whitedraco.switchbow.item.GeneralItem;
+import de.Whitedraco.switchbow.item.ItemMagicQuiver;
+import de.Whitedraco.switchbow.item.ItemQuiver;
+import de.Whitedraco.switchbow.item.ItemSwitchBow;
+import de.Whitedraco.switchbow.item.ItemSwitchCrossbow;
+import de.Whitedraco.switchbow.item.arrow.ItemArrowFirework;
+import de.Whitedraco.switchbow.item.arrow.ItemArrows;
+import de.Whitedraco.switchbow.item.arrow.ItemArrowsUpgrade;
+import java.util.ArrayList;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraftforge.event.RegistryEvent.Register;
+
+public class ItemInit {
+   public static Item SwitchBow;
+   public static Item Quiver;
+   public static Item MagicQuiver;
+   public static Item SwitchCrossbow;
+   public static Item LovePotion;
+   public static Item ArrowLightningBolt;
+   public static Item ArrowTNT;
+   public static Item ArrowFrost;
+   public static Item ArrowAir;
+   public static Item ArrowEnderperle;
+   public static Item ArrowVampier;
+   public static Item ArrowWither;
+   public static Item ArrowTorch;
+   public static Item ArrowSplit;
+   public static Item ArrowUnderwater;
+   public static Item ArrowDiamond;
+   public static Item ArrowLove;
+   public static Item ArrowFire;
+   public static Item ArrowBone;
+   public static Item ArrowFirework;
+   public static Item ArrowSplitLove;
+   public static Item ArrowLuck;
+   public static Item ArrowRedstone;
+   public static Item ArrowBurial;
+   public static Item ArrowChorus;
+   public static Item ArrowSprinkler;
+   public static Item ArrowDragonBreath;
+   public static Item ArrowTriple;
+   public static Item ArrowProtector;
+   public static Item ArrowKnockback;
+   public static Item ArrowBouncy;
+   public static Item ArrowoftheSearcher;
+   public static Item ArrowPiercing;
+   public static Item ArrowCatcher;
+   public static Item ArrowLightningBoltStorm;
+   public static Item ArrowBoneAOE;
+   public static Item ArrowSplitUpgrade;
+   public static Item ArrowBurialAOE;
+   public static Item ArrowFireUpgrade;
+   public static Item ArrowLuckUpgrade;
+   public static Item ArrowAirUpgrade;
+   public static Item ArrowSplitLoveUpgrade;
+   public static Item ArrowSprinklerUpgrade;
+   public static ArrayList<Item> itemList = new ArrayList();
+
+   public ItemInit() {
+   }
+
+   public static void prepareItems() {
+      SwitchBow = new ItemSwitchBow("SwitchBow");
+      itemList.add(SwitchBow);
+      SwitchCrossbow = new ItemSwitchCrossbow("SwitchCrossbow");
+      itemList.add(SwitchCrossbow);
+      Quiver = new ItemQuiver("Quiver");
+      itemList.add(Quiver);
+      MagicQuiver = new ItemMagicQuiver("MagicQuiver");
+      itemList.add(MagicQuiver);
+      LovePotion = (new GeneralItem("LovePotion")).setCreativeTab(Initial.tabSwitchbow);
+      itemList.add(LovePotion);
+      ArrowLightningBolt = (new ItemArrows("ArrowLightningBolt", EntityArrowLightningBolt.class)).setInfinity(ArrowConfig.InfiArrowLightningBolt.getBool());
+      itemList.add(ArrowLightningBolt);
+      ArrowTNT = (new ItemArrows("ArrowTNT", EntityArrowTNT.class)).setInfinity(ArrowConfig.InfiArrowTNT.getBool());
+      itemList.add(ArrowTNT);
+      ArrowFrost = (new ItemArrows("ArrowFrost", EntityArrowFrost.class)).setInfinity(ArrowConfig.InfiArrowFrost.getBool());
+      itemList.add(ArrowFrost);
+      ArrowAir = (new ItemArrows("ArrowAir", EntityArrowAir.class)).setInfinity(ArrowConfig.InfiArrowAir.getBool());
+      itemList.add(ArrowAir);
+      ArrowEnderperle = (new ItemArrows("ArrowEnderperle", EntityArrowEnderperle.class)).setInfinity(ArrowConfig.InfiArrowEnderperle.getBool());
+      itemList.add(ArrowEnderperle);
+      ArrowVampier = (new ItemArrows("ArrowVampier", EntityArrowVampier.class)).setInfinity(ArrowConfig.InfiArrowVampier.getBool());
+      itemList.add(ArrowVampier);
+      ArrowWither = (new ItemArrows("ArrowWither", EntityArrowWither.class)).setInfinity(ArrowConfig.InfiArrowWither.getBool());
+      itemList.add(ArrowWither);
+      ArrowTorch = (new ItemArrows("ArrowTorch", EntityArrowTorch.class)).setInfinity(ArrowConfig.InfiArrowTorch.getBool());
+      itemList.add(ArrowTorch);
+      ArrowSplit = (new ItemArrows("ArrowSplit", EntityArrowSplit.class)).setInfinity(ArrowConfig.InfiArrowSplit.getBool());
+      itemList.add(ArrowSplit);
+      ArrowUnderwater = (new ItemArrows("ArrowUnderwater", EntityArrowUnderwater.class)).setInfinity(ArrowConfig.InfiArrowUnderwater.getBool());
+      itemList.add(ArrowUnderwater);
+      ArrowDiamond = (new ItemArrows("ArrowDiamond", EntityArrowDiamond.class)).setInfinity(ArrowConfig.InfiArrowDiamond.getBool());
+      itemList.add(ArrowDiamond);
+      ArrowLove = (new ItemArrows("ArrowLove", EntityArrowLove.class)).setInfinity(ArrowConfig.InfiArrowLove.getBool());
+      itemList.add(ArrowLove);
+      ArrowFire = (new ItemArrows("ArrowFire", EntityArrowFire.class)).setInfinity(ArrowConfig.InfiArrowFire.getBool());
+      itemList.add(ArrowFire);
+      ArrowBone = (new ItemArrows("ArrowBone", EntityArrowBone.class)).setInfinity(ArrowConfig.InfiArrowBone.getBool());
+      itemList.add(ArrowBone);
+      ArrowFirework = (new ItemArrowFirework("ArrowFirework")).setInfinity(ArrowConfig.InfiArrowFirework.getBool());
+      itemList.add(ArrowFirework);
+      ArrowSplitLove = (new ItemArrows("ArrowSplitLove", EntityArrowSplitLove.class)).setInfinity(ArrowConfig.InfiArrowSplitLove.getBool());
+      itemList.add(ArrowSplitLove);
+      ArrowLuck = (new ItemArrows("ArrowLuck", EntityArrowLuck.class)).setInfinity(ArrowConfig.InfiArrowLuck.getBool());
+      itemList.add(ArrowLuck);
+      ArrowRedstone = (new ItemArrows("ArrowRedstone", EntityArrowRedstone.class)).setInfinity(ArrowConfig.InfiArrowRedstone.getBool());
+      itemList.add(ArrowRedstone);
+      ArrowBurial = (new ItemArrows("ArrowBurial", EntityArrowBurial.class)).setInfinity(ArrowConfig.InfiArrowBurial.getBool());
+      itemList.add(ArrowBurial);
+      ArrowChorus = (new ItemArrows("ArrowChorus", EntityArrowChorus.class)).setInfinity(ArrowConfig.InfiArrowChorus.getBool());
+      itemList.add(ArrowChorus);
+      ArrowSprinkler = (new ItemArrows("ArrowSprinkler", EntityArrowSprinkler.class)).setInfinity(ArrowConfig.InfiArrowSprinkler.getBool());
+      itemList.add(ArrowSprinkler);
+      ArrowDragonBreath = (new ItemArrows("ArrowDragonBreath", EntityArrowDragonBreath.class)).setInfinity(ArrowConfig.InfiArrowDragonBreath.getBool());
+      itemList.add(ArrowDragonBreath);
+      ArrowTriple = (new ItemArrows("ArrowTriple", EntityArrowTriple.class)).setInfinity(ArrowConfig.InfiArrowTriple.getBool());
+      itemList.add(ArrowTriple);
+      ArrowProtector = (new ItemArrows("ArrowProtector", EntityArrowProtector.class)).setInfinity(ArrowConfig.InfiArrowProtector.getBool());
+      itemList.add(ArrowProtector);
+      ArrowKnockback = (new ItemArrows("ArrowKnockback", EntityArrowKnockback.class)).setInfinity(ArrowConfig.InfiArrowKnockback.getBool());
+      itemList.add(ArrowKnockback);
+      ArrowBouncy = (new ItemArrows("ArrowBouncy", EntityArrowBouncy.class)).setInfinity(ArrowConfig.InfiArrowBouncy.getBool());
+      itemList.add(ArrowBouncy);
+      ArrowoftheSearcher = (new ItemArrows("ArrowoftheSearcher", EntityArrowoftheSearcher.class)).setInfinity(ArrowConfig.InfiArrowoftheSearcher.getBool());
+      itemList.add(ArrowoftheSearcher);
+      ArrowPiercing = (new ItemArrows("ArrowPiercing", EntityArrowPiercing.class)).setInfinity(ArrowConfig.InfiArrowPiercing.getBool());
+      itemList.add(ArrowPiercing);
+      ArrowLightningBoltStorm = (new ItemArrowsUpgrade("ArrowLightningBoltStorm", EntityArrowLightningBoltStorm.class)).setInfinity(ArrowConfig.InfiArrowLightningStorm.getBool());
+      itemList.add(ArrowLightningBoltStorm);
+      ArrowBoneAOE = (new ItemArrowsUpgrade("ArrowBoneAOE", EntityArrowBoneAOE.class)).setInfinity(ArrowConfig.InfiArrowBoneAOE.getBool());
+      itemList.add(ArrowBoneAOE);
+      ArrowSplitUpgrade = (new ItemArrowsUpgrade("ArrowSplitUpgrade", EntityArrowSplitUpgrade.class)).setInfinity(ArrowConfig.InfiArrowSplitUpgrade.getBool());
+      itemList.add(ArrowSplitUpgrade);
+      ArrowBurialAOE = (new ItemArrowsUpgrade("ArrowBurialAOE", EntityArrowBurialAOE.class)).setInfinity(ArrowConfig.InfiArrowBurialAOE.getBool());
+      itemList.add(ArrowBurialAOE);
+      ArrowFireUpgrade = (new ItemArrowsUpgrade("ArrowFireUpgrade", EntityArrowFireUpgrade.class)).setInfinity(ArrowConfig.InfiArrowFireUpgrade.getBool());
+      itemList.add(ArrowFireUpgrade);
+      ArrowLuckUpgrade = (new ItemArrowsUpgrade("ArrowLuckUpgrade", EntityArrowLuckUpgrade.class)).setInfinity(ArrowConfig.InfiArrowLuckUpgrade.getBool());
+      itemList.add(ArrowLuckUpgrade);
+      ArrowAirUpgrade = (new ItemArrowsUpgrade("ArrowAirUpgrade", EntityArrowAirUpgrade.class)).setInfinity(ArrowConfig.InfiArrowAirUpgrade.getBool());
+      itemList.add(ArrowAirUpgrade);
+      ArrowSplitLoveUpgrade = (new ItemArrowsUpgrade("ArrowSplitLoveUpgrade", EntityArrowSplitLoveUpgrade.class)).setInfinity(ArrowConfig.InfiArrowSplitLoveUpgrade.getBool());
+      itemList.add(ArrowSplitLoveUpgrade);
+   }
+
+   public static void addItemBlockToItems(Block block) {
+      ItemBlock itemblock = new ItemBlock(block);
+      itemblock.setRegistryName(block.getRegistryName());
+      itemList.add(itemblock);
+   }
+
+   public static void registerItems(Register<Item> event) {
+      for(Item item : itemList) {
+         event.getRegistry().register(item);
+         Initial.proxy.registerItemModel(item);
+      }
+
+   }
+}

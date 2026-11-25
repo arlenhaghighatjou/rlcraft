@@ -1,0 +1,57 @@
+package com.github.fnar.minecraft.item.mapper;
+
+import com.github.fnar.minecraft.item.RldBaseItem;
+import java.util.List;
+import java.util.Random;
+import java.util.function.Consumer;
+import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemEnchantedBook;
+import net.minecraft.item.ItemStack;
+
+public abstract class RldBaseItemMapper1_12<T extends RldBaseItem> extends BaseItemMapper1_12<T> {
+   private static final Random RAND = new Random(0L);
+   private final EnchantmentMapper1_12 enchantmentMapper = new EnchantmentMapper1_12();
+
+   public RldBaseItemMapper1_12() {
+   }
+
+   protected ItemStack map(T rldItem, Item item) {
+      ItemStack itemStack = new ItemStack(item);
+      if (rldItem.isPlzEnchant()) {
+         itemStack = enchantItem(RAND, itemStack, rldItem.getPlzEnchantLevel());
+      }
+
+      rldItem.getEnchantments().forEach((enchantment) -> {
+         finalItemStack.addEnchantment(this.enchantmentMapper.map(enchantment), enchantment.getLevel());
+      });
+      return itemStack;
+   }
+
+   public static ItemStack enchantItem(Random rand, ItemStack item, int enchantLevel) {
+      if (item == null) {
+         return null;
+      } else {
+         List<EnchantmentData> enchants = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel, false);
+         boolean isBook = item.getItem() == Items.BOOK;
+         if (isBook) {
+            item = new ItemStack(Items.ENCHANTED_BOOK);
+            if (enchants.size() > 1) {
+               enchants.remove(rand.nextInt(enchants.size()));
+            }
+         }
+
+         for(EnchantmentData toAdd : enchants) {
+            if (isBook) {
+               ItemEnchantedBook.addEnchantment(item, toAdd);
+            } else {
+               item.addEnchantment(toAdd.enchantment, toAdd.enchantmentLevel);
+            }
+         }
+
+         return item;
+      }
+   }
+}

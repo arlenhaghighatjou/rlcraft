@@ -1,0 +1,206 @@
+{
+  "mcjty/fxcontrol/ForgeEventHandlers": {
+    "name": "mcjty/fxcontrol/ForgeEventHandlers",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClickEvent(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLeftClickEvent(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$LeftClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockPaceEvent(Lnet/minecraftforge/event/world/BlockEvent$PlaceEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockBreakEvent(Lnet/minecraftforge/event/world/BlockEvent$BreakEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "mcjty/fxcontrol/FxControl": {
+    "name": "mcjty/fxcontrol/FxControl",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "mcjty/fxcontrol/FxControl",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12,1.13)"
+          },
+          "dependencies": {
+            "value": "after:forge@[13.19.0.2176,)"
+          },
+          "modid": {
+            "value": "fxcontrol"
+          },
+          "name": {
+            "value": "FxControl"
+          },
+          "version": {
+            "value": "0.1.14"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "mcjty.fxcontrol.setup.ClientProxy"
+          },
+          "serverSide": {
+            "value": "mcjty.fxcontrol.setup.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onLoadComplete(Lnet/minecraftforge/fml/common/event/FMLLoadCompleteEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverLoad(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStopped(Lnet/minecraftforge/fml/common/event/FMLServerStoppedEvent;)V"
+      }
+    ]
+  },
+  "mcjty/fxcontrol/compat/EnigmaSupport$GetEnigmaScript": {
+    "name": "mcjty/fxcontrol/compat/EnigmaSupport$GetEnigmaScript",
+    "interfaces": [
+      "java/util/function/Function"
+    ]
+  },
+  "mcjty/fxcontrol/compat/LostCitySupport$GetLostCities": {
+    "name": "mcjty/fxcontrol/compat/LostCitySupport$GetLostCities",
+    "interfaces": [
+      "java/util/function/Function"
+    ]
+  },
+  "mcjty/fxcontrol/compat/ModRuleCompatibilityLayer": {
+    "name": "mcjty/fxcontrol/compat/ModRuleCompatibilityLayer",
+    "interfaces": [
+      "mcjty/tools/rules/IModRuleCompatibilityLayer"
+    ]
+  },
+  "mcjty/fxcontrol/rules/EffectRule$1": {
+    "name": "mcjty/fxcontrol/rules/EffectRule$1",
+    "interfaces": [
+      "mcjty/tools/rules/IEventQuery"
+    ]
+  },
+  "mcjty/fxcontrol/rules/EffectRule$2": {
+    "name": "mcjty/fxcontrol/rules/EffectRule$2",
+    "interfaces": [
+      "mcjty/tools/rules/RuleBase$EventGetter"
+    ]
+  },
+  "mcjty/fxcontrol/rules/HarvestRule$1": {
+    "name": "mcjty/fxcontrol/rules/HarvestRule$1",
+    "interfaces": [
+      "mcjty/tools/rules/IEventQuery"
+    ]
+  },
+  "mcjty/fxcontrol/rules/HarvestRule$2": {
+    "name": "mcjty/fxcontrol/rules/HarvestRule$2",
+    "interfaces": [
+      "mcjty/tools/rules/RuleBase$EventGetter"
+    ]
+  },
+  "mcjty/fxcontrol/rules/LeftClickRule$1": {
+    "name": "mcjty/fxcontrol/rules/LeftClickRule$1",
+    "interfaces": [
+      "mcjty/tools/rules/IEventQuery"
+    ]
+  },
+  "mcjty/fxcontrol/rules/LeftClickRule$2": {
+    "name": "mcjty/fxcontrol/rules/LeftClickRule$2",
+    "interfaces": [
+      "mcjty/tools/rules/RuleBase$EventGetter"
+    ]
+  },
+  "mcjty/fxcontrol/rules/PlaceRule$1": {
+    "name": "mcjty/fxcontrol/rules/PlaceRule$1",
+    "interfaces": [
+      "mcjty/tools/rules/IEventQuery"
+    ]
+  },
+  "mcjty/fxcontrol/rules/PlaceRule$2": {
+    "name": "mcjty/fxcontrol/rules/PlaceRule$2",
+    "interfaces": [
+      "mcjty/tools/rules/RuleBase$EventGetter"
+    ]
+  },
+  "mcjty/fxcontrol/rules/RightClickRule$1": {
+    "name": "mcjty/fxcontrol/rules/RightClickRule$1",
+    "interfaces": [
+      "mcjty/tools/rules/IEventQuery"
+    ]
+  },
+  "mcjty/fxcontrol/rules/RightClickRule$2": {
+    "name": "mcjty/fxcontrol/rules/RightClickRule$2",
+    "interfaces": [
+      "mcjty/tools/rules/RuleBase$EventGetter"
+    ]
+  },
+  "mcjty/fxcontrol/rules/support/RuleKeys": {
+    "name": "mcjty/fxcontrol/rules/support/RuleKeys",
+    "interfaces": [
+      "mcjty/tools/rules/CommonRuleKeys"
+    ]
+  },
+  "mcjty/fxcontrol/setup/ClientProxy": {
+    "name": "mcjty/fxcontrol/setup/ClientProxy",
+    "interfaces": [
+      "mcjty/fxcontrol/setup/IProxy"
+    ]
+  },
+  "mcjty/fxcontrol/setup/ServerProxy": {
+    "name": "mcjty/fxcontrol/setup/ServerProxy",
+    "interfaces": [
+      "mcjty/fxcontrol/setup/IProxy"
+    ]
+  }
+}

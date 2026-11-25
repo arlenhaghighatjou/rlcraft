@@ -1,0 +1,1088 @@
+{
+  "com/alcatrazescapee/notreepunching/ModConfig": {
+    "name": "com/alcatrazescapee/notreepunching/ModConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "com/alcatrazescapee/notreepunching/ModConfig",
+        "values": {
+          "category": {
+            "value": ""
+          },
+          "modid": {
+            "value": "notreepunching"
+          }
+        }
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/ModConfig$BalanceConfig": {
+    "name": "com/alcatrazescapee/notreepunching/ModConfig$BalanceConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "flintKnappingChance",
+        "value": {
+          "values": [
+            "Chance for a flint knapping to occur. Set to zero to disable flint knapping."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "flintKnappingChance",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "flintKnappingSuccessChance",
+        "value": {
+          "values": [
+            "Chance for a successful flint knapping"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "flintKnappingSuccessChance",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "logChoppingChance",
+        "value": {
+          "values": [
+            "Chance for a log chopping to occur"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "logChoppingChance",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "firePitCookTime",
+        "value": {
+          "values": [
+            "Fire pit cook time (in ticks). Furnace is 200 ticks"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "firePitCookTime",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "20"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "firePitFuelMultiplier",
+        "value": {
+          "values": [
+            "Fire pit fuel efficiency multiplier as compared to the furnace"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "firePitFuelMultiplier",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "firePitFuelMaxAmount",
+        "value": {
+          "values": [
+            "The maximum burn amount required for a fire pit fuel. (in ticks, coal \u003d 1600)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "firePitFuelMaxAmount",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "20"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "fireStarterFireStartChance",
+        "value": {
+          "values": [
+            "The chance that a fire starter will start a fire"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "fireStarterFireStartChance",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "leavesStickDropChance",
+        "value": {
+          "values": [
+            "The chance for leaves to drop sticks when broken"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "leavesStickDropChance",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "tallGrassDropPlantFiberChance",
+        "value": {
+          "values": [
+            "The chance for tall grass to drop plant fiber when broken with a knife"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "tallGrassDropPlantFiberChance",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "canPickUpRocks",
+        "value": {
+          "values": [
+            "Can the player pick up rocks by right clicking? (vs. having to mine them)"
+          ]
+        }
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/ModConfig$CompatConfig": {
+    "name": "com/alcatrazescapee/notreepunching/ModConfig$CompatConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableRusticCompat",
+        "value": {
+          "values": [
+            "Enable compatibility features from Rustic (slate cobblestone + loose rock)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "enableRusticCompat"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableQuarkCompat",
+        "value": {
+          "values": [
+            "Enable compatibility features from Quark (marble + limestone cobblestone and loose rock)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "enableQuarkCompat"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableChiselCompat",
+        "value": {
+          "values": [
+            "Enable compatability features from Chisel (marble + limestone + basalt loose rocks)"
+          ]
+        }
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/ModConfig$GeneralConfig": {
+    "name": "com/alcatrazescapee/notreepunching/ModConfig$GeneralConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "alwaysBreakable",
+        "value": {
+          "values": [
+            "Blocks that are always breakable. Use the format modid:registryname or modid:registryname:metadata",
+            "Note that this will not make blocks drop if they wouldn\u0027t normally drop when broken with fists."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "ceramicBucketValidFluids",
+        "value": {
+          "values": [
+            "Fluids that are able to be picked up by the ceramic bucket"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "replaceLogRecipes"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "replaceLogRecipes",
+        "value": {
+          "values": [
+            "If true, NTP will add its own log-\u003eplank and plank-\u003estick recipes and remove old versions",
+            "If false, NTP will still add its own recipes, but it will not remove any other vanilla or modded recipes"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "replaceVanillaRecipes"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "replaceVanillaRecipes",
+        "value": {
+          "values": [
+            "If true, NTP will remove recipes for vanilla wooden + stone tools. It will also attempt to hide these items from the creative inventory.",
+            "If false, NTP will not add or remove any vanilla recipes"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "enableAdvancedRecipeReplacement"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableAdvancedRecipeReplacement",
+        "value": {
+          "values": [
+            "If true, this will allow NTP to search aggressively for recipes and try and replace log -\u003e wood recipes. (Makes NTPs wood chopping / saw recipes more automatic.) For pack makers: this WILL run after craft tweaker, and it WILL override any recipes craft tweaker adds."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableBreakingChanges",
+        "value": {
+          "values": [
+            "If false, this will disable all changes to breaking speed + block drops."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableStoneDropChanges",
+        "value": {
+          "values": [
+            "If false, this will disable all changes to Stone / Cobblestone drops."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableRandomStoneWorldGenVariants",
+        "value": {
+          "values": [
+            "If false, this will disable stone variants (andesite, diorite, and granite) from appearing, except if the respective stone is found during world gen. (It will only disable random occurrences, not ones based on the underground material.)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "looseRocksGeneration",
+        "value": {
+          "values": [
+            "If false, this will disable NTP world gen (surface rocks)."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "allowTorchesFromFirePits",
+        "value": {
+          "values": [
+            "If false, this will disable the ability to get torches from fire pits."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "looseRocksFrequency",
+        "value": {
+          "values": [
+            "Frequency of loose rocks in the world"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "looseRocksFrequency",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "1000"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/ModConfig$ToolsConfig": {
+    "name": "com/alcatrazescapee/notreepunching/ModConfig$ToolsConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "miningLevelFlint",
+        "value": {
+          "values": [
+            "Mining level of flint tools. 0 \u003d Wood, 1 \u003d Stone, 2 \u003d Iron, 3 \u003d Diamond"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "miningLevelFlint",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "4"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "miningLevelFlint"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "miningLevelTin",
+        "value": {
+          "values": [
+            "Mining level of tin tools. 0 \u003d Wood, 1 \u003d Stone, 2 \u003d Iron, 3 \u003d Diamond"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "miningLevelTin",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "4"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "miningLevelTin"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "miningLevelCopper",
+        "value": {
+          "values": [
+            "Mining level of copper tools. 0 \u003d Wood, 1 \u003d Stone, 2 \u003d Iron, 3 \u003d Diamond"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "miningLevelCopper",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "4"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "miningLevelCopper"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "miningLevelBronze",
+        "value": {
+          "values": [
+            "Mining level of bronze tools. 0 \u003d Wood, 1 \u003d Stone, 2 \u003d Iron, 3 \u003d Diamond"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "miningLevelBronze",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "4"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "miningLevelBronze"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "miningLevelSteel",
+        "value": {
+          "values": [
+            "Mining level of steel tools. 0 \u003d Wood, 1 \u003d Stone, 2 \u003d Iron, 3 \u003d Diamond"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "miningLevelSteel",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "4"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "miningLevelSteel"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableCopperTools",
+        "value": {
+          "values": [
+            "Enable copper versions of NTP tools (knife, mattock, saw)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "enableCopperTools"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableTinTools",
+        "value": {
+          "values": [
+            "Enable tin versions of NTP tools (knife, mattock, saw)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "enableTinTools"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableBronzeTools",
+        "value": {
+          "values": [
+            "Enable bronze versions of NTP tools (knife, mattock, saw)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "enableBronzeTools"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableSteelTools",
+        "value": {
+          "values": [
+            "Enable steel versions of NTP tools (knife, mattock, saw)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "enableSteelTools"
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/ModEventHandler": {
+    "name": "com/alcatrazescapee/notreepunching/ModEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/alcatrazescapee/notreepunching/ModEventHandler",
+        "values": {
+          "modid": {
+            "value": "notreepunching"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "breakEvent(Lnet/minecraftforge/event/world/BlockEvent$BreakEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "breakSpeed(Lnet/minecraftforge/event/entity/player/PlayerEvent$BreakSpeed;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHarvestBlock(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerInteractEvent(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRecipes(Lnet/minecraftforge/event/RegistryEvent$Register;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachEntityCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerSounds(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "harvestBlockInitialCheck(Lnet/minecraftforge/event/entity/player/PlayerEvent$HarvestCheck;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChangedEvent(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/NoTreePunching": {
+    "name": "com/alcatrazescapee/notreepunching/NoTreePunching",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/alcatrazescapee/notreepunching/NoTreePunching",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "certificateFingerprint": {
+            "value": "3c2d6be715971d1ed58a028cdb3fae72987fc934"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.4.2705,15.0.0.0);required-after:alcatrazcore@[1.0.0,2.0.0);"
+          },
+          "modid": {
+            "value": "notreepunching"
+          },
+          "useMetadata": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "version": {
+            "value": "2.0.21"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onFingerprintViolation(Lnet/minecraftforge/fml/common/event/FMLFingerprintViolationEvent;)V"
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/NoTreePunching$1": {
+    "name": "com/alcatrazescapee/notreepunching/NoTreePunching$1",
+    "interfaces": [
+      "net/minecraftforge/fml/common/ICrashCallable"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/client/ModGuiHandler": {
+    "name": "com/alcatrazescapee/notreepunching/client/ModGuiHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/client/ModSounds": {
+    "name": "com/alcatrazescapee/notreepunching/client/ModSounds",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "com/alcatrazescapee/notreepunching/client/ModSounds",
+        "value": {
+          "value": "notreepunching"
+        }
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/common/blocks/ModBlocks": {
+    "name": "com/alcatrazescapee/notreepunching/common/blocks/ModBlocks",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "com/alcatrazescapee/notreepunching/common/blocks/ModBlocks",
+        "value": {
+          "value": "notreepunching"
+        }
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/common/capability/CapabilityPlayerItem": {
+    "name": "com/alcatrazescapee/notreepunching/common/capability/CapabilityPlayerItem",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/alcatrazescapee/notreepunching/common/capability/IPlayerItem;"
+        }
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/common/capability/CapabilityPlayerItem$Instance": {
+    "name": "com/alcatrazescapee/notreepunching/common/capability/CapabilityPlayerItem$Instance",
+    "interfaces": [
+      "com/alcatrazescapee/notreepunching/common/capability/IPlayerItem",
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/common/capability/CapabilityPlayerItem$Storage": {
+    "name": "com/alcatrazescapee/notreepunching/common/capability/CapabilityPlayerItem$Storage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/common/items/ItemCeramicBucket": {
+    "name": "com/alcatrazescapee/notreepunching/common/items/ItemCeramicBucket",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/client/IModelProvider"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/common/items/ModItems": {
+    "name": "com/alcatrazescapee/notreepunching/common/items/ModItems",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "com/alcatrazescapee/notreepunching/common/items/ModItems",
+        "value": {
+          "value": "notreepunching"
+        }
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/common/tile/TileFirePit": {
+    "name": "com/alcatrazescapee/notreepunching/common/tile/TileFirePit",
+    "interfaces": [
+      "net/minecraft/util/ITickable",
+      "com/alcatrazescapee/alcatrazcore/tile/ITileFields"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTFirePitRecipe": {
+    "name": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTFirePitRecipe",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTFirePitRecipe"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTFirePitRecipe",
+        "value": {
+          "value": "mods.notreepunching.FirePit"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove(Lcrafttweaker/api/item/IIngredient;)V"
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTFirePitRecipe$1": {
+    "name": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTFirePitRecipe$1",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTFirePitRecipe$2": {
+    "name": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTFirePitRecipe$2",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTKnifeRecipe": {
+    "name": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTKnifeRecipe",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTKnifeRecipe"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTKnifeRecipe",
+        "value": {
+          "value": "mods.notreepunching.Knife"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove(Lcrafttweaker/api/item/IIngredient;)V"
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTKnifeRecipe$1": {
+    "name": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTKnifeRecipe$1",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTKnifeRecipe$2": {
+    "name": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CTKnifeRecipe$2",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/crafttweaker/CraftTweakerPlugin": {
+    "name": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CraftTweakerPlugin",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CraftTweakerPlugin"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CraftTweakerPlugin",
+        "value": {
+          "value": "mods.notreepunching.NoTreePunching"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addKnifeGrassDrop(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addWoodChoppingRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/crafttweaker/CraftTweakerPlugin$1": {
+    "name": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CraftTweakerPlugin$1",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/crafttweaker/CraftTweakerPlugin$2": {
+    "name": "com/alcatrazescapee/notreepunching/integration/crafttweaker/CraftTweakerPlugin$2",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/guide/ModGuideBook": {
+    "name": "com/alcatrazescapee/notreepunching/integration/guide/ModGuideBook",
+    "interfaces": [
+      "amerifrance/guideapi/api/IGuideBook"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lamerifrance/guideapi/api/GuideBook;",
+        "target": "com/alcatrazescapee/notreepunching/integration/guide/ModGuideBook"
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/guide/utils/PageFurnaceRecipeLazy": {
+    "name": "com/alcatrazescapee/notreepunching/integration/guide/utils/PageFurnaceRecipeLazy",
+    "interfaces": [
+      "com/alcatrazescapee/notreepunching/integration/guide/utils/ILazyLoader"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/guide/utils/PageIRecipeLazy": {
+    "name": "com/alcatrazescapee/notreepunching/integration/guide/utils/PageIRecipeLazy",
+    "interfaces": [
+      "com/alcatrazescapee/notreepunching/integration/guide/utils/ILazyLoader"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/jei/FirePitRecipeCategory": {
+    "name": "com/alcatrazescapee/notreepunching/integration/jei/FirePitRecipeCategory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeCategory"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/jei/FirePitRecipeCategory$Wrapper": {
+    "name": "com/alcatrazescapee/notreepunching/integration/jei/FirePitRecipeCategory$Wrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/jei/JeiPlugin": {
+    "name": "com/alcatrazescapee/notreepunching/integration/jei/JeiPlugin",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "com/alcatrazescapee/notreepunching/integration/jei/JeiPlugin"
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/jei/KnifeRecipeCategory": {
+    "name": "com/alcatrazescapee/notreepunching/integration/jei/KnifeRecipeCategory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeCategory"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/integration/jei/KnifeRecipeCategory$Wrapper": {
+    "name": "com/alcatrazescapee/notreepunching/integration/jei/KnifeRecipeCategory$Wrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/util/HarvestBlockHandler": {
+    "name": "com/alcatrazescapee/notreepunching/util/HarvestBlockHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/alcatrazescapee/notreepunching/util/HarvestBlockHandler"
+      }
+    ]
+  },
+  "com/alcatrazescapee/notreepunching/world/WorldGenRocks": {
+    "name": "com/alcatrazescapee/notreepunching/world/WorldGenRocks",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  }
+}

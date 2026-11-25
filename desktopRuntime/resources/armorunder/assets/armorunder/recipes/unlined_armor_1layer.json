@@ -1,0 +1,10 @@
+{ "_comment": ["Adjust armor piece to remove 1 layer lining" ],
+  "result": {
+    "item": "minecraft:stick"
+  },
+  "type": "armorunder:unlined_armor_shapeless",
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemArmor" },
+    { "item": "armorunder:liner_snips" }
+  ]
+}

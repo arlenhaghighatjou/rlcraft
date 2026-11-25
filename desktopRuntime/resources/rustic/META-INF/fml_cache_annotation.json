@@ -1,0 +1,1358 @@
+{
+  "rustic/client/EventHandlerClient": {
+    "name": "rustic/client/EventHandlerClient",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTextureStitchPre(Lnet/minecraftforge/client/event/TextureStitchEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelBakeEvent(Lnet/minecraftforge/client/event/ModelBakeEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onVaseMouseWheel(Lnet/minecraftforge/client/event/MouseEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onFoodTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBoozeTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderBlockOverlayEvent(Lnet/minecraftforge/client/event/RenderBlockOverlayEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderArmorToughnessEvent(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderArmorOverlayEvent(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onUpdateSittingEntity(Lnet/minecraftforge/client/event/RenderLivingEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockHighlight(Lnet/minecraftforge/client/event/DrawBlockHighlightEvent;)V"
+      }
+    ]
+  },
+  "rustic/client/GuiProxy": {
+    "name": "rustic/client/GuiProxy",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "rustic/client/gui/GuiBarrel": {
+    "name": "rustic/client/gui/GuiBarrel",
+    "interfaces": [
+      "vazkii/quark/api/IItemSearchBar",
+      "vazkii/quark/api/IChestButtonCallback"
+    ],
+    "annotations": [
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 1,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IItemSearchBar"
+          },
+          "modid": {
+            "value": "quark"
+          },
+          "striprefs": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 2,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IChestButtonCallback"
+          },
+          "modid": {
+            "value": "quark"
+          },
+          "striprefs": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$InterfaceList;",
+        "target": "rustic/client/gui/GuiBarrel",
+        "value": {
+          "type": "ANNOTATION",
+          "values": [
+            "1",
+            "2"
+          ]
+        }
+      }
+    ]
+  },
+  "rustic/client/gui/GuiCabinet": {
+    "name": "rustic/client/gui/GuiCabinet",
+    "interfaces": [
+      "vazkii/quark/api/IItemSearchBar",
+      "vazkii/quark/api/IChestButtonCallback"
+    ],
+    "annotations": [
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 3,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IItemSearchBar"
+          },
+          "modid": {
+            "value": "quark"
+          },
+          "striprefs": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 4,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IChestButtonCallback"
+          },
+          "modid": {
+            "value": "quark"
+          },
+          "striprefs": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$InterfaceList;",
+        "target": "rustic/client/gui/GuiCabinet",
+        "value": {
+          "type": "ANNOTATION",
+          "values": [
+            "3",
+            "4"
+          ]
+        }
+      }
+    ]
+  },
+  "rustic/client/gui/GuiCabinetDouble": {
+    "name": "rustic/client/gui/GuiCabinetDouble",
+    "interfaces": [
+      "vazkii/quark/api/IItemSearchBar",
+      "vazkii/quark/api/IChestButtonCallback"
+    ],
+    "annotations": [
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 5,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IItemSearchBar"
+          },
+          "modid": {
+            "value": "quark"
+          },
+          "striprefs": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 6,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IChestButtonCallback"
+          },
+          "modid": {
+            "value": "quark"
+          },
+          "striprefs": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$InterfaceList;",
+        "target": "rustic/client/gui/GuiCabinetDouble",
+        "value": {
+          "type": "ANNOTATION",
+          "values": [
+            "5",
+            "6"
+          ]
+        }
+      }
+    ]
+  },
+  "rustic/client/gui/GuiVase": {
+    "name": "rustic/client/gui/GuiVase",
+    "interfaces": [
+      "vazkii/quark/api/IItemSearchBar",
+      "vazkii/quark/api/IChestButtonCallback"
+    ],
+    "annotations": [
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 7,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IItemSearchBar"
+          },
+          "modid": {
+            "value": "quark"
+          },
+          "striprefs": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 8,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IChestButtonCallback"
+          },
+          "modid": {
+            "value": "quark"
+          },
+          "striprefs": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$InterfaceList;",
+        "target": "rustic/client/gui/GuiVase",
+        "value": {
+          "type": "ANNOTATION",
+          "values": [
+            "7",
+            "8"
+          ]
+        }
+      }
+    ]
+  },
+  "rustic/client/models/BookBakedModel": {
+    "name": "rustic/client/models/BookBakedModel",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "rustic/client/models/FluidBottleModel": {
+    "name": "rustic/client/models/FluidBottleModel",
+    "interfaces": [
+      "net/minecraftforge/client/model/IModel"
+    ]
+  },
+  "rustic/client/models/FluidBottleModel$BakedFluidBottle": {
+    "name": "rustic/client/models/FluidBottleModel$BakedFluidBottle",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "rustic/client/models/FluidBottleModel$BakedFluidBottleOverrideHandler$1": {
+    "name": "rustic/client/models/FluidBottleModel$BakedFluidBottleOverrideHandler$1",
+    "interfaces": [
+      "java/util/function/Function"
+    ]
+  },
+  "rustic/client/models/FluidBottleModel$LoaderFluidBottle": {
+    "name": "rustic/client/models/FluidBottleModel$LoaderFluidBottle",
+    "interfaces": [
+      "net/minecraftforge/client/model/ICustomModelLoader"
+    ]
+  },
+  "rustic/client/models/LatticeModel": {
+    "name": "rustic/client/models/LatticeModel",
+    "interfaces": [
+      "net/minecraftforge/client/model/IModel"
+    ]
+  },
+  "rustic/client/models/LatticeModel$BakedLatticeModel": {
+    "name": "rustic/client/models/LatticeModel$BakedLatticeModel",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "rustic/client/models/LatticeModel$LatticeModelLoader": {
+    "name": "rustic/client/models/LatticeModel$LatticeModelLoader",
+    "interfaces": [
+      "net/minecraftforge/client/model/ICustomModelLoader"
+    ]
+  },
+  "rustic/client/models/LiquidBarrelFilledItemModel": {
+    "name": "rustic/client/models/LiquidBarrelFilledItemModel",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "rustic/client/models/LiquidBarrelItemModel": {
+    "name": "rustic/client/models/LiquidBarrelItemModel",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "rustic/client/models/TEISRModel": {
+    "name": "rustic/client/models/TEISRModel",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "rustic/client/renderer/LayerIronSkin": {
+    "name": "rustic/client/renderer/LayerIronSkin",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "rustic/client/renderer/RenderTomato$Factory": {
+    "name": "rustic/client/renderer/RenderTomato$Factory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "rustic/client/util/ItemColorCache": {
+    "name": "rustic/client/util/ItemColorCache",
+    "interfaces": [
+      "net/minecraft/client/resources/IResourceManagerReloadListener"
+    ]
+  },
+  "rustic/common/EventHandlerCommon": {
+    "name": "rustic/common/EventHandlerCommon",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onOliveOilCraftingEvent(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$ItemCraftedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onVineDropEvent(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemUseTick(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Tick;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemUseFinish(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Finish;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerUseGlassBottle(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSeedInteractEvent(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onChickenUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "rustic/common/blocks/BlockApiary": {
+    "name": "rustic/common/blocks/BlockApiary",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "rustic/common/blocks/BlockBarrel": {
+    "name": "rustic/common/blocks/BlockBarrel",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "rustic/common/blocks/BlockBrewingBarrel": {
+    "name": "rustic/common/blocks/BlockBrewingBarrel",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "rustic/common/blocks/BlockCabinet": {
+    "name": "rustic/common/blocks/BlockCabinet",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "rustic/common/blocks/BlockCandle$1": {
+    "name": "rustic/common/blocks/BlockCandle$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "rustic/common/blocks/BlockCandleLever$1": {
+    "name": "rustic/common/blocks/BlockCandleLever$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "rustic/common/blocks/BlockClayWallDiag": {
+    "name": "rustic/common/blocks/BlockClayWallDiag",
+    "interfaces": [
+      "rustic/common/blocks/IAdvancedRotationPlacement"
+    ]
+  },
+  "rustic/common/blocks/BlockCondenser": {
+    "name": "rustic/common/blocks/BlockCondenser",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "rustic/common/blocks/BlockCondenserAdvanced": {
+    "name": "rustic/common/blocks/BlockCondenserAdvanced",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "rustic/common/blocks/BlockCrushingTub": {
+    "name": "rustic/common/blocks/BlockCrushingTub",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "rustic/common/blocks/BlockEvaporatingBasin": {
+    "name": "rustic/common/blocks/BlockEvaporatingBasin",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "rustic/common/blocks/BlockLattice": {
+    "name": "rustic/common/blocks/BlockLattice",
+    "interfaces": [
+      "rustic/common/blocks/IColoredBlock"
+    ]
+  },
+  "rustic/common/blocks/BlockLattice$1": {
+    "name": "rustic/common/blocks/BlockLattice$1",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IBlockColor"
+    ]
+  },
+  "rustic/common/blocks/BlockLattice$2": {
+    "name": "rustic/common/blocks/BlockLattice$2",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IItemColor"
+    ]
+  },
+  "rustic/common/blocks/BlockLeavesRustic": {
+    "name": "rustic/common/blocks/BlockLeavesRustic",
+    "interfaces": [
+      "rustic/common/blocks/IColoredBlock"
+    ]
+  },
+  "rustic/common/blocks/BlockLeavesRustic$2": {
+    "name": "rustic/common/blocks/BlockLeavesRustic$2",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IBlockColor"
+    ]
+  },
+  "rustic/common/blocks/BlockLeavesRustic$3": {
+    "name": "rustic/common/blocks/BlockLeavesRustic$3",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IItemColor"
+    ]
+  },
+  "rustic/common/blocks/BlockLiquidBarrel": {
+    "name": "rustic/common/blocks/BlockLiquidBarrel",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "rustic/common/blocks/BlockPlanksRustic$EnumType": {
+    "name": "rustic/common/blocks/BlockPlanksRustic$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "rustic/common/blocks/BlockSaplingRustic": {
+    "name": "rustic/common/blocks/BlockSaplingRustic",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "rustic/common/blocks/BlockVase": {
+    "name": "rustic/common/blocks/BlockVase",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "rustic/common/blocks/BlockWoodLantern$1": {
+    "name": "rustic/common/blocks/BlockWoodLantern$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockAppleSeeds": {
+    "name": "rustic/common/blocks/crops/BlockAppleSeeds",
+    "interfaces": [
+      "net/minecraft/block/IGrowable",
+      "net/minecraftforge/common/IPlantable"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockBerryBush": {
+    "name": "rustic/common/blocks/crops/BlockBerryBush",
+    "interfaces": [
+      "rustic/common/blocks/IColoredBlock",
+      "net/minecraftforge/common/IPlantable",
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockBerryBush$1": {
+    "name": "rustic/common/blocks/crops/BlockBerryBush$1",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IBlockColor"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockBerryBush$2": {
+    "name": "rustic/common/blocks/crops/BlockBerryBush$2",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IItemColor"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockGrapeLeaves": {
+    "name": "rustic/common/blocks/crops/BlockGrapeLeaves",
+    "interfaces": [
+      "net/minecraft/block/IGrowable",
+      "rustic/common/blocks/IColoredBlock"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockGrapeLeaves$1": {
+    "name": "rustic/common/blocks/crops/BlockGrapeLeaves$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockGrapeLeaves$2": {
+    "name": "rustic/common/blocks/crops/BlockGrapeLeaves$2",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IBlockColor"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockGrapeLeaves$3": {
+    "name": "rustic/common/blocks/crops/BlockGrapeLeaves$3",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IItemColor"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockGrapeStem": {
+    "name": "rustic/common/blocks/crops/BlockGrapeStem",
+    "interfaces": [
+      "net/minecraft/block/IGrowable",
+      "net/minecraftforge/common/IPlantable"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockHerbBase": {
+    "name": "rustic/common/blocks/crops/BlockHerbBase",
+    "interfaces": [
+      "net/minecraft/block/IGrowable",
+      "net/minecraftforge/common/IPlantable"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockHerbBase$ItemHerbBase": {
+    "name": "rustic/common/blocks/crops/BlockHerbBase$ItemHerbBase",
+    "interfaces": [
+      "net/minecraftforge/common/IPlantable"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockLeavesApple": {
+    "name": "rustic/common/blocks/crops/BlockLeavesApple",
+    "interfaces": [
+      "rustic/common/blocks/IColoredBlock",
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockLeavesApple$1": {
+    "name": "rustic/common/blocks/crops/BlockLeavesApple$1",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IBlockColor"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockLeavesApple$2": {
+    "name": "rustic/common/blocks/crops/BlockLeavesApple$2",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IItemColor"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockSaplingApple": {
+    "name": "rustic/common/blocks/crops/BlockSaplingApple",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "rustic/common/blocks/crops/BlockStakeCrop": {
+    "name": "rustic/common/blocks/crops/BlockStakeCrop",
+    "interfaces": [
+      "net/minecraft/block/IGrowable",
+      "net/minecraftforge/common/IPlantable"
+    ]
+  },
+  "rustic/common/blocks/fluids/FluidStateMapper": {
+    "name": "rustic/common/blocks/fluids/FluidStateMapper",
+    "interfaces": [
+      "net/minecraft/client/renderer/ItemMeshDefinition"
+    ]
+  },
+  "rustic/common/blocks/properties/UnlistedPropertyBool": {
+    "name": "rustic/common/blocks/properties/UnlistedPropertyBool",
+    "interfaces": [
+      "net/minecraftforge/common/property/IUnlistedProperty"
+    ]
+  },
+  "rustic/common/crafting/BrewingBarrelRecipe": {
+    "name": "rustic/common/crafting/BrewingBarrelRecipe",
+    "interfaces": [
+      "rustic/common/crafting/IBrewingBarrelRecipe"
+    ]
+  },
+  "rustic/common/crafting/CondenserRecipe": {
+    "name": "rustic/common/crafting/CondenserRecipe",
+    "interfaces": [
+      "rustic/common/crafting/ICondenserRecipe"
+    ]
+  },
+  "rustic/common/crafting/CrushingTubRecipe": {
+    "name": "rustic/common/crafting/CrushingTubRecipe",
+    "interfaces": [
+      "rustic/common/crafting/ICrushingTubRecipe"
+    ]
+  },
+  "rustic/common/crafting/EvaporatingBasinRecipe": {
+    "name": "rustic/common/crafting/EvaporatingBasinRecipe",
+    "interfaces": [
+      "rustic/common/crafting/IEvaporatingBasinRecipe"
+    ]
+  },
+  "rustic/common/crafting/RecipeCabinet": {
+    "name": "rustic/common/crafting/RecipeCabinet",
+    "interfaces": [
+      "net/minecraft/item/crafting/IRecipe"
+    ]
+  },
+  "rustic/common/crafting/RecipeOliveOil": {
+    "name": "rustic/common/crafting/RecipeOliveOil",
+    "interfaces": [
+      "net/minecraft/item/crafting/IRecipe"
+    ]
+  },
+  "rustic/common/crafting/Recipes$1": {
+    "name": "rustic/common/crafting/Recipes$1",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IFuelHandler"
+    ]
+  },
+  "rustic/common/inventory/DoubleCabinetItemHandler": {
+    "name": "rustic/common/inventory/DoubleCabinetItemHandler",
+    "interfaces": [
+      "net/minecraftforge/items/IItemHandlerModifiable"
+    ]
+  },
+  "rustic/common/inventory/ExternalItemHandler": {
+    "name": "rustic/common/inventory/ExternalItemHandler",
+    "interfaces": [
+      "net/minecraftforge/items/IItemHandler",
+      "net/minecraftforge/items/IItemHandlerModifiable"
+    ]
+  },
+  "rustic/common/items/ItemElixir": {
+    "name": "rustic/common/items/ItemElixir",
+    "interfaces": [
+      "rustic/common/items/IColoredItem"
+    ]
+  },
+  "rustic/common/items/ItemElixir$1": {
+    "name": "rustic/common/items/ItemElixir$1",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IItemColor"
+    ]
+  },
+  "rustic/common/items/ItemFluidBottle$1": {
+    "name": "rustic/common/items/ItemFluidBottle$1",
+    "interfaces": [
+      "net/minecraft/client/renderer/ItemMeshDefinition"
+    ]
+  },
+  "rustic/common/items/ItemHerbEdible": {
+    "name": "rustic/common/items/ItemHerbEdible",
+    "interfaces": [
+      "net/minecraftforge/common/IPlantable"
+    ]
+  },
+  "rustic/common/network/MessageDismountChair": {
+    "name": "rustic/common/network/MessageDismountChair",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "rustic/common/network/MessageDismountChair$MessageHolder": {
+    "name": "rustic/common/network/MessageDismountChair$MessageHolder",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "rustic/common/network/MessageShameFX": {
+    "name": "rustic/common/network/MessageShameFX",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "rustic/common/network/MessageShameFX$MessageHolder": {
+    "name": "rustic/common/network/MessageShameFX$MessageHolder",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "rustic/common/network/MessageVaseMeta": {
+    "name": "rustic/common/network/MessageVaseMeta",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "rustic/common/network/MessageVaseMeta$MessageHolder": {
+    "name": "rustic/common/network/MessageVaseMeta$MessageHolder",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "rustic/common/potions/EventHandlerPotions": {
+    "name": "rustic/common/potions/EventHandlerPotions",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWaterBottleUse(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Finish;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityDamage(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "rustic/common/tileentity/ContainerBarrel": {
+    "name": "rustic/common/tileentity/ContainerBarrel",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Linvtweaks/api/container/ChestContainer;",
+        "target": "rustic/common/tileentity/ContainerBarrel"
+      }
+    ]
+  },
+  "rustic/common/tileentity/ContainerCabinet": {
+    "name": "rustic/common/tileentity/ContainerCabinet",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Linvtweaks/api/container/ChestContainer;",
+        "target": "rustic/common/tileentity/ContainerCabinet"
+      }
+    ]
+  },
+  "rustic/common/tileentity/ContainerCabinetDouble": {
+    "name": "rustic/common/tileentity/ContainerCabinetDouble",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Linvtweaks/api/container/ChestContainer;",
+        "target": "rustic/common/tileentity/ContainerCabinetDouble",
+        "values": {
+          "isLargeChest": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "rustic/common/tileentity/ContainerVase": {
+    "name": "rustic/common/tileentity/ContainerVase",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Linvtweaks/api/container/ChestContainer;",
+        "target": "rustic/common/tileentity/ContainerVase"
+      }
+    ]
+  },
+  "rustic/common/tileentity/TileEntityApiary": {
+    "name": "rustic/common/tileentity/TileEntityApiary",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "rustic/common/tileentity/TileEntityBarrel": {
+    "name": "rustic/common/tileentity/TileEntityBarrel",
+    "interfaces": [
+      "vazkii/quark/api/IDropoffManager"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "rustic/common/tileentity/TileEntityBarrel",
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IDropoffManager"
+          },
+          "modid": {
+            "value": "quark"
+          },
+          "striprefs": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "rustic/common/tileentity/TileEntityBrewingBarrel": {
+    "name": "rustic/common/tileentity/TileEntityBrewingBarrel",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "rustic/common/tileentity/TileEntityCabinet": {
+    "name": "rustic/common/tileentity/TileEntityCabinet",
+    "interfaces": [
+      "net/minecraft/util/ITickable",
+      "vazkii/quark/api/IDropoffManager"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "rustic/common/tileentity/TileEntityCabinet",
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IDropoffManager"
+          },
+          "modid": {
+            "value": "quark"
+          },
+          "striprefs": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "rustic/common/tileentity/TileEntityCondenserBase": {
+    "name": "rustic/common/tileentity/TileEntityCondenserBase",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "rustic/common/tileentity/TileEntityEvaporatingBasin": {
+    "name": "rustic/common/tileentity/TileEntityEvaporatingBasin",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "rustic/common/tileentity/TileEntityVase": {
+    "name": "rustic/common/tileentity/TileEntityVase",
+    "interfaces": [
+      "vazkii/quark/api/IDropoffManager"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "rustic/common/tileentity/TileEntityVase",
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IDropoffManager"
+          },
+          "modid": {
+            "value": "quark"
+          },
+          "striprefs": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "rustic/common/world/WorldGeneratorRustic": {
+    "name": "rustic/common/world/WorldGeneratorRustic",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "rustic/common/world/WorldGeneratorRustic$NetherPredicate": {
+    "name": "rustic/common/world/WorldGeneratorRustic$NetherPredicate",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "rustic/compat/Compat": {
+    "name": "rustic/compat/Compat",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "doForestryCompat()V",
+        "values": {
+          "modid": {
+            "value": "forestry"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "preInitDynamicTreesCompat()V",
+        "values": {
+          "modid": {
+            "value": "dynamictrees"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "initDynamicTreesCompat()V",
+        "values": {
+          "modid": {
+            "value": "dynamictrees"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "preInitDynamicTreesClientCompat()V",
+        "values": {
+          "modid": {
+            "value": "dynamictrees"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "initDynamicTreesClientCompat()V",
+        "values": {
+          "modid": {
+            "value": "dynamictrees"
+          }
+        }
+      }
+    ]
+  },
+  "rustic/compat/crafttweaker/Condenser": {
+    "name": "rustic/compat/crafttweaker/Condenser",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "rustic/compat/crafttweaker/Condenser",
+        "value": {
+          "value": "mods.rustic.Condenser"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "rustic/compat/crafttweaker/Condenser$Add": {
+    "name": "rustic/compat/crafttweaker/Condenser$Add",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "rustic/compat/crafttweaker/Condenser$Remove": {
+    "name": "rustic/compat/crafttweaker/Condenser$Remove",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "rustic/compat/crafttweaker/CrTCondenserRecipe": {
+    "name": "rustic/compat/crafttweaker/CrTCondenserRecipe",
+    "interfaces": [
+      "rustic/common/crafting/ICondenserRecipe"
+    ]
+  },
+  "rustic/compat/crafttweaker/CrTEvaporatingBasinRecipe": {
+    "name": "rustic/compat/crafttweaker/CrTEvaporatingBasinRecipe",
+    "interfaces": [
+      "rustic/common/crafting/IEvaporatingBasinRecipe"
+    ]
+  },
+  "rustic/compat/crafttweaker/CrushingTub": {
+    "name": "rustic/compat/crafttweaker/CrushingTub",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "rustic/compat/crafttweaker/CrushingTub",
+        "value": {
+          "value": "mods.rustic.CrushingTub"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "rustic/compat/crafttweaker/CrushingTub$Add": {
+    "name": "rustic/compat/crafttweaker/CrushingTub$Add",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "rustic/compat/crafttweaker/CrushingTub$Remove": {
+    "name": "rustic/compat/crafttweaker/CrushingTub$Remove",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "rustic/compat/crafttweaker/EvaporatingBasin": {
+    "name": "rustic/compat/crafttweaker/EvaporatingBasin",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "rustic/compat/crafttweaker/EvaporatingBasin",
+        "value": {
+          "value": "mods.rustic.EvaporatingBasin"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "rustic/compat/crafttweaker/EvaporatingBasin$Add": {
+    "name": "rustic/compat/crafttweaker/EvaporatingBasin$Add",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "rustic/compat/crafttweaker/EvaporatingBasin$RemoveFluid": {
+    "name": "rustic/compat/crafttweaker/EvaporatingBasin$RemoveFluid",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "rustic/compat/crafttweaker/EvaporatingBasin$RemoveItem": {
+    "name": "rustic/compat/crafttweaker/EvaporatingBasin$RemoveItem",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "rustic/compat/dynamictrees/BiomeDataBasePopulator": {
+    "name": "rustic/compat/dynamictrees/BiomeDataBasePopulator",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/worldgen/IBiomeDataBasePopulator"
+    ]
+  },
+  "rustic/compat/dynamictrees/DynamicTreesCompat": {
+    "name": "rustic/compat/dynamictrees/DynamicTreesCompat",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "registerDataBasePopulators(Lcom/ferreusveritas/dynamictrees/api/WorldGenRegistry$BiomeDataBasePopulatorRegistryEvent;)V",
+        "values": {
+          "modid": {
+            "value": "dynamictrees"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerDataBasePopulators(Lcom/ferreusveritas/dynamictrees/api/WorldGenRegistry$BiomeDataBasePopulatorRegistryEvent;)V"
+      }
+    ]
+  },
+  "rustic/compat/dynamictrees/DynamicTreesCompat$1": {
+    "name": "rustic/compat/dynamictrees/DynamicTreesCompat$1",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IBlockColor"
+    ]
+  },
+  "rustic/compat/dynamictrees/SaplingReplacer": {
+    "name": "rustic/compat/dynamictrees/SaplingReplacer",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlaceSaplingEvent(Lnet/minecraftforge/event/world/BlockEvent$PlaceEvent;)V"
+      }
+    ]
+  },
+  "rustic/compat/jei/AdvancedAlchemyRecipeWrapperFactory": {
+    "name": "rustic/compat/jei/AdvancedAlchemyRecipeWrapperFactory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapperFactory"
+    ]
+  },
+  "rustic/compat/jei/BrewingRecipeWrapperFactory": {
+    "name": "rustic/compat/jei/BrewingRecipeWrapperFactory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapperFactory"
+    ]
+  },
+  "rustic/compat/jei/CabinetRecipeWrapper": {
+    "name": "rustic/compat/jei/CabinetRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/wrapper/IShapedCraftingRecipeWrapper"
+    ]
+  },
+  "rustic/compat/jei/CrushingTubRecipeWrapperFactory": {
+    "name": "rustic/compat/jei/CrushingTubRecipeWrapperFactory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapperFactory"
+    ]
+  },
+  "rustic/compat/jei/EvaporatingRecipeWrapperFactory": {
+    "name": "rustic/compat/jei/EvaporatingRecipeWrapperFactory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapperFactory"
+    ]
+  },
+  "rustic/compat/jei/OliveOilRecipeWrapper": {
+    "name": "rustic/compat/jei/OliveOilRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/wrapper/ICraftingRecipeWrapper"
+    ]
+  },
+  "rustic/compat/jei/RusticJEIPlugin": {
+    "name": "rustic/compat/jei/RusticJEIPlugin",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "rustic/compat/jei/RusticJEIPlugin"
+      }
+    ]
+  },
+  "rustic/compat/jei/SimpleAlchemyRecipeWrapper": {
+    "name": "rustic/compat/jei/SimpleAlchemyRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "rustic/compat/jei/SimpleAlchemyRecipeWrapperFactory": {
+    "name": "rustic/compat/jei/SimpleAlchemyRecipeWrapperFactory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapperFactory"
+    ]
+  },
+  "rustic/core/Rustic": {
+    "name": "rustic/core/Rustic",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "rustic/core/Rustic",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "after:dynamictrees@[1.12.2-0.9.1e,);after:dynamictreesbop;before:dynamictreestc"
+          },
+          "modid": {
+            "value": "rustic"
+          },
+          "name": {
+            "value": "Rustic"
+          },
+          "version": {
+            "value": "1.1.7"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "rustic.core.ClientProxy"
+          },
+          "serverSide": {
+            "value": "rustic.core.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "initRecipes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "postInitRecipes(Lnet/minecraftforge/event/RegistryEvent$Register;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  }
+}

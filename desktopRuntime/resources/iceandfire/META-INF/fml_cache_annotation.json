@@ -1,0 +1,3467 @@
+{
+  "com/github/alexthe666/iceandfire/ClientProxy": {
+    "name": "com/github/alexthe666/iceandfire/ClientProxy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/github/alexthe666/iceandfire/ClientProxy"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/CommonProxy": {
+    "name": "com/github/alexthe666/iceandfire/CommonProxy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/github/alexthe666/iceandfire/CommonProxy"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerSoundEvents(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEntities(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItemBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBiomes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/IceAndFire": {
+    "name": "com/github/alexthe666/iceandfire/IceAndFire",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/github/alexthe666/iceandfire/IceAndFire",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:llibrary@[1.7.9,)"
+          },
+          "guiFactory": {
+            "value": "com.github.alexthe666.iceandfire.client.gui.IceAndFireGuiFactory"
+          },
+          "modid": {
+            "value": "iceandfire"
+          },
+          "name": {
+            "value": "Ice And Fire"
+          },
+          "version": {
+            "value": "1.7.1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "INSTANCE",
+        "value": {
+          "value": "iceandfire"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/ilexiconn/llibrary/server/network/NetworkWrapper;",
+        "target": "NETWORK_WRAPPER",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lcom/github/alexthe666/iceandfire/message/MessageDaytime;",
+            "Lcom/github/alexthe666/iceandfire/message/MessageDragonArmor;",
+            "Lcom/github/alexthe666/iceandfire/message/MessageDragonControl;",
+            "Lcom/github/alexthe666/iceandfire/message/MessageHippogryphArmor;",
+            "Lcom/github/alexthe666/iceandfire/message/MessageStoneStatue;",
+            "Lcom/github/alexthe666/iceandfire/message/MessageUpdatePixieHouse;",
+            "Lcom/github/alexthe666/iceandfire/message/MessageUpdatePodium;",
+            "Lcom/github/alexthe666/iceandfire/message/MessageUpdatePixieHouseModel;",
+            "Lcom/github/alexthe666/iceandfire/message/MessageUpdatePixieJar;",
+            "Lcom/github/alexthe666/iceandfire/message/MessageSirenSong;",
+            "Lcom/github/alexthe666/iceandfire/message/MessageDeathWormHitbox;",
+            "Lcom/github/alexthe666/iceandfire/message/MessageMultipartInteract;",
+            "Lcom/github/alexthe666/iceandfire/message/MessageGetMyrmexHive;",
+            "Lcom/github/alexthe666/iceandfire/message/MessageSetMyrmexHiveNull;",
+            "Lcom/github/alexthe666/iceandfire/message/MessagePlayerHitMultipart;"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "PROXY",
+        "values": {
+          "clientSide": {
+            "value": "com.github.alexthe666.iceandfire.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.github.alexthe666.iceandfire.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/block/BlockElementalFlower": {
+    "name": "com/github/alexthe666/iceandfire/block/BlockElementalFlower",
+    "interfaces": [
+      "thaumcraft/api/crafting/IInfusionStabiliser"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "com/github/alexthe666/iceandfire/block/BlockElementalFlower",
+        "values": {
+          "iface": {
+            "value": "thaumcraft.api.crafting.IInfusionStabiliser"
+          },
+          "modid": {
+            "value": "thaumcraft"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "canStabaliseInfusion(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)Z",
+        "values": {
+          "modid": {
+            "value": "thaumcraft"
+          }
+        }
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/block/BlockJar": {
+    "name": "com/github/alexthe666/iceandfire/block/BlockJar",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/item/ICustomRendered"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/block/BlockMyrmexResin": {
+    "name": "com/github/alexthe666/iceandfire/block/BlockMyrmexResin",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/item/ICustomRendered"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/block/BlockMyrmexResin$EnumType": {
+    "name": "com/github/alexthe666/iceandfire/block/BlockMyrmexResin$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/block/BlockPixieHouse": {
+    "name": "com/github/alexthe666/iceandfire/block/BlockPixieHouse",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/item/ICustomRendered"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/block/BlockPodium": {
+    "name": "com/github/alexthe666/iceandfire/block/BlockPodium",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/item/ICustomRendered"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/block/BlockPodium$EnumType": {
+    "name": "com/github/alexthe666/iceandfire/block/BlockPodium$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/GuiHandler": {
+    "name": "com/github/alexthe666/iceandfire/client/GuiHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/gui/IceAndFireGuiFactory": {
+    "name": "com/github/alexthe666/iceandfire/client/gui/IceAndFireGuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/model/ModelDragonBase": {
+    "name": "com/github/alexthe666/iceandfire/client/model/ModelDragonBase",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/client/model/ICustomStatueModel"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/model/animator/FireDragonTabulaModelAnimator": {
+    "name": "com/github/alexthe666/iceandfire/client/model/animator/FireDragonTabulaModelAnimator",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/client/model/util/IIceAndFireTabulaModelAnimator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/model/animator/IceDragonTabulaModelAnimator": {
+    "name": "com/github/alexthe666/iceandfire/client/model/animator/IceDragonTabulaModelAnimator",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/client/model/util/IIceAndFireTabulaModelAnimator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/model/animator/SeaSerpentTabulaModelAnimator": {
+    "name": "com/github/alexthe666/iceandfire/client/model/animator/SeaSerpentTabulaModelAnimator",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/client/model/util/IIceAndFireTabulaModelAnimator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/RenderHippocampus$LayerHippocampusArmor": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/RenderHippocampus$LayerHippocampusArmor",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/RenderHippocampus$LayerHippocampusBridle": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/RenderHippocampus$LayerHippocampusBridle",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/RenderHippocampus$LayerHippocampusChest": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/RenderHippocampus$LayerHippocampusChest",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/RenderHippocampus$LayerHippocampusRainbow": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/RenderHippocampus$LayerHippocampusRainbow",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/RenderHippocampus$LayerHippocampusSaddle": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/RenderHippocampus$LayerHippocampusSaddle",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/RenderHippogryph$LayerHippogriffArmor": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/RenderHippogryph$LayerHippogriffArmor",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/RenderHippogryph$LayerHippogriffBridle": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/RenderHippogryph$LayerHippogriffBridle",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/RenderHippogryph$LayerHippogriffChest": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/RenderHippogryph$LayerHippogriffChest",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/RenderHippogryph$LayerHippogriffSaddle": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/RenderHippogryph$LayerHippogriffSaddle",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/RenderModCapes": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/RenderModCapes",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerRender(Lnet/minecraftforge/client/event/RenderPlayerEvent$Pre;)V"
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/RenderTroll": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/RenderTroll",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/client/render/entity/ICustomStoneLayer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerDragonArmor": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerDragonArmor",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerDragonEyes": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerDragonEyes",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerGorgonEyes": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerGorgonEyes",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerMyrmexItem": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerMyrmexItem",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerPixieGlow": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerPixieGlow",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerPixieItem": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerPixieItem",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerSeaSerpentAncient": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerSeaSerpentAncient",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerStoneEntity": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerStoneEntity",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerStoneEntityCrack": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerStoneEntityCrack",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerStonePlayerEntityCrack": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerStonePlayerEntityCrack",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerTrollEyes": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerTrollEyes",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerTrollStone": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerTrollStone",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerTrollWeapon": {
+    "name": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerTrollWeapon",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/core/ModBlocks": {
+    "name": "com/github/alexthe666/iceandfire/core/ModBlocks",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "lectern",
+        "value": {
+          "value": "iceandfire:lectern"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "podium",
+        "value": {
+          "value": "iceandfire:podium"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "fire_lily",
+        "value": {
+          "value": "iceandfire:fire_lily"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "frost_lily",
+        "value": {
+          "value": "iceandfire:frost_lily"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "goldPile",
+        "value": {
+          "value": "iceandfire:goldpile"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silverPile",
+        "value": {
+          "value": "iceandfire:silverpile"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silverOre",
+        "value": {
+          "value": "iceandfire:silver_ore"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "sapphireOre",
+        "value": {
+          "value": "iceandfire:sapphire_ore"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silverBlock",
+        "value": {
+          "value": "iceandfire:silver_block"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "sapphireBlock",
+        "value": {
+          "value": "iceandfire:sapphire_block"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "charedDirt",
+        "value": {
+          "value": "iceandfire:chared_dirt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "charedGrass",
+        "value": {
+          "value": "iceandfire:chared_grass"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "charedStone",
+        "value": {
+          "value": "iceandfire:chared_stone"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "charedCobblestone",
+        "value": {
+          "value": "iceandfire:chared_cobblestone"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "charedGravel",
+        "value": {
+          "value": "iceandfire:chared_gravel"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "charedGrassPath",
+        "value": {
+          "value": "iceandfire:chared_grass_path"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ash",
+        "value": {
+          "value": "iceandfire:ash"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "frozenDirt",
+        "value": {
+          "value": "iceandfire:frozen_dirt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "frozenGrass",
+        "value": {
+          "value": "iceandfire:frozen_grass"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "frozenStone",
+        "value": {
+          "value": "iceandfire:frozen_stone"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "frozenCobblestone",
+        "value": {
+          "value": "iceandfire:frozen_cobblestone"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "frozenGravel",
+        "value": {
+          "value": "iceandfire:frozen_gravel"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "frozenGrassPath",
+        "value": {
+          "value": "iceandfire:frozen_grass_path"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "frozenSplinters",
+        "value": {
+          "value": "iceandfire:frozen_splinters"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragon_ice",
+        "value": {
+          "value": "iceandfire:dragon_ice"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragon_ice_spikes",
+        "value": {
+          "value": "iceandfire:dragon_ice_spikes"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "nest",
+        "value": {
+          "value": "iceandfire:nest"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "eggInIce",
+        "value": {
+          "value": "iceandfire:egginice"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "pixieHouse",
+        "value": {
+          "value": "iceandfire:pixie_house"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "jar_empty",
+        "value": {
+          "value": "iceandfire:jar_empty"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "jar_pixie",
+        "value": {
+          "value": "iceandfire:jar_pixie"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_resin",
+        "value": {
+          "value": "iceandfire:myrmex_resin"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_resin_sticky",
+        "value": {
+          "value": "iceandfire:myrmex_resin_sticky"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "desert_myrmex_cocoon",
+        "value": {
+          "value": "iceandfire:desert_myrmex_cocoon"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "jungle_myrmex_cocoon",
+        "value": {
+          "value": "iceandfire:jungle_myrmex_cocoon"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_biolight",
+        "value": {
+          "value": "iceandfire:myrmex_desert_biolight"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_biolight",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_biolight"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_resin_block",
+        "value": {
+          "value": "iceandfire:myrmex_desert_resin_block"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_resin_block",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_resin_block"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_resin_glass",
+        "value": {
+          "value": "iceandfire:myrmex_desert_resin_glass"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_resin_glass",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_resin_glass"
+        }
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/core/ModItems": {
+    "name": "com/github/alexthe666/iceandfire/core/ModItems",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "bestiary",
+        "value": {
+          "value": "iceandfire:bestiary"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "manuscript",
+        "value": {
+          "value": "iceandfire:manuscript"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "sapphireGem",
+        "value": {
+          "value": "iceandfire:sapphire_gem"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silverIngot",
+        "value": {
+          "value": "iceandfire:silver_ingot"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silverNugget",
+        "value": {
+          "value": "iceandfire:silver_nugget"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silver_helmet",
+        "value": {
+          "value": "iceandfire:silver_helmet"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silver_chestplate",
+        "value": {
+          "value": "iceandfire:silver_chestplate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silver_leggings",
+        "value": {
+          "value": "iceandfire:silver_leggings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silver_boots",
+        "value": {
+          "value": "iceandfire:silver_boots"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silver_sword",
+        "value": {
+          "value": "iceandfire:silver_sword"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silver_shovel",
+        "value": {
+          "value": "iceandfire:silver_shovel"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silver_pickaxe",
+        "value": {
+          "value": "iceandfire:silver_pickaxe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silver_axe",
+        "value": {
+          "value": "iceandfire:silver_axe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "silver_hoe",
+        "value": {
+          "value": "iceandfire:silver_hoe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "fire_stew",
+        "value": {
+          "value": "iceandfire:fire_stew"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "frost_stew",
+        "value": {
+          "value": "iceandfire:frost_stew"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonegg_red",
+        "value": {
+          "value": "iceandfire:dragonegg_red"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonegg_green",
+        "value": {
+          "value": "iceandfire:dragonegg_green"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonegg_bronze",
+        "value": {
+          "value": "iceandfire:dragonegg_bronze"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonegg_gray",
+        "value": {
+          "value": "iceandfire:dragonegg_gray"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonegg_blue",
+        "value": {
+          "value": "iceandfire:dragonegg_blue"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonegg_white",
+        "value": {
+          "value": "iceandfire:dragonegg_white"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonegg_sapphire",
+        "value": {
+          "value": "iceandfire:dragonegg_sapphire"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonegg_silver",
+        "value": {
+          "value": "iceandfire:dragonegg_silver"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonscales_red",
+        "value": {
+          "value": "iceandfire:dragonscales_red"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonscales_green",
+        "value": {
+          "value": "iceandfire:dragonscales_green"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonscales_bronze",
+        "value": {
+          "value": "iceandfire:dragonscales_bronze"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonscales_gray",
+        "value": {
+          "value": "iceandfire:dragonscales_gray"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonscales_blue",
+        "value": {
+          "value": "iceandfire:dragonscales_blue"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonscales_white",
+        "value": {
+          "value": "iceandfire:dragonscales_white"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonscales_sapphire",
+        "value": {
+          "value": "iceandfire:dragonscales_sapphire"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonscales_silver",
+        "value": {
+          "value": "iceandfire:dragonscales_silver"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonbone",
+        "value": {
+          "value": "iceandfire:dragonbone"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "witherbone",
+        "value": {
+          "value": "iceandfire:witherbone"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "fishing_spear",
+        "value": {
+          "value": "iceandfire:fishing_spear"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "wither_shard",
+        "value": {
+          "value": "iceandfire:wither_shard"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonbone_sword",
+        "value": {
+          "value": "iceandfire:dragonbone_sword"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonbone_shovel",
+        "value": {
+          "value": "iceandfire:dragonbone_shovel"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonbone_pickaxe",
+        "value": {
+          "value": "iceandfire:dragonbone_pickaxe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonbone_axe",
+        "value": {
+          "value": "iceandfire:dragonbone_axe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonbone_hoe",
+        "value": {
+          "value": "iceandfire:dragonbone_hoe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonbone_sword_fire",
+        "value": {
+          "value": "iceandfire:dragonbone_sword_fire"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonbone_sword_ice",
+        "value": {
+          "value": "iceandfire:dragonbone_sword_ice"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonbone_arrow",
+        "value": {
+          "value": "iceandfire:dragonbone_arrow"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragonbone_bow",
+        "value": {
+          "value": "iceandfire:dragonbone_bow"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragon_skull",
+        "value": {
+          "value": "iceandfire:dragon_skull"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragon_armor_iron",
+        "value": {
+          "value": "iceandfire:dragonarmor_iron"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragon_armor_gold",
+        "value": {
+          "value": "iceandfire:dragonarmor_gold"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragon_armor_diamond",
+        "value": {
+          "value": "iceandfire:dragonarmor_diamond"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragon_meal",
+        "value": {
+          "value": "iceandfire:dragon_meal"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "sickly_dragon_meal",
+        "value": {
+          "value": "iceandfire:sickly_dragon_meal"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "fire_dragon_flesh",
+        "value": {
+          "value": "iceandfire:fire_dragon_flesh"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ice_dragon_flesh",
+        "value": {
+          "value": "iceandfire:ice_dragon_flesh"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "fire_dragon_heart",
+        "value": {
+          "value": "iceandfire:fire_dragon_heart"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ice_dragon_heart",
+        "value": {
+          "value": "iceandfire:ice_dragon_heart"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "fire_dragon_blood",
+        "value": {
+          "value": "iceandfire:fire_dragon_blood"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ice_dragon_blood",
+        "value": {
+          "value": "iceandfire:ice_dragon_blood"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragon_stick",
+        "value": {
+          "value": "iceandfire:dragon_stick"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragon_horn",
+        "value": {
+          "value": "iceandfire:dragon_horn"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragon_horn_fire",
+        "value": {
+          "value": "iceandfire:dragon_horn_fire"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragon_horn_ice",
+        "value": {
+          "value": "iceandfire:dragon_horn_ice"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "dragon_flute",
+        "value": {
+          "value": "iceandfire:dragon_flute"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "hippogryph_egg",
+        "value": {
+          "value": "iceandfire:hippogryph_egg"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "iron_hippogryph_armor",
+        "value": {
+          "value": "iceandfire:iron_hippogryph_armor"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "gold_hippogryph_armor",
+        "value": {
+          "value": "iceandfire:gold_hippogryph_armor"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "diamond_hippogryph_armor",
+        "value": {
+          "value": "iceandfire:diamond_hippogryph_armor"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "gorgon_head",
+        "value": {
+          "value": "iceandfire:gorgon_head"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "stone_statue",
+        "value": {
+          "value": "iceandfire:stone_statue"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "blindfold",
+        "value": {
+          "value": "iceandfire:blindfold"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "pixie_dust",
+        "value": {
+          "value": "iceandfire:pixie_dust"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ambrosia",
+        "value": {
+          "value": "iceandfire:ambrosia"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "sheep_helmet",
+        "value": {
+          "value": "iceandfire:sheep_helmet"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "sheep_chestplate",
+        "value": {
+          "value": "iceandfire:sheep_chestplate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "sheep_leggings",
+        "value": {
+          "value": "iceandfire:sheep_leggings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "sheep_boots",
+        "value": {
+          "value": "iceandfire:sheep_boots"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "shiny_scales",
+        "value": {
+          "value": "iceandfire:shiny_scales"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "earplugs",
+        "value": {
+          "value": "iceandfire:earplugs"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_chitin",
+        "value": {
+          "value": "iceandfire:deathworm_chitin"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_yellow_helmet",
+        "value": {
+          "value": "iceandfire:deathworm_yellow_helmet"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_yellow_chestplate",
+        "value": {
+          "value": "iceandfire:deathworm_yellow_chestplate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_yellow_leggings",
+        "value": {
+          "value": "iceandfire:deathworm_yellow_leggings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_yellow_boots",
+        "value": {
+          "value": "iceandfire:deathworm_yellow_boots"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_white_helmet",
+        "value": {
+          "value": "iceandfire:deathworm_white_helmet"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_white_chestplate",
+        "value": {
+          "value": "iceandfire:deathworm_white_chestplate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_white_leggings",
+        "value": {
+          "value": "iceandfire:deathworm_white_leggings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_white_boots",
+        "value": {
+          "value": "iceandfire:deathworm_white_boots"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_red_helmet",
+        "value": {
+          "value": "iceandfire:deathworm_red_helmet"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_red_chestplate",
+        "value": {
+          "value": "iceandfire:deathworm_red_chworm_whhestplate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_red_leggings",
+        "value": {
+          "value": "iceandfire:deathworm_red_leggings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_red_boots",
+        "value": {
+          "value": "iceandfire:deathworm_red_boots"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "deathworm_egg",
+        "value": {
+          "value": "iceandfire:deathworm_egg"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "rotten_egg",
+        "value": {
+          "value": "iceandfire:rotten_egg"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "stymphalian_bird_feather",
+        "value": {
+          "value": "iceandfire:stymphalian_bird_feather"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "stymphalian_arrow",
+        "value": {
+          "value": "iceandfire:stymphalian_arrow"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "troll_tusk",
+        "value": {
+          "value": "iceandfire:troll_tusk"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_egg",
+        "value": {
+          "value": "iceandfire:myrmex_desert_egg"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_egg",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_egg"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_resin",
+        "value": {
+          "value": "iceandfire:myrmex_desert_resin"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_resin",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_resin"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_chitin",
+        "value": {
+          "value": "iceandfire:myrmex_desert_chitin"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_chitin",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_chitin"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_stinger",
+        "value": {
+          "value": "iceandfire:myrmex_stinger"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_sword",
+        "value": {
+          "value": "iceandfire:myrmex_desert_sword"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_sword_venom",
+        "value": {
+          "value": "iceandfire:myrmex_desert_sword_venom"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_shovel",
+        "value": {
+          "value": "iceandfire:myrmex_desert_shovel"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_pickaxe",
+        "value": {
+          "value": "iceandfire:myrmex_desert_pickaxe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_axe",
+        "value": {
+          "value": "iceandfire:myrmex_desert_axe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_hoe",
+        "value": {
+          "value": "iceandfire:myrmex_desert_hoe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_sword",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_sword"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_sword_venom",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_sword_venom"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_shovel",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_shovel"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_pickaxe",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_pickaxe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_axe",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_axe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_hoe",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_hoe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_staff",
+        "value": {
+          "value": "iceandfire:myrmex_desert_staff"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_staff",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_staff"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_helmet",
+        "value": {
+          "value": "iceandfire:myrmex_desert_helmet"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_chestplate",
+        "value": {
+          "value": "iceandfire:myrmex_desert_chestplate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_leggings",
+        "value": {
+          "value": "iceandfire:myrmex_desert_leggings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_desert_boots",
+        "value": {
+          "value": "iceandfire:myrmex_desert_boots"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_helmet",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_helmet"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_chestplate",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_chestplate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_leggings",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_leggings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "myrmex_jungle_boots",
+        "value": {
+          "value": "iceandfire:myrmex_jungle_boots"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "amphithere_feather",
+        "value": {
+          "value": "iceandfire:amphithere_feather"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "amphithere_arrow",
+        "value": {
+          "value": "iceandfire:amphithere_arrow"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "sea_serpent_fang",
+        "value": {
+          "value": "iceandfire:sea_serpent_fang"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "sea_serpent_arrow",
+        "value": {
+          "value": "iceandfire:sea_serpent_arrow"
+        }
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/core/ModSounds": {
+    "name": "com/github/alexthe666/iceandfire/core/ModSounds",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "com/github/alexthe666/iceandfire/core/ModSounds",
+        "value": {
+          "value": "iceandfire"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "DRAGON_HATCH",
+        "value": {
+          "value": "dragon_hatch"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "FIREDRAGON_BREATH",
+        "value": {
+          "value": "firedragon_breath"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ICEDRAGON_BREATH",
+        "value": {
+          "value": "icedragon_breath"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "FIREDRAGON_CHILD_IDLE",
+        "value": {
+          "value": "firedragon_child_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "FIREDRAGON_CHILD_HURT",
+        "value": {
+          "value": "firedragon_child_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "FIREDRAGON_CHILD_DEATH",
+        "value": {
+          "value": "firedragon_child_death"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "FIREDRAGON_CHILD_ROAR",
+        "value": {
+          "value": "firedragon_child_roar"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "FIREDRAGON_TEEN_ROAR",
+        "value": {
+          "value": "firedragon_teen_roar"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "FIREDRAGON_TEEN_IDLE",
+        "value": {
+          "value": "firedragon_teen_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "FIREDRAGON_TEEN_DEATH",
+        "value": {
+          "value": "firedragon_teen_death"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "FIREDRAGON_TEEN_HURT",
+        "value": {
+          "value": "firedragon_teen_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "FIREDRAGON_ADULT_ROAR",
+        "value": {
+          "value": "firedragon_adult_roar"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "FIREDRAGON_ADULT_IDLE",
+        "value": {
+          "value": "firedragon_adult_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "FIREDRAGON_ADULT_DEATH",
+        "value": {
+          "value": "firedragon_adult_death"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "FIREDRAGON_ADULT_HURT",
+        "value": {
+          "value": "firedragon_adult_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ICEDRAGON_CHILD_IDLE",
+        "value": {
+          "value": "icedragon_child_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ICEDRAGON_CHILD_HURT",
+        "value": {
+          "value": "icedragon_child_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ICEDRAGON_CHILD_DEATH",
+        "value": {
+          "value": "icedragon_child_death"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ICEDRAGON_CHILD_ROAR",
+        "value": {
+          "value": "icedragon_child_roar"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ICEDRAGON_TEEN_ROAR",
+        "value": {
+          "value": "icedragon_teen_roar"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ICEDRAGON_TEEN_IDLE",
+        "value": {
+          "value": "icedragon_teen_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ICEDRAGON_TEEN_DEATH",
+        "value": {
+          "value": "icedragon_teen_death"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ICEDRAGON_TEEN_HURT",
+        "value": {
+          "value": "icedragon_teen_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ICEDRAGON_ADULT_ROAR",
+        "value": {
+          "value": "icedragon_adult_roar"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ICEDRAGON_ADULT_IDLE",
+        "value": {
+          "value": "icedragon_adult_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ICEDRAGON_ADULT_DEATH",
+        "value": {
+          "value": "icedragon_adult_death"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ICEDRAGON_ADULT_HURT",
+        "value": {
+          "value": "icedragon_adult_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "DRAGONFLUTE",
+        "value": {
+          "value": "dragonflute"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "HIPPOGRYPH_IDLE",
+        "value": {
+          "value": "hippogryph_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "HIPPOGRYPH_HURT",
+        "value": {
+          "value": "hippogryph_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "HIPPOGRYPH_DIE",
+        "value": {
+          "value": "hippogryph_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "GORGON_IDLE",
+        "value": {
+          "value": "gorgon_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "GORGON_HURT",
+        "value": {
+          "value": "gorgon_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "GORGON_DIE",
+        "value": {
+          "value": "gorgon_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "GORGON_ATTACK",
+        "value": {
+          "value": "gorgon_attack"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "GORGON_PETRIFY",
+        "value": {
+          "value": "gorgon_petrify"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "GORGON_TURN_STONE",
+        "value": {
+          "value": "gorgon_turn_stone"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "PIXIE_IDLE",
+        "value": {
+          "value": "pixie_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "PIXIE_HURT",
+        "value": {
+          "value": "pixie_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "PIXIE_DIE",
+        "value": {
+          "value": "pixie_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "PIXIE_TAUNT",
+        "value": {
+          "value": "pixie_taunt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "GOLD_PILE_STEP",
+        "value": {
+          "value": "gold_pile_step"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "GOLD_PILE_BREAK",
+        "value": {
+          "value": "gold_pile_break"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "DRAGON_FLIGHT",
+        "value": {
+          "value": "dragon_flight"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "CYCLOPS_IDLE",
+        "value": {
+          "value": "cyclops_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "CYCLOPS_HURT",
+        "value": {
+          "value": "cyclops_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "CYCLOPS_DIE",
+        "value": {
+          "value": "cyclops_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "CYCLOPS_BITE",
+        "value": {
+          "value": "cyclops_bite"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "CYCLOPS_BLINDED",
+        "value": {
+          "value": "cyclops_blinded"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "HIPPOCAMPUS_IDLE",
+        "value": {
+          "value": "hippocampus_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "HIPPOCAMPUS_HURT",
+        "value": {
+          "value": "hippocampus_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "HIPPOCAMPUS_DIE",
+        "value": {
+          "value": "hippocampus_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "DEATHWORM_IDLE",
+        "value": {
+          "value": "deathworm_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "DEATHWORM_ATTACK",
+        "value": {
+          "value": "deathworm_attack"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "DEATHWORM_HURT",
+        "value": {
+          "value": "deathworm_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "DEATHWORM_DIE",
+        "value": {
+          "value": "deathworm_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "DEATHWORM_GIANT_IDLE",
+        "value": {
+          "value": "deathworm_giant_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "DEATHWORM_GIANT_ATTACK",
+        "value": {
+          "value": "deathworm_giant_attack"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "DEATHWORM_GIANT_HURT",
+        "value": {
+          "value": "deathworm_giant_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "DEATHWORM_GIANT_DIE",
+        "value": {
+          "value": "deathworm_giant_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "NAGA_IDLE",
+        "value": {
+          "value": "naga_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "NAGA_ATTACK",
+        "value": {
+          "value": "naga_attack"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "NAGA_HURT",
+        "value": {
+          "value": "naga_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "NAGA_DIE",
+        "value": {
+          "value": "naga_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "MERMAID_IDLE",
+        "value": {
+          "value": "mermaid_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "MERMAID_HURT",
+        "value": {
+          "value": "mermaid_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "MERMAID_DIE",
+        "value": {
+          "value": "mermaid_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "SIREN_SONG",
+        "value": {
+          "value": "siren_song"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "TROLL_DIE",
+        "value": {
+          "value": "troll_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "TROLL_IDLE",
+        "value": {
+          "value": "troll_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "TROLL_HURT",
+        "value": {
+          "value": "troll_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "TROLL_ROAR",
+        "value": {
+          "value": "troll_roar"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "COCKATRICE_DIE",
+        "value": {
+          "value": "cockatrice_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "COCKATRICE_IDLE",
+        "value": {
+          "value": "cockatrice_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "COCKATRICE_HURT",
+        "value": {
+          "value": "cockatrice_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "COCKATRICE_CRY",
+        "value": {
+          "value": "cockatrice_cry"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "STYMPHALIAN_BIRD_DIE",
+        "value": {
+          "value": "stymphalian_bird_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "STYMPHALIAN_BIRD_IDLE",
+        "value": {
+          "value": "stymphalian_bird_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "STYMPHALIAN_BIRD_HURT",
+        "value": {
+          "value": "stymphalian_bird_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "STYMPHALIAN_BIRD_ATTACK",
+        "value": {
+          "value": "stymphalian_bird_attack"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "MYRMEX_DIE",
+        "value": {
+          "value": "myrmex_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "MYRMEX_IDLE",
+        "value": {
+          "value": "myrmex_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "MYRMEX_HURT",
+        "value": {
+          "value": "myrmex_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "MYRMEX_WALK",
+        "value": {
+          "value": "myrmex_walk"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "MYRMEX_BITE",
+        "value": {
+          "value": "myrmex_bite"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "MYRMEX_STING",
+        "value": {
+          "value": "myrmex_sting"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "AMPHITHERE_DIE",
+        "value": {
+          "value": "amphithere_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "AMPHITHERE_IDLE",
+        "value": {
+          "value": "amphithere_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "AMPHITHERE_HURT",
+        "value": {
+          "value": "amphithere_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "AMPHITHERE_BITE",
+        "value": {
+          "value": "amphithere_bite"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "AMPHITHERE_GUST",
+        "value": {
+          "value": "amphithere_gust"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "SEA_SERPENT_DIE",
+        "value": {
+          "value": "sea_serpent_die"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "SEA_SERPENT_IDLE",
+        "value": {
+          "value": "sea_serpent_idle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "SEA_SERPENT_HURT",
+        "value": {
+          "value": "sea_serpent_hurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "SEA_SERPENT_BITE",
+        "value": {
+          "value": "sea_serpent_bite"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "SEA_SERPENT_ROAR",
+        "value": {
+          "value": "sea_serpent_roar"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "SEA_SERPENT_BREATH",
+        "value": {
+          "value": "sea_serpent_breath"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "SEA_SERPENT_SPLASH",
+        "value": {
+          "value": "sea_serpent_splash"
+        }
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/core/ModVillagers$ListItemForSapphires": {
+    "name": "com/github/alexthe666/iceandfire/core/ModVillagers$ListItemForSapphires",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/core/ModVillagers$SapphireForItems": {
+    "name": "com/github/alexthe666/iceandfire/core/ModVillagers$SapphireForItems",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/DragonUtils$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/DragonUtils$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityAmphithere": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityAmphithere",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/animation/IAnimatedEntity",
+      "com/github/alexthe666/iceandfire/entity/IPhasesThroughBlock",
+      "com/github/alexthe666/iceandfire/entity/IFlapable",
+      "com/github/alexthe666/iceandfire/entity/IDragonFlute"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityCockatrice": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityCockatrice",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/animation/IAnimatedEntity",
+      "com/github/alexthe666/iceandfire/entity/IBlacklistedFromStatues",
+      "com/github/alexthe666/iceandfire/entity/IVillagerFear"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityCockatrice$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityCockatrice$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityCyclops": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityCyclops",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/animation/IAnimatedEntity",
+      "com/github/alexthe666/iceandfire/entity/IBlacklistedFromStatues",
+      "com/github/alexthe666/iceandfire/entity/IVillagerFear"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityCyclops$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityCyclops$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityCyclops$2": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityCyclops$2",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityDeathWorm": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityDeathWorm",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/entity/IBlacklistedFromStatues",
+      "net/ilexiconn/llibrary/server/entity/multipart/IMultipartEntity",
+      "net/ilexiconn/llibrary/server/animation/IAnimatedEntity",
+      "com/github/alexthe666/iceandfire/entity/IVillagerFear",
+      "com/github/alexthe666/iceandfire/entity/IAnimalFear",
+      "com/github/alexthe666/iceandfire/entity/IPhasesThroughBlock"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityDeathWorm$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityDeathWorm$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityDragonBase": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityDragonBase",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/entity/multipart/IMultipartEntity",
+      "net/ilexiconn/llibrary/server/animation/IAnimatedEntity",
+      "com/github/alexthe666/iceandfire/entity/IDragonFlute",
+      "com/github/alexthe666/iceandfire/entity/IDeadMob",
+      "com/github/alexthe666/iceandfire/entity/IVillagerFear",
+      "com/github/alexthe666/iceandfire/entity/IAnimalFear",
+      "com/github/alexthe666/iceandfire/entity/IDropArmor"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityDragonEgg": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityDragonEgg",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/entity/IBlacklistedFromStatues",
+      "com/github/alexthe666/iceandfire/entity/IDeadMob"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityDragonFire": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityDragonFire",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/entity/IDragonProjectile"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityDragonFireCharge": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityDragonFireCharge",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/entity/IDragonProjectile"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityDragonIceCharge": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityDragonIceCharge",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/entity/IDragonProjectile"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityDragonIceProjectile": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityDragonIceProjectile",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/entity/IDragonProjectile"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityDragonSkull": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityDragonSkull",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/entity/IBlacklistedFromStatues",
+      "com/github/alexthe666/iceandfire/entity/IDeadMob"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityFireDragon$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityFireDragon$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityGorgon": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityGorgon",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/animation/IAnimatedEntity",
+      "com/github/alexthe666/iceandfire/entity/IVillagerFear",
+      "com/github/alexthe666/iceandfire/entity/IAnimalFear"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityGorgon$3": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityGorgon$3",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityGorgon$4": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityGorgon$4",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityHippocampus": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityHippocampus",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/animation/IAnimatedEntity",
+      "com/github/alexthe666/iceandfire/entity/IDropArmor"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityHippocampus$HippocampusInventoryListener": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityHippocampus$HippocampusInventoryListener",
+    "interfaces": [
+      "net/minecraft/inventory/IInventoryChangedListener"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityHippogryph": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityHippogryph",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/animation/IAnimatedEntity",
+      "com/github/alexthe666/iceandfire/entity/IDragonFlute",
+      "com/github/alexthe666/iceandfire/entity/IVillagerFear",
+      "com/github/alexthe666/iceandfire/entity/IAnimalFear",
+      "com/github/alexthe666/iceandfire/entity/IDropArmor"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityHippogryph$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityHippogryph$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityHippogryph$HippogryphInventoryListener": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityHippogryph$HippogryphInventoryListener",
+    "interfaces": [
+      "net/minecraft/inventory/IInventoryChangedListener"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityIceDragon$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityIceDragon$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityMyrmexBase": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityMyrmexBase",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/animation/IAnimatedEntity",
+      "net/minecraft/entity/IMerchant"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityMyrmexBase$BasicTrade": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityMyrmexBase$BasicTrade",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityMyrmexEgg": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityMyrmexEgg",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/entity/IBlacklistedFromStatues",
+      "com/github/alexthe666/iceandfire/entity/IDeadMob"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityMyrmexQueen$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityMyrmexQueen$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityMyrmexRoyal$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityMyrmexRoyal$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityMyrmexSentinel$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityMyrmexSentinel$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityMyrmexSoldier$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityMyrmexSoldier$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityMyrmexWorker$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityMyrmexWorker$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityPixie$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityPixie$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntitySeaSerpent": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntitySeaSerpent",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/animation/IAnimatedEntity",
+      "net/ilexiconn/llibrary/server/entity/multipart/IMultipartEntity",
+      "com/github/alexthe666/iceandfire/entity/IVillagerFear",
+      "com/github/alexthe666/iceandfire/entity/IAnimalFear"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntitySeaSerpent$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntitySeaSerpent$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntitySeaSerpentBubbles": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntitySeaSerpentBubbles",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/entity/IDragonProjectile"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntitySiren": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntitySiren",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/animation/IAnimatedEntity"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntitySiren$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntitySiren$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntitySiren$2": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntitySiren$2",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntitySiren$3": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntitySiren$3",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityStoneStatue": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityStoneStatue",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/entity/IBlacklistedFromStatues"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityStymphalianBird": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityStymphalianBird",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/animation/IAnimatedEntity",
+      "net/minecraft/entity/monster/IMob",
+      "com/github/alexthe666/iceandfire/entity/IVillagerFear",
+      "com/github/alexthe666/iceandfire/entity/IAnimalFear"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityStymphalianBird$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityStymphalianBird$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/EntityTroll": {
+    "name": "com/github/alexthe666/iceandfire/entity/EntityTroll",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/animation/IAnimatedEntity",
+      "com/github/alexthe666/iceandfire/entity/IVillagerFear"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/MyrmexAIAttackPlayers$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/MyrmexAIAttackPlayers$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/AquaticAIFindWaterTarget$Sorter": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/AquaticAIFindWaterTarget$Sorter",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/CockatriceAIAggroLook$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/CockatriceAIAggroLook$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/CockatriceAITargetItems$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/CockatriceAITargetItems$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/CyclopsAITargetSheepPlayers$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/CyclopsAITargetSheepPlayers$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/CyclopsAITargetSheepPlayers$2": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/CyclopsAITargetSheepPlayers$2",
+    "interfaces": [
+      "com/google/common/base/Function"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/CyclopsAITargetSheepPlayers$Sorter": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/CyclopsAITargetSheepPlayers$Sorter",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/DeathwormAITargetItems$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/DeathwormAITargetItems$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/DragonAITargetItems$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/DragonAITargetItems$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/DragonAITargetItems$Sorter": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/DragonAITargetItems$Sorter",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/HippogryphAITargetItems$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/HippogryphAITargetItems$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/HippogryphAITargetItems$Sorter": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/HippogryphAITargetItems$Sorter",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIFindGaurdingEntity$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIFindGaurdingEntity$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIFindGaurdingEntity$Sorter": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIFindGaurdingEntity$Sorter",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIFindHidingSpot$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIFindHidingSpot$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIFindMate$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIFindMate$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIFindMate$Sorter": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIFindMate$Sorter",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIForage$BlockSorter": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIForage$BlockSorter",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIForageForItems$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIForageForItems$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIForageForItems$Sorter": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIForageForItems$Sorter",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIPickupBabies$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIPickupBabies$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIPickupBabies$Sorter": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/MyrmexAIPickupBabies$Sorter",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/PixieAIFlee$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/PixieAIFlee$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/PixieAIPickupItem$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/PixieAIPickupItem$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/PixieAIPickupItem$Sorter": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/PixieAIPickupItem$Sorter",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/StymphalianBirdAIFlee$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/StymphalianBirdAIFlee$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/ai/StymphalianBirdAITarget$1": {
+    "name": "com/github/alexthe666/iceandfire/entity/ai/StymphalianBirdAITarget$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/tile/TileEntityEggInIce": {
+    "name": "com/github/alexthe666/iceandfire/entity/tile/TileEntityEggInIce",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/tile/TileEntityJar": {
+    "name": "com/github/alexthe666/iceandfire/entity/tile/TileEntityJar",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/tile/TileEntityLectern": {
+    "name": "com/github/alexthe666/iceandfire/entity/tile/TileEntityLectern",
+    "interfaces": [
+      "net/minecraft/util/ITickable",
+      "net/minecraft/inventory/ISidedInventory"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/tile/TileEntityPixieHouse": {
+    "name": "com/github/alexthe666/iceandfire/entity/tile/TileEntityPixieHouse",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/entity/tile/TileEntityPodium": {
+    "name": "com/github/alexthe666/iceandfire/entity/tile/TileEntityPodium",
+    "interfaces": [
+      "net/minecraft/util/ITickable",
+      "net/minecraft/inventory/ISidedInventory"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/enums/EnumDragonArmor": {
+    "name": "com/github/alexthe666/iceandfire/enums/EnumDragonArmor",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "helmet",
+        "value": {
+          "value": "iceandfire:armor_dragon_helmet"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "chestplate",
+        "value": {
+          "value": "iceandfire:armor_dragon_chestplate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "leggings",
+        "value": {
+          "value": "iceandfire:armor_dragon_leggings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "boots",
+        "value": {
+          "value": "iceandfire:armor_dragon_boots"
+        }
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/enums/EnumSeaSerpent": {
+    "name": "com/github/alexthe666/iceandfire/enums/EnumSeaSerpent",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "scale",
+        "value": {
+          "value": "iceandfire:sea_serpent_scale"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "helmet",
+        "value": {
+          "value": "iceandfire:sea_serpent_helmet"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "chestplate",
+        "value": {
+          "value": "iceandfire:sea_serpent_chestplate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "leggings",
+        "value": {
+          "value": "iceandfire:sea_serpent_leggings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "boots",
+        "value": {
+          "value": "iceandfire:sea_serpent_boots"
+        }
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/enums/EnumTroll": {
+    "name": "com/github/alexthe666/iceandfire/enums/EnumTroll",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "leather",
+        "value": {
+          "value": "iceandfire:troll_leather"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "helmet",
+        "value": {
+          "value": "iceandfire:troll_helmet"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "chestplate",
+        "value": {
+          "value": "iceandfire:troll_chestplate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "leggings",
+        "value": {
+          "value": "iceandfire:troll_leggings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "boots",
+        "value": {
+          "value": "iceandfire:troll_boots"
+        }
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/event/EventClient": {
+    "name": "com/github/alexthe666/iceandfire/event/EventClient",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCameraSetup(Lnet/minecraftforge/client/event/EntityViewRenderEvent$CameraSetup;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPostRenderLiving(Lnet/minecraftforge/client/event/RenderLivingEvent$Post;)V"
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/event/EventLiving": {
+    "name": "com/github/alexthe666/iceandfire/event/EventLiving",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onArrowCollide(Lnet/minecraftforge/event/entity/ProjectileImpactEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerAttackMob(Lnet/minecraftforge/event/entity/player/AttackEntityEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGatherCollisionBoxes(Lnet/minecraftforge/event/world/GetCollisionBoxesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityFall(Lnet/minecraftforge/event/entity/living/LivingFallEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityMount(Lnet/minecraftforge/event/entity/EntityMountEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityDamage(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityDrop(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityDespawn(Lnet/minecraftforge/event/entity/living/LivingSpawnEvent$AllowDespawn;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingAttacked(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingSetTarget(Lnet/minecraftforge/event/entity/living/LivingSetAttackTargetEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerAttack(Lnet/minecraftforge/event/entity/player/AttackEntityEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityUseItem(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickItem;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteractSpecific;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRightClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBreakBlock(Lnet/minecraftforge/event/world/BlockEvent$BreakEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onChestGenerated(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLeaveEvent(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedOutEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityJoinWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/event/EventLiving$1": {
+    "name": "com/github/alexthe666/iceandfire/event/EventLiving$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/event/EventLiving$2": {
+    "name": "com/github/alexthe666/iceandfire/event/EventLiving$2",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/event/EventNewMenu": {
+    "name": "com/github/alexthe666/iceandfire/event/EventNewMenu",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "openMainMenu(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/event/StructureGenerator": {
+    "name": "com/github/alexthe666/iceandfire/event/StructureGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/integration/ThaumcraftCompat": {
+    "name": "com/github/alexthe666/iceandfire/integration/ThaumcraftCompat",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "aspectRegistrationEvent(Lthaumcraft/api/aspects/AspectRegistryEvent;)V"
+      }
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemDeathWormChitin": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemDeathWormChitin",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/item/ICustomRendered"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemDeathwormEgg": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemDeathwormEgg",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/item/ICustomRendered"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemDragonArmor": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemDragonArmor",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/item/ICustomRendered"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemDragonBow": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemDragonBow",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/item/ICustomRendered"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemDragonBow$1": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemDragonBow$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemDragonBow$2": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemDragonBow$2",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemDragonFlute$Sorter": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemDragonFlute$Sorter",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemDragonHornActive$1": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemDragonHornActive$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemDragonHornActive$2": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemDragonHornActive$2",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemDragonSkull": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemDragonSkull",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/item/ICustomRendered"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemGorgonHead": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemGorgonHead",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/item/ICustomRendered"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemGorgonHead$1": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemGorgonHead$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemHippogryphEgg": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemHippogryphEgg",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/item/ICustomRendered"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemMyrmexEgg": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemMyrmexEgg",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/item/ICustomRendered"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/item/ItemTrollWeapon": {
+    "name": "com/github/alexthe666/iceandfire/item/ItemTrollWeapon",
+    "interfaces": [
+      "com/github/alexthe666/iceandfire/item/ICustomRendered"
+    ]
+  },
+  "com/github/alexthe666/iceandfire/world/village/VillageAnimalFarmCreator": {
+    "name": "com/github/alexthe666/iceandfire/world/village/VillageAnimalFarmCreator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/VillagerRegistry$IVillageCreationHandler"
+    ]
+  }
+}

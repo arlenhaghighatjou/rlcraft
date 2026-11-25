@@ -1,0 +1,36 @@
+package ivorius.reccomplex.events;
+
+import ivorius.reccomplex.world.gen.feature.structure.Structure;
+import ivorius.reccomplex.world.gen.feature.structure.context.StructureSpawnContext;
+import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
+
+public class StructureGenerationEvent extends WorldEvent {
+   public final Structure structure;
+   public StructureSpawnContext spawnContext;
+
+   public StructureGenerationEvent(Structure structure, StructureSpawnContext spawnContext) {
+      super(spawnContext.environment.world);
+      this.structure = structure;
+      this.spawnContext = spawnContext;
+   }
+
+   public static class Post extends StructureGenerationEvent {
+      public Post(Structure structure, StructureSpawnContext spawnContext) {
+         super(structure, spawnContext);
+      }
+   }
+
+   public static class Pre extends StructureGenerationEvent {
+      public Pre(Structure structure, StructureSpawnContext spawnContext) {
+         super(structure, spawnContext);
+      }
+   }
+
+   @Cancelable
+   public static class Suggest extends StructureGenerationEvent {
+      public Suggest(Structure structure, StructureSpawnContext spawnContext) {
+         super(structure, spawnContext);
+      }
+   }
+}

@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern":
+    [
+        "W"
+    ],
+    
+    "key":
+    {
+        "W":
+        {
+            "item": "mcwbridges:stone_brick_bridge"
+        }
+    },
+    
+    "result":
+    {
+        "item": "mcwbridges:stone_brick_bridge_end",
+        "count": 1
+    }
+}

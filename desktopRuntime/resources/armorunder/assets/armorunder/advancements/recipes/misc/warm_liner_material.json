@@ -1,0 +1,21 @@
+{
+  "parent": "armorunder:recipes/root",
+  "rewards": {
+    "recipes": [ "armorunder:warm_liner_material" ]
+  },
+  "criteria": {
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+        "conditions": { "recipe": "armorunder:warm_liner_material" }
+    },
+    "has_heating_goo": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { 
+        "items": [{"item": "armorunder:heating_goo"}] 
+      }
+    }
+  },
+  "requirements": [
+    [ "has_the_recipe", "has_heating_goo" ]
+  ]
+}

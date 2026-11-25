@@ -1,0 +1,6 @@
+package team.creative.enhancedvisuals.server.command;
+
+public class DisplayVisualCommand {
+   public DisplayVisualCommand() {
+   }
+}

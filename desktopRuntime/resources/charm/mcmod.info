@@ -1,0 +1,15 @@
+[{
+  "modid": "charm",
+  "name": "Charm",
+  "description": "Smaller things.",
+  "version": "1.12.2-1.4.1",
+  "mcversion": "1.12.2",
+  "logoFile": "",
+  "url": "https://minecraft.curseforge.com/projects/charm",
+  "updateUrl": "",
+  "authorList": ["svenhjol", "SokyranTheDragon"],
+  "credits": "",
+  "parent": "",
+  "screenshots": [],
+  "dependencies": []
+}]

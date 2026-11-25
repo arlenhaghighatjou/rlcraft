@@ -1,0 +1,18 @@
+[
+{
+  "modid": "iceandfire",
+  "name": "Ice and Fire",
+  "description": "Ice and Fire adds in both dragons and other mythological creatures.",
+  "version": "1.7.1",
+  "mcversion": "1.12.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Alexthe666", "Raptorfarian"],
+  "credits": "gegy1000, Paul Fulham, Zyranna, 4f6f3b, iLexiconn, Sunconure11, Elucent",
+  "logoFile": "assets/iceandfire/textures/logo.png",
+  "screenshots": [],
+  "requiredMods": [ "llibrary", "forge" ],
+  "dependencies": [ "llibrary", "forge" ],
+  "useDependencyInformation": true
+}
+]

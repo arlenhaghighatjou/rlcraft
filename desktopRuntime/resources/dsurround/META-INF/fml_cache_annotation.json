@@ -1,0 +1,6307 @@
+{
+  "org/orecruncher/dsurround/ModBase": {
+    "name": "org/orecruncher/dsurround/ModBase",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "org/orecruncher/dsurround/ModBase",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2,)"
+          },
+          "certificateFingerprint": {
+            "value": "7a2128d395ad96ceb9d9030fbd41d035b435753a"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2779,);required-after:orelib@[3.6.0.1,);after:sereneseasons@[1.2.18,);after:animania@[2.0.0,);after:galacticraftcore;after:ambientsounds;"
+          },
+          "guiFactory": {
+            "value": "org.orecruncher.dsurround.client.gui.ConfigGuiFactory"
+          },
+          "modid": {
+            "value": "dsurround"
+          },
+          "updateJSON": {
+            "value": "https://raw.githubusercontent.com/OreCruncher/DynamicSurroundings/master/version.json"
+          },
+          "useMetadata": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "version": {
+            "value": "3.6.2.1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "dsurround"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "org.orecruncher.dsurround.proxy.ProxyClient"
+          },
+          "serverSide": {
+            "value": "org.orecruncher.dsurround.proxy.Proxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "loadCompleted(Lnet/minecraftforge/fml/common/event/FMLLoadCompleteEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onFingerprintViolation(Lnet/minecraftforge/fml/common/event/FMLFingerprintViolationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/network/NetworkCheckHandler;",
+        "target": "checkModLists(Ljava/util/Map;Lnet/minecraftforge/fml/relauncher/Side;)Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientConnect(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientDisconnect(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientDisconnectionFromServerEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverAboutToStart(Lnet/minecraftforge/fml/common/event/FMLServerAboutToStartEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStopping(Lnet/minecraftforge/fml/common/event/FMLServerStoppingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStopped(Lnet/minecraftforge/fml/common/event/FMLServerStoppedEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$asm": {
+    "name": "org/orecruncher/dsurround/ModOptions$asm",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$asm",
+        "value": {
+          "value": "asm"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "org/orecruncher/dsurround/ModOptions$asm",
+        "value": {
+          "value": "dsurround.cfg.asm"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "org/orecruncher/dsurround/ModOptions$asm",
+        "value": {
+          "value": "Controls ASM/Mixin transforms at startup"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableWeatherASM",
+        "value": {
+          "value": "Enable Weather Control"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableWeatherASM",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableWeatherASM",
+        "value": {
+          "value": "dsurround.cfg.asm.EnableWeather"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableWeatherASM",
+        "value": {
+          "value": "Enable weather rendering and handling"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "disableArrowParticleTrail",
+        "value": {
+          "value": "Disable Arrow Critical Particle Trail"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "disableArrowParticleTrail",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "disableArrowParticleTrail",
+        "value": {
+          "value": "dsurround.cfg.asm.DisableArrow"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "disableArrowParticleTrail",
+        "value": {
+          "value": "Disable particle trail left by an arrow when it flies"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "disablePotionIconsInInventory",
+        "value": {
+          "value": "Disable Potion Icons in Inventory Display"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "disablePotionIconsInInventory",
+        "value": {
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "disablePotionIconsInInventory",
+        "value": {
+          "value": "dsurround.cfg.asm.DisablePotionIcons"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "disablePotionIconsInInventory",
+        "value": {
+          "value": "Disable Potion Icons in Inventory Display"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableOptionSearchASM",
+        "value": {
+          "value": "Enable Search Option in Configuration"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableOptionSearchASM",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableOptionSearchASM",
+        "value": {
+          "value": "dsurround.cfg.asm.EnableOptionSearch"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableOptionSearchASM",
+        "value": {
+          "value": "Enable search field in config option display"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$aurora": {
+    "name": "org/orecruncher/dsurround/ModOptions$aurora",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$aurora",
+        "value": {
+          "value": "aurora"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "org/orecruncher/dsurround/ModOptions$aurora",
+        "value": {
+          "value": "dsurround.cfg.aurora"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "org/orecruncher/dsurround/ModOptions$aurora",
+        "value": {
+          "value": "Options that control Aurora behavior and rendering"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "auroraEnable",
+        "value": {
+          "value": "Enabled"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "auroraEnable",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "auroraEnable",
+        "value": {
+          "value": "dsurround.cfg.aurora.EnableAurora"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "auroraEnable",
+        "value": {
+          "value": "Enable/disable aurora processing and rendering"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "auroraUseShader",
+        "value": {
+          "value": "Use Shaders"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "auroraUseShader",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "auroraUseShader",
+        "value": {
+          "value": "dsurround.cfg.aurora.EnableShader"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "auroraUseShader",
+        "value": {
+          "value": "Use shader when rendering aurora"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "auroraUseShader"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "maxBands",
+        "value": {
+          "value": "Maximum Bands"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "maxBands",
+        "value": {
+          "value": "3"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "maxBands",
+        "value": {
+          "value": "dsurround.cfg.aurora.MaxBands"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "maxBands",
+        "value": {
+          "value": "Maximum number of bands to render"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "maxBands",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "3"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$biomes": {
+    "name": "org/orecruncher/dsurround/ModOptions$biomes",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$biomes",
+        "value": {
+          "value": "biomes"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "org/orecruncher/dsurround/ModOptions$biomes",
+        "value": {
+          "value": "dsurround.cfg.biomes"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "org/orecruncher/dsurround/ModOptions$biomes",
+        "value": {
+          "value": "Options for controlling biome sound/effects"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "worldSealevelOverride",
+        "value": {
+          "value": "Overworld Sealevel Override"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "worldSealevelOverride",
+        "value": {
+          "value": "0"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "worldSealevelOverride",
+        "value": {
+          "value": "dsurround.cfg.biomes.Sealevel"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "worldSealevelOverride",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "255"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "worldSealevelOverride",
+        "value": {
+          "value": "Sealevel to set for Overworld (0 use default for World)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "biomeAliases",
+        "value": {
+          "value": "Biomes Alias"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "biomeAliases",
+        "value": {
+          "value": ""
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "biomeAliases",
+        "value": {
+          "value": "dsurround.cfg.biomes.Aliases"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "biomeAliases",
+        "value": {
+          "value": "Biomes alias list"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "dimensionBlacklist",
+        "value": {
+          "value": "Dimension Blacklist"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "dimensionBlacklist",
+        "value": {
+          "value": ""
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "dimensionBlacklist",
+        "value": {
+          "value": "dsurround.cfg.biomes.DimBlacklist"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "dimensionBlacklist",
+        "value": {
+          "value": "Dimension IDs where biome sounds will not be played"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$commands": {
+    "name": "org/orecruncher/dsurround/ModOptions$commands",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$commands",
+        "value": {
+          "value": "commands"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "org/orecruncher/dsurround/ModOptions$commands",
+        "value": {
+          "value": "dsurround.cfg.commands"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "org/orecruncher/dsurround/ModOptions$commands",
+        "value": {
+          "value": "Options for configuring commands"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "org/orecruncher/dsurround/ModOptions$commands",
+        "values": {
+          "server": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$commands$calc": {
+    "name": "org/orecruncher/dsurround/ModOptions$commands$calc",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$commands$calc",
+        "value": {
+          "value": "/calc"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "commandNameCalc",
+        "value": {
+          "value": "name"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "commandNameCalc",
+        "value": {
+          "value": "calc"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "commandNameCalc",
+        "value": {
+          "value": "dsurround.cfg.commands.Calc.Name"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "commandNameCalc",
+        "value": {
+          "value": "Name of the command"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "commandAliasCalc",
+        "value": {
+          "value": "alias"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "commandAliasCalc",
+        "value": {
+          "value": "c math"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "commandAliasCalc",
+        "value": {
+          "value": "dsurround.cfg.commands.Calc.Alias"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "commandAliasCalc",
+        "value": {
+          "value": "Alias for the command"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$commands$ds": {
+    "name": "org/orecruncher/dsurround/ModOptions$commands$ds",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$commands$ds",
+        "value": {
+          "value": "/ds"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "commandNameDS",
+        "value": {
+          "value": "name"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "commandNameDS",
+        "value": {
+          "value": "ds"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "commandNameDS",
+        "value": {
+          "value": "dsurround.cfg.commands.DS.Name"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "commandNameDS",
+        "value": {
+          "value": "Name of the command"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "commandAliasDS",
+        "value": {
+          "value": "alias"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "commandAliasDS",
+        "value": {
+          "value": "dsurround rain"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "commandAliasDS",
+        "value": {
+          "value": "dsurround.cfg.commands.DS.Alias"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "commandAliasDS",
+        "value": {
+          "value": "Alias for the command"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$effects": {
+    "name": "org/orecruncher/dsurround/ModOptions$effects",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$effects",
+        "value": {
+          "value": "effects"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "org/orecruncher/dsurround/ModOptions$effects",
+        "value": {
+          "value": "dsurround.cfg.effects"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "org/orecruncher/dsurround/ModOptions$effects",
+        "value": {
+          "value": "Options for controlling various effects"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "specialEffectRange",
+        "value": {
+          "value": "Special Effect Range"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "specialEffectRange",
+        "value": {
+          "value": "24"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "specialEffectRange",
+        "value": {
+          "value": "dsurround.cfg.effects.FXRange"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "specialEffectRange",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "64"
+          },
+          "min": {
+            "type": "INT",
+            "value": "16"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "specialEffectRange",
+        "value": {
+          "value": "Block radius/range around player for special effect application"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "disableWaterSuspendParticle",
+        "value": {
+          "value": "Disable Water Suspend Particles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "disableWaterSuspendParticle",
+        "value": {
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "disableWaterSuspendParticle",
+        "value": {
+          "value": "dsurround.cfg.effects.Suspend"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "disableWaterSuspendParticle",
+        "value": {
+          "value": "Enable/disable water depth particle effect"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "disableWaterSuspendParticle",
+        "values": {
+          "server": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "waterfallCutoff",
+        "value": {
+          "value": "Waterfall Cutoff"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "waterfallCutoff",
+        "value": {
+          "value": "0"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "waterfallCutoff",
+        "value": {
+          "value": "dsurround.cfg.effects.WaterfallCutoff"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "waterfallCutoff",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "16"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "waterfallCutoff",
+        "value": {
+          "value": "Waterfall strength below which sounds will not play (\u003e 10 to turn off)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableSteamJets",
+        "value": {
+          "value": "Enable Steam"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableSteamJets",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableSteamJets",
+        "value": {
+          "value": "dsurround.cfg.effects.Steam"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableSteamJets",
+        "value": {
+          "value": "Enable Steam Jets where lava meets water"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableFireJets",
+        "value": {
+          "value": "Enable FireJetEffect Jets"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableFireJets",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableFireJets",
+        "value": {
+          "value": "dsurround.cfg.effects.Fire"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableFireJets",
+        "value": {
+          "value": "Enable FireJetEffect Jets in lava"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableBubbleJets",
+        "value": {
+          "value": "Enable Bubbles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableBubbleJets",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableBubbleJets",
+        "value": {
+          "value": "dsurround.cfg.effects.Bubble"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableBubbleJets",
+        "value": {
+          "value": "Enable BubbleJetEffect Jets under water"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableDustJets",
+        "value": {
+          "value": "Enable DustJetEffect Motes"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableDustJets",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableDustJets",
+        "value": {
+          "value": "dsurround.cfg.effects.Dust"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableDustJets",
+        "value": {
+          "value": "Enable DustJetEffect motes dropping from blocks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableFountainJets",
+        "value": {
+          "value": "Enable FountainJetEffect"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableFountainJets",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableFountainJets",
+        "value": {
+          "value": "dsurround.cfg.effects.Fountain"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableFountainJets",
+        "value": {
+          "value": "Enable FountainJetEffect jets"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableFireflies",
+        "value": {
+          "value": "Enable Fireflies"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableFireflies",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableFireflies",
+        "value": {
+          "value": "dsurround.cfg.effects.Fireflies"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableFireflies",
+        "value": {
+          "value": "Enable Firefly effect around plants"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableWaterSplash",
+        "value": {
+          "value": "Enable Water Splash"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableWaterSplash",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableWaterSplash",
+        "value": {
+          "value": "dsurround.cfg.effects.Splash"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableWaterSplash",
+        "value": {
+          "value": "Enable Water Splash effects when water spills down"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableDamagePopoffs",
+        "value": {
+          "value": "Damage Popoffs"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableDamagePopoffs",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableDamagePopoffs",
+        "value": {
+          "value": "dsurround.cfg.effects.Popoffs"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableDamagePopoffs",
+        "value": {
+          "value": "Controls display of damage pop-offs when an entity is damaged/healed"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "showCritWords",
+        "value": {
+          "value": "Show Crit Words"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "showCritWords",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "showCritWords",
+        "value": {
+          "value": "dsurround.cfg.effects.CritWords"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "showCritWords",
+        "value": {
+          "value": "Display random power word on critical hit"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableFootprints",
+        "value": {
+          "value": "Footprints"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableFootprints",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableFootprints",
+        "value": {
+          "value": "dsurround.cfg.effects.Footprints"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableFootprints",
+        "value": {
+          "value": "Enable player footprints"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "footprintStyle",
+        "value": {
+          "value": "Footprint Style"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "footprintStyle",
+        "value": {
+          "value": "6"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "footprintStyle",
+        "value": {
+          "value": "dsurround.cfg.effects.FootprintStyle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "footprintStyle",
+        "value": {
+          "value": "0: shoe print, 1: square print, 2: horse hoof, 3: bird, 4: paw, 5: solid square, 6: lowres square"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "footprintStyle",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "6"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "showBreath",
+        "value": {
+          "value": "Show Frost Breath"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "showBreath",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "showBreath",
+        "value": {
+          "value": "dsurround.cfg.effects.ShowBreath"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "showBreath",
+        "value": {
+          "value": "Show player breath in cold weather and underwater"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$fog": {
+    "name": "org/orecruncher/dsurround/ModOptions$fog",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$fog",
+        "value": {
+          "value": "fog"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "org/orecruncher/dsurround/ModOptions$fog",
+        "value": {
+          "value": "dsurround.cfg.fog"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "org/orecruncher/dsurround/ModOptions$fog",
+        "value": {
+          "value": "Options that control the various fog effects in the client"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableFogProcessing",
+        "value": {
+          "value": "Enable Fog Processing"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableFogProcessing",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableFogProcessing",
+        "value": {
+          "value": "dsurround.cfg.fog.Enable"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableFogProcessing",
+        "value": {
+          "value": "Enable/disable fog processing"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableMorningFog",
+        "value": {
+          "value": "Morning Fog"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableMorningFog",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableMorningFog",
+        "value": {
+          "value": "dsurround.cfg.fog.EnableMorning"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableMorningFog",
+        "value": {
+          "value": "Show morning fog that eventually burns off"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableWeatherFog",
+        "value": {
+          "value": "Weather Fog"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableWeatherFog",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableWeatherFog",
+        "value": {
+          "value": "dsurround.cfg.fog.EnableWeather"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableWeatherFog",
+        "value": {
+          "value": "Increase fog based on the strength of rain"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableBedrockFog",
+        "value": {
+          "value": "Bedrock Fog"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableBedrockFog",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableBedrockFog",
+        "value": {
+          "value": "dsurround.cfg.fog.EnableBedrock"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableBedrockFog",
+        "value": {
+          "value": "Increase fog at bedrock layers"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "allowDesertFog",
+        "value": {
+          "value": "Desert Fog"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "allowDesertFog",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "allowDesertFog",
+        "value": {
+          "value": "dsurround.cfg.fog.DesertFog"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "allowDesertFog",
+        "value": {
+          "value": "Enable/disable desert fog when raining"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableElevationHaze",
+        "value": {
+          "value": "Elevation Haze"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableElevationHaze",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableElevationHaze",
+        "value": {
+          "value": "dsurround.cfg.fog.ElevationHaze"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableElevationHaze",
+        "value": {
+          "value": "Higher the player elevation the more haze that is experienced"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableBiomeFog",
+        "value": {
+          "value": "Biomes Fog"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableBiomeFog",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableBiomeFog",
+        "value": {
+          "value": "dsurround.cfg.fog.BiomeFog"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableBiomeFog",
+        "value": {
+          "value": "Enable biome specific fog density and color"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "morningFogChance",
+        "value": {
+          "value": "Morning Fog Chance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "morningFogChance",
+        "value": {
+          "value": "1"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "morningFogChance",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "10"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "morningFogChance",
+        "value": {
+          "value": "dsurround.cfg.fog.MorningFogChance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "morningFogChance",
+        "value": {
+          "value": "Chance morning fog will occurs expressed as 1 in N (1 means always)"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$general": {
+    "name": "org/orecruncher/dsurround/ModOptions$general",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$general",
+        "value": {
+          "value": "general"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "org/orecruncher/dsurround/ModOptions$general",
+        "value": {
+          "value": "dsurround.cfg.general"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "org/orecruncher/dsurround/ModOptions$general",
+        "value": {
+          "value": "Miscellaneous settings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "externalScriptFiles",
+        "value": {
+          "value": "External Configuration Files"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "externalScriptFiles",
+        "value": {
+          "value": ""
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "externalScriptFiles",
+        "value": {
+          "value": "dsurround.cfg.general.ExternalScripts"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "externalScriptFiles",
+        "value": {
+          "value": "Configuration files for customization"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "startupSoundList",
+        "value": {
+          "value": "Startup Sound List"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "startupSoundList",
+        "value": {
+          "value": "minecraft:entity.experience_orb.pickup,minecraft:entity.chicken.egg"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "startupSoundList",
+        "value": {
+          "value": "dsurround.cfg.general.StartupSounds"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "startupSoundList",
+        "value": {
+          "value": "Possible sounds to play when client finishes loading and reaches the main game menu"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableClientChunkCaching",
+        "value": {
+          "value": "Enable Client Chunk Caching"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableClientChunkCaching",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableClientChunkCaching",
+        "value": {
+          "value": "dsurround.cfg.general.ChunkCaching"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableClientChunkCaching",
+        "value": {
+          "value": "Enable/disable client side chunk caching (performance)"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$logging": {
+    "name": "org/orecruncher/dsurround/ModOptions$logging",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$logging",
+        "value": {
+          "value": "logging"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "org/orecruncher/dsurround/ModOptions$logging",
+        "value": {
+          "value": "dsurround.cfg.logging"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "org/orecruncher/dsurround/ModOptions$logging",
+        "value": {
+          "value": "Defines how logging will behave"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableDebugLogging",
+        "value": {
+          "value": "Enable Debug Logging"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableDebugLogging",
+        "value": {
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableDebugLogging",
+        "value": {
+          "value": "dsurround.cfg.logging.EnableDebug"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableDebugLogging",
+        "value": {
+          "value": "Enables/disables debug log tracing"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "enableDebugLogging"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableVersionChecking",
+        "value": {
+          "value": "Enable Online Version Check"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableVersionChecking",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableVersionChecking",
+        "value": {
+          "value": "dsurround.cfg.logging.VersionCheck"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableVersionChecking",
+        "value": {
+          "value": "Enables/disables display of version check information"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "enableVersionChecking"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "reportServerStats",
+        "value": {
+          "value": "Report Server Stats"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "reportServerStats",
+        "value": {
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "reportServerStats",
+        "value": {
+          "value": "dsurround.cfg.logging.ServerStats"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "reportServerStats",
+        "value": {
+          "value": "Enables/disables reporting of server TPS and memory stats (has to be enabled server side as well)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "debugFlagMask",
+        "value": {
+          "value": "Debug Flag Mask"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "debugFlagMask",
+        "value": {
+          "value": "0"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "debugFlagMask",
+        "value": {
+          "value": "dsurround.cfg.logging.FlagMask"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "debugFlagMask",
+        "value": {
+          "value": "Bitmask for toggling various debug traces"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Hidden;",
+        "target": "debugFlagMask"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$player": {
+    "name": "org/orecruncher/dsurround/ModOptions$player",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$player",
+        "value": {
+          "value": "player"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "org/orecruncher/dsurround/ModOptions$player",
+        "value": {
+          "value": "dsurround.cfg.player"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "org/orecruncher/dsurround/ModOptions$player",
+        "value": {
+          "value": "General options for defining sound and effects the player entity"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "suppressPotionParticles",
+        "value": {
+          "value": "Suppress Potion Particles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "suppressPotionParticles",
+        "value": {
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "suppressPotionParticles",
+        "value": {
+          "value": "dsurround.cfg.player.PotionParticles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "suppressPotionParticles",
+        "value": {
+          "value": "Suppress rendering of player\u0027s potion particles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "playerHurtThreshold",
+        "value": {
+          "value": "Hurt Threshold"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "playerHurtThreshold",
+        "value": {
+          "value": "0.25"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "playerHurtThreshold",
+        "value": {
+          "value": "dsurround.cfg.player.HurtThreshold"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "playerHurtThreshold",
+        "value": {
+          "value": "Percentage of player health bar remaining to trigger player hurt sound (0 disable)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeFloat;",
+        "target": "playerHurtThreshold",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "0.5"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "playerHungerThreshold",
+        "value": {
+          "value": "Hunger Threshold"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "playerHungerThreshold",
+        "value": {
+          "value": "8"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "playerHungerThreshold",
+        "value": {
+          "value": "dsurround.cfg.player.HungerThreshold"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "playerHungerThreshold",
+        "value": {
+          "value": "Amount of food bar remaining to trigger player hunger sound (0 disable)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "playerHungerThreshold",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "10"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$profiles": {
+    "name": "org/orecruncher/dsurround/ModOptions$profiles",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$profiles",
+        "value": {
+          "value": "profiles"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "org/orecruncher/dsurround/ModOptions$profiles",
+        "value": {
+          "value": "dsurround.cfg.profiles"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "org/orecruncher/dsurround/ModOptions$profiles",
+        "value": {
+          "value": "Enable/disable application of built in profiles"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$rain": {
+    "name": "org/orecruncher/dsurround/ModOptions$rain",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$rain",
+        "value": {
+          "value": "rain"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "org/orecruncher/dsurround/ModOptions$rain",
+        "value": {
+          "value": "dsurround.cfg.rain"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "org/orecruncher/dsurround/ModOptions$rain",
+        "value": {
+          "value": "Options that control rain effects in the client"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "doVanillaRain",
+        "value": {
+          "value": "Use Vanilla Algorithms"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "doVanillaRain",
+        "value": {
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "doVanillaRain",
+        "value": {
+          "value": "dsurround.cfg.rain.VanillaRain"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "doVanillaRain",
+        "value": {
+          "value": "Let Vanilla handle rain intensity and time windows"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "doVanillaRain"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "useVanillaRainSound",
+        "value": {
+          "value": "Use Vanilla Rain Sound"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "useVanillaRainSound",
+        "value": {
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "useVanillaRainSound",
+        "value": {
+          "value": "dsurround.cfg.rain.UseVanillaSound"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "useVanillaRainSound",
+        "value": {
+          "value": "Use the Vanilla rain sound rather than the modified one"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "useVanillaRainSound",
+        "values": {
+          "server": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "rainRippleStyle",
+        "value": {
+          "value": "Style of rain water ripple"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "rainRippleStyle",
+        "value": {
+          "value": "3"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "rainRippleStyle",
+        "value": {
+          "value": "dsurround.cfg.rain.RippleStyle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "rainRippleStyle",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "3"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "rainRippleStyle",
+        "value": {
+          "value": "0: original round, 1: darker round, 2: square, 3: pixelated"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "allowBackgroundThunder",
+        "value": {
+          "value": "Enable Background Thunder"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "allowBackgroundThunder",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "allowBackgroundThunder",
+        "value": {
+          "value": "dsurround.cfg.rain.EnableThunder"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "allowBackgroundThunder",
+        "value": {
+          "value": "Allow background thunder when storming"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "stormThunderThreshold",
+        "value": {
+          "value": "Rain Intensity for Background Thunder"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "stormThunderThreshold",
+        "value": {
+          "value": "0.75"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "stormThunderThreshold",
+        "value": {
+          "value": "dsurround.cfg.rain.ThunderThreshold"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeFloat;",
+        "target": "stormThunderThreshold",
+        "values": {
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "stormThunderThreshold",
+        "value": {
+          "value": "Minimum rain intensity level for background thunder to occur"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "defaultMinRainStrength",
+        "value": {
+          "value": "Default Minimum Rain Strength"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "defaultMinRainStrength",
+        "value": {
+          "value": "0.0"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "defaultMinRainStrength",
+        "value": {
+          "value": "dsurround.cfg.rain.MinRainStrength"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeFloat;",
+        "target": "defaultMinRainStrength",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "defaultMinRainStrength",
+        "value": {
+          "value": "Default minimum rain strength for a dimension"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "defaultMaxRainStrength",
+        "value": {
+          "value": "Default Maximum Rain Strength"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "defaultMaxRainStrength",
+        "value": {
+          "value": "1.0"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "defaultMaxRainStrength",
+        "value": {
+          "value": "dsurround.cfg.rain.MaxRainStrength"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeFloat;",
+        "target": "defaultMaxRainStrength",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "defaultMaxRainStrength",
+        "value": {
+          "value": "Default maximum rain strength for a dimension"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableNetherrackMagmaSplashEffect",
+        "value": {
+          "value": "Enable Netherrack and Magma Splash Effect"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableNetherrackMagmaSplashEffect",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableNetherrackMagmaSplashEffect",
+        "value": {
+          "value": "dsurround.cfg.rain.EnableMagmaNetherrack"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableNetherrackMagmaSplashEffect",
+        "value": {
+          "value": "Enable lava particle rain splash effect on Netherrack and Magma blocks"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$sound": {
+    "name": "org/orecruncher/dsurround/ModOptions$sound",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$sound",
+        "value": {
+          "value": "sound"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "org/orecruncher/dsurround/ModOptions$sound",
+        "value": {
+          "value": "dsurround.cfg.sound"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "org/orecruncher/dsurround/ModOptions$sound",
+        "value": {
+          "value": "General options for defining sound effects"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableBattleMusic",
+        "value": {
+          "value": "Battle Music"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableBattleMusic",
+        "value": {
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableBattleMusic",
+        "value": {
+          "value": "dsurround.cfg.sound.BattleMusic"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableBattleMusic",
+        "value": {
+          "value": "Enable/disable Battle Music (must also have BattleMusic resource pack installed to hear)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableBiomeSounds",
+        "value": {
+          "value": "Enable Biomes Sounds"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableBiomeSounds",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableBiomeSounds",
+        "value": {
+          "value": "dsurround.cfg.sound.BiomeSounds"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableBiomeSounds",
+        "value": {
+          "value": "Enable biome background and spot sounds"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "autoConfigureChannels",
+        "value": {
+          "value": "Autoconfigure Channels"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "autoConfigureChannels",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "autoConfigureChannels",
+        "value": {
+          "value": "dsurround.cfg.sound.AutoConfig"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "autoConfigureChannels",
+        "value": {
+          "value": "Automatically configure sound channels"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "autoConfigureChannels",
+        "values": {
+          "server": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "normalSoundChannelCount",
+        "value": {
+          "value": "Number Normal Channels"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "normalSoundChannelCount",
+        "value": {
+          "value": "28"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "normalSoundChannelCount",
+        "value": {
+          "value": "dsurround.cfg.sound.NormalChannels"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "normalSoundChannelCount",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "255"
+          },
+          "min": {
+            "type": "INT",
+            "value": "28"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "normalSoundChannelCount",
+        "value": {
+          "value": "Number of normal sound channels to configure in the sound system (manual)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "normalSoundChannelCount",
+        "values": {
+          "server": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "streamingSoundChannelCount",
+        "value": {
+          "value": "Number Streaming Channels"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "streamingSoundChannelCount",
+        "value": {
+          "value": "4"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "streamingSoundChannelCount",
+        "value": {
+          "value": "dsurround.cfg.sound.StreamingChannels"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "streamingSoundChannelCount",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "255"
+          },
+          "min": {
+            "type": "INT",
+            "value": "4"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "streamingSoundChannelCount",
+        "value": {
+          "value": "Number of streaming sound channels to configure in the sound system (manual)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "streamingSoundChannelCount",
+        "values": {
+          "server": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "streamBufferSize",
+        "value": {
+          "value": "Stream Buffer Size"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "streamBufferSize",
+        "value": {
+          "value": "32"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "streamBufferSize",
+        "value": {
+          "value": "dsurround.cfg.sound.StreamBufferSize"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "streamBufferSize",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "streamBufferSize",
+        "value": {
+          "value": "Size of a stream buffer in kilobytes (0: system default - usually 128K bytes)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "streamBufferSize",
+        "values": {
+          "server": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "streamBufferCount",
+        "value": {
+          "value": "Number of Stream Buffers per Channel"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "streamBufferCount",
+        "value": {
+          "value": "0"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "streamBufferCount",
+        "value": {
+          "value": "dsurround.cfg.sound.StreamBufferCount"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "streamBufferCount",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "8"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "streamBufferCount",
+        "value": {
+          "value": "Number of stream buffers per channel (0: system default - usually 3 buffers)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "streamBufferCount",
+        "values": {
+          "server": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "muteWhenBackground",
+        "value": {
+          "value": "Mute when Background"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "muteWhenBackground",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "muteWhenBackground",
+        "value": {
+          "value": "dsurround.cfg.sound.Mute"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "muteWhenBackground",
+        "value": {
+          "value": "Mute sound when Minecraft is in the background"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "thunderVolume",
+        "value": {
+          "value": "Thunder Volume"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "thunderVolume",
+        "value": {
+          "value": "10000"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "thunderVolume",
+        "value": {
+          "value": "dsurround.cfg.sound.ThunderVolume"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "thunderVolume",
+        "value": {
+          "value": "Sound Volume of Thunder"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeFloat;",
+        "target": "thunderVolume",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "10000.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "15.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableJumpSound",
+        "value": {
+          "value": "Jump Sound"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableJumpSound",
+        "value": {
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableJumpSound",
+        "value": {
+          "value": "dsurround.cfg.sound.Jump"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableJumpSound",
+        "value": {
+          "value": "Enable player Jump sound effect"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableEquipSound",
+        "value": {
+          "value": "Equip Sound"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableEquipSound",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableEquipSound",
+        "value": {
+          "value": "dsurround.cfg.sound.Equip"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableEquipSound",
+        "value": {
+          "value": "Enable Weapon/Tool Equip sound effect"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "swordEquipAsTool",
+        "value": {
+          "value": "Sword Equip as Tool"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "swordEquipAsTool",
+        "value": {
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "swordEquipAsTool",
+        "value": {
+          "value": "dsurround.cfg.sound.SwordEquipAsTool"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "swordEquipAsTool",
+        "value": {
+          "value": "Enable Sword Equip sound as Tool"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "swordEquipAsTool",
+        "values": {
+          "server": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableCraftingSound",
+        "value": {
+          "value": "Crafting Sound"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableCraftingSound",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableCraftingSound",
+        "value": {
+          "value": "dsurround.cfg.sound.Craft"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableCraftingSound",
+        "value": {
+          "value": "Enable Item Crafted sound effect"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "foostepsQuadruped",
+        "value": {
+          "value": "Footsteps as Quadruped"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "foostepsQuadruped",
+        "value": {
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "foostepsQuadruped",
+        "value": {
+          "value": "dsurround.cfg.sound.FootstepQuad"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "foostepsQuadruped",
+        "value": {
+          "value": "Simulate quadruped with Footstep effects (horse)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "firstPersonFootstepCadence",
+        "value": {
+          "value": "First Person Footstep Cadence"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "firstPersonFootstepCadence",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "firstPersonFootstepCadence",
+        "value": {
+          "value": "dsurround.cfg.sound.FootstepCadence"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "firstPersonFootstepCadence",
+        "value": {
+          "value": "true to match first person arm swing; false to match 3rd person leg animation"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableArmorSounds",
+        "value": {
+          "value": "Armor Sound"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableArmorSounds",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableArmorSounds",
+        "value": {
+          "value": "dsurround.cfg.sound.Armor"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableArmorSounds",
+        "value": {
+          "value": "Enable/disable armor sounds when moving"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableSwingSounds",
+        "value": {
+          "value": "Swing Sound"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableSwingSounds",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableSwingSounds",
+        "value": {
+          "value": "dsurround.cfg.sound.Swing"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableSwingSounds",
+        "value": {
+          "value": "Enable/disable item swing sounds"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enablePuddleSound",
+        "value": {
+          "value": "Rain Puddle Sound"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enablePuddleSound",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enablePuddleSound",
+        "value": {
+          "value": "dsurround.cfg.sound.Puddle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enablePuddleSound",
+        "value": {
+          "value": "Enable/disable rain puddle sound when moving in the rain"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "soundCullingThreshold",
+        "value": {
+          "value": "Sound Culling Threshold"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "soundCullingThreshold",
+        "value": {
+          "value": "20"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "soundCullingThreshold",
+        "value": {
+          "value": "dsurround.cfg.sound.CullInterval"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "soundCullingThreshold",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "soundCullingThreshold",
+        "value": {
+          "value": "Ticks between culled sound events (0 to disable culling)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "soundSettings",
+        "value": {
+          "value": "Sound Settings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Hidden;",
+        "target": "soundSettings"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "soundSettings",
+        "value": {
+          "value": "minecraft:block.water.ambient cull,minecraft:block.lava.ambient cull,minecraft:entity.sheep.ambient cull,minecraft:entity.chicken.ambient cull,minecraft:entity.cow.ambient cull,minecraft:entity.pig.ambient cull,dsurround:bison block,dsurround:elephant block,dsurround:gnatt block,dsurround:insectbuzz block,dsurround:hiss block,dsurround:rattlesnake block"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "soundSettings",
+        "value": {
+          "value": "dsurround.cfg.sound.SoundSettings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "soundSettings",
+        "value": {
+          "value": "Configure how each individual sound will be handled (block, cull, and volume scale)"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/ModOptions$speechbubbles": {
+    "name": "org/orecruncher/dsurround/ModOptions$speechbubbles",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Category;",
+        "target": "org/orecruncher/dsurround/ModOptions$speechbubbles",
+        "value": {
+          "value": "speechbubbles"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "org/orecruncher/dsurround/ModOptions$speechbubbles",
+        "value": {
+          "value": "dsurround.cfg.speech"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "org/orecruncher/dsurround/ModOptions$speechbubbles",
+        "value": {
+          "value": "Options for configuring SpeechBubbles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableSpeechBubbles",
+        "value": {
+          "value": "Enable SpeechBubbles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableSpeechBubbles",
+        "value": {
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableSpeechBubbles",
+        "value": {
+          "value": "dsurround.cfg.speech.EnableSpeechBubbles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableSpeechBubbles",
+        "value": {
+          "value": "Enables/disables speech bubbles above player heads (needs to be enabled server side as well)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableEntityChat",
+        "value": {
+          "value": "Enable Entity Chat"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableEntityChat",
+        "value": {
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableEntityChat",
+        "value": {
+          "value": "dsurround.cfg.speech.EnableEntityChat"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableEntityChat",
+        "value": {
+          "value": "Enables/disables entity chat bubbles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "speechBubbleDuration",
+        "value": {
+          "value": "Display Duration"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "speechBubbleDuration",
+        "value": {
+          "value": "7"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "speechBubbleDuration",
+        "value": {
+          "value": "dsurround.cfg.speech.Duration"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeFloat;",
+        "target": "speechBubbleDuration",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "15.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "5.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "speechBubbleDuration",
+        "value": {
+          "value": "Number of seconds to display speech before removing"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "speechBubbleRange",
+        "value": {
+          "value": "Visibility Range"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "speechBubbleRange",
+        "value": {
+          "value": "16"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "speechBubbleRange",
+        "value": {
+          "value": "dsurround.cfg.speech.Range"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RangeInt;",
+        "target": "speechBubbleRange",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "32"
+          },
+          "min": {
+            "type": "INT",
+            "value": "16"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "speechBubbleRange",
+        "value": {
+          "value": "Range at which a SpeechBubble is visible (filtering occurs server side)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Option;",
+        "target": "enableAnimaniaBadges",
+        "value": {
+          "value": "Animania Badges"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$DefaultValue;",
+        "target": "enableAnimaniaBadges",
+        "value": {
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$LangKey;",
+        "target": "enableAnimaniaBadges",
+        "value": {
+          "value": "dsurround.cfg.speech.AnimaniaBadges"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$Comment;",
+        "target": "enableAnimaniaBadges",
+        "value": {
+          "value": "Enable/disable display of food/water badges over Animania mobs"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/orecruncher/lib/ConfigProcessor$RestartRequired;",
+        "target": "enableAnimaniaBadges",
+        "values": {
+          "server": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/CapabilityDimensionInfo": {
+    "name": "org/orecruncher/dsurround/capabilities/CapabilityDimensionInfo",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "DIMENSION_INFO",
+        "value": {
+          "type": "CLASS",
+          "value": "Lorg/orecruncher/dsurround/capabilities/dimension/IDimensionInfo;"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/CapabilityDimensionInfo$EventHandler": {
+    "name": "org/orecruncher/dsurround/capabilities/CapabilityDimensionInfo$EventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/capabilities/CapabilityDimensionInfo$EventHandler",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/CapabilityEntityData": {
+    "name": "org/orecruncher/dsurround/capabilities/CapabilityEntityData",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "ENTITY_DATA",
+        "value": {
+          "type": "CLASS",
+          "value": "Lorg/orecruncher/dsurround/capabilities/entitydata/IEntityData;"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/CapabilityEntityData$EventHandler": {
+    "name": "org/orecruncher/dsurround/capabilities/CapabilityEntityData$EventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/capabilities/CapabilityEntityData$EventHandler",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "trackingEvent(Lnet/minecraftforge/event/entity/player/PlayerEvent$StartTracking;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "livingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/CapabilityEntityFXData": {
+    "name": "org/orecruncher/dsurround/capabilities/CapabilityEntityFXData",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "FX_INFO",
+        "value": {
+          "type": "CLASS",
+          "value": "Lorg/orecruncher/dsurround/capabilities/entityfx/IEntityFX;"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/CapabilityEntityFXData$EventHandler": {
+    "name": "org/orecruncher/dsurround/capabilities/CapabilityEntityFXData$EventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/capabilities/CapabilityEntityFXData$EventHandler",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/CapabilitySeasonInfo": {
+    "name": "org/orecruncher/dsurround/capabilities/CapabilitySeasonInfo",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "SEASON_INFO",
+        "value": {
+          "type": "CLASS",
+          "value": "Lorg/orecruncher/dsurround/capabilities/season/ISeasonInfo;"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/CapabilitySeasonInfo$EventHandler": {
+    "name": "org/orecruncher/dsurround/capabilities/CapabilitySeasonInfo$EventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/capabilities/CapabilitySeasonInfo$EventHandler",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/CapabilitySpeechData": {
+    "name": "org/orecruncher/dsurround/capabilities/CapabilitySpeechData",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "SPEECH_DATA",
+        "value": {
+          "type": "CLASS",
+          "value": "Lorg/orecruncher/dsurround/capabilities/speech/ISpeechData;"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/CapabilitySpeechData$EventHandler": {
+    "name": "org/orecruncher/dsurround/capabilities/CapabilitySpeechData$EventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/capabilities/CapabilitySpeechData$EventHandler",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "livingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/dimension/DimensionInfo": {
+    "name": "org/orecruncher/dsurround/capabilities/dimension/DimensionInfo",
+    "interfaces": [
+      "org/orecruncher/dsurround/capabilities/dimension/IDimensionInfoEx"
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/dimension/IDimensionInfo": {
+    "name": "org/orecruncher/dsurround/capabilities/dimension/IDimensionInfo",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/dimension/IDimensionInfoEx": {
+    "name": "org/orecruncher/dsurround/capabilities/dimension/IDimensionInfoEx",
+    "interfaces": [
+      "org/orecruncher/dsurround/capabilities/dimension/IDimensionInfo"
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/entitydata/EntityData": {
+    "name": "org/orecruncher/dsurround/capabilities/entitydata/EntityData",
+    "interfaces": [
+      "org/orecruncher/dsurround/capabilities/entitydata/IEntityDataSettable"
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/entitydata/IEntityData": {
+    "name": "org/orecruncher/dsurround/capabilities/entitydata/IEntityData",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/entitydata/IEntityDataSettable": {
+    "name": "org/orecruncher/dsurround/capabilities/entitydata/IEntityDataSettable",
+    "interfaces": [
+      "org/orecruncher/dsurround/capabilities/entitydata/IEntityData"
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/entityfx/EntityFXData": {
+    "name": "org/orecruncher/dsurround/capabilities/entityfx/EntityFXData",
+    "interfaces": [
+      "org/orecruncher/dsurround/capabilities/entityfx/IEntityFX"
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/season/SeasonInfo": {
+    "name": "org/orecruncher/dsurround/capabilities/season/SeasonInfo",
+    "interfaces": [
+      "org/orecruncher/dsurround/capabilities/season/ISeasonInfo"
+    ]
+  },
+  "org/orecruncher/dsurround/capabilities/speech/SpeechData": {
+    "name": "org/orecruncher/dsurround/capabilities/speech/SpeechData",
+    "interfaces": [
+      "org/orecruncher/dsurround/capabilities/speech/ISpeechData"
+    ]
+  },
+  "org/orecruncher/dsurround/client/aurora/AuroraBase": {
+    "name": "org/orecruncher/dsurround/client/aurora/AuroraBase",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/aurora/IAurora"
+    ]
+  },
+  "org/orecruncher/dsurround/client/effects/EffectStateBase": {
+    "name": "org/orecruncher/dsurround/client/effects/EffectStateBase",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEffectState"
+    ]
+  },
+  "org/orecruncher/dsurround/client/effects/EffectStateBase$1": {
+    "name": "org/orecruncher/dsurround/client/effects/EffectStateBase$1",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/ISoundHelper"
+    ]
+  },
+  "org/orecruncher/dsurround/client/effects/EntityEffectHandler": {
+    "name": "org/orecruncher/dsurround/client/effects/EntityEffectHandler",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEntityEffectHandlerState"
+    ]
+  },
+  "org/orecruncher/dsurround/client/effects/EntityEffectStateBase": {
+    "name": "org/orecruncher/dsurround/client/effects/EntityEffectStateBase",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEntityEffectState"
+    ]
+  },
+  "org/orecruncher/dsurround/client/effects/EventEffectLibrary": {
+    "name": "org/orecruncher/dsurround/client/effects/EventEffectLibrary",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEventEffectLibraryState"
+    ]
+  },
+  "org/orecruncher/dsurround/client/effects/IEntityEffectHandlerState": {
+    "name": "org/orecruncher/dsurround/client/effects/IEntityEffectHandlerState",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEntityEffectState"
+    ]
+  },
+  "org/orecruncher/dsurround/client/effects/IEntityEffectState": {
+    "name": "org/orecruncher/dsurround/client/effects/IEntityEffectState",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEffectState"
+    ]
+  },
+  "org/orecruncher/dsurround/client/effects/IEventEffectLibraryState": {
+    "name": "org/orecruncher/dsurround/client/effects/IEventEffectLibraryState",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEffectState"
+    ]
+  },
+  "org/orecruncher/dsurround/client/footsteps/ConfigOptions": {
+    "name": "org/orecruncher/dsurround/client/footsteps/ConfigOptions",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/acoustics/IOptions"
+    ]
+  },
+  "org/orecruncher/dsurround/client/footsteps/DelayedAcoustic": {
+    "name": "org/orecruncher/dsurround/client/footsteps/DelayedAcoustic",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/acoustics/IOptions"
+    ]
+  },
+  "org/orecruncher/dsurround/client/footsteps/SoundPlayer": {
+    "name": "org/orecruncher/dsurround/client/footsteps/SoundPlayer",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/acoustics/ISoundPlayer"
+    ]
+  },
+  "org/orecruncher/dsurround/client/footsteps/accents/ArmorAccents": {
+    "name": "org/orecruncher/dsurround/client/footsteps/accents/ArmorAccents",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/footsteps/IFootstepAccentProvider"
+    ]
+  },
+  "org/orecruncher/dsurround/client/footsteps/accents/RainSplashAccent": {
+    "name": "org/orecruncher/dsurround/client/footsteps/accents/RainSplashAccent",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/footsteps/IFootstepAccentProvider"
+    ]
+  },
+  "org/orecruncher/dsurround/client/footsteps/facade/ConnectedTexturesAccessor": {
+    "name": "org/orecruncher/dsurround/client/footsteps/facade/ConnectedTexturesAccessor",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/footsteps/facade/IFacadeAccessor"
+    ]
+  },
+  "org/orecruncher/dsurround/client/footsteps/facade/FacadeAccessor": {
+    "name": "org/orecruncher/dsurround/client/footsteps/facade/FacadeAccessor",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/footsteps/facade/IFacadeAccessor"
+    ]
+  },
+  "org/orecruncher/dsurround/client/footsteps/facade/ForgeMultiPartCBE": {
+    "name": "org/orecruncher/dsurround/client/footsteps/facade/ForgeMultiPartCBE",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/footsteps/facade/IFacadeAccessor"
+    ]
+  },
+  "org/orecruncher/dsurround/client/footsteps/facade/LittleTilesAccessor": {
+    "name": "org/orecruncher/dsurround/client/footsteps/facade/LittleTilesAccessor",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/footsteps/facade/IFacadeAccessor"
+    ]
+  },
+  "org/orecruncher/dsurround/client/fx/BlockEffect": {
+    "name": "org/orecruncher/dsurround/client/fx/BlockEffect",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/fx/ISpecialEffect"
+    ]
+  },
+  "org/orecruncher/dsurround/client/fx/ParticleCollections": {
+    "name": "org/orecruncher/dsurround/client/fx/ParticleCollections",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldUnload(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "diagnostics(Lorg/orecruncher/dsurround/event/DiagnosticEvent$Gather;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/fx/particle/ParticleDripOverride$LavaFactory": {
+    "name": "org/orecruncher/dsurround/client/fx/particle/ParticleDripOverride$LavaFactory",
+    "interfaces": [
+      "net/minecraft/client/particle/IParticleFactory"
+    ]
+  },
+  "org/orecruncher/dsurround/client/fx/particle/ParticleDripOverride$WaterFactory": {
+    "name": "org/orecruncher/dsurround/client/fx/particle/ParticleDripOverride$WaterFactory",
+    "interfaces": [
+      "net/minecraft/client/particle/IParticleFactory"
+    ]
+  },
+  "org/orecruncher/dsurround/client/fx/particle/ParticleMoteAdapter": {
+    "name": "org/orecruncher/dsurround/client/fx/particle/ParticleMoteAdapter",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/fx/particle/mote/IParticleMote"
+    ]
+  },
+  "org/orecruncher/dsurround/client/fx/particle/mote/MoteFireFly": {
+    "name": "org/orecruncher/dsurround/client/fx/particle/mote/MoteFireFly",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/fx/particle/mote/IIlluminatedMote"
+    ]
+  },
+  "org/orecruncher/dsurround/client/fx/particle/mote/MoteParticle": {
+    "name": "org/orecruncher/dsurround/client/fx/particle/mote/MoteParticle",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/fx/particle/mote/IParticleMote"
+    ]
+  },
+  "org/orecruncher/dsurround/client/gui/ConfigGuiFactory": {
+    "name": "org/orecruncher/dsurround/client/gui/ConfigGuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "org/orecruncher/dsurround/client/gui/HumDinger": {
+    "name": "org/orecruncher/dsurround/client/gui/HumDinger",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiOpen(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/gui/SoundConfigEntry$ConfigElementSliderAdapter": {
+    "name": "org/orecruncher/dsurround/client/gui/SoundConfigEntry$ConfigElementSliderAdapter",
+    "interfaces": [
+      "net/minecraftforge/fml/client/config/IConfigElement"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/AuroraEffectHandler": {
+    "name": "org/orecruncher/dsurround/client/handlers/AuroraEffectHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "doRender(Lnet/minecraftforge/client/event/RenderWorldLastEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "diagnostic(Lorg/orecruncher/dsurround/event/DiagnosticEvent$Gather;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/DiagnosticHandler": {
+    "name": "org/orecruncher/dsurround/client/handlers/DiagnosticHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tickStart(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "worldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tickEnd(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGatherText(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Text;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/EffectManager": {
+    "name": "org/orecruncher/dsurround/client/handlers/EffectManager",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/client/handlers/EffectManager",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/EnvironStateHandler": {
+    "name": "org/orecruncher/dsurround/client/handlers/EnvironStateHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "diagnostics(Lorg/orecruncher/dsurround/event/DiagnosticEvent$Gather;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/FogHandler": {
+    "name": "org/orecruncher/dsurround/client/handlers/FogHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "fogColorEvent(Lnet/minecraftforge/client/event/EntityViewRenderEvent$FogColors;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "fogRenderEvent(Lnet/minecraftforge/client/event/EntityViewRenderEvent$RenderFogEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "diagnostics(Lorg/orecruncher/dsurround/event/DiagnosticEvent$Gather;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigurationChanged(Lorg/orecruncher/dsurround/registry/RegistryDataEvent$Reload;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/FxHandler": {
+    "name": "org/orecruncher/dsurround/client/handlers/FxHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V",
+        "values": {
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityJoin(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registryReload(Lorg/orecruncher/dsurround/registry/RegistryDataEvent$Reload;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "diagnostic(Lorg/orecruncher/dsurround/event/DiagnosticEvent$Gather;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/FxHandler$1": {
+    "name": "org/orecruncher/dsurround/client/handlers/FxHandler$1",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/ISoundHelper"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/SoundEffectHandler": {
+    "name": "org/orecruncher/dsurround/client/handlers/SoundEffectHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registryReloadEvent(Lorg/orecruncher/dsurround/registry/RegistryDataEvent$Reload;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerJoinWorldEvent(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "diagnostics(Lorg/orecruncher/dsurround/event/DiagnosticEvent$Gather;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/WeatherHandler": {
+    "name": "org/orecruncher/dsurround/client/handlers/WeatherHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onThunderEvent(Lorg/orecruncher/dsurround/event/ThunderEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "diagnostic(Lorg/orecruncher/dsurround/event/DiagnosticEvent$Gather;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/effects/BreathEffect$Factory": {
+    "name": "org/orecruncher/dsurround/client/handlers/effects/BreathEffect$Factory",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEntityEffectFactory"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/effects/CraftingSoundEffect": {
+    "name": "org/orecruncher/dsurround/client/handlers/effects/CraftingSoundEffect",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEvent(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$ItemCraftedEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/effects/EntityBowSoundEffect$Factory": {
+    "name": "org/orecruncher/dsurround/client/handlers/effects/EntityBowSoundEffect$Factory",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEntityEffectFactory"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/effects/EntityChatEffect$Factory": {
+    "name": "org/orecruncher/dsurround/client/handlers/effects/EntityChatEffect$Factory",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEntityEffectFactory"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/effects/EntityChatEffect$Stripper": {
+    "name": "org/orecruncher/dsurround/client/handlers/effects/EntityChatEffect$Stripper",
+    "interfaces": [
+      "com/google/common/base/Function"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/effects/EntityChatEffect$WeightTableBuilder": {
+    "name": "org/orecruncher/dsurround/client/handlers/effects/EntityChatEffect$WeightTableBuilder",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/effects/EntityChatEffect$WeightTableBuilder$1": {
+    "name": "org/orecruncher/dsurround/client/handlers/effects/EntityChatEffect$WeightTableBuilder$1",
+    "interfaces": [
+      "org/orecruncher/lib/WeightTable$IItem"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/effects/EntityFootprintEffect$Factory": {
+    "name": "org/orecruncher/dsurround/client/handlers/effects/EntityFootprintEffect$Factory",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEntityEffectFactory"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/effects/EntityHealthPopoffEffect$Factory": {
+    "name": "org/orecruncher/dsurround/client/handlers/effects/EntityHealthPopoffEffect$Factory",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEntityEffectFactory"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/effects/EntitySwingEffect$Factory": {
+    "name": "org/orecruncher/dsurround/client/handlers/effects/EntitySwingEffect$Factory",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEntityEffectFactory"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/effects/PlayerToolBarSoundEffect$Factory": {
+    "name": "org/orecruncher/dsurround/client/handlers/effects/PlayerToolBarSoundEffect$Factory",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEntityEffectFactory"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/effects/VillagerChatEffect$Factory": {
+    "name": "org/orecruncher/dsurround/client/handlers/effects/VillagerChatEffect$Factory",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/effects/IEntityEffectFactory"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/fog/HolisticFogColorCalculator": {
+    "name": "org/orecruncher/dsurround/client/handlers/fog/HolisticFogColorCalculator",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/handlers/fog/IFogColorCalculator"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/fog/HolisticFogRangeCalculator": {
+    "name": "org/orecruncher/dsurround/client/handlers/fog/HolisticFogRangeCalculator",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/handlers/fog/IFogRangeCalculator"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/fog/SeasonFogRangeCalculator$SeasonKey": {
+    "name": "org/orecruncher/dsurround/client/handlers/fog/SeasonFogRangeCalculator$SeasonKey",
+    "interfaces": [
+      "java/util/Map$Entry"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/fog/VanillaFogColorCalculator": {
+    "name": "org/orecruncher/dsurround/client/handlers/fog/VanillaFogColorCalculator",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/handlers/fog/IFogColorCalculator"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/fog/VanillaFogRangeCalculator": {
+    "name": "org/orecruncher/dsurround/client/handlers/fog/VanillaFogRangeCalculator",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/handlers/fog/IFogRangeCalculator"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/scanners/BiomeScanner": {
+    "name": "org/orecruncher/dsurround/client/handlers/scanners/BiomeScanner",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/scanners/CeilingCoverage": {
+    "name": "org/orecruncher/dsurround/client/handlers/scanners/CeilingCoverage",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "org/orecruncher/dsurround/client/handlers/scanners/CeilingCoverage$Cell": {
+    "name": "org/orecruncher/dsurround/client/handlers/scanners/CeilingCoverage$Cell",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "org/orecruncher/dsurround/client/hud/GuiHUDHandler": {
+    "name": "org/orecruncher/dsurround/client/hud/GuiHUDHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderGameOverlayEvent(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderGameOverlayEvent(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/hud/InspectionHUD": {
+    "name": "org/orecruncher/dsurround/client/hud/InspectionHUD",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/hud/IGuiOverlay"
+    ]
+  },
+  "org/orecruncher/dsurround/client/renderer/AnimaniaBadge": {
+    "name": "org/orecruncher/dsurround/client/renderer/AnimaniaBadge",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/renderer/BadgeRenderLayer$IEntityBadgeProvider"
+    ]
+  },
+  "org/orecruncher/dsurround/client/renderer/BadgeRenderLayer": {
+    "name": "org/orecruncher/dsurround/client/renderer/BadgeRenderLayer",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "org/orecruncher/dsurround/client/renderer/SpeechDataRenderer": {
+    "name": "org/orecruncher/dsurround/client/renderer/SpeechDataRenderer",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/client/renderer/SpeechDataRenderer",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderWorldLast(Lnet/minecraftforge/client/event/RenderWorldLastEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/renderer/ToolTipProvider": {
+    "name": "org/orecruncher/dsurround/client/renderer/ToolTipProvider",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/client/renderer/ToolTipProvider",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tooltipEvent(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/renderer/weather/RenderWeather": {
+    "name": "org/orecruncher/dsurround/client/renderer/weather/RenderWeather",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/sound/BackgroundMute": {
+    "name": "org/orecruncher/dsurround/client/sound/BackgroundMute",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/sound/ISoundInstance": {
+    "name": "org/orecruncher/dsurround/client/sound/ISoundInstance",
+    "interfaces": [
+      "net/minecraft/client/audio/ISound"
+    ]
+  },
+  "org/orecruncher/dsurround/client/sound/MusicFader": {
+    "name": "org/orecruncher/dsurround/client/sound/MusicFader",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/client/sound/MusicFader",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/sound/SoundConfigProcessor": {
+    "name": "org/orecruncher/dsurround/client/sound/SoundConfigProcessor",
+    "interfaces": [
+      "java/lang/AutoCloseable"
+    ]
+  },
+  "org/orecruncher/dsurround/client/sound/SoundConfigProcessor$1": {
+    "name": "org/orecruncher/dsurround/client/sound/SoundConfigProcessor$1",
+    "interfaces": [
+      "java/lang/reflect/ParameterizedType"
+    ]
+  },
+  "org/orecruncher/dsurround/client/sound/SoundEffect": {
+    "name": "org/orecruncher/dsurround/client/sound/SoundEffect",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/fx/ISpecialEffect",
+      "org/orecruncher/lib/WeightTable$IEntrySource",
+      "org/orecruncher/lib/WeightTable$IItem"
+    ]
+  },
+  "org/orecruncher/dsurround/client/sound/SoundEngine": {
+    "name": "org/orecruncher/dsurround/client/sound/SoundEngine",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/client/sound/SoundEngine",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSoundSourceEvent(Lnet/minecraftforge/client/event/sound/SoundEvent$SoundSourceEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "diagnostics(Lorg/orecruncher/dsurround/event/DiagnosticEvent$Gather;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "configureSound(Lnet/minecraftforge/client/event/sound/SoundSetupEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/client/sound/SoundInstance": {
+    "name": "org/orecruncher/dsurround/client/sound/SoundInstance",
+    "interfaces": [
+      "org/orecruncher/dsurround/client/sound/ISoundInstance"
+    ]
+  },
+  "org/orecruncher/dsurround/client/sound/TrackingSoundInstance": {
+    "name": "org/orecruncher/dsurround/client/sound/TrackingSoundInstance",
+    "interfaces": [
+      "net/minecraft/client/audio/ITickableSound"
+    ]
+  },
+  "org/orecruncher/dsurround/client/weather/Weather": {
+    "name": "org/orecruncher/dsurround/client/weather/Weather",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWeatherUpdateEvent(Lorg/orecruncher/dsurround/event/WeatherUpdateEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/event/ThunderEvent": {
+    "name": "org/orecruncher/dsurround/event/ThunderEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "org/orecruncher/dsurround/event/ThunderEvent"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/event/WorldEventDetector": {
+    "name": "org/orecruncher/dsurround/event/WorldEventDetector",
+    "interfaces": [
+      "net/minecraft/world/IWorldEventListener"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/lib/scanner/ComplementsPointIterator": {
+    "name": "org/orecruncher/dsurround/lib/scanner/ComplementsPointIterator",
+    "interfaces": [
+      "org/orecruncher/dsurround/lib/scanner/IPointIterator"
+    ]
+  },
+  "org/orecruncher/dsurround/lib/scanner/CuboidPointIterator": {
+    "name": "org/orecruncher/dsurround/lib/scanner/CuboidPointIterator",
+    "interfaces": [
+      "org/orecruncher/dsurround/lib/scanner/IPointIterator"
+    ]
+  },
+  "org/orecruncher/dsurround/lib/scanner/CuboidScanner": {
+    "name": "org/orecruncher/dsurround/lib/scanner/CuboidScanner",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockUpdate(Lorg/orecruncher/dsurround/event/BlockUpdateEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/lib/scanner/Scanner": {
+    "name": "org/orecruncher/dsurround/lib/scanner/Scanner",
+    "interfaces": [
+      "net/minecraft/util/ITickable",
+      "java/util/concurrent/Callable"
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/IPositionedSoundMixin": {
+    "name": "org/orecruncher/dsurround/mixins/IPositionedSoundMixin",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/IPositionedSoundMixin",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/client/audio/PositionedSound;"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/gen/Accessor;",
+        "target": "getVolumeRaw()F",
+        "value": {
+          "value": "volume"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/gen/Accessor;",
+        "target": "getPitchRaw()F",
+        "value": {
+          "value": "pitch"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/ISoundHandlerMixin": {
+    "name": "org/orecruncher/dsurround/mixins/ISoundHandlerMixin",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/ISoundHandlerMixin",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/client/audio/SoundHandler;"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/gen/Accessor;",
+        "target": "getSoundManager()Lnet/minecraft/client/audio/SoundManager;",
+        "value": {
+          "value": "sndManager"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/gen/Accessor;",
+        "target": "getSoundRegistry()Lnet/minecraft/client/audio/SoundRegistry;",
+        "value": {
+          "value": "soundRegistry"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/ISoundManagerMixin": {
+    "name": "org/orecruncher/dsurround/mixins/ISoundManagerMixin",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/ISoundManagerMixin",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/client/audio/SoundManager;"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/gen/Accessor;",
+        "target": "getPlayingSounds()Ljava/util/Map;",
+        "value": {
+          "value": "playingSounds"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/gen/Accessor;",
+        "target": "getPlayingSoundsInv()Ljava/util/Map;",
+        "value": {
+          "value": "invPlayingSounds"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/gen/Accessor;",
+        "target": "getDelayedSounds()Ljava/util/Map;",
+        "value": {
+          "value": "delayedSounds"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/ISoundSystemMixin": {
+    "name": "org/orecruncher/dsurround/mixins/ISoundSystemMixin",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/ISoundSystemMixin",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lpaulscode/sound/SoundSystem;"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/gen/Accessor;",
+        "target": "getSoundLibrary()Lpaulscode/sound/Library;",
+        "values": {
+          "remap": {
+            "type": "BOOL",
+            "value": "false"
+          },
+          "value": {
+            "value": "soundLibrary"
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/MixinBiome": {
+    "name": "org/orecruncher/dsurround/mixins/MixinBiome",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/IDataAccessor"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/MixinBiome",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/world/biome/Biome;"
+          ]
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/MixinBlockStateBase": {
+    "name": "org/orecruncher/dsurround/mixins/MixinBlockStateBase",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/IDataAccessor"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/MixinBlockStateBase",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/block/state/BlockStateBase;"
+          ]
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/MixinEntityArrow": {
+    "name": "org/orecruncher/dsurround/mixins/MixinEntityArrow",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/MixinEntityArrow",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/entity/projectile/EntityArrow;"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/Shadow;",
+        "target": "func_70241_g()Z"
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lorg/spongepowered/asm/mixin/injection/At;",
+        "id": 7,
+        "values": {
+          "target": {
+            "value": "Lnet/minecraft/entity/projectile/EntityArrow;getIsCritical()Z"
+          },
+          "value": {
+            "value": "INVOKE"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/injection/Redirect;",
+        "target": "isCriticalCheck(Lnet/minecraft/entity/projectile/EntityArrow;)Z",
+        "values": {
+          "at": {
+            "type": "ANNOTATION",
+            "value": "7"
+          },
+          "method": {
+            "values": [
+              "onUpdate()V"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/MixinEntityRenderer": {
+    "name": "org/orecruncher/dsurround/mixins/MixinEntityRenderer",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/MixinEntityRenderer",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/client/renderer/EntityRenderer;"
+          ]
+        }
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lorg/spongepowered/asm/mixin/injection/At;",
+        "id": 8,
+        "value": {
+          "value": "HEAD"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/injection/Inject;",
+        "target": "myRainParticles(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+        "values": {
+          "at": {
+            "type": "ANNOTATION",
+            "values": [
+              "8"
+            ]
+          },
+          "cancellable": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "method": {
+            "values": [
+              "addRainParticles()V"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/MixinGuiConfig": {
+    "name": "org/orecruncher/dsurround/mixins/MixinGuiConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/MixinGuiConfig",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraftforge/fml/client/config/GuiConfig;"
+          ]
+        }
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lorg/spongepowered/asm/mixin/injection/At;",
+        "id": 9,
+        "values": {
+          "target": {
+            "value": "(Lnet/minecraftforge/fml/client/config/GuiConfig;Lnet/minecraft/client/Minecraft;)Lnet/minecraftforge/fml/client/config/GuiConfigEntries;"
+          },
+          "value": {
+            "value": "NEW"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/injection/Redirect;",
+        "target": "constructEntries(Lnet/minecraftforge/fml/client/config/GuiConfig;Lnet/minecraft/client/Minecraft;)Lnet/minecraftforge/fml/client/config/GuiConfigEntries;",
+        "values": {
+          "at": {
+            "type": "ANNOTATION",
+            "value": "9"
+          },
+          "method": {
+            "values": [
+              "*"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/MixinGuiScreenOptionsSounds": {
+    "name": "org/orecruncher/dsurround/mixins/MixinGuiScreenOptionsSounds",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/MixinGuiScreenOptionsSounds",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/client/gui/GuiScreenOptionsSounds;"
+          ]
+        }
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lorg/spongepowered/asm/mixin/injection/Constant;",
+        "id": 10,
+        "values": {
+          "intValue": {
+            "type": "INT",
+            "value": "24"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/injection/ModifyConstant;",
+        "target": "getHeight(I)I",
+        "values": {
+          "constant": {
+            "type": "ANNOTATION",
+            "values": [
+              "10"
+            ]
+          },
+          "method": {
+            "values": [
+              "initGui()V"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/MixinInventoryEffectRenderer": {
+    "name": "org/orecruncher/dsurround/mixins/MixinInventoryEffectRenderer",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/MixinInventoryEffectRenderer",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/client/renderer/InventoryEffectRenderer;"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/spongepowered/asm/mixin/Shadow;",
+        "target": "field_147045_u"
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lorg/spongepowered/asm/mixin/injection/At;",
+        "id": 11,
+        "value": {
+          "value": "HEAD"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/injection/Inject;",
+        "target": "handleUpdate(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+        "values": {
+          "at": {
+            "type": "ANNOTATION",
+            "values": [
+              "11"
+            ]
+          },
+          "cancellable": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "method": {
+            "values": [
+              "updateActivePotionEffects()V"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/MixinItem": {
+    "name": "org/orecruncher/dsurround/mixins/MixinItem",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/IDataAccessor"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/MixinItem",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/item/Item;"
+          ]
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/MixinSoundCategory": {
+    "name": "org/orecruncher/dsurround/mixins/MixinSoundCategory",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/MixinSoundCategory",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/util/SoundCategory;"
+          ]
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/MixinSoundManager": {
+    "name": "org/orecruncher/dsurround/mixins/MixinSoundManager",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "org/orecruncher/dsurround/mixins/MixinSoundManager",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/client/audio/SoundManager;"
+          ]
+        }
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lorg/spongepowered/asm/mixin/injection/At;",
+        "id": 12,
+        "value": {
+          "value": "HEAD"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/injection/Inject;",
+        "target": "getClampedVolume(Lnet/minecraft/client/audio/ISound;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+        "values": {
+          "at": {
+            "type": "ANNOTATION",
+            "values": [
+              "12"
+            ]
+          },
+          "cancellable": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "method": {
+            "values": [
+              "getClampedVolume(Lnet/minecraft/client/audio/ISound;)F"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/mixins/TransformLoader": {
+    "name": "org/orecruncher/dsurround/mixins/TransformLoader",
+    "interfaces": [
+      "net/minecraftforge/fml/relauncher/IFMLLoadingPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$MCVersion;",
+        "target": "org/orecruncher/dsurround/mixins/TransformLoader",
+        "value": {
+          "value": "1.12.2"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/network/Network": {
+    "name": "org/orecruncher/dsurround/network/Network",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/network/Network",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientConnect(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ServerConnectionFromClientEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientDisconnect(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ServerDisconnectionFromClientEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientDisconnect(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedOutEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/network/PacketEntityData": {
+    "name": "org/orecruncher/dsurround/network/PacketEntityData",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "org/orecruncher/dsurround/network/PacketEntityData$PacketHandler": {
+    "name": "org/orecruncher/dsurround/network/PacketEntityData$PacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "org/orecruncher/dsurround/network/PacketEnvironment": {
+    "name": "org/orecruncher/dsurround/network/PacketEnvironment",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "org/orecruncher/dsurround/network/PacketEnvironment$PacketHandler": {
+    "name": "org/orecruncher/dsurround/network/PacketEnvironment$PacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "org/orecruncher/dsurround/network/PacketServerData": {
+    "name": "org/orecruncher/dsurround/network/PacketServerData",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "org/orecruncher/dsurround/network/PacketServerData$PacketHandler": {
+    "name": "org/orecruncher/dsurround/network/PacketServerData$PacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "org/orecruncher/dsurround/network/PacketSpeechBubble": {
+    "name": "org/orecruncher/dsurround/network/PacketSpeechBubble",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "org/orecruncher/dsurround/network/PacketSpeechBubble$PacketHandler": {
+    "name": "org/orecruncher/dsurround/network/PacketSpeechBubble$PacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "org/orecruncher/dsurround/network/PacketThunder": {
+    "name": "org/orecruncher/dsurround/network/PacketThunder",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "org/orecruncher/dsurround/network/PacketThunder$PacketHandler": {
+    "name": "org/orecruncher/dsurround/network/PacketThunder$PacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "org/orecruncher/dsurround/network/PacketWeatherUpdate": {
+    "name": "org/orecruncher/dsurround/network/PacketWeatherUpdate",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "org/orecruncher/dsurround/network/PacketWeatherUpdate$PacketHandler": {
+    "name": "org/orecruncher/dsurround/network/PacketWeatherUpdate$PacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "org/orecruncher/dsurround/proxy/Proxy": {
+    "name": "org/orecruncher/dsurround/proxy/Proxy",
+    "interfaces": [
+      "org/orecruncher/dsurround/proxy/IProxy"
+    ]
+  },
+  "org/orecruncher/dsurround/proxy/ProxyClient": {
+    "name": "org/orecruncher/dsurround/proxy/ProxyClient",
+    "interfaces": [
+      "org/orecruncher/dsurround/proxy/IProxy",
+      "net/minecraftforge/client/resource/ISelectiveResourceReloadListener"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/RegistryManager": {
+    "name": "org/orecruncher/dsurround/registry/RegistryManager",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/registry/RegistryManager",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onReload(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/acoustics/EventSelectorAcoustics": {
+    "name": "org/orecruncher/dsurround/registry/acoustics/EventSelectorAcoustics",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/acoustics/IAcoustic"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/acoustics/NullAcoustic": {
+    "name": "org/orecruncher/dsurround/registry/acoustics/NullAcoustic",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/acoustics/IAcoustic"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/acoustics/ProbabilityWeightsAcoustic": {
+    "name": "org/orecruncher/dsurround/registry/acoustics/ProbabilityWeightsAcoustic",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/acoustics/IAcoustic"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/acoustics/RainSplashAcoustic": {
+    "name": "org/orecruncher/dsurround/registry/acoustics/RainSplashAcoustic",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/acoustics/IAcoustic"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/acoustics/SimpleAcoustic": {
+    "name": "org/orecruncher/dsurround/registry/acoustics/SimpleAcoustic",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/acoustics/IAcoustic"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/acoustics/SimultaneousAcoustic": {
+    "name": "org/orecruncher/dsurround/registry/acoustics/SimultaneousAcoustic",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/acoustics/IAcoustic"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/biome/BiomeHandler": {
+    "name": "org/orecruncher/dsurround/registry/biome/BiomeHandler",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/biome/IBiome"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/biome/BiomeInfo": {
+    "name": "org/orecruncher/dsurround/registry/biome/BiomeInfo",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/biome/FakeBiome": {
+    "name": "org/orecruncher/dsurround/registry/biome/FakeBiome",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/biome/IBiome"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/BiomeConfig": {
+    "name": "org/orecruncher/dsurround/registry/config/BiomeConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "biomeName",
+        "value": {
+          "value": "biomeName"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "conditions",
+        "value": {
+          "value": "conditions"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "comment",
+        "value": {
+          "value": "_comment"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "hasPrecipitation",
+        "value": {
+          "value": "precipitation"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "hasDust",
+        "value": {
+          "value": "dust"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "hasAurora",
+        "value": {
+          "value": "aurora"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "hasFog",
+        "value": {
+          "value": "fog"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "dustColor",
+        "value": {
+          "value": "dustColor"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "fogColor",
+        "value": {
+          "value": "fogColor"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "fogDensity",
+        "value": {
+          "value": "fogDensity"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "soundReset",
+        "value": {
+          "value": "soundReset"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "spotSoundChance",
+        "value": {
+          "value": "spotSoundChance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "sounds",
+        "value": {
+          "value": "sounds"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/BlockConfig": {
+    "name": "org/orecruncher/dsurround/registry/config/BlockConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "blocks",
+        "value": {
+          "value": "blocks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "soundReset",
+        "value": {
+          "value": "soundReset"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "effectReset",
+        "value": {
+          "value": "effectReset"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "chance",
+        "value": {
+          "value": "chance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "sounds",
+        "value": {
+          "value": "sounds"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "effects",
+        "value": {
+          "value": "effects"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/ConfigData": {
+    "name": "org/orecruncher/dsurround/registry/config/ConfigData",
+    "interfaces": [
+      "java/lang/Iterable"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/ConfigData$1": {
+    "name": "org/orecruncher/dsurround/registry/config/ConfigData$1",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/DimensionConfig": {
+    "name": "org/orecruncher/dsurround/registry/config/DimensionConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "dimensionId",
+        "value": {
+          "value": "dimId"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "name",
+        "value": {
+          "value": "name"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "seaLevel",
+        "value": {
+          "value": "seaLevel"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "skyHeight",
+        "value": {
+          "value": "skyHeight"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "cloudHeight",
+        "value": {
+          "value": "cloudHeight"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "hasHaze",
+        "value": {
+          "value": "haze"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "hasAurora",
+        "value": {
+          "value": "aurora"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "hasWeather",
+        "value": {
+          "value": "weather"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "hasFog",
+        "value": {
+          "value": "fog"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "alwaysOutside",
+        "value": {
+          "value": "alwaysOutside"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/EffectConfig": {
+    "name": "org/orecruncher/dsurround/registry/config/EffectConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "effect",
+        "value": {
+          "value": "effect"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "conditions",
+        "value": {
+          "value": "conditions"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "chance",
+        "value": {
+          "value": "chance"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/EntityConfig": {
+    "name": "org/orecruncher/dsurround/registry/config/EntityConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "effects",
+        "value": {
+          "value": "effects"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "variator",
+        "value": {
+          "value": "variator"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/MCFIterator": {
+    "name": "org/orecruncher/dsurround/registry/config/MCFIterator",
+    "interfaces": [
+      "java/util/Iterator",
+      "java/io/Closeable"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/ModConfiguration": {
+    "name": "org/orecruncher/dsurround/registry/config/ModConfiguration",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "sounds",
+        "value": {
+          "value": "soundMetadata"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "biomes",
+        "value": {
+          "value": "biomes"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "biomeAlias",
+        "value": {
+          "value": "biomeAlias"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "blocks",
+        "value": {
+          "value": "blocks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "dimensions",
+        "value": {
+          "value": "dimensions"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "footsteps",
+        "value": {
+          "value": "footsteps"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "footprints",
+        "value": {
+          "value": "footprints"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "forgeMappings",
+        "value": {
+          "value": "forgeMappings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "items",
+        "value": {
+          "value": "items"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "variators",
+        "value": {
+          "value": "variators"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "entities",
+        "value": {
+          "value": "entities"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "acoustics",
+        "value": {
+          "value": "acoustics"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "primitiveAcoustics",
+        "value": {
+          "value": "primitiveAcoustics"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/ModConfiguration$ForgeEntry": {
+    "name": "org/orecruncher/dsurround/registry/config/ModConfiguration$ForgeEntry",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "acousticProfile",
+        "value": {
+          "value": "acousticProfile"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "dictionaryEntries",
+        "value": {
+          "value": "dictionaryEntries"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/Profiles$ProfileEntry": {
+    "name": "org/orecruncher/dsurround/registry/config/Profiles$ProfileEntry",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "profileName",
+        "value": {
+          "value": "profileName"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "optionName",
+        "value": {
+          "value": "optionName"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "optionDescription",
+        "value": {
+          "value": "optionDescription"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/SoundConfig": {
+    "name": "org/orecruncher/dsurround/registry/config/SoundConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "sound",
+        "value": {
+          "value": "sound"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "title",
+        "value": {
+          "value": "title"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "conditions",
+        "value": {
+          "value": "conditions"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "soundType",
+        "value": {
+          "value": "soundType"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "soundCategory",
+        "value": {
+          "value": "category"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "volume",
+        "value": {
+          "value": "volume"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "pitch",
+        "value": {
+          "value": "pitch"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "weight",
+        "value": {
+          "value": "weight"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "variable",
+        "value": {
+          "value": "variable"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "repeatDelayRandom",
+        "value": {
+          "value": "repeatDelayRandom"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "repeatDelay",
+        "value": {
+          "value": "repeatDelay"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "spotSound",
+        "value": {
+          "value": "spot"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "step",
+        "value": {
+          "value": "step"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/SoundMetadataConfig": {
+    "name": "org/orecruncher/dsurround/registry/config/SoundMetadataConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "category",
+        "value": {
+          "value": "category"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "title",
+        "value": {
+          "value": "title"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "credits",
+        "value": {
+          "value": "credits"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/VariatorConfig": {
+    "name": "org/orecruncher/dsurround/registry/config/VariatorConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "immobileDuration",
+        "value": {
+          "value": "immobileDuration"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "eventOnJump",
+        "value": {
+          "value": "eventOnJump"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "landHardDistanceMin",
+        "value": {
+          "value": "landHardDistanceMin"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "speedToJumpAsMultifoot",
+        "value": {
+          "value": "speedToJumpAsMultifoot"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "speedToRun",
+        "value": {
+          "value": "speedToRun"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "stride",
+        "value": {
+          "value": "stride"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "strideStair",
+        "value": {
+          "value": "strideStair"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "strideLadder",
+        "value": {
+          "value": "strideLadder"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "quadrupedMultiplier",
+        "value": {
+          "value": "quadrupedMultiplier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "playWander",
+        "value": {
+          "value": "playWander"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "quadruped",
+        "value": {
+          "value": "quadruped"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "playJump",
+        "value": {
+          "value": "playJump"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "distanceToCenter",
+        "value": {
+          "value": "distanceToCenter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "hasFootprint",
+        "value": {
+          "value": "hasFootprint"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "footprintStyle",
+        "value": {
+          "value": "footprintStyle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "footprintScale",
+        "value": {
+          "value": "footprintScale"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "volumeScale",
+        "value": {
+          "value": "volumeScale"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/packs/Manifest": {
+    "name": "org/orecruncher/dsurround/registry/config/packs/Manifest",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "version",
+        "value": {
+          "value": "version"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "name",
+        "value": {
+          "value": "name"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "author",
+        "value": {
+          "value": "author"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "website",
+        "value": {
+          "value": "website"
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/packs/ResourcePacks$Pack": {
+    "name": "org/orecruncher/dsurround/registry/config/packs/ResourcePacks$Pack",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/config/packs/IMyResourcePack"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/config/packs/ResourcePacks$ResourcePack": {
+    "name": "org/orecruncher/dsurround/registry/config/packs/ResourcePacks$ResourcePack",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/config/packs/IMyResourcePack"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/item/SimpleArmorItemData": {
+    "name": "org/orecruncher/dsurround/registry/item/SimpleArmorItemData",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/item/IArmorItemData"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/registry/item/SimpleArmorItemData",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registryReload(Lorg/orecruncher/dsurround/registry/RegistryDataEvent$Reload;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/item/SimpleItemData": {
+    "name": "org/orecruncher/dsurround/registry/item/SimpleItemData",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/item/IItemData"
+    ]
+  },
+  "org/orecruncher/dsurround/registry/item/compat/ConstructArmoryProducer": {
+    "name": "org/orecruncher/dsurround/registry/item/compat/ConstructArmoryProducer",
+    "interfaces": [
+      "org/orecruncher/dsurround/registry/item/compat/IItemDataProducer"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dsurround/registry/item/compat/ConstructArmoryProducer",
+        "values": {
+          "modid": {
+            "value": "dsurround"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registryReload(Lorg/orecruncher/dsurround/registry/RegistryDataEvent$Reload;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/registry/sound/SoundRegistry": {
+    "name": "org/orecruncher/dsurround/registry/sound/SoundRegistry",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "soundPlay(Lnet/minecraftforge/client/event/sound/PlaySoundEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/server/services/AtmosphereService": {
+    "name": "org/orecruncher/dsurround/server/services/AtmosphereService",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tickEvent(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldUnload(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/server/services/EnvironmentService": {
+    "name": "org/orecruncher/dsurround/server/services/EnvironmentService",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tickEvent(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/server/services/ServiceManager": {
+    "name": "org/orecruncher/dsurround/server/services/ServiceManager",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tickEvent(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dsurround/server/services/SpeechBubbleService": {
+    "name": "org/orecruncher/dsurround/server/services/SpeechBubbleService",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onChatMessageEvent(Lnet/minecraftforge/event/ServerChatEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  }
+}

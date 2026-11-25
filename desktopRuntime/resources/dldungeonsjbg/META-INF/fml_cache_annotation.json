@@ -1,0 +1,270 @@
+{
+  "jaredbgreat/dldungeons/DoomlikeDungeons": {
+    "name": "jaredbgreat/dldungeons/DoomlikeDungeons",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "jaredbgreat/dldungeons/DoomlikeDungeons",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12]"
+          },
+          "modid": {
+            "value": "dldungeonsjbg"
+          },
+          "name": {
+            "value": "Doomlike Dungeons"
+          },
+          "version": {
+            "value": "1.14.12"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "dldungeonsjbg"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverLoad(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "jaredbgreat/dldungeons/GenerationHandler": {
+    "name": "jaredbgreat/dldungeons/GenerationHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "jaredbgreat/dldungeons/api/DLDEvent$AddChestBlocksToRoom": {
+    "name": "jaredbgreat/dldungeons/api/DLDEvent$AddChestBlocksToRoom",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "jaredbgreat/dldungeons/api/DLDEvent$AddChestBlocksToRoom"
+      }
+    ]
+  },
+  "jaredbgreat/dldungeons/api/DLDEvent$AddEntrance": {
+    "name": "jaredbgreat/dldungeons/api/DLDEvent$AddEntrance",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "jaredbgreat/dldungeons/api/DLDEvent$AddEntrance"
+      }
+    ]
+  },
+  "jaredbgreat/dldungeons/api/DLDEvent$AddTileEntitiesToRoom": {
+    "name": "jaredbgreat/dldungeons/api/DLDEvent$AddTileEntitiesToRoom",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "jaredbgreat/dldungeons/api/DLDEvent$AddTileEntitiesToRoom"
+      }
+    ]
+  },
+  "jaredbgreat/dldungeons/api/DLDEvent$BeforePlaceSpawner": {
+    "name": "jaredbgreat/dldungeons/api/DLDEvent$BeforePlaceSpawner",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "jaredbgreat/dldungeons/api/DLDEvent$BeforePlaceSpawner"
+      }
+    ]
+  },
+  "jaredbgreat/dldungeons/api/DLDEvent$Place": {
+    "name": "jaredbgreat/dldungeons/api/DLDEvent$Place",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "jaredbgreat/dldungeons/api/DLDEvent$Place"
+      }
+    ]
+  },
+  "jaredbgreat/dldungeons/api/DLDEvent$PlaceBlock": {
+    "name": "jaredbgreat/dldungeons/api/DLDEvent$PlaceBlock",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "jaredbgreat/dldungeons/api/DLDEvent$PlaceBlock"
+      }
+    ]
+  },
+  "jaredbgreat/dldungeons/api/DLDEvent$PlaceDBlock": {
+    "name": "jaredbgreat/dldungeons/api/DLDEvent$PlaceDBlock",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "jaredbgreat/dldungeons/api/DLDEvent$PlaceDBlock"
+      }
+    ]
+  },
+  "jaredbgreat/dldungeons/api/DLDEvent$PlaceDungeon": {
+    "name": "jaredbgreat/dldungeons/api/DLDEvent$PlaceDungeon",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "jaredbgreat/dldungeons/api/DLDEvent$PlaceDungeon"
+      }
+    ]
+  },
+  "jaredbgreat/dldungeons/api/DLDEvent$PlaceDungeonBegin": {
+    "name": "jaredbgreat/dldungeons/api/DLDEvent$PlaceDungeonBegin",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "jaredbgreat/dldungeons/api/DLDEvent$PlaceDungeonBegin"
+      }
+    ]
+  },
+  "jaredbgreat/dldungeons/api/package-info": {
+    "name": "jaredbgreat/dldungeons/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "jaredbgreat/dldungeons/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "1.1"
+          },
+          "owner": {
+            "value": "DLDungeonsJBG"
+          },
+          "provides": {
+            "value": "DLDungeonsAPI"
+          }
+        }
+      }
+    ]
+  },
+  "jaredbgreat/dldungeons/builder/AbstractBlock": {
+    "name": "jaredbgreat/dldungeons/builder/AbstractBlock",
+    "interfaces": [
+      "jaredbgreat/dldungeons/builder/IBlockPlacer"
+    ]
+  },
+  "jaredbgreat/dldungeons/builder/BlockFamily": {
+    "name": "jaredbgreat/dldungeons/builder/BlockFamily",
+    "interfaces": [
+      "jaredbgreat/dldungeons/builder/IBlockPlacer"
+    ]
+  },
+  "jaredbgreat/dldungeons/builder/BlockFamily$1": {
+    "name": "jaredbgreat/dldungeons/builder/BlockFamily$1",
+    "interfaces": [
+      "java/util/function/Consumer"
+    ]
+  },
+  "jaredbgreat/dldungeons/pieces/Doorway": {
+    "name": "jaredbgreat/dldungeons/pieces/Doorway",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "jaredbgreat/dldungeons/planner/Dungeon": {
+    "name": "jaredbgreat/dldungeons/planner/Dungeon",
+    "interfaces": [
+      "jaredbgreat/dldungeons/util/cache/IHaveCoords"
+    ]
+  },
+  "jaredbgreat/dldungeons/planner/astar/DoorChecker$CompareLists": {
+    "name": "jaredbgreat/dldungeons/planner/astar/DoorChecker$CompareLists",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "jaredbgreat/dldungeons/planner/astar/Step": {
+    "name": "jaredbgreat/dldungeons/planner/astar/Step",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "jaredbgreat/dldungeons/planner/mapping/MapMatrix": {
+    "name": "jaredbgreat/dldungeons/planner/mapping/MapMatrix",
+    "interfaces": [
+      "jaredbgreat/dldungeons/util/cache/IHaveCoords"
+    ]
+  },
+  "jaredbgreat/dldungeons/themes/Degree": {
+    "name": "jaredbgreat/dldungeons/themes/Degree",
+    "interfaces": [
+      "jaredbgreat/dldungeons/themes/Autoselectable"
+    ]
+  },
+  "jaredbgreat/dldungeons/themes/Element": {
+    "name": "jaredbgreat/dldungeons/themes/Element",
+    "interfaces": [
+      "jaredbgreat/dldungeons/themes/Autoselecting"
+    ]
+  },
+  "jaredbgreat/dldungeons/themes/SizeElement": {
+    "name": "jaredbgreat/dldungeons/themes/SizeElement",
+    "interfaces": [
+      "jaredbgreat/dldungeons/themes/Autoselecting"
+    ]
+  },
+  "jaredbgreat/dldungeons/themes/Sizes": {
+    "name": "jaredbgreat/dldungeons/themes/Sizes",
+    "interfaces": [
+      "jaredbgreat/dldungeons/themes/Autoselectable"
+    ]
+  },
+  "jaredbgreat/dldungeons/util/cache/Coords": {
+    "name": "jaredbgreat/dldungeons/util/cache/Coords",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "jaredbgreat/dldungeons/util/cache/Coords$HashCompare": {
+    "name": "jaredbgreat/dldungeons/util/cache/Coords$HashCompare",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "jaredbgreat/dldungeons/util/debug/DLDProfile": {
+    "name": "jaredbgreat/dldungeons/util/debug/DLDProfile",
+    "interfaces": [
+      "jaredbgreat/dldungeons/util/debug/IProfiler"
+    ]
+  },
+  "jaredbgreat/dldungeons/util/debug/DoNothing": {
+    "name": "jaredbgreat/dldungeons/util/debug/DoNothing",
+    "interfaces": [
+      "jaredbgreat/dldungeons/util/debug/IProfiler"
+    ]
+  }
+}

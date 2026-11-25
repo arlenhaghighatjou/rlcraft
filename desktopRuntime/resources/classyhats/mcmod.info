@@ -1,0 +1,13 @@
+[
+    {
+        "modid": "classyhats",
+        "name": "Classy Hats",
+        "description": "A mod of classy hats. Enough said.",
+        "version": "1.6.0",
+        "mcversion": "[1.12,1.13)",
+        "authorList": [ "yrsegal", "Tristaric", "InsomniaKitten" ],
+        "dependencies": [ "librarianlib" ],
+        "requiredMods": [ "librarianlib" ],
+        "useDependencyInformation": true
+    }
+]

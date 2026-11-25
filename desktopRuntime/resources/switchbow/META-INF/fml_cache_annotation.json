@@ -1,0 +1,634 @@
+{
+  "de/Whitedraco/switchbow/Initial": {
+    "name": "de/Whitedraco/switchbow/Initial",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "de/Whitedraco/switchbow/Initial",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "switchbow"
+          },
+          "version": {
+            "value": "1.6.8"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "de.Whitedraco.switchbow.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "de.Whitedraco.switchbow.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "switchbow"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "pre(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postinit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverLoad(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "de/Whitedraco/switchbow/RegisterUtil": {
+    "name": "de/Whitedraco/switchbow/RegisterUtil",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "de/Whitedraco/switchbow/RegisterUtil"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerPotion(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEnchant(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "de/Whitedraco/switchbow/command/ClientCommand": {
+    "name": "de/Whitedraco/switchbow/command/ClientCommand",
+    "interfaces": [
+      "net/minecraftforge/client/IClientCommand"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowAir": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowAir",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowBone": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowBone",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowBouncy": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowBouncy",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowBurial": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowBurial",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowCatcher": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowCatcher",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowChorus": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowChorus",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowDiamond": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowDiamond",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowDragonBreath": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowDragonBreath",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowEnderperle": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowEnderperle",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowFire": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowFire",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowFirework": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowFirework",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowFrost": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowFrost",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowKnockback": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowKnockback",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowLightningBolt": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowLightningBolt",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowLove": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowLove",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowLuck": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowLuck",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowPiercing": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowPiercing",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowProtector": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowProtector",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowRedstone": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowRedstone",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowSplit": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowSplit",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowSplitLove": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowSplitLove",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowSprinkler": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowSprinkler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowTNT": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowTNT",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowTorch": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowTorch",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowTriple": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowTriple",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowUnderwater": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowUnderwater",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowVampier": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowVampier",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowWither": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowWither",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/EntityArrowoftheSearcher": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/EntityArrowoftheSearcher",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowAirUpgrade": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowAirUpgrade",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowBoneAOE": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowBoneAOE",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowBurialAOE": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowBurialAOE",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowFireUpgrade": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowFireUpgrade",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowLightningBoltStorm": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowLightningBoltStorm",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowLuckUpgrade": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowLuckUpgrade",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowSplitLoveUpgrade": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowSplitLoveUpgrade",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowSplitUpgrade": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowSplitUpgrade",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowSprinklerUpgrade": {
+    "name": "de/Whitedraco/switchbow/entity/arrow/upgrade/EntityArrowSprinklerUpgrade",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  },
+  "de/Whitedraco/switchbow/entity/living/EntityLittleIronGolem$1": {
+    "name": "de/Whitedraco/switchbow/entity/living/EntityLittleIronGolem$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "de/Whitedraco/switchbow/event/ClientEventHandler": {
+    "name": "de/Whitedraco/switchbow/event/ClientEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onUpdateFOV(Lnet/minecraftforge/client/event/FOVUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "RenderSpecificHand(Lnet/minecraftforge/client/event/RenderSpecificHandEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderGameOverlay(Lnet/minecraftforge/client/event/RenderGameOverlayEvent;)V"
+      }
+    ]
+  },
+  "de/Whitedraco/switchbow/event/EventHandler": {
+    "name": "de/Whitedraco/switchbow/event/EventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "LootingLevelEvent(Lnet/minecraftforge/event/entity/living/LootingLevelEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityAttacked(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V"
+      }
+    ]
+  },
+  "de/Whitedraco/switchbow/event/Mouse_Key_Lisener": {
+    "name": "de/Whitedraco/switchbow/event/Mouse_Key_Lisener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "keylisener(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "shiftandscroll(Lnet/minecraftforge/client/event/MouseEvent;)V"
+      }
+    ]
+  },
+  "de/Whitedraco/switchbow/event/WorldtickEvent": {
+    "name": "de/Whitedraco/switchbow/event/WorldtickEvent",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      }
+    ]
+  },
+  "de/Whitedraco/switchbow/gui/GUIHandle": {
+    "name": "de/Whitedraco/switchbow/gui/GUIHandle",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/gui/InventoryItems": {
+    "name": "de/Whitedraco/switchbow/gui/InventoryItems",
+    "interfaces": [
+      "net/minecraft/inventory/IInventory"
+    ]
+  },
+  "de/Whitedraco/switchbow/gui/InventoryItemsMagicQuiver": {
+    "name": "de/Whitedraco/switchbow/gui/InventoryItemsMagicQuiver",
+    "interfaces": [
+      "net/minecraft/inventory/IInventory"
+    ]
+  },
+  "de/Whitedraco/switchbow/item/ItemSwitchBow$1": {
+    "name": "de/Whitedraco/switchbow/item/ItemSwitchBow$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "de/Whitedraco/switchbow/item/ItemSwitchCrossbow$1": {
+    "name": "de/Whitedraco/switchbow/item/ItemSwitchCrossbow$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "de/Whitedraco/switchbow/particle/FireFX$Factory": {
+    "name": "de/Whitedraco/switchbow/particle/FireFX$Factory",
+    "interfaces": [
+      "net/minecraft/client/particle/IParticleFactory"
+    ]
+  },
+  "de/Whitedraco/switchbow/particle/TransformationFX$Podest": {
+    "name": "de/Whitedraco/switchbow/particle/TransformationFX$Podest",
+    "interfaces": [
+      "net/minecraft/client/particle/IParticleFactory"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/SwitchBowHandler": {
+    "name": "de/Whitedraco/switchbow/proxy/SwitchBowHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/SwitchBowHandler$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/SwitchBowHandler$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/CommandPacket": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/CommandPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/CommandPacket$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/CommandPacket$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/ParticleFreezePacket": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/ParticleFreezePacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/ParticleFreezePacket$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/ParticleFreezePacket$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/ParticleHeartPacket": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/ParticleHeartPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/ParticleHeartPacket$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/ParticleHeartPacket$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/ParticleLightningPacket": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/ParticleLightningPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/ParticleLightningPacket$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/ParticleLightningPacket$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/ParticleLovePacket": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/ParticleLovePacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/ParticleLovePacket$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/ParticleLovePacket$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/ParticleSplittingPacket": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/ParticleSplittingPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/ParticleSplittingPacket$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/ParticleSplittingPacket$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/PatricleExplosionPacket": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/PatricleExplosionPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/PatricleExplosionPacket$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/PatricleExplosionPacket$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/PatricleWaterDropPacket": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/PatricleWaterDropPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/PatricleWaterDropPacket$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/PatricleWaterDropPacket$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/TEArrowDispenserCountPacket": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/TEArrowDispenserCountPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/TEArrowDispenserCountPacket$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/TEArrowDispenserCountPacket$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/TEArrowDispenserRangePacket": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/TEArrowDispenserRangePacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/TEArrowDispenserRangePacket$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/TEArrowDispenserRangePacket$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/TEArrowDispenserShootAnglePacket": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/TEArrowDispenserShootAnglePacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/TEArrowDispenserShootAnglePacket$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/TEArrowDispenserShootAnglePacket$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/TEPodestParticlePacket": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/TEPodestParticlePacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/TEPodestParticlePacket$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/TEPodestParticlePacket$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/TEPodestUpdatePacket": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/TEPodestUpdatePacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/Whitedraco/switchbow/proxy/packets/TEPodestUpdatePacket$Handler": {
+    "name": "de/Whitedraco/switchbow/proxy/packets/TEPodestUpdatePacket$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/Whitedraco/switchbow/recipe/RecipeArrowFirework": {
+    "name": "de/Whitedraco/switchbow/recipe/RecipeArrowFirework",
+    "interfaces": [
+      "net/minecraft/item/crafting/IRecipe"
+    ]
+  },
+  "de/Whitedraco/switchbow/recipe/RecipeMagicQuiver": {
+    "name": "de/Whitedraco/switchbow/recipe/RecipeMagicQuiver",
+    "interfaces": [
+      "net/minecraft/item/crafting/IRecipe"
+    ]
+  },
+  "de/Whitedraco/switchbow/tileentity/TileEntityArrowDispenser": {
+    "name": "de/Whitedraco/switchbow/tileentity/TileEntityArrowDispenser",
+    "interfaces": [
+      "net/minecraft/inventory/IInventory"
+    ]
+  },
+  "de/Whitedraco/switchbow/tileentity/TileEntityPodest": {
+    "name": "de/Whitedraco/switchbow/tileentity/TileEntityPodest",
+    "interfaces": [
+      "net/minecraft/inventory/IInventory",
+      "net/minecraft/util/ITickable"
+    ]
+  }
+}

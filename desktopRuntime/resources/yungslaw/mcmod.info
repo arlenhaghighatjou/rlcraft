@@ -1,0 +1,11 @@
+[{
+  "modid": "yungslaw",
+  "name": "YUNG's Law",
+  "description": "Thou shalt not strip mine.",
+  "version": "1.12.2-1.0.4",
+  "mcversion": "1.12.2",
+  "url": "https://www.curseforge.com/minecraft/mc-mods/yungs-law",
+  "authorList": ["YUNGNICKYOUNG"],
+  "credits": "Much love to Lughbaloo for funding this mod!",
+  "logoFile": "YLLogo.png"
+}]

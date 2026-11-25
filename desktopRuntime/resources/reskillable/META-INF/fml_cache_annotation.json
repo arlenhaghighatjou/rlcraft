@@ -1,0 +1,650 @@
+{
+  "codersafterdark/reskillable/Reskillable": {
+    "name": "codersafterdark/reskillable/Reskillable",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "codersafterdark/reskillable/Reskillable",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "guiFactory": {
+            "value": "codersafterdark.reskillable.client.gui.GuiFactory"
+          },
+          "modid": {
+            "value": "reskillable"
+          },
+          "name": {
+            "value": "Reskillable"
+          },
+          "version": {
+            "value": "1.12.2-1.13.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "codersafterdark.reskillable.client.base.ClientProxy"
+          },
+          "serverSide": {
+            "value": "codersafterdark.reskillable.base.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/ReskillableModAccess": {
+    "name": "codersafterdark/reskillable/ReskillableModAccess",
+    "interfaces": [
+      "codersafterdark/reskillable/api/IModAccess"
+    ]
+  },
+  "codersafterdark/reskillable/ReskillableRegistryHandler": {
+    "name": "codersafterdark/reskillable/ReskillableRegistryHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "codersafterdark/reskillable/ReskillableRegistryHandler",
+        "values": {
+          "modid": {
+            "value": "reskillable"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "buildRegistry(Lnet/minecraftforge/event/RegistryEvent$NewRegistry;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerSkills(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerTraits(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "skillAdvancementHandling(Lcodersafterdark/reskillable/api/event/LevelUpEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "unlockableAdvancementHandling(Lcodersafterdark/reskillable/api/event/UnlockUnlockableEvent$Post;)V"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/advancement/CriterionTrigger": {
+    "name": "codersafterdark/reskillable/advancement/CriterionTrigger",
+    "interfaces": [
+      "net/minecraft/advancements/ICriterionTrigger"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "codersafterdark/reskillable/advancement/CriterionTrigger"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/advancement/skilllevel/SkillLevelTrigger": {
+    "name": "codersafterdark/reskillable/advancement/skilllevel/SkillLevelTrigger",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "codersafterdark/reskillable/advancement/skilllevel/SkillLevelTrigger"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/advancement/trait/UnlockUnlockableTrigger": {
+    "name": "codersafterdark/reskillable/advancement/trait/UnlockUnlockableTrigger",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "codersafterdark/reskillable/advancement/trait/UnlockUnlockableTrigger"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/api/data/FuzzyLockKey": {
+    "name": "codersafterdark/reskillable/api/data/FuzzyLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/reskillable/api/data/GenericLockKey": {
+    "name": "codersafterdark/reskillable/api/data/GenericLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/reskillable/api/data/NBTLockKey": {
+    "name": "codersafterdark/reskillable/api/data/NBTLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/FuzzyLockKey"
+    ]
+  },
+  "codersafterdark/reskillable/api/data/ParentLockKey": {
+    "name": "codersafterdark/reskillable/api/data/ParentLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/reskillable/api/data/PlayerDataHandler$EventHandler": {
+    "name": "codersafterdark/reskillable/api/data/PlayerDataHandler$EventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockDrops(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGetBreakSpeed(Lnet/minecraftforge/event/entity/player/PlayerEvent$BreakSpeed;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMobDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHurt(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClickBlock(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEnderTeleport(Lnet/minecraftforge/event/entity/living/EnderTeleportEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMobDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/api/event/LevelUpEvent$Pre": {
+    "name": "codersafterdark/reskillable/api/event/LevelUpEvent$Pre",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "codersafterdark/reskillable/api/event/LevelUpEvent$Pre"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/api/event/LockUnlockableEvent$Pre": {
+    "name": "codersafterdark/reskillable/api/event/LockUnlockableEvent$Pre",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "codersafterdark/reskillable/api/event/LockUnlockableEvent$Pre"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/api/event/UnlockUnlockableEvent$Pre": {
+    "name": "codersafterdark/reskillable/api/event/UnlockUnlockableEvent$Pre",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "codersafterdark/reskillable/api/event/UnlockUnlockableEvent$Pre"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/api/requirement/RequirementCache": {
+    "name": "codersafterdark/reskillable/api/requirement/RequirementCache",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLevelChange(Lcodersafterdark/reskillable/api/event/LevelUpEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onUnlockableLocked(Lcodersafterdark/reskillable/api/event/LockUnlockableEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onUnlockableUnlocked(Lcodersafterdark/reskillable/api/event/UnlockUnlockableEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAdvancement(Lnet/minecraftforge/event/entity/player/AdvancementEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDisconnect(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedOutEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/api/requirement/logic/DoubleRequirement": {
+    "name": "codersafterdark/reskillable/api/requirement/logic/DoubleRequirement",
+    "interfaces": [
+      "codersafterdark/reskillable/api/requirement/logic/OuterRequirement"
+    ]
+  },
+  "codersafterdark/reskillable/api/requirement/logic/impl/NOTRequirement": {
+    "name": "codersafterdark/reskillable/api/requirement/logic/impl/NOTRequirement",
+    "interfaces": [
+      "codersafterdark/reskillable/api/requirement/logic/OuterRequirement"
+    ]
+  },
+  "codersafterdark/reskillable/api/skill/Skill": {
+    "name": "codersafterdark/reskillable/api/skill/Skill",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "codersafterdark/reskillable/api/toast/AbstractToast": {
+    "name": "codersafterdark/reskillable/api/toast/AbstractToast",
+    "interfaces": [
+      "net/minecraft/client/gui/toasts/IToast"
+    ]
+  },
+  "codersafterdark/reskillable/api/unlockable/AutoUnlocker": {
+    "name": "codersafterdark/reskillable/api/unlockable/AutoUnlocker",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCacheInvalidated(Lcodersafterdark/reskillable/api/event/CacheInvalidatedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityLiving(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/api/unlockable/Trait": {
+    "name": "codersafterdark/reskillable/api/unlockable/Trait",
+    "interfaces": [
+      "codersafterdark/reskillable/api/unlockable/IAbilityEventHandler"
+    ]
+  },
+  "codersafterdark/reskillable/api/unlockable/Unlockable": {
+    "name": "codersafterdark/reskillable/api/unlockable/Unlockable",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "codersafterdark/reskillable/base/ConfigHandler$ChangeListener": {
+    "name": "codersafterdark/reskillable/base/ConfigHandler$ChangeListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/base/LevelLockHandler": {
+    "name": "codersafterdark/reskillable/base/LevelLockHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "hurtEvent(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "leftClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$LeftClickBlock;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "rightClickItem(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickItem;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "rightClickBlock(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockBreak(Lnet/minecraftforge/event/world/BlockEvent$BreakEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onArmorEquip(Lnet/minecraftforge/event/entity/living/LivingEquipmentChangeEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/reskillable/base/ToolTipHandler": {
+    "name": "codersafterdark/reskillable/base/ToolTipHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiOpen(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "connect(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "disconnect(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientDisconnectionFromServerEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCacheInvalidated(Lcodersafterdark/reskillable/api/event/CacheInvalidatedEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/reskillable/base/asm/ClassTransformer": {
+    "name": "codersafterdark/reskillable/base/asm/ClassTransformer",
+    "interfaces": [
+      "net/minecraft/launchwrapper/IClassTransformer"
+    ]
+  },
+  "codersafterdark/reskillable/base/asm/LoadingPlugin": {
+    "name": "codersafterdark/reskillable/base/asm/LoadingPlugin",
+    "interfaces": [
+      "net/minecraftforge/fml/relauncher/IFMLLoadingPlugin"
+    ]
+  },
+  "codersafterdark/reskillable/client/base/ClientProxy": {
+    "name": "codersafterdark/reskillable/client/base/ClientProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "connect(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/client/base/ClientTickHandler": {
+    "name": "codersafterdark/reskillable/client/base/ClientTickHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTickEnd(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/client/base/HUDHandler": {
+    "name": "codersafterdark/reskillable/client/base/HUDHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderHUD(Lnet/minecraftforge/client/event/RenderGameOverlayEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/client/gui/GuiFactory": {
+    "name": "codersafterdark/reskillable/client/gui/GuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "codersafterdark/reskillable/client/gui/button/GuiBestButton": {
+    "name": "codersafterdark/reskillable/client/gui/button/GuiBestButton",
+    "interfaces": [
+      "codersafterdark/reskillable/client/gui/button/IToolTipProvider"
+    ]
+  },
+  "codersafterdark/reskillable/client/gui/handler/InventoryTabHandler": {
+    "name": "codersafterdark/reskillable/client/gui/handler/InventoryTabHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "initGui(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "performAction(Lnet/minecraftforge/client/event/GuiScreenEvent$ActionPerformedEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "finishRenderTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPotionShiftEvent(Lnet/minecraftforge/client/event/GuiScreenEvent$PotionShiftEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/client/gui/handler/KeyBindings": {
+    "name": "codersafterdark/reskillable/client/gui/handler/KeyBindings",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyInput(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/loot/LootConditionRequirement": {
+    "name": "codersafterdark/reskillable/loot/LootConditionRequirement",
+    "interfaces": [
+      "net/minecraft/world/storage/loot/conditions/LootCondition"
+    ]
+  },
+  "codersafterdark/reskillable/network/InvalidateRequirementPacket": {
+    "name": "codersafterdark/reskillable/network/InvalidateRequirementPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "codersafterdark/reskillable/network/MessageDataSync": {
+    "name": "codersafterdark/reskillable/network/MessageDataSync",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "codersafterdark/reskillable/network/MessageDodge": {
+    "name": "codersafterdark/reskillable/network/MessageDodge",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "codersafterdark/reskillable/network/MessageLevelUp": {
+    "name": "codersafterdark/reskillable/network/MessageLevelUp",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "codersafterdark/reskillable/network/MessageLockedItem": {
+    "name": "codersafterdark/reskillable/network/MessageLockedItem",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "codersafterdark/reskillable/network/MessageUnlockUnlockable": {
+    "name": "codersafterdark/reskillable/network/MessageUnlockUnlockable",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "codersafterdark/reskillable/network/SkillToastPacket": {
+    "name": "codersafterdark/reskillable/network/SkillToastPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "codersafterdark/reskillable/network/UnlockableToastPacket": {
+    "name": "codersafterdark/reskillable/network/UnlockableToastPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "codersafterdark/reskillable/skill/agility/TraitSidestep": {
+    "name": "codersafterdark/reskillable/skill/agility/TraitSidestep",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyDown(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderHUD(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      }
+    ]
+  },
+  "codersafterdark/reskillable/skill/attack/TraitNeutralissse": {
+    "name": "codersafterdark/reskillable/skill/attack/TraitNeutralissse",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityTick(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  }
+}

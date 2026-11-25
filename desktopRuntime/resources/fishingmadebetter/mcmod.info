@@ -1,0 +1,15 @@
+[
+{
+  "modid": "fishingmadebetter",
+  "name": "Fishing Made Better",
+  "description": "Fishing is now more better-er.",
+  "version": "2.2.6",
+  "mcversion": "1.12.2",
+  "url": "https://www.curseforge.com/members/fonnymunkey/projects",
+  "updateUrl": "",
+  "authorList": ["TheAwesomeGem", "Fonnymunkey"],
+  "credits": "",
+  "logoFile": "logo.png",
+  "dependencies": []
+}
+]

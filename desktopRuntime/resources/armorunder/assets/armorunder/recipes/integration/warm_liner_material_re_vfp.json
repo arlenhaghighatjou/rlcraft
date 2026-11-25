@@ -1,0 +1,18 @@
+{ "_comment": ["Warm lining material from llama fleece" ],
+  "conditions": [
+    { "type": "forge:mod_loaded",
+      "modid": "vanillafoodpantry" }
+  ],
+  "result": {
+    "item": "armorunder:warm_liner_material",
+    "count": 2
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "sss", " F ", "sss"
+  ],
+  "key": {
+    "s": { "item": "minecraft:string" },
+    "F": { "item": "vanillafoodpantry:llama_fleece_block", "data": 32767 }
+  }
+}

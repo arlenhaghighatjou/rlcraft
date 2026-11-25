@@ -1,0 +1,24 @@
+package codersafterdark.compatskills.common.compats.bloodmagic.ritualhandler.keys;
+
+import WayofTime.bloodmagic.ritual.Ritual;
+import codersafterdark.reskillable.api.data.LockKey;
+
+public class RitualNameLockKey implements LockKey {
+   private final String name;
+
+   public RitualNameLockKey(String name) {
+      this.name = name;
+   }
+
+   public RitualNameLockKey(Ritual ritual) {
+      this(ritual == null ? "" : ritual.getName());
+   }
+
+   public boolean equals(Object o) {
+      return o == this || o instanceof RitualNameLockKey && this.name.equals(((RitualNameLockKey)o).name);
+   }
+
+   public int hashCode() {
+      return this.name.hashCode();
+   }
+}

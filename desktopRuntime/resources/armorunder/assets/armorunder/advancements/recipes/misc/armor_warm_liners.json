@@ -1,0 +1,25 @@
+{
+  "parent": "armorunder:recipes/root",
+  "rewards": {
+    "recipes": [ 
+      "armorunder:warm_boots_liner",
+      "armorunder:warm_chestplate_liner",
+      "armorunder:warm_helmet_liner",
+      "armorunder:warm_leggings_liner"
+    ]
+  },
+  "criteria": {
+    "has_warm_liner_material": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { 
+        "items": [{
+          "item": "armorunder:warm_liner_material",
+          "count": { "min": 4 }
+        }] 
+      }
+    }
+  },
+  "requirements": [
+    [ "has_warm_liner_material" ]
+  ]
+}

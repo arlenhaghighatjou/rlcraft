@@ -1,0 +1,630 @@
+{
+  "cursedflames/bountifulbaubles/BountifulBaubles": {
+    "name": "cursedflames/bountifulbaubles/BountifulBaubles",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "cursedflames/bountifulbaubles/BountifulBaubles",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "bountifulbaubles"
+          },
+          "name": {
+            "value": "Bountiful Baubles"
+          },
+          "useMetadata": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "version": {
+            "value": "0.0.1"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "cursedflames/bountifulbaubles/BountifulBaubles"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "cursedflames.bountifulbaubles.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "cursedflames.bountifulbaubles.proxy.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStart(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/baubleeffect/BaubleAttributeModifierHandler": {
+    "name": "cursedflames/bountifulbaubles/baubleeffect/BaubleAttributeModifierHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerCraft(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$ItemCraftedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/block/GenericTileBlock": {
+    "name": "cursedflames/bountifulbaubles/block/GenericTileBlock",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "cursedflames/bountifulbaubles/capability/CapabilityWormholePins": {
+    "name": "cursedflames/bountifulbaubles/capability/CapabilityWormholePins",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "PIN_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcursedflames/bountifulbaubles/capability/CapabilityWormholePins$IWormholePins;"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityConstruct(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/capability/CapabilityWormholePins$1": {
+    "name": "cursedflames/bountifulbaubles/capability/CapabilityWormholePins$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "cursedflames/bountifulbaubles/capability/CapabilityWormholePins$DefaultImpl": {
+    "name": "cursedflames/bountifulbaubles/capability/CapabilityWormholePins$DefaultImpl",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/capability/CapabilityWormholePins$IWormholePins"
+    ]
+  },
+  "cursedflames/bountifulbaubles/capability/CapabilityWormholePins$Storage": {
+    "name": "cursedflames/bountifulbaubles/capability/CapabilityWormholePins$Storage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "cursedflames/bountifulbaubles/client/layer/BountfulRenderLayer": {
+    "name": "cursedflames/bountifulbaubles/client/layer/BountfulRenderLayer",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "cursedflames/bountifulbaubles/entity/EntityFlare": {
+    "name": "cursedflames/bountifulbaubles/entity/EntityFlare",
+    "interfaces": [
+      "elucent/albedo/lighting/ILightProvider"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "cursedflames/bountifulbaubles/entity/EntityFlare",
+        "values": {
+          "iface": {
+            "value": "elucent.albedo.lighting.ILightProvider"
+          },
+          "modid": {
+            "value": "albedo"
+          }
+        }
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/entity/EntityTerrariaThrowable": {
+    "name": "cursedflames/bountifulbaubles/entity/EntityTerrariaThrowable",
+    "interfaces": [
+      "net/minecraft/entity/IProjectile"
+    ]
+  },
+  "cursedflames/bountifulbaubles/entity/ThrowableAdvancedRenderFactory": {
+    "name": "cursedflames/bountifulbaubles/entity/ThrowableAdvancedRenderFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "cursedflames/bountifulbaubles/entity/ThrowableDefaultRenderFactory": {
+    "name": "cursedflames/bountifulbaubles/entity/ThrowableDefaultRenderFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "cursedflames/bountifulbaubles/event/EventHandler": {
+    "name": "cursedflames/bountifulbaubles/event/EventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onJump(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingJumpEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDamage(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDamage(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "potionApply(Lnet/minecraftforge/event/entity/living/PotionEvent$PotionApplicableEvent;)V"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/integration/JeiIntegration": {
+    "name": "cursedflames/bountifulbaubles/integration/JeiIntegration",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "cursedflames/bountifulbaubles/integration/JeiIntegration"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemAmuletCross": {
+    "name": "cursedflames/bountifulbaubles/item/ItemAmuletCross",
+    "interfaces": [
+      "baubles/api/render/IRenderBauble",
+      "vazkii/botania/api/item/IPhantomInkable"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemAmuletSin": {
+    "name": "cursedflames/bountifulbaubles/item/ItemAmuletSin",
+    "interfaces": [
+      "baubles/api/render/IRenderBauble",
+      "vazkii/botania/api/item/IPhantomInkable"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemAmuletSinGluttony": {
+    "name": "cursedflames/bountifulbaubles/item/ItemAmuletSinGluttony",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemUse(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Tick;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemUse(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Start;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemUse(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Finish;)V"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemAmuletSinWrath": {
+    "name": "cursedflames/bountifulbaubles/item/ItemAmuletSinWrath",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/item/base/IItemAttributeModifier"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCrit(Lnet/minecraftforge/event/entity/player/CriticalHitEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemCharmHermesWings": {
+    "name": "cursedflames/bountifulbaubles/item/ItemCharmHermesWings",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/item/base/IItemAttributeModifier"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemMagicMirror": {
+    "name": "cursedflames/bountifulbaubles/item/ItemMagicMirror",
+    "interfaces": [
+      "vazkii/quark/api/ICustomEnchantColor"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemMagicMirror$1": {
+    "name": "cursedflames/bountifulbaubles/item/ItemMagicMirror$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemModifierBook": {
+    "name": "cursedflames/bountifulbaubles/item/ItemModifierBook",
+    "interfaces": [
+      "vazkii/quark/api/ICustomEnchantColor"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemPhantomPrism": {
+    "name": "cursedflames/bountifulbaubles/item/ItemPhantomPrism",
+    "interfaces": [
+      "vazkii/quark/api/ICustomEnchantColor"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemRingFlywheel": {
+    "name": "cursedflames/bountifulbaubles/item/ItemRingFlywheel",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "ENERGY_STORAGE_CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Lnet/minecraftforge/energy/IEnergyStorage;"
+        }
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemRingFlywheel$1": {
+    "name": "cursedflames/bountifulbaubles/item/ItemRingFlywheel$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemRingFlywheel$Provider": {
+    "name": "cursedflames/bountifulbaubles/item/ItemRingFlywheel$Provider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemRingOverclocking": {
+    "name": "cursedflames/bountifulbaubles/item/ItemRingOverclocking",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/item/base/IItemAttributeModifier",
+      "cursedflames/bountifulbaubles/baubleeffect/PotionNegation$IPotionNegateItem"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemShieldAnkh": {
+    "name": "cursedflames/bountifulbaubles/item/ItemShieldAnkh",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/event/IItemHeldListener",
+      "cursedflames/bountifulbaubles/baubleeffect/PotionNegation$IPotionNegateItem"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemShieldCobalt": {
+    "name": "cursedflames/bountifulbaubles/item/ItemShieldCobalt",
+    "interfaces": [
+      "baubles/api/IBauble",
+      "baubles/api/render/IRenderBauble",
+      "cursedflames/bountifulbaubles/item/base/IItemAttributeModifier",
+      "cursedflames/bountifulbaubles/client/layer/IRenderObject"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingAttack(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/entity/player/AnvilRepairEvent;)V"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemShieldObsidian": {
+    "name": "cursedflames/bountifulbaubles/item/ItemShieldObsidian",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/baubleeffect/IFireResistance"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemSpectralSilt": {
+    "name": "cursedflames/bountifulbaubles/item/ItemSpectralSilt",
+    "interfaces": [
+      "vazkii/quark/api/ICustomEnchantColor"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemSunglasses": {
+    "name": "cursedflames/bountifulbaubles/item/ItemSunglasses",
+    "interfaces": [
+      "baubles/api/IBauble",
+      "net/minecraftforge/common/ISpecialArmor",
+      "baubles/api/render/IRenderBauble",
+      "cursedflames/bountifulbaubles/baubleeffect/PotionNegation$IPotionNegateItem",
+      "cursedflames/bountifulbaubles/client/layer/IRenderObject"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemTrinketBalloon": {
+    "name": "cursedflames/bountifulbaubles/item/ItemTrinketBalloon",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/baubleeffect/IJumpBoost"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemTrinketBrokenHeart": {
+    "name": "cursedflames/bountifulbaubles/item/ItemTrinketBrokenHeart",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDamage(Lnet/minecraftforge/event/entity/living/LivingDamageEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerWake(Lnet/minecraftforge/event/entity/player/PlayerWakeUpEvent;)V"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemTrinketObsidianSkull": {
+    "name": "cursedflames/bountifulbaubles/item/ItemTrinketObsidianSkull",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/baubleeffect/IFireResistance"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemTrinketPotionCharm": {
+    "name": "cursedflames/bountifulbaubles/item/ItemTrinketPotionCharm",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/baubleeffect/PotionNegation$IPotionNegateItem"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ItemUmbrella": {
+    "name": "cursedflames/bountifulbaubles/item/ItemUmbrella",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "livingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/ModItems": {
+    "name": "cursedflames/bountifulbaubles/item/ModItems",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "quarkDragonScale",
+        "value": {
+          "value": "quark:enderdragon_scale"
+        }
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/armor/ItemArmorBB": {
+    "name": "cursedflames/bountifulbaubles/item/armor/ItemArmorBB",
+    "interfaces": [
+      "vazkii/botania/api/item/IPhantomInkable"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/base/AGenericItemBauble": {
+    "name": "cursedflames/bountifulbaubles/item/base/AGenericItemBauble",
+    "interfaces": [
+      "baubles/api/IBauble"
+    ]
+  },
+  "cursedflames/bountifulbaubles/item/base/GenericItemBB": {
+    "name": "cursedflames/bountifulbaubles/item/base/GenericItemBB",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/client/layer/IRenderObject"
+    ]
+  },
+  "cursedflames/bountifulbaubles/loot/ModLoot": {
+    "name": "cursedflames/bountifulbaubles/loot/ModLoot",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLootTablesLoaded(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityTick(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/network/HandlerNBTPacket": {
+    "name": "cursedflames/bountifulbaubles/network/HandlerNBTPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "cursedflames/bountifulbaubles/network/NBTPacket": {
+    "name": "cursedflames/bountifulbaubles/network/NBTPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "cursedflames/bountifulbaubles/potion/ModPotions": {
+    "name": "cursedflames/bountifulbaubles/potion/ModPotions",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerPotions(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/proxy/ClientProxy": {
+    "name": "cursedflames/bountifulbaubles/proxy/ClientProxy",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/proxy/ISideProxy"
+    ]
+  },
+  "cursedflames/bountifulbaubles/proxy/GuiProxy": {
+    "name": "cursedflames/bountifulbaubles/proxy/GuiProxy",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "cursedflames/bountifulbaubles/proxy/ServerProxy": {
+    "name": "cursedflames/bountifulbaubles/proxy/ServerProxy",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/proxy/ISideProxy"
+    ]
+  },
+  "cursedflames/bountifulbaubles/recipe/AnvilRecipes": {
+    "name": "cursedflames/bountifulbaubles/recipe/AnvilRecipes",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/recipe/ModCrafting": {
+    "name": "cursedflames/bountifulbaubles/recipe/ModCrafting",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRecipes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/util/Config": {
+    "name": "cursedflames/bountifulbaubles/util/Config",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLoggedIn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "cursedflames/bountifulbaubles/wormhole/DebugTarget": {
+    "name": "cursedflames/bountifulbaubles/wormhole/DebugTarget",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/wormhole/IWormholeTarget"
+    ]
+  },
+  "cursedflames/bountifulbaubles/wormhole/PlayerTarget": {
+    "name": "cursedflames/bountifulbaubles/wormhole/PlayerTarget",
+    "interfaces": [
+      "cursedflames/bountifulbaubles/wormhole/IWormholeTarget"
+    ]
+  },
+  "cursedflames/bountifulbaubles/wormhole/TeleporterRecall": {
+    "name": "cursedflames/bountifulbaubles/wormhole/TeleporterRecall",
+    "interfaces": [
+      "net/minecraftforge/common/util/ITeleporter"
+    ]
+  },
+  "vazkii/botania/api/package-info": {
+    "name": "vazkii/botania/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "vazkii/botania/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "89"
+          },
+          "owner": {
+            "value": "Botania"
+          },
+          "provides": {
+            "value": "BotaniaAPI"
+          }
+        }
+      }
+    ]
+  },
+  "vazkii/quark/api/package-info": {
+    "name": "vazkii/quark/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "vazkii/quark/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "2"
+          },
+          "owner": {
+            "value": "quark"
+          },
+          "provides": {
+            "value": "QuarkAPI"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+package com.ferreusveritas.dynamictrees.models.bakedmodels;
+
+import com.ferreusveritas.dynamictrees.ModBlocks;
+import com.ferreusveritas.dynamictrees.blocks.BlockBonsaiPot;
+import com.ferreusveritas.dynamictrees.blocks.SpeciesProperty;
+import com.ferreusveritas.dynamictrees.client.QuadManipulator;
+import com.ferreusveritas.dynamictrees.trees.Species;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import net.minecraft.block.BlockFlowerPot;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ItemOverrideList;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
+public class BakedModelBlockBonsaiPot implements IBakedModel {
+   protected IBakedModel basePotModel;
+   protected Map<Species, List<BakedQuad>> cachedSaplingQuads = new HashMap();
+
+   public BakedModelBlockBonsaiPot(IBakedModel basePotModel) {
+      this.basePotModel = basePotModel;
+   }
+
+   public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
+      List<BakedQuad> quads = new ArrayList();
+      if (side != null) {
+         return quads;
+      } else {
+         Species species = Species.NULLSPECIES;
+         IBlockState potState = null;
+         if (state != null && state.getBlock() instanceof BlockBonsaiPot && state instanceof IExtendedBlockState) {
+            species = (Species)((IExtendedBlockState)state).getValue(SpeciesProperty.SPECIES);
+            potState = (IBlockState)((IExtendedBlockState)state).getValue(BlockBonsaiPot.POT);
+         }
+
+         if (species != null && species != Species.NULLSPECIES && potState.getBlock() instanceof BlockFlowerPot) {
+            BlockRendererDispatcher dispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
+            IBakedModel potModel = dispatcher.getModelForState(potState);
+            IBakedModel saplingModel = BakedModelSapling.getModelForSapling(species);
+            quads.addAll(potModel.getQuads(potState, side, rand));
+            quads.addAll((Collection)this.cachedSaplingQuads.computeIfAbsent(species, (s) -> {
+               return QuadManipulator.getQuads(saplingModel, ModBlocks.blockDynamicSapling.getDefaultState(), new Vec3d(0.0D, 0.25D, 0.0D), rand);
+            }));
+            return quads;
+         } else {
+            return quads;
+         }
+      }
+   }
+
+   public boolean isAmbientOcclusion() {
+      return this.basePotModel.isAmbientOcclusion();
+   }
+
+   public boolean isGui3d() {
+      return true;
+   }
+
+   public boolean isBuiltInRenderer() {
+      return true;
+   }
+
+   public TextureAtlasSprite getParticleTexture() {
+      return this.basePotModel.getParticleTexture();
+   }
+
+   public ItemOverrideList getOverrides() {
+      return ItemOverrideList.NONE;
+   }
+}

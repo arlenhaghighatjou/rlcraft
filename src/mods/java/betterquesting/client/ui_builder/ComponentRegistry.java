@@ -1,0 +1,66 @@
+package betterquesting.client.ui_builder;
+
+import betterquesting.api2.client.gui.controls.PanelButton;
+import betterquesting.api2.client.gui.misc.IGuiRect;
+import betterquesting.api2.client.gui.panels.CanvasTextured;
+import betterquesting.api2.client.gui.panels.IGuiPanel;
+import betterquesting.api2.client.gui.themes.presets.PresetTexture;
+import betterquesting.client.themes.ThemeRegistry;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.function.BiFunction;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+
+public class ComponentRegistry {
+   public static final ComponentRegistry INSTANCE = new ComponentRegistry();
+   private final HashMap<ResourceLocation, BiFunction<IGuiRect, NBTTagCompound, IGuiPanel>> REG_MAP = new HashMap();
+   private final HashMap<ResourceLocation, NBTTagCompound> TEMPLATE_TAGS = new HashMap();
+
+   public ComponentRegistry() {
+      this.init();
+   }
+
+   public void register(@Nonnull ResourceLocation idname, @Nonnull BiFunction<IGuiRect, NBTTagCompound, IGuiPanel> factory, @Nonnull NBTTagCompound template) {
+      if (this.REG_MAP.containsKey(idname)) {
+         throw new IllegalArgumentException("Tried to register duplicate GUI component ID");
+      } else {
+         this.REG_MAP.put(idname, factory);
+         this.TEMPLATE_TAGS.put(idname, template);
+      }
+   }
+
+   @Nonnull
+   public IGuiPanel createNew(@Nonnull ResourceLocation idName, @Nonnull IGuiRect rect, @Nullable NBTTagCompound tag) {
+      BiFunction<IGuiRect, NBTTagCompound, IGuiPanel> factory = (BiFunction)this.REG_MAP.get(idName);
+      if (factory == null) {
+         return new CanvasTextured(rect, ThemeRegistry.INSTANCE.getTexture((ResourceLocation)null));
+      } else {
+         IGuiPanel pan = (IGuiPanel)factory.apply(rect, tag);
+         return pan;
+      }
+   }
+
+   @Nonnull
+   public NBTTagCompound getTemplateTag(@Nonnull ResourceLocation idName) {
+      NBTTagCompound tag = (NBTTagCompound)this.TEMPLATE_TAGS.get(idName);
+      return tag == null ? new NBTTagCompound() : tag.copy();
+   }
+
+   public List<ResourceLocation> getRegisteredIDs() {
+      return new ArrayList(this.REG_MAP.keySet());
+   }
+
+   private void init() {
+      NBTTagCompound refTag = new NBTTagCompound();
+      this.register(new ResourceLocation("betterquesting", "canvas_textured"), (rect, tag) -> {
+         return new CanvasTextured(rect, PresetTexture.PANEL_MAIN.getTexture());
+      }, refTag);
+      this.register(new ResourceLocation("betterquesting", "panel_button"), (rect, tag) -> {
+         return new PanelButton(rect, -1, "New Button");
+      }, refTag);
+   }
+}

@@ -1,0 +1,21 @@
+{ "_comment": ["Warm lining material the TAN way" ],
+  "conditions": [
+    { "type": "forge:not",
+      "value": { "type": "armorunder:compat_mode" }
+    },{
+      "type": "forge:mod_loaded",
+      "modid": "toughasnails"
+    }
+  ],
+  "result": {
+    "item": "armorunder:warm_liner_material"
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "sss", " W ", "sss"
+  ],
+  "key": {
+    "s": { "item": "minecraft:string" },
+    "W": { "item": "minecraft:wool", "data": 32767 }
+  }
+}

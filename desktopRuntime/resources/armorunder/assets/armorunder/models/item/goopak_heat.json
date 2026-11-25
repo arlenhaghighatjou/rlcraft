@@ -1,0 +1,7 @@
+{ "parent": "item/generated",
+  "textures": { "layer0": "armorunder:items/goopak_warm" },
+  "overrides": [{
+    "predicate": { "temperature": 1.0 }, 
+    "model": "armorunder:item/goopak_heat_activated"
+  }]
+}

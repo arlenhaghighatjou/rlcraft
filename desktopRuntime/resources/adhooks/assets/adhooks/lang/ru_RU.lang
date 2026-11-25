@@ -1,0 +1,26 @@
+item.spear_hook.name=Крюк-копье
+item.pudge_hook.name=Крюк мясника
+item.web_hook.name=Крюк-паутина
+
+item.prototype_launcher.name=Модель стартера
+item.spear_launcher.name=Стартер крюка-копья
+item.pudge_launcher.name=Стартер крюка мясника
+item.web_launcher.name=Стартер крюка-паутины
+
+entity.adhooks.hookshot.name=Крюк
+
+key.unhook=Отцепиться
+
+tooltip.launcher.hook_strength=Сила крюка
+tooltip.launcher.rope_elasticity=Упругость троса
+tooltip.launcher.rope_max_length=Максимальная длина троса
+tooltip.launcher.reeling_speed=Скорость наматывания
+tooltip.launcher.boostup_strength=Сила прыжка в воздухе
+tooltip.launcher.launch=%1$sЗапустить: %2$s
+tooltip.launcher.reel_unhook=%1$sНамотать / Отцепиться: нажмите %2$s or %3$s
+tooltip.launcher.pull=%1$sНатянуть трос: %2$s (удерживать)
+tooltip.launcher.loosen=%1$sРастянуть трос: %2$s (удерживать)
+tooltip.launcher.boost_up=%1$sПрыжок: нажмите %2$s или %3$s во время натягивания крюка
+tooltip.launcher.release=%1$sЧтобы позволить другому игроку применять на вас крюк, нажмите %2$s, удерживая %3$s
+tooltip.launcher.more_info=Удерживайте %1$s, чтобы увидеть дополнительную информацию
+tooltip.launcher.controls=Удерживайте %1$s, чтобы посмотреть управление

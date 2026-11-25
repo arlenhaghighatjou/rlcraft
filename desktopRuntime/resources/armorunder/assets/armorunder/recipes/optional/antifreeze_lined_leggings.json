@@ -1,0 +1,15 @@
+{ "_comment": ["Leggings with anti-freezing liner" ],
+  "conditions": [{
+     "type": "armorunder:is_allowed",
+     "value": "special_sets"
+  }],
+  "result": {
+    "item": "minecraft:diamond_leggings",
+    "nbt": {"carrots:ArmorXLining":"ANTIFREEZE_SHIELD"}
+  },
+  "type": "armorunder:barrier_shielded_armor_shapeless",
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemLeggings" },
+    { "item": "armorunder:antifreeze_leggings_liner" }
+  ]
+}

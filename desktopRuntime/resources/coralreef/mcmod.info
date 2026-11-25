@@ -1,0 +1,17 @@
+[
+  {
+    "modid": "coralreef",
+    "name": "Coralreef",
+    "description": "Coral Reefs",
+    "version": "2.5-1.12.2",
+    "mcversion": "1.12.2",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "primetoxinz"
+    ],
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]

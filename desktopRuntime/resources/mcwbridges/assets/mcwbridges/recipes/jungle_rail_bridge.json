@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern": [
+    "F F",
+    "FWF"
+    ],
+    
+    "key":
+    {
+        "F":
+        {
+            "item": "minecraft:jungle_fence"
+        },
+        
+        "W":
+        {
+            "item": "minecraft:wooden_slab",
+            "data": 3
+        }
+    },
+    
+    "result":
+    {
+        "item":  "mcwbridges:jungle_rail_bridge",
+        "count": 4
+    }
+}

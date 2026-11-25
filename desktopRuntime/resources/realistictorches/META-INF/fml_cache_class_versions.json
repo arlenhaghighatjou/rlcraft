@@ -1,0 +1,21 @@
+{
+  "com/chaosthedude/realistictorches/RealisticTorches": 52,
+  "com/chaosthedude/realistictorches/blocks/BlockMovingLightSource": 52,
+  "com/chaosthedude/realistictorches/blocks/BlockRealisticTorch": 52,
+  "com/chaosthedude/realistictorches/blocks/BlockTorchLit": 52,
+  "com/chaosthedude/realistictorches/blocks/BlockTorchSmoldering": 52,
+  "com/chaosthedude/realistictorches/blocks/BlockTorchUnlit": 52,
+  "com/chaosthedude/realistictorches/blocks/RealisticTorchesBlocks": 52,
+  "com/chaosthedude/realistictorches/blocks/te/TEMovingLightSource": 52,
+  "com/chaosthedude/realistictorches/config/ConfigHandler": 52,
+  "com/chaosthedude/realistictorches/config/ConfigHandler$ChangeListener": 52,
+  "com/chaosthedude/realistictorches/events/RealisticTorchesEvents": 52,
+  "com/chaosthedude/realistictorches/handler/LightSourceHandler": 52,
+  "com/chaosthedude/realistictorches/handler/NullReplacementRecipe": 52,
+  "com/chaosthedude/realistictorches/handler/RecipeHandler": 52,
+  "com/chaosthedude/realistictorches/items/ItemMatchbox": 52,
+  "com/chaosthedude/realistictorches/items/RealisticTorchesItems": 52,
+  "com/chaosthedude/realistictorches/proxy/ClientProxy": 52,
+  "com/chaosthedude/realistictorches/proxy/CommonProxy": 52,
+  "com/chaosthedude/realistictorches/worldgen/TorchGenerator": 52
+}

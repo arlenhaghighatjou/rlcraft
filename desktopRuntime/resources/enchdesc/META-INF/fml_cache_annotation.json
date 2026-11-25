@@ -1,0 +1,53 @@
+{
+  "net/darkhax/enchdesc/EnchantmentDescriptions": {
+    "name": "net/darkhax/enchdesc/EnchantmentDescriptions",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "net/darkhax/enchdesc/EnchantmentDescriptions",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "certificateFingerprint": {
+            "value": "d476d1b22b218a10d845928d1665d45fce301b27"
+          },
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "modid": {
+            "value": "enchdesc"
+          },
+          "name": {
+            "value": "Enchantment Descriptions"
+          },
+          "version": {
+            "value": "1.1.20"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "net/darkhax/enchdesc/client/TooltipHandler": {
+    "name": "net/darkhax/enchdesc/client/TooltipHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTooltipDisplayed(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      }
+    ]
+  }
+}

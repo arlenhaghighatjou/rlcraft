@@ -1,0 +1,20 @@
+package com.oblivioussp.spartanweaponry.proxy;
+
+import com.oblivioussp.spartanweaponry.api.ToolMaterialEx;
+import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
+public abstract class CommonProxy {
+   public CommonProxy() {
+   }
+
+   public abstract void preInit(FMLPreInitializationEvent var1);
+
+   public abstract void init(FMLInitializationEvent var1);
+
+   public abstract void postInit(FMLPostInitializationEvent var1);
+
+   public abstract void addColourHandler(Item var1, ToolMaterialEx var2);
+}

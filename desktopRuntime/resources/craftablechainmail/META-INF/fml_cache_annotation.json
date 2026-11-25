@@ -1,0 +1,102 @@
+{
+  "moddy10/craftablechainmail/CraftableChainmail": {
+    "name": "moddy10/craftablechainmail/CraftableChainmail",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "moddy10/craftablechainmail/CraftableChainmail",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "craftablechainmail"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "moddy10.craftablechainmail.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "moddy10.craftablechainmail.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "moddy10/craftablechainmail/init/ModItems": {
+    "name": "moddy10/craftablechainmail/init/ModItems",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "moddy10/craftablechainmail/init/ModItems",
+        "value": {
+          "value": "craftablechainmail"
+        }
+      }
+    ]
+  },
+  "moddy10/craftablechainmail/proxy/ClientProxy": {
+    "name": "moddy10/craftablechainmail/proxy/ClientProxy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "moddy10/craftablechainmail/proxy/ClientProxy",
+        "value": {
+          "type": "ENUM",
+          "values": [
+            "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "moddy10/craftablechainmail/proxy/CommonProxy": {
+    "name": "moddy10/craftablechainmail/proxy/CommonProxy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "moddy10/craftablechainmail/proxy/CommonProxy"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  }
+}

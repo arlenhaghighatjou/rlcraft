@@ -1,0 +1,1473 @@
+{
+  "baubles/api/cap/BaubleItem": {
+    "name": "baubles/api/cap/BaubleItem",
+    "interfaces": [
+      "baubles/api/IBauble"
+    ]
+  },
+  "baubles/api/cap/BaublesCapabilities": {
+    "name": "baubles/api/cap/BaublesCapabilities",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CAPABILITY_BAUBLES",
+        "value": {
+          "type": "CLASS",
+          "value": "Lbaubles/api/cap/IBaublesItemHandler;"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CAPABILITY_ITEM_BAUBLE",
+        "value": {
+          "type": "CLASS",
+          "value": "Lbaubles/api/IBauble;"
+        }
+      }
+    ]
+  },
+  "baubles/api/cap/BaublesCapabilities$CapabilityBaubles": {
+    "name": "baubles/api/cap/BaublesCapabilities$CapabilityBaubles",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "baubles/api/cap/BaublesCapabilities$CapabilityItemBaubleStorage": {
+    "name": "baubles/api/cap/BaublesCapabilities$CapabilityItemBaubleStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "baubles/api/cap/BaublesContainer": {
+    "name": "baubles/api/cap/BaublesContainer",
+    "interfaces": [
+      "baubles/api/cap/IBaublesItemHandler"
+    ]
+  },
+  "baubles/api/cap/BaublesContainerProvider": {
+    "name": "baubles/api/cap/BaublesContainerProvider",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable",
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "baubles/api/cap/IBaublesItemHandler": {
+    "name": "baubles/api/cap/IBaublesItemHandler",
+    "interfaces": [
+      "net/minecraftforge/items/IItemHandlerModifiable"
+    ]
+  },
+  "baubles/api/inv/BaublesInventoryWrapper": {
+    "name": "baubles/api/inv/BaublesInventoryWrapper",
+    "interfaces": [
+      "net/minecraft/inventory/IInventory"
+    ]
+  },
+  "baubles/api/package-info": {
+    "name": "baubles/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "baubles/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "1.4.0.2"
+          },
+          "owner": {
+            "value": "Baubles"
+          },
+          "provides": {
+            "value": "Baubles|API"
+          }
+        }
+      }
+    ]
+  },
+  "com/fantasticsource/fantasticlib/FantasticLib": {
+    "name": "com/fantasticsource/fantasticlib/FantasticLib",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/fantasticsource/fantasticlib/FantasticLib",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "fantasticlib"
+          },
+          "name": {
+            "value": "Fantastic Lib"
+          },
+          "version": {
+            "value": "1.12.2.047"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "saveConfig(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "syncConfig(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$PostConfigChangedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverAboutToStart(Lnet/minecraftforge/fml/common/event/FMLServerAboutToStartEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarted(Lnet/minecraftforge/fml/common/event/FMLServerStartedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStopped(Lnet/minecraftforge/fml/common/event/FMLServerStoppedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "inventorySyncFix(Lcom/fantasticsource/mctools/event/InventoryChangedEvent;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/fantasticlib/api/FLibAPI": {
+    "name": "com/fantasticsource/fantasticlib/api/FLibAPI",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "NBT_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/fantasticsource/fantasticlib/api/INBTCap;"
+        }
+      }
+    ]
+  },
+  "com/fantasticsource/fantasticlib/config/FantasticConfig": {
+    "name": "com/fantasticsource/fantasticlib/config/FantasticConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "com/fantasticsource/fantasticlib/config/FantasticConfig",
+        "values": {
+          "modid": {
+            "value": "fantasticlib"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "entityRenderFixer",
+        "value": {
+          "value": "Use Entity Render Fixer"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "entityRenderFixer",
+        "value": {
+          "value": "fantasticlib.config.entityRenderFixer"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "entityRenderFixer",
+        "value": {
+          "values": [
+            "If enabled, runs some code to reset certain openGL settings after each entity renders",
+            "Only use this if you need it to fix a graphical issue"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "entityRenderFixer"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "inventoryDesyncFixer",
+        "value": {
+          "value": "Use Inventory Desync Fixer"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "inventoryDesyncFixer",
+        "value": {
+          "value": "fantasticlib.config.inventoryDesyncFixer"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "inventoryDesyncFixer",
+        "value": {
+          "values": [
+            "If enabled, runs some code to synchronize inventory to client when it changes server-side"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "previewRenderModeOverrides",
+        "value": {
+          "value": "Preview Render Mode Overrides"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "previewRenderModeOverrides",
+        "value": {
+          "value": "fantasticlib.config.previewRenderModeOverrides"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "previewRenderModeOverrides",
+        "value": {
+          "values": [
+            "Overrides for render modes when previewing AW skins on items",
+            "Syntax is...",
+            "Slotting, Channel@Mode, Channel@Mode, etc",
+            "Valid entries for \u0027Slotting\u0027 can be found in config/fantasticlib/reference/slottings.txt",
+            "Valid channels and modes depend on the AW skins on the server (ask server admin)",
+            "Eg. if Tiamat Inventory is installed and a server has valid shoulder skins for it...",
+            "Tiamat Shoulders, ShoulderL@On, ShoulderR@On, ShoulderLControl@On, ShoulderRControl@On"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "negativeAttributes",
+        "value": {
+          "value": "Negative Attributes"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "negativeAttributes",
+        "value": {
+          "value": "fantasticlib.config.negativeAttributes"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "negativeAttributes",
+        "value": {
+          "values": [
+            "A list of attributes which are bad to have, for render color purposes"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "tooltipScaling",
+        "value": {
+          "value": "Tooltip Scaling"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "tooltipScaling",
+        "value": {
+          "value": "fantasticlib.config.tooltipScaling"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "tooltipScaling",
+        "value": {
+          "values": [
+            "Multiplies tooltip render size by this amount"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "guiSettings",
+        "value": {
+          "value": "GUI Settings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "guiSettings",
+        "value": {
+          "value": "fantasticlib.config.guiSettings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "raytraceSettings",
+        "value": {
+          "value": "Raytrace Settings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "raytraceSettings",
+        "value": {
+          "value": "fantasticlib.config.raytraceSettings"
+        }
+      }
+    ]
+  },
+  "com/fantasticsource/fantasticlib/config/GUIConfig": {
+    "name": "com/fantasticsource/fantasticlib/config/GUIConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "zoomFocusMouse",
+        "value": {
+          "value": "Focus Zoom on Mouse by Default"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "zoomFocusMouse",
+        "value": {
+          "value": "fantasticlib.config.zoomFocusMouse"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "zoomFocusMouse",
+        "value": {
+          "values": [
+            "Whether zooming in/out focuses on the mouse position or not in a zoomable GUI view (if not, center of view is used instead)",
+            "Whichever mode is *NOT* the default can be accessed by holding the ctrl key while using zoom controls"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "zoomResetButton",
+        "value": {
+          "value": "Reset Zoom (Mouse Button)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "zoomResetButton",
+        "value": {
+          "value": "fantasticlib.config.zoomResetButton"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "zoomResetButton",
+        "value": {
+          "values": [
+            "Which mouse button resets the zoom level in a zoomable GUI view (click)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "zoomResetButton",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "panButton",
+        "value": {
+          "value": "Pan (Mouse Button)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "panButton",
+        "value": {
+          "value": "fantasticlib.config.panButton"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "panButton",
+        "value": {
+          "values": [
+            "Which mouse button pans the view in a pannable GUI view (hold and drag)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "panButton",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "zoomRate",
+        "value": {
+          "value": "Zoom Rate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "zoomRate",
+        "value": {
+          "value": "fantasticlib.config.zoomRate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "zoomRate",
+        "value": {
+          "values": [
+            "How fast zoomable views zoom"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "zoomRate",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "4.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "1.1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "perGUIScaling",
+        "value": {
+          "value": "Per-GUI Scaling"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "perGUIScaling",
+        "value": {
+          "value": "fantasticlib.config.perGUIScaling"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "perGUIScaling",
+        "value": {
+          "values": [
+            "The scaling for each applicable GUI.",
+            "Applicable GUIs should show up here automatically if they\u0027ve been accessed at least once."
+          ]
+        }
+      }
+    ]
+  },
+  "com/fantasticsource/fantasticlib/config/RaytraceConfig": {
+    "name": "com/fantasticsource/fantasticlib/config/RaytraceConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "rayBlockstateFilter",
+        "value": {
+          "value": "1. Blockstate Filter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "rayBlockstateFilter",
+        "value": {
+          "value": "fantasticlib.config.rayBlockstateFilter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "rayBlockstateFilter",
+        "value": {
+          "values": [
+            "Syntax is...",
+            "domain:name:meta, transparent",
+            "",
+            "Eg...",
+            "minecraft:stone:0, false"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "rayBlockFilter",
+        "value": {
+          "value": "2. Block Filter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "rayBlockFilter",
+        "value": {
+          "value": "fantasticlib.config.rayBlockFilter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "rayBlockFilter",
+        "value": {
+          "values": [
+            "Syntax is...",
+            "domain:name, transparent",
+            "",
+            "Eg...",
+            "minecraft:glass, true"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "rayBlockSuperclassFilter",
+        "value": {
+          "value": "3. Block Superclass Filter (Advanced)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "rayBlockSuperclassFilter",
+        "value": {
+          "value": "fantasticlib.config.rayBlockSuperclassFilter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "rayBlockSuperclassFilter",
+        "value": {
+          "values": [
+            "Syntax is...",
+            "package.package.ClassName, transparent",
+            "",
+            "Eg...",
+            "net.minecraft.block.BlockStairs, false"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "rayMaterialFilter",
+        "value": {
+          "value": "4. Material Filter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "rayMaterialFilter",
+        "value": {
+          "value": "fantasticlib.config.rayMaterialFilter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "rayMaterialFilter",
+        "value": {
+          "values": [
+            "Syntax is...",
+            "material, transparent",
+            "",
+            "Eg...",
+            "air, true",
+            "",
+            "Vanilla types:",
+            "air, grass, ground, wood, rock, iron, anvil, water, lava, leaves, plants, vine, sponge, cloth, fire, sand, circuits, carpet, glass, redstone_light, tnt, coral, ice, packed_ice, snow, crafted_snow, cactus, clay, gourd, dragon_egg, portal, cake, web, piston, barrier, structure_void"
+          ]
+        }
+      }
+    ]
+  },
+  "com/fantasticsource/lwjgl/Matrix": {
+    "name": "com/fantasticsource/lwjgl/Matrix",
+    "interfaces": [
+      "java/io/Serializable"
+    ]
+  },
+  "com/fantasticsource/lwjgl/Matrix2f": {
+    "name": "com/fantasticsource/lwjgl/Matrix2f",
+    "interfaces": [
+      "java/io/Serializable"
+    ]
+  },
+  "com/fantasticsource/lwjgl/Matrix3f": {
+    "name": "com/fantasticsource/lwjgl/Matrix3f",
+    "interfaces": [
+      "java/io/Serializable"
+    ]
+  },
+  "com/fantasticsource/lwjgl/Matrix4f": {
+    "name": "com/fantasticsource/lwjgl/Matrix4f",
+    "interfaces": [
+      "java/io/Serializable"
+    ]
+  },
+  "com/fantasticsource/lwjgl/Quaternion": {
+    "name": "com/fantasticsource/lwjgl/Quaternion",
+    "interfaces": [
+      "com/fantasticsource/lwjgl/ReadableVector4f"
+    ]
+  },
+  "com/fantasticsource/lwjgl/ReadableVector2f": {
+    "name": "com/fantasticsource/lwjgl/ReadableVector2f",
+    "interfaces": [
+      "com/fantasticsource/lwjgl/ReadableVector"
+    ]
+  },
+  "com/fantasticsource/lwjgl/ReadableVector3f": {
+    "name": "com/fantasticsource/lwjgl/ReadableVector3f",
+    "interfaces": [
+      "com/fantasticsource/lwjgl/ReadableVector2f"
+    ]
+  },
+  "com/fantasticsource/lwjgl/ReadableVector4f": {
+    "name": "com/fantasticsource/lwjgl/ReadableVector4f",
+    "interfaces": [
+      "com/fantasticsource/lwjgl/ReadableVector3f"
+    ]
+  },
+  "com/fantasticsource/lwjgl/Vector": {
+    "name": "com/fantasticsource/lwjgl/Vector",
+    "interfaces": [
+      "java/io/Serializable",
+      "com/fantasticsource/lwjgl/ReadableVector"
+    ]
+  },
+  "com/fantasticsource/lwjgl/Vector2f": {
+    "name": "com/fantasticsource/lwjgl/Vector2f",
+    "interfaces": [
+      "java/io/Serializable",
+      "com/fantasticsource/lwjgl/ReadableVector2f",
+      "com/fantasticsource/lwjgl/WritableVector2f"
+    ]
+  },
+  "com/fantasticsource/lwjgl/Vector3f": {
+    "name": "com/fantasticsource/lwjgl/Vector3f",
+    "interfaces": [
+      "java/io/Serializable",
+      "com/fantasticsource/lwjgl/ReadableVector3f",
+      "com/fantasticsource/lwjgl/WritableVector3f"
+    ]
+  },
+  "com/fantasticsource/lwjgl/Vector4f": {
+    "name": "com/fantasticsource/lwjgl/Vector4f",
+    "interfaces": [
+      "java/io/Serializable",
+      "com/fantasticsource/lwjgl/ReadableVector4f",
+      "com/fantasticsource/lwjgl/WritableVector4f"
+    ]
+  },
+  "com/fantasticsource/lwjgl/WritableVector3f": {
+    "name": "com/fantasticsource/lwjgl/WritableVector3f",
+    "interfaces": [
+      "com/fantasticsource/lwjgl/WritableVector2f"
+    ]
+  },
+  "com/fantasticsource/lwjgl/WritableVector4f": {
+    "name": "com/fantasticsource/lwjgl/WritableVector4f",
+    "interfaces": [
+      "com/fantasticsource/lwjgl/WritableVector3f"
+    ]
+  },
+  "com/fantasticsource/mctools/ClientTickTimer": {
+    "name": "com/fantasticsource/mctools/ClientTickTimer",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "update(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/EntityRenderFixer": {
+    "name": "com/fantasticsource/mctools/EntityRenderFixer",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityPostRender(Lnet/minecraftforge/client/event/RenderLivingEvent$Post;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/FirstTimeEventMessenger": {
+    "name": "com/fantasticsource/mctools/FirstTimeEventMessenger",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "event(Lnet/minecraftforge/fml/common/eventhandler/Event;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/Network$AddBipedAnimationsPacket": {
+    "name": "com/fantasticsource/mctools/Network$AddBipedAnimationsPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$AddBipedAnimationsPacketHandler": {
+    "name": "com/fantasticsource/mctools/Network$AddBipedAnimationsPacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$BetterAttributePacket": {
+    "name": "com/fantasticsource/mctools/Network$BetterAttributePacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$BetterAttributePacketHandler": {
+    "name": "com/fantasticsource/mctools/Network$BetterAttributePacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$ControlEventPacket": {
+    "name": "com/fantasticsource/mctools/Network$ControlEventPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$ControlEventPacketHandler": {
+    "name": "com/fantasticsource/mctools/Network$ControlEventPacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$GenericComponentPacket": {
+    "name": "com/fantasticsource/mctools/Network$GenericComponentPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$GenericComponentPacketHandler": {
+    "name": "com/fantasticsource/mctools/Network$GenericComponentPacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$PlaySimpleSoundPacket": {
+    "name": "com/fantasticsource/mctools/Network$PlaySimpleSoundPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$PlaySimpleSoundPacketHandler": {
+    "name": "com/fantasticsource/mctools/Network$PlaySimpleSoundPacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$RemoveBipedAnimationPacket": {
+    "name": "com/fantasticsource/mctools/Network$RemoveBipedAnimationPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$RemoveBipedAnimationPacketHandler": {
+    "name": "com/fantasticsource/mctools/Network$RemoveBipedAnimationPacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$RemoveEntityImmediatePacket": {
+    "name": "com/fantasticsource/mctools/Network$RemoveEntityImmediatePacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$RemoveEntityImmediatePacketHandler": {
+    "name": "com/fantasticsource/mctools/Network$RemoveEntityImmediatePacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$UpdateBipedAnimationsPacket": {
+    "name": "com/fantasticsource/mctools/Network$UpdateBipedAnimationsPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/fantasticsource/mctools/Network$UpdateBipedAnimationsPacketHandler": {
+    "name": "com/fantasticsource/mctools/Network$UpdateBipedAnimationsPacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/fantasticsource/mctools/PathedParticleManager": {
+    "name": "com/fantasticsource/mctools/PathedParticleManager",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderLast(Lnet/minecraftforge/client/event/RenderWorldLastEvent;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/PlayerData": {
+    "name": "com/fantasticsource/mctools/PlayerData",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerLogon(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerLogoff(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedOutEvent;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/Render": {
+    "name": "com/fantasticsource/mctools/Render",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "drawHUD(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "updateFOV(Lnet/minecraftforge/client/event/EntityViewRenderEvent$FOVModifier;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "updateFOVMultiplier(Lnet/minecraftforge/client/event/FOVUpdateEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/ServerTickTimer": {
+    "name": "com/fantasticsource/mctools/ServerTickTimer",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "update(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/Speedometer": {
+    "name": "com/fantasticsource/mctools/Speedometer",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerUpdateEvent(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "teleport(Lnet/minecraftforge/event/entity/living/EnderTeleportEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "dimChange(Lnet/minecraftforge/event/entity/EntityTravelToDimensionEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerLogout(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedOutEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "serverTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/TooltipAlterer": {
+    "name": "com/fantasticsource/mctools/TooltipAlterer",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTooltipPre(Lnet/minecraftforge/client/event/RenderTooltipEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTooltipPost(Lnet/minecraftforge/client/event/RenderTooltipEvent$PostText;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/TooltipFixer": {
+    "name": "com/fantasticsource/mctools/TooltipFixer",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "configTooltip(Lnet/minecraftforge/client/event/RenderTooltipEvent$Pre;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/WorldEventDistributor": {
+    "name": "com/fantasticsource/mctools/WorldEventDistributor",
+    "interfaces": [
+      "net/minecraft/world/IWorldEventListener"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "worldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/WorldEventDistributor$DBlockUpdateEvent": {
+    "name": "com/fantasticsource/mctools/WorldEventDistributor$DBlockUpdateEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/fantasticsource/mctools/WorldEventDistributor$DBlockUpdateEvent"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/WorldEventDistributor$DBroadcastSoundEvent": {
+    "name": "com/fantasticsource/mctools/WorldEventDistributor$DBroadcastSoundEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/fantasticsource/mctools/WorldEventDistributor$DBroadcastSoundEvent"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/WorldEventDistributor$DMarkBlockRangeForRenderUpdateEvent": {
+    "name": "com/fantasticsource/mctools/WorldEventDistributor$DMarkBlockRangeForRenderUpdateEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/fantasticsource/mctools/WorldEventDistributor$DMarkBlockRangeForRenderUpdateEvent"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/WorldEventDistributor$DNotifyLightSetEvent": {
+    "name": "com/fantasticsource/mctools/WorldEventDistributor$DNotifyLightSetEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/fantasticsource/mctools/WorldEventDistributor$DNotifyLightSetEvent"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/WorldEventDistributor$DPlayEvent": {
+    "name": "com/fantasticsource/mctools/WorldEventDistributor$DPlayEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/fantasticsource/mctools/WorldEventDistributor$DPlayEvent"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/WorldEventDistributor$DPlayRecordEvent": {
+    "name": "com/fantasticsource/mctools/WorldEventDistributor$DPlayRecordEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/fantasticsource/mctools/WorldEventDistributor$DPlayRecordEvent"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/WorldEventDistributor$DSendBlockBreakProgressEvent": {
+    "name": "com/fantasticsource/mctools/WorldEventDistributor$DSendBlockBreakProgressEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/fantasticsource/mctools/WorldEventDistributor$DSendBlockBreakProgressEvent"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/WorldEventDistributor$DSoundEvent": {
+    "name": "com/fantasticsource/mctools/WorldEventDistributor$DSoundEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/fantasticsource/mctools/WorldEventDistributor$DSoundEvent"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/WorldEventDistributor$DSpawnParticleEvent": {
+    "name": "com/fantasticsource/mctools/WorldEventDistributor$DSpawnParticleEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/fantasticsource/mctools/WorldEventDistributor$DSpawnParticleEvent"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/animation/CBipedAnimation": {
+    "name": "com/fantasticsource/mctools/animation/CBipedAnimation",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderLivingBase(Lnet/minecraftforge/client/event/RenderLivingEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "startTracking(Lnet/minecraftforge/event/entity/player/PlayerEvent$StartTracking;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/betterattributes/BetterAttributeMod": {
+    "name": "com/fantasticsource/mctools/betterattributes/BetterAttributeMod",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "inventoryChanged(Lcom/fantasticsource/mctools/event/InventoryChangedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "betterAttributeCalc(Lcom/fantasticsource/mctools/betterattributes/BetterAttribute$BetterAttributeCalcEvent;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/cliententity/Camera": {
+    "name": "com/fantasticsource/mctools/cliententity/Camera",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "trackFollowed(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderPlayerPre(Lnet/minecraftforge/client/event/RenderPlayerEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderPlayerPost(Lnet/minecraftforge/client/event/RenderPlayerEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "preOverlayRender(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "postOverlayRender(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "controlFixPre1(Lnet/minecraftforge/client/event/PlayerSPPushOutOfBlocksEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "controlFixPre2(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "controlFixPost(Lnet/minecraftforge/event/world/GetCollisionBoxesEvent;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/component/NBTSerializableComponent": {
+    "name": "com/fantasticsource/mctools/component/NBTSerializableComponent",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "com/fantasticsource/mctools/controlintercept/ControlEvent": {
+    "name": "com/fantasticsource/mctools/controlintercept/ControlEvent",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "interceptControls(Lnet/minecraftforge/fml/common/gameevent/InputEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/data/CDataHandler": {
+    "name": "com/fantasticsource/mctools/data/CDataHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "syncOnLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/event/GametypeChangedEvent": {
+    "name": "com/fantasticsource/mctools/event/GametypeChangedEvent",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerLogoffServer(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedOutEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerLogoffClient(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientDisconnectionFromServerEvent;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/event/InventoryChangedEvent": {
+    "name": "com/fantasticsource/mctools/event/InventoryChangedEvent",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "serverTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/event/InventoryChangedEvent$GlobalInventoryData": {
+    "name": "com/fantasticsource/mctools/event/InventoryChangedEvent$GlobalInventoryData",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "com/fantasticsource/mctools/gui/GUILeftClickEvent": {
+    "name": "com/fantasticsource/mctools/gui/GUILeftClickEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/fantasticsource/mctools/gui/GUILeftClickEvent"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/gui/screen/TestGUI": {
+    "name": "com/fantasticsource/mctools/gui/screen/TestGUI",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "interactAir(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickEmpty;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/nbtcap/NBTCap": {
+    "name": "com/fantasticsource/mctools/nbtcap/NBTCap",
+    "interfaces": [
+      "com/fantasticsource/fantasticlib/api/INBTCap"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerClone(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachToEntity(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachToStack(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachToWorld(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachToTE(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachToChunk(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachToVillage(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      }
+    ]
+  },
+  "com/fantasticsource/mctools/nbtcap/NBTCapProvider": {
+    "name": "com/fantasticsource/mctools/nbtcap/NBTCapProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "com/fantasticsource/mctools/nbtcap/NBTCapStorage": {
+    "name": "com/fantasticsource/mctools/nbtcap/NBTCapStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/fantasticsource/mctools/sound/SimpleSound": {
+    "name": "com/fantasticsource/mctools/sound/SimpleSound",
+    "interfaces": [
+      "net/minecraft/client/audio/ISound"
+    ]
+  },
+  "com/fantasticsource/tiamatinventory/api/ITiamatPlayerInventory": {
+    "name": "com/fantasticsource/tiamatinventory/api/ITiamatPlayerInventory",
+    "interfaces": [
+      "net/minecraft/inventory/IInventory"
+    ]
+  },
+  "com/fantasticsource/tools/datastructures/ExplicitPriorityQueue$Entry": {
+    "name": "com/fantasticsource/tools/datastructures/ExplicitPriorityQueue$Entry",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "moe/plushie/armourers_workshop/api/ArmourersWorkshopApi": {
+    "name": "moe/plushie/armourers_workshop/api/ArmourersWorkshopApi",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "ENTITY_SKIN_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lmoe/plushie/armourers_workshop/api/common/capability/IEntitySkinCapability;"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "ENTITY_WARDROBE_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lmoe/plushie/armourers_workshop/api/common/capability/IWardrobeCap;"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "PLAYER_WARDROBE_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lmoe/plushie/armourers_workshop/api/common/capability/IPlayerWardrobeCap;"
+        }
+      }
+    ]
+  },
+  "moe/plushie/armourers_workshop/api/common/capability/IPlayerWardrobeCap": {
+    "name": "moe/plushie/armourers_workshop/api/common/capability/IPlayerWardrobeCap",
+    "interfaces": [
+      "moe/plushie/armourers_workshop/api/common/capability/IWardrobeCap"
+    ]
+  },
+  "moe/plushie/armourers_workshop/api/common/skin/Point3D": {
+    "name": "moe/plushie/armourers_workshop/api/common/skin/Point3D",
+    "interfaces": [
+      "moe/plushie/armourers_workshop/api/common/IPoint3D"
+    ]
+  },
+  "moe/plushie/armourers_workshop/api/common/skin/Rectangle3D": {
+    "name": "moe/plushie/armourers_workshop/api/common/skin/Rectangle3D",
+    "interfaces": [
+      "moe/plushie/armourers_workshop/api/common/IRectangle3D"
+    ]
+  },
+  "moe/plushie/armourers_workshop/api/common/skin/type/ISkinPartTypeTextured": {
+    "name": "moe/plushie/armourers_workshop/api/common/skin/type/ISkinPartTypeTextured",
+    "interfaces": [
+      "moe/plushie/armourers_workshop/api/common/skin/type/ISkinPartType"
+    ]
+  },
+  "moe/plushie/armourers_workshop/api/package-info": {
+    "name": "moe/plushie/armourers_workshop/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "moe/plushie/armourers_workshop/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "@API_VERSION@"
+          },
+          "owner": {
+            "value": "armourers_workshop"
+          },
+          "provides": {
+            "value": "armourers_workshop_api"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "mappings": {
+    "snownee/snow/mixin/MixinBlockRendererDispatcher": {
+      "renderBlock": "Lnet/minecraft/client/renderer/BlockRendererDispatcher;func_175018_a(Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/client/renderer/BufferBuilder;)Z"
+    },
+    "snownee/snow/mixin/ItemBlockAccessor": {
+      "block": "field_150939_a:Lnet/minecraft/block/Block;"
+    },
+    "snownee/snow/mixin/MixinItemSnow": {
+      "onItemUse": "Lnet/minecraft/item/ItemSnow;func_180614_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumHand;Lnet/minecraft/util/EnumFacing;FFF)Lnet/minecraft/util/EnumActionResult;"
+    }
+  },
+  "data": {
+    "notch": {
+      "snownee/snow/mixin/MixinBlockRendererDispatcher": {
+        "renderBlock": "Lbvm;a(Lawt;Let;Lamy;Lbuk;)Z"
+      },
+      "snownee/snow/mixin/ItemBlockAccessor": {
+        "block": "a:Laow;"
+      },
+      "snownee/snow/mixin/MixinItemSnow": {
+        "onItemUse": "Lajt;a(Laed;Lamu;Let;Lub;Lfa;FFF)Lud;"
+      }
+    },
+    "searge": {
+      "snownee/snow/mixin/MixinBlockRendererDispatcher": {
+        "renderBlock": "Lnet/minecraft/client/renderer/BlockRendererDispatcher;func_175018_a(Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/client/renderer/BufferBuilder;)Z"
+      },
+      "snownee/snow/mixin/ItemBlockAccessor": {
+        "block": "field_150939_a:Lnet/minecraft/block/Block;"
+      },
+      "snownee/snow/mixin/MixinItemSnow": {
+        "onItemUse": "Lnet/minecraft/item/ItemSnow;func_180614_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumHand;Lnet/minecraft/util/EnumFacing;FFF)Lnet/minecraft/util/EnumActionResult;"
+      }
+    }
+  }
+}

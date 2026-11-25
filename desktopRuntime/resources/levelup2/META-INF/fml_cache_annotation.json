@@ -1,0 +1,517 @@
+{
+  "levelup2/LevelUp2": {
+    "name": "levelup2/LevelUp2",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "levelup2/LevelUp2",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12]"
+          },
+          "modid": {
+            "value": "levelup2"
+          },
+          "name": {
+            "value": "Level Up! Reloaded"
+          },
+          "version": {
+            "value": "${version}"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "INSTANCE",
+        "value": {
+          "value": "levelup2"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "levelup2.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "levelup2.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "levelup2/LevelUp2$RegistryEventHandler": {
+    "name": "levelup2/LevelUp2$RegistryEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "levelup2/LevelUp2$RegistryEventHandler",
+        "values": {
+          "modid": {
+            "value": "levelup2"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRecipes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "levelup2/capability/PlayerCapability": {
+    "name": "levelup2/capability/PlayerCapability",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "PLAYER_CLASS",
+        "value": {
+          "type": "CLASS",
+          "value": "Llevelup2/player/IPlayerClass;"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "MACHINE_PROCESSING",
+        "value": {
+          "type": "CLASS",
+          "value": "Llevelup2/api/IProcessor;"
+        }
+      }
+    ]
+  },
+  "levelup2/capability/PlayerCapability$CapabilityPlayerClass": {
+    "name": "levelup2/capability/PlayerCapability$CapabilityPlayerClass",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "levelup2/capability/PlayerCapability$CapabilityProcessorClass": {
+    "name": "levelup2/capability/PlayerCapability$CapabilityProcessorClass",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "levelup2/capability/PlayerCapability$CapabilityProcessorDefault": {
+    "name": "levelup2/capability/PlayerCapability$CapabilityProcessorDefault",
+    "interfaces": [
+      "levelup2/api/IProcessor"
+    ]
+  },
+  "levelup2/event/CapabilityEventHandler": {
+    "name": "levelup2/event/CapabilityEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerEntersWorld(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerClone(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerChangedDimension(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerChangedDimensionEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "levelup2/event/CapabilityEventHandler$1": {
+    "name": "levelup2/event/CapabilityEventHandler$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "levelup2/event/KeybindEventHandler": {
+    "name": "levelup2/event/KeybindEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "openGui(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      }
+    ]
+  },
+  "levelup2/network/SkillPacketHandler": {
+    "name": "levelup2/network/SkillPacketHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerPacket(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ServerCustomPacketEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientPacket(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientCustomPacketEvent;)V"
+      }
+    ]
+  },
+  "levelup2/player/PlayerExtension": {
+    "name": "levelup2/player/PlayerExtension",
+    "interfaces": [
+      "levelup2/player/IPlayerClass"
+    ]
+  },
+  "levelup2/proxy/ClientProxy": {
+    "name": "levelup2/proxy/ClientProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/BaseSkill": {
+    "name": "levelup2/skills/BaseSkill",
+    "interfaces": [
+      "levelup2/api/IPlayerSkill"
+    ]
+  },
+  "levelup2/skills/combat/ArrowSpeedBonus": {
+    "name": "levelup2/skills/combat/ArrowSpeedBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onArrowLoose(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      }
+    ]
+  },
+  "levelup2/skills/combat/DrawSpeedBonus": {
+    "name": "levelup2/skills/combat/DrawSpeedBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBowUse(Lnet/minecraftforge/event/entity/player/ArrowNockEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      }
+    ]
+  },
+  "levelup2/skills/combat/NaturalArmorBonus": {
+    "name": "levelup2/skills/combat/NaturalArmorBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDamageTaken(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/combat/ShieldBlockBonus": {
+    "name": "levelup2/skills/combat/ShieldBlockBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDamageTaken(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/combat/StealthBonus": {
+    "name": "levelup2/skills/combat/StealthBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTargetSet(Lnet/minecraftforge/event/entity/living/LivingSetAttackTargetEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/combat/StealthDamage": {
+    "name": "levelup2/skills/combat/StealthDamage",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDamage(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/combat/StealthSpeed": {
+    "name": "levelup2/skills/combat/StealthSpeed",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerSneak(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/combat/SwordCritBonus": {
+    "name": "levelup2/skills/combat/SwordCritBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHurting(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/combat/SwordDamageBonus": {
+    "name": "levelup2/skills/combat/SwordDamageBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHurting(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/combat/XPBonusCombat": {
+    "name": "levelup2/skills/combat/XPBonusCombat",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "getCombatBonus(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/crafting/BrewingEfficiencyBonus": {
+    "name": "levelup2/skills/crafting/BrewingEfficiencyBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerStandCapability(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/crafting/BrewingEfficiencyBonus$1": {
+    "name": "levelup2/skills/crafting/BrewingEfficiencyBonus$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "levelup2/skills/crafting/FishingLootBonus": {
+    "name": "levelup2/skills/crafting/FishingLootBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onFishInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickItem;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      }
+    ]
+  },
+  "levelup2/skills/crafting/FoodGrowthBonus": {
+    "name": "levelup2/skills/crafting/FoodGrowthBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerUpdate(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/crafting/FoodHarvestBonus": {
+    "name": "levelup2/skills/crafting/FoodHarvestBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockBroken(Lnet/minecraftforge/event/world/BlockEvent$BreakEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "levelup2/skills/crafting/FurnaceEfficiencyBonus": {
+    "name": "levelup2/skills/crafting/FurnaceEfficiencyBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerFurnaceCapability(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTileInteracted(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "doFurnaceTicks(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/crafting/FurnaceEfficiencyBonus$1": {
+    "name": "levelup2/skills/crafting/FurnaceEfficiencyBonus$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "levelup2/skills/crafting/XPBonusCrafting": {
+    "name": "levelup2/skills/crafting/XPBonusCrafting",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCrafting(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$ItemCraftedEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/mining/DiggingTreasureBonus": {
+    "name": "levelup2/skills/mining/DiggingTreasureBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "dirtLooting(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/mining/FallDamageBonus": {
+    "name": "levelup2/skills/mining/FallDamageBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "reduceFallDamage(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/mining/FlintLootBonus": {
+    "name": "levelup2/skills/mining/FlintLootBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "gravelLooting(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/mining/SprintSpeedBonus": {
+    "name": "levelup2/skills/mining/SprintSpeedBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerSprint(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/mining/StoneMiningBonus": {
+    "name": "levelup2/skills/mining/StoneMiningBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHarvest(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "stopPlacingDupes(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "addTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/mining/StoneSpeedBonus": {
+    "name": "levelup2/skills/mining/StoneSpeedBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBreak(Lnet/minecraftforge/event/entity/player/PlayerEvent$BreakSpeed;)V"
+      }
+    ]
+  },
+  "levelup2/skills/mining/WoodSpeedBonus": {
+    "name": "levelup2/skills/mining/WoodSpeedBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBreak(Lnet/minecraftforge/event/entity/player/PlayerEvent$BreakSpeed;)V"
+      }
+    ]
+  },
+  "levelup2/skills/mining/WoodcuttingBonus": {
+    "name": "levelup2/skills/mining/WoodcuttingBonus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHarvest(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      }
+    ]
+  },
+  "levelup2/skills/mining/XPBonusMining": {
+    "name": "levelup2/skills/mining/XPBonusMining",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "giveMiningXP(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      }
+    ]
+  }
+}

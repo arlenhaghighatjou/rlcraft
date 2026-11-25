@@ -1,0 +1,113 @@
+package com.Shultrea.Rin.Ench0_3_0;
+
+import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
+import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
+import com.Shultrea.Rin.Interfaces.IWeatherEnchantment;
+import com.Shultrea.Rin.Main_Sector.ModConfig;
+import com.Shultrea.Rin.Utility_Sector.EnchantmentsUtility;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+public class EnchantmentThunderstorm extends EnchantmentBase implements IWeatherEnchantment {
+   public EnchantmentThunderstorm() {
+      super(Rarity.VERY_RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
+      this.setName("Thunderstorm");
+      this.setRegistryName("Thunderstorm");
+   }
+
+   public boolean isConfigEnabled() {
+      return ModConfig.enabled.ThunderstormEnable;
+   }
+
+   public int getMaxLevel() {
+      return ModConfig.level.Thunderstorm;
+   }
+
+   public int getMinEnchantability(int par1) {
+      return 20 + (par1 - 1) * 15;
+   }
+
+   public int getMaxEnchantability(int par1) {
+      return this.getMinEnchantability(par1) + 40;
+   }
+
+   public boolean canApplyTogether(Enchantment fTest) {
+      return super.canApplyTogether(fTest) && !(fTest instanceof IWeatherEnchantment);
+   }
+
+   public boolean isValidPlayer(Entity entity) {
+      return entity instanceof EntityPlayer && ((EntityPlayer)entity).getHeldItemMainhand() != null && this.level(((EntityPlayer)entity).getHeldItemMainhand()) > 0;
+   }
+
+   public boolean isValidMob(Entity entity) {
+      if (entity instanceof EntityMob || entity instanceof EntityAnimal) {
+         if (((EntityMob)entity).getHeldItemMainhand() != null && this.level(((EntityMob)entity).getHeldItemMainhand()) > 0) {
+            return true;
+         }
+
+         if (((EntityAnimal)entity).getHeldItemMainhand() != null && this.level(((EntityAnimal)entity).getHeldItemMainhand()) > 0) {
+            return true;
+         }
+      }
+
+      return false;
+   }
+
+   public int level(ItemStack stack) {
+      return EnchantmentHelper.getEnchantmentLevel(Smc_030.Thunderstorm, stack);
+   }
+
+   @SubscribeEvent(
+      priority = EventPriority.HIGHEST
+   )
+   public void HandleEnchant(LivingHurtEvent fEvent) {
+      float SkyDamage = 0.0F;
+      if (fEvent.getSource().damageType == "player" || fEvent.getSource().damageType == "mob") {
+         if (fEvent.getSource().getTrueSource() instanceof EntityLivingBase) {
+            EntityLivingBase attacker = (EntityLivingBase)fEvent.getSource().getTrueSource();
+            if (attacker != null) {
+               ItemStack dmgSource = ((EntityLivingBase)fEvent.getSource().getTrueSource()).getHeldItemMainhand();
+               if (dmgSource != null) {
+                  if (EnchantmentHelper.getEnchantmentLevel(Smc_030.Thunderstorm, dmgSource) > 0) {
+                     if (!isOffensivePetDisallowed(fEvent.getSource().getImmediateSource(), fEvent.getSource().getTrueSource())) {
+                        int levelWeather = EnchantmentHelper.getEnchantmentLevel(Smc_030.Thunderstorm, dmgSource);
+                        float Damage = fEvent.getAmount();
+                        if (attacker.world.isThundering() && EnchantmentsUtility.noBlockLight(attacker)) {
+                           float FDamage = EnchantmentsUtility.CalculateDamageIgnoreSwipe(Damage, 0.0F, 1.25F, 1.0F, attacker, Smc_030.Thunderstorm);
+                           fEvent.setAmount(FDamage);
+                        } else if (attacker.world.isRaining()) {
+                           fEvent.setAmount(Damage);
+                        } else if (EnchantmentsUtility.noBlockLight(attacker)) {
+                           float Fin = EnchantmentsUtility.CalculateDamageForNegativeSwipe(Damage, 0.0F, -0.5F, 1.0F, attacker, Smc_030.Thunderstorm);
+                           fEvent.setAmount(Fin);
+                           if (fEvent.getEntity().world.rand.nextInt(800) < 2 + levelWeather * 2) {
+                              EnchantmentsUtility.setThunderstorm(fEvent.getEntityLiving().getEntityWorld());
+                           }
+                        } else if (!EnchantmentsUtility.noBlockLight(attacker)) {
+                           float FI = EnchantmentsUtility.CalculateDamageForNegativeSwipe(Damage, -0.05F, -0.75F, 1.0F, attacker, Smc_030.Thunderstorm);
+                           fEvent.setAmount(FI);
+                           if (fEvent.getEntity().world.rand.nextInt(800) < 2 + levelWeather * 2) {
+                              ;
+                           }
+                        }
+
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+}

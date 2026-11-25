@@ -1,0 +1,406 @@
+{
+  "de/mennomax/astikorcarts/AstikorCarts": {
+    "name": "de/mennomax/astikorcarts/AstikorCarts",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "de/mennomax/astikorcarts/AstikorCarts",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12,1.13)"
+          },
+          "modid": {
+            "value": "astikorcarts"
+          },
+          "version": {
+            "value": "1.12.2-0.1.2.8"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "de.mennomax.astikorcarts.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "de.mennomax.astikorcarts.proxy.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "astikorcarts"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "de/mennomax/astikorcarts/capabilities/PullFactory": {
+    "name": "de/mennomax/astikorcarts/capabilities/PullFactory",
+    "interfaces": [
+      "de/mennomax/astikorcarts/capabilities/IPull"
+    ]
+  },
+  "de/mennomax/astikorcarts/capabilities/PullProvider": {
+    "name": "de/mennomax/astikorcarts/capabilities/PullProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "PULL",
+        "value": {
+          "type": "CLASS",
+          "value": "Lde/mennomax/astikorcarts/capabilities/IPull;"
+        }
+      }
+    ]
+  },
+  "de/mennomax/astikorcarts/capabilities/PullStorage": {
+    "name": "de/mennomax/astikorcarts/capabilities/PullStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "de/mennomax/astikorcarts/config/ModConfig": {
+    "name": "de/mennomax/astikorcarts/config/ModConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "de/mennomax/astikorcarts/config/ModConfig",
+        "values": {
+          "modid": {
+            "value": "astikorcarts"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "speedModifier",
+        "value": {
+          "value": "config.astikorcarts:speedmodifier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "speedModifier"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "speedModifier",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "-1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "cargoCart",
+        "value": {
+          "value": "entity.astikorcarts:cargocart.name"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "plowCart",
+        "value": {
+          "value": "entity.astikorcarts:plowcart.name"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "mobCart",
+        "value": {
+          "value": "entity.astikorcarts:mobcart.name"
+        }
+      }
+    ]
+  },
+  "de/mennomax/astikorcarts/config/ModConfig$EventHandler": {
+    "name": "de/mennomax/astikorcarts/config/ModConfig$EventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "de/mennomax/astikorcarts/config/ModConfig$EventHandler"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "de/mennomax/astikorcarts/entity/AbstractDrawn": {
+    "name": "de/mennomax/astikorcarts/entity/AbstractDrawn",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IEntityAdditionalSpawnData"
+    ]
+  },
+  "de/mennomax/astikorcarts/entity/EntityCargoCart": {
+    "name": "de/mennomax/astikorcarts/entity/EntityCargoCart",
+    "interfaces": [
+      "net/minecraft/inventory/IInventoryChangedListener"
+    ]
+  },
+  "de/mennomax/astikorcarts/entity/EntityPlowCart": {
+    "name": "de/mennomax/astikorcarts/entity/EntityPlowCart",
+    "interfaces": [
+      "net/minecraft/inventory/IInventoryChangedListener"
+    ]
+  },
+  "de/mennomax/astikorcarts/handler/ClientEventHandler": {
+    "name": "de/mennomax/astikorcarts/handler/ClientEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "de/mennomax/astikorcarts/handler/ClientEventHandler",
+        "values": {
+          "modid": {
+            "value": "astikorcarts"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTickEvent(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiOpen(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      }
+    ]
+  },
+  "de/mennomax/astikorcarts/handler/CommonEventHandler": {
+    "name": "de/mennomax/astikorcarts/handler/CommonEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "de/mennomax/astikorcarts/handler/CommonEventHandler",
+        "values": {
+          "modid": {
+            "value": "astikorcarts"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAttachCapability(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityJoinWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      }
+    ]
+  },
+  "de/mennomax/astikorcarts/handler/GuiHandler": {
+    "name": "de/mennomax/astikorcarts/handler/GuiHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "de/mennomax/astikorcarts/handler/MissingMappingHandler": {
+    "name": "de/mennomax/astikorcarts/handler/MissingMappingHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "de/mennomax/astikorcarts/handler/MissingMappingHandler",
+        "values": {
+          "modid": {
+            "value": "astikorcarts"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMissingItemMapping(Lnet/minecraftforge/event/RegistryEvent$MissingMappings;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMissingEntityMapping(Lnet/minecraftforge/event/RegistryEvent$MissingMappings;)V"
+      }
+    ]
+  },
+  "de/mennomax/astikorcarts/init/ModEntities": {
+    "name": "de/mennomax/astikorcarts/init/ModEntities",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "de/mennomax/astikorcarts/init/ModEntities",
+        "value": {
+          "value": "astikorcarts"
+        }
+      }
+    ]
+  },
+  "de/mennomax/astikorcarts/init/ModEntities$EntityRegistrationHandler": {
+    "name": "de/mennomax/astikorcarts/init/ModEntities$EntityRegistrationHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "de/mennomax/astikorcarts/init/ModEntities$EntityRegistrationHandler",
+        "values": {
+          "modid": {
+            "value": "astikorcarts"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEntities(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "de/mennomax/astikorcarts/init/ModItems": {
+    "name": "de/mennomax/astikorcarts/init/ModItems",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "de/mennomax/astikorcarts/init/ModItems",
+        "value": {
+          "value": "astikorcarts"
+        }
+      }
+    ]
+  },
+  "de/mennomax/astikorcarts/init/ModItems$ItemRegistrationHandler": {
+    "name": "de/mennomax/astikorcarts/init/ModItems$ItemRegistrationHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "de/mennomax/astikorcarts/init/ModItems$ItemRegistrationHandler",
+        "values": {
+          "modid": {
+            "value": "astikorcarts"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItemModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "de/mennomax/astikorcarts/packets/CPacketActionKey": {
+    "name": "de/mennomax/astikorcarts/packets/CPacketActionKey",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/mennomax/astikorcarts/packets/CPacketActionKey$ActionKeyPacketHandler": {
+    "name": "de/mennomax/astikorcarts/packets/CPacketActionKey$ActionKeyPacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/mennomax/astikorcarts/packets/CPacketOpenCartGui": {
+    "name": "de/mennomax/astikorcarts/packets/CPacketOpenCartGui",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/mennomax/astikorcarts/packets/CPacketOpenCartGui$OpenCartGuiPacketHandler": {
+    "name": "de/mennomax/astikorcarts/packets/CPacketOpenCartGui$OpenCartGuiPacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/mennomax/astikorcarts/packets/CPacketToggleSlow": {
+    "name": "de/mennomax/astikorcarts/packets/CPacketToggleSlow",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/mennomax/astikorcarts/packets/CPacketToggleSlow$ToggleSlowHandler": {
+    "name": "de/mennomax/astikorcarts/packets/CPacketToggleSlow$ToggleSlowHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/mennomax/astikorcarts/packets/SPacketDrawnUpdate": {
+    "name": "de/mennomax/astikorcarts/packets/SPacketDrawnUpdate",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "de/mennomax/astikorcarts/packets/SPacketDrawnUpdate$DrawnUpdatePacketHandler": {
+    "name": "de/mennomax/astikorcarts/packets/SPacketDrawnUpdate$DrawnUpdatePacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "de/mennomax/astikorcarts/proxy/ClientProxy": {
+    "name": "de/mennomax/astikorcarts/proxy/ClientProxy",
+    "interfaces": [
+      "de/mennomax/astikorcarts/proxy/IProxy"
+    ]
+  },
+  "de/mennomax/astikorcarts/proxy/ServerProxy": {
+    "name": "de/mennomax/astikorcarts/proxy/ServerProxy",
+    "interfaces": [
+      "de/mennomax/astikorcarts/proxy/IProxy"
+    ]
+  }
+}

@@ -1,0 +1,435 @@
+{
+  "rtg/RTG": {
+    "name": "rtg/RTG",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "rtg/RTG",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2779,);required:rtgapi@[1.0.0,);after:abyssalcraft@[1.9.4.3,);after:biomesoplenty@[7.0.1.2399,);"
+          },
+          "guiFactory": {
+            "value": "rtg.RTGConfig$RTGGuiConfigFactory"
+          },
+          "modid": {
+            "value": "rtg"
+          },
+          "name": {
+            "value": "Realistic Terrain Generation"
+          },
+          "version": {
+            "value": "6.1.0.0-snapshot.1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$InstanceFactory;",
+        "target": "getInstance()Lrtg/RTG;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "initPre(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "initPost(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "loadComplete(Lnet/minecraftforge/fml/common/event/FMLLoadCompleteEvent;)V"
+      }
+    ]
+  },
+  "rtg/RTG$ClientProxy": {
+    "name": "rtg/RTG$ClientProxy",
+    "interfaces": [
+      "rtg/RTG$RTGProxy"
+    ]
+  },
+  "rtg/RTG$ServerProxy": {
+    "name": "rtg/RTG$ServerProxy",
+    "interfaces": [
+      "rtg/RTG$RTGProxy"
+    ]
+  },
+  "rtg/RTGConfig": {
+    "name": "rtg/RTGConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "rtg/RTGConfig",
+        "values": {
+          "modid": {
+            "value": "rtg"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChange(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "rtg/RTGConfig$RTGGuiConfigFactory": {
+    "name": "rtg/RTGConfig$RTGGuiConfigFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "rtg/api/event/DecorateBiomeEventRTG$DecorateRTG": {
+    "name": "rtg/api/event/DecorateBiomeEventRTG$DecorateRTG",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Event$HasResult;",
+        "target": "rtg/api/event/DecorateBiomeEventRTG$DecorateRTG"
+      }
+    ]
+  },
+  "rtg/api/package-info": {
+    "name": "rtg/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "rtg/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "1.0.0"
+          },
+          "owner": {
+            "value": "rtg"
+          },
+          "provides": {
+            "value": "rtgapi"
+          }
+        }
+      }
+    ]
+  },
+  "rtg/api/util/LimitedArrayCacheMap": {
+    "name": "rtg/api/util/LimitedArrayCacheMap",
+    "interfaces": [
+      "java/util/Map",
+      "java/io/Serializable"
+    ]
+  },
+  "rtg/api/util/LimitedArrayCacheMap$ImmutableEntry": {
+    "name": "rtg/api/util/LimitedArrayCacheMap$ImmutableEntry",
+    "interfaces": [
+      "java/util/Map$Entry",
+      "java/io/Serializable"
+    ]
+  },
+  "rtg/api/util/UtilityClass": {
+    "name": "rtg/api/util/UtilityClass",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "rtg/api/util/noise/OpenSimplexNoise": {
+    "name": "rtg/api/util/noise/OpenSimplexNoise",
+    "interfaces": [
+      "rtg/api/util/noise/SimplexNoise"
+    ]
+  },
+  "rtg/api/util/noise/SimplexData2D": {
+    "name": "rtg/api/util/noise/SimplexData2D",
+    "interfaces": [
+      "rtg/api/util/noise/ISimplexData2D"
+    ]
+  },
+  "rtg/api/util/noise/SimplexData2D$Derivative": {
+    "name": "rtg/api/util/noise/SimplexData2D$Derivative",
+    "interfaces": [
+      "rtg/api/util/noise/ISimplexData2D"
+    ]
+  },
+  "rtg/api/util/noise/SimplexData2D$Disk": {
+    "name": "rtg/api/util/noise/SimplexData2D$Disk",
+    "interfaces": [
+      "rtg/api/util/noise/ISimplexData2D"
+    ]
+  },
+  "rtg/api/util/noise/SpacedCellularNoise": {
+    "name": "rtg/api/util/noise/SpacedCellularNoise",
+    "interfaces": [
+      "rtg/api/util/noise/CellularNoise"
+    ]
+  },
+  "rtg/api/util/package-info": {
+    "name": "rtg/api/util/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "rtg/api/util/package-info"
+      }
+    ]
+  },
+  "rtg/api/util/storage/BiomeMap": {
+    "name": "rtg/api/util/storage/BiomeMap",
+    "interfaces": [
+      "rtg/api/util/storage/IndexedMap$LimitedIndexedMap$IntegerLIMap"
+    ]
+  },
+  "rtg/api/util/storage/IndexedMap": {
+    "name": "rtg/api/util/storage/IndexedMap",
+    "interfaces": [
+      "java/util/Map",
+      "java/io/Serializable"
+    ]
+  },
+  "rtg/api/util/storage/IndexedMap$IndexMapEntry": {
+    "name": "rtg/api/util/storage/IndexedMap$IndexMapEntry",
+    "interfaces": [
+      "java/util/Map$Entry",
+      "java/lang/Comparable",
+      "java/io/Serializable"
+    ]
+  },
+  "rtg/api/util/storage/IndexedMap$IndexMapEntry$IndexEntryBase": {
+    "name": "rtg/api/util/storage/IndexedMap$IndexMapEntry$IndexEntryBase",
+    "interfaces": [
+      "rtg/api/util/storage/IndexedMap$IndexMapEntry"
+    ]
+  },
+  "rtg/api/util/storage/IndexedMap$LimitedIndexedMap": {
+    "name": "rtg/api/util/storage/IndexedMap$LimitedIndexedMap",
+    "interfaces": [
+      "rtg/api/util/storage/IndexedMap"
+    ]
+  },
+  "rtg/api/util/storage/IndexedMap$LimitedIndexedMap$ByteLIMap": {
+    "name": "rtg/api/util/storage/IndexedMap$LimitedIndexedMap$ByteLIMap",
+    "interfaces": [
+      "rtg/api/util/storage/IndexedMap$LimitedIndexedMap"
+    ]
+  },
+  "rtg/api/util/storage/IndexedMap$LimitedIndexedMap$IntegerLIMap": {
+    "name": "rtg/api/util/storage/IndexedMap$LimitedIndexedMap$IntegerLIMap",
+    "interfaces": [
+      "rtg/api/util/storage/IndexedMap$LimitedIndexedMap"
+    ]
+  },
+  "rtg/api/util/storage/IndexedMap$LimitedIndexedMap$LongLIMap": {
+    "name": "rtg/api/util/storage/IndexedMap$LimitedIndexedMap$LongLIMap",
+    "interfaces": [
+      "rtg/api/util/storage/IndexedMap$LimitedIndexedMap"
+    ]
+  },
+  "rtg/api/util/storage/IndexedMap$LimitedIndexedMap$ShortLIMap": {
+    "name": "rtg/api/util/storage/IndexedMap$LimitedIndexedMap$ShortLIMap",
+    "interfaces": [
+      "rtg/api/util/storage/IndexedMap$LimitedIndexedMap"
+    ]
+  },
+  "rtg/api/world/RTGWorld": {
+    "name": "rtg/api/world/RTGWorld",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "rtg/api/world/RTGWorld",
+        "values": {
+          "modid": {
+            "value": "rtg"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldUnload(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V"
+      }
+    ]
+  },
+  "rtg/api/world/biome/RealisticBiomeBase": {
+    "name": "rtg/api/world/biome/RealisticBiomeBase",
+    "interfaces": [
+      "rtg/api/world/biome/IRealisticBiome"
+    ]
+  },
+  "rtg/api/world/deco/helper/package-info": {
+    "name": "rtg/api/world/deco/helper/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "rtg/api/world/deco/helper/package-info"
+      }
+    ]
+  },
+  "rtg/api/world/deco/package-info": {
+    "name": "rtg/api/world/deco/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "rtg/api/world/deco/package-info"
+      }
+    ]
+  },
+  "rtg/api/world/gen/RTGChunkGenSettings$Serializer": {
+    "name": "rtg/api/world/gen/RTGChunkGenSettings$Serializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer",
+      "com/google/gson/JsonSerializer"
+    ]
+  },
+  "rtg/api/world/gen/feature/package-info": {
+    "name": "rtg/api/world/gen/feature/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "rtg/api/world/gen/feature/package-info"
+      }
+    ]
+  },
+  "rtg/api/world/gen/feature/tree/rtg/package-info": {
+    "name": "rtg/api/world/gen/feature/tree/rtg/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "rtg/api/world/gen/feature/tree/rtg/package-info"
+      }
+    ]
+  },
+  "rtg/client/GuiCustomizeWorldScreenRTG": {
+    "name": "rtg/client/GuiCustomizeWorldScreenRTG",
+    "interfaces": [
+      "net/minecraft/client/gui/GuiSlider$FormatHelper",
+      "net/minecraft/client/gui/GuiPageButtonList$GuiResponder"
+    ]
+  },
+  "rtg/client/package-info": {
+    "name": "rtg/client/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "rtg/client/package-info"
+      }
+    ]
+  },
+  "rtg/event/EventHandlerClient": {
+    "name": "rtg/event/EventHandlerClient",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "rtg/event/EventHandlerClient",
+        "values": {
+          "modid": {
+            "value": "rtg"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiCreateWorld(Lnet/minecraftforge/client/event/GuiOpenEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "rtg/event/EventHandlerCommon": {
+    "name": "rtg/event/EventHandlerCommon",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDecorateBiome(Lnet/minecraftforge/event/terraingen/DecorateBiomeEvent$Decorate;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "saplingGrowTreeRTG(Lnet/minecraftforge/event/terraingen/SaplingGrowTreeEvent;)V"
+      }
+    ]
+  },
+  "rtg/world/gen/ChunkGeneratorRTG": {
+    "name": "rtg/world/gen/ChunkGeneratorRTG",
+    "interfaces": [
+      "net/minecraft/world/gen/IChunkGenerator"
+    ]
+  },
+  "rtg/world/gen/package-info": {
+    "name": "rtg/world/gen/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "rtg/world/gen/package-info"
+      }
+    ]
+  },
+  "rtg/world/gen/structure/WoodlandMansionRTG": {
+    "name": "rtg/world/gen/structure/WoodlandMansionRTG",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "rtg/world/gen/structure/WoodlandMansionRTG"
+      }
+    ]
+  },
+  "rtg/world/package-info": {
+    "name": "rtg/world/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "rtg/world/package-info"
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern": [
+    "F F",
+    "FWF"
+    ],
+    
+    "key":
+    {
+        "F":
+        {
+            "item": "minecraft:spruce_fence"
+        },
+        
+        "W":
+        {
+            "item": "minecraft:wooden_slab",
+            "data": 1
+        }
+    },
+    
+    "result":
+    {
+        "item":  "mcwbridges:spruce_rail_bridge",
+        "count": 4
+    }
+}

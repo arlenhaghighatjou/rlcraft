@@ -1,0 +1,21 @@
+{
+  "parent": "armorunder:recipes/root",
+  "rewards": {
+    "recipes": [ "armorunder:cooling_goo" ]
+  },
+  "criteria": {
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+        "conditions": { "recipe": "armorunder:cooling_goo" }
+    },
+    "has_packed_ice": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [ {"item": "minecraft:packed_ice"} ]
+      }
+    }
+  },
+  "requirements": [
+    [ "has_the_recipe", "has_packed_ice" ]
+  ]
+}

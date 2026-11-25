@@ -1,0 +1,355 @@
+{
+  "mcjty/lostcities/ClientEventHandlers": {
+    "name": "mcjty/lostcities/ClientEventHandlers",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onFogEvent(Lnet/minecraftforge/client/event/EntityViewRenderEvent$FogColors;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onFogDensity(Lnet/minecraftforge/client/event/EntityViewRenderEvent$FogDensity;)V"
+      }
+    ]
+  },
+  "mcjty/lostcities/ForgeEventHandlers": {
+    "name": "mcjty/lostcities/ForgeEventHandlers",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCreateSpawnPoint(Lnet/minecraftforge/event/world/WorldEvent$CreateSpawnPosition;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerSleepInBedEvent(Lnet/minecraftforge/event/entity/player/PlayerSleepInBedEvent;)V"
+      }
+    ]
+  },
+  "mcjty/lostcities/LostCities": {
+    "name": "mcjty/lostcities/LostCities",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "mcjty/lostcities/LostCities",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12,1.13)"
+          },
+          "dependencies": {
+            "value": "after:forge@[13.19.0.2176,)"
+          },
+          "modid": {
+            "value": "lostcities"
+          },
+          "name": {
+            "value": "The Lost Cities"
+          },
+          "version": {
+            "value": "2.0.22"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "mcjty.lostcities.setup.ClientProxy"
+          },
+          "serverSide": {
+            "value": "mcjty.lostcities.setup.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "lostcities"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverLoad(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStopped(Lnet/minecraftforge/fml/common/event/FMLServerStoppedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "imcCallback(Lnet/minecraftforge/fml/common/event/FMLInterModComms$IMCEvent;)V"
+      }
+    ]
+  },
+  "mcjty/lostcities/LostCitiesImp": {
+    "name": "mcjty/lostcities/LostCitiesImp",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCities"
+    ]
+  },
+  "mcjty/lostcities/TerrainEventHandlers": {
+    "name": "mcjty/lostcities/TerrainEventHandlers",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCreateDecorate(Lnet/minecraftforge/event/terraingen/DecorateBiomeEvent$Decorate;)V"
+      }
+    ]
+  },
+  "mcjty/lostcities/api/ILostCityBuilding": {
+    "name": "mcjty/lostcities/api/ILostCityBuilding",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityAsset"
+    ]
+  },
+  "mcjty/lostcities/api/ILostCityCityStyle": {
+    "name": "mcjty/lostcities/api/ILostCityCityStyle",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityAsset"
+    ]
+  },
+  "mcjty/lostcities/api/ILostCityMultiBuilding": {
+    "name": "mcjty/lostcities/api/ILostCityMultiBuilding",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityAsset"
+    ]
+  },
+  "mcjty/lostcities/api/LostCityEvent$PreExplosionEvent": {
+    "name": "mcjty/lostcities/api/LostCityEvent$PreExplosionEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "mcjty/lostcities/api/LostCityEvent$PreExplosionEvent"
+      }
+    ]
+  },
+  "mcjty/lostcities/api/LostCityEvent$PreGenCityChunkEvent": {
+    "name": "mcjty/lostcities/api/LostCityEvent$PreGenCityChunkEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "mcjty/lostcities/api/LostCityEvent$PreGenCityChunkEvent"
+      }
+    ]
+  },
+  "mcjty/lostcities/commands/CommandBuildPart": {
+    "name": "mcjty/lostcities/commands/CommandBuildPart",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "mcjty/lostcities/commands/CommandDebug": {
+    "name": "mcjty/lostcities/commands/CommandDebug",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "mcjty/lostcities/commands/CommandExportBuilding": {
+    "name": "mcjty/lostcities/commands/CommandExportBuilding",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "mcjty/lostcities/commands/CommandExportPart": {
+    "name": "mcjty/lostcities/commands/CommandExportPart",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/LostCityChunkGenerator": {
+    "name": "mcjty/lostcities/dimensions/world/LostCityChunkGenerator",
+    "interfaces": [
+      "net/minecraft/world/gen/IChunkGenerator",
+      "mcjty/lostcities/api/ILostChunkGenerator"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/driver/OptimizedDriver": {
+    "name": "mcjty/lostcities/dimensions/world/driver/OptimizedDriver",
+    "interfaces": [
+      "mcjty/lostcities/dimensions/world/driver/IPrimerDriver"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/driver/OptimizedDriver$Index": {
+    "name": "mcjty/lostcities/dimensions/world/driver/OptimizedDriver$Index",
+    "interfaces": [
+      "mcjty/lostcities/dimensions/world/driver/IIndex"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/driver/SafeDriver": {
+    "name": "mcjty/lostcities/dimensions/world/driver/SafeDriver",
+    "interfaces": [
+      "mcjty/lostcities/dimensions/world/driver/IPrimerDriver"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/driver/SafeDriver$Index": {
+    "name": "mcjty/lostcities/dimensions/world/driver/SafeDriver$Index",
+    "interfaces": [
+      "mcjty/lostcities/dimensions/world/driver/IIndex"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/BuildingInfo": {
+    "name": "mcjty/lostcities/dimensions/world/lost/BuildingInfo",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostChunkInfo"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/BuildingInfo$2": {
+    "name": "mcjty/lostcities/dimensions/world/lost/BuildingInfo$2",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityInfo"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/CitySphere": {
+    "name": "mcjty/lostcities/dimensions/world/lost/CitySphere",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostSphere"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/Explosion": {
+    "name": "mcjty/lostcities/dimensions/world/lost/Explosion",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostExplosion"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/cityassets/AbstractAssetRegistry": {
+    "name": "mcjty/lostcities/dimensions/world/lost/cityassets/AbstractAssetRegistry",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityAssetRegistry"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/cityassets/Building": {
+    "name": "mcjty/lostcities/dimensions/world/lost/cityassets/Building",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityBuilding"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/cityassets/BuildingPart": {
+    "name": "mcjty/lostcities/dimensions/world/lost/cityassets/BuildingPart",
+    "interfaces": [
+      "mcjty/lostcities/dimensions/world/lost/cityassets/IBuildingPart",
+      "mcjty/lostcities/api/ILostCityAsset"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/cityassets/CityStyle": {
+    "name": "mcjty/lostcities/dimensions/world/lost/cityassets/CityStyle",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityCityStyle"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/cityassets/Condition": {
+    "name": "mcjty/lostcities/dimensions/world/lost/cityassets/Condition",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityAsset"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/cityassets/MultiBuilding": {
+    "name": "mcjty/lostcities/dimensions/world/lost/cityassets/MultiBuilding",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityMultiBuilding"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/cityassets/Palette": {
+    "name": "mcjty/lostcities/dimensions/world/lost/cityassets/Palette",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityAsset"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/cityassets/PredefinedCity": {
+    "name": "mcjty/lostcities/dimensions/world/lost/cityassets/PredefinedCity",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityAsset"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/cityassets/PredefinedSphere": {
+    "name": "mcjty/lostcities/dimensions/world/lost/cityassets/PredefinedSphere",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityAsset"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/cityassets/Style": {
+    "name": "mcjty/lostcities/dimensions/world/lost/cityassets/Style",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityAsset"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/lost/cityassets/WorldStyle": {
+    "name": "mcjty/lostcities/dimensions/world/lost/cityassets/WorldStyle",
+    "interfaces": [
+      "mcjty/lostcities/api/ILostCityAsset"
+    ]
+  },
+  "mcjty/lostcities/dimensions/world/terraingen/LostCitiesTerrainGenerator$Blob": {
+    "name": "mcjty/lostcities/dimensions/world/terraingen/LostCitiesTerrainGenerator$Blob",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "mcjty/lostcities/network/PacketRequestProfile": {
+    "name": "mcjty/lostcities/network/PacketRequestProfile",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "mcjty/lostcities/network/PacketRequestProfile$Handler": {
+    "name": "mcjty/lostcities/network/PacketRequestProfile$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "mcjty/lostcities/network/PacketReturnProfileToClient": {
+    "name": "mcjty/lostcities/network/PacketReturnProfileToClient",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "mcjty/lostcities/network/PacketReturnProfileToClient$Handler": {
+    "name": "mcjty/lostcities/network/PacketReturnProfileToClient$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "mcjty/lostcities/setup/ClientProxy": {
+    "name": "mcjty/lostcities/setup/ClientProxy",
+    "interfaces": [
+      "mcjty/lostcities/setup/IProxy"
+    ]
+  },
+  "mcjty/lostcities/setup/ServerProxy": {
+    "name": "mcjty/lostcities/setup/ServerProxy",
+    "interfaces": [
+      "mcjty/lostcities/setup/IProxy"
+    ]
+  }
+}

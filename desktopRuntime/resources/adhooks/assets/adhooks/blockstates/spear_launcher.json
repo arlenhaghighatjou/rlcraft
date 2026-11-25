@@ -1,0 +1,29 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"0": "blocks/concrete_powder_white",
+			"1": "blocks/concrete_powder_gray",
+			"4": "blocks/wool_colored_black",
+			"particle": "#0"
+		},
+		"model": "adhooks:launcher"
+	},
+	"variants": {
+		"normal": [
+			{
+				"submodel": "adhooks:spear_hook"
+			}
+		],
+		"empty": [
+			{
+				
+			}
+		],
+		"inventory": [
+			{
+				
+			}
+		]
+	}
+}

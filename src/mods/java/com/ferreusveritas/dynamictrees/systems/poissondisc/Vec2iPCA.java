@@ -1,0 +1,19 @@
+package com.ferreusveritas.dynamictrees.systems.poissondisc;
+
+public class Vec2iPCA extends Vec2i {
+   double radians;
+
+   public Vec2iPCA(int x, int z, boolean tight) {
+      super(x, z, tight);
+   }
+
+   public Vec2i set(int x, int z) {
+      super.set(x, z);
+      this.radians = super.angle();
+      return this;
+   }
+
+   public double angle() {
+      return this.radians;
+   }
+}

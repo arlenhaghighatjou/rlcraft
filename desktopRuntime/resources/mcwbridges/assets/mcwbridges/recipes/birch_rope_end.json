@@ -1,0 +1,32 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern": [
+    "S S",
+    "F F",
+    "WWW"
+    ],
+    
+    "key":
+    {
+        "F":
+        {
+            "item": "minecraft:birch_fence"
+        },
+        "S":
+        {
+            "item": "minecraft:string"
+        },        
+        "W":
+        {
+            "item": "minecraft:wooden_slab",
+            "data": 2
+        }
+    },
+    
+    "result":
+    {
+        "item":  "mcwbridges:rope_birch_bridge_end",
+        "count": 4
+    }
+}

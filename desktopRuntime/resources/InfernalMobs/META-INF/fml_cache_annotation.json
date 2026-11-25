@@ -1,0 +1,257 @@
+{
+  "atomicstryker/infernalmobs/client/InfernalMobsClient": {
+    "name": "atomicstryker/infernalmobs/client/InfernalMobsClient",
+    "interfaces": [
+      "atomicstryker/infernalmobs/common/ISidedProxy"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityJoinedWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPreRenderGameOverlay(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V"
+      }
+    ]
+  },
+  "atomicstryker/infernalmobs/client/InfernalMobsClient$1": {
+    "name": "atomicstryker/infernalmobs/client/InfernalMobsClient$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "atomicstryker/infernalmobs/client/RendererBossGlow": {
+    "name": "atomicstryker/infernalmobs/client/RendererBossGlow",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderWorldLast(Lnet/minecraftforge/client/event/RenderWorldLastEvent;)V"
+      }
+    ]
+  },
+  "atomicstryker/infernalmobs/common/EntityEventHandler": {
+    "name": "atomicstryker/infernalmobs/common/EntityEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityJoinedWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityLivingDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityLivingSetAttackTarget(Lnet/minecraftforge/event/entity/living/LivingSetAttackTargetEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityLivingAttacked(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityLivingHurt(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityLivingFall(Lnet/minecraftforge/event/entity/living/LivingFallEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityLivingJump(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingJumpEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityLivingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityLivingDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      }
+    ]
+  },
+  "atomicstryker/infernalmobs/common/InfernalMobsCore": {
+    "name": "atomicstryker/infernalmobs/common/InfernalMobsCore",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "atomicstryker/infernalmobs/common/InfernalMobsCore",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "infernalmobs"
+          },
+          "name": {
+            "value": "Infernal Mobs"
+          },
+          "version": {
+            "value": "1.7.6"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "infernalmobs"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "atomicstryker.infernalmobs.client.InfernalMobsClient"
+          },
+          "serverSide": {
+            "value": "atomicstryker.infernalmobs.common.InfernalMobsServer"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "load(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarted(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      }
+    ]
+  },
+  "atomicstryker/infernalmobs/common/InfernalMobsServer": {
+    "name": "atomicstryker/infernalmobs/common/InfernalMobsServer",
+    "interfaces": [
+      "atomicstryker/infernalmobs/common/ISidedProxy"
+    ]
+  },
+  "atomicstryker/infernalmobs/common/SaveEventHandler": {
+    "name": "atomicstryker/infernalmobs/common/SaveEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onChunkUnload(Lnet/minecraftforge/event/world/ChunkEvent$Unload;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onChunkLoad(Lnet/minecraftforge/event/world/ChunkEvent$Load;)V"
+      }
+    ]
+  },
+  "atomicstryker/infernalmobs/common/network/AirPacket": {
+    "name": "atomicstryker/infernalmobs/common/network/AirPacket",
+    "interfaces": [
+      "atomicstryker/infernalmobs/common/network/NetworkHelper$IPacket"
+    ]
+  },
+  "atomicstryker/infernalmobs/common/network/AirPacket$ScheduledCode": {
+    "name": "atomicstryker/infernalmobs/common/network/AirPacket$ScheduledCode",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "atomicstryker/infernalmobs/common/network/HealthPacket": {
+    "name": "atomicstryker/infernalmobs/common/network/HealthPacket",
+    "interfaces": [
+      "atomicstryker/infernalmobs/common/network/NetworkHelper$IPacket"
+    ]
+  },
+  "atomicstryker/infernalmobs/common/network/HealthPacket$ScheduledCode": {
+    "name": "atomicstryker/infernalmobs/common/network/HealthPacket$ScheduledCode",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "atomicstryker/infernalmobs/common/network/KnockBackPacket": {
+    "name": "atomicstryker/infernalmobs/common/network/KnockBackPacket",
+    "interfaces": [
+      "atomicstryker/infernalmobs/common/network/NetworkHelper$IPacket"
+    ]
+  },
+  "atomicstryker/infernalmobs/common/network/KnockBackPacket$ScheduledCode": {
+    "name": "atomicstryker/infernalmobs/common/network/KnockBackPacket$ScheduledCode",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "atomicstryker/infernalmobs/common/network/MobModsPacket": {
+    "name": "atomicstryker/infernalmobs/common/network/MobModsPacket",
+    "interfaces": [
+      "atomicstryker/infernalmobs/common/network/NetworkHelper$IPacket"
+    ]
+  },
+  "atomicstryker/infernalmobs/common/network/MobModsPacket$ScheduledCode": {
+    "name": "atomicstryker/infernalmobs/common/network/MobModsPacket$ScheduledCode",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "atomicstryker/infernalmobs/common/network/NetworkHelper$ChannelHandler": {
+    "name": "atomicstryker/infernalmobs/common/network/NetworkHelper$ChannelHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lio/netty/channel/ChannelHandler$Sharable;",
+        "target": "atomicstryker/infernalmobs/common/network/NetworkHelper$ChannelHandler"
+      }
+    ]
+  },
+  "atomicstryker/infernalmobs/common/network/VelocityPacket": {
+    "name": "atomicstryker/infernalmobs/common/network/VelocityPacket",
+    "interfaces": [
+      "atomicstryker/infernalmobs/common/network/NetworkHelper$IPacket"
+    ]
+  },
+  "atomicstryker/infernalmobs/common/network/VelocityPacket$ScheduledCode": {
+    "name": "atomicstryker/infernalmobs/common/network/VelocityPacket$ScheduledCode",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  }
+}

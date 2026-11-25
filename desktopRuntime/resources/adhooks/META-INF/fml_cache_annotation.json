@@ -1,0 +1,166 @@
+{
+  "com/endertech/minecraft/mods/adhooks/Main": {
+    "name": "com/endertech/minecraft/mods/adhooks/Main",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/endertech/minecraft/mods/adhooks/Main",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:forgeendertech@[1.12.2-4.5.6.0,)"
+          },
+          "modid": {
+            "value": "adhooks"
+          },
+          "name": {
+            "value": "Advanced Hook Launchers"
+          },
+          "version": {
+            "value": "1.12.2-3.3.1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "adhooks"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInitClient(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/mods/adhooks/forces/ForceController": {
+    "name": "com/endertech/minecraft/mods/adhooks/forces/ForceController",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/mods/adhooks/init/HookType": {
+    "name": "com/endertech/minecraft/mods/adhooks/init/HookType",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IForgeEnum"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/endertech/minecraft/mods/adhooks/init/HookType"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLoggedIn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "remapMissingItems(Lnet/minecraftforge/event/RegistryEvent$MissingMappings;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/mods/adhooks/items/Launcher": {
+    "name": "com/endertech/minecraft/mods/adhooks/items/Launcher",
+    "interfaces": [
+      "com/endertech/minecraft/forge/units/IUnitWithMeshDefinition"
+    ]
+  },
+  "com/endertech/minecraft/mods/adhooks/items/Launcher$Variants": {
+    "name": "com/endertech/minecraft/mods/adhooks/items/Launcher$Variants",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IForgeEnum"
+    ]
+  },
+  "com/endertech/minecraft/mods/adhooks/items/Rope": {
+    "name": "com/endertech/minecraft/mods/adhooks/items/Rope",
+    "interfaces": [
+      "com/endertech/minecraft/forge/configs/IHaveConfig"
+    ]
+  },
+  "com/endertech/minecraft/mods/adhooks/motion/MotionController": {
+    "name": "com/endertech/minecraft/mods/adhooks/motion/MotionController",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/endertech/minecraft/mods/adhooks/motion/MotionController"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/mods/adhooks/motion/realistic/RealisticController": {
+    "name": "com/endertech/minecraft/mods/adhooks/motion/realistic/RealisticController",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityJump(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingJumpEvent;)V"
+      }
+    ]
+  },
+  "com/endertech/minecraft/mods/adhooks/shot/HookShot": {
+    "name": "com/endertech/minecraft/mods/adhooks/shot/HookShot",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity",
+      "net/minecraft/entity/IProjectile"
+    ]
+  },
+  "com/endertech/minecraft/mods/adhooks/shot/HookShotRender$Factory": {
+    "name": "com/endertech/minecraft/mods/adhooks/shot/HookShotRender$Factory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{ "_comment": ["Lined boots to provide +1 warming" ],
+  "result": {
+    "item": "minecraft:leather_boots",
+    "nbt": {"carrots:ArmorTLining":"WARM"}
+  },
+  "type": "armorunder:lined_armor_shapeless",
+  "limit": "WARM",
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemBoots" },
+    { "item": "armorunder:warm_boots_liner" }
+  ]
+}

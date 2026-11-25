@@ -1,0 +1,13 @@
+package melonslise.locks.mixin;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityLockableLoot;
+import net.minecraft.util.NonNullList;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Invoker;
+
+@Mixin({TileEntityLockableLoot.class})
+public interface TileEntityLockableLootAccessor {
+   @Invoker("getItems")
+   NonNullList<ItemStack> getItems();
+}

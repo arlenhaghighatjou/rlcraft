@@ -1,0 +1,97 @@
+{
+  "com/teammetallurgy/aquaculture/Aquaculture": {
+    "name": "com/teammetallurgy/aquaculture/Aquaculture",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/teammetallurgy/aquaculture/Aquaculture",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "guiFactory": {
+            "value": "com.teammetallurgy.aquaculture.client.GuiFactory"
+          },
+          "modid": {
+            "value": "aquaculture"
+          },
+          "name": {
+            "value": "Aquaculture"
+          },
+          "version": {
+            "value": "1.6.8"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "aquaculture"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.teammetallurgy.aquaculture.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.teammetallurgy.aquaculture.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "load(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/teammetallurgy/aquaculture/client/CustomFishingHookRenderFactory": {
+    "name": "com/teammetallurgy/aquaculture/client/CustomFishingHookRenderFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/teammetallurgy/aquaculture/handlers/AquacultureRecipes": {
+    "name": "com/teammetallurgy/aquaculture/handlers/AquacultureRecipes",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/teammetallurgy/aquaculture/handlers/AquacultureRecipes"
+      }
+    ]
+  },
+  "com/teammetallurgy/aquaculture/handlers/Config": {
+    "name": "com/teammetallurgy/aquaculture/handlers/Config",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/teammetallurgy/aquaculture/handlers/Config"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigurationChangedEvent(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "com/teammetallurgy/aquaculture/handlers/EntityCustomFishHook": {
+    "name": "com/teammetallurgy/aquaculture/handlers/EntityCustomFishHook",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IThrowableEntity"
+    ]
+  }
+}

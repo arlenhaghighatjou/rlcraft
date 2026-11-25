@@ -1,0 +1,20 @@
+{
+    "variants": {
+        "damage=0": { "model": "variedcommodities:crystal_block" },
+        "damage=1": { "model": "variedcommodities:crystal_block" },
+        "damage=2": { "model": "variedcommodities:crystal_block" },
+        "damage=3": { "model": "variedcommodities:crystal_block" },
+        "damage=4": { "model": "variedcommodities:crystal_block" },
+        "damage=5": { "model": "variedcommodities:crystal_block" },
+        "damage=6": { "model": "variedcommodities:crystal_block" },
+        "damage=7": { "model": "variedcommodities:crystal_block" },
+        "damage=8": { "model": "variedcommodities:crystal_block" },
+        "damage=9": { "model": "variedcommodities:crystal_block" },
+        "damage=10": { "model": "variedcommodities:crystal_block" },
+        "damage=11": { "model": "variedcommodities:crystal_block" },
+        "damage=12": { "model": "variedcommodities:crystal_block" },
+        "damage=13": { "model": "variedcommodities:crystal_block" },
+        "damage=14": { "model": "variedcommodities:crystal_block" },
+        "damage=15": { "model": "variedcommodities:crystal_block" }
+    }
+}

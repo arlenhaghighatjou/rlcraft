@@ -1,0 +1,711 @@
+{
+  "gigaherz/toolbelt/BeltFinderBaubles": {
+    "name": "gigaherz/toolbelt/BeltFinderBaubles",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "initBaubles(Lnet/minecraftforge/common/capabilities/Capability;)V",
+        "value": {
+          "type": "CLASS",
+          "value": "Lbaubles/api/cap/IBaublesItemHandler;"
+        }
+      }
+    ]
+  },
+  "gigaherz/toolbelt/BeltFinderBaubles$BaublesBeltGetter": {
+    "name": "gigaherz/toolbelt/BeltFinderBaubles$BaublesBeltGetter",
+    "interfaces": [
+      "gigaherz/toolbelt/BeltFinder$BeltGetter"
+    ]
+  },
+  "gigaherz/toolbelt/BeltFinderBeltSlot": {
+    "name": "gigaherz/toolbelt/BeltFinderBeltSlot",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "initBaubles(Lnet/minecraftforge/common/capabilities/Capability;)V",
+        "value": {
+          "type": "CLASS",
+          "value": "Lgigaherz/toolbelt/slot/ExtensionSlotBelt;"
+        }
+      }
+    ]
+  },
+  "gigaherz/toolbelt/BeltFinderBeltSlot$ExtensionSlotBeltGetter": {
+    "name": "gigaherz/toolbelt/BeltFinderBeltSlot$ExtensionSlotBeltGetter",
+    "interfaces": [
+      "gigaherz/toolbelt/BeltFinder$BeltGetter"
+    ]
+  },
+  "gigaherz/toolbelt/Config": {
+    "name": "gigaherz/toolbelt/Config",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "gigaherz/toolbelt/Config"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChange(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/Config$CustomBeltSlotMode": {
+    "name": "gigaherz/toolbelt/Config$CustomBeltSlotMode",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "gigaherz/toolbelt/ToolBelt": {
+    "name": "gigaherz/toolbelt/ToolBelt",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "gigaherz/toolbelt/ToolBelt"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "gigaherz/toolbelt/ToolBelt",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.0,1.13.0)"
+          },
+          "dependencies": {
+            "value": "after:baubles;after:jei@[4.6,)"
+          },
+          "guiFactory": {
+            "value": "gigaherz.toolbelt.client.config.ConfigGuiFactory"
+          },
+          "modid": {
+            "value": "toolbelt"
+          },
+          "version": {
+            "value": "1.9.14"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "toolbelt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "gigaherz.toolbelt.client.ClientProxy"
+          },
+          "serverSide": {
+            "value": "gigaherz.toolbelt.server.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "anvilChange(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/belt/ItemToolBelt": {
+    "name": "gigaherz/toolbelt/belt/ItemToolBelt",
+    "interfaces": [
+      "baubles/api/IBauble",
+      "gigaherz/toolbelt/customslots/IExtensionSlotItem"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "gigaherz/toolbelt/belt/ItemToolBelt",
+        "values": {
+          "iface": {
+            "value": "baubles.api.IBauble"
+          },
+          "modid": {
+            "value": "baubles"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "ITEM_HANDLER",
+        "value": {
+          "type": "CLASS",
+          "value": "Lnet/minecraftforge/items/IItemHandler;"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "EXTENSION_SLOT_ITEM",
+        "value": {
+          "type": "CLASS",
+          "value": "Lgigaherz/toolbelt/customslots/IExtensionSlotItem;"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "getBaubleType(Lnet/minecraft/item/ItemStack;)Lbaubles/api/BaubleType;",
+        "values": {
+          "modid": {
+            "value": "baubles"
+          }
+        }
+      }
+    ]
+  },
+  "gigaherz/toolbelt/belt/ItemToolBelt$1": {
+    "name": "gigaherz/toolbelt/belt/ItemToolBelt$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "gigaherz/toolbelt/belt/ItemToolBelt$BeltExtensionContainer": {
+    "name": "gigaherz/toolbelt/belt/ItemToolBelt$BeltExtensionContainer",
+    "interfaces": [
+      "gigaherz/toolbelt/customslots/IExtensionContainer"
+    ]
+  },
+  "gigaherz/toolbelt/belt/ToolBeltInventory": {
+    "name": "gigaherz/toolbelt/belt/ToolBeltInventory",
+    "interfaces": [
+      "net/minecraftforge/items/IItemHandlerModifiable"
+    ]
+  },
+  "gigaherz/toolbelt/belt/package-info": {
+    "name": "gigaherz/toolbelt/belt/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "gigaherz/toolbelt/belt/package-info"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/client/ClientProxy": {
+    "name": "gigaherz/toolbelt/client/ClientProxy",
+    "interfaces": [
+      "gigaherz/toolbelt/ISideProxy"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "gigaherz/toolbelt/client/ClientProxy",
+        "value": {
+          "type": "ENUM",
+          "values": [
+            "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "textureStitch(Lnet/minecraftforge/client/event/TextureStitchEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "handleKeys(Lnet/minecraftforge/fml/common/gameevent/InputEvent;)V"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/client/GuiRadialMenu": {
+    "name": "gigaherz/toolbelt/client/GuiRadialMenu",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "gigaherz/toolbelt/client/GuiRadialMenu",
+        "value": {
+          "type": "ENUM",
+          "values": [
+            "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "overlayEvent(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/client/LayerToolBelt": {
+    "name": "gigaherz/toolbelt/client/LayerToolBelt",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "gigaherz/toolbelt/client/config/ConfigGuiFactory": {
+    "name": "gigaherz/toolbelt/client/config/ConfigGuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "gigaherz/toolbelt/client/package-info": {
+    "name": "gigaherz/toolbelt/client/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "gigaherz/toolbelt/client/package-info"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/common/BeltEvents": {
+    "name": "gigaherz/toolbelt/common/BeltEvents",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "gigaherz/toolbelt/common/BeltEvents"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "startTracking(Lnet/minecraftforge/event/entity/player/PlayerEvent$StartTracking;)V"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/common/GuiBeltSlot": {
+    "name": "gigaherz/toolbelt/common/GuiBeltSlot",
+    "interfaces": [
+      "net/minecraft/client/gui/recipebook/IRecipeShownListener"
+    ]
+  },
+  "gigaherz/toolbelt/common/GuiHandler": {
+    "name": "gigaherz/toolbelt/common/GuiHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "gigaherz/toolbelt/common/SlotBelt$1": {
+    "name": "gigaherz/toolbelt/common/SlotBelt$1",
+    "interfaces": [
+      "net/minecraft/inventory/IInventory"
+    ]
+  },
+  "gigaherz/toolbelt/common/package-info": {
+    "name": "gigaherz/toolbelt/common/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "gigaherz/toolbelt/common/package-info"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/customslots/CapabilityExtensionSlotItem": {
+    "name": "gigaherz/toolbelt/customslots/CapabilityExtensionSlotItem",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "INSTANCE",
+        "value": {
+          "type": "CLASS",
+          "value": "Lgigaherz/toolbelt/customslots/IExtensionSlotItem;"
+        }
+      }
+    ]
+  },
+  "gigaherz/toolbelt/customslots/CapabilityExtensionSlotItem$DefaultImplementation": {
+    "name": "gigaherz/toolbelt/customslots/CapabilityExtensionSlotItem$DefaultImplementation",
+    "interfaces": [
+      "gigaherz/toolbelt/customslots/IExtensionSlotItem"
+    ]
+  },
+  "gigaherz/toolbelt/customslots/CapabilityExtensionSlotItem$Storage": {
+    "name": "gigaherz/toolbelt/customslots/CapabilityExtensionSlotItem$Storage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "gigaherz/toolbelt/customslots/ExtensionSlotItemHandler": {
+    "name": "gigaherz/toolbelt/customslots/ExtensionSlotItemHandler",
+    "interfaces": [
+      "gigaherz/toolbelt/customslots/IExtensionSlot"
+    ]
+  },
+  "gigaherz/toolbelt/customslots/example/RpgEquipment": {
+    "name": "gigaherz/toolbelt/customslots/example/RpgEquipment",
+    "interfaces": [
+      "gigaherz/toolbelt/customslots/IExtensionContainer",
+      "net/minecraftforge/common/util/INBTSerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Lgigaherz/toolbelt/customslots/example/RpgEquipment;"
+        }
+      }
+    ]
+  },
+  "gigaherz/toolbelt/customslots/example/RpgEquipment$1": {
+    "name": "gigaherz/toolbelt/customslots/example/RpgEquipment$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "gigaherz/toolbelt/customslots/example/RpgEquipment$EventHandlers": {
+    "name": "gigaherz/toolbelt/customslots/example/RpgEquipment$EventHandlers",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/customslots/example/RpgEquipment$EventHandlers$1": {
+    "name": "gigaherz/toolbelt/customslots/example/RpgEquipment$EventHandlers$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "gigaherz/toolbelt/customslots/example/VanillaLivingEquipment": {
+    "name": "gigaherz/toolbelt/customslots/example/VanillaLivingEquipment",
+    "interfaces": [
+      "gigaherz/toolbelt/customslots/IExtensionContainer"
+    ]
+  },
+  "gigaherz/toolbelt/customslots/example/VanillaLivingEquipment$Slot": {
+    "name": "gigaherz/toolbelt/customslots/example/VanillaLivingEquipment$Slot",
+    "interfaces": [
+      "gigaherz/toolbelt/customslots/IExtensionSlot"
+    ]
+  },
+  "gigaherz/toolbelt/integration/JeiPlugin": {
+    "name": "gigaherz/toolbelt/integration/JeiPlugin",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "gigaherz/toolbelt/integration/JeiPlugin"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/integration/package-info": {
+    "name": "gigaherz/toolbelt/integration/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "gigaherz/toolbelt/integration/package-info"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/network/BeltContentsChange": {
+    "name": "gigaherz/toolbelt/network/BeltContentsChange",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "gigaherz/toolbelt/network/BeltContentsChange$Handler": {
+    "name": "gigaherz/toolbelt/network/BeltContentsChange$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "gigaherz/toolbelt/network/OpenBeltSlotInventory": {
+    "name": "gigaherz/toolbelt/network/OpenBeltSlotInventory",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "gigaherz/toolbelt/network/OpenBeltSlotInventory$Handler": {
+    "name": "gigaherz/toolbelt/network/OpenBeltSlotInventory$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "gigaherz/toolbelt/network/SwapItems": {
+    "name": "gigaherz/toolbelt/network/SwapItems",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "gigaherz/toolbelt/network/SwapItems$Handler": {
+    "name": "gigaherz/toolbelt/network/SwapItems$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "gigaherz/toolbelt/network/SyncBeltSlotContents": {
+    "name": "gigaherz/toolbelt/network/SyncBeltSlotContents",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "gigaherz/toolbelt/network/SyncBeltSlotContents$Handler": {
+    "name": "gigaherz/toolbelt/network/SyncBeltSlotContents$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "gigaherz/toolbelt/network/package-info": {
+    "name": "gigaherz/toolbelt/network/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "gigaherz/toolbelt/network/package-info"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/package-info": {
+    "name": "gigaherz/toolbelt/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "gigaherz/toolbelt/package-info"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/server/ServerProxy": {
+    "name": "gigaherz/toolbelt/server/ServerProxy",
+    "interfaces": [
+      "gigaherz/toolbelt/ISideProxy"
+    ]
+  },
+  "gigaherz/toolbelt/server/package-info": {
+    "name": "gigaherz/toolbelt/server/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "gigaherz/toolbelt/server/package-info"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/shadow/commons/client/ModelHandle$1": {
+    "name": "gigaherz/toolbelt/shadow/commons/client/ModelHandle$1",
+    "interfaces": [
+      "net/minecraft/client/resources/IResourceManagerReloadListener"
+    ]
+  },
+  "gigaherz/toolbelt/shadow/commons/client/package-info": {
+    "name": "gigaherz/toolbelt/shadow/commons/client/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "gigaherz/toolbelt/shadow/commons/client/package-info"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/shadow/commons/package-info": {
+    "name": "gigaherz/toolbelt/shadow/commons/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "gigaherz/toolbelt/shadow/commons/package-info"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/shadow/commons/state/ItemBlockStateful": {
+    "name": "gigaherz/toolbelt/shadow/commons/state/ItemBlockStateful",
+    "interfaces": [
+      "gigaherz/toolbelt/shadow/commons/state/StatefulItem"
+    ]
+  },
+  "gigaherz/toolbelt/shadow/commons/state/ItemStateful": {
+    "name": "gigaherz/toolbelt/shadow/commons/state/ItemStateful",
+    "interfaces": [
+      "gigaherz/toolbelt/shadow/commons/state/StatefulItem"
+    ]
+  },
+  "gigaherz/toolbelt/shadow/commons/state/client/ItemStateMapper": {
+    "name": "gigaherz/toolbelt/shadow/commons/state/client/ItemStateMapper",
+    "interfaces": [
+      "net/minecraft/client/renderer/ItemMeshDefinition"
+    ]
+  },
+  "gigaherz/toolbelt/shadow/commons/state/client/package-info": {
+    "name": "gigaherz/toolbelt/shadow/commons/state/client/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "gigaherz/toolbelt/shadow/commons/state/client/package-info"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/shadow/commons/state/implementation/ItemStateManager": {
+    "name": "gigaherz/toolbelt/shadow/commons/state/implementation/ItemStateManager",
+    "interfaces": [
+      "gigaherz/toolbelt/shadow/commons/state/IItemStateManager"
+    ]
+  },
+  "gigaherz/toolbelt/shadow/commons/state/implementation/ItemStateManager$ItemState": {
+    "name": "gigaherz/toolbelt/shadow/commons/state/implementation/ItemStateManager$ItemState",
+    "interfaces": [
+      "gigaherz/toolbelt/shadow/commons/state/IItemState"
+    ]
+  },
+  "gigaherz/toolbelt/shadow/commons/state/implementation/package-info": {
+    "name": "gigaherz/toolbelt/shadow/commons/state/implementation/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "gigaherz/toolbelt/shadow/commons/state/implementation/package-info"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/shadow/commons/state/package-info": {
+    "name": "gigaherz/toolbelt/shadow/commons/state/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "gigaherz/toolbelt/shadow/commons/state/package-info"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/slot/ExtensionSlotBelt": {
+    "name": "gigaherz/toolbelt/slot/ExtensionSlotBelt",
+    "interfaces": [
+      "gigaherz/toolbelt/customslots/IExtensionContainer",
+      "net/minecraftforge/common/util/INBTSerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Lgigaherz/toolbelt/slot/ExtensionSlotBelt;"
+        }
+      }
+    ]
+  },
+  "gigaherz/toolbelt/slot/ExtensionSlotBelt$1": {
+    "name": "gigaherz/toolbelt/slot/ExtensionSlotBelt$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "gigaherz/toolbelt/slot/ExtensionSlotBelt$AttachHandlers": {
+    "name": "gigaherz/toolbelt/slot/ExtensionSlotBelt$AttachHandlers",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/slot/ExtensionSlotBelt$AttachHandlers$1": {
+    "name": "gigaherz/toolbelt/slot/ExtensionSlotBelt$AttachHandlers$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "gigaherz/toolbelt/slot/ExtensionSlotBelt$EventHandlers": {
+    "name": "gigaherz/toolbelt/slot/ExtensionSlotBelt$EventHandlers",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "joinWorld(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "joinWorld(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerChangedDimensionEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "track(Lnet/minecraftforge/event/entity/player/PlayerEvent$StartTracking;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerDeath(Lnet/minecraftforge/event/entity/player/PlayerDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerClone(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V"
+      }
+    ]
+  },
+  "gigaherz/toolbelt/slot/ExtensionSlotBelt$EventHandlers$Disabled": {
+    "name": "gigaherz/toolbelt/slot/ExtensionSlotBelt$EventHandlers$Disabled",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  }
+}

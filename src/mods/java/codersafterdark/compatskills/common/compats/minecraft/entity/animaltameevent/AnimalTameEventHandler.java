@@ -1,0 +1,36 @@
+package codersafterdark.compatskills.common.compats.minecraft.entity.animaltameevent;
+
+import codersafterdark.compatskills.utils.Utils;
+import codersafterdark.reskillable.api.data.PlayerData;
+import codersafterdark.reskillable.api.data.PlayerDataHandler;
+import codersafterdark.reskillable.api.data.RequirementHolder;
+import codersafterdark.reskillable.base.LevelLockHandler;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.event.entity.living.AnimalTameEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+public class AnimalTameEventHandler {
+   public AnimalTameEventHandler() {
+   }
+
+   @SubscribeEvent(
+      priority = EventPriority.HIGH
+   )
+   public void onTame(AnimalTameEvent event) {
+      if (!event.isCanceled()) {
+         EntityPlayer player = event.getTamer();
+         if (!Utils.skipPlayer(player)) {
+            PlayerData data = PlayerDataHandler.get(player);
+            RequirementHolder requirementHolder = LevelLockHandler.getLockByKey(new EntityTameKey(event.getAnimal()));
+            if (!requirementHolder.equals(LevelLockHandler.EMPTY_LOCK) && !data.matchStats(requirementHolder)) {
+               event.setCanceled(true);
+               TextComponentTranslation error = new TextComponentTranslation("compatskills.error.entity.tame", new Object[0]);
+               player.sendStatusMessage(Utils.getError(requirementHolder, data, error), false);
+            }
+
+         }
+      }
+   }
+}

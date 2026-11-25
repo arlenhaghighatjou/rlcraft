@@ -1,0 +1,45 @@
+package com.lycanitesmobs.core.entity.goals.targeting;
+
+import com.lycanitesmobs.core.entity.BaseCreatureEntity;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.village.Village;
+
+public class DefendVillageGoal extends FindAttackTargetGoal {
+   protected Village village;
+
+   public DefendVillageGoal(BaseCreatureEntity setHost) {
+      super(setHost);
+      this.setMutexBits(1);
+   }
+
+   public boolean shouldExecute() {
+      if (this.host.getOwner() != null) {
+         return false;
+      } else {
+         if (this.village == null) {
+            this.village = this.host.getEntityWorld().getVillageCollection().getNearestVillage(new BlockPos(this.host), 32);
+         }
+
+         if (this.village == null) {
+            return false;
+         } else {
+            this.target = this.village.findNearestVillageAggressor(this.host);
+            if (this.target instanceof EntityCreeper) {
+               return false;
+            } else if (this.isEntityTargetable(this.target, false)) {
+               return true;
+            } else if (this.host.getRNG().nextInt(20) == 0) {
+               this.target = this.village.getNearestTargetPlayer(this.host);
+               return this.isEntityTargetable(this.target, false);
+            } else {
+               return false;
+            }
+         }
+      }
+   }
+
+   public void startExecuting() {
+      super.startExecuting();
+   }
+}

@@ -1,0 +1,196 @@
+{
+  "shadows/placebo/Placebo": {
+    "name": "shadows/placebo/Placebo",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "shadows/placebo/Placebo",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "placebo"
+          },
+          "name": {
+            "value": "Placebo"
+          },
+          "version": {
+            "value": "1.6.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "PROXY",
+        "values": {
+          "clientSide": {
+            "value": "shadows.placebo.ClientProxy"
+          },
+          "serverSide": {
+            "value": "shadows.placebo.Proxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "shadows/placebo/block/BlockBasic": {
+    "name": "shadows/placebo/block/BlockBasic",
+    "interfaces": [
+      "shadows/placebo/client/IHasModel",
+      "shadows/placebo/interfaces/IItemBlock"
+    ]
+  },
+  "shadows/placebo/block/BlockEnum": {
+    "name": "shadows/placebo/block/BlockEnum",
+    "interfaces": [
+      "shadows/placebo/block/IEnumBlock"
+    ]
+  },
+  "shadows/placebo/block/IEnumBlock": {
+    "name": "shadows/placebo/block/IEnumBlock",
+    "interfaces": [
+      "shadows/placebo/block/IEnumBlockAccess",
+      "shadows/placebo/interfaces/ISpecialPlacement",
+      "shadows/placebo/interfaces/IItemBlock"
+    ]
+  },
+  "shadows/placebo/client/RenamedStateMapper": {
+    "name": "shadows/placebo/client/RenamedStateMapper",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/statemap/IStateMapper"
+    ]
+  },
+  "shadows/placebo/interfaces/IFlowerEnum": {
+    "name": "shadows/placebo/interfaces/IFlowerEnum",
+    "interfaces": [
+      "shadows/placebo/interfaces/IPropertyEnum"
+    ]
+  },
+  "shadows/placebo/interfaces/IHarvestableEnum": {
+    "name": "shadows/placebo/interfaces/IHarvestableEnum",
+    "interfaces": [
+      "shadows/placebo/interfaces/IPropertyEnum"
+    ]
+  },
+  "shadows/placebo/interfaces/IPlankEnum": {
+    "name": "shadows/placebo/interfaces/IPlankEnum",
+    "interfaces": [
+      "shadows/placebo/interfaces/IPropertyEnum"
+    ]
+  },
+  "shadows/placebo/interfaces/IPropertyEnum": {
+    "name": "shadows/placebo/interfaces/IPropertyEnum",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "shadows/placebo/interfaces/ITreeEnum": {
+    "name": "shadows/placebo/interfaces/ITreeEnum",
+    "interfaces": [
+      "shadows/placebo/interfaces/IPropertyEnum"
+    ]
+  },
+  "shadows/placebo/item/ItemAxeBase": {
+    "name": "shadows/placebo/item/ItemAxeBase",
+    "interfaces": [
+      "shadows/placebo/client/IHasModel"
+    ]
+  },
+  "shadows/placebo/item/ItemBase": {
+    "name": "shadows/placebo/item/ItemBase",
+    "interfaces": [
+      "shadows/placebo/client/IHasModel"
+    ]
+  },
+  "shadows/placebo/item/ItemHoeBase": {
+    "name": "shadows/placebo/item/ItemHoeBase",
+    "interfaces": [
+      "shadows/placebo/client/IHasModel"
+    ]
+  },
+  "shadows/placebo/item/ItemPickaxeBase": {
+    "name": "shadows/placebo/item/ItemPickaxeBase",
+    "interfaces": [
+      "shadows/placebo/client/IHasModel"
+    ]
+  },
+  "shadows/placebo/item/ItemShovelBase": {
+    "name": "shadows/placebo/item/ItemShovelBase",
+    "interfaces": [
+      "shadows/placebo/client/IHasModel"
+    ]
+  },
+  "shadows/placebo/item/ItemSwordBase": {
+    "name": "shadows/placebo/item/ItemSwordBase",
+    "interfaces": [
+      "shadows/placebo/client/IHasModel"
+    ]
+  },
+  "shadows/placebo/loot/PlaceboLootSystem": {
+    "name": "shadows/placebo/loot/PlaceboLootSystem",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "loadTables(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      }
+    ]
+  },
+  "shadows/placebo/patreon/PatreonManager": {
+    "name": "shadows/placebo/patreon/PatreonManager",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "shadows/placebo/patreon/PatreonManager",
+        "values": {
+          "modid": {
+            "value": "placebo"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "init(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "shadows/placebo/util/AdvancementHelper": {
+    "name": "shadows/placebo/util/AdvancementHelper",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "worldServerCaps(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      }
+    ]
+  }
+}

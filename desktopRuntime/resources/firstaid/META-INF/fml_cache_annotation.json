@@ -1,0 +1,2296 @@
+{
+  "com/creativemd/playerrevive/api/IRevival": {
+    "name": "com/creativemd/playerrevive/api/IRevival",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "com/creativemd/playerrevive/api/capability/CapaRevive": {
+    "name": "com/creativemd/playerrevive/api/capability/CapaRevive",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "reviveCapa",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/creativemd/playerrevive/api/IRevival;"
+        }
+      }
+    ]
+  },
+  "com/creativemd/playerrevive/api/capability/CapaRevive$DefaultImpl": {
+    "name": "com/creativemd/playerrevive/api/capability/CapaRevive$DefaultImpl",
+    "interfaces": [
+      "com/creativemd/playerrevive/api/IRevival"
+    ]
+  },
+  "com/creativemd/playerrevive/api/capability/CapaReviveStorage": {
+    "name": "com/creativemd/playerrevive/api/capability/CapaReviveStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/creativemd/playerrevive/api/package-info": {
+    "name": "com/creativemd/playerrevive/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "com/creativemd/playerrevive/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "3"
+          },
+          "owner": {
+            "value": "playerrevive"
+          },
+          "provides": {
+            "value": "PlayerReviveAPI"
+          }
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAid": {
+    "name": "ichttt/mods/firstaid/FirstAid",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "ichttt/mods/firstaid/FirstAid",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2,1.13)"
+          },
+          "certificateFingerprint": {
+            "value": "7904c4e13947c8a616c5f39b26bdeba796500722"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2803,);"
+          },
+          "guiFactory": {
+            "value": "ichttt.mods.firstaid.client.config.GuiFactory"
+          },
+          "modid": {
+            "value": "firstaid"
+          },
+          "name": {
+            "value": "First Aid"
+          },
+          "version": {
+            "value": "1.6.22"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "ichttt.mods.firstaid.client.ClientProxy"
+          },
+          "serverSide": {
+            "value": "ichttt.mods.firstaid.server.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "loadComplete(Lnet/minecraftforge/fml/common/event/FMLLoadCompleteEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "wrongFingerprint(Lnet/minecraftforge/fml/common/event/FMLFingerprintViolationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "beforeServerStart(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onServerStop(Lnet/minecraftforge/fml/common/event/FMLServerStoppedEvent;)V"
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAid$2": {
+    "name": "ichttt/mods/firstaid/FirstAid$2",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "ichttt/mods/firstaid/FirstAidConfig",
+        "values": {
+          "modid": {
+            "value": "firstaid"
+          },
+          "name": {
+            "value": "firstaid"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig;",
+        "target": "ichttt/mods/firstaid/FirstAidConfig"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "damageSystem",
+        "value": {
+          "values": [
+            "Settings regarding the max health of the body\u0027s parts. 2 \u003d 1 heart"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "damageSystem",
+        "value": {
+          "value": "firstaid.config.damagesystem"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "damageSystem"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Sync;",
+        "target": "damageSystem"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "overlay",
+        "value": {
+          "values": [
+            "Settings regarding the health overlay when ingame"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "overlay",
+        "value": {
+          "value": "firstaid.config.overlay"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "internalHealing",
+        "value": {
+          "values": [
+            "Settings regarding the internal healing system"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "internalHealing",
+        "value": {
+          "value": "firstaid.config.internalhealing"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "internalHealing"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Sync;",
+        "target": "internalHealing"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "externalHealing",
+        "value": {
+          "values": [
+            "Settings regarding external healing system(like vanilla potions or natural regeneration"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "externalHealing",
+        "value": {
+          "value": "firstaid.config.externalhealing"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "externalHealing"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Sync;",
+        "target": "externalHealing"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "debuffs",
+        "value": {
+          "values": [
+            "Enable/Disable specify debuffs on specific body parts"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "debuffs",
+        "value": {
+          "value": "firstaid.config.debuffs"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "debuffs"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "locationalArmor",
+        "value": {
+          "values": [
+            "Specify how the locational armor is calculated"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "locationalArmor",
+        "value": {
+          "value": "firstaid.config.locationalarmor"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "locationalArmor"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "locationalArmor"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Sync;",
+        "target": "locationalArmor"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enchantmentHandling",
+        "value": {
+          "values": [
+            "Specify how enchantments are applied"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "enchantmentHandling",
+        "value": {
+          "value": "firstaid.config.enchantmenthandling"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "enchantmentHandling"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Sync;",
+        "target": "enchantmentHandling"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableSoundSystem",
+        "value": {
+          "values": [
+            "Set to true to enable the debuff sounds. Requieres enableDebuffs to be true"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "enableSoundSystem",
+        "value": {
+          "value": "firstaid.config.enablesoundsystem"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "enableSoundSystem"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "scaleMaxHealth",
+        "value": {
+          "values": [
+            "If true, max health is scaled to your hearts, and the config entries get multiplier to match the max health"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "scaleMaxHealth",
+        "value": {
+          "value": "firstaid.config.scalemaxhealth"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "scaleMaxHealth"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Sync;",
+        "target": "scaleMaxHealth"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "capMaxHealth",
+        "value": {
+          "values": [
+            "If true, max health will be capped at 6 hearts and absorption at 2 hearts per limb. If false, the health cap will be much higher (64 hearts normal and 16 absorption)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "capMaxHealth",
+        "value": {
+          "value": "firstaid.config.capmaxhealth"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "capMaxHealth"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Sync;",
+        "target": "capMaxHealth"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "watchSetHealth",
+        "value": {
+          "values": [
+            "If true, all usages of setHealth from other mods will be captured. Should not cause any problems, but allow mods like scaling health bandages to apply"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "watchSetHealth",
+        "value": {
+          "value": "firstaid.config.sethealth"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "watchSetHealth"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "hardMode",
+        "value": {
+          "values": [
+            "If true, many damage distributions will be more realistic, but this will also cause them to be harder\nIf enabled, e.g. drowing will only damage your body instead of your body and head last"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "hardMode",
+        "value": {
+          "value": "firstaid.config.hardmode"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "hardMode"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "vanillaHealthCalculation",
+        "value": {
+          "values": [
+            "Specifies how the vanilla health is calculated. Affects the vanilla visual health bar, as well as the value other mods get to see when they query the player health.\nAVERAGE_ALL simply takes all limbs and calculates the average of it.\nAVERAGE_CRITICAL takes all critical limbs and calculates the average of it\nMIN_CRITICAl takes the smallest health value of all critical limb\nDoes not have any effect if all critical limbs have been disabled."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "vanillaHealthCalculation"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Sync;",
+        "target": "vanillaHealthCalculation"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "useFriendlyRandomDistribution",
+        "value": {
+          "values": [
+            "Only effects the fallback random distribution.\nIf enabled, the default random damage distribution will be changed to leave critical limbs at 1hp if possible.\nWhen there is too much damage, the damage will still kill the player. Other distributions that defined are not affected by this."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "debug",
+        "value": {
+          "values": [
+            "Enabled additional debug logs - May slow down the game and will increase log file size\nOnly enable for special purposes"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "debug",
+        "value": {
+          "value": "firstaid.config.debug"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "debug"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "debug"
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$DamageSystem": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$DamageSystem",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "maxHealthHead",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "12"
+          },
+          "min": {
+            "type": "INT",
+            "value": "2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "causeDeathHead"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "maxHealthLeftArm",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "12"
+          },
+          "min": {
+            "type": "INT",
+            "value": "2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "maxHealthLeftLeg",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "12"
+          },
+          "min": {
+            "type": "INT",
+            "value": "2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "maxHealthLeftFoot",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "12"
+          },
+          "min": {
+            "type": "INT",
+            "value": "2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "maxHealthBody",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "12"
+          },
+          "min": {
+            "type": "INT",
+            "value": "2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "causeDeathBody"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "maxHealthRightArm",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "12"
+          },
+          "min": {
+            "type": "INT",
+            "value": "2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "maxHealthRightLeg",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "12"
+          },
+          "min": {
+            "type": "INT",
+            "value": "2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "maxHealthRightFoot",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "12"
+          },
+          "min": {
+            "type": "INT",
+            "value": "2"
+          }
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$Debuffs$Arms": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$Debuffs$Arms",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "miningFatigueConditions",
+        "value": {
+          "values": [
+            "Holds the information how the debuff should be applied at different health left. Only use this if you know what you are doing."
+          ]
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$Debuffs$Body": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$Debuffs$Body",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "nauseaConditions",
+        "value": {
+          "values": [
+            "Holds the information how the debuff should be applied at different damage taken. Only use this if you know what you are doing."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "weaknessConditions",
+        "value": {
+          "values": [
+            "Holds the information how the debuff should be applied at different health left. Only use this if you know what you are doing."
+          ]
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$Debuffs$ConditionConstant": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$Debuffs$ConditionConstant",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "healthPercentageLeft"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "healthPercentageLeft",
+        "value": {
+          "values": [
+            "How much health the user must have left for the debuff to apply at the mapped length. Must be sorted so the **lowest** value comes first"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "healthPercentageLeft",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "debuffStrength"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "debuffStrength",
+        "value": {
+          "values": [
+            "How strong the potion effect should stay. If the first condition from the healthPercentageLeft config is met, the first value in this list will be taken"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "debuffStrength",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "127"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$Debuffs$ConditionOnHit": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$Debuffs$ConditionOnHit",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "damageTaken"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "damageTaken",
+        "value": {
+          "values": [
+            "How much damage the user must have taken for the debuff to apply at the mapped length. Must be sorted so the **highest** value comes first. 2 \u003d 1 heart"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "damageTaken",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "10.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "debuffLength"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "debuffLength",
+        "value": {
+          "values": [
+            "How long the debuff should stay. If the first condition from the damageTaken config is met, the first value in this list will be taken"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "debuffLength",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "32767"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$Debuffs$Head": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$Debuffs$Head",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "blindnessConditions",
+        "value": {
+          "values": [
+            "Holds the information how the debuff should be applied at different damage taken. Only use this if you know what you are doing."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "nauseaConditions",
+        "value": {
+          "values": [
+            "Holds the information how the debuff should be applied at different damage taken. Only use this if you know what you are doing."
+          ]
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$Debuffs$LegsAndFeet": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$Debuffs$LegsAndFeet",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "slownessConditions",
+        "value": {
+          "values": [
+            "Holds the information how the debuff should be applied at different health left. Only use this if you know what you are doing."
+          ]
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$EnchantmentHandling": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$EnchantmentHandling",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "armorEnchantmentMode",
+        "value": {
+          "values": [
+            "If set to LOCAL_ENCHANTMENTS, only the enchantments for the armor for the body part that is currently being damaged is taken into account. The strength of the armor is multiplied by 4, so it matches the vanilla default\nIf set to GLOBAL_ENCHANTMENTS, the enchantments of all armor pieces are taken into account for all body parts that have any kind of armor."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "enchantmentMultiplier",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "4"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enchantmentMultiplier",
+        "value": {
+          "values": [
+            "Specifies the default modifier. This is only used if armorEnchantmentMode is LOCAL_ENCHANTMENTS, as this is used scale up the values to somewhat match what vanilla balances around (as vanilla balances around global enchantments)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "overrideEntries",
+        "value": {
+          "values": [
+            "Specifies the overrides for the the modifier. This is only used if armorEnchantmentMode is LOCAL_ENCHANTMENTS. This can be used to set another multiplier for special enchantments"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "overrideEntries"
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$EnchantmentHandling$OverrideEntries": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$EnchantmentHandling$OverrideEntries",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "resourceLocation",
+        "value": {
+          "values": [
+            "The resource location of the enchantment. Must be fully specified and cannot use wildcard. Example: minecraft:feather_falling"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "multiplierOverride",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "4"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$ExternalHealing": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$ExternalHealing",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "allowNaturalRegeneration",
+        "value": {
+          "values": [
+            "Allow vanilla\u0027s natural regeneration. Requires \"allowOtherHealingItems\" to be true\n**WARNING** This sets the gamerule \"naturalRegeneration\" for all of your worlds internally, so it persists even if you remove the mod"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "allowNaturalRegeneration",
+        "value": {
+          "value": "firstaid.config.allownaturalregeneration"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "allowNaturalRegeneration"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "allowOtherHealingItems",
+        "value": {
+          "values": [
+            "If false, healing potions and other healing items will have no effect"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "allowOtherHealingItems",
+        "value": {
+          "value": "firstaid.config.allowotherhealingitems"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "sleepHealPercentage",
+        "value": {
+          "values": [
+            "Specifies how much percent of the max health should be restored when sleeping"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "sleepHealPercentage",
+        "value": {
+          "value": "firstaid.config.sleephealpercentage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "sleepHealPercentage",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "otherRegenMultiplier",
+        "value": {
+          "values": [
+            "The value external regen will be multiplied with. Has no effect if \"allowOtherHealingItems\" is disabled"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "otherRegenMultiplier",
+        "value": {
+          "value": "firstaid.config.otherregenmultiplier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "otherRegenMultiplier",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "20.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "otherRegenMultiplier"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "naturalRegenMultiplier",
+        "value": {
+          "values": [
+            "The value vanilla\u0027s natural regeneration will be multiplied with. Has no effect if \"allowNaturalRegeneration\" is disabled"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "naturalRegenMultiplier",
+        "value": {
+          "value": "firstaid.config.naturalregenmultiplier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "naturalRegenMultiplier",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "20.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "naturalRegenMultiplier"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "resistanceReductionPercentPerLevel",
+        "value": {
+          "values": [
+            "Specifies how the vanilla resistance potion effect should reduce damage.\nBy default, one level of resistance reduces 20% of damage. Changing this value to e.g. 10 will reduce the reduction to 10% damage reduction per level"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "resistanceReductionPercentPerLevel",
+        "value": {
+          "value": "firstaid.config.resistancereductionpercentperlevel"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "resistanceReductionPercentPerLevel",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "40"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$InternalHealing": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$InternalHealing",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "bandage",
+        "value": {
+          "values": [
+            "Settings for the bandage item"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "bandage",
+        "value": {
+          "value": "firstaid.config.bandage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "plaster",
+        "value": {
+          "values": [
+            "Settings for the plaster item"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "plaster",
+        "value": {
+          "value": "firstaid.config.plaster"
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$InternalHealing$Entry": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$InternalHealing$Entry",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "totalHeals",
+        "value": {
+          "values": [
+            "The total heals this item does when applied. 1 heal \u003d half a heart"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "totalHeals",
+        "value": {
+          "value": "firstaid.config.totalheals"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "totalHeals",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "127"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "secondsPerHeal",
+        "value": {
+          "values": [
+            "The time it takes for a single heal to trigger. Total time this item is active \u003d this * totalHeals"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "secondsPerHeal",
+        "value": {
+          "value": "firstaid.config.secondsperheal"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "secondsPerHeal",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "32767"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "applyTime",
+        "value": {
+          "values": [
+            "The time it takes in the GUI to apply the item in milliseconds"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "applyTime",
+        "value": {
+          "value": "firstaid.config.applytime"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "applyTime",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "16000"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$LocationalArmor$Armor": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$LocationalArmor$Armor",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "headArmorMultiplier",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "16.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "chestArmorMultiplier",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "16.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "legsArmorMultiplier",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "16.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "feetArmorMultiplier",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "16.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "headArmorOffset",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "4.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "chestArmorOffset",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "4.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "legsArmorOffset",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "4.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "feetArmorOffset",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "4.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$LocationalArmor$Toughness": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$LocationalArmor$Toughness",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "headToughnessMultiplier",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "16.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "chestToughnessMultiplier",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "16.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "legsToughnessMultiplier",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "16.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "feetToughnessMultiplier",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "16.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "headToughnessOffset",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "4.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "chestToughnessOffset",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "4.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "legsToughnessOffset",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "4.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "feetToughnessOffset",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "4.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$Overlay": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$Overlay",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "vanillaHealthBarMode",
+        "value": {
+          "values": [
+            "The mode how to show the mc vanilla health bar.\nNORMAL shows the vanilla health value that calculated the way vanillaHealthCalculation is specified (server config)\nHIGHLIGHT_CRITICAL_PATH show the vanilla health value and highlights the health value of the most damaged critical limb (by default head or body) using the hardcore-styled hearts for them and the normal hearts for the rest of the health. Only works if vanillaHealthCalculation is set to AVERAGE_ALL\nHIDE just doesn\u0027t display the vanilla health bar at all."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "vanillaHealthBarMode",
+        "value": {
+          "value": "firstaid.config.vanillahealthbarmode"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "displayMode",
+        "value": {
+          "values": [
+            "Specifies when and how the HUD should be displayed"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "displayMode",
+        "value": {
+          "value": "firstaid.config.displaymode"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "overlayMode",
+        "value": {
+          "values": [
+            "Specifies the type of the overlay HUD."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "overlayMode",
+        "value": {
+          "value": "firstaid.config.overlaymode"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "pos",
+        "value": {
+          "values": [
+            "The relative point of the overlay"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "pos",
+        "value": {
+          "value": "firstaid.config.position"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "xOffset",
+        "value": {
+          "values": [
+            "The offset on the x axis"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "xOffset",
+        "value": {
+          "value": "firstaid.config.xoffset"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "xOffset"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "yOffset",
+        "value": {
+          "values": [
+            "The offset on the y axis"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "yOffset",
+        "value": {
+          "value": "firstaid.config.yoffset"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "yOffset"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "alpha",
+        "value": {
+          "values": [
+            "Determines the transparency of the overlay. 200 \u003d Maximum transparency, 0 \u003d Fully opaque"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "alpha",
+        "value": {
+          "value": "firstaid.config.alpha"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "alpha",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "200"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "alpha"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "armorTooltipMode",
+        "value": {
+          "values": [
+            "Determines how first aid should display armor on item tooltips.\nREPLACE replaces the vanilla description with the one fitting first aid\nAPPEND will add the first aid values at the bottom\nNONE will show the old vanilla values. Be advised this is purly visual, interally, the first aid value will always be used"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "armorTooltipMode"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableEasterEggs",
+        "value": {
+          "values": [
+            "Disables the funny easter eggs on certain events"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lichttt/mods/firstaid/common/config/ExtraConfig$Advanced;",
+        "target": "enableEasterEggs"
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/FirstAidConfig$Overlay$DisplayMode": {
+    "name": "ichttt/mods/firstaid/FirstAidConfig$Overlay$DisplayMode",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "visibleDurationTicks",
+        "value": {
+          "values": [
+            "Specifies how many ticks (20 ticks \u003d 1 second) the overlay should be visible after health changed (healing/damaging)\nIf set to -1, the HUD is always visible"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "visibleDurationTicks",
+        "value": {
+          "value": "firstaid.config.visibledurationticks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "visibleDurationTicks",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "600"
+          },
+          "min": {
+            "type": "INT",
+            "value": "-1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "flash",
+        "value": {
+          "values": [
+            "If set to true, the overlay will flash for a short moment if the health changed. Only affects PLAYER_MODEL overlay"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "flash",
+        "value": {
+          "value": "firstaid.config.flash"
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/api/CapabilityExtendedHealthSystem": {
+    "name": "ichttt/mods/firstaid/api/CapabilityExtendedHealthSystem",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "INSTANCE",
+        "value": {
+          "type": "CLASS",
+          "value": "Lichttt/mods/firstaid/api/damagesystem/AbstractPlayerDamageModel;"
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/api/damagesystem/AbstractDamageablePart": {
+    "name": "ichttt/mods/firstaid/api/damagesystem/AbstractDamageablePart",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "ichttt/mods/firstaid/api/damagesystem/AbstractPlayerDamageModel": {
+    "name": "ichttt/mods/firstaid/api/damagesystem/AbstractPlayerDamageModel",
+    "interfaces": [
+      "java/lang/Iterable",
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "ichttt/mods/firstaid/api/distribution/ICustomDamageDistributionBuilder": {
+    "name": "ichttt/mods/firstaid/api/distribution/ICustomDamageDistributionBuilder",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/distribution/IDamageDistributionBuilder"
+    ]
+  },
+  "ichttt/mods/firstaid/api/distribution/IEqualDamageDistributionBuilder": {
+    "name": "ichttt/mods/firstaid/api/distribution/IEqualDamageDistributionBuilder",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/distribution/IDamageDistributionBuilder"
+    ]
+  },
+  "ichttt/mods/firstaid/api/distribution/IRandomDamageDistributionBuilder": {
+    "name": "ichttt/mods/firstaid/api/distribution/IRandomDamageDistributionBuilder",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/distribution/IDamageDistributionBuilder"
+    ]
+  },
+  "ichttt/mods/firstaid/api/distribution/IStandardDamageDistributionBuilder": {
+    "name": "ichttt/mods/firstaid/api/distribution/IStandardDamageDistributionBuilder",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/distribution/IDamageDistributionBuilder"
+    ]
+  },
+  "ichttt/mods/firstaid/api/event/FirstAidLivingDamageEvent": {
+    "name": "ichttt/mods/firstaid/api/event/FirstAidLivingDamageEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "ichttt/mods/firstaid/api/event/FirstAidLivingDamageEvent"
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/api/package-info": {
+    "name": "ichttt/mods/firstaid/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "ichttt/mods/firstaid/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "14"
+          },
+          "owner": {
+            "value": "firstaid"
+          },
+          "provides": {
+            "value": "FirstAid API"
+          }
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/client/ClientEventHandler": {
+    "name": "ichttt/mods/firstaid/client/ClientEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyPress(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "preRender(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderOverlay(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingRender(Lnet/minecraftforge/client/event/RenderLivingEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tooltipItems(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDisconnect(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientDisconnectionFromServerEvent;)V"
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/client/ClientProxy": {
+    "name": "ichttt/mods/firstaid/client/ClientProxy",
+    "interfaces": [
+      "ichttt/mods/firstaid/common/IProxy"
+    ]
+  },
+  "ichttt/mods/firstaid/client/DebuffTimedSound": {
+    "name": "ichttt/mods/firstaid/client/DebuffTimedSound",
+    "interfaces": [
+      "net/minecraft/client/audio/ITickableSound"
+    ]
+  },
+  "ichttt/mods/firstaid/client/HUDHandler": {
+    "name": "ichttt/mods/firstaid/client/HUDHandler",
+    "interfaces": [
+      "net/minecraftforge/client/resource/ISelectiveResourceReloadListener"
+    ]
+  },
+  "ichttt/mods/firstaid/client/config/GuiFactory": {
+    "name": "ichttt/mods/firstaid/client/config/GuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "ichttt/mods/firstaid/common/CapProvider": {
+    "name": "ichttt/mods/firstaid/common/CapProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "ichttt/mods/firstaid/common/EventHandler": {
+    "name": "ichttt/mods/firstaid/common/EventHandler",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "RESISTANCE",
+        "value": {
+          "value": "minecraft:resistance"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingHurt(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onProjectileImpact(Lnet/minecraftforge/event/entity/ProjectileImpactEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerCapability(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerPotion(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerSound(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tickPlayers(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tickWorld(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLootTableLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChange(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHeal(Lnet/minecraftforge/event/entity/living/LivingHealEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLogout(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedOutEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDimensionChange(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerChangedDimensionEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerBleedToDeath(Lcom/creativemd/playerrevive/api/event/PlayerKilledEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRevived(Lcom/creativemd/playerrevive/api/event/PlayerRevivedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/common/apiimpl/DebuffBuilder": {
+    "name": "ichttt/mods/firstaid/common/apiimpl/DebuffBuilder",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/debuff/builder/IDebuffBuilder"
+    ]
+  },
+  "ichttt/mods/firstaid/common/apiimpl/distribution/BaseDamageDistributionBuilder": {
+    "name": "ichttt/mods/firstaid/common/apiimpl/distribution/BaseDamageDistributionBuilder",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/distribution/IDamageDistributionBuilder"
+    ]
+  },
+  "ichttt/mods/firstaid/common/apiimpl/distribution/CustomDamageDistributionBuilder": {
+    "name": "ichttt/mods/firstaid/common/apiimpl/distribution/CustomDamageDistributionBuilder",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/distribution/ICustomDamageDistributionBuilder"
+    ]
+  },
+  "ichttt/mods/firstaid/common/apiimpl/distribution/EqualDamageDistributionBuilder": {
+    "name": "ichttt/mods/firstaid/common/apiimpl/distribution/EqualDamageDistributionBuilder",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/distribution/IEqualDamageDistributionBuilder"
+    ]
+  },
+  "ichttt/mods/firstaid/common/apiimpl/distribution/RandomDamageDistributionBuilder": {
+    "name": "ichttt/mods/firstaid/common/apiimpl/distribution/RandomDamageDistributionBuilder",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/distribution/IRandomDamageDistributionBuilder"
+    ]
+  },
+  "ichttt/mods/firstaid/common/apiimpl/distribution/StandardDamageDistributionBuilder": {
+    "name": "ichttt/mods/firstaid/common/apiimpl/distribution/StandardDamageDistributionBuilder",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/distribution/IStandardDamageDistributionBuilder"
+    ]
+  },
+  "ichttt/mods/firstaid/common/config/ExtraConfig": {
+    "name": "ichttt/mods/firstaid/common/config/ExtraConfig",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "ichttt/mods/firstaid/common/config/ExtraConfig$Advanced": {
+    "name": "ichttt/mods/firstaid/common/config/ExtraConfig$Advanced",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "ichttt/mods/firstaid/common/config/ExtraConfig$Sync": {
+    "name": "ichttt/mods/firstaid/common/config/ExtraConfig$Sync",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "ichttt/mods/firstaid/common/damagesystem/PlayerDamageModel$1": {
+    "name": "ichttt/mods/firstaid/common/damagesystem/PlayerDamageModel$1",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "ichttt/mods/firstaid/common/damagesystem/debuff/AbstractDebuff": {
+    "name": "ichttt/mods/firstaid/common/damagesystem/debuff/AbstractDebuff",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/debuff/IDebuff"
+    ]
+  },
+  "ichttt/mods/firstaid/common/damagesystem/debuff/SharedDebuff": {
+    "name": "ichttt/mods/firstaid/common/damagesystem/debuff/SharedDebuff",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/debuff/IDebuff"
+    ]
+  },
+  "ichttt/mods/firstaid/common/damagesystem/distribution/DamageDistribution": {
+    "name": "ichttt/mods/firstaid/common/damagesystem/distribution/DamageDistribution",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/IDamageDistribution"
+    ]
+  },
+  "ichttt/mods/firstaid/common/damagesystem/distribution/DirectDamageDistribution": {
+    "name": "ichttt/mods/firstaid/common/damagesystem/distribution/DirectDamageDistribution",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/IDamageDistribution"
+    ]
+  },
+  "ichttt/mods/firstaid/common/damagesystem/distribution/EqualDamageDistribution": {
+    "name": "ichttt/mods/firstaid/common/damagesystem/distribution/EqualDamageDistribution",
+    "interfaces": [
+      "ichttt/mods/firstaid/api/IDamageDistribution"
+    ]
+  },
+  "ichttt/mods/firstaid/common/items/FirstAidItems": {
+    "name": "ichttt/mods/firstaid/common/items/FirstAidItems",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ichttt/mods/firstaid/common/items/FirstAidItems",
+        "value": {
+          "value": "firstaid"
+        }
+      }
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageAddHealth": {
+    "name": "ichttt/mods/firstaid/common/network/MessageAddHealth",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageAddHealth$Handler": {
+    "name": "ichttt/mods/firstaid/common/network/MessageAddHealth$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageApplyAbsorption": {
+    "name": "ichttt/mods/firstaid/common/network/MessageApplyAbsorption",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageApplyAbsorption$Handler": {
+    "name": "ichttt/mods/firstaid/common/network/MessageApplyAbsorption$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageApplyHealingItem": {
+    "name": "ichttt/mods/firstaid/common/network/MessageApplyHealingItem",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageApplyHealingItem$Handler": {
+    "name": "ichttt/mods/firstaid/common/network/MessageApplyHealingItem$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageClientRequest": {
+    "name": "ichttt/mods/firstaid/common/network/MessageClientRequest",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageClientRequest$Handler": {
+    "name": "ichttt/mods/firstaid/common/network/MessageClientRequest$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageConfiguration": {
+    "name": "ichttt/mods/firstaid/common/network/MessageConfiguration",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageConfiguration$Handler": {
+    "name": "ichttt/mods/firstaid/common/network/MessageConfiguration$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessagePlayHurtSound": {
+    "name": "ichttt/mods/firstaid/common/network/MessagePlayHurtSound",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessagePlayHurtSound$Handler": {
+    "name": "ichttt/mods/firstaid/common/network/MessagePlayHurtSound$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageSyncDamageModel": {
+    "name": "ichttt/mods/firstaid/common/network/MessageSyncDamageModel",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageSyncDamageModel$Handler": {
+    "name": "ichttt/mods/firstaid/common/network/MessageSyncDamageModel$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageUpdatePart": {
+    "name": "ichttt/mods/firstaid/common/network/MessageUpdatePart",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "ichttt/mods/firstaid/common/network/MessageUpdatePart$Handler": {
+    "name": "ichttt/mods/firstaid/common/network/MessageUpdatePart$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "ichttt/mods/firstaid/common/util/MorpheusHelper": {
+    "name": "ichttt/mods/firstaid/common/util/MorpheusHelper",
+    "interfaces": [
+      "net/quetzi/morpheus/api/INewDayHandler"
+    ]
+  },
+  "ichttt/mods/firstaid/server/ServerProxy": {
+    "name": "ichttt/mods/firstaid/server/ServerProxy",
+    "interfaces": [
+      "ichttt/mods/firstaid/common/IProxy"
+    ]
+  }
+}

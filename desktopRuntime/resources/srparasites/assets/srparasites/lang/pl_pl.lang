@@ -1,0 +1,471 @@
+//Entities
+
+entity.srparasites.pri_longarms.name=Prymitywny długoręki
+entity.srparasites.pri_manducater.name=Prymitywny przeżuwacz
+entity.srparasites.pri_summoner.name=Prymitywny przywoływacz
+entity.srparasites.pri_reeker.name=Prymitywny otruwacz
+entity.srparasites.pri_yelloweye.name=Prymitywny żółtooki
+entity.srparasites.pri_bolster.name=Prymitywny wzmacniacz
+entity.srparasites.pri_arachnida.name=Prymitywna arachnida
+entity.srparasites.pri_lum.name=Prymitywny pożeracz
+
+entity.srparasites.host.name=Chmara
+entity.srparasites.hostii.name=Tabun
+entity.srparasites.crux.name=Kruks
+entity.srparasites.heed.name=Pacynka
+entity.srparasites.thrall.name=Zwolennik
+
+entity.srparasites.sim_bear.name=Zasymilowany niedźwiedź
+entity.srparasites.sim_enderman.name=Zasymilowany Enderman
+entity.srparasites.sim_endermanhead.name=Chodząca głowa
+entity.srparasites.sim_adventurer.name=Zasymilowany podróżnik
+entity.srparasites.sim_adventurerhead.name=Chodząca głowa
+entity.srparasites.sim_bigspider.name=Zasymilowany wielki pająk
+entity.srparasites.sim_human.name=Zasymilowany człowiek
+entity.srparasites.sim_humanhead.name=Chodząca głowa
+entity.srparasites.sim_villager.name=Zasymilowany osadnik
+entity.srparasites.sim_villagerhead.name=Chodząca głowa
+entity.srparasites.sim_cow.name=Zasymilowana krowa
+entity.srparasites.sim_cowhead.name=Chodząca głowa
+entity.srparasites.sim_horse.name=Zasymilowany koń
+entity.srparasites.sim_horsehead.name=Chodząca głowa
+entity.srparasites.sim_pig.name=Zasymilowana świnia
+entity.srparasites.sim_pighead.name=Chodząca głowa
+entity.srparasites.sim_sheep.name=Zasymilowana owca
+entity.srparasites.sim_sheephead.name=Chodząca głowa
+entity.srparasites.sim_wolf.name=Zasymilowany wilk
+entity.srparasites.sim_wolfhead.name=Chodząca głowa
+entity.srparasites.incompleteform_medium.name=Niekompletna forma
+entity.srparasites.incompleteform_small.name=Niekompletna forma
+entity.srparasites.sim_dragone.name=Zasymilowany smok Endu
+entity.srparasites.sim_dragonehead.name=Chodząca głowa
+
+entity.srparasites.overseer.name=Nadzorca
+entity.srparasites.bomber_light.name=Lekki bombowiec
+entity.srparasites.carrier_heavy.name=Ciężki roznosiciel
+entity.srparasites.buglin.name=Buglin
+entity.srparasites.mangler.name=Rozrywacz
+entity.srparasites.worker.name=Robotnik
+entity.srparasites.carrier_flying.name=Latający roznosiciel
+entity.srparasites.rupter.name=Rupter
+entity.srparasites.beckon_si.name=Bekon etap I
+entity.srparasites.beckon_sii.name=Bekon etap II
+entity.srparasites.beckon_siii.name=Bekon etap III
+entity.srparasites.beckon_siv.name=Bekon etap IV
+entity.srparasites.beckon_sv.name=Bekon etap V
+entity.srparasites.warden.name=Opiekun
+entity.srparasites.marauder.name=Maruder
+entity.srparasites.monarch.name=Monarcha 
+entity.srparasites.grunt.name=Chrząk
+entity.srparasites.sentry.name=Wartownik
+entity.srparasites.kyphosis.name=Kifoza
+entity.srparasites.dispatcherten.name=Macka dyspozytora
+entity.srparasites.dispatcher_si.name=Dyspozytor etap I
+entity.srparasites.dispatcher_sii.name=Dyspozytor etap II
+entity.srparasites.dispatcher_siii.name=Dyspozytor etap III
+entity.srparasites.dispatcher_siv.name=Dyspozytor etap IV
+entity.srparasites.seizer.name=Chwytacz
+
+entity.srparasites.bomber_heavy.name=Ciężki bombowiec
+entity.srparasites.carrier_colony.name=Nosiciel kolonii
+entity.srparasites.wraith.name=Zmora
+entity.srparasites.bogle.name=Straszydło
+entity.srparasites.haunter.name=Nawiedzacz
+entity.srparasites.succor.name=Sukurs
+
+entity.srparasites.anc_dreadnaut.name=Starożytna groza
+entity.srparasites.anc_overlord.name=Starożytny władca
+entity.srparasites.vigilante.name=Strażnik
+entity.srparasites.movingflesh.name=Ruchome mięso
+entity.srparasites.tendril.name=Wić
+entity.srparasites.anc_pod.name=Kapsuła
+entity.srparasites.biomass.name=Biomasa
+entity.srparasites.gore.name=Szczątki
+
+entity.srparasites.ada_longarms.name=Przystosowany długoręki
+entity.srparasites.ada_summoner.name=Przystosowany przywoływacz
+entity.srparasites.ada_manducater.name=Przystosowany przeżuwacz
+entity.srparasites.ada_reeker.name=Przystosowany otruwacz
+entity.srparasites.ada_yelloweye.name=Przystosowany żóltooki
+entity.srparasites.ada_bolster.name=Przystosowany wzmacniacz
+entity.srparasites.ada_arachnida.name=Przystosowana arachnida
+
+entity.srparasites.remain.name=Szczątki
+//Creative Tab
+
+itemGroup.SRParasites=SR:Parasites
+
+//Items
+item.srparasites.itemmobspawner_pod.name=Przywołaj: Kapsuła
+
+item.srparasites.itemmobspawner_host.name=Przywołaj: Chmara
+item.srparasites.itemmobspawner_hostii.name=Przywołaj: Tabun
+item.srparasites.itemmobspawner_heed.name=Przywołaj: Pacynka
+item.srparasites.itemmobspawner_cruxa.name=Przywołaj: Kruks
+item.srparasites.itemmobspawner_mes.name=Przywołaj: Zwolennik
+
+item.srparasites.itemmobspawner_infbear.name=Przywołaj: Zasymilowany niedźwiedź
+item.srparasites.itemmobspawner_infenderman.name=Przywołaj: Zasymilowany Enderman
+item.srparasites.itemmobspawner_infendermanhead.name=Przywołaj: Chodzącza głowa (Enderman)
+item.srparasites.itemmobspawner_infplayer.name=Przywołaj: Zasymilowany podróżnik
+item.srparasites.itemmobspawner_infplayerhead.name=Przywołaj: Chodzącza głowa (Podróżnik)
+item.srparasites.itemmobspawner_dorpa.name=Przywołaj: Zasymilowany wielki pająk
+item.srparasites.itemmobspawner_infhuman.name=Przywołaj: Zasymilowany człowiek
+item.srparasites.itemmobspawner_infhumanhead.name=Przywołaj: Chodząca głowa (Człowiek)
+item.srparasites.itemmobspawner_infvillager.name=Przywołaj: Zasymilowany osadnik
+item.srparasites.itemmobspawner_infvillagerhead.name=Przywołaj: Chodząca głowa (Osadnik)
+item.srparasites.itemmobspawner_infcow.name=Przywołaj: Zasymilowana krowa
+item.srparasites.itemmobspawner_infcowhead.name=Przywołaj: Chodząca głowa (Krowa)
+item.srparasites.itemmobspawner_infpig.name=Przywołaj: Zasymilowana świnia
+item.srparasites.itemmobspawner_infpighead.name=Przywołaj: Chodząca głowa (Świnia)
+item.srparasites.itemmobspawner_infsheep.name=Przywołaj: Zasymilowana owca
+item.srparasites.itemmobspawner_infsheephead.name=Przywołaj: Chodząca głowa (Owca)
+item.srparasites.itemmobspawner_infwolf.name=Przywołaj: Zasymilowany wilk
+item.srparasites.itemmobspawner_infwolfhead.name=Przywołaj: Chodząca głowa (Wilk)
+item.srparasites.itemmobspawner_infhorse.name=Przywołaj: Zasymilowany koń
+item.srparasites.itemmobspawner_infhorsehead.name=Przywołaj: Chodząca głowa (Koń)
+item.srparasites.itemmobspawner_inhoos.name=Przywołaj: Niekompletna forma (Mała)
+item.srparasites.itemmobspawner_inhoom.name=Przywołaj: Niekompletna forma (Średnia)
+item.srparasites.itemmobspawner_infdragone.name=Przywołaj: Zasymilowany smok Endu
+item.srparasites.itemmobspawner_infdragonehead.name=Przywołaj: Chodząca głowa (Smok Endu)
+
+
+item.srparasites.itemmobspawner_alafha.name=Przywołaj: Nadzorca
+item.srparasites.itemmobspawner_omboo.name=Przywołaj: Lekki bombowiec
+item.srparasites.itemmobspawner_rathol.name=Przywołaj: Cięzki roznosiciel
+item.srparasites.itemmobspawner_buthol.name=Przywołaj: Latający roznosiciel
+item.srparasites.itemmobspawner_lodo.name=Przywołaj: Buglin
+item.srparasites.itemmobspawner_nuuh.name=Przywołaj: Rozrywacz
+item.srparasites.itemmobspawner_worker.name=Przywołaj: Robotnik
+item.srparasites.itemmobspawner_mudo.name=Przywołaj: Rupter
+item.srparasites.itemmobspawner_venkrol.name=Przywołaj: Bekon etap I
+item.srparasites.itemmobspawner_venkrolsii.name=Przywołaj: Bekon etap II
+item.srparasites.itemmobspawner_venkrolsiii.name=Przywołaj: Bekon etap III
+item.srparasites.itemmobspawner_venkrolsiv.name=Przywołaj: Bekon etap IV
+item.srparasites.itemmobspawner_venkrolsv.name=Przywołaj: Bekon etap V
+item.srparasites.itemmobspawner_ganro.name=Przywołaj: Opiekun
+item.srparasites.itemmobspawner_esor.name=Przywołaj: Maruder
+item.srparasites.itemmobspawner_orch.name=Przywołaj: Monarcha
+item.srparasites.itemmobspawner_flog.name=Przywołaj: Chrząk
+item.srparasites.itemmobspawner_unvo.name=Przywołaj: Wartownik
+item.srparasites.itemmobspawner_tonro.name=Przywołaj: Kifoza
+item.srparasites.itemmobspawner_dod.name=Przywołaj: Dyspozytor etap I
+item.srparasites.itemmobspawner_dodsii.name=Przywołaj: Dyspozytor etap II
+item.srparasites.itemmobspawner_dodsiii.name=Przywołaj: Dyspozytor etap III
+item.srparasites.itemmobspawner_dodsiv.name=Przywołaj: Dyspozytor etap IV
+item.srparasites.itemmobspawner_nak.name=Przywołaj: Chwytacz
+
+item.srparasites.itemmobspawner_jinjo.name=Przywołaj: Ciężki bombowiec
+item.srparasites.itemmobspawner_vesta.name=Przywołaj: Nosiciel kolonii
+item.srparasites.itemmobspawner_elvia.name=Przywołaj: Zmora
+item.srparasites.itemmobspawner_lencia.name=Przywołaj: Straszydło
+item.srparasites.itemmobspawner_pheon.name=Przywołaj: Nawiedzacz
+item.srparasites.itemmobspawner_flam.name=Przywołaj: Sukurs
+
+item.srparasites.itemmobspawner_oronco.name=Przywołaj: Starożytna groza
+item.srparasites.itemmobspawner_terla.name=Przywołaj: Starożytny władca
+item.srparasites.itemmobspawner_anged.name=Przywołaj: Strażnik
+item.srparasites.itemmobspawner_lesh.name=Przywołaj: Ruchome mięso
+
+item.srparasites.itemmobspawner_shyco.name=Przywołaj: Prymitywny długoręki
+item.srparasites.itemmobspawner_hull.name=Przywołaj: Prymitywny przeżuwacz
+item.srparasites.itemmobspawner_canra.name=Przywołaj: Prymitywny przywoływacz
+item.srparasites.itemmobspawner_emana.name=Przywołaj: Prymitywny żółtooki
+item.srparasites.itemmobspawner_nogla.name=Przywołaj: Prymitywny otruwacz
+item.srparasites.itemmobspawner_bano.name=Przywołaj: Prymitywny wzmacniacz
+item.srparasites.itemmobspawner_ranrac.name=Przywołaj: Prymitywna arachnida
+item.srparasites.itemmobspawner_lum.name=Przywołaj: Primitywny pożeracz
+
+item.srparasites.itemmobspawner_shycoadapted.name=Przywołaj: Przystosowany długoręki
+item.srparasites.itemmobspawner_canraadapted.name=Przywołaj: Przystosowany przywoływacz
+item.srparasites.itemmobspawner_noglaadapted.name=Przywołaj: Przystosowany otruwacz
+item.srparasites.itemmobspawner_hulladapted.name=Przywołaj: Przystosowany przeżuwacz
+item.srparasites.itemmobspawner_emanaadapted.name=Przywołaj: Przystosowany żółtooki
+item.srparasites.itemmobspawner_banoadapted.name=Przywołaj: Przystosowany wzmacniacz
+item.srparasites.itemmobspawner_ranracadapted.name=Przywołaj: Przystosowana arachnida
+
+item.srparasites.itemthrow.name=
+item.srparasites.itemtab.name=BRAK
+item.srparasites.evclock.name=Okrwawiony zegar
+item.srparasites.weapon_scythe.name=Żywa kosa
+item.srparasites.weapon_scythe_sentient.name=Świadoma wielka kosa
+item.srparasites.weapon_bow.name=Żywy łuk
+item.srparasites.weapon_bow_sentient.name=Świadomy wielki łuk
+item.srparasites.weapon_axe.name=Żywy topór
+item.srparasites.weapon_axe_sentient.name=Świadomy wielki topór
+item.srparasites.weapon_cleaver.name=Żywy tasak
+item.srparasites.weapon_cleaver_sentient.name=Świadomy wielki tasak
+
+item.srparasites.armor_helm.name=Żywy hełm
+item.srparasites.armor_chest.name=Żywy napierśnik
+item.srparasites.armor_pants.name=Żywe nogawice
+item.srparasites.armor_boots.name=Żywe buty
+item.srparasites.armor_helm_sentient.name=Świadomy hełm
+item.srparasites.armor_chest_sentient.name=Świadomy napierśnik
+item.srparasites.armor_pants_sentient.name=Świadome nogawice
+item.srparasites.armor_boots_sentient.name=Świadome buty
+
+//////
+item.srparasites.bow_upperlimb.name=Górne ramię żywego łuku
+item.srparasites.bow_lowerlimb.name=Dolne ramię żywego łuku
+item.srparasites.bow_string.name=Cięciwa żywego łuku
+item.srparasites.bow_grip.name=Uchwyt żywego łuku
+item.srparasites.bow_core.name=Rdzeń żywego łuku
+
+item.srparasites.scythe_back.name=Tył żywej kosy
+item.srparasites.scythe_blade.name=Ostrze żywej kosy
+item.srparasites.scythe_core.name=Rdzeń żywej kosy
+item.srparasites.scythe_handle.name=Uchwyt żywej kosy
+item.srparasites.scythe_head.name=Głowa żywej kosy
+///////
+
+item.srparasites.dried_tendons.name=Wysuszone ścięgna
+item.srparasites.hardened_bone_handle.name=Utwardzony uchwyt z kości
+item.srparasites.infectious_blade_fragment.name=Zakaźny fragment ostrza
+item.srparasites.living_core.name=Żywy rdzeń
+item.srparasites.vile_shell.name=Wstrętna skorupa
+item.srparasites.bone.name=Dziwna kość
+
+item.srparasites.ada_longarms_drop.name=Fragment pancerza długorękiego
+item.srparasites.ada_summoner_drop.name=Rdzeń przywoływacza
+item.srparasites.ada_yelloweye_drop.name=Kość żółtookiego
+item.srparasites.ada_reeker_drop.name=kieł otruwacza
+item.srparasites.ada_manducater_drop.name=Kula przeżuwacza
+item.srparasites.ada_bolster_drop.name=Łuska wzmacniacza
+item.srparasites.ada_arachnida_drop.name=Pazur arachnidy
+item.srparasites.ada_devourer_drop.name=Macka pożeracza
+
+item.srparasites.assimilated_flesh.name=Zainfekowane mięso
+item.srparasites.beckon_drop.name=Membrana bekona
+item.srparasites.dispatcher_drop.name=Membrana dyspozytora
+
+item.srparasites.lurecomponent1.name=Wnętrzności Ruptera
+item.srparasites.lurecomponent2.name=Schorowane serce
+item.srparasites.lurecomponent3.name=Zmienione ścięgna
+item.srparasites.lurecomponent4.name=Toksyczne płuco
+item.srparasites.lurecomponent5.name=Trujący mózg
+item.srparasites.lurecomponent6.name=Niezbędny segment
+
+//Blocks
+
+tile.srparasites.parasitesapling_tree.name=Sadzonka żyłozy
+tile.srparasites.parasitesapling_treethin.name=Sadzonka okotrysku
+tile.srparasites.parasitesapling_flowertall.name=Sadzonka ciemnokrzewu
+
+tile.srparasites.parasitebush_tendril.name=Kapilarna sieć
+tile.srparasites.parasitebush_pop.name=Pasożytniczy pęcherzyk
+tile.srparasites.parasitebush_bine.name=Unerwiony kędzior
+
+tile.srparasites.srpweb_one.name=Pajęczyna
+tile.srparasites.srpweb_two.name=Pajęczyna
+tile.srparasites.srpweb_three.name=Pajęczyna
+tile.srparasites.tunnel.name=Tunel
+tile.srparasites.dispatchern.name=Siedlisko dyspozytora
+tile.srparasites.biomeheart.name=Pasożytniczy rdzeń biomu
+tile.srparasites.colonyheart.name=Pasożytniczy rdzeń kolonii
+tile.srparasites.biomepurifier.name=Oczyszczacz biomu
+tile.srparasites.parasitestructure.name=Pasożytnicza niekompletna struktura kolonii
+tile.srparasites.parasitethin.name=Pasożytnicze chude drewno
+tile.srparasites.parasitemouth.name=Paszcza
+tile.srparasites.parasitetendril.name=Pasożytnicza wić
+tile.srparasites.parasitefog.name=Mgła
+
+tile.srparasites.gore_sim_small.name=Szczątki zasymilowanego stwora
+tile.srparasites.gore_sim_big.name=Szczątki zasymilowanego stwora
+tile.srparasites.gore_sim_flat.name=Szczątki zasymilowanego stwora
+tile.srparasites.gore_pri_small.name=Szczątki prymitywnego stwora
+tile.srparasites.gore_pri_big.name=Szczątki prymitywnego stwora
+tile.srparasites.gore_pri_flat.name=Szczątki prymitywnego stwora
+tile.srparasites.gore_ada_small.name=Szczątki przystosowanego stwora
+tile.srparasites.gore_ada_big.name=Szczątki przystosowanego stwora
+tile.srparasites.gore_ada_flat.name=Szczątki przystosowanego stwora
+tile.srparasites.gore_pure_small.name=Szczątki nieskalanego stwora
+tile.srparasites.gore_pure_big.name=Szczątki nieskalanego stwora
+tile.srparasites.gore_pure_flat.name=Szczątki nieskalanego stwora
+
+tile.srparasites.infestedstain.name=Zarażona ziemia
+tile.srparasites.infestedtrunk.name=Zarażone drewno
+tile.srparasites.infestedrubble.name=Zarażony kamień
+tile.srparasites.infestremain.name=Zarażone pozostałości
+
+tile.srparasites.infestedbush_infected.name=Zarażone żyły
+tile.srparasites.infestedbush_grass1.name=Zarażone żyły
+tile.srparasites.infestedbush_flower1.name=Zarażone żyły
+tile.srparasites.infestedbush_spine.name=Zarażone żyły
+tile.srparasites.infestedbush_vine.name=Zarażone żyły
+tile.srparasites.infestedbush_arc.name=Zarażone żyły
+
+tile.srparasites.parasitecanister_sac.name=Pęcherzowy worek
+tile.srparasites.parasitecanister_cyst.name=Bezczynna cysta
+tile.srparasites.canisteractive.name=Pochłaniająca cysta
+tile.srparasites.parasitecanister_lump.name=Groteskowa grudka
+tile.srparasites.parasitecanister_bag.name=Worek mięsa
+
+tile.srparasites.parasitetrunk_ball.name=Drewno sinodrzewu
+tile.srparasites.parasitetrunk_tree.name=Drewno sinodrzewu
+tile.srparasites.parasitetrunk_plant.name=Drewno sinodrzewu
+
+tile.srparasites.parasitestain_dirt.name=Ziemia roju
+tile.srparasites.parasitestain_mud.name=Trzewne błoto
+tile.srparasites.parasitestain_flesh.name=Kawałek mięsa
+tile.srparasites.parasitestain_fleshstairs.name=Kawałek mięsa
+tile.srparasites.parasitestain_feeler.name=Skondensowane tętnice
+
+tile.srparasites.parasiterubble_slabhalf.name=Wzmocniona kość
+tile.srparasites.parasiterubble_flesh.name=Skondensowany kawałek mięsa
+tile.srparasites.parasiterubble_bone.name=Wzmocniona kość
+tile.srparasites.parasiterubble_bonestairs.name=Wzmocniona kość
+tile.srparasites.parasiterubble_stone.name=Kamień roju
+
+tile.srparasites.parasiterubbledense_wall.name=Skondensowany kamień roju
+tile.srparasites.parasiterubbledense_biome.name=Wzmocniony kamień roju
+tile.srparasites.parasiterubbledense_colony.name=Skondensowany pasożytniczy kamień kolonii
+
+tile.srparasites.evolutionlure_one.name=Wabik (Nikły)
+tile.srparasites.evolutionlure_two.name=Wabik (Osłabiony)
+tile.srparasites.evolutionlure_three.name=Wabik (Wątły)
+tile.srparasites.evolutionlure_four.name=Wabik (Stabilny)
+tile.srparasites.evolutionlure_five.name=Wabik (Istotny)
+tile.srparasites.evolutionlure_six.name=Wabik (Stężony)
+tile.srparasites.evolutionlure_seven.name=Wabik (Stężony+)
+tile.srparasites.evolutionlure_eight.name=Wabik (Stężony++)
+
+//Effects
+
+mob_effect.srparasites:coth=Zew roju
+splash_potion.effect.srparasites:coth=Miotana mikstura zewu roju
+potion.effect.srparasites:coth=Mikstura zewu roju
+lingering_potion.effect.srparasites:coth=Trwała mikstura zewu roju
+tipped_arrow.effect.srparasites:coth=Strzała zewu roju
+
+mob_effect.srparasites:fear=Strach
+splash_potion.effect.srparasites:fear=Miotana mikstura strachu
+potion.effect.srparasites:fear=Mikstura strachu
+lingering_potion.effect.srparasites:fear=Trwała mikstura strachu
+tipped_arrow.effect.srparasites:fear=Strzała strachu
+
+mob_effect.srparasites:antimall=Niezmienność
+splash_potion.effect.srparasites:antimall=Miotana mikstura niezmienności
+potion.effect.srparasites:antimall=Mikstura niezmienności
+lingering_potion.effect.srparasites:antimall=Trwała mikstura niezmienności
+tipped_arrow.effect.srparasites:antimall=Sztrzała niezmienności
+
+mob_effect.srparasites:bleed=Krwawienie
+splash_potion.effect.srparasites:bleed=Miotana mikstura krwawienia
+potion.effect.srparasites:bleed=Mikstura krwawienia
+lingering_potion.effect.srparasites:bleed=Trwała mikstura krwawienia
+tipped_arrow.effect.srparasites:bleed=Strzała krwawienia
+
+mob_effect.srparasites:corrosive=Korozja
+splash_potion.effect.srparasites:corrosive=Miotana mikstura korozji
+potion.effect.srparasites:corrosive=Mikstura korozji
+lingering_potion.effect.srparasites:corrosive=Trwała mikstura korozji
+tipped_arrow.effect.srparasites:corrosive=Strzała korozji
+
+mob_effect.srparasites:viral=Infekcja
+splash_potion.effect.srparasites:viral=Miotana mikstura infekcji
+potion.effect.srparasites:viral=Mikstura infekcji
+lingering_potion.effect.srparasites:viral=Trwała mikstura infekcji
+tipped_arrow.effect.srparasites:viral=Strzała infekcji
+
+mob_effect.srparasites:rage=Wściekłość
+splash_potion.effect.srparasites:rage=Miotana mikstura wściekłości
+potion.effect.srparasites:rage=Mikstura wściekłości
+lingering_potion.effect.srparasites:rage=Trwała mikstura wściekłości
+tipped_arrow.effect.srparasites:rage=Strzała wściekłości
+
+mob_effect.srparasites:repel=Kamuflaż
+splash_potion.effect.srparasites:repel=Miotana mikstura kamuflażu
+potion.effect.srparasites:repel=Mikstura kamuflażu
+lingering_potion.effect.srparasites:repel=Trwała mikstura kamuflażu
+tipped_arrow.effect.srparasites:repel=Strzała kamuflażu
+
+mob_effect.srparasites:senses=Wyostrzone zmysły
+splash_potion.effect.srparasites:senses=Miotana mikstura wyostrzenia zmysłów
+potion.effect.srparasites:senses=Mikstura wyostrzenia zmysłów
+lingering_potion.effect.srparasites:senses=Trwała mikstura wyostrzenia zmysłów
+tipped_arrow.effect.srparasites:senses=Strzała wyostrzenia zmysłów
+
+mob_effect.srparasites:debar=Wykluczenie
+splash_potion.effect.srparasites:debar=Miotana mikstura wykluczenia
+potion.effect.srparasites:debar=Mikstura wykluczenia
+lingering_potion.effect.srparasites:debar=Trwała mikstura wykluczenia
+tipped_arrow.effect.srparasites:debar=Strzała wylkuczenia
+
+mob_effect.srparasites:needler=Podrażnienie
+splash_potion.effect.srparasites:needler=Miotana mikstura podrażnienia
+potion.effect.srparasites:needler=Mikstura podrażnienia
+lingering_potion.effect.srparasites:needler=Trwała mikstura podrażnienia
+tipped_arrow.effect.srparasites:needler=Strzała podrażnienia
+
+//extra
+
+message.srparasites.lure=Punkty zredukowane!
+message.srparasites.fearitem=Panikujesz!
+message.srparasites.fearblock=Panikujesz!
+message.srparasites.feargui=Panikujesz!
+message.srparasites.evolutionsleep=Nie możesz teraz spać...
+
+tootip.srparasites.lurecomp.1=Kawałki ciała Ruptera, zebrane z ciała małego Pasożyta. Składnik do przynęty.
+tootip.srparasites.lurecomp.2=Rażąco spuchnięty organ pobrany od zasymilowanego stworzenia. Składnik do przynęty.
+tootip.srparasites.lurecomp.3=Kawałek skóry pobranej z ciała prymitywnego pasożyta, który wydziela okropny zapach. Składnik do przynęty.
+tootip.srparasites.lurecomp.4=Organ pobrany z ciała przystosowanego pasożyta, który wydziela okropny zapach. Składnik do przynęty.
+tootip.srparasites.lurecomp.5=Narząd przypominający grzyby zebrany z ciała nieskalanego pasożyta. Składnik przynęty.
+tootip.srparasites.lurecomp.6=Obiekt podobny do kręgosłupa zebrany z worków wiszących w biomie. Składnik do przynęty.
+
+tootip.srparasites.item.1=Mała kula, która wydaje się emitować energię, zebrana przez przystosowanego przywoływacza. Składnik do broni.
+tootip.srparasites.item.2=Wytrzymała kość zebrana z przystosowanego żółtookiego. Składnik do broni.
+tootip.srparasites.item.3=Mała kula, która wydaje się emitować energię, zebrana z przystosowanego przeżuwacza. Składnik do broni.
+tootip.srparasites.item.4=Ostry kieł wyrwany z przystosowanego. Składnik do broni.
+tootip.srparasites.item.5=Lekki, ale wytrzymały fragment pancerza pozyskany z przystosowanego długorękiego. Składnik do broni
+tootip.srparasites.item.6=Kawałek mięsa oderwany od zasymilowanego stworzenia. Składnik przynęty, który może być również używany jako podtrzymanie w najbardziej rozpaczliwych sytuacjach. 
+tootip.srparasites.item.7=
+tootip.srparasites.item.8=Elastyczny i organiczny materiał, wyprodukowany z części ciała pasożytów. Składnik do broni.
+tootip.srparasites.item.9=Kawałek ostrza wytworzony z części ciała pasożytów. Składnik do broni.
+tootip.srparasites.item.10=Płomień życia jeszcze nie zabłysnął w tym przedmiocie. Rdzeń, który napędza wszystkie bronie.
+tootip.srparasites.item.11=Niezwykle wytrzymała skorupa, wykonana z części ciała Pasożytów. Składnik do broni.
+tootip.srparasites.item.12=Szczególnie gruby uchwyt, składa się z kości, wykonana z części ciała Pasorzytów Składnik do broni.
+
+tootip.srparasites.item.20=Suchy kawałek skóry zebrany z ciała wzmacniacza.
+tootip.srparasites.item.21=Przerażająco ostre pazury zebrane z ciała arachnidy.
+tootip.srparasites.item.22=Koścista macka oderwana od pożeracza.
+tootip.srparasites.item.23=Powłoka bekonów, oderwana od ich ciała.
+tootip.srparasites.item.24=Powłoka dyspozytorów, oderwana od ich ciała.
+
+tootip.srparasites.item.18=Podczas ociekania krwią, zegar tyka teraz w kierunku strasznej północy.
+
+tootip.srparasites.weaponm.1=Efektem przekształcenia różnych części ciała Pasożytów w broń. W nim świeci płomień życia.
+tootip.srparasites.weaponm.2=Ukryta ewolucja żywej kosy. Zyskało Umysł.
+tootip.srparasites.weaponm.3=Efektem przekształcenia różnych części ciała Pasożytów w broń. W nim świeci płomień życia..
+tootip.srparasites.weaponm.4=Ukryta ewolucja żywego topora. Zyskało Umysł.
+tootip.srparasites.weaponm.5=Efektem przekształcenia różnych części ciała Pasożytów w broń. W nim świeci płomień życia.
+tootip.srparasites.weaponm.6=Ukryta ewolucja żywego miecza. Zyskało Umysł.
+tootip.srparasites.weaponm.7=Efektem przekształcenia różnych części ciała Pasożytów w broń. W nim świeci płomień życia.
+tootip.srparasites.weaponm.8=Ukryta ewolucja żywego tasaka. Zyskało Umysł.
+
+tootip.srparasites.weaponm.10=Zgładza duży obszar.
+tootip.srparasites.weaponm.20=Dziesiątkuje duży obszar.
+tootip.srparasites.weaponm.30=Z czasem czyni zbroję bezużyteczną.
+tootip.srparasites.weaponm.40=Z czasem czyni zbroję bezużyteczną.
+tootip.srparasites.weaponm.50=Zadaje zagrażające życiu obrażenia.
+tootip.srparasites.weaponm.60=Zadaje zagrażające życiu obrażenia.
+tootip.srparasites.weaponm.70=Zadaje zjadliwe ataki.
+tootip.srparasites.weaponm.80=Zadaje zjadliwe ataki.
+
+tootip.srparasites.weaponm.100=Nie możesz się już ukryć...
+tootip.srparasites.weaponm.200=Nie możesz się już ukryć...
+tootip.srparasites.weaponm.300=Nie możesz się już ukryć...
+tootip.srparasites.weaponm.400=Nie możesz się już ukryć...
+tootip.srparasites.weaponm.500=Nie możesz się już ukryć...
+tootip.srparasites.weaponm.600=Nie możesz się już ukryć...
+tootip.srparasites.weaponm.700=Nie możesz się już ukryć...
+tootip.srparasites.weaponm.800=Nie możesz się już ukryć...
+
+tootip.srparasites.weaponr.1=Efektem przekształcenia różnych części ciała Pasożytów w broń. W nim świeci płomień życia.
+tootip.srparasites.weaponr.2=Ukryta ewolucja żywego łuku. Zyskało Umysł.
+
+tootip.srparasites.weaponr.10=Trzymaj te strzały
+tootip.srparasites.weaponr.20=Trzymaj te strzały
+
+tootip.srparasites.weaponr.100=Nie możesz się już ukryć...
+tootip.srparasites.weaponr.200=Nie możesz się już ukryć...

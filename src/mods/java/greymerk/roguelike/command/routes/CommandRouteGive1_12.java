@@ -1,0 +1,31 @@
+package greymerk.roguelike.command.routes;
+
+import com.github.fnar.minecraft.item.RldItemStack;
+import greymerk.roguelike.command.CommandBase;
+import greymerk.roguelike.command.CommandContext1_12;
+import greymerk.roguelike.command.CommandRouteBase;
+import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
+import greymerk.roguelike.util.ArgumentParser;
+import java.util.List;
+
+public class CommandRouteGive1_12 extends CommandRouteBase {
+   public CommandRouteGive1_12(CommandBase commandBase) {
+      super(commandBase);
+   }
+
+   public void execute(CommandContext1_12 context, List<String> args) {
+      ArgumentParser ap = new ArgumentParser(args);
+      if (!ap.hasEntry(0)) {
+         context.sendInfo("Usage: roguelike give novelty_name");
+      } else {
+         String name = ap.get(0);
+         RldItemStack item = ItemNovelty.getItemByName(name);
+         if (item == null) {
+            context.sendFailure("No such item");
+         } else {
+            context.give(item);
+            context.sendSuccess("Given " + name);
+         }
+      }
+   }
+}

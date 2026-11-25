@@ -1,0 +1,1404 @@
+{
+  "svenhjol/charm/Charm": {
+    "name": "svenhjol/charm/Charm",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "svenhjol/charm/Charm",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "after:jei@[4.14.3,);after:redstoneplusplus;after:quark"
+          },
+          "modid": {
+            "value": "charm"
+          },
+          "name": {
+            "value": "Charm"
+          },
+          "version": {
+            "value": "1.4"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "charm"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "svenhjol.charm.base.ClientProxy"
+          },
+          "serverSide": {
+            "value": "svenhjol.charm.base.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/automation/block/BlockGunpowder": {
+    "name": "svenhjol/charm/automation/block/BlockGunpowder",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonBlock"
+    ]
+  },
+  "svenhjol/charm/automation/block/BlockRedstoneSand": {
+    "name": "svenhjol/charm/automation/block/BlockRedstoneSand",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonBlock"
+    ]
+  },
+  "svenhjol/charm/automation/block/BlockVariableRedstoneLight": {
+    "name": "svenhjol/charm/automation/block/BlockVariableRedstoneLight",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonBlock"
+    ]
+  },
+  "svenhjol/charm/base/GuiHandler": {
+    "name": "svenhjol/charm/base/GuiHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "svenhjol/charm/base/integration/jei/CharmJeiPlugin": {
+    "name": "svenhjol/charm/base/integration/jei/CharmJeiPlugin",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "svenhjol/charm/base/integration/jei/CharmJeiPlugin"
+      }
+    ]
+  },
+  "svenhjol/charm/base/integration/jei/ComposterCategory": {
+    "name": "svenhjol/charm/base/integration/jei/ComposterCategory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeCategory"
+    ]
+  },
+  "svenhjol/charm/base/integration/jei/ComposterRecipe": {
+    "name": "svenhjol/charm/base/integration/jei/ComposterRecipe",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "svenhjol/charm/brewing/block/BlockFlavoredCake": {
+    "name": "svenhjol/charm/brewing/block/BlockFlavoredCake",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonBlock",
+      "svenhjol/meson/iface/IMesonBlock$IHasCustomItemBlockModel",
+      "svenhjol/meson/iface/IMesonBlock$IHasCustomStateMapper"
+    ]
+  },
+  "svenhjol/charm/brewing/feature/EnderSight": {
+    "name": "svenhjol/charm/brewing/feature/EnderSight",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/brewing/feature/FlavoredCake": {
+    "name": "svenhjol/charm/brewing/feature/FlavoredCake",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onUse(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/block/BlockBarrel": {
+    "name": "svenhjol/charm/crafting/block/BlockBarrel",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonBlock",
+      "vazkii/quark/api/IRotationLockHandler"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "svenhjol/charm/crafting/block/BlockBarrel",
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IRotationLockHandler"
+          },
+          "modid": {
+            "value": "quark"
+          }
+        }
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/block/BlockBookshelfChest": {
+    "name": "svenhjol/charm/crafting/block/BlockBookshelfChest",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonBlock"
+    ]
+  },
+  "svenhjol/charm/crafting/block/BlockComposter": {
+    "name": "svenhjol/charm/crafting/block/BlockComposter",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonBlock"
+    ]
+  },
+  "svenhjol/charm/crafting/block/BlockCrate": {
+    "name": "svenhjol/charm/crafting/block/BlockCrate",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonBlock"
+    ]
+  },
+  "svenhjol/charm/crafting/block/BlockCrate$Type": {
+    "name": "svenhjol/charm/crafting/block/BlockCrate$Type",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonEnum"
+    ]
+  },
+  "svenhjol/charm/crafting/container/ContainerBarrel": {
+    "name": "svenhjol/charm/crafting/container/ContainerBarrel",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Linvtweaks/api/container/ChestContainer;",
+        "target": "svenhjol/charm/crafting/container/ContainerBarrel"
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/container/ContainerBookshelfChest": {
+    "name": "svenhjol/charm/crafting/container/ContainerBookshelfChest",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Linvtweaks/api/container/ChestContainer;",
+        "target": "svenhjol/charm/crafting/container/ContainerBookshelfChest"
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/container/ContainerCrate": {
+    "name": "svenhjol/charm/crafting/container/ContainerCrate",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Linvtweaks/api/container/ChestContainer;",
+        "target": "svenhjol/charm/crafting/container/ContainerCrate"
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/feature/Composter": {
+    "name": "svenhjol/charm/crafting/feature/Composter",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegister(Lnet/minecraftforge/event/RegistryEvent$Register;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/feature/Crate": {
+    "name": "svenhjol/charm/crafting/feature/Crate",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilRepair(Lnet/minecraftforge/event/entity/player/AnvilRepairEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "makeTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTooltip(Lnet/minecraftforge/client/event/RenderTooltipEvent$PostText;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/feature/EnderPearlBlock": {
+    "name": "svenhjol/charm/crafting/feature/EnderPearlBlock",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEnterChunk(Lnet/minecraftforge/event/entity/EntityEvent$EnteringChunk;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/feature/Lantern": {
+    "name": "svenhjol/charm/crafting/feature/Lantern",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegister(Lnet/minecraftforge/event/RegistryEvent$Register;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/feature/SuspiciousSoup": {
+    "name": "svenhjol/charm/crafting/feature/SuspiciousSoup",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLootTableLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/gui/GuiContainerBarrel": {
+    "name": "svenhjol/charm/crafting/gui/GuiContainerBarrel",
+    "interfaces": [
+      "vazkii/quark/api/IChestButtonCallback",
+      "vazkii/quark/api/IItemSearchBar"
+    ],
+    "annotations": [
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 7,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IChestButtonCallback"
+          },
+          "modid": {
+            "value": "quark"
+          }
+        }
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 8,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IItemSearchBar"
+          },
+          "modid": {
+            "value": "quark"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$InterfaceList;",
+        "target": "svenhjol/charm/crafting/gui/GuiContainerBarrel",
+        "value": {
+          "type": "ANNOTATION",
+          "values": [
+            "7",
+            "8"
+          ]
+        }
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/gui/GuiContainerBookshelfChest": {
+    "name": "svenhjol/charm/crafting/gui/GuiContainerBookshelfChest",
+    "interfaces": [
+      "vazkii/quark/api/IChestButtonCallback",
+      "vazkii/quark/api/IItemSearchBar"
+    ],
+    "annotations": [
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 11,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IChestButtonCallback"
+          },
+          "modid": {
+            "value": "quark"
+          }
+        }
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 12,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IItemSearchBar"
+          },
+          "modid": {
+            "value": "quark"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$InterfaceList;",
+        "target": "svenhjol/charm/crafting/gui/GuiContainerBookshelfChest",
+        "value": {
+          "type": "ANNOTATION",
+          "values": [
+            "11",
+            "12"
+          ]
+        }
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/gui/GuiContainerCrate": {
+    "name": "svenhjol/charm/crafting/gui/GuiContainerCrate",
+    "interfaces": [
+      "vazkii/quark/api/IChestButtonCallback",
+      "vazkii/quark/api/IItemSearchBar"
+    ],
+    "annotations": [
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 9,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IChestButtonCallback"
+          },
+          "modid": {
+            "value": "quark"
+          }
+        }
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "id": 10,
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IItemSearchBar"
+          },
+          "modid": {
+            "value": "quark"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$InterfaceList;",
+        "target": "svenhjol/charm/crafting/gui/GuiContainerCrate",
+        "value": {
+          "type": "ANNOTATION",
+          "values": [
+            "9",
+            "10"
+          ]
+        }
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/item/ItemSuspiciousSoup": {
+    "name": "svenhjol/charm/crafting/item/ItemSuspiciousSoup",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonItem",
+      "svenhjol/meson/iface/IMesonItem$IItemCustomModel"
+    ]
+  },
+  "svenhjol/charm/crafting/tile/TileBarrel": {
+    "name": "svenhjol/charm/crafting/tile/TileBarrel",
+    "interfaces": [
+      "vazkii/quark/api/IDropoffManager"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "svenhjol/charm/crafting/tile/TileBarrel",
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IDropoffManager"
+          },
+          "modid": {
+            "value": "quark"
+          }
+        }
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/tile/TileBookshelfChest": {
+    "name": "svenhjol/charm/crafting/tile/TileBookshelfChest",
+    "interfaces": [
+      "vazkii/quark/api/IDropoffManager"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "svenhjol/charm/crafting/tile/TileBookshelfChest",
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IDropoffManager"
+          },
+          "modid": {
+            "value": "quark"
+          }
+        }
+      }
+    ]
+  },
+  "svenhjol/charm/crafting/tile/TileCrate": {
+    "name": "svenhjol/charm/crafting/tile/TileCrate",
+    "interfaces": [
+      "vazkii/quark/api/IDropoffManager"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "svenhjol/charm/crafting/tile/TileCrate",
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IDropoffManager"
+          },
+          "modid": {
+            "value": "quark"
+          }
+        }
+      }
+    ]
+  },
+  "svenhjol/charm/enchanting/enchantment/EnchantmentClumsinessCurse": {
+    "name": "svenhjol/charm/enchanting/enchantment/EnchantmentClumsinessCurse",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonEnchantment$ICurse"
+    ]
+  },
+  "svenhjol/charm/enchanting/enchantment/EnchantmentHarmingCurse": {
+    "name": "svenhjol/charm/enchanting/enchantment/EnchantmentHarmingCurse",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonEnchantment$ICurse"
+    ]
+  },
+  "svenhjol/charm/enchanting/enchantment/EnchantmentHauntingCurse": {
+    "name": "svenhjol/charm/enchanting/enchantment/EnchantmentHauntingCurse",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonEnchantment$ICurse"
+    ]
+  },
+  "svenhjol/charm/enchanting/enchantment/EnchantmentRustingCurse": {
+    "name": "svenhjol/charm/enchanting/enchantment/EnchantmentRustingCurse",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonEnchantment$ICurse"
+    ]
+  },
+  "svenhjol/charm/enchanting/feature/CurseBreak": {
+    "name": "svenhjol/charm/enchanting/feature/CurseBreak",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/enchanting/feature/ExtraCurses": {
+    "name": "svenhjol/charm/enchanting/feature/ExtraCurses",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBreak(Lnet/minecraftforge/event/world/BlockEvent$BreakEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAttack(Lnet/minecraftforge/event/entity/player/AttackEntityEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBreakDrop(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDamage(Lnet/minecraftforge/event/entity/living/LivingDamageEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemUseStop(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Stop;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/enchanting/feature/Homing": {
+    "name": "svenhjol/charm/enchanting/feature/Homing",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/enchanting/feature/Magnetic": {
+    "name": "svenhjol/charm/enchanting/feature/Magnetic",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBreak(Lnet/minecraftforge/event/world/BlockEvent$BreakEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityCreate(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/enchanting/feature/Salvage": {
+    "name": "svenhjol/charm/enchanting/feature/Salvage",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemRightClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickItem;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDestroy(Lnet/minecraftforge/event/entity/player/PlayerDestroyItemEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/smithing/feature/DecreaseRepairCost": {
+    "name": "svenhjol/charm/smithing/feature/DecreaseRepairCost",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/smithing/feature/ExtendTotemOfReturning": {
+    "name": "svenhjol/charm/smithing/feature/ExtendTotemOfReturning",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/smithing/feature/ExtractBookXP": {
+    "name": "svenhjol/charm/smithing/feature/ExtractBookXP",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/smithing/feature/ExtractEnchantments": {
+    "name": "svenhjol/charm/smithing/feature/ExtractEnchantments",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/smithing/feature/TallowIncreasesDurability": {
+    "name": "svenhjol/charm/smithing/feature/TallowIncreasesDurability",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/CactusWater": {
+    "name": "svenhjol/charm/tweaks/feature/CactusWater",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onUse(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/CauldronWaterSource": {
+    "name": "svenhjol/charm/tweaks/feature/CauldronWaterSource",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBucketUse(Lnet/minecraftforge/event/entity/player/FillBucketEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCauldronUse(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/CompassBinding": {
+    "name": "svenhjol/charm/tweaks/feature/CompassBinding",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCompassUse(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAnvilUpdate(Lnet/minecraftforge/event/AnvilUpdateEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/ExtraRecords": {
+    "name": "svenhjol/charm/tweaks/feature/ExtraRecords",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/RandomAnimalTextures$MOB": {
+    "name": "svenhjol/charm/tweaks/feature/RandomAnimalTextures$MOB",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonEnum"
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/RecordsStopBackgroundMusic": {
+    "name": "svenhjol/charm/tweaks/feature/RecordsStopBackgroundMusic",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSoundPlay(Lnet/minecraftforge/client/event/sound/SoundEvent$SoundSourceEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/RemoveNitwits": {
+    "name": "svenhjol/charm/tweaks/feature/RemoveNitwits",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onVillagerSpawn(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/ShearedMelons": {
+    "name": "svenhjol/charm/tweaks/feature/ShearedMelons",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBreak(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/SpongesReduceFallDamage": {
+    "name": "svenhjol/charm/tweaks/feature/SpongesReduceFallDamage",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLanding(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/TamedAnimalsNoDamage": {
+    "name": "svenhjol/charm/tweaks/feature/TamedAnimalsNoDamage",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDamage(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/UseTotemFromInventory": {
+    "name": "svenhjol/charm/tweaks/feature/UseTotemFromInventory",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/WaterInHotBiomes": {
+    "name": "svenhjol/charm/tweaks/feature/WaterInHotBiomes",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onUseItemFinish(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Finish;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/WitchHatProtection": {
+    "name": "svenhjol/charm/tweaks/feature/WitchHatProtection",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSpectreAttack(Lsvenhjol/charm/world/event/SpectreAttackEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/WitchesDropDecay": {
+    "name": "svenhjol/charm/tweaks/feature/WitchesDropDecay",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/feature/WitchesDropLuck": {
+    "name": "svenhjol/charm/tweaks/feature/WitchesDropLuck",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/tweaks/item/CharmItemRecord": {
+    "name": "svenhjol/charm/tweaks/item/CharmItemRecord",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonItem"
+    ]
+  },
+  "svenhjol/charm/tweaks/item/ItemBoundCompass$1": {
+    "name": "svenhjol/charm/tweaks/item/ItemBoundCompass$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "svenhjol/charm/world/block/BlockRunePortal": {
+    "name": "svenhjol/charm/world/block/BlockRunePortal",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonBlock"
+    ]
+  },
+  "svenhjol/charm/world/block/BlockRunePortalFrame": {
+    "name": "svenhjol/charm/world/block/BlockRunePortalFrame",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonBlock",
+      "vazkii/quark/api/IRotationLockHandler"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "svenhjol/charm/world/block/BlockRunePortalFrame",
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.IRotationLockHandler"
+          },
+          "modid": {
+            "value": "quark"
+          }
+        }
+      }
+    ]
+  },
+  "svenhjol/charm/world/client/layer/LayerSpectreEyes": {
+    "name": "svenhjol/charm/world/client/layer/LayerSpectreEyes",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "svenhjol/charm/world/client/layer/LayerSpectreOutline": {
+    "name": "svenhjol/charm/world/client/layer/LayerSpectreOutline",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "svenhjol/charm/world/feature/BatBucket": {
+    "name": "svenhjol/charm/world/feature/BatBucket",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLootTableLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/ChargedEmeralds": {
+    "name": "svenhjol/charm/world/feature/ChargedEmeralds",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLootTableLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/EndPortalRunes": {
+    "name": "svenhjol/charm/world/feature/EndPortalRunes",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWitherDestroyBlock(Lsvenhjol/charm/world/event/WitherDestroyBlockEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClick(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/EndermitePowder": {
+    "name": "svenhjol/charm/world/feature/EndermitePowder",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/IllusionersInRoofedForest": {
+    "name": "svenhjol/charm/world/feature/IllusionersInRoofedForest",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSpawn(Lnet/minecraftforge/event/entity/living/LivingSpawnEvent$CheckSpawn;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/Moonstone": {
+    "name": "svenhjol/charm/world/feature/Moonstone",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMoonstoneUse(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/MoreVillageBiomes": {
+    "name": "svenhjol/charm/world/feature/MoreVillageBiomes",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "getVillageBlockID(Lnet/minecraftforge/event/terraingen/BiomeEvent$GetVillageBlockID;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/SpectreHaunting": {
+    "name": "svenhjol/charm/world/feature/SpectreHaunting",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/StructureMaps": {
+    "name": "svenhjol/charm/world/feature/StructureMaps",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegisterVillagers(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/StructureMaps$StructureMapTrade": {
+    "name": "svenhjol/charm/world/feature/StructureMaps$StructureMapTrade",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "svenhjol/charm/world/feature/SwampHutDecorations": {
+    "name": "svenhjol/charm/world/feature/SwampHutDecorations",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAddComponentParts(Lsvenhjol/meson/event/StructureEventBase$Post;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/TotemOfReturning": {
+    "name": "svenhjol/charm/world/feature/TotemOfReturning",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLootTableLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/TotemOfShielding": {
+    "name": "svenhjol/charm/world/feature/TotemOfShielding",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDamage(Lnet/minecraftforge/event/entity/living/LivingDamageEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLootTableLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/VillageDecorations": {
+    "name": "svenhjol/charm/world/feature/VillageDecorations",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPopulate(Lnet/minecraftforge/event/terraingen/PopulateChunkEvent$Populate;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDecorate(Lnet/minecraftforge/event/terraingen/DecorateBiomeEvent$Decorate;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAddComponentParts(Lsvenhjol/meson/event/StructureEventBase$Post;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/VillagerTrades": {
+    "name": "svenhjol/charm/world/feature/VillagerTrades",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegisterVillagers(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/feature/VillagerTrades$CurseBreakTrade": {
+    "name": "svenhjol/charm/world/feature/VillagerTrades$CurseBreakTrade",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "svenhjol/charm/world/feature/VillagerTrades$DamagedAnvilsTrade": {
+    "name": "svenhjol/charm/world/feature/VillagerTrades$DamagedAnvilsTrade",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "svenhjol/charm/world/feature/VillagerTrades$EnchantedBookTrade": {
+    "name": "svenhjol/charm/world/feature/VillagerTrades$EnchantedBookTrade",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "svenhjol/charm/world/feature/VillagerTrades$FortuneShovelTrade": {
+    "name": "svenhjol/charm/world/feature/VillagerTrades$FortuneShovelTrade",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "svenhjol/charm/world/feature/VillagerTrades$LanternsTrade": {
+    "name": "svenhjol/charm/world/feature/VillagerTrades$LanternsTrade",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "svenhjol/charm/world/feature/VillagerTrades$SalvageTrade": {
+    "name": "svenhjol/charm/world/feature/VillagerTrades$SalvageTrade",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "svenhjol/charm/world/feature/VillagerTrades$SuspiciousSoupTrade": {
+    "name": "svenhjol/charm/world/feature/VillagerTrades$SuspiciousSoupTrade",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "svenhjol/charm/world/feature/VillagerTrades$ZombieFlesh": {
+    "name": "svenhjol/charm/world/feature/VillagerTrades$ZombieFlesh",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  },
+  "svenhjol/charm/world/feature/VindicatorsInRoofedForest": {
+    "name": "svenhjol/charm/world/feature/VindicatorsInRoofedForest",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSpawn(Lnet/minecraftforge/event/entity/living/LivingSpawnEvent$CheckSpawn;)V"
+      }
+    ]
+  },
+  "svenhjol/charm/world/generator/AbandonedCrateGenerator": {
+    "name": "svenhjol/charm/world/generator/AbandonedCrateGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "svenhjol/charm/world/generator/NetherGoldDepositGenerator": {
+    "name": "svenhjol/charm/world/generator/NetherGoldDepositGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "svenhjol/charm/world/item/ItemBatBucket": {
+    "name": "svenhjol/charm/world/item/ItemBatBucket",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonItem"
+    ]
+  },
+  "svenhjol/charm/world/item/ItemChargedEmerald": {
+    "name": "svenhjol/charm/world/item/ItemChargedEmerald",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonItem"
+    ]
+  },
+  "svenhjol/charm/world/item/ItemMoonstone": {
+    "name": "svenhjol/charm/world/item/ItemMoonstone",
+    "interfaces": [
+      "vazkii/quark/api/ICustomEnchantColor",
+      "svenhjol/meson/iface/IMesonItem$IItemColorHandler",
+      "svenhjol/meson/iface/IMesonItem$IItemCustomModel"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "svenhjol/charm/world/item/ItemMoonstone",
+        "values": {
+          "iface": {
+            "value": "vazkii.quark.api.ICustomEnchantColor"
+          },
+          "modid": {
+            "value": "quark"
+          }
+        }
+      }
+    ]
+  },
+  "svenhjol/charm/world/item/ItemMoonstone$1": {
+    "name": "svenhjol/charm/world/item/ItemMoonstone$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "svenhjol/charm/world/item/ItemTotemOfReturning": {
+    "name": "svenhjol/charm/world/item/ItemTotemOfReturning",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonItem"
+    ]
+  },
+  "svenhjol/charm/world/item/ItemTotemOfShielding": {
+    "name": "svenhjol/charm/world/item/ItemTotemOfShielding",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonItem"
+    ]
+  },
+  "svenhjol/charm/world/tile/TileRunePortal": {
+    "name": "svenhjol/charm/world/tile/TileRunePortal",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonTile"
+    ]
+  },
+  "svenhjol/meson/Feature": {
+    "name": "svenhjol/meson/Feature",
+    "interfaces": [
+      "svenhjol/meson/iface/IFMLEvents"
+    ]
+  },
+  "svenhjol/meson/MesonBlock": {
+    "name": "svenhjol/meson/MesonBlock",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonBlock"
+    ]
+  },
+  "svenhjol/meson/MesonBlock$ColorVariant": {
+    "name": "svenhjol/meson/MesonBlock$ColorVariant",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonEnum"
+    ]
+  },
+  "svenhjol/meson/MesonBlock$WoodVariant": {
+    "name": "svenhjol/meson/MesonBlock$WoodVariant",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonEnum"
+    ]
+  },
+  "svenhjol/meson/MesonEnchantment": {
+    "name": "svenhjol/meson/MesonEnchantment",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonEnchantment"
+    ]
+  },
+  "svenhjol/meson/MesonItem": {
+    "name": "svenhjol/meson/MesonItem",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonItem"
+    ]
+  },
+  "svenhjol/meson/MesonItemBlock": {
+    "name": "svenhjol/meson/MesonItemBlock",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonItemBlock"
+    ]
+  },
+  "svenhjol/meson/MesonMessage": {
+    "name": "svenhjol/meson/MesonMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "svenhjol/meson/MesonPotion": {
+    "name": "svenhjol/meson/MesonPotion",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonPotion"
+    ]
+  },
+  "svenhjol/meson/MesonTile": {
+    "name": "svenhjol/meson/MesonTile",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonTile"
+    ]
+  },
+  "svenhjol/meson/Module": {
+    "name": "svenhjol/meson/Module",
+    "interfaces": [
+      "svenhjol/meson/iface/IFMLEvents"
+    ]
+  },
+  "svenhjol/meson/asm/MesonClassTransformer": {
+    "name": "svenhjol/meson/asm/MesonClassTransformer",
+    "interfaces": [
+      "net/minecraft/launchwrapper/IClassTransformer"
+    ]
+  },
+  "svenhjol/meson/asm/MesonClassTransformer$MethodAction": {
+    "name": "svenhjol/meson/asm/MesonClassTransformer$MethodAction",
+    "interfaces": [
+      "java/util/function/Predicate"
+    ]
+  },
+  "svenhjol/meson/asm/MesonClassTransformer$NodeAction": {
+    "name": "svenhjol/meson/asm/MesonClassTransformer$NodeAction",
+    "interfaces": [
+      "java/util/function/BiPredicate"
+    ]
+  },
+  "svenhjol/meson/asm/MesonClassTransformer$NodeFilter": {
+    "name": "svenhjol/meson/asm/MesonClassTransformer$NodeFilter",
+    "interfaces": [
+      "java/util/function/Predicate"
+    ]
+  },
+  "svenhjol/meson/asm/MesonClassTransformer$Transformer": {
+    "name": "svenhjol/meson/asm/MesonClassTransformer$Transformer",
+    "interfaces": [
+      "java/util/function/Function"
+    ]
+  },
+  "svenhjol/meson/asm/MesonLoadingPlugin": {
+    "name": "svenhjol/meson/asm/MesonLoadingPlugin",
+    "interfaces": [
+      "net/minecraftforge/fml/relauncher/IFMLLoadingPlugin"
+    ]
+  },
+  "svenhjol/meson/event/BiomeEventBase$GetVillageDoor": {
+    "name": "svenhjol/meson/event/BiomeEventBase$GetVillageDoor",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Event$HasResult;",
+        "target": "svenhjol/meson/event/BiomeEventBase$GetVillageDoor"
+      }
+    ]
+  },
+  "svenhjol/meson/event/StructureEventBase$Pre": {
+    "name": "svenhjol/meson/event/StructureEventBase$Pre",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Event$HasResult;",
+        "target": "svenhjol/meson/event/StructureEventBase$Pre"
+      }
+    ]
+  },
+  "svenhjol/meson/handler/ModelHandler": {
+    "name": "svenhjol/meson/handler/ModelHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegister(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemColorRegister(Lnet/minecraftforge/client/event/ColorHandlerEvent$Item;)V"
+      }
+    ]
+  },
+  "svenhjol/meson/helper/WorldHelper$StructureType": {
+    "name": "svenhjol/meson/helper/WorldHelper$StructureType",
+    "interfaces": [
+      "svenhjol/meson/iface/IMesonEnum"
+    ]
+  },
+  "svenhjol/meson/iface/IMesonEnum": {
+    "name": "svenhjol/meson/iface/IMesonEnum",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "svenhjol/meson/registry/ProxyRegistry": {
+    "name": "svenhjol/meson/registry/ProxyRegistry",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegister(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "svenhjol/meson/registry/VillagerRegistry": {
+    "name": "svenhjol/meson/registry/VillagerRegistry",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegisterVillagers(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  }
+}

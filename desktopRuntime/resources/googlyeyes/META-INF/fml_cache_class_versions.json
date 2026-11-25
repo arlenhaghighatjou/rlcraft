@@ -1,0 +1,9 @@
+{
+  "me/ichun/mods/googlyeyes/common/GooglyEyes": 52,
+  "me/ichun/mods/googlyeyes/common/core/Config": 52,
+  "me/ichun/mods/googlyeyes/common/core/EventHandler": 52,
+  "me/ichun/mods/googlyeyes/common/layerrenderer/LayerGooglyEyes": 52,
+  "me/ichun/mods/googlyeyes/common/model/ModelGooglyEye": 52,
+  "me/ichun/mods/googlyeyes/common/tracker/GooglyTracker": 52,
+  "me/ichun/mods/googlyeyes/common/tracker/GooglyTracker$EyeInfo": 52
+}

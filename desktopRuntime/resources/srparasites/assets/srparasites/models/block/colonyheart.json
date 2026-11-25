@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "particle": "srparasites:blocks/parasiterubbledense_biome_down",
+    "down": "srparasites:blocks/parasiterubbledense_biome_down",
+    "up": "srparasites:blocks/parasiterubbledense_biome_up",
+    "east": "srparasites:blocks/parasiterubbledense_biome_side",
+    "west": "srparasites:blocks/parasiterubbledense_biome_side",
+    "north": "srparasites:blocks/parasiterubbledense_biome_side",
+    "south": "srparasites:blocks/parasiterubbledense_biome_side"
+  }
+}

@@ -1,0 +1,83 @@
+package com.fantasticsource.mctools.gui.element.other;
+
+import com.fantasticsource.mctools.gui.GUIScreen;
+import com.fantasticsource.mctools.gui.element.GUIElement;
+import com.fantasticsource.tools.datastructures.Color;
+import net.minecraft.client.renderer.GlStateManager;
+
+public class GUIGradient extends GUIElement {
+   private Color[] colors;
+   private Color[] hoverColors;
+   private Color[] activeColors;
+
+   public GUIGradient(GUIScreen screen, double width, double height, Color color) {
+      this(screen, width, height, color, color, color);
+   }
+
+   public GUIGradient(GUIScreen screen, double width, double height, Color color, Color hover, Color active) {
+      this(screen, width, height, color, color, color, color, hover, hover, hover, hover, active, active, active, active);
+   }
+
+   public GUIGradient(GUIScreen screen, double width, double height, Color topRight, Color topLeft, Color bottomLeft, Color bottomRight) {
+      this(screen, width, height, topRight, topLeft, bottomLeft, bottomRight, topRight, topLeft, bottomLeft, bottomRight, topRight, topLeft, bottomLeft, bottomRight);
+   }
+
+   public GUIGradient(GUIScreen screen, double width, double height, Color topRight, Color topLeft, Color bottomLeft, Color bottomRight, Color topRightHover, Color topLeftHover, Color bottomLeftHover, Color bottomRightHover, Color topRightActive, Color topLeftActive, Color bottomLeftActive, Color bottomRightActive) {
+      super(screen, width, height);
+      this.setColor(topRight, topLeft, bottomLeft, bottomRight, topRightHover, topLeftHover, bottomLeftHover, bottomRightHover, topRightActive, topLeftActive, bottomLeftActive, bottomRightActive);
+   }
+
+   public GUIGradient(GUIScreen screen, double x, double y, double width, double height, Color color) {
+      this(screen, x, y, width, height, color, color, color);
+   }
+
+   public GUIGradient(GUIScreen screen, double x, double y, double width, double height, Color color, Color hover, Color active) {
+      this(screen, x, y, width, height, color, color, color, color, hover, hover, hover, hover, active, active, active, active);
+   }
+
+   public GUIGradient(GUIScreen screen, double x, double y, double width, double height, Color topRight, Color topLeft, Color bottomLeft, Color bottomRight) {
+      this(screen, x, y, width, height, topRight, topLeft, bottomLeft, bottomRight, topRight, topLeft, bottomLeft, bottomRight, topRight, topLeft, bottomLeft, bottomRight);
+   }
+
+   public GUIGradient(GUIScreen screen, double x, double y, double width, double height, Color topRight, Color topLeft, Color bottomLeft, Color bottomRight, Color topRightHover, Color topLeftHover, Color bottomLeftHover, Color bottomRightHover, Color topRightActive, Color topLeftActive, Color bottomLeftActive, Color bottomRightActive) {
+      super(screen, x, y, width, height);
+      this.colors = new Color[]{topRight, topLeft, bottomLeft, bottomRight};
+      this.hoverColors = new Color[]{topRightHover, topLeftHover, bottomLeftHover, bottomRightHover};
+      this.activeColors = new Color[]{topRightActive, topLeftActive, bottomLeftActive, bottomRightActive};
+   }
+
+   public void setColor(Color color) {
+      this.setColor(color, color, color);
+   }
+
+   public void setColor(Color color, Color hover, Color active) {
+      this.setColor(color, color, color, color, hover, hover, hover, hover, active, active, active, active);
+   }
+
+   public void setColor(Color topRight, Color topLeft, Color bottomLeft, Color bottomRight) {
+      this.setColor(topRight, topLeft, bottomLeft, bottomRight, topRight, topLeft, bottomLeft, bottomRight, topRight, topLeft, bottomLeft, bottomRight);
+   }
+
+   public void setColor(Color topRight, Color topLeft, Color bottomLeft, Color bottomRight, Color topRightHover, Color topLeftHover, Color bottomLeftHover, Color bottomRightHover, Color topRightActive, Color topLeftActive, Color bottomLeftActive, Color bottomRightActive) {
+      this.colors = new Color[]{topRight, topLeft, bottomLeft, bottomRight};
+      this.hoverColors = new Color[]{topRightHover, topLeftHover, bottomLeftHover, bottomRightHover};
+      this.activeColors = new Color[]{topRightActive, topLeftActive, bottomLeftActive, bottomRightActive};
+   }
+
+   public void draw() {
+      GlStateManager.disableTexture2D();
+      GlStateManager.disableAlpha();
+      Color[] colors = this.active ? this.activeColors : (this.isMouseWithin() ? this.hoverColors : this.colors);
+      GlStateManager.glBegin(7);
+      GlStateManager.color(colors[0].rf(), colors[0].gf(), colors[0].bf(), colors[0].af());
+      GlStateManager.glVertex3f(1.0F, 0.0F, 0.0F);
+      GlStateManager.color(colors[1].rf(), colors[1].gf(), colors[1].bf(), colors[1].af());
+      GlStateManager.glVertex3f(0.0F, 0.0F, 0.0F);
+      GlStateManager.color(colors[2].rf(), colors[2].gf(), colors[2].bf(), colors[2].af());
+      GlStateManager.glVertex3f(0.0F, 1.0F, 0.0F);
+      GlStateManager.color(colors[3].rf(), colors[3].gf(), colors[3].bf(), colors[3].af());
+      GlStateManager.glVertex3f(1.0F, 1.0F, 0.0F);
+      GlStateManager.glEnd();
+      this.drawChildren();
+   }
+}

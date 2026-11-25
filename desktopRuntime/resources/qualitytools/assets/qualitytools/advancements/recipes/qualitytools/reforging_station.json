@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "qualitytools:reforging_station"
+    ]
+  },
+  "criteria": {
+    "has_anvil": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:anvil"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "qualitytools:reforging_station"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_anvil",
+      "has_the_recipe"
+    ]
+  ]
+}

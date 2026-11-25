@@ -1,0 +1,18 @@
+{ "_comment": ["Diamond reinforced threads" ],
+  "conditions": [{
+     "type": "armorunder:is_allowed",
+     "value": "craft_smart_lining"
+  }],
+  "result": {
+    "item": "armorunder:diamond_strong_thread",
+    "count": 3
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "Ds", "ss"
+  ],
+  "key": {
+    "D": { "type": "forge:ore_dict", "ore": "gemDiamond" },
+    "s": { "item": "minecraft:string" }
+  }
+}

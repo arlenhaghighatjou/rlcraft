@@ -1,0 +1,10 @@
+{
+  "fr/samlegamer/spartandefiled/SpartanDefiled": 52,
+  "fr/samlegamer/spartandefiled/items/SDItemsRegistry": 52,
+  "fr/samlegamer/spartandefiled/proxy/ClientProxy": 52,
+  "fr/samlegamer/spartandefiled/proxy/CommonProxy": 52,
+  "fr/samlegamer/spartandefiled/proxy/ServerProxy": 52,
+  "fr/samlegamer/spartandefiled/utils/ModelRenderRegistrySD": 52,
+  "fr/samlegamer/spartandefiled/utils/SDMatConvert": 52,
+  "fr/samlegamer/spartandefiled/utils/SDUtils": 52
+}

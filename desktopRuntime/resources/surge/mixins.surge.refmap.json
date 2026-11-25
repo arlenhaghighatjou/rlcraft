@@ -1,0 +1,61 @@
+{
+  "mappings": {
+    "net/darkhax/surge/mixins/minecraft/entity/passive/MixinEntitySheep": {
+      "getDyeColorMixFromParents(Lnet/minecraft/entity/passive/EntityAnimal;Lnet/minecraft/entity/passive/EntityAnimal;)Lnet/minecraft/item/EnumDyeColor;": "Lnet/minecraft/entity/passive/EntitySheep;func_175511_a(Lnet/minecraft/entity/passive/EntityAnimal;Lnet/minecraft/entity/passive/EntityAnimal;)Lnet/minecraft/item/EnumDyeColor;"
+    },
+    "net/darkhax/surge/mixins/minecraft/entity/item/MixinEntityItem": {
+      "searchForOtherItemsNearby()V": "Lnet/minecraft/entity/item/EntityItem;func_85054_d()V",
+      "combineItems(Lnet/minecraft/entity/item/EntityItem;)Z": "Lnet/minecraft/entity/item/EntityItem;func_70289_a(Lnet/minecraft/entity/item/EntityItem;)Z"
+    },
+    "net/darkhax/surge/mixins/minecraft/client/audio/MixinSoundHandler": {
+      "onResourceManagerReload(Lnet/minecraft/client/resources/IResourceManager;)V": "Lnet/minecraft/client/audio/SoundHandler;func_110549_a(Lnet/minecraft/client/resources/IResourceManager;)V"
+    },
+    "net/darkhax/surge/mixins/minecraft/client/gui/MixinGuiRepair": {
+      "initGui": "Lnet/minecraft/client/gui/GuiRepair;func_73866_w_()V"
+    },
+    "net/darkhax/surge/mixins/minecraft/entity/MixinEntity": {
+      "readFromNBT(Lnet/minecraft/nbt/NBTTagCompound;)V": "Lnet/minecraft/entity/Entity;func_70020_e(Lnet/minecraft/nbt/NBTTagCompound;)V",
+      "writeToNBT(Lnet/minecraft/nbt/NBTTagCompound;)Lnet/minecraft/nbt/NBTTagCompound;": "Lnet/minecraft/entity/Entity;func_189511_e(Lnet/minecraft/nbt/NBTTagCompound;)Lnet/minecraft/nbt/NBTTagCompound;"
+    }
+  },
+  "data": {
+    "notch": {
+      "net/darkhax/surge/mixins/minecraft/entity/passive/MixinEntitySheep": {
+        "getDyeColorMixFromParents(Lnet/minecraft/entity/passive/EntityAnimal;Lnet/minecraft/entity/passive/EntityAnimal;)Lnet/minecraft/item/EnumDyeColor;": "Laag;a(Lzv;Lzv;)Lahs;"
+      },
+      "net/darkhax/surge/mixins/minecraft/entity/item/MixinEntityItem": {
+        "searchForOtherItemsNearby()V": "Lacl;x()V",
+        "combineItems(Lnet/minecraft/entity/item/EntityItem;)Z": "Lacl;a(Lacl;)Z"
+      },
+      "net/darkhax/surge/mixins/minecraft/client/audio/MixinSoundHandler": {
+        "onResourceManagerReload(Lnet/minecraft/client/resources/IResourceManager;)V": "Lcho;a(Lcep;)V"
+      },
+      "net/darkhax/surge/mixins/minecraft/client/gui/MixinGuiRepair": {
+        "initGui": "Lbmh;b()V"
+      },
+      "net/darkhax/surge/mixins/minecraft/entity/MixinEntity": {
+        "readFromNBT(Lnet/minecraft/nbt/NBTTagCompound;)V": "Lvg;f(Lfy;)V",
+        "writeToNBT(Lnet/minecraft/nbt/NBTTagCompound;)Lnet/minecraft/nbt/NBTTagCompound;": "Lvg;e(Lfy;)Lfy;"
+      }
+    },
+    "searge": {
+      "net/darkhax/surge/mixins/minecraft/entity/passive/MixinEntitySheep": {
+        "getDyeColorMixFromParents(Lnet/minecraft/entity/passive/EntityAnimal;Lnet/minecraft/entity/passive/EntityAnimal;)Lnet/minecraft/item/EnumDyeColor;": "Lnet/minecraft/entity/passive/EntitySheep;func_175511_a(Lnet/minecraft/entity/passive/EntityAnimal;Lnet/minecraft/entity/passive/EntityAnimal;)Lnet/minecraft/item/EnumDyeColor;"
+      },
+      "net/darkhax/surge/mixins/minecraft/entity/item/MixinEntityItem": {
+        "searchForOtherItemsNearby()V": "Lnet/minecraft/entity/item/EntityItem;func_85054_d()V",
+        "combineItems(Lnet/minecraft/entity/item/EntityItem;)Z": "Lnet/minecraft/entity/item/EntityItem;func_70289_a(Lnet/minecraft/entity/item/EntityItem;)Z"
+      },
+      "net/darkhax/surge/mixins/minecraft/client/audio/MixinSoundHandler": {
+        "onResourceManagerReload(Lnet/minecraft/client/resources/IResourceManager;)V": "Lnet/minecraft/client/audio/SoundHandler;func_110549_a(Lnet/minecraft/client/resources/IResourceManager;)V"
+      },
+      "net/darkhax/surge/mixins/minecraft/client/gui/MixinGuiRepair": {
+        "initGui": "Lnet/minecraft/client/gui/GuiRepair;func_73866_w_()V"
+      },
+      "net/darkhax/surge/mixins/minecraft/entity/MixinEntity": {
+        "readFromNBT(Lnet/minecraft/nbt/NBTTagCompound;)V": "Lnet/minecraft/entity/Entity;func_70020_e(Lnet/minecraft/nbt/NBTTagCompound;)V",
+        "writeToNBT(Lnet/minecraft/nbt/NBTTagCompound;)Lnet/minecraft/nbt/NBTTagCompound;": "Lnet/minecraft/entity/Entity;func_189511_e(Lnet/minecraft/nbt/NBTTagCompound;)Lnet/minecraft/nbt/NBTTagCompound;"
+      }
+    }
+  }
+}

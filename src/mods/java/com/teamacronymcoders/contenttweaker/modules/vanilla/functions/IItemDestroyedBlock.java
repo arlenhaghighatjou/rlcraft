@@ -1,0 +1,15 @@
+package com.teamacronymcoders.contenttweaker.modules.vanilla.functions;
+
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockpos.IBlockPos;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.blockstate.ICTBlockState;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.mutableitemstack.IMutableItemStack;
+import com.teamacronymcoders.contenttweaker.api.ctobjects.world.IWorld;
+import crafttweaker.annotations.ZenRegister;
+import crafttweaker.api.entity.IEntityLivingBase;
+import stanhebben.zenscript.annotations.ZenClass;
+
+@ZenRegister
+@ZenClass("mods.contenttweaker.IItemDestroyedBlock")
+public interface IItemDestroyedBlock {
+   boolean onBlockDestroyed(IMutableItemStack var1, IWorld var2, ICTBlockState var3, IBlockPos var4, IEntityLivingBase var5);
+}

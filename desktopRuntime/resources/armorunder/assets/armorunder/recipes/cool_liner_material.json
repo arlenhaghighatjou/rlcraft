@@ -1,0 +1,13 @@
+{ "_comment": ["Cool lining material from cooling goo" ],
+  "result": {
+    "item": "armorunder:cool_liner_material"
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "sss", " X ", "sss"
+  ],
+  "key": {
+    "s": { "item": "minecraft:string" },
+    "X": { "item": "armorunder:cooling_goo" }
+  }
+}

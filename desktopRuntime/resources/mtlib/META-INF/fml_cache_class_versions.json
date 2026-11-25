@@ -1,0 +1,22 @@
+{
+  "com/blamejared/mtlib/MTLib": 52,
+  "com/blamejared/mtlib/helpers/InputHelper": 52,
+  "com/blamejared/mtlib/helpers/LogHelper": 52,
+  "com/blamejared/mtlib/helpers/ReflectionHelper": 52,
+  "com/blamejared/mtlib/helpers/StackHelper": 52,
+  "com/blamejared/mtlib/helpers/StringHelper": 52,
+  "com/blamejared/mtlib/reference/Reference": 52,
+  "com/blamejared/mtlib/utils/BaseAction": 52,
+  "com/blamejared/mtlib/utils/BaseAddForestry": 52,
+  "com/blamejared/mtlib/utils/BaseCraftingAddition": 52,
+  "com/blamejared/mtlib/utils/BaseCraftingRemoval": 52,
+  "com/blamejared/mtlib/utils/BaseListAddition": 52,
+  "com/blamejared/mtlib/utils/BaseListModification": 52,
+  "com/blamejared/mtlib/utils/BaseListRemoval": 52,
+  "com/blamejared/mtlib/utils/BaseMapAddition": 52,
+  "com/blamejared/mtlib/utils/BaseMapModification": 52,
+  "com/blamejared/mtlib/utils/BaseMapRemoval": 52,
+  "com/blamejared/mtlib/utils/BaseMultiModification": 52,
+  "com/blamejared/mtlib/utils/BaseRemoveForestry": 52,
+  "com/blamejared/mtlib/utils/BaseUndoable": 52
+}

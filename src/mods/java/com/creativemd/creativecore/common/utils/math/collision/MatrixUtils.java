@@ -1,0 +1,123 @@
+package com.creativemd.creativecore.common.utils.math.collision;
+
+import javax.vecmath.Matrix3d;
+import javax.vecmath.Matrix4d;
+
+public class MatrixUtils {
+   public MatrixUtils() {
+   }
+
+   public static Matrix3d createIdentityMatrix() {
+      Matrix3d matrix = new Matrix3d();
+      matrix.setIdentity();
+      return matrix;
+   }
+
+   public static Matrix3d createRotationMatrix(double rotX, double rotY, double rotZ) {
+      Matrix3d matrix = createRotationMatrixX(rotX);
+      matrix.mul(createRotationMatrixY(rotY));
+      matrix.mul(createRotationMatrixZ(rotZ));
+      return matrix;
+   }
+
+   public static void mul(Matrix4d matrix, Matrix3d matrix2) {
+      double m00 = matrix.m00 * matrix2.m00 + matrix.m01 * matrix2.m10 + matrix.m02 * matrix2.m20;
+      double m01 = matrix.m00 * matrix2.m01 + matrix.m01 * matrix2.m11 + matrix.m02 * matrix2.m21;
+      double m02 = matrix.m00 * matrix2.m02 + matrix.m01 * matrix2.m12 + matrix.m02 * matrix2.m22;
+      double m10 = matrix.m10 * matrix2.m00 + matrix.m11 * matrix2.m10 + matrix.m12 * matrix2.m20;
+      double m11 = matrix.m10 * matrix2.m01 + matrix.m11 * matrix2.m11 + matrix.m12 * matrix2.m21;
+      double m12 = matrix.m10 * matrix2.m02 + matrix.m11 * matrix2.m12 + matrix.m12 * matrix2.m22;
+      double m20 = matrix.m20 * matrix2.m00 + matrix.m21 * matrix2.m10 + matrix.m22 * matrix2.m20;
+      double m21 = matrix.m20 * matrix2.m01 + matrix.m21 * matrix2.m11 + matrix.m22 * matrix2.m21;
+      double m22 = matrix.m20 * matrix2.m02 + matrix.m21 * matrix2.m12 + matrix.m22 * matrix2.m22;
+      matrix.m00 = m00;
+      matrix.m01 = m01;
+      matrix.m02 = m02;
+      matrix.m10 = m10;
+      matrix.m11 = m11;
+      matrix.m12 = m12;
+      matrix.m20 = m20;
+      matrix.m21 = m21;
+      matrix.m22 = m22;
+   }
+
+   public static Matrix4d createRotationMatrixAndTranslationRadians(double x, double y, double z, double rotX, double rotY, double rotZ) {
+      Matrix4d matrix = new Matrix4d();
+      if (rotX != 0.0D) {
+         matrix.rotX(rotX);
+      } else {
+         matrix.setIdentity();
+      }
+
+      if (rotY != 0.0D) {
+         mul(matrix, createRotationMatrixYRadians(rotY));
+      }
+
+      if (rotZ != 0.0D) {
+         mul(matrix, createRotationMatrixZRadians(rotZ));
+      }
+
+      matrix.m03 = x;
+      matrix.m13 = y;
+      matrix.m23 = z;
+      return matrix;
+   }
+
+   public static Matrix4d createRotationMatrixAndTranslation(double x, double y, double z, double rotX, double rotY, double rotZ) {
+      Matrix4d matrix = new Matrix4d();
+      if (rotX != 0.0D) {
+         matrix.rotX(Math.toRadians(rotX));
+      } else {
+         matrix.setIdentity();
+      }
+
+      if (rotY != 0.0D) {
+         mul(matrix, createRotationMatrixY(rotY));
+      }
+
+      if (rotZ != 0.0D) {
+         mul(matrix, createRotationMatrixZ(rotZ));
+      }
+
+      matrix.m03 = x;
+      matrix.m13 = y;
+      matrix.m23 = z;
+      return matrix;
+   }
+
+   public static Matrix3d createRotationMatrixX(double angle) {
+      Matrix3d matrix = new Matrix3d();
+      matrix.rotX(Math.toRadians(angle));
+      return matrix;
+   }
+
+   private static Matrix3d createRotationMatrixXRadians(double radians) {
+      Matrix3d matrix = new Matrix3d();
+      matrix.rotX(radians);
+      return matrix;
+   }
+
+   public static Matrix3d createRotationMatrixY(double angle) {
+      Matrix3d matrix = new Matrix3d();
+      matrix.rotY(Math.toRadians(angle));
+      return matrix;
+   }
+
+   private static Matrix3d createRotationMatrixYRadians(double radians) {
+      Matrix3d matrix = new Matrix3d();
+      matrix.rotY(radians);
+      return matrix;
+   }
+
+   public static Matrix3d createRotationMatrixZ(double angle) {
+      Matrix3d matrix = new Matrix3d();
+      matrix.rotZ(Math.toRadians(angle));
+      return matrix;
+   }
+
+   private static Matrix3d createRotationMatrixZRadians(double radians) {
+      Matrix3d matrix = new Matrix3d();
+      matrix.rotZ(radians);
+      return matrix;
+   }
+}

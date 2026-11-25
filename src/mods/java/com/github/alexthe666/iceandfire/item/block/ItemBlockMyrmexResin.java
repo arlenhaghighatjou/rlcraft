@@ -1,0 +1,28 @@
+package com.github.alexthe666.iceandfire.item.block;
+
+import com.github.alexthe666.iceandfire.core.ModBlocks;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+
+public class ItemBlockMyrmexResin extends ItemBlock {
+   private boolean sticky;
+
+   public ItemBlockMyrmexResin(Block block) {
+      super(block);
+      this.sticky = block == ModBlocks.myrmex_resin_sticky;
+      this.setHasSubtypes(true);
+   }
+
+   public String getUnlocalizedName(ItemStack itemstack) {
+      if (this.sticky) {
+         return itemstack.getItemDamage() == 1 ? "tile.iceandfire.jungle_myrmex_resin_sticky" : "tile.iceandfire.desert_myrmex_resin_sticky";
+      } else {
+         return itemstack.getItemDamage() == 1 ? "tile.iceandfire.jungle_myrmex_resin" : "tile.iceandfire.desert_myrmex_resin";
+      }
+   }
+
+   public int getMetadata(int meta) {
+      return meta;
+   }
+}

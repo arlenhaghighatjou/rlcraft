@@ -1,0 +1,225 @@
+{
+  "com/jamieswhiteshirt/trumpetskeleton/TrumpetSkeleton": {
+    "name": "com/jamieswhiteshirt/trumpetskeleton/TrumpetSkeleton",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/jamieswhiteshirt/trumpetskeleton/TrumpetSkeleton",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12,1.13)"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.21.1.2387,)"
+          },
+          "modid": {
+            "value": "trumpetskeleton"
+          },
+          "name": {
+            "value": "Trumpet Skeleton"
+          },
+          "version": {
+            "value": "1.12-1.0.2.1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.jamieswhiteshirt.trumpetskeleton.client.ClientProxy"
+          },
+          "modId": {
+            "value": "trumpetskeleton"
+          },
+          "serverSide": {
+            "value": "com.jamieswhiteshirt.trumpetskeleton.server.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerSoundEvents(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEntityEntries(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onActiveItemUseTick(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Tick;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlaySoundAtEntity(Lnet/minecraftforge/event/entity/PlaySoundAtEntityEvent;)V"
+      }
+    ]
+  },
+  "com/jamieswhiteshirt/trumpetskeleton/client/ClientProxy": {
+    "name": "com/jamieswhiteshirt/trumpetskeleton/client/ClientProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "com/jamieswhiteshirt/trumpetskeleton/client/model/package-info": {
+    "name": "com/jamieswhiteshirt/trumpetskeleton/client/model/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/jamieswhiteshirt/trumpetskeleton/client/model/package-info"
+      }
+    ]
+  },
+  "com/jamieswhiteshirt/trumpetskeleton/client/package-info": {
+    "name": "com/jamieswhiteshirt/trumpetskeleton/client/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/jamieswhiteshirt/trumpetskeleton/client/package-info"
+      }
+    ]
+  },
+  "com/jamieswhiteshirt/trumpetskeleton/client/renderer/entity/package-info": {
+    "name": "com/jamieswhiteshirt/trumpetskeleton/client/renderer/entity/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/jamieswhiteshirt/trumpetskeleton/client/renderer/entity/package-info"
+      }
+    ]
+  },
+  "com/jamieswhiteshirt/trumpetskeleton/common/TrumpetSkeletonItems": {
+    "name": "com/jamieswhiteshirt/trumpetskeleton/common/TrumpetSkeletonItems",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "com/jamieswhiteshirt/trumpetskeleton/common/TrumpetSkeletonItems",
+        "value": {
+          "value": "trumpetskeleton"
+        }
+      }
+    ]
+  },
+  "com/jamieswhiteshirt/trumpetskeleton/common/TrumpetSkeletonSoundEvents": {
+    "name": "com/jamieswhiteshirt/trumpetskeleton/common/TrumpetSkeletonSoundEvents",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "com/jamieswhiteshirt/trumpetskeleton/common/TrumpetSkeletonSoundEvents",
+        "value": {
+          "value": "trumpetskeleton"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ENTITY_TRUMPET_SKELETON_AMBIENT",
+        "value": {
+          "value": "entity.trumpet_skeleton.ambient"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "E_PARROT_IM_TRUMPET_SKELETON",
+        "value": {
+          "value": "entity.parrot.imitate.trumpet_skeleton"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ITEM_TRUMPET_USE",
+        "value": {
+          "value": "item.trumpet.use"
+        }
+      }
+    ]
+  },
+  "com/jamieswhiteshirt/trumpetskeleton/common/entity/package-info": {
+    "name": "com/jamieswhiteshirt/trumpetskeleton/common/entity/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/jamieswhiteshirt/trumpetskeleton/common/entity/package-info"
+      }
+    ]
+  },
+  "com/jamieswhiteshirt/trumpetskeleton/common/item/package-info": {
+    "name": "com/jamieswhiteshirt/trumpetskeleton/common/item/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/jamieswhiteshirt/trumpetskeleton/common/item/package-info"
+      }
+    ]
+  },
+  "com/jamieswhiteshirt/trumpetskeleton/common/package-info": {
+    "name": "com/jamieswhiteshirt/trumpetskeleton/common/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/jamieswhiteshirt/trumpetskeleton/common/package-info"
+      }
+    ]
+  },
+  "com/jamieswhiteshirt/trumpetskeleton/package-info": {
+    "name": "com/jamieswhiteshirt/trumpetskeleton/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/jamieswhiteshirt/trumpetskeleton/package-info"
+      }
+    ]
+  },
+  "com/jamieswhiteshirt/trumpetskeleton/server/package-info": {
+    "name": "com/jamieswhiteshirt/trumpetskeleton/server/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/jamieswhiteshirt/trumpetskeleton/server/package-info"
+      }
+    ]
+  }
+}

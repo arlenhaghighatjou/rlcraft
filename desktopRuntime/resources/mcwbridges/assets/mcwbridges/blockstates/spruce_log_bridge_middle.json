@@ -1,0 +1,47 @@
+{
+	"variants":
+	{
+		
+		"facing=south,lit=false":
+		{
+			 "model": "mcwbridges:spruce_log_bridge_middle","y":270
+		},
+		
+		"facing=east,lit=false":
+		{
+			 "model": "mcwbridges:spruce_log_bridge_middle","y":0
+		},
+		
+		"facing=west,lit=false":
+		{
+			 "model": "mcwbridges:spruce_log_bridge_middle","y":180
+		},
+		
+		"facing=north,lit=false":
+		{
+			 "model": "mcwbridges:spruce_log_bridge_middle","y":90
+		},
+		
+		
+		
+		"facing=south,lit=true":
+		{
+			 "model": "mcwbridges:lit/spruce_log_bridge_middle","y":270
+		},
+		
+		"facing=east,lit=true":
+		{
+			 "model": "mcwbridges:lit/spruce_log_bridge_middle","y":0
+		},
+		
+		"facing=west,lit=true":
+		{
+			 "model": "mcwbridges:lit/spruce_log_bridge_middle","y":180
+		},
+		
+		"facing=north,lit=true":
+		{
+			 "model": "mcwbridges:lit/spruce_log_bridge_middle","y":90
+		}
+	}
+}

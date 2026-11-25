@@ -1,0 +1,3670 @@
+{
+  "net/silentchaos512/scalinghealth/ScalingHealth": {
+    "name": "net/silentchaos512/scalinghealth/ScalingHealth",
+    "interfaces": [
+      "net/silentchaos512/lib/base/IModBase"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "net/silentchaos512/scalinghealth/ScalingHealth",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2779,);required-after:silentlib@[3.0.13,);after:morpheus"
+          },
+          "guiFactory": {
+            "value": "net.silentchaos512.scalinghealth.gui.GuiFactoryScalingHealth"
+          },
+          "modid": {
+            "value": "scalinghealth"
+          },
+          "name": {
+            "value": "Scaling Health"
+          },
+          "version": {
+            "value": "1.3.37"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/scalinghealth/ScalingHealth"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "scalinghealth"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "net.silentchaos512.scalinghealth.proxy.ScalingHealthClientProxy"
+          },
+          "serverSide": {
+            "value": "net.silentchaos512.scalinghealth.proxy.ScalingHealthCommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onServerLoad(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onServerStarted(Lnet/minecraftforge/fml/common/event/FMLServerStartedEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/api/package-info": {
+    "name": "net/silentchaos512/scalinghealth/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "net/silentchaos512/scalinghealth/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "2"
+          },
+          "owner": {
+            "value": "ScalingHealth"
+          },
+          "provides": {
+            "value": "ScalingHealthAPI"
+          }
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/client/DifficultyDisplayHandler": {
+    "name": "net/silentchaos512/scalinghealth/client/DifficultyDisplayHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderOverlay(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/client/HeartDisplayHandler": {
+    "name": "net/silentchaos512/scalinghealth/client/HeartDisplayHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHealthBar(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V",
+        "values": {
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/client/render/entity/RenderBlightFire$Factory": {
+    "name": "net/silentchaos512/scalinghealth/client/render/entity/RenderBlightFire$Factory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "net/silentchaos512/scalinghealth/client/render/entity/package-info": {
+    "name": "net/silentchaos512/scalinghealth/client/render/entity/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/scalinghealth/client/render/entity/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/command/package-info": {
+    "name": "net/silentchaos512/scalinghealth/command/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/scalinghealth/command/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/compat/morpheus/SHMorpheusCompat$NewDayHandler": {
+    "name": "net/silentchaos512/scalinghealth/compat/morpheus/SHMorpheusCompat$NewDayHandler",
+    "interfaces": [
+      "net/quetzi/morpheus/api/INewDayHandler"
+    ]
+  },
+  "net/silentchaos512/scalinghealth/config/Config$Client": {
+    "name": "net/silentchaos512/scalinghealth/config/Config$Client",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "enableWitSupport",
+        "values": {
+          "category": {
+            "value": "main.client.wit"
+          },
+          "name": {
+            "value": "Enable WIT Support"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "enableWitSupport",
+        "value": {
+          "value": "If true, additional information on entities will be added to WIT. Disable this if another mod is using the \"wit\" mod ID and causing the game to crash as a result."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "enableWitSupport",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/config/Config$Client$Difficulty": {
+    "name": "net/silentchaos512/scalinghealth/config/Config$Client$Difficulty",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "renderMeter",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Render Difficulty Meter"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "renderMeter",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "renderMeter",
+        "value": {
+          "value": "Show the difficulty meter. Usually, it is display for a few seconds occasionally. If false, it is never shown."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "renderMeterAlways",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Render Difficulty Meter Always"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "renderMeterAlways",
+        "value": {
+          "type": "BOOL",
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "renderMeterAlways",
+        "value": {
+          "value": "Render the difficulty meter at all times. If false, it displays occasionally."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "meterDisplayTime",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Difficulty Meter Display Time"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "meterDisplayTime",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "160"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "meterDisplayTime",
+        "value": {
+          "value": "The time (in ticks) to show the difficulty meter whenever it pops up."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "meterPosX",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Position X"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "meterPosX",
+        "value": {
+          "type": "INT",
+          "value": "5"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "meterPosX",
+        "value": {
+          "value": "Sets position of the difficulty meter. Negative numbers anchor it to the right side of the screen."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "meterPosY",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Position Y"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "meterPosY",
+        "value": {
+          "type": "INT",
+          "value": "-30"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "meterPosY",
+        "value": {
+          "value": "Sets position of the difficulty meter. Negative numbers anchor it to the bottom of the screen."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "warnWhenSleeping",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Warn When Sleeping"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "warnWhenSleeping",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "warnWhenSleeping",
+        "value": {
+          "value": "If difficulty is set to change when the player sleeps, they will be warned when they get in bed."
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/config/Config$Client$Hearts": {
+    "name": "net/silentchaos512/scalinghealth/config/Config$Client$Hearts",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "customHeartRendering",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Custom Heart Rendering"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "customHeartRendering",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "customHeartRendering",
+        "value": {
+          "value": "Replaces vanilla heart rendering (regular and absorption)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "replaceVanillaRow",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Replace Vanilla Heart Row With Custom"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "replaceVanillaRow",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "replaceVanillaRow",
+        "value": {
+          "value": "If true, replaces the vanilla hearts with Scaling Health\u0027s hearts. Otherwise, regular vanilla hearts are rendered first, then custom hearts are used for extra health."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "textOffsetX",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Text Offset X"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "textOffsetX",
+        "value": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "textOffsetX",
+        "value": {
+          "value": "Offset the position of health text."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "textOffsetY",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Text Offset Y"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "textOffsetY",
+        "value": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "textOffsetY",
+        "value": {
+          "value": "Offset the position of health text."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "absorbTextOffsetX",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Text Offset Absorption X"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "absorbTextOffsetX",
+        "value": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "absorbTextOffsetX",
+        "value": {
+          "value": "Offset the position of the absorption text"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "absorbTextOffsetY",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Text Offset Absorption Y"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "absorbTextOffsetY",
+        "value": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "absorbTextOffsetY",
+        "value": {
+          "value": "Offset the position of the absorption text"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "lastHeartOutline",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Last Heart Outline Enabled"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "lastHeartOutline",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "lastHeartOutline",
+        "value": {
+          "value": "Outline your highest (max health) heart in a different color. This makes seeing your max health a little bit easier."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "lastHeartOutlineColor",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Last Heart Outline Color"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "lastHeartOutlineColor",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "16777215"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "16777215"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "lastHeartOutlineColor",
+        "value": {
+          "value": "The color of the last heart outline (default value). Due to an oversight, this ended up as a decimal number. Oops."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "heartColorLooping",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Color Looping"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "heartColorLooping",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "heartColorLooping",
+        "value": {
+          "value": "If true, heart colors will \u0027loop around\u0027 to the first color after going through the entire list. Set false to have every row after the last have the same color."
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/config/Config$Debug": {
+    "name": "net/silentchaos512/scalinghealth/config/Config$Debug",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "debugMode",
+        "values": {
+          "category": {
+            "value": "main.debug"
+          },
+          "name": {
+            "value": "Debug Mode"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "debugMode",
+        "value": {
+          "type": "BOOL",
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "debugMode",
+        "value": {
+          "value": "Master switch for the other debug configs."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "debugOverlay",
+        "values": {
+          "category": {
+            "value": "main.debug"
+          },
+          "name": {
+            "value": "Debug Overlay"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "debugOverlay",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "debugOverlay",
+        "value": {
+          "value": "Draws information related to the mod on-screen, including health modifiers, difficulty data, and more. This is intended for testing purposes only, not normal gameplay."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "logSpawns",
+        "values": {
+          "category": {
+            "value": "main.debug"
+          },
+          "name": {
+            "value": "Log Spawns"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "logSpawns",
+        "value": {
+          "type": "BOOL",
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "logSpawns",
+        "value": {
+          "value": "If debug mode is on, this will log details on mob spawns. This may slow down your game."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "logPlayerDamage",
+        "values": {
+          "category": {
+            "value": "main.debug"
+          },
+          "name": {
+            "value": "Log Player Damage"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "logPlayerDamage",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "logPlayerDamage",
+        "value": {
+          "value": "If debug mode is on, this will log details of damage done to players."
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/config/Config$Difficulty": {
+    "name": "net/silentchaos512/scalinghealth/config/Config$Difficulty",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "forSleeping",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Difficulty Added When Sleeping"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "forSleeping",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "10000.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "-10000.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "forSleeping",
+        "value": {
+          "value": "Change in difficulty when a player sleeps through the night. Negative numbers cause difficulty to decrease."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "groupAreaBonus",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Group Area Bonus"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "groupAreaBonus",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "10.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "-10.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.05"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "groupAreaBonus",
+        "value": {
+          "value": "Adds extra difficulty per additional nearby player. So area difficulty will be multiplied by: 1 + group_bonus * (players_in_area - 1)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "idleMulti",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Idle Multiplier"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "idleMulti",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "100.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "-100.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.7"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "idleMulti",
+        "value": {
+          "value": "Difficulty added per second is multiplied by this if the player is not moving."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "lostOnDeath",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Lost On Death"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "lostOnDeath",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "10000.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "-10000.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "lostOnDeath",
+        "value": {
+          "value": "The difficulty a player loses on death. Negative numbers cause the player to gain difficulty."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "maxValue",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Max Value"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "maxValue",
+        "values": {
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "250.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "maxValue",
+        "value": {
+          "value": "The maximum difficulty level that can be reached."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "minValue",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Min Value"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "minValue",
+        "values": {
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "minValue",
+        "value": {
+          "value": "The minimum difficulty value. This can be different from the starting value."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "perBlightKill",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Difficulty Per Blight Kill"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "perBlightKill",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "10000.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "-10000.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "perBlightKill",
+        "value": {
+          "value": "Difficulty change per blight kill. Negative numbers cause difficulty to decrease."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "perBossKill",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Difficulty Per Boss Kill"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "perBossKill",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "10000.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "-10000.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "perBossKill",
+        "value": {
+          "value": "Difficulty change per boss kill. Negative numbers cause difficulty to decrease."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "perBlock",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Difficulty Per Block"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "perBlock",
+        "value": {
+          "type": "FLOAT",
+          "value": "0.0025"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "perBlock",
+        "value": {
+          "value": "The amount of difficulty added per unit distance from the origin/spawn, assuming \"Area Mode\" is set to a distance-based option. Negative numbers will decrease difficulty over distance."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "perHostileKill",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Difficulty Per Kill"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "perHostileKill",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "10000.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "-10000.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "perHostileKill",
+        "value": {
+          "value": "Difficulty change per hostile mob killed. Negative numbers cause difficulty to decrease."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "perPassiveKill",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Difficulty Per Passive Kill"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "perPassiveKill",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "10000.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "-10000.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "perPassiveKill",
+        "value": {
+          "value": "Difficulty change per passive mob kill. Negative numbers cause difficulty to decrease."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "perSecond",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Increase Per Second"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "perSecond",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "10000.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "-10000.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.0011574"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "perSecond",
+        "value": {
+          "value": "The amount difficulty changes each second. In Difficult Life, the option was named per tick, but was actually applied each second. Negative numbers will decrease difficulty over time."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "searchRadius",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Search Radius"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "searchRadius",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "32767"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "256"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "searchRadius",
+        "value": {
+          "value": "The distance from a newly spawned mob to search for players to determine its difficulty level. Set to 0 for unlimited range."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "startValue",
+        "values": {
+          "category": {
+            "value": "main.difficulty"
+          },
+          "name": {
+            "value": "Starting Value"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "startValue",
+        "values": {
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "startValue",
+        "value": {
+          "value": "The starting difficulty level for new worlds or players joining for the first time."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "statsConsumeDifficulty",
+        "values": {
+          "category": {
+            "value": "main.client"
+          },
+          "name": {
+            "value": "Stats Consume Difficulty"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "statsConsumeDifficulty",
+        "value": {
+          "type": "BOOL",
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "statsConsumeDifficulty",
+        "value": {
+          "value": "If true, the difficulty a mob is spawned with will be \"consumed\" when given health/damage bonuses and potion effects (as in older versions)."
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/config/Config$FakePlayer": {
+    "name": "net/silentchaos512/scalinghealth/config/Config$FakePlayer",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "generateHearts",
+        "values": {
+          "category": {
+            "value": "main.fake_players"
+          },
+          "name": {
+            "value": "Can Generate Hearts"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "generateHearts",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "generateHearts",
+        "value": {
+          "value": "If enabled, fake players will be able to get heart container drops when killing mobs. Disabling should prevent at least some mob grinders from getting heart drops."
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/config/Config$Items": {
+    "name": "net/silentchaos512/scalinghealth/config/Config$Items",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "cursedHeartChange",
+        "values": {
+          "category": {
+            "value": "main.items.cursed_heart"
+          },
+          "name": {
+            "value": "Difficulty Change"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "cursedHeartChange",
+        "value": {
+          "type": "FLOAT",
+          "value": "10.0"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "cursedHeartChange",
+        "value": {
+          "value": "The amount of difficulty added/removed when using a cursed heart."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "enchantedHeartChange",
+        "values": {
+          "category": {
+            "value": "main.items.enchanted_heart"
+          },
+          "name": {
+            "value": "Difficulty Change"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "enchantedHeartChange",
+        "value": {
+          "type": "FLOAT",
+          "value": "-10.0"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "enchantedHeartChange",
+        "value": {
+          "value": "The amount of difficulty added/removed when using an enchanted heart."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "healingItemFireEvent",
+        "values": {
+          "category": {
+            "value": "main.items"
+          },
+          "name": {
+            "value": "Healing Items Fire Healing Event"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "healingItemFireEvent",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "healingItemFireEvent",
+        "value": {
+          "value": "If true, the healing from bandages and medkits will fire a standard healing event, allowing other mods to execute additional code or cancel the healing altogether. Disable if needed."
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/config/Config$Items$Heart": {
+    "name": "net/silentchaos512/scalinghealth/config/Config$Items$Heart",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "blightMin",
+        "values": {
+          "category": {
+            "value": "main.items"
+          },
+          "name": {
+            "value": "Hearts Dropped by Blight Min"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "blightMin",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "64"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "blightMin",
+        "value": {
+          "value": "The minimum number of heart containers that a blight will drop when killed."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "blightMax",
+        "values": {
+          "category": {
+            "value": "main.items"
+          },
+          "name": {
+            "value": "Hearts Dropped by Blight Max"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "blightMax",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "64"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "blightMax",
+        "value": {
+          "value": "The maximum number of heart containers that a blight will drop when killed."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "bossMin",
+        "values": {
+          "category": {
+            "value": "main.items"
+          },
+          "name": {
+            "value": "Hearts Dropped by Boss Min"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "bossMin",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "64"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "3"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "bossMin",
+        "value": {
+          "value": "The minimum number of heart containers that a boss will drop when killed."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "bossMax",
+        "values": {
+          "category": {
+            "value": "main.items"
+          },
+          "name": {
+            "value": "Hearts Dropped by Boss Max"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "bossMax",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "64"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "6"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "bossMax",
+        "value": {
+          "value": "The maximum number of heart containers that a boss will drop when killed."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "chanceHostile",
+        "values": {
+          "category": {
+            "value": "main.items"
+          },
+          "name": {
+            "value": "Heart Drop Chance"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "chanceHostile",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.01"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "chanceHostile",
+        "value": {
+          "value": "The chance of a hostile mob dropping a heart container when killed."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "chancePassive",
+        "values": {
+          "category": {
+            "value": "main.items"
+          },
+          "name": {
+            "value": "Heart Drop Chance (Passive)"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "chancePassive",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.001"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "chancePassive",
+        "value": {
+          "value": "The chance of a passive mob (animals) dropping a heart container when killed."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "dropShardsInstead",
+        "values": {
+          "category": {
+            "value": "main.items"
+          },
+          "name": {
+            "value": "Drop Shards Instead of Containers"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "dropShardsInstead",
+        "value": {
+          "type": "BOOL",
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "dropShardsInstead",
+        "value": {
+          "value": "If enabled, heart crystals drop shards instead of full containers."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "healingEvent",
+        "values": {
+          "category": {
+            "value": "main.items"
+          },
+          "name": {
+            "value": "Heart Healing Event"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "healingEvent",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "healingEvent",
+        "value": {
+          "value": "If true, the healing from heart containers will fire a standard healing event, allowing other mods to execute additional code or cancel the healing altogether. Disable if needed."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "healthRestored",
+        "values": {
+          "category": {
+            "value": "main.items"
+          },
+          "name": {
+            "value": "Hearts Health Restored"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "healthRestored",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "4"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "healthRestored",
+        "value": {
+          "value": "The amount of extra health restored when using a heart container. This applies whether or not hearts increase max health."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "increaseHealth",
+        "values": {
+          "category": {
+            "value": "main.items"
+          },
+          "name": {
+            "value": "Hearts Increase Max Health"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "increaseHealth",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "increaseHealth",
+        "value": {
+          "value": "If set to false, hearts will no longer increase the player\u0027s maximum health, but can still be used for healing."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "xpCost",
+        "values": {
+          "category": {
+            "value": "main.items"
+          },
+          "name": {
+            "value": "Heart XP Level Cost"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "xpCost",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "3"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "xpCost",
+        "value": {
+          "value": "The number of experience levels required to use a heart container."
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/config/Config$Mob": {
+    "name": "net/silentchaos512/scalinghealth/config/Config$Mob",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "damageMultiplier",
+        "values": {
+          "category": {
+            "value": "main.mob"
+          },
+          "name": {
+            "value": "Damage Modifier"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "damageMultiplier",
+        "values": {
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "damageMultiplier",
+        "value": {
+          "value": "A multiplier for extra attack strength all mobs will receive. Set to 0 to disable extra attack strength."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "maxDamageBoost",
+        "values": {
+          "category": {
+            "value": "main.mob"
+          },
+          "name": {
+            "value": "Max Damage Bonus"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "maxDamageBoost",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "1000.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "10.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "maxDamageBoost",
+        "value": {
+          "value": "The maximum extra attack damage a mob can receive. Zero means unlimited."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "hostilePotionChance",
+        "values": {
+          "category": {
+            "value": "main.mob"
+          },
+          "name": {
+            "value": "Potion Chance (Hostiles)"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "hostilePotionChance",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.375"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "hostilePotionChance",
+        "value": {
+          "value": "The chance that an extra potion effect will be applied to any hostile mob. Note that this effect requires the mob to have a certain amount of \"difficulty\" left after it has been given extra health and damage. So entering 1 won\u0027t guarantee potion effects."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "passivePotionChance",
+        "values": {
+          "category": {
+            "value": "main.mob"
+          },
+          "name": {
+            "value": "Potion Chance (Passives)"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "passivePotionChance",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.025"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "passivePotionChance",
+        "value": {
+          "value": "The chance that an extra potion effect will be applied to any passive mob. Note that this effect requires the mob to have a certain amount of \"difficulty\" left after it has been given extra health and damage. So entering 1 won\u0027t guarantee potion effects."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "xpBoost",
+        "values": {
+          "category": {
+            "value": "main.mob"
+          },
+          "name": {
+            "value": "XP Boost"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "xpBoost",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.01"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "xpBoost",
+        "value": {
+          "value": "Additional XP (as percentage) per point of difficulty. For example, if this is 0.01, a mob will drop 2x (+1.0x) XP at 100 difficulty and 3x (+2.0x) at 200"
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/config/Config$Mob$Blight": {
+    "name": "net/silentchaos512/scalinghealth/config/Config$Mob$Blight",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "blacklistBosses",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Blacklist All Bosses"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "blacklistBosses",
+        "value": {
+          "type": "BOOL",
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "blacklistBosses",
+        "value": {
+          "value": "If enabled, no bosses can become blights. If you need more control, use the Blacklist instead."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "blacklistHostiles",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Blacklist All Hostiles"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "blacklistHostiles",
+        "value": {
+          "type": "BOOL",
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "blacklistHostiles",
+        "value": {
+          "value": "If enabled, no hostile mobs can become blights."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "blacklistPassives",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Blacklist All Passives"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "blacklistPassives",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "blacklistPassives",
+        "value": {
+          "value": "If enabled, no passive (peaceful) mobs can become blights."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "blightAlways",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "All Mobs Are Blights"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "blightAlways",
+        "value": {
+          "type": "BOOL",
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "blightAlways",
+        "value": {
+          "value": "If true, every mob that can be a blight will be one 100% of the time."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "chanceMultiplier",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Blight Chance Multiplier"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "chanceMultiplier",
+        "values": {
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.0625"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "chanceMultiplier",
+        "value": {
+          "value": "Determines the chance of a mob spawning as a blight. Formula is \"blightChanceMulti * currentDifficulty / maxDifficulty\". Setting to 0 will disable blights. Setting to 1 will guarantee blights at max difficulty."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "fixedBlightChance",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Fixed Chance"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "fixedBlightChance",
+        "value": {
+          "type": "BOOL",
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "fixedBlightChance",
+        "value": {
+          "value": "If true, blights will have a fixed chance of spawning, regardless of difficulty. Set the chance in \"Blight Chance Multiplier\"."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "difficultyMultiplier",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Blight Difficulty Multiplier"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "difficultyMultiplier",
+        "values": {
+          "min": {
+            "type": "FLOAT",
+            "value": "1.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "3.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "difficultyMultiplier",
+        "value": {
+          "value": "When an entity spawns as a blight, their calculated difficulty is multiplied by this. Higher numbers mean more health and damage!"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "fireRidesBlight",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Fire Rides Blights"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "fireRidesBlight",
+        "value": {
+          "type": "BOOL",
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "fireRidesBlight",
+        "value": {
+          "value": "Set blight fires to \"ride\" on the blight they belong to. In some cases, this might cause the fire to follow the blight more smoothly, but doesn\u0027t seem to help in most cases. Leaving off is recommended."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "fireResist",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Fire Resist"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "fireResist",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "fireResist",
+        "value": {
+          "value": "Should blights have the fire resistance potion effect?"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "immuneToSuffocation",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Immune To Suffocation"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "immuneToSuffocation",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "immuneToSuffocation",
+        "value": {
+          "value": "If true, blights will not take suffocation (inside a block) damage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "invisibility",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Invisibility"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "invisibility",
+        "value": {
+          "type": "BOOL",
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "invisibility",
+        "value": {
+          "value": "Should blights have the invisibility potion effect?"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "notifyOnDeath",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Notify Players on Death"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "notifyOnDeath",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "notifyOnDeath",
+        "value": {
+          "value": "Let all players know when a blight dies in chat."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "potionDuration",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Potion Duration"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "potionDuration",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "-1"
+          },
+          "value": {
+            "type": "INT",
+            "value": "6000"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "potionDuration",
+        "value": {
+          "value": "The duration (in ticks) of the potion effects applied to blights. The effects are refreshed frequently, so this value doesn\u0027t matter in most cases... except for the lingering potion effects left by blight creepers. Set to -1 for infinite time. Default is 5 minutes."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "speedAmp",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Amplifier Speed"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "speedAmp",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "99"
+          },
+          "min": {
+            "type": "INT",
+            "value": "-1"
+          },
+          "value": {
+            "type": "INT",
+            "value": "4"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "speedAmp",
+        "value": {
+          "value": "The amplifier level on the speed potion effect applied to blights. Set -1 to disable, 0 is level 1."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "strengthAmp",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Amplifier Strength"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "strengthAmp",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "99"
+          },
+          "min": {
+            "type": "INT",
+            "value": "-1"
+          },
+          "value": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "strengthAmp",
+        "value": {
+          "value": "The amplifier level on the strength potion effect applied to blights. Set -1 to disable, 0 is level 1."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "superchargeCreepers",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "Supercharge Creepers"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "superchargeCreepers",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "superchargeCreepers",
+        "value": {
+          "value": "Blight creepers will be supercharged, like when they are struck by lightning."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "xpMultiplier",
+        "values": {
+          "category": {
+            "value": "main.mob.blights"
+          },
+          "name": {
+            "value": "XP Multiplier"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "xpMultiplier",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "1000.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "10.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "xpMultiplier",
+        "value": {
+          "value": "The multiplier applied to the amount of XP dropped when a blight is killed."
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/config/Config$Mob$Health": {
+    "name": "net/silentchaos512/scalinghealth/config/Config$Mob$Health",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "allowBoss",
+        "values": {
+          "category": {
+            "value": "main.mob.health"
+          },
+          "name": {
+            "value": "Allow Boss Extra Health"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "allowBoss",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "allowBoss",
+        "value": {
+          "value": "Allow boss mobs (dragon, wither, etc.) to spawn with extra health based on difficulty."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "allowPeaceful",
+        "values": {
+          "category": {
+            "value": "main.mob.health"
+          },
+          "name": {
+            "value": "Allow Peaceful Extra Health"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "allowPeaceful",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "allowPeaceful",
+        "value": {
+          "value": "Allow peaceful/passive mobs (such as animals) to spawn with extra health based on difficulty."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "allowHostile",
+        "values": {
+          "category": {
+            "value": "main.mob.health"
+          },
+          "name": {
+            "value": "Allow Hostile Extra Health"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "allowHostile",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "allowHostile",
+        "value": {
+          "value": "Allow hostile mobs (monsters) to spawn with extra health based on difficulty."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "hostileHealthMultiplier",
+        "values": {
+          "category": {
+            "value": "main.mob.health"
+          },
+          "name": {
+            "value": "Base Health Modifier"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "hostileHealthMultiplier",
+        "values": {
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.5"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "hostileHealthMultiplier",
+        "value": {
+          "value": "The minimum extra health a hostile mob will have per point of difficulty, before the scaling mode is accounted for."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "peacefulHealthMultiplier",
+        "values": {
+          "category": {
+            "value": "main.mob.health"
+          },
+          "name": {
+            "value": "Base Health Modifier Peaceful"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "peacefulHealthMultiplier",
+        "values": {
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.25"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "peacefulHealthMultiplier",
+        "value": {
+          "value": "The minimum extra health a peaceful mob will have per point of difficulty, before the scaling mode is accounted for. Same as \"Base Health Modifier\", but for peaceful/passive mobs!"
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/config/Config$Player$BonusRegen": {
+    "name": "net/silentchaos512/scalinghealth/config/Config$Player$BonusRegen",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "enabled",
+        "values": {
+          "category": {
+            "value": "main.player.regen"
+          },
+          "name": {
+            "value": "Enable Bonus Regen"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "enabled",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "enabled",
+        "value": {
+          "value": "Enable bonus health regen for players. Vanilla regen is not changed in any way, this just adds extra healing! Vanilla regen can be disabled with the naturalRegeneration gamerule."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "scaleWithMaxHealth",
+        "values": {
+          "category": {
+            "value": "main.player.regen"
+          },
+          "name": {
+            "value": "Scale With Max Health"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "scaleWithMaxHealth",
+        "value": {
+          "type": "BOOL",
+          "value": "false"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "scaleWithMaxHealth",
+        "value": {
+          "value": "If enabled, regen will be proportional to max health"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "minFood",
+        "values": {
+          "category": {
+            "value": "main.player.regen"
+          },
+          "name": {
+            "value": "Food Min"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "minFood",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "10"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "minFood",
+        "value": {
+          "value": "The minimum food level at which bonus regen will be active (vanilla max food is 20)."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "maxFood",
+        "values": {
+          "category": {
+            "value": "main.player.regen"
+          },
+          "name": {
+            "value": "Food Max"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "maxFood",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "2147483647"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "maxFood",
+        "value": {
+          "value": "The maximum food level at which bonus regen will be active (vanilla max food is 20)."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "minHealth",
+        "values": {
+          "category": {
+            "value": "main.player.regen"
+          },
+          "name": {
+            "value": "Health Min"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "minHealth",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "minHealth",
+        "value": {
+          "value": "Bonus regen will stop when players have this much health or less."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "maxHealth",
+        "values": {
+          "category": {
+            "value": "main.player.regen"
+          },
+          "name": {
+            "value": "Health Max"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "maxHealth",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "2147483647"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "maxHealth",
+        "value": {
+          "value": "Bonus regen will stop when players have this much health or more."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "initialDelay",
+        "values": {
+          "category": {
+            "value": "main.player.regen"
+          },
+          "name": {
+            "value": "Delay (Initial)"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "initialDelay",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "400"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "initialDelay",
+        "value": {
+          "value": "The amount of time (in ticks) after being hurt before bonus regen activates."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "delay",
+        "values": {
+          "category": {
+            "value": "main.player.regen"
+          },
+          "name": {
+            "value": "Delay"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "delay",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "100"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "delay",
+        "value": {
+          "value": "The amount of time (in ticks) between each bonus regen tick (a half heart being healed)."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "exhaustion",
+        "values": {
+          "category": {
+            "value": "main.player.regen"
+          },
+          "name": {
+            "value": "Exhaustion Added"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeFloat;",
+        "target": "exhaustion",
+        "values": {
+          "max": {
+            "type": "FLOAT",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "FLOAT",
+            "value": "0.0"
+          },
+          "value": {
+            "type": "FLOAT",
+            "value": "0.1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "exhaustion",
+        "value": {
+          "value": "The food consumption for each bonus regen tick."
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/config/Config$Player$Health": {
+    "name": "net/silentchaos512/scalinghealth/config/Config$Player$Health",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "allowModify",
+        "values": {
+          "category": {
+            "value": "main.player.health"
+          },
+          "name": {
+            "value": "Allow Modified Health"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$BooleanDefault;",
+        "target": "allowModify",
+        "value": {
+          "type": "BOOL",
+          "value": "true"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "allowModify",
+        "value": {
+          "value": "Allow Scaling Health to modify the player\u0027s health. Scaling Health\u0027s changes are often compatible with other mods, assuming they use Minecraft\u0027s attribute system. If set to false, heart containers and the \u0027/scalinghealth health\u0027 command will not work."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "startingHealth",
+        "values": {
+          "category": {
+            "value": "main.player.health"
+          },
+          "name": {
+            "value": "Starting Health"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "startingHealth",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "2"
+          },
+          "value": {
+            "type": "INT",
+            "value": "20"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "startingHealth",
+        "value": {
+          "value": "The amount of health (in half hearts) players will start with when first joining the world. Vanilla is 20."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "maxHealth",
+        "values": {
+          "category": {
+            "value": "main.player.health"
+          },
+          "name": {
+            "value": "Max Health"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "maxHealth",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          },
+          "value": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "maxHealth",
+        "value": {
+          "value": "The maximum amount of health (in half hearts) a player can achieve with heart containers alone. Zero means unlimited. NOTE: Players must still obey Minecraft\u0027s max health cap. You can change that value with the \"Max Health Cap\" setting under the main category."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "minHealth",
+        "values": {
+          "category": {
+            "value": "main.player.health"
+          },
+          "name": {
+            "value": "Min Health"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "minHealth",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "2"
+          },
+          "value": {
+            "type": "INT",
+            "value": "2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "minHealth",
+        "value": {
+          "value": "The minimum amount of health (in half hearts) a player can have. This is different from starting health."
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption;",
+        "target": "lostOnDeath",
+        "values": {
+          "category": {
+            "value": "main.player.health"
+          },
+          "name": {
+            "value": "Health Lost On Death"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$RangeInt;",
+        "target": "lostOnDeath",
+        "value": {
+          "type": "INT",
+          "value": "0"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/config/ConfigOption$Comment;",
+        "target": "lostOnDeath",
+        "value": {
+          "value": "The amount of health (in half hearts) a player will lose each time they die. Set to a negative number to cause players to gain health instead."
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/entity/EntityBlightFire": {
+    "name": "net/silentchaos512/scalinghealth/entity/EntityBlightFire",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IEntityAdditionalSpawnData"
+    ]
+  },
+  "net/silentchaos512/scalinghealth/event/BlightHandler": {
+    "name": "net/silentchaos512/scalinghealth/event/BlightHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlightKilled(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlightUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlightAttack(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/event/DamageScaling": {
+    "name": "net/silentchaos512/scalinghealth/event/DamageScaling",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerHurt(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/event/DifficultyHandler": {
+    "name": "net/silentchaos512/scalinghealth/event/DifficultyHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMobSpawn(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMobDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/event/PetEventHandler": {
+    "name": "net/silentchaos512/scalinghealth/event/PetEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/event/PlayerBonusRegenHandler": {
+    "name": "net/silentchaos512/scalinghealth/event/PlayerBonusRegenHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "net/silentchaos512/scalinghealth/event/PlayerBonusRegenHandler",
+        "values": {
+          "modid": {
+            "value": "scalinghealth"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerHurt(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/event/ScalingHealthClientEvents": {
+    "name": "net/silentchaos512/scalinghealth/event/ScalingHealthClientEvents",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "net/silentchaos512/scalinghealth/event/ScalingHealthClientEvents",
+        "values": {
+          "modid": {
+            "value": "scalinghealth"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTick(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/event/ScalingHealthCommonEvents": {
+    "name": "net/silentchaos512/scalinghealth/event/ScalingHealthCommonEvents",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onXPDropped(Lnet/minecraftforge/event/entity/living/LivingExperienceDropEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerDied(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerJoinedServer(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerSleepInBed(Lnet/minecraftforge/event/entity/player/PlayerSleepInBedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerWakeUp(Lnet/minecraftforge/event/entity/player/PlayerWakeUpEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/event/WitEventHandler": {
+    "name": "net/silentchaos512/scalinghealth/event/WitEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWitEntityInfo(Lnet/silentchaos512/wit/api/WitEntityInfoEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/item/ItemDifficultyChanger": {
+    "name": "net/silentchaos512/scalinghealth/item/ItemDifficultyChanger",
+    "interfaces": [
+      "net/silentchaos512/lib/registry/ICustomModel"
+    ]
+  },
+  "net/silentchaos512/scalinghealth/item/ItemHealing": {
+    "name": "net/silentchaos512/scalinghealth/item/ItemHealing",
+    "interfaces": [
+      "net/silentchaos512/lib/registry/ICustomModel"
+    ]
+  },
+  "net/silentchaos512/scalinghealth/item/package-info": {
+    "name": "net/silentchaos512/scalinghealth/item/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/scalinghealth/item/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/lib/package-info": {
+    "name": "net/silentchaos512/scalinghealth/lib/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/scalinghealth/lib/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/loot/properties/PropertyBlight": {
+    "name": "net/silentchaos512/scalinghealth/loot/properties/PropertyBlight",
+    "interfaces": [
+      "net/minecraft/world/storage/loot/properties/EntityProperty"
+    ]
+  },
+  "net/silentchaos512/scalinghealth/loot/properties/PropertyDifficulty": {
+    "name": "net/silentchaos512/scalinghealth/loot/properties/PropertyDifficulty",
+    "interfaces": [
+      "net/minecraft/world/storage/loot/properties/EntityProperty"
+    ]
+  },
+  "net/silentchaos512/scalinghealth/loot/properties/package-info": {
+    "name": "net/silentchaos512/scalinghealth/loot/properties/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/scalinghealth/loot/properties/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/network/Message": {
+    "name": "net/silentchaos512/scalinghealth/network/Message",
+    "interfaces": [
+      "java/io/Serializable",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "net/silentchaos512/scalinghealth/potion/package-info": {
+    "name": "net/silentchaos512/scalinghealth/potion/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/scalinghealth/potion/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/proxy/ScalingHealthCommonProxy": {
+    "name": "net/silentchaos512/scalinghealth/proxy/ScalingHealthCommonProxy",
+    "interfaces": [
+      "net/silentchaos512/lib/proxy/IProxy"
+    ]
+  },
+  "net/silentchaos512/scalinghealth/utils/SHPlayerDataHandler": {
+    "name": "net/silentchaos512/scalinghealth/utils/SHPlayerDataHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/scalinghealth/utils/SHPlayerDataHandler"
+      }
+    ]
+  },
+  "net/silentchaos512/scalinghealth/utils/SHPlayerDataHandler$EventHandler": {
+    "name": "net/silentchaos512/scalinghealth/utils/SHPlayerDataHandler$EventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/wit/api/package-info": {
+    "name": "net/silentchaos512/wit/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "net/silentchaos512/wit/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "2"
+          },
+          "owner": {
+            "value": "WIT"
+          },
+          "provides": {
+            "value": "WIT-API"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/wit/api/package-info"
+      }
+    ]
+  }
+}

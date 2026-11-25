@@ -1,0 +1,51 @@
+package com.teamacronymcoders.contenttweaker.modules.materials.materials;
+
+import com.teamacronymcoders.base.materialsystem.materials.Material;
+import com.teamacronymcoders.contenttweaker.modules.materials.CTMaterialSystem;
+import com.teamacronymcoders.contenttweaker.modules.materials.materialparts.IMaterialPart;
+import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPart;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class CTMaterial implements IMaterial {
+   private Material material;
+
+   public CTMaterial(Material material) {
+      this.material = material;
+   }
+
+   public String getName() {
+      return this.material.getName();
+   }
+
+   public int getColor() {
+      return this.material.getColor().getRGB();
+   }
+
+   public boolean isHasEffect() {
+      return this.material.isHasEffect();
+   }
+
+   public String getUnlocalizedName() {
+      return this.material.getUnlocalizedName();
+   }
+
+   public List<IMaterialPart> registerParts(String[] partNames) {
+      return CTMaterialSystem.registerPartsForMaterial(this.material, partNames);
+   }
+
+   public List<IMaterialPart> registerParts(IPart[] parts) {
+      List<String> names = (List)Arrays.stream(parts).map(IPart::getName).collect(Collectors.toList());
+      return this.registerParts((String[])names.toArray(new String[names.size()]));
+   }
+
+   public IMaterialPart registerPart(String partName) {
+      return (IMaterialPart)this.registerParts(new String[]{partName}).get(0);
+   }
+
+   public IMaterialPart registerPart(IPart part) {
+      return (IMaterialPart)this.registerParts(new IPart[]{part}).get(0);
+   }
+}

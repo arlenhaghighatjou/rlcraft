@@ -1,0 +1,15 @@
+[
+  {
+    "modid": "bedbreakbegone",
+    "name": "BedBreakBegone",
+    "description": "Fixes the checks for respawning at a bed to help prevent nonsense *Your bed was obstructed* errors.",
+    "version": "1.0.2",
+    "mcversion": "1.12.2",
+    "url": "https://www.curseforge.com/members/fonnymunkey/projects",
+    "updateUrl": "",
+    "authorList": ["fonnymunkey"],
+  "credits": "",
+  "logoFile": "title.png",
+  "dependencies": []
+  }
+]

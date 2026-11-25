@@ -1,0 +1,138 @@
+{
+	"items": {
+		"CRYSTAL": [
+			"erebus:jade_boots",
+			"erebus:jade_leggings",
+			"erebus:jade_chestplate",
+			"erebus:jade_helmet"
+		],
+		"SHIELD": [
+			"erebus.items.ItemErebusShield"
+		],
+		"AXE": [
+			"erebus.items.ItemAxeJade",
+			"erebus.items.ItemJadePaxel",
+			"erebus.items.ItemWarHammer"
+		]
+	},
+	"biomes": [
+		{
+			"conditions": "biome.modid == 'erebus'",
+			"_comment": "All Erebus biomes",
+			"soundReset": true,
+			"sounds": [
+				{
+					"sound": "dsurround:insectbuzz",
+					"soundType": "spot",
+					"weight": 7,
+					"variable": true
+				},
+				{
+					"sound": "dsurround:insectcrawl",
+					"soundType": "spot",
+					"variable": true
+				}
+			]
+		},
+		{ 
+			"conditions": "biome.id = 'erebus:elysian_fields'",
+			"_comment": "<PLAINS,LUSH>",
+			"sounds": [
+				{
+					"sound": "dsurround:crickets"
+				}
+			]
+		},
+		{ 
+			"conditions": "biome.id = 'erebus:fields_sub_forest'",
+			"_comment": "<MAGICAL,LUSH,FOREST>",
+			"sounds": [
+				{
+					"sound": "dsurround:deep_crickets"
+				}
+			]
+		},
+		{ 
+			"conditions": "biome.id = 'erebus:fungal_forest'",
+			"_comment": "<MUSHROOM,DENSE,SPOOKY>",
+			"sounds": [
+			]
+		},
+		{ 
+			"conditions": "biome.id = 'erebus:petrified_forest'",
+			"_comment": "<DRY,HOT,DEAD>",
+			"sounds": [
+			]
+		},
+		{ 
+			"conditions": "biome.id = 'erebus:submerged_swamp'",
+			"_comment": "<WATER,HOT,SWAMP,WET>",
+			"sounds": [
+				{
+					"sound": "dsurround:crickets"
+				}
+			]
+		},
+		{ 
+			"conditions": "biome.id = 'erebus:subterranean_savannah'",
+			"_comment": "<SAVANNA>",
+			"sounds": [
+				{
+					"sound": "dsurround:savanna.night"
+				}
+			]
+		},
+		{ 
+			"conditions": "biome.id = 'erebus:ulterior_outback'",
+			"_comment": "<DRY,HOT,SANDY>",
+			"sounds": [
+			]
+		},
+		{ 
+			"conditions": "biome.id = 'erebus:underground_jungle'",
+			"_comment": "<JUNGLE,DENSE,HOT,LUSH>",
+			"sounds": [
+				{
+					"sound": "dsurround:savanna.night"
+				}
+			]
+		},
+		{ 
+			"conditions": "biome.id = 'erebus:volcanic_desert'",
+			"_comment": "<DRY,HOT,SANDY>",
+			"sounds": [
+			]
+		}
+	],
+	"dimensions": [
+		{
+			"name": "EREBUS",
+			"seaLevel": 20,
+			"weather": false,
+			"fog": false,
+			"haze": false,
+			"aurora": false,
+			"alwaysOutside": true
+		}
+	],
+	"footsteps": {
+		"erebus:mud": "mud",
+		"erebus:ore_temple": "ore",
+		"erebus:small_plant": "#plant",
+		"erebus:dark_fruit_vine": "#vine",
+		"erebus:thorns": "#vine",
+		"erebus:double_plant": "straw",
+		"erebus:double_plant+messy": "MESSY_GROUND",
+		"erebus:double_plant+foliage": "straw",
+		"erebus:giant_flower": "organic_dry",
+		"erebus:giant_flower_stigma": "organic_dry",
+		"erebus:wall_plants": "#moss",
+		"erebus:algae": "NOT_EMITTER",
+		"erebus:grandmas_shoes_mushroom_block": "organic",
+		"erebus:sarcastic_czech_mushroom_block": "organic",
+		"erebus:dark_capped_mushroom_block": "organic",
+		"erebus:dutch_cap_mushroom_block": "organic",
+		"erebus:swamp_berry_bush": "leaves",
+		"erebus:swamp_vent": "grass"
+	}
+}

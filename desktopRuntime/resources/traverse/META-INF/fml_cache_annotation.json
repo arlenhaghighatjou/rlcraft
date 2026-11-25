@@ -1,0 +1,288 @@
+{
+  "prospector/traverse/TraverseCommon": {
+    "name": "prospector/traverse/TraverseCommon",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "prospector/traverse/TraverseCommon"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "prospector/traverse/blocks/base/BlockTraverseSlab$Variant": {
+    "name": "prospector/traverse/blocks/base/BlockTraverseSlab$Variant",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "prospector/traverse/client/Traverse2Textures": {
+    "name": "prospector/traverse/client/Traverse2Textures",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "prospector/traverse/client/Traverse2Textures"
+      }
+    ]
+  },
+  "prospector/traverse/core/TraverseMod": {
+    "name": "prospector/traverse/core/TraverseMod",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "prospector/traverse/core/TraverseMod",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "1.12.2"
+          },
+          "modid": {
+            "value": "traverse"
+          },
+          "name": {
+            "value": "Traverse"
+          },
+          "version": {
+            "value": "1.6.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "traverse"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "prospector.traverse.TraverseClient"
+          },
+          "serverSide": {
+            "value": "prospector.traverse.TraverseServer"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverAboutToStart(Lnet/minecraftforge/fml/common/event/FMLServerAboutToStartEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStopping(Lnet/minecraftforge/fml/common/event/FMLServerStoppingEvent;)V"
+      }
+    ]
+  },
+  "prospector/traverse/world/TraverseWorld": {
+    "name": "prospector/traverse/world/TraverseWorld",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "prospector/traverse/world/TraverseWorld"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBiomes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "replaceVillageBlocks(Lnet/minecraftforge/event/terraingen/BiomeEvent$GetVillageBlockID;)V"
+      }
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeAridHighland": {
+    "name": "prospector/traverse/world/biomes/BiomeAridHighland",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeAutumnalWoodedHills": {
+    "name": "prospector/traverse/world/biomes/BiomeAutumnalWoodedHills",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeAutumnalWoods": {
+    "name": "prospector/traverse/world/biomes/BiomeAutumnalWoods",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeBadlands": {
+    "name": "prospector/traverse/world/biomes/BiomeBadlands",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeCanyon": {
+    "name": "prospector/traverse/world/biomes/BiomeCanyon",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeCliffs": {
+    "name": "prospector/traverse/world/biomes/BiomeCliffs",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeConiferousForest": {
+    "name": "prospector/traverse/world/biomes/BiomeConiferousForest",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeCragCliffs": {
+    "name": "prospector/traverse/world/biomes/BiomeCragCliffs",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeDesertShrubland": {
+    "name": "prospector/traverse/world/biomes/BiomeDesertShrubland",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeForestedHills": {
+    "name": "prospector/traverse/world/biomes/BiomeForestedHills",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeGlacier": {
+    "name": "prospector/traverse/world/biomes/BiomeGlacier",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeLushHills": {
+    "name": "prospector/traverse/world/biomes/BiomeLushHills",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeLushSwamp": {
+    "name": "prospector/traverse/world/biomes/BiomeLushSwamp",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeMeadow": {
+    "name": "prospector/traverse/world/biomes/BiomeMeadow",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeMiniJungle": {
+    "name": "prospector/traverse/world/biomes/BiomeMiniJungle",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeMountainousDesert": {
+    "name": "prospector/traverse/world/biomes/BiomeMountainousDesert",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeRedDesert": {
+    "name": "prospector/traverse/world/biomes/BiomeRedDesert",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeRockyPlains": {
+    "name": "prospector/traverse/world/biomes/BiomeRockyPlains",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeRockyPlateau": {
+    "name": "prospector/traverse/world/biomes/BiomeRockyPlateau",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeThicket": {
+    "name": "prospector/traverse/world/biomes/BiomeThicket",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/biomes/BiomeWoodlands": {
+    "name": "prospector/traverse/world/biomes/BiomeWoodlands",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/features/TraverseTreeGenerator": {
+    "name": "prospector/traverse/world/features/TraverseTreeGenerator",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/features/WorldGenCustomSwampTree": {
+    "name": "prospector/traverse/world/features/WorldGenCustomSwampTree",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/features/WorldGenFallenTree": {
+    "name": "prospector/traverse/world/features/WorldGenFallenTree",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  },
+  "prospector/traverse/world/features/WorldGenFirTree": {
+    "name": "prospector/traverse/world/features/WorldGenFirTree",
+    "interfaces": [
+      "prospector/traverse/world/WorldGenConstants"
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+package baubles.client;
+
+import baubles.client.gui.GuiEvents;
+import baubles.client.gui.GuiPlayerExpanded;
+import baubles.common.CommonProxy;
+import java.util.Map;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+
+public class ClientProxy extends CommonProxy {
+   public static final KeyBinding KEY_BAUBLES = new KeyBinding("keybind.baublesinventory", 48, "key.categories.inventory");
+
+   public ClientProxy() {
+   }
+
+   public void registerEventHandlers() {
+      super.registerEventHandlers();
+      ClientRegistry.registerKeyBinding(KEY_BAUBLES);
+      MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
+      MinecraftForge.EVENT_BUS.register(new GuiEvents());
+   }
+
+   public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+      if (world instanceof WorldClient) {
+         switch(ID) {
+         case 0:
+            return new GuiPlayerExpanded(player);
+         }
+      }
+
+      return null;
+   }
+
+   public World getClientWorld() {
+      return FMLClientHandler.instance().getClient().world;
+   }
+
+   public void init() {
+      Map<String, RenderPlayer> skinMap = Minecraft.getMinecraft().getRenderManager().getSkinMap();
+      RenderPlayer render = (RenderPlayer)skinMap.get("default");
+      render.addLayer(new BaublesRenderLayer());
+      render = (RenderPlayer)skinMap.get("slim");
+      render.addLayer(new BaublesRenderLayer());
+   }
+}

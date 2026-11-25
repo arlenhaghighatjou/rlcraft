@@ -1,0 +1,60 @@
+package com.blamejared.compat.betterwithmods;
+
+import betterwithmods.common.BWRegistry;
+import com.blamejared.compat.betterwithmods.base.bulkrecipes.MillBuilder;
+import crafttweaker.annotations.ModOnly;
+import crafttweaker.annotations.ZenRegister;
+import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.item.IItemStack;
+import java.util.function.Supplier;
+import stanhebben.zenscript.annotations.NotNull;
+import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenMethod;
+
+@ZenClass("mods.betterwithmods.Mill")
+@ModOnly("betterwithmods")
+@ZenRegister
+public class Mill {
+   public static MillBuilder INSTANCE = new MillBuilder(() -> {
+      return BWRegistry.MILLSTONE;
+   }, "Mill");
+
+   public Mill() {
+   }
+
+   @ZenMethod
+   public static MillBuilder builder() {
+      return new MillBuilder(() -> {
+         return BWRegistry.MILLSTONE;
+      }, "Mill");
+   }
+
+   @ZenMethod
+   public static void addRecipe(IIngredient[] inputs, IItemStack[] outputs) {
+      INSTANCE.buildRecipe(inputs, outputs).build();
+   }
+
+   /** @deprecated */
+   @Deprecated
+   @ZenMethod
+   public static void add(IItemStack output, IItemStack secondaryOutput, @NotNull IIngredient[] inputs) {
+      addRecipe(inputs, new IItemStack[]{output, secondaryOutput});
+   }
+
+   /** @deprecated */
+   @Deprecated
+   @ZenMethod
+   public static void add(IItemStack output, @NotNull IIngredient[] inputs) {
+      addRecipe(inputs, new IItemStack[]{output});
+   }
+
+   @ZenMethod
+   public static void remove(IItemStack[] output) {
+      INSTANCE.removeRecipe(output);
+   }
+
+   @ZenMethod
+   public static void removeAll() {
+      builder().removeAll();
+   }
+}

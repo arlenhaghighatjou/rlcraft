@@ -1,0 +1,140 @@
+{
+  "me/ichun/mods/googlyeyes/common/GooglyEyes": {
+    "name": "me/ichun/mods/googlyeyes/common/GooglyEyes",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "me/ichun/mods/googlyeyes/common/GooglyEyes",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12,1.13)"
+          },
+          "certificateFingerprint": {
+            "value": "4db5c2bd1b556f252a5b8b54b256d381b2a0a6b8"
+          },
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "dependencies": {
+            "value": "required-after:ichunutil@[7.2.0,8.0.0)"
+          },
+          "guiFactory": {
+            "value": "me.ichun.mods.ichunutil.common.core.config.GenericModGuiFactory"
+          },
+          "modid": {
+            "value": "googlyeyes"
+          },
+          "name": {
+            "value": "GooglyEyes"
+          },
+          "version": {
+            "value": "7.1.1"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onFingerprintViolation(Lnet/minecraftforge/fml/common/event/FMLFingerprintViolationEvent;)V"
+      }
+    ]
+  },
+  "me/ichun/mods/googlyeyes/common/core/Config": {
+    "name": "me/ichun/mods/googlyeyes/common/core/Config",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "disabledGoogly",
+        "values": {
+          "changeable": {
+            "type": "BOOL",
+            "value": "false"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "acidTripEyes"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntBool;",
+        "target": "acidTripEyes"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "googlyEyeChance"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntMinMax;",
+        "target": "googlyEyeChance",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "100"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "allPlayersHaveGooglyEyes"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntBool;",
+        "target": "allPlayersHaveGooglyEyes"
+      }
+    ]
+  },
+  "me/ichun/mods/googlyeyes/common/core/EventHandler": {
+    "name": "me/ichun/mods/googlyeyes/common/core/EventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldUnload(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRendererSafeCompatibilityEvent(Lme/ichun/mods/ichunutil/client/core/event/RendererSafeCompatibilityEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      }
+    ]
+  },
+  "me/ichun/mods/googlyeyes/common/layerrenderer/LayerGooglyEyes": {
+    "name": "me/ichun/mods/googlyeyes/common/layerrenderer/LayerGooglyEyes",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  }
+}

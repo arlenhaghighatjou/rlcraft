@@ -1,0 +1,2048 @@
+{
+  "c4/champions/Champions": {
+    "name": "c4/champions/Champions",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "c4/champions/Champions",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12, 1.13)"
+          },
+          "certificateFingerprint": {
+            "value": "b33d2c8df492beff56d1bbbc92da49b8ab7345a1"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2768,)"
+          },
+          "modid": {
+            "value": "champions"
+          },
+          "name": {
+            "value": "Champions"
+          },
+          "version": {
+            "value": "1.12.2-1.0.11.10"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "c4.champions.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "c4.champions.proxy.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onFingerPrintViolation(Lnet/minecraftforge/fml/common/event/FMLFingerprintViolationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverLoad(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "c4/champions/client/EventHandlerClient": {
+    "name": "c4/champions/client/EventHandlerClient",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMovementInput(Lnet/minecraftforge/client/event/InputUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderChampionHealth(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V"
+      }
+    ]
+  },
+  "c4/champions/client/renderer/RenderArcticSpark$Factory": {
+    "name": "c4/champions/client/renderer/RenderArcticSpark$Factory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "c4/champions/client/renderer/RenderCinderSpark$Factory": {
+    "name": "c4/champions/client/renderer/RenderCinderSpark$Factory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "c4/champions/common/EventHandlerCommon": {
+    "name": "c4/champions/common/EventHandlerCommon",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "livingDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "livingDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "livingXP(Lnet/minecraftforge/event/entity/living/LivingExperienceDropEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "livingDamage(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onExplosion(Lnet/minecraftforge/event/world/ExplosionEvent$Start;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "injuredPotionHealHandler(Lnet/minecraftforge/event/entity/living/LivingHealEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "injuredPotionHurtHandler(Lnet/minecraftforge/event/entity/living/LivingDamageEvent;)V"
+      }
+    ]
+  },
+  "c4/champions/common/affix/AffixEvents": {
+    "name": "c4/champions/common/affix/AffixEvents",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingJoinWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingAttacked(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingAttack(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingWasHurt(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingDamaged(Lnet/minecraftforge/event/entity/living/LivingDamageEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingKnockback(Lnet/minecraftforge/event/entity/living/LivingKnockBackEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingHeal(Lnet/minecraftforge/event/entity/living/LivingHealEvent;)V"
+      }
+    ]
+  },
+  "c4/champions/common/affix/affix/AffixReflecting": {
+    "name": "c4/champions/common/affix/affix/AffixReflecting",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDamagedEvent(Lnet/minecraftforge/event/entity/living/LivingDamageEvent;)V"
+      }
+    ]
+  },
+  "c4/champions/common/affix/core/AffixBase": {
+    "name": "c4/champions/common/affix/core/AffixBase",
+    "interfaces": [
+      "c4/champions/common/affix/IAffix"
+    ]
+  },
+  "c4/champions/common/capability/CapabilityChampionship": {
+    "name": "c4/champions/common/capability/CapabilityChampionship",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CHAMPION_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lc4/champions/common/capability/IChampionship;"
+        }
+      }
+    ]
+  },
+  "c4/champions/common/capability/CapabilityChampionship$1": {
+    "name": "c4/champions/common/capability/CapabilityChampionship$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "c4/champions/common/capability/CapabilityChampionship$EventHandler": {
+    "name": "c4/champions/common/capability/CapabilityChampionship$EventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "c4/champions/common/capability/CapabilityChampionship$EventHandler",
+        "values": {
+          "modid": {
+            "value": "champions"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityJoin(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entitySpawn(Lnet/minecraftforge/event/entity/living/LivingSpawnEvent$SpecialSpawn;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "startTracking(Lnet/minecraftforge/event/entity/player/PlayerEvent$StartTracking;)V"
+      }
+    ]
+  },
+  "c4/champions/common/capability/CapabilityChampionship$Provider": {
+    "name": "c4/champions/common/capability/CapabilityChampionship$Provider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "c4/champions/common/capability/Championship": {
+    "name": "c4/champions/common/capability/Championship",
+    "interfaces": [
+      "c4/champions/common/capability/IChampionship"
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler": {
+    "name": "c4/champions/common/config/ConfigHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "c4/champions/common/config/ConfigHandler",
+        "values": {
+          "modid": {
+            "value": "champions"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "hideEffects",
+        "value": {
+          "value": "Hide Champion Effects"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "hideEffects",
+        "value": {
+          "values": [
+            "Set whether to hide champion particles and HUD effects"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "championSpawners",
+        "value": {
+          "value": "Champions from Spawners"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "championSpawners",
+        "value": {
+          "values": [
+            "Set whether champions can spawn from mob spawners"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "dimensionPermission",
+        "value": {
+          "value": "Dimension Permission Mode"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "dimensionPermission",
+        "value": {
+          "values": [
+            "Set whether the dimension configuration is blacklisted or whitelisted"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "dimensionPermission"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "dimensionList",
+        "value": {
+          "value": "Dimension List"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "dimensionList",
+        "value": {
+          "values": [
+            "Set which dimensions, listed as number ids, are blacklisted or whitelisted for champion mobs, leave blank to disable this option"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "dimensionList"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "mobPermission",
+        "value": {
+          "value": "Mob Permission Mode"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "mobPermission",
+        "value": {
+          "values": [
+            "Set whether the mob configuration is blacklisted or whitelisted"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "mobPermission"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "mobList",
+        "value": {
+          "value": "Mob List"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "mobList",
+        "value": {
+          "values": [
+            "Set which mobs are blacklisted or whitelisted for champion mobs, leave blank to disable this option"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "mobList"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "championsList",
+        "value": {
+          "value": "Champion Mobs List"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "championsList",
+        "value": {
+          "values": [
+            "List of mobs that will always spawn as champions, can optionally include specific tier (i.e. \u0027minecraft:spider;2\u0027) or tier range (i.e. \u0027minecraft:spider;1;3"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "championsList"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "lootSource",
+        "value": {
+          "value": "Loot Source"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "lootSource",
+        "value": {
+          "values": [
+            "Set whether champion mobs drop loot from the loot table, config, or both"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "lootDrops",
+        "value": {
+          "value": "Loot Drops"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "lootDrops",
+        "value": {
+          "values": [
+            "Sets the loot drops from champions if loot source is set to CONFIG, format is tier;modid:name;metadata;stacksize;enchant(true/false);weight"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "lootDrops"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "lootScaling",
+        "value": {
+          "value": "Loot Drop Scales to Tier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "lootScaling",
+        "value": {
+          "values": [
+            "Sets whether to scale loot drop amount to tier number if LootSource.CONFIG is active"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "lootFake",
+        "value": {
+          "value": "Loot Drops From Fake Players"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "lootFake",
+        "value": {
+          "values": [
+            "True if fake players can cause champion loot drops, otherwise false"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "championNames",
+        "value": {
+          "value": "Additional Champion Names"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "championNames",
+        "value": {
+          "values": [
+            "Additional names that will be added to the pool of names given to champions"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "championNameSuffixes",
+        "value": {
+          "value": "Additional Champion Name Suffixes"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "championNameSuffixes",
+        "value": {
+          "values": [
+            "Additional name suffixes that will be added to the pool of names given to champions"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "beaconRange",
+        "value": {
+          "value": "Beacon Blacklist Range"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "beaconRange",
+        "value": {
+          "values": [
+            "The range an active beacon will prevent champion spawns, 0 to disable"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "deathMessageTier",
+        "value": {
+          "value": "Death Message Tier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "deathMessageTier",
+        "value": {
+          "values": [
+            "The tier (and above) of champions that will have death messages sent out upon defeat, 0 to disable"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "client",
+        "value": {
+          "value": "Client Settings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "client",
+        "value": {
+          "values": [
+            "Settings that are only client-side"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "growth",
+        "value": {
+          "value": "Growth Settings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "growth",
+        "value": {
+          "values": [
+            "Settings that affect the growth rate of champion mobs"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "affix",
+        "value": {
+          "value": "Affix Settings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "affix",
+        "value": {
+          "values": [
+            "Settings that affect individual affixes"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "scalingHealth",
+        "value": {
+          "value": "Scaling Health Integration"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "scalingHealth",
+        "value": {
+          "values": [
+            "Settings for integration with the Scaling Health mod"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "abilityRange",
+        "value": {
+          "value": "Maximum Ability Range"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "abilityRange",
+        "value": {
+          "values": [
+            "Set the maximum distance that mobs can use their targeted abilities from, 0 to disable"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "adaptable",
+        "value": {
+          "value": "Adaptable"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "adaptable",
+        "value": {
+          "values": [
+            "Settings for the Adaptable affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "arctic",
+        "value": {
+          "value": "Arctic"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "arctic",
+        "value": {
+          "values": [
+            "Settings for the Arctic affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "cinder",
+        "value": {
+          "value": "Cinder"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "cinder",
+        "value": {
+          "values": [
+            "Settings for the Cinder affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "dampening",
+        "value": {
+          "value": "Dampening"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "dampening",
+        "value": {
+          "values": [
+            "Settings for the Dampening affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "desecrator",
+        "value": {
+          "value": "Desecrator"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "desecrator",
+        "value": {
+          "values": [
+            "Settings for the Desecrator affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "hasty",
+        "value": {
+          "value": "Hasty"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "hasty",
+        "value": {
+          "values": [
+            "Settings for the Hasty affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "infested",
+        "value": {
+          "value": "Infested"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "infested",
+        "value": {
+          "values": [
+            "Settings for the Infested affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "jailer",
+        "value": {
+          "value": "Jailer"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "jailer",
+        "value": {
+          "values": [
+            "Settings for the Jailer affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "knockback",
+        "value": {
+          "value": "Knockback"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "knockback",
+        "value": {
+          "values": [
+            "Settings for the Knockback affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "lively",
+        "value": {
+          "value": "Lively"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "lively",
+        "value": {
+          "values": [
+            "Settings for the Lively affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "molten",
+        "value": {
+          "value": "Molten"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "molten",
+        "value": {
+          "values": [
+            "Settings for the Molten affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "plagued",
+        "value": {
+          "value": "Plagued"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "plagued",
+        "value": {
+          "values": [
+            "Settings for the Plagued affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "reflecting",
+        "value": {
+          "value": "Reflecting"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "reflecting",
+        "value": {
+          "values": [
+            "Settings for the Reflecting affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "scrapper",
+        "value": {
+          "value": "Scrapper"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "scrapper",
+        "value": {
+          "values": [
+            "Settings for the Scrapper affix"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "vortex",
+        "value": {
+          "value": "Vortex"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "vortex",
+        "value": {
+          "values": [
+            "Settings for the Vortex affix"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Adaptable": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Adaptable",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "damageReductionIncrement",
+        "value": {
+          "value": "Damage Reduction Increment"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "damageReductionIncrement",
+        "value": {
+          "values": [
+            "The increase in damage reduction for each consecutive attack of the same damage type"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "maxDamageReduction",
+        "value": {
+          "value": "Maximum Damage Reduction"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "maxDamageReduction",
+        "value": {
+          "values": [
+            "The maximum damage reduction"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Arctic": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Arctic",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "attackInterval",
+        "value": {
+          "value": "Attack Interval"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "attackInterval",
+        "value": {
+          "values": [
+            "How often the champion will shoot projectiles (in ticks)"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Cinder": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Cinder",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "attackInterval",
+        "value": {
+          "value": "Attack Interval"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "attackInterval",
+        "value": {
+          "values": [
+            "How often the champion will shoot projectiles (in ticks)"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Dampening": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Dampening",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "damageReduction",
+        "value": {
+          "value": "Damage Reduction"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "damageReduction",
+        "value": {
+          "values": [
+            "The amount of damage reduction to apply to indirect attacks"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Desecrator": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Desecrator",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "attackInterval",
+        "value": {
+          "value": "Attack Interval"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "attackInterval",
+        "value": {
+          "values": [
+            "How often the champion will create harming clouds (in ticks)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "activationTicks",
+        "value": {
+          "value": "Cloud Activation Time"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "activationTicks",
+        "value": {
+          "values": [
+            "How long, in ticks, it takes for the effect cloud to activate after being placed"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "cloudRadius",
+        "value": {
+          "value": "Cloud Radius"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "cloudRadius",
+        "value": {
+          "values": [
+            "The radius of the cloud effect"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "cloudDuration",
+        "value": {
+          "value": "Cloud Duration"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "cloudDuration",
+        "value": {
+          "values": [
+            "The duration, in ticks, of the cloud effect"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Hasty": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Hasty",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "movementBonus",
+        "value": {
+          "value": "Movement Bonus"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "movementBonus",
+        "value": {
+          "values": [
+            "The base movement speed bonus"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Infested": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Infested",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "silverfishAmount",
+        "value": {
+          "value": "Silverfish Spawn Amount"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "silverfishAmount",
+        "value": {
+          "values": [
+            "How many silverfish to spawn per interval"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "silverfishInterval",
+        "value": {
+          "value": "Silverfish Spawn Interval"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "silverfishInterval",
+        "value": {
+          "values": [
+            "How long, in ticks, between silverfish spawns"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "silverfishPerHealth",
+        "value": {
+          "value": "Silverfish Per Health"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "silverfishPerHealth",
+        "value": {
+          "values": [
+            "The amount of silverfish to infest per health point of the champion"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "silverfishTotal",
+        "value": {
+          "value": "Silverfish Total Amount"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "silverfishTotal",
+        "value": {
+          "values": [
+            "The total amount of silverfish a champion can house at once"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Jailer": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Jailer",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "chance",
+        "value": {
+          "value": "Chance per Attack"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "chance",
+        "value": {
+          "values": [
+            "The percent chance that an attack will jail targets"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Knockback": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Knockback",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "multiplier",
+        "value": {
+          "value": "Knockback Multiplier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "multiplier",
+        "value": {
+          "values": [
+            "The multiplier to apply to the knockback strength"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Lively": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Lively",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "healAmount",
+        "value": {
+          "value": "Heal Amount"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "healAmount",
+        "value": {
+          "values": [
+            "The amount of health per second regeneration"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "passiveMultiplier",
+        "value": {
+          "value": "Passive Multiplier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "passiveMultiplier",
+        "value": {
+          "values": [
+            "Multiplier to health regeneration when not aggressive"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "cooldown",
+        "value": {
+          "value": "Cooldown on Attacked"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "cooldown",
+        "value": {
+          "values": [
+            "Set cooldown (in seconds) for regeneration after getting attacked"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Molten": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Molten",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "waterResistant",
+        "value": {
+          "value": "Water-Resistant"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "waterResistant",
+        "value": {
+          "values": [
+            "Whether or not champions are damaged by water"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Plagued": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Plagued",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "duration",
+        "value": {
+          "value": "Plague Duration"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "duration",
+        "value": {
+          "values": [
+            "The duration (in ticks) of the plague effect"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "infectPotion",
+        "value": {
+          "value": "Infection Potion"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "infectPotion",
+        "value": {
+          "values": [
+            "The potion that will be spread through the plague effect"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "infectPotion"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "infectDuration",
+        "value": {
+          "value": "Infection Potion Duration"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "infectDuration",
+        "value": {
+          "values": [
+            "The duration (in ticks) of the infection potion"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "infectPower",
+        "value": {
+          "value": "Infection Potion Power"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "infectPower",
+        "value": {
+          "values": [
+            "The power of the infection potion (base: 1)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "infectRange",
+        "value": {
+          "value": "Infection Range"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "infectRange",
+        "value": {
+          "values": [
+            "The range that the infection will spread from hosts"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Reflecting": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Reflecting",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "minimumPerc",
+        "value": {
+          "value": "Minimum Percent of Damage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "minimumPerc",
+        "value": {
+          "values": [
+            "The minimum percent of damage to reflect back"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "maximumPerc",
+        "value": {
+          "value": "Maximum Percent of Damage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "maximumPerc",
+        "value": {
+          "values": [
+            "The maximum percent of damage to reflect back"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "maxDamage",
+        "value": {
+          "value": "Maximum Damage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "maxDamage",
+        "value": {
+          "values": [
+            "The maximum amount of damage to reflect back"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "killingBlow",
+        "value": {
+          "value": "Enable Killing Blow"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "killingBlow",
+        "value": {
+          "values": [
+            "Set whether or not reflected damage can be deadly"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Scrapper": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Scrapper",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "chance",
+        "value": {
+          "value": "Chance per Attack"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "chance",
+        "value": {
+          "values": [
+            "The percent chance that an attack will injure targets"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Affix$Vortex": {
+    "name": "c4/champions/common/config/ConfigHandler$Affix$Vortex",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "strength",
+        "value": {
+          "value": "Vortex Strength"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "strength",
+        "value": {
+          "values": [
+            "The strength of the vortex pulling effect"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Client": {
+    "name": "c4/champions/common/config/ConfigHandler$Client",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "colors",
+        "value": {
+          "value": "Rank Colors"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "colors",
+        "value": {
+          "values": [
+            "A list of colors, as numbers, for each rank"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "xOffset",
+        "value": {
+          "value": "Health Bar X-Offset"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "xOffset",
+        "value": {
+          "values": [
+            "The x-offset for the champion health bars"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "yOffset",
+        "value": {
+          "value": "Health Bar Y-Offset"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "yOffset",
+        "value": {
+          "values": [
+            "The y-offset for the champion health bars"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "healthVisibility",
+        "value": {
+          "value": "Health Bar Visibility Range"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "healthVisibility",
+        "value": {
+          "values": [
+            "The distance, in blocks, from which the health bar can be seen"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "nameVisibility",
+        "value": {
+          "value": "Name Visibility"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "nameVisibility",
+        "value": {
+          "values": [
+            "Set to true to render the names of the champions"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$ConfigEventHandler": {
+    "name": "c4/champions/common/config/ConfigHandler$ConfigEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "c4/champions/common/config/ConfigHandler$ConfigEventHandler",
+        "values": {
+          "modid": {
+            "value": "champions"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$Growth": {
+    "name": "c4/champions/common/config/ConfigHandler$Growth",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "health",
+        "value": {
+          "value": "Health"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "health",
+        "value": {
+          "values": [
+            "The percent increase in health multiplied by the growth factor"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "attackDamage",
+        "value": {
+          "value": "Attack Damage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "attackDamage",
+        "value": {
+          "values": [
+            "The percent increase in attack damage multiplied by the growth factor"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "armor",
+        "value": {
+          "value": "Armor"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "armor",
+        "value": {
+          "values": [
+            "The increase in armor multiplied by the growth factor"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "armorToughness",
+        "value": {
+          "value": "Armor Toughness"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "armorToughness",
+        "value": {
+          "values": [
+            "The increase in armor toughness multiplied by the growth factor"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "knockbackResist",
+        "value": {
+          "value": "Knockback Resistance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "knockbackResist",
+        "value": {
+          "values": [
+            "The increase in knockback resistance multiplied by the growth factor"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "exp",
+        "value": {
+          "value": "Experience"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "exp",
+        "value": {
+          "values": [
+            "The increase in experience multiplied by the growth factor"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "creeperStrength",
+        "value": {
+          "value": "Creeper Explosion Strength"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "creeperStrength",
+        "value": {
+          "values": [
+            "The increase in creeper explosion strength multiplied by tier, NOT by growth factor"
+          ]
+        }
+      }
+    ]
+  },
+  "c4/champions/common/config/ConfigHandler$ScalingHealth": {
+    "name": "c4/champions/common/config/ConfigHandler$ScalingHealth",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "spawnModifiers",
+        "value": {
+          "value": "Tier Spawn Modifiers"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "spawnModifiers",
+        "value": {
+          "values": [
+            "List of tiers with numbers to multiply spawn rates by difficulty (i.e. \u00271;0.02\u0027 to increase tier 1 spawns by 2 percent per difficulty). Note that tier spawn chances are cumulative, so increasing lower tier spawns will naturally increase higher tier spawns."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "spawnModifiers"
+      }
+    ]
+  },
+  "c4/champions/common/init/ChampionsRegistry": {
+    "name": "c4/champions/common/init/ChampionsRegistry",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "c4/champions/common/init/ChampionsRegistry",
+        "value": {
+          "value": "champions"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "c4/champions/common/init/ChampionsRegistry",
+        "values": {
+          "modid": {
+            "value": "champions"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "jailed",
+        "value": {
+          "value": "jailed"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "plague",
+        "value": {
+          "value": "plague"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "injured",
+        "value": {
+          "value": "injured"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "championEgg",
+        "value": {
+          "value": "champion_egg"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItem(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerPotion(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEntity(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "c4/champions/common/loot/EntityIsChampion": {
+    "name": "c4/champions/common/loot/EntityIsChampion",
+    "interfaces": [
+      "net/minecraft/world/storage/loot/properties/EntityProperty"
+    ]
+  },
+  "c4/champions/integrations/crafttweaker/ActionAddChampionStage": {
+    "name": "c4/champions/integrations/crafttweaker/ActionAddChampionStage",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "c4/champions/integrations/crafttweaker/ActionAddTierStage": {
+    "name": "c4/champions/integrations/crafttweaker/ActionAddTierStage",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "c4/champions/integrations/crafttweaker/ChampionsCrT": {
+    "name": "c4/champions/integrations/crafttweaker/ChampionsCrT",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "c4/champions/integrations/crafttweaker/ChampionsCrT"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "c4/champions/integrations/crafttweaker/ChampionsCrT",
+        "value": {
+          "value": "mods.champions"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addStage(Ljava/lang/String;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addStage(Ljava/lang/String;Ljava/lang/String;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addTierStage(Ljava/lang/String;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addTierStage(Ljava/lang/String;II)V"
+      }
+    ]
+  },
+  "c4/champions/integrations/jei/JEIPlugin": {
+    "name": "c4/champions/integrations/jei/JEIPlugin",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "c4/champions/integrations/jei/JEIPlugin"
+      }
+    ]
+  },
+  "c4/champions/network/PacketSyncAffix": {
+    "name": "c4/champions/network/PacketSyncAffix",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "c4/champions/network/PacketSyncAffix$PacketSyncHandler": {
+    "name": "c4/champions/network/PacketSyncAffix$PacketSyncHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "c4/champions/proxy/ClientProxy": {
+    "name": "c4/champions/proxy/ClientProxy",
+    "interfaces": [
+      "c4/champions/proxy/IProxy"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "c4/champions/proxy/ClientProxy",
+        "values": {
+          "modid": {
+            "value": "champions"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "c4/champions/proxy/ServerProxy": {
+    "name": "c4/champions/proxy/ServerProxy",
+    "interfaces": [
+      "c4/champions/proxy/IProxy"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern": [
+    "W W",
+    "WWW"
+    ],
+    
+    "key":
+    {   
+        "W":
+        {
+            "item": "minecraft:stonebrick",
+            "data": 1
+        }
+    },
+    
+    "result":
+    {
+        "item":  "mcwbridges:mossy_stone_brick_bridge",
+        "count": 4
+    }
+}

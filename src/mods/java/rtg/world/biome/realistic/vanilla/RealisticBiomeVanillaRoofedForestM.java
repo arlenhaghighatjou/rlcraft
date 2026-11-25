@@ -1,0 +1,145 @@
+package rtg.world.biome.realistic.vanilla;
+
+import java.util.Random;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockPlanks.EnumType;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Biomes;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.ChunkPrimer;
+import rtg.api.config.BiomeConfig;
+import rtg.api.util.BlockUtil;
+import rtg.api.world.RTGWorld;
+import rtg.api.world.biome.RealisticBiomeBase;
+import rtg.api.world.deco.DecoBoulder;
+import rtg.api.world.deco.DecoDeadBush;
+import rtg.api.world.deco.DecoFallenTree;
+import rtg.api.world.deco.DecoMushrooms;
+import rtg.api.world.deco.DecoShrub;
+import rtg.api.world.deco.DecoTree;
+import rtg.api.world.gen.feature.tree.rtg.TreeRTG;
+import rtg.api.world.gen.feature.tree.rtg.TreeRTGRhizophoraMucronata;
+import rtg.api.world.surface.SurfaceBase;
+import rtg.api.world.terrain.TerrainBase;
+
+public class RealisticBiomeVanillaRoofedForestM extends RealisticBiomeBase {
+   public static Biome biome = Biomes.MUTATED_ROOFED_FOREST;
+   public static Biome river = Biomes.RIVER;
+
+   public RealisticBiomeVanillaRoofedForestM() {
+      super(biome);
+   }
+
+   public void initConfig() {
+      this.getConfig().ALLOW_SCENIC_LAKES.set(false);
+      this.getConfig().addProperty(this.getConfig().ALLOW_LOGS).set(true);
+      this.getConfig().addProperty(this.getConfig().FALLEN_LOG_DENSITY_MULTIPLIER);
+      this.getConfig().addProperty(this.getConfig().SURFACE_MIX_BLOCK).set("");
+   }
+
+   public TerrainBase initTerrain() {
+      return new RealisticBiomeVanillaRoofedForestM.TerrainVanillaRoofedForestM();
+   }
+
+   public SurfaceBase initSurface() {
+      return new RealisticBiomeVanillaRoofedForestM.SurfaceVanillaRoofedForestM(this.getConfig(), biome.topBlock, biome.fillerBlock);
+   }
+
+   public void initDecos() {
+      DecoBoulder decoBoulder = new DecoBoulder();
+      decoBoulder.setBoulderBlock(Blocks.MOSSY_COBBLESTONE.getDefaultState());
+      decoBoulder.setChance(20);
+      decoBoulder.setMaxY(80);
+      decoBoulder.setStrengthFactor(2.0F);
+      this.addDeco(decoBoulder);
+      TreeRTG mucronataTree = new TreeRTGRhizophoraMucronata(3, 4, 13.0F, 0.32F, 0.1F);
+      mucronataTree.setLogBlock(BlockUtil.getStateLog(EnumType.DARK_OAK));
+      mucronataTree.setLeavesBlock(BlockUtil.getStateLeaf(EnumType.DARK_OAK));
+      mucronataTree.setMinTrunkSize(3);
+      mucronataTree.setMaxTrunkSize(4);
+      mucronataTree.setMinCrownSize(7);
+      mucronataTree.setMaxCrownSize(12);
+      this.addTree(mucronataTree);
+      DecoTree decoTrees = new DecoTree(mucronataTree);
+      decoTrees.setStrengthFactorForLoops(24.0F);
+      decoTrees.getDistribution().setNoiseDivisor(80.0F);
+      decoTrees.getDistribution().setNoiseFactor(60.0F);
+      decoTrees.getDistribution().setNoiseAddend(-15.0F);
+      decoTrees.setTreeType(DecoTree.TreeType.RTG_TREE);
+      decoTrees.setTreeCondition(DecoTree.TreeCondition.NOISE_GREATER_AND_RANDOM_CHANCE);
+      decoTrees.setTreeConditionNoise(0.0F);
+      decoTrees.setTreeConditionChance(1);
+      decoTrees.setMaxY(120);
+      this.addDeco(decoTrees);
+      DecoFallenTree decoFallenTree = new DecoFallenTree();
+      decoFallenTree.getDistribution().setNoiseDivisor(80.0F);
+      decoFallenTree.getDistribution().setNoiseFactor(60.0F);
+      decoFallenTree.getDistribution().setNoiseAddend(-15.0F);
+      decoFallenTree.setLogConditionChance(16);
+      decoFallenTree.setLogBlock(BlockUtil.getStateLog(EnumType.DARK_OAK));
+      decoFallenTree.setLeavesBlock(BlockUtil.getStateLeaf(EnumType.DARK_OAK));
+      decoFallenTree.setMinSize(4);
+      decoFallenTree.setMaxSize(9);
+      this.addDeco(decoFallenTree, this.getConfig().ALLOW_LOGS.get());
+      DecoShrub decoShrub = new DecoShrub();
+      decoShrub.setMaxY(110);
+      decoShrub.setLoopMultiplier(1.0F);
+      this.addDeco(decoShrub);
+      DecoDeadBush decoDeadBush = new DecoDeadBush();
+      decoDeadBush.setMaxY(128);
+      decoDeadBush.setChance(16);
+      decoDeadBush.setStrengthFactor(1.0F);
+      this.addDeco(decoDeadBush);
+      DecoMushrooms decoMushrooms = new DecoMushrooms();
+      decoMushrooms.setMaxY(90);
+      decoMushrooms.setRandomType(DecoMushrooms.RandomType.ALWAYS_GENERATE);
+      this.addDeco(decoMushrooms);
+   }
+
+   public static class SurfaceVanillaRoofedForestM extends SurfaceBase {
+      public SurfaceVanillaRoofedForestM(BiomeConfig config, IBlockState top, IBlockState filler) {
+         super(config, top, filler);
+      }
+
+      public void paintTerrain(ChunkPrimer primer, int i, int j, int x, int z, int depth, RTGWorld rtgWorld, float[] noise, float river, Biome[] base) {
+         Random rand = rtgWorld.rand();
+         float c = TerrainBase.calcCliff(x, z, noise);
+         boolean cliff = c > 1.4F;
+
+         for(int k = 255; k > -1; --k) {
+            Block b = primer.getBlockState(x, k, z).getBlock();
+            if (b == Blocks.AIR) {
+               depth = -1;
+            } else if (b == Blocks.STONE) {
+               ++depth;
+               if (cliff) {
+                  if (depth > -1 && depth < 2) {
+                     if (rand.nextInt(3) == 0) {
+                        primer.setBlockState(x, k, z, this.hcCobble());
+                     } else {
+                        primer.setBlockState(x, k, z, this.hcStone());
+                     }
+                  } else if (depth < 10) {
+                     primer.setBlockState(x, k, z, this.hcStone());
+                  }
+               } else if (depth == 0 && k > 61) {
+                  primer.setBlockState(x, k, z, this.topBlock);
+               } else if (depth < 4) {
+                  primer.setBlockState(x, k, z, this.fillerBlock);
+               }
+            }
+         }
+
+      }
+   }
+
+   public static class TerrainVanillaRoofedForestM extends TerrainBase {
+      public TerrainVanillaRoofedForestM() {
+      }
+
+      public float generateNoise(RTGWorld rtgWorld, int x, int y, float border, float river) {
+         return terrainGrasslandMountains(x, y, rtgWorld, river, 4.0F, 50.0F, 68.0F);
+      }
+   }
+}

@@ -1,0 +1,18 @@
+{ "_comment": ["Cooling goo from a raw polar crystal" ],
+  "conditions": [
+    { "type": "forge:mod_loaded",
+      "modid": "vanillafoodpantry" }
+  ],
+  "result": {
+    "item": "armorunder:cooling_goo",
+    "count": 27
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "Cs", "ss"
+  ],
+  "key": {
+    "C": { "item": "vanillafoodpantry:polar_raw_crystal" },
+    "s": { "type": "forge:ore_dict", "ore": "blockSlime" }
+  }
+}

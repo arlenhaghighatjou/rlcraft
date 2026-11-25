@@ -1,0 +1,16 @@
+[
+	{
+		"modid": "orelib",
+		"name": "OreLib Support Mod",
+		"description": "Provides support for OreCruncher's mods",
+		"version": "1.12.2-3.6.0.1",
+		"mcversion": "1.12.2",
+		"url": "https://github.com/OreCruncher/OreLib/wiki",
+		"updateUrl": "https://raw.githubusercontent.com/OreCruncher/OreLib/master/version.json",
+		"updateJSON": "https://raw.githubusercontent.com/OreCruncher/OreLib/master/version.json",
+		"authorList": [
+			"OreCruncher"
+		],
+		"logoFile": "assets/orelib/textures/logo.png"
+	}
+]

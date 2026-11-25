@@ -1,0 +1,34 @@
+{
+	"biomes": [
+		{
+			"conditions": "biome.name == 'Meneglin'",
+			"_comment": "Gives Meneglin biome forest sounds.",
+			"soundReset": true,
+			"sounds": [
+				{
+					"sound": "dsurround:forest",
+					"conditions": "weather.isNotRaining && diurnal.isDay"
+				},
+				{
+					"sound": "dsurround:crickets",
+					"conditions": "weather.isNotRaining && diurnal.isNight"
+				},
+				{
+					"sound": "dsurround:bird",
+					"conditions": "weather.isNotRaining && diurnal.isDay",
+					"soundType": "spot"
+				},
+				{
+					"sound": "dsurround:owl",
+					"conditions": "weather.isNotRaining && diurnal.isNight",
+					"soundType": "spot"
+				},
+				{
+					"sound": "dsurround:woodpecker",
+					"conditions": "weather.isNotRaining && diurnal.isDay",
+					"soundType": "spot"
+				}
+			]
+		}
+	]
+}

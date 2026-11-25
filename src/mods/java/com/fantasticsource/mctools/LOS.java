@@ -1,0 +1,195 @@
+package com.fantasticsource.mctools;
+
+import com.fantasticsource.fantasticlib.Compat;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFence;
+import net.minecraft.block.BlockFenceGate;
+import net.minecraft.block.BlockSlime;
+import net.minecraft.block.BlockTrapDoor;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+
+/** @deprecated */
+@Deprecated
+public class LOS {
+   private static final int MAX_ITERATIONS = 200;
+
+   public LOS() {
+   }
+
+   public static boolean rayTraceBlocks(World world, Vec3d vec, Vec3d vecEnd, boolean collideOnAllSolids) {
+      world.profiler.startSection("Fantastic Lib: Improved Raytrace");
+      if (vec.x < vecEnd.x) {
+         Vec3d swap = vec;
+         vec = vecEnd;
+         vecEnd = swap;
+      }
+
+      int x = MathHelper.floor(vec.x);
+      int y = MathHelper.floor(vec.y);
+      int z = MathHelper.floor(vec.z);
+      int endX = MathHelper.floor(vecEnd.x);
+      int endY = MathHelper.floor(vecEnd.y);
+      int endZ = MathHelper.floor(vecEnd.z);
+      BlockPos blockPos = new BlockPos(x, y, z);
+      if (!world.isBlockLoaded(blockPos)) {
+         world.profiler.endSection();
+         return false;
+      } else {
+         IBlockState blockState = world.getBlockState(blockPos);
+         if ((collideOnAllSolids || !canSeeThrough(blockState)) && blockState.getCollisionBoundingBox(world, blockPos) != Block.NULL_AABB && blockState.collisionRayTrace(world, blockPos, vec, vecEnd) != null) {
+            world.profiler.endSection();
+            return false;
+         } else {
+            for(int i = 1; i <= 200; ++i) {
+               if (x == endX && y == endY && z == endZ) {
+                  world.profiler.endSection();
+                  return true;
+               }
+
+               boolean xMotion = true;
+               boolean yMotion = true;
+               boolean zMotion = true;
+               double x2 = 999.0D;
+               double y2 = 999.0D;
+               double z2 = 999.0D;
+               if (endX > x) {
+                  x2 = (double)(x + 1);
+               } else if (endX < x) {
+                  x2 = (double)x;
+               } else {
+                  xMotion = false;
+               }
+
+               if (endY > y) {
+                  y2 = (double)(y + 1);
+               } else if (endY < y) {
+                  y2 = (double)y;
+               } else {
+                  yMotion = false;
+               }
+
+               if (endZ > z) {
+                  z2 = (double)(z + 1);
+               } else if (endZ < z) {
+                  z2 = (double)z;
+               } else {
+                  zMotion = false;
+               }
+
+               double x3 = 999.0D;
+               double y3 = 999.0D;
+               double z3 = 999.0D;
+               double xDif = vecEnd.x - vec.x;
+               double yDif = vecEnd.y - vec.y;
+               double zDif = vecEnd.z - vec.z;
+               if (xMotion) {
+                  x3 = (x2 - vec.x) / xDif;
+               }
+
+               if (yMotion) {
+                  y3 = (y2 - vec.y) / yDif;
+               }
+
+               if (zMotion) {
+                  z3 = (z2 - vec.z) / zDif;
+               }
+
+               if (x3 == 0.0D) {
+                  x3 = -1.0E-4D;
+               }
+
+               if (y3 == 0.0D) {
+                  y3 = -1.0E-4D;
+               }
+
+               if (z3 == 0.0D) {
+                  z3 = -1.0E-4D;
+               }
+
+               EnumFacing enumfacing;
+               if (x3 < y3 && x3 < z3) {
+                  enumfacing = endX > x ? EnumFacing.WEST : EnumFacing.EAST;
+                  vec = new Vec3d(x2, vec.y + yDif * x3, vec.z + zDif * x3);
+               } else if (y3 < z3) {
+                  enumfacing = endY > y ? EnumFacing.DOWN : EnumFacing.UP;
+                  vec = new Vec3d(vec.x + xDif * y3, y2, vec.z + zDif * y3);
+               } else {
+                  enumfacing = endZ > z ? EnumFacing.NORTH : EnumFacing.SOUTH;
+                  vec = new Vec3d(vec.x + xDif * z3, vec.y + yDif * z3, z2);
+               }
+
+               x = MathHelper.floor(vec.x) - (enumfacing == EnumFacing.EAST ? 1 : 0);
+               y = MathHelper.floor(vec.y) - (enumfacing == EnumFacing.UP ? 1 : 0);
+               z = MathHelper.floor(vec.z) - (enumfacing == EnumFacing.SOUTH ? 1 : 0);
+               blockPos = new BlockPos(x, y, z);
+               if (!world.isBlockLoaded(blockPos)) {
+                  world.profiler.endSection();
+                  return false;
+               }
+
+               blockState = world.getBlockState(blockPos);
+               if ((collideOnAllSolids || !canSeeThrough(blockState)) && blockState.getCollisionBoundingBox(world, blockPos) != Block.NULL_AABB && blockState.collisionRayTrace(world, blockPos, vec, vecEnd) != null) {
+                  world.profiler.endSection();
+                  return false;
+               }
+            }
+
+            world.profiler.endSection();
+            return false;
+         }
+      }
+   }
+
+   public static boolean canSeeThrough(IBlockState blockState) {
+      Material material = blockState.getMaterial();
+      if (material == Material.LEAVES) {
+         return true;
+      } else if (material == Material.GLASS) {
+         return true;
+      } else if (material == Material.ICE) {
+         return true;
+      } else if (material == Material.AIR) {
+         return true;
+      } else if (material == Material.WATER) {
+         return true;
+      } else if (material == Material.FIRE) {
+         return true;
+      } else if (material == Material.PORTAL) {
+         return !Compat.betterportals;
+      } else if (material == Material.BARRIER) {
+         return true;
+      } else if (material == Material.PLANTS) {
+         return true;
+      } else if (material == Material.WEB) {
+         return true;
+      } else if (material == Material.VINE) {
+         return true;
+      } else {
+         Block block = blockState.getBlock();
+         if (block instanceof BlockSlime) {
+            return true;
+         } else if (block instanceof BlockTrapDoor) {
+            return true;
+         } else if (block instanceof BlockFence) {
+            return true;
+         } else if (block instanceof BlockFenceGate) {
+            return true;
+         } else if (block == Blocks.ACACIA_DOOR) {
+            return true;
+         } else if (block == Blocks.JUNGLE_DOOR) {
+            return true;
+         } else if (block == Blocks.IRON_BARS) {
+            return true;
+         } else {
+            return (block == Blocks.OAK_DOOR || block == Blocks.IRON_DOOR) && (block.getMetaFromState(blockState) & 8) != 0;
+         }
+      }
+   }
+}

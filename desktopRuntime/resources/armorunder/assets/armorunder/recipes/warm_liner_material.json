@@ -1,0 +1,13 @@
+{ "_comment": ["Warm lining material from heating goo" ],
+  "result": {
+    "item": "armorunder:warm_liner_material"
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "sss", " X ", "sss"
+  ],
+  "key": {
+    "s": { "item": "minecraft:string" },
+    "X": { "item": "armorunder:heating_goo" }
+  }
+}

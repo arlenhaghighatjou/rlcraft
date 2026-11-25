@@ -1,0 +1,16 @@
+[
+{
+  "modid": "soundfilters",
+  "name": "Sound Filters",
+  "description": "Adds reveb to caves, as well as muted sounds underwater/in lava, and behind walls.",
+  "version": "0.12.1_for_1.12",
+  "mcversion": "1.12",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Tmtravlr"],
+  "credits": "Made by Tmtravlr.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

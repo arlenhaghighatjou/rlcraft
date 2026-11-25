@@ -1,0 +1,17 @@
+[
+{
+  "modid": "setbonus",
+  "name": "Set Bonus",
+  "description": "Inspired by Diablo 2 and Terraria, lets you define custom equipment sets that give attribute modifiers or potion effects",
+  "version": "1.12.2.020",
+  "mcversion": "1.12.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Laike_Endaril"],
+  "credits": "
+democat3457 (PR related to 'globally hidden' bonus discovery mode)",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

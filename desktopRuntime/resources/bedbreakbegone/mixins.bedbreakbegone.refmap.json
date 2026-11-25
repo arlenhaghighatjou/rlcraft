@@ -1,0 +1,14 @@
+{
+  "mappings": {
+    "bedbreakbegone/mixin/EntityPlayerMixin": {
+      "getBedSpawnLocation(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Z)Lnet/minecraft/util/math/BlockPos;": "Lnet/minecraft/entity/player/EntityPlayer;func_180467_a(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Z)Lnet/minecraft/util/math/BlockPos;"
+    }
+  },
+  "data": {
+    "searge": {
+      "bedbreakbegone/mixin/EntityPlayerMixin": {
+        "getBedSpawnLocation(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Z)Lnet/minecraft/util/math/BlockPos;": "Lnet/minecraft/entity/player/EntityPlayer;func_180467_a(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Z)Lnet/minecraft/util/math/BlockPos;"
+      }
+    }
+  }
+}

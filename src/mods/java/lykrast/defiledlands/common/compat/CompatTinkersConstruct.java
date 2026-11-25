@@ -1,0 +1,73 @@
+package lykrast.defiledlands.common.compat;
+
+import lykrast.defiledlands.common.block.BlockBaseFluid;
+import lykrast.defiledlands.common.compat.ticon.TraitDefiled;
+import lykrast.defiledlands.common.init.ModBlocks;
+import lykrast.defiledlands.common.init.ModItems;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
+import slimeknights.tconstruct.library.TinkerRegistry;
+import slimeknights.tconstruct.library.materials.BowMaterialStats;
+import slimeknights.tconstruct.library.materials.ExtraMaterialStats;
+import slimeknights.tconstruct.library.materials.HandleMaterialStats;
+import slimeknights.tconstruct.library.materials.HeadMaterialStats;
+import slimeknights.tconstruct.library.materials.IMaterialStats;
+import slimeknights.tconstruct.library.materials.Material;
+
+public class CompatTinkersConstruct extends ModCompat {
+   public static final Material UMBRIUM = new Material("umbrium", 10820300);
+   public static final Fluid MOLTEN_UMBRIUM = sendFluidForMelting("umbrium", registerFluid(new CompatTinkersConstruct.FluidColouredMetal("umbrium", 10820300, 800)));
+
+   public CompatTinkersConstruct() {
+   }
+
+   public void preInit() {
+      ModBlocks.registerBlock(new BlockBaseFluid(MOLTEN_UMBRIUM, net.minecraft.block.material.Material.LAVA), "molten_umbrium", (CreativeTabs)null);
+      TinkerRegistry.addMaterialStats(UMBRIUM, new HeadMaterialStats(246, 5.0F, 4.0F, 2), new IMaterialStats[]{new HandleMaterialStats(1.0F, 72), new ExtraMaterialStats(60), new BowMaterialStats(0.5F, 1.5F, 7.0F)});
+      TinkerRegistry.integrate(UMBRIUM, MOLTEN_UMBRIUM, "Umbrium").toolforge().preInit();
+   }
+
+   public void init() {
+      UMBRIUM.setCastable(true);
+      UMBRIUM.addCommonItems("Umbrium");
+      UMBRIUM.setRepresentativeItem(ModItems.umbriumIngot);
+      UMBRIUM.addTrait(new TraitDefiled());
+   }
+
+   public static Fluid registerFluid(Fluid fluid) {
+      FluidRegistry.addBucketForFluid(fluid);
+      FluidRegistry.registerFluid(fluid);
+      return fluid;
+   }
+
+   public static Fluid sendFluidForMelting(String ore, Fluid fluid) {
+      NBTTagCompound tag = new NBTTagCompound();
+      tag.setString("fluid", fluid.getName());
+      tag.setString("ore", ore);
+      tag.setBoolean("toolforge", true);
+      FMLInterModComms.sendMessage("tconstruct", "integrateSmeltery", tag);
+      return fluid;
+   }
+
+   public static class FluidColouredMetal extends Fluid {
+      public static ResourceLocation ICON_MetalStill = new ResourceLocation("tconstruct:blocks/fluids/molten_metal");
+      public static ResourceLocation ICON_MetalFlowing = new ResourceLocation("tconstruct:blocks/fluids/molten_metal_flow");
+      int colour;
+
+      public FluidColouredMetal(String name, int colour, int temp) {
+         super(name, ICON_MetalStill, ICON_MetalFlowing);
+         this.colour = colour;
+         this.setTemperature(temp);
+         this.setDensity(2000);
+         this.setViscosity(10000);
+      }
+
+      public int getColor() {
+         return this.colour | -16777216;
+      }
+   }
+}

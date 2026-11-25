@@ -1,0 +1,50 @@
+package meldexun.reachfix.asm;
+
+import java.util.function.Consumer;
+import meldexun.asmutil.ASMUtil;
+import meldexun.asmutil.transformer.clazz.AbstractClassTransformer;
+import net.minecraft.launchwrapper.IClassTransformer;
+import org.objectweb.asm.tree.AbstractInsnNode;
+import org.objectweb.asm.tree.FieldInsnNode;
+import org.objectweb.asm.tree.InsnNode;
+import org.objectweb.asm.tree.JumpInsnNode;
+import org.objectweb.asm.tree.LabelNode;
+import org.objectweb.asm.tree.LdcInsnNode;
+import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.VarInsnNode;
+
+public class ReachFixClassTransformer extends AbstractClassTransformer implements IClassTransformer {
+   public ReachFixClassTransformer() {
+   }
+
+   protected void registerTransformers() {
+      this.registerMethodTransformer("buq", "a", "(F)V", "net/minecraft/client/renderer/EntityRenderer", "getMouseOver", "(F)V", (methodNode) -> {
+         methodNode.instructions.insert(ASMUtil.listOf(new VarInsnNode(23, 1), new MethodInsnNode(184, "meldexun/reachfix/hook/client/EntityRendererHook", "getMouseOver", "(F)V", false), new InsnNode(177)));
+      });
+      this.registerMethodTransformer("pa", "a", "(Lli;)V", "net/minecraft/network/NetHandlerPlayServer", "processUseEntity", "(Lnet/minecraft/network/play/client/CPacketUseEntity;)V", (methodNode) -> {
+         AbstractInsnNode targetNode1 = ASMUtil.findFirstMethodCall(methodNode, 182, "oq", "D", "(Lvg;)Z", "net/minecraft/entity/player/EntityPlayerMP", "canEntityBeSeen", "(Lnet/minecraft/entity/Entity;)Z");
+         targetNode1 = ASMUtil.findLastInsnByType(methodNode, 8, targetNode1);
+         AbstractInsnNode popNode12 = ASMUtil.findFirstMethodCall(methodNode, 182, "oq", "h", "(Lvg;)D", "net/minecraft/entity/player/EntityPlayerMP", "getDistanceSq", "(Lnet/minecraft/entity/Entity;)D");
+         popNode12 = ASMUtil.findFirstInsnByType(methodNode, 8, popNode12);
+         methodNode.instructions.insert(targetNode1, ASMUtil.listOf(new VarInsnNode(25, 0), new VarInsnNode(25, 3), new FieldInsnNode(178, "net/minecraft/util/EnumHand", "MAIN_HAND", "Lnet/minecraft/util/EnumHand;"), new MethodInsnNode(184, "meldexun/reachfix/hook/NetHandlerPlayServerHook", "isEntityInRange", "(Lnet/minecraft/network/NetHandlerPlayServer;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/EnumHand;)Z", false), new JumpInsnNode(154, (LabelNode)popNode12), new InsnNode(177)));
+      });
+      this.registerMethodTransformer("pa", "a", "(Llp;)V", "net/minecraft/network/NetHandlerPlayServer", "processPlayerDigging", "(Lnet/minecraft/network/play/client/CPacketPlayerDigging;)V", (methodNode) -> {
+         AbstractInsnNode targetNode1;
+         for(targetNode1 = ASMUtil.findFirstInsnByType(methodNode, 9); !((LdcInsnNode)targetNode1).cst.equals(Double.valueOf(1.5D)); targetNode1 = ASMUtil.findFirstInsnByType(methodNode, 9, targetNode1)) {
+            ;
+         }
+
+         methodNode.instructions.insert(targetNode1, ASMUtil.listOf(new VarInsnNode(25, 0), new MethodInsnNode(184, "meldexun/reachfix/hook/NetHandlerPlayServerHook", "getEyeHeightMinusOnePointFive", "(Lnet/minecraft/network/NetHandlerPlayServer;)D", false), new InsnNode(99)));
+      });
+      this.registerMethodTransformer("bsc", "a", "(Lams;)V", "net/minecraft/client/network/NetworkPlayerInfo", "setGameType", "(Lnet/minecraft/world/GameType;)V", (methodNode) -> {
+         methodNode.instructions.insert(ASMUtil.listOf(new VarInsnNode(25, 0), new VarInsnNode(25, 1), new MethodInsnNode(184, "meldexun/reachfix/hook/client/NetworkPlayerInfoHook", "onUpdateGameMode", "(Lnet/minecraft/client/network/NetworkPlayerInfo;Lnet/minecraft/world/GameType;)V", false)));
+      });
+      this.registerMethodTransformer("or", "a", "(Lams;)V", "net/minecraft/server/management/PlayerInteractionManager", "setGameType", "(Lnet/minecraft/world/GameType;)V", (methodNode) -> {
+         methodNode.instructions.insert(ASMUtil.listOf(new VarInsnNode(25, 0), new VarInsnNode(25, 1), new MethodInsnNode(184, "meldexun/reachfix/hook/PlayerInteractionManagerHook", "onUpdateGameMode", "(Lnet/minecraft/server/management/PlayerInteractionManager;Lnet/minecraft/world/GameType;)V", false)));
+      });
+      this.registerMethodTransformer("?", "?", "?", "com/oblivioussp/spartanweaponry/event/EventHandlerClient", "onMouseEvent", "(Lnet/minecraftforge/client/event/MouseEvent;)V", (methodNode) -> {
+         ASMUtil.LOGGER.info("Transforming method (SpartanWeaponry): EventHandlerClient#onMouseEvent(MouseEvent)");
+         methodNode.instructions.insert(new InsnNode(177));
+      });
+   }
+}

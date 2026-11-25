@@ -1,0 +1,29 @@
+{
+	"footsteps": {
+		"primal:rush": "#reed",
+		"primal:brickform": "woodutility",
+		"primal:pitfall": "metalbar",
+		"primal:drying_rack": "woodutility",
+		"primal:shelf_half": "wood",
+		"primal:worktable_slab": "woodutility",
+		"primal:worktable_shelf": "wood",
+		"primal:dust_bin": "woodutility",
+		"primal:storage_crate": "woodutility,metalsubparts",
+		"primal:lantern_empty": "metalsubparts",
+		"primal:lantern_torch": "metalsubparts",
+		"primal:lantern_nether": "metalsubparts",
+		"primal:lantern_redstone": "metalsubparts",
+		"primal:lantern_ignis": "metalsubparts",
+		"primal:barrel": "woodutility",
+		"primal:jackolantern": "organic_dry",
+		"primal:cineris_grass": "NOT_EMITTER",
+		"primal:cineris_grass+messy": "MESSY_GROUND",
+		"primal:cineris_grass+foliage": "brush_straw_transition",
+		"primal:cineris_bloom": "NOT_EMITTER",
+		"primal:cineris_bloom+messy": "MESSY_GROUND",
+		"primal:cineris_bloom+foliage": "brush_straw_transition",
+		"primal:nether_vine": "#vine",
+		"primal:strangle_weed": "#vine",
+		"primal:devils_tongue": "#reed"
+	}
+}

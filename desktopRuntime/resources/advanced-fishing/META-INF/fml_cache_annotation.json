@@ -1,0 +1,162 @@
+{
+  "nightkosh/advanced_fishing/ModAdvancedFishing": {
+    "name": "nightkosh/advanced_fishing/ModAdvancedFishing",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "nightkosh/advanced_fishing/ModAdvancedFishing",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "advanced-fishing"
+          },
+          "name": {
+            "value": "Advanced-Fishing"
+          },
+          "version": {
+            "value": "1.3.3"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "INSTANCE",
+        "value": {
+          "value": "advanced-fishing"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "nightkosh.advanced_fishing.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "nightkosh.advanced_fishing.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "load(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      }
+    ]
+  },
+  "nightkosh/advanced_fishing/core/CatchManager": {
+    "name": "nightkosh/advanced_fishing/core/CatchManager",
+    "interfaces": [
+      "nightkosh/advanced_fishing/api/fishing_catch/ICatchManager"
+    ]
+  },
+  "nightkosh/advanced_fishing/core/EventsHandler": {
+    "name": "nightkosh/advanced_fishing/core/EventsHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityJoinWorldEvent(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "lootLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      }
+    ]
+  },
+  "nightkosh/advanced_fishing/core/Items": {
+    "name": "nightkosh/advanced_fishing/core/Items",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "nightkosh/advanced_fishing/core/Items",
+        "value": {
+          "value": "advanced-fishing"
+        }
+      }
+    ]
+  },
+  "nightkosh/advanced_fishing/core/Items$RegistrationHandler": {
+    "name": "nightkosh/advanced_fishing/core/Items$RegistrationHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "nightkosh/advanced_fishing/core/Items$RegistrationHandler",
+        "values": {
+          "modid": {
+            "value": "advanced-fishing"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "nightkosh/advanced_fishing/core/MaterialManager": {
+    "name": "nightkosh/advanced_fishing/core/MaterialManager",
+    "interfaces": [
+      "nightkosh/advanced_fishing/api/material/IMaterialManager"
+    ]
+  },
+  "nightkosh/advanced_fishing/core/Models": {
+    "name": "nightkosh/advanced_fishing/core/Models",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "nightkosh/advanced_fishing/core/Models",
+        "value": {
+          "value": "advanced-fishing"
+        }
+      }
+    ]
+  },
+  "nightkosh/advanced_fishing/core/Models$RegistrationHandler": {
+    "name": "nightkosh/advanced_fishing/core/Models$RegistrationHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "nightkosh/advanced_fishing/core/Models$RegistrationHandler",
+        "values": {
+          "modid": {
+            "value": "advanced-fishing"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "nightkosh/advanced_fishing/core/ParticlesManager": {
+    "name": "nightkosh/advanced_fishing/core/ParticlesManager",
+    "interfaces": [
+      "nightkosh/advanced_fishing/api/particles/IParticlesManager"
+    ]
+  }
+}

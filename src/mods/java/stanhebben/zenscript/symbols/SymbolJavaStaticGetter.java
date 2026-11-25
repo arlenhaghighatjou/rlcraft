@@ -1,0 +1,18 @@
+package stanhebben.zenscript.symbols;
+
+import stanhebben.zenscript.expression.partial.IPartialExpression;
+import stanhebben.zenscript.expression.partial.PartialStaticGetter;
+import stanhebben.zenscript.type.natives.IJavaMethod;
+import stanhebben.zenscript.util.ZenPosition;
+
+public class SymbolJavaStaticGetter implements IZenSymbol {
+   private final IJavaMethod method;
+
+   public SymbolJavaStaticGetter(IJavaMethod method) {
+      this.method = method;
+   }
+
+   public IPartialExpression instance(ZenPosition position) {
+      return new PartialStaticGetter(position, this.method);
+   }
+}

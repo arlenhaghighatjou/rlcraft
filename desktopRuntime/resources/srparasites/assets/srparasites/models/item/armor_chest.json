@@ -1,0 +1,14 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "SRParasites:items/armor_chest"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "vinni": 1
+            },
+            "model": "SRParasites:item/armor_chest_v"
+        }
+    ]
+}

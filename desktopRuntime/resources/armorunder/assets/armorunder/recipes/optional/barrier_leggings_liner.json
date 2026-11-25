@@ -1,0 +1,13 @@
+{ "conditions": [{
+     "type": "armorunder:is_allowed",
+     "value": "craft_smart_lining"
+  }],
+  "result": {
+    "item": "armorunder:barrier_leggings_liner"
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "xxx", "x x", "x x"
+  ],
+  "key": { "x": { "item": "armorunder:obsidian_wrap_material" } }
+}

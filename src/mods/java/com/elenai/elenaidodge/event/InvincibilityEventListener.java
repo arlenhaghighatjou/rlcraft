@@ -1,0 +1,25 @@
+package com.elenai.elenaidodge.event;
+
+import com.elenai.elenaidodge.ModConfig;
+import com.elenai.elenaidodge.capability.invincibility.IInvincibility;
+import com.elenai.elenaidodge.capability.invincibility.InvincibilityProvider;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+public class InvincibilityEventListener {
+   public InvincibilityEventListener() {
+   }
+
+   @SubscribeEvent
+   public void onHit(LivingAttackEvent event) {
+      if (event.getEntityLiving() instanceof EntityPlayer && (event.getSource().isProjectile() || event.getSource().damageType.contains("player") || event.getSource().damageType.contains("mob"))) {
+         IInvincibility i = (IInvincibility)event.getEntityLiving().getCapability(InvincibilityProvider.INVINCIBILITY_CAP, (EnumFacing)null);
+         if (i.getInvincibility() > 0 && ModConfig.common.balance.invincibilityTicks > 0) {
+            event.setCanceled(true);
+         }
+      }
+
+   }
+}

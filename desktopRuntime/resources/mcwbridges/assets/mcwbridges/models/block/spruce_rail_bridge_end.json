@@ -1,0 +1,9 @@
+{
+	"parent": "mcwbridges:block/parent/rail_bridge_end",
+	"textures": {
+		"5": "minecraft:blocks/planks_spruce",
+		"2": "minecraft:blocks/log_spruce",
+		"6": "minecraft:blocks/log_spruce_top",
+		"particle": "minecraft:blocks/log_spruce"
+	}
+}

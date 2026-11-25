@@ -1,0 +1,15 @@
+{
+  "us/getfluxed/controlsearch/Control": 52,
+  "us/getfluxed/controlsearch/client/gui/EnumSortingType": 52,
+  "us/getfluxed/controlsearch/client/gui/EnumSortingType$1": 52,
+  "us/getfluxed/controlsearch/client/gui/GuiNewControls": 52,
+  "us/getfluxed/controlsearch/client/gui/GuiNewKeyBindingList": 52,
+  "us/getfluxed/controlsearch/client/gui/GuiNewKeyBindingList$1": 52,
+  "us/getfluxed/controlsearch/client/gui/GuiNewKeyBindingList$CategoryEntry": 52,
+  "us/getfluxed/controlsearch/client/gui/GuiNewKeyBindingList$KeyEntry": 52,
+  "us/getfluxed/controlsearch/events/ClientEventHandler": 52,
+  "us/getfluxed/controlsearch/events/CommonEventHandler": 52,
+  "us/getfluxed/controlsearch/proxy/ClientProxy": 52,
+  "us/getfluxed/controlsearch/proxy/CommonProxy": 52,
+  "us/getfluxed/controlsearch/reference/Reference": 52
+}

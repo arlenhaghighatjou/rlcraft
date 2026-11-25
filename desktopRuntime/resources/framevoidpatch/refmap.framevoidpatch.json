@@ -1,0 +1,16 @@
+{
+  "mappings": {
+    "framevoidpatch/mixin/EntityItemFrameMixin": {
+      "Lnet/minecraft/entity/item/EntityItemFrame;setDisplayedItem(Lnet/minecraft/item/ItemStack;)V": "Lnet/minecraft/entity/item/EntityItemFrame;func_82334_a(Lnet/minecraft/item/ItemStack;)V",
+      "processInitialInteract": "Lnet/minecraft/entity/item/EntityItemFrame;func_184230_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Z"
+    }
+  },
+  "data": {
+    "searge": {
+      "framevoidpatch/mixin/EntityItemFrameMixin": {
+        "Lnet/minecraft/entity/item/EntityItemFrame;setDisplayedItem(Lnet/minecraft/item/ItemStack;)V": "Lnet/minecraft/entity/item/EntityItemFrame;func_82334_a(Lnet/minecraft/item/ItemStack;)V",
+        "processInitialInteract": "Lnet/minecraft/entity/item/EntityItemFrame;func_184230_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Z"
+      }
+    }
+  }
+}

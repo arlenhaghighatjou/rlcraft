@@ -1,0 +1,26 @@
+{
+	"blocks":[
+		{
+			"blocks": [
+				"rockhounding_surface:white_sand"
+			],
+			"effects": [
+				{
+					"effect": "dust",
+					"chance": 500
+				}
+			]
+		}
+	],
+	"footsteps": {
+		"rockhounding_surface:gypsum_crops": "NOT_EMITTER",
+		"rockhounding_surface:gypsum_crops+messy": "MESSY_GROUND",
+		"rockhounding_surface:gypsum_crops+foliage": "leaves",
+		"rockhounding_surface:gypsum_crops[variant=skunkbush]": "leaves",
+		"rockhounding_surface:gypsum_bush_lo": "NOT_EMITTER",
+		"rockhounding_surface:gypsum_bush_lo+messy": "MESSY_GROUND",
+		"rockhounding_surface:gypsum_bush_lo+foliage": "straw",
+		"rockhounding_surface:gypsum_bush_hi+foliage": "straw"
+	}
+	
+}

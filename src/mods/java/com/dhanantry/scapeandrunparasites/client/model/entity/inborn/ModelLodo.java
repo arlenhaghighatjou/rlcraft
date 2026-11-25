@@ -1,0 +1,212 @@
+package com.dhanantry.scapeandrunparasites.client.model.entity.inborn;
+
+import com.dhanantry.scapeandrunparasites.client.model.ModelSRP;
+import com.dhanantry.scapeandrunparasites.entity.monster.inborn.EntityLodo;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.math.MathHelper;
+
+public class ModelLodo extends ModelSRP {
+   public ModelRenderer mainbody;
+   public ModelRenderer bodyfront;
+   public ModelRenderer joint1;
+   public ModelRenderer dec;
+   public ModelRenderer dec_1;
+   public ModelRenderer dec_2;
+   public ModelRenderer dec_3;
+   public ModelRenderer body;
+   public ModelRenderer joint2;
+   public ModelRenderer bodyMiddle;
+   public ModelRenderer joint3;
+   public ModelRenderer dec_4;
+   public ModelRenderer dec_5;
+   public ModelRenderer dec_6;
+   public ModelRenderer dec_7;
+   public ModelRenderer dec_8;
+   public ModelRenderer dec_9;
+   public ModelRenderer dec_10;
+   public ModelRenderer body_1;
+   public ModelRenderer joint4;
+   public ModelRenderer bodyback;
+   public ModelRenderer joint5;
+   public ModelRenderer dec_11;
+   public ModelRenderer dec_12;
+   public ModelRenderer dec_13;
+   public ModelRenderer dec_14;
+   public ModelRenderer body_2;
+
+   public ModelLodo() {
+      this.textureWidth = 64;
+      this.textureHeight = 16;
+      this.bodyMiddle = new ModelRenderer(this, 16, 3);
+      this.bodyMiddle.setRotationPoint(0.0F, 0.0F, 2.5F);
+      this.bodyMiddle.addBox(-3.0F, -3.0F, -1.5F, 6, 4, 3, 0.0F);
+      this.dec_4 = new ModelRenderer(this, 31, 2);
+      this.dec_4.setRotationPoint(0.0F, -2.6F, -0.7F);
+      this.dec_4.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_4, -0.38397244F, 0.0F, 0.0F);
+      this.dec_7 = new ModelRenderer(this, 31, 4);
+      this.dec_7.setRotationPoint(2.6F, -1.7F, -0.7F);
+      this.dec_7.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_7, 0.0F, -0.38397244F, 0.0F);
+      this.dec_1 = new ModelRenderer(this, 26, 0);
+      this.dec_1.setRotationPoint(-0.9F, -0.5F, -0.2F);
+      this.dec_1.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_1, -0.38397244F, 0.0F, 0.0F);
+      this.dec_11 = new ModelRenderer(this, 8, 5);
+      this.dec_11.setRotationPoint(-0.9F, -0.6F, 1.2F);
+      this.dec_11.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_11, -0.38397244F, 0.0F, 0.0F);
+      this.body = new ModelRenderer(this, 35, 0);
+      this.body.setRotationPoint(0.0F, 0.0F, 1.5F);
+      this.body.addBox(-2.5F, -2.0F, -1.0F, 5, 3, 3, 0.0F);
+      this.dec_10 = new ModelRenderer(this, 0, 5);
+      this.dec_10.setRotationPoint(-2.6F, -0.2F, -0.7F);
+      this.dec_10.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_10, 0.0F, 0.38397244F, 0.0F);
+      this.joint4 = new ModelRenderer(this, 2, 5);
+      this.joint4.setRotationPoint(0.0F, 0.0F, 0.4F);
+      this.joint4.addBox(-1.0F, 0.0F, 0.0F, 2, 1, 2, 0.0F);
+      this.dec_2 = new ModelRenderer(this, 30, 0);
+      this.dec_2.setRotationPoint(1.5F, 0.0F, -0.2F);
+      this.dec_2.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_2, 0.0F, -0.38397244F, 0.0F);
+      this.dec_5 = new ModelRenderer(this, 0, 3);
+      this.dec_5.setRotationPoint(1.8F, -2.6F, -0.7F);
+      this.dec_5.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_5, -0.38397244F, 0.0F, 0.0F);
+      this.joint3 = new ModelRenderer(this, 54, 1);
+      this.joint3.setRotationPoint(0.0F, 0.0F, 0.4F);
+      this.joint3.addBox(-1.0F, 0.0F, 0.0F, 2, 1, 2, 0.0F);
+      this.joint5 = new ModelRenderer(this, 47, 6);
+      this.joint5.setRotationPoint(0.0F, 0.0F, 0.4F);
+      this.joint5.addBox(-1.0F, 0.0F, 0.0F, 2, 1, 2, 0.0F);
+      this.dec = new ModelRenderer(this, 22, 0);
+      this.dec.setRotationPoint(0.9F, -0.5F, -0.2F);
+      this.dec.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec, -0.38397244F, 0.0F, 0.0F);
+      this.bodyback = new ModelRenderer(this, 0, 8);
+      this.bodyback.setRotationPoint(0.0F, 0.0F, 1.5F);
+      this.bodyback.addBox(-2.0F, -1.0F, -2.0F, 4, 2, 4, 0.0F);
+      this.dec_6 = new ModelRenderer(this, 51, 3);
+      this.dec_6.setRotationPoint(-1.8F, -2.6F, -0.7F);
+      this.dec_6.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_6, -0.38397244F, 0.0F, 0.0F);
+      this.mainbody = new ModelRenderer(this, 0, 0);
+      this.mainbody.setRotationPoint(0.0F, 23.0F, -3.0F);
+      this.mainbody.addBox(-1.0F, 0.0F, -3.0F, 2, 1, 2, 0.0F);
+      this.dec_8 = new ModelRenderer(this, 54, 4);
+      this.dec_8.setRotationPoint(2.6F, -0.2F, -0.7F);
+      this.dec_8.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_8, 0.0F, -0.38397244F, 0.0F);
+      this.dec_3 = new ModelRenderer(this, 34, 0);
+      this.dec_3.setRotationPoint(-1.5F, 0.0F, -0.2F);
+      this.dec_3.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_3, 0.0F, 0.38397244F, 0.0F);
+      this.dec_14 = new ModelRenderer(this, 57, 6);
+      this.dec_14.setRotationPoint(-1.6F, 0.0F, 1.2F);
+      this.dec_14.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_14, 0.0F, 0.38397244F, 0.0F);
+      this.body_2 = new ModelRenderer(this, 45, 9);
+      this.body_2.setRotationPoint(0.0F, 0.0F, 1.5F);
+      this.body_2.addBox(-1.0F, 0.0F, -2.0F, 2, 1, 5, 0.0F);
+      this.dec_12 = new ModelRenderer(this, 12, 5);
+      this.dec_12.setRotationPoint(0.9F, -0.6F, 1.2F);
+      this.dec_12.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_12, -0.38397244F, 0.0F, 0.0F);
+      this.dec_9 = new ModelRenderer(this, 58, 4);
+      this.dec_9.setRotationPoint(-2.6F, -1.7F, -0.7F);
+      this.dec_9.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_9, 0.0F, 0.38397244F, 0.0F);
+      this.dec_13 = new ModelRenderer(this, 53, 6);
+      this.dec_13.setRotationPoint(1.6F, 0.0F, 1.2F);
+      this.dec_13.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F);
+      this.setRotateAngle(this.dec_13, 0.0F, -0.38397244F, 0.0F);
+      this.bodyfront = new ModelRenderer(this, 5, 0);
+      this.bodyfront.setRotationPoint(0.0F, 0.0F, -1.5F);
+      this.bodyfront.addBox(-2.0F, -1.0F, -1.0F, 4, 2, 3, 0.0F);
+      this.joint2 = new ModelRenderer(this, 48, 0);
+      this.joint2.setRotationPoint(0.0F, 0.0F, -0.5F);
+      this.joint2.addBox(-1.0F, 0.0F, 0.0F, 2, 1, 2, 0.0F);
+      this.body_1 = new ModelRenderer(this, 34, 6);
+      this.body_1.setRotationPoint(0.0F, 0.0F, 1.5F);
+      this.body_1.addBox(-2.5F, -2.0F, -2.0F, 5, 3, 3, 0.0F);
+      this.joint1 = new ModelRenderer(this, 16, 0);
+      this.joint1.setRotationPoint(0.0F, 0.0F, 0.4F);
+      this.joint1.addBox(-1.0F, 0.0F, 0.0F, 2, 1, 2, 0.0F);
+      this.joint2.addChild(this.bodyMiddle);
+      this.bodyMiddle.addChild(this.dec_4);
+      this.bodyMiddle.addChild(this.dec_7);
+      this.bodyfront.addChild(this.dec_1);
+      this.bodyback.addChild(this.dec_11);
+      this.joint1.addChild(this.body);
+      this.bodyMiddle.addChild(this.dec_10);
+      this.body_1.addChild(this.joint4);
+      this.bodyfront.addChild(this.dec_2);
+      this.bodyMiddle.addChild(this.dec_5);
+      this.bodyMiddle.addChild(this.joint3);
+      this.bodyback.addChild(this.joint5);
+      this.bodyfront.addChild(this.dec);
+      this.joint4.addChild(this.bodyback);
+      this.bodyMiddle.addChild(this.dec_6);
+      this.bodyMiddle.addChild(this.dec_8);
+      this.bodyfront.addChild(this.dec_3);
+      this.bodyback.addChild(this.dec_14);
+      this.joint5.addChild(this.body_2);
+      this.bodyback.addChild(this.dec_12);
+      this.bodyMiddle.addChild(this.dec_9);
+      this.bodyback.addChild(this.dec_13);
+      this.mainbody.addChild(this.bodyfront);
+      this.body.addChild(this.joint2);
+      this.joint3.addChild(this.body_1);
+      this.bodyfront.addChild(this.joint1);
+   }
+
+   public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+      super.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+      this.mainbody.render(scale);
+   }
+
+   public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+      EntityLodo ven = (EntityLodo)entityIn;
+      float f6 = (float)ven.getFloorTimer();
+      if (f6 >= 0.0F) {
+         float f2 = MathHelper.cos(ageInTicks * 2.6F) * 0.015F;
+         float f1 = MathHelper.cos(ageInTicks * 2.27F) * 0.02F;
+         this.mainbody.offsetX = f2;
+         this.mainbody.offsetZ = f1;
+         this.mainbody.rotateAngleX = 1.6F;
+         this.mainbody.offsetZ = 0.2F;
+         this.mainbody.offsetY = f6;
+         f1 = MathHelper.cos(ageInTicks * 0.643219F) * 0.06510051F;
+         f2 = MathHelper.cos(ageInTicks * 0.643219F) * 0.06510015F;
+         this.joint1.rotateAngleY = f1;
+         this.joint2.rotateAngleY = f1;
+         this.joint3.rotateAngleY = f1;
+         this.joint4.rotateAngleY = f1;
+         this.joint5.rotateAngleY = f1;
+         this.mainbody.rotateAngleZ = f2;
+         this.bodyMiddle.rotateAngleZ = f2;
+      } else {
+         this.mainbody.offsetX = 0.0F;
+         this.mainbody.offsetZ = 0.0F;
+         this.mainbody.rotateAngleX = 0.0F;
+         this.mainbody.offsetZ = 0.0F;
+         this.mainbody.offsetY = 0.0F;
+         float f1 = MathHelper.cos(limbSwing * 1.5F) * 1.0F * limbSwingAmount * 0.25F;
+         float f2 = MathHelper.cos(limbSwing * 1.5F) * 1.0F * limbSwingAmount * 0.15F;
+         this.joint1.rotateAngleY = f1;
+         this.joint2.rotateAngleY = f1;
+         this.joint3.rotateAngleY = f1;
+         this.joint4.rotateAngleY = f1;
+         this.joint5.rotateAngleY = f1;
+         this.mainbody.rotateAngleZ = f2;
+         this.bodyMiddle.rotateAngleZ = f2;
+      }
+
+   }
+
+   public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
+   }
+}

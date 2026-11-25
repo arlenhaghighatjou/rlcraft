@@ -1,0 +1,392 @@
+{
+  "shadows/toaster/ToastControl": {
+    "name": "shadows/toaster/ToastControl",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "shadows/toaster/ToastControl",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "dependencies": {
+            "value": "required-after:placebo@[1.6,)"
+          },
+          "modid": {
+            "value": "toastcontrol"
+          },
+          "name": {
+            "value": "Toast Control"
+          },
+          "version": {
+            "value": "1.8.1"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "keys(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "shadows/toaster/ToastControl$ToastControlConfig": {
+    "name": "shadows/toaster/ToastControl$ToastControlConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "shadows/toaster/ToastControl$ToastControlConfig",
+        "values": {
+          "category": {
+            "value": "Toast Types"
+          },
+          "modid": {
+            "value": "toastcontrol"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "advancements",
+        "value": {
+          "value": "Disable Advancements"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "advancements",
+        "value": {
+          "values": [
+            "If advancement toasts are blocked. Enabling will block ALL advancements."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "recipes",
+        "value": {
+          "value": "Disable Recipes"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "recipes",
+        "value": {
+          "values": [
+            "If recipe unlock toasts are blocked. Blocks \"you have unlocked a new recipe\" toasts."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "system",
+        "value": {
+          "value": "Disable System Toasts"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "system",
+        "value": {
+          "values": [
+            "If system toasts are blocked. This is used only for the narrator toggle notification right now."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "tutorial",
+        "value": {
+          "value": "Disable Tutorials"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "tutorial",
+        "value": {
+          "values": [
+            "If tutorial toasts are blocked. Blocks useless things like use WASD to move."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "globalVanilla",
+        "value": {
+          "value": "Disable All Vanilla"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "globalVanilla",
+        "value": {
+          "values": [
+            "If all vanilla toasts are blocked.  Includes advancements, recipes, system, and tutorials."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "globalModded",
+        "value": {
+          "value": "Disable All Non-Vanilla"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "globalModded",
+        "value": {
+          "values": [
+            "If all non-vanilla toasts are blocked.  Blocks all toasts that do not extend vanilla classes."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "global",
+        "value": {
+          "value": "Disable All"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "global",
+        "value": {
+          "values": [
+            "If all toasts are blocked."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "forceTime",
+        "value": {
+          "value": "Forced Display Time"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "forceTime",
+        "value": {
+          "values": [
+            "How long (in ticks) to force a toast to show for.  Higher is longer."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "translucent",
+        "value": {
+          "value": "Translucent Toasts"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "translucent",
+        "value": {
+          "values": [
+            "If toasts are slightly translucent."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "transparent",
+        "value": {
+          "value": "Transparent Toasts"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "transparent",
+        "value": {
+          "values": [
+            "If toasts do not draw a background."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "toastCount",
+        "value": {
+          "value": "Max Toasts Shown"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "toastCount",
+        "value": {
+          "values": [
+            "The maximum number of toasts on the screen at once.  Default 3, Vanilla uses 5."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "toastCount",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "7"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "printClasses",
+        "value": {
+          "value": "Print Toast Classnames"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "printClasses",
+        "value": {
+          "values": [
+            "A debug config to print the class of each toast that tries to enter the GUI.  Useful for finding classes to block."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "blockedClasses",
+        "value": {
+          "value": "Blacklisted Classes"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "blockedClasses",
+        "value": {
+          "values": [
+            "A Class-specific blacklist for toasts.  Insert class names."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "offsetX",
+        "value": {
+          "value": "Toast X Offset"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "offsetX",
+        "value": {
+          "values": [
+            "The amount to offset a toast in the x axis."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "offsetY",
+        "value": {
+          "value": "Toast Y Offset"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "offsetY",
+        "value": {
+          "values": [
+            "The amount to offset a toast in the y axis."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "noSlide",
+        "value": {
+          "value": "Disable Transitions"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "noSlide",
+        "value": {
+          "values": [
+            "Set to true to disable toasts sliding in to view."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "startLeft",
+        "value": {
+          "value": "Transition from Left"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "startLeft",
+        "value": {
+          "values": [
+            "Set to true to change the transition to start from the left."
+          ]
+        }
+      }
+    ]
+  }
+}

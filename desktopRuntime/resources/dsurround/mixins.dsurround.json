@@ -1,0 +1,25 @@
+{
+	"package": "org.orecruncher.dsurround.mixins",
+	"refmap": "mixins.dsurround.refmap.json",
+	"target": "@env(DEFAULT)",
+	"minVersion": "0.8",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+	],
+	"client": [
+		"MixinBiome",
+		"MixinBlockStateBase",
+		"MixinItem",
+		"MixinSoundCategory",
+		"MixinEntityRenderer",
+		"MixinSoundManager",
+		"MixinEntityArrow",
+		"MixinGuiScreenOptionsSounds",
+		"MixinInventoryEffectRenderer",
+		"MixinGuiConfig",
+		"ISoundHandlerMixin",
+		"ISoundManagerMixin",
+		"ISoundSystemMixin",
+		"IPositionedSoundMixin"
+	]
+}

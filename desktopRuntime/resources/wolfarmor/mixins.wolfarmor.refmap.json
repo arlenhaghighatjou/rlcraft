@@ -1,0 +1,62 @@
+{
+  "mappings": {
+    "dev/satyrn/wolfarmor/mixin/accessors/EntityLivingAccessor": {
+      "inventoryArmorDropChances": "field_184655_bs:[F",
+      "inventoryHandsDropChances": "field_82174_bp:[F"
+    },
+    "dev/satyrn/wolfarmor/mixin/accessors/RenderAccessor": {
+      "canRenderName": "func_177070_b(Lnet/minecraft/entity/Entity;)Z"
+    },
+    "dev/satyrn/wolfarmor/mixin/accessors/ModelWolfAccessor": {
+      "wolfMane": "field_78186_h:Lnet/minecraft/client/model/ModelRenderer;",
+      "wolfTail": "field_78180_g:Lnet/minecraft/client/model/ModelRenderer;"
+    },
+    "dev/satyrn/wolfarmor/mixin/MixinEntityAISit": {
+      "setSitting": "Lnet/minecraft/entity/ai/EntityAISit;func_75270_a(Z)V"
+    },
+    "dev/satyrn/wolfarmor/mixin/MixinPotion": {
+      "performEffect": "Lnet/minecraft/potion/Potion;func_76394_a(Lnet/minecraft/entity/EntityLivingBase;I)V"
+    },
+    "dev/satyrn/wolfarmor/mixin/MixinEntityWolf": {
+      "getAmbientSound": "Lnet/minecraft/entity/passive/EntityWolf;func_184639_G()Lnet/minecraft/util/SoundEvent;",
+      "processInteract": "Lnet/minecraft/entity/passive/EntityWolf;func_184645_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Z",
+      "writeEntityToNBT": "Lnet/minecraft/entity/passive/EntityWolf;func_70014_b(Lnet/minecraft/nbt/NBTTagCompound;)V",
+      "onLivingUpdate": "Lnet/minecraft/entity/passive/EntityWolf;func_70636_d()V",
+      "readEntityFromNBT": "Lnet/minecraft/entity/passive/EntityWolf;func_70037_a(Lnet/minecraft/nbt/NBTTagCompound;)V",
+      "entityInit": "Lnet/minecraft/entity/passive/EntityWolf;func_70088_a()V",
+      "onUpdate": "Lnet/minecraft/entity/passive/EntityWolf;func_70071_h_()V",
+      "attackEntityAsMob": "Lnet/minecraft/entity/passive/EntityWolf;func_70652_k(Lnet/minecraft/entity/Entity;)Z"
+    }
+  },
+  "data": {
+    "searge": {
+      "dev/satyrn/wolfarmor/mixin/accessors/EntityLivingAccessor": {
+        "inventoryArmorDropChances": "field_184655_bs:[F",
+        "inventoryHandsDropChances": "field_82174_bp:[F"
+      },
+      "dev/satyrn/wolfarmor/mixin/accessors/RenderAccessor": {
+        "canRenderName": "func_177070_b(Lnet/minecraft/entity/Entity;)Z"
+      },
+      "dev/satyrn/wolfarmor/mixin/accessors/ModelWolfAccessor": {
+        "wolfMane": "field_78186_h:Lnet/minecraft/client/model/ModelRenderer;",
+        "wolfTail": "field_78180_g:Lnet/minecraft/client/model/ModelRenderer;"
+      },
+      "dev/satyrn/wolfarmor/mixin/MixinEntityAISit": {
+        "setSitting": "Lnet/minecraft/entity/ai/EntityAISit;func_75270_a(Z)V"
+      },
+      "dev/satyrn/wolfarmor/mixin/MixinPotion": {
+        "performEffect": "Lnet/minecraft/potion/Potion;func_76394_a(Lnet/minecraft/entity/EntityLivingBase;I)V"
+      },
+      "dev/satyrn/wolfarmor/mixin/MixinEntityWolf": {
+        "getAmbientSound": "Lnet/minecraft/entity/passive/EntityWolf;func_184639_G()Lnet/minecraft/util/SoundEvent;",
+        "processInteract": "Lnet/minecraft/entity/passive/EntityWolf;func_184645_a(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/EnumHand;)Z",
+        "writeEntityToNBT": "Lnet/minecraft/entity/passive/EntityWolf;func_70014_b(Lnet/minecraft/nbt/NBTTagCompound;)V",
+        "onLivingUpdate": "Lnet/minecraft/entity/passive/EntityWolf;func_70636_d()V",
+        "readEntityFromNBT": "Lnet/minecraft/entity/passive/EntityWolf;func_70037_a(Lnet/minecraft/nbt/NBTTagCompound;)V",
+        "entityInit": "Lnet/minecraft/entity/passive/EntityWolf;func_70088_a()V",
+        "onUpdate": "Lnet/minecraft/entity/passive/EntityWolf;func_70071_h_()V",
+        "attackEntityAsMob": "Lnet/minecraft/entity/passive/EntityWolf;func_70652_k(Lnet/minecraft/entity/Entity;)Z"
+      }
+    }
+  }
+}

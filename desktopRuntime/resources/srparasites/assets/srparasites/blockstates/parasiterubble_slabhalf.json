@@ -1,0 +1,11 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "srparasites:parasiterubble_boneslab_bottom"
+  },
+  "variants": { 
+    "half=top,variant=default":  { "model": "srparasites:parasiterubble_boneslab_top" },
+    "half=bottom,variant=default":  { "model": "srparasites:parasiterubble_boneslab_bottom" }, 
+    "inventory": [{}]
+  }
+}

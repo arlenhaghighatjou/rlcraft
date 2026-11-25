@@ -1,0 +1,223 @@
+{
+  "com/tmtravlr/qualitytools/ClientEventHandler": {
+    "name": "com/tmtravlr/qualitytools/ClientEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/tmtravlr/qualitytools/ClientEventHandler",
+        "values": {
+          "modid": {
+            "value": "qualitytools"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      }
+    ]
+  },
+  "com/tmtravlr/qualitytools/CommonEventHandler": {
+    "name": "com/tmtravlr/qualitytools/CommonEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/tmtravlr/qualitytools/CommonEventHandler",
+        "values": {
+          "modid": {
+            "value": "qualitytools"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegisterBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegisterItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityJoinWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "com/tmtravlr/qualitytools/QualityToolsGuiHandler": {
+    "name": "com/tmtravlr/qualitytools/QualityToolsGuiHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "com/tmtravlr/qualitytools/QualityToolsMod": {
+    "name": "com/tmtravlr/qualitytools/QualityToolsMod",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/tmtravlr/qualitytools/QualityToolsMod",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:potioncore;after:baubles"
+          },
+          "modid": {
+            "value": "qualitytools"
+          },
+          "name": {
+            "value": "Quality Tools"
+          },
+          "version": {
+            "value": "1.0.7_for_1.12.2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.tmtravlr.qualitytools.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.tmtravlr.qualitytools.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onServerStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "com/tmtravlr/qualitytools/config/CustomMaterial$Serializer": {
+    "name": "com/tmtravlr/qualitytools/config/CustomMaterial$Serializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer"
+    ]
+  },
+  "com/tmtravlr/qualitytools/config/QualityEntry$Serializer": {
+    "name": "com/tmtravlr/qualitytools/config/QualityEntry$Serializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer"
+    ]
+  },
+  "com/tmtravlr/qualitytools/config/QualityItem$Serializer": {
+    "name": "com/tmtravlr/qualitytools/config/QualityItem$Serializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer"
+    ]
+  },
+  "com/tmtravlr/qualitytools/config/QualityType$Serializer": {
+    "name": "com/tmtravlr/qualitytools/config/QualityType$Serializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer"
+    ]
+  },
+  "com/tmtravlr/qualitytools/items/ItemEmeraldBauble": {
+    "name": "com/tmtravlr/qualitytools/items/ItemEmeraldBauble",
+    "interfaces": [
+      "baubles/api/IBauble"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "com/tmtravlr/qualitytools/items/ItemEmeraldBauble",
+        "values": {
+          "iface": {
+            "value": "baubles.api.IBauble"
+          },
+          "modid": {
+            "value": "baubles"
+          },
+          "striprefs": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "getBaubleType(Lnet/minecraft/item/ItemStack;)Lbaubles/api/BaubleType;",
+        "values": {
+          "modid": {
+            "value": "baubles"
+          }
+        }
+      }
+    ]
+  },
+  "com/tmtravlr/qualitytools/network/CToSMessage": {
+    "name": "com/tmtravlr/qualitytools/network/CToSMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/tmtravlr/qualitytools/network/PacketHandlerClient": {
+    "name": "com/tmtravlr/qualitytools/network/PacketHandlerClient",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/tmtravlr/qualitytools/network/PacketHandlerServer": {
+    "name": "com/tmtravlr/qualitytools/network/PacketHandlerServer",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/tmtravlr/qualitytools/network/SToCMessage": {
+    "name": "com/tmtravlr/qualitytools/network/SToCMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/tmtravlr/qualitytools/reforging/TileEntityReforgingStation": {
+    "name": "com/tmtravlr/qualitytools/reforging/TileEntityReforgingStation",
+    "interfaces": [
+      "net/minecraft/inventory/ISidedInventory"
+    ]
+  }
+}

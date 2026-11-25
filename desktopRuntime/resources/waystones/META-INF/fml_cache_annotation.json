@@ -1,0 +1,1286 @@
+{
+  "net/blay09/mods/waystones/CommonProxy": {
+    "name": "net/blay09/mods/waystones/CommonProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLoggedIn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerChangedDimension(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerChangedDimensionEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/WarpDamageResetHandler": {
+    "name": "net/blay09/mods/waystones/WarpDamageResetHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDamage(Lnet/minecraftforge/event/entity/living/LivingDamageEvent;)V"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/WaystoneConfig": {
+    "name": "net/blay09/mods/waystones/WaystoneConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "net/blay09/mods/waystones/WaystoneConfig",
+        "values": {
+          "category": {
+            "value": ""
+          },
+          "modid": {
+            "value": "waystones"
+          },
+          "name": {
+            "value": "Waystones"
+          },
+          "type": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/common/config/Config$Type;/INSTANCE"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "net/blay09/mods/waystones/WaystoneConfig",
+        "value": {
+          "value": "waystones.config"
+        }
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/WaystoneConfig$Client": {
+    "name": "net/blay09/mods/waystones/WaystoneConfig$Client",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "soundVolume",
+        "value": {
+          "value": "Sound Volume"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "soundVolume",
+        "value": {
+          "values": [
+            "The volume of the sound played when teleporting."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "soundVolume",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "teleportButtonX",
+        "value": {
+          "value": "Teleport Button GUI X"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "teleportButtonX",
+        "value": {
+          "values": [
+            "The x position of the warp button in the inventory."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "teleportButtonY",
+        "value": {
+          "value": "Teleport Button GUI Y"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "teleportButtonY",
+        "value": {
+          "values": [
+            "The y position of the warp button in the inventory."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "disableParticles",
+        "value": {
+          "value": "Disable Particles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "disableParticles",
+        "value": {
+          "values": [
+            "If enabled, activated waystones will not emit particles."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "disableTextGlow",
+        "value": {
+          "value": "Disable Text Glow"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "disableTextGlow",
+        "value": {
+          "values": [
+            "If enabled, the text overlay on waystones will no longer always render at full brightness."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "randomlySpawnedLookMossy",
+        "value": {
+          "value": "Mossy Look for World Gen Waystones"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "randomlySpawnedLookMossy",
+        "value": {
+          "values": [
+            "If enabled, waystones spawned using the legacy spawn-just-anywhere mode will look mossy ingame."
+          ]
+        }
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/WaystoneConfig$Compat": {
+    "name": "net/blay09/mods/waystones/WaystoneConfig$Compat",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "createJourneyMapWaypoint",
+        "value": {
+          "value": "Create JourneyMap Waypoint"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "createJourneyMapWaypoint",
+        "value": {
+          "values": [
+            "If this is true, activating a waystone will cause a JourneyMap waypoint to be created at its position."
+          ]
+        }
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/WaystoneConfig$General": {
+    "name": "net/blay09/mods/waystones/WaystoneConfig$General",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "teleportButton",
+        "value": {
+          "value": "Teleport Button in GUI"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "teleportButton",
+        "value": {
+          "values": [
+            "Should there be a button in the inventory to access the waystone menu?"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "teleportButtonTarget",
+        "value": {
+          "value": "Teleport Button Target"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "teleportButtonTarget",
+        "value": {
+          "values": [
+            "Set this to a global waystone name to lock the inventory button to that specific waystone. Leave empty for default behaviour."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "teleportButtonCooldown",
+        "value": {
+          "value": "Teleport Button Cooldown"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "teleportButtonCooldown",
+        "value": {
+          "values": [
+            "The cooldown between usages of the teleport button in seconds."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "teleportButtonReturnOnly",
+        "value": {
+          "value": "Teleport Button Return Only"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "teleportButtonReturnOnly",
+        "value": {
+          "values": [
+            "If enabled, the teleport button will only let you return to the last activated waystone, instead of allowing to choose."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "blocksPerXPLevel",
+        "value": {
+          "value": "Blocks per XP Level"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "blocksPerXPLevel",
+        "value": {
+          "values": [
+            "The amount of blocks per xp level requirement."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "dimensionalXpCost",
+        "value": {
+          "value": "Dimensional Warp XP Cost"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "dimensionalXpCost",
+        "value": {
+          "values": [
+            "The amount of xp levels to use for dimensional warp."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "shortTravelFree",
+        "value": {
+          "value": "Short Travel is Free"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "shortTravelFree",
+        "value": {
+          "values": [
+            "If set to true, XP cost by distance travelled will only start beyond the distance-per-level distance, and shorter travel will be free."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "maximumXpCost",
+        "value": {
+          "value": "Maximum XP Cost"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "maximumXpCost",
+        "value": {
+          "values": [
+            "The maximum xp cost when Blocks per XP Level is enabled."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "maximumXpCost",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "waystoneXpCost",
+        "value": {
+          "value": "Waystone Costs XP"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "waystoneXpCost",
+        "value": {
+          "values": [
+            "If enabled, waystones cost experience when used, based on the distance travelled."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "inventoryButtonXpCost",
+        "value": {
+          "value": "Inventory Button Costs XP"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "inventoryButtonXpCost",
+        "value": {
+          "values": [
+            "If enabled, the inventory button cost experience when used, based on the distance travelled."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "warpStoneXpCost",
+        "value": {
+          "value": "Warp Stone Costs XP"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "warpStoneXpCost",
+        "value": {
+          "values": [
+            "If enabled, the warp stone costs experience when used, based on the distance travelled."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "globalWaystonesCostXp",
+        "value": {
+          "value": "Global Waystones Cost XP"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "globalWaystonesCostXp",
+        "value": {
+          "values": [
+            "Set to false to make all global waystones not cost any experience, regardless of method used."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "warpStoneCooldown",
+        "value": {
+          "value": "Warp Stone Cooldown"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "warpStoneCooldown",
+        "value": {
+          "values": [
+            "The cooldown between usages of the warp stone in seconds."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "interDimension",
+        "value": {
+          "value": "Interdimensional Teleport"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "interDimension",
+        "value": {
+          "values": [
+            "If enabled, all waystones work inter-dimensionally."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "restrictRenameToOwner",
+        "value": {
+          "value": "Restrict Rename to Owner"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "restrictRenameToOwner",
+        "value": {
+          "values": [
+            "If enabled, only the owner of a waystone can rename it."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "creativeModeOnly",
+        "value": {
+          "value": "Creative Mode Only"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "creativeModeOnly",
+        "value": {
+          "values": [
+            "If enabled, waystones can only be placed in creative mode."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "setSpawnPoint",
+        "value": {
+          "value": "Set Spawnpoint on Activation"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "setSpawnPoint",
+        "value": {
+          "values": [
+            "If enabled, the player\u0027s spawnpoint will be set to the last activated waystone."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "globalNoCooldown",
+        "value": {
+          "value": "No Cooldown on Global Waystones"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "globalNoCooldown",
+        "value": {
+          "values": [
+            "If enabled, waystones marked as global have no cooldown."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "globalInterDimension",
+        "value": {
+          "value": "Interdimensional Teleport on Global Waystones"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "globalInterDimension",
+        "value": {
+          "values": [
+            "If enabled, waystones marked as global work inter-dimensionally."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "allowEveryoneGlobal",
+        "value": {
+          "value": "Allow Global Waystones for Everyone"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "allowEveryoneGlobal",
+        "value": {
+          "values": [
+            "If enabled, everyone can create global waystones, not just players in creative mode."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "resetUseOnDamage",
+        "value": {
+          "value": "Reset Use On Damage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "resetUseOnDamage",
+        "value": {
+          "values": [
+            "Whether the use of a warp stone or warp scroll should be interrupted by damage. Not supported when playing with Vivecraft!"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "disallowBreakingGenerated",
+        "value": {
+          "value": "Disallow Breaking Generated"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "disallowBreakingGenerated",
+        "value": {
+          "values": [
+            "Whether generated waystones should not be breakable by players."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "dropGenerated",
+        "value": {
+          "value": "Drop Item From Generated"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "dropGenerated",
+        "value": {
+          "values": [
+            "Whether generated waystones drop their item form when broken by players."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "warpStoneUseTime",
+        "value": {
+          "value": "Warp Stone Use Time"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "warpStoneUseTime",
+        "value": {
+          "values": [
+            "The time it takes to use a warp stone in ticks. This is the charge-up time when holding right-click."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "warpStoneUseTime",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "127"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "warpScrollUseTime",
+        "value": {
+          "value": "Warp Scroll Use Time"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "warpScrollUseTime",
+        "value": {
+          "values": [
+            "The time it takes to use a warp scroll in ticks. This is the charge-up time when holding right-click."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "warpScrollUseTime",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "127"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/WaystoneConfig$WorldGen": {
+    "name": "net/blay09/mods/waystones/WaystoneConfig$WorldGen",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "villageChance",
+        "value": {
+          "value": "Generate in Villages"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "villageChance",
+        "value": {
+          "values": [
+            "The chance for a waystone to generate in a village. Set to 1 to always generate one in villages, set to 0 to disable."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "villageChance",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "legacyChance",
+        "value": {
+          "value": "Change to generate just anywhere"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "legacyChance",
+        "value": {
+          "values": [
+            "The chance for a waystone to generate just anywhere (without a structure), scaled by 1/10000."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "legacyChance",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "10000.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "customNames",
+        "value": {
+          "value": "Custom Names"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "customNames",
+        "value": {
+          "values": [
+            "The Name Generator will pick from these names until they have all been used, then it will generate random ones again."
+          ]
+        }
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/Waystones": {
+    "name": "net/blay09/mods/waystones/Waystones",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "net/blay09/mods/waystones/Waystones",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12]"
+          },
+          "modid": {
+            "value": "waystones"
+          },
+          "name": {
+            "value": "Waystones"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "net/blay09/mods/waystones/Waystones"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "waystones"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "net.blay09.mods.waystones.client.ClientProxy"
+          },
+          "serverSide": {
+            "value": "net.blay09.mods.waystones.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "blockWaystone",
+        "value": {
+          "value": "waystone"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "itemReturnScroll",
+        "value": {
+          "value": "return_scroll"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "itemBoundScroll",
+        "value": {
+          "value": "bound_scroll"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "itemWarpScroll",
+        "value": {
+          "value": "warp_scroll"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "itemWarpStone",
+        "value": {
+          "value": "warp_stone"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/block/package-info": {
+    "name": "net/blay09/mods/waystones/block/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/blay09/mods/waystones/block/package-info"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/client/ClientProxy": {
+    "name": "net/blay09/mods/waystones/client/ClientProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInitGui(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onActionPerformed(Lnet/minecraftforge/client/event/GuiScreenEvent$ActionPerformedEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrawScreen(Lnet/minecraftforge/client/event/GuiScreenEvent$DrawScreenEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onFOV(Lnet/minecraftforge/client/event/FOVUpdateEvent;)V"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/client/gui/GuiConfirmInventoryButtonReturn": {
+    "name": "net/blay09/mods/waystones/client/gui/GuiConfirmInventoryButtonReturn",
+    "interfaces": [
+      "net/minecraft/client/gui/GuiYesNoCallback"
+    ]
+  },
+  "net/blay09/mods/waystones/client/gui/package-info": {
+    "name": "net/blay09/mods/waystones/client/gui/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/blay09/mods/waystones/client/gui/package-info"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/client/package-info": {
+    "name": "net/blay09/mods/waystones/client/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/blay09/mods/waystones/client/package-info"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/client/render/package-info": {
+    "name": "net/blay09/mods/waystones/client/render/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/blay09/mods/waystones/client/render/package-info"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/compat/JourneyMapAddon": {
+    "name": "net/blay09/mods/waystones/compat/JourneyMapAddon",
+    "interfaces": [
+      "journeymap/client/api/IClientPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Ljourneymap/client/api/ClientPlugin;",
+        "target": "net/blay09/mods/waystones/compat/JourneyMapAddon"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWaystoneActivated(Lnet/blay09/mods/waystones/util/WaystoneActivatedEvent;)V"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/compat/TheOneProbeAddon": {
+    "name": "net/blay09/mods/waystones/compat/TheOneProbeAddon",
+    "interfaces": [
+      "com/google/common/base/Function"
+    ]
+  },
+  "net/blay09/mods/waystones/compat/TheOneProbeAddon$ProbeInfoProvider": {
+    "name": "net/blay09/mods/waystones/compat/TheOneProbeAddon$ProbeInfoProvider",
+    "interfaces": [
+      "mcjty/theoneprobe/api/IProbeInfoProvider"
+    ]
+  },
+  "net/blay09/mods/waystones/compat/WailaProvider": {
+    "name": "net/blay09/mods/waystones/compat/WailaProvider",
+    "interfaces": [
+      "mcp/mobius/waila/api/IWailaPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/mobius/waila/api/WailaPlugin;",
+        "target": "net/blay09/mods/waystones/compat/WailaProvider"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/compat/WailaProvider$WaystoneDataProvider": {
+    "name": "net/blay09/mods/waystones/compat/WailaProvider$WaystoneDataProvider",
+    "interfaces": [
+      "mcp/mobius/waila/api/IWailaDataProvider"
+    ]
+  },
+  "net/blay09/mods/waystones/compat/package-info": {
+    "name": "net/blay09/mods/waystones/compat/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/blay09/mods/waystones/compat/package-info"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/item/ItemBoundScroll": {
+    "name": "net/blay09/mods/waystones/item/ItemBoundScroll",
+    "interfaces": [
+      "net/blay09/mods/waystones/item/IResetUseOnDamage"
+    ]
+  },
+  "net/blay09/mods/waystones/item/ItemWarpScroll": {
+    "name": "net/blay09/mods/waystones/item/ItemWarpScroll",
+    "interfaces": [
+      "net/blay09/mods/waystones/item/IResetUseOnDamage"
+    ]
+  },
+  "net/blay09/mods/waystones/item/ItemWarpStone": {
+    "name": "net/blay09/mods/waystones/item/ItemWarpStone",
+    "interfaces": [
+      "net/blay09/mods/waystones/item/IResetUseOnDamage"
+    ]
+  },
+  "net/blay09/mods/waystones/item/package-info": {
+    "name": "net/blay09/mods/waystones/item/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/blay09/mods/waystones/item/package-info"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/HandlerConfig": {
+    "name": "net/blay09/mods/waystones/network/handler/HandlerConfig",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/HandlerEditWaystone": {
+    "name": "net/blay09/mods/waystones/network/handler/HandlerEditWaystone",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/HandlerFreeWarpReturn": {
+    "name": "net/blay09/mods/waystones/network/handler/HandlerFreeWarpReturn",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/HandlerOpenWaystoneSelection": {
+    "name": "net/blay09/mods/waystones/network/handler/HandlerOpenWaystoneSelection",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/HandlerOpenWaystoneSelection$1": {
+    "name": "net/blay09/mods/waystones/network/handler/HandlerOpenWaystoneSelection$1",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/HandlerRemoveWaystone": {
+    "name": "net/blay09/mods/waystones/network/handler/HandlerRemoveWaystone",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/HandlerSortWaystone": {
+    "name": "net/blay09/mods/waystones/network/handler/HandlerSortWaystone",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/HandlerTeleportEffect": {
+    "name": "net/blay09/mods/waystones/network/handler/HandlerTeleportEffect",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/HandlerTeleportEffect$1": {
+    "name": "net/blay09/mods/waystones/network/handler/HandlerTeleportEffect$1",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/HandlerTeleportToGlobal": {
+    "name": "net/blay09/mods/waystones/network/handler/HandlerTeleportToGlobal",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/HandlerTeleportToWaystone": {
+    "name": "net/blay09/mods/waystones/network/handler/HandlerTeleportToWaystone",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/HandlerWaystones": {
+    "name": "net/blay09/mods/waystones/network/handler/HandlerWaystones",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/HandlerWaystones$1": {
+    "name": "net/blay09/mods/waystones/network/handler/HandlerWaystones$1",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "net/blay09/mods/waystones/network/handler/package-info": {
+    "name": "net/blay09/mods/waystones/network/handler/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/blay09/mods/waystones/network/handler/package-info"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/network/message/MessageConfig": {
+    "name": "net/blay09/mods/waystones/network/message/MessageConfig",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "net/blay09/mods/waystones/network/message/MessageEditWaystone": {
+    "name": "net/blay09/mods/waystones/network/message/MessageEditWaystone",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "net/blay09/mods/waystones/network/message/MessageFreeWarpReturn": {
+    "name": "net/blay09/mods/waystones/network/message/MessageFreeWarpReturn",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "net/blay09/mods/waystones/network/message/MessageOpenWaystoneSelection": {
+    "name": "net/blay09/mods/waystones/network/message/MessageOpenWaystoneSelection",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "net/blay09/mods/waystones/network/message/MessageRemoveWaystone": {
+    "name": "net/blay09/mods/waystones/network/message/MessageRemoveWaystone",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "net/blay09/mods/waystones/network/message/MessageSortWaystone": {
+    "name": "net/blay09/mods/waystones/network/message/MessageSortWaystone",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "net/blay09/mods/waystones/network/message/MessageTeleportEffect": {
+    "name": "net/blay09/mods/waystones/network/message/MessageTeleportEffect",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "net/blay09/mods/waystones/network/message/MessageTeleportToGlobal": {
+    "name": "net/blay09/mods/waystones/network/message/MessageTeleportToGlobal",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "net/blay09/mods/waystones/network/message/MessageTeleportToWaystone": {
+    "name": "net/blay09/mods/waystones/network/message/MessageTeleportToWaystone",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "net/blay09/mods/waystones/network/message/MessageWaystones": {
+    "name": "net/blay09/mods/waystones/network/message/MessageWaystones",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "net/blay09/mods/waystones/network/message/package-info": {
+    "name": "net/blay09/mods/waystones/network/message/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/blay09/mods/waystones/network/message/package-info"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/network/package-info": {
+    "name": "net/blay09/mods/waystones/network/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/blay09/mods/waystones/network/package-info"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/package-info": {
+    "name": "net/blay09/mods/waystones/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/blay09/mods/waystones/package-info"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/util/package-info": {
+    "name": "net/blay09/mods/waystones/util/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/blay09/mods/waystones/util/package-info"
+      }
+    ]
+  },
+  "net/blay09/mods/waystones/worldgen/LegacyWorldGen": {
+    "name": "net/blay09/mods/waystones/worldgen/LegacyWorldGen",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "net/blay09/mods/waystones/worldgen/VillageWaystoneCreationHandler": {
+    "name": "net/blay09/mods/waystones/worldgen/VillageWaystoneCreationHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/VillagerRegistry$IVillageCreationHandler"
+    ]
+  },
+  "net/blay09/mods/waystones/worldgen/package-info": {
+    "name": "net/blay09/mods/waystones/worldgen/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/blay09/mods/waystones/worldgen/package-info"
+      }
+    ]
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "com/daposeidonguy/pigstep/PigstepMod": {
+    "name": "com/daposeidonguy/pigstep/PigstepMod",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/daposeidonguy/pigstep/PigstepMod",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "pigstep"
+          },
+          "name": {
+            "value": "Pigstep"
+          },
+          "version": {
+            "value": "1.12"
+          }
+        }
+      }
+    ]
+  },
+  "com/daposeidonguy/pigstep/common/LootTableHandler": {
+    "name": "com/daposeidonguy/pigstep/common/LootTableHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/daposeidonguy/pigstep/common/LootTableHandler"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "lootLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      }
+    ]
+  },
+  "com/daposeidonguy/pigstep/common/items/ItemHandler": {
+    "name": "com/daposeidonguy/pigstep/common/items/ItemHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/daposeidonguy/pigstep/common/items/ItemHandler"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRender(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  }
+}

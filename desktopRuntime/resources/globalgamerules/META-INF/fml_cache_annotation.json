@@ -1,0 +1,112 @@
+{
+  "se/gory_moon/globalgamerules/GlobalGR": {
+    "name": "se/gory_moon/globalgamerules/GlobalGR",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "se/gory_moon/globalgamerules/GlobalGR",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "guiFactory": {
+            "value": "se.gory_moon.globalgamerules.config.GGRGuiFactory"
+          },
+          "modid": {
+            "value": "globalgamerules"
+          },
+          "name": {
+            "value": "Global GameRules"
+          },
+          "version": {
+            "value": "2.2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "se.gory_moon.globalgamerules.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "se.gory_moon.globalgamerules.proxy.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      }
+    ]
+  },
+  "se/gory_moon/globalgamerules/WorldEvents": {
+    "name": "se/gory_moon/globalgamerules/WorldEvents",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "se/gory_moon/globalgamerules/WorldEvents",
+        "values": {
+          "modid": {
+            "value": "globalgamerules"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldJoin(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldUnLoad(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V"
+      }
+    ]
+  },
+  "se/gory_moon/globalgamerules/config/GGRConfig": {
+    "name": "se/gory_moon/globalgamerules/config/GGRConfig",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "se/gory_moon/globalgamerules/config/GGRConfig$Value": {
+    "name": "se/gory_moon/globalgamerules/config/GGRConfig$Value",
+    "interfaces": [
+      "java/lang/Cloneable"
+    ]
+  },
+  "se/gory_moon/globalgamerules/config/GGRGuiFactory": {
+    "name": "se/gory_moon/globalgamerules/config/GGRGuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  }
+}

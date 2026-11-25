@@ -1,0 +1,9 @@
+{
+	"parent": "mcwbridges:block/parent/lit/log_bridge_middle",
+	"textures": {
+		"0": "minecraft:blocks/log_big_oak",
+		"2": "minecraft:blocks/planks_big_oak",
+		"1_0": "minecraft:blocks/torch",
+		"particle": "minecraft:blocks/log_big_oak"
+	}
+}

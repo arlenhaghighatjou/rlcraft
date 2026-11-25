@@ -1,0 +1,6 @@
+{
+	"footsteps": {
+		"charset:rail_charset": "NOT_EMITTER",
+		"charset:rail_charset+foliage": "rails"
+	}
+}

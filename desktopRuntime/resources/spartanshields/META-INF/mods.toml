@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="[25,)"
+issueTrackerURL="https://minecraft.curseforge.com/projects/spartan-shields/issues"
+logoFile="logo.png"
+
+[[mods]]
+	modId="spartanshields"
+	version="${file.jarVersion}"
+	displayName="Spartan Shields"
+	# A URL to query for updates for this mod. See the JSON update specification <here>
+	#updateJSONURL="http://myurl.me/"
+	displayURL="https://minecraft.curseforge.com/projects/spartan-shields"
+	credits="Evinsta for the name, Ryo_Pasternak for Russian translation."
+	authors="ObliviousSpartan"
+	description='''
+    Spartan Shields adds a variety of new shields to Minecraft.
+    '''
+	
+[[dependencies.spartanshields]]
+    modId="forge"
+    mandatory=true
+    versionRange="[25,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.spartanshields]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.13.2]"
+    ordering="NONE"
+    side="BOTH"

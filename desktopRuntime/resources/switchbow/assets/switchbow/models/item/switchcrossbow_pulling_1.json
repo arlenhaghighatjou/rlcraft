@@ -1,0 +1,6 @@
+{
+  "parent": "switchbow:item/switchcrossbow",
+  "textures": {
+    "layer0": "switchbow:items/switchcrossbow0"
+  }
+}

@@ -1,0 +1,122 @@
+package com.github.alexthe666.iceandfire.inventory;
+
+import com.github.alexthe666.iceandfire.entity.EntityDragonBase;
+import com.github.alexthe666.iceandfire.item.ItemDragonArmor;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+
+public class ContainerDragon extends Container {
+   private IInventory dragonInv;
+   private EntityDragonBase dragon;
+
+   public ContainerDragon(EntityDragonBase dragon, EntityPlayer player) {
+      this.dragonInv = dragon.dragonInv;
+      this.dragon = dragon;
+      byte b0 = 3;
+      this.dragonInv.openInventory(player);
+      int i = (b0 - 4) * 18;
+      this.addSlotToContainer(new Slot(dragon.dragonInv, 0, 8, 18) {
+         public void onSlotChanged() {
+            EntityDragonBase drg = ContainerDragon.this.dragon;
+            drg.setArmorInSlot(0, drg.getIntFromArmor(ContainerDragon.this.dragonInv.getStackInSlot(0)));
+            this.inventory.markDirty();
+            drg.updateDragonSlots();
+         }
+
+         public boolean isItemValid(ItemStack stack) {
+            return super.isItemValid(stack) && !stack.isEmpty() && stack.getItem() != null && stack.getItem() instanceof ItemDragonArmor && stack.getMetadata() == 0;
+         }
+      });
+      this.addSlotToContainer(new Slot(dragon.dragonInv, 1, 8, 36) {
+         public void onSlotChanged() {
+            EntityDragonBase drg = ContainerDragon.this.dragon;
+            drg.setArmorInSlot(1, drg.getIntFromArmor(ContainerDragon.this.dragonInv.getStackInSlot(1)));
+            this.inventory.markDirty();
+            drg.updateDragonSlots();
+         }
+
+         public boolean isItemValid(ItemStack stack) {
+            return super.isItemValid(stack) && !stack.isEmpty() && stack.getItem() != null && stack.getItem() instanceof ItemDragonArmor && stack.getMetadata() == 1;
+         }
+      });
+      this.addSlotToContainer(new Slot(dragon.dragonInv, 2, 153, 18) {
+         public void onSlotChanged() {
+            EntityDragonBase drg = ContainerDragon.this.dragon;
+            drg.setArmorInSlot(2, drg.getIntFromArmor(ContainerDragon.this.dragonInv.getStackInSlot(2)));
+            this.inventory.markDirty();
+            drg.updateDragonSlots();
+         }
+
+         public boolean isItemValid(ItemStack stack) {
+            return super.isItemValid(stack) && !stack.isEmpty() && stack.getItem() != null && stack.getItem() instanceof ItemDragonArmor && stack.getMetadata() == 2;
+         }
+      });
+      this.addSlotToContainer(new Slot(dragon.dragonInv, 3, 153, 36) {
+         public void onSlotChanged() {
+            EntityDragonBase drg = ContainerDragon.this.dragon;
+            drg.setArmorInSlot(3, drg.getIntFromArmor(ContainerDragon.this.dragonInv.getStackInSlot(3)));
+            this.inventory.markDirty();
+            drg.updateDragonSlots();
+         }
+
+         public boolean isItemValid(ItemStack stack) {
+            return super.isItemValid(stack) && !stack.isEmpty() && stack.getItem() != null && stack.getItem() instanceof ItemDragonArmor && stack.getMetadata() == 3;
+         }
+      });
+
+      for(int j = 0; j < 3; ++j) {
+         for(int k = 0; k < 9; ++k) {
+            this.addSlotToContainer(new Slot(player.inventory, k + j * 9 + 9, 8 + k * 18, 150 + j * 18 + i));
+         }
+      }
+
+      for(int var7 = 0; var7 < 9; ++var7) {
+         this.addSlotToContainer(new Slot(player.inventory, var7, 8 + var7 * 18, 208 + i));
+      }
+
+   }
+
+   public boolean canInteractWith(EntityPlayer playerIn) {
+      return this.dragonInv.isUsableByPlayer(playerIn) && this.dragon.isEntityAlive() && this.dragon.getDistance(playerIn) < 8.0F;
+   }
+
+   public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+      ItemStack itemstack = ItemStack.EMPTY;
+      Slot slot = (Slot)this.inventorySlots.get(index);
+      if (slot != null && slot.getHasStack()) {
+         ItemStack itemstack1 = slot.getStack();
+         itemstack = itemstack1.copy();
+         if (index < this.dragonInv.getSizeInventory()) {
+            if (!this.mergeItemStack(itemstack1, this.dragonInv.getSizeInventory(), this.inventorySlots.size(), true)) {
+               return ItemStack.EMPTY;
+            }
+         } else if (this.getSlot(1).isItemValid(itemstack1) && !this.getSlot(1).getHasStack()) {
+            if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
+               return ItemStack.EMPTY;
+            }
+         } else if (this.getSlot(0).isItemValid(itemstack1)) {
+            if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+               return ItemStack.EMPTY;
+            }
+         } else if (this.dragonInv.getSizeInventory() <= 2 || !this.mergeItemStack(itemstack1, 2, this.dragonInv.getSizeInventory(), false)) {
+            return ItemStack.EMPTY;
+         }
+
+         if (itemstack1.isEmpty()) {
+            slot.putStack(ItemStack.EMPTY);
+         } else {
+            slot.onSlotChanged();
+         }
+      }
+
+      return itemstack;
+   }
+
+   public void onContainerClosed(EntityPlayer playerIn) {
+      super.onContainerClosed(playerIn);
+      this.dragonInv.closeInventory(playerIn);
+   }
+}

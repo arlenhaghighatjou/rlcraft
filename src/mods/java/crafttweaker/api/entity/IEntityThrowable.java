@@ -1,0 +1,18 @@
+package crafttweaker.api.entity;
+
+import crafttweaker.annotations.ZenRegister;
+import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenGetter;
+import stanhebben.zenscript.annotations.ZenMethod;
+
+@ZenClass("crafttweaker.entity.IEntityThrowable")
+@ZenRegister
+public interface IEntityThrowable extends IEntity, IProjectile {
+   @ZenMethod
+   @ZenGetter("thrower")
+   IEntityLivingBase getThrower();
+
+   @ZenMethod
+   @ZenGetter("shake")
+   int getThrowableShake();
+}

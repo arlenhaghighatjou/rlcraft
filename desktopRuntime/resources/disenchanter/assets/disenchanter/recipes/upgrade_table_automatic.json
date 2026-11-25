@@ -1,0 +1,36 @@
+{
+  "type": "disenchanter:upgrade_table",
+  "pattern": [
+    "IMI",
+    "BCB",
+    "ITI"
+  ],
+  "key": {
+    "T": {
+      "item": "#TABLE"
+    },
+    "I": {
+      "type": "forge:ore_dict",
+      "ore": "ingotIron"
+    },
+    "C": {
+      "type": "forge:ore_dict",
+      "ore": "chestWood"
+    },
+    "B": {
+      "type": "forge:ore_dict",
+      "ore": "dyeBlack"
+    },
+    "M": {
+      "item": "minecraft:comparator"
+    }
+  },
+  "conditions": [{
+    "type": "disenchanter:automatic_upgrade_enabled"
+  }],
+  "added_property": "automatic",
+  "result": {
+    "item": "disenchanter:disenchantmenttable",
+    "data": 0
+  }
+}

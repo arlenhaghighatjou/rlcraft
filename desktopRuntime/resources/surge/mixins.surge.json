@@ -1,0 +1,20 @@
+{
+  "package": "net.darkhax.surge.mixins",
+  "refmap": "mixins.surge.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.6",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+      "minecraft.entity.passive.MixinEntitySheep",
+	  "minecraft.entity.MixinEntity",
+	  "minecraft.entity.item.MixinEntityItem",
+      "minecraftforge.registries.MixinGameData"
+  ],
+  "client": [
+      "minecraftforge.client.model.animation.MixinModelBlockAnimation",
+	  "minecraft.client.resources.MixinFallbackResourceManager",
+	  "minecraft.client.resources.MixinSimpleReloadableResourceManager",
+      "minecraft.client.gui.MixinGuiRepair",
+	  "minecraft.client.audio.MixinSoundHandler"
+  ]
+}

@@ -1,0 +1,73 @@
+package com.charles445.rltweaker.handler;
+
+import com.charles445.rltweaker.config.JsonConfig;
+import com.charles445.rltweaker.config.ModConfig;
+import com.charles445.rltweaker.entity.ai.InvestigateAI;
+import com.charles445.rltweaker.entity.ai.InvestigateAIConfig;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+public class InvestigateAIHandler {
+   public InvestigateAIHandler() {
+      MinecraftForge.EVENT_BUS.register(this);
+   }
+
+   @SubscribeEvent
+   public void addInvestigateAiHandler(EntityJoinWorldEvent event) {
+      if (!event.getEntity().world.isRemote) {
+         if (event.getEntity() instanceof EntityLiving) {
+            EntityLiving entity = (EntityLiving)event.getEntity();
+            InvestigateAIConfig config = (InvestigateAIConfig)JsonConfig.investigateAI.get(EntityList.getKey(entity));
+            if (config != null) {
+               entity.tasks.addTask(config.priority, new InvestigateAI(entity, config));
+            }
+
+         }
+      }
+   }
+
+   @SubscribeEvent(
+      priority = EventPriority.LOWEST
+   )
+   public void updateInvestigateAiHandler(LivingDamageEvent event) {
+      if (!event.getEntity().world.isRemote) {
+         if (event.getEntity() instanceof EntityLiving) {
+            if (ModConfig.server.minecraft.investigateNonPlayerAttacks) {
+               if (!(event.getSource().getTrueSource() instanceof EntityLivingBase)) {
+                  return;
+               }
+            } else if (!(event.getSource().getTrueSource() instanceof EntityPlayer)) {
+               return;
+            }
+
+            EntityLiving entity = (EntityLiving)event.getEntity();
+            EntityLivingBase source = (EntityLivingBase)event.getSource().getTrueSource();
+            getInvestigateAI(entity).ifPresent((investigateAi) -> {
+               investigateAi.setTarget(source);
+            });
+         }
+      }
+   }
+
+   public static Optional<InvestigateAI> getInvestigateAI(EntityLiving entity) {
+      Stream var10000 = entity.tasks.taskEntries.stream().map((taskEntry) -> {
+         return taskEntry.action;
+      });
+      InvestigateAI.class.getClass();
+      var10000 = var10000.filter(InvestigateAI.class::isInstance);
+      InvestigateAI.class.getClass();
+      return var10000.map(InvestigateAI.class::cast).findFirst();
+   }
+}

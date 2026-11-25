@@ -1,0 +1,874 @@
+{
+  "leviathan143/loottweaker/common/CTLoggingErrorHandler": {
+    "name": "leviathan143/loottweaker/common/CTLoggingErrorHandler",
+    "interfaces": [
+      "leviathan143/loottweaker/common/ErrorHandler"
+    ]
+  },
+  "leviathan143/loottweaker/common/DeprecationWarningManager": {
+    "name": "leviathan143/loottweaker/common/DeprecationWarningManager",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "leviathan143/loottweaker/common/DeprecationWarningManager",
+        "values": {
+          "modid": {
+            "value": "loottweaker"
+          }
+        }
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/LTConfig": {
+    "name": "leviathan143/loottweaker/common/LTConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "leviathan143/loottweaker/common/LTConfig",
+        "values": {
+          "modid": {
+            "value": "loottweaker"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "leviathan143/loottweaker/common/LTConfig",
+        "values": {
+          "modid": {
+            "value": "loottweaker"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "warnings",
+        "value": {
+          "value": "loottweaker.config.warnings.category"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "workarounds",
+        "value": {
+          "value": "loottweaker.config.workarounds.category"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "lastCfgVersion",
+        "value": {
+          "values": [
+            "Do not touch!"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "lastCfgVersion",
+        "value": {
+          "value": "loottweaker.config.lastCfgVersion"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "syncConfig(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/LTConfig$Warnings": {
+    "name": "leviathan143/loottweaker/common/LTConfig$Warnings",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "deprecation"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "deprecation",
+        "value": {
+          "values": [
+            "Warns about deprecated methods on world load. Resets if the version of LootTweaker is changed."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "deprecation",
+        "value": {
+          "value": "loottweaker.config.warnings.deprecation"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "newTableMinecraftNamespace"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "newTableMinecraftNamespace",
+        "value": {
+          "values": [
+            "Warns when newTable() is passed a table id that implictly or explicitly uses the \u0027minecraft\u0027 namescape."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "newTableMinecraftNamespace",
+        "value": {
+          "value": "loottweaker.config.warnings.newTableMinecraftNamespace"
+        }
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/LTConfig$Workarounds": {
+    "name": "leviathan143/loottweaker/common/LTConfig$Workarounds",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "forceInitClasses",
+        "value": {
+          "values": [
+            "Classes to force initialise during pre-init. Use only if directed to by LootTweaker author."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "forceInitClasses",
+        "value": {
+          "value": "loottweaker.config.workarounds.forceInitClasses"
+        }
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/LootTweaker": {
+    "name": "leviathan143/loottweaker/common/LootTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "leviathan143/loottweaker/common/LootTweaker",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:crafttweaker@[4.1.20,); before:jeresources; required:forge@[14.23.5.2779,);"
+          },
+          "modid": {
+            "value": "loottweaker"
+          },
+          "name": {
+            "value": "LootTweaker"
+          },
+          "version": {
+            "value": "0.3.1"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/network/NetworkCheckHandler;",
+        "target": "networkCheck(Ljava/util/Map;Lnet/minecraftforge/fml/relauncher/Side;)Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarted(Lnet/minecraftforge/fml/common/event/FMLServerStartedEvent;)V"
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/command/SubcommandDumpAll": {
+    "name": "leviathan143/loottweaker/common/command/SubcommandDumpAll",
+    "interfaces": [
+      "leviathan143/loottweaker/common/command/Subcommand"
+    ]
+  },
+  "leviathan143/loottweaker/common/command/SubcommandDumpNamed": {
+    "name": "leviathan143/loottweaker/common/command/SubcommandDumpNamed",
+    "interfaces": [
+      "leviathan143/loottweaker/common/command/Subcommand"
+    ]
+  },
+  "leviathan143/loottweaker/common/command/SubcommandDumpTargetsLootTable": {
+    "name": "leviathan143/loottweaker/common/command/SubcommandDumpTargetsLootTable",
+    "interfaces": [
+      "leviathan143/loottweaker/common/command/Subcommand"
+    ]
+  },
+  "leviathan143/loottweaker/common/command/SubcommandListLootTables": {
+    "name": "leviathan143/loottweaker/common/command/SubcommandListLootTables",
+    "interfaces": [
+      "leviathan143/loottweaker/common/command/Subcommand"
+    ]
+  },
+  "leviathan143/loottweaker/common/lib/JsonConverter": {
+    "name": "leviathan143/loottweaker/common/lib/JsonConverter",
+    "interfaces": [
+      "crafttweaker/api/data/IDataConverter"
+    ]
+  },
+  "leviathan143/loottweaker/common/lib/RobustLootConditionSerialiser": {
+    "name": "leviathan143/loottweaker/common/lib/RobustLootConditionSerialiser",
+    "interfaces": [
+      "com/google/gson/JsonSerializer"
+    ]
+  },
+  "leviathan143/loottweaker/common/lib/RobustLootEntrySerialiser": {
+    "name": "leviathan143/loottweaker/common/lib/RobustLootEntrySerialiser",
+    "interfaces": [
+      "com/google/gson/JsonSerializer"
+    ]
+  },
+  "leviathan143/loottweaker/common/lib/RobustLootFunctionSerialiser": {
+    "name": "leviathan143/loottweaker/common/lib/RobustLootFunctionSerialiser",
+    "interfaces": [
+      "com/google/gson/JsonSerializer"
+    ]
+  },
+  "leviathan143/loottweaker/common/mutable_loot/entry/AbstractMutableLootEntry": {
+    "name": "leviathan143/loottweaker/common/mutable_loot/entry/AbstractMutableLootEntry",
+    "interfaces": [
+      "leviathan143/loottweaker/common/mutable_loot/entry/MutableLootEntry"
+    ]
+  },
+  "leviathan143/loottweaker/common/mutable_loot/entry/GenericMutableLootEmpty": {
+    "name": "leviathan143/loottweaker/common/mutable_loot/entry/GenericMutableLootEmpty",
+    "interfaces": [
+      "leviathan143/loottweaker/common/mutable_loot/entry/MutableLootEntry"
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/DeprecatedZenLootTableTweakManager": {
+    "name": "leviathan143/loottweaker/common/zenscript/DeprecatedZenLootTableTweakManager",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "leviathan143/loottweaker/common/zenscript/DeprecatedZenLootTableTweakManager"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "leviathan143/loottweaker/common/zenscript/DeprecatedZenLootTableTweakManager",
+        "value": {
+          "value": "loottweaker.vanilla.loot.LootTables"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getTable(Ljava/lang/String;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootTableWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getTableUnchecked(Ljava/lang/String;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootTableWrapper;"
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/IDataConversions": {
+    "name": "leviathan143/loottweaker/common/zenscript/IDataConversions",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "leviathan143/loottweaker/common/zenscript/IDataConversions"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenExpansion;",
+        "target": "leviathan143/loottweaker/common/zenscript/IDataConversions",
+        "value": {
+          "value": "crafttweaker.data.IData"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenCaster;",
+        "target": "asLootCondition(Lcrafttweaker/api/data/IData;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenCaster;",
+        "target": "asLootFunction(Lcrafttweaker/api/data/IData;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/IDataConversions$Impl": {
+    "name": "leviathan143/loottweaker/common/zenscript/IDataConversions$Impl",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/google/common/annotations/VisibleForTesting;",
+        "target": "leviathan143/loottweaker/common/zenscript/IDataConversions$Impl"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/annotations/VisibleForTesting;",
+        "target": "asLootCondition(Lcrafttweaker/api/data/IData;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/annotations/VisibleForTesting;",
+        "target": "asLootFunction(Lcrafttweaker/api/data/IData;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/JsonMapConversions": {
+    "name": "leviathan143/loottweaker/common/zenscript/JsonMapConversions",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "leviathan143/loottweaker/common/zenscript/JsonMapConversions"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenExpansion;",
+        "target": "leviathan143/loottweaker/common/zenscript/JsonMapConversions",
+        "value": {
+          "value": "any[any]"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenCaster;",
+        "target": "asLootCondition(Ljava/util/Map;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenCaster;",
+        "target": "asLootFunction(Ljava/util/Map;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/JsonMapConversions$Impl": {
+    "name": "leviathan143/loottweaker/common/zenscript/JsonMapConversions$Impl",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/google/common/annotations/VisibleForTesting;",
+        "target": "leviathan143/loottweaker/common/zenscript/JsonMapConversions$Impl"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/annotations/VisibleForTesting;",
+        "target": "asLootCondition(Ljava/util/Map;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/annotations/VisibleForTesting;",
+        "target": "asLootFunction(Ljava/util/Map;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/ZenLootTableTweakManager": {
+    "name": "leviathan143/loottweaker/common/zenscript/ZenLootTableTweakManager",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "leviathan143/loottweaker/common/zenscript/ZenLootTableTweakManager"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "leviathan143/loottweaker/common/zenscript/ZenLootTableTweakManager",
+        "value": {
+          "value": "loottweaker.LootTweaker"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "leviathan143/loottweaker/common/zenscript/ZenLootTableTweakManager",
+        "values": {
+          "modid": {
+            "value": "loottweaker"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getTable(Ljava/lang/String;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootTableWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getTableUnchecked(Ljava/lang/String;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootTableWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "newTable(Ljava/lang/String;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootTableWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onServerStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTableLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/factory/LootConditionFactory": {
+    "name": "leviathan143/loottweaker/common/zenscript/factory/LootConditionFactory",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "leviathan143/loottweaker/common/zenscript/factory/LootConditionFactory"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "leviathan143/loottweaker/common/zenscript/factory/LootConditionFactory",
+        "value": {
+          "value": "loottweaker.vanilla.loot.Conditions"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "randomChance(F)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "randomChanceWithLooting(FF)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "killedByPlayer()Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "killedByNonPlayer()Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "parse(Ljava/util/Map;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "zenscript(Lleviathan143/loottweaker/common/zenscript/factory/ZenLambdaLootCondition$Delegate;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;"
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/factory/LootFunctionFactory": {
+    "name": "leviathan143/loottweaker/common/zenscript/factory/LootFunctionFactory",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "leviathan143/loottweaker/common/zenscript/factory/LootFunctionFactory"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "leviathan143/loottweaker/common/zenscript/factory/LootFunctionFactory",
+        "value": {
+          "value": "loottweaker.vanilla.loot.Functions"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "enchantRandomly([Ljava/lang/String;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "enchantWithLevels(IIZ)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "lootingEnchantBonus(III)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setCount(II)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setDamage(FF)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setMetadata(II)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setNBT(Lcrafttweaker/api/data/IData;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "smelt()Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "parse(Ljava/util/Map;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "zenscript(Lleviathan143/loottweaker/common/zenscript/factory/ZenLambdaLootFunction$Delegate;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/factory/ZenLambdaLootCondition": {
+    "name": "leviathan143/loottweaker/common/zenscript/factory/ZenLambdaLootCondition",
+    "interfaces": [
+      "net/minecraft/world/storage/loot/conditions/LootCondition"
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/factory/ZenLambdaLootCondition$Delegate": {
+    "name": "leviathan143/loottweaker/common/zenscript/factory/ZenLambdaLootCondition$Delegate",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "leviathan143/loottweaker/common/zenscript/factory/ZenLambdaLootCondition$Delegate"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "leviathan143/loottweaker/common/zenscript/factory/ZenLambdaLootCondition$Delegate",
+        "value": {
+          "value": "loottweaker.CustomLootCondition"
+        }
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/factory/ZenLambdaLootFunction$Delegate": {
+    "name": "leviathan143/loottweaker/common/zenscript/factory/ZenLambdaLootFunction$Delegate",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "leviathan143/loottweaker/common/zenscript/factory/ZenLambdaLootFunction$Delegate"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "leviathan143/loottweaker/common/zenscript/factory/ZenLambdaLootFunction$Delegate",
+        "value": {
+          "value": "loottweaker.CustomLootFunction"
+        }
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper": {
+    "name": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper",
+        "value": {
+          "value": "loottweaker.vanilla.loot.LootCondition"
+        }
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootContext": {
+    "name": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootContext",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootContext"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootContext",
+        "value": {
+          "value": "loottweaker.LootContext"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "lootedEntity()Lcrafttweaker/api/entity/IEntity;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "killerPlayer()Lcrafttweaker/api/player/IPlayer;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "killer()Lcrafttweaker/api/entity/IEntity;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "luck()F"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "world()Lcrafttweaker/api/world/IWorld;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "lootingModifier()I"
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper": {
+    "name": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper",
+        "value": {
+          "value": "loottweaker.vanilla.loot.LootFunction"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addConditions([Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;"
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootPoolWrapper": {
+    "name": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootPoolWrapper",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootPoolWrapper"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootPoolWrapper",
+        "value": {
+          "value": "loottweaker.vanilla.loot.LootPool"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addConditions([Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addConditionsHelper([Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addConditionsJson([Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "clearConditions()V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "clearEntries()V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeEntry(Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addItemEntry(Lcrafttweaker/api/item/IItemStack;ILjava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addItemEntry(Lcrafttweaker/api/item/IItemStack;IILjava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addItemEntry(Lcrafttweaker/api/item/IItemStack;II[Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;[Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addItemEntryHelper(Lcrafttweaker/api/item/IItemStack;II[Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;[Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addItemEntryJson(Lcrafttweaker/api/item/IItemStack;II[Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootFunctionWrapper;[Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addLootTableEntry(Ljava/lang/String;ILjava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addLootTableEntry(Ljava/lang/String;IILjava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addLootTableEntry(Ljava/lang/String;II[Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addLootTableEntryHelper(Ljava/lang/String;II[Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addLootTableEntryJson(Ljava/lang/String;II[Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEmptyEntry(ILjava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEmptyEntry(IILjava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEmptyEntry(II[Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEmptyEntryHelper(II[Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEmptyEntryJson(II[Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootConditionWrapper;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setRolls(FF)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setBonusRolls(FF)V"
+      }
+    ]
+  },
+  "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootTableWrapper": {
+    "name": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootTableWrapper",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootTableWrapper"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "leviathan143/loottweaker/common/zenscript/wrapper/ZenLootTableWrapper",
+        "value": {
+          "value": "loottweaker.vanilla.loot.LootTable"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getPool(Ljava/lang/String;)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootPoolWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addPool(Ljava/lang/String;FFFF)Lleviathan143/loottweaker/common/zenscript/wrapper/ZenLootPoolWrapper;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removePool(Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "clear()V"
+      }
+    ]
+  }
+}

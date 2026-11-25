@@ -1,0 +1,16 @@
+package stanhebben.zenscript.annotations;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.FIELD})
+public @interface ZenProperty {
+   String value() default "";
+
+   String setter() default "";
+
+   String getter() default "";
+}

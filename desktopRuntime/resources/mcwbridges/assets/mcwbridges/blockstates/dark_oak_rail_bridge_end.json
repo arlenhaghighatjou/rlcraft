@@ -1,0 +1,13 @@
+{
+    "variants": {
+        "facing=east,lit=false": { "model": "mcwbridges:dark_oak_rail_bridge_end", "y": 180 },
+        "facing=west,lit=false": { "model": "mcwbridges:dark_oak_rail_bridge_end", "y": 0 },
+        "facing=south,lit=false": { "model": "mcwbridges:dark_oak_rail_bridge_end", "y": 270 },
+        "facing=north,lit=false": { "model": "mcwbridges:dark_oak_rail_bridge_end", "y": 90 },
+		
+		"facing=east,lit=true": { "model": "mcwbridges:dark_oak_rail_bridge_powered_end", "y": 180 },
+        "facing=west,lit=true": { "model": "mcwbridges:dark_oak_rail_bridge_powered_end", "y": 0 },
+        "facing=south,lit=true": { "model": "mcwbridges:dark_oak_rail_bridge_powered_end", "y": 270 },
+        "facing=north,lit=true": { "model": "mcwbridges:dark_oak_rail_bridge_powered_end", "y": 90 }	
+    }
+}

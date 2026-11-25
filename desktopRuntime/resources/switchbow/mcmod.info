@@ -1,0 +1,16 @@
+[
+{
+  "modid": "switchbow",
+  "name": "Switch-Bow",
+  "description": "Switch what you like",
+  "version": "1.6.8",
+  "mcversion": "1.12.2",
+  "url": "https://minecraft.curseforge.com/projects/switch-bow",
+  "updateUrl": "",
+  "authorList": ["Whitedraco"],
+  "credits": "Credits to Piara_Pirate for her Ideas",
+  "logoFile": "logo.png",
+  "screenshots": [],
+  "dependencies": [mod_minecraftForge]
+}
+]

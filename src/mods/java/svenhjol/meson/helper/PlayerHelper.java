@@ -1,0 +1,132 @@
+package svenhjol.meson.helper;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
+import net.minecraft.entity.ai.attributes.AttributeMap;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.SPacketEntityEffect;
+import net.minecraft.network.play.server.SPacketEntityProperties;
+import net.minecraft.network.play.server.SPacketRespawn;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.PlayerList;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+
+public class PlayerHelper {
+   public PlayerHelper() {
+   }
+
+   public static List<String> getBiomeTypes(EntityPlayer player) {
+      Set<Type> types = BiomeDictionary.getTypes(player.world.getBiome(player.getPosition()));
+      List<String> actualTypes = new ArrayList();
+      types.forEach((type) -> {
+         actualTypes.add(type.getName());
+      });
+      return actualTypes;
+   }
+
+   public static List<NonNullList<ItemStack>> getAllInventories(EntityPlayer player) {
+      InventoryPlayer inventory = player.inventory;
+      return Arrays.asList(inventory.mainInventory, inventory.armorInventory, inventory.offHandInventory);
+   }
+
+   public static double getLocationAngleToPlayer(EntityPlayer player, BlockPos location) {
+      return Math.atan2((double)location.getZ() - player.posZ, (double)location.getX() - player.posX);
+   }
+
+   public static void replaceHeldItem(EntityPlayer player, EnumHand hand, ItemStack item) {
+      player.setHeldItem(hand, item);
+   }
+
+   public static void setHeldItem(EntityPlayer player, EnumHand hand, ItemStack item) {
+      ItemStack stack = player.getHeldItem(hand);
+      if (stack.getCount() == 1) {
+         player.setHeldItem(hand, item);
+      } else {
+         stack.shrink(1);
+         if (stack.getCount() == 0) {
+            player.setHeldItem(hand, item);
+         } else {
+            addOrDropStack(player, item);
+         }
+      }
+
+   }
+
+   public static boolean addOrDropStack(EntityPlayer player, ItemStack stack) {
+      if (!player.inventory.addItemStackToInventory(stack)) {
+         player.dropItem(stack, false);
+         return false;
+      } else {
+         return true;
+      }
+   }
+
+   public static void addOrDropStacks(EntityPlayer player, List<ItemStack> stacks) {
+      for(ItemStack stack : stacks) {
+         addOrDropStack(player, stack);
+      }
+
+   }
+
+   public static void teleportPlayer(EntityPlayer player, BlockPos pos, int dimension) {
+      if (player.getEntityWorld().provider.getDimension() != dimension) {
+         MinecraftServer server = player.world.getMinecraftServer();
+         if (server != null) {
+            transferPlayerToDimension((EntityPlayerMP)player, dimension, server.getPlayerList());
+         }
+      }
+
+      player.setPositionAndUpdate((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D);
+   }
+
+   public static void transferPlayerToDimension(EntityPlayerMP player, int dimension, PlayerList manager) {
+      int oldDim = player.dimension;
+      WorldServer worldserver = manager.getServerInstance().getWorld(player.dimension);
+      player.dimension = dimension;
+      WorldServer worldserver1 = manager.getServerInstance().getWorld(player.dimension);
+      player.connection.sendPacket(new SPacketRespawn(player.dimension, player.world.getDifficulty(), player.world.getWorldInfo().getTerrainType(), player.interactionManager.getGameType()));
+      worldserver.removeEntityDangerously(player);
+      if (player.isBeingRidden()) {
+         player.removePassengers();
+      }
+
+      if (player.isRiding()) {
+         player.dismountRidingEntity();
+      }
+
+      player.isDead = false;
+      EntityHelper.transferEntityToWorld(player, worldserver, worldserver1);
+      manager.preparePlayer(player, worldserver);
+      player.connection.setPlayerLocation(player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
+      player.interactionManager.setWorld(worldserver1);
+      manager.updateTimeAndWeatherForPlayer(player, worldserver1);
+      manager.syncPlayerInventory(player);
+
+      for(PotionEffect potioneffect : player.getActivePotionEffects()) {
+         player.connection.sendPacket(new SPacketEntityEffect(player.getEntityId(), potioneffect));
+      }
+
+      AttributeMap attributeMap = (AttributeMap)player.getAttributeMap();
+      Collection<IAttributeInstance> watchedAttributes = attributeMap.getWatchedAttributes();
+      if (!watchedAttributes.isEmpty()) {
+         player.connection.sendPacket(new SPacketEntityProperties(player.getEntityId(), watchedAttributes));
+      }
+
+      FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, oldDim, dimension);
+   }
+}

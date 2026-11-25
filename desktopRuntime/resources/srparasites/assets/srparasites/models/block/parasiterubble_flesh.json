@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "particle": "srparasites:blocks/parasiterubble_flesh_down",
+    "down": "srparasites:blocks/parasiterubble_flesh_down",
+    "up": "srparasites:blocks/parasiterubble_flesh_up",
+    "east": "srparasites:blocks/parasiterubble_flesh_side",
+    "west": "srparasites:blocks/parasiterubble_flesh_side",
+    "north": "srparasites:blocks/parasiterubble_flesh_side",
+    "south": "srparasites:blocks/parasiterubble_flesh_side"
+  }
+}

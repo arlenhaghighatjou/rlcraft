@@ -1,0 +1,89 @@
+package com.Shultrea.Rin.Ench0_4_5;
+
+import com.Shultrea.Rin.Ench0_3_0.EnchantmentStrafe;
+import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
+import com.Shultrea.Rin.Main_Sector.ModConfig;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent.Tick;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+public class EnchantmentPushing extends EnchantmentBase {
+   public EnchantmentPushing() {
+      super(Rarity.VERY_RARE, EnumEnchantmentType.BOW, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
+      this.setName("Pushing");
+      this.setRegistryName("Pushing");
+   }
+
+   public boolean isConfigEnabled() {
+      return ModConfig.enabled.Pushing;
+   }
+
+   public int getMaxLevel() {
+      return ModConfig.level.Pushing;
+   }
+
+   public int getMinEnchantability(int par1) {
+      return 25 + 25 * (par1 - 1);
+   }
+
+   public int getMaxEnchantability(int par1) {
+      return this.getMinEnchantability(par1) + 50;
+   }
+
+   public boolean canApplyTogether(Enchantment fTest) {
+      return fTest instanceof EnchantmentStrafe ? false : super.canApplyTogether(fTest);
+   }
+
+   @SubscribeEvent(
+      priority = EventPriority.HIGHEST,
+      receiveCanceled = true
+   )
+   public void onEvent(Tick event) {
+      EntityLivingBase entity = event.getEntityLiving();
+      if (entity != null) {
+         ItemStack bow = event.getItem();
+         if (!bow.isEmpty()) {
+            int level = EnchantmentHelper.getEnchantmentLevel(this, bow);
+            if (level > 0) {
+               if (bow.getItem() instanceof ItemBow && 72000 - event.getDuration() <= 20 + level * 10) {
+                  AxisAlignedBB axis = (new AxisAlignedBB(entity.getPosition())).grow((double)(4 + level * 2));
+                  this.repelEntitiesInAABBFromPoint(entity.world, axis, entity.posX, entity.posY, entity.posZ, level);
+               }
+
+            }
+         }
+      }
+   }
+
+   public void repelEntitiesInAABBFromPoint(World world, AxisAlignedBB effectBounds, double x, double y, double z, int level) {
+      for(Entity ent : world.getEntitiesWithinAABB(Entity.class, effectBounds)) {
+         if ((ent instanceof EntityLiving || ent instanceof IProjectile) && (!(ent instanceof EntityArrow) || !((EntityArrow)ent).onGround)) {
+            Vec3d p = new Vec3d(x, y, z);
+            Vec3d t = new Vec3d(ent.posX, ent.posY, ent.posZ);
+            double distance = p.distanceTo(t) + 0.1D;
+            distance = 10.0D / distance;
+            Vec3d r = new Vec3d(t.x - p.x, t.y - p.y, t.z - p.z);
+            ent.motionX += r.x / ((3.75D - (double)(level - 1) * 1.5D) / distance) / (double)MathHelper.clamp(50 - level * 10, 1, Integer.MAX_VALUE);
+            ent.motionY += r.y / ((5.0D - (double)(level - 1) * 1.25D) / distance) / (double)MathHelper.clamp(50 - level * 10, 1, Integer.MAX_VALUE);
+            ent.motionZ += r.z / ((3.75D - (double)(level - 1) * 1.5D) / distance) / (double)MathHelper.clamp(50 - level * 10, 1, Integer.MAX_VALUE);
+         }
+      }
+
+   }
+}

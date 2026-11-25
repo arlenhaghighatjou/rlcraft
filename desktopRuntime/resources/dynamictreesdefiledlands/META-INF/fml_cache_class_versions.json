@@ -1,0 +1,18 @@
+{
+  "maxhyper/dynamictreesdefiledlands/DynamicTreesDefiledLands": 52,
+  "maxhyper/dynamictreesdefiledlands/ModContent": 52,
+  "maxhyper/dynamictreesdefiledlands/ModContent$1": 52,
+  "maxhyper/dynamictreesdefiledlands/ModContent$2": 52,
+  "maxhyper/dynamictreesdefiledlands/blocks/BlockRootyDefiledDirt": 52,
+  "maxhyper/dynamictreesdefiledlands/cells/CellKits": 52,
+  "maxhyper/dynamictreesdefiledlands/cells/CellKits$1": 52,
+  "maxhyper/dynamictreesdefiledlands/cells/CellSparseBranch": 52,
+  "maxhyper/dynamictreesdefiledlands/event/EventListenerDefiledLands": 52,
+  "maxhyper/dynamictreesdefiledlands/event/TreeGenCancelDefiledEventHandler": 52,
+  "maxhyper/dynamictreesdefiledlands/proxy/ClientProxy": 52,
+  "maxhyper/dynamictreesdefiledlands/proxy/ClientProxy$1": 52,
+  "maxhyper/dynamictreesdefiledlands/proxy/CommonProxy": 52,
+  "maxhyper/dynamictreesdefiledlands/trees/TreeTenebra": 52,
+  "maxhyper/dynamictreesdefiledlands/trees/TreeTenebra$SpeciesTenebra": 52,
+  "maxhyper/dynamictreesdefiledlands/worldgen/BiomeDataBasePopulator": 52
+}

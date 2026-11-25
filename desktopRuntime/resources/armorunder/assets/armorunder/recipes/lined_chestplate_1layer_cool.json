@@ -1,0 +1,12 @@
+{ "_comment": ["Lined chestplate to provide -1 cooling" ],
+  "result": {
+    "item": "minecraft:leather_chestplate",
+    "nbt": {"carrots:ArmorTLining":"COOL"}
+  },
+  "type": "armorunder:lined_armor_shapeless",
+  "limit": "COOLEST",
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemChestplate" },
+    { "item": "armorunder:cool_chestplate_liner" }
+  ]
+}

@@ -1,0 +1,16 @@
+[
+{
+  "modid": "mcwbridges",
+  "name": "Macaw's Bridges",
+  "description": "Connect your world with bridges!",
+  "version": "1.0.6",
+  "mcversion": "1.12.2",
+  "logoFile": "assets/mcwdoors/textures/logo.png",
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-bridges",
+  "updateUrl": "https://raw.githubusercontent.com/sketchmacaw/macawsmods/master/bridges.json",
+  "authorList": ["Macaw's Mods"],
+  "credits": "Macaw's Mods",
+  "screenshots": [],
+  "dependencies": []
+}
+]

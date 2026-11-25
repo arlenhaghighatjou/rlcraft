@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern": [
+    "W W",
+    "WWW"
+    ],
+    
+    "key":
+    {   
+        "W":
+        {
+            "item": "minecraft:stone_slab",
+            "data": 5
+        }
+    },
+    
+    "result":
+    {
+        "item":  "mcwbridges:stone_brick_bridge",
+        "count": 4
+    }
+}

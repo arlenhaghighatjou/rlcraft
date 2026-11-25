@@ -1,0 +1,11 @@
+{
+  "com/lothrazar/playerbosses/AIFireballAttackGeneric": 52,
+  "com/lothrazar/playerbosses/ConfigManager": 52,
+  "com/lothrazar/playerbosses/EntityPlayerBoss": 52,
+  "com/lothrazar/playerbosses/EntityPlayerBoss$1": 52,
+  "com/lothrazar/playerbosses/EntityPlayerBoss$EnumAttackType": 52,
+  "com/lothrazar/playerbosses/EntityPlayerBoss$Factory": 52,
+  "com/lothrazar/playerbosses/ModBosses": 52,
+  "com/lothrazar/playerbosses/RenderPlayerBoss": 52,
+  "com/lothrazar/playerbosses/RenderUtil": 52
+}

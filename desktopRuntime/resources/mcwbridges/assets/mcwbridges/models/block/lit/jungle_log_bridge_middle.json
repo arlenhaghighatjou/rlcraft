@@ -1,0 +1,9 @@
+{
+	"parent": "mcwbridges:block/parent/lit/log_bridge_middle",
+	"textures": {
+		"0": "minecraft:blocks/log_jungle",
+		"1_0": "minecraft:blocks/torch",
+		"2": "minecraft:blocks/planks_jungle",
+		"particle": "minecraft:blocks/log_jungle"
+	}
+}

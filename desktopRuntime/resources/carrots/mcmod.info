@@ -1,0 +1,17 @@
+{
+  "modListVersion": 2,
+  "modList": [{
+    "modid": "carrots",
+    "name": "Carrots Lib",
+    "description": "Base library used by The_Wabbit's mods (as of MC 1.13)",
+    "version": "1.0.0b1",
+    "mcversion": "1.12.2",
+    "url": "https://minecraft.curseforge.com/projects/carrots-lib",
+    "updateUrl": "",
+    "authorList": ["The_Wabbit"],
+    "credits": "Forge, Pig-Ralph and family",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }]
+}

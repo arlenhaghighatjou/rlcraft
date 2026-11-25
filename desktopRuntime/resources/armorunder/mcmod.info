@@ -1,0 +1,17 @@
+{
+  "modListVersion": 2,
+  "modList": [{
+    "modid": "armorunder",
+    "name": "Armor Underwear",
+    "description": "Give your armor warming or cooling underwear (a ToughAsNails utility)",
+    "version": "1.0.0",
+    "mcversion": "1.12.2",
+    "url": "https://minecraft.curseforge.com/projects/armor-underwear-mod",
+    "updateUrl": "",
+    "authorList": ["The_Wabbit"],
+    "credits": "Forge, Pig-Ralph and family, Llama Mama, and Polarbear Ned",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": ["carrots"]
+  }]
+}

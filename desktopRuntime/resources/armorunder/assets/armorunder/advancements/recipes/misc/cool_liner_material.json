@@ -1,0 +1,21 @@
+{
+  "parent": "armorunder:recipes/root",
+  "rewards": {
+    "recipes": [ "armorunder:cool_liner_material" ]
+  },
+  "criteria": {
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+        "conditions": { "recipe": "armorunder:cool_liner_material" }
+    },
+    "has_cooling_goo": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { 
+        "items": [{"item": "armorunder:cooling_goo"}] 
+      }
+    }
+  },
+  "requirements": [
+    [ "has_the_recipe", "has_cooling_goo" ]
+  ]
+}

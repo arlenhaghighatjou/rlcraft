@@ -1,0 +1,51 @@
+package knightminer.inspirations.recipes.recipe;
+
+import knightminer.inspirations.library.InspirationsRegistry;
+import knightminer.inspirations.library.recipe.cauldron.ICauldronRecipe;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundEvent;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+
+public enum FillFluidContainerFromCauldron implements ICauldronRecipe {
+   INSTANCE;
+
+   private FillFluidContainerFromCauldron() {
+   }
+
+   public boolean matches(ItemStack stack, boolean boiling, int level, ICauldronRecipe.CauldronState state) {
+      if (level == InspirationsRegistry.getCauldronMax() && state.getFluid() != null) {
+         stack = stack.copy();
+         stack.setCount(1);
+         IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(stack);
+         if (fluidHandler == null) {
+            return false;
+         } else {
+            return fluidHandler.fill(new FluidStack(state.getFluid(), 1000), false) == 1000;
+         }
+      } else {
+         return false;
+      }
+   }
+
+   public ItemStack getResult(ItemStack stack, boolean boiling, int level, ICauldronRecipe.CauldronState state) {
+      stack = stack.copy();
+      stack.setCount(1);
+      IFluidHandlerItem handler = FluidUtil.getFluidHandler(stack);
+      handler.fill(state.getFluidStack(), true);
+      return handler.getContainer();
+   }
+
+   public int getLevel(int level) {
+      return 0;
+   }
+
+   public SoundEvent getSound(ItemStack stack, boolean boiling, int level, ICauldronRecipe.CauldronState state) {
+      return state.getFluid().getEmptySound();
+   }
+
+   public ItemStack getContainer(ItemStack stack) {
+      return ItemStack.EMPTY;
+   }
+}

@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern": [
+    "F F",
+    "WWW"
+    ],
+    
+    "key":
+    {
+        "F":
+        {
+            "item": "minecraft:string"
+        },
+        
+        "W":
+        {
+            "item": "minecraft:wooden_slab",
+            "data": 0
+        }
+    },
+    
+    "result":
+    {
+        "item":  "mcwbridges:rope_oak_bridge",
+        "count": 4
+    }
+}

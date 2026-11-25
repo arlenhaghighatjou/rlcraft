@@ -1,0 +1,494 @@
+{
+  "lykrast/defiledlands/client/render/entity/layers/LayerScuttlerEyes": {
+    "name": "lykrast/defiledlands/client/render/entity/layers/LayerScuttlerEyes",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "lykrast/defiledlands/client/render/entity/layers/LayerShamblerTwistedEyes": {
+    "name": "lykrast/defiledlands/client/render/entity/layers/LayerShamblerTwistedEyes",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "lykrast/defiledlands/client/render/entity/layers/LayerSlimeDefiledGel": {
+    "name": "lykrast/defiledlands/client/render/entity/layers/LayerSlimeDefiledGel",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockBaseFluid": {
+    "name": "lykrast/defiledlands/common/block/BlockBaseFluid",
+    "interfaces": [
+      "lykrast/defiledlands/common/block/ICustomStateMapper"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockBlastem": {
+    "name": "lykrast/defiledlands/common/block/BlockBlastem",
+    "interfaces": [
+      "net/minecraft/block/IGrowable",
+      "lykrast/defiledlands/common/block/ICustomItemBlock"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockConjuringAltar": {
+    "name": "lykrast/defiledlands/common/block/BlockConjuringAltar",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockDoorGeneric": {
+    "name": "lykrast/defiledlands/common/block/BlockDoorGeneric",
+    "interfaces": [
+      "lykrast/defiledlands/common/block/ICustomItemBlock",
+      "lykrast/defiledlands/common/block/ICustomStateMapper"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockGlassObscure": {
+    "name": "lykrast/defiledlands/common/block/BlockGlassObscure",
+    "interfaces": [
+      "lykrast/defiledlands/common/block/ICustomItemBlock"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockHalfSlabCorruptedStone": {
+    "name": "lykrast/defiledlands/common/block/BlockHalfSlabCorruptedStone",
+    "interfaces": [
+      "lykrast/defiledlands/common/block/ICustomModel"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockHalfSlabCorruptedWood": {
+    "name": "lykrast/defiledlands/common/block/BlockHalfSlabCorruptedWood",
+    "interfaces": [
+      "lykrast/defiledlands/common/block/ICustomModel"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockHephaestite": {
+    "name": "lykrast/defiledlands/common/block/BlockHephaestite",
+    "interfaces": [
+      "lykrast/defiledlands/common/block/ICustomItemBlock"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockHephaestiteOre": {
+    "name": "lykrast/defiledlands/common/block/BlockHephaestiteOre",
+    "interfaces": [
+      "lykrast/defiledlands/common/block/ICustomItemBlock"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockRavagingDecoration$Variants": {
+    "name": "lykrast/defiledlands/common/block/BlockRavagingDecoration$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockSlabCorruptedStone": {
+    "name": "lykrast/defiledlands/common/block/BlockSlabCorruptedStone",
+    "interfaces": [
+      "lykrast/defiledlands/common/block/ICustomItemBlock"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockSlabCorruptedStone$Variant": {
+    "name": "lykrast/defiledlands/common/block/BlockSlabCorruptedStone$Variant",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockSlabCorruptedWood": {
+    "name": "lykrast/defiledlands/common/block/BlockSlabCorruptedWood",
+    "interfaces": [
+      "lykrast/defiledlands/common/block/ICustomItemBlock"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockSlabCorruptedWood$Variant": {
+    "name": "lykrast/defiledlands/common/block/BlockSlabCorruptedWood$Variant",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockStoneDefiledDecoration$Variants": {
+    "name": "lykrast/defiledlands/common/block/BlockStoneDefiledDecoration$Variants",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockVariant": {
+    "name": "lykrast/defiledlands/common/block/BlockVariant",
+    "interfaces": [
+      "lykrast/defiledlands/common/block/ICustomItemBlock",
+      "lykrast/defiledlands/common/block/ICustomModel"
+    ]
+  },
+  "lykrast/defiledlands/common/block/BlockVilespine": {
+    "name": "lykrast/defiledlands/common/block/BlockVilespine",
+    "interfaces": [
+      "net/minecraftforge/common/IPlantable"
+    ]
+  },
+  "lykrast/defiledlands/common/compat/jei/DefiledLandsJEI": {
+    "name": "lykrast/defiledlands/common/compat/jei/DefiledLandsJEI",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "lykrast/defiledlands/common/compat/jei/DefiledLandsJEI"
+      }
+    ]
+  },
+  "lykrast/defiledlands/common/compat/jei/DefilementCategory": {
+    "name": "lykrast/defiledlands/common/compat/jei/DefilementCategory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeCategory"
+    ]
+  },
+  "lykrast/defiledlands/common/compat/jei/DefilementWrapper": {
+    "name": "lykrast/defiledlands/common/compat/jei/DefilementWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "lykrast/defiledlands/common/entity/boss/EntityDestroyer": {
+    "name": "lykrast/defiledlands/common/entity/boss/EntityDestroyer",
+    "interfaces": [
+      "lykrast/defiledlands/common/entity/IEntityDefiled"
+    ]
+  },
+  "lykrast/defiledlands/common/entity/boss/EntityMourner": {
+    "name": "lykrast/defiledlands/common/entity/boss/EntityMourner",
+    "interfaces": [
+      "lykrast/defiledlands/common/entity/IEntityDefiled"
+    ]
+  },
+  "lykrast/defiledlands/common/entity/monster/EntityHost": {
+    "name": "lykrast/defiledlands/common/entity/monster/EntityHost",
+    "interfaces": [
+      "lykrast/defiledlands/common/entity/IEntityDefiled"
+    ]
+  },
+  "lykrast/defiledlands/common/entity/monster/EntityScuttler": {
+    "name": "lykrast/defiledlands/common/entity/monster/EntityScuttler",
+    "interfaces": [
+      "lykrast/defiledlands/common/entity/IEntityDefiled"
+    ]
+  },
+  "lykrast/defiledlands/common/entity/monster/EntityShambler": {
+    "name": "lykrast/defiledlands/common/entity/monster/EntityShambler",
+    "interfaces": [
+      "lykrast/defiledlands/common/entity/IEntityDefiled"
+    ]
+  },
+  "lykrast/defiledlands/common/entity/monster/EntitySlimeDefiled": {
+    "name": "lykrast/defiledlands/common/entity/monster/EntitySlimeDefiled",
+    "interfaces": [
+      "lykrast/defiledlands/common/entity/IEntityDefiled"
+    ]
+  },
+  "lykrast/defiledlands/common/entity/passive/EntityBookWyrm": {
+    "name": "lykrast/defiledlands/common/entity/passive/EntityBookWyrm",
+    "interfaces": [
+      "lykrast/defiledlands/common/entity/IEntityDefiled",
+      "net/minecraftforge/fml/common/registry/IEntityAdditionalSpawnData"
+    ]
+  },
+  "lykrast/defiledlands/common/entity/projectile/EntityBlastemFruit$1": {
+    "name": "lykrast/defiledlands/common/entity/projectile/EntityBlastemFruit$1",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDetonate(Lnet/minecraftforge/event/world/ExplosionEvent$Detonate;)V"
+      }
+    ]
+  },
+  "lykrast/defiledlands/common/init/ModBiomes": {
+    "name": "lykrast/defiledlands/common/init/ModBiomes",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "lykrast/defiledlands/common/init/ModBiomes"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBiomes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "lykrast/defiledlands/common/init/ModBlocks": {
+    "name": "lykrast/defiledlands/common/init/ModBlocks",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "lykrast/defiledlands/common/init/ModBlocks"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "lykrast/defiledlands/common/init/ModEnchantments": {
+    "name": "lykrast/defiledlands/common/init/ModEnchantments",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "lykrast/defiledlands/common/init/ModEnchantments"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEnchantments(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "lykrast/defiledlands/common/init/ModEntities": {
+    "name": "lykrast/defiledlands/common/init/ModEntities",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "lykrast/defiledlands/common/init/ModEntities"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEntities(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "lykrast/defiledlands/common/init/ModItems": {
+    "name": "lykrast/defiledlands/common/init/ModItems",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "lykrast/defiledlands/common/init/ModItems"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "lykrast/defiledlands/common/init/ModPotions": {
+    "name": "lykrast/defiledlands/common/init/ModPotions",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "lykrast/defiledlands/common/init/ModPotions"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerPotions(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "lykrast/defiledlands/common/init/ModRecipes": {
+    "name": "lykrast/defiledlands/common/init/ModRecipes",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "lykrast/defiledlands/common/init/ModRecipes"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRecipes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "lykrast/defiledlands/common/init/ModSounds": {
+    "name": "lykrast/defiledlands/common/init/ModSounds",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "lykrast/defiledlands/common/init/ModSounds"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerSoundEvents(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "lykrast/defiledlands/common/item/ItemBauble": {
+    "name": "lykrast/defiledlands/common/item/ItemBauble",
+    "interfaces": [
+      "baubles/api/IBauble"
+    ]
+  },
+  "lykrast/defiledlands/common/item/ItemConcussionSmasher": {
+    "name": "lykrast/defiledlands/common/item/ItemConcussionSmasher",
+    "interfaces": [
+      "lykrast/defiledlands/common/item/IEnchantDestructive"
+    ]
+  },
+  "lykrast/defiledlands/common/item/ItemConcussionSmasher$1": {
+    "name": "lykrast/defiledlands/common/item/ItemConcussionSmasher$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "lykrast/defiledlands/common/item/ItemConcussionSmasher$2": {
+    "name": "lykrast/defiledlands/common/item/ItemConcussionSmasher$2",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "lykrast/defiledlands/common/item/ItemPellet": {
+    "name": "lykrast/defiledlands/common/item/ItemPellet",
+    "interfaces": [
+      "lykrast/defiledlands/common/item/IPellet"
+    ]
+  },
+  "lykrast/defiledlands/common/item/ItemUmbraBlaster": {
+    "name": "lykrast/defiledlands/common/item/ItemUmbraBlaster",
+    "interfaces": [
+      "lykrast/defiledlands/common/item/IEnchantDestructive"
+    ]
+  },
+  "lykrast/defiledlands/common/potion/PotionHooks": {
+    "name": "lykrast/defiledlands/common/potion/PotionHooks",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "lykrast/defiledlands/common/potion/PotionHooks"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHurt(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      }
+    ]
+  },
+  "lykrast/defiledlands/common/tileentity/TileConjuringAltar": {
+    "name": "lykrast/defiledlands/common/tileentity/TileConjuringAltar",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "lykrast/defiledlands/common/util/RavagingDropHandler": {
+    "name": "lykrast/defiledlands/common/util/RavagingDropHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "lykrast/defiledlands/common/util/RavagingDropHandler"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "OnBlockBreak(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "lykrast/defiledlands/core/CommonProxy": {
+    "name": "lykrast/defiledlands/core/CommonProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "lykrast/defiledlands/core/DefiledLands": {
+    "name": "lykrast/defiledlands/core/DefiledLands",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "lykrast/defiledlands/core/DefiledLands",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12,1.13)"
+          },
+          "dependencies": {
+            "value": "required-after:baubles;after:tconstruct"
+          },
+          "modid": {
+            "value": "defiledlands"
+          },
+          "name": {
+            "value": "Defiled Lands"
+          },
+          "version": {
+            "value": "1.4.3"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "defiledlands"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "lykrast.defiledlands.core.ClientProxy"
+          },
+          "serverSide": {
+            "value": "lykrast.defiledlands.core.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  }
+}

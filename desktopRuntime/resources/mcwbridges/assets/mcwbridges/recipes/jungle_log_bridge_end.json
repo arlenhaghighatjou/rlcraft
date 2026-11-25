@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern":
+    [
+        "W"
+    ],
+    
+    "key":
+    {
+        "W":
+        {
+            "item": "mcwbridges:jungle_log_bridge_middle"
+        }
+    },
+    
+    "result":
+    {
+        "item": "mcwbridges:jungle_log_bridge_end",
+        "count": 1
+    }
+}

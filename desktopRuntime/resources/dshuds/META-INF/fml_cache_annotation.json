@@ -1,0 +1,941 @@
+{
+  "org/orecruncher/dshuds/Environment": {
+    "name": "org/orecruncher/dshuds/Environment",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dshuds/Environment",
+        "values": {
+          "modid": {
+            "value": "dshuds"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dshuds/ModBase": {
+    "name": "org/orecruncher/dshuds/ModBase",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "org/orecruncher/dshuds/ModBase",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2,)"
+          },
+          "certificateFingerprint": {
+            "value": "7a2128d395ad96ceb9d9030fbd41d035b435753a"
+          },
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2779,);required-after:orelib@[3.6.0.0,);after:sereneseasons@[1.2.18,);after:dsurround@[3.6.0.0,)"
+          },
+          "modid": {
+            "value": "dshuds"
+          },
+          "updateJSON": {
+            "value": "https://raw.githubusercontent.com/OreCruncher/DynamicSurroundingsHuds/master/version.json"
+          },
+          "useMetadata": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "version": {
+            "value": "3.6.0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "dshuds"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "org.orecruncher.dshuds.proxy.ProxyClient"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "loadCompleted(Lnet/minecraftforge/fml/common/event/FMLLoadCompleteEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onFingerprintViolation(Lnet/minecraftforge/fml/common/event/FMLFingerprintViolationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientConnect(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientDisconnect(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientDisconnectionFromServerEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dshuds/ModOptions": {
+    "name": "org/orecruncher/dshuds/ModOptions",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dshuds/ModOptions",
+        "values": {
+          "modid": {
+            "value": "dshuds"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "org/orecruncher/dshuds/ModOptions",
+        "values": {
+          "category": {
+            "value": ""
+          },
+          "modid": {
+            "value": "dshuds"
+          },
+          "name": {
+            "value": "dshuds"
+          },
+          "type": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/common/config/Config$Type;/INSTANCE"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "logging",
+        "value": {
+          "value": "Logging"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "logging",
+        "value": {
+          "values": [
+            "Options to control logging"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "logging",
+        "value": {
+          "value": "config.dshuds.logging"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "potionHUD",
+        "value": {
+          "value": "PotionHud"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "potionHUD",
+        "value": {
+          "value": "config.dshuds.potionhud"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "potionHUD",
+        "value": {
+          "values": [
+            "Options for the Potion HUD overlay"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "lightLevelHUD",
+        "value": {
+          "value": "LightLevelHud"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "lightLevelHUD",
+        "value": {
+          "value": "config.dshuds.lightlevelhud"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "lightLevelHUD",
+        "value": {
+          "values": [
+            "Options for configuring Light Level HUD"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "compassHUD",
+        "value": {
+          "value": "CompassHud"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "compassHUD",
+        "value": {
+          "value": "config.dshuds.compasshud"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "compassHUD",
+        "value": {
+          "values": [
+            "Options for configuring compass HUD"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "clockHUD",
+        "value": {
+          "value": "ClockHud"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "clockHUD",
+        "value": {
+          "value": "config.dshuds.clockhud"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "clockHUD",
+        "value": {
+          "values": [
+            "Options for configuring clock HUD"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChangedEvent(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dshuds/ModOptions$ClockHUD": {
+    "name": "org/orecruncher/dshuds/ModOptions$ClockHUD",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "enable",
+        "value": {
+          "value": "config.dshuds.clockhud.enable"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enable",
+        "value": {
+          "values": [
+            "Enable/disable clock HUD when clock is held"
+          ]
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dshuds/ModOptions$CompassHUD": {
+    "name": "org/orecruncher/dshuds/ModOptions$CompassHUD",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "enable",
+        "value": {
+          "value": "config.dshuds.compasshud.enable"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enable",
+        "value": {
+          "values": [
+            "Enable/disable compass HUD when compass is held"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "style",
+        "value": {
+          "value": "config.dshuds.compasshud.style"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "style",
+        "value": {
+          "values": [
+            "Style of compass bar"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "style",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "6"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "transparency",
+        "value": {
+          "value": "config.dshuds.compasshud.transparency"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "transparency",
+        "value": {
+          "values": [
+            "Compass transparency"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "transparency",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "coordFormat",
+        "value": {
+          "value": "config.dshuds.compasshud.format"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "coordFormat",
+        "value": {
+          "values": [
+            "Format string for location coordinates"
+          ]
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dshuds/ModOptions$LightLevelHUD": {
+    "name": "org/orecruncher/dshuds/ModOptions$LightLevelHUD",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "range",
+        "value": {
+          "value": "config.dshuds.lightlevelhud.range"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "range",
+        "value": {
+          "values": [
+            "Range from player to analyze light levels"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "range",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "32"
+          },
+          "min": {
+            "type": "INT",
+            "value": "16"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "spawnThreshold",
+        "value": {
+          "value": "config.dshuds.lightlevelhud.mobspawnthreshold"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "spawnThreshold",
+        "value": {
+          "values": [
+            "Light level at which mobs can spawn"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "spawnThreshold",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "15"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "displayMode",
+        "value": {
+          "value": "config.dshuds.lightlevelhud.displaymode"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "displayMode",
+        "value": {
+          "values": [
+            "0: Block Light, 1: Block Light + Sky Light"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "displayMode",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "1"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "hideSafe",
+        "value": {
+          "value": "config.dshuds.lightlevelhud.hidesafe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "hideSafe",
+        "value": {
+          "values": [
+            "Hide light level information for blocks that are considered safe"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "indicateCaution",
+        "value": {
+          "value": "config.dshuds.lightlevelhud.indicatecaution"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "indicateCaution",
+        "value": {
+          "values": [
+            "Indicate current light levels that will change at night which could result in mob spawns"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "colors",
+        "value": {
+          "value": "config.dshuds.lightlevelhud.colors"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "colors",
+        "value": {
+          "values": [
+            "Color set: 0 bright, 1 dark"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "colors",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "1"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dshuds/ModOptions$Logging": {
+    "name": "org/orecruncher/dshuds/ModOptions$Logging",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "enableLogging",
+        "value": {
+          "value": "config.dshuds.logging.enableLogging"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableLogging",
+        "value": {
+          "values": [
+            "Enables debug logging output for diagnostics"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "enableVersionCheck",
+        "value": {
+          "value": "config.dshuds.logging.enableVersionCheck"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableVersionCheck",
+        "value": {
+          "values": [
+            "Enables display of chat messages related to newer versions",
+            "of the mod being available."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "hideChatNotices",
+        "value": {
+          "value": "config.dshuds.logging.chatnotices"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "hideChatNotices",
+        "value": {
+          "values": [
+            "Disable display of hud toggles in chat"
+          ]
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dshuds/ModOptions$PotionHUD": {
+    "name": "org/orecruncher/dshuds/ModOptions$PotionHUD",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "none",
+        "value": {
+          "value": "config.dshuds.potionhud.nohud"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "none",
+        "value": {
+          "values": [
+            "Disables Vanilla and Dynamic Surroundings potion HUD"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "enabled",
+        "value": {
+          "value": "config.dshuds.potionhud.enable"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enabled",
+        "value": {
+          "values": [
+            "Enable display of potion icons in display"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "transparency",
+        "value": {
+          "value": "config.dshuds.potionhud.transparency"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "transparency",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "transparency",
+        "value": {
+          "values": [
+            "Transparency factor for icons (higher more solid)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "leftOffset",
+        "value": {
+          "value": "config.dshuds.potionhud.leftoffset"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "leftOffset",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "leftOffset",
+        "value": {
+          "values": [
+            "Offset from left side of screen"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "topOffset",
+        "value": {
+          "value": "config.dshuds.potionhud.topoffset"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "topOffset",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "topOffset",
+        "value": {
+          "values": [
+            "Offset from top of screen"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "scale",
+        "value": {
+          "value": "config.dshuds.potionhud.scale"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "scale",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "scale",
+        "value": {
+          "values": [
+            "Size scale of icons (lower is smaller)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "anchor",
+        "value": {
+          "value": "config.dshuds.potionhud.location"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "anchor",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "1"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "anchor",
+        "value": {
+          "values": [
+            "Area of the display the Potion HUD is displayed (0 upper left, 1 upper right)"
+          ]
+        }
+      }
+    ]
+  },
+  "org/orecruncher/dshuds/compat/SereneSeasonHandler": {
+    "name": "org/orecruncher/dshuds/compat/SereneSeasonHandler",
+    "interfaces": [
+      "java/util/function/Function"
+    ]
+  },
+  "org/orecruncher/dshuds/hud/GuiHUDHandler": {
+    "name": "org/orecruncher/dshuds/hud/GuiHUDHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/dshuds/hud/GuiHUDHandler",
+        "values": {
+          "modid": {
+            "value": "dshuds"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderGameOverlayEvent(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderGameOverlayEvent(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dshuds/hud/LightLevelHUD": {
+    "name": "org/orecruncher/dshuds/hud/LightLevelHUD",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "doRender(Lnet/minecraftforge/client/event/RenderWorldLastEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/dshuds/keyboard/KeyHandler": {
+    "name": "org/orecruncher/dshuds/keyboard/KeyHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyboard(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V",
+        "values": {
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "false"
+          }
+        }
+      }
+    ]
+  }
+}

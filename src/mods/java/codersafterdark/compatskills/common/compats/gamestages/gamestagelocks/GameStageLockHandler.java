@@ -1,0 +1,35 @@
+package codersafterdark.compatskills.common.compats.gamestages.gamestagelocks;
+
+import codersafterdark.compatskills.utils.Utils;
+import codersafterdark.reskillable.api.data.PlayerData;
+import codersafterdark.reskillable.api.data.PlayerDataHandler;
+import codersafterdark.reskillable.api.data.RequirementHolder;
+import codersafterdark.reskillable.base.LevelLockHandler;
+import net.darkhax.gamestages.event.GameStageEvent.Add;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+public class GameStageLockHandler {
+   public GameStageLockHandler() {
+   }
+
+   @SubscribeEvent(
+      priority = EventPriority.HIGH
+   )
+   public void gameStageAdded(Add event) {
+      EntityPlayer player = event.getEntityPlayer();
+      if (!Utils.skipPlayer(player)) {
+         PlayerData data = PlayerDataHandler.get(player);
+         String eventGameStage = event.getStageName();
+         RequirementHolder requirementHolder = LevelLockHandler.getLockByKey(new GameStageLock(eventGameStage));
+         if (!requirementHolder.equals(LevelLockHandler.EMPTY_LOCK) && !data.matchStats(requirementHolder)) {
+            event.setCanceled(true);
+            TextComponentTranslation error = new TextComponentTranslation("compatskills.error.gamestage", new Object[0]);
+            player.sendStatusMessage(Utils.getError(requirementHolder, data, error), false);
+         }
+
+      }
+   }
+}

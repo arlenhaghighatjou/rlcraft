@@ -1,0 +1,2492 @@
+{
+  "com/elenai/elenaidodge/ElenaiDodge": {
+    "name": "com/elenai/elenaidodge/ElenaiDodge",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/elenai/elenaidodge/ElenaiDodge",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "before:rustic;after:quark"
+          },
+          "modid": {
+            "value": "elenaidodge"
+          },
+          "name": {
+            "value": "Elenai Dodge"
+          },
+          "version": {
+            "value": "2.1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "INSTANCE"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.elenai.elenaidodge.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.elenai.elenaidodge.proxy.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverLoad(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/ModConfig": {
+    "name": "com/elenai/elenaidodge/ModConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "com/elenai/elenaidodge/ModConfig",
+        "values": {
+          "modid": {
+            "value": "elenaidodge"
+          },
+          "name": {
+            "value": "Elenai Dodge"
+          },
+          "type": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/common/config/Config$Type;/INSTANCE"
+          }
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/ModConfig$Client$Controls": {
+    "name": "com/elenai/elenaidodge/ModConfig$Client$Controls",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "doubleTap",
+        "value": {
+          "value": "Enable Double Tap"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "doubleTap",
+        "value": {
+          "values": [
+            "Enable to make dodging left, right or backwards require a double tap, and forwards require a tap of a movement key."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "doubleTapTicks",
+        "value": {
+          "value": "Double Tap Ticks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "doubleTapTicks",
+        "value": {
+          "values": [
+            "How many system ticks you have between double tapping (these are faster than Minecraft ticks)."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "doubleTapTicks",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "2147483647"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "doubleTapForwards",
+        "value": {
+          "value": "Forwards Double Tap"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "doubleTapForwards",
+        "value": {
+          "values": [
+            "Enable to make dodging forwards require a double tap of a movement key. \u0027Enable Double Tap\u0027 must be enabled."
+          ]
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/ModConfig$Client$Hud": {
+    "name": "com/elenai/elenaidodge/ModConfig$Client$Hud",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "hud",
+        "value": {
+          "value": "Show HUD"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "hud",
+        "value": {
+          "values": [
+            "Whether to show the cooldown UI."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "legacyHud",
+        "value": {
+          "value": "Legacy HUD"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "legacyHud",
+        "value": {
+          "values": [
+            "Whether to show the old cooldown UI above the experience bar."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "tutorial",
+        "value": {
+          "value": "Show Tutorial"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "tutorial",
+        "value": {
+          "values": [
+            "Whether to show the tutorial on joining a new world."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "tooltips",
+        "value": {
+          "value": "Show Tooltips"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "tooltips",
+        "value": {
+          "values": [
+            "Whether to show armor weight tooltips. If Quark is installed, please restart the game after disabling or enabling \u0027Quark Settings -\u003e Client -\u003e Visual Stat Display\u0027."
+          ]
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/ModConfig$Common$Balance": {
+    "name": "com/elenai/elenaidodge/ModConfig$Common$Balance",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "regenSpeed",
+        "value": {
+          "value": "Cooldown Speed"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "regenSpeed",
+        "value": {
+          "values": [
+            "The amount of ticks required for the Dodge cooldown to fully decrease when Armor Weights are disabled."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "regenSpeed",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "2147483647"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "force",
+        "value": {
+          "value": "Force"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "force",
+        "value": {
+          "values": [
+            "The force of the player\u0027s dodge before any multipliers have been applied and when Armor Weights are disabled. This value is very sensitive."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "force",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.7976931348623157E308"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "verticality",
+        "value": {
+          "value": "Verticality"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "verticality",
+        "value": {
+          "values": [
+            "How high the player is pushed from the ground when dodging. This value is proportional distance dodged due to friction."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "verticality",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.7976931348623157E308"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "useExistingVelocity",
+        "value": {
+          "value": "Use Existing Velocity"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "useExistingVelocity",
+        "value": {
+          "values": [
+            "Whether to use the Player\u0027s current Velocity when calculating Dodge distancing."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "exhaustion",
+        "value": {
+          "value": "Exhaustion"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "exhaustion",
+        "value": {
+          "values": [
+            "How much exhaustion is added when dodging. For reference, sprinting adds 0.01 exhaustion per meter, and the Hunger effect adds 0.1 per second."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "exhaustion",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "40.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "hunger",
+        "value": {
+          "value": "Hunger Requirement"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "hunger",
+        "value": {
+          "values": [
+            "How many half drumsticks the player needs to dodge. The default six is the same as sprinting."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "hunger",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "20"
+          },
+          "min": {
+            "type": "INT",
+            "value": "-1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enableWhilstSneaking",
+        "value": {
+          "value": "Enable whilst Sneaking"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableWhilstSneaking",
+        "value": {
+          "values": [
+            "Whether the player can dodge whilst sneaking."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enableWhilstBlocking",
+        "value": {
+          "value": "Enable whilst Blocking"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableWhilstBlocking",
+        "value": {
+          "values": [
+            "Whether the player can dodge whilst blocking."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enableWhilstAirborne",
+        "value": {
+          "value": "Enable whilst Airborne"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableWhilstAirborne",
+        "value": {
+          "values": [
+            "Whether the player can dodge whilst airborne."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "invincibilityTicks",
+        "value": {
+          "value": "Invincibility Ticks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "invincibilityTicks",
+        "value": {
+          "values": [
+            "How many in-game ticks of invincibility the player has after dodging. 20 ticks is 1 second."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "invincibilityTicks",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "100"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "potions",
+        "value": {
+          "value": "Potion Blacklist"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "potions",
+        "value": {
+          "values": [
+            "Potions that prevent the player from dodging. Insert values in the format modid:potion. Idea Credit: SandwichHorror"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "requiresPotion",
+        "value": {
+          "value": "Requires Dodge Potion"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "requiresPotion",
+        "value": {
+          "values": [
+            "Whether the player requires the potion effect \u0027can_dodge\u0027 to dodge."
+          ]
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/ModConfig$Common$Gamestages": {
+    "name": "com/elenai/elenaidodge/ModConfig$Common$Gamestages",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enable",
+        "value": {
+          "value": "Dodging Requires Gamestage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enable",
+        "value": {
+          "values": [
+            "Whether the player requires a gamestage to dodge \u003d! Requires GameStages to be Installed !\u003d"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "name",
+        "value": {
+          "value": "Dodging Gamestage Name"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "name",
+        "value": {
+          "values": [
+            "The name of the required gamestage \u003d! Requires GameStages to be Installed !\u003d"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "nameAirborne",
+        "value": {
+          "value": "Airborne Gamestage Name"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "nameAirborne",
+        "value": {
+          "values": [
+            "The name of a gamestage that will allow the player to dodge in midair. This does not require \u0027Dodging Requires Gamestage\u0027 to be enabled to work. \u003d! Requires GameStages to be Installed !\u003d"
+          ]
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/ModConfig$Common$LedgeGrab": {
+    "name": "com/elenai/elenaidodge/ModConfig$Common$LedgeGrab",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enable",
+        "value": {
+          "value": "Enable Ledge Grab"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enable",
+        "value": {
+          "values": [
+            "Whether the Player can Ledge Grab by pressing jump again with their face to the top of a wall. This value does nothing if Reskillable is installed as ledge grabbing is unlocked as a trait. This value can also be overriden by the \u0027Climber\u0027 potion effect."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "forwardsForce",
+        "value": {
+          "value": "Forwards Force"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "forwardsForce",
+        "value": {
+          "values": [
+            "The forwards force of the player\u0027s ledge grab. (How far they are pushed in the direction they are facing). This value is very sensitive."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "forwardsForce",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.7976931348623157E308"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "upwardsForce",
+        "value": {
+          "value": "Upwards Force"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "upwardsForce",
+        "value": {
+          "values": [
+            "The upwards force of the player\u0027s ledge grab. (How far they are pushed upwards). This value is very sensitive."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "upwardsForce",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.7976931348623157E308"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "useExistingVelocity",
+        "value": {
+          "value": "Use Existing Velocity"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "useExistingVelocity",
+        "value": {
+          "values": [
+            "Whether to use the Player\u0027s current Velocity when calculating Ledge Grab distancing."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "exhaustion",
+        "value": {
+          "value": "Exhaustion"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "exhaustion",
+        "value": {
+          "values": [
+            "How much exhaustion is added when ledge grabbing. For reference, sprinting adds 0.01 exhaustion per meter, and the Hunger effect adds 0.1 per second."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "exhaustion",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "40.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "extraHeight",
+        "value": {
+          "value": "Extra Height"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "extraHeight",
+        "value": {
+          "values": [
+            "How much extra height you have for ledge grabbing. Set to at least 0.2 to allow for Ledge Grabbing up 2 and a Half Blocks. When you increase this, be aware you will also need to increase the Upwards Force variable to complete the ledge grab."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "extraHeight",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "hunger",
+        "value": {
+          "value": "Hunger Requirement"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "hunger",
+        "value": {
+          "values": [
+            "How many half drumsticks the player needs to ledge grab. The default six is the same as sprinting."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "hunger",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "20"
+          },
+          "min": {
+            "type": "INT",
+            "value": "-1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "maximum",
+        "value": {
+          "value": "Maximum Ledge Grabs"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "maximum",
+        "value": {
+          "values": [
+            "How many Ledge Grabs the player can perform before touching the ground again. Set this value to 0 to allow infinite Ledge Grabs."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "maximum",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "5"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "cooldown",
+        "value": {
+          "value": "Ledge Grab Cooldown"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "cooldown",
+        "value": {
+          "values": [
+            "How many ticks the player must wait between Ledge Grabs."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "cooldown",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "2147483647"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "angle",
+        "value": {
+          "value": "Required Angle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "angle",
+        "value": {
+          "values": [
+            "How far (as a percentage from 0 to 1) the player must face towards the wall to Ledge Grab."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "angle",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "1"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "distance",
+        "value": {
+          "value": "Distance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "distance",
+        "value": {
+          "values": [
+            "How much farther from the Wall you can stand to Ledge Grab."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "distance",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.6"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "falling",
+        "value": {
+          "value": "Falling Ledge Grab"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "falling",
+        "value": {
+          "values": [
+            "Whether the Player can Ledge Grab when falling"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "fallDistance",
+        "value": {
+          "value": "Maximum Fall Distance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "fallDistance",
+        "value": {
+          "values": [
+            "How far the player can fall whilst still being able to Ledge Grab. Set this value to 0 to allow Ledge Grabbing from any fall distance."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "fallDistance",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.7976931348623157E308"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/ModConfig$Common$Misc": {
+    "name": "com/elenai/elenaidodge/ModConfig$Common$Misc",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "nether",
+        "value": {
+          "value": "Nether Dodge"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "nether",
+        "value": {
+          "values": [
+            "Whether the Player dodges further in the Nether."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "end",
+        "value": {
+          "value": "End Dodge"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "end",
+        "value": {
+          "values": [
+            "Whether the Player dodge is weaker in the End."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "particles",
+        "value": {
+          "value": "Enable Particles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "particles",
+        "value": {
+          "values": [
+            "Whether the Player\u0027s dodge creates a puff of smoke."
+          ]
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/ModConfig$Common$WallJump": {
+    "name": "com/elenai/elenaidodge/ModConfig$Common$WallJump",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enable",
+        "value": {
+          "value": "Enable Wall Jump"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enable",
+        "value": {
+          "values": [
+            "Whether the Player can Wall Jump by pressing jump again with their back to a wall. This value does nothing if Reskillable is installed as wall jumping is unlocked as a trait. This value can also be overriden by the \u0027Nimble\u0027 potion effect."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "forwardsForce",
+        "value": {
+          "value": "Forwards Force"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "forwardsForce",
+        "value": {
+          "values": [
+            "The forwards force of the player\u0027s wall jump. (How far they are pushed in the direction they are facing). This value is very sensitive."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "forwardsForce",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.7976931348623157E308"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "outwardsForce",
+        "value": {
+          "value": "Outwards Force"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "outwardsForce",
+        "value": {
+          "values": [
+            "The outwards force of the player\u0027s wall jump. (How far they are pushed away from the wall). This value is very sensitive."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "outwardsForce",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.7976931348623157E308"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "useExistingVelocity",
+        "value": {
+          "value": "Use Existing Velocity"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "useExistingVelocity",
+        "value": {
+          "values": [
+            "Whether to use the Player\u0027s current Velocity when calculating Wall Jump distancing. If disabled, please note Verticality, Forwards Force and Outwards Force will be more powerful and may need to be lowered."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "verticality",
+        "value": {
+          "value": "Verticality"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "verticality",
+        "value": {
+          "values": [
+            "How high the player jumps. This value will affect distance jumped due to airtime."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "verticality",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.7976931348623157E308"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "exhaustion",
+        "value": {
+          "value": "Exhaustion"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "exhaustion",
+        "value": {
+          "values": [
+            "How much exhaustion is added when wall jumping. For reference, sprinting adds 0.01 exhaustion per meter, and the Hunger effect adds 0.1 per second."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "exhaustion",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "40.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "hunger",
+        "value": {
+          "value": "Hunger Requirement"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "hunger",
+        "value": {
+          "values": [
+            "How many half drumsticks the player needs to wall jump. The default six is the same as sprinting."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "hunger",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "20"
+          },
+          "min": {
+            "type": "INT",
+            "value": "-1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "angle",
+        "value": {
+          "value": "Required Angle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "angle",
+        "value": {
+          "values": [
+            "How far (as a percentage from 0 to 1) the player must face away from the wall to Wall Jump."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "angle",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "1"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "cooldown",
+        "value": {
+          "value": "Wall Jump Cooldown"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "cooldown",
+        "value": {
+          "values": [
+            "How many ticks the player must wait between Wall Jumps."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "cooldown",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "2147483647"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "maximum",
+        "value": {
+          "value": "Maximum Wall Jumps"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "maximum",
+        "value": {
+          "values": [
+            "How many Wall Jumps the player can perform before touching the ground again. Set this value to 0 to allow infinite Wall Jumps."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "maximum",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "5"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "distance",
+        "value": {
+          "value": "Distance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "distance",
+        "value": {
+          "values": [
+            "How much farther from the Wall you can stand to Wall Jump."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "distance",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.6"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "falling",
+        "value": {
+          "value": "Falling Wall Jump"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "falling",
+        "value": {
+          "values": [
+            "Whether the Player can Wall Jump when falling."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "fallDistance",
+        "value": {
+          "value": "Maximum Fall Distance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "fallDistance",
+        "value": {
+          "values": [
+            "How far the player can fall whilst still being able to Wall Jump. Set this value to 0 to allow Wall Jumping from any fall distance."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "fallDistance",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.7976931348623157E308"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "oneBlock",
+        "value": {
+          "value": "One Block Wall Jump"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "oneBlock",
+        "value": {
+          "values": [
+            "Whether the Player can Wall Jump in a one block gap."
+          ]
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/ModConfig$Common$WallJump$Advanced": {
+    "name": "com/elenai/elenaidodge/ModConfig$Common$WallJump$Advanced",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "readMe",
+        "value": {
+          "value": "Read Me! (Hover Mouse Here)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "readMe",
+        "value": {
+          "values": [
+            "Casual Players, turn back now! These values are for finetuning the mod and playtesting. You can adjust the Wall Jump distance, angle, force etc. in the previous page. "
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "angle",
+        "value": {
+          "value": "Detection Angle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "angle",
+        "value": {
+          "values": [
+            "Wall Jump Block Collision is checked by three points, one directly behind the player, and two behind the player at an angle (left and right). This value determines how far out these angled points are from the center line. Think of this as a clock, where 6 O\u0027Clock is directly behind the player, and setting this to 90 degrees would create a point at 9 O\u0027Clock and 3\u0027 O\u0027Clock. The default of 40 is recommended."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "angle",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "90.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "angleLength",
+        "value": {
+          "value": "Detection Angle Length"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "angleLength",
+        "value": {
+          "values": [
+            "Wall Jump Block Collision is checked by three points, one directly behind the player, and two behind the player at an angle (left and right). This value determines how far away from the player these angled points are in relation to the center line\u0027s length, where 1 is equivalent to 100% the length of the center line (determined as \u0027distance\u0027 on previous page) and 0.8 is 80% of that distance. The default of 0.8 is recommended."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "angleLength",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/ModConfig$Common$Weights": {
+    "name": "com/elenai/elenaidodge/ModConfig$Common$Weights",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "weights",
+        "value": {
+          "value": "Weights Override"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "weights",
+        "value": {
+          "values": [
+            "The weight of each item of Armor. This overrides the default generated values and can be a decimal. Insert values as such: modid:itemname\u003dvalue. Idea Credit: SandwichHorror"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "tiers",
+        "value": {
+          "value": "Weight Tiers"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "tiers",
+        "value": {
+          "values": [
+            "The Cooldown Speed and Dodge Force given to the player depending on their weight. Each tier is determined by a minimum weight to enter it. Always start this at 0.0 and add each tier in increasing weight order. To make a player \u0027Overencumbered\u0027 simply set a tiers cooldown AND force to 0. Insert values as such: minimumweight:cooldown|force. Idea Credit: SandwichHorror"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enable",
+        "value": {
+          "value": "Enable Weights"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enable",
+        "value": {
+          "values": [
+            "Enables the Weight System"
+          ]
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/api/DodgeEvent$ServerDodgeEvent": {
+    "name": "com/elenai/elenaidodge/api/DodgeEvent$ServerDodgeEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/elenai/elenaidodge/api/DodgeEvent$ServerDodgeEvent"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/api/LedgeGrabEvent$ServerLedgeGrabEvent": {
+    "name": "com/elenai/elenaidodge/api/LedgeGrabEvent$ServerLedgeGrabEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/elenai/elenaidodge/api/LedgeGrabEvent$ServerLedgeGrabEvent"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/api/WallJumpEvent$ServerWallJumpEvent": {
+    "name": "com/elenai/elenaidodge/api/WallJumpEvent$ServerWallJumpEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/elenai/elenaidodge/api/WallJumpEvent$ServerWallJumpEvent"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/capability/CapabilityHandler": {
+    "name": "com/elenai/elenaidodge/capability/CapabilityHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityConstructing(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerCloned(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/capability/airborne/Airborne": {
+    "name": "com/elenai/elenaidodge/capability/airborne/Airborne",
+    "interfaces": [
+      "com/elenai/elenaidodge/capability/airborne/IAirborne"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/airborne/AirborneProvider": {
+    "name": "com/elenai/elenaidodge/capability/airborne/AirborneProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "AIRBORNE_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/elenai/elenaidodge/capability/airborne/IAirborne;"
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/capability/airborne/AirborneStorage": {
+    "name": "com/elenai/elenaidodge/capability/airborne/AirborneStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/enabled/Enabled": {
+    "name": "com/elenai/elenaidodge/capability/enabled/Enabled",
+    "interfaces": [
+      "com/elenai/elenaidodge/capability/enabled/IEnabled"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/enabled/EnabledProvider": {
+    "name": "com/elenai/elenaidodge/capability/enabled/EnabledProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "ENABLED_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/elenai/elenaidodge/capability/enabled/IEnabled;"
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/capability/enabled/EnabledStorage": {
+    "name": "com/elenai/elenaidodge/capability/enabled/EnabledStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/invincibility/Invincibility": {
+    "name": "com/elenai/elenaidodge/capability/invincibility/Invincibility",
+    "interfaces": [
+      "com/elenai/elenaidodge/capability/invincibility/IInvincibility"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/invincibility/InvincibilityProvider": {
+    "name": "com/elenai/elenaidodge/capability/invincibility/InvincibilityProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "INVINCIBILITY_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/elenai/elenaidodge/capability/invincibility/IInvincibility;"
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/capability/invincibility/InvincibilityStorage": {
+    "name": "com/elenai/elenaidodge/capability/invincibility/InvincibilityStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/joined/Joined": {
+    "name": "com/elenai/elenaidodge/capability/joined/Joined",
+    "interfaces": [
+      "com/elenai/elenaidodge/capability/joined/IJoined"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/joined/JoinedProvider": {
+    "name": "com/elenai/elenaidodge/capability/joined/JoinedProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "JOINED_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/elenai/elenaidodge/capability/joined/IJoined;"
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/capability/joined/JoinedStorage": {
+    "name": "com/elenai/elenaidodge/capability/joined/JoinedStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/ledgegrabcooldown/LedgeGrabCooldown": {
+    "name": "com/elenai/elenaidodge/capability/ledgegrabcooldown/LedgeGrabCooldown",
+    "interfaces": [
+      "com/elenai/elenaidodge/capability/ledgegrabcooldown/ILedgeGrabCooldown"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/ledgegrabcooldown/LedgeGrabCooldownProvider": {
+    "name": "com/elenai/elenaidodge/capability/ledgegrabcooldown/LedgeGrabCooldownProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "LEDGEGRABCOOLDOWN_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/elenai/elenaidodge/capability/ledgegrabcooldown/ILedgeGrabCooldown;"
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/capability/ledgegrabcooldown/LedgeGrabCooldownStorage": {
+    "name": "com/elenai/elenaidodge/capability/ledgegrabcooldown/LedgeGrabCooldownStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/ledgegrabs/LedgeGrabs": {
+    "name": "com/elenai/elenaidodge/capability/ledgegrabs/LedgeGrabs",
+    "interfaces": [
+      "com/elenai/elenaidodge/capability/ledgegrabs/ILedgeGrabs"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/ledgegrabs/LedgeGrabsProvider": {
+    "name": "com/elenai/elenaidodge/capability/ledgegrabs/LedgeGrabsProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "LEDGEGRABS_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/elenai/elenaidodge/capability/ledgegrabs/ILedgeGrabs;"
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/capability/ledgegrabs/LedgeGrabsStorage": {
+    "name": "com/elenai/elenaidodge/capability/ledgegrabs/LedgeGrabsStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/particles/Particles": {
+    "name": "com/elenai/elenaidodge/capability/particles/Particles",
+    "interfaces": [
+      "com/elenai/elenaidodge/capability/particles/IParticles"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/particles/ParticlesProvider": {
+    "name": "com/elenai/elenaidodge/capability/particles/ParticlesProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "PARTICLES_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/elenai/elenaidodge/capability/particles/IParticles;"
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/capability/particles/ParticlesStorage": {
+    "name": "com/elenai/elenaidodge/capability/particles/ParticlesStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/regen/Regen": {
+    "name": "com/elenai/elenaidodge/capability/regen/Regen",
+    "interfaces": [
+      "com/elenai/elenaidodge/capability/regen/IRegen"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/regen/RegenProvider": {
+    "name": "com/elenai/elenaidodge/capability/regen/RegenProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "REGEN_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/elenai/elenaidodge/capability/regen/IRegen;"
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/capability/regen/RegenStorage": {
+    "name": "com/elenai/elenaidodge/capability/regen/RegenStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/walljumpcooldown/WallJumpCooldown": {
+    "name": "com/elenai/elenaidodge/capability/walljumpcooldown/WallJumpCooldown",
+    "interfaces": [
+      "com/elenai/elenaidodge/capability/walljumpcooldown/IWallJumpCooldown"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/walljumpcooldown/WallJumpCooldownProvider": {
+    "name": "com/elenai/elenaidodge/capability/walljumpcooldown/WallJumpCooldownProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "WALLJUMPCOOLDOWN_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/elenai/elenaidodge/capability/walljumpcooldown/IWallJumpCooldown;"
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/capability/walljumpcooldown/WallJumpCooldownStorage": {
+    "name": "com/elenai/elenaidodge/capability/walljumpcooldown/WallJumpCooldownStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/walljumps/WallJumps": {
+    "name": "com/elenai/elenaidodge/capability/walljumps/WallJumps",
+    "interfaces": [
+      "com/elenai/elenaidodge/capability/walljumps/IWallJumps"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/walljumps/WallJumpsProvider": {
+    "name": "com/elenai/elenaidodge/capability/walljumps/WallJumpsProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "WALLJUMPS_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/elenai/elenaidodge/capability/walljumps/IWallJumps;"
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/capability/walljumps/WallJumpsStorage": {
+    "name": "com/elenai/elenaidodge/capability/walljumps/WallJumpsStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/weight/Weight": {
+    "name": "com/elenai/elenaidodge/capability/weight/Weight",
+    "interfaces": [
+      "com/elenai/elenaidodge/capability/weight/IWeight"
+    ]
+  },
+  "com/elenai/elenaidodge/capability/weight/WeightProvider": {
+    "name": "com/elenai/elenaidodge/capability/weight/WeightProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "WEIGHT_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/elenai/elenaidodge/capability/weight/IWeight;"
+        }
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/capability/weight/WeightStorage": {
+    "name": "com/elenai/elenaidodge/capability/weight/WeightStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/elenai/elenaidodge/command/main/DisableAirborne": {
+    "name": "com/elenai/elenaidodge/command/main/DisableAirborne",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "com/elenai/elenaidodge/command/main/DisableDodge": {
+    "name": "com/elenai/elenaidodge/command/main/DisableDodge",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "com/elenai/elenaidodge/command/main/EnableAirborne": {
+    "name": "com/elenai/elenaidodge/command/main/EnableAirborne",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "com/elenai/elenaidodge/command/main/EnableDodge": {
+    "name": "com/elenai/elenaidodge/command/main/EnableDodge",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "com/elenai/elenaidodge/command/main/ToggleAirborne": {
+    "name": "com/elenai/elenaidodge/command/main/ToggleAirborne",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "com/elenai/elenaidodge/command/main/ToggleDodge": {
+    "name": "com/elenai/elenaidodge/command/main/ToggleDodge",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "com/elenai/elenaidodge/event/ArmorTickEventListener": {
+    "name": "com/elenai/elenaidodge/event/ArmorTickEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onArmorUpdate(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/CameraEventListener": {
+    "name": "com/elenai/elenaidodge/event/CameraEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "camera(Lnet/minecraftforge/client/event/EntityViewRenderEvent$CameraSetup;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/ClientTickEventListener": {
+    "name": "com/elenai/elenaidodge/event/ClientTickEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/ConfigEventListener": {
+    "name": "com/elenai/elenaidodge/event/ConfigEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChange(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerJoinsWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/CoreDodgeEventListener": {
+    "name": "com/elenai/elenaidodge/event/CoreDodgeEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientDodge(Lcom/elenai/elenaidodge/api/DodgeEvent$RequestDodgeEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/CoreWallJumpEventListener": {
+    "name": "com/elenai/elenaidodge/event/CoreWallJumpEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientWallJump(Lcom/elenai/elenaidodge/api/WallJumpEvent$RequestWallJumpEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/InputEventListener": {
+    "name": "com/elenai/elenaidodge/event/InputEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyInput(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/InvincibilityEventListener": {
+    "name": "com/elenai/elenaidodge/event/InvincibilityEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHit(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/PotionTickEventListener": {
+    "name": "com/elenai/elenaidodge/event/PotionTickEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPotionTickEvent(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/RenderEventListener": {
+    "name": "com/elenai/elenaidodge/event/RenderEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRenders(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/ServerDodgeEventListener": {
+    "name": "com/elenai/elenaidodge/event/ServerDodgeEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerDodge(Lcom/elenai/elenaidodge/api/DodgeEvent$ServerDodgeEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/ServerLedgeGrabEventListener": {
+    "name": "com/elenai/elenaidodge/event/ServerLedgeGrabEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerLedgeGrab(Lcom/elenai/elenaidodge/api/LedgeGrabEvent$ServerLedgeGrabEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/ServerWallJumpEventListener": {
+    "name": "com/elenai/elenaidodge/event/ServerWallJumpEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerWallJump(Lcom/elenai/elenaidodge/api/WallJumpEvent$ServerWallJumpEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/TickEventListener": {
+    "name": "com/elenai/elenaidodge/event/TickEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/TooltipEventListener": {
+    "name": "com/elenai/elenaidodge/event/TooltipEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "makeTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTooltip(Lnet/minecraftforge/client/event/RenderTooltipEvent$PostText;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/event/WallJumpInputEventListener": {
+    "name": "com/elenai/elenaidodge/event/WallJumpInputEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyInput(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/gui/DodgeGui": {
+    "name": "com/elenai/elenaidodge/gui/DodgeGui",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderDodgeGUIEvent(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/gui/DodgeToast": {
+    "name": "com/elenai/elenaidodge/gui/DodgeToast",
+    "interfaces": [
+      "net/minecraft/client/gui/toasts/IToast"
+    ]
+  },
+  "com/elenai/elenaidodge/init/ItemInit": {
+    "name": "com/elenai/elenaidodge/init/ItemInit",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CDodgeEffectsMessage": {
+    "name": "com/elenai/elenaidodge/network/message/CDodgeEffectsMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CDodgeEffectsMessage$Handler": {
+    "name": "com/elenai/elenaidodge/network/message/CDodgeEffectsMessage$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CInitPlayerMessage": {
+    "name": "com/elenai/elenaidodge/network/message/CInitPlayerMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CInitPlayerMessage$Handler": {
+    "name": "com/elenai/elenaidodge/network/message/CInitPlayerMessage$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CParticleMessage": {
+    "name": "com/elenai/elenaidodge/network/message/CParticleMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CParticleMessage$Handler": {
+    "name": "com/elenai/elenaidodge/network/message/CParticleMessage$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CPatronMessage": {
+    "name": "com/elenai/elenaidodge/network/message/CPatronMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CPatronMessage$Handler": {
+    "name": "com/elenai/elenaidodge/network/message/CPatronMessage$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CUpdateConfigMessage": {
+    "name": "com/elenai/elenaidodge/network/message/CUpdateConfigMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CUpdateConfigMessage$Handler": {
+    "name": "com/elenai/elenaidodge/network/message/CUpdateConfigMessage$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CUpdateCooldownMessage": {
+    "name": "com/elenai/elenaidodge/network/message/CUpdateCooldownMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CUpdateCooldownMessage$Handler": {
+    "name": "com/elenai/elenaidodge/network/message/CUpdateCooldownMessage$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CUpdateDodgeMessage": {
+    "name": "com/elenai/elenaidodge/network/message/CUpdateDodgeMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CUpdateDodgeMessage$Handler": {
+    "name": "com/elenai/elenaidodge/network/message/CUpdateDodgeMessage$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CUpdateRegenMessage": {
+    "name": "com/elenai/elenaidodge/network/message/CUpdateRegenMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CUpdateRegenMessage$Handler": {
+    "name": "com/elenai/elenaidodge/network/message/CUpdateRegenMessage$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CUpdateWeightMessage": {
+    "name": "com/elenai/elenaidodge/network/message/CUpdateWeightMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CUpdateWeightMessage$Handler": {
+    "name": "com/elenai/elenaidodge/network/message/CUpdateWeightMessage$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CVelocityMessage": {
+    "name": "com/elenai/elenaidodge/network/message/CVelocityMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/CVelocityMessage$Handler": {
+    "name": "com/elenai/elenaidodge/network/message/CVelocityMessage$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/SDodgeMessage": {
+    "name": "com/elenai/elenaidodge/network/message/SDodgeMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/SDodgeMessage$Handler": {
+    "name": "com/elenai/elenaidodge/network/message/SDodgeMessage$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/SWallJumpMessage": {
+    "name": "com/elenai/elenaidodge/network/message/SWallJumpMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/SWallJumpMessage$Handler": {
+    "name": "com/elenai/elenaidodge/network/message/SWallJumpMessage$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/SWeightMessage": {
+    "name": "com/elenai/elenaidodge/network/message/SWeightMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/elenai/elenaidodge/network/message/SWeightMessage$Handler": {
+    "name": "com/elenai/elenaidodge/network/message/SWeightMessage$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/elenai/elenaidodge/proxy/ClientProxy": {
+    "name": "com/elenai/elenaidodge/proxy/ClientProxy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/elenai/elenaidodge/proxy/ClientProxy",
+        "values": {
+          "modid": {
+            "value": "elenaidodge"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/proxy/CommonProxy": {
+    "name": "com/elenai/elenaidodge/proxy/CommonProxy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/elenai/elenaidodge/proxy/CommonProxy",
+        "values": {
+          "modid": {
+            "value": "elenaidodge"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/proxy/ServerProxy": {
+    "name": "com/elenai/elenaidodge/proxy/ServerProxy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/elenai/elenaidodge/proxy/ServerProxy",
+        "values": {
+          "modid": {
+            "value": "elenaidodge"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/SERVER"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/elenai/elenaidodge/util/PatronRewardHandler": {
+    "name": "com/elenai/elenaidodge/util/PatronRewardHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/elenai/elenaidodge/util/PatronRewardHandler",
+        "values": {
+          "modid": {
+            "value": "elenaidodge"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderPlayer(Lnet/minecraftforge/client/event/RenderPlayerEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerJoin(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern":
+    [
+        "W"
+    ],
+    
+    "key":
+    {
+        "W":
+        {
+            "item": "mcwbridges:most1"
+        }
+    },
+    
+    "result":
+    {
+        "item": "mcwbridges:most2",
+        "count": 1
+    }
+}

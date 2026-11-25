@@ -1,0 +1,113 @@
+{
+  "com/chaosthedude/realistictorches/RealisticTorches": {
+    "name": "com/chaosthedude/realistictorches/RealisticTorches",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/chaosthedude/realistictorches/RealisticTorches",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "realistictorches"
+          },
+          "name": {
+            "value": "Realistic Torches"
+          },
+          "version": {
+            "value": "2.1.2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.chaosthedude.realistictorches.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.chaosthedude.realistictorches.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/chaosthedude/realistictorches/blocks/BlockMovingLightSource": {
+    "name": "com/chaosthedude/realistictorches/blocks/BlockMovingLightSource",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "com/chaosthedude/realistictorches/blocks/te/TEMovingLightSource": {
+    "name": "com/chaosthedude/realistictorches/blocks/te/TEMovingLightSource",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "com/chaosthedude/realistictorches/config/ConfigHandler$ChangeListener": {
+    "name": "com/chaosthedude/realistictorches/config/ConfigHandler$ChangeListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "com/chaosthedude/realistictorches/events/RealisticTorchesEvents": {
+    "name": "com/chaosthedude/realistictorches/events/RealisticTorchesEvents",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "movingLightHandler(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockHarvest(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      }
+    ]
+  },
+  "com/chaosthedude/realistictorches/handler/NullReplacementRecipe": {
+    "name": "com/chaosthedude/realistictorches/handler/NullReplacementRecipe",
+    "interfaces": [
+      "net/minecraft/item/crafting/IRecipe"
+    ]
+  },
+  "com/chaosthedude/realistictorches/worldgen/TorchGenerator": {
+    "name": "com/chaosthedude/realistictorches/worldgen/TorchGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  }
+}

@@ -1,0 +1,1614 @@
+{
+  "mezz/jei/JustEnoughItems": {
+    "name": "mezz/jei/JustEnoughItems",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "mezz/jei/JustEnoughItems",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2,1.13)"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2816,);"
+          },
+          "guiFactory": {
+            "value": "mezz.jei.config.JEIModGuiFactory"
+          },
+          "modid": {
+            "value": "jei"
+          },
+          "name": {
+            "value": "Just Enough Items"
+          },
+          "version": {
+            "value": "4.16.1.302"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "mezz.jei.startup.ProxyCommonClient"
+          },
+          "serverSide": {
+            "value": "mezz.jei.startup.ProxyCommon"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/network/NetworkCheckHandler;",
+        "target": "checkModLists(Ljava/util/Map;Lnet/minecraftforge/fml/relauncher/Side;)Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "loadComplete(Lnet/minecraftforge/fml/common/event/FMLLoadCompleteEvent;)V"
+      }
+    ]
+  },
+  "mezz/jei/api/BlankModPlugin": {
+    "name": "mezz/jei/api/BlankModPlugin",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ]
+  },
+  "mezz/jei/api/ISubtypeRegistry$ISubtypeInterpreter": {
+    "name": "mezz/jei/api/ISubtypeRegistry$ISubtypeInterpreter",
+    "interfaces": [
+      "java/util/function/Function"
+    ]
+  },
+  "mezz/jei/api/JEIPlugin": {
+    "name": "mezz/jei/api/JEIPlugin",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "mezz/jei/api/gui/BlankAdvancedGuiHandler": {
+    "name": "mezz/jei/api/gui/BlankAdvancedGuiHandler",
+    "interfaces": [
+      "mezz/jei/api/gui/IAdvancedGuiHandler"
+    ]
+  },
+  "mezz/jei/api/gui/IDrawableAnimated": {
+    "name": "mezz/jei/api/gui/IDrawableAnimated",
+    "interfaces": [
+      "mezz/jei/api/gui/IDrawable"
+    ]
+  },
+  "mezz/jei/api/gui/IDrawableStatic": {
+    "name": "mezz/jei/api/gui/IDrawableStatic",
+    "interfaces": [
+      "mezz/jei/api/gui/IDrawable"
+    ]
+  },
+  "mezz/jei/api/gui/IGhostIngredientHandler$Target": {
+    "name": "mezz/jei/api/gui/IGhostIngredientHandler$Target",
+    "interfaces": [
+      "java/util/function/Consumer"
+    ]
+  },
+  "mezz/jei/api/gui/IGuiFluidStackGroup": {
+    "name": "mezz/jei/api/gui/IGuiFluidStackGroup",
+    "interfaces": [
+      "mezz/jei/api/gui/IGuiIngredientGroup"
+    ]
+  },
+  "mezz/jei/api/gui/IGuiItemStackGroup": {
+    "name": "mezz/jei/api/gui/IGuiItemStackGroup",
+    "interfaces": [
+      "mezz/jei/api/gui/IGuiIngredientGroup"
+    ]
+  },
+  "mezz/jei/api/gui/IGuiScreenHandler": {
+    "name": "mezz/jei/api/gui/IGuiScreenHandler",
+    "interfaces": [
+      "java/util/function/Function"
+    ]
+  },
+  "mezz/jei/api/gui/IRecipeLayoutDrawable": {
+    "name": "mezz/jei/api/gui/IRecipeLayoutDrawable",
+    "interfaces": [
+      "mezz/jei/api/gui/IRecipeLayout"
+    ]
+  },
+  "mezz/jei/api/gui/package-info": {
+    "name": "mezz/jei/api/gui/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/api/gui/package-info"
+      }
+    ]
+  },
+  "mezz/jei/api/ingredients/package-info": {
+    "name": "mezz/jei/api/ingredients/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/api/ingredients/package-info"
+      }
+    ]
+  },
+  "mezz/jei/api/package-info": {
+    "name": "mezz/jei/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "mezz/jei/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "4.13.0"
+          },
+          "owner": {
+            "value": "jei"
+          },
+          "provides": {
+            "value": "JustEnoughItemsAPI"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/api/package-info"
+      }
+    ]
+  },
+  "mezz/jei/api/recipe/BlankRecipeCategory": {
+    "name": "mezz/jei/api/recipe/BlankRecipeCategory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeCategory"
+    ]
+  },
+  "mezz/jei/api/recipe/BlankRecipeWrapper": {
+    "name": "mezz/jei/api/recipe/BlankRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "mezz/jei/api/recipe/package-info": {
+    "name": "mezz/jei/api/recipe/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/api/recipe/package-info"
+      }
+    ]
+  },
+  "mezz/jei/api/recipe/transfer/package-info": {
+    "name": "mezz/jei/api/recipe/transfer/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/api/recipe/transfer/package-info"
+      }
+    ]
+  },
+  "mezz/jei/api/recipe/wrapper/ICraftingRecipeWrapper": {
+    "name": "mezz/jei/api/recipe/wrapper/ICraftingRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "mezz/jei/api/recipe/wrapper/ICustomCraftingRecipeWrapper": {
+    "name": "mezz/jei/api/recipe/wrapper/ICustomCraftingRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/wrapper/ICraftingRecipeWrapper"
+    ]
+  },
+  "mezz/jei/api/recipe/wrapper/IShapedCraftingRecipeWrapper": {
+    "name": "mezz/jei/api/recipe/wrapper/IShapedCraftingRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/wrapper/ICraftingRecipeWrapper"
+    ]
+  },
+  "mezz/jei/api/recipe/wrapper/package-info": {
+    "name": "mezz/jei/api/recipe/wrapper/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/api/recipe/wrapper/package-info"
+      }
+    ]
+  },
+  "mezz/jei/bookmarks/BookmarkList": {
+    "name": "mezz/jei/bookmarks/BookmarkList",
+    "interfaces": [
+      "mezz/jei/gui/overlay/IIngredientGridSource"
+    ]
+  },
+  "mezz/jei/bookmarks/package-info": {
+    "name": "mezz/jei/bookmarks/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/bookmarks/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/bookmarks/package-info"
+      }
+    ]
+  },
+  "mezz/jei/collect/package-info": {
+    "name": "mezz/jei/collect/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/collect/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/collect/package-info"
+      }
+    ]
+  },
+  "mezz/jei/color/MMCQ$1": {
+    "name": "mezz/jei/color/MMCQ$1",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "mezz/jei/color/MMCQ$2": {
+    "name": "mezz/jei/color/MMCQ$2",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "mezz/jei/color/package-info": {
+    "name": "mezz/jei/color/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/color/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/color/package-info"
+      }
+    ]
+  },
+  "mezz/jei/config/JEIModGuiFactory": {
+    "name": "mezz/jei/config/JEIModGuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "mezz/jei/config/package-info": {
+    "name": "mezz/jei/config/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/config/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/config/package-info"
+      }
+    ]
+  },
+  "mezz/jei/gui/CraftingGridHelper": {
+    "name": "mezz/jei/gui/CraftingGridHelper",
+    "interfaces": [
+      "mezz/jei/api/gui/ICraftingGridHelper"
+    ]
+  },
+  "mezz/jei/gui/Focus": {
+    "name": "mezz/jei/gui/Focus",
+    "interfaces": [
+      "mezz/jei/api/recipe/IFocus"
+    ]
+  },
+  "mezz/jei/gui/GuiEventHandler": {
+    "name": "mezz/jei/gui/GuiEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onOverlayToggle(Lmezz/jei/config/OverlayToggleEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiInit(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiOpen(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrawBackgroundEventPost(Lnet/minecraftforge/client/event/GuiScreenEvent$BackgroundDrawnEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrawForegroundEvent(Lnet/minecraftforge/client/event/GuiContainerEvent$DrawForeground;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrawScreenEventPost(Lnet/minecraftforge/client/event/GuiScreenEvent$DrawScreenEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPotionShiftEvent(Lnet/minecraftforge/client/event/GuiScreenEvent$PotionShiftEvent;)V"
+      }
+    ]
+  },
+  "mezz/jei/gui/GuiHelper": {
+    "name": "mezz/jei/gui/GuiHelper",
+    "interfaces": [
+      "mezz/jei/api/IGuiHelper"
+    ]
+  },
+  "mezz/jei/gui/TickTimer": {
+    "name": "mezz/jei/gui/TickTimer",
+    "interfaces": [
+      "mezz/jei/api/gui/ITickTimer"
+    ]
+  },
+  "mezz/jei/gui/elements/DrawableAnimated": {
+    "name": "mezz/jei/gui/elements/DrawableAnimated",
+    "interfaces": [
+      "mezz/jei/api/gui/IDrawableAnimated"
+    ]
+  },
+  "mezz/jei/gui/elements/DrawableBlank": {
+    "name": "mezz/jei/gui/elements/DrawableBlank",
+    "interfaces": [
+      "mezz/jei/api/gui/IDrawableStatic",
+      "mezz/jei/api/gui/IDrawableAnimated"
+    ]
+  },
+  "mezz/jei/gui/elements/DrawableBuilder": {
+    "name": "mezz/jei/gui/elements/DrawableBuilder",
+    "interfaces": [
+      "mezz/jei/api/gui/IDrawableBuilder"
+    ]
+  },
+  "mezz/jei/gui/elements/DrawableIngredient": {
+    "name": "mezz/jei/gui/elements/DrawableIngredient",
+    "interfaces": [
+      "mezz/jei/api/gui/IDrawable"
+    ]
+  },
+  "mezz/jei/gui/elements/DrawableResource": {
+    "name": "mezz/jei/gui/elements/DrawableResource",
+    "interfaces": [
+      "mezz/jei/api/gui/IDrawableStatic"
+    ]
+  },
+  "mezz/jei/gui/elements/DrawableSprite": {
+    "name": "mezz/jei/gui/elements/DrawableSprite",
+    "interfaces": [
+      "mezz/jei/api/gui/IDrawableStatic"
+    ]
+  },
+  "mezz/jei/gui/elements/package-info": {
+    "name": "mezz/jei/gui/elements/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/gui/elements/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/gui/elements/package-info"
+      }
+    ]
+  },
+  "mezz/jei/gui/ingredients/GuiFluidStackGroup": {
+    "name": "mezz/jei/gui/ingredients/GuiFluidStackGroup",
+    "interfaces": [
+      "mezz/jei/api/gui/IGuiFluidStackGroup"
+    ]
+  },
+  "mezz/jei/gui/ingredients/GuiIngredient": {
+    "name": "mezz/jei/gui/ingredients/GuiIngredient",
+    "interfaces": [
+      "mezz/jei/api/gui/IGuiIngredient"
+    ]
+  },
+  "mezz/jei/gui/ingredients/GuiIngredientGroup": {
+    "name": "mezz/jei/gui/ingredients/GuiIngredientGroup",
+    "interfaces": [
+      "mezz/jei/api/gui/IGuiIngredientGroup"
+    ]
+  },
+  "mezz/jei/gui/ingredients/GuiItemStackGroup": {
+    "name": "mezz/jei/gui/ingredients/GuiItemStackGroup",
+    "interfaces": [
+      "mezz/jei/api/gui/IGuiItemStackGroup"
+    ]
+  },
+  "mezz/jei/gui/ingredients/package-info": {
+    "name": "mezz/jei/gui/ingredients/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/gui/ingredients/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/gui/ingredients/package-info"
+      }
+    ]
+  },
+  "mezz/jei/gui/overlay/GuiProperties": {
+    "name": "mezz/jei/gui/overlay/GuiProperties",
+    "interfaces": [
+      "mezz/jei/api/gui/IGuiProperties"
+    ]
+  },
+  "mezz/jei/gui/overlay/IngredientGrid": {
+    "name": "mezz/jei/gui/overlay/IngredientGrid",
+    "interfaces": [
+      "mezz/jei/input/IShowsRecipeFocuses"
+    ]
+  },
+  "mezz/jei/gui/overlay/IngredientGridWithNavigation": {
+    "name": "mezz/jei/gui/overlay/IngredientGridWithNavigation",
+    "interfaces": [
+      "mezz/jei/input/IShowsRecipeFocuses",
+      "mezz/jei/input/IMouseHandler",
+      "mezz/jei/gui/ghost/IGhostIngredientDragSource"
+    ]
+  },
+  "mezz/jei/gui/overlay/IngredientGridWithNavigation$IngredientGridPaged": {
+    "name": "mezz/jei/gui/overlay/IngredientGridWithNavigation$IngredientGridPaged",
+    "interfaces": [
+      "mezz/jei/input/IPaged"
+    ]
+  },
+  "mezz/jei/gui/overlay/IngredientListOverlay": {
+    "name": "mezz/jei/gui/overlay/IngredientListOverlay",
+    "interfaces": [
+      "mezz/jei/api/IIngredientListOverlay",
+      "mezz/jei/input/IMouseHandler",
+      "mezz/jei/input/IShowsRecipeFocuses"
+    ]
+  },
+  "mezz/jei/gui/overlay/ItemListOverlay": {
+    "name": "mezz/jei/gui/overlay/ItemListOverlay",
+    "interfaces": [
+      "mezz/jei/api/IItemListOverlay"
+    ]
+  },
+  "mezz/jei/gui/overlay/bookmarks/BookmarkOverlay": {
+    "name": "mezz/jei/gui/overlay/bookmarks/BookmarkOverlay",
+    "interfaces": [
+      "mezz/jei/input/IShowsRecipeFocuses",
+      "mezz/jei/gui/overlay/bookmarks/ILeftAreaContent",
+      "mezz/jei/api/IBookmarkOverlay"
+    ]
+  },
+  "mezz/jei/gui/overlay/bookmarks/ILeftAreaContent": {
+    "name": "mezz/jei/gui/overlay/bookmarks/ILeftAreaContent",
+    "interfaces": [
+      "mezz/jei/input/IShowsRecipeFocuses"
+    ]
+  },
+  "mezz/jei/gui/overlay/bookmarks/LeftAreaDispatcher": {
+    "name": "mezz/jei/gui/overlay/bookmarks/LeftAreaDispatcher",
+    "interfaces": [
+      "mezz/jei/input/IShowsRecipeFocuses",
+      "mezz/jei/input/IPaged"
+    ]
+  },
+  "mezz/jei/gui/overlay/bookmarks/package-info": {
+    "name": "mezz/jei/gui/overlay/bookmarks/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/gui/overlay/bookmarks/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/gui/overlay/bookmarks/package-info"
+      }
+    ]
+  },
+  "mezz/jei/gui/overlay/package-info": {
+    "name": "mezz/jei/gui/overlay/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/gui/overlay/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/gui/overlay/package-info"
+      }
+    ]
+  },
+  "mezz/jei/gui/package-info": {
+    "name": "mezz/jei/gui/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/gui/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/gui/package-info"
+      }
+    ]
+  },
+  "mezz/jei/gui/recipes/RecipeCatalysts": {
+    "name": "mezz/jei/gui/recipes/RecipeCatalysts",
+    "interfaces": [
+      "mezz/jei/input/IShowsRecipeFocuses"
+    ]
+  },
+  "mezz/jei/gui/recipes/RecipeGuiLogic": {
+    "name": "mezz/jei/gui/recipes/RecipeGuiLogic",
+    "interfaces": [
+      "mezz/jei/gui/recipes/IRecipeGuiLogic"
+    ]
+  },
+  "mezz/jei/gui/recipes/RecipeGuiTab": {
+    "name": "mezz/jei/gui/recipes/RecipeGuiTab",
+    "interfaces": [
+      "mezz/jei/input/IMouseHandler"
+    ]
+  },
+  "mezz/jei/gui/recipes/RecipeGuiTabs": {
+    "name": "mezz/jei/gui/recipes/RecipeGuiTabs",
+    "interfaces": [
+      "mezz/jei/input/IMouseHandler",
+      "mezz/jei/input/IPaged"
+    ]
+  },
+  "mezz/jei/gui/recipes/RecipeLayout": {
+    "name": "mezz/jei/gui/recipes/RecipeLayout",
+    "interfaces": [
+      "mezz/jei/api/gui/IRecipeLayoutDrawable"
+    ]
+  },
+  "mezz/jei/gui/recipes/RecipesGui": {
+    "name": "mezz/jei/gui/recipes/RecipesGui",
+    "interfaces": [
+      "mezz/jei/api/IRecipesGui",
+      "mezz/jei/input/IShowsRecipeFocuses",
+      "mezz/jei/gui/recipes/IRecipeLogicStateListener"
+    ]
+  },
+  "mezz/jei/gui/recipes/package-info": {
+    "name": "mezz/jei/gui/recipes/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/gui/recipes/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/gui/recipes/package-info"
+      }
+    ]
+  },
+  "mezz/jei/gui/textures/package-info": {
+    "name": "mezz/jei/gui/textures/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/gui/textures/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/gui/textures/package-info"
+      }
+    ]
+  },
+  "mezz/jei/ingredients/IngredientBlacklist": {
+    "name": "mezz/jei/ingredients/IngredientBlacklist",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientBlacklist"
+    ]
+  },
+  "mezz/jei/ingredients/IngredientFilter": {
+    "name": "mezz/jei/ingredients/IngredientFilter",
+    "interfaces": [
+      "mezz/jei/api/IIngredientFilter",
+      "mezz/jei/gui/overlay/IIngredientGridSource"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEditModeToggleEvent(Lmezz/jei/config/EditModeToggleEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerJoinedWorldEvent(Lmezz/jei/startup/PlayerJoinedWorldEvent;)V"
+      }
+    ]
+  },
+  "mezz/jei/ingredients/IngredientFilterBackgroundBuilder": {
+    "name": "mezz/jei/ingredients/IngredientFilterBackgroundBuilder",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "mezz/jei/ingredients/IngredientListElement": {
+    "name": "mezz/jei/ingredients/IngredientListElement",
+    "interfaces": [
+      "mezz/jei/gui/ingredients/IIngredientListElement"
+    ]
+  },
+  "mezz/jei/ingredients/IngredientListElementComparator": {
+    "name": "mezz/jei/ingredients/IngredientListElementComparator",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "mezz/jei/ingredients/IngredientRegistry": {
+    "name": "mezz/jei/ingredients/IngredientRegistry",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientRegistry"
+    ]
+  },
+  "mezz/jei/ingredients/Ingredients": {
+    "name": "mezz/jei/ingredients/Ingredients",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredients"
+    ]
+  },
+  "mezz/jei/ingredients/ItemBlacklist": {
+    "name": "mezz/jei/ingredients/ItemBlacklist",
+    "interfaces": [
+      "mezz/jei/api/IItemBlacklist"
+    ]
+  },
+  "mezz/jei/ingredients/package-info": {
+    "name": "mezz/jei/ingredients/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/ingredients/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/ingredients/package-info"
+      }
+    ]
+  },
+  "mezz/jei/input/ClickedIngredient": {
+    "name": "mezz/jei/input/ClickedIngredient",
+    "interfaces": [
+      "mezz/jei/input/IClickedIngredient"
+    ]
+  },
+  "mezz/jei/input/GuiContainerWrapper": {
+    "name": "mezz/jei/input/GuiContainerWrapper",
+    "interfaces": [
+      "mezz/jei/input/IShowsRecipeFocuses"
+    ]
+  },
+  "mezz/jei/input/InputHandler": {
+    "name": "mezz/jei/input/InputHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiKeyboardEvent(Lnet/minecraftforge/client/event/GuiScreenEvent$KeyboardInputEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiKeyboardEvent(Lnet/minecraftforge/client/event/GuiScreenEvent$KeyboardInputEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiMouseEvent(Lnet/minecraftforge/client/event/GuiScreenEvent$MouseInputEvent$Pre;)V"
+      }
+    ]
+  },
+  "mezz/jei/input/MouseHelper": {
+    "name": "mezz/jei/input/MouseHelper",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "mezz/jei/input/MouseHelper",
+        "values": {
+          "modid": {
+            "value": "jei"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiInit(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V"
+      }
+    ]
+  },
+  "mezz/jei/input/package-info": {
+    "name": "mezz/jei/input/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/input/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/input/package-info"
+      }
+    ]
+  },
+  "mezz/jei/network/PacketHandler": {
+    "name": "mezz/jei/network/PacketHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPacket(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ServerCustomPacketEvent;)V"
+      }
+    ]
+  },
+  "mezz/jei/network/PacketHandlerClient": {
+    "name": "mezz/jei/network/PacketHandlerClient",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPacket(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientCustomPacketEvent;)V"
+      }
+    ]
+  },
+  "mezz/jei/network/PacketIdClient": {
+    "name": "mezz/jei/network/PacketIdClient",
+    "interfaces": [
+      "mezz/jei/network/IPacketId"
+    ]
+  },
+  "mezz/jei/network/PacketIdServer": {
+    "name": "mezz/jei/network/PacketIdServer",
+    "interfaces": [
+      "mezz/jei/network/IPacketId"
+    ]
+  },
+  "mezz/jei/network/package-info": {
+    "name": "mezz/jei/network/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/network/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/network/package-info"
+      }
+    ]
+  },
+  "mezz/jei/network/packets/package-info": {
+    "name": "mezz/jei/network/packets/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/network/packets/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/network/packets/package-info"
+      }
+    ]
+  },
+  "mezz/jei/package-info": {
+    "name": "mezz/jei/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/package-info"
+      }
+    ]
+  },
+  "mezz/jei/plugins/jei/JEIInternalPlugin": {
+    "name": "mezz/jei/plugins/jei/JEIInternalPlugin",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "mezz/jei/plugins/jei/JEIInternalPlugin"
+      }
+    ]
+  },
+  "mezz/jei/plugins/jei/JEIInternalPlugin$1": {
+    "name": "mezz/jei/plugins/jei/JEIInternalPlugin$1",
+    "interfaces": [
+      "mezz/jei/api/gui/IAdvancedGuiHandler"
+    ]
+  },
+  "mezz/jei/plugins/jei/debug/DebugGhostIngredientHandler": {
+    "name": "mezz/jei/plugins/jei/debug/DebugGhostIngredientHandler",
+    "interfaces": [
+      "mezz/jei/api/gui/IGhostIngredientHandler"
+    ]
+  },
+  "mezz/jei/plugins/jei/debug/DebugGhostIngredientHandler$DebugInfoTarget": {
+    "name": "mezz/jei/plugins/jei/debug/DebugGhostIngredientHandler$DebugInfoTarget",
+    "interfaces": [
+      "mezz/jei/api/gui/IGhostIngredientHandler$Target"
+    ]
+  },
+  "mezz/jei/plugins/jei/debug/DebugRecipe": {
+    "name": "mezz/jei/plugins/jei/debug/DebugRecipe",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "mezz/jei/plugins/jei/debug/DebugRecipeCategory": {
+    "name": "mezz/jei/plugins/jei/debug/DebugRecipeCategory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeCategory"
+    ]
+  },
+  "mezz/jei/plugins/jei/debug/package-info": {
+    "name": "mezz/jei/plugins/jei/debug/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/plugins/jei/debug/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/plugins/jei/debug/package-info"
+      }
+    ]
+  },
+  "mezz/jei/plugins/jei/info/IngredientInfoRecipe": {
+    "name": "mezz/jei/plugins/jei/info/IngredientInfoRecipe",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "mezz/jei/plugins/jei/info/IngredientInfoRecipeCategory": {
+    "name": "mezz/jei/plugins/jei/info/IngredientInfoRecipeCategory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeCategory"
+    ]
+  },
+  "mezz/jei/plugins/jei/info/package-info": {
+    "name": "mezz/jei/plugins/jei/info/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/plugins/jei/info/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/plugins/jei/info/package-info"
+      }
+    ]
+  },
+  "mezz/jei/plugins/jei/ingredients/DebugIngredientHelper": {
+    "name": "mezz/jei/plugins/jei/ingredients/DebugIngredientHelper",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientHelper"
+    ]
+  },
+  "mezz/jei/plugins/jei/ingredients/DebugIngredientRenderer": {
+    "name": "mezz/jei/plugins/jei/ingredients/DebugIngredientRenderer",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientRenderer"
+    ]
+  },
+  "mezz/jei/plugins/jei/ingredients/package-info": {
+    "name": "mezz/jei/plugins/jei/ingredients/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/plugins/jei/ingredients/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/plugins/jei/ingredients/package-info"
+      }
+    ]
+  },
+  "mezz/jei/plugins/jei/package-info": {
+    "name": "mezz/jei/plugins/jei/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/plugins/jei/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/plugins/jei/package-info"
+      }
+    ]
+  },
+  "mezz/jei/plugins/vanilla/InventoryEffectRendererGuiHandler": {
+    "name": "mezz/jei/plugins/vanilla/InventoryEffectRendererGuiHandler",
+    "interfaces": [
+      "mezz/jei/api/gui/IAdvancedGuiHandler"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/RecipeBookGuiHandler": {
+    "name": "mezz/jei/plugins/vanilla/RecipeBookGuiHandler",
+    "interfaces": [
+      "mezz/jei/api/gui/IAdvancedGuiHandler"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/VanillaPlugin": {
+    "name": "mezz/jei/plugins/vanilla/VanillaPlugin",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "mezz/jei/plugins/vanilla/VanillaPlugin"
+      }
+    ]
+  },
+  "mezz/jei/plugins/vanilla/VanillaRecipeFactory": {
+    "name": "mezz/jei/plugins/vanilla/VanillaRecipeFactory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IVanillaRecipeFactory"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/anvil/AnvilRecipeCategory": {
+    "name": "mezz/jei/plugins/vanilla/anvil/AnvilRecipeCategory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeCategory"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/anvil/AnvilRecipeWrapper": {
+    "name": "mezz/jei/plugins/vanilla/anvil/AnvilRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/anvil/package-info": {
+    "name": "mezz/jei/plugins/vanilla/anvil/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/anvil/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/anvil/package-info"
+      }
+    ]
+  },
+  "mezz/jei/plugins/vanilla/brewing/BrewingRecipeCategory": {
+    "name": "mezz/jei/plugins/vanilla/brewing/BrewingRecipeCategory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeCategory"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/brewing/BrewingRecipeCategory$BrewingBubblesTickTimer": {
+    "name": "mezz/jei/plugins/vanilla/brewing/BrewingRecipeCategory$BrewingBubblesTickTimer",
+    "interfaces": [
+      "mezz/jei/api/gui/ITickTimer"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/brewing/BrewingRecipeWrapper": {
+    "name": "mezz/jei/plugins/vanilla/brewing/BrewingRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/brewing/PotionSubtypeInterpreter": {
+    "name": "mezz/jei/plugins/vanilla/brewing/PotionSubtypeInterpreter",
+    "interfaces": [
+      "mezz/jei/api/ISubtypeRegistry$ISubtypeInterpreter"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/brewing/package-info": {
+    "name": "mezz/jei/plugins/vanilla/brewing/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/brewing/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/brewing/package-info"
+      }
+    ]
+  },
+  "mezz/jei/plugins/vanilla/crafting/CraftingRecipeCategory": {
+    "name": "mezz/jei/plugins/vanilla/crafting/CraftingRecipeCategory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeCategory"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/crafting/ShapedOreRecipeWrapper": {
+    "name": "mezz/jei/plugins/vanilla/crafting/ShapedOreRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/wrapper/IShapedCraftingRecipeWrapper"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/crafting/ShapedRecipesWrapper": {
+    "name": "mezz/jei/plugins/vanilla/crafting/ShapedRecipesWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/wrapper/IShapedCraftingRecipeWrapper"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/crafting/ShapelessRecipeWrapper": {
+    "name": "mezz/jei/plugins/vanilla/crafting/ShapelessRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/wrapper/ICraftingRecipeWrapper"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/crafting/TippedArrowRecipeWrapper": {
+    "name": "mezz/jei/plugins/vanilla/crafting/TippedArrowRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/wrapper/IShapedCraftingRecipeWrapper"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/crafting/package-info": {
+    "name": "mezz/jei/plugins/vanilla/crafting/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/crafting/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/crafting/package-info"
+      }
+    ]
+  },
+  "mezz/jei/plugins/vanilla/furnace/FuelRecipe": {
+    "name": "mezz/jei/plugins/vanilla/furnace/FuelRecipe",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/furnace/FurnaceRecipeCategory": {
+    "name": "mezz/jei/plugins/vanilla/furnace/FurnaceRecipeCategory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeCategory"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/furnace/SmeltingRecipe": {
+    "name": "mezz/jei/plugins/vanilla/furnace/SmeltingRecipe",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/furnace/package-info": {
+    "name": "mezz/jei/plugins/vanilla/furnace/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/furnace/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/furnace/package-info"
+      }
+    ]
+  },
+  "mezz/jei/plugins/vanilla/ingredients/enchant/EnchantDataHelper": {
+    "name": "mezz/jei/plugins/vanilla/ingredients/enchant/EnchantDataHelper",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientHelper"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/ingredients/enchant/EnchantDataRenderer": {
+    "name": "mezz/jei/plugins/vanilla/ingredients/enchant/EnchantDataRenderer",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientRenderer"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/ingredients/enchant/EnchantedBookCache": {
+    "name": "mezz/jei/plugins/vanilla/ingredients/enchant/EnchantedBookCache",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerJoinedWorldEvent(Lmezz/jei/startup/PlayerJoinedWorldEvent;)V"
+      }
+    ]
+  },
+  "mezz/jei/plugins/vanilla/ingredients/enchant/package-info": {
+    "name": "mezz/jei/plugins/vanilla/ingredients/enchant/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/ingredients/enchant/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/ingredients/enchant/package-info"
+      }
+    ]
+  },
+  "mezz/jei/plugins/vanilla/ingredients/fluid/FluidStackHelper": {
+    "name": "mezz/jei/plugins/vanilla/ingredients/fluid/FluidStackHelper",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientHelper"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/ingredients/fluid/FluidStackRenderer": {
+    "name": "mezz/jei/plugins/vanilla/ingredients/fluid/FluidStackRenderer",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientRenderer"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/ingredients/fluid/package-info": {
+    "name": "mezz/jei/plugins/vanilla/ingredients/fluid/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/ingredients/fluid/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/ingredients/fluid/package-info"
+      }
+    ]
+  },
+  "mezz/jei/plugins/vanilla/ingredients/item/ItemStackHelper": {
+    "name": "mezz/jei/plugins/vanilla/ingredients/item/ItemStackHelper",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientHelper"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/ingredients/item/ItemStackListFactory$FluidSubtypeInterpreter": {
+    "name": "mezz/jei/plugins/vanilla/ingredients/item/ItemStackListFactory$FluidSubtypeInterpreter",
+    "interfaces": [
+      "mezz/jei/api/ISubtypeRegistry$ISubtypeInterpreter"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/ingredients/item/ItemStackRenderer": {
+    "name": "mezz/jei/plugins/vanilla/ingredients/item/ItemStackRenderer",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientRenderer"
+    ]
+  },
+  "mezz/jei/plugins/vanilla/ingredients/item/package-info": {
+    "name": "mezz/jei/plugins/vanilla/ingredients/item/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/ingredients/item/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/ingredients/item/package-info"
+      }
+    ]
+  },
+  "mezz/jei/plugins/vanilla/ingredients/package-info": {
+    "name": "mezz/jei/plugins/vanilla/ingredients/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/ingredients/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/ingredients/package-info"
+      }
+    ]
+  },
+  "mezz/jei/plugins/vanilla/package-info": {
+    "name": "mezz/jei/plugins/vanilla/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/plugins/vanilla/package-info"
+      }
+    ]
+  },
+  "mezz/jei/recipes/InternalRecipeRegistryPlugin": {
+    "name": "mezz/jei/recipes/InternalRecipeRegistryPlugin",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeRegistryPlugin"
+    ]
+  },
+  "mezz/jei/recipes/RecipeCategoryComparator": {
+    "name": "mezz/jei/recipes/RecipeCategoryComparator",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "mezz/jei/recipes/RecipeRegistry": {
+    "name": "mezz/jei/recipes/RecipeRegistry",
+    "interfaces": [
+      "mezz/jei/api/IRecipeRegistry"
+    ]
+  },
+  "mezz/jei/recipes/RecipeRegistryPluginSafeWrapper": {
+    "name": "mezz/jei/recipes/RecipeRegistryPluginSafeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeRegistryPlugin"
+    ]
+  },
+  "mezz/jei/recipes/RecipeTransferRegistry": {
+    "name": "mezz/jei/recipes/RecipeTransferRegistry",
+    "interfaces": [
+      "mezz/jei/api/recipe/transfer/IRecipeTransferRegistry"
+    ]
+  },
+  "mezz/jei/recipes/package-info": {
+    "name": "mezz/jei/recipes/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/recipes/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/recipes/package-info"
+      }
+    ]
+  },
+  "mezz/jei/render/package-info": {
+    "name": "mezz/jei/render/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/render/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/render/package-info"
+      }
+    ]
+  },
+  "mezz/jei/runtime/JeiHelpers": {
+    "name": "mezz/jei/runtime/JeiHelpers",
+    "interfaces": [
+      "mezz/jei/api/IJeiHelpers"
+    ]
+  },
+  "mezz/jei/runtime/JeiRuntime": {
+    "name": "mezz/jei/runtime/JeiRuntime",
+    "interfaces": [
+      "mezz/jei/api/IJeiRuntime"
+    ]
+  },
+  "mezz/jei/runtime/SubtypeRegistry": {
+    "name": "mezz/jei/runtime/SubtypeRegistry",
+    "interfaces": [
+      "mezz/jei/api/ISubtypeRegistry"
+    ]
+  },
+  "mezz/jei/runtime/SubtypeRegistry$AllNbt": {
+    "name": "mezz/jei/runtime/SubtypeRegistry$AllNbt",
+    "interfaces": [
+      "mezz/jei/api/ISubtypeRegistry$ISubtypeInterpreter"
+    ]
+  },
+  "mezz/jei/runtime/package-info": {
+    "name": "mezz/jei/runtime/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/runtime/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/runtime/package-info"
+      }
+    ]
+  },
+  "mezz/jei/startup/AbstractModIdHelper": {
+    "name": "mezz/jei/startup/AbstractModIdHelper",
+    "interfaces": [
+      "mezz/jei/startup/IModIdHelper"
+    ]
+  },
+  "mezz/jei/startup/ModIngredientRegistration": {
+    "name": "mezz/jei/startup/ModIngredientRegistration",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IModIngredientRegistration"
+    ]
+  },
+  "mezz/jei/startup/ModRegistry": {
+    "name": "mezz/jei/startup/ModRegistry",
+    "interfaces": [
+      "mezz/jei/api/IModRegistry",
+      "mezz/jei/api/recipe/IRecipeCategoryRegistration"
+    ]
+  },
+  "mezz/jei/startup/ModRegistry$1": {
+    "name": "mezz/jei/startup/ModRegistry$1",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeHandler"
+    ]
+  },
+  "mezz/jei/startup/ProxyCommonClient": {
+    "name": "mezz/jei/startup/ProxyCommonClient",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientConnectedToServer(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldSave(Lnet/minecraftforge/event/world/WorldEvent$Save;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "handleTextureRemap(Lnet/minecraftforge/client/event/TextureStitchEvent$Pre;)V"
+      }
+    ]
+  },
+  "mezz/jei/startup/StackHelper": {
+    "name": "mezz/jei/startup/StackHelper",
+    "interfaces": [
+      "mezz/jei/api/recipe/IStackHelper"
+    ]
+  },
+  "mezz/jei/startup/StackHelper$DelegateIterator": {
+    "name": "mezz/jei/startup/StackHelper$DelegateIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "mezz/jei/startup/StackHelper$MatchingIndexed": {
+    "name": "mezz/jei/startup/StackHelper$MatchingIndexed",
+    "interfaces": [
+      "java/lang/Iterable"
+    ]
+  },
+  "mezz/jei/startup/StackHelper$MatchingIndexed$1$1": {
+    "name": "mezz/jei/startup/StackHelper$MatchingIndexed$1$1",
+    "interfaces": [
+      "mezz/jei/startup/StackHelper$ItemStackMatchable"
+    ]
+  },
+  "mezz/jei/startup/StackHelper$MatchingIterable": {
+    "name": "mezz/jei/startup/StackHelper$MatchingIterable",
+    "interfaces": [
+      "java/lang/Iterable"
+    ]
+  },
+  "mezz/jei/startup/StackHelper$MatchingIterable$1$1": {
+    "name": "mezz/jei/startup/StackHelper$MatchingIterable$1$1",
+    "interfaces": [
+      "mezz/jei/startup/StackHelper$ItemStackMatchable"
+    ]
+  },
+  "mezz/jei/startup/package-info": {
+    "name": "mezz/jei/startup/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/startup/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/startup/package-info"
+      }
+    ]
+  },
+  "mezz/jei/suffixtree/CombinedSearchTrees": {
+    "name": "mezz/jei/suffixtree/CombinedSearchTrees",
+    "interfaces": [
+      "mezz/jei/suffixtree/ISearchTree"
+    ]
+  },
+  "mezz/jei/suffixtree/GeneralizedSuffixTree": {
+    "name": "mezz/jei/suffixtree/GeneralizedSuffixTree",
+    "interfaces": [
+      "mezz/jei/suffixtree/ISearchTree"
+    ]
+  },
+  "mezz/jei/suffixtree/package-info": {
+    "name": "mezz/jei/suffixtree/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/suffixtree/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/suffixtree/package-info"
+      }
+    ]
+  },
+  "mezz/jei/transfer/BasicRecipeTransferHandler": {
+    "name": "mezz/jei/transfer/BasicRecipeTransferHandler",
+    "interfaces": [
+      "mezz/jei/api/recipe/transfer/IRecipeTransferHandler"
+    ]
+  },
+  "mezz/jei/transfer/BasicRecipeTransferInfo": {
+    "name": "mezz/jei/transfer/BasicRecipeTransferInfo",
+    "interfaces": [
+      "mezz/jei/api/recipe/transfer/IRecipeTransferInfo"
+    ]
+  },
+  "mezz/jei/transfer/PlayerRecipeTransferHandler": {
+    "name": "mezz/jei/transfer/PlayerRecipeTransferHandler",
+    "interfaces": [
+      "mezz/jei/api/recipe/transfer/IRecipeTransferHandler"
+    ]
+  },
+  "mezz/jei/transfer/RecipeTransferErrorInternal": {
+    "name": "mezz/jei/transfer/RecipeTransferErrorInternal",
+    "interfaces": [
+      "mezz/jei/api/recipe/transfer/IRecipeTransferError"
+    ]
+  },
+  "mezz/jei/transfer/RecipeTransferErrorTooltip": {
+    "name": "mezz/jei/transfer/RecipeTransferErrorTooltip",
+    "interfaces": [
+      "mezz/jei/api/recipe/transfer/IRecipeTransferError"
+    ]
+  },
+  "mezz/jei/transfer/RecipeTransferHandlerHelper": {
+    "name": "mezz/jei/transfer/RecipeTransferHandlerHelper",
+    "interfaces": [
+      "mezz/jei/api/recipe/transfer/IRecipeTransferHandlerHelper"
+    ]
+  },
+  "mezz/jei/transfer/package-info": {
+    "name": "mezz/jei/transfer/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/transfer/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/transfer/package-info"
+      }
+    ]
+  },
+  "mezz/jei/util/FieldsAreNonnullByDefault": {
+    "name": "mezz/jei/util/FieldsAreNonnullByDefault",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "mezz/jei/util/package-info": {
+    "name": "mezz/jei/util/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/util/FieldsAreNonnullByDefault;",
+        "target": "mezz/jei/util/package-info"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "mezz/jei/util/package-info"
+      }
+    ]
+  }
+}

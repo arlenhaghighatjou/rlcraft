@@ -1,0 +1,137 @@
+package nightkosh.advanced_fishing.core;
+
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.LootEntry;
+import net.minecraft.world.storage.loot.LootEntryTable;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraft.world.storage.loot.RandomValueRange;
+import net.minecraft.world.storage.loot.conditions.LootCondition;
+import net.minecraftforge.event.LootTableLoadEvent;
+
+public class LootTables {
+   public static final ResourceLocation FISHING = new ResourceLocation("advanced-fishing", "gameplay/fishing");
+   public static final ResourceLocation FISHING_TIER1 = new ResourceLocation("advanced-fishing", "gameplay/fishing/tier_1");
+   public static final ResourceLocation FISHING_TIER2 = new ResourceLocation("advanced-fishing", "gameplay/fishing/tier_2");
+   public static final ResourceLocation FISHING_TIER3 = new ResourceLocation("advanced-fishing", "gameplay/fishing/tier_3");
+   public static final ResourceLocation FISHING_TIER4 = new ResourceLocation("advanced-fishing", "gameplay/fishing/tier_4");
+   public static final ResourceLocation FISHING_SANDY = new ResourceLocation("advanced-fishing", "gameplay/fishing_sandy");
+   public static final ResourceLocation FISHING_SANDY_TIER2 = new ResourceLocation("advanced-fishing", "gameplay/fishing/sandy/tier_2");
+   public static final ResourceLocation FISHING_SANDY_TIER3 = new ResourceLocation("advanced-fishing", "gameplay/fishing/sandy/tier_3");
+   public static final ResourceLocation FISHING_SANDY_TIER4 = new ResourceLocation("advanced-fishing", "gameplay/fishing/sandy/tier_4");
+   public static final ResourceLocation FISHING_SNOWY = new ResourceLocation("advanced-fishing", "gameplay/fishing_snowy");
+   public static final ResourceLocation FISHING_SNOWY_TIER2 = new ResourceLocation("advanced-fishing", "gameplay/fishing/snowy/tier_2");
+   public static final ResourceLocation FISHING_SNOWY_TIER3 = new ResourceLocation("advanced-fishing", "gameplay/fishing/snowy/tier_3");
+   public static final ResourceLocation FISHING_SNOWY_TIER4 = new ResourceLocation("advanced-fishing", "gameplay/fishing/snowy/tier_4");
+   public static final ResourceLocation FISHING_SWAMP = new ResourceLocation("advanced-fishing", "gameplay/fishing_swamp");
+   public static final ResourceLocation FISHING_SWAMP_TIER2 = new ResourceLocation("advanced-fishing", "gameplay/fishing/swamp/tier_2");
+   public static final ResourceLocation FISHING_SWAMP_TIER3 = new ResourceLocation("advanced-fishing", "gameplay/fishing/swamp/tier_3");
+   public static final ResourceLocation FISHING_SWAMP_TIER4 = new ResourceLocation("advanced-fishing", "gameplay/fishing/swamp/tier_4");
+   public static final ResourceLocation FISHING_JUNGLE = new ResourceLocation("advanced-fishing", "gameplay/fishing_jungle");
+   public static final ResourceLocation FISHING_JUNGLE_TIER2 = new ResourceLocation("advanced-fishing", "gameplay/fishing/jungle/tier_2");
+   public static final ResourceLocation FISHING_JUNGLE_TIER3 = new ResourceLocation("advanced-fishing", "gameplay/fishing/jungle/tier_3");
+   public static final ResourceLocation FISHING_JUNGLE_TIER4 = new ResourceLocation("advanced-fishing", "gameplay/fishing/jungle/tier_4");
+   public static final ResourceLocation FISHING_OCEAN = new ResourceLocation("advanced-fishing", "gameplay/fishing_ocean");
+   public static final ResourceLocation FISHING_OCEAN_TIER1 = new ResourceLocation("advanced-fishing", "gameplay/fishing/ocean/tier_1");
+   public static final ResourceLocation FISHING_OCEAN_TIER2 = new ResourceLocation("advanced-fishing", "gameplay/fishing/ocean/tier_2");
+   public static final ResourceLocation FISHING_OCEAN_TIER3 = new ResourceLocation("advanced-fishing", "gameplay/fishing/ocean/tier_3");
+   public static final ResourceLocation FISHING_OCEAN_TIER4 = new ResourceLocation("advanced-fishing", "gameplay/fishing/ocean/tier_4");
+   public static final ResourceLocation FISHING_OCEAN_DEEP = new ResourceLocation("advanced-fishing", "gameplay/fishing_ocean_deep");
+   public static final ResourceLocation FISHING_OCEAN_DEEP_TIER3 = new ResourceLocation("advanced-fishing", "gameplay/fishing/ocean_deep/tier_3");
+   public static final ResourceLocation FISHING_OCEAN_DEEP_TIER4 = new ResourceLocation("advanced-fishing", "gameplay/fishing/ocean_deep/tier_4");
+   public static final ResourceLocation FISHING_BEACH = new ResourceLocation("advanced-fishing", "gameplay/fishing_beach");
+   public static final ResourceLocation FISHING_END = new ResourceLocation("advanced-fishing", "gameplay/fishing_end");
+   public static final ResourceLocation FISHING_END_TIER1 = new ResourceLocation("advanced-fishing", "gameplay/fishing/end/tier_1");
+   public static final ResourceLocation FISHING_END_TIER2 = new ResourceLocation("advanced-fishing", "gameplay/fishing/end/tier_2");
+   public static final ResourceLocation FISHING_END_TIER3 = new ResourceLocation("advanced-fishing", "gameplay/fishing/end/tier_3");
+   public static final ResourceLocation FISHING_MUSHROOM = new ResourceLocation("advanced-fishing", "gameplay/fishing_mushroom");
+   public static final ResourceLocation FISHING_MUSHROOM_TIER3 = new ResourceLocation("advanced-fishing", "gameplay/fishing/mushroom/tier_3");
+   public static final ResourceLocation FISHING_CAVE_50 = new ResourceLocation("advanced-fishing", "gameplay/fishing/cave/50");
+   public static final ResourceLocation FISHING_CAVE_40 = new ResourceLocation("advanced-fishing", "gameplay/fishing/cave/40");
+   public static final ResourceLocation FISHING_CAVE_25 = new ResourceLocation("advanced-fishing", "gameplay/fishing/cave/25");
+   public static final ResourceLocation FISHING_LAVA = new ResourceLocation("advanced-fishing", "gameplay/fishing_lava");
+   public static final ResourceLocation FISHING_LAVA_TIER1 = new ResourceLocation("advanced-fishing", "gameplay/fishing_lava/tier_1");
+   public static final ResourceLocation FISHING_LAVA_TIER2 = new ResourceLocation("advanced-fishing", "gameplay/fishing_lava/tier_2");
+   public static final ResourceLocation FISHING_LAVA_TREASURE = new ResourceLocation("advanced-fishing", "gameplay/fishing_lava/treasure");
+   public static final ResourceLocation FISHING_LAVA_NETHER = new ResourceLocation("advanced-fishing", "gameplay/fishing_lava_nether");
+   public static final ResourceLocation FISHING_LAVA_NETHER_TIER1 = new ResourceLocation("advanced-fishing", "gameplay/fishing_lava_nether/tier_1");
+   public static final ResourceLocation FISHING_LAVA_NETHER_TIER2 = new ResourceLocation("advanced-fishing", "gameplay/fishing_lava_nether/tier_2");
+   public static final ResourceLocation FISHING_LAVA_NETHER_TIER3 = new ResourceLocation("advanced-fishing", "gameplay/fishing_lava_nether/tier_3");
+   public static final ResourceLocation FISHING_LAVA_NETHER_TIER4 = new ResourceLocation("advanced-fishing", "gameplay/fishing_lava_nether/tier_4");
+   public static final ResourceLocation FISHING_LAVA_NETHER_TREASURE = new ResourceLocation("advanced-fishing", "gameplay/fishing_lava_nether/treasure");
+   public static final ResourceLocation FISHING_DEAD = new ResourceLocation("advanced-fishing", "gameplay/fishing_dead");
+   public static final ResourceLocation FISHING_DEAD_TIER1 = new ResourceLocation("advanced-fishing", "gameplay/fishing/dead/tier_1");
+   public static final ResourceLocation FISHING_DEAD_TIER2 = new ResourceLocation("advanced-fishing", "gameplay/fishing/dead/tier_2");
+   public static final ResourceLocation FISHING_DEAD_TIER3 = new ResourceLocation("advanced-fishing", "gameplay/fishing/dead/tier_3");
+   public static final ResourceLocation FISHING_DEAD_TREASURE = new ResourceLocation("advanced-fishing", "gameplay/fishing/dead/treasure");
+   public static final ResourceLocation INJECT_NETHER_BRIDGE = new ResourceLocation("advanced-fishing", "inject/nether_bridge");
+
+   public LootTables() {
+   }
+
+   public static void registration() {
+      LootTableList.register(FISHING);
+      LootTableList.register(FISHING_TIER1);
+      LootTableList.register(FISHING_TIER2);
+      LootTableList.register(FISHING_TIER3);
+      LootTableList.register(FISHING_TIER4);
+      LootTableList.register(FISHING_SANDY);
+      LootTableList.register(FISHING_SANDY_TIER2);
+      LootTableList.register(FISHING_SANDY_TIER3);
+      LootTableList.register(FISHING_SANDY_TIER4);
+      LootTableList.register(FISHING_SNOWY);
+      LootTableList.register(FISHING_SNOWY_TIER2);
+      LootTableList.register(FISHING_SNOWY_TIER3);
+      LootTableList.register(FISHING_SNOWY_TIER4);
+      LootTableList.register(FISHING_SWAMP);
+      LootTableList.register(FISHING_SWAMP_TIER2);
+      LootTableList.register(FISHING_SWAMP_TIER3);
+      LootTableList.register(FISHING_SWAMP_TIER4);
+      LootTableList.register(FISHING_JUNGLE);
+      LootTableList.register(FISHING_JUNGLE_TIER2);
+      LootTableList.register(FISHING_JUNGLE_TIER3);
+      LootTableList.register(FISHING_JUNGLE_TIER4);
+      LootTableList.register(FISHING_OCEAN);
+      LootTableList.register(FISHING_OCEAN_TIER1);
+      LootTableList.register(FISHING_OCEAN_TIER2);
+      LootTableList.register(FISHING_OCEAN_TIER3);
+      LootTableList.register(FISHING_OCEAN_TIER4);
+      LootTableList.register(FISHING_OCEAN_DEEP);
+      LootTableList.register(FISHING_OCEAN_DEEP_TIER3);
+      LootTableList.register(FISHING_OCEAN_DEEP_TIER4);
+      LootTableList.register(FISHING_BEACH);
+      LootTableList.register(FISHING_END);
+      LootTableList.register(FISHING_END_TIER1);
+      LootTableList.register(FISHING_END_TIER2);
+      LootTableList.register(FISHING_END_TIER3);
+      LootTableList.register(FISHING_MUSHROOM);
+      LootTableList.register(FISHING_MUSHROOM_TIER3);
+      LootTableList.register(FISHING_CAVE_50);
+      LootTableList.register(FISHING_CAVE_40);
+      LootTableList.register(FISHING_CAVE_25);
+      LootTableList.register(FISHING_LAVA);
+      LootTableList.register(FISHING_LAVA_TIER1);
+      LootTableList.register(FISHING_LAVA_TIER2);
+      LootTableList.register(FISHING_LAVA_TREASURE);
+      LootTableList.register(FISHING_LAVA_NETHER);
+      LootTableList.register(FISHING_LAVA_NETHER_TIER1);
+      LootTableList.register(FISHING_LAVA_NETHER_TIER2);
+      LootTableList.register(FISHING_LAVA_NETHER_TIER3);
+      LootTableList.register(FISHING_LAVA_NETHER_TIER4);
+      LootTableList.register(FISHING_LAVA_NETHER_TREASURE);
+      LootTableList.register(FISHING_DEAD);
+      LootTableList.register(FISHING_DEAD_TIER1);
+      LootTableList.register(FISHING_DEAD_TIER2);
+      LootTableList.register(FISHING_DEAD_TIER3);
+      LootTableList.register(FISHING_DEAD_TREASURE);
+   }
+
+   public static void inject(LootTableLoadEvent event) {
+      if (event.getName().toString().equals("minecraft:chests/nether_bridge")) {
+         LootEntry entry = new LootEntryTable(INJECT_NETHER_BRIDGE, 1, 1, new LootCondition[0], "nether_bridge_blazing_fishing_pole");
+         LootPool pool = new LootPool(new LootEntry[]{entry}, new LootCondition[0], new RandomValueRange(1.0F, 1.0F), new RandomValueRange(0.0F, 0.0F), "nether_bridge_blazing_fishing_pole");
+         event.getTable().addPool(pool);
+      }
+
+   }
+}

@@ -1,0 +1,9 @@
+{
+	"parent": "mcwbridges:block/parent/rail_bridge",
+	"textures": {
+		"0": "minecraft:blocks/planks_acacia",
+		"1": "minecraft:blocks/log_acacia",
+		"2": "minecraft:blocks/log_acacia_top",
+		"particle": "minecraft:blocks/log_acacia"
+	}
+}

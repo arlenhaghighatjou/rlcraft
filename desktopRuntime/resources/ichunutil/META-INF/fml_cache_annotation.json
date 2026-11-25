@@ -1,0 +1,1106 @@
+{
+  "me/ichun/mods/ichunutil/api/event/BlockEntityEvent$Pickup": {
+    "name": "me/ichun/mods/ichunutil/api/event/BlockEntityEvent$Pickup",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "me/ichun/mods/ichunutil/api/event/BlockEntityEvent$Pickup"
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/api/event/BlockEntityEvent$Place": {
+    "name": "me/ichun/mods/ichunutil/api/event/BlockEntityEvent$Place",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "me/ichun/mods/ichunutil/api/event/BlockEntityEvent$Place"
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/api/package-info": {
+    "name": "me/ichun/mods/ichunutil/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "me/ichun/mods/ichunutil/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "1.2.0"
+          },
+          "owner": {
+            "value": "iChun"
+          },
+          "provides": {
+            "value": "iChunUtil API"
+          }
+        }
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/api/worldportals/ApiDummy": {
+    "name": "me/ichun/mods/ichunutil/api/worldportals/ApiDummy",
+    "interfaces": [
+      "me/ichun/mods/ichunutil/api/worldportals/IApi"
+    ]
+  },
+  "me/ichun/mods/ichunutil/client/core/event/EventHandlerClient": {
+    "name": "me/ichun/mods/ichunutil/client/core/event/EventHandlerClient",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRendererSafeCompatibility(Lme/ichun/mods/ichunutil/client/core/event/RendererSafeCompatibilityEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelRegistry(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRenderPre(Lnet/minecraftforge/client/event/RenderPlayerEvent$Pre;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRenderPost(Lnet/minecraftforge/client/event/RenderPlayerEvent$Post;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderSpecificHand(Lnet/minecraftforge/client/event/RenderSpecificHandEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientConnection(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientDisconnect(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientDisconnectionFromServerEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInitGuiPost(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntitySpawn(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLatchedRendererUpdate(Lme/ichun/mods/ichunutil/client/entity/EntityLatchedRenderer$EntityLatchedRendererUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLatchedRendererRender(Lme/ichun/mods/ichunutil/client/render/entity/RenderLatchedRenderer$RenderLatchedRendererEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiActionPerformed(Lnet/minecraftforge/client/event/GuiScreenEvent$ActionPerformedEvent$Pre;)V"
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/client/gui/Theme": {
+    "name": "me/ichun/mods/ichunutil/client/gui/Theme",
+    "interfaces": [
+      "me/ichun/mods/ichunutil/client/gui/window/element/IListable"
+    ]
+  },
+  "me/ichun/mods/ichunutil/client/gui/window/element/ElementNumberInput": {
+    "name": "me/ichun/mods/ichunutil/client/gui/window/element/ElementNumberInput",
+    "interfaces": [
+      "me/ichun/mods/ichunutil/client/gui/window/element/ITextInput"
+    ]
+  },
+  "me/ichun/mods/ichunutil/client/gui/window/element/ElementTextInput": {
+    "name": "me/ichun/mods/ichunutil/client/gui/window/element/ElementTextInput",
+    "interfaces": [
+      "me/ichun/mods/ichunutil/client/gui/window/element/ITextInput"
+    ]
+  },
+  "me/ichun/mods/ichunutil/client/model/item/ModelBaseWrapper": {
+    "name": "me/ichun/mods/ichunutil/client/model/item/ModelBaseWrapper",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "me/ichun/mods/ichunutil/client/model/item/ModelEmpty": {
+    "name": "me/ichun/mods/ichunutil/client/model/item/ModelEmpty",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "me/ichun/mods/ichunutil/client/module/patron/LayerPatronEffect": {
+    "name": "me/ichun/mods/ichunutil/client/module/patron/LayerPatronEffect",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "me/ichun/mods/ichunutil/client/module/patron/PatronTracker": {
+    "name": "me/ichun/mods/ichunutil/client/module/patron/PatronTracker",
+    "interfaces": [
+      "me/ichun/mods/ichunutil/common/core/tracker/EntityTrackerRegistry$IAdditionalTrackerInfo"
+    ]
+  },
+  "me/ichun/mods/ichunutil/client/module/tabula/model/ModelInfo": {
+    "name": "me/ichun/mods/ichunutil/client/module/tabula/model/ModelInfo",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "me/ichun/mods/ichunutil/client/render/entity/RenderBlock$RenderFactory": {
+    "name": "me/ichun/mods/ichunutil/client/render/entity/RenderBlock$RenderFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "me/ichun/mods/ichunutil/client/render/entity/RenderLatchedRenderer$RenderFactory": {
+    "name": "me/ichun/mods/ichunutil/client/render/entity/RenderLatchedRenderer$RenderFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/core/config/ConfigBase": {
+    "name": "me/ichun/mods/ichunutil/common/core/config/ConfigBase",
+    "interfaces": [
+      "java/lang/Comparable",
+      "me/ichun/mods/ichunutil/client/gui/window/element/IIdentifiable",
+      "me/ichun/mods/ichunutil/client/gui/window/element/IListable"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/core/config/ConfigBase$CategoryInfo": {
+    "name": "me/ichun/mods/ichunutil/common/core/config/ConfigBase$CategoryInfo",
+    "interfaces": [
+      "java/lang/Comparable",
+      "me/ichun/mods/ichunutil/client/gui/window/element/IIdentifiable",
+      "me/ichun/mods/ichunutil/client/gui/window/element/IListable"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/core/config/ConfigBase$PropInfo": {
+    "name": "me/ichun/mods/ichunutil/common/core/config/ConfigBase$PropInfo",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/core/config/GenericModGuiFactory": {
+    "name": "me/ichun/mods/ichunutil/common/core/config/GenericModGuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp": {
+    "name": "me/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/core/config/annotations/IntBool": {
+    "name": "me/ichun/mods/ichunutil/common/core/config/annotations/IntBool",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/core/config/annotations/IntMinMax": {
+    "name": "me/ichun/mods/ichunutil/common/core/config/annotations/IntMinMax",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/core/config/annotations/StringValues": {
+    "name": "me/ichun/mods/ichunutil/common/core/config/annotations/StringValues",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/core/event/EventHandlerServer": {
+    "name": "me/ichun/mods/ichunutil/common/core/event/EventHandlerServer",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerChangedDimension(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerChangedDimensionEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogout(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedOutEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntitySpawn(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegisterBlock(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegisterItem(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/core/util/EntityHelper$1": {
+    "name": "me/ichun/mods/ichunutil/common/core/util/EntityHelper$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/grab/handlers/GrabbedEntityBlockHandler": {
+    "name": "me/ichun/mods/ichunutil/common/grab/handlers/GrabbedEntityBlockHandler",
+    "interfaces": [
+      "me/ichun/mods/ichunutil/common/grab/GrabHandler$GrabbedEntityHandler"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/grab/handlers/GrabbedFallingBlockHandler": {
+    "name": "me/ichun/mods/ichunutil/common/grab/handlers/GrabbedFallingBlockHandler",
+    "interfaces": [
+      "me/ichun/mods/ichunutil/common/grab/GrabHandler$GrabbedEntityHandler"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/grab/handlers/GrabbedFireballHandler": {
+    "name": "me/ichun/mods/ichunutil/common/grab/handlers/GrabbedFireballHandler",
+    "interfaces": [
+      "me/ichun/mods/ichunutil/common/grab/GrabHandler$GrabbedEntityHandler"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/iChunUtil": {
+    "name": "me/ichun/mods/ichunutil/common/iChunUtil",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "me/ichun/mods/ichunutil/common/iChunUtil",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "[7.2.0,7.3.0)"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12,1.13)"
+          },
+          "certificateFingerprint": {
+            "value": "4db5c2bd1b556f252a5b8b54b256d381b2a0a6b8"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2781,99999.24.0.0)"
+          },
+          "guiFactory": {
+            "value": "me.ichun.mods.ichunutil.common.core.config.GenericModGuiFactory"
+          },
+          "modid": {
+            "value": "ichunutil"
+          },
+          "name": {
+            "value": "iChunUtil"
+          },
+          "version": {
+            "value": "7.2.2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "ichunutil"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "me.ichun.mods.ichunutil.client.core.ProxyClient"
+          },
+          "serverSide": {
+            "value": "me.ichun.mods.ichunutil.common.core.ProxyCommon"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onPreInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onInit(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onPostInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onServerStarted(Lnet/minecraftforge/fml/common/event/FMLServerStartedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onServerStopping(Lnet/minecraftforge/fml/common/event/FMLServerStoppingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onIMCMessage(Lnet/minecraftforge/fml/common/event/FMLInterModComms$IMCEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onFingerprintViolation(Lnet/minecraftforge/fml/common/event/FMLFingerprintViolationEvent;)V"
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/iChunUtil$Config": {
+    "name": "me/ichun/mods/ichunutil/common/iChunUtil$Config",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "enableStencils",
+        "values": {
+          "category": {
+            "value": "clientOnly"
+          },
+          "changeable": {
+            "type": "BOOL",
+            "value": "false"
+          },
+          "side": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntBool;",
+        "target": "enableStencils"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "enableLatchedRendererSpawn",
+        "values": {
+          "category": {
+            "value": "clientOnly"
+          },
+          "side": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntBool;",
+        "target": "enableLatchedRendererSpawn"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "enableCompactPorkchop",
+        "values": {
+          "category": {
+            "value": "block"
+          },
+          "module": {
+            "value": "compactPorkchop"
+          },
+          "useSession": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntBool;",
+        "target": "enableCompactPorkchop"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "eulaAcknowledged",
+        "values": {
+          "module": {
+            "value": "eula"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "showPatronReward",
+        "values": {
+          "hidden": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "module": {
+            "value": "patreon"
+          },
+          "side": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntBool;",
+        "target": "showPatronReward"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "patronRewardType",
+        "values": {
+          "hidden": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "module": {
+            "value": "patreon"
+          },
+          "side": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntMinMax;",
+        "target": "patronRewardType",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "6"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "versionNotificationTypes",
+        "values": {
+          "module": {
+            "value": "versionCheck"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntMinMax;",
+        "target": "versionNotificationTypes",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "2"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "versionNotificationFrequency",
+        "values": {
+          "module": {
+            "value": "versionCheck"
+          },
+          "side": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntMinMax;",
+        "target": "versionNotificationFrequency",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "2"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "versionSave",
+        "values": {
+          "module": {
+            "value": "versionCheck"
+          },
+          "side": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntMinMax;",
+        "target": "versionSave",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "35"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "aggressiveHeadTracking",
+        "values": {
+          "hidden": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "module": {
+            "value": "headTracking"
+          },
+          "side": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntMinMax;",
+        "target": "aggressiveHeadTracking",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "2"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "horseEasterEgg",
+        "values": {
+          "hidden": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "module": {
+            "value": "headTracking"
+          },
+          "side": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntBool;",
+        "target": "horseEasterEgg"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "maxRecursion",
+        "values": {
+          "hidden": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "module": {
+            "value": "worldPortals"
+          },
+          "side": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntMinMax;",
+        "target": "maxRecursion",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "10"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "stencilValue",
+        "values": {
+          "hidden": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "module": {
+            "value": "worldPortals"
+          },
+          "side": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntMinMax;",
+        "target": "stencilValue",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "255"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "renderDistanceChunks",
+        "values": {
+          "hidden": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "module": {
+            "value": "worldPortals"
+          },
+          "side": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntMinMax;",
+        "target": "renderDistanceChunks",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "16"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/ConfigProp;",
+        "target": "maxRendersPerTick",
+        "values": {
+          "hidden": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "module": {
+            "value": "worldPortals"
+          },
+          "side": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lme/ichun/mods/ichunutil/common/core/config/annotations/IntMinMax;",
+        "target": "maxRendersPerTick",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "100"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/tabula/formats/types/Exporter": {
+    "name": "me/ichun/mods/ichunutil/common/module/tabula/formats/types/Exporter",
+    "interfaces": [
+      "me/ichun/mods/ichunutil/client/gui/window/element/IListable"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/tabula/project/components/AnimationComponent": {
+    "name": "me/ichun/mods/ichunutil/common/module/tabula/project/components/AnimationComponent",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/techne/TC1Json$ModelInfo": {
+    "name": "me/ichun/mods/ichunutil/common/module/techne/TC1Json$ModelInfo",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "texture",
+        "value": {
+          "value": "@texture"
+        }
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/techne/TC1Json$Null": {
+    "name": "me/ichun/mods/ichunutil/common/module/techne/TC1Json$Null",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "Type",
+        "value": {
+          "value": "@type"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "Name",
+        "value": {
+          "value": "@Name"
+        }
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/techne/TC1Json$Shape": {
+    "name": "me/ichun/mods/ichunutil/common/module/techne/TC1Json$Shape",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "Type",
+        "value": {
+          "value": "@type"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "Name",
+        "value": {
+          "value": "@name"
+        }
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/techne/TC1Json$Techne": {
+    "name": "me/ichun/mods/ichunutil/common/module/techne/TC1Json$Techne",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "Version",
+        "value": {
+          "value": "@Version"
+        }
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/techne/TC2Info$ModelInfo": {
+    "name": "me/ichun/mods/ichunutil/common/module/techne/TC2Info$ModelInfo",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "texture",
+        "value": {
+          "value": "@texture"
+        }
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/techne/TC2Info$Null": {
+    "name": "me/ichun/mods/ichunutil/common/module/techne/TC2Info$Null",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "Type",
+        "value": {
+          "value": "@Type"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "Name",
+        "value": {
+          "value": "@Name"
+        }
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/techne/TC2Info$Shape": {
+    "name": "me/ichun/mods/ichunutil/common/module/techne/TC2Info$Shape",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "Type",
+        "value": {
+          "value": "@Type"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "Name",
+        "value": {
+          "value": "@Name"
+        }
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/techne/TC2Info$Techne": {
+    "name": "me/ichun/mods/ichunutil/common/module/techne/TC2Info$Techne",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "Version",
+        "value": {
+          "value": "@Version"
+        }
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/update/UpdateChecker$ModVersionInfo": {
+    "name": "me/ichun/mods/ichunutil/common/module/update/UpdateChecker$ModVersionInfo",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/worldportals/client/core/EventHandlerWorldPortalClient": {
+    "name": "me/ichun/mods/ichunutil/common/module/worldportals/client/core/EventHandlerWorldPortalClient",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCameraSetupEvent(Lnet/minecraftforge/client/event/EntityViewRenderEvent$CameraSetup;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderBlockOverlay(Lnet/minecraftforge/client/event/RenderBlockOverlayEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPushPlayerSPOutOfBlock(Lnet/minecraftforge/client/event/PlayerSPPushOutOfBlocksEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientDisconnect(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientDisconnectionFromServerEvent;)V"
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/worldportals/client/render/culling/Frustum": {
+    "name": "me/ichun/mods/ichunutil/common/module/worldportals/client/render/culling/Frustum",
+    "interfaces": [
+      "net/minecraft/client/renderer/culling/ICamera"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/worldportals/client/render/world/chunk/ListedRenderChunkWorldPortal": {
+    "name": "me/ichun/mods/ichunutil/common/module/worldportals/client/render/world/chunk/ListedRenderChunkWorldPortal",
+    "interfaces": [
+      "me/ichun/mods/ichunutil/common/module/worldportals/client/render/world/chunk/IRenderChunkWorldPortal"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/worldportals/client/render/world/chunk/RenderChunkWorldPortal": {
+    "name": "me/ichun/mods/ichunutil/common/module/worldportals/client/render/world/chunk/RenderChunkWorldPortal",
+    "interfaces": [
+      "me/ichun/mods/ichunutil/common/module/worldportals/client/render/world/chunk/IRenderChunkWorldPortal"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/worldportals/client/render/world/factory/ListChunkFactory": {
+    "name": "me/ichun/mods/ichunutil/common/module/worldportals/client/render/world/factory/ListChunkFactory",
+    "interfaces": [
+      "net/minecraft/client/renderer/chunk/IRenderChunkFactory"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/worldportals/client/render/world/factory/VboChunkFactory": {
+    "name": "me/ichun/mods/ichunutil/common/module/worldportals/client/render/world/factory/VboChunkFactory",
+    "interfaces": [
+      "net/minecraft/client/renderer/chunk/IRenderChunkFactory"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/worldportals/common/core/ApiImpl": {
+    "name": "me/ichun/mods/ichunutil/common/module/worldportals/common/core/ApiImpl",
+    "interfaces": [
+      "me/ichun/mods/ichunutil/api/worldportals/IApi"
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/module/worldportals/common/core/EventHandlerWorldPortal": {
+    "name": "me/ichun/mods/ichunutil/common/module/worldportals/common/core/EventHandlerWorldPortal",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingAttack(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldUnload(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGetCollisionBoxesEvent(Lnet/minecraftforge/event/world/GetCollisionBoxesEvent;)V"
+      }
+    ]
+  },
+  "me/ichun/mods/ichunutil/common/recipe/internal/RecipeCompactPorkchop": {
+    "name": "me/ichun/mods/ichunutil/common/recipe/internal/RecipeCompactPorkchop",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IRecipeFactory"
+    ]
+  }
+}

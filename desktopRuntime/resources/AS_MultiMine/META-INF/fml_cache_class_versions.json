@@ -1,0 +1,22 @@
+{
+  "atomicstryker/multimine/client/ClientProxy": 52,
+  "atomicstryker/multimine/client/MultiMineClient": 52,
+  "atomicstryker/multimine/common/BlockRegenQueue": 52,
+  "atomicstryker/multimine/common/CommonProxy": 52,
+  "atomicstryker/multimine/common/MultiMine": 52,
+  "atomicstryker/multimine/common/MultiMineServer": 52,
+  "atomicstryker/multimine/common/MultiMineServer$1": 52,
+  "atomicstryker/multimine/common/MultiMineServer$BlockAgeComparator": 52,
+  "atomicstryker/multimine/common/MultiMineServer$BlockRegenQueue": 52,
+  "atomicstryker/multimine/common/PartiallyMinedBlock": 52,
+  "atomicstryker/multimine/common/fmlmagic/MMFMLCorePlugin": 52,
+  "atomicstryker/multimine/common/fmlmagic/MMTransformer": 52,
+  "atomicstryker/multimine/common/network/NetworkHelper": 52,
+  "atomicstryker/multimine/common/network/NetworkHelper$ChannelCodec": 52,
+  "atomicstryker/multimine/common/network/NetworkHelper$ChannelHandler": 52,
+  "atomicstryker/multimine/common/network/NetworkHelper$IPacket": 52,
+  "atomicstryker/multimine/common/network/PartialBlockPacket": 52,
+  "atomicstryker/multimine/common/network/PartialBlockPacket$ScheduledCode": 52,
+  "atomicstryker/multimine/common/network/PartialBlockRemovalPacket": 52,
+  "atomicstryker/multimine/common/network/PartialBlockRemovalPacket$ScheduledCode": 52
+}

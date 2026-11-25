@@ -1,0 +1,72 @@
+package meldexun.entityculling;
+
+import meldexun.entityculling.config.EntityCullingConfig;
+import meldexun.entityculling.util.CullingThread;
+import meldexun.renderlib.util.GLUtil;
+import meldexun.renderlib.util.timer.CPUTimer;
+import meldexun.renderlib.util.timer.ITimer;
+import meldexun.renderlib.util.timer.TimerEventHandler;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.common.config.Config.Type;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
+
+@Mod(
+   modid = "entityculling",
+   dependencies = "required-after:renderlib@[1.2.7,)"
+)
+public class EntityCulling {
+   public static final String MOD_ID = "entityculling";
+   private static CullingThread cullingThread;
+   public static boolean isCubicChunksInstalled;
+   public static boolean isHatsInstalled;
+   public static final ITimer gpuTimer = TimerEventHandler.tryCreateGLTimer("GPU (Cull)", 100);
+   public static final ITimer cpuTimer = new CPUTimer("CPU (Cull Main)", 100);
+
+   public EntityCulling() {
+   }
+
+   public static boolean useOpenGlBasedCulling() {
+      return EntityCullingConfig.openglBasedCulling && GLUtil.CAPS.OpenGL44;
+   }
+
+   @EventHandler
+   public void onFMLConstructionEvent(FMLConstructionEvent event) {
+      EntityCullingConfig.onConfigChanged();
+      MinecraftForge.EVENT_BUS.register(this);
+      cullingThread = new CullingThread();
+      cullingThread.start();
+      TimerEventHandler.timers.add((Object)null);
+      TimerEventHandler.timers.add(gpuTimer);
+      TimerEventHandler.timers.add(cpuTimer);
+      TimerEventHandler.timers.add(cullingThread.timer);
+   }
+
+   @EventHandler
+   public void onFMLPostInitializationEvent(FMLPostInitializationEvent event) {
+      isCubicChunksInstalled = Loader.isModLoaded("cubicchunks");
+      isHatsInstalled = Loader.isModLoaded("hats");
+   }
+
+   @SubscribeEvent
+   public void onConfigChangedEvent(OnConfigChangedEvent event) {
+      if (event.getModID().equals("entityculling")) {
+         ConfigManager.sync("entityculling", Type.INSTANCE);
+         EntityCullingConfig.onConfigChanged();
+      }
+
+   }
+
+   @SubscribeEvent
+   public void onRenderTickEvent(RenderTickEvent event) {
+      gpuTimer.update();
+      cpuTimer.update();
+   }
+}

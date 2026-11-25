@@ -1,0 +1,29 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"0": "blocks/concrete_powder_gray",
+			"1": "blocks/concrete_powder_yellow",
+			"4": "blocks/wool_colored_red",
+			"particle": "#0"
+		},
+		"model": "adhooks:launcher"
+	},
+	"variants": {
+		"normal": [
+			{
+				"submodel": "adhooks:pudge_hook"
+			}
+		],
+		"empty": [
+			{
+				
+			}
+		],
+		"inventory": [
+			{
+				
+			}
+		]
+	}
+}

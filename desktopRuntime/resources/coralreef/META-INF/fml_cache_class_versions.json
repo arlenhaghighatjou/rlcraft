@@ -1,0 +1,14 @@
+{
+  "primetoxinz/coralreef/BlockCoral": 52,
+  "primetoxinz/coralreef/BlockReef": 52,
+  "primetoxinz/coralreef/CoralReef": 52,
+  "primetoxinz/coralreef/CoralReef$ClientProxy": 52,
+  "primetoxinz/coralreef/CoralReef$CommonProxy": 52,
+  "primetoxinz/coralreef/CoralReef$ConfigHandler": 52,
+  "primetoxinz/coralreef/CoralReef$ConfigHandler$Reef": 52,
+  "primetoxinz/coralreef/CoralReef$ConfigHandler$Rock": 52,
+  "primetoxinz/coralreef/GeneratorReef": 52,
+  "primetoxinz/coralreef/ItemBlockMeta": 52,
+  "primetoxinz/coralreef/WorldGenReef": 52,
+  "primetoxinz/coralreef/WorldGenRock": 52
+}

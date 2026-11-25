@@ -1,0 +1,23 @@
+[  
+   {  
+      "modid":"enchdesc",
+      "name":"Enchantment Descriptions",
+      "description":"Shows information about enchantments on enchantment books.",
+      "version":"1.1.20",
+      "mcversion":"1.12.2",
+      "url":"http://www.darkhax.net",
+      "updateUrl":"",
+      "authorList":[  
+         "Darkhax"
+      ],
+      "credits":"",
+      "logoFile":"",
+      "screenshots":[  
+
+      ],
+      "parent":"",
+      "dependencies":[  
+
+      ]
+   }
+]

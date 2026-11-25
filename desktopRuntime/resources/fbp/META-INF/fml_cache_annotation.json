@@ -1,0 +1,153 @@
+{
+  "com/TominoCZ/FBP/FBP": {
+    "name": "com/TominoCZ/FBP/FBP",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/TominoCZ/FBP/FBP",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12,1.13)"
+          },
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "modid": {
+            "value": "fbp"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "INSTANCE",
+        "value": {
+          "value": "fbp"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/TominoCZ/FBP/handler/FBPEventHandler": {
+    "name": "com/TominoCZ/FBP/handler/FBPEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInteractionEvent(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoadEvent(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityJoinWorldEvent(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerPlaceBlockEvent(Lnet/minecraftforge/event/world/BlockEvent$PlaceEvent;)V"
+      }
+    ]
+  },
+  "com/TominoCZ/FBP/handler/FBPEventHandler$1": {
+    "name": "com/TominoCZ/FBP/handler/FBPEventHandler$1",
+    "interfaces": [
+      "net/minecraft/world/IWorldEventListener"
+    ]
+  },
+  "com/TominoCZ/FBP/handler/FBPGuiHandler": {
+    "name": "com/TominoCZ/FBP/handler/FBPGuiHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderGui(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiMouseInput(Lnet/minecraftforge/client/event/GuiScreenEvent$MouseInputEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiKeyboardInput(Lnet/minecraftforge/client/event/GuiScreenEvent$KeyboardInputEvent;)V"
+      }
+    ]
+  },
+  "com/TominoCZ/FBP/handler/FBPKeyInputHandler": {
+    "name": "com/TominoCZ/FBP/handler/FBPKeyInputHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyboardInput(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMouseInput(Lnet/minecraftforge/fml/common/gameevent/InputEvent$MouseInputEvent;)V"
+      }
+    ]
+  },
+  "com/TominoCZ/FBP/model/FBPModelHelper$1": {
+    "name": "com/TominoCZ/FBP/model/FBPModelHelper$1",
+    "interfaces": [
+      "com/TominoCZ/FBP/model/FBPModelTransformer$IVertexTransformer"
+    ]
+  },
+  "com/TominoCZ/FBP/model/FBPModelTransformer$VertexTransformerWrapper": {
+    "name": "com/TominoCZ/FBP/model/FBPModelTransformer$VertexTransformerWrapper",
+    "interfaces": [
+      "net/minecraftforge/client/model/pipeline/IVertexConsumer"
+    ]
+  },
+  "com/TominoCZ/FBP/model/FBPSimpleBakedModel": {
+    "name": "com/TominoCZ/FBP/model/FBPSimpleBakedModel",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "com/TominoCZ/FBP/particle/FBPParticleDigging$Factory": {
+    "name": "com/TominoCZ/FBP/particle/FBPParticleDigging$Factory",
+    "interfaces": [
+      "net/minecraft/client/particle/IParticleFactory"
+    ]
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "atomicstryker/multimine/common/MultiMine": {
+    "name": "atomicstryker/multimine/common/MultiMine",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "atomicstryker/multimine/common/MultiMine",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "multimine"
+          },
+          "name": {
+            "value": "Multi Mine"
+          },
+          "version": {
+            "value": "1.6.2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "multimine"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "atomicstryker.multimine.client.ClientProxy"
+          },
+          "serverSide": {
+            "value": "atomicstryker.multimine.common.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "load(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      }
+    ]
+  },
+  "atomicstryker/multimine/common/MultiMineServer": {
+    "name": "atomicstryker/multimine/common/MultiMineServer",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      }
+    ]
+  },
+  "atomicstryker/multimine/common/MultiMineServer$BlockAgeComparator": {
+    "name": "atomicstryker/multimine/common/MultiMineServer$BlockAgeComparator",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "atomicstryker/multimine/common/fmlmagic/MMFMLCorePlugin": {
+    "name": "atomicstryker/multimine/common/fmlmagic/MMFMLCorePlugin",
+    "interfaces": [
+      "net/minecraftforge/fml/relauncher/IFMLLoadingPlugin"
+    ]
+  },
+  "atomicstryker/multimine/common/fmlmagic/MMTransformer": {
+    "name": "atomicstryker/multimine/common/fmlmagic/MMTransformer",
+    "interfaces": [
+      "net/minecraft/launchwrapper/IClassTransformer"
+    ]
+  },
+  "atomicstryker/multimine/common/network/NetworkHelper$ChannelHandler": {
+    "name": "atomicstryker/multimine/common/network/NetworkHelper$ChannelHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lio/netty/channel/ChannelHandler$Sharable;",
+        "target": "atomicstryker/multimine/common/network/NetworkHelper$ChannelHandler"
+      }
+    ]
+  },
+  "atomicstryker/multimine/common/network/PartialBlockPacket": {
+    "name": "atomicstryker/multimine/common/network/PartialBlockPacket",
+    "interfaces": [
+      "atomicstryker/multimine/common/network/NetworkHelper$IPacket"
+    ]
+  },
+  "atomicstryker/multimine/common/network/PartialBlockPacket$ScheduledCode": {
+    "name": "atomicstryker/multimine/common/network/PartialBlockPacket$ScheduledCode",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "atomicstryker/multimine/common/network/PartialBlockRemovalPacket": {
+    "name": "atomicstryker/multimine/common/network/PartialBlockRemovalPacket",
+    "interfaces": [
+      "atomicstryker/multimine/common/network/NetworkHelper$IPacket"
+    ]
+  },
+  "atomicstryker/multimine/common/network/PartialBlockRemovalPacket$ScheduledCode": {
+    "name": "atomicstryker/multimine/common/network/PartialBlockRemovalPacket$ScheduledCode",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  }
+}

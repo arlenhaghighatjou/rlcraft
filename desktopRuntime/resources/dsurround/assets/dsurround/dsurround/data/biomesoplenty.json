@@ -1,0 +1,279 @@
+{
+	"biomes": [
+		{
+			"conditions": "biome.name == 'Sacred Springs'",
+			"_comment": "Specific override for Sacred Springs",
+			"soundReset": true,
+			"sounds": [
+				{
+					"sound": "dsurround:forest",
+					"conditions": "weather.isNotRaining && diurnal.isDay"
+				},
+				{
+					"sound": "dsurround:crickets",
+					"conditions": "weather.isNotRaining && diurnal.isNight"
+				},
+				{
+					"sound": "dsurround:owl",
+					"conditions": "weather.isNotRaining && diurnal.isNight",
+					"soundType": "spot"
+				},
+				{
+					"sound": "dsurround:bird",
+					"conditions": "weather.isNotRaining && diurnal.isDay",
+					"soundType": "spot"
+				},
+				{
+					"sound": "dsurround:woodpecker",
+					"conditions": "weather.isNotRaining && diurnal.isDay",
+					"soundType": "spot"
+				}
+			]
+		}
+	],
+	"blocks": [
+		{
+			"blocks": [
+				"biomesoplenty:blood",
+				"biomesoplenty:poison"
+			],
+			"effects": [
+				{
+					"effect": "fountain",
+					"chance": 500
+				},
+				{
+					"effect": "bubble",
+					"chance": 1800
+				}
+			]
+		},
+		{
+			"blocks": [
+				"biomesoplenty:hot_spring_water"
+			],
+			"effects": [
+				{
+					"effect": "bubble",
+					"chance": 1800
+				}
+			]
+		},
+		{
+			"blocks": [
+				"biomesoplenty:waterlily[variant=flower]"
+			],
+			"chance": 25,
+			"sounds": [
+				{
+					"sound": "dsurround:frog",
+					"conditions": "!player.isInside && !weather.canWaterFreeze",
+					"variable": true,
+					"weight": 30
+				},
+				{
+					"sound": "dsurround:bullfrog",
+					"conditions": "!player.isInside && !weather.canWaterFreeze",
+					"weight": 10
+				}
+			]
+		},
+		{
+			"blocks": [
+				"biomesoplenty:flower_0[variant=swampflower]",
+				"biomesoplenty:flower_0[variant=glowflower]",
+				"biomesoplenty:flower_0[variant=blue_hydrangea]",
+				"biomesoplenty:flower_0[variant=orange_cosmos]",
+				"biomesoplenty:flower_0[variant=pink_daffodil]",
+				"biomesoplenty:flower_0[variant=wildflower]",
+				"biomesoplenty:flower_0[variant=violet]",
+				"biomesoplenty:flower_0[variant=white_anemone]",
+				"biomesoplenty:flower_0[variant=bromeliad]",
+				"biomesoplenty:flower_0[variant=pink_hibiscus]",
+				"biomesoplenty:flower_0[variant=lily_of_the_valley]",
+				"biomesoplenty:flower_1[variant=lavender]",
+				"biomesoplenty:flower_1[variant=goldenrod]",
+				"biomesoplenty:flower_1[variant=bluebells]",
+				"biomesoplenty:flower_1[variant=rose]",
+				"biomesoplenty:plant_0[variant=mediumgrass]",
+				"biomesoplenty:plant_0[variant=bush]",
+				"biomesoplenty:plant_0[variant=sprout]",
+				"biomesoplenty:plant_0[variant=berrybush]",
+				"biomesoplenty:plant_0[variant=shrub]",
+				"biomesoplenty:plant_0[variant=wheatgrass]",
+				"biomesoplenty:plant_0[variant=dampgrass]",
+				"biomesoplenty:plant_1[variant=wildrice]",
+				"biomesoplenty:plant_1[variant=cattail]",
+				"biomesoplenty:plant_1[variant=rivercane]",
+				"biomesoplenty:plant_1[variant=rafflesia]",
+				"biomesoplenty:double_plant[variant=flax]",
+				"biomesoplenty:double_plant[variant=tall_cattail]"
+			],
+			"effects": [
+				{
+					"effect": "firefly",
+					"conditions": "weather.isNotRaining && (diurnal.isNight || diurnal.isSunset) && !(biome.isHot || weather.canWaterFreeze)",
+					"chance": 50
+				}
+			]
+		}
+	],
+	"footsteps": {
+		"biomesoplenty:ash_block": "sand",
+		"biomesoplenty:bamboo": "wood",
+		"biomesoplenty:bamboo_thatching": "wood",
+		"biomesoplenty:biome_block": "ore",
+		"biomesoplenty:blood": "NOT_EMITTER",
+		"biomesoplenty:cherry_door_block": "bluntwood",
+		"biomesoplenty:cherry_fence": "#fence",
+		"biomesoplenty:cherry_fence_gate": "#fence",
+		"biomesoplenty:cherry_stairs": "wood",
+		"biomesoplenty:coral": "stone",
+		"biomesoplenty:crystal": "glass",
+		"biomesoplenty:dirt": "dirt",
+		"biomesoplenty:double_wood_slab_0": "planks",
+		"biomesoplenty:double_wood_slab_1": "planks",
+		"biomesoplenty:dried_sand": "sand",
+		"biomesoplenty:ebony_door_block": "bluntwood",
+		"biomesoplenty:ebony_fence": "#fence",
+		"biomesoplenty:ebony_fence_gate": "#fence",
+		"biomesoplenty:ebony_stairs": "planks",
+		"biomesoplenty:ethereal_door_block": "bluntwood",
+		"biomesoplenty:ethereal_fence": "#fence",
+		"biomesoplenty:ethereal_fence_gate": "#fence",
+		"biomesoplenty:ethereal_stairs": "planks",
+		"biomesoplenty:eucalyptus_door_block": "bluntwood",
+		"biomesoplenty:eucalyptus_fence": "#fence",
+		"biomesoplenty:eucalyptus_fence_gate": "#fence",
+		"biomesoplenty:eucalyptus_stairs": "planks",
+		"biomesoplenty:farmland_0": "dirt",
+		"biomesoplenty:farmland_1": "dirt",
+		"biomesoplenty:fir_door_block": "bluntwood",
+		"biomesoplenty:fir_fence": "#fence",
+		"biomesoplenty:fir_fence_gate": "#fence",
+		"biomesoplenty:fir_stairs": "planks",
+		"biomesoplenty:flesh": "organic",
+		"biomesoplenty:flower_0": "NOT_EMITTER",
+		"biomesoplenty:flower_1": "NOT_EMITTER",
+		"biomesoplenty:gem_block": "ice",
+		"biomesoplenty:gem_ore": "ore",
+		"biomesoplenty:grass": "grass",
+		"biomesoplenty:grass_path": "grass",
+		"biomesoplenty:hard_ice": "stone,snow",
+		"biomesoplenty:hellbark_door_block": "bluntwood",
+		"biomesoplenty:hellbark_fence": "#fence",
+		"biomesoplenty:hellbark_fence_gate": "#fence",
+		"biomesoplenty:hellbark_stairs": "planks",
+		"biomesoplenty:hive": "organic_dry",
+		"biomesoplenty:honey": "NOT_EMITTER",
+		"biomesoplenty:honey_block": "glass",
+		"biomesoplenty:hot_spring_water": "NOT_EMITTER",
+		"biomesoplenty:jacaranda_door_block": "bluntwood",
+		"biomesoplenty:jacaranda_fence": "#fence",
+		"biomesoplenty:jacaranda_fence_gate": "#fence",
+		"biomesoplenty:jacaranda_stairs": "planks",
+		"biomesoplenty:leaves_0": "leaves",
+		"biomesoplenty:leaves_1": "leaves",
+		"biomesoplenty:leaves_2": "leaves",
+		"biomesoplenty:leaves_3": "leaves",
+		"biomesoplenty:leaves_4": "leaves",
+		"biomesoplenty:leaves_5": "leaves",
+		"biomesoplenty:leaves_6": "leaves",
+		"biomesoplenty:log_0": "log",
+		"biomesoplenty:log_1": "log",
+		"biomesoplenty:log_2": "log",
+		"biomesoplenty:log_3": "log",
+		"biomesoplenty:log_4": "log",
+		"biomesoplenty:magic_door_block": "bluntwood",
+		"biomesoplenty:magic_fence": "#fence",
+		"biomesoplenty:magic_fence_gate": "#fence",
+		"biomesoplenty:magic_stairs": "planks",
+		"biomesoplenty:mahogany_door_block": "bluntwood",
+		"biomesoplenty:mahogany_fence": "#fence",
+		"biomesoplenty:mahogany_fence_gate": "#fence",
+		"biomesoplenty:mahogany_stairs": "planks",
+		"biomesoplenty:mangrove_door_block": "bluntwood",
+		"biomesoplenty:mangrove_fence": "#fence",
+		"biomesoplenty:mangrove_fence_gate": "#fence",
+		"biomesoplenty:mangrove_stairs": "planks",
+		"biomesoplenty:mud": "mud",
+		"biomesoplenty:mud_brick_block": "sandstone",
+		"biomesoplenty:mud_brick_stairs": "sandstone",
+		"biomesoplenty:mushroom": "NOT_EMITTER",
+		"biomesoplenty:other_slab": "sandstone",
+		"biomesoplenty:double_other_slab": "sandstone",
+		"biomesoplenty:palm_door_block": "bluntwood",
+		"biomesoplenty:palm_fence": "#fence",
+		"biomesoplenty:palm_fence_gate": "#fence",
+		"biomesoplenty:palm_stairs": "planks",
+		"biomesoplenty:pine_door_block": "bluntwood",
+		"biomesoplenty:pine_fence": "#fence",
+		"biomesoplenty:pine_fence_gate": "#fence",
+		"biomesoplenty:pine_stairs": "planks",
+		"biomesoplenty:planks_0": "planks",
+		"biomesoplenty:poison": "NOT_EMITTER",
+		"biomesoplenty:redwood_door_block": "bluntwood",
+		"biomesoplenty:redwood_fence": "#fence",
+		"biomesoplenty:redwood_fence_gate": "#fence",
+		"biomesoplenty:redwood_stairs": "planks",
+		"biomesoplenty:sacred_oak_door_block": "bluntwood",
+		"biomesoplenty:sacred_oak_fence": "#fence",
+		"biomesoplenty:sacred_oak_fence_gate": "#fence",
+		"biomesoplenty:sacred_oak_stairs": "planks",
+		"biomesoplenty:sand": "sand",
+		"biomesoplenty:sapling_0": "#sapling",
+		"biomesoplenty:sapling_1": "#sapling",
+		"biomesoplenty:sapling_2": "#sapling",
+		"biomesoplenty:seaweed": "NOT_EMITTER",
+		"biomesoplenty:terrarium": "glass",
+		"biomesoplenty:umbran_door_block": "bluntwood",
+		"biomesoplenty:umbran_fence": "#fence",
+		"biomesoplenty:umbran_fence_gate": "#fence",
+		"biomesoplenty:umbran_stairs": "planks",
+		"biomesoplenty:waterlily": "waterfine",
+		"biomesoplenty:waterlily+carpet": "waterfine",
+		"biomesoplenty:willow_door_block": "bluntwood",
+		"biomesoplenty:willow_fence": "#fence",
+		"biomesoplenty:willow_fence_gate": "#fence",
+		"biomesoplenty:willow_stairs": "planks",
+		"biomesoplenty:wood_slab_0": "planks",
+		"biomesoplenty:wood_slab_1": "planks",
+		"biomesoplenty:plant_0": "NOT_EMITTER",
+		"biomesoplenty:plant_0+messy": "MESSY_GROUND",
+		"biomesoplenty:plant_0[variant=bush]+foliage": "brush_straw_transition",
+		"biomesoplenty:plant_0[variant=berrybush]+foliage": "brush_straw_transition",
+		"biomesoplenty:plant_0[variant=shrub]+foliage": "brush_straw_transition",
+		"biomesoplenty:plant_0[variant=wheatgrass]+foliage": "straw",
+		"biomesoplenty:plant_0[variant=koru]+foliage": "brush_straw_transition",
+		"biomesoplenty:plant_0[variant=cloverpatch]+foliage": "brush",
+		"biomesoplenty:plant_0[variant=leafpile]+foliage": "leaves",
+		"biomesoplenty:plant_0[variant=deadleafpile]+foliage": "leaves",
+		"biomesoplenty:plant_0[variant=deadgrass]+foliage": "straw",
+		"biomesoplenty:plant_0[variant=desertgrass]+foliage": "straw",
+		"biomesoplenty:plant_1": "NOT_EMITTER",
+		"biomesoplenty:plant_1+messy": "MESSY_GROUND",
+		"biomesoplenty:plant_1[variant=dunegrass]+foliage": "straw",
+		"biomesoplenty:plant_1[variant=spectralfern]+foliage": "brush_straw_transition",
+		"biomesoplenty:plant_1[variant=thorn]+foliage": "brush_straw_transition",
+		"biomesoplenty:plant_1[variant=wildrice]+foliage": "straw",
+		"biomesoplenty:plant_1[variant=cattail]+foliage": "straw",
+		"biomesoplenty:plant_1[variant=rivercane]+foliage": "straw",
+		"biomesoplenty:plant_1[variant=devilweed]+foliage": "organic",
+		"biomesoplenty:plant_1[variant=reed]+foliage": "straw",
+		"biomesoplenty:plant_1[variant=root]+foliage": "leaves",
+		"biomesoplenty:plant_1[variant=barley]+foliage": "straw",
+		"biomesoplenty:double_plant": "NOT_EMITTER",
+		"biomesoplenty:double_plant+messy": "MESSY_GROUND",
+		"biomesoplenty:double_plant[variant=flax]+foliage": "brush_straw_transition",
+		"biomesoplenty:double_plant[variant=tall_cattail]+foliage": "brush_straw_transition",
+		"biomesoplenty:double_plant[variant=eyebulb]+foliage": "organic",
+		"biomesoplenty:double_plant[variant=sea_oats]+foliage": "straw",
+		"biomesoplenty:white_sandstone": "sandstone",
+		"biomesoplenty:white_sandstone_stairs": "sandstone",
+		"biomesoplenty:ivy": "#vine",
+		"biomesoplenty:willow_vine": "#vine"
+	},
+	"footprints": [
+		"biomesoplenty:grass[variant=overgrown_stone]"
+	]
+}

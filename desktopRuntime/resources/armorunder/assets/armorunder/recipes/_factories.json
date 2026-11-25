@@ -1,0 +1,13 @@
+{
+  "conditions": {
+    "compat_mode": "org.jwaresoftware.mcmods.armorunder.recipes.IsSupercompatibilityModeConditionFactory",
+    "is_allowed": "org.jwaresoftware.mcmods.armorunder.recipes.ConfigAllowsConditionFactory"
+  },
+  "recipes": {
+    "lined_armor_shapeless": "org.jwaresoftware.mcmods.armorunder.recipes.TLinedArmorRecipe$Factory",
+    "unlined_armor_shapeless": "org.jwaresoftware.mcmods.armorunder.recipes.StripArmorTLiningRecipe$Factory",
+    "autoreg_armor_shapeless": "org.jwaresoftware.mcmods.armorunder.recipes.AutoregLinedArmorRecipe$Factory",
+    "autoreg_lining_shaped": "org.jwaresoftware.mcmods.armorunder.recipes.BuffAutoregLiningRecipe$Factory",
+    "barrier_shielded_armor_shapeless": "org.jwaresoftware.mcmods.armorunder.recipes.BarrierReinforcedArmorRecipe$Factory"
+  }
+}

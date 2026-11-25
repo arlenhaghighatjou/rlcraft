@@ -1,0 +1,8 @@
+{
+    "parent": "defiledlands:block/altar_base",
+    "textures": {
+        "bottom": "defiledlands:blocks/stone_defiled",
+        "top": "defiledlands:blocks/conjuring_altar_top",
+        "side": "defiledlands:blocks/conjuring_altar_side"
+    }
+}

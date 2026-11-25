@@ -1,0 +1,34 @@
+package pl.asie.foamfix.coremod.injections;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockBed;
+import net.minecraft.block.BlockBed.EnumPartType;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
+public class BlockBedInject extends BlockBed {
+   public BlockBedInject() {
+   }
+
+   public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+      EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+      if (state.getValue(PART) == EnumPartType.FOOT) {
+         BlockPos pos2 = pos.offset(enumfacing);
+         if ((fromPos == null || fromPos.equals(pos2)) && worldIn.getBlockState(pos2).getBlock() != this) {
+            worldIn.setBlockToAir(pos);
+         }
+      } else {
+         BlockPos pos2 = pos.offset(enumfacing.getOpposite());
+         if ((fromPos == null || fromPos.equals(pos2)) && worldIn.getBlockState(pos2).getBlock() != this) {
+            if (!worldIn.isRemote) {
+               this.dropBlockAsItem(worldIn, pos, state, 0);
+            }
+
+            worldIn.setBlockToAir(pos);
+         }
+      }
+
+   }
+}

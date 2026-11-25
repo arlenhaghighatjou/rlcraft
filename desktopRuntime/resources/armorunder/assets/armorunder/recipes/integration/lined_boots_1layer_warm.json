@@ -1,0 +1,18 @@
+{ "_comment": ["Lined boots to provide +1 warming" ],
+  "conditions": [{ "type": "forge:not",
+      "value": { "type": "armorunder:compat_mode" }
+    },{
+      "type": "forge:mod_loaded",
+      "modid": "toughasnails"
+  }],
+  "result": {
+    "item": "minecraft:leather_boots",
+    "nbt": {"carrots:ArmorTLining":"WARM"}
+  },
+  "type": "armorunder:lined_armor_shapeless",
+  "limit": "WARM",
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemBoots" },
+    { "item": "toughasnails:wool_boots" }
+  ]
+}

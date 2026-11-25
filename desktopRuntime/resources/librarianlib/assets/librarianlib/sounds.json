@@ -1,0 +1,8 @@
+{
+	"equip_bauble": {
+		"sounds": [
+			"librarianlib:equip_bauble"
+		],
+		"subtitle": "librarianlib.subtitle.equip_bauble"
+	}
+}

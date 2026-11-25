@@ -1,0 +1,208 @@
+{
+  "net/konwboy/tumbleweed/Tumbleweed": {
+    "name": "net/konwboy/tumbleweed/Tumbleweed",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "net/konwboy/tumbleweed/Tumbleweed",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.11,1.12.2]"
+          },
+          "modid": {
+            "value": "tumbleweed"
+          },
+          "name": {
+            "value": "Tumbleweed"
+          },
+          "useMetadata": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "version": {
+            "value": "1.12-0.4.7"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChangedEvent(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "net/konwboy/tumbleweed/client/RenderTumbleweed$Factory": {
+    "name": "net/konwboy/tumbleweed/client/RenderTumbleweed$Factory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "net/konwboy/tumbleweed/common/EntityTumbleweed": {
+    "name": "net/konwboy/tumbleweed/common/EntityTumbleweed",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IEntityAdditionalSpawnData"
+    ]
+  },
+  "net/konwboy/tumbleweed/common/TumbleweedConfig": {
+    "name": "net/konwboy/tumbleweed/common/TumbleweedConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "net/konwboy/tumbleweed/common/TumbleweedConfig",
+        "values": {
+          "modid": {
+            "value": "tumbleweed"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "spawnChance",
+        "value": {
+          "value": "Chance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "spawnChance",
+        "value": {
+          "values": [
+            "Chance a tumbleweed spawns in a chunk."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enableDrops",
+        "value": {
+          "value": "Enable Drops"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "damageCrops",
+        "value": {
+          "value": "Damage Crops"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "damageCrops",
+        "value": {
+          "values": [
+            "Should tumbleweeds damage crops."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "maxPerPlayer",
+        "value": {
+          "value": "Max Per Player"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "maxPerPlayer",
+        "value": {
+          "values": [
+            "Maximum number of tumbleweeds existing per player (technically 17x17 loaded chunks)."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "dropsData",
+        "value": {
+          "value": "Drops"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "dropsData",
+        "value": {
+          "values": [
+            "These items will drop from a tumbleweed upon destroying.\n\u003cweight\u003e \u003cmod\u003e:\u003citem\u003e:[metadata] [amount]"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "spawningBlocksData",
+        "value": {
+          "value": "Spawning Blocks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "spawningBlocksData",
+        "value": {
+          "values": [
+            "Blocks from which tumbleweeds can spawn.\n\u003cmod\u003e:\u003cblock\u003e:[metadata]"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "biomeWhitelistData",
+        "value": {
+          "value": "Biome Whitelist"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "biomeWhitelistData",
+        "value": {
+          "values": [
+            "If not empty, tumbleweeds spawn ONLY in the specified biomes. Else they appear in all hot, dry biomes.\nExample entry: minecraft:desert"
+          ]
+        }
+      }
+    ]
+  },
+  "net/konwboy/tumbleweed/common/TumbleweedSpawner": {
+    "name": "net/konwboy/tumbleweed/common/TumbleweedSpawner",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCanUpdate(Lnet/minecraftforge/event/entity/EntityEvent$CanUpdate;)V"
+      }
+    ]
+  }
+}

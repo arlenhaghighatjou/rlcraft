@@ -1,0 +1,15 @@
+{
+  "lellson/roughTweaks/RoughTweaks": 52,
+  "lellson/roughTweaks/items/ItemHeal": 52,
+  "lellson/roughTweaks/items/RoughItemRegistry": 52,
+  "lellson/roughTweaks/items/RoughItems": 52,
+  "lellson/roughTweaks/misc/RoughConfig": 52,
+  "lellson/roughTweaks/misc/RoughEvents": 52,
+  "lellson/roughTweaks/misc/factories/FactoryBandage": 52,
+  "lellson/roughTweaks/misc/factories/FactoryMedikit": 52,
+  "lellson/roughTweaks/misc/factories/FactoryMedikitEnchanted": 52,
+  "lellson/roughTweaks/misc/factories/FactoryPlaster": 52,
+  "lellson/roughTweaks/misc/factories/FactorySalve": 52,
+  "lellson/roughTweaks/proxy/ClientProxy": 52,
+  "lellson/roughTweaks/proxy/ServerProxy": 52
+}

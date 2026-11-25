@@ -1,0 +1,23 @@
+{
+  "com/oblivioussp/spartanhudbaubles/ModSpartanHUDBaubles": 52,
+  "com/oblivioussp/spartanhudbaubles/client/event/RenderBaubleOnHUDEvent": 52,
+  "com/oblivioussp/spartanhudbaubles/client/event/RenderBaubleOnHUDEvent$1": 52,
+  "com/oblivioussp/spartanhudbaubles/client/event/RenderBaubleOnHUDEvent$Post": 52,
+  "com/oblivioussp/spartanhudbaubles/client/event/RenderBaubleOnHUDEvent$Pre": 52,
+  "com/oblivioussp/spartanhudbaubles/client/gui/AlignmentHelper": 52,
+  "com/oblivioussp/spartanhudbaubles/client/gui/AlignmentHelper$Alignment": 52,
+  "com/oblivioussp/spartanhudbaubles/client/gui/AlignmentHelper$HorizontalAlignment": 52,
+  "com/oblivioussp/spartanhudbaubles/client/gui/AlignmentHelper$VerticalAlignment": 52,
+  "com/oblivioussp/spartanhudbaubles/client/gui/GuiConfigSHB": 52,
+  "com/oblivioussp/spartanhudbaubles/client/gui/GuiFactorySHB": 52,
+  "com/oblivioussp/spartanhudbaubles/client/gui/GuiPreviewHUD": 52,
+  "com/oblivioussp/spartanhudbaubles/client/gui/HudElement": 52,
+  "com/oblivioussp/spartanhudbaubles/client/gui/HudElement$1": 52,
+  "com/oblivioussp/spartanhudbaubles/client/gui/HudElementBaubles": 52,
+  "com/oblivioussp/spartanhudbaubles/client/gui/HudElementBaubles$1": 52,
+  "com/oblivioussp/spartanhudbaubles/util/Config": 52,
+  "com/oblivioussp/spartanhudbaubles/util/Config$ColourValue": 52,
+  "com/oblivioussp/spartanhudbaubles/util/Defaults": 52,
+  "com/oblivioussp/spartanhudbaubles/util/Log": 52,
+  "com/oblivioussp/spartanhudbaubles/util/SkinType": 52
+}

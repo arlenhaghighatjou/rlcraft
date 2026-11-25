@@ -1,0 +1,739 @@
+{
+  "net/ilexiconn/llibrary/LLibrary": {
+    "name": "net/ilexiconn/llibrary/LLibrary",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "net/ilexiconn/llibrary/LLibrary",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "1.12.2"
+          },
+          "certificateFingerprint": {
+            "value": "b9f30a813bee3b9dd5652c460310cfcd54f6b7ec"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2772,)"
+          },
+          "guiFactory": {
+            "value": "net.ilexiconn.llibrary.client.gui.LLibraryGUIFactory"
+          },
+          "modid": {
+            "value": "llibrary"
+          },
+          "name": {
+            "value": "LLibrary"
+          },
+          "updateJSON": {
+            "value": "https://gist.githubusercontent.com/Gegy/a6639456aeb8edd92cbf7cbfcf9d65d9/raw/llibrary_updates.json"
+          },
+          "version": {
+            "value": "1.7.20"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "PROXY",
+        "values": {
+          "clientSide": {
+            "value": "net.ilexiconn.llibrary.client.ClientProxy"
+          },
+          "serverSide": {
+            "value": "net.ilexiconn.llibrary.server.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "INSTANCE",
+        "value": {
+          "value": "llibrary"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "ENTITY_DATA_CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Lnet/ilexiconn/llibrary/server/capability/IEntityDataCapability;"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/ilexiconn/llibrary/server/network/NetworkWrapper;",
+        "target": "NETWORK_WRAPPER",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/ilexiconn/llibrary/server/network/AnimationMessage;",
+            "Lnet/ilexiconn/llibrary/server/network/PropertiesMessage;",
+            "Lnet/ilexiconn/llibrary/server/network/SnackbarMessage;",
+            "Lnet/ilexiconn/llibrary/server/network/BlockEntityMessage;",
+            "Lnet/ilexiconn/llibrary/server/network/SurvivalTabMessage;"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onPreInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onInit(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onPostInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onFingerprintViolation(Lnet/minecraftforge/fml/common/event/FMLFingerprintViolationEvent;)V"
+      }
+    ]
+  },
+  "net/ilexiconn/llibrary/LLibrary$CoreAPIHandler": {
+    "name": "net/ilexiconn/llibrary/LLibrary$CoreAPIHandler",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/core/api/LLibraryCoreAPI"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/ClientEventHandler": {
+    "name": "net/ilexiconn/llibrary/client/ClientEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInitGuiPost(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onButtonPressPre(Lnet/minecraftforge/client/event/GuiScreenEvent$ActionPerformedEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientUpdate(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderUpdate(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderOverlayPost(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrawScreenPost(Lnet/minecraftforge/client/event/GuiScreenEvent$DrawScreenEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderPlayer(Lnet/minecraftforge/client/event/RenderPlayerEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSurvivalTabClick(Lnet/ilexiconn/llibrary/server/event/SurvivalTabClickEvent;)V"
+      }
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/ElementGUI": {
+    "name": "net/ilexiconn/llibrary/client/gui/ElementGUI",
+    "interfaces": [
+      "net/ilexiconn/llibrary/client/gui/element/IElementGUI"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/LLibraryGUIFactory": {
+    "name": "net/ilexiconn/llibrary/client/gui/LLibraryGUIFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/config/LLibraryConfigGUI$1$1": {
+    "name": "net/ilexiconn/llibrary/client/gui/config/LLibraryConfigGUI$1$1",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IBooleanProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/config/LLibraryConfigGUI$2$1": {
+    "name": "net/ilexiconn/llibrary/client/gui/config/LLibraryConfigGUI$2$1",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IBooleanProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/config/LLibraryConfigGUI$3$1": {
+    "name": "net/ilexiconn/llibrary/client/gui/config/LLibraryConfigGUI$3$1",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IBooleanProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/config/LLibraryConfigGUI$4$1": {
+    "name": "net/ilexiconn/llibrary/client/gui/config/LLibraryConfigGUI$4$1",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IBooleanProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/config/LLibraryConfigGUI$5$1": {
+    "name": "net/ilexiconn/llibrary/client/gui/config/LLibraryConfigGUI$5$1",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IIntProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/config/LLibraryConfigGUI$6$1": {
+    "name": "net/ilexiconn/llibrary/client/gui/config/LLibraryConfigGUI$6$1",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IBooleanProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/config/property/BooleanConfigProperty": {
+    "name": "net/ilexiconn/llibrary/client/gui/config/property/BooleanConfigProperty",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IBooleanProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/config/property/ColorConfigProperty": {
+    "name": "net/ilexiconn/llibrary/client/gui/config/property/ColorConfigProperty",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IIntProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/config/property/DoubleRangeConfigProperty": {
+    "name": "net/ilexiconn/llibrary/client/gui/config/property/DoubleRangeConfigProperty",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IDoubleRangeProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/config/property/IntRangeConfigProperty": {
+    "name": "net/ilexiconn/llibrary/client/gui/config/property/IntRangeConfigProperty",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IIntRangeProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/config/property/StringConfigPropertyBase": {
+    "name": "net/ilexiconn/llibrary/client/gui/config/property/StringConfigPropertyBase",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IStringProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/gui/config/property/StringSelectionConfigProperty": {
+    "name": "net/ilexiconn/llibrary/client/gui/config/property/StringSelectionConfigProperty",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IStringSelectionProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/qubble/QubbleAnimation": {
+    "name": "net/ilexiconn/llibrary/client/model/qubble/QubbleAnimation",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/qubble/QubbleAnimationAction": {
+    "name": "net/ilexiconn/llibrary/client/model/qubble/QubbleAnimationAction",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/qubble/QubbleAnimationKeyframe": {
+    "name": "net/ilexiconn/llibrary/client/model/qubble/QubbleAnimationKeyframe",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/qubble/QubbleCuboid": {
+    "name": "net/ilexiconn/llibrary/client/model/qubble/QubbleCuboid",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/qubble/QubbleModel": {
+    "name": "net/ilexiconn/llibrary/client/model/qubble/QubbleModel",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/qubble/vanilla/QubbleVanillaCuboid": {
+    "name": "net/ilexiconn/llibrary/client/model/qubble/vanilla/QubbleVanillaCuboid",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/qubble/vanilla/QubbleVanillaFace": {
+    "name": "net/ilexiconn/llibrary/client/model/qubble/vanilla/QubbleVanillaFace",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/qubble/vanilla/QubbleVanillaModel": {
+    "name": "net/ilexiconn/llibrary/client/model/qubble/vanilla/QubbleVanillaModel",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/qubble/vanilla/QubbleVanillaRotation": {
+    "name": "net/ilexiconn/llibrary/client/model/qubble/vanilla/QubbleVanillaRotation",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/qubble/vanilla/QubbleVanillaTexture": {
+    "name": "net/ilexiconn/llibrary/client/model/qubble/vanilla/QubbleVanillaTexture",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/tabula/TabulaModelHandler": {
+    "name": "net/ilexiconn/llibrary/client/model/tabula/TabulaModelHandler",
+    "interfaces": [
+      "net/minecraftforge/client/model/ICustomModelLoader",
+      "com/google/gson/JsonDeserializationContext"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/tabula/animation/AnimationPlayerAnimator": {
+    "name": "net/ilexiconn/llibrary/client/model/tabula/animation/AnimationPlayerAnimator",
+    "interfaces": [
+      "net/ilexiconn/llibrary/client/model/tabula/ITabulaModelAnimator"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/tabula/baked/BakedTabulaModel": {
+    "name": "net/ilexiconn/llibrary/client/model/tabula/baked/BakedTabulaModel",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/tabula/baked/VanillaTabulaModel": {
+    "name": "net/ilexiconn/llibrary/client/model/tabula/baked/VanillaTabulaModel",
+    "interfaces": [
+      "net/minecraftforge/client/model/IModel"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/tabula/baked/deserializer/ItemCameraTransformsDeserializer": {
+    "name": "net/ilexiconn/llibrary/client/model/tabula/baked/deserializer/ItemCameraTransformsDeserializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/model/tabula/baked/deserializer/ItemTransformVec3fDeserializer": {
+    "name": "net/ilexiconn/llibrary/client/model/tabula/baked/deserializer/ItemTransformVec3fDeserializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer"
+    ]
+  },
+  "net/ilexiconn/llibrary/client/render/entity/PartRenderer$Factory": {
+    "name": "net/ilexiconn/llibrary/client/render/entity/PartRenderer$Factory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/ServerEventHandler": {
+    "name": "net/ilexiconn/llibrary/server/ServerEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAttachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onFinishAttachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCollectEntityData(Lnet/ilexiconn/llibrary/server/event/CollectEntityDataEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerClone(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onJoinWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityStartTracking(Lnet/minecraftforge/event/entity/player/PlayerEvent$StartTracking;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityStopTracking(Lnet/minecraftforge/event/entity/player/PlayerEvent$StopTracking;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerTickEvent(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldSave(Lnet/minecraftforge/event/world/WorldEvent$Save;)V"
+      }
+    ]
+  },
+  "net/ilexiconn/llibrary/server/capability/EntityDataCapabilityImplementation": {
+    "name": "net/ilexiconn/llibrary/server/capability/EntityDataCapabilityImplementation",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/capability/IEntityDataCapability"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/capability/EntityDataCapabilityStorage": {
+    "name": "net/ilexiconn/llibrary/server/capability/EntityDataCapabilityStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/capability/IEntityDataCapability": {
+    "name": "net/ilexiconn/llibrary/server/capability/IEntityDataCapability",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/command/CommandHandler$1": {
+    "name": "net/ilexiconn/llibrary/server/command/CommandHandler$1",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/command/argument/IArgumentParser"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/command/argument/ArgumentParsers": {
+    "name": "net/ilexiconn/llibrary/server/command/argument/ArgumentParsers",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/command/argument/IArgumentParser"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/config/Config": {
+    "name": "net/ilexiconn/llibrary/server/config/Config",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/config/ConfigEntry": {
+    "name": "net/ilexiconn/llibrary/server/config/ConfigEntry",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/config/LLibraryConfig": {
+    "name": "net/ilexiconn/llibrary/server/config/LLibraryConfig",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/ilexiconn/llibrary/server/nbt/NBTProperty;",
+        "target": "accentColor"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/ilexiconn/llibrary/server/nbt/NBTMutatorProperty;",
+        "target": "colorMode",
+        "values": {
+          "type": {
+            "type": "CLASS",
+            "value": "Ljava/lang/String;"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/ilexiconn/llibrary/server/nbt/NBTProperty;",
+        "target": "patreonEffects"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/ilexiconn/llibrary/server/nbt/NBTProperty;",
+        "target": "versionCheck"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/ilexiconn/llibrary/server/nbt/NBTProperty;",
+        "target": "tabsAlwaysVisible"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/ilexiconn/llibrary/server/nbt/NBTProperty;",
+        "target": "tabsLeftSide"
+      }
+    ]
+  },
+  "net/ilexiconn/llibrary/server/entity/EntityProperties": {
+    "name": "net/ilexiconn/llibrary/server/entity/EntityProperties",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/capability/IEntityData"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/entity/EntityPropertiesHandler": {
+    "name": "net/ilexiconn/llibrary/server/entity/EntityPropertiesHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogOut(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedOutEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerClone(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V"
+      }
+    ]
+  },
+  "net/ilexiconn/llibrary/server/entity/block/BlockEntity": {
+    "name": "net/ilexiconn/llibrary/server/entity/block/BlockEntity",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/event/AnimationEvent$Start": {
+    "name": "net/ilexiconn/llibrary/server/event/AnimationEvent$Start",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "net/ilexiconn/llibrary/server/event/AnimationEvent$Start"
+      }
+    ]
+  },
+  "net/ilexiconn/llibrary/server/nbt/NBTMutatorProperty": {
+    "name": "net/ilexiconn/llibrary/server/nbt/NBTMutatorProperty",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/nbt/NBTProperty": {
+    "name": "net/ilexiconn/llibrary/server/nbt/NBTProperty",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/nbt/parser/NBTParsers": {
+    "name": "net/ilexiconn/llibrary/server/nbt/parser/NBTParsers",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/nbt/parser/INBTParser"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/network/AbstractMessage": {
+    "name": "net/ilexiconn/llibrary/server/network/AbstractMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/network/NetworkWrapper": {
+    "name": "net/ilexiconn/llibrary/server/network/NetworkWrapper",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/IBooleanProperty$WithState": {
+    "name": "net/ilexiconn/llibrary/server/property/IBooleanProperty$WithState",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IBooleanProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/IDoubleProperty$WithState": {
+    "name": "net/ilexiconn/llibrary/server/property/IDoubleProperty$WithState",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IDoubleProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/IDoubleRangeProperty": {
+    "name": "net/ilexiconn/llibrary/server/property/IDoubleRangeProperty",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IDoubleProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/IDoubleRangeProperty$WithState": {
+    "name": "net/ilexiconn/llibrary/server/property/IDoubleRangeProperty$WithState",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IDoubleRangeProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/IFloatProperty$WithState": {
+    "name": "net/ilexiconn/llibrary/server/property/IFloatProperty$WithState",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IFloatProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/IFloatRangeProperty": {
+    "name": "net/ilexiconn/llibrary/server/property/IFloatRangeProperty",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IFloatProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/IFloatRangeProperty$WithState": {
+    "name": "net/ilexiconn/llibrary/server/property/IFloatRangeProperty$WithState",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IFloatRangeProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/IIntProperty$WithState": {
+    "name": "net/ilexiconn/llibrary/server/property/IIntProperty$WithState",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IIntProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/IIntRangeProperty": {
+    "name": "net/ilexiconn/llibrary/server/property/IIntRangeProperty",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IIntProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/IIntRangeProperty$WithState": {
+    "name": "net/ilexiconn/llibrary/server/property/IIntRangeProperty$WithState",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IIntRangeProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/IStringProperty$WithState": {
+    "name": "net/ilexiconn/llibrary/server/property/IStringProperty$WithState",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IStringProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/IStringSelectionProperty": {
+    "name": "net/ilexiconn/llibrary/server/property/IStringSelectionProperty",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IStringProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/IStringSelectionProperty$WithState": {
+    "name": "net/ilexiconn/llibrary/server/property/IStringSelectionProperty$WithState",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IStringSelectionProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/wrapper/BooleanPropertyWrapper": {
+    "name": "net/ilexiconn/llibrary/server/property/wrapper/BooleanPropertyWrapper",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IBooleanProperty",
+      "net/ilexiconn/llibrary/server/property/IStringSelectionProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/wrapper/DoublePropertyWrapperBase": {
+    "name": "net/ilexiconn/llibrary/server/property/wrapper/DoublePropertyWrapperBase",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IDoubleProperty",
+      "net/ilexiconn/llibrary/server/property/IFloatProperty",
+      "net/ilexiconn/llibrary/server/property/IIntProperty",
+      "net/ilexiconn/llibrary/server/property/IStringProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/wrapper/DoubleRangePropertyWrapper": {
+    "name": "net/ilexiconn/llibrary/server/property/wrapper/DoubleRangePropertyWrapper",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IDoubleRangeProperty",
+      "net/ilexiconn/llibrary/server/property/IFloatRangeProperty",
+      "net/ilexiconn/llibrary/server/property/IIntRangeProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/wrapper/FloatPropertyWrapperBase": {
+    "name": "net/ilexiconn/llibrary/server/property/wrapper/FloatPropertyWrapperBase",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IFloatProperty",
+      "net/ilexiconn/llibrary/server/property/IDoubleProperty",
+      "net/ilexiconn/llibrary/server/property/IIntProperty",
+      "net/ilexiconn/llibrary/server/property/IStringProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/wrapper/FloatRangePropertyWrapper": {
+    "name": "net/ilexiconn/llibrary/server/property/wrapper/FloatRangePropertyWrapper",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IFloatRangeProperty",
+      "net/ilexiconn/llibrary/server/property/IDoubleRangeProperty",
+      "net/ilexiconn/llibrary/server/property/IIntRangeProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/wrapper/IntPropertyWrapperBase": {
+    "name": "net/ilexiconn/llibrary/server/property/wrapper/IntPropertyWrapperBase",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IIntProperty",
+      "net/ilexiconn/llibrary/server/property/IDoubleProperty",
+      "net/ilexiconn/llibrary/server/property/IFloatProperty",
+      "net/ilexiconn/llibrary/server/property/IStringProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/property/wrapper/IntRangePropertyWrapper": {
+    "name": "net/ilexiconn/llibrary/server/property/wrapper/IntRangePropertyWrapper",
+    "interfaces": [
+      "net/ilexiconn/llibrary/server/property/IIntRangeProperty",
+      "net/ilexiconn/llibrary/server/property/IDoubleRangeProperty",
+      "net/ilexiconn/llibrary/server/property/IFloatRangeProperty"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/util/IValueAccess": {
+    "name": "net/ilexiconn/llibrary/server/util/IValueAccess",
+    "interfaces": [
+      "java/util/function/Supplier",
+      "java/util/function/Consumer"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/util/WeakIdentityHashMap": {
+    "name": "net/ilexiconn/llibrary/server/util/WeakIdentityHashMap",
+    "interfaces": [
+      "java/util/Map"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/util/WeakIdentityHashMap$1$1": {
+    "name": "net/ilexiconn/llibrary/server/util/WeakIdentityHashMap$1$1",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/util/WeakIdentityHashMap$3$1": {
+    "name": "net/ilexiconn/llibrary/server/util/WeakIdentityHashMap$3$1",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "net/ilexiconn/llibrary/server/util/WeakIdentityHashMap$3$1$1": {
+    "name": "net/ilexiconn/llibrary/server/util/WeakIdentityHashMap$3$1$1",
+    "interfaces": [
+      "java/util/Map$Entry"
+    ]
+  }
+}

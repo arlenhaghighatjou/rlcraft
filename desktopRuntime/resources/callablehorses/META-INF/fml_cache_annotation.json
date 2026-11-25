@@ -1,0 +1,471 @@
+{
+  "tschipp/callablehorses/CallableHorses": {
+    "name": "tschipp/callablehorses/CallableHorses",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "tschipp/callablehorses/CallableHorses"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "tschipp/callablehorses/CallableHorses",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2,1.13)"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[13.20.1.2386,);"
+          },
+          "guiFactory": {
+            "value": "tschipp.callablehorses.client.gui.GuiFactoryCallableHorses"
+          },
+          "modid": {
+            "value": "callablehorses"
+          },
+          "name": {
+            "value": "Callable Horses"
+          },
+          "version": {
+            "value": "1.1.1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "tschipp.callablehorses.ClientProxy"
+          },
+          "serverSide": {
+            "value": "tschipp.callablehorses.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "callablehorses"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "tschipp/callablehorses/CommonProxy": {
+    "name": "tschipp/callablehorses/CommonProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "tschipp/callablehorses/client/event/KeybindEvents": {
+    "name": "tschipp/callablehorses/client/event/KeybindEvents",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "tschipp/callablehorses/client/event/KeybindEvents",
+        "values": {
+          "modid": {
+            "value": "callablehorses"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "tschipp/callablehorses/client/gui/GuiFactoryCallableHorses": {
+    "name": "tschipp/callablehorses/client/gui/GuiFactoryCallableHorses",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "tschipp/callablehorses/client/gui/GuiHandler": {
+    "name": "tschipp/callablehorses/client/gui/GuiHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "tschipp/callablehorses/common/capabilities/horseowner/HorseOwner": {
+    "name": "tschipp/callablehorses/common/capabilities/horseowner/HorseOwner",
+    "interfaces": [
+      "tschipp/callablehorses/common/capabilities/horseowner/IHorseOwner"
+    ]
+  },
+  "tschipp/callablehorses/common/capabilities/horseowner/HorseOwnerProvider": {
+    "name": "tschipp/callablehorses/common/capabilities/horseowner/HorseOwnerProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "OWNER_CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Ltschipp/callablehorses/common/capabilities/horseowner/IHorseOwner;"
+        }
+      }
+    ]
+  },
+  "tschipp/callablehorses/common/capabilities/horseowner/HorseOwnerStorage": {
+    "name": "tschipp/callablehorses/common/capabilities/horseowner/HorseOwnerStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "tschipp/callablehorses/common/capabilities/storedhorse/HorseProvider": {
+    "name": "tschipp/callablehorses/common/capabilities/storedhorse/HorseProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "HORSE_CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Ltschipp/callablehorses/common/capabilities/storedhorse/IStoredHorse;"
+        }
+      }
+    ]
+  },
+  "tschipp/callablehorses/common/capabilities/storedhorse/HorseStorage": {
+    "name": "tschipp/callablehorses/common/capabilities/storedhorse/HorseStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "tschipp/callablehorses/common/capabilities/storedhorse/StoredHorse": {
+    "name": "tschipp/callablehorses/common/capabilities/storedhorse/StoredHorse",
+    "interfaces": [
+      "tschipp/callablehorses/common/capabilities/storedhorse/IStoredHorse"
+    ]
+  },
+  "tschipp/callablehorses/common/config/CallableHorsesConfig": {
+    "name": "tschipp/callablehorses/common/config/CallableHorsesConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "tschipp/callablehorses/common/config/CallableHorsesConfig",
+        "values": {
+          "modid": {
+            "value": "callablehorses"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "settings",
+        "value": {
+          "value": "callablehorses"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "settings",
+        "value": {
+          "values": [
+            "General Mod Settings"
+          ]
+        }
+      }
+    ]
+  },
+  "tschipp/callablehorses/common/config/CallableHorsesConfig$EventHandler": {
+    "name": "tschipp/callablehorses/common/config/CallableHorsesConfig$EventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "tschipp/callablehorses/common/config/CallableHorsesConfig$EventHandler"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "tschipp/callablehorses/common/config/Configs$Settings": {
+    "name": "tschipp/callablehorses/common/config/Configs$Settings",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableDebug",
+        "value": {
+          "values": [
+            "Enable debug mode (Developers only) WARNING! Will override all horse names!"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "deathIsPermanent",
+        "value": {
+          "values": [
+            "Personal Horses get deleted if they\u0027re killed"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "callableInEveryDimension",
+        "value": {
+          "values": [
+            "If the horse can be called in every dimension"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "callableDimsWhitelist",
+        "value": {
+          "values": [
+            "Whitelist for dimensions where horses can be called. callableInEveryDimension needs to be false!"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "maxCallingDistance",
+        "value": {
+          "values": [
+            "Maximum block distance from last horse where new horse can be called. Set to -1 to disable range."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "maxCallingDistance",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "30000000"
+          },
+          "min": {
+            "type": "INT",
+            "value": "-1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableStatsViewer",
+        "value": {
+          "values": [
+            "Enable/disable the horse stat viewer GUI"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "horseWalkRange",
+        "value": {
+          "values": [
+            "Range in which the horse will not teleport, but walk to you. Set to 0 to force the horse to always teleport."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "horseSpeed",
+        "value": {
+          "values": [
+            "Speed with which the horse walks when you call it. Vanilla horse walk speed is 1.2"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "continuousAntiDupeChecking",
+        "value": {
+          "values": [
+            "Check against duplicate horses every game tick (20 times per second) instead of only on load. Only use this if you\u0027re experiencing problem with duplicate horses! THIS COULD CAUSE LAG!"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "disableHorseDrops",
+        "value": {
+          "values": [
+            "Prevents personal horses from dropping items (like leather). This won\u0027t prevent armor or saddles from dropping. If this is disabled in combination with deathIsPermanent, it can become a really easy way to farm/duplicate leather, so keep that in mind."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "checkForSpace",
+        "value": {
+          "values": [
+            "If you need a 3x3x3 space to call your horse"
+          ]
+        }
+      }
+    ]
+  },
+  "tschipp/callablehorses/common/events/EntityEvents": {
+    "name": "tschipp/callablehorses/common/events/EntityEvents",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "tschipp/callablehorses/common/events/EntityEvents",
+        "values": {
+          "modid": {
+            "value": "callablehorses"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAttachCaps(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onChunkLoad(Lnet/minecraftforge/event/world/ChunkEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClone(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onChunkUnload(Lnet/minecraftforge/event/world/ChunkEvent$Unload;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onStopTracking(Lnet/minecraftforge/event/entity/player/PlayerEvent$StopTracking;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onStartTracking(Lnet/minecraftforge/event/entity/player/PlayerEvent$StartTracking;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onJoinWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityDrop(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      }
+    ]
+  },
+  "tschipp/callablehorses/network/HorseCapSyncPacket": {
+    "name": "tschipp/callablehorses/network/HorseCapSyncPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "tschipp/callablehorses/network/HorseCapSyncPacket$1": {
+    "name": "tschipp/callablehorses/network/HorseCapSyncPacket$1",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "tschipp/callablehorses/network/OwnerSyncShowStatsPacket": {
+    "name": "tschipp/callablehorses/network/OwnerSyncShowStatsPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "tschipp/callablehorses/network/OwnerSyncShowStatsPacket$1": {
+    "name": "tschipp/callablehorses/network/OwnerSyncShowStatsPacket$1",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "tschipp/callablehorses/network/PressKeyPacket": {
+    "name": "tschipp/callablehorses/network/PressKeyPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "tschipp/callablehorses/network/PressKeyPacket$1": {
+    "name": "tschipp/callablehorses/network/PressKeyPacket$1",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  }
+}

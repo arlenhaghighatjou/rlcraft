@@ -1,0 +1,1512 @@
+{
+  "com/teamacronymcoders/base/Base": {
+    "name": "com/teamacronymcoders/base/Base",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/teamacronymcoders/base/Base",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "after:crafttweaker;after:jei"
+          },
+          "modid": {
+            "value": "base"
+          },
+          "name": {
+            "value": "BASE"
+          },
+          "version": {
+            "value": "3.14.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "base"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.teamacronymcoders.base.proxies.ModClientProxy"
+          },
+          "serverSide": {
+            "value": "com.teamacronymcoders.base.proxies.ModServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverInit(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/BaseModFoundation": {
+    "name": "com/teamacronymcoders/base/BaseModFoundation",
+    "interfaces": [
+      "com/teamacronymcoders/base/IBaseMod",
+      "com/teamacronymcoders/base/registrysystem/IRegistryHolder"
+    ]
+  },
+  "com/teamacronymcoders/base/Capabilities": {
+    "name": "com/teamacronymcoders/base/Capabilities",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "TOOL",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/teamacronymcoders/base/api/ITool;"
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/Capabilities$1": {
+    "name": "com/teamacronymcoders/base/Capabilities$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/teamacronymcoders/base/advancement/CriterionTrigger": {
+    "name": "com/teamacronymcoders/base/advancement/CriterionTrigger",
+    "interfaces": [
+      "net/minecraft/advancements/ICriterionTrigger"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/teamacronymcoders/base/advancement/CriterionTrigger"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/api/ToolImpl": {
+    "name": "com/teamacronymcoders/base/api/ToolImpl",
+    "interfaces": [
+      "com/teamacronymcoders/base/api/ITool"
+    ]
+  },
+  "com/teamacronymcoders/base/api/package-info": {
+    "name": "com/teamacronymcoders/base/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "com/teamacronymcoders/base/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "1.0.0"
+          },
+          "owner": {
+            "value": "Base"
+          },
+          "provides": {
+            "value": "Base|API"
+          }
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/blocks/BlockBase": {
+    "name": "com/teamacronymcoders/base/blocks/BlockBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/IHasModel",
+      "com/teamacronymcoders/base/client/models/generator/IHasGeneratedModel"
+    ]
+  },
+  "com/teamacronymcoders/base/blocks/BlockBaseNoModel": {
+    "name": "com/teamacronymcoders/base/blocks/BlockBaseNoModel",
+    "interfaces": [
+      "com/teamacronymcoders/base/blocks/IHasItemBlock",
+      "com/teamacronymcoders/base/items/IHasSubItems",
+      "com/teamacronymcoders/base/IModAware",
+      "com/teamacronymcoders/base/blocks/IAmBlock",
+      "com/teamacronymcoders/base/items/IHasOreDict"
+    ]
+  },
+  "com/teamacronymcoders/base/blocks/BlockFluidBase": {
+    "name": "com/teamacronymcoders/base/blocks/BlockFluidBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/blocks/IHasBlockStateMapper",
+      "com/teamacronymcoders/base/client/models/generator/IHasGeneratedModel"
+    ]
+  },
+  "com/teamacronymcoders/base/blocks/BlockTEBase": {
+    "name": "com/teamacronymcoders/base/blocks/BlockTEBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/blocks/IHasTileEntity"
+    ]
+  },
+  "com/teamacronymcoders/base/blocks/IHasBlockColor": {
+    "name": "com/teamacronymcoders/base/blocks/IHasBlockColor",
+    "interfaces": [
+      "com/teamacronymcoders/base/blocks/IAmBlock"
+    ]
+  },
+  "com/teamacronymcoders/base/blocks/IHasBlockStateMapper": {
+    "name": "com/teamacronymcoders/base/blocks/IHasBlockStateMapper",
+    "interfaces": [
+      "com/teamacronymcoders/base/blocks/IAmBlock"
+    ]
+  },
+  "com/teamacronymcoders/base/blocks/IHasItemBlock": {
+    "name": "com/teamacronymcoders/base/blocks/IHasItemBlock",
+    "interfaces": [
+      "com/teamacronymcoders/base/items/IAmItem"
+    ]
+  },
+  "com/teamacronymcoders/base/blocks/properties/PropertySideType": {
+    "name": "com/teamacronymcoders/base/blocks/properties/PropertySideType",
+    "interfaces": [
+      "net/minecraftforge/common/property/IUnlistedProperty"
+    ]
+  },
+  "com/teamacronymcoders/base/blocks/properties/SideType": {
+    "name": "com/teamacronymcoders/base/blocks/properties/SideType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/teamacronymcoders/base/capability/NBTCapStorage": {
+    "name": "com/teamacronymcoders/base/capability/NBTCapStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/teamacronymcoders/base/capability/QueueFoundation": {
+    "name": "com/teamacronymcoders/base/capability/QueueFoundation",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "com/teamacronymcoders/base/capability/energy/EnergyStorageDirectional": {
+    "name": "com/teamacronymcoders/base/capability/energy/EnergyStorageDirectional",
+    "interfaces": [
+      "net/minecraftforge/energy/IEnergyStorage"
+    ]
+  },
+  "com/teamacronymcoders/base/capability/energy/EnergyStorageSerializable": {
+    "name": "com/teamacronymcoders/base/capability/energy/EnergyStorageSerializable",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "com/teamacronymcoders/base/capability/fluid/FluidHandlerInput": {
+    "name": "com/teamacronymcoders/base/capability/fluid/FluidHandlerInput",
+    "interfaces": [
+      "net/minecraftforge/fluids/capability/IFluidHandler"
+    ]
+  },
+  "com/teamacronymcoders/base/capability/fluid/FluidHandlerOutput": {
+    "name": "com/teamacronymcoders/base/capability/fluid/FluidHandlerOutput",
+    "interfaces": [
+      "net/minecraftforge/fluids/capability/IFluidHandler"
+    ]
+  },
+  "com/teamacronymcoders/base/capability/fluid/FluidTankSerializable": {
+    "name": "com/teamacronymcoders/base/capability/fluid/FluidTankSerializable",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "com/teamacronymcoders/base/capability/item/ItemHandlerDirectional": {
+    "name": "com/teamacronymcoders/base/capability/item/ItemHandlerDirectional",
+    "interfaces": [
+      "net/minecraftforge/items/IItemHandler"
+    ]
+  },
+  "com/teamacronymcoders/base/capability/item/ItemStackQueue": {
+    "name": "com/teamacronymcoders/base/capability/item/ItemStackQueue",
+    "interfaces": [
+      "net/minecraftforge/items/IItemHandler"
+    ]
+  },
+  "com/teamacronymcoders/base/capability/tool/ToolConfiguration": {
+    "name": "com/teamacronymcoders/base/capability/tool/ToolConfiguration",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "checkTool(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/client/ItemMeshDefinitions$1": {
+    "name": "com/teamacronymcoders/base/client/ItemMeshDefinitions$1",
+    "interfaces": [
+      "net/minecraft/client/renderer/ItemMeshDefinition"
+    ]
+  },
+  "com/teamacronymcoders/base/client/models/EmptyModelState": {
+    "name": "com/teamacronymcoders/base/client/models/EmptyModelState",
+    "interfaces": [
+      "net/minecraftforge/common/model/IModelState"
+    ]
+  },
+  "com/teamacronymcoders/base/client/models/IHasModel": {
+    "name": "com/teamacronymcoders/base/client/models/IHasModel",
+    "interfaces": [
+      "com/teamacronymcoders/base/items/IHasSubItems",
+      "com/teamacronymcoders/base/IModAware"
+    ]
+  },
+  "com/teamacronymcoders/base/client/models/generator/ModelGeneratorPiece": {
+    "name": "com/teamacronymcoders/base/client/models/generator/ModelGeneratorPiece",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistryPiece;",
+        "target": "com/teamacronymcoders/base/client/models/generator/ModelGeneratorPiece",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          },
+          "value": {
+            "type": "ENUM",
+            "value": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistrySide;/CLIENT"
+          }
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/client/models/generator/generatedmodel/GeneratedModel": {
+    "name": "com/teamacronymcoders/base/client/models/generator/generatedmodel/GeneratedModel",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/generator/generatedmodel/IGeneratedModel"
+    ]
+  },
+  "com/teamacronymcoders/base/client/models/sided/BakedModelSidedBlock": {
+    "name": "com/teamacronymcoders/base/client/models/sided/BakedModelSidedBlock",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "com/teamacronymcoders/base/client/models/sided/ModelLoaderSidedBlock": {
+    "name": "com/teamacronymcoders/base/client/models/sided/ModelLoaderSidedBlock",
+    "interfaces": [
+      "net/minecraftforge/client/model/ICustomModelLoader"
+    ]
+  },
+  "com/teamacronymcoders/base/client/models/sided/ModelSidedBlock": {
+    "name": "com/teamacronymcoders/base/client/models/sided/ModelSidedBlock",
+    "interfaces": [
+      "net/minecraftforge/client/model/IModel"
+    ]
+  },
+  "com/teamacronymcoders/base/client/models/sided/SidedTypeRegistry$1": {
+    "name": "com/teamacronymcoders/base/client/models/sided/SidedTypeRegistry$1",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/sided/ITextureNamer"
+    ]
+  },
+  "com/teamacronymcoders/base/client/models/sided/SidedTypeRegistry$2": {
+    "name": "com/teamacronymcoders/base/client/models/sided/SidedTypeRegistry$2",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/sided/ITextureNamer"
+    ]
+  },
+  "com/teamacronymcoders/base/client/models/sided/SidedTypeRegistry$3": {
+    "name": "com/teamacronymcoders/base/client/models/sided/SidedTypeRegistry$3",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/sided/ITextureNamer"
+    ]
+  },
+  "com/teamacronymcoders/base/client/models/sided/SidedTypeRegistry$4": {
+    "name": "com/teamacronymcoders/base/client/models/sided/SidedTypeRegistry$4",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/sided/ITextureNamer"
+    ]
+  },
+  "com/teamacronymcoders/base/client/models/sided/SidedTypeRegistry$5": {
+    "name": "com/teamacronymcoders/base/client/models/sided/SidedTypeRegistry$5",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/sided/ITextureNamer"
+    ]
+  },
+  "com/teamacronymcoders/base/client/models/sided/SidedTypeRegistry$6": {
+    "name": "com/teamacronymcoders/base/client/models/sided/SidedTypeRegistry$6",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/sided/ITextureNamer"
+    ]
+  },
+  "com/teamacronymcoders/base/entities/dataserializers/ResourceLocationDataSerializer": {
+    "name": "com/teamacronymcoders/base/entities/dataserializers/ResourceLocationDataSerializer",
+    "interfaces": [
+      "net/minecraft/network/datasync/DataSerializer"
+    ]
+  },
+  "com/teamacronymcoders/base/guisystem/GuiHandler": {
+    "name": "com/teamacronymcoders/base/guisystem/GuiHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "com/teamacronymcoders/base/items/IHasItemMeshDefinition": {
+    "name": "com/teamacronymcoders/base/items/IHasItemMeshDefinition",
+    "interfaces": [
+      "com/teamacronymcoders/base/items/IHasSubItems"
+    ]
+  },
+  "com/teamacronymcoders/base/items/IHasSubItems": {
+    "name": "com/teamacronymcoders/base/items/IHasSubItems",
+    "interfaces": [
+      "com/teamacronymcoders/base/items/IAmItem"
+    ]
+  },
+  "com/teamacronymcoders/base/items/IIsHidden": {
+    "name": "com/teamacronymcoders/base/items/IIsHidden",
+    "interfaces": [
+      "com/teamacronymcoders/base/items/IHasSubItems"
+    ]
+  },
+  "com/teamacronymcoders/base/items/ItemArmorBase": {
+    "name": "com/teamacronymcoders/base/items/ItemArmorBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/IHasModel"
+    ]
+  },
+  "com/teamacronymcoders/base/items/ItemBase": {
+    "name": "com/teamacronymcoders/base/items/ItemBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/IHasModel",
+      "com/teamacronymcoders/base/client/models/generator/IHasGeneratedModel"
+    ]
+  },
+  "com/teamacronymcoders/base/items/ItemBaseNoModel": {
+    "name": "com/teamacronymcoders/base/items/ItemBaseNoModel",
+    "interfaces": [
+      "com/teamacronymcoders/base/IModAware",
+      "com/teamacronymcoders/base/items/IHasSubItems"
+    ]
+  },
+  "com/teamacronymcoders/base/items/ItemCustomRecord": {
+    "name": "com/teamacronymcoders/base/items/ItemCustomRecord",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/generator/IHasGeneratedModel",
+      "com/teamacronymcoders/base/client/models/IHasModel",
+      "com/teamacronymcoders/base/items/IHasItemColor"
+    ]
+  },
+  "com/teamacronymcoders/base/items/ItemEventHandler": {
+    "name": "com/teamacronymcoders/base/items/ItemEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityRightClicked(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteractSpecific;)V"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/items/ItemStackDropTable": {
+    "name": "com/teamacronymcoders/base/items/ItemStackDropTable",
+    "interfaces": [
+      "com/teamacronymcoders/base/items/IDropTable"
+    ]
+  },
+  "com/teamacronymcoders/base/items/WeightedDropTable": {
+    "name": "com/teamacronymcoders/base/items/WeightedDropTable",
+    "interfaces": [
+      "com/teamacronymcoders/base/items/IDropTable"
+    ]
+  },
+  "com/teamacronymcoders/base/items/boats/ItemBoatBase": {
+    "name": "com/teamacronymcoders/base/items/boats/ItemBoatBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/IHasModel"
+    ]
+  },
+  "com/teamacronymcoders/base/items/itemblocks/ItemBlockGeneric": {
+    "name": "com/teamacronymcoders/base/items/itemblocks/ItemBlockGeneric",
+    "interfaces": [
+      "com/teamacronymcoders/base/IModAware",
+      "com/teamacronymcoders/base/items/IHasSubItems",
+      "com/teamacronymcoders/base/items/IHasOreDict"
+    ]
+  },
+  "com/teamacronymcoders/base/items/itemblocks/ItemBlockModel": {
+    "name": "com/teamacronymcoders/base/items/itemblocks/ItemBlockModel",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/IHasModel"
+    ]
+  },
+  "com/teamacronymcoders/base/items/itemblocks/ItemSubBlock": {
+    "name": "com/teamacronymcoders/base/items/itemblocks/ItemSubBlock",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/IHasModel"
+    ]
+  },
+  "com/teamacronymcoders/base/items/itemblocks/package-info": {
+    "name": "com/teamacronymcoders/base/items/itemblocks/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/teamacronymcoders/base/items/itemblocks/package-info"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/items/minecart/ItemMinecartBase": {
+    "name": "com/teamacronymcoders/base/items/minecart/ItemMinecartBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/IHasModel",
+      "com/teamacronymcoders/base/IModAware"
+    ]
+  },
+  "com/teamacronymcoders/base/items/tools/ItemShovelBase": {
+    "name": "com/teamacronymcoders/base/items/tools/ItemShovelBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/IHasModel",
+      "com/teamacronymcoders/base/IModAware"
+    ]
+  },
+  "com/teamacronymcoders/base/items/tools/ItemSwordBase": {
+    "name": "com/teamacronymcoders/base/items/tools/ItemSwordBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/IHasModel"
+    ]
+  },
+  "com/teamacronymcoders/base/items/tools/ItemToolBase": {
+    "name": "com/teamacronymcoders/base/items/tools/ItemToolBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/IHasModel",
+      "com/teamacronymcoders/base/IModAware"
+    ]
+  },
+  "com/teamacronymcoders/base/json/deserializer/BlockPosDeserializer": {
+    "name": "com/teamacronymcoders/base/json/deserializer/BlockPosDeserializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer"
+    ]
+  },
+  "com/teamacronymcoders/base/json/deserializer/BlockStateDeserializer": {
+    "name": "com/teamacronymcoders/base/json/deserializer/BlockStateDeserializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer"
+    ]
+  },
+  "com/teamacronymcoders/base/json/deserializer/BlockStateMatcherDeserializer": {
+    "name": "com/teamacronymcoders/base/json/deserializer/BlockStateMatcherDeserializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer"
+    ]
+  },
+  "com/teamacronymcoders/base/json/deserializer/EntityClassDeserializer": {
+    "name": "com/teamacronymcoders/base/json/deserializer/EntityClassDeserializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer"
+    ]
+  },
+  "com/teamacronymcoders/base/json/deserializer/EntityFactoryDeserializer": {
+    "name": "com/teamacronymcoders/base/json/deserializer/EntityFactoryDeserializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer"
+    ]
+  },
+  "com/teamacronymcoders/base/json/deserializer/NBTDeserializer": {
+    "name": "com/teamacronymcoders/base/json/deserializer/NBTDeserializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer"
+    ]
+  },
+  "com/teamacronymcoders/base/json/factory/DefaultObjectFactory": {
+    "name": "com/teamacronymcoders/base/json/factory/DefaultObjectFactory",
+    "interfaces": [
+      "com/teamacronymcoders/base/json/factory/IObjectFactory"
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/blocks/BlockMaterialFluid": {
+    "name": "com/teamacronymcoders/base/materialsystem/blocks/BlockMaterialFluid",
+    "interfaces": [
+      "com/teamacronymcoders/base/blocks/IHasBlockStateMapper",
+      "com/teamacronymcoders/base/client/models/generator/IHasGeneratedModel"
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/blocks/package-info": {
+    "name": "com/teamacronymcoders/base/materialsystem/blocks/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/teamacronymcoders/base/materialsystem/blocks/package-info"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/capabilities/IMaterialPartHolder": {
+    "name": "com/teamacronymcoders/base/materialsystem/capabilities/IMaterialPartHolder",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/capabilities/MaterialPartCapability": {
+    "name": "com/teamacronymcoders/base/materialsystem/capabilities/MaterialPartCapability",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "MATERIAL_PART_HOLDER",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/teamacronymcoders/base/materialsystem/capabilities/IMaterialPartHolder;"
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/capabilities/MaterialPartCapability$1": {
+    "name": "com/teamacronymcoders/base/materialsystem/capabilities/MaterialPartCapability$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/capabilities/MaterialPartHolder": {
+    "name": "com/teamacronymcoders/base/materialsystem/capabilities/MaterialPartHolder",
+    "interfaces": [
+      "com/teamacronymcoders/base/materialsystem/capabilities/IMaterialPartHolder"
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/capabilities/MaterialPartHolderProvider": {
+    "name": "com/teamacronymcoders/base/materialsystem/capabilities/MaterialPartHolderProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/compat/MaterialCompat": {
+    "name": "com/teamacronymcoders/base/materialsystem/compat/MaterialCompat",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/compat/base/BaseCompat": {
+    "name": "com/teamacronymcoders/base/materialsystem/compat/base/BaseCompat",
+    "interfaces": [
+      "com/teamacronymcoders/base/materialsystem/compat/IMaterialCompat"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/materialsystem/compat/MaterialCompat;",
+        "target": "com/teamacronymcoders/base/materialsystem/compat/base/BaseCompat",
+        "value": {
+          "value": "base"
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/entity/minecart/package-info": {
+    "name": "com/teamacronymcoders/base/materialsystem/entity/minecart/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/teamacronymcoders/base/materialsystem/entity/minecart/package-info"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/items/ItemMaterialArmor": {
+    "name": "com/teamacronymcoders/base/materialsystem/items/ItemMaterialArmor",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/models/IHasModel",
+      "com/teamacronymcoders/base/items/IHasItemColor",
+      "com/teamacronymcoders/base/client/models/generator/IHasGeneratedModel"
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/items/ItemMaterialPart": {
+    "name": "com/teamacronymcoders/base/materialsystem/items/ItemMaterialPart",
+    "interfaces": [
+      "com/teamacronymcoders/base/items/IHasItemColor",
+      "com/teamacronymcoders/base/items/IHasOreDict",
+      "com/teamacronymcoders/base/client/models/generator/IHasGeneratedModel"
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/items/ItemSingularMaterialPart": {
+    "name": "com/teamacronymcoders/base/materialsystem/items/ItemSingularMaterialPart",
+    "interfaces": [
+      "com/teamacronymcoders/base/items/IHasItemColor",
+      "com/teamacronymcoders/base/items/IHasOreDict",
+      "com/teamacronymcoders/base/client/models/generator/IHasGeneratedModel"
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/items/minecart/ItemMaterialMinecart": {
+    "name": "com/teamacronymcoders/base/materialsystem/items/minecart/ItemMaterialMinecart",
+    "interfaces": [
+      "com/teamacronymcoders/base/items/IHasItemColor",
+      "com/teamacronymcoders/base/client/models/generator/IHasGeneratedModel"
+    ]
+  },
+  "com/teamacronymcoders/base/materialsystem/renderer/minecart/RenderMaterialMinecart": {
+    "name": "com/teamacronymcoders/base/materialsystem/renderer/minecart/RenderMaterialMinecart",
+    "interfaces": [
+      "com/teamacronymcoders/base/renderer/entity/loader/IEntityRenderer"
+    ]
+  },
+  "com/teamacronymcoders/base/modules/journeymap/JourneyMapModule": {
+    "name": "com/teamacronymcoders/base/modules/journeymap/JourneyMapModule",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/modulesystem/Module;",
+        "target": "com/teamacronymcoders/base/modules/journeymap/JourneyMapModule",
+        "value": {
+          "value": "base"
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/modules/journeymap/JourneyMapPlugin": {
+    "name": "com/teamacronymcoders/base/modules/journeymap/JourneyMapPlugin",
+    "interfaces": [
+      "journeymap/client/api/IClientPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Ljourneymap/client/api/ClientPlugin;",
+        "target": "com/teamacronymcoders/base/modules/journeymap/JourneyMapPlugin"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/modules/journeymap/JourneyMapWaypointListener": {
+    "name": "com/teamacronymcoders/base/modules/journeymap/JourneyMapWaypointListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWaypointPlaced(Lcom/teamacronymcoders/base/event/PlaceWaypointEvent;)V"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/modules/tool/CapabilityProviderTool": {
+    "name": "com/teamacronymcoders/base/modules/tool/CapabilityProviderTool",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "com/teamacronymcoders/base/modules/tool/CapabilityProviderTool$1": {
+    "name": "com/teamacronymcoders/base/modules/tool/CapabilityProviderTool$1",
+    "interfaces": [
+      "com/teamacronymcoders/base/api/ITool"
+    ]
+  },
+  "com/teamacronymcoders/base/modules/tool/ItemWrench": {
+    "name": "com/teamacronymcoders/base/modules/tool/ItemWrench",
+    "interfaces": [
+      "com/teamacronymcoders/base/items/IHasRecipe"
+    ]
+  },
+  "com/teamacronymcoders/base/modules/tool/ItemWrench$CapabilityProvider": {
+    "name": "com/teamacronymcoders/base/modules/tool/ItemWrench$CapabilityProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "com/teamacronymcoders/base/modules/tool/ItemWrench$CapabilityProvider$1": {
+    "name": "com/teamacronymcoders/base/modules/tool/ItemWrench$CapabilityProvider$1",
+    "interfaces": [
+      "com/teamacronymcoders/base/api/ITool"
+    ]
+  },
+  "com/teamacronymcoders/base/modules/tool/ToolModule": {
+    "name": "com/teamacronymcoders/base/modules/tool/ToolModule",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/modulesystem/Module;",
+        "target": "com/teamacronymcoders/base/modules/tool/ToolModule",
+        "value": {
+          "value": "base"
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/modulesystem/IModule": {
+    "name": "com/teamacronymcoders/base/modulesystem/IModule",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "com/teamacronymcoders/base/modulesystem/Module": {
+    "name": "com/teamacronymcoders/base/modulesystem/Module",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "com/teamacronymcoders/base/modulesystem/ModuleBase": {
+    "name": "com/teamacronymcoders/base/modulesystem/ModuleBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/modulesystem/IModule"
+    ]
+  },
+  "com/teamacronymcoders/base/modulesystem/crafting/ConditionFactoryModuleActive": {
+    "name": "com/teamacronymcoders/base/modulesystem/crafting/ConditionFactoryModuleActive",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "com/teamacronymcoders/base/modulesystem/dependencies/ModDependency": {
+    "name": "com/teamacronymcoders/base/modulesystem/dependencies/ModDependency",
+    "interfaces": [
+      "com/teamacronymcoders/base/modulesystem/dependencies/IDependency"
+    ]
+  },
+  "com/teamacronymcoders/base/modulesystem/dependencies/ModuleDependency": {
+    "name": "com/teamacronymcoders/base/modulesystem/dependencies/ModuleDependency",
+    "interfaces": [
+      "com/teamacronymcoders/base/modulesystem/dependencies/IDependency"
+    ]
+  },
+  "com/teamacronymcoders/base/modulesystem/proxies/ModuleProxyBase": {
+    "name": "com/teamacronymcoders/base/modulesystem/proxies/ModuleProxyBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/modulesystem/proxies/IModuleProxy"
+    ]
+  },
+  "com/teamacronymcoders/base/multiblocksystem/MultiblockControllerBase": {
+    "name": "com/teamacronymcoders/base/multiblocksystem/MultiblockControllerBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/multiblocksystem/validation/IMultiblockValidator"
+    ]
+  },
+  "com/teamacronymcoders/base/multiblocksystem/MultiblockEventHandler": {
+    "name": "com/teamacronymcoders/base/multiblocksystem/MultiblockEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onChunkLoad(Lnet/minecraftforge/event/world/ChunkEvent$Load;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/NORMAL"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldUnload(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/NORMAL"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/multiblocksystem/MultiblockRegistry": {
+    "name": "com/teamacronymcoders/base/multiblocksystem/MultiblockRegistry",
+    "interfaces": [
+      "com/teamacronymcoders/base/multiblocksystem/IMultiblockRegistry"
+    ]
+  },
+  "com/teamacronymcoders/base/multiblocksystem/MultiblockTileEntityBase": {
+    "name": "com/teamacronymcoders/base/multiblocksystem/MultiblockTileEntityBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/multiblocksystem/IMultiblockPart"
+    ]
+  },
+  "com/teamacronymcoders/base/multiblocksystem/PropertyBlockFacings": {
+    "name": "com/teamacronymcoders/base/multiblocksystem/PropertyBlockFacings",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/teamacronymcoders/base/multiblocksystem/rectangular/PartPosition": {
+    "name": "com/teamacronymcoders/base/multiblocksystem/rectangular/PartPosition",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/NBT": {
+    "name": "com/teamacronymcoders/base/nbt/NBT",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTBlockPosConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTBlockPosConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTBooleanConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTBooleanConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTByteArrayConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTByteArrayConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTByteConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTByteConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTDoubleConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTDoubleConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTFloatConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTFloatConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTFluidTankConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTFluidTankConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTIntArrayConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTIntArrayConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTIntConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTIntConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTItemStackHandlerConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTItemStackHandlerConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTLongConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTLongConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTShortConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTShortConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTStringConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTStringConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/nbt/converters/NBTTagConverter": {
+    "name": "com/teamacronymcoders/base/nbt/converters/NBTTagConverter",
+    "interfaces": [
+      "com/teamacronymcoders/base/nbt/INBTConverter"
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/RecipeContainer": {
+    "name": "com/teamacronymcoders/base/recipesystem/RecipeContainer",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/command/RecipeSystemCommandSender": {
+    "name": "com/teamacronymcoders/base/recipesystem/command/RecipeSystemCommandSender",
+    "interfaces": [
+      "net/minecraft/command/ICommandSender"
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/condition/BiomeCondition": {
+    "name": "com/teamacronymcoders/base/recipesystem/condition/BiomeCondition",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/condition/ICondition"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/JsonAdapter;",
+        "target": "biome",
+        "values": {
+          "nullSafe": {
+            "type": "BOOL",
+            "value": "false"
+          },
+          "value": {
+            "type": "CLASS",
+            "value": "Lnet/minecraft/util/ResourceLocation$Serializer;"
+          }
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/condition/VillageCondition": {
+    "name": "com/teamacronymcoders/base/recipesystem/condition/VillageCondition",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/condition/ICondition"
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/event/RecipeSystemEventHandler": {
+    "name": "com/teamacronymcoders/base/recipesystem/event/RecipeSystemEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/teamacronymcoders/base/recipesystem/event/RecipeSystemEventHandler",
+        "values": {
+          "modid": {
+            "value": "base"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRecipes(Lnet/minecraftforge/event/RegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerConditions(Lcom/teamacronymcoders/base/recipesystem/event/RegisterRecipeFactoriesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerInput(Lcom/teamacronymcoders/base/recipesystem/event/RegisterRecipeFactoriesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerOutput(Lcom/teamacronymcoders/base/recipesystem/event/RegisterRecipeFactoriesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerLoader(Lcom/teamacronymcoders/base/event/BaseRegistryEvent;)V"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/handler/ClickedRecipeHandler": {
+    "name": "com/teamacronymcoders/base/recipesystem/handler/ClickedRecipeHandler",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/handler/IRecipeHandler"
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/handler/DefaultRecipeHandler": {
+    "name": "com/teamacronymcoders/base/recipesystem/handler/DefaultRecipeHandler",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/handler/IRecipeHandler"
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/input/BlockStateInput": {
+    "name": "com/teamacronymcoders/base/recipesystem/input/BlockStateInput",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/input/IInput"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/JsonAdapter;",
+        "target": "blockState",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/teamacronymcoders/base/json/deserializer/BlockStateMatcherDeserializer;"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/JsonAdapter;",
+        "target": "offset",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/teamacronymcoders/base/json/deserializer/BlockPosDeserializer;"
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/input/EntityInput": {
+    "name": "com/teamacronymcoders/base/recipesystem/input/EntityInput",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/input/IInput"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/JsonAdapter;",
+        "target": "entity",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/teamacronymcoders/base/json/deserializer/EntityClassDeserializer;"
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/input/ForgeEnergyInput": {
+    "name": "com/teamacronymcoders/base/recipesystem/input/ForgeEnergyInput",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/input/IInput"
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/loader/JsonRecipeLoader": {
+    "name": "com/teamacronymcoders/base/recipesystem/loader/JsonRecipeLoader",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/loader/ILoader"
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/output/BlockStateOutput": {
+    "name": "com/teamacronymcoders/base/recipesystem/output/BlockStateOutput",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/output/IOutput"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/JsonAdapter;",
+        "target": "blockState",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/teamacronymcoders/base/json/deserializer/BlockStateDeserializer;"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/JsonAdapter;",
+        "target": "offset",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/teamacronymcoders/base/json/deserializer/BlockPosDeserializer;"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/JsonAdapter;",
+        "target": "tileEntityNBT",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/teamacronymcoders/base/json/deserializer/NBTDeserializer;"
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/output/CommandOutput": {
+    "name": "com/teamacronymcoders/base/recipesystem/output/CommandOutput",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/output/IOutput"
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/output/EntityOutput": {
+    "name": "com/teamacronymcoders/base/recipesystem/output/EntityOutput",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/output/IOutput"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/JsonAdapter;",
+        "target": "entity",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/teamacronymcoders/base/json/deserializer/EntityFactoryDeserializer;"
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/output/ExplosionOutput": {
+    "name": "com/teamacronymcoders/base/recipesystem/output/ExplosionOutput",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/output/IOutput"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/JsonAdapter;",
+        "target": "offset",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/teamacronymcoders/base/json/deserializer/BlockPosDeserializer;"
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/output/OneOfOutput": {
+    "name": "com/teamacronymcoders/base/recipesystem/output/OneOfOutput",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/output/IOutput"
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/output/json/OneOfOutputFactory": {
+    "name": "com/teamacronymcoders/base/recipesystem/output/json/OneOfOutputFactory",
+    "interfaces": [
+      "com/teamacronymcoders/base/json/factory/IObjectFactory"
+    ]
+  },
+  "com/teamacronymcoders/base/recipesystem/source/RecipeSource": {
+    "name": "com/teamacronymcoders/base/recipesystem/source/RecipeSource",
+    "interfaces": [
+      "com/teamacronymcoders/base/recipesystem/source/IRecipeSource"
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/RegistryEventHandler": {
+    "name": "com/teamacronymcoders/base/registrysystem/RegistryEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEntities(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerSoundEvents(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelRun(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/RegistryPiece": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/RegistryPiece",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/RegistryPieceBase": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/RegistryPieceBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/registrysystem/pieces/IRegistryPiece",
+      "com/teamacronymcoders/base/IModAware"
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/RegistryPieceComparator": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/RegistryPieceComparator",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/assorted/ConfigListenerRegistryPiece": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/assorted/ConfigListenerRegistryPiece",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistryPiece;",
+        "target": "com/teamacronymcoders/base/registrysystem/pieces/assorted/ConfigListenerRegistryPiece"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/assorted/ModAwareRegistryPiece": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/assorted/ModAwareRegistryPiece",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistryPiece;",
+        "target": "com/teamacronymcoders/base/registrysystem/pieces/assorted/ModAwareRegistryPiece"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/gameregistry/CreativeTabRegistryPiece": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/gameregistry/CreativeTabRegistryPiece",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistryPiece;",
+        "target": "com/teamacronymcoders/base/registrysystem/pieces/gameregistry/CreativeTabRegistryPiece"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/gameregistry/ItemBlockRegisterRegistryPiece": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/gameregistry/ItemBlockRegisterRegistryPiece",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistryPiece;",
+        "target": "com/teamacronymcoders/base/registrysystem/pieces/gameregistry/ItemBlockRegisterRegistryPiece"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/gameregistry/OreDictRegistryPiece": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/gameregistry/OreDictRegistryPiece",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistryPiece;",
+        "target": "com/teamacronymcoders/base/registrysystem/pieces/gameregistry/OreDictRegistryPiece",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/gameregistry/TileEntityRegisterRegistryPiece": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/gameregistry/TileEntityRegisterRegistryPiece",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistryPiece;",
+        "target": "com/teamacronymcoders/base/registrysystem/pieces/gameregistry/TileEntityRegisterRegistryPiece"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/jei/BASEJEIPlugin": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/jei/BASEJEIPlugin",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "com/teamacronymcoders/base/registrysystem/pieces/jei/BASEJEIPlugin"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/jei/JEIBlackListRegistryPiece": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/jei/JEIBlackListRegistryPiece",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistryPiece;",
+        "target": "com/teamacronymcoders/base/registrysystem/pieces/jei/JEIBlackListRegistryPiece",
+        "values": {
+          "modid": {
+            "value": "jei"
+          }
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/models/BlockStateMapperRegistryPiece": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/models/BlockStateMapperRegistryPiece",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistryPiece;",
+        "target": "com/teamacronymcoders/base/registrysystem/pieces/models/BlockStateMapperRegistryPiece",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          },
+          "value": {
+            "type": "ENUM",
+            "value": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistrySide;/CLIENT"
+          }
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/models/ColorRegistryPiece": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/models/ColorRegistryPiece",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistryPiece;",
+        "target": "com/teamacronymcoders/base/registrysystem/pieces/models/ColorRegistryPiece",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          },
+          "value": {
+            "type": "ENUM",
+            "value": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistrySide;/CLIENT"
+          }
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/models/ItemMeshDefinitioniRegistryPiece": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/models/ItemMeshDefinitioniRegistryPiece",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistryPiece;",
+        "target": "com/teamacronymcoders/base/registrysystem/pieces/models/ItemMeshDefinitioniRegistryPiece",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          },
+          "value": {
+            "type": "ENUM",
+            "value": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistrySide;/CLIENT"
+          }
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/registrysystem/pieces/models/ModelRegistryPiece": {
+    "name": "com/teamacronymcoders/base/registrysystem/pieces/models/ModelRegistryPiece",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistryPiece;",
+        "target": "com/teamacronymcoders/base/registrysystem/pieces/models/ModelRegistryPiece",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          },
+          "value": {
+            "type": "ENUM",
+            "value": "Lcom/teamacronymcoders/base/registrysystem/pieces/RegistrySide;/CLIENT"
+          }
+        }
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/renderer/entity/loader/EntityRenderer": {
+    "name": "com/teamacronymcoders/base/renderer/entity/loader/EntityRenderer",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "com/teamacronymcoders/base/sound/CustomSoundEvent": {
+    "name": "com/teamacronymcoders/base/sound/CustomSoundEvent",
+    "interfaces": [
+      "com/teamacronymcoders/base/sound/IHasSoundGroup"
+    ]
+  },
+  "com/teamacronymcoders/base/subblocksystem/blocks/BlockSubBlockHolder": {
+    "name": "com/teamacronymcoders/base/subblocksystem/blocks/BlockSubBlockHolder",
+    "interfaces": [
+      "com/teamacronymcoders/base/blocks/IHasBlockStateMapper",
+      "com/teamacronymcoders/base/blocks/IHasBlockColor",
+      "com/teamacronymcoders/base/items/IHasOreDict",
+      "com/teamacronymcoders/base/items/IHasRecipe",
+      "com/teamacronymcoders/base/client/models/generator/IHasGeneratedModel"
+    ]
+  },
+  "com/teamacronymcoders/base/subblocksystem/blocks/MissingSubBlock": {
+    "name": "com/teamacronymcoders/base/subblocksystem/blocks/MissingSubBlock",
+    "interfaces": [
+      "com/teamacronymcoders/base/subblocksystem/blocks/ISubBlock"
+    ]
+  },
+  "com/teamacronymcoders/base/subblocksystem/blocks/SubBlockBase": {
+    "name": "com/teamacronymcoders/base/subblocksystem/blocks/SubBlockBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/subblocksystem/blocks/ISubBlock"
+    ]
+  },
+  "com/teamacronymcoders/base/subblocksystem/blocks/package-info": {
+    "name": "com/teamacronymcoders/base/subblocksystem/blocks/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/teamacronymcoders/base/subblocksystem/blocks/package-info"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/subblocksystem/items/ItemBlockSubBlockHolder": {
+    "name": "com/teamacronymcoders/base/subblocksystem/items/ItemBlockSubBlockHolder",
+    "interfaces": [
+      "com/teamacronymcoders/base/items/IHasItemColor",
+      "com/teamacronymcoders/base/items/IHasItemMeshDefinition"
+    ]
+  },
+  "com/teamacronymcoders/base/subblocksystem/items/package-info": {
+    "name": "com/teamacronymcoders/base/subblocksystem/items/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/teamacronymcoders/base/subblocksystem/items/package-info"
+      }
+    ]
+  },
+  "com/teamacronymcoders/base/tileentities/TileEntitySidedBase": {
+    "name": "com/teamacronymcoders/base/tileentities/TileEntitySidedBase",
+    "interfaces": [
+      "com/teamacronymcoders/base/client/IBlockOverlayText"
+    ]
+  },
+  "com/teamacronymcoders/base/tileentities/TileEntitySidedSlowTick": {
+    "name": "com/teamacronymcoders/base/tileentities/TileEntitySidedSlowTick",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "com/teamacronymcoders/base/tileentities/TileEntitySlowTick": {
+    "name": "com/teamacronymcoders/base/tileentities/TileEntitySlowTick",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "com/teamacronymcoders/base/util/collections/NonnullListCollector": {
+    "name": "com/teamacronymcoders/base/util/collections/NonnullListCollector",
+    "interfaces": [
+      "java/util/stream/Collector"
+    ]
+  },
+  "com/teamacronymcoders/base/util/logging/ModLogger": {
+    "name": "com/teamacronymcoders/base/util/logging/ModLogger",
+    "interfaces": [
+      "com/teamacronymcoders/base/util/logging/ILogger"
+    ]
+  },
+  "com/teamacronymcoders/base/util/package-info": {
+    "name": "com/teamacronymcoders/base/util/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/teamacronymcoders/base/util/package-info"
+      }
+    ]
+  }
+}

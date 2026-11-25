@@ -1,0 +1,83 @@
+package com.charles445.simpledifficulty.proxy;
+
+import com.charles445.simpledifficulty.SimpleDifficulty;
+import com.charles445.simpledifficulty.api.temperature.ITemperatureCapability;
+import com.charles445.simpledifficulty.api.temperature.TemperatureRegistry;
+import com.charles445.simpledifficulty.api.temperature.TemperatureUtil;
+import com.charles445.simpledifficulty.api.thirst.IThirstCapability;
+import com.charles445.simpledifficulty.api.thirst.ThirstUtil;
+import com.charles445.simpledifficulty.capability.TemperatureCapability;
+import com.charles445.simpledifficulty.capability.TemperatureStorage;
+import com.charles445.simpledifficulty.capability.ThirstCapability;
+import com.charles445.simpledifficulty.capability.ThirstStorage;
+import com.charles445.simpledifficulty.compat.CompatController;
+import com.charles445.simpledifficulty.config.JsonConfigInternal;
+import com.charles445.simpledifficulty.config.ModConfig;
+import com.charles445.simpledifficulty.handler.BlockHandler;
+import com.charles445.simpledifficulty.handler.CapabilityHandler;
+import com.charles445.simpledifficulty.handler.ConfigHandler;
+import com.charles445.simpledifficulty.handler.MiscHandler;
+import com.charles445.simpledifficulty.handler.TemperatureHandler;
+import com.charles445.simpledifficulty.handler.ThirstHandler;
+import com.charles445.simpledifficulty.temperature.ModifierAltitude;
+import com.charles445.simpledifficulty.temperature.ModifierArmor;
+import com.charles445.simpledifficulty.temperature.ModifierBiome;
+import com.charles445.simpledifficulty.temperature.ModifierBlocksTiles;
+import com.charles445.simpledifficulty.temperature.ModifierDefault;
+import com.charles445.simpledifficulty.temperature.ModifierDimension;
+import com.charles445.simpledifficulty.temperature.ModifierHeldItems;
+import com.charles445.simpledifficulty.temperature.ModifierSnow;
+import com.charles445.simpledifficulty.temperature.ModifierSprint;
+import com.charles445.simpledifficulty.temperature.ModifierTemporary;
+import com.charles445.simpledifficulty.temperature.ModifierTime;
+import com.charles445.simpledifficulty.temperature.ModifierWet;
+import com.charles445.simpledifficulty.util.internal.TemperatureUtilInternal;
+import com.charles445.simpledifficulty.util.internal.ThirstUtilInternal;
+import java.util.concurrent.Callable;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+
+public abstract class CommonProxy implements IProxy {
+   public CommonProxy() {
+   }
+
+   public void preInit() {
+      TemperatureUtil.internal = new TemperatureUtilInternal();
+      ThirstUtil.internal = new ThirstUtilInternal();
+      ModConfig.sendLocalServerConfigToAPI();
+      ModConfig.sendLocalClientConfigToAPI();
+      CapabilityManager.INSTANCE.register(ITemperatureCapability.class, new TemperatureStorage(), TemperatureCapability::new);
+      CapabilityManager.INSTANCE.register(IThirstCapability.class, new ThirstStorage(), ThirstCapability::new);
+      MinecraftForge.EVENT_BUS.register(new BlockHandler());
+      MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
+      MinecraftForge.EVENT_BUS.register(new ConfigHandler());
+      MinecraftForge.EVENT_BUS.register(new MiscHandler());
+      MinecraftForge.EVENT_BUS.register(new TemperatureHandler());
+      MinecraftForge.EVENT_BUS.register(new ThirstHandler());
+      TemperatureRegistry.registerModifier(new ModifierDefault());
+      TemperatureRegistry.registerModifier(new ModifierAltitude());
+      TemperatureRegistry.registerModifier(new ModifierArmor());
+      TemperatureRegistry.registerModifier(new ModifierBiome());
+      TemperatureRegistry.registerModifier(new ModifierBlocksTiles());
+      TemperatureRegistry.registerModifier(new ModifierDimension());
+      TemperatureRegistry.registerModifier(new ModifierHeldItems());
+      TemperatureRegistry.registerModifier(new ModifierSnow());
+      TemperatureRegistry.registerModifier(new ModifierSprint());
+      TemperatureRegistry.registerModifier(new ModifierTemporary());
+      TemperatureRegistry.registerModifier(new ModifierTime());
+      TemperatureRegistry.registerModifier(new ModifierWet());
+      JsonConfigInternal.preInit(SimpleDifficulty.jsonDirectory);
+   }
+
+   public void init() {
+   }
+
+   public void postInit() {
+      JsonConfigInternal.postInit(SimpleDifficulty.jsonDirectory);
+      CompatController.setupCommonPostInit();
+   }
+
+   public void spawnClientParticle(World world, String type, double xPos, double yPos, double zPos, double motionX, double motionY, double motionZ) {
+   }
+}

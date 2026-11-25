@@ -1,0 +1,29 @@
+package betterquesting.api2.supporter;
+
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+import java.io.IOException;
+import javax.annotation.Nonnull;
+import net.minecraft.client.renderer.texture.AbstractTexture;
+import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.client.resources.IResourceManager;
+
+public class RgbTexture extends AbstractTexture {
+   private final int[] rgbAry;
+   private final int w;
+   private final int h;
+
+   public RgbTexture(int w, int h, int[] rgbAry) {
+      this.w = w;
+      this.h = h;
+      this.rgbAry = rgbAry;
+   }
+
+   public void loadTexture(@Nonnull IResourceManager resourceManager) throws IOException {
+      this.deleteGlTexture();
+      BufferedImage bufImg = new BufferedImage(this.w, this.h, 2);
+      int[] imgData = ((DataBufferInt)bufImg.getRaster().getDataBuffer()).getData();
+      System.arraycopy(this.rgbAry, 0, imgData, 0, imgData.length);
+      TextureUtil.uploadTextureImageAllocate(this.getGlTextureId(), bufImg, false, false);
+   }
+}

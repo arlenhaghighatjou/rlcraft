@@ -1,0 +1,406 @@
+{
+  "sereneseasons/api/config/SeasonsOption": {
+    "name": "sereneseasons/api/config/SeasonsOption",
+    "interfaces": [
+      "sereneseasons/api/config/ISyncedOption"
+    ]
+  },
+  "sereneseasons/api/season/Season$SubSeason": {
+    "name": "sereneseasons/api/season/Season$SubSeason",
+    "interfaces": [
+      "sereneseasons/api/season/ISeasonColorProvider"
+    ]
+  },
+  "sereneseasons/api/season/Season$TropicalSeason": {
+    "name": "sereneseasons/api/season/Season$TropicalSeason",
+    "interfaces": [
+      "sereneseasons/api/season/ISeasonColorProvider"
+    ]
+  },
+  "sereneseasons/asm/SSLoadingPlugin": {
+    "name": "sereneseasons/asm/SSLoadingPlugin",
+    "interfaces": [
+      "net/minecraftforge/fml/relauncher/IFMLLoadingPlugin"
+    ]
+  },
+  "sereneseasons/asm/transformer/EntityRendererTransformer": {
+    "name": "sereneseasons/asm/transformer/EntityRendererTransformer",
+    "interfaces": [
+      "net/minecraft/launchwrapper/IClassTransformer"
+    ]
+  },
+  "sereneseasons/asm/transformer/WorldTransformer": {
+    "name": "sereneseasons/asm/transformer/WorldTransformer",
+    "interfaces": [
+      "net/minecraft/launchwrapper/IClassTransformer"
+    ]
+  },
+  "sereneseasons/block/BlockGreenhouseGlass": {
+    "name": "sereneseasons/block/BlockGreenhouseGlass",
+    "interfaces": [
+      "sereneseasons/api/ISSBlock"
+    ]
+  },
+  "sereneseasons/block/BlockSeasonSensor": {
+    "name": "sereneseasons/block/BlockSeasonSensor",
+    "interfaces": [
+      "sereneseasons/api/ISSBlock"
+    ]
+  },
+  "sereneseasons/block/BlockSeasonSensor$DetectorType": {
+    "name": "sereneseasons/block/BlockSeasonSensor$DetectorType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "sereneseasons/config/ConfigHandler": {
+    "name": "sereneseasons/config/ConfigHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigurationChangedEvent(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "sereneseasons/config/FertilityConfig": {
+    "name": "sereneseasons/config/FertilityConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "sereneseasons/config/FertilityConfig",
+        "values": {
+          "category": {
+            "value": ""
+          },
+          "modid": {
+            "value": "sereneseasons"
+          },
+          "name": {
+            "value": "sereneseasons/cropfertility"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "sereneseasons/config/FertilityConfig"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "sereneseasons/config/FertilityConfig$General": {
+    "name": "sereneseasons/config/FertilityConfig$General",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonal_crops",
+        "value": {
+          "values": [
+            "Whether crops are affected by seasons."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "crops_break",
+        "value": {
+          "values": [
+            "Whether crops break if out of season. If false, they simply don\u0027t grow"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "ignore_unlisted_crops",
+        "value": {
+          "values": [
+            "Whether unlisted seeds are fertile every season. False means they\u0027re fertile every season except Winter"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "crop_tooltips",
+        "value": {
+          "values": [
+            "Whether to include tooltips on crops listing which seasons they\u0027re fertile in. Note: This only applies to listed crops."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "greenhouse_glass_max_height",
+        "value": {
+          "values": [
+            "Maximum height greenhouse glass can be above a crop for it to be fertile out of season"
+          ]
+        }
+      }
+    ]
+  },
+  "sereneseasons/config/FertilityConfig$SeasonFertility": {
+    "name": "sereneseasons/config/FertilityConfig$SeasonFertility",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "spring_crops",
+        "value": {
+          "values": [
+            "Crops growable in Spring (List either the seed item for the crop, or the crop block itself)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "summer_crops",
+        "value": {
+          "values": [
+            "Crops growable in Summer (List either the seed item for the crop, or the crop block itself)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "autumn_crops",
+        "value": {
+          "values": [
+            "Crops growable in Autumn (List either the seed item for the crop, or the crop block itself)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "winter_crops",
+        "value": {
+          "values": [
+            "Crops growable in Winter (List either the seed item for the crop, or the crop block itself)"
+          ]
+        }
+      }
+    ]
+  },
+  "sereneseasons/config/json/BiomeData": {
+    "name": "sereneseasons/config/json/BiomeData",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "enableSeasonalEffects",
+        "value": {
+          "value": "enable_seasonal_effects"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "useTropicalSeasons",
+        "value": {
+          "value": "use_tropical_seasons"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "disableCrops",
+        "value": {
+          "value": "disable_crops"
+        }
+      }
+    ]
+  },
+  "sereneseasons/core/ClientProxy$EntityRenderFactory": {
+    "name": "sereneseasons/core/ClientProxy$EntityRenderFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "sereneseasons/core/SereneSeasons": {
+    "name": "sereneseasons/core/SereneSeasons",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "sereneseasons/core/SereneSeasons",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2768,)"
+          },
+          "modid": {
+            "value": "sereneseasons"
+          },
+          "name": {
+            "value": "Serene Seasons"
+          },
+          "version": {
+            "value": "1.2.18"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "sereneseasons"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "sereneseasons.core.ClientProxy"
+          },
+          "serverSide": {
+            "value": "sereneseasons.core.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "sereneseasons/handler/season/BirchColorHandler$1": {
+    "name": "sereneseasons/handler/season/BirchColorHandler$1",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IBlockColor"
+    ]
+  },
+  "sereneseasons/handler/season/RandomUpdateHandler": {
+    "name": "sereneseasons/handler/season/RandomUpdateHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      }
+    ]
+  },
+  "sereneseasons/handler/season/SeasonHandler": {
+    "name": "sereneseasons/handler/season/SeasonHandler",
+    "interfaces": [
+      "sereneseasons/api/season/SeasonHelper$ISeasonDataProvider"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPopulateChunk(Lnet/minecraftforge/event/terraingen/PopulateChunkEvent$Populate;)V"
+      }
+    ]
+  },
+  "sereneseasons/handler/season/SeasonSleepHandler": {
+    "name": "sereneseasons/handler/season/SeasonSleepHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      }
+    ]
+  },
+  "sereneseasons/handler/season/SeasonalCropGrowthHandler": {
+    "name": "sereneseasons/handler/season/SeasonalCropGrowthHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemTooltipAdded(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCropGrowth(Lnet/minecraftforge/event/world/BlockEvent$CropGrowEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onApplyBonemeal(Lnet/minecraftforge/event/entity/player/BonemealEvent;)V"
+      }
+    ]
+  },
+  "sereneseasons/item/ItemSeasonClock$1": {
+    "name": "sereneseasons/item/ItemSeasonClock$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "sereneseasons/network/message/MessageSyncConfigs": {
+    "name": "sereneseasons/network/message/MessageSyncConfigs",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "sereneseasons/network/message/MessageSyncSeasonCycle": {
+    "name": "sereneseasons/network/message/MessageSyncSeasonCycle",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "sereneseasons/season/SeasonTime": {
+    "name": "sereneseasons/season/SeasonTime",
+    "interfaces": [
+      "sereneseasons/api/season/ISeasonState"
+    ]
+  },
+  "sereneseasons/tileentity/TileEntitySeasonSensor": {
+    "name": "sereneseasons/tileentity/TileEntitySeasonSensor",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" i ",
+		"isi",
+		" i "
+	],
+	"key": {
+		"s": {
+			"item": "spartanshields:shield_basic_wood"
+		},
+		"i": {
+			"tag": "forge:ingots/silver"
+		}
+	},
+	"result": {
+		"item": "spartanshields:shield_basic_silver"
+	},
+	"conditions": [
+		{
+			"type" : "spartanshields:item_tag_exists",
+			"item_tag": "forge:ingots/silver"
+		}
+	]
+}

@@ -1,0 +1,5343 @@
+{
+  "com/blamejared/ModTweaker": {
+    "name": "com/blamejared/ModTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/blamejared/ModTweaker",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:crafttweaker;required-after:mtlib;before:jei"
+          },
+          "modid": {
+            "value": "modtweaker"
+          },
+          "name": {
+            "value": "Modtweaker"
+          },
+          "version": {
+            "value": "4.0.19"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "loadComplete(Lnet/minecraftforge/fml/common/event/FMLLoadCompleteEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onFMLServerStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "com/blamejared/api/annotations/Handler": {
+    "name": "com/blamejared/api/annotations/Handler",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "com/blamejared/compat/actuallyaddition/AtomicReconstructor": {
+    "name": "com/blamejared/compat/actuallyaddition/AtomicReconstructor",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/actuallyaddition/AtomicReconstructor",
+        "value": {
+          "value": "mods.actuallyadditions.AtomicReconstructor"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/actuallyaddition/AtomicReconstructor",
+        "value": {
+          "value": "actuallyadditions"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/actuallyaddition/AtomicReconstructor"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/actuallyaddition/BallOfFur": {
+    "name": "com/blamejared/compat/actuallyaddition/BallOfFur",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/actuallyaddition/BallOfFur",
+        "value": {
+          "value": "mods.actuallyadditions.BallOfFur"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/actuallyaddition/BallOfFur",
+        "value": {
+          "value": "actuallyadditions"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/actuallyaddition/BallOfFur"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addReturn(Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeReturn(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/actuallyaddition/Compost": {
+    "name": "com/blamejared/compat/actuallyaddition/Compost",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/actuallyaddition/Compost",
+        "value": {
+          "value": "mods.actuallyadditions.Compost"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/actuallyaddition/Compost",
+        "value": {
+          "value": "actuallyadditions"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/actuallyaddition/Compost"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/actuallyaddition/Crusher": {
+    "name": "com/blamejared/compat/actuallyaddition/Crusher",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/actuallyaddition/Crusher",
+        "value": {
+          "value": "mods.actuallyadditions.Crusher"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/actuallyaddition/Crusher",
+        "value": {
+          "value": "actuallyadditions"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/actuallyaddition/Crusher"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/actuallyaddition/Empowerer": {
+    "name": "com/blamejared/compat/actuallyaddition/Empowerer",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/actuallyaddition/Empowerer",
+        "value": {
+          "value": "mods.actuallyadditions.Empowerer"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/actuallyaddition/Empowerer",
+        "value": {
+          "value": "actuallyadditions"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/actuallyaddition/Empowerer"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;II[F)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/actuallyaddition/MiningLens": {
+    "name": "com/blamejared/compat/actuallyaddition/MiningLens",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/actuallyaddition/MiningLens",
+        "value": {
+          "value": "mods.actuallyadditions.MiningLens"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/actuallyaddition/MiningLens",
+        "value": {
+          "value": "actuallyadditions"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/actuallyaddition/MiningLens"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addStoneOre(Lcrafttweaker/api/oredict/IOreDictEntry;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addNetherOre(Lcrafttweaker/api/oredict/IOreDictEntry;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeStoneOre(Lcrafttweaker/api/oredict/IOreDictEntry;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeNetherOre(Lcrafttweaker/api/oredict/IOreDictEntry;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/actuallyaddition/OilGen": {
+    "name": "com/blamejared/compat/actuallyaddition/OilGen",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/actuallyaddition/OilGen",
+        "value": {
+          "value": "mods.actuallyadditions.OilGen"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/actuallyaddition/OilGen",
+        "value": {
+          "value": "actuallyadditions"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/actuallyaddition/OilGen"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;II)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/actuallyaddition/TreasureChest": {
+    "name": "com/blamejared/compat/actuallyaddition/TreasureChest",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/actuallyaddition/TreasureChest",
+        "value": {
+          "value": "mods.actuallyadditions.TreasureChest"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/actuallyaddition/TreasureChest",
+        "value": {
+          "value": "actuallyadditions"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/actuallyaddition/TreasureChest"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addLoot(Lcrafttweaker/api/item/IItemStack;III)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeLoot(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/Anvil": {
+    "name": "com/blamejared/compat/betterwithmods/Anvil",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/Anvil",
+        "value": {
+          "value": "mods.betterwithmods.Anvil"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/Anvil",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/Anvil"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addShaped(Lcrafttweaker/api/item/IItemStack;[[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addShapedFixed(Lcrafttweaker/api/item/IItemStack;[[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addShapeless(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeShaped(Lcrafttweaker/api/item/IItemStack;[[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeShapedFixed(Lcrafttweaker/api/item/IItemStack;[[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeShapeless(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAll()V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/Bellows": {
+    "name": "com/blamejared/compat/betterwithmods/Bellows",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/Bellows",
+        "value": {
+          "value": "mods.betterwithmods.Bellows"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/Bellows",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/Bellows"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "set(Lcrafttweaker/api/item/IItemStack;F)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/Buoyancy": {
+    "name": "com/blamejared/compat/betterwithmods/Buoyancy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/Buoyancy",
+        "value": {
+          "value": "mods.betterwithmods.Buoyancy"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/Buoyancy",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/Buoyancy"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "set(Lcrafttweaker/api/item/IItemStack;F)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/Cauldron": {
+    "name": "com/blamejared/compat/betterwithmods/Cauldron",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/Cauldron",
+        "value": {
+          "value": "mods.betterwithmods.Cauldron"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/Cauldron",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/Cauldron"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "builder()Lcom/blamejared/compat/betterwithmods/base/bulkrecipes/CookingPotBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addStoked([Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addUnstoked([Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove([Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAll()V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/Crucible": {
+    "name": "com/blamejared/compat/betterwithmods/Crucible",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/Crucible",
+        "value": {
+          "value": "mods.betterwithmods.Crucible"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/Crucible",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/Crucible"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "builder()Lcom/blamejared/compat/betterwithmods/base/bulkrecipes/CookingPotBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addStoked([Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addUnstoked([Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove([Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAll()V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/HeatRegistry": {
+    "name": "com/blamejared/compat/betterwithmods/HeatRegistry",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/HeatRegistry",
+        "value": {
+          "value": "mods.betterwithmods.HeatRegistry"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/HeatRegistry",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/HeatRegistry"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addHeatSource(Lcrafttweaker/api/block/IBlockState;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addHeatSource(Ljava/util/List;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addHeatSource(Lcrafttweaker/api/item/IItemStack;I)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/Hopper": {
+    "name": "com/blamejared/compat/betterwithmods/Hopper",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/Hopper",
+        "value": {
+          "value": "mods.betterwithmods.FilteredHopper"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/Hopper",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/Hopper"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFilter(Ljava/lang/String;Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFilteredItem(Ljava/lang/String;Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFilteredItem(Ljava/lang/String;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFilterRecipe(Ljava/lang/String;Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addSoulUrnRecipe(Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "clearFilter(Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe([Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipeByInput(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAll()V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/Kiln": {
+    "name": "com/blamejared/compat/betterwithmods/Kiln",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/Kiln",
+        "value": {
+          "value": "mods.betterwithmods.Kiln"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/Kiln",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/Kiln"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "builder()Lcom/blamejared/compat/betterwithmods/base/blockrecipes/KilnBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add([Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove([Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAll()V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "registerBlock(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/Mill": {
+    "name": "com/blamejared/compat/betterwithmods/Mill",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/Mill",
+        "value": {
+          "value": "mods.betterwithmods.Mill"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/Mill",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/Mill"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "builder()Lcom/blamejared/compat/betterwithmods/base/bulkrecipes/MillBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe([Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove([Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAll()V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/MiniBlocks": {
+    "name": "com/blamejared/compat/betterwithmods/MiniBlocks",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/MiniBlocks",
+        "value": {
+          "value": "mods.betterwithmods.MiniBlocks"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/MiniBlocks",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/MiniBlocks"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getMiniBlock(Ljava/lang/String;Lcrafttweaker/api/item/IIngredient;)Lcrafttweaker/api/item/IIngredient;"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/MiniBlocks$IngredientMini": {
+    "name": "com/blamejared/compat/betterwithmods/MiniBlocks$IngredientMini",
+    "interfaces": [
+      "crafttweaker/api/item/IIngredient"
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/Misc": {
+    "name": "com/blamejared/compat/betterwithmods/Misc",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/Misc",
+        "value": {
+          "value": "mods.betterwithmods.Misc"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/Misc",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/Misc"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setFurnaceSmeltingTime(Lcrafttweaker/api/item/IIngredient;I)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/Movement": {
+    "name": "com/blamejared/compat/betterwithmods/Movement",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/Movement",
+        "value": {
+          "value": "mods.betterwithmods.Movement"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/Movement",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/Movement"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "set(Lcrafttweaker/api/item/IItemStack;F)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/PulleyManager": {
+    "name": "com/blamejared/compat/betterwithmods/PulleyManager",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/PulleyManager",
+        "value": {
+          "value": "mods.betterwithmods.PulleyManager"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/PulleyManager",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/PulleyManager"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addPulleyBlock(Lcrafttweaker/api/block/IBlockState;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/Saw": {
+    "name": "com/blamejared/compat/betterwithmods/Saw",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/Saw",
+        "value": {
+          "value": "mods.betterwithmods.Saw"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/Saw",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/Saw"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "builder()Lcom/blamejared/compat/betterwithmods/base/blockrecipes/SawBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add([Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove([Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAll()V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/StokedCauldron": {
+    "name": "com/blamejared/compat/betterwithmods/StokedCauldron",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/StokedCauldron",
+        "value": {
+          "value": "mods.betterwithmods.StokedCauldron"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/StokedCauldron",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/StokedCauldron"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove([Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/StokedCrucible": {
+    "name": "com/blamejared/compat/betterwithmods/StokedCrucible",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/StokedCrucible",
+        "value": {
+          "value": "mods.betterwithmods.StokedCrucible"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/StokedCrucible",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/StokedCrucible"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove([Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/Turntable": {
+    "name": "com/blamejared/compat/betterwithmods/Turntable",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/betterwithmods/Turntable",
+        "value": {
+          "value": "mods.betterwithmods.Turntable"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/betterwithmods/Turntable",
+        "value": {
+          "value": "betterwithmods"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/betterwithmods/Turntable"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "builder()Lcom/blamejared/compat/betterwithmods/base/blockrecipes/TurntableBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeByProductState(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAll()V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/base/blockrecipes/BlockRecipeBuilder": {
+    "name": "com/blamejared/compat/betterwithmods/base/blockrecipes/BlockRecipeBuilder",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "build()V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setInputBlockDrop(Lcrafttweaker/api/item/IItemStack;)Lcom/blamejared/compat/betterwithmods/base/blockrecipes/BlockRecipeBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setInputBlockDrop([Lcrafttweaker/api/item/IItemStack;)Lcom/blamejared/compat/betterwithmods/base/blockrecipes/BlockRecipeBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAll()V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/base/blockrecipes/KilnBuilder": {
+    "name": "com/blamejared/compat/betterwithmods/base/blockrecipes/KilnBuilder",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setHeat(I)Lcom/blamejared/compat/betterwithmods/base/blockrecipes/KilnBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setIgnoreHeat(Z)Lcom/blamejared/compat/betterwithmods/base/blockrecipes/KilnBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "buildRecipe(Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)Lcom/blamejared/compat/betterwithmods/base/blockrecipes/KilnBuilder;"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/base/blockrecipes/SawBuilder": {
+    "name": "com/blamejared/compat/betterwithmods/base/blockrecipes/SawBuilder",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "buildRecipe(Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)Lcom/blamejared/compat/betterwithmods/base/blockrecipes/SawBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAll()V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/base/blockrecipes/TurntableBuilder": {
+    "name": "com/blamejared/compat/betterwithmods/base/blockrecipes/TurntableBuilder",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setRotations(I)Lcom/blamejared/compat/betterwithmods/base/blockrecipes/TurntableBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setProductState(Lcrafttweaker/api/item/IItemStack;)Lcom/blamejared/compat/betterwithmods/base/blockrecipes/TurntableBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "buildRecipe(Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)Lcom/blamejared/compat/betterwithmods/base/blockrecipes/TurntableBuilder;"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/base/bulkrecipes/BulkRecipeBuilder": {
+    "name": "com/blamejared/compat/betterwithmods/base/bulkrecipes/BulkRecipeBuilder",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAll()V"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/base/bulkrecipes/CookingPotBuilder": {
+    "name": "com/blamejared/compat/betterwithmods/base/bulkrecipes/CookingPotBuilder",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "build()V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setHeat(I)Lcom/blamejared/compat/betterwithmods/base/bulkrecipes/CookingPotBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setIgnoreHeat(Z)Lcom/blamejared/compat/betterwithmods/base/bulkrecipes/CookingPotBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setPriority(I)Lcom/blamejared/compat/betterwithmods/base/bulkrecipes/CookingPotBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "buildRecipe([Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)Lcom/blamejared/compat/betterwithmods/base/bulkrecipes/CookingPotBuilder;"
+      }
+    ]
+  },
+  "com/blamejared/compat/betterwithmods/base/bulkrecipes/MillBuilder": {
+    "name": "com/blamejared/compat/betterwithmods/base/bulkrecipes/MillBuilder",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "build()V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setPriority(I)Lcom/blamejared/compat/betterwithmods/base/bulkrecipes/MillBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setGrindType(Ljava/lang/String;)Lcom/blamejared/compat/betterwithmods/base/bulkrecipes/MillBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setTicks(I)Lcom/blamejared/compat/betterwithmods/base/bulkrecipes/MillBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "buildRecipe([Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IItemStack;)Lcom/blamejared/compat/betterwithmods/base/bulkrecipes/MillBuilder;"
+      }
+    ]
+  },
+  "com/blamejared/compat/bloodmagic/AlchemyArray": {
+    "name": "com/blamejared/compat/bloodmagic/AlchemyArray",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/bloodmagic/AlchemyArray",
+        "value": {
+          "value": "mods.bloodmagic.AlchemyArray"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/bloodmagic/AlchemyArray"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/bloodmagic/AlchemyArray",
+        "value": {
+          "value": "bloodmagic"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/bloodmagic/AlchemyTable": {
+    "name": "com/blamejared/compat/bloodmagic/AlchemyTable",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/bloodmagic/AlchemyTable",
+        "value": {
+          "value": "mods.bloodmagic.AlchemyTable"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/bloodmagic/AlchemyTable"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/bloodmagic/AlchemyTable",
+        "value": {
+          "value": "bloodmagic"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;III)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addPotionRecipe([Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/potions/IPotionEffect;III)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe([Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/bloodmagic/BloodAltar": {
+    "name": "com/blamejared/compat/bloodmagic/BloodAltar",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/bloodmagic/BloodAltar",
+        "value": {
+          "value": "mods.bloodmagic.BloodAltar"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/bloodmagic/BloodAltar"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/bloodmagic/BloodAltar",
+        "value": {
+          "value": "bloodmagic"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;IIII)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/bloodmagic/TartaricForge": {
+    "name": "com/blamejared/compat/bloodmagic/TartaricForge",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/bloodmagic/TartaricForge",
+        "value": {
+          "value": "mods.bloodmagic.TartaricForge"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/bloodmagic/TartaricForge"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/bloodmagic/TartaricForge",
+        "value": {
+          "value": "bloodmagic"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;DD)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe([Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/Apothecary": {
+    "name": "com/blamejared/compat/botania/handlers/Apothecary",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/botania/handlers/Apothecary",
+        "value": {
+          "value": "mods.botania.Apothecary"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/botania/handlers/Apothecary",
+        "value": {
+          "value": "botania"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/botania/handlers/Apothecary"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Ljava/lang/String;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/Brew": {
+    "name": "com/blamejared/compat/botania/handlers/Brew",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/botania/handlers/Brew",
+        "value": {
+          "value": "mods.botania.Brew"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/botania/handlers/Brew",
+        "value": {
+          "value": "botania"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/botania/handlers/Brew"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe([Lcrafttweaker/api/item/IIngredient;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/ElvenTrade": {
+    "name": "com/blamejared/compat/botania/handlers/ElvenTrade",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/botania/handlers/ElvenTrade",
+        "value": {
+          "value": "mods.botania.ElvenTrade"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/botania/handlers/ElvenTrade",
+        "value": {
+          "value": "botania"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/botania/handlers/ElvenTrade"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe([Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IIngredient;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/Knowledge": {
+    "name": "com/blamejared/compat/botania/handlers/Knowledge",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/botania/handlers/Knowledge",
+        "value": {
+          "value": "mods.botania.Knowledge"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/botania/handlers/Knowledge",
+        "value": {
+          "value": "botania"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/botania/handlers/Knowledge"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "registerKnowledgeType(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/Knowledge$Add": {
+    "name": "com/blamejared/compat/botania/handlers/Knowledge$Add",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/Lexicon": {
+    "name": "com/blamejared/compat/botania/handlers/Lexicon",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/botania/handlers/Lexicon",
+        "value": {
+          "value": "mods.botania.Lexicon"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/botania/handlers/Lexicon",
+        "value": {
+          "value": "botania"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/botania/handlers/Lexicon"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addBrewPage(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;[Lcrafttweaker/api/item/IIngredient;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addCraftingPage(Ljava/lang/String;Ljava/lang/String;I[Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addElvenPage(Ljava/lang/String;Ljava/lang/String;I[Lcrafttweaker/api/item/IItemStack;[[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEntityPage(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addImagePage(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addLorePage(Ljava/lang/String;Ljava/lang/String;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addInfusionPage(Ljava/lang/String;Ljava/lang/String;I[Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;[I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addAlchemyPage(Ljava/lang/String;Ljava/lang/String;I[Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;[I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addConjurationPage(Ljava/lang/String;Ljava/lang/String;I[Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;[I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addPetalPage(Ljava/lang/String;Ljava/lang/String;I[Lcrafttweaker/api/item/IItemStack;[[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRunePage(Ljava/lang/String;Ljava/lang/String;I[Lcrafttweaker/api/item/IItemStack;[[Lcrafttweaker/api/item/IIngredient;[I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addTextPage(Ljava/lang/String;Ljava/lang/String;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removePage(Ljava/lang/String;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEntry(Ljava/lang/String;Ljava/lang/String;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeEntry(Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setEntryKnowledgeType(Ljava/lang/String;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addCategory(Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeCategory(Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setCategoryPriority(Ljava/lang/String;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setCategoryIcon(Ljava/lang/String;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipeMapping(Lcrafttweaker/api/item/IItemStack;Ljava/lang/String;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipeMapping(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/ManaInfusion": {
+    "name": "com/blamejared/compat/botania/handlers/ManaInfusion",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/botania/handlers/ManaInfusion",
+        "value": {
+          "value": "mods.botania.ManaInfusion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/botania/handlers/ManaInfusion",
+        "value": {
+          "value": "botania"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/botania/handlers/ManaInfusion"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addInfusion(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addAlchemy(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addConjuration(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IIngredient;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/Orechid": {
+    "name": "com/blamejared/compat/botania/handlers/Orechid",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/botania/handlers/Orechid",
+        "value": {
+          "value": "mods.botania.Orechid"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/botania/handlers/Orechid",
+        "value": {
+          "value": "botania"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/botania/handlers/Orechid"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addOre(Lcrafttweaker/api/oredict/IOreDictEntry;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addOre(Ljava/lang/String;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeOre(Lcrafttweaker/api/oredict/IOreDictEntry;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeOre(Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/Orechid$Add": {
+    "name": "com/blamejared/compat/botania/handlers/Orechid$Add",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/Orechid$Remove": {
+    "name": "com/blamejared/compat/botania/handlers/Orechid$Remove",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/OrechidIgnem": {
+    "name": "com/blamejared/compat/botania/handlers/OrechidIgnem",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/botania/handlers/OrechidIgnem",
+        "value": {
+          "value": "mods.botania.OrechidIgnem"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/botania/handlers/OrechidIgnem",
+        "value": {
+          "value": "botania"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/botania/handlers/OrechidIgnem"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addOre(Lcrafttweaker/api/oredict/IOreDictEntry;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addOre(Ljava/lang/String;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeOre(Lcrafttweaker/api/oredict/IOreDictEntry;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeOre(Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/OrechidIgnem$Add": {
+    "name": "com/blamejared/compat/botania/handlers/OrechidIgnem$Add",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/OrechidIgnem$Remove": {
+    "name": "com/blamejared/compat/botania/handlers/OrechidIgnem$Remove",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/PureDaisy": {
+    "name": "com/blamejared/compat/botania/handlers/PureDaisy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/botania/handlers/PureDaisy",
+        "value": {
+          "value": "mods.botania.PureDaisy"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/botania/handlers/PureDaisy",
+        "value": {
+          "value": "botania"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/botania/handlers/PureDaisy"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IIngredient;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/botania/handlers/RuneAltar": {
+    "name": "com/blamejared/compat/botania/handlers/RuneAltar",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/botania/handlers/RuneAltar",
+        "value": {
+          "value": "mods.botania.RuneAltar"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/botania/handlers/RuneAltar",
+        "value": {
+          "value": "botania"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/botania/handlers/RuneAltar"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IIngredient;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/AddCategory": {
+    "name": "com/blamejared/compat/botania/lexicon/AddCategory",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/AddEntry": {
+    "name": "com/blamejared/compat/botania/lexicon/AddEntry",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/AddRecipeMapping": {
+    "name": "com/blamejared/compat/botania/lexicon/AddRecipeMapping",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/RemoveCategory": {
+    "name": "com/blamejared/compat/botania/lexicon/RemoveCategory",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/RemoveEntry": {
+    "name": "com/blamejared/compat/botania/lexicon/RemoveEntry",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/RemovePage": {
+    "name": "com/blamejared/compat/botania/lexicon/RemovePage",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/RemoveRecipeMapping": {
+    "name": "com/blamejared/compat/botania/lexicon/RemoveRecipeMapping",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/SetCategoryIcon": {
+    "name": "com/blamejared/compat/botania/lexicon/SetCategoryIcon",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/SetCategoryPriority": {
+    "name": "com/blamejared/compat/botania/lexicon/SetCategoryPriority",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/SetEntryKnowledgeType": {
+    "name": "com/blamejared/compat/botania/lexicon/SetEntryKnowledgeType",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/pages/AddPageAlchemy": {
+    "name": "com/blamejared/compat/botania/lexicon/pages/AddPageAlchemy",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/pages/AddPageBrew": {
+    "name": "com/blamejared/compat/botania/lexicon/pages/AddPageBrew",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/pages/AddPageConjuration": {
+    "name": "com/blamejared/compat/botania/lexicon/pages/AddPageConjuration",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/pages/AddPageCrafting": {
+    "name": "com/blamejared/compat/botania/lexicon/pages/AddPageCrafting",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/pages/AddPageElven": {
+    "name": "com/blamejared/compat/botania/lexicon/pages/AddPageElven",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/pages/AddPageEntity": {
+    "name": "com/blamejared/compat/botania/lexicon/pages/AddPageEntity",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/pages/AddPageImage": {
+    "name": "com/blamejared/compat/botania/lexicon/pages/AddPageImage",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/pages/AddPageInfusion": {
+    "name": "com/blamejared/compat/botania/lexicon/pages/AddPageInfusion",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/pages/AddPageLore": {
+    "name": "com/blamejared/compat/botania/lexicon/pages/AddPageLore",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/pages/AddPagePetal": {
+    "name": "com/blamejared/compat/botania/lexicon/pages/AddPagePetal",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/pages/AddPageRune": {
+    "name": "com/blamejared/compat/botania/lexicon/pages/AddPageRune",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/botania/lexicon/pages/AddPageText": {
+    "name": "com/blamejared/compat/botania/lexicon/pages/AddPageText",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/chisel/Carving": {
+    "name": "com/blamejared/compat/chisel/Carving",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/chisel/Carving"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/chisel/Carving",
+        "value": {
+          "value": "mods.chisel.Carving"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/chisel/Carving",
+        "value": {
+          "value": "chisel"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addGroup(Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addVariation(Ljava/lang/String;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeGroup(Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeVariation(Ljava/lang/String;Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/extrautils2/Crusher": {
+    "name": "com/blamejared/compat/extrautils2/Crusher",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/extrautils2/Crusher",
+        "value": {
+          "value": "mods.extrautils2.Crusher"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/extrautils2/Crusher",
+        "value": {
+          "value": "extrautils2"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/extrautils2/Crusher"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;F)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/extrautils2/Resonator": {
+    "name": "com/blamejared/compat/extrautils2/Resonator",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/extrautils2/Resonator",
+        "value": {
+          "value": "mods.extrautils2.Resonator"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/extrautils2/Resonator",
+        "value": {
+          "value": "extrautils2"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/extrautils2/Resonator"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "add(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;IZ)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "remove(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/forestry/Carpenter": {
+    "name": "com/blamejared/compat/forestry/Carpenter",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/forestry/Carpenter",
+        "value": {
+          "value": "mods.forestry.Carpenter"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/forestry/Carpenter",
+        "value": {
+          "value": "forestry"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/forestry/Carpenter"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;[[Lcrafttweaker/api/item/IIngredient;ILcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/forestry/Centrifuge": {
+    "name": "com/blamejared/compat/forestry/Centrifuge",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/forestry/Centrifuge",
+        "value": {
+          "value": "mods.forestry.Centrifuge"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/forestry/Centrifuge",
+        "value": {
+          "value": "forestry"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/forestry/Centrifuge"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe([Lcrafttweaker/api/item/WeightedItemStack;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IIngredient;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/forestry/CharcoalPile": {
+    "name": "com/blamejared/compat/forestry/CharcoalPile",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/forestry/CharcoalPile",
+        "value": {
+          "value": "mods.forestry.CharcoalWall"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/forestry/CharcoalPile",
+        "value": {
+          "value": "forestry"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/forestry/CharcoalPile"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addWall(Lcrafttweaker/api/block/IBlock;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addWallState(Lcrafttweaker/api/block/IBlockState;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addWallStack(Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeWall(Lcrafttweaker/api/block/IBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeWallState(Lcrafttweaker/api/block/IBlockState;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeWallStack(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/forestry/Fermenter": {
+    "name": "com/blamejared/compat/forestry/Fermenter",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/forestry/Fermenter",
+        "value": {
+          "value": "mods.forestry.Fermenter"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/forestry/Fermenter",
+        "value": {
+          "value": "forestry"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/forestry/Fermenter"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;IF)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFuel(Lcrafttweaker/api/item/IItemStack;II)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeFuel(Lcrafttweaker/api/item/IIngredient;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/forestry/Moistener": {
+    "name": "com/blamejared/compat/forestry/Moistener",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/forestry/Moistener",
+        "value": {
+          "value": "mods.forestry.Moistener"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/forestry/Moistener",
+        "value": {
+          "value": "forestry"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/forestry/Moistener"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFuel(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;II)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeFuel(Lcrafttweaker/api/item/IIngredient;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/forestry/Squeezer": {
+    "name": "com/blamejared/compat/forestry/Squeezer",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/forestry/Squeezer",
+        "value": {
+          "value": "mods.forestry.Squeezer"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/forestry/Squeezer",
+        "value": {
+          "value": "forestry"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/forestry/Squeezer"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;[Lcrafttweaker/api/item/IItemStack;ILcrafttweaker/api/item/WeightedItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/liquid/ILiquidStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/forestry/Still": {
+    "name": "com/blamejared/compat/forestry/Still",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/forestry/Still",
+        "value": {
+          "value": "mods.forestry.Still"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/forestry/Still",
+        "value": {
+          "value": "forestry"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/forestry/Still"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/forestry/ThermionicFabricator": {
+    "name": "com/blamejared/compat/forestry/ThermionicFabricator",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/forestry/ThermionicFabricator",
+        "value": {
+          "value": "mods.forestry.ThermionicFabricator"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/forestry/ThermionicFabricator",
+        "value": {
+          "value": "forestry"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/forestry/ThermionicFabricator"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addSmelting(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addCast(Lcrafttweaker/api/item/IItemStack;[[Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeSmelting(Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeCast(Lcrafttweaker/api/item/IIngredient;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/immersivetech/Boiler": {
+    "name": "com/blamejared/compat/immersivetech/Boiler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/immersivetech/Boiler",
+        "value": {
+          "value": "mods.immersivetech.Boiler"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/immersivetech/Boiler"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/immersivetech/Boiler",
+        "value": {
+          "value": "immersivetech"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/immersivetech/Distiller": {
+    "name": "com/blamejared/compat/immersivetech/Distiller",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/immersivetech/Distiller",
+        "value": {
+          "value": "mods.immersivetech.Distiller"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/immersivetech/Distiller"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/immersivetech/Distiller",
+        "value": {
+          "value": "immersivetech"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;IID)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/immersivetech/SolarTower": {
+    "name": "com/blamejared/compat/immersivetech/SolarTower",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/immersivetech/SolarTower",
+        "value": {
+          "value": "mods.immersivetech.SolarTower"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/immersivetech/SolarTower"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/immersivetech/SolarTower",
+        "value": {
+          "value": "immersivetech"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/immersivetech/SteamTurbine": {
+    "name": "com/blamejared/compat/immersivetech/SteamTurbine",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/immersivetech/SteamTurbine",
+        "value": {
+          "value": "mods.immersivetech.SteamTurbine"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/immersivetech/SteamTurbine"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/immersivetech/SteamTurbine",
+        "value": {
+          "value": "immersivetech"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "registerSteam(Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeSteam(Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/inspirations/Cauldron": {
+    "name": "com/blamejared/compat/inspirations/Cauldron",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/inspirations/Cauldron",
+        "value": {
+          "value": "mods.inspirations.Cauldron"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/inspirations/Cauldron"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/inspirations/Cauldron",
+        "value": {
+          "value": "inspirations"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addBrewingRecipe(Ljava/lang/String;Ljava/lang/String;Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeBrewingRecipe(Ljava/lang/String;Ljava/lang/String;Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addPotionRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addPotionRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;Ljava/lang/String;ILjava/lang/Boolean;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removePotionRecipe(Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addDyeRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addDyeRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;Ljava/lang/String;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeDyeRecipe(Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFluidRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFluidRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;ILjava/lang/Boolean;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFluidTransform(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFluidTransform(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;ILjava/lang/Boolean;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFluidMix(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeFluidRecipe(Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeFluidTransform(Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFillRecipe(Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFillRecipe(Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;ILcrafttweaker/api/item/IItemStack;Ljava/lang/Boolean;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeFillRecipe(Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCauldronRegister(Lknightminer/inspirations/library/event/RegisterEvent$RegisterCauldronRecipe;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/refinedstorage/Solderer": {
+    "name": "com/blamejared/compat/refinedstorage/Solderer",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/refinedstorage/Solderer",
+        "value": {
+          "value": "mods.refinedstorage.Solderer"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/refinedstorage/Solderer",
+        "value": {
+          "value": "refinedstorage"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/refinedstorage/Solderer"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Ljava/lang/String;Lcrafttweaker/api/item/IItemStack;I[Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/tcomplement/Blacklist": {
+    "name": "com/blamejared/compat/tcomplement/Blacklist",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/tcomplement/Blacklist",
+        "value": {
+          "value": "mods.tcomplement.Blacklist"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/tcomplement/Blacklist"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/tcomplement/Blacklist",
+        "value": {
+          "value": "tcomplement"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTinkerRegister(Lknightminer/tcomplement/library/events/TCompRegisterEvent$MelterBlackListRegisterEvent;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/tcomplement/Overrides": {
+    "name": "com/blamejared/compat/tcomplement/Overrides",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/tcomplement/Overrides",
+        "value": {
+          "value": "mods.tcomplement.Overrides"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/tcomplement/Overrides"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/tcomplement/Overrides",
+        "value": {
+          "value": "tcomplement"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTinkerRegister(Lknightminer/tcomplement/library/events/TCompRegisterEvent$MelterOverrideRegisterEvent;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/tcomplement/highoven/HighOven": {
+    "name": "com/blamejared/compat/tcomplement/highoven/HighOven",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/tcomplement/highoven/HighOven",
+        "value": {
+          "value": "mods.tcomplement.highoven.HighOven"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/tcomplement/highoven/HighOven"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/tcomplement/highoven/HighOven",
+        "value": {
+          "value": "tcomplement"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeFuel(Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFuel(Lcrafttweaker/api/item/IIngredient;II)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addMeltingOverride(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IIngredient;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeMeltingOverride(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeHeatRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addHeatRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeMixRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "newMixRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/liquid/ILiquidStack;I)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "manageMixRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/liquid/ILiquidStack;)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeManager;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHighOvenFuelRegister(Lknightminer/tcomplement/library/events/TCompRegisterEvent$HighOvenFuelRegisterEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHighOvenHeatRegister(Lknightminer/tcomplement/library/events/TCompRegisterEvent$HighOvenHeatRegisterEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHighOvenMixRegister(Lknightminer/tcomplement/library/events/TCompRegisterEvent$HighOvenMixRegisterEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHighOvenOverrideRegister(Lknightminer/tcomplement/library/events/TCompRegisterEvent$HighOvenOverrideRegisterEvent;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/tcomplement/highoven/MixRecipeBuilder": {
+    "name": "com/blamejared/compat/tcomplement/highoven/MixRecipeBuilder",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/tcomplement/highoven/MixRecipeBuilder",
+        "value": {
+          "value": "mods.tcomplement.highoven.MixRecipeBuilder"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/tcomplement/highoven/MixRecipeBuilder"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/tcomplement/highoven/MixRecipeBuilder",
+        "value": {
+          "value": "tcomplement"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getOutput()Lcrafttweaker/api/liquid/ILiquidStack;",
+        "value": {
+          "value": "output"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setOutput(Lcrafttweaker/api/liquid/ILiquidStack;)V",
+        "value": {
+          "value": "output"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getInput()Lcrafttweaker/api/liquid/ILiquidStack;",
+        "value": {
+          "value": "input"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setInput(Lcrafttweaker/api/liquid/ILiquidStack;)V",
+        "value": {
+          "value": "input"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getTemp()I",
+        "value": {
+          "value": "temp"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setTemp(I)V",
+        "value": {
+          "value": "temp"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getOxidizers()Ljava/util/List;",
+        "value": {
+          "value": "oxidizers"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getReducers()Ljava/util/List;",
+        "value": {
+          "value": "reducers"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getPurifiers()Ljava/util/List;",
+        "value": {
+          "value": "purifiers"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getOxidizerChance(Lcrafttweaker/api/item/IIngredient;)I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getReducerChance(Lcrafttweaker/api/item/IIngredient;)I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getPurifierChance(Lcrafttweaker/api/item/IIngredient;)I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addOxidizer(Lcrafttweaker/api/item/IIngredient;I)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addReducer(Lcrafttweaker/api/item/IIngredient;I)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addPurifier(Lcrafttweaker/api/item/IIngredient;I)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeOxidizer(Lcrafttweaker/api/item/IIngredient;)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeReducer(Lcrafttweaker/api/item/IIngredient;)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removePurifier(Lcrafttweaker/api/item/IIngredient;)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAllOxidizer()Lcom/blamejared/compat/tcomplement/highoven/MixRecipeBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAllReducer()Lcom/blamejared/compat/tcomplement/highoven/MixRecipeBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAllPurifier()Lcom/blamejared/compat/tcomplement/highoven/MixRecipeBuilder;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "register()V"
+      }
+    ]
+  },
+  "com/blamejared/compat/tcomplement/highoven/MixRecipeManager": {
+    "name": "com/blamejared/compat/tcomplement/highoven/MixRecipeManager",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/tcomplement/highoven/MixRecipeManager",
+        "value": {
+          "value": "mods.tcomplement.highoven.MixRecipeManager"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/tcomplement/highoven/MixRecipeManager"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/tcomplement/highoven/MixRecipeManager",
+        "value": {
+          "value": "tcomplement"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addOxidizer(Lcrafttweaker/api/item/IIngredient;I)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeManager;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addReducer(Lcrafttweaker/api/item/IIngredient;I)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeManager;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addPurifier(Lcrafttweaker/api/item/IIngredient;I)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeManager;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeOxidizer(Lcrafttweaker/api/item/IIngredient;)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeManager;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeReducer(Lcrafttweaker/api/item/IIngredient;)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeManager;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removePurifier(Lcrafttweaker/api/item/IIngredient;)Lcom/blamejared/compat/tcomplement/highoven/MixRecipeManager;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHighOvenMixRegister(Lknightminer/tcomplement/library/events/TCompRegisterEvent$HighOvenMixRegisterEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHighOvenAdditiveRegister(Lknightminer/tcomplement/library/events/TCompRegisterEvent$HighOvenMixAdditiveEvent;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/tconstruct/Alloy": {
+    "name": "com/blamejared/compat/tconstruct/Alloy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/tconstruct/Alloy",
+        "value": {
+          "value": "mods.tconstruct.Alloy"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/tconstruct/Alloy"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/tconstruct/Alloy",
+        "value": {
+          "value": "tconstruct"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;[Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/liquid/ILiquidStack;[Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTinkerRegister(Lslimeknights/tconstruct/library/events/TinkerRegisterEvent$AlloyRegisterEvent;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/tconstruct/Casting": {
+    "name": "com/blamejared/compat/tconstruct/Casting",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/tconstruct/Casting",
+        "value": {
+          "value": "mods.tconstruct.Casting"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/tconstruct/Casting"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/tconstruct/Casting",
+        "value": {
+          "value": "tconstruct"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addTableRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;IZI)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addBasinRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/liquid/ILiquidStack;IZI)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeTableRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeBasinRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTinkerRegister(Lslimeknights/tconstruct/library/events/TinkerRegisterEvent$TableCastingRegisterEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTinkerRegister(Lslimeknights/tconstruct/library/events/TinkerRegisterEvent$BasinCastingRegisterEvent;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/tconstruct/Drying": {
+    "name": "com/blamejared/compat/tconstruct/Drying",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/tconstruct/Drying",
+        "value": {
+          "value": "mods.tconstruct.Drying"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/tconstruct/Drying"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/tconstruct/Drying",
+        "value": {
+          "value": "tconstruct"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTinkerRegister(Lslimeknights/tconstruct/library/events/TinkerRegisterEvent$DryingRackRegisterEvent;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/tconstruct/Fuel": {
+    "name": "com/blamejared/compat/tconstruct/Fuel",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/tconstruct/Fuel",
+        "value": {
+          "value": "mods.tconstruct.Fuel"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/tconstruct/Fuel"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/tconstruct/Fuel",
+        "value": {
+          "value": "tconstruct"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "registerFuel(Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/tconstruct/Melting": {
+    "name": "com/blamejared/compat/tconstruct/Melting",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/tconstruct/Melting",
+        "value": {
+          "value": "mods.tconstruct.Melting"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/tconstruct/Melting"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/tconstruct/Melting",
+        "value": {
+          "value": "tconstruct"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IIngredient;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEntityMelting(Lcrafttweaker/api/entity/IEntityDefinition;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeEntityMelting(Lcrafttweaker/api/entity/IEntityDefinition;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTinkerRegister(Lslimeknights/tconstruct/library/events/TinkerRegisterEvent$MeltingRegisterEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTinkerRegister(Lslimeknights/tconstruct/library/events/TinkerRegisterEvent$EntityMeltingRegisterEvent;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/tconstruct/actions/SetAttackAction": {
+    "name": "com/blamejared/compat/tconstruct/actions/SetAttackAction",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/tconstruct/actions/SetBowBonusDamageAction": {
+    "name": "com/blamejared/compat/tconstruct/actions/SetBowBonusDamageAction",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/tconstruct/actions/SetBowRangeAction": {
+    "name": "com/blamejared/compat/tconstruct/actions/SetBowRangeAction",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/tconstruct/actions/SetDrawSpeedAction": {
+    "name": "com/blamejared/compat/tconstruct/actions/SetDrawSpeedAction",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/tconstruct/actions/SetDurabilityAction": {
+    "name": "com/blamejared/compat/tconstruct/actions/SetDurabilityAction",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/tconstruct/actions/SetHarvestLevelAction": {
+    "name": "com/blamejared/compat/tconstruct/actions/SetHarvestLevelAction",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/tconstruct/actions/SetMiningSpeedAction": {
+    "name": "com/blamejared/compat/tconstruct/actions/SetMiningSpeedAction",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/tconstruct/actions/SetModifierAction": {
+    "name": "com/blamejared/compat/tconstruct/actions/SetModifierAction",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/tconstruct/brackets/MaterialBracketHandler": {
+    "name": "com/blamejared/compat/tconstruct/brackets/MaterialBracketHandler",
+    "interfaces": [
+      "crafttweaker/zenscript/IBracketHandler"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/BracketHandler;",
+        "target": "com/blamejared/compat/tconstruct/brackets/MaterialBracketHandler",
+        "values": {
+          "priority": {
+            "type": "INT",
+            "value": "100"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/tconstruct/brackets/MaterialBracketHandler"
+      }
+    ]
+  },
+  "com/blamejared/compat/tconstruct/brackets/MaterialBracketHandler$MaterialReferenceSymbol": {
+    "name": "com/blamejared/compat/tconstruct/brackets/MaterialBracketHandler$MaterialReferenceSymbol",
+    "interfaces": [
+      "stanhebben/zenscript/symbols/IZenSymbol"
+    ]
+  },
+  "com/blamejared/compat/tconstruct/materials/ITICMaterial": {
+    "name": "com/blamejared/compat/tconstruct/materials/ITICMaterial",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/tconstruct/materials/ITICMaterial",
+        "value": {
+          "value": "modtweaker.tconstruct.ITICMaterial"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/tconstruct/materials/ITICMaterial"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getName()Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "matches(Lcom/blamejared/compat/tconstruct/materials/ITICMaterial;)Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getDefinition()Lcom/blamejared/compat/tconstruct/materials/ITICMaterialDefinition;",
+        "value": {
+          "value": "definition"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "hasStats(Ljava/lang/String;)Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "hasHeadStats()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "hasHandleStats()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "hasExtraStats()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "hasArrowStats()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "hasFletchingStats()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "hasBowStats()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "hasBowStringStats()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setDurabilityHead(I)V",
+        "value": {
+          "value": "durabilityHead"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getDurabilityHead()I",
+        "value": {
+          "value": "durabilityHead"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setMiningSpeedHead(F)V",
+        "value": {
+          "value": "miningSpeedHead"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getMiningSpeedHead()F",
+        "value": {
+          "value": "miningSpeedHead"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setAttackHead(F)V",
+        "value": {
+          "value": "attackHead"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getAttackHead()F",
+        "value": {
+          "value": "attackHead"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setHarvestLevelHead(I)V",
+        "value": {
+          "value": "harvestLevelHead"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getHarvestLevelHead()I",
+        "value": {
+          "value": "harvestLevelHead"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setDurabilityHandle(I)V",
+        "value": {
+          "value": "durabilityHandle"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getDurabilityHandle()I",
+        "value": {
+          "value": "durabilityHandle"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setModifierHandle(F)V",
+        "value": {
+          "value": "modifierHandle"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getModifierHandle()F",
+        "value": {
+          "value": "modifierHandle"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setDurabilityExtra(I)V",
+        "value": {
+          "value": "durabilityExtra"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getDurabilityExtra()I",
+        "value": {
+          "value": "durabilityExtra"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setArrowModifier(F)V",
+        "value": {
+          "value": "arrowModifier"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getArrowModifier()F",
+        "value": {
+          "value": "arrowModifier"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setArrowBonusAmmo(I)V",
+        "value": {
+          "value": "arrowBonusAmmo"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getArrowBonusAmmo()I",
+        "value": {
+          "value": "arrowBonusAmmo"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setFletchingModifier(F)V",
+        "value": {
+          "value": "fletchingModifier"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getFletchingModifier()F",
+        "value": {
+          "value": "fletchingModifier"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setFletchingAccuracy(F)V",
+        "value": {
+          "value": "fletchingAccuracy"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getFletchingAccuracy()F",
+        "value": {
+          "value": "fletchingAccuracy"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getBowDrawSpeed()F",
+        "value": {
+          "value": "bowDrawSpeed"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setBowDrawSpeed(F)V",
+        "value": {
+          "value": "bowDrawSpeed"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getBowRange()F",
+        "value": {
+          "value": "bowRange"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setBowRange(F)V",
+        "value": {
+          "value": "bowRange"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getBonusDamage()F",
+        "value": {
+          "value": "bonusDamage"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setBonusDamage(F)V",
+        "value": {
+          "value": "bonusDamage"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getBowStringModifier()F",
+        "value": {
+          "value": "bowStringModifier"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setBowStringModifier(F)V",
+        "value": {
+          "value": "bowStringModifier"
+        }
+      }
+    ]
+  },
+  "com/blamejared/compat/tconstruct/materials/ITICMaterialDefinition": {
+    "name": "com/blamejared/compat/tconstruct/materials/ITICMaterialDefinition",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/tconstruct/materials/ITICMaterialDefinition",
+        "value": {
+          "value": "modtweaker.tconstruct.ITICMaterialDefinition"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/tconstruct/materials/ITICMaterialDefinition"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "asMaterial()Lcom/blamejared/compat/tconstruct/materials/ITICMaterial;",
+        "value": {
+          "value": "stack"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getName()Ljava/lang/String;",
+        "value": {
+          "value": "name"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getDisplayName()Ljava/lang/String;",
+        "value": {
+          "value": "displayName"
+        }
+      }
+    ]
+  },
+  "com/blamejared/compat/tconstruct/materials/TICMaterial": {
+    "name": "com/blamejared/compat/tconstruct/materials/TICMaterial",
+    "interfaces": [
+      "com/blamejared/compat/tconstruct/materials/ITICMaterial"
+    ]
+  },
+  "com/blamejared/compat/tconstruct/materials/TICMaterialDefinition": {
+    "name": "com/blamejared/compat/tconstruct/materials/TICMaterialDefinition",
+    "interfaces": [
+      "com/blamejared/compat/tconstruct/materials/ITICMaterialDefinition"
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/aspects/CTAspect": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/aspects/CTAspect",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/aspects/CTAspect"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/aspects/CTAspect",
+        "value": {
+          "value": "thaumcraft"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/aspects/CTAspect",
+        "value": {
+          "value": "thaumcraft.aspect.CTAspect"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getName()Ljava/lang/String;",
+        "value": {
+          "value": "name"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setChatColour(Ljava/lang/String;)V",
+        "value": {
+          "value": "chatColour"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getChatColour()Ljava/lang/String;",
+        "value": {
+          "value": "chatColour"
+        }
+      }
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack",
+        "value": {
+          "value": "thaumcraft"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack",
+        "value": {
+          "value": "thaumcraft.aspect.CTAspectStack"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenOperator;",
+        "target": "setAmount(I)Lcom/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack;",
+        "value": {
+          "type": "ENUM",
+          "value": "Lstanhebben/zenscript/annotations/OperatorType;/MUL"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setAmount(I)Lcom/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getInternal()Lcom/blamejared/compat/thaumcraft/handlers/aspects/CTAspect;",
+        "value": {
+          "value": "internal"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getAmount()I",
+        "value": {
+          "value": "amount"
+        }
+      }
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/brackets/BracketHandlerAspect": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/brackets/BracketHandlerAspect",
+    "interfaces": [
+      "crafttweaker/zenscript/IBracketHandler"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/BracketHandler;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/brackets/BracketHandlerAspect",
+        "values": {
+          "priority": {
+            "type": "INT",
+            "value": "100"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/brackets/BracketHandlerAspect"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/brackets/BracketHandlerAspect",
+        "value": {
+          "value": "thaumcraft"
+        }
+      }
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/expand/IEntityAspectExpansion": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/expand/IEntityAspectExpansion",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenExpansion;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/expand/IEntityAspectExpansion",
+        "value": {
+          "value": "crafttweaker.entity.IEntityDefinition"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/expand/IEntityAspectExpansion",
+        "value": {
+          "value": "thaumcraft"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/expand/IEntityAspectExpansion"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setAspects(Lcrafttweaker/api/entity/IEntityDefinition;[Lcom/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAspects(Lcrafttweaker/api/entity/IEntityDefinition;[Lcom/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/expand/IItemAspectExpansion": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/expand/IItemAspectExpansion",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenExpansion;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/expand/IItemAspectExpansion",
+        "value": {
+          "value": "crafttweaker.item.IItemStack"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/expand/IItemAspectExpansion",
+        "value": {
+          "value": "thaumcraft"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/expand/IItemAspectExpansion"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setAspects(Lcrafttweaker/api/item/IItemStack;[Lcom/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeAspects(Lcrafttweaker/api/item/IItemStack;[Lcom/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/handlers/ArcaneWorkbench": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/handlers/ArcaneWorkbench",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/ArcaneWorkbench",
+        "value": {
+          "value": "mods.thaumcraft.ArcaneWorkbench"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/ArcaneWorkbench"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/ArcaneWorkbench",
+        "value": {
+          "value": "thaumcraft"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "registerShapedRecipe(Ljava/lang/String;Ljava/lang/String;I[Lcom/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack;Lcrafttweaker/api/item/IItemStack;[[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "registerShapelessRecipe(Ljava/lang/String;Ljava/lang/String;I[Lcom/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack;Lcrafttweaker/api/item/IItemStack;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/handlers/Crucible": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/handlers/Crucible",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/Crucible",
+        "value": {
+          "value": "mods.thaumcraft.Crucible"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/Crucible"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/Crucible",
+        "value": {
+          "value": "thaumcraft"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "registerRecipe(Ljava/lang/String;Ljava/lang/String;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IIngredient;[Lcom/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/handlers/DustTrigger": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/handlers/DustTrigger",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/DustTrigger",
+        "value": {
+          "value": "mods.thaumcraft.SalisMundus"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/DustTrigger"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/DustTrigger",
+        "value": {
+          "value": "thaumcraft"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addSingleConversion(Lcrafttweaker/api/block/IBlock;Lcrafttweaker/api/item/IItemStack;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addSingleConversion(Lcrafttweaker/api/oredict/IOreDictEntry;Lcrafttweaker/api/item/IItemStack;Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeSingleConversion(Lcrafttweaker/api/item/IIngredient;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/handlers/DustTrigger$ActionAddTrigger": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/handlers/DustTrigger$ActionAddTrigger",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/handlers/DustTrigger$ActionRemoveTrigger": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/handlers/DustTrigger$ActionRemoveTrigger",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/handlers/Infusion": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/handlers/Infusion",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/Infusion",
+        "value": {
+          "value": "mods.thaumcraft.Infusion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/Infusion"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/Infusion",
+        "value": {
+          "value": "thaumcraft"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "registerRecipe(Ljava/lang/String;Ljava/lang/String;Lcrafttweaker/api/item/IItemStack;I[Lcom/blamejared/compat/thaumcraft/handlers/aspects/CTAspectStack;Lcrafttweaker/api/item/IIngredient;[Lcrafttweaker/api/item/IIngredient;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/handlers/LootBag": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/handlers/LootBag",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/LootBag",
+        "value": {
+          "value": "mods.thaumcraft.LootBag"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/LootBag"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/LootBag",
+        "value": {
+          "value": "thaumcraft"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addLoot(Lcrafttweaker/api/item/WeightedItemStack;[I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeLoot(Lcrafttweaker/api/item/IItemStack;[I)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/handlers/SmeltingBonus": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/handlers/SmeltingBonus",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/SmeltingBonus",
+        "value": {
+          "value": "mods.thaumcraft.SmeltingBonus"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/SmeltingBonus"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/SmeltingBonus",
+        "value": {
+          "value": "thaumcraft"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addSmeltingBonus(Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/WeightedItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeSmeltingBonus(Lcrafttweaker/api/item/IIngredient;Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thaumcraft/handlers/handlers/Warp": {
+    "name": "com/blamejared/compat/thaumcraft/handlers/handlers/Warp",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/Warp",
+        "value": {
+          "value": "mods.thaumcraft.Warp"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/Warp"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thaumcraft/handlers/handlers/Warp",
+        "value": {
+          "value": "thaumcraft"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setWarp(Lcrafttweaker/api/item/IItemStack;I)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/Centrifuge": {
+    "name": "com/blamejared/compat/thermalexpansion/Centrifuge",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/Centrifuge",
+        "value": {
+          "value": "mods.thermalexpansion.Centrifuge"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/Centrifuge",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/Centrifuge"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe([Lcrafttweaker/api/item/WeightedItemStack;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipeMob(Ljava/lang/String;[Lcrafttweaker/api/item/WeightedItemStack;Lcrafttweaker/api/liquid/ILiquidStack;II)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipeMob(Lcrafttweaker/api/entity/IEntityDefinition;[Lcrafttweaker/api/item/WeightedItemStack;Lcrafttweaker/api/liquid/ILiquidStack;II)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipeMob(Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipeMob(Lcrafttweaker/api/entity/IEntityDefinition;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/Compactor": {
+    "name": "com/blamejared/compat/thermalexpansion/Compactor",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/Compactor",
+        "value": {
+          "value": "mods.thermalexpansion.Compactor"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/Compactor",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/Compactor"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addMintRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addPressRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addStorageRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addGearRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeMintRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removePressRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeStorageRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeGearRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/Crucible": {
+    "name": "com/blamejared/compat/thermalexpansion/Crucible",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/Crucible",
+        "value": {
+          "value": "mods.thermalexpansion.Crucible"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/Crucible",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/Crucible"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/Enchanter": {
+    "name": "com/blamejared/compat/thermalexpansion/Enchanter",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/Enchanter",
+        "value": {
+          "value": "mods.thermalexpansion.Enchanter"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/Enchanter",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/Enchanter"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;IIZ)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/Imbuer": {
+    "name": "com/blamejared/compat/thermalexpansion/Imbuer",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/Imbuer",
+        "value": {
+          "value": "mods.thermalexpansion.Imbuer"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/Imbuer",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/Imbuer"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/InductionSmelter": {
+    "name": "com/blamejared/compat/thermalexpansion/InductionSmelter",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/InductionSmelter",
+        "value": {
+          "value": "mods.thermalexpansion.InductionSmelter"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/InductionSmelter",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/InductionSmelter"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;ILcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/Infuser": {
+    "name": "com/blamejared/compat/thermalexpansion/Infuser",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/Infuser",
+        "value": {
+          "value": "mods.thermalexpansion.Infuser"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/Infuser",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/Infuser"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/Insolator": {
+    "name": "com/blamejared/compat/thermalexpansion/Insolator",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/Insolator",
+        "value": {
+          "value": "mods.thermalexpansion.Insolator"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/Insolator",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/Insolator"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;ILcrafttweaker/api/item/IItemStack;II)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipeSaplingInfuser(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;ILcrafttweaker/api/item/IItemStack;II)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/Pulverizer": {
+    "name": "com/blamejared/compat/thermalexpansion/Pulverizer",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/Pulverizer",
+        "value": {
+          "value": "mods.thermalexpansion.Pulverizer"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/Pulverizer",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/Pulverizer"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;ILcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/RedstoneFurnace": {
+    "name": "com/blamejared/compat/thermalexpansion/RedstoneFurnace",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/RedstoneFurnace",
+        "value": {
+          "value": "mods.thermalexpansion.RedstoneFurnace"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/RedstoneFurnace",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/RedstoneFurnace"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addPyrolysisRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;II)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removePyrolysisRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/Refinery": {
+    "name": "com/blamejared/compat/thermalexpansion/Refinery",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/Refinery",
+        "value": {
+          "value": "mods.thermalexpansion.Refinery"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/Refinery",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/Refinery"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/WeightedItemStack;Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipePotion(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipePotion(Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/SawMill": {
+    "name": "com/blamejared/compat/thermalexpansion/SawMill",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/SawMill",
+        "value": {
+          "value": "mods.thermalexpansion.Sawmill"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/SawMill",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/SawMill"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;ILcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/Transposer": {
+    "name": "com/blamejared/compat/thermalexpansion/Transposer",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/Transposer",
+        "value": {
+          "value": "mods.thermalexpansion.Transposer"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/Transposer",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/Transposer"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addExtractRecipe(Lcrafttweaker/api/liquid/ILiquidStack;Lcrafttweaker/api/item/IItemStack;ILcrafttweaker/api/item/WeightedItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeExtractRecipe(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFillRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeFillRecipe(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/devicemanagers/Coolant": {
+    "name": "com/blamejared/compat/thermalexpansion/devicemanagers/Coolant",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/devicemanagers/Coolant",
+        "value": {
+          "value": "mods.thermalexpansion.Coolant"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/devicemanagers/Coolant",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/devicemanagers/Coolant"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addCoolant(Lcrafttweaker/api/liquid/ILiquidStack;II)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeCoolant(Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/devicemanagers/Coolant$ActionAddCoolant": {
+    "name": "com/blamejared/compat/thermalexpansion/devicemanagers/Coolant$ActionAddCoolant",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/devicemanagers/Coolant$ActionRemoveCoolant": {
+    "name": "com/blamejared/compat/thermalexpansion/devicemanagers/Coolant$ActionRemoveCoolant",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/devicemanagers/Factorizer": {
+    "name": "com/blamejared/compat/thermalexpansion/devicemanagers/Factorizer",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/devicemanagers/Factorizer",
+        "value": {
+          "value": "mods.thermalexpansion.Factorizer"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/devicemanagers/Factorizer",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/devicemanagers/Factorizer"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipeSplit(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipeCombine(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRecipeBoth(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipeCombine(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRecipeSplit(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/devicemanagers/Factorizer$ActionAddFactorizer": {
+    "name": "com/blamejared/compat/thermalexpansion/devicemanagers/Factorizer$ActionAddFactorizer",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/devicemanagers/Factorizer$ActionRemoveFactorizer": {
+    "name": "com/blamejared/compat/thermalexpansion/devicemanagers/Factorizer$ActionRemoveFactorizer",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/dynamos/CompressionDynamo": {
+    "name": "com/blamejared/compat/thermalexpansion/dynamos/CompressionDynamo",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/CompressionDynamo",
+        "value": {
+          "value": "mods.thermalexpansion.CompressionDynamo"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/CompressionDynamo",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/CompressionDynamo"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFuel(Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeFuel(Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/dynamos/EnervationDynamo": {
+    "name": "com/blamejared/compat/thermalexpansion/dynamos/EnervationDynamo",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/EnervationDynamo",
+        "value": {
+          "value": "mods.thermalexpansion.EnervationDynamo"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/EnervationDynamo",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/EnervationDynamo"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFuel(Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeFuel(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/dynamos/MagmaticDynamo": {
+    "name": "com/blamejared/compat/thermalexpansion/dynamos/MagmaticDynamo",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/MagmaticDynamo",
+        "value": {
+          "value": "mods.thermalexpansion.MagmaticDynamo"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/MagmaticDynamo",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/MagmaticDynamo"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFuel(Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeFuel(Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/dynamos/NumisticDynamo": {
+    "name": "com/blamejared/compat/thermalexpansion/dynamos/NumisticDynamo",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/NumisticDynamo",
+        "value": {
+          "value": "mods.thermalexpansion.NumisticDynamo"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/NumisticDynamo",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/NumisticDynamo"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFuel(Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeFuel(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addGemFuel(Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeGemFuel(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/dynamos/ReactantDynamo": {
+    "name": "com/blamejared/compat/thermalexpansion/dynamos/ReactantDynamo",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/ReactantDynamo",
+        "value": {
+          "value": "mods.thermalexpansion.ReactantDynamo"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/ReactantDynamo",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/ReactantDynamo"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addReaction(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addReactionElemental(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeReaction(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeReactionElemental(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/liquid/ILiquidStack;)V"
+      }
+    ]
+  },
+  "com/blamejared/compat/thermalexpansion/dynamos/SteamDynamo": {
+    "name": "com/blamejared/compat/thermalexpansion/dynamos/SteamDynamo",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/SteamDynamo",
+        "value": {
+          "value": "mods.thermalexpansion.SteamDynamo"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/SteamDynamo",
+        "value": {
+          "value": "thermalexpansion"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "com/blamejared/compat/thermalexpansion/dynamos/SteamDynamo"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addFuel(Lcrafttweaker/api/item/IItemStack;I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeFuel(Lcrafttweaker/api/item/IItemStack;)V"
+      }
+    ]
+  }
+}

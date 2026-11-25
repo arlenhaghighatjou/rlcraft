@@ -1,0 +1,1389 @@
+{
+  "com/charles445/aireducer/AIReducer": {
+    "name": "com/charles445/aireducer/AIReducer",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/charles445/aireducer/AIReducer",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12]"
+          },
+          "modid": {
+            "value": "aireducer"
+          },
+          "name": {
+            "value": "AI Reducer"
+          },
+          "version": {
+            "value": "0.3.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "aireducer"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/aireducer/ai/AIAvoidReduced$1": {
+    "name": "com/charles445/aireducer/ai/AIAvoidReduced$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/charles445/aireducer/config/AnyConfig": {
+    "name": "com/charles445/aireducer/config/AnyConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "taskDelayTweaks",
+        "value": {
+          "values": [
+            "Enables tweaking task delay with the JSON config"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "taskDelayTweaks",
+        "value": {
+          "value": "Task Delay Tweaks"
+        }
+      }
+    ]
+  },
+  "com/charles445/aireducer/config/IceAndFireConfig": {
+    "name": "com/charles445/aireducer/config/IceAndFireConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "ENABLED",
+        "value": {
+          "values": [
+            "Master switch for this handler"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "ENABLED",
+        "value": {
+          "value": "ENABLED"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "deathworm",
+        "value": {
+          "values": [
+            "Should death worm AI be tweaked"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "deathworm",
+        "value": {
+          "value": "Death Worm"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "deathwormProximityRequirement",
+        "value": {
+          "values": [
+            "How close in blocks a player has to be for death worms to have AI, helps fix chunk loading issues"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "deathwormProximityRequirement",
+        "value": {
+          "value": "DeathWormProximityRequirement"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "deathwormProximityRequirement",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "10.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "deathwormProximityRequired",
+        "value": {
+          "values": [
+            "Whether to enable Death Worm Proximity Requirements"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "deathwormProximityRequired",
+        "value": {
+          "value": "DeathWormProximityRequired"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmex",
+        "value": {
+          "values": [
+            "Should myrmex AI be tweaked"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmex",
+        "value": {
+          "value": "Myrmex"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexFollowRange",
+        "value": {
+          "values": [
+            "Range with which Myrmex can see and pathfind - Vanilla is 64"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexFollowRange",
+        "value": {
+          "value": "MyrmexFollowRange"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexFollowRange",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "128.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "16.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexModifyEscortEntity",
+        "value": {
+          "values": [
+            "Modify EscortEntity"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexModifyEscortEntity",
+        "value": {
+          "value": "MyrmexModify EscortEntity"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexRunDelayEscortEntity",
+        "value": {
+          "values": [
+            "Delay in ticks between new EscortEntity tasks - Vanilla is 0"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexRunDelayEscortEntity",
+        "value": {
+          "value": "MyrmexRunDelay EscortEntity"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "myrmexRunDelayEscortEntity",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexUpdateChanceEscortEntity",
+        "value": {
+          "values": [
+            "Update chance for EscortEntity task updates - Vanilla is 1"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexUpdateChanceEscortEntity",
+        "value": {
+          "value": "myrmexUpdateChance EscortEntity"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexUpdateChanceEscortEntity",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.01"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexModifyFindHidingSpot",
+        "value": {
+          "values": [
+            "Modify FindHidingSpot"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexModifyFindHidingSpot",
+        "value": {
+          "value": "MyrmexModify FindHidingSpot"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexRunDelayFindHidingSpot",
+        "value": {
+          "values": [
+            "Delay in ticks between new FindHidingSpot tasks - Vanilla is 0"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexRunDelayFindHidingSpot",
+        "value": {
+          "value": "MyrmexRunDelay FindHidingSpot"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "myrmexRunDelayFindHidingSpot",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexUpdateChanceFindHidingSpot",
+        "value": {
+          "values": [
+            "Update chance for FindHidingSpot task updates - Vanilla is 1"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexUpdateChanceFindHidingSpot",
+        "value": {
+          "value": "myrmexUpdateChance FindHidingSpot"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexUpdateChanceFindHidingSpot",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.01"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexModifyForage",
+        "value": {
+          "values": [
+            "Modify Forage"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexModifyForage",
+        "value": {
+          "value": "MyrmexModify Forage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexRunDelayForage",
+        "value": {
+          "values": [
+            "Delay in ticks between new Forage tasks - Vanilla is 0"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexRunDelayForage",
+        "value": {
+          "value": "MyrmexRunDelay Forage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "myrmexRunDelayForage",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexUpdateChanceForage",
+        "value": {
+          "values": [
+            "Update chance for Forage task updates - Vanilla is 1"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexUpdateChanceForage",
+        "value": {
+          "value": "myrmexUpdateChance Forage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexUpdateChanceForage",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.01"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexModifyLeaveHive",
+        "value": {
+          "values": [
+            "Modify LeaveHive"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexModifyLeaveHive",
+        "value": {
+          "value": "MyrmexModify LeaveHive"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexRunDelayLeaveHive",
+        "value": {
+          "values": [
+            "Delay in ticks between new LeaveHive tasks - Vanilla is 0"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexRunDelayLeaveHive",
+        "value": {
+          "value": "MyrmexRunDelay LeaveHive"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "myrmexRunDelayLeaveHive",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexUpdateChanceLeaveHive",
+        "value": {
+          "values": [
+            "Update chance for LeaveHive task updates - Vanilla is 1"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexUpdateChanceLeaveHive",
+        "value": {
+          "value": "myrmexUpdateChance LeaveHive"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexUpdateChanceLeaveHive",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.01"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexModifyMoveThroughHive",
+        "value": {
+          "values": [
+            "Modify MoveThroughHive"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexModifyMoveThroughHive",
+        "value": {
+          "value": "MyrmexModify MoveThroughHive"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexRunDelayWanderHiveCenter",
+        "value": {
+          "values": [
+            "Delay in ticks between new MoveThroughHive tasks - Vanilla is 0"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexRunDelayWanderHiveCenter",
+        "value": {
+          "value": "MyrmexRunDelay MoveThroughHive"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "myrmexRunDelayWanderHiveCenter",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexUpdateChanceMoveThroughHive",
+        "value": {
+          "values": [
+            "Update chance for MoveThroughHive task updates - Vanilla is 1"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexUpdateChanceMoveThroughHive",
+        "value": {
+          "value": "myrmexUpdateChance MoveThroughHive"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexUpdateChanceMoveThroughHive",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.01"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexModifyWanderHiveCenter",
+        "value": {
+          "values": [
+            "Modify WanderHiveCenter"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexModifyWanderHiveCenter",
+        "value": {
+          "value": "MyrmexModify WanderHiveCenter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexRunDelayMoveThroughHive",
+        "value": {
+          "values": [
+            "Delay in ticks between new WanderHiveCenter tasks - Vanilla is 0"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexRunDelayMoveThroughHive",
+        "value": {
+          "value": "MyrmexRunDelay WanderHiveCenter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "myrmexRunDelayMoveThroughHive",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexUpdateChanceWanderHiveCenter",
+        "value": {
+          "values": [
+            "Update chance for WanderHiveCenter task updates - Vanilla is 1"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexUpdateChanceWanderHiveCenter",
+        "value": {
+          "value": "myrmexUpdateChance WanderHiveCenter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexUpdateChanceWanderHiveCenter",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.01"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexProximityRequirement",
+        "value": {
+          "values": [
+            "How close in blocks a player has to be for myrmex to have AI, helps fix chunk loading issues"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexProximityRequirement",
+        "value": {
+          "value": "MyrmexProximityRequirement"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexProximityRequirement",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "10.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexProximityRequired",
+        "value": {
+          "values": [
+            "Whether to enable Myrmex Proximity Requirements"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexProximityRequired",
+        "value": {
+          "value": "MyrmexProximityRequired"
+        }
+      }
+    ]
+  },
+  "com/charles445/aireducer/config/IceAndFireOldConfig": {
+    "name": "com/charles445/aireducer/config/IceAndFireOldConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "ENABLED",
+        "value": {
+          "values": [
+            "Master switch for this handler"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "ENABLED",
+        "value": {
+          "value": "ENABLED"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "deathworm",
+        "value": {
+          "values": [
+            "Should death worm AI be tweaked"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "deathworm",
+        "value": {
+          "value": "Death Worm"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "deathwormProximityRequirement",
+        "value": {
+          "values": [
+            "How close in blocks a player has to be for death worms to have AI, helps fix chunk loading issues"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "deathwormProximityRequirement",
+        "value": {
+          "value": "DeathWormProximityRequirement"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "deathwormProximityRequirement",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "10.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "deathwormProximityRequired",
+        "value": {
+          "values": [
+            "Whether to enable Death Worm Proximity Requirements"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "deathwormProximityRequired",
+        "value": {
+          "value": "DeathWormProximityRequired"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmex",
+        "value": {
+          "values": [
+            "Should myrmex AI be tweaked"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmex",
+        "value": {
+          "value": "Myrmex"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexFollowRange",
+        "value": {
+          "values": [
+            "Range with which Myrmex can see and pathfind - Vanilla 1.7.1 is 128, 1.8.4 is 64"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexFollowRange",
+        "value": {
+          "value": "MyrmexFollowRange"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexFollowRange",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "128.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "16.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexUpdateChanceEscortEntity",
+        "value": {
+          "values": [
+            "Update chance for EscortEntity - Vanilla is 1.0"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexUpdateChanceEscortEntity",
+        "value": {
+          "value": "MyrmexUpdateChance EscortEntity"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexUpdateChanceEscortEntity",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.01"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexUpdateChanceFindHidingSpot",
+        "value": {
+          "values": [
+            "Update chance for FindHidingSpot - Vanilla is 1.0"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexUpdateChanceFindHidingSpot",
+        "value": {
+          "value": "MyrmexUpdateChance FindHidingSpot"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexUpdateChanceFindHidingSpot",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.01"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexUpdateChanceForage",
+        "value": {
+          "values": [
+            "Update chance for Forage - Vanilla is 1.0"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexUpdateChanceForage",
+        "value": {
+          "value": "MyrmexUpdateChance Forage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexUpdateChanceForage",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.01"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexAlternateNavigation",
+        "value": {
+          "values": [
+            "Use alternate path navigation - for 1.7.1"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexAlternateNavigation",
+        "value": {
+          "value": "MyrmexAlternateNavigation"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexModifyLeaveHive",
+        "value": {
+          "values": [
+            "Modify LeaveHive - for 1.7.1"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexModifyLeaveHive",
+        "value": {
+          "value": "MyrmexModify LeaveHive"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexMoveThroughHive",
+        "value": {
+          "values": [
+            "Modify MoveThroughHive - for 1.7.1"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexMoveThroughHive",
+        "value": {
+          "value": "MyrmexModify MoveThroughHive"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexUpdateChanceReEnterHive",
+        "value": {
+          "values": [
+            "Update chance for ReEnterHive - Vanilla is 1.0"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexUpdateChanceReEnterHive",
+        "value": {
+          "value": "MyrmexUpdateChance ReEnterHive"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexUpdateChanceReEnterHive",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.01"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "replaceVillageAIFearUntamed",
+        "value": {
+          "values": [
+            "Replaces Ice and Fire dragon avoiding AI to use reduced AI settings instead"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "replaceVillageAIFearUntamed",
+        "value": {
+          "value": "ReplaceVillageAIFearUntamed"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexProximityRequirement",
+        "value": {
+          "values": [
+            "How close in blocks a player has to be for myrmex to have AI, helps fix chunk loading issues"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexProximityRequirement",
+        "value": {
+          "value": "MyrmexProximityRequirement"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "myrmexProximityRequirement",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "10.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "myrmexProximityRequired",
+        "value": {
+          "values": [
+            "Whether to enable Myrmex Proximity Requirements"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "myrmexProximityRequired",
+        "value": {
+          "value": "MyrmexProximityRequired"
+        }
+      }
+    ]
+  },
+  "com/charles445/aireducer/config/ModConfig": {
+    "name": "com/charles445/aireducer/config/ModConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "com/charles445/aireducer/config/ModConfig",
+        "values": {
+          "modid": {
+            "value": "aireducer"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "any",
+        "value": {
+          "values": [
+            "Options that affect all mobs"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "any",
+        "value": {
+          "value": "Any"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "iceandfire",
+        "value": {
+          "values": [
+            "Ice and Fire 1.8+ AI Options"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "iceandfire",
+        "value": {
+          "value": "IceAndFire"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "iceandfireold",
+        "value": {
+          "values": [
+            "Ice and Fire 1.7.1 AI Options"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "iceandfireold",
+        "value": {
+          "value": "IceAndFire171"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "vanilla",
+        "value": {
+          "values": [
+            "Minecraft AI Options"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "vanilla",
+        "value": {
+          "value": "Minecraft"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "debug",
+        "value": {
+          "values": [
+            "Enables debug features. Will spam the console with unnecessary information, so leave this off unless you are trying to fix a problem!"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "debug",
+        "value": {
+          "value": "Debug Mode"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enabled",
+        "value": {
+          "values": [
+            "Master switch, enables all features"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enabled",
+        "value": {
+          "value": "Reducer Enabled"
+        }
+      }
+    ]
+  },
+  "com/charles445/aireducer/config/ModConfig$EventHandler": {
+    "name": "com/charles445/aireducer/config/ModConfig$EventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/charles445/aireducer/config/ModConfig$EventHandler",
+        "values": {
+          "modid": {
+            "value": "aireducer"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/aireducer/config/VanillaConfig": {
+    "name": "com/charles445/aireducer/config/VanillaConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "ENABLED",
+        "value": {
+          "values": [
+            "Master switch for this handler"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "ENABLED",
+        "value": {
+          "value": "ENABLED"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "avoidTaskReplacement",
+        "value": {
+          "values": [
+            "Replace vanilla entity avoid tasks for better performance"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "avoidTaskReplacement",
+        "value": {
+          "value": "Avoid Task Replacement"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "rabbit",
+        "value": {
+          "values": [
+            "Should vanilla rabbit AI be tweaked"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "rabbit",
+        "value": {
+          "value": "Rabbit"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "rabbit_should_avoid",
+        "value": {
+          "values": [
+            "Delay for rabbits checking if they are scared - Vanilla is 1"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "rabbit_should_avoid",
+        "value": {
+          "value": "RabbitAvoidDelay"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "rabbit_should_avoid",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "10"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      }
+    ]
+  },
+  "com/charles445/aireducer/handler/SpawnHandler": {
+    "name": "com/charles445/aireducer/handler/SpawnHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityJoinWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/aireducer/routine/IAFOldFearUntamedRoutine$1": {
+    "name": "com/charles445/aireducer/routine/IAFOldFearUntamedRoutine$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/charles445/aireducer/routine/IAFOldFearUntamedRoutine$2": {
+    "name": "com/charles445/aireducer/routine/IAFOldFearUntamedRoutine$2",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  }
+}

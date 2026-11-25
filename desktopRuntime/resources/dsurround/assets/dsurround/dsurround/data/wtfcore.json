@@ -1,0 +1,28 @@
+{
+	"footsteps":{
+		"wtfcore:patchWater": "waterfine",
+		"wtfcore:patchWater+carpet": "waterfine",
+		"wtfcore:patchIce": "ice",
+		"wtfcore:patchIce+carpet": "ice",
+		"wtfcore:slabGravel": "gravel",
+		"wtfcore:slabGravel+carpet": "gravel",
+		"wtfcore:slabDirt": "dirt",
+		"wtfcore:slabDirt+carpet": "dirt",
+		"wtfcore:slabMossyDirt": "dirt",
+		"wtfcore:slabMossyDirt+carpet": "dirt",
+		"wtfcore:slabPodzol": "dirt",
+		"wtfcore:slabPodzol+carpet": "dirt",
+		"wtfcore:slabSand": "sand",
+		"wtfcore:slabSand+carpet": "sand",
+		"wtfcore:slabRedsand": "sand",
+		"wtfcore:slabRedsand+carpet": "sand",
+		"wtfcore:slabClay": "dirt",
+		"wtfcore:slabClay+carpet": "dirt",
+		"wtfcore:stone0DecoStatic": "stone",
+		"wtfcore:nitre_ore": "ore",
+		"wtfcore:dense_stone0nitre_ore0": "ore",
+		"wtfcore:dense_stone0redstone_ore0": "ore",
+		"wtfcore:dense_stone0iron_ore0": "ore",
+		"wtfcore:dense_stone0coal_ore0": "ore"
+	}
+}

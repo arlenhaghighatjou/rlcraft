@@ -1,0 +1,18 @@
+[
+{
+  "modid": "kiwi",
+  "name": "Kiwi",
+  "description": "",
+  "version": "0.5.3.32",
+  "mcversion": "1.12.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Snownee", "3TUSK"],
+  "credits": "Huge thanks to my supporters:
+粉鱼, Lioness131, 皮蛋, Cherls, idyllic_bean, 鱼加盐有点咸, 洋葱菜菜子",
+  "logoFile": "",
+  "screenshots": [],
+  "useDependencyInformation": true,
+  "requiredMods": ["forge@[14.23.4.2748,)"]
+}
+]

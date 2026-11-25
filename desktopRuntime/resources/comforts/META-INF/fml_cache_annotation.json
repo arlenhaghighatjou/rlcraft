@@ -1,0 +1,637 @@
+{
+  "c4/comforts/Comforts": {
+    "name": "c4/comforts/Comforts",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "c4/comforts/Comforts",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12, 1.13)"
+          },
+          "certificateFingerprint": {
+            "value": "2484ef4d131fdc0dca0647aa21b7b944ddb935a1"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2776,);after:morpheus;after:toughasnails"
+          },
+          "modid": {
+            "value": "comforts"
+          },
+          "name": {
+            "value": "Comforts"
+          },
+          "version": {
+            "value": "1.4.1.3"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "c4.comforts.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "c4.comforts.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onFingerPrintViolation(Lnet/minecraftforge/fml/common/event/FMLFingerprintViolationEvent;)V"
+      }
+    ]
+  },
+  "c4/comforts/client/EventHandlerClient": {
+    "name": "c4/comforts/client/EventHandlerClient",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRender(Lnet/minecraftforge/client/event/RenderPlayerEvent$Pre;)V"
+      }
+    ]
+  },
+  "c4/comforts/common/ConfigHandler": {
+    "name": "c4/comforts/common/ConfigHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "c4/comforts/common/ConfigHandler",
+        "values": {
+          "modid": {
+            "value": "comforts"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "autoUse",
+        "value": {
+          "value": "Auto Use Sleeping Bags"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "autoUse",
+        "value": {
+          "values": [
+            "Set to true to automatically use sleeping bags when placed"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "autoUse"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "wellRested",
+        "value": {
+          "value": "Well-Rested"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "wellRested",
+        "value": {
+          "values": [
+            "Set to true to prevent sleeping depending on how long you previously slept"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "wellRested"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "sleepyRatio",
+        "value": {
+          "value": "Sleepy Factor"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "sleepyRatio",
+        "value": {
+          "values": [
+            "If well rested is true, this value is used to determine how long you need before being able to sleep again (larger numbers \u003d can sleep sooner)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "sleepyRatio",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "20.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "restHammocks",
+        "value": {
+          "value": "Leisure Hammocks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "restHammocks",
+        "value": {
+          "values": [
+            "Set to true to enable relaxing in hammocks without sleeping"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "nightHammocks",
+        "value": {
+          "value": "Nighttime Hammocks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "nightHammocks",
+        "value": {
+          "values": [
+            "Set to true to enable sleeping in hammocks at night"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "sleepingBagDebuffs",
+        "value": {
+          "value": "Sleeping Bag Debuffs"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "sleepingBagDebuffs",
+        "value": {
+          "values": [
+            "List of debuffs to apply to players after using the sleeping bag",
+            "Format: [effect] [duration(secs)] [power]"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "bagBreakPerc",
+        "value": {
+          "value": "Sleeping Bag Break Chance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "bagBreakPerc",
+        "value": {
+          "values": [
+            "The chance that a sleeping bag will break upon usage"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "bagBreakPerc",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      }
+    ]
+  },
+  "c4/comforts/common/ConfigHandler$ConfigEventHandler": {
+    "name": "c4/comforts/common/ConfigHandler$ConfigEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "c4/comforts/common/ConfigHandler$ConfigEventHandler",
+        "values": {
+          "modid": {
+            "value": "comforts"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "c4/comforts/common/ConfigHandler$ToughAsNails": {
+    "name": "c4/comforts/common/ConfigHandler$ToughAsNails",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "warmBody",
+        "value": {
+          "value": "Insulated Sleeping Bags"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "warmBody",
+        "value": {
+          "values": [
+            "Set to true to have sleeping bags slightly warm your body if you\u0027re cold"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "warmBody"
+      }
+    ]
+  },
+  "c4/comforts/common/EventHandlerCommon": {
+    "name": "c4/comforts/common/EventHandlerCommon",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPreWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "allowDaytimeNapping(Lnet/minecraftforge/event/entity/player/SleepingTimeCheckEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "stopResting(Lnet/minecraftforge/event/entity/EntityMountEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerSetSpawn(Lnet/minecraftforge/event/entity/player/PlayerSetSpawnEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerWakeUp(Lnet/minecraftforge/event/entity/player/PlayerWakeUpEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "c4/comforts/common/blocks/ComfortsBlocks": {
+    "name": "c4/comforts/common/blocks/ComfortsBlocks",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ROPE",
+        "value": {
+          "value": "comforts:rope"
+        }
+      }
+    ]
+  },
+  "c4/comforts/common/capability/CapabilitySleepTime": {
+    "name": "c4/comforts/common/capability/CapabilitySleepTime",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "SLEEP_TIME_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lc4/comforts/common/capability/CapabilitySleepTime$ISleepTime;"
+        }
+      }
+    ]
+  },
+  "c4/comforts/common/capability/CapabilitySleepTime$1": {
+    "name": "c4/comforts/common/capability/CapabilitySleepTime$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "c4/comforts/common/capability/CapabilitySleepTime$EventHandler": {
+    "name": "c4/comforts/common/capability/CapabilitySleepTime$EventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerSleep(Lnet/minecraftforge/event/entity/player/PlayerSleepInBedEvent;)V"
+      }
+    ]
+  },
+  "c4/comforts/common/capability/CapabilitySleepTime$Provider": {
+    "name": "c4/comforts/common/capability/CapabilitySleepTime$Provider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "c4/comforts/common/capability/CapabilitySleepTime$SleepTime": {
+    "name": "c4/comforts/common/capability/CapabilitySleepTime$SleepTime",
+    "interfaces": [
+      "c4/comforts/common/capability/CapabilitySleepTime$ISleepTime"
+    ]
+  },
+  "c4/comforts/common/capability/CapabilitySleeping": {
+    "name": "c4/comforts/common/capability/CapabilitySleeping",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "SLEEP_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lc4/comforts/common/capability/CapabilitySleeping$ISleeping;"
+        }
+      }
+    ]
+  },
+  "c4/comforts/common/capability/CapabilitySleeping$1": {
+    "name": "c4/comforts/common/capability/CapabilitySleeping$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "c4/comforts/common/capability/CapabilitySleeping$EventHandler": {
+    "name": "c4/comforts/common/capability/CapabilitySleeping$EventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPostPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerWakeUp(Lnet/minecraftforge/event/entity/player/PlayerWakeUpEvent;)V"
+      }
+    ]
+  },
+  "c4/comforts/common/capability/CapabilitySleeping$Provider": {
+    "name": "c4/comforts/common/capability/CapabilitySleeping$Provider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "c4/comforts/common/capability/CapabilitySleeping$Sleeping": {
+    "name": "c4/comforts/common/capability/CapabilitySleeping$Sleeping",
+    "interfaces": [
+      "c4/comforts/common/capability/CapabilitySleeping$ISleeping"
+    ]
+  },
+  "c4/comforts/common/capability/CapabilityWellRested": {
+    "name": "c4/comforts/common/capability/CapabilityWellRested",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "RESTED_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lc4/comforts/common/capability/CapabilityWellRested$IWellRested;"
+        }
+      }
+    ]
+  },
+  "c4/comforts/common/capability/CapabilityWellRested$1": {
+    "name": "c4/comforts/common/capability/CapabilityWellRested$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "c4/comforts/common/capability/CapabilityWellRested$EventHandler": {
+    "name": "c4/comforts/common/capability/CapabilityWellRested$EventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawn(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerSleep(Lnet/minecraftforge/event/entity/player/PlayerSleepInBedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerWakeUp(Lnet/minecraftforge/event/entity/player/PlayerWakeUpEvent;)V"
+      }
+    ]
+  },
+  "c4/comforts/common/capability/CapabilityWellRested$Provider": {
+    "name": "c4/comforts/common/capability/CapabilityWellRested$Provider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "c4/comforts/common/capability/CapabilityWellRested$WellRested": {
+    "name": "c4/comforts/common/capability/CapabilityWellRested$WellRested",
+    "interfaces": [
+      "c4/comforts/common/capability/CapabilityWellRested$IWellRested"
+    ]
+  },
+  "c4/comforts/common/items/ComfortsItems": {
+    "name": "c4/comforts/common/items/ComfortsItems",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "SLEEPING_BAG",
+        "value": {
+          "value": "comforts:sleeping_bag"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "HAMMOCK",
+        "value": {
+          "value": "comforts:hammock"
+        }
+      }
+    ]
+  },
+  "c4/comforts/integrations/morpheus/MorpheusDayHandler": {
+    "name": "c4/comforts/integrations/morpheus/MorpheusDayHandler",
+    "interfaces": [
+      "net/quetzi/morpheus/api/INewDayHandler"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "c4/comforts/integrations/morpheus/MorpheusDayHandler",
+        "values": {
+          "iface": {
+            "value": "net.quetzi.morpheus.api.INewDayHandler"
+          },
+          "modid": {
+            "value": "morpheus"
+          },
+          "striprefs": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "c4/comforts/integrations/toughasnails/EventHandlerTAN": {
+    "name": "c4/comforts/integrations/toughasnails/EventHandlerTAN",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerWakeUp(Lnet/minecraftforge/event/entity/player/PlayerWakeUpEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "warmBody(Lnet/minecraft/entity/player/EntityPlayer;J)V",
+        "values": {
+          "modid": {
+            "value": "toughasnails"
+          }
+        }
+      }
+    ]
+  },
+  "c4/comforts/proxy/ClientProxy": {
+    "name": "c4/comforts/proxy/ClientProxy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "c4/comforts/proxy/ClientProxy",
+        "value": {
+          "type": "ENUM",
+          "values": [
+            "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "c4/comforts/proxy/CommonProxy": {
+    "name": "c4/comforts/proxy/CommonProxy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "c4/comforts/proxy/CommonProxy"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEntities(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "morpheusInit()V",
+        "values": {
+          "modid": {
+            "value": "morpheus"
+          }
+        }
+      }
+    ]
+  }
+}

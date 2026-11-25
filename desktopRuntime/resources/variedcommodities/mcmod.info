@@ -1,0 +1,16 @@
+[
+{
+  "modid": "variedcommodities",
+  "name": "Varied Commodities",
+  "description": "Varied blocks and items with different functionalities",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Noppes"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

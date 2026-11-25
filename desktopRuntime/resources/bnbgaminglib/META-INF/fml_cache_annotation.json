@@ -1,0 +1,233 @@
+{
+  "com/bloodnbonesgaming/lib/BNBGamingLib": {
+    "name": "com/bloodnbonesgaming/lib/BNBGamingLib",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/bloodnbonesgaming/lib/BNBGamingLib",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "after:bnbgamingcore"
+          },
+          "modid": {
+            "value": "bnbgaminglib"
+          },
+          "name": {
+            "value": "BNBGamingLib"
+          },
+          "version": {
+            "value": "2.17.6"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "libInstance",
+        "value": {
+          "value": "bnbgaminglib"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.bloodnbonesgaming.lib.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.bloodnbonesgaming.lib.proxy.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onPreInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onLoadComplete(Lnet/minecraftforge/fml/common/event/FMLLoadCompleteEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverAboutToStart(Lnet/minecraftforge/fml/common/event/FMLServerAboutToStartEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "com/bloodnbonesgaming/lib/client/chat/ChatListenerCopy": {
+    "name": "com/bloodnbonesgaming/lib/client/chat/ChatListenerCopy",
+    "interfaces": [
+      "net/minecraft/client/gui/chat/IChatListener"
+    ]
+  },
+  "com/bloodnbonesgaming/lib/client/dyngui/DynamicGuiScreen": {
+    "name": "com/bloodnbonesgaming/lib/client/dyngui/DynamicGuiScreen",
+    "interfaces": [
+      "java/lang/Cloneable"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Ljava/beans/ConstructorProperties;",
+        "target": "\u003cinit\u003e(Ljava/util/List;Ljava/util/List;Ljava/util/List;)V",
+        "value": {
+          "values": [
+            "buttons",
+            "textFields",
+            "labels"
+          ]
+        }
+      }
+    ]
+  },
+  "com/bloodnbonesgaming/lib/client/dyngui/GuiSpacer": {
+    "name": "com/bloodnbonesgaming/lib/client/dyngui/GuiSpacer",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Ljava/beans/ConstructorProperties;",
+        "target": "\u003cinit\u003e(II)V",
+        "value": {
+          "values": [
+            "columns",
+            "rows"
+          ]
+        }
+      }
+    ]
+  },
+  "com/bloodnbonesgaming/lib/command/BNBCommand": {
+    "name": "com/bloodnbonesgaming/lib/command/BNBCommand",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "com/bloodnbonesgaming/lib/command/BNBGamingCommand": {
+    "name": "com/bloodnbonesgaming/lib/command/BNBGamingCommand",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "com/bloodnbonesgaming/lib/command/client/CopyToClipboardCommand": {
+    "name": "com/bloodnbonesgaming/lib/command/client/CopyToClipboardCommand",
+    "interfaces": [
+      "net/minecraftforge/client/IClientCommand"
+    ]
+  },
+  "com/bloodnbonesgaming/lib/events/ClientEventHandler": {
+    "name": "com/bloodnbonesgaming/lib/events/ClientEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiOpen(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      }
+    ]
+  },
+  "com/bloodnbonesgaming/lib/events/OnItemRightClickEvent": {
+    "name": "com/bloodnbonesgaming/lib/events/OnItemRightClickEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/bloodnbonesgaming/lib/events/OnItemRightClickEvent"
+      }
+    ]
+  },
+  "com/bloodnbonesgaming/lib/network/BNBSimpleChannelHandler": {
+    "name": "com/bloodnbonesgaming/lib/network/BNBSimpleChannelHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lio/netty/channel/ChannelHandler$Sharable;",
+        "target": "com/bloodnbonesgaming/lib/network/BNBSimpleChannelHandler"
+      }
+    ]
+  },
+  "com/bloodnbonesgaming/lib/network/ConsumableMessage": {
+    "name": "com/bloodnbonesgaming/lib/network/ConsumableMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/bloodnbonesgaming/lib/util/BlockLocation": {
+    "name": "com/bloodnbonesgaming/lib/util/BlockLocation",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Ljava/beans/ConstructorProperties;",
+        "target": "\u003cinit\u003e(Lnet/minecraft/util/math/BlockPos;)V",
+        "value": {
+          "values": [
+            "pos"
+          ]
+        }
+      }
+    ]
+  },
+  "com/bloodnbonesgaming/lib/util/JsonToNBTExtended": {
+    "name": "com/bloodnbonesgaming/lib/util/JsonToNBTExtended",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/annotations/VisibleForTesting;",
+        "target": "readSingleStruct()Lnet/minecraft/nbt/NBTTagCompound;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/annotations/VisibleForTesting;",
+        "target": "\u003cinit\u003e(Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "com/bloodnbonesgaming/lib/util/NbtUtilExtended": {
+    "name": "com/bloodnbonesgaming/lib/util/NbtUtilExtended",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/annotations/VisibleForTesting;",
+        "target": "areNBTEquals(Lnet/minecraft/nbt/NBTBase;Lnet/minecraft/nbt/NBTBase;Z)Z"
+      }
+    ]
+  },
+  "com/bloodnbonesgaming/lib/util/script/ClientOnly": {
+    "name": "com/bloodnbonesgaming/lib/util/script/ClientOnly",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "com/bloodnbonesgaming/lib/util/script/ScriptArgs": {
+    "name": "com/bloodnbonesgaming/lib/util/script/ScriptArgs",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "com/bloodnbonesgaming/lib/util/script/ScriptClassDocumentation": {
+    "name": "com/bloodnbonesgaming/lib/util/script/ScriptClassDocumentation",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "com/bloodnbonesgaming/lib/util/script/ScriptMethodDocumentation": {
+    "name": "com/bloodnbonesgaming/lib/util/script/ScriptMethodDocumentation",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  }
+}

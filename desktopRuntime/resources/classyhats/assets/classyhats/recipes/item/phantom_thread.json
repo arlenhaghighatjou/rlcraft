@@ -1,0 +1,10 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "result": { "item": "classyhats:phantom_thread" },
+    "pattern": [ "LS ", "SWS", " SL" ],
+    "key": {
+        "L": { "item": "#lapis" },
+        "S": { "item": "#string" },
+        "W": { "item": "#stick" }
+    }
+}

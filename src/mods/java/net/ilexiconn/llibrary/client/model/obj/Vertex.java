@@ -1,0 +1,42 @@
+package net.ilexiconn.llibrary.client.model.obj;
+
+import java.util.Locale;
+import org.lwjgl.util.vector.Vector3f;
+
+public class Vertex {
+   private Vector3f position;
+   private int index;
+
+   public Vertex(float x, float y, float z) {
+      this(new Vector3f(x, y, z));
+   }
+
+   public Vertex(Vector3f position) {
+      this.position = position;
+   }
+
+   public void register(OBJModel model) {
+      this.index = model.getVertexIndex();
+   }
+
+   public Vector3f getPosition() {
+      return this.position;
+   }
+
+   public int getIndex() {
+      return this.index;
+   }
+
+   public String toString() {
+      return "v " + String.format(Locale.US, "%.6f", this.position.x) + " " + String.format(Locale.US, "%.6f", this.position.y) + " " + String.format(Locale.US, "%.6f", this.position.z);
+   }
+
+   public boolean equals(Object obj) {
+      if (!(obj instanceof Vertex)) {
+         return false;
+      } else {
+         Vertex vertex = (Vertex)obj;
+         return vertex.position.x == this.position.x && vertex.position.y == this.position.y && vertex.position.z == this.position.z;
+      }
+   }
+}

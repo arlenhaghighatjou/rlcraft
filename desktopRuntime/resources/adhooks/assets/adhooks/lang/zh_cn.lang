@@ -1,0 +1,28 @@
+itemGroup.adhooks=先进钩爪发射器
+
+item.spear_hook.name=锚钩
+item.pudge_hook.name=屠夫钩爪
+item.web_hook.name=蛛网钩
+
+item.prototype_launcher.name=发射器原型
+item.spear_launcher.name=锚钩发射器
+item.pudge_launcher.name=屠夫发射器
+item.web_launcher.name=蛛网发射器
+
+entity.adhooks.hookshot.name=钩爪
+
+key.unhook=松开钩爪
+
+tooltip.launcher.hook_strength=钩爪力度
+tooltip.launcher.rope_elasticity=绳索弹性
+tooltip.launcher.rope_max_length=绳索最大长度
+tooltip.launcher.reeling_speed=回卷速度
+tooltip.launcher.boostup_strength=加速跳力度
+tooltip.launcher.launch=%1$s发射: %2$s
+tooltip.launcher.reel_unhook=%1$s回卷 / 松开: 按 %2$s 或 %3$s
+tooltip.launcher.pull=%1$s拉绳: %2$s (按下)
+tooltip.launcher.loosen=%1$s松绳: %2$s (按下)
+tooltip.launcher.boost_up=%1$s加速跳: 在拉绳时 按 %2$s 或 %3$s
+tooltip.launcher.release=%1$s松开(多人）: 按住%3$s 按下 %2$s 
+tooltip.launcher.more_info=按下 %1$s 获取更多信息
+tooltip.launcher.controls=按下 %1$s 获取控制方法

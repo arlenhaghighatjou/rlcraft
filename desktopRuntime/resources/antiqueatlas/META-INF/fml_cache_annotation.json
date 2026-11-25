@@ -1,0 +1,1340 @@
+{
+  "hunternif/mc/atlas/AntiqueAtlasMod": {
+    "name": "hunternif/mc/atlas/AntiqueAtlasMod",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "hunternif/mc/atlas/AntiqueAtlasMod",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "after:forge@[14.23.2.2611,);"
+          },
+          "modid": {
+            "value": "antiqueatlas"
+          },
+          "name": {
+            "value": "Antique Atlas"
+          },
+          "version": {
+            "value": "4.6.3"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "antiqueatlas"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "hunternif.mc.atlas.ClientProxy"
+          },
+          "serverSide": {
+            "value": "hunternif.mc.atlas.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/ClientProxy": {
+    "name": "hunternif/mc/atlas/ClientProxy",
+    "interfaces": [
+      "net/minecraft/client/resources/IResourceManagerReloadListener"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/CommonProxy": {
+    "name": "hunternif/mc/atlas/CommonProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldSave(Lnet/minecraftforge/event/world/WorldEvent$Save;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/RegistrarAntiqueAtlas": {
+    "name": "hunternif/mc/atlas/RegistrarAntiqueAtlas",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "hunternif/mc/atlas/RegistrarAntiqueAtlas",
+        "values": {
+          "modid": {
+            "value": "antiqueatlas"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "hunternif/mc/atlas/RegistrarAntiqueAtlas",
+        "value": {
+          "value": "antiqueatlas"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "EMPTY_ATLAS",
+        "value": {
+          "value": "empty_antique_atlas"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ATLAS",
+        "value": {
+          "value": "antique_atlas"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRecipes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "handleMissingMapping(Lnet/minecraftforge/event/RegistryEvent$MissingMappings;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/SettingsConfig": {
+    "name": "hunternif/mc/atlas/SettingsConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "hunternif/mc/atlas/SettingsConfig",
+        "values": {
+          "category": {
+            "value": ""
+          },
+          "modid": {
+            "value": "antiqueatlas"
+          },
+          "name": {
+            "value": "antiqueatlas/antiqueatlas"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "hunternif/mc/atlas/SettingsConfig",
+        "values": {
+          "modid": {
+            "value": "antiqueatlas"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "gameplay",
+        "value": {
+          "values": [
+            "These settings will affect how the mod behaves in certain situations and the players\u0027 overall gameplay, but generally won\u0027t affect performance."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "userInterface",
+        "value": {
+          "values": [
+            "These setting will affect the look and feel of the Atlas\u0027 interface."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "performance",
+        "value": {
+          "values": [
+            "These settings affect the algorithms for scanning the world, drawing the map etc. Changing them may improve the game\u0027s overall stability and performance at the cost of Atlas\u0027 functionality."
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/SettingsConfig$Gameplay": {
+    "name": "hunternif/mc/atlas/SettingsConfig$Gameplay",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "doSaveBrowsingPos",
+        "value": {
+          "values": [
+            "Whether to remember last open browsing position and zoom level for each dimension in every atlas.",
+            "If disabled, all dimensions and all atlases will be \"synchronized\" at the same coordinates and zoom level, and map will \"follow\" player by default."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "autoDeathMarker",
+        "value": {
+          "values": [
+            "Whether to add local marker for the spot where the player died."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "autoVillageMarkers",
+        "value": {
+          "values": [
+            "Whether to add local markers for NPC villages."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "autoNetherPortalMarkers",
+        "value": {
+          "values": [
+            "Whether to add local markers for Nether Portals."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "itemNeeded",
+        "value": {
+          "values": [
+            "Player will need to craft atlas item to use atlas."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "itemNeeded"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/SettingsConfig$Interface": {
+    "name": "hunternif/mc/atlas/SettingsConfig$Interface",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "defaultScale",
+        "value": {
+          "values": [
+            "Default zoom level. The number corresponds to the size of a block on the map relative to the size of a GUI pixel. Preferrably a power of 2."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "defaultScale",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "16.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.001953125"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "minScale",
+        "value": {
+          "values": [
+            "Minimum zoom level. The number corresponds to the size of a block on the map relative to the size of a GUI pixel. Preferrably a power of 2. Smaller values may decrease performance!"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "minScale",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "16.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.001953125"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "maxScale",
+        "value": {
+          "values": [
+            "Maximum zoom level. The number corresponds to the size of a block on the map relative to the size of a GUI pixel. Preferrably a power of 2."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "maxScale",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "16.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.001953125"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "doReverseWheelZoom",
+        "value": {
+          "values": [
+            "If false (by default), then mousewheel up is zoom in, mousewheel down is zoom out.",
+            "If true, then the direction is reversed."
+          ]
+        }
+      }
+    ]
+  },
+  "hunternif/mc/atlas/SettingsConfig$Performance": {
+    "name": "hunternif/mc/atlas/SettingsConfig$Performance",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "scanRadius",
+        "value": {
+          "values": [
+            "The radius of the area around the player which is scanned by the Atlas at regular intervals.",
+            "Note that this will not force faraway chunks to load, unless force_chunk_loading is enabled.",
+            "Lower value gives better performance."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "forceChunkLoading",
+        "value": {
+          "values": [
+            "Force loading of chunks within scan radius even if it exceeds regular chunk loading distance.",
+            "Enabling this may SEVERELY decrease performance!"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "newScanInterval",
+        "value": {
+          "values": [
+            "Time in seconds between two scans of the area.",
+            "Higher value gives better performance."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "doRescan",
+        "value": {
+          "values": [
+            "Whether to rescan chunks in the area that have been previously mapped. This is useful in case of changes in coastline (including small ponds of water and lava), or if land disappears completely (for sky worlds).",
+            "Disable for better performance."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "rescanRate",
+        "value": {
+          "values": [
+            "The number of area scans between full rescans.",
+            "Higher value gives better performance."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "rescanRate",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "1000"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "markerLimit",
+        "value": {
+          "values": [
+            "The maximum number of markers a particular atlas can hold."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "markerLimit",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "2147483647"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "doScanPonds",
+        "value": {
+          "values": [
+            "Whether to perform additional scanning to locate small ponds of water or lava.",
+            "Disable for better performance."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "doScanRavines",
+        "value": {
+          "values": [
+            "Whether to perform additional scanning to locate ravines.",
+            "Disable for better performance."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "debugRender",
+        "value": {
+          "values": [
+            "If true, map render time will be output."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "exportSizeLimit",
+        "value": {
+          "values": [
+            "Maximum size of image for export. Larger atlases will not be exported to prevent crashes."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "exportSizeLimit",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "32"
+          }
+        }
+      }
+    ]
+  },
+  "hunternif/mc/atlas/api/AtlasAPI": {
+    "name": "hunternif/mc/atlas/api/AtlasAPI",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "ATLAS_ITEM",
+        "value": {
+          "value": "antiqueatlas:antique_atlas"
+        }
+      }
+    ]
+  },
+  "hunternif/mc/atlas/api/impl/MarkerApiImpl": {
+    "name": "hunternif/mc/atlas/api/impl/MarkerApiImpl",
+    "interfaces": [
+      "hunternif/mc/atlas/api/MarkerAPI"
+    ]
+  },
+  "hunternif/mc/atlas/api/impl/TileApiImpl": {
+    "name": "hunternif/mc/atlas/api/impl/TileApiImpl",
+    "interfaces": [
+      "hunternif/mc/atlas/api/TileAPI"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTileIdRegistered(Lhunternif/mc/atlas/ext/TileIdRegisteredEvent;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/api/package-info": {
+    "name": "hunternif/mc/atlas/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "hunternif/mc/atlas/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "5.1"
+          },
+          "owner": {
+            "value": "antiqueatlas"
+          },
+          "provides": {
+            "value": "antiqueatlasapi"
+          }
+        }
+      }
+    ]
+  },
+  "hunternif/mc/atlas/client/KeyHandler": {
+    "name": "hunternif/mc/atlas/client/KeyHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyEvent(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V",
+        "values": {
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "hunternif/mc/atlas/client/SubTileQuartet": {
+    "name": "hunternif/mc/atlas/client/SubTileQuartet",
+    "interfaces": [
+      "java/lang/Iterable"
+    ]
+  },
+  "hunternif/mc/atlas/client/TextureSet": {
+    "name": "hunternif/mc/atlas/client/TextureSet",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "hunternif/mc/atlas/client/TileRenderIterator": {
+    "name": "hunternif/mc/atlas/client/TileRenderIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "hunternif/mc/atlas/client/gui/ExportProgressOverlay": {
+    "name": "hunternif/mc/atlas/client/gui/ExportProgressOverlay",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "draw(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/client/gui/GuiAtlas$1": {
+    "name": "hunternif/mc/atlas/client/gui/GuiAtlas$1",
+    "interfaces": [
+      "hunternif/mc/atlas/client/gui/core/GuiStates$IState"
+    ]
+  },
+  "hunternif/mc/atlas/client/gui/GuiAtlas$2": {
+    "name": "hunternif/mc/atlas/client/gui/GuiAtlas$2",
+    "interfaces": [
+      "hunternif/mc/atlas/client/gui/core/GuiStates$IState"
+    ]
+  },
+  "hunternif/mc/atlas/client/gui/GuiAtlas$3": {
+    "name": "hunternif/mc/atlas/client/gui/GuiAtlas$3",
+    "interfaces": [
+      "hunternif/mc/atlas/client/gui/core/GuiStates$IState"
+    ]
+  },
+  "hunternif/mc/atlas/client/gui/GuiAtlas$4": {
+    "name": "hunternif/mc/atlas/client/gui/GuiAtlas$4",
+    "interfaces": [
+      "hunternif/mc/atlas/client/gui/core/GuiStates$IState"
+    ]
+  },
+  "hunternif/mc/atlas/client/gui/GuiBlinkingMarker": {
+    "name": "hunternif/mc/atlas/client/gui/GuiBlinkingMarker",
+    "interfaces": [
+      "hunternif/mc/atlas/client/gui/GuiMarkerFinalizer$IMarkerTypeSelectListener"
+    ]
+  },
+  "hunternif/mc/atlas/client/gui/core/GuiStates$SimpleState": {
+    "name": "hunternif/mc/atlas/client/gui/core/GuiStates$SimpleState",
+    "interfaces": [
+      "hunternif/mc/atlas/client/gui/core/GuiStates$IState"
+    ]
+  },
+  "hunternif/mc/atlas/client/gui/core/ToggleGroup": {
+    "name": "hunternif/mc/atlas/client/gui/core/ToggleGroup",
+    "interfaces": [
+      "java/lang/Iterable"
+    ]
+  },
+  "hunternif/mc/atlas/client/gui/core/ToggleGroup$ClickListener": {
+    "name": "hunternif/mc/atlas/client/gui/core/ToggleGroup$ClickListener",
+    "interfaces": [
+      "hunternif/mc/atlas/client/gui/core/IButtonListener"
+    ]
+  },
+  "hunternif/mc/atlas/core/AtlasDataHandler": {
+    "name": "hunternif/mc/atlas/core/AtlasDataHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientConnectedToServer(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/core/BiomeDetectorBase": {
+    "name": "hunternif/mc/atlas/core/BiomeDetectorBase",
+    "interfaces": [
+      "hunternif/mc/atlas/core/IBiomeDetector"
+    ]
+  },
+  "hunternif/mc/atlas/core/BiomeDetectorEnd": {
+    "name": "hunternif/mc/atlas/core/BiomeDetectorEnd",
+    "interfaces": [
+      "hunternif/mc/atlas/core/IBiomeDetector"
+    ]
+  },
+  "hunternif/mc/atlas/core/BiomeDetectorNether": {
+    "name": "hunternif/mc/atlas/core/BiomeDetectorNether",
+    "interfaces": [
+      "hunternif/mc/atlas/core/IBiomeDetector"
+    ]
+  },
+  "hunternif/mc/atlas/core/DimensionData": {
+    "name": "hunternif/mc/atlas/core/DimensionData",
+    "interfaces": [
+      "hunternif/mc/atlas/core/ITileStorage"
+    ]
+  },
+  "hunternif/mc/atlas/core/PlayerEventHandler": {
+    "name": "hunternif/mc/atlas/core/PlayerEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/core/TileGroup": {
+    "name": "hunternif/mc/atlas/core/TileGroup",
+    "interfaces": [
+      "hunternif/mc/atlas/core/ITileStorage"
+    ]
+  },
+  "hunternif/mc/atlas/event/MarkerClickedEvent": {
+    "name": "hunternif/mc/atlas/event/MarkerClickedEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "hunternif/mc/atlas/event/MarkerClickedEvent"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/ext/ExtBiomeDataHandler": {
+    "name": "hunternif/mc/atlas/ext/ExtBiomeDataHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/ext/watcher/DeathWatcher": {
+    "name": "hunternif/mc/atlas/ext/watcher/DeathWatcher",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/ext/watcher/StructureWatcher": {
+    "name": "hunternif/mc/atlas/ext/watcher/StructureWatcher",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPopulateChunk(Lnet/minecraftforge/event/terraingen/PopulateChunkEvent$Post;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/ext/watcher/impl/StructureWatcherFortress": {
+    "name": "hunternif/mc/atlas/ext/watcher/impl/StructureWatcherFortress",
+    "interfaces": [
+      "hunternif/mc/atlas/ext/watcher/IStructureWatcher"
+    ]
+  },
+  "hunternif/mc/atlas/ext/watcher/impl/StructureWatcherGeneric": {
+    "name": "hunternif/mc/atlas/ext/watcher/impl/StructureWatcherGeneric",
+    "interfaces": [
+      "hunternif/mc/atlas/ext/watcher/IStructureWatcher"
+    ]
+  },
+  "hunternif/mc/atlas/ext/watcher/impl/StructureWatcherVillage": {
+    "name": "hunternif/mc/atlas/ext/watcher/impl/StructureWatcherVillage",
+    "interfaces": [
+      "hunternif/mc/atlas/ext/watcher/IStructureWatcher"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onOptionalMarker(Lhunternif/mc/atlas/event/OptionalMarkerEvent;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/item/RecipeAtlasCombining": {
+    "name": "hunternif/mc/atlas/item/RecipeAtlasCombining",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCrafted(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$ItemCraftedEvent;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/item/RecipeBase": {
+    "name": "hunternif/mc/atlas/item/RecipeBase",
+    "interfaces": [
+      "net/minecraft/item/crafting/IRecipe"
+    ]
+  },
+  "hunternif/mc/atlas/marker/GlobalMarkersDataHandler": {
+    "name": "hunternif/mc/atlas/marker/GlobalMarkersDataHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientConnectedToServer(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/marker/MarkersDataHandler": {
+    "name": "hunternif/mc/atlas/marker/MarkersDataHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientConnectedToServer(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/marker/NetherPortalWatcher": {
+    "name": "hunternif/mc/atlas/marker/NetherPortalWatcher",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onOptionalMarker(Lhunternif/mc/atlas/event/OptionalMarkerEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldUnload(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V"
+      }
+    ]
+  },
+  "hunternif/mc/atlas/network/AbstractMessage": {
+    "name": "hunternif/mc/atlas/network/AbstractMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "hunternif/mc/atlas/network/client/IntDimensionUpdatePacket": {
+    "name": "hunternif/mc/atlas/network/client/IntDimensionUpdatePacket",
+    "interfaces": [
+      "hunternif/mc/atlas/network/client/TilesPacket"
+    ]
+  },
+  "hunternif/mc/atlas/network/client/IntTilesPacket": {
+    "name": "hunternif/mc/atlas/network/client/IntTilesPacket",
+    "interfaces": [
+      "hunternif/mc/atlas/network/client/TilesPacket"
+    ]
+  },
+  "hunternif/mc/atlas/network/client/ShortDimensionUpdatePacket": {
+    "name": "hunternif/mc/atlas/network/client/ShortDimensionUpdatePacket",
+    "interfaces": [
+      "hunternif/mc/atlas/network/client/TilesPacket"
+    ]
+  },
+  "hunternif/mc/atlas/network/client/ShortTilesPacket": {
+    "name": "hunternif/mc/atlas/network/client/ShortTilesPacket",
+    "interfaces": [
+      "hunternif/mc/atlas/network/client/TilesPacket"
+    ]
+  },
+  "hunternif/mc/atlas/network/client/TilesPacket": {
+    "name": "hunternif/mc/atlas/network/client/TilesPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "hunternif/mc/atlas/registry/IRegistryEntry$Impl": {
+    "name": "hunternif/mc/atlas/registry/IRegistryEntry$Impl",
+    "interfaces": [
+      "hunternif/mc/atlas/registry/IRegistryEntry"
+    ]
+  },
+  "hunternif/mc/atlas/registry/MarkerRegistryImpl": {
+    "name": "hunternif/mc/atlas/registry/MarkerRegistryImpl",
+    "interfaces": [
+      "net/minecraft/util/registry/IRegistry"
+    ]
+  },
+  "hunternif/mc/atlas/util/AbstractJSONConfig": {
+    "name": "hunternif/mc/atlas/util/AbstractJSONConfig",
+    "interfaces": [
+      "hunternif/mc/atlas/util/Config"
+    ]
+  },
+  "hunternif/mc/atlas/util/ArrayIterator": {
+    "name": "hunternif/mc/atlas/util/ArrayIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "hunternif/mc/atlas/util/DummyWorldAccess": {
+    "name": "hunternif/mc/atlas/util/DummyWorldAccess",
+    "interfaces": [
+      "net/minecraft/world/IWorldEventListener"
+    ]
+  },
+  "hunternif/mc/atlas/util/ListMapValueIterator": {
+    "name": "hunternif/mc/atlas/util/ListMapValueIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "hunternif/mc/atlas/util/RenderedImageScanned": {
+    "name": "hunternif/mc/atlas/util/RenderedImageScanned",
+    "interfaces": [
+      "java/awt/image/RenderedImage"
+    ]
+  },
+  "kenkron/antiqueatlasoverlay/AAOConfig": {
+    "name": "kenkron/antiqueatlasoverlay/AAOConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "kenkron/antiqueatlasoverlay/AAOConfig",
+        "values": {
+          "category": {
+            "value": ""
+          },
+          "modid": {
+            "value": "antiqueatlasoverlay"
+          },
+          "name": {
+            "value": "antiqueatlas/atlas_overlay"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "kenkron/antiqueatlasoverlay/AAOConfig",
+        "values": {
+          "modid": {
+            "value": "antiqueatlasoverlay"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "position",
+        "value": {
+          "values": [
+            "These settings change the location and size."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "appearance",
+        "value": {
+          "values": [
+            "These settings change what the map shows, or how it is shown."
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "kenkron/antiqueatlasoverlay/AAOConfig$Appearance": {
+    "name": "kenkron/antiqueatlasoverlay/AAOConfig$Appearance",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "tileSize",
+        "value": {
+          "values": [
+            "The size (in GUI pixels) of a map\u0027s tile.",
+            "Note that this will change with Minecraft\u0027s GUI scale configuration.",
+            "When using a small gui scale, the map may look better with a TILE_SIZE of 16 or more."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "tileSize",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "markerSize",
+        "value": {
+          "values": [
+            "The size (in GUI pixels) of a marker on the map.",
+            "Note that this will change with Minecraft\u0027s GUI scale configuration."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "markerSize",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "playerIconWidth",
+        "value": {
+          "values": [
+            "The width (in GUI pixels) of the player\u0027s icon."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "playerIconWidth",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "playerIconHeight",
+        "value": {
+          "values": [
+            "The height (in GUI pixels) of the player\u0027s icon."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "playerIconHeight",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "borderX",
+        "value": {
+          "values": [
+            "The width of the map border on the left and right sides of the minimap tiles.",
+            "Represented as a fraction of the image width.",
+            "Below a certain threshold, this border will be overtaken by the map border graphic."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "borderX",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "0.5"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "borderY",
+        "value": {
+          "values": [
+            "The width of the map border on the top and bottom sides of the minimap tiles.",
+            "Represented as a fraction of the image width.",
+            "Below a certain threshold, this border will be overtaken by the map border graphic.\n"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "borderY",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "0.5"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "requiresHold",
+        "value": {
+          "values": [
+            "If true, the minimap will show the map of an atlas only while it is held.",
+            "If false, the minimap will show the map of the first atlas in the hotbar."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enabled",
+        "value": {
+          "values": [
+            "Set true to enable minimap"
+          ]
+        }
+      }
+    ]
+  },
+  "kenkron/antiqueatlasoverlay/AAOConfig$Position": {
+    "name": "kenkron/antiqueatlasoverlay/AAOConfig$Position",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "alignRight",
+        "value": {
+          "values": [
+            "If true, the map position\u0027s x axis will align 0 to the right",
+            "of the screen, increasing towards the left."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "alignBottom",
+        "value": {
+          "values": [
+            "If true, the map position\u0027s y axis will align 0 to the bottom",
+            "of the screen, increasing towards the top."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "xPosition",
+        "value": {
+          "values": [
+            "Map\u0027s minimum position along the x axis in GUI pixels.",
+            "Note that this will change with Minecraft\u0027s GUI scale configuration."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "xPosition"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "yPosition",
+        "value": {
+          "values": [
+            "Map\u0027s minimum position along the y axis in GUI pixels.",
+            "Note that this will change with Minecraft\u0027s GUI scale configuration."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "yPosition"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "width",
+        "value": {
+          "values": [
+            "Map\u0027s width in GUI pixels.",
+            "Note that this will change with Minecraft\u0027s GUI scale configuration."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "width",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "height",
+        "value": {
+          "values": [
+            "Map\u0027s height in GUI pixels.",
+            "Note that this will change with Minecraft\u0027s GUI scale configuration."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "height",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      }
+    ]
+  },
+  "kenkron/antiqueatlasoverlay/AAORenderEventReceiver": {
+    "name": "kenkron/antiqueatlasoverlay/AAORenderEventReceiver",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "kenkron/antiqueatlasoverlay/AAORenderEventReceiver",
+        "values": {
+          "modid": {
+            "value": "antiqueatlasoverlay"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "eventHandler(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/NORMAL"
+          }
+        }
+      }
+    ]
+  },
+  "kenkron/antiqueatlasoverlay/AntiqueAtlasOverlayMod": {
+    "name": "kenkron/antiqueatlasoverlay/AntiqueAtlasOverlayMod",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "kenkron/antiqueatlasoverlay/AntiqueAtlasOverlayMod",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "dependencies": {
+            "value": "required-after:antiqueatlas;after:forge@[13.20.0.2262,)"
+          },
+          "modid": {
+            "value": "antiqueatlasoverlay"
+          },
+          "name": {
+            "value": "antiqueatlasoverlay"
+          },
+          "version": {
+            "value": "1.2"
+          }
+        }
+      }
+    ]
+  }
+}

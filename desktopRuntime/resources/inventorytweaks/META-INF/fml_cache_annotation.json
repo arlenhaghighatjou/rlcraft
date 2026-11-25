@@ -1,0 +1,1137 @@
+{
+  "invtweaks/InvTweaks": {
+    "name": "invtweaks/InvTweaks",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "hotbarClone"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "queuedMessages"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "cfgManager"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "storedStack"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "storedStackId"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getConfigManager()Linvtweaks/InvTweaksConfigManager;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getContainerManager(Lnet/minecraft/inventory/Container;)Linvtweaks/container/IContainerManager;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getCurrentContainerManager()Linvtweaks/container/IContainerManager;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "buildLogString(Ljava/util/logging/Level;Ljava/lang/String;Ljava/lang/Exception;)Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "buildLogString(Ljava/util/logging/Level;Ljava/lang/String;)Ljava/lang/String;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksConfig": {
+    "name": "invtweaks/InvTweaksConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "currentRulesetName"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getProperties(Ljava/lang/String;)Ljava/util/Map;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getProperty(Ljava/lang/String;)Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getCurrentRulesetName()Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "switchConfig(I)Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "switchConfig()Ljava/lang/String;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksConfigInventoryRuleset": {
+    "name": "invtweaks/InvTweaksConfigInventoryRuleset",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "registerLine(Ljava/lang/String;)Ljava/lang/String;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksConfigManager": {
+    "name": "invtweaks/InvTweaksConfigManager",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "config"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "autoRefillHandler"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "shortcutsHandler"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getConfig()Linvtweaks/InvTweaksConfig;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getAutoRefillHandler()Linvtweaks/InvTweaksHandlerAutoRefill;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getShortcutsHandler()Linvtweaks/InvTweaksHandlerShortcuts;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksConfigProperties": {
+    "name": "invtweaks/InvTweaksConfigProperties",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "keys()Ljava/util/Enumeration;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksConfigSortingRule": {
+    "name": "invtweaks/InvTweaksConfigSortingRule",
+    "interfaces": [
+      "java/lang/Comparable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "preferredPositions"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getRulePreferredPositions(Ljava/lang/String;II)[I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getRuleType(Ljava/lang/String;I)Linvtweaks/InvTweaksConfigSortingRuleType;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getPreferredSlots()[I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getRulePreferredPositions(Ljava/lang/String;)[I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "toString()Ljava/lang/String;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksGuiIconButton": {
+    "name": "invtweaks/InvTweaksGuiIconButton",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "resourceButtonCustom"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "resourceButtonDefault"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksGuiSettingsAbstract": {
+    "name": "invtweaks/InvTweaksGuiSettingsAbstract",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "computeBooleanButtonLabel(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksGuiTooltipButton": {
+    "name": "invtweaks/InvTweaksGuiTooltipButton",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "tooltip"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "tooltipLines"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getTooltip()Ljava/lang/String;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksHandlerAutoRefill": {
+    "name": "invtweaks/InvTweaksHandlerAutoRefill",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "config"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksHandlerAutoRefill$1": {
+    "name": "invtweaks/InvTweaksHandlerAutoRefill$1",
+    "interfaces": [
+      "java/lang/Runnable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "expectedItemId"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "init(IIZ)Ljava/lang/Runnable;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksHandlerShortcuts": {
+    "name": "invtweaks/InvTweaksHandlerShortcuts",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "computeCurrentShortcut()Linvtweaks/ShortcutSpecification;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "isShortcutDown(Linvtweaks/InvTweaksShortcutType;)Linvtweaks/InvTweaksShortcutMapping;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksHandlerShortcuts$ShortcutConfig": {
+    "name": "invtweaks/InvTweaksHandlerShortcuts$ShortcutConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "action"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "scope"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "fromSection"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "fromStack"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "toSection"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksHandlerSorting": {
+    "name": "invtweaks/InvTweaksHandlerSorting",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "DEFAULT_LOCK_PRIORITIES"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "DEFAULT_FROZEN_SLOTS"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "lockPriorities"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "frozenSlots"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "computeContainerStats()Ljava/util/Map;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksItemTree": {
+    "name": "invtweaks/InvTweaksItemTree",
+    "interfaces": [
+      "invtweaks/api/IItemTree"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "defaultItems"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "categories"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "itemsById"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "itemsByName"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "oresRegistered"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "allGameItems"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getAllCategories()Ljava/util/Collection;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getItems(Ljava/lang/String;ILnet/minecraft/nbt/NBTTagCompound;)Ljava/util/List;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getItems(Ljava/lang/String;I)Ljava/util/List;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getRandomItem(Ljava/util/Random;)Linvtweaks/api/IItemTreeItem;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "addCategory(Ljava/lang/String;Ljava/lang/String;)Linvtweaks/api/IItemTreeCategory;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "addItem(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II)Linvtweaks/api/IItemTreeItem;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "addItem(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILnet/minecraft/nbt/NBTTagCompound;I)Linvtweaks/api/IItemTreeItem;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "oreRegistered(Lnet/minecraftforge/oredict/OreDictionary$OreRegisterEvent;)V"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksItemTreeCategory": {
+    "name": "invtweaks/InvTweaksItemTreeCategory",
+    "interfaces": [
+      "invtweaks/api/IItemTreeCategory"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getSubCategories()Ljava/util/Collection;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getItems()Ljava/util/Collection;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "toString()Ljava/lang/String;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksItemTreeItem": {
+    "name": "invtweaks/InvTweaksItemTreeItem",
+    "interfaces": [
+      "invtweaks/api/IItemTreeItem"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "id"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getId()Ljava/lang/String;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksItemTreeLoader": {
+    "name": "invtweaks/InvTweaksItemTreeLoader",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "treeVersion"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksItemTreeLoader$VersionLoader": {
+    "name": "invtweaks/InvTweaksItemTreeLoader$VersionLoader",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "version"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksObfuscation": {
+    "name": "invtweaks/InvTweaksObfuscation",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getNamespacedID(Ljava/lang/String;)Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getSlotStack(Lnet/minecraft/inventory/Container;I)Lnet/minecraft/item/ItemStack;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getSlotAtMousePosition(Lnet/minecraft/client/gui/inventory/GuiContainer;)Lnet/minecraft/inventory/Slot;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Contract;",
+        "target": "getSpecialChestRowSize(Lnet/minecraft/inventory/Container;)I",
+        "value": {
+          "value": "!null-\u003e_"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Contract;",
+        "target": "isValidChest(Lnet/minecraft/inventory/Container;)Z",
+        "value": {
+          "value": "!null-\u003e_"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Contract;",
+        "target": "isLargeChest(Lnet/minecraft/inventory/Container;)Z",
+        "value": {
+          "value": "!null-\u003e_"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Contract;",
+        "target": "isValidInventory(Lnet/minecraft/inventory/Container;)Z",
+        "value": {
+          "value": "!null-\u003e_"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Contract;",
+        "target": "showButtons(Lnet/minecraft/inventory/Container;)Z",
+        "value": {
+          "value": "!null-\u003e_"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Contract;",
+        "target": "getContainerSlotMap(Lnet/minecraft/inventory/Container;)Ljava/util/Map;",
+        "value": {
+          "value": "!null-\u003e_"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getCurrentScreen()Lnet/minecraft/client/gui/GuiScreen;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getHeldStack()Lnet/minecraft/item/ItemStack;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getFocusedStack()Lnet/minecraft/item/ItemStack;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getOffhandStack()Lnet/minecraft/item/ItemStack;"
+      }
+    ]
+  },
+  "invtweaks/InvTweaksShortcutMapping": {
+    "name": "invtweaks/InvTweaksShortcutMapping",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "keysToHold"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getKeyCodes()Ljava/util/List;"
+      }
+    ]
+  },
+  "invtweaks/api/IItemTreeItem": {
+    "name": "invtweaks/api/IItemTreeItem",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "invtweaks/api/IItemTreeListener": {
+    "name": "invtweaks/api/IItemTreeListener",
+    "interfaces": [
+      "java/util/EventListener"
+    ]
+  },
+  "invtweaks/api/container/ChestContainer": {
+    "name": "invtweaks/api/container/ChestContainer",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "invtweaks/api/container/ChestContainer$IsLargeCallback": {
+    "name": "invtweaks/api/container/ChestContainer$IsLargeCallback",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "invtweaks/api/container/ChestContainer$RowSizeCallback": {
+    "name": "invtweaks/api/container/ChestContainer$RowSizeCallback",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "invtweaks/api/container/ContainerSectionCallback": {
+    "name": "invtweaks/api/container/ContainerSectionCallback",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "invtweaks/api/container/IgnoreContainer": {
+    "name": "invtweaks/api/container/IgnoreContainer",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "invtweaks/api/container/InventoryContainer": {
+    "name": "invtweaks/api/container/InventoryContainer",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "invtweaks/container/ContainerSectionManager": {
+    "name": "invtweaks/container/ContainerSectionManager",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getSlot(I)Lnet/minecraft/inventory/Slot;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getItemStack(I)Lnet/minecraft/item/ItemStack;"
+      }
+    ]
+  },
+  "invtweaks/container/DirectContainerManager": {
+    "name": "invtweaks/container/DirectContainerManager",
+    "interfaces": [
+      "invtweaks/container/IContainerManager"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "container"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "slotRefs"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getSlot(Linvtweaks/api/container/ContainerSection;I)Lnet/minecraft/inventory/Slot;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getSlotSection(I)Linvtweaks/api/container/ContainerSection;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getItemStack(Linvtweaks/api/container/ContainerSection;I)Lnet/minecraft/item/ItemStack;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getContainer()Lnet/minecraft/inventory/Container;"
+      }
+    ]
+  },
+  "invtweaks/container/IContainerManager": {
+    "name": "invtweaks/container/IContainerManager",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getSlot(Linvtweaks/api/container/ContainerSection;I)Lnet/minecraft/inventory/Slot;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getSlotSection(I)Linvtweaks/api/container/ContainerSection;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getItemStack(Linvtweaks/api/container/ContainerSection;I)Lnet/minecraft/item/ItemStack;"
+      }
+    ]
+  },
+  "invtweaks/container/MirroredContainerManager": {
+    "name": "invtweaks/container/MirroredContainerManager",
+    "interfaces": [
+      "invtweaks/container/IContainerManager"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "heldItem"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "droppedItems"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "slotRefs"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getSlot(Linvtweaks/api/container/ContainerSection;I)Lnet/minecraft/inventory/Slot;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getSlotSection(I)Linvtweaks/api/container/ContainerSection;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getItemStack(Linvtweaks/api/container/ContainerSection;I)Lnet/minecraft/item/ItemStack;"
+      }
+    ]
+  },
+  "invtweaks/container/VanillaSlotMaps": {
+    "name": "invtweaks/container/VanillaSlotMaps",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "containerPlayerSlots(Lnet/minecraft/inventory/Container;)Ljava/util/Map;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "containerCreativeSlots(Lnet/minecraft/client/gui/inventory/GuiContainerCreative$ContainerCreative;)Ljava/util/Map;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "containerChestDispenserSlots(Lnet/minecraft/inventory/Container;)Ljava/util/Map;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "containerHorseSlots(Lnet/minecraft/inventory/ContainerHorseInventory;)Ljava/util/Map;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "containerFurnaceSlots(Lnet/minecraft/inventory/Container;)Ljava/util/Map;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "containerWorkbenchSlots(Lnet/minecraft/inventory/Container;)Ljava/util/Map;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "containerEnchantmentSlots(Lnet/minecraft/inventory/Container;)Ljava/util/Map;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "containerBrewingSlots(Lnet/minecraft/inventory/Container;)Ljava/util/Map;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "containerRepairSlots(Lnet/minecraft/inventory/Container;)Ljava/util/Map;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "unknownContainerSlots(Lnet/minecraft/inventory/Container;)Ljava/util/Map;"
+      }
+    ]
+  },
+  "invtweaks/forge/ClientProxy": {
+    "name": "invtweaks/forge/ClientProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "notifyPickup(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$ItemPickupEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConnectionToServer(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V"
+      }
+    ]
+  },
+  "invtweaks/forge/CommonProxy": {
+    "name": "invtweaks/forge/CommonProxy",
+    "interfaces": [
+      "invtweaks/api/InvTweaksAPI"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "server"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLoggedIn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "invtweaks/forge/InvTweaksMod": {
+    "name": "invtweaks/forge/InvTweaksMod",
+    "interfaces": [
+      "invtweaks/api/InvTweaksAPI"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "invtweaks/forge/InvTweaksMod",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": ""
+          },
+          "certificateFingerprint": {
+            "value": "55d2cd4f5f0961410bf7b91ef6c6bf00a766dcbe"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.21.0,)"
+          },
+          "guiFactory": {
+            "value": "invtweaks.forge.ModGuiFactory"
+          },
+          "modid": {
+            "value": "inventorytweaks"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "invtweaks.forge.ClientProxy"
+          },
+          "serverSide": {
+            "value": "invtweaks.forge.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverAboutToStart(Lnet/minecraftforge/fml/common/event/FMLServerAboutToStartEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStopped(Lnet/minecraftforge/fml/common/event/FMLServerStoppedEvent;)V"
+      }
+    ]
+  },
+  "invtweaks/forge/ModGuiFactory": {
+    "name": "invtweaks/forge/ModGuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "createConfigGui(Lnet/minecraft/client/gui/GuiScreen;)Lnet/minecraft/client/gui/GuiScreen;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "runtimeGuiCategories()Ljava/util/Set;"
+      }
+    ]
+  },
+  "invtweaks/forge/ToolTipEvent": {
+    "name": "invtweaks/forge/ToolTipEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "invtweaks/forge/ToolTipEvent",
+        "values": {
+          "modid": {
+            "value": "inventorytweaks"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tTipEvent(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      }
+    ]
+  },
+  "invtweaks/forge/asm/ContainerTransformer": {
+    "name": "invtweaks/forge/asm/ContainerTransformer",
+    "interfaces": [
+      "net/minecraft/launchwrapper/IClassTransformer"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "standardClasses"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "configClasses"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getVanillaSlotMapInfo(Ljava/lang/String;)Linvtweaks/forge/asm/compatibility/MethodInfo;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getSlotMapInfo(Lorg/objectweb/asm/Type;Ljava/lang/String;Z)Linvtweaks/forge/asm/compatibility/MethodInfo;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "transform(Ljava/lang/String;Ljava/lang/String;[B)[B"
+      }
+    ]
+  },
+  "invtweaks/forge/asm/FMLPlugin": {
+    "name": "invtweaks/forge/asm/FMLPlugin",
+    "interfaces": [
+      "net/minecraftforge/fml/relauncher/IFMLLoadingPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$TransformerExclusions;",
+        "target": "invtweaks/forge/asm/FMLPlugin",
+        "value": {
+          "values": [
+            "invtweaks.forge.asm",
+            "invtweaks.forge.asm.compatibility"
+          ]
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$SortingIndex;",
+        "target": "invtweaks/forge/asm/FMLPlugin",
+        "value": {
+          "type": "INT",
+          "value": "1001"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$Name;",
+        "target": "invtweaks/forge/asm/FMLPlugin",
+        "value": {
+          "value": "Inventory Tweaks Coremod"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$MCVersion;",
+        "target": "invtweaks/forge/asm/FMLPlugin",
+        "value": {
+          "value": ""
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getASMTransformerClass()[Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "getAccessTransformerClass()Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getModContainerClass()Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "getSetupClass()Ljava/lang/String;"
+      }
+    ]
+  },
+  "invtweaks/forge/asm/compatibility/CompatibilityConfigLoader": {
+    "name": "invtweaks/forge/asm/compatibility/CompatibilityConfigLoader",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lorg/jetbrains/annotations/NotNull;",
+        "target": "load(Ljava/lang/String;)Ljava/util/Map;"
+      }
+    ]
+  },
+  "invtweaks/forge/asm/compatibility/ContainerInfo": {
+    "name": "invtweaks/forge/asm/compatibility/ContainerInfo",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "rowSizeMethod"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "largeChestMethod"
+      }
+    ]
+  },
+  "invtweaks/integration/ItemListChecker": {
+    "name": "invtweaks/integration/ItemListChecker",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "neiHidden"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/jetbrains/annotations/Nullable;",
+        "target": "jeiShown"
+      }
+    ]
+  },
+  "invtweaks/integration/ItemListSorter": {
+    "name": "invtweaks/integration/ItemListSorter",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "invtweaks.forge.ClientProxy"
+          },
+          "serverSide": {
+            "value": "invtweaks.forge.CommonProxy"
+          }
+        }
+      }
+    ]
+  },
+  "invtweaks/integration/ItemListSorter$ItemListComparator": {
+    "name": "invtweaks/integration/ItemListSorter$ItemListComparator",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "invtweaks/integration/ItemListSorter$ItemListComparator2": {
+    "name": "invtweaks/integration/ItemListSorter$ItemListComparator2",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "invtweaks/network/packets/ITPacketClick": {
+    "name": "invtweaks/network/packets/ITPacketClick",
+    "interfaces": [
+      "invtweaks/network/packets/ITPacket"
+    ]
+  },
+  "invtweaks/network/packets/ITPacketLogin": {
+    "name": "invtweaks/network/packets/ITPacketLogin",
+    "interfaces": [
+      "invtweaks/network/packets/ITPacket"
+    ]
+  },
+  "invtweaks/network/packets/ITPacketSortComplete": {
+    "name": "invtweaks/network/packets/ITPacketSortComplete",
+    "interfaces": [
+      "invtweaks/network/packets/ITPacket"
+    ]
+  }
+}

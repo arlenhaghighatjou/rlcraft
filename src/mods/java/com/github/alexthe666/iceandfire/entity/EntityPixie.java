@@ -1,0 +1,443 @@
+package com.github.alexthe666.iceandfire.entity;
+
+import com.github.alexthe666.iceandfire.IceAndFire;
+import com.github.alexthe666.iceandfire.core.ModBlocks;
+import com.github.alexthe666.iceandfire.core.ModSounds;
+import com.github.alexthe666.iceandfire.entity.ai.PixieAIFlee;
+import com.github.alexthe666.iceandfire.entity.ai.PixieAIFollowOwner;
+import com.github.alexthe666.iceandfire.entity.ai.PixieAIPickupItem;
+import com.github.alexthe666.iceandfire.entity.ai.PixieAISteal;
+import com.github.alexthe666.iceandfire.entity.tile.TileEntityPixieHouse;
+import com.github.alexthe666.iceandfire.message.MessageUpdatePixieHouse;
+import com.google.common.base.Predicate;
+import java.util.Random;
+import javax.annotation.Nullable;
+import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.EntityMoveHelper;
+import net.minecraft.entity.ai.EntityMoveHelper.Action;
+import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootTableList;
+
+public class EntityPixie extends EntityTameable {
+   public static final float[][] PARTICLE_RGB = new float[][]{{1.0F, 0.752F, 0.792F}, {0.831F, 0.662F, 1.0F}, {0.513F, 0.843F, 1.0F}, {0.654F, 0.909F, 0.615F}, {0.996F, 0.788F, 0.407F}};
+   public Potion[] positivePotions = new Potion[]{MobEffects.STRENGTH, MobEffects.JUMP_BOOST, MobEffects.SPEED, MobEffects.LUCK, MobEffects.HASTE};
+   public Potion[] negativePotions = new Potion[]{MobEffects.WEAKNESS, MobEffects.NAUSEA, MobEffects.SLOWNESS, MobEffects.UNLUCK, MobEffects.MINING_FATIGUE};
+   public static final ResourceLocation LOOT = LootTableList.register(new ResourceLocation("iceandfire", "if_pixie"));
+   private static final DataParameter<Integer> COLOR = EntityDataManager.createKey(EntityPixie.class, DataSerializers.VARINT);
+   public boolean slowSpeed = false;
+   public int ticksUntilHouseAI;
+   private BlockPos housePos;
+   private PixieAIFlee aiFlee;
+   private PixieAISteal aiTempt;
+
+   public EntityPixie(World worldIn) {
+      super(worldIn);
+      this.moveHelper = new EntityPixie.AIMoveControl(this);
+      this.setSize(0.4F, 0.8F);
+      this.experienceValue = 3;
+      this.setDropChance(EntityEquipmentSlot.MAINHAND, 0.0F);
+   }
+
+   public static BlockPos getPositionRelativetoGround(Entity entity, World world, double x, double z, Random rand) {
+      BlockPos pos = new BlockPos(x, entity.posY, z);
+
+      for(int yDown = 0; yDown < 3; ++yDown) {
+         if (!world.isAirBlock(pos.down(yDown))) {
+            return pos.up(yDown);
+         }
+      }
+
+      return pos;
+   }
+
+   public static BlockPos findAHouse(Entity entity, World world) {
+      for(int xSearch = -10; xSearch < 10; ++xSearch) {
+         for(int ySearch = -10; ySearch < 10; ++ySearch) {
+            for(int zSearch = -10; zSearch < 10; ++zSearch) {
+               if (world.getTileEntity(entity.getPosition().add(xSearch, ySearch, zSearch)) != null && world.getTileEntity(entity.getPosition().add(xSearch, ySearch, zSearch)) instanceof TileEntityPixieHouse) {
+                  TileEntityPixieHouse house = (TileEntityPixieHouse)world.getTileEntity(entity.getPosition().add(xSearch, ySearch, zSearch));
+                  if (!house.hasPixie) {
+                     return entity.getPosition().add(xSearch, ySearch, zSearch);
+                  }
+               }
+            }
+         }
+      }
+
+      return entity.getPosition();
+   }
+
+   protected void applyEntityAttributes() {
+      super.applyEntityAttributes();
+      this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
+      this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
+   }
+
+   public boolean attackEntityFrom(DamageSource source, float amount) {
+      StoneEntityProperties properties = (StoneEntityProperties)EntityPropertiesHandler.INSTANCE.getProperties(this, StoneEntityProperties.class);
+      if (!this.world.isRemote && this.getRNG().nextInt(3) == 0 && this.getHeldItem(EnumHand.MAIN_HAND) != ItemStack.EMPTY && !properties.isStone) {
+         this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
+         this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+         return true;
+      } else {
+         return !this.isOwnerClose() || source != DamageSource.FALLING_BLOCK && source != DamageSource.IN_WALL && (this.getOwner() == null || source.getTrueSource() != this.getOwner()) ? super.attackEntityFrom(source, amount) : false;
+      }
+   }
+
+   public void onDeath(DamageSource cause) {
+      if (!this.world.isRemote && !this.getHeldItem(EnumHand.MAIN_HAND).isEmpty()) {
+         this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
+         this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+      }
+
+      super.onDeath(cause);
+   }
+
+   protected void entityInit() {
+      super.entityInit();
+      this.getDataManager().register(COLOR, Integer.valueOf(0));
+   }
+
+   protected void collideWithEntity(Entity entityIn) {
+      if (this.getOwner() != entityIn) {
+         entityIn.applyEntityCollision(this);
+      }
+
+   }
+
+   protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos) {
+      if (!this.isInWater()) {
+         this.handleWaterMovement();
+      }
+
+      if (onGroundIn) {
+         if (this.fallDistance > 0.0F) {
+            state.getBlock().onFallenUpon(this.world, pos, this, this.fallDistance);
+         }
+
+         this.fallDistance = 0.0F;
+      } else if (y < 0.0D) {
+         this.fallDistance = (float)((double)this.fallDistance - y);
+      }
+
+   }
+
+   public boolean processInteract(EntityPlayer player, EnumHand hand) {
+      boolean flag = player.getHeldItem(hand).getItem() == Items.NAME_TAG || player.getHeldItem(hand).getItem() == Items.LEAD;
+      if (flag) {
+         player.getHeldItem(hand).interactWithEntity(player, this, hand);
+         return true;
+      } else if (this.isOwner(player)) {
+         if (player.getHeldItem(hand).getItem() == Items.SUGAR && this.getHealth() < this.getMaxHealth()) {
+            this.heal(5.0F);
+            player.getHeldItem(hand).shrink(1);
+            this.playSound(ModSounds.PIXIE_TAUNT, 1.0F, 1.0F);
+            return true;
+         } else {
+            this.setSitting(!this.isSitting());
+            return true;
+         }
+      } else {
+         if (player.getHeldItem(hand).getItem() == Item.getItemFromBlock(ModBlocks.jar_empty) && player.getHeldItem(hand).getMetadata() == 0 && !this.isTamed()) {
+            if (!player.isCreative()) {
+               player.getHeldItem(hand).shrink(1);
+            }
+
+            ItemStack stack = new ItemStack(ModBlocks.jar_pixie, 1, this.getColor());
+            if (!this.world.isRemote) {
+               if (!this.getHeldItem(EnumHand.MAIN_HAND).isEmpty()) {
+                  this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
+               }
+
+               this.entityDropItem(stack, 0.0F);
+            }
+
+            this.setDead();
+         }
+
+         return super.processInteract(player, hand);
+      }
+   }
+
+   public void flipAI(boolean flee) {
+      if (flee) {
+         this.tasks.removeTask(this.aiTempt);
+         this.tasks.addTask(3, this.aiFlee);
+      } else {
+         this.tasks.removeTask(this.aiFlee);
+         this.tasks.addTask(3, this.aiTempt);
+      }
+
+   }
+
+   public void fall(float distance, float damageMultiplier) {
+   }
+
+   protected void initEntityAI() {
+      this.tasks.addTask(0, new EntityAISwimming(this));
+      this.tasks.addTask(1, new PixieAIFollowOwner(this, 1.0D, 2.0F, 4.0F));
+      this.tasks.addTask(1, new PixieAIPickupItem(this, false));
+      this.tasks.addTask(2, this.aiTempt = new PixieAISteal(this, 1.0D));
+      this.tasks.addTask(2, this.aiFlee = new PixieAIFlee(this, EntityPlayer.class, 10.0F, new Predicate<EntityPlayer>() {
+         public boolean apply(@Nullable EntityPlayer entity) {
+            return true;
+         }
+      }));
+      this.tasks.addTask(3, new EntityPixie.AIMoveRandom());
+      this.tasks.addTask(4, new EntityPixie.AIEnterHouse());
+      this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+      this.tasks.addTask(7, new EntityAILookIdle(this));
+      this.tasks.removeTask(this.aiFlee);
+   }
+
+   @Nullable
+   public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
+      livingdata = super.onInitialSpawn(difficulty, livingdata);
+      this.setColor(this.rand.nextInt(5));
+      this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+      return livingdata;
+   }
+
+   private boolean isBeyondHeight() {
+      if (this.posY > (double)this.world.getHeight()) {
+         return true;
+      } else {
+         BlockPos height = this.world.getHeight(new BlockPos(this));
+         int maxY = 20 + height.getY();
+         return this.posY > (double)maxY;
+      }
+   }
+
+   public void onLivingUpdate() {
+      super.onLivingUpdate();
+      if (!this.isSitting() && !this.isBeyondHeight()) {
+         this.motionY += 0.08D;
+      } else {
+         this.moveHelper.action = Action.WAIT;
+      }
+
+      if (this.world.isRemote) {
+         IceAndFire.PROXY.spawnParticle("if_pixie", this.world, this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, this.posY + (double)(this.rand.nextFloat() * this.height), this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, (double)PARTICLE_RGB[this.getColor()][0], (double)PARTICLE_RGB[this.getColor()][1], (double)PARTICLE_RGB[this.getColor()][2]);
+      }
+
+      if (this.ticksUntilHouseAI > 0) {
+         --this.ticksUntilHouseAI;
+      }
+
+      if (this.housePos != null && this.getDistanceSqToCenter(this.housePos) < 1.5D && this.world.getTileEntity(this.housePos) != null && this.world.getTileEntity(this.housePos) instanceof TileEntityPixieHouse) {
+         if (((TileEntityPixieHouse)this.world.getTileEntity(this.housePos)).hasPixie) {
+            this.housePos = null;
+            this.moveHelper.action = Action.WAIT;
+         } else {
+            ((TileEntityPixieHouse)this.world.getTileEntity(this.housePos)).hasPixie = true;
+            ((TileEntityPixieHouse)this.world.getTileEntity(this.housePos)).pixieType = this.getColor();
+            ((TileEntityPixieHouse)this.world.getTileEntity(this.housePos)).pixieItems.set(0, this.getHeldItem(EnumHand.MAIN_HAND));
+            ((TileEntityPixieHouse)this.world.getTileEntity(this.housePos)).tamedPixie = this.isTamed();
+            ((TileEntityPixieHouse)this.world.getTileEntity(this.housePos)).pixieOwnerUUID = this.getOwnerId();
+            IceAndFire.NETWORK_WRAPPER.sendToAll(new MessageUpdatePixieHouse(this.housePos.toLong(), true, this.getColor()));
+            this.setDead();
+         }
+      }
+
+      if (this.getOwner() != null && this.isOwnerClose() && this.ticksExisted % 80 == 0) {
+         this.getOwner().addPotionEffect(new PotionEffect(this.positivePotions[this.getColor()], 100, 0, false, false));
+      }
+
+   }
+
+   public int getColor() {
+      return ((Integer)this.getDataManager().get(COLOR)).intValue();
+   }
+
+   public void setColor(int color) {
+      this.getDataManager().set(COLOR, Integer.valueOf(color));
+   }
+
+   public void readEntityFromNBT(NBTTagCompound compound) {
+      this.setColor(compound.getInteger("Color"));
+      super.readEntityFromNBT(compound);
+   }
+
+   public void writeEntityToNBT(NBTTagCompound compound) {
+      compound.setInteger("Color", this.getColor());
+      super.writeEntityToNBT(compound);
+   }
+
+   @Nullable
+   public EntityAgeable createChild(EntityAgeable ageable) {
+      return null;
+   }
+
+   public BlockPos getHousePos() {
+      return this.housePos;
+   }
+
+   public boolean isOwnerClose() {
+      return this.isTamed() && this.getOwner() != null && this.getDistanceSq(this.getOwner()) < 100.0D;
+   }
+
+   @Nullable
+   protected SoundEvent getAmbientSound() {
+      return ModSounds.PIXIE_IDLE;
+   }
+
+   @Nullable
+   protected SoundEvent getHurtSound(DamageSource p_184601_1_) {
+      return ModSounds.PIXIE_HURT;
+   }
+
+   @Nullable
+   protected SoundEvent getDeathSound() {
+      return ModSounds.PIXIE_DIE;
+   }
+
+   @Nullable
+   protected ResourceLocation getLootTable() {
+      return LOOT;
+   }
+
+   class AIEnterHouse extends EntityAIBase {
+      public AIEnterHouse() {
+         this.setMutexBits(1);
+      }
+
+      public boolean shouldExecute() {
+         if (!EntityPixie.this.isOwnerClose() && !EntityPixie.this.getMoveHelper().isUpdating() && !EntityPixie.this.isSitting() && EntityPixie.this.rand.nextInt(20) == 0 && EntityPixie.this.ticksUntilHouseAI == 0) {
+            BlockPos blockpos1 = EntityPixie.findAHouse(EntityPixie.this, EntityPixie.this.world);
+            return !blockpos1.toString().equals(EntityPixie.this.getPosition().toString());
+         } else {
+            return false;
+         }
+      }
+
+      public boolean shouldContinueExecuting() {
+         return false;
+      }
+
+      public void updateTask() {
+         BlockPos blockpos = EntityPixie.this.getHousePos() == null ? EntityPixie.this.getPosition() : EntityPixie.this.getHousePos();
+         if (blockpos == null) {
+            new BlockPos(EntityPixie.this);
+         }
+
+         for(int i = 0; i < 3; ++i) {
+            BlockPos blockpos1 = EntityPixie.findAHouse(EntityPixie.this, EntityPixie.this.world);
+            EntityPixie.this.moveHelper.setMoveTo((double)blockpos1.getX() + 0.5D, (double)blockpos1.getY() + 0.5D, (double)blockpos1.getZ() + 0.5D, 0.25D);
+            EntityPixie.this.housePos = blockpos1;
+            if (EntityPixie.this.getAttackTarget() == null) {
+               EntityPixie.this.getLookHelper().setLookPosition((double)blockpos1.getX() + 0.5D, (double)blockpos1.getY() + 0.5D, (double)blockpos1.getZ() + 0.5D, 180.0F, 20.0F);
+            }
+         }
+
+      }
+   }
+
+   class AIMoveControl extends EntityMoveHelper {
+      public AIMoveControl(EntityPixie pixie) {
+         super(pixie);
+         this.speed = 0.75D;
+      }
+
+      public void onUpdateMoveHelper() {
+         if (EntityPixie.this.slowSpeed) {
+            this.speed = 2.0D;
+         }
+
+         if (this.action == Action.MOVE_TO) {
+            double d0 = this.posX - EntityPixie.this.posX;
+            double d1 = this.posY - EntityPixie.this.posY;
+            double d2 = this.posZ - EntityPixie.this.posZ;
+            double d3 = d0 * d0 + d1 * d1 + d2 * d2;
+            d3 = (double)MathHelper.sqrt(d3);
+            if (d3 < EntityPixie.this.getEntityBoundingBox().getAverageEdgeLength()) {
+               this.action = Action.WAIT;
+               EntityPixie.this.motionX *= 0.5D;
+               EntityPixie.this.motionY *= 0.5D;
+               EntityPixie.this.motionZ *= 0.5D;
+            } else {
+               EntityPixie.this.motionX += d0 / d3 * 0.05D * this.speed;
+               EntityPixie.this.motionY += d1 / d3 * 0.05D * this.speed;
+               EntityPixie.this.motionZ += d2 / d3 * 0.05D * this.speed;
+               if (EntityPixie.this.getAttackTarget() == null) {
+                  EntityPixie.this.rotationYaw = -((float)MathHelper.atan2(EntityPixie.this.motionX, EntityPixie.this.motionZ)) * 57.295776F;
+                  EntityPixie.this.renderYawOffset = EntityPixie.this.rotationYaw;
+               } else {
+                  double d4 = EntityPixie.this.getAttackTarget().posX - EntityPixie.this.posX;
+                  double d5 = EntityPixie.this.getAttackTarget().posZ - EntityPixie.this.posZ;
+                  EntityPixie.this.rotationYaw = -((float)MathHelper.atan2(d4, d5)) * 57.295776F;
+                  EntityPixie.this.renderYawOffset = EntityPixie.this.rotationYaw;
+               }
+            }
+         }
+
+      }
+   }
+
+   class AIMoveRandom extends EntityAIBase {
+      BlockPos target;
+
+      public AIMoveRandom() {
+         this.setMutexBits(1);
+      }
+
+      public boolean shouldExecute() {
+         this.target = EntityPixie.getPositionRelativetoGround(EntityPixie.this, EntityPixie.this.world, EntityPixie.this.posX + (double)EntityPixie.this.rand.nextInt(15) - 7.0D, EntityPixie.this.posZ + (double)EntityPixie.this.rand.nextInt(15) - 7.0D, EntityPixie.this.rand);
+         return !EntityPixie.this.isOwnerClose() && !EntityPixie.this.isSitting() && this.isDirectPathBetweenPoints(EntityPixie.this.getPosition(), this.target) && !EntityPixie.this.getMoveHelper().isUpdating() && EntityPixie.this.rand.nextInt(4) == 0 && EntityPixie.this.housePos == null;
+      }
+
+      protected boolean isDirectPathBetweenPoints(BlockPos posVec31, BlockPos posVec32) {
+         RayTraceResult raytraceresult = EntityPixie.this.world.rayTraceBlocks(new Vec3d((double)posVec31.getX() + 0.5D, (double)posVec31.getY() + 0.5D, (double)posVec31.getZ() + 0.5D), new Vec3d((double)posVec32.getX() + 0.5D, (double)posVec32.getY() + (double)EntityPixie.this.height * 0.5D, (double)posVec32.getZ() + 0.5D), false, true, false);
+         return raytraceresult == null || raytraceresult.typeOfHit == Type.MISS;
+      }
+
+      public boolean shouldContinueExecuting() {
+         return false;
+      }
+
+      public void updateTask() {
+         if (!this.isDirectPathBetweenPoints(EntityPixie.this.getPosition(), this.target)) {
+            this.target = EntityPixie.getPositionRelativetoGround(EntityPixie.this, EntityPixie.this.world, EntityPixie.this.posX + (double)EntityPixie.this.rand.nextInt(15) - 7.0D, EntityPixie.this.posZ + (double)EntityPixie.this.rand.nextInt(15) - 7.0D, EntityPixie.this.rand);
+         }
+
+         if (EntityPixie.this.world.isAirBlock(this.target)) {
+            EntityPixie.this.moveHelper.setMoveTo((double)this.target.getX() + 0.5D, (double)this.target.getY() + 0.5D, (double)this.target.getZ() + 0.5D, 0.25D);
+            if (EntityPixie.this.getAttackTarget() == null) {
+               EntityPixie.this.getLookHelper().setLookPosition((double)this.target.getX() + 0.5D, (double)this.target.getY() + 0.5D, (double)this.target.getZ() + 0.5D, 180.0F, 20.0F);
+            }
+         }
+
+      }
+   }
+}

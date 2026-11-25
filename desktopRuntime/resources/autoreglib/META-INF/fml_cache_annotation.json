@@ -1,0 +1,396 @@
+{
+  "vazkii/arl/AutoRegLib": {
+    "name": "vazkii/arl/AutoRegLib",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "vazkii/arl/AutoRegLib",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.21.1.2387,)"
+          },
+          "modid": {
+            "value": "autoreglib"
+          },
+          "name": {
+            "value": "AutoRegLib"
+          },
+          "version": {
+            "value": "1.3-32"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "autoreglib"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "vazkii.arl.ClientProxy"
+          },
+          "serverSide": {
+            "value": "vazkii.arl.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "vazkii/arl/block/BlockMetaVariants$EnumBase": {
+    "name": "vazkii/arl/block/BlockMetaVariants$EnumBase",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "vazkii/arl/block/BlockMod": {
+    "name": "vazkii/arl/block/BlockMod",
+    "interfaces": [
+      "vazkii/arl/interf/IModBlock"
+    ]
+  },
+  "vazkii/arl/block/BlockModContainer": {
+    "name": "vazkii/arl/block/BlockModContainer",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "vazkii/arl/block/BlockModDust": {
+    "name": "vazkii/arl/block/BlockModDust",
+    "interfaces": [
+      "vazkii/arl/interf/IBlockColorProvider"
+    ]
+  },
+  "vazkii/arl/block/BlockModDust$EnumAttachPosition": {
+    "name": "vazkii/arl/block/BlockModDust$EnumAttachPosition",
+    "interfaces": [
+      "vazkii/arl/block/BlockMetaVariants$EnumBase"
+    ]
+  },
+  "vazkii/arl/block/BlockModFalling": {
+    "name": "vazkii/arl/block/BlockModFalling",
+    "interfaces": [
+      "vazkii/arl/interf/IModBlock"
+    ]
+  },
+  "vazkii/arl/block/BlockModSlab": {
+    "name": "vazkii/arl/block/BlockModSlab",
+    "interfaces": [
+      "vazkii/arl/interf/IModBlock"
+    ]
+  },
+  "vazkii/arl/block/BlockModSlab$DummyEnum": {
+    "name": "vazkii/arl/block/BlockModSlab$DummyEnum",
+    "interfaces": [
+      "vazkii/arl/block/BlockMetaVariants$EnumBase"
+    ]
+  },
+  "vazkii/arl/block/BlockModStairs": {
+    "name": "vazkii/arl/block/BlockModStairs",
+    "interfaces": [
+      "vazkii/arl/interf/IModBlock"
+    ]
+  },
+  "vazkii/arl/block/property/PropertyBlockState": {
+    "name": "vazkii/arl/block/property/PropertyBlockState",
+    "interfaces": [
+      "net/minecraftforge/common/property/IUnlistedProperty"
+    ]
+  },
+  "vazkii/arl/block/property/PropertyString": {
+    "name": "vazkii/arl/block/property/PropertyString",
+    "interfaces": [
+      "net/minecraftforge/common/property/IUnlistedProperty"
+    ]
+  },
+  "vazkii/arl/block/tile/TileSimpleInventory": {
+    "name": "vazkii/arl/block/tile/TileSimpleInventory",
+    "interfaces": [
+      "net/minecraft/inventory/ISidedInventory"
+    ]
+  },
+  "vazkii/arl/client/jei/JeiPlugin": {
+    "name": "vazkii/arl/client/jei/JeiPlugin",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "vazkii/arl/client/jei/JeiPlugin"
+      }
+    ]
+  },
+  "vazkii/arl/interf/IBlockColorProvider": {
+    "name": "vazkii/arl/interf/IBlockColorProvider",
+    "interfaces": [
+      "vazkii/arl/interf/IItemColorProvider"
+    ]
+  },
+  "vazkii/arl/interf/IDropInItem": {
+    "name": "vazkii/arl/interf/IDropInItem",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "DROP_IN_CAPABILITY",
+        "value": {
+          "type": "CLASS",
+          "value": "Lvazkii/arl/interf/IDropInItem;"
+        }
+      }
+    ]
+  },
+  "vazkii/arl/interf/IExtraVariantHolder": {
+    "name": "vazkii/arl/interf/IExtraVariantHolder",
+    "interfaces": [
+      "vazkii/arl/interf/IVariantHolder"
+    ]
+  },
+  "vazkii/arl/interf/IModBlock": {
+    "name": "vazkii/arl/interf/IModBlock",
+    "interfaces": [
+      "vazkii/arl/interf/IVariantHolder",
+      "vazkii/arl/interf/IVariantEnumHolder",
+      "vazkii/arl/interf/IStateMapperProvider"
+    ]
+  },
+  "vazkii/arl/item/ItemMod": {
+    "name": "vazkii/arl/item/ItemMod",
+    "interfaces": [
+      "vazkii/arl/interf/IVariantHolder"
+    ]
+  },
+  "vazkii/arl/item/ItemModArmor": {
+    "name": "vazkii/arl/item/ItemModArmor",
+    "interfaces": [
+      "vazkii/arl/interf/IVariantHolder"
+    ]
+  },
+  "vazkii/arl/item/ItemModAxe": {
+    "name": "vazkii/arl/item/ItemModAxe",
+    "interfaces": [
+      "vazkii/arl/interf/IVariantHolder"
+    ]
+  },
+  "vazkii/arl/item/ItemModBlock": {
+    "name": "vazkii/arl/item/ItemModBlock",
+    "interfaces": [
+      "vazkii/arl/interf/IVariantHolder"
+    ]
+  },
+  "vazkii/arl/item/ItemModBlockSlab": {
+    "name": "vazkii/arl/item/ItemModBlockSlab",
+    "interfaces": [
+      "vazkii/arl/interf/IVariantHolder"
+    ]
+  },
+  "vazkii/arl/item/ItemModPickaxe": {
+    "name": "vazkii/arl/item/ItemModPickaxe",
+    "interfaces": [
+      "vazkii/arl/interf/IVariantHolder"
+    ]
+  },
+  "vazkii/arl/item/ItemModShovel": {
+    "name": "vazkii/arl/item/ItemModShovel",
+    "interfaces": [
+      "vazkii/arl/interf/IVariantHolder"
+    ]
+  },
+  "vazkii/arl/item/ItemModSword": {
+    "name": "vazkii/arl/item/ItemModSword",
+    "interfaces": [
+      "vazkii/arl/interf/IVariantHolder"
+    ]
+  },
+  "vazkii/arl/item/ItemModTool": {
+    "name": "vazkii/arl/item/ItemModTool",
+    "interfaces": [
+      "vazkii/arl/interf/IVariantHolder"
+    ]
+  },
+  "vazkii/arl/network/NetworkMessage": {
+    "name": "vazkii/arl/network/NetworkMessage",
+    "interfaces": [
+      "java/io/Serializable",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "vazkii/arl/recipe/ModRecipe": {
+    "name": "vazkii/arl/recipe/ModRecipe",
+    "interfaces": [
+      "net/minecraft/item/crafting/IRecipe"
+    ]
+  },
+  "vazkii/arl/util/AbstractDropIn": {
+    "name": "vazkii/arl/util/AbstractDropIn",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilityProvider",
+      "vazkii/arl/interf/IDropInItem"
+    ]
+  },
+  "vazkii/arl/util/ClientTicker": {
+    "name": "vazkii/arl/util/ClientTicker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "vazkii/arl/util/ClientTicker",
+        "values": {
+          "modid": {
+            "value": "autoreglib"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTickEnd(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "vazkii/arl/util/DropInHandler": {
+    "name": "vazkii/arl/util/DropInHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "vazkii/arl/util/DropInHandler",
+        "values": {
+          "modid": {
+            "value": "autoreglib"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrawScreen(Lnet/minecraftforge/client/event/GuiScreenEvent$DrawScreenEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClick(Lnet/minecraftforge/client/event/GuiScreenEvent$MouseInputEvent$Pre;)V"
+      }
+    ]
+  },
+  "vazkii/arl/util/DropInHandler$CapabilityFactory": {
+    "name": "vazkii/arl/util/DropInHandler$CapabilityFactory",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage",
+      "java/util/concurrent/Callable"
+    ]
+  },
+  "vazkii/arl/util/DropInHandler$CapabilityFactory$DefaultImpl": {
+    "name": "vazkii/arl/util/DropInHandler$CapabilityFactory$DefaultImpl",
+    "interfaces": [
+      "vazkii/arl/interf/IDropInItem"
+    ]
+  },
+  "vazkii/arl/util/InventoryIIH": {
+    "name": "vazkii/arl/util/InventoryIIH",
+    "interfaces": [
+      "net/minecraftforge/items/IItemHandlerModifiable"
+    ]
+  },
+  "vazkii/arl/util/ModelHandler": {
+    "name": "vazkii/arl/util/ModelHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "vazkii/arl/util/ModelHandler",
+        "values": {
+          "modid": {
+            "value": "autoreglib"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegister(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemColorRegister(Lnet/minecraftforge/client/event/ColorHandlerEvent$Item;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockColorRegister(Lnet/minecraftforge/client/event/ColorHandlerEvent$Block;)V"
+      }
+    ]
+  },
+  "vazkii/arl/util/ProxyRegistry": {
+    "name": "vazkii/arl/util/ProxyRegistry",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "vazkii/arl/util/ProxyRegistry",
+        "values": {
+          "modid": {
+            "value": "autoreglib"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegistryEvent(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  }
+}

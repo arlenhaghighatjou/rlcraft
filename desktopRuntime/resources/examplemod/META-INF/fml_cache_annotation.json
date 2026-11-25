@@ -1,0 +1,73 @@
+{
+  "com/lothrazar/playerbosses/ConfigManager": {
+    "name": "com/lothrazar/playerbosses/ConfigManager",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "com/lothrazar/playerbosses/EntityPlayerBoss": {
+    "name": "com/lothrazar/playerbosses/EntityPlayerBoss",
+    "interfaces": [
+      "net/minecraft/entity/IRangedAttackMob"
+    ]
+  },
+  "com/lothrazar/playerbosses/EntityPlayerBoss$Factory": {
+    "name": "com/lothrazar/playerbosses/EntityPlayerBoss$Factory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/lothrazar/playerbosses/ModBosses": {
+    "name": "com/lothrazar/playerbosses/ModBosses",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/lothrazar/playerbosses/ModBosses",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "certificateFingerprint": {
+            "value": "1bc8f8dbe770187a854cef35dad0ff40ba441bbe"
+          },
+          "modid": {
+            "value": "playerbosses"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "playerbosses"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRegisterSoundEvent(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRendering(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onFingerprintViolation(Lnet/minecraftforge/fml/common/event/FMLFingerprintViolationEvent;)V"
+      }
+    ]
+  }
+}

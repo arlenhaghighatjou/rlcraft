@@ -1,0 +1,1427 @@
+{
+  "knightminer/inspirations/Inspirations": {
+    "name": "knightminer/inspirations/Inspirations",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "knightminer/inspirations/Inspirations",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12, 1.13)"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.1.2571,];required-after:mantle;after:toughasnails@[3.1.0,]"
+          },
+          "modid": {
+            "value": "inspirations"
+          },
+          "name": {
+            "value": "Inspirations"
+          },
+          "version": {
+            "value": "1.12.2-0.2.9"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "inspirations"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/building/BuildingClientProxy": {
+    "name": "knightminer/inspirations/building/BuildingClientProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlockColors(Lnet/minecraftforge/client/event/ColorHandlerEvent$Block;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItemColors(Lnet/minecraftforge/client/event/ColorHandlerEvent$Item;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelBake(Lnet/minecraftforge/client/event/ModelBakeEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/building/BuildingEvents": {
+    "name": "knightminer/inspirations/building/BuildingEvents",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "addFlowerDrop(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "toggleRopeLadder(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/building/InspirationsBuilding": {
+    "name": "knightminer/inspirations/building/InspirationsBuilding",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "knightminer/inspirations/building/InspirationsBuilding",
+        "values": {
+          "description": {
+            "value": "A collection of features to improve building"
+          },
+          "id": {
+            "value": "InspirationsBuilding"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "knightminer.inspirations.building.BuildingClientProxy"
+          },
+          "serverSide": {
+            "value": "knightminer.inspirations.common.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/building/block/BlockBookshelf": {
+    "name": "knightminer/inspirations/building/block/BlockBookshelf",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "knightminer/inspirations/building/block/BlockBookshelf$BookshelfType": {
+    "name": "knightminer/inspirations/building/block/BlockBookshelf$BookshelfType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "knightminer/inspirations/building/block/BlockEnlightenedBush": {
+    "name": "knightminer/inspirations/building/block/BlockEnlightenedBush",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "knightminer/inspirations/building/block/BlockEnlightenedBush$LightsType": {
+    "name": "knightminer/inspirations/building/block/BlockEnlightenedBush$LightsType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable",
+      "slimeknights/mantle/block/EnumBlock$IEnumMeta"
+    ]
+  },
+  "knightminer/inspirations/building/block/BlockFlower": {
+    "name": "knightminer/inspirations/building/block/BlockFlower",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "knightminer/inspirations/building/block/BlockFlower$FlowerType": {
+    "name": "knightminer/inspirations/building/block/BlockFlower$FlowerType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "knightminer/inspirations/building/block/BlockMulch$MulchColor": {
+    "name": "knightminer/inspirations/building/block/BlockMulch$MulchColor",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "knightminer/inspirations/building/block/BlockPath$PathType": {
+    "name": "knightminer/inspirations/building/block/BlockPath$PathType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable",
+      "slimeknights/mantle/block/EnumBlock$IEnumMeta"
+    ]
+  },
+  "knightminer/inspirations/building/block/BlockRope$RopeType": {
+    "name": "knightminer/inspirations/building/block/BlockRope$RopeType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable",
+      "slimeknights/mantle/block/EnumBlock$IEnumMeta"
+    ]
+  },
+  "knightminer/inspirations/building/block/BlockRope$Rungs": {
+    "name": "knightminer/inspirations/building/block/BlockRope$Rungs",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable",
+      "slimeknights/mantle/block/EnumBlock$IEnumMeta"
+    ]
+  },
+  "knightminer/inspirations/building/tileentity/TileBookshelf": {
+    "name": "knightminer/inspirations/building/tileentity/TileBookshelf",
+    "interfaces": [
+      "slimeknights/mantle/common/IInventoryGui"
+    ]
+  },
+  "knightminer/inspirations/common/ClientProxy$1": {
+    "name": "knightminer/inspirations/common/ClientProxy$1",
+    "interfaces": [
+      "net/minecraft/client/renderer/ItemMeshDefinition"
+    ]
+  },
+  "knightminer/inspirations/common/ClientProxy$FluidStateMapper": {
+    "name": "knightminer/inspirations/common/ClientProxy$FluidStateMapper",
+    "interfaces": [
+      "net/minecraft/client/renderer/ItemMeshDefinition"
+    ]
+  },
+  "knightminer/inspirations/common/Config$ConfigProperty": {
+    "name": "knightminer/inspirations/common/Config$ConfigProperty",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "knightminer/inspirations/common/Config$PulseLoaded": {
+    "name": "knightminer/inspirations/common/Config$PulseLoaded",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "knightminer/inspirations/library/PropertyUnlistedInteger": {
+    "name": "knightminer/inspirations/library/PropertyUnlistedInteger",
+    "interfaces": [
+      "net/minecraftforge/common/property/IUnlistedProperty"
+    ]
+  },
+  "knightminer/inspirations/library/event/RegisterEvent": {
+    "name": "knightminer/inspirations/library/event/RegisterEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "knightminer/inspirations/library/event/RegisterEvent"
+      }
+    ]
+  },
+  "knightminer/inspirations/library/recipe/ModItemList$Factory": {
+    "name": "knightminer/inspirations/library/recipe/ModItemList$Factory",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IIngredientFactory"
+    ]
+  },
+  "knightminer/inspirations/library/recipe/ShapelessNoContainerRecipe$Factory": {
+    "name": "knightminer/inspirations/library/recipe/ShapelessNoContainerRecipe$Factory",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IRecipeFactory"
+    ]
+  },
+  "knightminer/inspirations/library/recipe/TextureRecipe$Factory": {
+    "name": "knightminer/inspirations/library/recipe/TextureRecipe$Factory",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IRecipeFactory"
+    ]
+  },
+  "knightminer/inspirations/library/recipe/cauldron/CauldronBrewingRecipe": {
+    "name": "knightminer/inspirations/library/recipe/cauldron/CauldronBrewingRecipe",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ISimpleCauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/library/recipe/cauldron/CauldronMixRecipe": {
+    "name": "knightminer/inspirations/library/recipe/cauldron/CauldronMixRecipe",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ISimpleCauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/library/recipe/cauldron/CauldronRecipeMatchRecipe": {
+    "name": "knightminer/inspirations/library/recipe/cauldron/CauldronRecipeMatchRecipe",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ISimpleCauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/library/recipe/cauldron/ISimpleCauldronRecipe": {
+    "name": "knightminer/inspirations/library/recipe/cauldron/ISimpleCauldronRecipe",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ICauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/plugins/LeatherWorksPlugin": {
+    "name": "knightminer/inspirations/plugins/LeatherWorksPlugin",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "knightminer/inspirations/plugins/LeatherWorksPlugin",
+        "values": {
+          "description": {
+            "value": "Adds recipes for Leather Works items"
+          },
+          "id": {
+            "value": "LeatherWorks"
+          },
+          "modsRequired": {
+            "value": "leatherworks"
+          },
+          "pulsesRequired": {
+            "value": "InspirationsRecipes"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "tanninBall",
+        "value": {
+          "value": "leatherworks:tannin_ball"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "tanninBottle",
+        "value": {
+          "value": "leatherworks:tannin_bottle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "preparedHide",
+        "value": {
+          "value": "leatherworks:crafting_leather_scraped"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "soakedHide",
+        "value": {
+          "value": "leatherworks:crafting_leather_soaked"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "washedHide",
+        "value": {
+          "value": "leatherworks:crafting_leather_washed"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/plugins/RatsPlugin": {
+    "name": "knightminer/inspirations/plugins/RatsPlugin",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "knightminer/inspirations/plugins/RatsPlugin",
+        "values": {
+          "description": {
+            "value": "Supports the Rats milk cauldron as part of cauldron recipes. Note extended features such as recipes from dropping items in cauldrons will now work."
+          },
+          "id": {
+            "value": "RatsPlugin"
+          },
+          "modsRequired": {
+            "value": "rats"
+          },
+          "pulsesRequired": {
+            "value": "InspirationsRecipes"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "milkCauldron",
+        "value": {
+          "value": "rats:cauldron_milk"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/plugins/TwilightForestPlugin": {
+    "name": "knightminer/inspirations/plugins/TwilightForestPlugin",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "knightminer/inspirations/plugins/TwilightForestPlugin",
+        "values": {
+          "description": {
+            "value": "Supports dyeing Twilight Forest armor in the Inspirations cauldron."
+          },
+          "id": {
+            "value": "TwilightForestPlugin"
+          },
+          "modsRequired": {
+            "value": "twilightforest"
+          },
+          "pulsesRequired": {
+            "value": "InspirationsRecipes"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/JEIPlugin": {
+    "name": "knightminer/inspirations/plugins/jei/JEIPlugin",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "knightminer/inspirations/plugins/jei/JEIPlugin"
+      }
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/cauldron/CauldronRecipeCategory": {
+    "name": "knightminer/inspirations/plugins/jei/cauldron/CauldronRecipeCategory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeCategory"
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/cauldron/CauldronRecipeWrapper": {
+    "name": "knightminer/inspirations/plugins/jei/cauldron/CauldronRecipeWrapper",
+    "interfaces": [
+      "knightminer/inspirations/plugins/jei/cauldron/ICauldronRecipeWrapper"
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/cauldron/DyeFillWrapper": {
+    "name": "knightminer/inspirations/plugins/jei/cauldron/DyeFillWrapper",
+    "interfaces": [
+      "knightminer/inspirations/plugins/jei/cauldron/ICauldronRecipeWrapper"
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/cauldron/ICauldronRecipeWrapper": {
+    "name": "knightminer/inspirations/plugins/jei/cauldron/ICauldronRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/cauldron/PotionWrapper": {
+    "name": "knightminer/inspirations/plugins/jei/cauldron/PotionWrapper",
+    "interfaces": [
+      "knightminer/inspirations/plugins/jei/cauldron/ICauldronRecipeWrapper"
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/cauldron/ingredient/DyeIngredientHelper": {
+    "name": "knightminer/inspirations/plugins/jei/cauldron/ingredient/DyeIngredientHelper",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientHelper"
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/cauldron/ingredient/DyeIngredientRenderer": {
+    "name": "knightminer/inspirations/plugins/jei/cauldron/ingredient/DyeIngredientRenderer",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientRenderer"
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/cauldron/ingredient/PotionIngredientHelper": {
+    "name": "knightminer/inspirations/plugins/jei/cauldron/ingredient/PotionIngredientHelper",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientHelper"
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/cauldron/ingredient/PotionIngredientRenderer": {
+    "name": "knightminer/inspirations/plugins/jei/cauldron/ingredient/PotionIngredientRenderer",
+    "interfaces": [
+      "mezz/jei/api/ingredients/IIngredientRenderer"
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/smashing/SmashingRecipeCategory": {
+    "name": "knightminer/inspirations/plugins/jei/smashing/SmashingRecipeCategory",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeCategory"
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/smashing/SmashingRecipeWrapper": {
+    "name": "knightminer/inspirations/plugins/jei/smashing/SmashingRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper"
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/texture/TextureRecipeHandler": {
+    "name": "knightminer/inspirations/plugins/jei/texture/TextureRecipeHandler",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapperFactory"
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/texture/TextureRecipeWrapper": {
+    "name": "knightminer/inspirations/plugins/jei/texture/TextureRecipeWrapper",
+    "interfaces": [
+      "mezz/jei/api/recipe/IRecipeWrapper",
+      "mezz/jei/api/recipe/wrapper/IShapedCraftingRecipeWrapper",
+      "mezz/jei/api/recipe/wrapper/ICustomCraftingRecipeWrapper"
+    ]
+  },
+  "knightminer/inspirations/plugins/jei/texture/TextureSubtypeInterpreter": {
+    "name": "knightminer/inspirations/plugins/jei/texture/TextureSubtypeInterpreter",
+    "interfaces": [
+      "mezz/jei/api/ISubtypeRegistry$ISubtypeInterpreter"
+    ]
+  },
+  "knightminer/inspirations/plugins/tan/FillCanteenRecipe": {
+    "name": "knightminer/inspirations/plugins/tan/FillCanteenRecipe",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ISimpleCauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/plugins/tan/ToughAsNailsPlugin": {
+    "name": "knightminer/inspirations/plugins/tan/ToughAsNailsPlugin",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "knightminer/inspirations/plugins/tan/ToughAsNailsPlugin",
+        "values": {
+          "description": {
+            "value": "Adds support between TAN thirst and the cauldron overrides"
+          },
+          "id": {
+            "value": "ToughAsNailsPlugin"
+          },
+          "modsRequired": {
+            "value": "toughasnails"
+          },
+          "pulsesRequired": {
+            "value": "InspirationsRecipes"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "waterBottle",
+        "value": {
+          "value": "toughasnails:purified_water_bottle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "charcoalFilter",
+        "value": {
+          "value": "toughasnails:charcoal_filter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "fruitJuice",
+        "value": {
+          "value": "toughasnails:fruit_juice"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "canteen",
+        "value": {
+          "value": "toughasnails:canteen"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/plugins/top/CauldronInfoProvider": {
+    "name": "knightminer/inspirations/plugins/top/CauldronInfoProvider",
+    "interfaces": [
+      "mcjty/theoneprobe/api/IProbeInfoProvider"
+    ]
+  },
+  "knightminer/inspirations/plugins/top/TheOneProbePlugin": {
+    "name": "knightminer/inspirations/plugins/top/TheOneProbePlugin",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "knightminer/inspirations/plugins/top/TheOneProbePlugin",
+        "values": {
+          "defaultEnable": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "id": {
+            "value": "TheOneProbePlugin"
+          },
+          "modsRequired": {
+            "value": "theoneprobe"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/plugins/top/TheOneProbeRegistrar": {
+    "name": "knightminer/inspirations/plugins/top/TheOneProbeRegistrar",
+    "interfaces": [
+      "com/google/common/base/Function"
+    ]
+  },
+  "knightminer/inspirations/plugins/waila/CauldronProvider": {
+    "name": "knightminer/inspirations/plugins/waila/CauldronProvider",
+    "interfaces": [
+      "mcp/mobius/waila/api/IWailaDataProvider"
+    ]
+  },
+  "knightminer/inspirations/plugins/waila/WailaPlugin": {
+    "name": "knightminer/inspirations/plugins/waila/WailaPlugin",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "knightminer/inspirations/plugins/waila/WailaPlugin",
+        "values": {
+          "defaultEnable": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "id": {
+            "value": "WailaPlugin"
+          },
+          "modsRequired": {
+            "value": "waila"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/recipes/InspirationsRecipes": {
+    "name": "knightminer/inspirations/recipes/InspirationsRecipes",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "knightminer/inspirations/recipes/InspirationsRecipes",
+        "values": {
+          "description": {
+            "value": "Adds additional recipe types, including cauldrons and anvil smashing"
+          },
+          "id": {
+            "value": "InspirationsRecipes"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "knightminer.inspirations.recipes.RecipesClientProxy"
+          },
+          "serverSide": {
+            "value": "knightminer.inspirations.common.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRecipes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/recipes/RecipesClientProxy": {
+    "name": "knightminer/inspirations/recipes/RecipesClientProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlockColors(Lnet/minecraftforge/client/event/ColorHandlerEvent$Block;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItemColors(Lnet/minecraftforge/client/event/ColorHandlerEvent$Item;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelBake(Lnet/minecraftforge/client/event/ModelBakeEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerTextures(Lnet/minecraftforge/client/event/TextureStitchEvent$Pre;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/recipes/RecipesClientProxy$CauldronStateMapper$CauldronLevel": {
+    "name": "knightminer/inspirations/recipes/RecipesClientProxy$CauldronStateMapper$CauldronLevel",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "knightminer/inspirations/recipes/RecipesEvents": {
+    "name": "knightminer/inspirations/recipes/RecipesEvents",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clickCauldron(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "milkSquid(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/recipes/block/BlockEnhancedCauldron": {
+    "name": "knightminer/inspirations/recipes/block/BlockEnhancedCauldron",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "knightminer/inspirations/recipes/block/BlockEnhancedCauldron$CauldronContents": {
+    "name": "knightminer/inspirations/recipes/block/BlockEnhancedCauldron$CauldronContents",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "knightminer/inspirations/recipes/recipe/ArmorClearRecipe": {
+    "name": "knightminer/inspirations/recipes/recipe/ArmorClearRecipe",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ICauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/recipes/recipe/ArmorDyeingCauldronRecipe": {
+    "name": "knightminer/inspirations/recipes/recipe/ArmorDyeingCauldronRecipe",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ICauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/recipes/recipe/BannerClearRecipe": {
+    "name": "knightminer/inspirations/recipes/recipe/BannerClearRecipe",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ICauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/recipes/recipe/DyeCauldronWater": {
+    "name": "knightminer/inspirations/recipes/recipe/DyeCauldronWater",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ISimpleCauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/recipes/recipe/FillCauldronFromDyedBottle": {
+    "name": "knightminer/inspirations/recipes/recipe/FillCauldronFromDyedBottle",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ICauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/recipes/recipe/FillCauldronFromFluidContainer": {
+    "name": "knightminer/inspirations/recipes/recipe/FillCauldronFromFluidContainer",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ICauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/recipes/recipe/FillCauldronFromPotion": {
+    "name": "knightminer/inspirations/recipes/recipe/FillCauldronFromPotion",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ICauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/recipes/recipe/FillDyedBottleFromCauldron": {
+    "name": "knightminer/inspirations/recipes/recipe/FillDyedBottleFromCauldron",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ICauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/recipes/recipe/FillFluidContainerFromCauldron": {
+    "name": "knightminer/inspirations/recipes/recipe/FillFluidContainerFromCauldron",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ICauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/recipes/recipe/FillPotionFromCauldron": {
+    "name": "knightminer/inspirations/recipes/recipe/FillPotionFromCauldron",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ICauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/recipes/recipe/TippedArrowCauldronRecipe": {
+    "name": "knightminer/inspirations/recipes/recipe/TippedArrowCauldronRecipe",
+    "interfaces": [
+      "knightminer/inspirations/library/recipe/cauldron/ICauldronRecipe"
+    ]
+  },
+  "knightminer/inspirations/recipes/tank/CauldronTank": {
+    "name": "knightminer/inspirations/recipes/tank/CauldronTank",
+    "interfaces": [
+      "net/minecraftforge/fluids/capability/IFluidHandler"
+    ]
+  },
+  "knightminer/inspirations/recipes/tank/CauldronTank$Properties": {
+    "name": "knightminer/inspirations/recipes/tank/CauldronTank$Properties",
+    "interfaces": [
+      "net/minecraftforge/fluids/capability/IFluidTankProperties"
+    ]
+  },
+  "knightminer/inspirations/shared/InspirationsOredict": {
+    "name": "knightminer/inspirations/shared/InspirationsOredict",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "knightminer/inspirations/shared/InspirationsOredict",
+        "values": {
+          "description": {
+            "value": "Blocks and items used by all modules"
+          },
+          "forced": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "id": {
+            "value": "InspirationsShared"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "doTheOredict(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/shared/InspirationsShared": {
+    "name": "knightminer/inspirations/shared/InspirationsShared",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "knightminer/inspirations/shared/InspirationsShared",
+        "values": {
+          "description": {
+            "value": "Blocks and items used by all modules"
+          },
+          "forced": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "id": {
+            "value": "InspirationsShared"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "knightminer.inspirations.shared.SharedClientProxy"
+          },
+          "serverSide": {
+            "value": "knightminer.inspirations.common.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLootTableLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/shared/SharedClientProxy": {
+    "name": "knightminer/inspirations/shared/SharedClientProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerTextures(Lnet/minecraftforge/client/event/TextureStitchEvent$Pre;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/shared/SharedEvents": {
+    "name": "knightminer/inspirations/shared/SharedEvents",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "updateMilkCooldown(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/tools/InspirationsTools": {
+    "name": "knightminer/inspirations/tools/InspirationsTools",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "knightminer/inspirations/tools/InspirationsTools",
+        "values": {
+          "description": {
+            "value": "Adds various tools or tweaks to vanilla tools"
+          },
+          "id": {
+            "value": "InspirationsTools"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "knightminer.inspirations.tools.ToolsClientProxy"
+          },
+          "serverSide": {
+            "value": "knightminer.inspirations.common.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEntities(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRecipes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEnchantments(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/tools/ToolsClientProxy": {
+    "name": "knightminer/inspirations/tools/ToolsClientProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItemColors(Lnet/minecraftforge/client/event/ColorHandlerEvent$Item;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "fixShieldTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/tools/ToolsEvents": {
+    "name": "knightminer/inspirations/tools/ToolsEvents",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "lockAndUnlock(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "vineBreakEvent(Lnet/minecraftforge/event/world/BlockEvent$BreakEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "dropMelon(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "dropExtraSapling(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "breakLeavesFast(Lnet/minecraftforge/event/entity/player/PlayerEvent$BreakSpeed;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "setWaypoint(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onShieldHit(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/tools/client/BarometerGetter": {
+    "name": "knightminer/inspirations/tools/client/BarometerGetter",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "knightminer/inspirations/tools/client/NorthCompassGetter": {
+    "name": "knightminer/inspirations/tools/client/NorthCompassGetter",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "knightminer/inspirations/tools/client/PhotometerGetter": {
+    "name": "knightminer/inspirations/tools/client/PhotometerGetter",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "knightminer/inspirations/tools/client/WaypointCompassGetter": {
+    "name": "knightminer/inspirations/tools/client/WaypointCompassGetter",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "knightminer/inspirations/tools/recipe/WaypointCompassCopyRecipe": {
+    "name": "knightminer/inspirations/tools/recipe/WaypointCompassCopyRecipe",
+    "interfaces": [
+      "net/minecraft/item/crafting/IRecipe"
+    ]
+  },
+  "knightminer/inspirations/tools/recipe/WaypointCompassDyeingRecipe$Factory": {
+    "name": "knightminer/inspirations/tools/recipe/WaypointCompassDyeingRecipe$Factory",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IRecipeFactory"
+    ]
+  },
+  "knightminer/inspirations/tweaks/InspirationsTweaks": {
+    "name": "knightminer/inspirations/tweaks/InspirationsTweaks",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "knightminer/inspirations/tweaks/InspirationsTweaks",
+        "values": {
+          "description": {
+            "value": "Various vanilla tweaks"
+          },
+          "id": {
+            "value": "InspirationsTweaks"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "knightminer.inspirations.tweaks.TweaksClientProxy"
+          },
+          "serverSide": {
+            "value": "knightminer.inspirations.common.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItem(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerPotionTypes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLootTableLoad(Lnet/minecraftforge/event/LootTableLoadEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/tweaks/TweaksClientProxy": {
+    "name": "knightminer/inspirations/tweaks/TweaksClientProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlockColors(Lnet/minecraftforge/client/event/ColorHandlerEvent$Block;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItemColors(Lnet/minecraftforge/client/event/ColorHandlerEvent$Item;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelBake(Lnet/minecraftforge/client/event/ModelBakeEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldUnload(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/tweaks/TweaksEvents": {
+    "name": "knightminer/inspirations/tweaks/TweaksEvents",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "unsaddlePig(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "extraBonemeal(Lnet/minecraftforge/event/entity/player/BonemealEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "dropHeartbeet(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "dropCarrotsPotatos(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onFall(Lnet/minecraftforge/event/entity/living/LivingFallEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "milkCow(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/tweaks/client/PortalColorHandler": {
+    "name": "knightminer/inspirations/tweaks/client/PortalColorHandler",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IBlockColor",
+      "net/minecraft/world/IWorldEventListener"
+    ]
+  },
+  "knightminer/inspirations/utility/InspirationsUtility": {
+    "name": "knightminer/inspirations/utility/InspirationsUtility",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "knightminer/inspirations/utility/InspirationsUtility",
+        "values": {
+          "description": {
+            "value": "Adds various utilities"
+          },
+          "id": {
+            "value": "InspirationsUtility"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "knightminer.inspirations.utility.UtilityClientProxy"
+          },
+          "serverSide": {
+            "value": "knightminer.inspirations.common.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/utility/UtilityClientProxy": {
+    "name": "knightminer/inspirations/utility/UtilityClientProxy",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlockColors(Lnet/minecraftforge/client/event/ColorHandlerEvent$Block;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/utility/UtilityClientProxy$CarpetedTrapdoorStateMapper$TrapdoorShape": {
+    "name": "knightminer/inspirations/utility/UtilityClientProxy$CarpetedTrapdoorStateMapper$TrapdoorShape",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "knightminer/inspirations/utility/UtilityEvents": {
+    "name": "knightminer/inspirations/utility/UtilityEvents",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "placeCarpetOnPressurePlate(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clickHopperWithPipe(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "knightminer/inspirations/utility/block/BlockBricksButton$BrickType": {
+    "name": "knightminer/inspirations/utility/block/BlockBricksButton$BrickType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable",
+      "slimeknights/mantle/block/EnumBlock$IEnumMeta"
+    ]
+  },
+  "knightminer/inspirations/utility/tileentity/TileCollector": {
+    "name": "knightminer/inspirations/utility/tileentity/TileCollector",
+    "interfaces": [
+      "slimeknights/mantle/common/IInventoryGui"
+    ]
+  },
+  "knightminer/inspirations/utility/tileentity/TilePipe": {
+    "name": "knightminer/inspirations/utility/tileentity/TilePipe",
+    "interfaces": [
+      "slimeknights/mantle/common/IInventoryGui",
+      "net/minecraft/util/ITickable"
+    ]
+  }
+}

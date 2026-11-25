@@ -1,0 +1,1982 @@
+{
+  "com/dhanantry/scapeandrunparasites/SRPMain": {
+    "name": "com/dhanantry/scapeandrunparasites/SRPMain",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/dhanantry/scapeandrunparasites/SRPMain",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "srparasites"
+          },
+          "name": {
+            "value": "Scape and Run Parasites"
+          },
+          "version": {
+            "value": "1.9.11"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.dhanantry.scapeandrunparasites.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.dhanantry.scapeandrunparasites.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "PreInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "Init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "Postinit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "Serverinit(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockDod": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockDod",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockEvolutionLure": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockEvolutionLure",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/block/IMetaName"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockEvolutionLure$EnumType": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockEvolutionLure$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockGore": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockGore",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/block/IMetaName"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockGore$EnumType": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockGore$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockInfestedBush": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockInfestedBush",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/block/IMetaName"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockInfestedBush$EnumType": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockInfestedBush$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteBush": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteBush",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/block/IMetaName"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteBush$EnumType": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteBush$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteCanister": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteCanister",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/block/IMetaName"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteCanister$EnumType": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteCanister$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteRubble": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteRubble",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/block/IMetaName"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteRubble$EnumType": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteRubble$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteRubbleDense": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteRubbleDense",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/block/IMetaName"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteRubbleDense$EnumType": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteRubbleDense$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteSapling": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteSapling",
+    "interfaces": [
+      "net/minecraft/block/IGrowable",
+      "com/dhanantry/scapeandrunparasites/block/IMetaName"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteSapling$EnumType": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteSapling$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteStain": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteStain",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/block/IMetaName"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteStain$EnumType": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteStain$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteTrunk": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteTrunk",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/block/IMetaName"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockParasiteTrunk$EnumType": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockParasiteTrunk$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockSlabBase$EnumType": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockSlabBase$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockWebBase": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockWebBase",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/block/IMetaName"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/block/BlockWebBase$EnumType": {
+    "name": "com/dhanantry/scapeandrunparasites/block/BlockWebBase$EnumType",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/client/particle/ParticleEen$Factory": {
+    "name": "com/dhanantry/scapeandrunparasites/client/particle/ParticleEen$Factory",
+    "interfaces": [
+      "net/minecraft/client/particle/IParticleFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/client/particle/ParticleFog$Factory": {
+    "name": "com/dhanantry/scapeandrunparasites/client/particle/ParticleFog$Factory",
+    "interfaces": [
+      "net/minecraft/client/particle/IParticleFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/client/particle/ParticleSpore$Factory": {
+    "name": "com/dhanantry/scapeandrunparasites/client/particle/ParticleSpore$Factory",
+    "interfaces": [
+      "net/minecraft/client/particle/IParticleFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/client/renderer/entity/awakened/LayerOroncoAW": {
+    "name": "com/dhanantry/scapeandrunparasites/client/renderer/entity/awakened/LayerOroncoAW",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/client/renderer/entity/layer/LayerSnow": {
+    "name": "com/dhanantry/scapeandrunparasites/client/renderer/entity/layer/LayerSnow",
+    "interfaces": [
+      "net/minecraft/client/renderer/entity/layers/LayerRenderer"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/EntityAIAvoidEntityStatus$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/EntityAIAvoidEntityStatus$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/EntityAINearestAttackableTargetStatus$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/EntityAINearestAttackableTargetStatus$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/EntityAINearestAttackableTargetStatus$Sorter": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/EntityAINearestAttackableTargetStatus$Sorter",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPAdapted$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPAdapted$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPAncient$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPAncient$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPInfected$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPInfected$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPPreeminent": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPPreeminent",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanSummon"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPPreeminent$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPPreeminent$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPPrimitive$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPPrimitive$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPPure": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPPure",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanSummon"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPPure$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPPure$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPStationary$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPStationary$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPStationaryArchitect": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityPStationaryArchitect",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanSummon"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityParasiteBase$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityParasiteBase$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/adapted/EntityBanoAdapted": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/adapted/EntityBanoAdapted",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/adapted/EntityCanraAdapted": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/adapted/EntityCanraAdapted",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanSummon",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/adapted/EntityEmanaAdapted": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/adapted/EntityEmanaAdapted",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanShoot"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/adapted/EntityNoglaAdapted": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/adapted/EntityNoglaAdapted",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/adapted/EntityRanracAdapted": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/adapted/EntityRanracAdapted",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/adapted/EntityShycoAdapted": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/adapted/EntityShycoAdapted",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanClimb"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/ancient/EntityDharma": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/ancient/EntityDharma",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts",
+      "net/minecraft/entity/IRangedAttackMob",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/ancient/EntityOronco": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/ancient/EntityOronco",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanShoot"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/ancient/EntityTerla": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/ancient/EntityTerla",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts",
+      "net/minecraft/entity/IRangedAttackMob",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityCrux": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityCrux",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityCrux$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityCrux$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityHeed": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityHeed",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityHeed$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityHeed$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityHost": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityHost",
+    "interfaces": [
+      "net/minecraft/entity/IRangedAttackMob",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityHost$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityHost$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityHostII": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityHostII",
+    "interfaces": [
+      "net/minecraft/entity/IRangedAttackMob",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityHostII$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityHostII$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityInhooM$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityInhooM$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityInhooS$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityInhooS$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityLesh$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityLesh$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityMes$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/crude/EntityMes$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/deterrent/EntityTonro": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/deterrent/EntityTonro",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/deterrent/EntityUnvo": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/deterrent/EntityUnvo",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanShoot"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/deterrent/nexus/EntityDodSIV": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/deterrent/nexus/EntityDodSIV",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/deterrent/nexus/EntityVenkrolSIV": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/deterrent/nexus/EntityVenkrolSIV",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/focused/EntityShycoFocused": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/focused/EntityShycoFocused",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanClimb"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityButhol$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityButhol$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityLodo$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityLodo$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityMudo$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityMudo$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityMudo$2": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityMudo$2",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityMudo$3": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityMudo$3",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityMudo$4": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityMudo$4",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityNuuh$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityNuuh$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityRathol$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/inborn/EntityRathol$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityDorpa": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityDorpa",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanShoot"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfBear": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfBear",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanMelt"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfCow": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfCow",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanMelt"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfCowHead$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfCowHead$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfDragonE": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfDragonE",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfHorse": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfHorse",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanMelt"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfHorseHead$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfHorseHead$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfHuman": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfHuman",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanMelt"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfHumanHead$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfHumanHead$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfPig": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfPig",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanMelt"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfPigHead$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfPigHead$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfPlayer": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfPlayer",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanMelt"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfPlayerHead$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfPlayerHead$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfSheep": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfSheep",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanMelt"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfSheepHead$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfSheepHead$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfVillager": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfVillager",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanMelt"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfVillagerHead$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfVillagerHead$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfWolf": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfWolf",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanMelt"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfWolfHead$1": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/infected/EntityInfWolfHead$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/primitive/EntityCanra": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/primitive/EntityCanra",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanSummon"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/primitive/EntityEmana": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/primitive/EntityEmana",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanShoot"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/primitive/EntityLum": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/primitive/EntityLum",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanFly",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/primitive/EntityShyco": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/primitive/EntityShyco",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/pure/EntityAlafha": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/pure/EntityAlafha",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanShoot"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/pure/EntityAnged": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/pure/EntityAnged",
+    "interfaces": [
+      "net/minecraft/entity/IRangedAttackMob",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/pure/EntityEsor": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/pure/EntityEsor",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/pure/EntityFlog": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/pure/EntityFlog",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/pure/EntityGanro": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/pure/EntityGanro",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/pure/EntityOrch": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/pure/EntityOrch",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanShoot"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/pure/preeminent/EntityElvia": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/pure/preeminent/EntityElvia",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanShoot"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/pure/preeminent/EntityLencia": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/pure/preeminent/EntityLencia",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanShoot"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/pure/preeminent/EntityPheon": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/pure/preeminent/EntityPheon",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts",
+      "net/minecraft/entity/IRangedAttackMob",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCutomAttack",
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityCanShoot"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/monster/pure/preeminent/EntityVesta": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/monster/pure/preeminent/EntityVesta",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/entity/ai/misc/EntityBodyParts"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/tile/TileEntityCanister": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/tile/TileEntityCanister",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/entity/tile/TileEntityDod": {
+    "name": "com/dhanantry/scapeandrunparasites/entity/tile/TileEntityDod",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/init/SRPBiomes$RegistrationHandler": {
+    "name": "com/dhanantry/scapeandrunparasites/init/SRPBiomes$RegistrationHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/dhanantry/scapeandrunparasites/init/SRPBiomes$RegistrationHandler",
+        "values": {
+          "modid": {
+            "value": "srparasites"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEvent(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/init/SRPBlocks$RegistrationHandler": {
+    "name": "com/dhanantry/scapeandrunparasites/init/SRPBlocks$RegistrationHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/dhanantry/scapeandrunparasites/init/SRPBlocks$RegistrationHandler",
+        "values": {
+          "modid": {
+            "value": "srparasites"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEvent(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItemBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/init/SRPEntities$RegistrationHandler": {
+    "name": "com/dhanantry/scapeandrunparasites/init/SRPEntities$RegistrationHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/dhanantry/scapeandrunparasites/init/SRPEntities$RegistrationHandler",
+        "values": {
+          "modid": {
+            "value": "srparasites"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEvent(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/init/SRPItems$RegistrationHandler": {
+    "name": "com/dhanantry/scapeandrunparasites/init/SRPItems$RegistrationHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/dhanantry/scapeandrunparasites/init/SRPItems$RegistrationHandler",
+        "values": {
+          "modid": {
+            "value": "srparasites"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/init/SRPPotions$RegistrationHandler": {
+    "name": "com/dhanantry/scapeandrunparasites/init/SRPPotions$RegistrationHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/dhanantry/scapeandrunparasites/init/SRPPotions$RegistrationHandler",
+        "values": {
+          "modid": {
+            "value": "srparasites"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEventE(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEventP(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/init/SRPSounds$RegistrationHandler": {
+    "name": "com/dhanantry/scapeandrunparasites/init/SRPSounds$RegistrationHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/dhanantry/scapeandrunparasites/init/SRPSounds$RegistrationHandler",
+        "values": {
+          "modid": {
+            "value": "srparasites"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerSoundEvents(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/init/SRPSpawning$DimensionHandler": {
+    "name": "com/dhanantry/scapeandrunparasites/init/SRPSpawning$DimensionHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/dhanantry/scapeandrunparasites/init/SRPSpawning$DimensionHandler",
+        "values": {
+          "modid": {
+            "value": "srparasites"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSpawn(Lnet/minecraftforge/event/entity/living/LivingSpawnEvent$CheckSpawn;)V"
+      }
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/item/ItemNodeColonyCompass$1": {
+    "name": "com/dhanantry/scapeandrunparasites/item/ItemNodeColonyCompass$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/item/tool/WeaponToolArmorBase$1": {
+    "name": "com/dhanantry/scapeandrunparasites/item/tool/WeaponToolArmorBase$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/item/tool/WeaponToolMeleeBase": {
+    "name": "com/dhanantry/scapeandrunparasites/item/tool/WeaponToolMeleeBase",
+    "interfaces": [
+      "com/dhanantry/scapeandrunparasites/item/tool/IHaveReach"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/item/tool/WeaponToolMeleeBase$1": {
+    "name": "com/dhanantry/scapeandrunparasites/item/tool/WeaponToolMeleeBase$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/item/tool/WeaponToolRangeBase$1": {
+    "name": "com/dhanantry/scapeandrunparasites/item/tool/WeaponToolRangeBase$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/item/tool/WeaponToolRangeBase$2": {
+    "name": "com/dhanantry/scapeandrunparasites/item/tool/WeaponToolRangeBase$2",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/item/tool/WeaponToolRangeBase$3": {
+    "name": "com/dhanantry/scapeandrunparasites/item/tool/WeaponToolRangeBase$3",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPCommand": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPCommand",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPCommandColony": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPCommandColony",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPCommandEvolution": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPCommandEvolution",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPCommandNode": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPCommandNode",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPCommandRoot": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPCommandRoot",
+    "interfaces": [
+      "net/minecraft/command/ICommand"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketBiomeChange": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketBiomeChange",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketBiomeChange$Handler": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketBiomeChange$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketEntityBodyDead": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketEntityBodyDead",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketEntityBodyDead$Handler": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketEntityBodyDead$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketEntityBodyHit": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketEntityBodyHit",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketEntityBodyHit$Handler": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketEntityBodyHit$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketEntityBodyHit$Handler$1": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketEntityBodyHit$Handler$1",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketFog": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketFog",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketFog$Handler": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketFog$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketMeleeRange": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketMeleeRange",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketMeleeRange$Handler": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketMeleeRange$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketMeleeRange$Handler$1": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketMeleeRange$Handler$1",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketMovingSound": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketMovingSound",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketMovingSound$Handler": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketMovingSound$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketParticle": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketParticle",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/network/SRPPacketParticle$Handler": {
+    "name": "com/dhanantry/scapeandrunparasites/network/SRPPacketParticle$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPEventHandlerBus": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPEventHandlerBus",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/NORMAL"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEvent(Lnet/minecraftforge/client/event/EntityViewRenderEvent$FogDensity;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/NORMAL"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEvent(Lnet/minecraftforge/client/event/EntityViewRenderEvent$FogColors;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/NORMAL"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "cropGrow(Lnet/minecraftforge/event/world/BlockEvent$CropGrowEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityHeal(Lnet/minecraftforge/event/entity/living/LivingHealEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityHurt(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "stitchEventPre(Lnet/minecraftforge/client/event/TextureStitchEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerFishing(Lnet/minecraftforge/event/entity/player/ItemFishedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "itemEntity(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "itemPlayer(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Start;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "blockPlayer(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "entityPlayer(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteractSpecific;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "guiPlayer(Lnet/minecraftforge/client/event/GuiOpenEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/NORMAL"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "mobFear(Lnet/minecraftforge/event/entity/living/LivingDamageEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntitySpawn(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "serverTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/NORMAL"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "setLoot(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/NORMAL"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerUp(Lnet/minecraftforge/event/entity/player/PlayerWakeUpEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "worldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/NORMAL"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "light(Lnet/minecraftforge/event/entity/EntityStruckByLightningEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEvent(Lnet/minecraftforge/client/event/MouseEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/NORMAL"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPEventHandlerTerrainGen": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPEventHandlerTerrainGen",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "allowTreeGrowthTick(Lnet/minecraftforge/event/terraingen/SaplingGrowTreeEvent;)V"
+      }
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRegisterModels": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRegisterModels",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRegisterModels",
+        "value": {
+          "type": "ENUM",
+          "values": [
+            "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRegisterModels$1": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRegisterModels$1",
+    "interfaces": [
+      "net/minecraft/client/renderer/ItemMeshDefinition"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$1": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$1",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$10": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$10",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$100": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$100",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$101": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$101",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$102": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$102",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$103": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$103",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$104": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$104",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$105": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$105",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$106": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$106",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$107": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$107",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$108": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$108",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$109": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$109",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$11": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$11",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$110": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$110",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$12": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$12",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$13": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$13",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$14": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$14",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$15": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$15",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$16": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$16",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$17": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$17",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$18": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$18",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$19": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$19",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$2": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$2",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$20": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$20",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$21": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$21",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$22": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$22",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$23": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$23",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$24": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$24",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$25": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$25",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$26": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$26",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$27": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$27",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$28": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$28",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$29": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$29",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$3": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$3",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$30": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$30",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$31": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$31",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$32": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$32",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$33": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$33",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$34": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$34",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$35": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$35",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$36": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$36",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$37": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$37",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$38": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$38",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$39": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$39",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$4": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$4",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$40": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$40",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$41": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$41",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$42": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$42",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$43": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$43",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$44": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$44",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$45": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$45",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$46": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$46",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$47": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$47",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$48": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$48",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$49": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$49",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$5": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$5",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$50": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$50",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$51": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$51",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$52": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$52",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$53": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$53",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$54": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$54",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$55": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$55",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$56": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$56",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$57": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$57",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$58": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$58",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$59": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$59",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$6": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$6",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$60": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$60",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$61": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$61",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$62": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$62",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$63": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$63",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$64": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$64",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$65": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$65",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$66": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$66",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$67": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$67",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$68": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$68",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$69": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$69",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$7": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$7",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$70": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$70",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$71": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$71",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$72": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$72",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$73": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$73",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$74": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$74",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$75": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$75",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$76": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$76",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$77": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$77",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$78": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$78",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$79": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$79",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$8": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$8",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$80": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$80",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$81": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$81",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$82": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$82",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$83": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$83",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$84": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$84",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$85": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$85",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$86": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$86",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$87": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$87",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$88": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$88",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$89": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$89",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$9": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$9",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$90": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$90",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$91": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$91",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$92": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$92",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$93": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$93",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$94": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$94",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$95": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$95",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$96": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$96",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$97": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$97",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$98": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$98",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$99": {
+    "name": "com/dhanantry/scapeandrunparasites/util/handlers/SRPRenderHandler$99",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/dhanantry/scapeandrunparasites/world/gen/WorldGenCustomStructures": {
+    "name": "com/dhanantry/scapeandrunparasites/world/gen/WorldGenCustomStructures",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  }
+}

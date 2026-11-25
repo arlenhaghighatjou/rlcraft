@@ -1,0 +1,9 @@
+{
+  "parent": "block/upper_slab",
+  "textures": {
+    "particle": "srparasites:blocks/parasiterubble_bone_down",
+    "bottom": "srparasites:blocks/parasiterubble_bone_down",
+    "top": "srparasites:blocks/parasiterubble_bone_up",
+    "side": "srparasites:blocks/parasiterubble_bone_side"
+  }
+}

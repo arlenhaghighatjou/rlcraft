@@ -1,0 +1,12 @@
+{ "_comment": ["Chestplate with auto regulating temperature liner" ],
+  "result": {
+    "item": "minecraft:golden_chestplate",
+    "nbt": {"carrots:ArmorXLining":"TEMPERATURE_REGULATOR"}
+  },
+  "type": "armorunder:autoreg_armor_shapeless",
+  "modifier": 0,
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemChestplate" },
+    { "item": "armorunder:auto_chestplate_liner" }
+  ]
+}

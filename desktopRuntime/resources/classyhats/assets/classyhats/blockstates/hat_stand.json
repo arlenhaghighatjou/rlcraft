@@ -1,0 +1,16 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "material": {
+            "oak": { "model": "classyhats:hat_stand_oak" },
+            "spruce": { "model": "classyhats:hat_stand_spruce" },
+            "birch": { "model": "classyhats:hat_stand_birch" },
+            "jungle": { "model": "classyhats:hat_stand_jungle" },
+            "acacia": { "model": "classyhats:hat_stand_acacia" },
+            "dark_oak": { "model": "classyhats:hat_stand_dark_oak" },
+            "stone": { "model": "classyhats:hat_stand_stone" },
+            "quartz": { "model": "classyhats:hat_stand_quartz" },
+            "obsidian": { "model": "classyhats:hat_stand_obsidian" }
+        }
+    }
+}

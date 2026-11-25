@@ -1,0 +1,27 @@
+{
+	"modListVersion": 2,
+	"modList": [
+		{
+			"modid": "betternether",
+			"name": "Better Nether",
+			"description": "Mod that improves Nether",
+			"mcversion": "1.12.2",
+			"version": "0.1.8.6",
+			"authorList": ["paulevs"],
+			"credits": "
+ -> §bpaulevs§r (programming, art, ideas, ru/en translations),
+ -> §3edos_§r (builder, design help),
+ -> §9yorusora_nk§r (chinese translation),
+ -> §9kralrindo1§r (turkish translation)",
+			"dependants": [],
+			"dependencies": [ "forge@[14.23.4.2705,)" ],
+			"parent": "",
+			"requiredMods": [ "forge@[14.23.4.2705,)" ],
+			"logoFile": "logo.png",
+			"screenshots": [],
+			"updateUrl": "https://www.curseforge.com/minecraft/mc-mods/betternether/files",
+			"url": "https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/wip-mods/2930448-better-nether",
+			"useDependencyInformation": true
+		}
+	]
+}

@@ -1,0 +1,56 @@
+package com.teamacronymcoders.contenttweaker.modules.materials.materialparts;
+
+import com.teamacronymcoders.contenttweaker.api.ctobjects.color.CTColor;
+import com.teamacronymcoders.contenttweaker.modules.materials.materialpartdata.IMaterialPartData;
+import com.teamacronymcoders.contenttweaker.modules.materials.materials.IMaterial;
+import com.teamacronymcoders.contenttweaker.modules.materials.parts.IPart;
+import crafttweaker.annotations.ZenRegister;
+import crafttweaker.api.item.IItemStack;
+import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenMethod;
+
+@ZenRegister
+@ZenClass("mods.contenttweaker.MaterialPart")
+public interface IMaterialPart {
+   @ZenMethod
+   String getName();
+
+   @ZenMethod
+   String getLocalizedName();
+
+   @ZenMethod
+   boolean hasEffect();
+
+   @ZenMethod
+   IMaterial getMaterial();
+
+   @ZenMethod
+   IPart getPart();
+
+   @ZenMethod
+   IItemStack getItemStack();
+
+   @ZenMethod
+   String getTextureLocation();
+
+   @ZenMethod
+   void setTextureLocation(String var1);
+
+   @ZenMethod
+   int getColor();
+
+   @ZenMethod
+   CTColor getCTColor();
+
+   @ZenMethod
+   boolean hasOverlay();
+
+   @ZenMethod
+   boolean isColorized();
+
+   @ZenMethod
+   void setColorized(boolean var1);
+
+   @ZenMethod
+   IMaterialPartData getData();
+}

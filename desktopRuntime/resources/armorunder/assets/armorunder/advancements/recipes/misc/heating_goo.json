@@ -1,0 +1,21 @@
+{
+  "parent": "armorunder:recipes/root",
+  "rewards": {
+    "recipes": [ "armorunder:heating_goo" ]
+  },
+  "criteria": {
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+        "conditions": { "recipe": "armorunder:heating_goo" }
+    },
+    "has_magma_blocks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { 
+        "items": [ {"item": "minecraft:magma"} ] 
+      }
+    }
+  },
+  "requirements": [
+    [ "has_the_recipe", "has_magma_blocks" ]
+  ]
+}

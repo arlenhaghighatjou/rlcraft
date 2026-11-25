@@ -1,0 +1,3502 @@
+{
+  "com/charles445/simpledifficulty/SimpleDifficulty": {
+    "name": "com/charles445/simpledifficulty/SimpleDifficulty",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/charles445/simpledifficulty/SimpleDifficulty",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12, 1.13)"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2859,);"
+          },
+          "modid": {
+            "value": "simpledifficulty"
+          },
+          "name": {
+            "value": "SimpleDifficulty"
+          },
+          "updateJSON": {
+            "value": "https://raw.githubusercontent.com/Charles445/SimpleDifficulty/master/modupdatechecker.json"
+          },
+          "version": {
+            "value": "0.3.9"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "simpledifficulty"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.charles445.simpledifficulty.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.charles445.simpledifficulty.proxy.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "loadComplete(Lnet/minecraftforge/fml/common/event/FMLLoadCompleteEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/api/SDCapabilities": {
+    "name": "com/charles445/simpledifficulty/api/SDCapabilities",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "TEMPERATURE",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/charles445/simpledifficulty/api/temperature/ITemperatureCapability;"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "THIRST",
+        "value": {
+          "type": "CLASS",
+          "value": "Lcom/charles445/simpledifficulty/api/thirst/IThirstCapability;"
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/api/config/ClientOptions": {
+    "name": "com/charles445/simpledifficulty/api/config/ClientOptions",
+    "interfaces": [
+      "com/charles445/simpledifficulty/api/config/IConfigOption"
+    ]
+  },
+  "com/charles445/simpledifficulty/api/config/ServerOptions": {
+    "name": "com/charles445/simpledifficulty/api/config/ServerOptions",
+    "interfaces": [
+      "com/charles445/simpledifficulty/api/config/IConfigOption"
+    ]
+  },
+  "com/charles445/simpledifficulty/api/config/json/JsonPropertyTemperature": {
+    "name": "com/charles445/simpledifficulty/api/config/json/JsonPropertyTemperature",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "properties",
+        "value": {
+          "value": "properties"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "temperature",
+        "value": {
+          "value": "temperature"
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/api/config/json/JsonTemperature": {
+    "name": "com/charles445/simpledifficulty/api/config/json/JsonTemperature",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/gson/annotations/SerializedName;",
+        "target": "temperature",
+        "value": {
+          "value": "temperature"
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/asm/CoreLoader": {
+    "name": "com/charles445/simpledifficulty/asm/CoreLoader",
+    "interfaces": [
+      "net/minecraftforge/fml/relauncher/IFMLLoadingPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$Name;",
+        "target": "com/charles445/simpledifficulty/asm/CoreLoader",
+        "value": {
+          "value": "SimpleDifficulty ASM"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$SortingIndex;",
+        "target": "com/charles445/simpledifficulty/asm/CoreLoader",
+        "value": {
+          "type": "INT",
+          "value": "1001"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$TransformerExclusions;",
+        "target": "com/charles445/simpledifficulty/asm/CoreLoader",
+        "value": {
+          "values": [
+            "com.charles445.simpledifficulty.asm",
+            "com.charles445.simpledifficulty.asm."
+          ]
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/asm/SimpleDifficultyASM": {
+    "name": "com/charles445/simpledifficulty/asm/SimpleDifficultyASM",
+    "interfaces": [
+      "net/minecraft/launchwrapper/IClassTransformer"
+    ]
+  },
+  "com/charles445/simpledifficulty/asm/helper/InsnComparator": {
+    "name": "com/charles445/simpledifficulty/asm/helper/InsnComparator",
+    "interfaces": [
+      "java/util/Comparator",
+      "java/io/Serializable"
+    ]
+  },
+  "com/charles445/simpledifficulty/block/BlockCampfire": {
+    "name": "com/charles445/simpledifficulty/block/BlockCampfire",
+    "interfaces": [
+      "com/charles445/simpledifficulty/block/IBlockStateIgnore"
+    ]
+  },
+  "com/charles445/simpledifficulty/capability/TemperatureCapability": {
+    "name": "com/charles445/simpledifficulty/capability/TemperatureCapability",
+    "interfaces": [
+      "com/charles445/simpledifficulty/api/temperature/ITemperatureCapability"
+    ]
+  },
+  "com/charles445/simpledifficulty/capability/TemperatureProvider": {
+    "name": "com/charles445/simpledifficulty/capability/TemperatureProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "com/charles445/simpledifficulty/capability/TemperatureStorage": {
+    "name": "com/charles445/simpledifficulty/capability/TemperatureStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/charles445/simpledifficulty/capability/ThirstCapability": {
+    "name": "com/charles445/simpledifficulty/capability/ThirstCapability",
+    "interfaces": [
+      "com/charles445/simpledifficulty/api/thirst/IThirstCapability"
+    ]
+  },
+  "com/charles445/simpledifficulty/capability/ThirstProvider": {
+    "name": "com/charles445/simpledifficulty/capability/ThirstProvider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "com/charles445/simpledifficulty/capability/ThirstStorage": {
+    "name": "com/charles445/simpledifficulty/capability/ThirstStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "com/charles445/simpledifficulty/client/command/ClientCommandBase": {
+    "name": "com/charles445/simpledifficulty/client/command/ClientCommandBase",
+    "interfaces": [
+      "net/minecraftforge/client/IClientCommand"
+    ]
+  },
+  "com/charles445/simpledifficulty/client/gui/TemperatureGui": {
+    "name": "com/charles445/simpledifficulty/client/gui/TemperatureGui",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPreRenderGameOverlay(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/client/gui/TemperatureInfoGui": {
+    "name": "com/charles445/simpledifficulty/client/gui/TemperatureInfoGui",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPostRenderGameOverlay(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/client/gui/ThirstGui": {
+    "name": "com/charles445/simpledifficulty/client/gui/ThirstGui",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPreRenderGameOverlay(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/compat/CompatRightClick$1": {
+    "name": "com/charles445/simpledifficulty/compat/CompatRightClick$1",
+    "interfaces": [
+      "com/charles445/simpledifficulty/compat/CompatRightClick$IRightClick"
+    ]
+  },
+  "com/charles445/simpledifficulty/compat/HasShadows": {
+    "name": "com/charles445/simpledifficulty/compat/HasShadows",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "com/charles445/simpledifficulty/compat/mod/InspirationsHandler$CanteenRecipe": {
+    "name": "com/charles445/simpledifficulty/compat/mod/InspirationsHandler$CanteenRecipe",
+    "interfaces": [
+      "com/charles445/simpledifficulty/compat/shadow/InspirationsShadow$ICauldronRecipe"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcom/charles445/simpledifficulty/compat/HasShadows;",
+        "target": "com/charles445/simpledifficulty/compat/mod/InspirationsHandler$CanteenRecipe"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/compat/mod/InspirationsHandler$InspirationsRightClickCauldron": {
+    "name": "com/charles445/simpledifficulty/compat/mod/InspirationsHandler$InspirationsRightClickCauldron",
+    "interfaces": [
+      "com/charles445/simpledifficulty/compat/CompatRightClick$IRightClick"
+    ]
+  },
+  "com/charles445/simpledifficulty/compat/mod/OreExcavationHandler": {
+    "name": "com/charles445/simpledifficulty/compat/mod/OreExcavationHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBreak(Ljava/lang/Object;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/config/ModConfig": {
+    "name": "com/charles445/simpledifficulty/config/ModConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "com/charles445/simpledifficulty/config/ModConfig",
+        "values": {
+          "modid": {
+            "value": "simpledifficulty"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "client",
+        "value": {
+          "values": [
+            "Client configuration"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "client",
+        "value": {
+          "value": "Client"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "server",
+        "value": {
+          "values": [
+            "Server configuration"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "server",
+        "value": {
+          "value": "Server"
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/config/ModConfig$ConfigClientConfig": {
+    "name": "com/charles445/simpledifficulty/config/ModConfig$ConfigClientConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thermometer",
+        "value": {
+          "values": [
+            "Thermometer Configuration"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thermometer",
+        "value": {
+          "value": "Thermometer"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "alternateTemp",
+        "value": {
+          "values": [
+            "Whether the alternate temperature display is enabled"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "alternateTemp",
+        "value": {
+          "value": "AlternateTemperature"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "drawThirstSaturation",
+        "value": {
+          "values": [
+            "Whether to draw thirst saturation on the HUD"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "drawThirstSaturation",
+        "value": {
+          "value": "DrawThirstSaturation"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "clientdebug",
+        "value": {
+          "values": [
+            "Debug mode for clients"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "clientdebug",
+        "value": {
+          "value": "Client DebugMode"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "temperatureReadout",
+        "value": {
+          "values": [
+            "Debug temperature readout"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "temperatureReadout",
+        "value": {
+          "value": "TemperatureReadout"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "classicHUDTemperature",
+        "value": {
+          "values": [
+            "Enables the classic temperature icon"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "classicHUDTemperature",
+        "value": {
+          "value": "ClassicHUDTemperature"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "classicHUDThirst",
+        "value": {
+          "values": [
+            "Enables the classic thirst bar"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "classicHUDThirst",
+        "value": {
+          "value": "ClassicHUDThirst"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "heaterParticles",
+        "value": {
+          "values": [
+            "Enables chiller and heater particles"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "heaterParticles",
+        "value": {
+          "value": "HeaterParticles"
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/config/ModConfig$ConfigClientConfig$ConfigClientThermometer": {
+    "name": "com/charles445/simpledifficulty/config/ModConfig$ConfigClientConfig$ConfigClientThermometer",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableThermometer",
+        "value": {
+          "values": [
+            "Whether thermometers display the correct temperature. Only disable this if you are trying to determine what\u0027s lagging."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enableThermometer",
+        "value": {
+          "value": "EnableThermometer"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "hudThermometer",
+        "value": {
+          "values": [
+            "Whether thermometers in your inventory will display on your HUD"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "hudThermometer",
+        "value": {
+          "value": "HUDThermometer"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "hudThermometerX",
+        "value": {
+          "values": [
+            "How far left or right the Thermometer HUD is from the default position"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "hudThermometerX",
+        "value": {
+          "value": "XOffset"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "hudThermometerY",
+        "value": {
+          "values": [
+            "How far up or down the Thermometer HUD is from the default position"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "hudThermometerY",
+        "value": {
+          "value": "YOffset"
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/config/ModConfig$ConfigServerConfig": {
+    "name": "com/charles445/simpledifficulty/config/ModConfig$ConfigServerConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "compatibility",
+        "value": {
+          "values": [
+            "Built-in mod compatibility options"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "compatibility",
+        "value": {
+          "value": "Compatibility"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "miscellaneous",
+        "value": {
+          "values": [
+            "Miscellaneous gameplay configurations"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "miscellaneous",
+        "value": {
+          "value": "Miscellaneous"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "temperature",
+        "value": {
+          "values": [
+            "Temperature related configurations"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "temperature",
+        "value": {
+          "value": "Temperature"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirst",
+        "value": {
+          "values": [
+            "Thirst related configurations"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirst",
+        "value": {
+          "value": "Thirst"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstEnabled",
+        "value": {
+          "values": [
+            "Whether thirst is enabled."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstEnabled",
+        "value": {
+          "value": "ThirstEnabled"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstDrinkBlocks",
+        "value": {
+          "values": [
+            "Whether the player is allowed to drink from normal water blocks."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstDrinkBlocks",
+        "value": {
+          "value": "ThirstDrinkBlocks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstDrinkRain",
+        "value": {
+          "values": [
+            "Whether the player is allowed to drink from the rain."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstDrinkRain",
+        "value": {
+          "value": "ThirstDrinkRain"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "peacefulDanger",
+        "value": {
+          "values": [
+            "Whether the mod should be dangerous on Peaceful difficulty."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "peacefulDanger",
+        "value": {
+          "value": "PeacefulDanger"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "temperatureEnabled",
+        "value": {
+          "values": [
+            "Whether temperature is enabled."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "temperatureEnabled",
+        "value": {
+          "value": "TemperatureEnabled"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "temperatureTEEnabled",
+        "value": {
+          "values": [
+            "Whether temperature tile entities are enabled."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "temperatureTEEnabled",
+        "value": {
+          "value": "TemperatureTileEntities"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "canteenDoses",
+        "value": {
+          "values": [
+            "Maximum number of doses in a canteen"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "canteenDoses",
+        "value": {
+          "value": "CanteenDoses"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "canteenDoses",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "strictHeaters",
+        "value": {
+          "values": [
+            "Whether heaters and chillers only work indoors"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "strictHeaters",
+        "value": {
+          "value": "StrictHeaters"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "ironCanteenDoses",
+        "value": {
+          "values": [
+            "Maximum number of doses in an iron canteen"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "ironCanteenDoses",
+        "value": {
+          "value": "IronCanteenDoses"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "ironCanteenDoses",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "infinitePurifiedWater",
+        "value": {
+          "values": [
+            "Whether purified water blocks are infinite"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "infinitePurifiedWater",
+        "value": {
+          "value": "Infinite Purified Water"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "debug",
+        "value": {
+          "values": [
+            "Spams chat with debug messages, do not enable this unless you are testing!"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "debug",
+        "value": {
+          "value": "DebugMode"
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/config/ModConfig$ConfigServerConfig$ConfigMiscellaneous": {
+    "name": "com/charles445/simpledifficulty/config/ModConfig$ConfigServerConfig$ConfigMiscellaneous",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "campfireDecayChance",
+        "value": {
+          "values": [
+            "Campfire has a 1/X chance to lose fuel when ticked (default is 2, a 1/2 chance"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "campfireDecayChance",
+        "value": {
+          "value": "CampfireDecayChance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "campfireDecayChance",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "campfireStickIgniteChance",
+        "value": {
+          "values": [
+            "Campfire has a 1/X chance to ignite with a stick (default is 5, a 1/5 chance"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "campfireStickIgniteChance",
+        "value": {
+          "value": "CampfireStickIgniteChance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "campfireStickIgniteChance",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "campfireSpitDelay",
+        "value": {
+          "values": [
+            "How many seconds it takes for a campfire spit to cook food"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "campfireSpitDelay",
+        "value": {
+          "value": "CampfireSpitDelay"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "campfireSpitDelay",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "campfireSpitSize",
+        "value": {
+          "values": [
+            "How many pieces of food can fit on a campfire spit (any existing spits won\u0027t change size)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "campfireSpitSize",
+        "value": {
+          "value": "CampfireSpitSize"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "campfireSpitSize",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "10"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "campfireSpitExperience",
+        "value": {
+          "values": [
+            "Should cooking food on a campfire spit give experience like a furnace"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "campfireSpitExperience",
+        "value": {
+          "value": "CampfireSpitExperience"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "campfireSpitBlacklist",
+        "value": {
+          "values": [
+            "Blacklisted items in the campfire spit (ex. minecraft:beef"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "campfireSpitBlacklist",
+        "value": {
+          "value": "CampfireSpitBlacklist"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "campfireSpitBlacklistIsWhitelist",
+        "value": {
+          "values": [
+            "Whether the campfire spit blacklist is a whitelist instead"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "campfireSpitBlacklistIsWhitelist",
+        "value": {
+          "value": "CampfireSpitBlacklistIsWhitelist"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "goldenAppleJuiceEffect",
+        "value": {
+          "values": [
+            "Whether Golden Apple Juice gives the golden apple effect"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "goldenAppleJuiceEffect",
+        "value": {
+          "value": "GoldenAppleJuiceEffect"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "iceDropsChunks",
+        "value": {
+          "values": [
+            "Whether Ice Blocks drop Ice Chunks"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "iceDropsChunks",
+        "value": {
+          "value": "IceDropsChunks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "magmaDropsChunks",
+        "value": {
+          "values": [
+            "Whether Magma Blocks drop Magma Chunks"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "magmaDropsChunks",
+        "value": {
+          "value": "MagmaDropsChunks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "rainCollectorFillChance",
+        "value": {
+          "values": [
+            "Chance for rain collector to fill (1/n chance, default is 6"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "rainCollectorFillChance",
+        "value": {
+          "value": "RainCollectorFillChance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "rainCollectorFillChance",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "registerEnchantments",
+        "value": {
+          "values": [
+            "Whether to register the cooling and heating enchantments"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "registerEnchantments",
+        "value": {
+          "value": "RegisterEnchantments"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "registerEnchantments"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "resistancePotionDurationShort",
+        "value": {
+          "values": [
+            "Duration of short heat/cold resistance potions, in ticks"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "resistancePotionDurationShort",
+        "value": {
+          "value": "ResistancePotionDurationShort"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "resistancePotionDurationShort"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "resistancePotionDurationShort",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "resistancePotionDurationLong",
+        "value": {
+          "values": [
+            "Duration of long heat/cold resistance potions, in ticks"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "resistancePotionDurationLong",
+        "value": {
+          "value": "ResistancePotionDurationLong"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "resistancePotionDurationLong"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "resistancePotionDurationLong",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "routinePacketDelay",
+        "value": {
+          "values": [
+            "How often player temperature and thirst are regularly synced, in ticks"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "routinePacketDelay",
+        "value": {
+          "value": "RoutinePacketDelay"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "routinePacketDelay",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/config/ModConfig$ConfigServerConfig$ConfigTemperature": {
+    "name": "com/charles445/simpledifficulty/config/ModConfig$ConfigServerConfig$ConfigTemperature",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "altitudeMultiplier",
+        "value": {
+          "values": [
+            "Altitude Temperature Multiplier - How strongly altitude affects temperature"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "altitudeMultiplier",
+        "value": {
+          "value": "AltitudeMultiplier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "altitudeMultiplier"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "biomeMultiplier",
+        "value": {
+          "values": [
+            "Biome Temperature Multiplier - The maximum temperature change in any biome"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "biomeMultiplier",
+        "value": {
+          "value": "BiomeMultiplier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "biomeMultiplier"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "undergroundEffect",
+        "value": {
+          "values": [
+            "Underground Effect - Whether being deep underground reduces some surface temperature effects"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "undergroundEffect",
+        "value": {
+          "value": "UndergroundEffect"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "undergroundEffectCutoff",
+        "value": {
+          "values": [
+            "Underground Effect Cutoff - Y Level where surface temperature effects do nothing"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "undergroundEffectCutoff",
+        "value": {
+          "value": "UndergroundEffectCutoff"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "undergroundEffectCutoff",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "64"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "timeMultiplier",
+        "value": {
+          "values": [
+            "Time Temperature Multiplier - How strongly time affects temperature"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "timeMultiplier",
+        "value": {
+          "value": "TimeMultiplier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "timeMultiplier"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "timeTemperatureDay",
+        "value": {
+          "values": [
+            "Time Temperature Day - Whether time changes temperature during the day"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "timeTemperatureDay",
+        "value": {
+          "value": "TimeTemperatureDay"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "timeTemperatureNight",
+        "value": {
+          "values": [
+            "Time Temperature Night - Whether time changes temperature during the night"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "timeTemperatureNight",
+        "value": {
+          "value": "TimeTemperatureNight"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "timeTemperatureShade",
+        "value": {
+          "values": [
+            "Time Temperature Shade - Effect of shade on time temperature, only applies when time temperature is hot"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "timeTemperatureShade",
+        "value": {
+          "value": "TimeTemperatureShade"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "timeBiomeMultiplier",
+        "value": {
+          "values": [
+            "Time Biome Temperature Multiplier - How strongly different biomes effect day/night temperature"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "timeBiomeMultiplier",
+        "value": {
+          "value": "TimeBiomeMultiplier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "timeBiomeMultiplier",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1000000.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "snowValue",
+        "value": {
+          "values": [
+            "Snow Temperature Value - Effect of snowfall on temperature"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "snowValue",
+        "value": {
+          "value": "SnowValue"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "snowValue"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "sprintingValue",
+        "value": {
+          "values": [
+            "Sprinting Temperature Value - Effect of sprinting on temperature"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "sprintingValue",
+        "value": {
+          "value": "SprintingValue"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "sprintingValue"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "wetValue",
+        "value": {
+          "values": [
+            "Wet Temperature Value - Effect of being wet on temperature"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "wetValue",
+        "value": {
+          "value": "WetValue"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "wetValue"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "temperatureTickMax",
+        "value": {
+          "values": [
+            "Temperature Max Speed - Maximum time in ticks for a player temperature change"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "temperatureTickMax",
+        "value": {
+          "value": "TemperatureTickMax"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "temperatureTickMax",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "20"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "temperatureTickMin",
+        "value": {
+          "values": [
+            "Temperature Min Speed - Minimum time in ticks for a player temperature change"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "temperatureTickMin",
+        "value": {
+          "value": "TemperatureTickMin"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "temperatureTickMin",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "20"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "temperatureTickDangerBoost",
+        "value": {
+          "values": [
+            "TemperatureTickDangerBoost - How much faster in ticks temperature changes happen when escaping dangerous temperatures"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "temperatureTickDangerBoost",
+        "value": {
+          "value": "TemperatureTickDangerBoost"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "temperatureTickDangerBoost",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enchantmentTemperature",
+        "value": {
+          "values": [
+            "Enchantment Temperature Change - Effect of temperature enchantments"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enchantmentTemperature",
+        "value": {
+          "value": "EnchantmentTemperature"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "enchantmentTemperature"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "heaterTemperature",
+        "value": {
+          "values": [
+            "Heater Temperature Change - Strength of heaters / chillers"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "heaterTemperature",
+        "value": {
+          "value": "HeaterTemperature"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "heaterTemperature",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "1000000"
+          },
+          "min": {
+            "type": "INT",
+            "value": "-1000000"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "heaterFullPowerRange",
+        "value": {
+          "values": [
+            "Heater Full Power Range - Distance where a heater / chiller starts to lose strength"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "heaterFullPowerRange",
+        "value": {
+          "value": "HeaterFullPowerRange"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "heaterFullPowerRange",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "50.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "heaterMaxRange",
+        "value": {
+          "values": [
+            "Heater Max Range - Distance where a heater / chiller has no effect"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "heaterMaxRange",
+        "value": {
+          "value": "HeaterMaxRange"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "heaterMaxRange",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "50.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "blocksTilesSeparate",
+        "value": {
+          "values": [
+            "Blocks Tiles Separate - Whether blocks and tile entities should have temperature calculated separately, for example, if this is set to true heaters and campfires will both add their heat individually"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "blocksTilesSeparate",
+        "value": {
+          "value": "BlocksTilesSeparate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "stackingTemperature",
+        "value": {
+          "values": [
+            "Stacking Temperature - Whether multiple blocks in a vicinity should combine their effect"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "stackingTemperature",
+        "value": {
+          "value": "StackingTemperature"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "stackingTemperatureLimit",
+        "value": {
+          "values": [
+            "Stacking Temperature Limit - How much more extreme block temperature can be from stacking temperature"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "stackingTemperatureLimit",
+        "value": {
+          "value": "StackingTemperatureLimit"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "stackingTemperatureLimit",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1000000.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "temperatureDamageScaling",
+        "value": {
+          "values": [
+            "Temperature Damage Scaling - Extra damage from hyperthermia and hypothermia over time"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "temperatureDamageScaling",
+        "value": {
+          "value": "TemperatureDamageScaling"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "temperatureDamageScaling",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "temperatureDamageDuration",
+        "value": {
+          "values": [
+            "TemperatureDamageDuration - Duration in ticks of hypothermia and hyperthermia"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "temperatureDamageDuration",
+        "value": {
+          "value": "TemperatureDamageDuration"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "temperatureDamageDuration",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/config/ModConfig$ConfigServerConfig$ConfigThirst": {
+    "name": "com/charles445/simpledifficulty/config/ModConfig$ConfigServerConfig$ConfigThirst",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstExhaustionLimit",
+        "value": {
+          "values": [
+            "Thirst Exhaustion Limit - How exhausted the player must get before they lose thirst."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstExhaustionLimit",
+        "value": {
+          "value": "ThirstExhaustionLimit"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstExhaustionLimit",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstyStrength",
+        "value": {
+          "values": [
+            "Thirsty Strength - Strength of the Thirsty Effect"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstyStrength",
+        "value": {
+          "value": "ThirstyStrength"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstyStrength",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstAttacking",
+        "value": {
+          "values": [
+            "Thirst Attacking - How exhausting attacking enemies is"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstAttacking",
+        "value": {
+          "value": "ThirstAttacking"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstAttacking",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstBreakBlock",
+        "value": {
+          "values": [
+            "Thirst Break Block - How exhausting breaking blocks is"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstBreakBlock",
+        "value": {
+          "value": "ThirstBreakBlock"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstBreakBlock",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstSprintJump",
+        "value": {
+          "values": [
+            "Thirst Sprint Jump - How exhausting jumping while sprinting is"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstSprintJump",
+        "value": {
+          "value": "ThirstSprintJump"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstSprintJump",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstJump",
+        "value": {
+          "values": [
+            "Thirst Jump - How exhausting jumping without sprinting is"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstJump",
+        "value": {
+          "value": "ThirstJump"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstJump",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstBaseMovement",
+        "value": {
+          "values": [
+            "Thirst Base Movement - How exhausting any kind of movement is"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstBaseMovement",
+        "value": {
+          "value": "ThirstBaseMovement"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstBaseMovement",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstSwimmingMovement",
+        "value": {
+          "values": [
+            "Thirst Swimming Movement - How exhausting swimming movement is"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstSwimmingMovement",
+        "value": {
+          "value": "ThirstSwimmingMovement"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstSwimmingMovement",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstSprintingMovement",
+        "value": {
+          "values": [
+            "Thirst Sprinting Movement - How exhausting sprinting movement is"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstSprintingMovement",
+        "value": {
+          "value": "ThirstSprintingMovement"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstSprintingMovement",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstWalkingMovement",
+        "value": {
+          "values": [
+            "Thirst Walking Movement - How exhausting walking movement is"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstWalkingMovement",
+        "value": {
+          "value": "ThirstWalkingMovement"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstWalkingMovement",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstParasites",
+        "value": {
+          "values": [
+            "Whether the player can get parasites from drinking unclean water"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstParasites",
+        "value": {
+          "value": "ThirstParasites"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstParasitesChance",
+        "value": {
+          "values": [
+            "The chance of parasites from drinking unclean water"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstParasitesChance",
+        "value": {
+          "value": "ThirstParasitesChance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstParasitesChance",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstParasitesDuration",
+        "value": {
+          "values": [
+            "The duration parasites last"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstParasitesDuration",
+        "value": {
+          "value": "ThirstParasitesDuration"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "thirstParasitesDuration",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstParasitesHunger",
+        "value": {
+          "values": [
+            "How strongly parasites make a player hungry (0.005 is same speed as hunger, 0 to disable"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstParasitesHunger",
+        "value": {
+          "value": "ThirstParasitesHunger"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstParasitesHunger",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstParasitesDamage",
+        "value": {
+          "values": [
+            "The chance a player takes damage from parasites (1 is poison speed, 0 to disable)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstParasitesDamage",
+        "value": {
+          "value": "ThirstParasitesDamage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstParasitesDamage",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "thirstDamageScaling",
+        "value": {
+          "values": [
+            "Thirst Damage Scaling - Extra damage from dehydration over time"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "thirstDamageScaling",
+        "value": {
+          "value": "ThirstDamageScaling"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "thirstDamageScaling",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/config/ModConfig$EventHandler": {
+    "name": "com/charles445/simpledifficulty/config/ModConfig$EventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/charles445/simpledifficulty/config/ModConfig$EventHandler",
+        "values": {
+          "modid": {
+            "value": "simpledifficulty"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/config/compat/ConfigServerCompatibility": {
+    "name": "com/charles445/simpledifficulty/config/compat/ConfigServerCompatibility",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "toggles",
+        "value": {
+          "values": [
+            "Built-In Compatibility Toggles - Turn compatibility for mods on or off"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "toggles",
+        "value": {
+          "value": "Built-In Compatibility Toggles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "auw",
+        "value": {
+          "values": [
+            "Armor Underwear Configurations"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "auw",
+        "value": {
+          "value": "Armor Underwear"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "harvestfestival",
+        "value": {
+          "values": [
+            "Harvest Festival Configurations"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "harvestfestival",
+        "value": {
+          "value": "Harvest Festival"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "sereneseasons",
+        "value": {
+          "values": [
+            "Serene Seasons Configurations"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "sereneseasons",
+        "value": {
+          "value": "Serene Seasons"
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/config/compat/ConfigServerCompatibility$ConfigArmorUnderwear": {
+    "name": "com/charles445/simpledifficulty/config/compat/ConfigServerCompatibility$ConfigArmorUnderwear",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "goopakTemperatureModifier",
+        "value": {
+          "values": [
+            "Goopak Temperature Modifier - Effect of a Goopak on temperature (won\u0027t change tooltip)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "goopakTemperatureModifier",
+        "value": {
+          "value": "GoopakTemperatureModifier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "goopakTemperatureModifier",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "goopakMaximumActive",
+        "value": {
+          "values": [
+            "Goopak Maximum Active - How many Goopaks can stack their effects at once"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "goopakMaximumActive",
+        "value": {
+          "value": "GoopakMaximumActive"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "goopakMaximumActive",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "ozzyBaseRange",
+        "value": {
+          "values": [
+            "Ozzy Base Range - The base temperature range of an Ozzy Liner"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "ozzyBaseRange",
+        "value": {
+          "value": "OzzyBaseRange"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "ozzyBaseRange",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "ozzyExtraRange",
+        "value": {
+          "values": [
+            "Ozzy Extra Range - The added temperature range when upgrading an Ozzy Liner"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "ozzyExtraRange",
+        "value": {
+          "value": "OzzyExtraRange"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "ozzyExtraRange",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "linerMultiplier",
+        "value": {
+          "values": [
+            "Liner Multiplier - Multiplier for the effect of normal liners"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "linerMultiplier",
+        "value": {
+          "value": "LinerMultiplier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "linerMultiplier",
+        "values": {
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/config/compat/ConfigServerCompatibility$ConfigHarvestFestival": {
+    "name": "com/charles445/simpledifficulty/config/compat/ConfigServerCompatibility$ConfigHarvestFestival",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonWinter",
+        "value": {
+          "values": [
+            "Season Winter - Temperature change during the Harvest Festival season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonWinter",
+        "value": {
+          "value": "SeasonWinter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonSpring",
+        "value": {
+          "values": [
+            "Season Spring - Temperature change during the Harvest Festival season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonSpring",
+        "value": {
+          "value": "SeasonSpring"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonSummer",
+        "value": {
+          "values": [
+            "Season Summer - Temperature change during the Harvest Festival season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonSummer",
+        "value": {
+          "value": "SeasonSummer"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonAutumn",
+        "value": {
+          "values": [
+            "Season Autumn - Temperature change during the Harvest Festival season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonAutumn",
+        "value": {
+          "value": "SeasonAutumn"
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/config/compat/ConfigServerCompatibility$ConfigSereneSeasons": {
+    "name": "com/charles445/simpledifficulty/config/compat/ConfigServerCompatibility$ConfigSereneSeasons",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonEarlyWinter",
+        "value": {
+          "values": [
+            "Season Early Winter - Temperature change during the Serene Seasons season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonEarlyWinter",
+        "value": {
+          "value": "SeasonEarlyWinter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "seasonEarlyWinter"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonMidWinter",
+        "value": {
+          "values": [
+            "Season Mid Winter - Temperature change during the Serene Seasons season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonMidWinter",
+        "value": {
+          "value": "SeasonMidWinter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "seasonMidWinter"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonLateWinter",
+        "value": {
+          "values": [
+            "Season Late Winter - Temperature change during the Serene Seasons season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonLateWinter",
+        "value": {
+          "value": "SeasonLateWinter"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "seasonLateWinter"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonEarlySpring",
+        "value": {
+          "values": [
+            "Season Early Spring - Temperature change during the Serene Seasons season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonEarlySpring",
+        "value": {
+          "value": "SeasonEarlySpring"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "seasonEarlySpring"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonMidSpring",
+        "value": {
+          "values": [
+            "Season Mid Spring - Temperature change during the Serene Seasons season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonMidSpring",
+        "value": {
+          "value": "SeasonMidSpring"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "seasonMidSpring"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonLateSpring",
+        "value": {
+          "values": [
+            "Season Late Spring - Temperature change during the Serene Seasons season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonLateSpring",
+        "value": {
+          "value": "SeasonLateSpring"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "seasonLateSpring"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonEarlySummer",
+        "value": {
+          "values": [
+            "Season Early Summer - Temperature change during the Serene Seasons season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonEarlySummer",
+        "value": {
+          "value": "SeasonEarlySummer"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "seasonEarlySummer"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonMidSummer",
+        "value": {
+          "values": [
+            "Season Mid Summer - Temperature change during the Serene Seasons season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonMidSummer",
+        "value": {
+          "value": "SeasonMidSummer"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "seasonMidSummer"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonLateSummer",
+        "value": {
+          "values": [
+            "Season Late Summer - Temperature change during the Serene Seasons season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonLateSummer",
+        "value": {
+          "value": "SeasonLateSummer"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "seasonLateSummer"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonEarlyAutumn",
+        "value": {
+          "values": [
+            "Season Early Autumn - Temperature change during the Serene Seasons season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonEarlyAutumn",
+        "value": {
+          "value": "SeasonEarlyAutumn"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "seasonEarlyAutumn"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonMidAutumn",
+        "value": {
+          "values": [
+            "Season Mid Autumn - Temperature change during the Serene Seasons season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonMidAutumn",
+        "value": {
+          "value": "SeasonMidAutumn"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "seasonMidAutumn"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "seasonLateAutumn",
+        "value": {
+          "values": [
+            "Season Late Autumn - Temperature change during the Serene Seasons season"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "seasonLateAutumn",
+        "value": {
+          "value": "SeasonLateAutumn"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "seasonLateAutumn"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/config/compat/ConfigServerCompatibility$ConfigToggles": {
+    "name": "com/charles445/simpledifficulty/config/compat/ConfigServerCompatibility$ConfigToggles",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "armorUnderwear",
+        "value": {
+          "values": [
+            "Enable Armor Underwear - Built-In Compatibility"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "armorUnderwear",
+        "value": {
+          "value": "EnableArmorUnderwear"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "baubles",
+        "value": {
+          "values": [
+            "Enable Baubles - Built-In Compatibility"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "baubles",
+        "value": {
+          "value": "EnableBaubles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "harvestFestival",
+        "value": {
+          "values": [
+            "Enable Harvest Festival - Built-In Compatibility"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "harvestFestival",
+        "value": {
+          "value": "EnableHarvestFestival"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "inspirations",
+        "value": {
+          "values": [
+            "Enable Inspirations - Built-In Compatibility"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "inspirations",
+        "value": {
+          "value": "EnableInspirations"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "oreExcavation",
+        "value": {
+          "values": [
+            "Enable OreExcavation - Built-In Compatibility"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "oreExcavation",
+        "value": {
+          "value": "EnableOreExcavation"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "sereneSeasons",
+        "value": {
+          "values": [
+            "Enable Serene Seasons - Built-In Compatibility"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "sereneSeasons",
+        "value": {
+          "value": "EnableSereneSeasons"
+        }
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/handler/BlockHandler": {
+    "name": "com/charles445/simpledifficulty/handler/BlockHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHarvestDrops(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/handler/CapabilityHandler": {
+    "name": "com/charles445/simpledifficulty/handler/CapabilityHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAttachCapability(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/handler/ConfigHandler": {
+    "name": "com/charles445/simpledifficulty/handler/ConfigHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldEventUnload(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerJoin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/handler/MiscHandler": {
+    "name": "com/charles445/simpledifficulty/handler/MiscHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDismount(Lnet/minecraftforge/event/entity/EntityMountEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/handler/TemperatureHandler": {
+    "name": "com/charles445/simpledifficulty/handler/TemperatureHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingEntityUseItemFinish(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Finish;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/handler/ThirstHandler": {
+    "name": "com/charles445/simpledifficulty/handler/ThirstHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingEntityUseItemFinish(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Finish;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClickBlock(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClickEmpty(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickEmpty;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAttackEntity(Lnet/minecraftforge/event/entity/player/AttackEntityEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockBreak(Lnet/minecraftforge/event/world/BlockEvent$BreakEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingHurt(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingJump(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingJumpEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/handler/TooltipHandler": {
+    "name": "com/charles445/simpledifficulty/handler/TooltipHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemTooltipEvent(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/item/ItemCanteen": {
+    "name": "com/charles445/simpledifficulty/item/ItemCanteen",
+    "interfaces": [
+      "com/charles445/simpledifficulty/api/item/IItemCanteen"
+    ]
+  },
+  "com/charles445/simpledifficulty/item/ItemDragonCanteen$1": {
+    "name": "com/charles445/simpledifficulty/item/ItemDragonCanteen$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/charles445/simpledifficulty/item/ItemIronCanteen$1": {
+    "name": "com/charles445/simpledifficulty/item/ItemIronCanteen$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/charles445/simpledifficulty/item/ItemThermometer$1": {
+    "name": "com/charles445/simpledifficulty/item/ItemThermometer$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/charles445/simpledifficulty/network/MessageConfigLAN": {
+    "name": "com/charles445/simpledifficulty/network/MessageConfigLAN",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/charles445/simpledifficulty/network/MessageConfigLAN$Handler": {
+    "name": "com/charles445/simpledifficulty/network/MessageConfigLAN$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/charles445/simpledifficulty/network/MessageDrinkWater": {
+    "name": "com/charles445/simpledifficulty/network/MessageDrinkWater",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/charles445/simpledifficulty/network/MessageDrinkWater$Handler": {
+    "name": "com/charles445/simpledifficulty/network/MessageDrinkWater$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/charles445/simpledifficulty/network/MessageUpdateConfig": {
+    "name": "com/charles445/simpledifficulty/network/MessageUpdateConfig",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/charles445/simpledifficulty/network/MessageUpdateConfig$Handler": {
+    "name": "com/charles445/simpledifficulty/network/MessageUpdateConfig$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/charles445/simpledifficulty/network/MessageUpdateTemperature": {
+    "name": "com/charles445/simpledifficulty/network/MessageUpdateTemperature",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/charles445/simpledifficulty/network/MessageUpdateTemperature$Handler": {
+    "name": "com/charles445/simpledifficulty/network/MessageUpdateTemperature$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/charles445/simpledifficulty/network/MessageUpdateThirst": {
+    "name": "com/charles445/simpledifficulty/network/MessageUpdateThirst",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/charles445/simpledifficulty/network/MessageUpdateThirst$Handler": {
+    "name": "com/charles445/simpledifficulty/network/MessageUpdateThirst$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/charles445/simpledifficulty/proxy/CommonProxy": {
+    "name": "com/charles445/simpledifficulty/proxy/CommonProxy",
+    "interfaces": [
+      "com/charles445/simpledifficulty/proxy/IProxy"
+    ]
+  },
+  "com/charles445/simpledifficulty/register/RegisterBlocks$Registrar": {
+    "name": "com/charles445/simpledifficulty/register/RegisterBlocks$Registrar",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/charles445/simpledifficulty/register/RegisterBlocks$Registrar",
+        "values": {
+          "modid": {
+            "value": "simpledifficulty"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItemBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/register/RegisterClientModels": {
+    "name": "com/charles445/simpledifficulty/register/RegisterClientModels",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/charles445/simpledifficulty/register/RegisterClientModels",
+        "values": {
+          "modid": {
+            "value": "simpledifficulty"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelRegistryEvent(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/register/RegisterClientModels$2": {
+    "name": "com/charles445/simpledifficulty/register/RegisterClientModels$2",
+    "interfaces": [
+      "net/minecraft/client/renderer/ItemMeshDefinition"
+    ]
+  },
+  "com/charles445/simpledifficulty/register/RegisterClientModels$MetadataPropertyGetter": {
+    "name": "com/charles445/simpledifficulty/register/RegisterClientModels$MetadataPropertyGetter",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/charles445/simpledifficulty/register/RegisterEnchantments$Registrar": {
+    "name": "com/charles445/simpledifficulty/register/RegisterEnchantments$Registrar",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/charles445/simpledifficulty/register/RegisterEnchantments$Registrar",
+        "values": {
+          "modid": {
+            "value": "simpledifficulty"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEnchantments(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/register/RegisterFluids$Registrar": {
+    "name": "com/charles445/simpledifficulty/register/RegisterFluids$Registrar",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/charles445/simpledifficulty/register/RegisterFluids$Registrar",
+        "values": {
+          "modid": {
+            "value": "simpledifficulty"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerFluidsAndFluidBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerFluidItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/register/RegisterItems$Registrar": {
+    "name": "com/charles445/simpledifficulty/register/RegisterItems$Registrar",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/charles445/simpledifficulty/register/RegisterItems$Registrar",
+        "values": {
+          "modid": {
+            "value": "simpledifficulty"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/register/RegisterPotions$Registrar": {
+    "name": "com/charles445/simpledifficulty/register/RegisterPotions$Registrar",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/charles445/simpledifficulty/register/RegisterPotions$Registrar",
+        "values": {
+          "modid": {
+            "value": "simpledifficulty"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "register(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerTypes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/register/RegisterRecipes$Registrar": {
+    "name": "com/charles445/simpledifficulty/register/RegisterRecipes$Registrar",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/charles445/simpledifficulty/register/RegisterRecipes$Registrar"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRecipes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/charles445/simpledifficulty/register/crafting/CanteenCharcoalRecipe$Factory": {
+    "name": "com/charles445/simpledifficulty/register/crafting/CanteenCharcoalRecipe$Factory",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IRecipeFactory"
+    ]
+  },
+  "com/charles445/simpledifficulty/temperature/ModifierBase": {
+    "name": "com/charles445/simpledifficulty/temperature/ModifierBase",
+    "interfaces": [
+      "com/charles445/simpledifficulty/api/temperature/ITemperatureModifier"
+    ]
+  },
+  "com/charles445/simpledifficulty/temperature/ModifierDynamicBase": {
+    "name": "com/charles445/simpledifficulty/temperature/ModifierDynamicBase",
+    "interfaces": [
+      "com/charles445/simpledifficulty/api/temperature/ITemperatureDynamicModifier"
+    ]
+  },
+  "com/charles445/simpledifficulty/tileentity/TileEntitySpit": {
+    "name": "com/charles445/simpledifficulty/tileentity/TileEntitySpit",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "com/charles445/simpledifficulty/tileentity/TileEntityTemperature": {
+    "name": "com/charles445/simpledifficulty/tileentity/TileEntityTemperature",
+    "interfaces": [
+      "com/charles445/simpledifficulty/api/temperature/ITemperatureTileEntity"
+    ]
+  },
+  "com/charles445/simpledifficulty/util/internal/TemperatureUtilInternal": {
+    "name": "com/charles445/simpledifficulty/util/internal/TemperatureUtilInternal",
+    "interfaces": [
+      "com/charles445/simpledifficulty/api/temperature/ITemperatureUtil"
+    ]
+  },
+  "com/charles445/simpledifficulty/util/internal/ThirstUtilInternal": {
+    "name": "com/charles445/simpledifficulty/util/internal/ThirstUtilInternal",
+    "interfaces": [
+      "com/charles445/simpledifficulty/api/thirst/IThirstUtil"
+    ]
+  }
+}

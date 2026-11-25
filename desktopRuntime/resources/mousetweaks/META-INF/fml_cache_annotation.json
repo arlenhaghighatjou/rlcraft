@@ -1,0 +1,161 @@
+{
+  "yalter/mousetweaks/SimpleMouseState": {
+    "name": "yalter/mousetweaks/SimpleMouseState",
+    "interfaces": [
+      "yalter/mousetweaks/IMouseState"
+    ]
+  },
+  "yalter/mousetweaks/api/MouseTweaksDisableWheelTweak": {
+    "name": "yalter/mousetweaks/api/MouseTweaksDisableWheelTweak",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "yalter/mousetweaks/api/MouseTweaksIgnore": {
+    "name": "yalter/mousetweaks/api/MouseTweaksIgnore",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "yalter/mousetweaks/api/package-info": {
+    "name": "yalter/mousetweaks/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "yalter/mousetweaks/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "1.0"
+          },
+          "owner": {
+            "value": "mousetweaks"
+          },
+          "provides": {
+            "value": "MouseTweaks|API"
+          }
+        }
+      }
+    ]
+  },
+  "yalter/mousetweaks/forge/ConfigGuiFactory": {
+    "name": "yalter/mousetweaks/forge/ConfigGuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "yalter/mousetweaks/forge/ForgeMouseState": {
+    "name": "yalter/mousetweaks/forge/ForgeMouseState",
+    "interfaces": [
+      "yalter/mousetweaks/IMouseState"
+    ]
+  },
+  "yalter/mousetweaks/forge/MouseTweaksForge": {
+    "name": "yalter/mousetweaks/forge/MouseTweaksForge",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "yalter/mousetweaks/forge/MouseTweaksForge",
+        "values": {
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "guiFactory": {
+            "value": "yalter.mousetweaks.forge.ConfigGuiFactory"
+          },
+          "modid": {
+            "value": "mousetweaks"
+          },
+          "updateJSON": {
+            "value": "http://play.sourceruns.org/yalter/MouseTweaks/update.json"
+          },
+          "useMetadata": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "version": {
+            "value": "2.10.1"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiMouseInput(Lnet/minecraftforge/client/event/GuiScreenEvent$MouseInputEvent$Post;)V"
+      }
+    ]
+  },
+  "yalter/mousetweaks/handlers/GuiContainerHandler": {
+    "name": "yalter/mousetweaks/handlers/GuiContainerHandler",
+    "interfaces": [
+      "yalter/mousetweaks/IGuiScreenHandler"
+    ]
+  },
+  "yalter/mousetweaks/handlers/IMTModGuiContainer2ExHandler": {
+    "name": "yalter/mousetweaks/handlers/IMTModGuiContainer2ExHandler",
+    "interfaces": [
+      "yalter/mousetweaks/IGuiScreenHandler"
+    ]
+  },
+  "yalter/mousetweaks/handlers/IMTModGuiContainer2Handler": {
+    "name": "yalter/mousetweaks/handlers/IMTModGuiContainer2Handler",
+    "interfaces": [
+      "yalter/mousetweaks/IGuiScreenHandler"
+    ]
+  },
+  "yalter/mousetweaks/handlers/IMTModGuiContainerHandler": {
+    "name": "yalter/mousetweaks/handlers/IMTModGuiContainerHandler",
+    "interfaces": [
+      "yalter/mousetweaks/IGuiScreenHandler"
+    ]
+  },
+  "yalter/mousetweaks/liteloader/LiteModMouseTweaks": {
+    "name": "yalter/mousetweaks/liteloader/LiteModMouseTweaks",
+    "interfaces": [
+      "com/mumfrey/liteloader/RenderListener",
+      "com/mumfrey/liteloader/Configurable"
+    ]
+  },
+  "yalter/mousetweaks/liteloader/MouseTweaksConfigPanel$1": {
+    "name": "yalter/mousetweaks/liteloader/MouseTweaksConfigPanel$1",
+    "interfaces": [
+      "com/mumfrey/liteloader/modconfig/AbstractConfigPanel$ConfigOptionListener"
+    ]
+  },
+  "yalter/mousetweaks/liteloader/MouseTweaksConfigPanel$2": {
+    "name": "yalter/mousetweaks/liteloader/MouseTweaksConfigPanel$2",
+    "interfaces": [
+      "com/mumfrey/liteloader/modconfig/AbstractConfigPanel$ConfigOptionListener"
+    ]
+  },
+  "yalter/mousetweaks/liteloader/MouseTweaksConfigPanel$3": {
+    "name": "yalter/mousetweaks/liteloader/MouseTweaksConfigPanel$3",
+    "interfaces": [
+      "com/mumfrey/liteloader/modconfig/AbstractConfigPanel$ConfigOptionListener"
+    ]
+  },
+  "yalter/mousetweaks/liteloader/MouseTweaksConfigPanel$4": {
+    "name": "yalter/mousetweaks/liteloader/MouseTweaksConfigPanel$4",
+    "interfaces": [
+      "com/mumfrey/liteloader/modconfig/AbstractConfigPanel$ConfigOptionListener"
+    ]
+  },
+  "yalter/mousetweaks/liteloader/MouseTweaksConfigPanel$5": {
+    "name": "yalter/mousetweaks/liteloader/MouseTweaksConfigPanel$5",
+    "interfaces": [
+      "com/mumfrey/liteloader/modconfig/AbstractConfigPanel$ConfigOptionListener"
+    ]
+  }
+}

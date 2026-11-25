@@ -1,0 +1,141 @@
+package com.mujmajnkraft.bettersurvival.entities.projectiles;
+
+import com.google.common.base.Optional;
+import com.mujmajnkraft.bettersurvival.BetterSurvival;
+import com.mujmajnkraft.bettersurvival.capabilities.spearsinentity.ISpearsIn;
+import com.mujmajnkraft.bettersurvival.capabilities.spearsinentity.SpearsInProvider;
+import com.mujmajnkraft.bettersurvival.integration.InFCompat;
+import com.mujmajnkraft.bettersurvival.items.ItemSpear;
+import java.util.UUID;
+import javax.annotation.Nullable;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityArrow.PickupStatus;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+
+public class EntityFlyingSpear extends EntityArrow {
+   private static DataParameter<ItemStack> SPEAR = EntityDataManager.createKey(EntityFlyingSpear.class, DataSerializers.ITEM_STACK);
+   private static DataParameter<Optional<UUID>> SHOOTER = EntityDataManager.createKey(EntityFlyingSpear.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+
+   public EntityFlyingSpear(World worldIn) {
+      super(worldIn);
+   }
+
+   public EntityFlyingSpear(World worldIn, EntityLivingBase shooter) {
+      super(worldIn, shooter.posX, shooter.posY + (double)shooter.getEyeHeight() - 0.10000000149011612D, shooter.posZ);
+      if (shooter instanceof EntityPlayer) {
+         this.pickupStatus = PickupStatus.ALLOWED;
+      }
+
+   }
+
+   public void setSpear(ItemStack spear) {
+      this.dataManager.set(SPEAR, spear);
+   }
+
+   public ItemStack getSpear() {
+      return (ItemStack)this.dataManager.get(SPEAR);
+   }
+
+   public void setShooter(Entity entity) {
+      this.shootingEntity = entity;
+      UUID id = entity == null ? null : entity.getUniqueID();
+      this.dataManager.set(SHOOTER, Optional.fromNullable(id));
+   }
+
+   @Nullable
+   public Entity getShooter() {
+      UUID id = (UUID)((Optional)this.dataManager.get(SHOOTER)).orNull();
+      this.shootingEntity = id == null ? null : this.world.getPlayerEntityByUUID(id);
+      return this.shootingEntity;
+   }
+
+   protected void onHit(RayTraceResult raytraceResultIn) {
+      Entity entity = raytraceResultIn.entityHit;
+      if (entity != null) {
+         boolean flag = true;
+         if (entity instanceof EntityPlayer) {
+            flag = !((EntityPlayer)entity).capabilities.isCreativeMode;
+         }
+
+         if (entity instanceof EntityLivingBase && !entity.getIsInvulnerable() && flag && !(entity instanceof EntityEnderman) && this.getSpear().getItem() instanceof ItemSpear) {
+            float matModifier = 0.0F;
+            if (BetterSurvival.isIafLoaded) {
+               matModifier = InFCompat.getMaterialModifier(((ItemSpear)this.getSpear().getItem()).getMaterial(), (EntityLivingBase)entity, (EntityPlayer)null, false);
+            }
+
+            this.setDamage(this.getDamage() + (double)matModifier);
+         }
+      }
+
+      super.onHit(raytraceResultIn);
+   }
+
+   @Nullable
+   protected Entity findEntityOnPath(Vec3d start, Vec3d end) {
+      Entity entity = super.findEntityOnPath(start, end);
+      if (entity == this.getShooter() && this.ticksExisted <= 10) {
+         return null;
+      } else {
+         return entity instanceof EntityLivingBase && BetterSurvival.isIafLoaded && InFCompat.isStoned((EntityLivingBase)entity) ? null : entity;
+      }
+   }
+
+   protected void arrowHit(EntityLivingBase living) {
+      if (!living.world.isRemote && this.getSpear().getItem() instanceof ItemSpear) {
+         if (BetterSurvival.isIafLoaded) {
+            InFCompat.getMaterialModifier(((ItemSpear)this.getSpear().getItem()).getMaterial(), living, (EntityPlayer)null, true);
+         }
+
+         if (this.pickupStatus == PickupStatus.ALLOWED && ((ItemSpear)this.getSpear().getItem()).breakChance() < this.rand.nextFloat()) {
+            ISpearsIn spearsin = (ISpearsIn)living.getCapability(SpearsInProvider.SPEARSIN_CAP, (EnumFacing)null);
+            if (spearsin != null && living.isEntityAlive()) {
+               spearsin.addSpear(this.getSpear());
+            } else {
+               this.entityDropItem(this.getSpear(), 0.1F);
+            }
+         }
+      }
+
+   }
+
+   protected ItemStack getArrowStack() {
+      return this.getSpear() != null ? this.getSpear() : ItemStack.EMPTY;
+   }
+
+   protected void entityInit() {
+      this.dataManager.register(SPEAR, ItemStack.EMPTY);
+      this.dataManager.register(SHOOTER, Optional.absent());
+      super.entityInit();
+   }
+
+   public void writeEntityToNBT(NBTTagCompound compound) {
+      super.writeEntityToNBT(compound);
+      compound.setTag("Spear", this.getSpear().serializeNBT());
+      if (this.getShooter() != null) {
+         compound.setString("shooter", this.getShooter().getUniqueID().toString());
+      }
+
+   }
+
+   public void readEntityFromNBT(NBTTagCompound compound) {
+      super.readEntityFromNBT(compound);
+      NBTTagCompound tag = (NBTTagCompound)compound.getTag("Spear");
+      this.setSpear(new ItemStack(tag));
+      if (compound.hasKey("shooter")) {
+         this.setShooter(this.world.getPlayerEntityByUUID(UUID.fromString(compound.getString("shooter"))));
+      }
+
+   }
+}

@@ -1,0 +1,9 @@
+{ "result": {
+    "item": "armorunder:cool_chestplate_liner"
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "x x", "xxx", "xxx"
+  ],
+  "key": { "x": { "item": "armorunder:cool_liner_material" } }
+}

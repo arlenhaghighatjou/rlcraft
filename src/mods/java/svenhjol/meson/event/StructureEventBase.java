@@ -1,0 +1,53 @@
+package svenhjol.meson.event;
+
+import net.minecraft.world.World;
+import net.minecraft.world.gen.structure.StructureBoundingBox;
+import net.minecraft.world.gen.structure.StructureComponent;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
+
+public class StructureEventBase extends Event {
+   public StructureEventBase() {
+   }
+
+   public static class AddComponentPartsEvent extends StructureEventBase {
+      private StructureComponent component;
+      private World world;
+      private StructureBoundingBox box;
+
+      public AddComponentPartsEvent(StructureComponent component, World world, StructureBoundingBox box) {
+         this.component = component;
+         this.world = world;
+         this.box = box;
+      }
+
+      public StructureComponent getComponent() {
+         return this.component;
+      }
+
+      public StructureBoundingBox getBox() {
+         return this.box;
+      }
+
+      public World getWorld() {
+         return this.world;
+      }
+   }
+
+   public static class Post extends StructureEventBase.AddComponentPartsEvent {
+      public Post(StructureComponent component, World world, StructureBoundingBox bb) {
+         super(component, world, bb);
+      }
+   }
+
+   @HasResult
+   public static class Pre extends StructureEventBase.AddComponentPartsEvent {
+      public Pre(StructureComponent component, World world, StructureBoundingBox bb) {
+         super(component, world, bb);
+      }
+
+      public boolean isCancelable() {
+         return true;
+      }
+   }
+}

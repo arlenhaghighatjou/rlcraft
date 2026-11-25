@@ -1,0 +1,28 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "-a-",
+    "owo"
+  ],
+  "key": {
+    "-": {
+      "item": "minecraft:stone_slab",
+      "data": 0
+    },
+    "a": {
+      "item": "minecraft:anvil",
+      "data": 0
+    },
+    "o": {
+      "type": "forge:ore_dict",
+      "ore": "obsidian"
+    },
+    "w": {
+      "type": "forge:ore_dict",
+      "ore": "workbench"
+    }
+  },
+  "result": {
+    "item": "qualitytools:reforging_station"
+  }
+}

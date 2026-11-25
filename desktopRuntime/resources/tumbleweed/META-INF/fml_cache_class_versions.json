@@ -1,0 +1,12 @@
+{
+  "net/konwboy/tumbleweed/Tumbleweed": 52,
+  "net/konwboy/tumbleweed/client/ModelTumbleweed": 52,
+  "net/konwboy/tumbleweed/client/RenderTumbleweed": 52,
+  "net/konwboy/tumbleweed/client/RenderTumbleweed$Factory": 52,
+  "net/konwboy/tumbleweed/common/EntityTumbleweed": 52,
+  "net/konwboy/tumbleweed/common/TumbleweedConfig": 52,
+  "net/konwboy/tumbleweed/common/TumbleweedConfig$Logic": 52,
+  "net/konwboy/tumbleweed/common/TumbleweedConfig$Metadata": 52,
+  "net/konwboy/tumbleweed/common/TumbleweedConfig$WeightedItem": 52,
+  "net/konwboy/tumbleweed/common/TumbleweedSpawner": 52
+}

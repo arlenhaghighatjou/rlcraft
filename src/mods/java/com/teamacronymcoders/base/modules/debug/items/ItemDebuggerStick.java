@@ -1,0 +1,73 @@
+package com.teamacronymcoders.base.modules.debug.items;
+
+import com.teamacronymcoders.base.api.IDebuggable;
+import com.teamacronymcoders.base.items.ItemBase;
+import java.util.LinkedHashMap;
+import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.ProjectileHelper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
+
+public class ItemDebuggerStick extends ItemBase {
+   public ItemDebuggerStick() {
+      super("debugger_stick");
+   }
+
+   @Nonnull
+   @ParametersAreNonnullByDefault
+   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityPlayer, EnumHand hand) {
+      RayTraceResult result = ProjectileHelper.forwardsRaycast(entityPlayer, true, true, entityPlayer);
+      EnumActionResult actionResult = EnumActionResult.PASS;
+      switch(result.typeOfHit) {
+      case BLOCK:
+         TileEntity tileEntity = world.getTileEntity(result.getBlockPos());
+         Block block = world.getBlockState(result.getBlockPos()).getBlock();
+         if (tileEntity instanceof IDebuggable) {
+            this.writeDebug((IDebuggable)tileEntity);
+         } else if (block instanceof IDebuggable) {
+            this.writeDebug((IDebuggable)block);
+         } else if (block.getRegistryName() != null) {
+            this.getMod().getLogger().info(block.getRegistryName().toString());
+         }
+         break;
+      case ENTITY:
+         Entity entity = result.entityHit;
+         if (entity instanceof IDebuggable) {
+            this.writeDebug((IDebuggable)entity);
+         } else if (entity != null) {
+            this.getMod().getLogger().info(entity.getName() + ":" + entity.getUniqueID());
+         }
+         break;
+      case MISS:
+         actionResult = EnumActionResult.PASS;
+      }
+
+      return ActionResult.newResult(actionResult, entityPlayer.getHeldItem(hand));
+   }
+
+   public void writeDebug(IDebuggable debuggable) {
+      LinkedHashMap<String, String> debugStrings = new LinkedHashMap();
+      debugStrings = debuggable.getDebugStrings(debugStrings);
+      if (!debugStrings.isEmpty()) {
+         for(String debugString : debugStrings.values()) {
+            this.getMod().getLogger().info(debugString);
+         }
+      }
+
+   }
+
+   public List<String> getModelNames(List<String> modelNames) {
+      modelNames.add("debugger_stick");
+      return modelNames;
+   }
+}

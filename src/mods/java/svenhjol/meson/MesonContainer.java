@@ -1,0 +1,56 @@
+package svenhjol.meson;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+
+public abstract class MesonContainer extends Container {
+   protected MesonTileInventory tile;
+   protected InventoryPlayer playerInv;
+
+   public MesonContainer(InventoryPlayer playerInv, MesonTileInventory tile) {
+      this.playerInv = playerInv;
+      this.tile = tile;
+   }
+
+   public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+      ItemStack itemstack = ItemStack.EMPTY;
+      Slot slot = (Slot)this.inventorySlots.get(index);
+      if (slot != null && slot.getHasStack()) {
+         ItemStack itemstack1 = slot.getStack();
+         itemstack = itemstack1.copy();
+         int containerSlots = this.inventorySlots.size() - player.inventory.mainInventory.size();
+         if (index < containerSlots) {
+            if (!this.mergeItemStack(itemstack1, containerSlots, this.inventorySlots.size(), true)) {
+               return ItemStack.EMPTY;
+            }
+         } else if (!this.mergeItemStack(itemstack1, 0, containerSlots, false)) {
+            return ItemStack.EMPTY;
+         }
+
+         if (itemstack1.getCount() == 0) {
+            slot.putStack(ItemStack.EMPTY);
+         } else {
+            slot.onSlotChanged();
+         }
+
+         if (itemstack1.getCount() == itemstack.getCount()) {
+            return ItemStack.EMPTY;
+         }
+
+         slot.onTake(player, itemstack1);
+      }
+
+      return itemstack;
+   }
+
+   public void setTile(MesonTileInventory tile) {
+      this.tile = tile;
+   }
+
+   public MesonTileInventory getTile() {
+      return this.tile;
+   }
+}

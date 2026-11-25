@@ -1,0 +1,12 @@
+{ "_comment": ["Leggings with auto regulating temperature liner" ],
+  "result": {
+    "item": "minecraft:golden_leggings",
+    "nbt": {"carrots:ArmorXLining":"TEMPERATURE_REGULATOR"}
+  },
+  "type": "armorunder:autoreg_armor_shapeless",
+  "modifier": 0,
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemLeggings" },
+    { "item": "armorunder:auto_leggings_liner" }
+  ]
+}

@@ -1,0 +1,1304 @@
+{
+
+    "infectedhuman.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:infectedhuman_death",
+            "srparasites:infected_death"
+        ]
+    },
+    
+    "infectedhuman.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:infectedhuman_growl",
+            "srparasites:infected_ambient"
+        ]
+    },
+    
+    "infectedhuman.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:infectedhuman_hurt",
+            "srparasites:infected_hurt"
+        ]
+    },
+    
+    "infected.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:infectedanimal_death",
+            "srparasites:infected_death"
+        ]
+    },
+    
+    "infected.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:infectedanimal_growl",
+            "srparasites:infected_ambient"
+        ]
+    },
+    
+    "infected.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:infectedanimal_hurt",
+            "srparasites:infected_hurt"
+        ]
+    },
+    
+    "infectedpig.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedpigdeath"
+        ]
+    },
+    
+    "infectedpig.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedpigliving1",
+            "srparasites:assimilatedpigliving2",
+            "srparasites:assimilatedpigliving3"
+        ]
+    },
+    
+    "infectedpig.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedpighurt1",
+            "srparasites:assimilatedpighurt2",
+            "srparasites:assimilatedpighurt3"
+        ]
+    },
+    
+    "infectedcow.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedcowdeath"
+        ]
+    },
+    
+    "infectedcow.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedcowliving1",
+            "srparasites:assimilatedcowliving2",
+            "srparasites:assimilatedcowliving3"
+        ]
+    },
+    
+    "infectedcow.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedcowhurt1",
+            "srparasites:assimilatedcowhurt2",
+            "srparasites:assimilatedcowhurt3"
+        ]
+    },
+    
+    "infectedwolf.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:AssimilatedWolfDeath"
+        ]
+    },
+    
+    "infectedwolf.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:AssimilatedWolfLiving1",
+            "srparasites:AssimilatedWolfLiving2",
+            "srparasites:AssimilatedWolfLiving3"
+        ]
+    },
+    
+    "infectedwolf.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:AssimilatedWolfHurt1",
+            "srparasites:AssimilatedWolfHurt2",
+            "srparasites:AssimilatedWolfHurt3"
+        ]
+    },
+    
+    "infectedbear.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedbeardeath"
+        ]
+    },
+    
+    "infectedbear.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedbearliving1",
+            "srparasites:assimilatedbearliving2",
+            "srparasites:assimilatedbearliving3"
+        ]
+    },
+    
+    "infectedbear.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedbearhurt1",
+            "srparasites:assimilatedbearhurt2",
+            "srparasites:assimilatedbearhurt3",
+            "srparasites:assimilatedbearhurt4"
+        ]
+    },
+    
+    "infectedspider.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedspiderdeath"
+        ]
+    },
+    
+    "infectedspider.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedspidersay1",
+            "srparasites:assimilatedspidersay2",
+            "srparasites:assimilatedspidersay3",
+            "srparasites:assimilatedspidersay4"
+        ]
+    },
+    
+    "infectedspider.step": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedspiderstep1",
+            "srparasites:assimilatedspiderstep2",
+            "srparasites:assimilatedspiderstep3",
+            "srparasites:assimilatedspiderstep4"
+        ]
+    },
+    
+    "infectedspider.hurt": {
+        "category": "hostile",
+        "sounds": [
+        ]
+    },
+    
+    "infectedenderman.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedendermandeath"
+        ]
+    },
+    
+    "infectedenderman.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedendermanliving1",
+            "srparasites:assimilatedendermanliving2",
+            "srparasites:assimilatedendermanliving3",
+            "srparasites:assimilatedendermanliving4"
+        ]
+    },
+    
+    "infectedenderman.portal": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedendermanportal1",
+            "srparasites:assimilatedendermanportal2"
+        ]
+    },
+    
+    "infectedenderman.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:assimilatedendermanhurt1",
+            "srparasites:assimilatedendermanhurt2",
+            "srparasites:assimilatedendermanhurt3",
+            "srparasites:assimilatedendermanhurt4"
+        ]
+    },
+    
+    "infectedhead.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:infectedhead_death"
+        ]
+    },
+    
+    "infectedhead.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:infectedhead_growl"
+        ]
+    },
+    
+    "infectedhead.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:infectedhead_hurt"
+        ]
+    },
+    
+    "infected.melt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:infected_melting"
+        ]
+    },
+    
+    "canra.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:canra_death"
+        ]
+    },
+    
+    "canra.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:canra_growl"
+        ]
+    },
+    
+    "canra.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:canra_hurt"
+        ]
+    },
+    
+    "canra.special": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:canra_special"
+        ]
+    },
+    
+    "emana.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:emana_death"
+        ]
+    },
+    
+    "emana.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:emana_growl"
+        ]
+    },
+    
+    "emana.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:emana_hurt"
+        ]
+    },
+    
+    "emana.shooting": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:emana_shooting"
+        ]
+    },
+    
+    "emana.shootingpost": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:emana_shootingpost"
+        ]
+    },
+    
+    "nogla.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:nogla_death"
+        ]
+    },
+    
+    "nogla.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:nogla_growl"
+        ]
+    },
+    
+    "nogla.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:nogla_hurt"
+        ]
+    },
+    
+    "hull.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:hull_death"
+        ]
+    },
+    
+    "hull.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:hull_growl"
+        ]
+    },
+    
+    "hull.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:hull_hurt"
+        ]
+    },
+    
+    "shyco.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:shyco_death"
+        ]
+    },
+    
+    "shyco.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:shyco_growl"
+        ]
+    },
+    
+    "shyco.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:shyco_hurt"
+        ]
+    },
+    
+    "zetmo.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:zetmo_death"
+        ]
+    },
+    
+    "zetmo.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:zetmo_growl"
+        ]
+    },
+    
+    "zetmo.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:zetmo_hurt"
+        ]
+    },
+    
+    "acanra.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:acanra_death"
+        ]
+    },
+    
+    "acanra.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:acanra_growl"
+        ]
+    },
+    
+    "acanra.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:acanra_hurt"
+        ]
+    },
+    
+    "acanra.special": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:acanra_special"
+        ]
+    },
+    
+    "aemana.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:aemana_death"
+        ]
+    },
+    
+    "aemana.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:aemana_growl"
+        ]
+    },
+    
+    "aemana.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:aemana_hurt"
+        ]
+    },
+    
+    "aemana.shootingpost": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:aemana_shootingpost"
+        ]
+    },
+    
+    "anogla.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:adaptedreekerdeath"
+        ]
+    },
+    
+    "anogla.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:adaptedreekerliving1",
+            "srparasites:adaptedreekerliving2",
+            "srparasites:adaptedreekerliving3",
+            "srparasites:adaptedreekerliving4"
+        ]
+    },
+    
+    "anogla.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:adaptedreekerhurt1",
+            "srparasites:adaptedreekerhurt2",
+            "srparasites:adaptedreekerhurt3",
+            "srparasites:adaptedreekerhurt4"
+        ]
+    },
+    
+    "ahull.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:ahull_death"
+        ]
+    },
+    
+    "ahull.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:ahull_growl"
+        ]
+    },
+    
+    "ahull.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:ahull_hurt"
+        ]
+    },
+    
+    "ashyco.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:adaptedlongarmsdeath"
+        ]
+    },
+    
+    "ashyco.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:adaptedlongarmsliving1",
+            "srparasites:adaptedlongarmsliving2",
+            "srparasites:adaptedlongarmsliving3",
+            "srparasites:adaptedlongarmsliving4"
+        ]
+    },
+    
+    "ashyco.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:adaptedlongarmshurt1",
+            "srparasites:adaptedlongarmshurt2",
+            "srparasites:adaptedlongarmshurt3"
+        ]
+    },
+    
+    "azetmo.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:azetmo_death"
+        ]
+    },
+    
+    "azetmo.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:azetmo_growl"
+        ]
+    },
+    
+    "azetmo.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:azetmo_hurt"
+        ]
+    },
+    
+    "aranrac.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:adaptedarachnidadeath"
+        ]
+    },
+    
+    "aranrac.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:adaptedarachnidaliving1",
+            "srparasites:adaptedarachnidaliving2",
+            "srparasites:adaptedarachnidaliving3"
+        ]
+    },
+    
+    "aranrac.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:adaptedarachnidahurt1",
+            "srparasites:adaptedarachnidahurt2",
+            "srparasites:adaptedarachnidahurt3"
+        ]
+    },
+    
+    "adapted.v": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:adapted_vomit"
+        ]
+    },
+    
+    "lodo.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:lodo_death"
+        ]
+    },
+    
+    "lodo.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:lodo_growl"
+        ]
+    },
+    
+    "lodo.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:lodo_hurt"
+        ]
+    },
+    
+    "lodo.mudo": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:lodo_mudo"
+        ]
+    },
+    
+    "mudo.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:mudo_death"
+        ]
+    },
+    
+    "mudo.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:mudo_growl"
+        ]
+    },
+    
+    "mudo.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:mudo_hurt"
+        ]
+    },
+    
+    "mudo.cloud": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:mudo_cloud"
+        ]
+    },
+    
+    "ganro.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:ganro_death"
+        ]
+    },
+    
+    "ganro.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:ganro_growl"
+        ]
+    },
+    
+    "ganro.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:ganro_hurt"
+        ]
+    },
+    
+    "esor.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:esor_death"
+        ]
+    },
+    
+    "esor.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:esor_growl"
+        ]
+    },
+    
+    "esor.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:esor_hurt"
+        ]
+    },
+    
+    "alafha.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:alafha_death"
+        ]
+    },
+    
+    "alafha.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:alafha_growl"
+        ]
+    },
+    
+    "alafha.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:alafha_hurt"
+        ]
+    },
+    
+    "anged.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:anged_death"
+        ]
+    },
+    
+    "anged.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:anged_growl"
+        ]
+    },
+    
+    "anged.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:anged_hurt"
+        ]
+    },
+    
+    "elvia.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:elviaDeath"
+        ]
+    },
+    
+    "elvia.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:elviaLiving1",
+            "srparasites:elviaLiving2",
+            "srparasites:elviaLiving3"
+        ]
+    },
+    
+    "elvia.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:elviaHurt1",
+            "srparasites:elviaHurt2",
+            "srparasites:elviaHurt3"
+        ]
+    },
+    
+     "lencia.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:lenciaDeath"
+        ]
+    },
+    
+    "lencia.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:lenciaLiving1",
+            "srparasites:lenciaLiving2",
+            "srparasites:lenciaLiving3"
+        ]
+    },
+    
+    "lencia.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:lenciaHurt1",
+            "srparasites:lenciaHurt2",
+            "srparasites:lenciaHurt3"
+        ]
+    },
+    
+    "flesh.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:flesh_death"
+        ]
+    },
+    
+    "flesh.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:flesh_growl"
+        ]
+    },
+    
+    "flesh.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:flesh_hurt"
+        ]
+    },
+    
+    "flesh.grow": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:flesh_grow"
+        ]
+    },
+    
+    "flesh.eat": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:flesh_eat"
+        ]
+    },
+    
+    "flesh.primitive": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:flesh_primitive"
+        ]
+    },
+    
+    "anged.shooting": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:anged_shooting"
+        ]
+    },
+    
+    "anged.shootingpost": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:anged_shootingpost"
+        ]
+    },
+    
+    "oronco.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:oronco_death"
+        ]
+    },
+    
+    "oronco.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:oronco_growl"
+        ]
+    },
+    
+    "oronco.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:oronco_hurt"
+        ]
+    },
+    
+    "oronco.shooting": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:oronco_shooting"
+        ]
+    },
+    
+    "oronco.shootingreal": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:oronco_shootingreal"
+        ]
+    },
+    
+    "terla.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:terla_death"
+        ]
+    },
+    
+    "terla.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:terla_growl"
+        ]
+    },
+    
+    "terla.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:terla_hurt"
+        ]
+    },
+    
+    "ancient.pod": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:ancient_pods"
+        ]
+    },
+    
+    "dorpa.range": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:dorpa_rangea"
+        ]
+    },
+    
+    "hull.c": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:hull_c"
+        ]
+    },
+    
+    "monster.step": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:monster_step"
+        ]
+    },
+    
+    "rathol.boom": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:rathol_explotion"
+        ]
+    },
+    
+    "buthol.boom": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:buthol_explotion"
+        ]
+    },
+    
+    "shyco.special": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:shyco_special"
+        ]
+    },
+    
+    "unvo.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:unvo_death"
+        ]
+    },
+    
+    "unvo.growl": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:unvo_growl"
+        ]
+    },
+    
+    "unvo.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:unvo_hurt"
+        ]
+    },
+    
+    "unvo.shooting": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:unvo_shooting"
+        ]
+    },
+    
+    "venkrol.si": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:vstagei"
+        ]
+    },
+    
+    "venkrol.sii": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:vstageii"
+        ]
+    },
+    
+    "venkrol.siii": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:vstageiii"
+        ]
+    },
+    
+    "venkrol.siv": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:vstageiv"
+        ]
+    },
+    
+    "dod.si": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:dstagei"
+        ]
+    },
+    
+    "dod.sii": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:dstageii"
+        ]
+    },
+    
+    "dod.siii": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:dstageiii"
+        ]
+    },
+    
+    "dod.siv": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:dstageiv"
+        ]
+    },
+    
+    "venkrolsi.growl": {
+       "category": "hostile",
+       "sounds": [
+           "srparasites:beckonsi_growl",
+           "srparasites:beckonsi_growl_2",
+           "srparasites:beckonsi_growl_2"
+       ]
+    },
+    
+    "venkrolsi.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:beckonsi_hurt",
+            "srparasites:beckonsi_hurt_2",
+            "srparasites:beckonsi_hurt_2"
+        ]
+    },
+    
+    "venkrolsi.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:beckonsi_death",
+            "srparasites:beckonsi_death_2",
+            "srparasites:beckonsi_death_2"
+        ]
+    },
+    
+    "venkrolsii.growl": {
+       "category": "hostile",
+       "sounds": [
+           "srparasites:beckonsii_growl",
+           "srparasites:beckonsii_growl_2",
+           "srparasites:beckonsii_growl_2"
+       ]
+    },
+    
+    "venkrolsii.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:beckonsii_hurt",
+            "srparasites:beckonsii_hurt_2",
+            "srparasites:beckonsii_hurt_2"
+        ]
+    },
+    
+    "venkrolsii.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:beckonsii_death",
+            "srparasites:beckonsii_death_2",
+            "srparasites:beckonsii_death_2"
+        ]
+    },
+    
+    "venkrolsiii.growl": {
+       "category": "hostile",
+       "sounds": [
+           "srparasites:beckonsiii_growl",
+           "srparasites:beckonsiii_growl_2",
+           "srparasites:beckonsiii_growl_2"
+       ]
+    },
+    
+    "venkrolsiii.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:beckonsiii_hurt",
+            "srparasites:beckonsiii_hurt_2",
+            "srparasites:beckonsiii_hurt_2"
+        ]
+    },
+    
+    "venkrolsiii.death": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:beckonsiii_death",
+            "srparasites:beckonsiii_death_2",
+            "srparasites:beckonsiii_death_2"
+        ]
+    },
+    
+    "ancient.mob": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:ancient"
+        ]
+    },
+    
+    "alafha.shooting": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:alafha_shooting"
+        ]
+    },
+    
+    "alafha.shootingpost": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:alafha_shootingpost"
+        ]
+    },
+    
+    "mob.silence": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:mob_silence"
+        ]
+    },
+    
+    "mob.explotion": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:mob_explotion"
+        ]
+    },
+    
+    "mob.swipe": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:mob_swipe"
+        ]
+    },
+    
+    "mob.hitground": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:mob_hitground"
+        ]
+    },
+    
+    "mob.tendril": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:mob_tendril"
+        ]
+    },
+    
+    "cyst.eating": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:cyst_eating"
+        ]
+    },
+    
+    "adaptation.parcial": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:adaptation_p"
+        ]
+    },
+    
+    "adaptation.full": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:adaptation_f"
+        ]
+    },
+    
+    "orb.s": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:orb_s"
+        ]
+    },
+    
+    "orb.e": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:orb_e"
+        ]
+    },
+    
+    "nade.s": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:nade_s"
+        ]
+    },
+    
+    "scent.wave": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:scent_wave"
+        ]
+    },
+    
+    "biome.heart": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:biome_heart"
+        ]
+    },
+    
+    "evolution.phaseone": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:evphase_1"
+        ]
+    },
+    
+    "evolution.phasetwo": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:evphase_2"
+        ]
+    },
+    
+    "evolution.phasethree": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:evphase_3"
+        ]
+    },
+    
+    "evolution.phasefour": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:evphase_4"
+        ]
+    },
+    
+    "evolution.phasefive": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:evphase_5"
+        ]
+    },
+    
+    "evolution.phasesix": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:evphase_6"
+        ]
+    },
+    
+    "evolution.phaseseven": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:evphase_7"
+        ]
+    },
+    
+    "evolution.phaseeight": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:evphase_8"
+        ]
+    },
+    
+    "node.one": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:node_1"
+        ]
+    },
+    
+    "colony.one": {
+        "category": "hostile",
+        "sounds": [
+            "srparasites:colony_1"
+        ]
+    },
+    
+    "blockinfest.place": {
+        "category": "block",
+        "sounds": [
+            "srparasites:blockinfest_place"
+        ]
+    },
+    
+    "blockinfest.break": {
+        "category": "block",
+        "sounds": [
+            "srparasites:blockinfest_break"
+        ]
+    },
+    
+    "blockinfest.step": {
+        "category": "block",
+        "sounds": [
+            "srparasites:blockinfest_step"
+        ]
+    },
+    
+    "blockinfest.hit": {
+        "category": "block",
+        "sounds": [
+            "srparasites:blockinfest_hit"
+        ]
+    }
+
+}

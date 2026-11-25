@@ -1,0 +1,1056 @@
+{
+  "com/yungnickyoung/minecraft/bettermineshafts/BetterMineshafts": {
+    "name": "com/yungnickyoung/minecraft/bettermineshafts/BetterMineshafts",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/yungnickyoung/minecraft/bettermineshafts/BetterMineshafts",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "bettermineshafts"
+          },
+          "useMetadata": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.yungnickyoung.minecraft.bettermineshafts.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.yungnickyoung.minecraft.bettermineshafts.proxy.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/bettermineshafts/config/Configuration": {
+    "name": "com/yungnickyoung/minecraft/bettermineshafts/config/Configuration",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "com/yungnickyoung/minecraft/bettermineshafts/config/Configuration",
+        "values": {
+          "modid": {
+            "value": "bettermineshafts"
+          },
+          "name": {
+            "value": "bettermineshafts-1_12_2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "mineshaftSpawnRate",
+        "value": {
+          "value": "Mineshaft Spawn Rate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "mineshaftSpawnRate"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "mineshaftSpawnRate",
+        "value": {
+          "values": [
+            "Default: .003"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "mineshaftSpawnRate",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "spawnRates",
+        "value": {
+          "value": "Spawn Rates \u0026 More"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "spawnRates",
+        "value": {
+          "values": [
+            "Customize the spawn rates for various mineshaft parts and decorations."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "ores",
+        "value": {
+          "value": "Ore Deposits"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "ores",
+        "value": {
+          "values": [
+            "Configure ore deposit spawn chances. MAKE SURE ALL THE VALUES ADD UP TO 100, or things won\u0027t work the way you want them to!!"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "modCompat",
+        "value": {
+          "value": "Mod Compatibility"
+        }
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/bettermineshafts/config/ModCompatConfig": {
+    "name": "com/yungnickyoung/minecraft/bettermineshafts/config/ModCompatConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "rusticLanternsEnabled",
+        "value": {
+          "value": "Use Rustic Lanterns"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "rusticLanternsEnabled",
+        "value": {
+          "values": [
+            "If Rustic is installed, mineshafts will occasionally have Rustic lanterns hanging from the ceiling."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "rusticLanternsEnabled"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "charmLanternsEnabled",
+        "value": {
+          "value": "Use Charm Lanterns"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "charmLanternsEnabled",
+        "value": {
+          "values": [
+            "If Charm is installed, mineshafts will occasionally have Charm lanterns hanging from the ceiling."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "charmLanternsEnabled"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "variedcommoditiesCandlesEnabled",
+        "value": {
+          "value": "Use Varied Commodities Candles"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "variedcommoditiesCandlesEnabled",
+        "value": {
+          "values": [
+            "If Varied Commodities is installed, mineshafts will occasionally have Varied Commodities candles on the walls."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "variedcommoditiesCandlesEnabled"
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/bettermineshafts/config/OresConfig": {
+    "name": "com/yungnickyoung/minecraft/bettermineshafts/config/OresConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enabled",
+        "value": {
+          "value": "Enable Ore Deposits"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "enabled"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "cobble",
+        "value": {
+          "value": "Cobble Spawn Chance (Empty deposit)"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "cobble",
+        "value": {
+          "values": [
+            "Percent chance of an ore deposit being cobblestone only.\nDefault: 50"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "cobble",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "100"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "cobble"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "coal",
+        "value": {
+          "value": "Coal Spawn Chance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "coal",
+        "value": {
+          "values": [
+            "Percent chance of an ore deposit containing coal.\nDefault: 20"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "coal",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "100"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "coal"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "iron",
+        "value": {
+          "value": "Iron Spawn Chance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "iron",
+        "value": {
+          "values": [
+            "Percent chance of an ore deposit containing iron.\nDefault: 9"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "iron",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "100"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "iron"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "redstone",
+        "value": {
+          "value": "Redstone Spawn Chance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "redstone",
+        "value": {
+          "values": [
+            "Percent chance of an ore deposit containing redstone.\nDefault: 7"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "redstone",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "100"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "redstone"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "gold",
+        "value": {
+          "value": "Gold Spawn Chance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "gold",
+        "value": {
+          "values": [
+            "Percent chance of an ore deposit containing gold.\nDefault: 7"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "gold",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "100"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "gold"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "lapis",
+        "value": {
+          "value": "Lapis Spawn Chance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "lapis",
+        "value": {
+          "values": [
+            "Percent chance of an ore deposit containing lapis.\nDefault: 3"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "lapis",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "100"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "lapis"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "emerald",
+        "value": {
+          "value": "Emerald Spawn Chance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "emerald",
+        "value": {
+          "values": [
+            "Percent chance of an ore deposit containing emerald.\nDefault: 3"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "emerald",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "100"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "emerald"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "diamond",
+        "value": {
+          "value": "Diamond Spawn Chance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "diamond",
+        "value": {
+          "values": [
+            "Percent chance of an ore deposit containing diamond.\nDefault: 1"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "diamond",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "100"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "diamond"
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/bettermineshafts/config/SpawnRatesConfig": {
+    "name": "com/yungnickyoung/minecraft/bettermineshafts/config/SpawnRatesConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "lanternSpawnRate",
+        "value": {
+          "value": "Lantern Spawn Rate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "lanternSpawnRate"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "lanternSpawnRate",
+        "value": {
+          "values": [
+            "The spawn rate for lanterns in the main shaft.\nDefault: .0067"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "lanternSpawnRate",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "torchSpawnRate",
+        "value": {
+          "value": "Torch Spawn Rate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "torchSpawnRate"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "torchSpawnRate",
+        "value": {
+          "values": [
+            "The spawn rate for torches in small shafts.\nDefault: .02"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "torchSpawnRate",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "workstationSpawnRate",
+        "value": {
+          "value": "Workstation Spawn Rate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "workstationSpawnRate"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "workstationSpawnRate",
+        "value": {
+          "values": [
+            "The spawn rate for workstation side rooms along the main shaft.\nDefault: .025"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "workstationSpawnRate",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "workstationDungeonSpawnRate",
+        "value": {
+          "value": "Workstation Cellar Spawn Rate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "workstationDungeonSpawnRate"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "workstationDungeonSpawnRate",
+        "value": {
+          "values": [
+            "The spawn rate for workstation cellars below workstations along the main shaft.\nDefault: .25"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "workstationDungeonSpawnRate",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "smallShaftSpawnRate",
+        "value": {
+          "value": "Small Shaft Spawn Rate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "smallShaftSpawnRate"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "smallShaftSpawnRate",
+        "value": {
+          "values": [
+            "The spawn rate for smaller tunnels that generate along the main shaft.\nDefault: .07"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "smallShaftSpawnRate",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "cobwebSpawnRate",
+        "value": {
+          "value": "Cobweb Spawn Rate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "cobwebSpawnRate"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "cobwebSpawnRate",
+        "value": {
+          "values": [
+            "The spawn rate for cobwebs.\nDefault: .15"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "cobwebSpawnRate",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "smallShaftChestMinecartSpawnRate",
+        "value": {
+          "value": "Small Shaft Chest Minecart Spawn Rate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "smallShaftChestMinecartSpawnRate"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "smallShaftChestMinecartSpawnRate",
+        "value": {
+          "values": [
+            "The spawn rate for minecarts holding chests in small shafts.\nDefault: .00125"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "smallShaftChestMinecartSpawnRate",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "mainShaftChestMinecartSpawnRate",
+        "value": {
+          "value": "Main Shaft Chest Minecart Spawn Rate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "mainShaftChestMinecartSpawnRate"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "mainShaftChestMinecartSpawnRate",
+        "value": {
+          "values": [
+            "The spawn rate for minecarts holding chests in the main shaft.\nDefault: .01"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "mainShaftChestMinecartSpawnRate",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "smallShaftTntMinecartSpawnRate",
+        "value": {
+          "value": "Small Shaft TNT Minecart Spawn Rate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "smallShaftTntMinecartSpawnRate"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "smallShaftTntMinecartSpawnRate",
+        "value": {
+          "values": [
+            "The spawn rate for minecarts holding TNT in small shafts.\nDefault: .0025"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "smallShaftTntMinecartSpawnRate",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "mainShaftTntMinecartSpawnRate",
+        "value": {
+          "value": "Main Shaft TNT Minecart Spawn Rate"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "mainShaftTntMinecartSpawnRate"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "mainShaftTntMinecartSpawnRate",
+        "value": {
+          "values": [
+            "The spawn rate for minecarts holding TNT in the main shaft.\nDefault: .0025"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeDouble;",
+        "target": "mainShaftTntMinecartSpawnRate",
+        "values": {
+          "max": {
+            "type": "DOUBLE",
+            "value": "1.0"
+          },
+          "min": {
+            "type": "DOUBLE",
+            "value": "0.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "zombieVillagerRoomSpawnRate",
+        "value": {
+          "value": "Abandoned Miners\u0027 Outpost Spawn Chance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "zombieVillagerRoomSpawnRate",
+        "value": {
+          "values": [
+            "Percent chance of an Abandoned Miners\u0027 Outpost to spawn at the end of a small mineshaft tunnel.\nDefault: 2"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "zombieVillagerRoomSpawnRate"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "zombieVillagerRoomSpawnRate",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "100"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "smallShaftPieceChainLength",
+        "value": {
+          "value": "Small Shaft Piece Chain Length"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "smallShaftPieceChainLength",
+        "value": {
+          "values": [
+            "The number of \"pieces\" (e.g. straight, turn, ladder, intersection, etc.) in a single small shaft.\nThis determines the overall length of small shafts.\nDefault: 9"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "smallShaftPieceChainLength"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "smallShaftPieceChainLength",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/bettermineshafts/event/EventConfigReload": {
+    "name": "com/yungnickyoung/minecraft/bettermineshafts/event/EventConfigReload",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigReload(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/bettermineshafts/event/EventMineshaftGen": {
+    "name": "com/yungnickyoung/minecraft/bettermineshafts/event/EventMineshaftGen",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMineshaftGen(Lnet/minecraftforge/event/terraingen/InitMapGenEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/bettermineshafts/proxy/ClientProxy": {
+    "name": "com/yungnickyoung/minecraft/bettermineshafts/proxy/ClientProxy",
+    "interfaces": [
+      "com/yungnickyoung/minecraft/bettermineshafts/proxy/IProxy"
+    ]
+  },
+  "com/yungnickyoung/minecraft/bettermineshafts/proxy/ServerProxy": {
+    "name": "com/yungnickyoung/minecraft/bettermineshafts/proxy/ServerProxy",
+    "interfaces": [
+      "com/yungnickyoung/minecraft/bettermineshafts/proxy/IProxy"
+    ]
+  },
+  "com/yungnickyoung/minecraft/bettermineshafts/world/MapGenBetterMineshaft": {
+    "name": "com/yungnickyoung/minecraft/bettermineshafts/world/MapGenBetterMineshaft",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/yungnickyoung/minecraft/bettermineshafts/world/MapGenBetterMineshaft"
+      }
+    ]
+  }
+}

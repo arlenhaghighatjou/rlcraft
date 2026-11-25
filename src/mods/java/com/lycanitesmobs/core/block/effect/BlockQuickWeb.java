@@ -1,0 +1,57 @@
+package com.lycanitesmobs.core.block.effect;
+
+import com.lycanitesmobs.LycanitesMobs;
+import com.lycanitesmobs.core.block.BlockBase;
+import com.lycanitesmobs.core.config.ConfigBase;
+import java.util.Random;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class BlockQuickWeb extends BlockBase {
+   public BlockQuickWeb() {
+      super(Material.WEB);
+      this.setCreativeTab(LycanitesMobs.blocksTab);
+      this.group = LycanitesMobs.modInfo;
+      this.blockName = "quickweb";
+      this.setup();
+      this.tickRate = ConfigBase.getConfig(this.group, "general").getBool("Features", "Enable Quickweb", true) ? 200 : 1;
+      this.removeOnTick = true;
+      this.loopTicks = false;
+      this.canBeCrushed = false;
+      this.noEntityCollision = true;
+      this.noBreakCollision = false;
+      this.isOpaque = false;
+      this.setHardness(0.1F);
+      this.setHarvestLevel("sword", 0);
+      this.setLightOpacity(1);
+   }
+
+   public Item getItemDropped(IBlockState blockState, Random random, int fortune) {
+      return null;
+   }
+
+   public int damageDropped(IBlockState blockState) {
+      return 0;
+   }
+
+   public int quantityDropped(Random random) {
+      return 1;
+   }
+
+   public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+      super.onEntityCollidedWithBlock(world, pos, state, entity);
+      entity.setInWeb();
+   }
+
+   @SideOnly(Side.CLIENT)
+   public BlockRenderLayer getBlockLayer() {
+      return BlockRenderLayer.CUTOUT;
+   }
+}

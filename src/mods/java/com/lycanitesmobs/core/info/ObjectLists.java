@@ -1,0 +1,380 @@
+package com.lycanitesmobs.core.info;
+
+import com.lycanitesmobs.LycanitesMobs;
+import com.lycanitesmobs.ObjectManager;
+import com.lycanitesmobs.core.config.ConfigBase;
+import com.lycanitesmobs.core.item.ItemCustom;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemSpade;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraftforge.oredict.OreDictionary;
+
+public class ObjectLists {
+   public static String[] itemListNames = new String[]{"RawMeat", "CookedMeat", "Vegetables", "RawFish", "CookedFish", "CactusFood", "Mushrooms", "Sweets", "Fuel"};
+   public static Map<String, List<ItemStack>> itemLists = new HashMap();
+   public static Map<String, List<Class>> entityLists = new HashMap();
+   public static Map<String, List<Potion>> effectLists = new HashMap();
+   public static Map<String, Potion> allEffects = new HashMap();
+
+   public ObjectLists() {
+   }
+
+   public static void addItem(String list, Object object) {
+      if (object instanceof Item || object instanceof Block || object instanceof ItemStack || object instanceof String) {
+         list = list.toLowerCase();
+         if (!itemLists.containsKey(list)) {
+            itemLists.put(list, new ArrayList());
+         }
+
+         ItemStack itemStack = null;
+         if (object instanceof Item) {
+            itemStack = new ItemStack((Item)object);
+         } else if (object instanceof Block) {
+            itemStack = new ItemStack((Block)object);
+         } else if (object instanceof ItemStack) {
+            itemStack = (ItemStack)object;
+         } else if (object instanceof String) {
+            if (ObjectManager.getItem((String)object) != null) {
+               itemStack = new ItemStack(ObjectManager.getItem((String)object));
+            } else if (ObjectManager.getBlock((String)object) != null) {
+               itemStack = new ItemStack(ObjectManager.getBlock((String)object));
+            }
+         }
+
+         if (itemStack != null) {
+            ((List)itemLists.get(list)).add(itemStack);
+         }
+
+      }
+   }
+
+   public static void addEntity(String list, Object object) {
+      if (object instanceof Entity || object instanceof String) {
+         list = list.toLowerCase();
+         if (!entityLists.containsKey(list)) {
+            entityLists.put(list, new ArrayList());
+         }
+
+         Class entity = null;
+         if (object instanceof String) {
+            CreatureInfo creatureInfo = CreatureManager.getInstance().getCreature((String)object);
+            if (creatureInfo != null) {
+               entity = creatureInfo.entityClass;
+            }
+         }
+
+         if (entity != null) {
+            ((List)entityLists.get(list)).add(entity);
+         }
+
+      }
+   }
+
+   public static void addEffect(String list, Potion effect, String effectName) {
+      if (effect != null) {
+         allEffects.put(effectName, effect);
+         list = list.toLowerCase();
+         if (!effectLists.containsKey(list)) {
+            effectLists.put(list, new ArrayList());
+         }
+
+         ((List)effectLists.get(list)).add(effect);
+      }
+   }
+
+   public static ItemStack[] getItems(String list) {
+      list = list.toLowerCase();
+      return !itemLists.containsKey(list) ? new ItemStack[0] : (ItemStack[])((List)itemLists.get(list)).toArray(new ItemStack[((List)itemLists.get(list)).size()]);
+   }
+
+   public static Class[] getEntites(String list) {
+      list = list.toLowerCase();
+      return !entityLists.containsKey(list) ? new Class[0] : (Class[])((List)entityLists.get(list)).toArray(new Class[((List)entityLists.get(list)).size()]);
+   }
+
+   public static Potion[] getEffects(String list) {
+      list = list.toLowerCase();
+      return !effectLists.containsKey(list) ? new Potion[0] : (Potion[])((List)effectLists.get(list)).toArray(new Potion[((List)effectLists.get(list)).size()]);
+   }
+
+   public static boolean inItemList(String list, ItemStack testStack) {
+      list = list.toLowerCase();
+      if (testStack.isEmpty()) {
+         return false;
+      } else {
+         testStack.getItem();
+         if (!itemLists.containsKey(list)) {
+            return false;
+         } else {
+            for(ItemStack listStack : (List)itemLists.get(list)) {
+               if (testStack.getItem() == listStack.getItem() && testStack.getItemDamage() == listStack.getItemDamage()) {
+                  return true;
+               }
+            }
+
+            return false;
+         }
+      }
+   }
+
+   public static boolean inEntityList(String list, Class testClass) {
+      list = list.toLowerCase();
+      return !entityLists.containsKey(list) ? false : false;
+   }
+
+   public static boolean inEffectList(String list, Potion testPotion) {
+      list = list.toLowerCase();
+      return !effectLists.containsKey(list) ? false : ((List)effectLists.get(list)).contains(testPotion);
+   }
+
+   public static boolean isInOreDictionary(String oreEntry, Item item) {
+      return isInOreDictionary(oreEntry, new ItemStack(item));
+   }
+
+   public static boolean isInOreDictionary(String oreEntry, Block block) {
+      return isInOreDictionary(oreEntry, new ItemStack(block));
+   }
+
+   public static boolean isInOreDictionary(String oreEntry, ItemStack itemStack) {
+      if (itemStack == null) {
+         return false;
+      } else {
+         List<ItemStack> ores = OreDictionary.getOres(oreEntry);
+         if (ores == null) {
+            return false;
+         } else {
+            for(ItemStack ore : ores) {
+               if (ore.getItem() == itemStack.getItem()) {
+                  return true;
+               }
+            }
+
+            return false;
+         }
+      }
+   }
+
+   public static void createCustomItems() {
+      ConfigBase config = ConfigBase.getConfig(LycanitesMobs.modInfo, "itemlists");
+      config.setCategoryComment("Custom Objects", "here you can add your own custom items! These items wont do anything and will have no crafting recipes you can however have them drop from mobs by adding them to the custom mob drops. To add items just create a comma seperated list of names (spaces will be removed), you will need to use the item.youritem.name and item.youritem.description lang file entries in your resource pack to name your item and you will also need to save a texture for your item as: assets/lycanitesmobs/items/youritem.png");
+      String customItems = config.getString("Custom Objects", "Custom Items", "");
+      if (!"".equals(customItems)) {
+         for(String itemEntry : customItems.replace(" ", "").split(",")) {
+            ObjectManager.addItem(itemEntry, new ItemCustom(itemEntry, LycanitesMobs.modInfo));
+         }
+
+      }
+   }
+
+   public static void createVanillaLists() {
+      addItem("diet_carnivore", Items.BEEF);
+      addItem("diet_carnivore", Items.PORKCHOP);
+      addItem("diet_carnivore", Items.CHICKEN);
+      addItem("diet_carnivore", Items.RABBIT);
+      addItem("diet_carnivore", Items.MUTTON);
+      addItem("diet_carnivore", Items.COOKED_BEEF);
+      addItem("diet_carnivore", Items.COOKED_PORKCHOP);
+      addItem("diet_carnivore", Items.COOKED_CHICKEN);
+      addItem("diet_carnivore", Items.COOKED_RABBIT);
+      addItem("diet_carnivore", Items.COOKED_MUTTON);
+      addItem("diet_piscivore", Items.FISH);
+      addItem("diet_piscivore", new ItemStack(Items.FISH, 1, 1));
+      addItem("diet_piscivore", new ItemStack(Items.FISH, 1, 2));
+      addItem("diet_piscivore", new ItemStack(Items.FISH, 1, 3));
+      addItem("diet_piscivore", Items.COOKED_FISH);
+      addItem("diet_piscivore", new ItemStack(Items.COOKED_FISH, 1, 1));
+      addItem("diet_herbivore", Items.WHEAT);
+      addItem("diet_herbivore", Items.CARROT);
+      addItem("diet_herbivore", Items.POTATO);
+      addItem("diet_frugivore", Items.APPLE);
+      addItem("diet_frugivore", Items.MELON);
+      addItem("diet_frugivore", Blocks.PUMPKIN);
+      addItem("diet_frugivore", Items.SUGAR);
+      addItem("diet_frugivore", new ItemStack(Items.DYE, 1, 15));
+      addItem("diet_frugivore", Items.COOKIE);
+      addItem("diet_frugivore", Blocks.CAKE);
+      addItem("diet_frugivore", Items.PUMPKIN_PIE);
+      addItem("diet_exudativore", new ItemStack(Items.DYE, 1, 2));
+      addItem("diet_fungivore", Items.MUSHROOM_STEW);
+      addItem("diet_fungivore", Blocks.RED_MUSHROOM);
+      addItem("diet_fungivore", Blocks.BROWN_MUSHROOM);
+      addItem("diet_fungivore", Blocks.NETHER_WART);
+      addItem("diet_detritivore", Items.ROTTEN_FLESH);
+      addItem("diet_detritivore", Items.FERMENTED_SPIDER_EYE);
+      addItem("diet_geovore", Items.COAL);
+      addItem("diet_geovore", new ItemStack(Items.DYE, 1, 4));
+      addItem("diet_geovore", Items.DIAMOND);
+      addItem("diet_geovore", Items.EMERALD);
+      addItem("diet_insectivore", Items.SPIDER_EYE);
+      addItem("diet_insectivore", Items.FERMENTED_SPIDER_EYE);
+
+      for(String itemListName : itemListNames) {
+         addFromConfig(itemListName.toLowerCase());
+      }
+
+      addEffect("buffs", MobEffects.STRENGTH, "strength");
+      addEffect("buffs", MobEffects.HASTE, "haste");
+      addEffect("buffs", MobEffects.FIRE_RESISTANCE, "fire_resistance");
+      addEffect("buffs", MobEffects.INSTANT_HEALTH, "instant_health");
+      addEffect("buffs", MobEffects.INVISIBILITY, "invisibility");
+      addEffect("buffs", MobEffects.JUMP_BOOST, "jump_boost");
+      addEffect("buffs", MobEffects.SPEED, "speed");
+      addEffect("buffs", MobEffects.NIGHT_VISION, "night_vision");
+      addEffect("buffs", MobEffects.REGENERATION, "regeneration");
+      addEffect("buffs", MobEffects.RESISTANCE, "resistance");
+      addEffect("buffs", MobEffects.WATER_BREATHING, "water_breathing");
+      addEffect("buffs", MobEffects.HEALTH_BOOST, "health_boost");
+      addEffect("buffs", MobEffects.ABSORPTION, "absorption");
+      addEffect("buffs", MobEffects.SATURATION, "saturation");
+      addEffect("buffs", MobEffects.GLOWING, "glowing");
+      addEffect("buffs", MobEffects.LEVITATION, "levitation");
+      addEffect("buffs", MobEffects.LUCK, "luck");
+      addEffect("debuffs", MobEffects.BLINDNESS, "blindness");
+      addEffect("debuffs", MobEffects.NAUSEA, "nausea");
+      addEffect("debuffs", MobEffects.MINING_FATIGUE, "mining_fatigue");
+      addEffect("debuffs", MobEffects.INSTANT_DAMAGE, "instant_damage");
+      addEffect("debuffs", MobEffects.HUNGER, "hunger");
+      addEffect("debuffs", MobEffects.SLOWNESS, "slowness");
+      addEffect("debuffs", MobEffects.POISON, "poison");
+      addEffect("debuffs", MobEffects.WEAKNESS, "weakness");
+      addEffect("debuffs", MobEffects.WITHER, "wither");
+      addEffect("debuffs", MobEffects.UNLUCK, "unluck");
+   }
+
+   public static void addFromConfig(String listName) {
+      ConfigBase config = ConfigBase.getConfig(LycanitesMobs.modInfo, "itemlists");
+      config.setCategoryComment("item lists", "Here you can add items from vanilla Minecraft or other mods to various lists used by this mod. These are mostly food items that can be fed to farmable/tameable mobs. Format is: mod:itemname,metadata Multiple entries should be semicolon separated, be sure to use a colon and semicolon in the correct place.");
+      String customDropsString = config.getString("Item Lists", listName).replace(" ", "");
+      LycanitesMobs.logDebug("ItemSetup", "~O========== Custom " + listName + " ==========O~");
+      if (customDropsString != null && customDropsString.length() > 0) {
+         for(String customDropEntryString : customDropsString.replace(" ", "").split(";")) {
+            LycanitesMobs.logDebug("ItemSetup", "Adding: " + customDropEntryString);
+            String[] customDropValues = customDropEntryString.split(",");
+            String dropName = customDropValues[0];
+            int dropMeta = 0;
+            if (customDropValues.length > 1) {
+               dropMeta = Integer.parseInt(customDropValues[1]);
+            }
+
+            if (Item.getByNameOrId(dropName) != null) {
+               Item customItem = Item.getByNameOrId(dropName);
+               addItem(listName, new ItemStack(customItem, 1, dropMeta));
+               LycanitesMobs.logDebug("ItemSetup", "As Item: " + customItem);
+            } else if (Block.getBlockFromName(dropName) != null) {
+               Block customBlock = Block.getBlockFromName(dropName);
+               addItem(listName, new ItemStack(customBlock, 1, dropMeta));
+               LycanitesMobs.logDebug("ItemSetup", "As Block: " + customBlock);
+            }
+         }
+      }
+
+   }
+
+   public static boolean isPickaxe(ItemStack itemStack) {
+      if (itemStack.isEmpty()) {
+         return false;
+      } else {
+         try {
+            String[] toolNameParts = itemStack.getUnlocalizedName().split("\\.");
+            if (toolNameParts.length >= 3 && "InfiTool".equalsIgnoreCase(toolNameParts[1])) {
+               String toolName = toolNameParts[2];
+               return "Pickaxe".equalsIgnoreCase(toolName) || "Hammer".equalsIgnoreCase(toolName);
+            } else if (itemStack.getItem() instanceof ItemPickaxe) {
+               return true;
+            } else if (itemStack.getItem().getHarvestLevel(itemStack, "pickaxe", (EntityPlayer)null, (IBlockState)null) != -1) {
+               return true;
+            } else {
+               return itemStack.getDestroySpeed(Blocks.STONE.getDefaultState()) > 1.0F;
+            }
+         } catch (Exception var3) {
+            return false;
+         }
+      }
+   }
+
+   public static boolean isAxe(ItemStack itemStack) {
+      if (itemStack.isEmpty()) {
+         return false;
+      } else {
+         try {
+            String[] toolNameParts = itemStack.getUnlocalizedName().split("\\.");
+
+            for(String var10000 : toolNameParts) {
+               if (toolNameParts.length >= 3 && "InfiTool".equalsIgnoreCase(toolNameParts[1])) {
+                  String toolName = toolNameParts[2];
+                  if (!"Axe".equalsIgnoreCase(toolName) && !"LumberAxe".equalsIgnoreCase(toolName) && !"Mattock".equalsIgnoreCase(toolName) && !"Battleaxe".equalsIgnoreCase(toolName)) {
+                     return false;
+                  }
+
+                  return true;
+               }
+            }
+
+            if (itemStack.getItem() instanceof ItemAxe) {
+               return true;
+            } else if (itemStack.getItem().getHarvestLevel(itemStack, "axe", (EntityPlayer)null, (IBlockState)null) != -1) {
+               return true;
+            } else {
+               return itemStack.getDestroySpeed(Blocks.LOG.getDefaultState()) > 1.0F;
+            }
+         } catch (Exception var7) {
+            return false;
+         }
+      }
+   }
+
+   public static boolean isShovel(ItemStack itemStack) {
+      if (itemStack.isEmpty()) {
+         return false;
+      } else {
+         try {
+            String[] toolNameParts = itemStack.getUnlocalizedName().split("\\.");
+            if (toolNameParts.length >= 3 && "InfiTool".equalsIgnoreCase(toolNameParts[1])) {
+               String toolName = toolNameParts[2];
+               return "Shovel".equalsIgnoreCase(toolName) || "Excavator".equalsIgnoreCase(toolName) || "Mattock".equalsIgnoreCase(toolName);
+            } else if (itemStack.getItem() instanceof ItemSpade) {
+               return true;
+            } else if (itemStack.getItem().getHarvestLevel(itemStack, "shovel", (EntityPlayer)null, (IBlockState)null) != -1) {
+               return true;
+            } else {
+               return itemStack.getDestroySpeed(Blocks.DIRT.getDefaultState()) > 1.0F;
+            }
+         } catch (Exception var3) {
+            return false;
+         }
+      }
+   }
+
+   public static boolean isName(Item item, String name) {
+      if (item == null) {
+         return false;
+      } else {
+         String itemName = item.getUnlocalizedName().toLowerCase();
+         return itemName.contains(name);
+      }
+   }
+
+   public static boolean isName(Block block, String name) {
+      if (block == null) {
+         return false;
+      } else {
+         name = name.toLowerCase();
+         String blockName = block.getUnlocalizedName().toLowerCase();
+         return blockName.contains(name);
+      }
+   }
+}

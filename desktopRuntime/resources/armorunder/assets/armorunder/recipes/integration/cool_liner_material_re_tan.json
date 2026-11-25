@@ -1,0 +1,21 @@
+{ "_comment": ["Cool lining material the TAN way" ],
+  "conditions": [
+    { "type": "forge:not",
+      "value": { "type": "armorunder:compat_mode" }
+    },{
+      "type": "forge:mod_loaded",
+      "modid": "toughasnails"
+    }
+  ],
+  "result": {
+    "item": "armorunder:cool_liner_material"
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "sss", " J ", "sss"
+  ],
+  "key": {
+    "s": { "item": "minecraft:string" },
+    "J": { "item": "toughasnails:jelled_slime" }
+  }
+}

@@ -1,0 +1,46 @@
+package sereneseasons.network.message;
+
+import io.netty.buffer.ByteBuf;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import sereneseasons.api.config.SyncedConfig;
+import sereneseasons.core.SereneSeasons;
+
+public class MessageSyncConfigs implements IMessage, IMessageHandler<MessageSyncConfigs, IMessage> {
+   public NBTTagCompound nbtOptions;
+
+   public MessageSyncConfigs() {
+   }
+
+   public MessageSyncConfigs(NBTTagCompound nbtOptions) {
+      this.nbtOptions = nbtOptions;
+   }
+
+   public void fromBytes(ByteBuf buf) {
+      this.nbtOptions = ByteBufUtils.readTag(buf);
+   }
+
+   public void toBytes(ByteBuf buf) {
+      ByteBufUtils.writeTag(buf, this.nbtOptions);
+   }
+
+   public IMessage onMessage(MessageSyncConfigs message, MessageContext ctx) {
+      if (ctx.side == Side.CLIENT) {
+         for(String key : message.nbtOptions.getKeySet()) {
+            SyncedConfig.SyncedConfigEntry entry = (SyncedConfig.SyncedConfigEntry)SyncedConfig.optionsToSync.get(key);
+            if (entry == null) {
+               SereneSeasons.logger.error("Option " + key + " does not exist locally!");
+            }
+
+            entry.value = message.nbtOptions.getString(key);
+            SereneSeasons.logger.info("SS configuration synchronized with the server");
+         }
+      }
+
+      return null;
+   }
+}

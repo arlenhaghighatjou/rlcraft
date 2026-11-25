@@ -1,0 +1,417 @@
+{
+  "org/orecruncher/LibBase": {
+    "name": "org/orecruncher/LibBase",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "org/orecruncher/LibBase",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2,)"
+          },
+          "certificateFingerprint": {
+            "value": "7a2128d395ad96ceb9d9030fbd41d035b435753a"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2779,);"
+          },
+          "modid": {
+            "value": "orelib"
+          },
+          "updateJSON": {
+            "value": "https://raw.githubusercontent.com/OreCruncher/OreLib/master/version.json"
+          },
+          "useMetadata": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "version": {
+            "value": "3.6.0.1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "org.orecruncher.proxy.ProxyClient"
+          },
+          "serverSide": {
+            "value": "org.orecruncher.proxy.Proxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$InstanceFactory;",
+        "target": "instance()Lorg/orecruncher/LibBase;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "loadCompleted(Lnet/minecraftforge/fml/common/event/FMLLoadCompleteEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onFingerprintViolation(Lnet/minecraftforge/fml/common/event/FMLFingerprintViolationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/LibOptions": {
+    "name": "org/orecruncher/LibOptions",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "org/orecruncher/LibOptions",
+        "values": {
+          "modid": {
+            "value": "orelib"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "org/orecruncher/LibOptions",
+        "values": {
+          "category": {
+            "value": ""
+          },
+          "modid": {
+            "value": "orelib"
+          },
+          "name": {
+            "value": "orelib"
+          },
+          "type": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/common/config/Config$Type;/INSTANCE"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "logging",
+        "value": {
+          "value": "Logging"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "logging",
+        "value": {
+          "values": [
+            "Options to control logging"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "logging",
+        "value": {
+          "value": "config.orelib.logging"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChangedEvent(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "org/orecruncher/LibOptions$Logging": {
+    "name": "org/orecruncher/LibOptions$Logging",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "enableLogging",
+        "value": {
+          "value": "config.orelib.logging.enableLogging"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableLogging",
+        "value": {
+          "values": [
+            "Enables debug logging output for diagnostics"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "enableVersionCheck",
+        "value": {
+          "value": "config.orelib.logging.enableVersionCheck"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableVersionCheck",
+        "value": {
+          "values": [
+            "Enables display of chat messages related to newer versions",
+            "of the mod being available."
+          ]
+        }
+      }
+    ]
+  },
+  "org/orecruncher/lib/ConfigProcessor$Category": {
+    "name": "org/orecruncher/lib/ConfigProcessor$Category",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "org/orecruncher/lib/ConfigProcessor$Comment": {
+    "name": "org/orecruncher/lib/ConfigProcessor$Comment",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "org/orecruncher/lib/ConfigProcessor$DefaultValue": {
+    "name": "org/orecruncher/lib/ConfigProcessor$DefaultValue",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "org/orecruncher/lib/ConfigProcessor$Hidden": {
+    "name": "org/orecruncher/lib/ConfigProcessor$Hidden",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "org/orecruncher/lib/ConfigProcessor$LangKey": {
+    "name": "org/orecruncher/lib/ConfigProcessor$LangKey",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "org/orecruncher/lib/ConfigProcessor$Option": {
+    "name": "org/orecruncher/lib/ConfigProcessor$Option",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "org/orecruncher/lib/ConfigProcessor$RangeFloat": {
+    "name": "org/orecruncher/lib/ConfigProcessor$RangeFloat",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "org/orecruncher/lib/ConfigProcessor$RangeInt": {
+    "name": "org/orecruncher/lib/ConfigProcessor$RangeInt",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "org/orecruncher/lib/ConfigProcessor$RestartRequired": {
+    "name": "org/orecruncher/lib/ConfigProcessor$RestartRequired",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "org/orecruncher/lib/EventMonitor": {
+    "name": "org/orecruncher/lib/EventMonitor",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEvent(Lnet/minecraftforge/fml/common/eventhandler/Event;)V"
+      }
+    ]
+  },
+  "org/orecruncher/lib/IVariant": {
+    "name": "org/orecruncher/lib/IVariant",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "org/orecruncher/lib/WeightTable$1": {
+    "name": "org/orecruncher/lib/WeightTable$1",
+    "interfaces": [
+      "org/orecruncher/lib/WeightTable$IItem"
+    ]
+  },
+  "org/orecruncher/lib/capability/CapabilityProviderSerializable": {
+    "name": "org/orecruncher/lib/capability/CapabilityProviderSerializable",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "org/orecruncher/lib/capability/CapabilityProviderSimple": {
+    "name": "org/orecruncher/lib/capability/CapabilityProviderSimple",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "org/orecruncher/lib/capability/NullStorage": {
+    "name": "org/orecruncher/lib/capability/NullStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "org/orecruncher/lib/capability/SimpleStorage": {
+    "name": "org/orecruncher/lib/capability/SimpleStorage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "org/orecruncher/lib/chunk/ClientChunkCache": {
+    "name": "org/orecruncher/lib/chunk/ClientChunkCache",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      }
+    ]
+  },
+  "org/orecruncher/lib/chunk/DirectChunkCache": {
+    "name": "org/orecruncher/lib/chunk/DirectChunkCache",
+    "interfaces": [
+      "org/orecruncher/lib/chunk/IChunkCache",
+      "org/orecruncher/lib/chunk/IBlockAccessEx"
+    ]
+  },
+  "org/orecruncher/lib/chunk/IBlockAccessEx": {
+    "name": "org/orecruncher/lib/chunk/IBlockAccessEx",
+    "interfaces": [
+      "net/minecraft/world/IBlockAccess"
+    ]
+  },
+  "org/orecruncher/lib/chunk/PassThroughChunkCache": {
+    "name": "org/orecruncher/lib/chunk/PassThroughChunkCache",
+    "interfaces": [
+      "org/orecruncher/lib/chunk/IChunkCache",
+      "org/orecruncher/lib/chunk/IBlockAccessEx"
+    ]
+  },
+  "org/orecruncher/lib/collections/EmptyList": {
+    "name": "org/orecruncher/lib/collections/EmptyList",
+    "interfaces": [
+      "java/util/List"
+    ]
+  },
+  "org/orecruncher/lib/collections/EmptyList$1": {
+    "name": "org/orecruncher/lib/collections/EmptyList$1",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "org/orecruncher/lib/collections/EmptyList$2": {
+    "name": "org/orecruncher/lib/collections/EmptyList$2",
+    "interfaces": [
+      "java/util/ListIterator"
+    ]
+  },
+  "org/orecruncher/lib/collections/EmptySet": {
+    "name": "org/orecruncher/lib/collections/EmptySet",
+    "interfaces": [
+      "java/util/Set"
+    ]
+  },
+  "org/orecruncher/lib/collections/EmptySet$1": {
+    "name": "org/orecruncher/lib/collections/EmptySet$1",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "org/orecruncher/lib/collections/ObjectArray": {
+    "name": "org/orecruncher/lib/collections/ObjectArray",
+    "interfaces": [
+      "java/util/Collection"
+    ]
+  },
+  "org/orecruncher/lib/collections/ObjectArray$1": {
+    "name": "org/orecruncher/lib/collections/ObjectArray$1",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "org/orecruncher/lib/expression/Dynamic$DynamicBoolean": {
+    "name": "org/orecruncher/lib/expression/Dynamic$DynamicBoolean",
+    "interfaces": [
+      "org/orecruncher/lib/expression/IDynamicVariant"
+    ]
+  },
+  "org/orecruncher/lib/expression/Dynamic$DynamicNumber": {
+    "name": "org/orecruncher/lib/expression/Dynamic$DynamicNumber",
+    "interfaces": [
+      "org/orecruncher/lib/expression/IDynamicVariant"
+    ]
+  },
+  "org/orecruncher/lib/expression/Dynamic$DynamicString": {
+    "name": "org/orecruncher/lib/expression/Dynamic$DynamicString",
+    "interfaces": [
+      "org/orecruncher/lib/expression/IDynamicVariant"
+    ]
+  },
+  "org/orecruncher/lib/expression/IDynamicVariant": {
+    "name": "org/orecruncher/lib/expression/IDynamicVariant",
+    "interfaces": [
+      "org/orecruncher/lib/expression/IVariant"
+    ]
+  },
+  "org/orecruncher/lib/expression/IVariant": {
+    "name": "org/orecruncher/lib/expression/IVariant",
+    "interfaces": [
+      "org/orecruncher/lib/expression/LazyVariant",
+      "java/lang/Comparable"
+    ]
+  },
+  "org/orecruncher/lib/expression/Tokenizer": {
+    "name": "org/orecruncher/lib/expression/Tokenizer",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "org/orecruncher/lib/expression/Variant": {
+    "name": "org/orecruncher/lib/expression/Variant",
+    "interfaces": [
+      "org/orecruncher/lib/expression/IVariant",
+      "java/lang/Comparable"
+    ]
+  }
+}

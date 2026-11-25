@@ -1,0 +1,78 @@
+package com.github.alexthe666.iceandfire.client.render.entity.layer;
+
+import com.github.alexthe666.iceandfire.client.model.ICustomStatueModel;
+import com.github.alexthe666.iceandfire.client.model.ModelGuardianStatue;
+import com.github.alexthe666.iceandfire.client.model.ModelHorseStatue;
+import com.github.alexthe666.iceandfire.entity.StoneEntityProperties;
+import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityGuardian;
+import net.minecraft.entity.passive.AbstractHorse;
+import net.minecraft.entity.passive.EntityLlama;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+
+public class LayerStoneEntity implements LayerRenderer {
+   private static final ModelHorseStatue HORSE_MODEL = new ModelHorseStatue();
+   private static final ModelGuardianStatue GUARDIAN_MODEL = new ModelGuardianStatue();
+   private RenderLivingBase renderer;
+
+   public LayerStoneEntity(RenderLivingBase renderer) {
+      this.renderer = renderer;
+   }
+
+   public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float f, float f1, float i, float f2, float f3, float f4, float f5) {
+      if (entitylivingbaseIn instanceof EntityLiving) {
+         StoneEntityProperties properties = (StoneEntityProperties)EntityPropertiesHandler.INSTANCE.getProperties(entitylivingbaseIn, StoneEntityProperties.class);
+         if (properties != null && properties.isStone) {
+            GlStateManager.depthMask(true);
+            GL11.glEnable(2884);
+            this.renderer.bindTexture(new ResourceLocation(this.getStoneType(this.renderer.getMainModel(), 1)));
+            if (this.renderer.getMainModel() instanceof ICustomStatueModel) {
+               ((ICustomStatueModel)this.renderer.getMainModel()).renderStatue();
+            } else if (entitylivingbaseIn instanceof AbstractHorse && !(entitylivingbaseIn instanceof EntityLlama)) {
+               HORSE_MODEL.render(entitylivingbaseIn, f, 0.0F, 0.0F, f3, f4, f5);
+            } else if (entitylivingbaseIn instanceof EntityGuardian) {
+               GUARDIAN_MODEL.render(entitylivingbaseIn, f, 0.0F, 0.0F, f3, f4, f5);
+            } else {
+               this.renderer.getMainModel().render(entitylivingbaseIn, f, 0.0F, 0.0F, f3, f4, f5);
+            }
+
+            GL11.glDisable(2884);
+         }
+      }
+
+   }
+
+   public String getStoneType(ModelBase model, int size) {
+      int x = model.textureWidth;
+      int y = model.textureHeight;
+      int sizeX = this.clampToMultipleOfFour(Math.min(128, x * size));
+      int sizeY = this.clampToMultipleOfFour(Math.min(128, y * size));
+      String str = "iceandfire:textures/models/gorgon/stone" + sizeX + "x" + sizeY + ".png";
+      return sizeX <= 16 && sizeY <= 16 ? "textures/blocks/stone.png" : str;
+   }
+
+   public int clampToMultipleOfFour(int i) {
+      if (i % 4 != 0) {
+         if (i > 128) {
+            return 128;
+         } else if (i > 64) {
+            return 64;
+         } else {
+            return i > 32 ? 32 : 16;
+         }
+      } else {
+         return i;
+      }
+   }
+
+   public boolean shouldCombineTextures() {
+      return true;
+   }
+}

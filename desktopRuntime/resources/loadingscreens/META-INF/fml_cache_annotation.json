@@ -1,0 +1,206 @@
+{
+  "com/bloodnbonesgaming/loadingscreens/LoadingScreens": {
+    "name": "com/bloodnbonesgaming/loadingscreens/LoadingScreens",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/bloodnbonesgaming/loadingscreens/LoadingScreens",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12,1.13)"
+          },
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "dependencies": {
+            "value": "required-after:bnbgaminglib@[2.14.0,);after:gamestages;"
+          },
+          "modid": {
+            "value": "loadingscreens"
+          },
+          "name": {
+            "value": "Loading Screens"
+          },
+          "version": {
+            "value": "0.3.1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "loadingscreens"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.bloodnbonesgaming.loadingscreens.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.bloodnbonesgaming.loadingscreens.proxy.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "loadComplete(Lnet/minecraftforge/fml/common/event/FMLLoadCompleteEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverAboutToSTart(Lnet/minecraftforge/fml/common/event/FMLServerAboutToStartEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarted(Lnet/minecraftforge/fml/common/event/FMLServerStartedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStopped(Lnet/minecraftforge/fml/common/event/FMLServerStoppedEvent;)V"
+      }
+    ]
+  },
+  "com/bloodnbonesgaming/loadingscreens/client/ClientEventHandler": {
+    "name": "com/bloodnbonesgaming/loadingscreens/client/ClientEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiOpen(Lnet/minecraftforge/client/event/GuiOpenEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRenderTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      }
+    ]
+  },
+  "com/bloodnbonesgaming/loadingscreens/client/LoadingScreenHandler": {
+    "name": "com/bloodnbonesgaming/loadingscreens/client/LoadingScreenHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lcom/bloodnbonesgaming/lib/util/script/ScriptMethodDocumentation;",
+        "target": "addTiledTexture(Ljava/lang/String;Ljava/lang/String;)Lcom/bloodnbonesgaming/loadingscreens/client/gui/GuiElementTextureTile;",
+        "values": {
+          "args": {
+            "value": "String, String"
+          },
+          "notes": {
+            "value": "Adds a tiled texture. Documentation can be found in documentation/gui/guiElements/Tiled_Texture.txt"
+          },
+          "usage": {
+            "value": "anchor point, texture location"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/bloodnbonesgaming/lib/util/script/ScriptMethodDocumentation;",
+        "target": "addStretchedTexture(Ljava/lang/String;Ljava/lang/String;)Lcom/bloodnbonesgaming/loadingscreens/client/gui/GuiElementTextureStretch;",
+        "values": {
+          "args": {
+            "value": "String, String"
+          },
+          "notes": {
+            "value": "Adds a stretched texture. Documentation can be found in documentation/gui/guiElements/Stretched_Texture.txt"
+          },
+          "usage": {
+            "value": "anchor point, texture location"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/bloodnbonesgaming/lib/util/script/ScriptMethodDocumentation;",
+        "target": "addAnimatedTexture(Ljava/lang/String;Ljava/lang/String;)Lcom/bloodnbonesgaming/loadingscreens/client/gui/GuiElementTextureAnimated;",
+        "values": {
+          "args": {
+            "value": "String, String"
+          },
+          "notes": {
+            "value": "Adds an animated texture. Documentation can be found in documentation/gui/guiElements/Animated_Texture.txt"
+          },
+          "usage": {
+            "value": "anchor point, texture location"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/bloodnbonesgaming/lib/util/script/ScriptMethodDocumentation;",
+        "target": "addText(Ljava/lang/String;Ljava/lang/String;)Lcom/bloodnbonesgaming/loadingscreens/client/gui/GuiElementText;",
+        "values": {
+          "args": {
+            "value": "String, String"
+          },
+          "notes": {
+            "value": "Adds a text string. Documentation can be found in documentation/gui/guiElements/Text.txt"
+          },
+          "usage": {
+            "value": "anchor point, text"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/bloodnbonesgaming/lib/util/script/ScriptMethodDocumentation;",
+        "target": "addRandomText(Ljava/lang/String;)Lcom/bloodnbonesgaming/loadingscreens/client/gui/GuiElementTextRandom;",
+        "values": {
+          "args": {
+            "value": "String, String"
+          },
+          "notes": {
+            "value": "Adds a text string. Documentation can be found in documentation/gui/guiElements/Text.txt"
+          },
+          "usage": {
+            "value": "anchor point, text"
+          }
+        }
+      }
+    ]
+  }
+}

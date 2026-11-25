@@ -1,0 +1,1392 @@
+{
+  "betterquesting/api/nbt_doc/NbtDocBasic": {
+    "name": "betterquesting/api/nbt_doc/NbtDocBasic",
+    "interfaces": [
+      "betterquesting/api/nbt_doc/INbtDoc"
+    ]
+  },
+  "betterquesting/api/package-info": {
+    "name": "betterquesting/api/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "betterquesting/api/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "3.2"
+          },
+          "owner": {
+            "value": "betterquesting"
+          },
+          "provides": {
+            "value": "BetterQuesting|API"
+          }
+        }
+      }
+    ]
+  },
+  "betterquesting/api/placeholders/rewards/FactoryRewardPlaceholder": {
+    "name": "betterquesting/api/placeholders/rewards/FactoryRewardPlaceholder",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api/placeholders/rewards/RewardPlaceholder": {
+    "name": "betterquesting/api/placeholders/rewards/RewardPlaceholder",
+    "interfaces": [
+      "betterquesting/api/questing/rewards/IReward"
+    ]
+  },
+  "betterquesting/api/placeholders/tasks/FactoryTaskPlaceholder": {
+    "name": "betterquesting/api/placeholders/tasks/FactoryTaskPlaceholder",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api/placeholders/tasks/TaskPlaceholder": {
+    "name": "betterquesting/api/placeholders/tasks/TaskPlaceholder",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "betterquesting/api/properties/basic/PropertyTypeBase": {
+    "name": "betterquesting/api/properties/basic/PropertyTypeBase",
+    "interfaces": [
+      "betterquesting/api/properties/IPropertyType"
+    ]
+  },
+  "betterquesting/api/questing/IQuest": {
+    "name": "betterquesting/api/questing/IQuest",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTSaveLoad",
+      "betterquesting/api2/storage/INBTProgress",
+      "betterquesting/api/properties/IPropertyContainer"
+    ]
+  },
+  "betterquesting/api/questing/IQuestDatabase": {
+    "name": "betterquesting/api/questing/IQuestDatabase",
+    "interfaces": [
+      "betterquesting/api2/storage/IDatabase",
+      "betterquesting/api2/storage/INBTPartial",
+      "betterquesting/api2/storage/INBTProgress"
+    ]
+  },
+  "betterquesting/api/questing/IQuestLine": {
+    "name": "betterquesting/api/questing/IQuestLine",
+    "interfaces": [
+      "betterquesting/api2/storage/IDatabase",
+      "betterquesting/api2/storage/INBTPartial",
+      "betterquesting/api/properties/IPropertyContainer"
+    ]
+  },
+  "betterquesting/api/questing/IQuestLineDatabase": {
+    "name": "betterquesting/api/questing/IQuestLineDatabase",
+    "interfaces": [
+      "betterquesting/api2/storage/IDatabase",
+      "betterquesting/api2/storage/INBTPartial"
+    ]
+  },
+  "betterquesting/api/questing/IQuestLineEntry": {
+    "name": "betterquesting/api/questing/IQuestLineEntry",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTSaveLoad"
+    ]
+  },
+  "betterquesting/api/questing/party/IParty": {
+    "name": "betterquesting/api/questing/party/IParty",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTSaveLoad"
+    ]
+  },
+  "betterquesting/api/questing/party/IPartyDatabase": {
+    "name": "betterquesting/api/questing/party/IPartyDatabase",
+    "interfaces": [
+      "betterquesting/api2/storage/IDatabase",
+      "betterquesting/api2/storage/INBTPartial"
+    ]
+  },
+  "betterquesting/api/questing/rewards/IReward": {
+    "name": "betterquesting/api/questing/rewards/IReward",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTSaveLoad"
+    ]
+  },
+  "betterquesting/api/questing/tasks/IFluidTask": {
+    "name": "betterquesting/api/questing/tasks/IFluidTask",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "betterquesting/api/questing/tasks/IItemTask": {
+    "name": "betterquesting/api/questing/tasks/IItemTask",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "betterquesting/api/questing/tasks/ITask": {
+    "name": "betterquesting/api/questing/tasks/ITask",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTSaveLoad",
+      "betterquesting/api2/storage/INBTProgress"
+    ]
+  },
+  "betterquesting/api/storage/ILifeDatabase": {
+    "name": "betterquesting/api/storage/ILifeDatabase",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTPartial"
+    ]
+  },
+  "betterquesting/api/storage/INameCache": {
+    "name": "betterquesting/api/storage/INameCache",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTPartial"
+    ]
+  },
+  "betterquesting/api/storage/IQuestSettings": {
+    "name": "betterquesting/api/storage/IQuestSettings",
+    "interfaces": [
+      "betterquesting/api/properties/IPropertyContainer"
+    ]
+  },
+  "betterquesting/api/utils/FileExtensionFilter": {
+    "name": "betterquesting/api/utils/FileExtensionFilter",
+    "interfaces": [
+      "java/io/FileFilter"
+    ]
+  },
+  "betterquesting/api2/cache/CapabilityProviderQuestCache": {
+    "name": "betterquesting/api2/cache/CapabilityProviderQuestCache",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilityProvider",
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CAP_QUEST_CACHE",
+        "value": {
+          "type": "CLASS",
+          "value": "Lbetterquesting/api2/cache/QuestCache;"
+        }
+      }
+    ]
+  },
+  "betterquesting/api2/cache/CapabilityProviderQuestCache$1": {
+    "name": "betterquesting/api2/cache/CapabilityProviderQuestCache$1",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "betterquesting/api2/cache/QuestCache": {
+    "name": "betterquesting/api2/cache/QuestCache",
+    "interfaces": [
+      "net/minecraftforge/common/util/INBTSerializable"
+    ]
+  },
+  "betterquesting/api2/cache/QuestCache$QResetTime": {
+    "name": "betterquesting/api2/cache/QuestCache$QResetTime",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "betterquesting/api2/client/gui/GuiContainerCanvas": {
+    "name": "betterquesting/api2/client/gui/GuiContainerCanvas",
+    "interfaces": [
+      "betterquesting/api2/client/gui/IScene"
+    ]
+  },
+  "betterquesting/api2/client/gui/GuiScreenCanvas": {
+    "name": "betterquesting/api2/client/gui/GuiScreenCanvas",
+    "interfaces": [
+      "betterquesting/api2/client/gui/IScene"
+    ]
+  },
+  "betterquesting/api2/client/gui/IScene": {
+    "name": "betterquesting/api2/client/gui/IScene",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiCanvas"
+    ]
+  },
+  "betterquesting/api2/client/gui/SceneController": {
+    "name": "betterquesting/api2/client/gui/SceneController",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "betterquesting/api2/client/gui/SceneController"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiOpened(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      }
+    ]
+  },
+  "betterquesting/api2/client/gui/controls/IPanelButton": {
+    "name": "betterquesting/api2/client/gui/controls/IPanelButton",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiPanel"
+    ]
+  },
+  "betterquesting/api2/client/gui/controls/PanelButton": {
+    "name": "betterquesting/api2/client/gui/controls/PanelButton",
+    "interfaces": [
+      "betterquesting/api2/client/gui/controls/IPanelButton",
+      "betterquesting/api2/client/gui/panels/IGuiPanel",
+      "betterquesting/api2/storage/INBTSaveLoad"
+    ]
+  },
+  "betterquesting/api2/client/gui/controls/PanelTextField": {
+    "name": "betterquesting/api2/client/gui/controls/PanelTextField",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiPanel"
+    ]
+  },
+  "betterquesting/api2/client/gui/controls/callbacks/CallbackMulti": {
+    "name": "betterquesting/api2/client/gui/controls/callbacks/CallbackMulti",
+    "interfaces": [
+      "betterquesting/api/misc/ICallback"
+    ]
+  },
+  "betterquesting/api2/client/gui/controls/callbacks/CallbackNBTPrimitive": {
+    "name": "betterquesting/api2/client/gui/controls/callbacks/CallbackNBTPrimitive",
+    "interfaces": [
+      "betterquesting/api/misc/ICallback"
+    ]
+  },
+  "betterquesting/api2/client/gui/controls/callbacks/CallbackNBTTagString": {
+    "name": "betterquesting/api2/client/gui/controls/callbacks/CallbackNBTTagString",
+    "interfaces": [
+      "betterquesting/api/misc/ICallback"
+    ]
+  },
+  "betterquesting/api2/client/gui/controls/filters/FieldFilterNumber": {
+    "name": "betterquesting/api2/client/gui/controls/filters/FieldFilterNumber",
+    "interfaces": [
+      "betterquesting/api2/client/gui/controls/IFieldFilter"
+    ]
+  },
+  "betterquesting/api2/client/gui/controls/filters/FieldFilterString": {
+    "name": "betterquesting/api2/client/gui/controls/filters/FieldFilterString",
+    "interfaces": [
+      "betterquesting/api2/client/gui/controls/IFieldFilter"
+    ]
+  },
+  "betterquesting/api2/client/gui/controls/io/FloatSimpleIO": {
+    "name": "betterquesting/api2/client/gui/controls/io/FloatSimpleIO",
+    "interfaces": [
+      "betterquesting/api2/client/gui/controls/IValueIO"
+    ]
+  },
+  "betterquesting/api2/client/gui/controls/io/ValueFuncIO": {
+    "name": "betterquesting/api2/client/gui/controls/io/ValueFuncIO",
+    "interfaces": [
+      "betterquesting/api2/client/gui/controls/IValueIO"
+    ]
+  },
+  "betterquesting/api2/client/gui/events/CommonPanelEvents": {
+    "name": "betterquesting/api2/client/gui/events/CommonPanelEvents",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "betterquesting/api2/client/gui/events/CommonPanelEvents"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "OnQuestCompleted(Lbetterquesting/api/events/QuestEvent;)V"
+      }
+    ]
+  },
+  "betterquesting/api2/client/gui/events/PEventBroadcaster": {
+    "name": "betterquesting/api2/client/gui/events/PEventBroadcaster",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiOpened(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      }
+    ]
+  },
+  "betterquesting/api2/client/gui/misc/ComparatorGuiDepth": {
+    "name": "betterquesting/api2/client/gui/misc/ComparatorGuiDepth",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "betterquesting/api2/client/gui/misc/GuiAlign$ImmutableVec4f": {
+    "name": "betterquesting/api2/client/gui/misc/GuiAlign$ImmutableVec4f",
+    "interfaces": [
+      "org/lwjgl/util/vector/ReadableVector4f"
+    ]
+  },
+  "betterquesting/api2/client/gui/misc/GuiRectLerp": {
+    "name": "betterquesting/api2/client/gui/misc/GuiRectLerp",
+    "interfaces": [
+      "betterquesting/api2/client/gui/misc/IGuiRect"
+    ]
+  },
+  "betterquesting/api2/client/gui/misc/GuiRectangle": {
+    "name": "betterquesting/api2/client/gui/misc/GuiRectangle",
+    "interfaces": [
+      "betterquesting/api2/client/gui/misc/IGuiRect"
+    ]
+  },
+  "betterquesting/api2/client/gui/misc/GuiTransform": {
+    "name": "betterquesting/api2/client/gui/misc/GuiTransform",
+    "interfaces": [
+      "betterquesting/api2/client/gui/misc/IGuiRect"
+    ]
+  },
+  "betterquesting/api2/client/gui/misc/IGuiRect": {
+    "name": "betterquesting/api2/client/gui/misc/IGuiRect",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "betterquesting/api2/client/gui/misc/ProxyRect": {
+    "name": "betterquesting/api2/client/gui/misc/ProxyRect",
+    "interfaces": [
+      "betterquesting/api2/client/gui/misc/IGuiRect"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/CanvasEmpty": {
+    "name": "betterquesting/api2/client/gui/panels/CanvasEmpty",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiCanvas"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/CanvasResizeable": {
+    "name": "betterquesting/api2/client/gui/panels/CanvasResizeable",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiCanvas"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/IGuiCanvas": {
+    "name": "betterquesting/api2/client/gui/panels/IGuiCanvas",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiPanel"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/bars/IBarFill": {
+    "name": "betterquesting/api2/client/gui/panels/bars/IBarFill",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiPanel"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/bars/IScrollBar": {
+    "name": "betterquesting/api2/client/gui/panels/bars/IScrollBar",
+    "interfaces": [
+      "betterquesting/api2/client/gui/controls/IValueIO",
+      "betterquesting/api2/client/gui/panels/IGuiPanel"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/bars/PanelHBarFill": {
+    "name": "betterquesting/api2/client/gui/panels/bars/PanelHBarFill",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/bars/IBarFill"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/bars/PanelHScrollBar": {
+    "name": "betterquesting/api2/client/gui/panels/bars/PanelHScrollBar",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/bars/IScrollBar"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/bars/PanelVBarFill": {
+    "name": "betterquesting/api2/client/gui/panels/bars/PanelVBarFill",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/bars/IBarFill"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/bars/PanelVScrollBar": {
+    "name": "betterquesting/api2/client/gui/panels/bars/PanelVScrollBar",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/bars/IScrollBar"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/content/PanelEntityPreview": {
+    "name": "betterquesting/api2/client/gui/panels/content/PanelEntityPreview",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiPanel"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/content/PanelGeneric": {
+    "name": "betterquesting/api2/client/gui/panels/content/PanelGeneric",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiPanel"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/content/PanelLine": {
+    "name": "betterquesting/api2/client/gui/panels/content/PanelLine",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiPanel"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/content/PanelPlayerPortrait": {
+    "name": "betterquesting/api2/client/gui/panels/content/PanelPlayerPortrait",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiPanel"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/content/PanelTextBox": {
+    "name": "betterquesting/api2/client/gui/panels/content/PanelTextBox",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiPanel"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/content/PanelTextBox$GuiRectText": {
+    "name": "betterquesting/api2/client/gui/panels/content/PanelTextBox$GuiRectText",
+    "interfaces": [
+      "betterquesting/api2/client/gui/misc/IGuiRect"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/lists/CanvasFileDirectory$FileSort": {
+    "name": "betterquesting/api2/client/gui/panels/lists/CanvasFileDirectory$FileSort",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "betterquesting/api2/client/gui/panels/lists/CanvasScrolling": {
+    "name": "betterquesting/api2/client/gui/panels/lists/CanvasScrolling",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiCanvas"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/colors/GuiColorPulse": {
+    "name": "betterquesting/api2/client/gui/resources/colors/GuiColorPulse",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/colors/IGuiColor"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/colors/GuiColorSequence": {
+    "name": "betterquesting/api2/client/gui/resources/colors/GuiColorSequence",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/colors/IGuiColor"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/colors/GuiColorStatic": {
+    "name": "betterquesting/api2/client/gui/resources/colors/GuiColorStatic",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/colors/IGuiColor"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/colors/GuiColorTransition": {
+    "name": "betterquesting/api2/client/gui/resources/colors/GuiColorTransition",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/colors/IGuiColor"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/factories/colors/FactoryColorPulse": {
+    "name": "betterquesting/api2/client/gui/resources/factories/colors/FactoryColorPulse",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/factories/colors/FactoryColorSequence": {
+    "name": "betterquesting/api2/client/gui/resources/factories/colors/FactoryColorSequence",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/factories/colors/FactoryColorStatic": {
+    "name": "betterquesting/api2/client/gui/resources/factories/colors/FactoryColorStatic",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/factories/lines/FactoryLineTaxiCab": {
+    "name": "betterquesting/api2/client/gui/resources/factories/lines/FactoryLineTaxiCab",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/factories/lines/FactorySimpleLine": {
+    "name": "betterquesting/api2/client/gui/resources/factories/lines/FactorySimpleLine",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/factories/textures/FactoryColorTexture": {
+    "name": "betterquesting/api2/client/gui/resources/factories/textures/FactoryColorTexture",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/factories/textures/FactoryEmptyTexture": {
+    "name": "betterquesting/api2/client/gui/resources/factories/textures/FactoryEmptyTexture",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/factories/textures/FactoryLayeredTexture": {
+    "name": "betterquesting/api2/client/gui/resources/factories/textures/FactoryLayeredTexture",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/factories/textures/FactoryPolyTextureC": {
+    "name": "betterquesting/api2/client/gui/resources/factories/textures/FactoryPolyTextureC",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/factories/textures/FactoryPolyTextureR": {
+    "name": "betterquesting/api2/client/gui/resources/factories/textures/FactoryPolyTextureR",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/factories/textures/FactorySimpleTexture": {
+    "name": "betterquesting/api2/client/gui/resources/factories/textures/FactorySimpleTexture",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/factories/textures/FactorySlicedTexture": {
+    "name": "betterquesting/api2/client/gui/resources/factories/textures/FactorySlicedTexture",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/factories/textures/FactorySlideShowTexture": {
+    "name": "betterquesting/api2/client/gui/resources/factories/textures/FactorySlideShowTexture",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/lines/BoxLine": {
+    "name": "betterquesting/api2/client/gui/resources/lines/BoxLine",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/lines/IGuiLine"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/lines/GuiLineSequence": {
+    "name": "betterquesting/api2/client/gui/resources/lines/GuiLineSequence",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/lines/IGuiLine"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/lines/LineTaxiCab": {
+    "name": "betterquesting/api2/client/gui/resources/lines/LineTaxiCab",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/lines/IGuiLine"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/lines/SimpleLine": {
+    "name": "betterquesting/api2/client/gui/resources/lines/SimpleLine",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/lines/IGuiLine"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/textures/ColorTexture": {
+    "name": "betterquesting/api2/client/gui/resources/textures/ColorTexture",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/textures/IGuiTexture"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/textures/EmptyTexture": {
+    "name": "betterquesting/api2/client/gui/resources/textures/EmptyTexture",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/textures/IGuiTexture"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/textures/FluidTexture": {
+    "name": "betterquesting/api2/client/gui/resources/textures/FluidTexture",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/textures/IGuiTexture"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/textures/GuiTextureColored": {
+    "name": "betterquesting/api2/client/gui/resources/textures/GuiTextureColored",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/textures/IGuiTexture"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/textures/ItemTexture": {
+    "name": "betterquesting/api2/client/gui/resources/textures/ItemTexture",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/textures/IGuiTexture"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/textures/LayeredTexture": {
+    "name": "betterquesting/api2/client/gui/resources/textures/LayeredTexture",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/textures/IGuiTexture"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/textures/PolyTexture": {
+    "name": "betterquesting/api2/client/gui/resources/textures/PolyTexture",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/textures/IGuiTexture"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/textures/SimpleTexture": {
+    "name": "betterquesting/api2/client/gui/resources/textures/SimpleTexture",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/textures/IGuiTexture"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/textures/SlicedTexture": {
+    "name": "betterquesting/api2/client/gui/resources/textures/SlicedTexture",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/textures/IGuiTexture"
+    ]
+  },
+  "betterquesting/api2/client/gui/resources/textures/SlideShowTexture": {
+    "name": "betterquesting/api2/client/gui/resources/textures/SlideShowTexture",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/textures/IGuiTexture"
+    ]
+  },
+  "betterquesting/api2/package-info": {
+    "name": "betterquesting/api2/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/API;",
+        "target": "betterquesting/api2/package-info",
+        "values": {
+          "apiVersion": {
+            "value": "3.1"
+          },
+          "owner": {
+            "value": "betterquesting"
+          },
+          "provides": {
+            "value": "BetterQuesting|API2"
+          }
+        }
+      }
+    ]
+  },
+  "betterquesting/api2/registry/IFactoryData": {
+    "name": "betterquesting/api2/registry/IFactoryData",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactory"
+    ]
+  },
+  "betterquesting/api2/storage/DBEntry": {
+    "name": "betterquesting/api2/storage/DBEntry",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "betterquesting/api2/storage/IDatabaseNBT": {
+    "name": "betterquesting/api2/storage/IDatabaseNBT",
+    "interfaces": [
+      "betterquesting/api2/storage/IDatabase",
+      "betterquesting/api2/storage/INBTPartial",
+      "betterquesting/api2/storage/INBTProgress"
+    ]
+  },
+  "betterquesting/api2/storage/SimpleDatabase": {
+    "name": "betterquesting/api2/storage/SimpleDatabase",
+    "interfaces": [
+      "betterquesting/api2/storage/IDatabase"
+    ]
+  },
+  "betterquesting/api2/supporter/SupporterDB": {
+    "name": "betterquesting/api2/supporter/SupporterDB",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTSaveLoad"
+    ]
+  },
+  "betterquesting/api2/supporter/SupporterEntry": {
+    "name": "betterquesting/api2/supporter/SupporterEntry",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTSaveLoad"
+    ]
+  },
+  "betterquesting/api2/utils/QuestLineSorter": {
+    "name": "betterquesting/api2/utils/QuestLineSorter",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "betterquesting/blocks/SSItemHandler": {
+    "name": "betterquesting/blocks/SSItemHandler",
+    "interfaces": [
+      "net/minecraftforge/items/IItemHandlerModifiable"
+    ]
+  },
+  "betterquesting/blocks/TileSubmitStation": {
+    "name": "betterquesting/blocks/TileSubmitStation",
+    "interfaces": [
+      "net/minecraftforge/fluids/capability/IFluidHandler",
+      "net/minecraft/inventory/ISidedInventory",
+      "net/minecraft/util/ITickable",
+      "net/minecraftforge/fluids/capability/IFluidTankProperties"
+    ]
+  },
+  "betterquesting/client/QuestNotification": {
+    "name": "betterquesting/client/QuestNotification",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDrawScreen(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      }
+    ]
+  },
+  "betterquesting/client/gui2/GuiQuest": {
+    "name": "betterquesting/client/gui2/GuiQuest",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/INeedsRefresh"
+    ]
+  },
+  "betterquesting/client/gui2/GuiQuestLines": {
+    "name": "betterquesting/client/gui2/GuiQuestLines",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/INeedsRefresh"
+    ]
+  },
+  "betterquesting/client/gui2/editors/GuiFileBrowser": {
+    "name": "betterquesting/client/gui2/editors/GuiFileBrowser",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener"
+    ]
+  },
+  "betterquesting/client/gui2/editors/GuiImporters": {
+    "name": "betterquesting/client/gui2/editors/GuiImporters",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/misc/ICallback"
+    ]
+  },
+  "betterquesting/client/gui2/editors/GuiPrerequisiteEditor": {
+    "name": "betterquesting/client/gui2/editors/GuiPrerequisiteEditor",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen",
+      "betterquesting/api/client/gui/misc/INeedsRefresh"
+    ]
+  },
+  "betterquesting/client/gui2/editors/GuiQuestEditor": {
+    "name": "betterquesting/client/gui2/editors/GuiQuestEditor",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen",
+      "betterquesting/api/client/gui/misc/INeedsRefresh"
+    ]
+  },
+  "betterquesting/client/gui2/editors/GuiQuestLineAddRemove": {
+    "name": "betterquesting/client/gui2/editors/GuiQuestLineAddRemove",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen",
+      "betterquesting/api/client/gui/misc/INeedsRefresh"
+    ]
+  },
+  "betterquesting/client/gui2/editors/GuiQuestLinesEditor": {
+    "name": "betterquesting/client/gui2/editors/GuiQuestLinesEditor",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen",
+      "betterquesting/api/client/gui/misc/INeedsRefresh"
+    ]
+  },
+  "betterquesting/client/gui2/editors/GuiRewardEditor": {
+    "name": "betterquesting/client/gui2/editors/GuiRewardEditor",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen",
+      "betterquesting/api/client/gui/misc/INeedsRefresh"
+    ]
+  },
+  "betterquesting/client/gui2/editors/GuiTaskEditor": {
+    "name": "betterquesting/client/gui2/editors/GuiTaskEditor",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen",
+      "betterquesting/api/client/gui/misc/INeedsRefresh"
+    ]
+  },
+  "betterquesting/client/gui2/editors/GuiTextEditor": {
+    "name": "betterquesting/client/gui2/editors/GuiTextEditor",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "betterquesting/client/gui2/editors/designer/GuiDesigner": {
+    "name": "betterquesting/client/gui2/editors/designer/GuiDesigner",
+    "interfaces": [
+      "betterquesting/api/client/gui/misc/IVolatileScreen",
+      "betterquesting/api/client/gui/misc/INeedsRefresh",
+      "betterquesting/api2/client/gui/events/IPEventListener"
+    ]
+  },
+  "betterquesting/client/gui2/editors/designer/PanelToolController": {
+    "name": "betterquesting/client/gui2/editors/designer/PanelToolController",
+    "interfaces": [
+      "betterquesting/api2/client/gui/panels/IGuiPanel"
+    ]
+  },
+  "betterquesting/client/gui2/editors/nbt/GuiEntitySelection": {
+    "name": "betterquesting/client/gui2/editors/nbt/GuiEntitySelection",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "betterquesting/client/gui2/editors/nbt/GuiFluidSelection": {
+    "name": "betterquesting/client/gui2/editors/nbt/GuiFluidSelection",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "betterquesting/client/gui2/editors/nbt/GuiItemSelection": {
+    "name": "betterquesting/client/gui2/editors/nbt/GuiItemSelection",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "betterquesting/client/gui2/editors/nbt/GuiNbtAdd": {
+    "name": "betterquesting/client/gui2/editors/nbt/GuiNbtAdd",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "betterquesting/client/gui2/editors/nbt/GuiNbtEditor": {
+    "name": "betterquesting/client/gui2/editors/nbt/GuiNbtEditor",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "betterquesting/client/gui2/editors/nbt/GuiNbtType": {
+    "name": "betterquesting/client/gui2/editors/nbt/GuiNbtType",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "betterquesting/client/gui2/editors/nbt/PanelScrollingNBT": {
+    "name": "betterquesting/client/gui2/editors/nbt/PanelScrollingNBT",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener"
+    ]
+  },
+  "betterquesting/client/gui2/editors/nbt/callback/NbtEntityCallback": {
+    "name": "betterquesting/client/gui2/editors/nbt/callback/NbtEntityCallback",
+    "interfaces": [
+      "betterquesting/api/misc/ICallback"
+    ]
+  },
+  "betterquesting/client/gui2/editors/nbt/callback/NbtFluidCallback": {
+    "name": "betterquesting/client/gui2/editors/nbt/callback/NbtFluidCallback",
+    "interfaces": [
+      "betterquesting/api/misc/ICallback"
+    ]
+  },
+  "betterquesting/client/gui2/editors/nbt/callback/NbtItemCallback": {
+    "name": "betterquesting/client/gui2/editors/nbt/callback/NbtItemCallback",
+    "interfaces": [
+      "betterquesting/api/misc/ICallback"
+    ]
+  },
+  "betterquesting/client/gui2/inventory/GuiSubmitStation": {
+    "name": "betterquesting/client/gui2/inventory/GuiSubmitStation",
+    "interfaces": [
+      "betterquesting/api/client/gui/misc/INeedsRefresh"
+    ]
+  },
+  "betterquesting/client/gui2/party/GuiPartyCreate": {
+    "name": "betterquesting/client/gui2/party/GuiPartyCreate",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/INeedsRefresh"
+    ]
+  },
+  "betterquesting/client/gui2/party/GuiPartyInvite": {
+    "name": "betterquesting/client/gui2/party/GuiPartyInvite",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener"
+    ]
+  },
+  "betterquesting/client/gui2/party/GuiPartyManage": {
+    "name": "betterquesting/client/gui2/party/GuiPartyManage",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/INeedsRefresh"
+    ]
+  },
+  "betterquesting/client/importers/ImportedQuestLines": {
+    "name": "betterquesting/client/importers/ImportedQuestLines",
+    "interfaces": [
+      "betterquesting/api/questing/IQuestLineDatabase"
+    ]
+  },
+  "betterquesting/client/importers/ImportedQuests": {
+    "name": "betterquesting/client/importers/ImportedQuests",
+    "interfaces": [
+      "betterquesting/api/questing/IQuestDatabase"
+    ]
+  },
+  "betterquesting/client/importers/ImporterRegistry": {
+    "name": "betterquesting/client/importers/ImporterRegistry",
+    "interfaces": [
+      "betterquesting/api/client/importers/IImportRegistry"
+    ]
+  },
+  "betterquesting/client/renderer/PlaceholderRenderFactory": {
+    "name": "betterquesting/client/renderer/PlaceholderRenderFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "betterquesting/client/themes/ResourceRegistry": {
+    "name": "betterquesting/client/themes/ResourceRegistry",
+    "interfaces": [
+      "betterquesting/api2/client/gui/themes/IResourceReg"
+    ]
+  },
+  "betterquesting/client/themes/ResourceTheme": {
+    "name": "betterquesting/client/themes/ResourceTheme",
+    "interfaces": [
+      "betterquesting/api2/client/gui/themes/IGuiTheme"
+    ]
+  },
+  "betterquesting/client/themes/ThemeRegistry": {
+    "name": "betterquesting/client/themes/ThemeRegistry",
+    "interfaces": [
+      "betterquesting/api2/client/gui/themes/IThemeRegistry"
+    ]
+  },
+  "betterquesting/client/toolbox/ToolboxRegistry": {
+    "name": "betterquesting/client/toolbox/ToolboxRegistry",
+    "interfaces": [
+      "betterquesting/api/client/toolbox/IToolRegistry"
+    ]
+  },
+  "betterquesting/client/toolbox/ToolboxTabMain": {
+    "name": "betterquesting/client/toolbox/ToolboxTabMain",
+    "interfaces": [
+      "betterquesting/api2/client/toolbox/IToolTab"
+    ]
+  },
+  "betterquesting/client/toolbox/tools/ToolboxToolComplete": {
+    "name": "betterquesting/client/toolbox/tools/ToolboxToolComplete",
+    "interfaces": [
+      "betterquesting/api/client/toolbox/IToolboxTool"
+    ]
+  },
+  "betterquesting/client/toolbox/tools/ToolboxToolCopy": {
+    "name": "betterquesting/client/toolbox/tools/ToolboxToolCopy",
+    "interfaces": [
+      "betterquesting/api/client/toolbox/IToolboxTool"
+    ]
+  },
+  "betterquesting/client/toolbox/tools/ToolboxToolDelete": {
+    "name": "betterquesting/client/toolbox/tools/ToolboxToolDelete",
+    "interfaces": [
+      "betterquesting/api/client/toolbox/IToolboxTool"
+    ]
+  },
+  "betterquesting/client/toolbox/tools/ToolboxToolFrame": {
+    "name": "betterquesting/client/toolbox/tools/ToolboxToolFrame",
+    "interfaces": [
+      "betterquesting/api/client/toolbox/IToolboxTool"
+    ]
+  },
+  "betterquesting/client/toolbox/tools/ToolboxToolGrab": {
+    "name": "betterquesting/client/toolbox/tools/ToolboxToolGrab",
+    "interfaces": [
+      "betterquesting/api/client/toolbox/IToolboxTool"
+    ]
+  },
+  "betterquesting/client/toolbox/tools/ToolboxToolIcon": {
+    "name": "betterquesting/client/toolbox/tools/ToolboxToolIcon",
+    "interfaces": [
+      "betterquesting/api/client/toolbox/IToolboxTool"
+    ]
+  },
+  "betterquesting/client/toolbox/tools/ToolboxToolLink": {
+    "name": "betterquesting/client/toolbox/tools/ToolboxToolLink",
+    "interfaces": [
+      "betterquesting/api/client/toolbox/IToolboxTool"
+    ]
+  },
+  "betterquesting/client/toolbox/tools/ToolboxToolNew": {
+    "name": "betterquesting/client/toolbox/tools/ToolboxToolNew",
+    "interfaces": [
+      "betterquesting/api/client/toolbox/IToolboxTool"
+    ]
+  },
+  "betterquesting/client/toolbox/tools/ToolboxToolOpen": {
+    "name": "betterquesting/client/toolbox/tools/ToolboxToolOpen",
+    "interfaces": [
+      "betterquesting/api/client/toolbox/IToolboxTool"
+    ]
+  },
+  "betterquesting/client/toolbox/tools/ToolboxToolRemove": {
+    "name": "betterquesting/client/toolbox/tools/ToolboxToolRemove",
+    "interfaces": [
+      "betterquesting/api/client/toolbox/IToolboxTool"
+    ]
+  },
+  "betterquesting/client/toolbox/tools/ToolboxToolReset": {
+    "name": "betterquesting/client/toolbox/tools/ToolboxToolReset",
+    "interfaces": [
+      "betterquesting/api/client/toolbox/IToolboxTool"
+    ]
+  },
+  "betterquesting/client/toolbox/tools/ToolboxToolScale": {
+    "name": "betterquesting/client/toolbox/tools/ToolboxToolScale",
+    "interfaces": [
+      "betterquesting/api/client/toolbox/IToolboxTool"
+    ]
+  },
+  "betterquesting/client/ui_builder/ComponentPanel": {
+    "name": "betterquesting/client/ui_builder/ComponentPanel",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTSaveLoad"
+    ]
+  },
+  "betterquesting/client/ui_builder/GuiBuilderMain": {
+    "name": "betterquesting/client/ui_builder/GuiBuilderMain",
+    "interfaces": [
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "betterquesting/core/BetterQuesting": {
+    "name": "betterquesting/core/BetterQuesting",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "betterquesting/core/BetterQuesting",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "guiFactory": {
+            "value": "betterquesting.handlers.ConfigGuiFactory"
+          },
+          "modid": {
+            "value": "betterquesting"
+          },
+          "name": {
+            "value": "BetterQuesting"
+          },
+          "version": {
+            "value": "3.5.329"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "betterquesting"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "betterquesting.core.proxies.ClientProxy"
+          },
+          "serverSide": {
+            "value": "betterquesting.core.proxies.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStart(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStop(Lnet/minecraftforge/fml/common/event/FMLServerStoppedEvent;)V"
+      }
+    ]
+  },
+  "betterquesting/core/RegEventHandler": {
+    "name": "betterquesting/core/RegEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "betterquesting/core/RegEventHandler"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModelEvent(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlockEvent(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItemEvent(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRecipeEvent(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "betterquesting/handlers/ConfigGuiFactory": {
+    "name": "betterquesting/handlers/ConfigGuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "betterquesting/handlers/EventHandler": {
+    "name": "betterquesting/handlers/EventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKey(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCapabilityPlayer(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerClone(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldSave(Lnet/minecraftforge/event/world/WorldEvent$Save;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerJoin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTextureStitch(Lnet/minecraftforge/client/event/TextureStitchEvent$Pre;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDataUpdated(Lbetterquesting/api/events/DatabaseEvent$Update;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCommand(Lnet/minecraftforge/event/CommandEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      }
+    ]
+  },
+  "betterquesting/handlers/GuiHandler": {
+    "name": "betterquesting/handlers/GuiHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "betterquesting/legacy/v0/LegacyLoader_v0": {
+    "name": "betterquesting/legacy/v0/LegacyLoader_v0",
+    "interfaces": [
+      "betterquesting/legacy/ILegacyLoader"
+    ]
+  },
+  "betterquesting/misc/QuestResourcesFile": {
+    "name": "betterquesting/misc/QuestResourcesFile",
+    "interfaces": [
+      "net/minecraft/client/resources/IResourcePack",
+      "java/io/Closeable"
+    ]
+  },
+  "betterquesting/misc/QuestResourcesFolder": {
+    "name": "betterquesting/misc/QuestResourcesFolder",
+    "interfaces": [
+      "net/minecraft/client/resources/IResourcePack"
+    ]
+  },
+  "betterquesting/network/PacketQuesting": {
+    "name": "betterquesting/network/PacketQuesting",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "betterquesting/network/PacketQuesting$HandleClient": {
+    "name": "betterquesting/network/PacketQuesting$HandleClient",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "betterquesting/network/PacketQuesting$HandleServer": {
+    "name": "betterquesting/network/PacketQuesting$HandleServer",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "betterquesting/network/PacketSender": {
+    "name": "betterquesting/network/PacketSender",
+    "interfaces": [
+      "betterquesting/api/network/IPacketSender"
+    ]
+  },
+  "betterquesting/network/PacketTypeRegistry": {
+    "name": "betterquesting/network/PacketTypeRegistry",
+    "interfaces": [
+      "betterquesting/api/network/IPacketRegistry"
+    ]
+  },
+  "betterquesting/questing/QuestDatabase": {
+    "name": "betterquesting/questing/QuestDatabase",
+    "interfaces": [
+      "betterquesting/api/questing/IQuestDatabase"
+    ]
+  },
+  "betterquesting/questing/QuestInstance": {
+    "name": "betterquesting/questing/QuestInstance",
+    "interfaces": [
+      "betterquesting/api/questing/IQuest"
+    ]
+  },
+  "betterquesting/questing/QuestLine": {
+    "name": "betterquesting/questing/QuestLine",
+    "interfaces": [
+      "betterquesting/api/questing/IQuestLine"
+    ]
+  },
+  "betterquesting/questing/QuestLineDatabase": {
+    "name": "betterquesting/questing/QuestLineDatabase",
+    "interfaces": [
+      "betterquesting/api/questing/IQuestLineDatabase"
+    ]
+  },
+  "betterquesting/questing/QuestLineEntry": {
+    "name": "betterquesting/questing/QuestLineEntry",
+    "interfaces": [
+      "betterquesting/api/questing/IQuestLineEntry"
+    ]
+  },
+  "betterquesting/questing/party/PartyInstance": {
+    "name": "betterquesting/questing/party/PartyInstance",
+    "interfaces": [
+      "betterquesting/api/questing/party/IParty"
+    ]
+  },
+  "betterquesting/questing/party/PartyInvitations": {
+    "name": "betterquesting/questing/party/PartyInvitations",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTPartial"
+    ]
+  },
+  "betterquesting/questing/party/PartyManager": {
+    "name": "betterquesting/questing/party/PartyManager",
+    "interfaces": [
+      "betterquesting/api/questing/party/IPartyDatabase"
+    ]
+  },
+  "betterquesting/questing/rewards/RewardRegistry": {
+    "name": "betterquesting/questing/rewards/RewardRegistry",
+    "interfaces": [
+      "betterquesting/api2/registry/IRegistry"
+    ]
+  },
+  "betterquesting/questing/rewards/RewardStorage": {
+    "name": "betterquesting/questing/rewards/RewardStorage",
+    "interfaces": [
+      "betterquesting/api2/storage/IDatabaseNBT"
+    ]
+  },
+  "betterquesting/questing/tasks/TaskRegistry": {
+    "name": "betterquesting/questing/tasks/TaskRegistry",
+    "interfaces": [
+      "betterquesting/api2/registry/IRegistry"
+    ]
+  },
+  "betterquesting/questing/tasks/TaskStorage": {
+    "name": "betterquesting/questing/tasks/TaskStorage",
+    "interfaces": [
+      "betterquesting/api2/storage/IDatabaseNBT"
+    ]
+  },
+  "betterquesting/storage/LifeDatabase": {
+    "name": "betterquesting/storage/LifeDatabase",
+    "interfaces": [
+      "betterquesting/api/storage/ILifeDatabase"
+    ]
+  },
+  "betterquesting/storage/NameCache": {
+    "name": "betterquesting/storage/NameCache",
+    "interfaces": [
+      "betterquesting/api/storage/INameCache"
+    ]
+  },
+  "betterquesting/storage/PropertyContainer": {
+    "name": "betterquesting/storage/PropertyContainer",
+    "interfaces": [
+      "betterquesting/api/properties/IPropertyContainer",
+      "betterquesting/api2/storage/INBTSaveLoad"
+    ]
+  },
+  "betterquesting/storage/QuestSettings": {
+    "name": "betterquesting/storage/QuestSettings",
+    "interfaces": [
+      "betterquesting/api/storage/IQuestSettings"
+    ]
+  }
+}

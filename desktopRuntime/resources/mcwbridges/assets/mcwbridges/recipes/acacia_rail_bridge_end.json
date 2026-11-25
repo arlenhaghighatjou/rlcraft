@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern":
+    [
+        "W"
+    ],
+    
+    "key":
+    {
+        "W":
+        {
+            "item": "mcwbridges:acacia_rail_bridge"
+        }
+    },
+    
+    "result":
+    {
+        "item": "mcwbridges:acacia_rail_bridge_end",
+        "count": 1
+    }
+}

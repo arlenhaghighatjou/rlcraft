@@ -1,0 +1,258 @@
+{
+  "atomicstryker/battletowers/client/ClientProxy$1": {
+    "name": "atomicstryker/battletowers/client/ClientProxy$1",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "atomicstryker/battletowers/client/ClientProxy$2": {
+    "name": "atomicstryker/battletowers/client/ClientProxy$2",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "atomicstryker/battletowers/client/ClientTickHandler": {
+    "name": "atomicstryker/battletowers/client/ClientTickHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      }
+    ]
+  },
+  "atomicstryker/battletowers/common/AS_BattleTowersCore": {
+    "name": "atomicstryker/battletowers/common/AS_BattleTowersCore",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "atomicstryker/battletowers/common/AS_BattleTowersCore",
+        "value": {
+          "value": "battletowers"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "atomicstryker/battletowers/common/AS_BattleTowersCore",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "battletowers"
+          },
+          "name": {
+            "value": "Battle Towers"
+          },
+          "version": {
+            "value": "1.6.5"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "battletowers"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "atomicstryker.battletowers.client.ClientProxy"
+          },
+          "serverSide": {
+            "value": "atomicstryker.battletowers.common.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "soundTowerBreakStart",
+        "value": {
+          "value": "towerbreakstart"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "soundTowerCrumble",
+        "value": {
+          "value": "towercrumble"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "soundGolemAwaken",
+        "value": {
+          "value": "golemawaken"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "soundGolemSpecial",
+        "value": {
+          "value": "golemspecial"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "soundGolemCharge",
+        "value": {
+          "value": "golemcharge"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "soundGolem",
+        "value": {
+          "value": "golem"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "soundGolemHurt",
+        "value": {
+          "value": "golemhurt"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "soundGolemDeath",
+        "value": {
+          "value": "golemdeath"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientConnected(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientDisconnected(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientDisconnectionFromServerEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "load(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "modsLoaded(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarted(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStopped(Lnet/minecraftforge/fml/common/event/FMLServerStoppedEvent;)V"
+      }
+    ]
+  },
+  "atomicstryker/battletowers/common/AS_BattleTowersCore$RegistrationHandler": {
+    "name": "atomicstryker/battletowers/common/AS_BattleTowersCore$RegistrationHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "atomicstryker/battletowers/common/AS_BattleTowersCore$RegistrationHandler"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerSoundEvents(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "atomicstryker/battletowers/common/AS_EntityGolem": {
+    "name": "atomicstryker/battletowers/common/AS_EntityGolem",
+    "interfaces": [
+      "net/minecraftforge/fml/common/registry/IEntityAdditionalSpawnData"
+    ]
+  },
+  "atomicstryker/battletowers/common/ServerTickHandler": {
+    "name": "atomicstryker/battletowers/common/ServerTickHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      }
+    ]
+  },
+  "atomicstryker/battletowers/common/WorldGenHandler": {
+    "name": "atomicstryker/battletowers/common/WorldGenHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "eventWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "eventWorldSave(Lnet/minecraftforge/event/world/WorldEvent$Save;)V"
+      }
+    ]
+  },
+  "atomicstryker/battletowers/common/WorldGenHandler$TowerPosition": {
+    "name": "atomicstryker/battletowers/common/WorldGenHandler$TowerPosition",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "atomicstryker/battletowers/common/network/ChestAttackedPacket": {
+    "name": "atomicstryker/battletowers/common/network/ChestAttackedPacket",
+    "interfaces": [
+      "atomicstryker/battletowers/common/network/NetworkHelper$IPacket"
+    ]
+  },
+  "atomicstryker/battletowers/common/network/LoginPacket": {
+    "name": "atomicstryker/battletowers/common/network/LoginPacket",
+    "interfaces": [
+      "atomicstryker/battletowers/common/network/NetworkHelper$IPacket"
+    ]
+  },
+  "atomicstryker/battletowers/common/network/NetworkHelper$ChannelHandler": {
+    "name": "atomicstryker/battletowers/common/network/NetworkHelper$ChannelHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lio/netty/channel/ChannelHandler$Sharable;",
+        "target": "atomicstryker/battletowers/common/network/NetworkHelper$ChannelHandler"
+      }
+    ]
+  }
+}

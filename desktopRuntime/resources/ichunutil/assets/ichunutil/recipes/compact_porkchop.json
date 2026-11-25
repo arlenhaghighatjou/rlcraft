@@ -1,0 +1,17 @@
+{
+  "type": "ichunutil:compact_porkchop",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:porkchop"
+    }
+  },
+  "result": {
+    "item": "ichunutil:compact_porkchop"
+  }
+}
+ 

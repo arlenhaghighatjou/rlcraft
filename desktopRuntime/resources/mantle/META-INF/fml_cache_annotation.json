@@ -1,0 +1,892 @@
+{
+  "slimeknights/mantle/Mantle": {
+    "name": "slimeknights/mantle/Mantle",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "slimeknights/mantle/Mantle",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12,1.13)"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.21.1.2387,)"
+          },
+          "modid": {
+            "value": "mantle"
+          },
+          "name": {
+            "value": "Mantle"
+          },
+          "version": {
+            "value": "1.12-1.3.3.55"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "mantle"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "slimeknights.mantle.client.ClientProxy"
+          },
+          "serverSide": {
+            "value": "slimeknights.mantle.common.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "slimeknights/mantle/client/ExtraHeartRenderHandler": {
+    "name": "slimeknights/mantle/client/ExtraHeartRenderHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderHealthbar(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Pre;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      }
+    ]
+  },
+  "slimeknights/mantle/client/book/BookLoader": {
+    "name": "slimeknights/mantle/client/book/BookLoader",
+    "interfaces": [
+      "net/minecraft/client/resources/IResourceManagerReloadListener"
+    ]
+  },
+  "slimeknights/mantle/client/book/StructureBlockAccess": {
+    "name": "slimeknights/mantle/client/book/StructureBlockAccess",
+    "interfaces": [
+      "net/minecraft/world/IBlockAccess"
+    ]
+  },
+  "slimeknights/mantle/client/book/data/AppearanceData": {
+    "name": "slimeknights/mantle/client/book/data/AppearanceData",
+    "interfaces": [
+      "slimeknights/mantle/client/book/data/IDataItem"
+    ]
+  },
+  "slimeknights/mantle/client/book/data/BookData": {
+    "name": "slimeknights/mantle/client/book/data/BookData",
+    "interfaces": [
+      "slimeknights/mantle/client/book/data/IDataItem"
+    ]
+  },
+  "slimeknights/mantle/client/book/data/PageData": {
+    "name": "slimeknights/mantle/client/book/data/PageData",
+    "interfaces": [
+      "slimeknights/mantle/client/book/data/IDataItem"
+    ]
+  },
+  "slimeknights/mantle/client/book/data/SectionData": {
+    "name": "slimeknights/mantle/client/book/data/SectionData",
+    "interfaces": [
+      "slimeknights/mantle/client/book/data/IDataItem"
+    ]
+  },
+  "slimeknights/mantle/client/book/data/deserializer/HexStringDeserializer": {
+    "name": "slimeknights/mantle/client/book/data/deserializer/HexStringDeserializer",
+    "interfaces": [
+      "com/google/gson/JsonDeserializer"
+    ]
+  },
+  "slimeknights/mantle/client/gui/GuiMultiModule": {
+    "name": "slimeknights/mantle/client/gui/GuiMultiModule",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "slimeknights/mantle/client/gui/GuiMultiModule",
+        "values": {
+          "iface": {
+            "value": "codechicken.nei.api.INEIGuiHandler"
+          },
+          "modid": {
+            "value": "NotEnoughItems"
+          }
+        }
+      }
+    ]
+  },
+  "slimeknights/mantle/client/gui/book/GuiBook$AdvancementCache": {
+    "name": "slimeknights/mantle/client/gui/book/GuiBook$AdvancementCache",
+    "interfaces": [
+      "net/minecraft/client/multiplayer/ClientAdvancementManager$IListener"
+    ]
+  },
+  "slimeknights/mantle/client/gui/book/element/ElementStructure": {
+    "name": "slimeknights/mantle/client/gui/book/element/ElementStructure",
+    "interfaces": [
+      "slimeknights/mantle/client/gui/book/element/IButtonClickHandler"
+    ]
+  },
+  "slimeknights/mantle/client/model/BakedSimple": {
+    "name": "slimeknights/mantle/client/model/BakedSimple",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "slimeknights/mantle/client/model/BakedWrapper": {
+    "name": "slimeknights/mantle/client/model/BakedWrapper",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "slimeknights/mantle/client/model/BakedWrapper$Perspective": {
+    "name": "slimeknights/mantle/client/model/BakedWrapper$Perspective",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "slimeknights/mantle/client/model/BlockItemModelWrapper": {
+    "name": "slimeknights/mantle/client/model/BlockItemModelWrapper",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "slimeknights/mantle/client/model/TRSRBakedModel": {
+    "name": "slimeknights/mantle/client/model/TRSRBakedModel",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "slimeknights/mantle/common/GuiHandler": {
+    "name": "slimeknights/mantle/common/GuiHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "slimeknights/mantle/config/AbstractConfigFile": {
+    "name": "slimeknights/mantle/config/AbstractConfigFile",
+    "interfaces": [
+      "java/io/Serializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lslimeknights/mantle/configurate/objectmapping/Setting;",
+        "target": "configVersion",
+        "value": {
+          "value": "_VERSION"
+        }
+      }
+    ]
+  },
+  "slimeknights/mantle/config/AbstractConfigFile$RegistrySerializer": {
+    "name": "slimeknights/mantle/config/AbstractConfigFile$RegistrySerializer",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializer"
+    ]
+  },
+  "slimeknights/mantle/config/BlockMeta$1": {
+    "name": "slimeknights/mantle/config/BlockMeta$1",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializer"
+    ]
+  },
+  "slimeknights/mantle/config/ExampleSync": {
+    "name": "slimeknights/mantle/config/ExampleSync",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerLoggedIn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerJoinedWorld(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "slimeknights/mantle/configurate/SimpleConfigurationNode": {
+    "name": "slimeknights/mantle/configurate/SimpleConfigurationNode",
+    "interfaces": [
+      "slimeknights/mantle/configurate/ConfigurationNode"
+    ]
+  },
+  "slimeknights/mantle/configurate/commented/CommentedConfigurationNode": {
+    "name": "slimeknights/mantle/configurate/commented/CommentedConfigurationNode",
+    "interfaces": [
+      "slimeknights/mantle/configurate/ConfigurationNode"
+    ]
+  },
+  "slimeknights/mantle/configurate/commented/SimpleCommentedConfigurationNode": {
+    "name": "slimeknights/mantle/configurate/commented/SimpleCommentedConfigurationNode",
+    "interfaces": [
+      "slimeknights/mantle/configurate/commented/CommentedConfigurationNode"
+    ]
+  },
+  "slimeknights/mantle/configurate/loader/AbstractConfigurationLoader": {
+    "name": "slimeknights/mantle/configurate/loader/AbstractConfigurationLoader",
+    "interfaces": [
+      "slimeknights/mantle/configurate/loader/ConfigurationLoader"
+    ]
+  },
+  "slimeknights/mantle/configurate/loader/CommentHandlers": {
+    "name": "slimeknights/mantle/configurate/loader/CommentHandlers",
+    "interfaces": [
+      "slimeknights/mantle/configurate/loader/CommentHandler"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/DefaultObjectMapperFactory": {
+    "name": "slimeknights/mantle/configurate/objectmapping/DefaultObjectMapperFactory",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/ObjectMapperFactory"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/GuiceObjectMapperFactory": {
+    "name": "slimeknights/mantle/configurate/objectmapping/GuiceObjectMapperFactory",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/ObjectMapperFactory"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Ljavax/inject/Singleton;",
+        "target": "slimeknights/mantle/configurate/objectmapping/GuiceObjectMapperFactory"
+      },
+      {
+        "type": "METHOD",
+        "name": "Ljavax/inject/Inject;",
+        "target": "\u003cinit\u003e(Lcom/google/inject/Injector;)V"
+      }
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/Setting": {
+    "name": "slimeknights/mantle/configurate/objectmapping/Setting",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/serialize/ConfigSerializable": {
+    "name": "slimeknights/mantle/configurate/objectmapping/serialize/ConfigSerializable",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$AnnotatedObjectSerializer": {
+    "name": "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$AnnotatedObjectSerializer",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializer"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$BooleanSerializer": {
+    "name": "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$BooleanSerializer",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializer"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$EnumValueSerializer": {
+    "name": "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$EnumValueSerializer",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializer"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$ListSerializer": {
+    "name": "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$ListSerializer",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializer"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$MapSerializer": {
+    "name": "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$MapSerializer",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializer"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$NumberSerializer": {
+    "name": "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$NumberSerializer",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializer"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$PatternSerializer": {
+    "name": "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$PatternSerializer",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializer"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$StringSerializer": {
+    "name": "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$StringSerializer",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializer"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$URISerializer": {
+    "name": "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$URISerializer",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializer"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$URLSerializer": {
+    "name": "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$URLSerializer",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializer"
+    ]
+  },
+  "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$UUIDSerializer": {
+    "name": "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializers$UUIDSerializer",
+    "interfaces": [
+      "slimeknights/mantle/configurate/objectmapping/serialize/TypeSerializer"
+    ]
+  },
+  "slimeknights/mantle/configurate/transformation/ConfigurationTransformation$NodePath": {
+    "name": "slimeknights/mantle/configurate/transformation/ConfigurationTransformation$NodePath",
+    "interfaces": [
+      "java/lang/Iterable"
+    ]
+  },
+  "slimeknights/mantle/configurate/transformation/NodePathComparator": {
+    "name": "slimeknights/mantle/configurate/transformation/NodePathComparator",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "slimeknights/mantle/configurate/util/MapFactories$EqualsSupplier": {
+    "name": "slimeknights/mantle/configurate/util/MapFactories$EqualsSupplier",
+    "interfaces": [
+      "slimeknights/mantle/configurate/util/MapFactory"
+    ]
+  },
+  "slimeknights/mantle/configurate/util/MapFactories$SynchronizedWrapper": {
+    "name": "slimeknights/mantle/configurate/util/MapFactories$SynchronizedWrapper",
+    "interfaces": [
+      "java/util/concurrent/ConcurrentMap"
+    ]
+  },
+  "slimeknights/mantle/item/ItemMetaDynamic$1": {
+    "name": "slimeknights/mantle/item/ItemMetaDynamic$1",
+    "interfaces": [
+      "gnu/trove/procedure/TIntObjectProcedure"
+    ]
+  },
+  "slimeknights/mantle/multiblock/IMasterNode": {
+    "name": "slimeknights/mantle/multiblock/IMasterNode",
+    "interfaces": [
+      "slimeknights/mantle/multiblock/IMasterLogic",
+      "slimeknights/mantle/multiblock/IServantLogic"
+    ]
+  },
+  "slimeknights/mantle/multiblock/MultiServantLogic": {
+    "name": "slimeknights/mantle/multiblock/MultiServantLogic",
+    "interfaces": [
+      "slimeknights/mantle/multiblock/IServantLogic"
+    ]
+  },
+  "slimeknights/mantle/network/AbstractPacket": {
+    "name": "slimeknights/mantle/network/AbstractPacket",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "slimeknights/mantle/network/AbstractPacketThreadsafe$1": {
+    "name": "slimeknights/mantle/network/AbstractPacketThreadsafe$1",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "slimeknights/mantle/network/AbstractPacketThreadsafe$2": {
+    "name": "slimeknights/mantle/network/AbstractPacketThreadsafe$2",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "slimeknights/mantle/network/NetworkWrapper$AbstactPacketHandler": {
+    "name": "slimeknights/mantle/network/NetworkWrapper$AbstactPacketHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "slimeknights/mantle/property/PropertyString": {
+    "name": "slimeknights/mantle/property/PropertyString",
+    "interfaces": [
+      "net/minecraftforge/common/property/IUnlistedProperty"
+    ]
+  },
+  "slimeknights/mantle/property/PropertyUnlistedDirection": {
+    "name": "slimeknights/mantle/property/PropertyUnlistedDirection",
+    "interfaces": [
+      "net/minecraftforge/common/property/IUnlistedProperty"
+    ]
+  },
+  "slimeknights/mantle/pulsar/config/ForgeCFG": {
+    "name": "slimeknights/mantle/pulsar/config/ForgeCFG",
+    "interfaces": [
+      "slimeknights/mantle/pulsar/config/IConfiguration"
+    ]
+  },
+  "slimeknights/mantle/pulsar/control/PulseManager": {
+    "name": "slimeknights/mantle/pulsar/control/PulseManager",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "propagateEvent(Ljava/lang/Object;)V"
+      }
+    ]
+  },
+  "slimeknights/mantle/pulsar/debug/EventSpy": {
+    "name": "slimeknights/mantle/pulsar/debug/EventSpy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lslimeknights/mantle/pulsar/pulse/Pulse;",
+        "target": "slimeknights/mantle/pulsar/debug/EventSpy",
+        "values": {
+          "description": {
+            "value": "we iz in ur buses, monitorin ur eventz"
+          },
+          "forced": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "id": {
+            "value": "EventSpy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lcom/google/common/eventbus/Subscribe;",
+        "target": "receive(Ljava/lang/Object;)V"
+      }
+    ]
+  },
+  "slimeknights/mantle/pulsar/flightpath/Airdrop": {
+    "name": "slimeknights/mantle/pulsar/flightpath/Airdrop",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "slimeknights/mantle/pulsar/flightpath/lib/AnnotationLocator": {
+    "name": "slimeknights/mantle/pulsar/flightpath/lib/AnnotationLocator",
+    "interfaces": [
+      "slimeknights/mantle/pulsar/flightpath/ISubscriberLocator"
+    ]
+  },
+  "slimeknights/mantle/pulsar/flightpath/lib/BlackholeExceptionHandler": {
+    "name": "slimeknights/mantle/pulsar/flightpath/lib/BlackholeExceptionHandler",
+    "interfaces": [
+      "slimeknights/mantle/pulsar/flightpath/IExceptionHandler"
+    ]
+  },
+  "slimeknights/mantle/pulsar/internal/BusExceptionHandler": {
+    "name": "slimeknights/mantle/pulsar/internal/BusExceptionHandler",
+    "interfaces": [
+      "slimeknights/mantle/pulsar/flightpath/IExceptionHandler"
+    ]
+  },
+  "slimeknights/mantle/pulsar/internal/Configuration": {
+    "name": "slimeknights/mantle/pulsar/internal/Configuration",
+    "interfaces": [
+      "slimeknights/mantle/pulsar/config/IConfiguration"
+    ]
+  },
+  "slimeknights/mantle/pulsar/internal/CrashHandler": {
+    "name": "slimeknights/mantle/pulsar/internal/CrashHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/ICrashCallable"
+    ]
+  },
+  "slimeknights/mantle/pulsar/pulse/Pulse": {
+    "name": "slimeknights/mantle/pulsar/pulse/Pulse",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "slimeknights/mantle/tileentity/TileInventory": {
+    "name": "slimeknights/mantle/tileentity/TileInventory",
+    "interfaces": [
+      "net/minecraft/inventory/IInventory"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/Config": {
+    "name": "slimeknights/mantle/typesafe/config/Config",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/ConfigMergeable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/ConfigException": {
+    "name": "slimeknights/mantle/typesafe/config/ConfigException",
+    "interfaces": [
+      "java/io/Serializable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/ConfigFactory$1": {
+    "name": "slimeknights/mantle/typesafe/config/ConfigFactory$1",
+    "interfaces": [
+      "java/util/concurrent/Callable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/ConfigList": {
+    "name": "slimeknights/mantle/typesafe/config/ConfigList",
+    "interfaces": [
+      "java/util/List",
+      "slimeknights/mantle/typesafe/config/ConfigValue"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/ConfigObject": {
+    "name": "slimeknights/mantle/typesafe/config/ConfigObject",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/ConfigValue",
+      "java/util/Map"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/ConfigValue": {
+    "name": "slimeknights/mantle/typesafe/config/ConfigValue",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/ConfigMergeable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/DefaultConfigLoadingStrategy": {
+    "name": "slimeknights/mantle/typesafe/config/DefaultConfigLoadingStrategy",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/ConfigLoadingStrategy"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/Optional": {
+    "name": "slimeknights/mantle/typesafe/config/Optional",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/AbstractConfigNode": {
+    "name": "slimeknights/mantle/typesafe/config/impl/AbstractConfigNode",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/parser/ConfigNode"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/AbstractConfigObject": {
+    "name": "slimeknights/mantle/typesafe/config/impl/AbstractConfigObject",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/ConfigObject",
+      "slimeknights/mantle/typesafe/config/impl/Container"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/AbstractConfigValue": {
+    "name": "slimeknights/mantle/typesafe/config/impl/AbstractConfigValue",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/ConfigValue",
+      "slimeknights/mantle/typesafe/config/impl/MergeableValue"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/AbstractConfigValue$NoExceptionsModifier": {
+    "name": "slimeknights/mantle/typesafe/config/impl/AbstractConfigValue$NoExceptionsModifier",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/AbstractConfigValue$Modifier"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigBoolean": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigBoolean",
+    "interfaces": [
+      "java/io/Serializable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigConcatenation": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigConcatenation",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/Unmergeable",
+      "slimeknights/mantle/typesafe/config/impl/Container"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigDelayedMerge": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigDelayedMerge",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/Unmergeable",
+      "slimeknights/mantle/typesafe/config/impl/ReplaceableMergeStack"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigDelayedMergeObject": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigDelayedMergeObject",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/Unmergeable",
+      "slimeknights/mantle/typesafe/config/impl/ReplaceableMergeStack"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigDouble": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigDouble",
+    "interfaces": [
+      "java/io/Serializable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigImpl$1": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigImpl$1",
+    "interfaces": [
+      "java/util/concurrent/Callable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigImpl$ClasspathNameSource": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigImpl$ClasspathNameSource",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/SimpleIncluder$NameSource"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigImpl$ClasspathNameSourceWithClass": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigImpl$ClasspathNameSourceWithClass",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/SimpleIncluder$NameSource"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigImpl$FileNameSource": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigImpl$FileNameSource",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/SimpleIncluder$NameSource"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigInt": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigInt",
+    "interfaces": [
+      "java/io/Serializable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigLong": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigLong",
+    "interfaces": [
+      "java/io/Serializable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigNull": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigNull",
+    "interfaces": [
+      "java/io/Serializable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigNumber": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigNumber",
+    "interfaces": [
+      "java/io/Serializable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigReference": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigReference",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/Unmergeable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ConfigString": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ConfigString",
+    "interfaces": [
+      "java/io/Serializable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/Container": {
+    "name": "slimeknights/mantle/typesafe/config/impl/Container",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/ConfigValue"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/DefaultTransformer$1": {
+    "name": "slimeknights/mantle/typesafe/config/impl/DefaultTransformer$1",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/FullIncluder": {
+    "name": "slimeknights/mantle/typesafe/config/impl/FullIncluder",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/ConfigIncluder",
+      "slimeknights/mantle/typesafe/config/ConfigIncluderFile",
+      "slimeknights/mantle/typesafe/config/ConfigIncluderURL",
+      "slimeknights/mantle/typesafe/config/ConfigIncluderClasspath"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/MergeableValue": {
+    "name": "slimeknights/mantle/typesafe/config/impl/MergeableValue",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/ConfigMergeable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/Parseable": {
+    "name": "slimeknights/mantle/typesafe/config/impl/Parseable",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/ConfigParseable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/Parseable$ParseableResources": {
+    "name": "slimeknights/mantle/typesafe/config/impl/Parseable$ParseableResources",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/Parseable$Relativizer"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/PropertiesParser$1": {
+    "name": "slimeknights/mantle/typesafe/config/impl/PropertiesParser$1",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/ReplaceableMergeStack": {
+    "name": "slimeknights/mantle/typesafe/config/impl/ReplaceableMergeStack",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/Container"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SerializedConfigValue": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SerializedConfigValue",
+    "interfaces": [
+      "java/io/Externalizable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleConfig": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleConfig",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/Config",
+      "slimeknights/mantle/typesafe/config/impl/MergeableValue",
+      "java/io/Serializable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleConfigDocument": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleConfigDocument",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/parser/ConfigDocument"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleConfigList": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleConfigList",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/ConfigList",
+      "slimeknights/mantle/typesafe/config/impl/Container",
+      "java/io/Serializable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleConfigList$2": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleConfigList$2",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleConfigList$3": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleConfigList$3",
+    "interfaces": [
+      "java/util/ListIterator"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleConfigList$ResolveModifier": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleConfigList$ResolveModifier",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/AbstractConfigValue$Modifier"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleConfigObject": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleConfigObject",
+    "interfaces": [
+      "java/io/Serializable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleConfigObject$RenderComparator": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleConfigObject$RenderComparator",
+    "interfaces": [
+      "java/util/Comparator",
+      "java/io/Serializable"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleConfigObject$ResolveModifier": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleConfigObject$ResolveModifier",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/AbstractConfigValue$Modifier"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleConfigOrigin": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleConfigOrigin",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/ConfigOrigin"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleIncludeContext": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleIncludeContext",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/ConfigIncludeContext"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleIncluder": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleIncluder",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/FullIncluder"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleIncluder$Proxy": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleIncluder$Proxy",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/FullIncluder"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/SimpleIncluder$RelativeNameSource": {
+    "name": "slimeknights/mantle/typesafe/config/impl/SimpleIncluder$RelativeNameSource",
+    "interfaces": [
+      "slimeknights/mantle/typesafe/config/impl/SimpleIncluder$NameSource"
+    ]
+  },
+  "slimeknights/mantle/typesafe/config/impl/Tokenizer$TokenIterator": {
+    "name": "slimeknights/mantle/typesafe/config/impl/Tokenizer$TokenIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "slimeknights/mantle/util/ImmutableConcatList": {
+    "name": "slimeknights/mantle/util/ImmutableConcatList",
+    "interfaces": [
+      "java/util/List"
+    ]
+  },
+  "slimeknights/mantle/util/JeiPlugin": {
+    "name": "slimeknights/mantle/util/JeiPlugin",
+    "interfaces": [
+      "mezz/jei/api/IModPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmezz/jei/api/JEIPlugin;",
+        "target": "slimeknights/mantle/util/JeiPlugin"
+      }
+    ]
+  },
+  "slimeknights/mantle/util/JeiPlugin$1": {
+    "name": "slimeknights/mantle/util/JeiPlugin$1",
+    "interfaces": [
+      "mezz/jei/api/gui/IAdvancedGuiHandler"
+    ]
+  },
+  "slimeknights/mantle/util/RecipeMatchRegistry$RecipeComparator": {
+    "name": "slimeknights/mantle/util/RecipeMatchRegistry$RecipeComparator",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "slimeknights/mantle/util/TradeGeneric": {
+    "name": "slimeknights/mantle/util/TradeGeneric",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityVillager$ITradeList"
+    ]
+  }
+}

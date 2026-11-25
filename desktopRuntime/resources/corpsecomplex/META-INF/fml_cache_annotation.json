@@ -1,0 +1,605 @@
+{
+  "c4/corpsecomplex/CorpseComplex": {
+    "name": "c4/corpsecomplex/CorpseComplex",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "c4/corpsecomplex/CorpseComplex",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12, 1.13)"
+          },
+          "certificateFingerprint": {
+            "value": "b33d2c8df492beff56d1bbbc92da49b8ab7345a1"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.21.1.2387,);after:toughasnails;after:wearablebackpacks;after:powerinventory;after:thut_wearables;after:baubles;after:rpginventory;after:cosmeticarmorreworked;after:galacticraftcore;after:thebetweenlands;after:tombstone;after:advinv"
+          },
+          "guiFactory": {
+            "value": "c4.corpsecomplex.client.gui.GuiFactory"
+          },
+          "modid": {
+            "value": "corpsecomplex"
+          },
+          "name": {
+            "value": "Corpse Complex"
+          },
+          "version": {
+            "value": "1.0.12.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "c4.corpsecomplex.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "c4.corpsecomplex.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onFingerPrintViolation(Lnet/minecraftforge/fml/common/event/FMLFingerprintViolationEvent;)V"
+      }
+    ]
+  },
+  "c4/corpsecomplex/client/gui/GuiFactory": {
+    "name": "c4/corpsecomplex/client/gui/GuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "c4/corpsecomplex/common/helpers/ModuleHelper$ConfigChangeHandler": {
+    "name": "c4/corpsecomplex/common/helpers/ModuleHelper$ConfigChangeHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "c4/corpsecomplex/common/helpers/ModuleHelper$ConfigChangeHandler"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/ExperienceModule": {
+    "name": "c4/corpsecomplex/common/modules/ExperienceModule",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerXPDrop(Lnet/minecraftforge/event/entity/living/LivingExperienceDropEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawnBegin(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/HungerModule": {
+    "name": "c4/corpsecomplex/common/modules/HungerModule",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawnBegin(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V"
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/compatibility/reskillable/ReskillableModule": {
+    "name": "c4/corpsecomplex/common/modules/compatibility/reskillable/ReskillableModule",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V"
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/compatibility/rpginventory/RPGModule": {
+    "name": "c4/corpsecomplex/common/modules/compatibility/rpginventory/RPGModule",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawnFinish(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "onPlayerRespawnFinish(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V",
+        "values": {
+          "modid": {
+            "value": "rpginventory"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "updateClientRPG(Lnet/minecraft/entity/player/EntityPlayer;)V",
+        "values": {
+          "modid": {
+            "value": "rpginventory"
+          }
+        }
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/compatibility/thut_wearables/ThutModule": {
+    "name": "c4/corpsecomplex/common/modules/compatibility/thut_wearables/ThutModule",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawnFinish(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "onPlayerRespawnFinish(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V",
+        "values": {
+          "modid": {
+            "value": "thut_wearables"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "updateClientThut(Lnet/minecraft/entity/player/EntityPlayer;)V",
+        "values": {
+          "modid": {
+            "value": "thut_wearables"
+          }
+        }
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/compatibility/toughasnails/TANModule": {
+    "name": "c4/corpsecomplex/common/modules/compatibility/toughasnails/TANModule",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawnBegin(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "onPlayerRespawnBegin(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V",
+        "values": {
+          "modid": {
+            "value": "toughasnails"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawnFinish(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "onPlayerRespawnFinish(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V",
+        "values": {
+          "modid": {
+            "value": "toughasnails"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "restoreStats(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/entity/player/EntityPlayer;)V",
+        "values": {
+          "modid": {
+            "value": "toughasnails"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "updateClientTAN(Lnet/minecraft/entity/player/EntityPlayer;)V",
+        "values": {
+          "modid": {
+            "value": "toughasnails"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "restoreThirst(Lnet/minecraft/entity/player/EntityPlayer;I)V",
+        "values": {
+          "modid": {
+            "value": "toughasnails"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "restoreHydration(Lnet/minecraft/entity/player/EntityPlayer;F)V",
+        "values": {
+          "modid": {
+            "value": "toughasnails"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "restoreTemperature(Lnet/minecraft/entity/player/EntityPlayer;I)V",
+        "values": {
+          "modid": {
+            "value": "toughasnails"
+          }
+        }
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/effects/EffectsModule": {
+    "name": "c4/corpsecomplex/common/modules/effects/EffectsModule",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemUseFinish(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Finish;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawnFinish(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V"
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/effects/MoriModule": {
+    "name": "c4/corpsecomplex/common/modules/effects/MoriModule",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "moriPotion",
+        "value": {
+          "value": "corpsecomplex:mori"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawnFinish(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerRespawnEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerXPPickUp(Lnet/minecraftforge/event/entity/player/PlayerPickupXpEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEatingFood(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickItem;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEatingCake(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/inventory/InventoryModule": {
+    "name": "c4/corpsecomplex/common/modules/inventory/InventoryModule",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "storeDeathInventory(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "canceledDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawnBegin(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerDrops(Lnet/minecraftforge/event/entity/player/PlayerDropsEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOW"
+          }
+        }
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/inventory/capability/DeathInvCapHandler": {
+    "name": "c4/corpsecomplex/common/modules/inventory/capability/DeathInvCapHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachCapability(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/inventory/capability/DeathInventory": {
+    "name": "c4/corpsecomplex/common/modules/inventory/capability/DeathInventory",
+    "interfaces": [
+      "c4/corpsecomplex/common/modules/inventory/capability/IDeathInventory"
+    ]
+  },
+  "c4/corpsecomplex/common/modules/inventory/capability/DeathInventory$Provider": {
+    "name": "c4/corpsecomplex/common/modules/inventory/capability/DeathInventory$Provider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "DEATH_INV_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lc4/corpsecomplex/common/modules/inventory/capability/IDeathInventory;"
+        }
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/inventory/capability/DeathInventory$Storage": {
+    "name": "c4/corpsecomplex/common/modules/inventory/capability/DeathInventory$Storage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "c4/corpsecomplex/common/modules/inventory/enchantment/EnchantmentModule": {
+    "name": "c4/corpsecomplex/common/modules/inventory/enchantment/EnchantmentModule",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "soulbound",
+        "value": {
+          "value": "corpsecomplex:soulbound"
+        }
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/spawning/SpawningModule": {
+    "name": "c4/corpsecomplex/common/modules/spawning/SpawningModule",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/registry/GameRegistry$ObjectHolder;",
+        "target": "scroll",
+        "value": {
+          "value": "corpsecomplex:scroll"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRespawn(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V"
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/spawning/capability/DeathLocCapHandler": {
+    "name": "c4/corpsecomplex/common/modules/spawning/capability/DeathLocCapHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attachCapability(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/spawning/capability/DeathLocation": {
+    "name": "c4/corpsecomplex/common/modules/spawning/capability/DeathLocation",
+    "interfaces": [
+      "c4/corpsecomplex/common/modules/spawning/capability/IDeathLocation"
+    ]
+  },
+  "c4/corpsecomplex/common/modules/spawning/capability/DeathLocation$Provider": {
+    "name": "c4/corpsecomplex/common/modules/spawning/capability/DeathLocation$Provider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "DEATH_LOC_CAP",
+        "value": {
+          "type": "CLASS",
+          "value": "Lc4/corpsecomplex/common/modules/spawning/capability/IDeathLocation;"
+        }
+      }
+    ]
+  },
+  "c4/corpsecomplex/common/modules/spawning/capability/DeathLocation$Storage": {
+    "name": "c4/corpsecomplex/common/modules/spawning/capability/DeathLocation$Storage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  },
+  "c4/corpsecomplex/network/TANMessage": {
+    "name": "c4/corpsecomplex/network/TANMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "c4/corpsecomplex/network/TANMessage$TANMessageHandler": {
+    "name": "c4/corpsecomplex/network/TANMessage$TANMessageHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "onMessage(Lc4/corpsecomplex/network/TANMessage;Lnet/minecraftforge/fml/common/network/simpleimpl/MessageContext;)Lnet/minecraftforge/fml/common/network/simpleimpl/IMessage;",
+        "values": {
+          "modid": {
+            "value": "toughasnails"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "onMessage(Lnet/minecraftforge/fml/common/network/simpleimpl/IMessage;Lnet/minecraftforge/fml/common/network/simpleimpl/MessageContext;)Lnet/minecraftforge/fml/common/network/simpleimpl/IMessage;",
+        "values": {
+          "modid": {
+            "value": "toughasnails"
+          }
+        }
+      }
+    ]
+  },
+  "c4/corpsecomplex/network/TeleportEffectMessage": {
+    "name": "c4/corpsecomplex/network/TeleportEffectMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "c4/corpsecomplex/network/TeleportEffectMessage$TeleportEffectMessageHandler": {
+    "name": "c4/corpsecomplex/network/TeleportEffectMessage$TeleportEffectMessageHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "c4/corpsecomplex/network/TeleportSoundMessage": {
+    "name": "c4/corpsecomplex/network/TeleportSoundMessage",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "c4/corpsecomplex/network/TeleportSoundMessage$TeleportSoundMessageHandler": {
+    "name": "c4/corpsecomplex/network/TeleportSoundMessage$TeleportSoundMessageHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "c4/corpsecomplex/proxy/ClientProxy": {
+    "name": "c4/corpsecomplex/proxy/ClientProxy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "c4/corpsecomplex/proxy/ClientProxy",
+        "value": {
+          "type": "ENUM",
+          "values": [
+            "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "c4/corpsecomplex/proxy/CommonProxy": {
+    "name": "c4/corpsecomplex/proxy/CommonProxy",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "c4/corpsecomplex/proxy/CommonProxy"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerPotions(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEnchantments(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRecipes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  }
+}

@@ -1,0 +1,370 @@
+{
+  "paulevs/betternether/BetterNether": {
+    "name": "paulevs/betternether/BetterNether",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "paulevs/betternether/BetterNether",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "betternether"
+          },
+          "name": {
+            "value": "Better Nether"
+          },
+          "version": {
+            "value": "0.1.8.6"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "paulevs.betternether.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "paulevs.betternether.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "paulevs/betternether/blocks/BlockBNStoneSlab$Variant": {
+    "name": "paulevs/betternether/blocks/BlockBNStoneSlab$Variant",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockBlackAppleSeed": {
+    "name": "paulevs/betternether/blocks/BlockBlackAppleSeed",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockBoneMushroom$1": {
+    "name": "paulevs/betternether/blocks/BlockBoneMushroom$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockBrownLargeMushroom$EnumShape": {
+    "name": "paulevs/betternether/blocks/BlockBrownLargeMushroom$EnumShape",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockCincinnasitPillar$EnumShape": {
+    "name": "paulevs/betternether/blocks/BlockCincinnasitPillar$EnumShape",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockEyeSeed": {
+    "name": "paulevs/betternether/blocks/BlockEyeSeed",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockInkBushSeed": {
+    "name": "paulevs/betternether/blocks/BlockInkBushSeed",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockLucisMushroom$EnumDir": {
+    "name": "paulevs/betternether/blocks/BlockLucisMushroom$EnumDir",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockLucisMushroom$EnumShape": {
+    "name": "paulevs/betternether/blocks/BlockLucisMushroom$EnumShape",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockLucisSpore": {
+    "name": "paulevs/betternether/blocks/BlockLucisSpore",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockNetherCactus$EnumShape": {
+    "name": "paulevs/betternether/blocks/BlockNetherCactus$EnumShape",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockNetherGrass": {
+    "name": "paulevs/betternether/blocks/BlockNetherGrass",
+    "interfaces": [
+      "net/minecraftforge/common/IShearable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockNetherReed$EnumShape": {
+    "name": "paulevs/betternether/blocks/BlockNetherReed$EnumShape",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockOrangeMushroom": {
+    "name": "paulevs/betternether/blocks/BlockOrangeMushroom",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockPottedPlant1$EnumPlant": {
+    "name": "paulevs/betternether/blocks/BlockPottedPlant1$EnumPlant",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockRedLargeMushroom$EnumShape": {
+    "name": "paulevs/betternether/blocks/BlockRedLargeMushroom$EnumShape",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockSmoker$EnumShape": {
+    "name": "paulevs/betternether/blocks/BlockSmoker$EnumShape",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockStalagnateBowl$EnumFood": {
+    "name": "paulevs/betternether/blocks/BlockStalagnateBowl$EnumFood",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockStalagnateSeed": {
+    "name": "paulevs/betternether/blocks/BlockStalagnateSeed",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockStalagnateSeedBottom": {
+    "name": "paulevs/betternether/blocks/BlockStalagnateSeedBottom",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "paulevs/betternether/blocks/BlockWartSeed": {
+    "name": "paulevs/betternether/blocks/BlockWartSeed",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "paulevs/betternether/entities/EntityFirefly": {
+    "name": "paulevs/betternether/entities/EntityFirefly",
+    "interfaces": [
+      "net/minecraft/entity/passive/IAnimals",
+      "elucent/albedo/lighting/ILightProvider"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "paulevs/betternether/entities/EntityFirefly",
+        "values": {
+          "iface": {
+            "value": "elucent.albedo.lighting.ILightProvider"
+          },
+          "modid": {
+            "value": "albedo"
+          }
+        }
+      }
+    ]
+  },
+  "paulevs/betternether/entities/models/ModelFirefly": {
+    "name": "paulevs/betternether/entities/models/ModelFirefly",
+    "interfaces": [
+      "paulevs/betternether/entities/models/IModelTechne"
+    ]
+  },
+  "paulevs/betternether/entities/render/EntityRenderRegister$1": {
+    "name": "paulevs/betternether/entities/render/EntityRenderRegister$1",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "paulevs/betternether/events/EventsHandler": {
+    "name": "paulevs/betternether/events/EventsHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldSave(Lnet/minecraftforge/event/world/WorldEvent$Save;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPopulate(Lnet/minecraftforge/event/terraingen/PopulateChunkEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPrePopulate(Lnet/minecraftforge/event/terraingen/PopulateChunkEvent$Pre;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "boneGrow(Lnet/minecraftforge/event/entity/player/BonemealEvent;)V"
+      }
+    ]
+  },
+  "paulevs/betternether/structures/StructureAltar": {
+    "name": "paulevs/betternether/structures/StructureAltar",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructureWorld"
+    ]
+  },
+  "paulevs/betternether/structures/StructureBuilding": {
+    "name": "paulevs/betternether/structures/StructureBuilding",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructureWorld"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureBlackApple": {
+    "name": "paulevs/betternether/structures/plants/StructureBlackApple",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureEggPlant": {
+    "name": "paulevs/betternether/structures/plants/StructureEggPlant",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureEye": {
+    "name": "paulevs/betternether/structures/plants/StructureEye",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureGrayMold": {
+    "name": "paulevs/betternether/structures/plants/StructureGrayMold",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureInkBush": {
+    "name": "paulevs/betternether/structures/plants/StructureInkBush",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureLucis": {
+    "name": "paulevs/betternether/structures/plants/StructureLucis",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureMagmaFlower": {
+    "name": "paulevs/betternether/structures/plants/StructureMagmaFlower",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureMedBrownMushroom": {
+    "name": "paulevs/betternether/structures/plants/StructureMedBrownMushroom",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureMedRedMushroom": {
+    "name": "paulevs/betternether/structures/plants/StructureMedRedMushroom",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureOrangeMushroom": {
+    "name": "paulevs/betternether/structures/plants/StructureOrangeMushroom",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureRedMold": {
+    "name": "paulevs/betternether/structures/plants/StructureRedMold",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureSmoker": {
+    "name": "paulevs/betternether/structures/plants/StructureSmoker",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureStalagnate": {
+    "name": "paulevs/betternether/structures/plants/StructureStalagnate",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureWartCap": {
+    "name": "paulevs/betternether/structures/plants/StructureWartCap",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/structures/plants/StructureWartTree": {
+    "name": "paulevs/betternether/structures/plants/StructureWartTree",
+    "interfaces": [
+      "paulevs/betternether/structures/IStructure"
+    ]
+  },
+  "paulevs/betternether/tab/CreativeTab$ItemComparator": {
+    "name": "paulevs/betternether/tab/CreativeTab$ItemComparator",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "paulevs/betternether/tileentities/TileEntityChestUniversal": {
+    "name": "paulevs/betternether/tileentities/TileEntityChestUniversal",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  },
+  "paulevs/betternether/tileentities/TileEntitySmoker": {
+    "name": "paulevs/betternether/tileentities/TileEntitySmoker",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ]
+  }
+}

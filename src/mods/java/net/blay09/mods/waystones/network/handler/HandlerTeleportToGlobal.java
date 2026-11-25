@@ -1,0 +1,56 @@
+package net.blay09.mods.waystones.network.handler;
+
+import javax.annotation.Nullable;
+import net.blay09.mods.waystones.GlobalWaystones;
+import net.blay09.mods.waystones.PlayerWaystoneHelper;
+import net.blay09.mods.waystones.WaystoneConfig;
+import net.blay09.mods.waystones.WaystoneManager;
+import net.blay09.mods.waystones.network.NetworkHandler;
+import net.blay09.mods.waystones.network.message.MessageTeleportToGlobal;
+import net.blay09.mods.waystones.util.WaystoneEntry;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+
+public class HandlerTeleportToGlobal implements IMessageHandler<MessageTeleportToGlobal, IMessage> {
+   public HandlerTeleportToGlobal() {
+   }
+
+   @Nullable
+   public IMessage onMessage(MessageTeleportToGlobal message, MessageContext ctx) {
+      NetworkHandler.getThreadListener(ctx).addScheduledTask(() -> {
+         if (!WaystoneConfig.general.teleportButtonReturnOnly) {
+            EntityPlayer player = ctx.getServerHandler().player;
+            WaystoneEntry waystone = GlobalWaystones.get(player.world).getGlobalWaystone(message.getWaystoneName());
+            if (waystone == null) {
+               player.sendStatusMessage(new TextComponentTranslation("waystones:waystoneBroken", new Object[0]), true);
+            } else {
+               int dist = (int)Math.sqrt(player.getDistanceSqToCenter(waystone.getPos()));
+               int xpLevelCost = WaystoneConfig.general.blocksPerXPLevel > 0 ? MathHelper.clamp(dist / WaystoneConfig.general.blocksPerXPLevel, 0, WaystoneConfig.general.maximumXpCost) : 0;
+               if (WaystoneConfig.general.teleportButton && !WaystoneConfig.general.teleportButtonReturnOnly) {
+                  boolean enableXPCost = WaystoneConfig.general.globalWaystonesCostXp && WaystoneConfig.general.inventoryButtonXpCost && !player.capabilities.isCreativeMode;
+                  if (!enableXPCost || player.experienceLevel >= xpLevelCost) {
+                     if (PlayerWaystoneHelper.canFreeWarp(ctx.getServerHandler().player)) {
+                        if (WaystoneManager.teleportToWaystone(ctx.getServerHandler().player, waystone)) {
+                           if (!WaystoneConfig.general.globalNoCooldown) {
+                              PlayerWaystoneHelper.setLastFreeWarp(ctx.getServerHandler().player, System.currentTimeMillis());
+                           }
+
+                           if (enableXPCost) {
+                              player.addExperienceLevel(-xpLevelCost);
+                           }
+                        }
+
+                        WaystoneManager.sendPlayerWaystones(ctx.getServerHandler().player);
+                     }
+                  }
+               }
+            }
+         }
+      });
+      return null;
+   }
+}

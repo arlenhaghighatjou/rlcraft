@@ -1,0 +1,14 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "SRParasites:items/armor_helm_sentient"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "vinni": 1
+            },
+            "model": "SRParasites:item/armor_helm_sentient_v"
+        }
+    ]
+}

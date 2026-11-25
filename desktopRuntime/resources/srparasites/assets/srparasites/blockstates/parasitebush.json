@@ -1,0 +1,39 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "srparasites:parasitebush_tendril"
+  },
+  "variants": {
+    "variant=tendril": [
+        { "model": "srparasites:parasitebush_tendril" },
+        { "model": "srparasites:parasitebush_tendril", "y": 90 },
+        { "model": "srparasites:parasitebush_tendril", "y": 180 },
+        { "model": "srparasites:parasitebush_tendril", "y": 270 }
+    ],
+    "variant=bine": [
+        { "model": "srparasites:parasitebush_bine" },
+        { "model": "srparasites:parasitebush_bine", "y": 90 },
+        { "model": "srparasites:parasitebush_bine", "y": 180 },
+        { "model": "srparasites:parasitebush_bine", "y": 270 }
+    ],
+    "variant=pop": [
+        { "model": "srparasites:parasitebush_pop" },
+        { "model": "srparasites:parasitebush_pop", "y": 90 },
+        { "model": "srparasites:parasitebush_pop", "y": 180 },
+        { "model": "srparasites:parasitebush_pop", "y": 270 }
+    ],
+    "variant=eye": [
+        { "model": "srparasites:parasitebush_eye" },
+        { "model": "srparasites:parasitebush_eye", "y": 90 },
+        { "model": "srparasites:parasitebush_eye", "y": 180 },
+        { "model": "srparasites:parasitebush_eye", "y": 270 }
+    ],
+    "variant=tooh": [
+        { "model": "srparasites:parasitebush_tooh" },
+        { "model": "srparasites:parasitebush_tooh", "y": 90 },
+        { "model": "srparasites:parasitebush_tooh", "y": 180 },
+        { "model": "srparasites:parasitebush_tooh", "y": 270 }
+    ],
+    "inventory": [{}]
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "familiarfauna/config/ConfigurationHandler": {
+    "name": "familiarfauna/config/ConfigurationHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigurationChangedEvent(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "familiarfauna/core/ClientProxy$EntityRenderFactory": {
+    "name": "familiarfauna/core/ClientProxy$EntityRenderFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "familiarfauna/core/FamiliarFauna": {
+    "name": "familiarfauna/core/FamiliarFauna",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "familiarfauna/core/FamiliarFauna",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2768,);after:biomesoplenty;"
+          },
+          "guiFactory": {
+            "value": "familiarfauna.client.gui.GuiFFFactory"
+          },
+          "modid": {
+            "value": "familiarfauna"
+          },
+          "name": {
+            "value": "FamiliarFauna"
+          },
+          "version": {
+            "value": "1.0.11"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "familiarfauna"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "familiarfauna.core.ClientProxy"
+          },
+          "serverSide": {
+            "value": "familiarfauna.core.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      }
+    ]
+  },
+  "familiarfauna/entities/EntityButterfly": {
+    "name": "familiarfauna/entities/EntityButterfly",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityFlying"
+    ]
+  },
+  "familiarfauna/entities/EntityButterfly$ButterflyTypeData": {
+    "name": "familiarfauna/entities/EntityButterfly$ButterflyTypeData",
+    "interfaces": [
+      "net/minecraft/entity/IEntityLivingData"
+    ]
+  },
+  "familiarfauna/entities/EntityDeer": {
+    "name": "familiarfauna/entities/EntityDeer",
+    "interfaces": [
+      "net/minecraft/entity/passive/IAnimals"
+    ]
+  },
+  "familiarfauna/entities/EntityDeer$DeerTypeData": {
+    "name": "familiarfauna/entities/EntityDeer$DeerTypeData",
+    "interfaces": [
+      "net/minecraft/entity/IEntityLivingData"
+    ]
+  },
+  "familiarfauna/entities/EntityDragonfly": {
+    "name": "familiarfauna/entities/EntityDragonfly",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityFlying"
+    ]
+  },
+  "familiarfauna/entities/EntityDragonfly$DragonflyTypeData": {
+    "name": "familiarfauna/entities/EntityDragonfly$DragonflyTypeData",
+    "interfaces": [
+      "net/minecraft/entity/IEntityLivingData"
+    ]
+  },
+  "familiarfauna/entities/EntityPixie": {
+    "name": "familiarfauna/entities/EntityPixie",
+    "interfaces": [
+      "net/minecraft/entity/passive/EntityFlying"
+    ]
+  },
+  "familiarfauna/entities/EntityPixie$PixieTypeData": {
+    "name": "familiarfauna/entities/EntityPixie$PixieTypeData",
+    "interfaces": [
+      "net/minecraft/entity/IEntityLivingData"
+    ]
+  },
+  "familiarfauna/entities/EntitySnail": {
+    "name": "familiarfauna/entities/EntitySnail",
+    "interfaces": [
+      "net/minecraft/entity/passive/IAnimals"
+    ]
+  },
+  "familiarfauna/entities/EntityTurkey": {
+    "name": "familiarfauna/entities/EntityTurkey",
+    "interfaces": [
+      "net/minecraft/entity/passive/IAnimals"
+    ]
+  },
+  "familiarfauna/entities/EntityTurkey$TurkeyTypeData": {
+    "name": "familiarfauna/entities/EntityTurkey$TurkeyTypeData",
+    "interfaces": [
+      "net/minecraft/entity/IEntityLivingData"
+    ]
+  },
+  "familiarfauna/item/ItemBugHabitat$1": {
+    "name": "familiarfauna/item/ItemBugHabitat$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "familiarfauna/item/ItemBugHabitat$2": {
+    "name": "familiarfauna/item/ItemBugHabitat$2",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  }
+}

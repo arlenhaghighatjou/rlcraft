@@ -1,0 +1,18 @@
+{ "_comment": ["Heating goo from lava sand" ],
+  "conditions": [
+    { "type": "forge:mod_loaded",
+      "modid": "vanillafoodpantry" }
+  ],
+  "result": {
+    "item": "armorunder:heating_goo",
+    "count": 2
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "Ls", "s "
+  ],
+  "key": {
+    "L": { "item": "vanillafoodpantry:lava_sand_pack" },
+    "s": { "item": "minecraft:slime_ball" }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "vazkii/potionfingers/ItemRing": {
+    "name": "vazkii/potionfingers/ItemRing",
+    "interfaces": [
+      "baubles/api/IBauble",
+      "vazkii/arl/interf/IItemColorProvider"
+    ]
+  },
+  "vazkii/potionfingers/PotionFingers": {
+    "name": "vazkii/potionfingers/PotionFingers",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "vazkii/potionfingers/PotionFingers",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:autoreglib;required-after:baubles;"
+          },
+          "modid": {
+            "value": "potionfingers"
+          },
+          "name": {
+            "value": "Potion Fingers"
+          },
+          "version": {
+            "value": "r1.0-8"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      }
+    ]
+  }
+}

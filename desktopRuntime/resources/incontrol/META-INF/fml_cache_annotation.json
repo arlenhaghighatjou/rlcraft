@@ -1,0 +1,263 @@
+{
+  "mcjty/incontrol/ForgeEventHandlers": {
+    "name": "mcjty/incontrol/ForgeEventHandlers",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityJoinWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityJoinWorldLast(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntitySpawnEvent(Lnet/minecraftforge/event/entity/living/LivingSpawnEvent$CheckSpawn;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSummonAidEvent(Lnet/minecraftforge/event/entity/living/ZombieEvent$SummonAidEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPotentialSpawns(Lnet/minecraftforge/event/world/WorldEvent$PotentialSpawns;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingExperienceDrop(Lnet/minecraftforge/event/entity/living/LivingExperienceDropEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "mcjty/incontrol/InControl": {
+    "name": "mcjty/incontrol/InControl",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "mcjty/incontrol/InControl",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12,1.13)"
+          },
+          "dependencies": {
+            "value": "after:forge@[13.19.0.2176,)"
+          },
+          "modid": {
+            "value": "incontrol"
+          },
+          "name": {
+            "value": "InControl"
+          },
+          "version": {
+            "value": "3.9.18"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "mcjty.incontrol.setup.ClientProxy"
+          },
+          "serverSide": {
+            "value": "mcjty.incontrol.setup.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onLoadComplete(Lnet/minecraftforge/fml/common/event/FMLLoadCompleteEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverLoad(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStopped(Lnet/minecraftforge/fml/common/event/FMLServerStoppedEvent;)V"
+      }
+    ]
+  },
+  "mcjty/incontrol/compat/EnigmaSupport$GetEnigmaScript": {
+    "name": "mcjty/incontrol/compat/EnigmaSupport$GetEnigmaScript",
+    "interfaces": [
+      "java/util/function/Function"
+    ]
+  },
+  "mcjty/incontrol/compat/LostCitySupport$GetLostCities": {
+    "name": "mcjty/incontrol/compat/LostCitySupport$GetLostCities",
+    "interfaces": [
+      "java/util/function/Function"
+    ]
+  },
+  "mcjty/incontrol/compat/ModRuleCompatibilityLayer": {
+    "name": "mcjty/incontrol/compat/ModRuleCompatibilityLayer",
+    "interfaces": [
+      "mcjty/tools/rules/IModRuleCompatibilityLayer"
+    ]
+  },
+  "mcjty/incontrol/rules/ExperienceRule$1": {
+    "name": "mcjty/incontrol/rules/ExperienceRule$1",
+    "interfaces": [
+      "mcjty/tools/rules/IEventQuery"
+    ]
+  },
+  "mcjty/incontrol/rules/LootRule$1": {
+    "name": "mcjty/incontrol/rules/LootRule$1",
+    "interfaces": [
+      "mcjty/tools/rules/IEventQuery"
+    ]
+  },
+  "mcjty/incontrol/rules/PotentialSpawnRule$1": {
+    "name": "mcjty/incontrol/rules/PotentialSpawnRule$1",
+    "interfaces": [
+      "mcjty/tools/rules/IEventQuery"
+    ]
+  },
+  "mcjty/incontrol/rules/SpawnRule$1": {
+    "name": "mcjty/incontrol/rules/SpawnRule$1",
+    "interfaces": [
+      "mcjty/tools/rules/IEventQuery"
+    ]
+  },
+  "mcjty/incontrol/rules/SpawnRule$2": {
+    "name": "mcjty/incontrol/rules/SpawnRule$2",
+    "interfaces": [
+      "mcjty/tools/rules/IEventQuery"
+    ]
+  },
+  "mcjty/incontrol/rules/SpawnRule$3": {
+    "name": "mcjty/incontrol/rules/SpawnRule$3",
+    "interfaces": [
+      "mcjty/tools/rules/RuleBase$EventGetter"
+    ]
+  },
+  "mcjty/incontrol/rules/SpawnRule$4": {
+    "name": "mcjty/incontrol/rules/SpawnRule$4",
+    "interfaces": [
+      "mcjty/tools/rules/RuleBase$EventGetter"
+    ]
+  },
+  "mcjty/incontrol/rules/SummonAidRule$1": {
+    "name": "mcjty/incontrol/rules/SummonAidRule$1",
+    "interfaces": [
+      "mcjty/tools/rules/IEventQuery"
+    ]
+  },
+  "mcjty/incontrol/rules/SummonAidRule$2": {
+    "name": "mcjty/incontrol/rules/SummonAidRule$2",
+    "interfaces": [
+      "mcjty/incontrol/rules/SummonEventGetter"
+    ]
+  },
+  "mcjty/incontrol/rules/SummonEventGetter": {
+    "name": "mcjty/incontrol/rules/SummonEventGetter",
+    "interfaces": [
+      "mcjty/tools/rules/RuleBase$EventGetter"
+    ]
+  },
+  "mcjty/incontrol/rules/support/RuleKeys": {
+    "name": "mcjty/incontrol/rules/support/RuleKeys",
+    "interfaces": [
+      "mcjty/tools/rules/CommonRuleKeys"
+    ]
+  },
+  "mcjty/incontrol/setup/ClientProxy": {
+    "name": "mcjty/incontrol/setup/ClientProxy",
+    "interfaces": [
+      "mcjty/incontrol/setup/IProxy"
+    ]
+  },
+  "mcjty/incontrol/setup/ServerProxy": {
+    "name": "mcjty/incontrol/setup/ServerProxy",
+    "interfaces": [
+      "mcjty/incontrol/setup/IProxy"
+    ]
+  }
+}

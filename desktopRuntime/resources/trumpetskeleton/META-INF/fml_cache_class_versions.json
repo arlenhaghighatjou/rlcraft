@@ -1,0 +1,21 @@
+{
+  "com/jamieswhiteshirt/trumpetskeleton/TrumpetSkeleton": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/client/ClientProxy": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/client/model/ModelTrumpetSkeleton": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/client/model/package-info": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/client/package-info": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/client/renderer/entity/RenderTrumpetSkeleton": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/client/renderer/entity/RenderTrumpetSkeleton$1": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/client/renderer/entity/package-info": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/common/CommonProxy": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/common/TrumpetSkeletonItems": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/common/TrumpetSkeletonSoundEvents": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/common/entity/EntityTrumpetSkeleton": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/common/entity/package-info": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/common/item/ItemTrumpet": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/common/item/package-info": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/common/package-info": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/package-info": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/server/ServerProxy": 52,
+  "com/jamieswhiteshirt/trumpetskeleton/server/package-info": 52
+}

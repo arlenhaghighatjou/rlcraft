@@ -1,0 +1,64 @@
+package com.oblivioussp.spartanweaponry.client.gui;
+
+import baubles.api.BaublesApi;
+import com.oblivioussp.spartanweaponry.inventory.ContainerQuiverArrow;
+import com.oblivioussp.spartanweaponry.inventory.ContainerQuiverBolt;
+import com.oblivioussp.spartanweaponry.item.ItemQuiverBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
+
+public class GuiHandler implements IGuiHandler {
+   private static int guiIndex = 0;
+   public static final int GUI_ID_QUIVER_ARROW = guiIndex++;
+   public static final int GUI_ID_QUIVER_BOLT = guiIndex++;
+
+   public GuiHandler() {
+   }
+
+   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+      ItemQuiverBase.SlotType slotType = ItemQuiverBase.SlotType.values()[x];
+      if (ID == GUI_ID_QUIVER_ARROW) {
+         ItemStack quiver = findQuiverStack(player, slotType, y);
+         return !quiver.isEmpty() ? new ContainerQuiverArrow(player.inventory, quiver) : null;
+      } else if (ID == GUI_ID_QUIVER_BOLT) {
+         ItemStack quiver = findQuiverStack(player, slotType, y);
+         return !quiver.isEmpty() ? new ContainerQuiverBolt(player.inventory, quiver) : null;
+      } else {
+         throw new IllegalArgumentException("Attempted to open invalid GUI ID: " + ID);
+      }
+   }
+
+   public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+      ItemQuiverBase.SlotType slotType = ItemQuiverBase.SlotType.values()[x];
+      if (ID == GUI_ID_QUIVER_ARROW) {
+         ItemStack quiver = findQuiverStack(player, slotType, y);
+         return !quiver.isEmpty() ? new GuiQuiverArrow(new ContainerQuiverArrow(player.inventory, quiver), player.inventory, quiver) : null;
+      } else if (ID == GUI_ID_QUIVER_BOLT) {
+         ItemStack quiver = findQuiverStack(player, slotType, y);
+         return !quiver.isEmpty() ? new GuiQuiverBolt(new ContainerQuiverBolt(player.inventory, quiver), player.inventory, quiver) : null;
+      } else {
+         throw new IllegalArgumentException("Attempted to open invalid GUI ID: " + ID);
+      }
+   }
+
+   protected static ItemStack findQuiverStack(EntityPlayer player, ItemQuiverBase.SlotType slotType, int slot) {
+      ItemStack quiverStack = ItemStack.EMPTY;
+      switch(slotType) {
+      case HOTBAR:
+         quiverStack = player.inventory.getStackInSlot(slot);
+         break;
+      case BAUBLE:
+         quiverStack = BaublesApi.getBaublesHandler(player).getStackInSlot(5);
+         break;
+      case MAIN_HAND:
+         quiverStack = player.getHeldItemMainhand();
+         break;
+      case OFF_HAND:
+         quiverStack = player.getHeldItemOffhand();
+      }
+
+      return quiverStack;
+   }
+}

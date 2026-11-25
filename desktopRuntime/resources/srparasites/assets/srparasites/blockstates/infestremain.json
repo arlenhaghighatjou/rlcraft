@@ -1,0 +1,27 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "srparasites:infestremain"
+  },
+  "variants": {
+        "normal": [
+            { "model": "srparasites:infestremain" },
+            { "model": "srparasites:infestremain", "y": 90 },
+            { "model": "srparasites:infestremain", "y": 180 },
+            { "model": "srparasites:infestremain", "y": 270 }
+        ],
+        "source=0": [
+            { "model": "srparasites:infestremain" },
+            { "model": "srparasites:infestremain", "y": 90 },
+            { "model": "srparasites:infestremain", "y": 180 },
+            { "model": "srparasites:infestremain", "y": 270 }
+        ],
+        "source=1": [
+            { "model": "srparasites:infestremain" },
+            { "model": "srparasites:infestremain", "y": 90 },
+            { "model": "srparasites:infestremain", "y": 180 },
+            { "model": "srparasites:infestremain", "y": 270 }
+        ],
+    "inventory": [{}]
+  }
+}

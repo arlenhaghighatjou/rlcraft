@@ -1,0 +1,12 @@
+{ "_comment": ["Lined helmet to provide -1 cooling" ],
+  "result": {
+    "item": "minecraft:leather_helmet",
+    "nbt": {"carrots:ArmorTLining":"COOL"}
+  },
+  "type": "armorunder:lined_armor_shapeless",
+  "limit": "COOLER",
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemHelmet" },
+    { "item": "armorunder:cool_helmet_liner" }
+  ]
+}

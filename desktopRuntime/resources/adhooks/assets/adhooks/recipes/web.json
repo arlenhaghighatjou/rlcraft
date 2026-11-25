@@ -1,0 +1,18 @@
+{
+    "type": "forge:ore_shaped",
+    "pattern": [
+        "W W",
+        " W ",
+        "W W"
+    ],
+    "key": {
+        "W": {
+            "item": "minecraft:string"
+        }        
+    },
+    "result": {
+        "item": "minecraft:web",
+        "data": 0,
+		"count": 1
+    }
+}

@@ -1,0 +1,83 @@
+package com.github.alexthe666.iceandfire.item;
+
+import com.github.alexthe666.iceandfire.IceAndFire;
+import com.github.alexthe666.iceandfire.client.StatCollector;
+import com.github.alexthe666.iceandfire.core.ModItems;
+import com.github.alexthe666.iceandfire.enums.EnumBestiaryPages;
+import java.util.List;
+import javax.annotation.Nullable;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class ItemBestiary extends Item {
+   public ItemBestiary() {
+      this.maxStackSize = 1;
+      this.setCreativeTab(IceAndFire.TAB);
+      this.setUnlocalizedName("iceandfire.bestiary");
+      this.setRegistryName("iceandfire", "bestiary");
+   }
+
+   public void onCreated(ItemStack itemStack, World world, EntityPlayer player) {
+      itemStack.setTagCompound(new NBTTagCompound());
+      itemStack.getTagCompound().setIntArray("Pages", new int[]{0});
+   }
+
+   @SideOnly(Side.CLIENT)
+   public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+      if (tab == this.getCreativeTab()) {
+         items.add(new ItemStack(this));
+         ItemStack stack = new ItemStack(ModItems.bestiary);
+         stack.setTagCompound(new NBTTagCompound());
+         int[] pages = new int[EnumBestiaryPages.values().length];
+
+         for(int i = 0; i < EnumBestiaryPages.values().length; pages[i] = i++) {
+            ;
+         }
+
+         stack.getTagCompound().setIntArray("Pages", pages);
+         items.add(stack);
+      }
+
+   }
+
+   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+      ItemStack itemStackIn = playerIn.getHeldItem(hand);
+      if (worldIn.isRemote) {
+         IceAndFire.PROXY.openBestiaryGui(itemStackIn);
+      }
+
+      return new ActionResult(EnumActionResult.PASS, itemStackIn);
+   }
+
+   public void onUpdate(ItemStack stack, World world, Entity entity, int f, boolean f1) {
+      if (stack.getTagCompound() == null) {
+         stack.setTagCompound(new NBTTagCompound());
+         stack.getTagCompound().setIntArray("Pages", new int[]{EnumBestiaryPages.INTRODUCTION.ordinal()});
+      }
+
+   }
+
+   public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
+      if (stack.getTagCompound() != null) {
+         tooltip.add(StatCollector.translateToLocal("bestiary.contains"));
+
+         for(EnumBestiaryPages page : EnumBestiaryPages.containedPages(EnumBestiaryPages.toList(stack.getTagCompound().getIntArray("Pages")))) {
+            tooltip.add(TextFormatting.WHITE + "-" + StatCollector.translateToLocal("bestiary." + EnumBestiaryPages.values()[page.ordinal()].toString().toLowerCase()));
+         }
+      }
+
+   }
+}

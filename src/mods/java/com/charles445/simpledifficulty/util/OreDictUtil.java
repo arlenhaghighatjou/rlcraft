@@ -1,0 +1,33 @@
+package com.charles445.simpledifficulty.util;
+
+import javax.annotation.Nonnull;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.oredict.OreDictionary;
+
+public class OreDictUtil {
+   public static final NonNullList<ItemStack> listAlljuice = OreDictionary.getOres("listAlljuice");
+   public static final NonNullList<ItemStack> listAllsmoothie = OreDictionary.getOres("listAllsmoothie");
+   public static final NonNullList<ItemStack> listAllsoda = OreDictionary.getOres("listAllsoda");
+   public static final NonNullList<ItemStack> logWood = OreDictionary.getOres("logWood");
+   public static final NonNullList<ItemStack> stick = OreDictionary.getOres("stickWood");
+
+   public OreDictUtil() {
+   }
+
+   public static boolean isOre(NonNullList<ItemStack> stackList, ItemStack stackCheck) {
+      return containsMatch(false, stackList, stackCheck);
+   }
+
+   public static boolean containsMatch(boolean strict, NonNullList<ItemStack> inputs, @Nonnull ItemStack... targets) {
+      for(ItemStack input : inputs) {
+         for(ItemStack target : targets) {
+            if (OreDictionary.itemMatches(input, target, strict)) {
+               return true;
+            }
+         }
+      }
+
+      return false;
+   }
+}

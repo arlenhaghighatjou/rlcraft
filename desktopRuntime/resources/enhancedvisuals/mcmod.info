@@ -1,0 +1,16 @@
+[
+{
+  "modid": "enhancedvisuals",
+  "name": "Enhanced Visuals",
+  "description": "Experience realism and extra video effects for your in-game experience.",
+  "mcversion": "${mcversion}",
+  "url": "https://www.curseforge.com/minecraft/mc-mods/enhancedvisuals",
+  "version": "1.3",
+  "updateUrl": "",
+  "authorList": ["Sonicjumper", "CreativeMD"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

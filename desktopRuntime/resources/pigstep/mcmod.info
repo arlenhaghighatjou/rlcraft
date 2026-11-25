@@ -1,0 +1,12 @@
+[
+    {
+        "modid": "pigstep",
+        "name": "Pigstep",
+        "description": "Adds pigstep to 1.12.2. Found in nether fortresses",
+        "version": "1.12",
+        "mcversion": "1.12.2",
+        "authors": ["daPoseidonGuy"],
+        "credits": "Lena Raine for making Pigstep",
+        "dependencies": ["mod_MinecraftForge"]
+    }
+]

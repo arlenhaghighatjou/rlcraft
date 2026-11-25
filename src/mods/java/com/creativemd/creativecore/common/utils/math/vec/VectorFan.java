@@ -1,0 +1,1084 @@
+package com.creativemd.creativecore.common.utils.math.vec;
+
+import com.creativemd.creativecore.client.rendering.RenderBox;
+import com.creativemd.creativecore.client.rendering.model.CreativeBakedQuad;
+import com.creativemd.creativecore.common.utils.math.BooleanUtils;
+import com.creativemd.creativecore.common.utils.math.RotationUtils;
+import com.creativemd.creativecore.common.utils.math.VectorUtils;
+import com.creativemd.creativecore.common.utils.math.collision.IntersectionHelperSolid;
+import com.creativemd.creativecore.common.utils.math.geo.NormalPlane;
+import com.creativemd.creativecore.common.utils.math.geo.Ray3f;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.vecmath.Vector2f;
+import javax.vecmath.Vector3d;
+import javax.vecmath.Vector3f;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.EnumFacing.Axis;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class VectorFan {
+   public static final float EPSILON = 1.0E-4F;
+   protected Vector3f[] coords;
+
+   public VectorFan(Vector3f[] coords) {
+      this.coords = coords;
+   }
+
+   public Vector3f[] getCoords() {
+      return this.coords;
+   }
+
+   public Vector3f get(int index) {
+      return this.coords[index];
+   }
+
+   public int count() {
+      return this.coords.length;
+   }
+
+   protected Vector3f[] cutMinMax(Axis one, Axis two, Axis axis, float minOne, float minTwo, float maxOne, float maxTwo) {
+      boolean allTheSame = true;
+      boolean allValue = false;
+      boolean[] inside = new boolean[this.coords.length];
+
+      for(int i = 0; i < inside.length; ++i) {
+         float valueOne = VectorUtils.get(one, this.coords[i]);
+         float valueTwo = VectorUtils.get(two, this.coords[i]);
+         inside[i] = valueOne >= minOne && valueOne <= maxOne && valueTwo >= minTwo && valueTwo <= maxTwo;
+         if (allTheSame) {
+            if (i == 0) {
+               allValue = inside[i];
+            } else if (allValue != inside[i]) {
+               allTheSame = false;
+            }
+         }
+      }
+
+      if (allTheSame && allValue) {
+         return this.coords;
+      } else {
+         List<Vector2f> shape = IntersectionHelperSolid.cutMinMax(one, two, minOne, minTwo, maxOne, maxTwo, this.coords);
+         if (shape == null) {
+            return null;
+         } else {
+            NormalPlane plane = this.createPlane();
+            Vector3f[] result = new Vector3f[shape.size()];
+
+            for(int i = 0; i < result.length; ++i) {
+               Vector3f vec = new Vector3f();
+               Vector2f vec2d = (Vector2f)shape.get(i);
+               VectorUtils.set(vec, vec2d.x, one);
+               VectorUtils.set(vec, vec2d.y, two);
+               VectorUtils.set(vec, plane.project(one, two, axis, vec2d.x, vec2d.y).floatValue(), axis);
+               result[i] = vec;
+            }
+
+            return result;
+         }
+      }
+   }
+
+   @SideOnly(Side.CLIENT)
+   public void generate(RenderBox.RenderInformationHolder holder, List<BakedQuad> quads) {
+      holder.normal = null;
+      Vector3f[] coords = this.coords;
+      if (!holder.getBox().allowOverlap && holder.hasBounds()) {
+         Axis one = RotationUtils.getOne(holder.facing.getAxis());
+         Axis two = RotationUtils.getTwo(holder.facing.getAxis());
+         float scaleOne;
+         float scaleTwo;
+         float offsetOne;
+         float offsetTwo;
+         if (holder.scaleAndOffset) {
+            scaleOne = 1.0F / VectorUtils.get(one, holder.scaleX, holder.scaleY, holder.scaleZ);
+            scaleTwo = 1.0F / VectorUtils.get(two, holder.scaleX, holder.scaleY, holder.scaleZ);
+            offsetOne = VectorUtils.get(one, holder.offsetX, holder.offsetY, holder.offsetZ);
+            offsetTwo = VectorUtils.get(two, holder.offsetX, holder.offsetY, holder.offsetZ);
+         } else {
+            scaleOne = 1.0F;
+            scaleTwo = 1.0F;
+            offsetOne = 0.0F;
+            offsetTwo = 0.0F;
+         }
+
+         float minOne = VectorUtils.get(one, holder.minX, holder.minY, holder.minZ) * scaleOne - offsetOne;
+         float minTwo = VectorUtils.get(two, holder.minX, holder.minY, holder.minZ) * scaleTwo - offsetTwo;
+         float maxOne = VectorUtils.get(one, holder.maxX, holder.maxY, holder.maxZ) * scaleOne - offsetOne;
+         float maxTwo = VectorUtils.get(two, holder.maxX, holder.maxY, holder.maxZ) * scaleTwo - offsetTwo;
+         coords = this.cutMinMax(one, two, holder.facing.getAxis(), minOne, minTwo, maxOne, maxTwo);
+      }
+
+      if (coords != null) {
+         int index;
+         for(index = 0; index < coords.length - 3; index += 2) {
+            this.generate(holder, coords[0], coords[index + 1], coords[index + 2], coords[index + 3], quads);
+         }
+
+         if (index < coords.length - 2) {
+            this.generate(holder, coords[0], coords[index + 1], coords[index + 2], coords[index + 2], quads);
+         }
+
+      }
+   }
+
+   @SideOnly(Side.CLIENT)
+   protected void generate(RenderBox.RenderInformationHolder holder, Vector3f vec1, Vector3f vec2, Vector3f vec3, Vector3f vec4, List<BakedQuad> quads) {
+      BakedQuad quad = new CreativeBakedQuad(holder.quad, holder.getBox(), holder.color, holder.shouldOverrideColor, holder.facing);
+      RenderBox box = holder.getBox();
+
+      for(int k = 0; k < 4; ++k) {
+         Vector3f vec;
+         if (k == 0) {
+            vec = vec1;
+         } else if (k == 1) {
+            vec = vec2;
+         } else if (k == 2) {
+            vec = vec3;
+         } else {
+            vec = vec4;
+         }
+
+         int index = k * quad.getFormat().getIntegerSize();
+         float x;
+         float y;
+         float z;
+         if (holder.scaleAndOffset) {
+            x = vec.x * holder.scaleX + holder.offsetX - (float)holder.offset.getX();
+            y = vec.y * holder.scaleY + holder.offsetY - (float)holder.offset.getY();
+            z = vec.z * holder.scaleZ + holder.offsetZ - (float)holder.offset.getZ();
+         } else {
+            x = vec.x - (float)holder.offset.getX();
+            y = vec.y - (float)holder.offset.getY();
+            z = vec.z - (float)holder.offset.getZ();
+         }
+
+         if (this.doMinMaxLate() && !box.allowOverlap) {
+            if (holder.facing.getAxis() != Axis.X) {
+               x = MathHelper.clamp(x, holder.minX, holder.maxX);
+            }
+
+            if (holder.facing.getAxis() != Axis.Y) {
+               y = MathHelper.clamp(y, holder.minY, holder.maxY);
+            }
+
+            if (holder.facing.getAxis() != Axis.Z) {
+               z = MathHelper.clamp(z, holder.minZ, holder.maxZ);
+            }
+         }
+
+         float oldX = Float.intBitsToFloat(quad.getVertexData()[index]);
+         float oldY = Float.intBitsToFloat(quad.getVertexData()[index + 1]);
+         float oldZ = Float.intBitsToFloat(quad.getVertexData()[index + 2]);
+         quad.getVertexData()[index] = Float.floatToIntBits(x + (float)holder.offset.getX());
+         quad.getVertexData()[index + 1] = Float.floatToIntBits(y + (float)holder.offset.getY());
+         quad.getVertexData()[index + 2] = Float.floatToIntBits(z + (float)holder.offset.getZ());
+         if (!box.keepVU) {
+            int uvIndex = index + quad.getFormat().getUvOffsetById(0) / 4;
+            float uOffset;
+            float vOffset;
+            if (holder.uvInverted) {
+               uOffset = (RotationUtils.getVFromFacing(holder.facing, oldX, oldY, oldZ) - RotationUtils.getVFromFacing(holder.facing, x, y, z)) / RotationUtils.getVFromFacing(holder.facing, holder.sizeX, holder.sizeY, holder.sizeZ) * holder.sizeU;
+               vOffset = (RotationUtils.getUFromFacing(holder.facing, oldX, oldY, oldZ) - RotationUtils.getUFromFacing(holder.facing, x, y, z)) / RotationUtils.getUFromFacing(holder.facing, holder.sizeX, holder.sizeY, holder.sizeZ) * holder.sizeV;
+            } else {
+               uOffset = (RotationUtils.getUFromFacing(holder.facing, oldX, oldY, oldZ) - RotationUtils.getUFromFacing(holder.facing, x, y, z)) / RotationUtils.getUFromFacing(holder.facing, holder.sizeX, holder.sizeY, holder.sizeZ) * holder.sizeU;
+               vOffset = (RotationUtils.getVFromFacing(holder.facing, oldX, oldY, oldZ) - RotationUtils.getVFromFacing(holder.facing, x, y, z)) / RotationUtils.getVFromFacing(holder.facing, holder.sizeX, holder.sizeY, holder.sizeZ) * holder.sizeV;
+            }
+
+            quad.getVertexData()[uvIndex] = Float.floatToIntBits(Float.intBitsToFloat(quad.getVertexData()[uvIndex]) - uOffset);
+            quad.getVertexData()[uvIndex + 1] = Float.floatToIntBits(Float.intBitsToFloat(quad.getVertexData()[uvIndex + 1]) - vOffset);
+         }
+      }
+
+      quads.add(quad);
+   }
+
+   protected boolean doMinMaxLate() {
+      return false;
+   }
+
+   public void renderPreview(int red, int green, int blue, int alpha) {
+      Tessellator tessellator = Tessellator.getInstance();
+      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      bufferbuilder.begin(6, DefaultVertexFormats.POSITION_COLOR);
+
+      for(int i = 0; i < this.coords.length; ++i) {
+         Vector3f vec = this.coords[i];
+         bufferbuilder.pos((double)vec.x, (double)vec.y, (double)vec.z).color(red, green, blue, alpha).endVertex();
+      }
+
+      tessellator.draw();
+   }
+
+   public void renderPreview(float offX, float offY, float offZ, float scaleX, float scaleY, float scaleZ, int red, int green, int blue, int alpha) {
+      Tessellator tessellator = Tessellator.getInstance();
+      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      bufferbuilder.begin(6, DefaultVertexFormats.POSITION_COLOR);
+
+      for(int i = 0; i < this.coords.length; ++i) {
+         Vector3f vec = this.coords[i];
+         bufferbuilder.pos((double)(vec.x * scaleX + offX), (double)(vec.y * scaleY + offY), (double)(vec.z * scaleZ + offZ)).color(red, green, blue, alpha).endVertex();
+      }
+
+      tessellator.draw();
+   }
+
+   public void renderLines(int red, int green, int blue, int alpha) {
+      Tessellator tessellator = Tessellator.getInstance();
+      BufferBuilder bufferbuilder = tessellator.getBuffer();
+
+      int index;
+      for(index = 0; index < this.coords.length - 3; index += 2) {
+         bufferbuilder.begin(2, DefaultVertexFormats.POSITION_COLOR);
+
+         for(int i = index; i < index + 4; ++i) {
+            Vector3f vec = this.coords[i];
+            bufferbuilder.pos((double)vec.x, (double)vec.y, (double)vec.z).color(red, green, blue, alpha).endVertex();
+         }
+
+         tessellator.draw();
+      }
+
+      if (index < this.coords.length - 2) {
+         bufferbuilder.begin(2, DefaultVertexFormats.POSITION_COLOR);
+
+         for(int i = index; i < index + 3; ++i) {
+            Vector3f vec = this.coords[i];
+            bufferbuilder.pos((double)vec.x, (double)vec.y, (double)vec.z).color(red, green, blue, alpha).endVertex();
+         }
+
+         tessellator.draw();
+      }
+
+   }
+
+   public void renderLines(float offX, float offY, float offZ, float scaleX, float scaleY, float scaleZ, int red, int green, int blue, int alpha) {
+      Tessellator tessellator = Tessellator.getInstance();
+      BufferBuilder bufferbuilder = tessellator.getBuffer();
+
+      int index;
+      for(index = 0; index < this.coords.length - 3; index += 2) {
+         bufferbuilder.begin(2, DefaultVertexFormats.POSITION_COLOR);
+
+         for(int i = index; i < index + 4; ++i) {
+            Vector3f vec = this.coords[i];
+            bufferbuilder.pos((double)(vec.x * scaleX + offX), (double)(vec.y * scaleY + offY), (double)(vec.z * scaleZ + offZ)).color(red, green, blue, alpha).endVertex();
+         }
+
+         tessellator.draw();
+      }
+
+      if (index < this.coords.length - 2) {
+         bufferbuilder.begin(2, DefaultVertexFormats.POSITION_COLOR);
+
+         for(int i = index; i < index + 3; ++i) {
+            Vector3f vec = this.coords[i];
+            bufferbuilder.pos((double)(vec.x * scaleX + offX), (double)(vec.y * scaleY + offY), (double)(vec.z * scaleZ + offZ)).color(red, green, blue, alpha).endVertex();
+         }
+
+         tessellator.draw();
+      }
+
+   }
+
+   public void renderLines(float offX, float offY, float offZ, float scaleX, float scaleY, float scaleZ, int red, int green, int blue, int alpha, Vector3d center, double grow) {
+      Tessellator tessellator = Tessellator.getInstance();
+      BufferBuilder bufferbuilder = tessellator.getBuffer();
+
+      int index;
+      for(index = 0; index < this.coords.length - 3; index += 2) {
+         bufferbuilder.begin(2, DefaultVertexFormats.POSITION_COLOR);
+
+         for(int i = index; i < index + 4; ++i) {
+            this.renderLinePoint(bufferbuilder, this.coords[i], offX, offY, offZ, scaleX, scaleY, scaleZ, red, green, blue, alpha, center, grow);
+         }
+
+         tessellator.draw();
+      }
+
+      if (index < this.coords.length - 2) {
+         bufferbuilder.begin(2, DefaultVertexFormats.POSITION_COLOR);
+
+         for(int i = index; i < index + 3; ++i) {
+            this.renderLinePoint(bufferbuilder, this.coords[i], offX, offY, offZ, scaleX, scaleY, scaleZ, red, green, blue, alpha, center, grow);
+         }
+
+         tessellator.draw();
+      }
+
+   }
+
+   protected void renderLinePoint(BufferBuilder bufferbuilder, Vector3f vec, float offX, float offY, float offZ, float scaleX, float scaleY, float scaleZ, int red, int green, int blue, int alpha, Vector3d center, double grow) {
+      float x = vec.x * scaleX + offX;
+      if ((double)x > center.x) {
+         x = (float)((double)x + grow);
+      } else {
+         x = (float)((double)x - grow);
+      }
+
+      float y = vec.y * scaleY + offY;
+      if ((double)y > center.y) {
+         y = (float)((double)y + grow);
+      } else {
+         y = (float)((double)y - grow);
+      }
+
+      float z = vec.z * scaleZ + offZ;
+      if ((double)z > center.z) {
+         z = (float)((double)z + grow);
+      } else {
+         z = (float)((double)z - grow);
+      }
+
+      bufferbuilder.pos((double)x, (double)y, (double)z).color(red, green, blue, alpha).endVertex();
+   }
+
+   protected void renderLinePoint(BufferBuilder bufferbuilder, Vector3f vec, int red, int green, int blue, int alpha, Vector3d center, double grow) {
+      float x = vec.x;
+      if ((double)x > center.x) {
+         x = (float)((double)x + grow);
+      } else {
+         x = (float)((double)x - grow);
+      }
+
+      float y = vec.y;
+      if ((double)y > center.y) {
+         y = (float)((double)y + grow);
+      } else {
+         y = (float)((double)y - grow);
+      }
+
+      float z = vec.z;
+      if ((double)z > center.z) {
+         z = (float)((double)z + grow);
+      } else {
+         z = (float)((double)z - grow);
+      }
+
+      bufferbuilder.pos((double)x, (double)y, (double)z).color(red, green, blue, alpha).endVertex();
+   }
+
+   public void renderLines(int red, int green, int blue, int alpha, Vector3d center, double grow) {
+      Tessellator tessellator = Tessellator.getInstance();
+      BufferBuilder bufferbuilder = tessellator.getBuffer();
+
+      int index;
+      for(index = 0; index < this.coords.length - 3; index += 2) {
+         bufferbuilder.begin(2, DefaultVertexFormats.POSITION_COLOR);
+
+         for(int i = index; i < index + 4; ++i) {
+            this.renderLinePoint(bufferbuilder, this.coords[i], red, green, blue, alpha, center, grow);
+         }
+
+         tessellator.draw();
+      }
+
+      if (index < this.coords.length - 2) {
+         bufferbuilder.begin(2, DefaultVertexFormats.POSITION_COLOR);
+
+         for(int i = index; i < index + 3; ++i) {
+            this.renderLinePoint(bufferbuilder, this.coords[i], red, green, blue, alpha, center, grow);
+         }
+
+         tessellator.draw();
+      }
+
+   }
+
+   private static boolean isPointBetween(Vector3f start, Vector3f end, Vector3f between) {
+      float x = (end.y - start.y) * (between.z - start.z) - (end.z - start.z) * (between.y - start.y);
+      float y = (between.x - start.x) * (end.z - start.z) - (between.z - start.z) * (end.x - start.x);
+      float z = (end.x - start.x) * (between.y - start.y) - (end.y - start.y) * (between.x - start.x);
+      float test = Math.abs(x) + Math.abs(y) + Math.abs(z);
+      return Math.abs(test) < 1.0E-4F;
+   }
+
+   public void add(List<Vector3f> list, Vector3f toAdd) {
+      if (list.isEmpty() || !((Vector3f)list.get(list.size() - 1)).equals(toAdd)) {
+         if (list.size() > 1 && isPointBetween((Vector3f)list.get(list.size() - 2), toAdd, (Vector3f)list.get(list.size() - 1))) {
+            list.set(list.size() - 1, toAdd);
+         } else {
+            list.add(toAdd);
+         }
+
+      }
+   }
+
+   public void set(VectorFan fan) {
+      this.set(fan.coords);
+   }
+
+   public void set(Vector3f[] coords) {
+      this.coords = new Vector3f[coords.length];
+
+      for(int i = 0; i < coords.length; ++i) {
+         this.coords[i] = coords[i];
+      }
+
+   }
+
+   public boolean cutWithoutCopy(NormalPlane[] planes) {
+      for(int i = 0; i < planes.length; ++i) {
+         this.cutWithoutCopy(planes[i]);
+         if (this.isEmpty()) {
+            return false;
+         }
+      }
+
+      return true;
+   }
+
+   public void cutWithoutCopy(NormalPlane plane) {
+      this.cutInternal(plane, false);
+   }
+
+   public boolean isEmpty() {
+      return this.coords == null;
+   }
+
+   protected VectorFan cutInternal(NormalPlane plane, boolean copy) {
+      boolean allTheSame = true;
+      Boolean allValue = null;
+      Boolean[] cutted = new Boolean[this.coords.length];
+
+      for(int i = 0; i < cutted.length; ++i) {
+         cutted[i] = plane.isInFront(this.coords[i]);
+         if (cutted[i] != null) {
+            cutted[i] = !cutted[i].booleanValue();
+         }
+
+         if (allTheSame) {
+            if (i == 0) {
+               allValue = cutted[i];
+            } else if (allValue == null) {
+               allValue = cutted[i];
+            } else if (allValue != cutted[i] && cutted[i] != null) {
+               allTheSame = false;
+            }
+         }
+      }
+
+      if (allTheSame) {
+         if (allValue == null) {
+            if (!copy) {
+               this.coords = null;
+            }
+
+            return null;
+         } else if (allValue.booleanValue()) {
+            return this;
+         } else {
+            if (!copy) {
+               this.coords = null;
+            }
+
+            return null;
+         }
+      } else {
+         List<Vector3f> right = new ArrayList();
+         Boolean beforeCutted = cutted[cutted.length - 1];
+         Vector3f beforeVec = this.coords[this.coords.length - 1];
+
+         for(int i = 0; i < this.coords.length; ++i) {
+            Vector3f vec = this.coords[i];
+            if (BooleanUtils.isTrue(cutted[i])) {
+               if (BooleanUtils.isFalse(beforeCutted)) {
+                  Vector3f intersection = plane.intersect(vec, beforeVec);
+                  if (intersection != null) {
+                     right.add(intersection);
+                  }
+               }
+
+               right.add(vec);
+            } else if (BooleanUtils.isFalse(cutted[i])) {
+               if (BooleanUtils.isTrue(beforeCutted)) {
+                  Vector3f intersection = plane.intersect(vec, beforeVec);
+                  if (intersection != null) {
+                     right.add(intersection);
+                  }
+               }
+            } else {
+               right.add(vec);
+            }
+
+            beforeCutted = cutted[i];
+            beforeVec = vec;
+         }
+
+         if (isPointBetween((Vector3f)right.get(right.size() - 2), (Vector3f)right.get(0), (Vector3f)right.get(right.size() - 1))) {
+            right.remove(right.size() - 1);
+         }
+
+         if (right.size() >= 3 && isPointBetween((Vector3f)right.get(right.size() - 1), (Vector3f)right.get(1), (Vector3f)right.get(0))) {
+            right.remove(0);
+         }
+
+         if (right.size() < 3) {
+            if (!copy) {
+               this.coords = null;
+            }
+
+            return null;
+         } else if (copy) {
+            return new VectorFan((Vector3f[])right.toArray(new Vector3f[right.size()]));
+         } else {
+            if (right != null) {
+               this.coords = (Vector3f[])right.toArray(new Vector3f[right.size()]);
+            }
+
+            return null;
+         }
+      }
+   }
+
+   public VectorFan cut(NormalPlane plane) {
+      return this.cutInternal(plane, true);
+   }
+
+   public void move(float x, float y, float z) {
+      for(int i = 0; i < this.coords.length; ++i) {
+         this.coords[i].x += x;
+         this.coords[i].y += y;
+         this.coords[i].z += z;
+      }
+
+   }
+
+   public void scale(float ratio) {
+      for(int i = 0; i < this.coords.length; ++i) {
+         this.coords[i].scale(ratio);
+      }
+
+   }
+
+   public void divide(float ratio) {
+      this.scale(1.0F / ratio);
+   }
+
+   public boolean intersects(NormalPlane plane1, NormalPlane plane2) {
+      Boolean beforeOne = null;
+      Boolean beforeTwo = null;
+      Vector3f before = null;
+
+      for(int i = 0; i <= this.coords.length; ++i) {
+         Vector3f vec = i == this.coords.length ? this.coords[0] : this.coords[i];
+         Boolean one = plane1.isInFront(vec);
+         Boolean two = plane2.isInFront(vec);
+         if (BooleanUtils.isTrue(one) && BooleanUtils.isTrue(two)) {
+            return true;
+         }
+
+         if (i > 0 && BooleanUtils.isTrue(one) != BooleanUtils.isTrue(beforeOne) && BooleanUtils.isTrue(two) != BooleanUtils.isTrue(beforeTwo)) {
+            Vector3f intersection = plane1.intersect(before, vec);
+            if (intersection != null && BooleanUtils.isTrue(plane2.isInFront(intersection))) {
+               return true;
+            }
+         }
+
+         before = vec;
+         beforeOne = one;
+         beforeTwo = two;
+      }
+
+      return false;
+   }
+
+   public VectorFan copy() {
+      Vector3f[] coordsCopy = new Vector3f[this.coords.length];
+
+      for(int i = 0; i < coordsCopy.length; ++i) {
+         coordsCopy[i] = new Vector3f(this.coords[i]);
+      }
+
+      return new VectorFan(coordsCopy);
+   }
+
+   public boolean equals(Object obj) {
+      if (obj instanceof VectorFan) {
+         VectorFan other = (VectorFan)obj;
+         if (this.coords.length != other.coords.length) {
+            return false;
+         }
+
+         int start;
+         for(start = 0; start < this.coords.length && !this.coords[start].equals(other.coords[0]); ++start) {
+            ;
+         }
+
+         if (start < this.coords.length) {
+            for(int i = 1; i < other.coords.length; ++i) {
+               start = (start + 1) % this.coords.length;
+               if (!this.coords[start].equals(other.coords[i])) {
+                  return false;
+               }
+            }
+
+            return true;
+         }
+      }
+
+      return false;
+   }
+
+   private static boolean equals(Vector3f vec, Vector3f other, Axis one, Axis two) {
+      float diff = VectorUtils.get(one, vec) - VectorUtils.get(one, other);
+      if (Float.isNaN(diff)) {
+         return false;
+      } else if ((diff < 0.0F ? -diff : diff) > 1.0E-4F) {
+         return false;
+      } else {
+         diff = VectorUtils.get(two, vec) - VectorUtils.get(two, other);
+         if (Float.isNaN(diff)) {
+            return false;
+         } else {
+            return (diff < 0.0F ? -diff : diff) <= 1.0E-4F;
+         }
+      }
+   }
+
+   public boolean equalsIgnoreOrder(VectorFan other, Axis toIgnore) {
+      if (this.coords.length != other.coords.length) {
+         return false;
+      } else {
+         Axis one = RotationUtils.getOne(toIgnore);
+         Axis two = RotationUtils.getTwo(toIgnore);
+
+         for(int i = 0; i < this.coords.length; ++i) {
+            boolean found = false;
+
+            for(int j = 0; j < other.coords.length; ++j) {
+               if (equals(this.coords[i], other.coords[j], one, two)) {
+                  found = true;
+                  break;
+               }
+            }
+
+            if (!found) {
+               return false;
+            }
+         }
+
+         return true;
+      }
+   }
+
+   protected static Vec3d calculateIntercept(Ray3f ray, Vector3f triangle0, Vector3f triangle1, Vector3f triangle2) throws VectorFan.ParallelException {
+      Vector3f edge1 = new Vector3f();
+      Vector3f edge2 = new Vector3f();
+      Vector3f h = new Vector3f();
+      Vector3f s = new Vector3f();
+      Vector3f q = new Vector3f();
+      edge1.sub(triangle1, triangle0);
+      edge2.sub(triangle2, triangle0);
+      h.cross(ray.direction, edge2);
+      double a = (double)edge1.dot(h);
+      if (a > -9.999999747378752E-5D && a < 9.999999747378752E-5D) {
+         throw new VectorFan.ParallelException();
+      } else {
+         double f = 1.0D / a;
+         s.sub(ray.origin, triangle0);
+         double u = f * (double)s.dot(h);
+         if (u >= 0.0D && u <= 1.0D) {
+            q.cross(s, edge1);
+            double v = f * (double)ray.direction.dot(q);
+            if (v >= 0.0D && u + v <= 1.0D) {
+               double t = f * (double)edge2.dot(q);
+               return new Vec3d((double)ray.direction.x * t + (double)ray.origin.x, (double)ray.direction.y * t + (double)ray.origin.y, (double)ray.direction.z * t + (double)ray.origin.z);
+            } else {
+               return null;
+            }
+         } else {
+            return null;
+         }
+      }
+   }
+
+   public Vec3d calculateIntercept(Ray3f ray) {
+      try {
+         Vector3f origin = this.coords[0];
+
+         for(int i = 0; i < this.coords.length - 2; ++i) {
+            Vec3d result = calculateIntercept(ray, this.coords[0], this.coords[i + 1], this.coords[i + 2]);
+            if (result != null) {
+               return result;
+            }
+         }
+      } catch (VectorFan.ParallelException var5) {
+         ;
+      }
+
+      return null;
+   }
+
+   public NormalPlane createPlane() {
+      Vector3f a = new Vector3f(this.coords[1]);
+      a.sub(this.coords[0]);
+      Vector3f b = new Vector3f(this.coords[2]);
+      b.sub(this.coords[0]);
+      Vector3f normal = new Vector3f();
+      normal.cross(a, b);
+      return new NormalPlane(this.coords[0], normal);
+   }
+
+   public NormalPlane createPlane(RenderBox.RenderInformationHolder holder) {
+      Vector3f a = new Vector3f(this.coords[1]);
+      a.sub(this.coords[0]);
+      if (holder.scaleAndOffset) {
+         a.x *= holder.scaleX;
+         a.y *= holder.scaleY;
+         a.z *= holder.scaleZ;
+      }
+
+      Vector3f b = new Vector3f(this.coords[2]);
+      b.sub(this.coords[0]);
+      if (holder.scaleAndOffset) {
+         b.x *= holder.scaleX;
+         b.y *= holder.scaleY;
+         b.z *= holder.scaleZ;
+      }
+
+      Vector3f normal = new Vector3f();
+      normal.cross(a, b);
+      Vector3f origin = new Vector3f();
+      if (holder.scaleAndOffset) {
+         origin.x *= holder.scaleX;
+         origin.x += holder.offsetX;
+         origin.y *= holder.scaleY;
+         origin.y += holder.offsetY;
+         origin.z *= holder.scaleZ;
+         origin.z += holder.offsetZ;
+      }
+
+      return new NormalPlane(origin, normal);
+   }
+
+   public boolean isInside(List<List<NormalPlane>> shapes) {
+      for(int j = 0; j < shapes.size(); ++j) {
+         List<NormalPlane> shape = (List)shapes.get(j);
+         Boolean[] firstOutside = null;
+         Boolean[] beforeOutside = null;
+         Vector3f before = null;
+
+         for(int i = 0; i <= this.coords.length; ++i) {
+            Vector3f vec = i == this.coords.length ? this.coords[0] : this.coords[i];
+            Boolean[] outside = new Boolean[shape.size()];
+            boolean inside = true;
+
+            for(int k = 0; k < shape.size(); ++k) {
+               Boolean front = ((NormalPlane)shape.get(k)).isInFront(vec);
+               if (!BooleanUtils.isFalse(front)) {
+                  inside = false;
+               }
+
+               outside[k] = front;
+            }
+
+            if (inside) {
+               return true;
+            }
+
+            if (i <= 0) {
+               firstOutside = outside;
+            } else {
+               for(int k = 0; k < shape.size(); ++k) {
+                  if (isInside(shape, before, vec, beforeOutside[k], outside[k], k)) {
+                     return true;
+                  }
+               }
+
+               if (i < this.coords.length - 1 && i % 2 == 0) {
+                  for(int k = 0; k < shape.size(); ++k) {
+                     if (isInside(shape, this.coords[0], vec, firstOutside[k], outside[k], k)) {
+                        return true;
+                     }
+                  }
+               }
+            }
+
+            before = vec;
+            beforeOutside = outside;
+         }
+      }
+
+      return false;
+   }
+
+   public boolean intersect2d(VectorFan other, Axis one, Axis two, boolean inverse) {
+      if (this.equals(other)) {
+         return true;
+      } else {
+         int parrallel = 0;
+         Vector3f before1 = this.coords[0];
+         com.creativemd.creativecore.common.utils.math.geo.Ray2d ray1 = new com.creativemd.creativecore.common.utils.math.geo.Ray2d(one, two, 0.0D, 0.0D, 0.0D, 0.0D);
+
+         for(int i = 1; i <= this.coords.length; ++i) {
+            Vector3f vec1 = i == this.coords.length ? this.coords[0] : this.coords[i];
+            ray1.originOne = (double)VectorUtils.get(one, before1);
+            ray1.originTwo = (double)VectorUtils.get(two, before1);
+            ray1.directionOne = (double)(VectorUtils.get(one, vec1) - VectorUtils.get(one, before1));
+            ray1.directionTwo = (double)(VectorUtils.get(two, vec1) - VectorUtils.get(two, before1));
+            boolean edge = false;
+            Vector3f before2 = other.coords[0];
+            com.creativemd.creativecore.common.utils.math.geo.Ray2d ray2 = new com.creativemd.creativecore.common.utils.math.geo.Ray2d(one, two, 0.0D, 0.0D, 0.0D, 0.0D);
+
+            for(int i2 = 1; i2 <= other.coords.length; ++i2) {
+               Vector3f vec2 = i2 == other.coords.length ? other.coords[0] : other.coords[i2];
+               ray2.originOne = (double)VectorUtils.get(one, before2);
+               ray2.originTwo = (double)VectorUtils.get(two, before2);
+               ray2.directionOne = (double)(VectorUtils.get(one, vec2) - VectorUtils.get(one, before2));
+               ray2.directionTwo = (double)(VectorUtils.get(two, vec2) - VectorUtils.get(two, before2));
+
+               try {
+                  double t = ray1.intersectWhen(ray2);
+                  double otherT = ray2.intersectWhen(ray1);
+                  if (t > 9.999999747378752E-5D && t < 0.9998999834060669D && otherT > 9.999999747378752E-5D && otherT < 0.9998999834060669D) {
+                     return true;
+                  }
+               } catch (VectorFan.ParallelException var20) {
+                  double startT = ray1.getT(one, ray2.originOne);
+                  double endT = ray1.getT(one, ray2.originOne + ray2.directionOne);
+                  if (startT > 9.999999747378752E-5D && startT < 0.9998999834060669D || endT > 9.999999747378752E-5D && endT < 0.9998999834060669D) {
+                     ++parrallel;
+                     if (parrallel > 1) {
+                        return true;
+                     }
+                  }
+               }
+
+               before2 = vec2;
+            }
+
+            before1 = vec1;
+         }
+
+         if (!this.isInside2d(one, two, other, inverse) && !other.isInside2d(one, two, this, inverse)) {
+            return false;
+         } else {
+            return true;
+         }
+      }
+   }
+
+   private boolean isInside2d(Axis one, Axis two, VectorFan other, boolean inverse) {
+      com.creativemd.creativecore.common.utils.math.geo.Ray2d temp = new com.creativemd.creativecore.common.utils.math.geo.Ray2d(one, two, 0.0D, 0.0D, 0.0D, 0.0D);
+
+      for(int i = 0; i < other.coords.length; ++i) {
+         float pointOne = VectorUtils.get(one, other.coords[i]);
+         float pointTwo = VectorUtils.get(two, other.coords[i]);
+         boolean inside = false;
+
+         for(int index = 0; index < this.coords.length - 2; ++index) {
+            float firstOne = VectorUtils.get(one, this.coords[0]);
+            float firstTwo = VectorUtils.get(two, this.coords[0]);
+            float secondOne = VectorUtils.get(one, this.coords[index + 1]);
+            float secondTwo = VectorUtils.get(two, this.coords[index + 1]);
+            float thirdOne = VectorUtils.get(one, this.coords[index + 2]);
+            float thirdTwo = VectorUtils.get(two, this.coords[index + 2]);
+            temp.set(one, two, (double)firstOne, (double)firstTwo, (double)secondOne, (double)secondTwo);
+            Boolean result = temp.isCoordinateToTheRight((double)pointOne, (double)pointTwo);
+            if (result == null || BooleanUtils.isFalse(result) == inverse) {
+               temp.set(one, two, (double)secondOne, (double)secondTwo, (double)thirdOne, (double)thirdTwo);
+               result = temp.isCoordinateToTheRight((double)pointOne, (double)pointTwo);
+               if (result == null || BooleanUtils.isFalse(result) == inverse) {
+                  temp.set(one, two, (double)thirdOne, (double)thirdTwo, (double)firstOne, (double)firstTwo);
+                  result = temp.isCoordinateToTheRight((double)pointOne, (double)pointTwo);
+                  if (result == null || BooleanUtils.isFalse(result) == inverse) {
+                     inside = true;
+                     break;
+                  }
+               }
+            }
+         }
+
+         if (!inside) {
+            return false;
+         }
+      }
+
+      return true;
+   }
+
+   public List<VectorFan> cut2d(List<VectorFan> cutters, Axis one, Axis two, boolean inverse, boolean takeInner) {
+      List<VectorFan> temp = new ArrayList();
+      List<VectorFan> next = new ArrayList();
+      temp.add(this);
+
+      for(VectorFan cutter : cutters) {
+         for(VectorFan fan2 : temp) {
+            next.addAll(fan2.cut2d(cutter, one, two, inverse, takeInner));
+         }
+
+         temp.clear();
+         temp.addAll(next);
+         next.clear();
+      }
+
+      return temp;
+   }
+
+   public List<VectorFan> cut2d(VectorFan cutter, Axis one, Axis two, boolean inverse, boolean takeInner) {
+      List<VectorFan> done = new ArrayList();
+      VectorFan toCut = this;
+      Vector3f before = cutter.coords[0];
+      com.creativemd.creativecore.common.utils.math.geo.Ray2d ray = new com.creativemd.creativecore.common.utils.math.geo.Ray2d(one, two, 0.0D, 0.0D, 0.0D, 0.0D);
+
+      for(int i = 1; i <= cutter.coords.length; ++i) {
+         boolean last = i == cutter.coords.length;
+         Vector3f vec = last ? cutter.coords[0] : cutter.coords[i];
+         ray.originOne = (double)VectorUtils.get(one, before);
+         ray.originTwo = (double)VectorUtils.get(two, before);
+         ray.directionOne = (double)(VectorUtils.get(one, vec) - VectorUtils.get(one, before));
+         ray.directionTwo = (double)(VectorUtils.get(two, vec) - VectorUtils.get(two, before));
+         toCut = toCut.cut2d(ray, one, two, takeInner ? null : done, inverse);
+         if (toCut == null) {
+            return done;
+         }
+
+         before = vec;
+      }
+
+      if (takeInner) {
+         done.add(toCut);
+      }
+
+      return done;
+   }
+
+   protected VectorFan cut2d(com.creativemd.creativecore.common.utils.math.geo.Ray2d ray, Axis one, Axis two, List<VectorFan> done, boolean inverse) {
+      boolean allTheSame = true;
+      Boolean allValue = null;
+      Boolean[] cutted = new Boolean[this.coords.length];
+
+      for(int i = 0; i < cutted.length; ++i) {
+         cutted[i] = ray.isCoordinateToTheRight((double)VectorUtils.get(one, this.coords[i]), (double)VectorUtils.get(two, this.coords[i]));
+         if (inverse && cutted[i] != null) {
+            cutted[i] = !cutted[i].booleanValue();
+         }
+
+         if (allTheSame) {
+            if (i == 0) {
+               allValue = cutted[i];
+            } else if (allValue == null) {
+               allValue = cutted[i];
+            } else if (allValue != cutted[i] && cutted[i] != null) {
+               allTheSame = false;
+            }
+         }
+      }
+
+      if (allTheSame) {
+         if (allValue == null) {
+            return null;
+         } else if (allValue.booleanValue()) {
+            return this;
+         } else {
+            if (done != null) {
+               done.add(this);
+            }
+
+            return null;
+         }
+      } else {
+         float thirdAxisValue = VectorUtils.get(RotationUtils.getThird(one, two), this.coords[0]);
+         List<Vector3f> left = new ArrayList();
+         List<Vector3f> right = new ArrayList();
+         Boolean beforeCutted = cutted[cutted.length - 1];
+         Vector3f beforeVec = this.coords[this.coords.length - 1];
+
+         for(int i = 0; i < this.coords.length; ++i) {
+            Vector3f vec = this.coords[i];
+            if (BooleanUtils.isTrue(cutted[i])) {
+               if (BooleanUtils.isFalse(beforeCutted)) {
+                  Vector3f intersection = ray.intersect(vec, beforeVec, thirdAxisValue);
+                  if (intersection != null) {
+                     left.add(intersection);
+                     right.add(intersection);
+                  }
+               }
+
+               right.add(vec);
+            } else if (BooleanUtils.isFalse(cutted[i])) {
+               if (BooleanUtils.isTrue(beforeCutted)) {
+                  Vector3f intersection = ray.intersect(vec, beforeVec, thirdAxisValue);
+                  if (intersection != null) {
+                     left.add(intersection);
+                     right.add(intersection);
+                  }
+               }
+
+               left.add(vec);
+            } else {
+               left.add(vec);
+               right.add(vec);
+            }
+
+            beforeCutted = cutted[i];
+            beforeVec = vec;
+         }
+
+         if (left.size() >= 3 && done != null) {
+            done.add(new VectorFan((Vector3f[])left.toArray(new Vector3f[left.size()])));
+         }
+
+         if (right.size() < 3) {
+            return null;
+         } else {
+            return new VectorFan((Vector3f[])right.toArray(new Vector3f[right.size()]));
+         }
+      }
+   }
+
+   public static boolean isInside(List<NormalPlane> shape, Vector3f before, Vector3f vec, Boolean beforeOutside, Boolean outside, int currentPlane) {
+      if (BooleanUtils.isFalse(beforeOutside)) {
+         if (outside == null) {
+            if (isInside(shape, vec, currentPlane)) {
+               return true;
+            }
+         } else if (outside.booleanValue()) {
+            Vector3f intersection = ((NormalPlane)shape.get(currentPlane)).intersect(before, vec);
+            if (intersection != null && isInside(shape, intersection, currentPlane)) {
+               return true;
+            }
+         }
+      } else if (BooleanUtils.isFalse(outside)) {
+         if (beforeOutside == null) {
+            if (isInside(shape, before, currentPlane)) {
+               return true;
+            }
+         } else if (beforeOutside.booleanValue()) {
+            Vector3f intersection = ((NormalPlane)shape.get(currentPlane)).intersect(before, vec);
+            if (intersection != null && isInside(shape, intersection, currentPlane)) {
+               return true;
+            }
+         }
+      }
+
+      return false;
+   }
+
+   public static boolean isInside(List<NormalPlane> shape, Vector3f vec, int toSkip) {
+      for(int i = 0; i < shape.size(); ++i) {
+         if (i != toSkip && !BooleanUtils.isFalse(((NormalPlane)shape.get(i)).isInFront(vec))) {
+            return false;
+         }
+      }
+
+      return true;
+   }
+
+   public String toString() {
+      return Arrays.toString(this.coords);
+   }
+
+   public static class ParallelException extends Exception {
+      public ParallelException() {
+      }
+   }
+}

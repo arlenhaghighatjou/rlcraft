@@ -1,0 +1,40 @@
+package net.ilexiconn.llibrary.client.gui.config.property;
+
+import java.text.NumberFormat;
+import net.ilexiconn.llibrary.client.gui.config.ConfigGUI;
+import net.ilexiconn.llibrary.client.gui.element.Element;
+import net.ilexiconn.llibrary.client.gui.element.SliderElement;
+import net.ilexiconn.llibrary.server.property.IIntRangeProperty;
+import net.ilexiconn.llibrary.server.property.wrapper.IntRangePropertyWrapper;
+import net.minecraftforge.common.config.Property;
+
+public class IntRangeConfigProperty extends ForgeConfigProperty implements IIntRangeProperty {
+   private final int minIntValue;
+   private final int maxIntValue;
+
+   public IntRangeConfigProperty(Property property) {
+      super(property);
+      this.minIntValue = Integer.parseInt(property.getMinValue());
+      this.maxIntValue = Integer.parseInt(property.getMaxValue());
+   }
+
+   public Element<ConfigGUI> provideElement(ConfigGUI gui, float x, float y) {
+      return new SliderElement(gui, x, y, new IntRangePropertyWrapper(this, NumberFormat.getIntegerInstance()), 1.0F);
+   }
+
+   public int getInt() {
+      return this.property.getInt();
+   }
+
+   public void setInt(int value) {
+      this.property.set(value);
+   }
+
+   public int getMinIntValue() {
+      return this.minIntValue;
+   }
+
+   public int getMaxIntValue() {
+      return this.maxIntValue;
+   }
+}

@@ -1,0 +1,45 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "srparasites:infestedstain"
+  },
+  "variants": {
+    "stage=0": [
+        { "model": "srparasites:infestedstain" },
+        { "model": "srparasites:infestedstain", "y": 90 },
+        { "model": "srparasites:infestedstain", "y": 180 },
+        { "model": "srparasites:infestedstain", "y": 270 }
+    ],
+    "stage=1": [
+        { "model": "srparasites:infestedstain" },
+        { "model": "srparasites:infestedstain", "y": 90 },
+        { "model": "srparasites:infestedstain", "y": 180 },
+        { "model": "srparasites:infestedstain", "y": 270 }
+    ],
+    "stage=2":[
+        { "model": "srparasites:infestedstain" },
+        { "model": "srparasites:infestedstain", "y": 90 },
+        { "model": "srparasites:infestedstain", "y": 180 },
+        { "model": "srparasites:infestedstain", "y": 270 }
+    ], 
+    "stage=3": [
+        { "model": "srparasites:infestedstain" },
+        { "model": "srparasites:infestedstain", "y": 90 },
+        { "model": "srparasites:infestedstain", "y": 180 },
+        { "model": "srparasites:infestedstain", "y": 270 }
+    ], 
+    "stage=4": [
+        { "model": "srparasites:infestedstain" },
+        { "model": "srparasites:infestedstain", "y": 90 },
+        { "model": "srparasites:infestedstain", "y": 180 },
+        { "model": "srparasites:infestedstain", "y": 270 }
+    ], 
+    "stage=5": [
+        { "model": "srparasites:infestedstain" },
+        { "model": "srparasites:infestedstain", "y": 90 },
+        { "model": "srparasites:infestedstain", "y": 180 },
+        { "model": "srparasites:infestedstain", "y": 270 }
+    ], 
+    "inventory": [{}]
+  }
+}

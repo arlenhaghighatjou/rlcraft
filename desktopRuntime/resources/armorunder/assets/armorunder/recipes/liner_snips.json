@@ -1,0 +1,10 @@
+{ "result": {
+    "item": "armorunder:liner_snips"
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " ii", "gg "
+  ],
+  "key": { "i": { "type": "forge:ore_dict", "ore": "nuggetIron" },
+           "g": { "type": "forge:ore_dict", "ore": "nuggetGold" } }
+}

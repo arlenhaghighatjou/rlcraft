@@ -1,0 +1,34 @@
+package melonslise.locks.client.gui.sprite.action;
+
+import melonslise.locks.client.gui.sprite.Sprite;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
+public class MoveAction<S extends Sprite> extends TimedAction<S> {
+   public float speedX;
+   public float speedY;
+
+   public MoveAction(float speedX, float speedY) {
+      this.speedX = speedX;
+      this.speedY = speedY;
+   }
+
+   public static <Z extends Sprite> MoveAction<Z> at(float speedX, float speedY) {
+      return new MoveAction<Z>(speedX, speedY);
+   }
+
+   public static <Z extends Sprite> MoveAction<Z> to(float shiftX, float shiftY, int ticks) {
+      return (MoveAction)at(shiftX / (float)ticks, shiftY / (float)ticks).time(ticks);
+   }
+
+   public static <Z extends Sprite> MoveAction<Z> to(Sprite sprite, float posX, float posY, int ticks) {
+      return to(posX - sprite.posX, posY - sprite.posY, ticks);
+   }
+
+   public void update(S sprite) {
+      super.update(sprite);
+      sprite.posX += this.speedX;
+      sprite.posY += this.speedY;
+   }
+}

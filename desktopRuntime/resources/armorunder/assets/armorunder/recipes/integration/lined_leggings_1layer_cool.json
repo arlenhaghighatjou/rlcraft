@@ -1,0 +1,18 @@
+{ "_comment": ["Lined leggings to provide -1 cooling" ],
+  "conditions": [{ "type": "forge:not",
+      "value": { "type": "armorunder:compat_mode" }
+    },{
+      "type": "forge:mod_loaded",
+      "modid": "toughasnails"
+  }],
+  "result": {
+    "item": "minecraft:leather_leggings",
+    "nbt": {"carrots:ArmorTLining":"COOL"}
+  },
+  "type": "armorunder:lined_armor_shapeless",
+  "limit": "COOLEST",
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemLeggings" },
+    { "item": "toughasnails:jelled_slime_leggings" }
+  ]
+}

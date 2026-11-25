@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "srparasites:parasite_fog"
+  },
+  "variants": {
+    "normal": { "model": "srparasites:parasite_fog" },
+    "inventory": [{}]
+  }
+}

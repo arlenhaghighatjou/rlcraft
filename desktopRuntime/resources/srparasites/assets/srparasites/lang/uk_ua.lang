@@ -1,0 +1,299 @@
+//Entities
+
+entity.srparasites.pri_longarms.name=Примітивний Довгорукий
+entity.srparasites.pri_manducater.name=Примитивный Пожиратель
+entity.srparasites.pri_summoner.name=Примітивний Викликач
+entity.srparasites.pri_reeker.name=Примітивний Смердючий
+entity.srparasites.pri_yelloweye.name=Примітивний Жовтоокий
+entity.srparasites.pri_bolster.name=Примітивний Підбурювач
+entity.srparasites.pri_arachnida.name=Примітивна Арахніда
+
+entity.srparasites.host.name=Воїнство
+entity.srparasites.sim_bear.name=Інфікований ведмідь
+entity.srparasites.sim_enderman.name=Інфікований ендермен
+entity.srparasites.sim_adventurer.name=Інфікований мандрівник
+entity.srparasites.sim_bigspider.name=Інфікований великий павук
+entity.srparasites.sim_human.name=Інфікований людина
+entity.srparasites.sim_humanhead.name=Ходяча голова
+entity.srparasites.sim_villager.name=Інфікований селянин
+entity.srparasites.sim_villagerhead.name=Ходяча голова 
+entity.srparasites.sim_cow.name=Інфікований корова
+entity.srparasites.sim_cowhead.name=Ходяча голова 
+entity.srparasites.sim_horse.name=Інфікований кінь
+entity.srparasites.sim_horsehead.name=Ходяча голова 
+entity.srparasites.sim_pig.name=Засвоєна свиня
+entity.srparasites.sim_pighead.name=Ходяча голова 
+entity.srparasites.sim_sheep.name=Засвоєна вівця
+entity.srparasites.sim_sheephead.name=Ходяча голова 
+entity.srparasites.sim_wolf.name=Інфікований вовк
+entity.srparasites.sim_wolfhead.name=Ходяча голова 
+entity.srparasites.incompleteform_medium.name=Незавершена форма
+entity.srparasites.incompleteform_small.name=Незавершена форма
+
+entity.srparasites.overseer.name=Наглядач
+entity.srparasites.bomber_light.name=Легкий бомбардувальник
+entity.srparasites.carrier_heavy.name=Важкий переносник
+entity.srparasites.buglin.name=Баглін
+entity.srparasites.carrier_flying.name=Літаючий переносник
+entity.srparasites.rupter.name=Руптер
+entity.srparasites.beckon_si.name=Маяк Стадія I
+entity.srparasites.beckon_sii.name=Маяк Стадія II
+entity.srparasites.beckon_siii.name=Маяк Стадія III
+entity.srparasites.beckon_siv.name=Маяк Стадія IV
+entity.srparasites.beckon_sv.name=Маяк Стадія V
+entity.srparasites.warden.name=Вартовий
+entity.srparasites.marauder.name=Мародер
+entity.srparasites.grunt.name=Буркотун
+entity.srparasites.sentry.name=Сторожовий
+entity.srparasites.kyphosis.name=Падальник
+
+entity.srparasites.anc_dreadnaut.name=Древнаут
+entity.srparasites.anc_overlord.name=Давній владика
+entity.srparasites.vigilante.name=Месник
+entity.srparasites.movingflesh.name=Рухома плоть
+entity.srparasites.tendril.name=Вусик
+entity.srparasites.anc_pod.name=Бутон
+entity.srparasites.biomass.name=Біомаса
+entity.srparasites.gore.name=Кров
+
+entity.srparasites.ada_longarms.name=Адаптований Довгорукий
+entity.srparasites.ada_summoner.name=Адаптований Викликач
+entity.srparasites.ada_manducater.name=Адаптований Дивакуватий
+entity.srparasites.ada_reeker.name=Адаптований Смердюх
+entity.srparasites.ada_yelloweye.name=Адаптований Жовтоокий
+entity.srparasites.ada_bolster.name=Адаптований Підбурювач
+entity.srparasites.ada_arachnida.name=Адаптована Арахніда
+
+//Creative Tab
+
+itemGroup.SRParasites=SR:Parasites
+
+//Items
+
+item.srparasites.itemmobspawner_host.name=Призыв -  Воїнство
+item.srparasites.itemmobspawner_infbear.name=Призыв -  Інфікований ведмідь
+item.srparasites.itemmobspawner_infenderman.name=Призыв -  Інфікований ендермен
+item.srparasites.itemmobspawner_infplayer.name=Призыв -  Інфікований мандрівник
+item.srparasites.itemmobspawner_dorpa.name=Призыв -  Інфікований великий павук
+item.srparasites.itemmobspawner_infhuman.name=Призыв -  Інфікована людина
+item.srparasites.itemmobspawner_infhumanhead.name=Призыв -  Ходяча голова (Людина)
+item.srparasites.itemmobspawner_infvillager.name=Призыв -  Інфікований селянин
+item.srparasites.itemmobspawner_infvillagerhead.name=Призыв -  Ходячая голова (Селянин)
+item.srparasites.itemmobspawner_infcow.name=Призыв -  Інфікована корова
+item.srparasites.itemmobspawner_infcowhead.name=Призыв -  Ходяча голова (Корова)
+item.srparasites.itemmobspawner_infpig.name=Призыв -  Інфікована свиня
+item.srparasites.itemmobspawner_infpighead.name=Призыв -  Ходяча голова (Свиня)
+item.srparasites.itemmobspawner_infsheep.name=Призыв -  Інфікована вівця
+item.srparasites.itemmobspawner_infsheephead.name=Призыв -  Ходячая голова (Вівця)
+item.srparasites.itemmobspawner_infwolf.name=Призыв -  Інфікований вовк
+item.srparasites.itemmobspawner_infwolfhead.name=Призыв -  Ходячая голова (Волк)
+item.srparasites.itemmobspawner_infhorse.name=Призыв -  Інфікований кінь
+item.srparasites.itemmobspawner_infhorsehead.name=Призыв -  Ходячая голова (Кінь)
+item.srparasites.itemmobspawner_inhoos.name=Призыв -  Незавершена форма (Маленька)
+item.srparasites.itemmobspawner_inhoom.name=Призыв -  Незавершена форма (Средня)
+
+item.srparasites.itemmobspawner_alafha.name=Призыв - Наглядач
+item.srparasites.itemmobspawner_omboo.name=Призыв - Легкий бомбардувальник
+item.srparasites.itemmobspawner_rathol.name=Призыв - Важкий переносник
+item.srparasites.itemmobspawner_buthol.name=Призыв - Літаючий переносник
+item.srparasites.itemmobspawner_lodo.name=Призыв - Баглін
+item.srparasites.itemmobspawner_mudo.name=Призыв - Шкідник
+item.srparasites.itemmobspawner_venkrol.name=Призыв - Маяк Стадія I
+item.srparasites.itemmobspawner_venkrolsii.name=Призыв - Маяк Стадія II
+item.srparasites.itemmobspawner_venkrolsiii.name=Призыв - Маяк Стадія III
+item.srparasites.itemmobspawner_venkrolsiv.name=Призыв - Маяк Стадія IV
+item.srparasites.itemmobspawner_venkrolsv.name=Призыв - Маяк Стадія V
+item.srparasites.itemmobspawner_ganro.name=Призыв - Вартовий
+item.srparasites.itemmobspawner_esor.name=Призыв -  Мародер
+item.srparasites.itemmobspawner_flog.name=Призыв -  Буркотун
+item.srparasites.itemmobspawner_unvo.name=Призыв -  Сторожовий
+item.srparasites.itemmobspawner_tonro.name=Призыв -  Падальник
+
+item.srparasites.itemmobspawner_oronco.name=Призыв -  Древнаут
+item.srparasites.itemmobspawner_terla.name=Призыв -  Давній владика
+item.srparasites.itemmobspawner_anged.name=Призыв -  Месник
+item.srparasites.itemmobspawner_lesh.name=Призыв -  Рухома плоть
+
+item.srparasites.itemmobspawner_shyco.name=Призыв -  Примітивний Довгорукий
+item.srparasites.itemmobspawner_hull.name=Призыв -  Примітивний Пожиратель
+item.srparasites.itemmobspawner_canra.name=Призыв -  Примітивний Викликач
+item.srparasites.itemmobspawner_emana.name=Призыв -  Примітивний Жовтоокий
+item.srparasites.itemmobspawner_nogla.name=Призыв -  Примітивний Смердюх
+item.srparasites.itemmobspawner_bano.name=Призыв -  Примитивный Подстрекатель
+item.srparasites.itemmobspawner_ranrac.name=Призыв -  Примитивная Арахнида
+
+item.srparasites.itemmobspawner_shycoadapted.name=Призыв -  Адаптированный Длиннорукий
+item.srparasites.itemmobspawner_canraadapted.name=Призыв -  Адаптированный Призыватель
+item.srparasites.itemmobspawner_noglaadapted.name=Призыв -  Адаптированный Зловонный
+item.srparasites.itemmobspawner_hulladapted.name=Призыв -  Адаптированный Пожиратель
+item.srparasites.itemmobspawner_emanaadapted.name=Призыв -  Адаптированный Желтоглаз
+item.srparasites.itemmobspawner_banoadapted.name=Призыв -  Адаптований Підбурювач
+item.srparasites.itemmobspawner_ranracadapted.name=Призыв -  Адаптована Арахніда
+
+item.srparasites.itemthrow.name=предмет кинути
+item.srparasites.itemtab.name=НУЛЬ
+item.srparasites.evclock.name=Брудний годинник
+item.srparasites.weapon_scythe.name=Жива коса
+item.srparasites.weapon_scythe_sentient.name=Розумна коса
+item.srparasites.weapon_bow.name=Живий лук
+item.srparasites.weapon_bow_sentient.name=Розумний лук
+item.srparasites.weapon_axe.name=Разумный Велика сокира
+item.srparasites.weapon_axe_sentient.name=Розумна велика сокира
+
+item.srparasites.bow_upperlimb.name=Верхня частина живого луку
+item.srparasites.bow_lowerlimb.name=Нижня частина живого луку
+item.srparasites.bow_string.name=Тятива живого луку
+item.srparasites.bow_grip.name=Руків'я живого луку
+item.srparasites.bow_core.name=Ядро живого лукe
+
+item.srparasites.scythe_back.name=Задня частина живої коси
+item.srparasites.scythe_blade.name=Клинок живої коси 
+item.srparasites.scythe_core.name=Ядро живої коси
+item.srparasites.scythe_handle.name=Руків'я живої коси
+item.srparasites.scythe_head.name=Голова живої коси
+
+item.srparasites.ada_longarms_drop.name=частинка броні довгорукого
+item.srparasites.ada_summoner_drop.name=Ядро викликача
+item.srparasites.ada_yelloweye_drop.name=Кістка жовтоокого
+item.srparasites.ada_reeker_drop.name=Ікло смердюха
+item.srparasites.ada_manducater_drop.name=Сфера пожирача
+item.srparasites.assimilated_flesh.name=Заражена плоть
+
+item.srparasites.lurecomponent1.name=Крихкий шматок
+item.srparasites.lurecomponent2.name=Пахучий шматок
+item.srparasites.lurecomponent3.name=Гнильна одиниця
+item.srparasites.lurecomponent4.name=Смердюча одиниця
+item.srparasites.lurecomponent5.name=Згнилий сегмент
+item.srparasites.lurecomponent6.name=Істотний сегмент
+
+//Blocks
+
+tile.srparasites.parasitesapling_tree.name=Заражений сажанець
+tile.srparasites.parasitesapling_treethin.name=Заражений саженець
+tile.srparasites.parasitesapling_flowertall.name=Заражений сажанець
+
+tile.srparasites.parasitebush_tendril.name=Заражена мережа
+tile.srparasites.parasitebush_pop.name=Заражена везикула
+
+tile.srparasites.srpweb.name=Павутина
+tile.srparasites.biomeheart.name=Ядро паразитичного біому
+tile.srparasites.colonyheart.name=Ядро паразитичної колонії
+tile.srparasites.biomepurifier.name=Очищувач біомів
+tile.srparasites.parasitestructure.name=Незавершена структура паразитичної колонії
+tile.srparasites.parasitethin.name=Паразитична тонка колода
+tile.srparasites.parasitemouth.name=Паразитичний рот
+tile.srparasites.parasitetendril.name=Паразитичний вусик 
+tile.srparasites.parasitefog.name=Туман
+
+tile.srparasites.gore_sim_small.name=Інфіковані залишки
+tile.srparasites.gore_sim_big.name=Інфіковані залишки
+tile.srparasites.gore_pri_small.name=Інфіковані залишки
+tile.srparasites.gore_pri_big.name=Інфіковані залишки
+tile.srparasites.gore_ada_small.name=Інфіковані залишки
+tile.srparasites.gore_ada_big.name=Інфіковані залишки
+tile.srparasites.gore_pure_small.name=Інфіковані залишки
+tile.srparasites.gore_pure_big.name=Інфіковані залишки
+
+tile.srparasites.infestedstain.name=Заражена земля
+tile.srparasites.infestedtrunk.name=Заражена колода
+tile.srparasites.infestedrubble.name=Заражений камінь
+tile.srparasites.infestremain.name=Заражений осад
+
+tile.srparasites.infestedbush_infected.name=Заражені вени
+tile.srparasites.infestedbush_grass1.name=Заражені вени
+tile.srparasites.infestedbush_flower1.name=Заражені вени
+tile.srparasites.infestedbush_spine.name=Заражені вени
+tile.srparasites.infestedbush_vine.name=Заражені вени
+tile.srparasites.infestedbush_arc.name=Заражені вени
+
+tile.srparasites.parasitecanister_sac.name=Паразитичний мішок
+tile.srparasites.parasitecanister_cyst.name=Паразитична кіста
+tile.srparasites.parasitecanister_lump.name=Паразитична пухлина
+tile.srparasites.parasitecanister_bag.name=Паразитична сумка
+
+tile.srparasites.parasitetrunk_ball.name=Паразитична колода
+tile.srparasites.parasitetrunk_tree.name=Паразитична колода
+tile.srparasites.parasitetrunk_plant.name=Паразитична колода
+
+tile.srparasites.parasitestain_dirt.name=Паразитична земля
+tile.srparasites.parasitestain_mud.name=Паразитичний бруд
+tile.srparasites.parasitestain_flesh.name=Паразитична плоть
+tile.srparasites.parasitestain_fleshstairs.name=Сходинки з паразитичної плоті
+tile.srparasites.parasitestain_feeler.name=Паразитичні вени
+
+tile.srparasites.parasiterubble_slabhalf.name=Паразитичний напівблок
+tile.srparasites.parasiterubble_flesh.name=Паразитична концентрована плоть
+tile.srparasites.parasiterubble_bone.name=Паразитична концентрована кістка
+tile.srparasites.parasiterubble_bonestairs.name=Сходинки з паразитичної концентрованої кістки
+tile.srparasites.parasiterubble_stone.name=Паразитичний Камінь
+
+tile.srparasites.parasiterubbledense_wall.name=Пресований паразитичний камінь
+tile.srparasites.parasiterubbledense_biome.name=Пресований паразитичний біомний камінь
+tile.srparasites.parasiterubbledense_colony.name=Пресований паразитичний камінь колонії
+
+tile.srparasites.evolutionlure_one.name=Приманка (Ослаблена)
+tile.srparasites.evolutionlure_two.name=Приманка (Слабка
+tile.srparasites.evolutionlure_three.name=Приманка (Тонка)
+tile.srparasites.evolutionlure_four.name=Приманка (Стабільна
+tile.srparasites.evolutionlure_five.name=Приманка (Істотна)
+tile.srparasites.evolutionlure_six.name=Приманка (Концентрована)
+tile.srparasites.evolutionlure_seven.name=Приманка (Концентрована+)
+tile.srparasites.evolutionlure_eight.name=Приманка (Концентрована++)
+
+//Effects
+
+mob_effect.srparasites:coth=Зов вулика
+splash_potion.effect.srparasites:coth=Вибухове зілля зову вулика
+potion.effect.srparasites:coth=Зілля зову вулика
+lingering_potion.effect.srparasites:coth=Туманне зілля зову вулика
+tipped_arrow.effect.srparasites:coth=Стріла зову вулика
+
+mob_effect.srparasites:fear=Страх
+splash_potion.effect.srparasites:fear=Вибухова зілля страху
+potion.effect.srparasites:fear=Зілля страху
+lingering_potion.effect.srparasites:fear=Туманне зілля страху
+tipped_arrow.effect.srparasites:fear=Стріла страху
+
+mob_effect.srparasites:antimall=Непоступливість
+splash_potion.effect.srparasites:antimall=Вибухове зілля непоступливості
+potion.effect.srparasites:antimall=Зілля непоступливості
+lingering_potion.effect.srparasites:antimall=Туманне зілля непоступливості
+tipped_arrow.effect.srparasites:antimall=Стріла непоступливості
+
+mob_effect.srparasites:bleed=Кровотеча
+splash_potion.effect.srparasites:bleed=Вибухове зілля кровотечі
+potion.effect.srparasites:bleed=Зілля кровотечі
+lingering_potion.effect.srparasites:bleed=Туманне зілля кровотечі
+tipped_arrow.effect.srparasites:bleed=Стріла кровотечі
+
+mob_effect.srparasites:corrosive=Роз'їдання
+splash_potion.effect.srparasites:corrosive=Вибухове зілля роз'їдання
+potion.effect.srparasites:corrosive=Зілля роз'їдання
+lingering_potion.effect.srparasites:corrosive=Туманне зілля роз'їдання
+tipped_arrow.effect.srparasites:corrosive=Стріла роз'їдання
+
+mob_effect.srparasites:viral=Вірусність
+splash_potion.effect.srparasites:viral=Вибухове зілля вірусності
+potion.effect.srparasites:viral=Зілля вірусності
+lingering_potion.effect.srparasites:viral=Туманне зілля вірусності
+tipped_arrow.effect.srparasites:viral=Стріла вірусності
+
+mob_effect.srparasites:rage=Лють
+splash_potion.effect.srparasites:rage=Вибухове зілля люті
+potion.effect.srparasites:rage=Зіллля люті
+lingering_potion.effect.srparasites:rage=Туманное зелье ярости
+tipped_arrow.effect.srparasites:rage=Стрела ярости
+
+mob_effect.srparasites:repel=Камуфляж
+splash_potion.effect.srparasites:repel=Вибухове зілля камуфляжу
+potion.effect.srparasites:repel=Зілля камуфляжу
+lingering_potion.effect.srparasites:repel=Туманне зілля камуфляжу
+tipped_arrow.effect.srparasites:repel=Стріла камуфляжу
+
+//extra
+
+message.srparasites.lure=Очки зменшилися
+message.srparasites.fearitem=Ви панікуєте!
+message.srparasites.fearblock=Ви панікуєте!
+message.srparasites.feargui=Ви панікуєте!
+message.srparasites.evolutionsleep=Ви не можете зараз спати...

@@ -1,0 +1,12 @@
+{ "_comment": ["Lined leggings to provide +1 warming" ],
+  "result": {
+    "item": "minecraft:leather_leggings",
+    "nbt": {"carrots:ArmorTLining":"WARM"}
+  },
+  "type": "armorunder:lined_armor_shapeless",
+  "limit": "WARMEST",
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemLeggings" },
+    { "item": "armorunder:warm_leggings_liner" }
+  ]
+}

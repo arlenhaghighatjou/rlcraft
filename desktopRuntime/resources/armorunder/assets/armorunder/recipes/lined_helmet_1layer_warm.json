@@ -1,0 +1,12 @@
+{ "_comment": ["Lined helmet to provide +1 warming" ],
+  "result": {
+    "item": "minecraft:leather_helmet",
+    "nbt": {"carrots:ArmorTLining":"WARM"}
+  },
+  "type": "armorunder:lined_armor_shapeless",
+  "limit": "WARMER",
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemHelmet" },
+    { "item": "armorunder:warm_helmet_liner" }
+  ]
+}

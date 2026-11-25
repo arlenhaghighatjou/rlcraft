@@ -1,0 +1,184 @@
+package snownee.snow;
+
+import java.util.Random;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class FallingSnowEntity extends Entity {
+   public int fallTime;
+   private BlockPos prevPos;
+   private int layers;
+   protected static final DataParameter<BlockPos> ORIGIN = EntityDataManager.createKey(FallingSnowEntity.class, DataSerializers.BLOCK_POS);
+   private static final DataParameter<Integer> LAYERS = EntityDataManager.createKey(FallingSnowEntity.class, DataSerializers.VARINT);
+
+   public FallingSnowEntity(World worldIn) {
+      super(worldIn);
+      this.prevPos = BlockPos.ORIGIN;
+      this.layers = 1;
+   }
+
+   public FallingSnowEntity(World worldIn, double x, double y, double z, int layers) {
+      super(worldIn);
+      this.preventEntitySpawning = true;
+      this.setSize(0.98F, 0.98F);
+      this.setPosition(x, y + (double)((1.0F - this.height) / 2.0F), z);
+      this.motionX = 0.0D;
+      this.motionY = 0.0D;
+      this.motionZ = 0.0D;
+      this.prevPosX = x;
+      this.prevPosY = y;
+      this.prevPosZ = z;
+      this.layers = layers;
+      this.setData(new BlockPos(this), layers);
+      this.prevPos = new BlockPos(this);
+   }
+
+   public void onUpdate() {
+      this.prevPosX = this.posX;
+      this.prevPosY = this.posY;
+      this.prevPosZ = this.posZ;
+      ++this.fallTime;
+      if (!this.hasNoGravity()) {
+         this.motionY -= 0.03999999910593033D;
+      }
+
+      this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+      BlockPos pos = new BlockPos(this);
+      if (!this.world.isRemote) {
+         if (this.onGround) {
+            IBlockState stateDown = this.world.getBlockState(pos.down());
+            if (ModSnowBlock.canContainState(stateDown)) {
+               pos = pos.down();
+            }
+
+            IBlockState state = this.world.getBlockState(pos);
+            this.motionX *= 0.699999988079071D;
+            this.motionZ *= 0.699999988079071D;
+            this.motionY *= -0.5D;
+            if (state.getBlock() != Blocks.PISTON_EXTENSION) {
+               ModSnowBlock.placeLayersOn(this.world, pos, this.layers, true, true, 3);
+               this.setDead();
+               return;
+            }
+         } else if ((this.fallTime <= 100 || this.world.isRemote || pos.getY() >= 1 && pos.getY() <= 256) && this.fallTime <= 600) {
+            if (!pos.equals(this.prevPos)) {
+               this.prevPos = pos;
+               IBlockState state = this.world.getBlockState(pos);
+               Block block = state.getBlock();
+               if (ModConfig.snowMakingIce && block == Blocks.WATER) {
+                  this.world.setBlockState(pos, Blocks.ICE.getDefaultState());
+                  this.setDead();
+                  return;
+               }
+
+               if (state.getMaterial() == Material.LAVA) {
+                  if (this.world.isRemote) {
+                     Random random = this.world.rand;
+
+                     for(int i = 0; i < 10; ++i) {
+                        double d0 = random.nextGaussian() * 0.02D;
+                        double d1 = random.nextGaussian() * 0.02D;
+                        double d2 = random.nextGaussian() * 0.02D;
+                        this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)((float)pos.getX() + random.nextFloat()), (double)(pos.getY() + 1), (double)((float)pos.getZ() + random.nextFloat()), d0, d1, d2, new int[0]);
+                     }
+                  }
+
+                  this.world.playSound((EntityPlayer)null, pos.up(), SoundEvents.BLOCK_LAVA_AMBIENT, SoundCategory.AMBIENT, 0.8F, 0.8F);
+                  this.setDead();
+                  return;
+               }
+
+               if (state.getMaterial() == Material.LEAVES && state.getCollisionBoundingBox(this.world, pos) != null) {
+                  ModSnowBlock.placeLayersOn(this.world, pos.up(), this.layers, true, true, 3);
+                  this.setDead();
+                  return;
+               }
+
+               if (block instanceof IFluidBlock || block instanceof BlockLiquid) {
+                  this.setDead();
+                  return;
+               }
+            }
+         } else {
+            this.setDead();
+         }
+      }
+
+      this.motionX *= 0.9800000190734863D;
+      this.motionY *= 0.9800000190734863D;
+      this.motionZ *= 0.9800000190734863D;
+   }
+
+   protected void entityInit() {
+      this.dataManager.register(ORIGIN, BlockPos.ORIGIN);
+      this.dataManager.register(LAYERS, Integer.valueOf(1));
+   }
+
+   public void setData(BlockPos pos, int layers) {
+      this.dataManager.set(ORIGIN, pos);
+      this.dataManager.set(LAYERS, Integer.valueOf(layers));
+   }
+
+   @SideOnly(Side.CLIENT)
+   public BlockPos getOrigin() {
+      return (BlockPos)this.dataManager.get(ORIGIN);
+   }
+
+   @SideOnly(Side.CLIENT)
+   public int getLayers() {
+      return ((Integer)this.dataManager.get(LAYERS)).intValue();
+   }
+
+   @SideOnly(Side.CLIENT)
+   public World getWorldObj() {
+      return this.world;
+   }
+
+   protected void writeEntityToNBT(NBTTagCompound compound) {
+      compound.setInteger("Time", this.fallTime);
+      compound.setInteger("Layers", this.layers);
+   }
+
+   protected void readEntityFromNBT(NBTTagCompound compound) {
+      this.fallTime = compound.getInteger("Time");
+      if (compound.hasKey("Layers", 3)) {
+         this.layers = compound.getInteger("Layers");
+      }
+
+   }
+
+   public boolean canBeCollidedWith() {
+      return !this.isDead;
+   }
+
+   @SideOnly(Side.CLIENT)
+   public boolean canRenderOnFire() {
+      return false;
+   }
+
+   protected boolean canTriggerWalking() {
+      return false;
+   }
+
+   public boolean canBeAttackedWithItem() {
+      return false;
+   }
+}

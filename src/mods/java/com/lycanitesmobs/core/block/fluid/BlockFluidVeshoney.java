@@ -1,0 +1,94 @@
+package com.lycanitesmobs.core.block.fluid;
+
+import com.lycanitesmobs.LycanitesMobs;
+import com.lycanitesmobs.client.localisation.LanguageManager;
+import com.lycanitesmobs.core.block.BlockFluidBase;
+import com.lycanitesmobs.core.entity.creature.EntityVespid;
+import com.lycanitesmobs.core.entity.creature.EntityVespidQueen;
+import java.util.List;
+import java.util.Random;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class BlockFluidVeshoney extends BlockFluidBase {
+   public BlockFluidVeshoney(Fluid fluid, String name) {
+      super(fluid, Material.WATER, LycanitesMobs.modInfo, name);
+      this.setLightOpacity(0);
+      this.setLightLevel(0.25F);
+      this.destroyItems = false;
+   }
+
+   public String getLocalizedName() {
+      return LanguageManager.translate(this.getUnlocalizedName() + ".name");
+   }
+
+   public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+      tooltip.add(this.getDescription(stack, world));
+   }
+
+   public String getDescription(ItemStack itemStack, World world) {
+      return LanguageManager.translate(this.getUnlocalizedName() + ".description");
+   }
+
+   public boolean canDisplace(IBlockAccess world, BlockPos pos) {
+      IBlockState blockState = world.getBlockState(pos);
+      if (blockState.getBlock() == this) {
+         return false;
+      } else if (blockState.getMaterial() == Material.WATER) {
+         if (world instanceof World) {
+            ((World)world).setBlockState(pos, Blocks.DIRT.getDefaultState());
+         }
+
+         return false;
+      } else if (blockState.getMaterial() == Material.LAVA) {
+         if (world instanceof World) {
+            ((World)world).setBlockState(pos, Blocks.COBBLESTONE.getDefaultState());
+         }
+
+         return false;
+      } else {
+         return blockState.getMaterial().isLiquid() ? false : super.canDisplace(world, pos);
+      }
+   }
+
+   public boolean displaceIfPossible(World world, BlockPos pos) {
+      return world.getBlockState(pos).getMaterial().isLiquid() ? this.canDisplace(world, pos) : super.displaceIfPossible(world, pos);
+   }
+
+   public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+      if (entity.isBurning()) {
+         entity.extinguish();
+      }
+
+      if (!(entity instanceof EntityVespid) & !(entity instanceof EntityVespidQueen) && (!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).isCreative() || !((EntityPlayer)entity).isSpectator())) {
+         entity.setInWeb();
+         entity.addVelocity(0.0D, -0.02D, 0.0D);
+      }
+
+      super.onEntityCollidedWithBlock(world, pos, state, entity);
+   }
+
+   @SideOnly(Side.CLIENT)
+   public void randomDisplayTick(IBlockState blockState, World world, BlockPos pos, Random random) {
+      if (random.nextInt(100) == 0) {
+         float f = (float)pos.getX() + random.nextFloat();
+         float f1 = (float)pos.getY() + random.nextFloat() * 0.5F;
+         float f2 = (float)pos.getZ() + random.nextFloat();
+         world.spawnParticle(EnumParticleTypes.PORTAL, (double)f, (double)f1, (double)f2, 0.0D, 0.0D, 0.0D, new int[0]);
+      }
+
+      super.randomDisplayTick(blockState, world, pos, random);
+   }
+}

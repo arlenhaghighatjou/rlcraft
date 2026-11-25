@@ -1,0 +1,493 @@
+{
+  "com/yungnickyoung/minecraft/yungslaw/YungsLaw": {
+    "name": "com/yungnickyoung/minecraft/yungslaw/YungsLaw",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/yungnickyoung/minecraft/yungslaw/YungsLaw",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "yungslaw"
+          },
+          "name": {
+            "value": "YUNG\u0027s Law"
+          },
+          "useMetadata": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "version": {
+            "value": "1.12.2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.yungnickyoung.minecraft.yungslaw.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.yungnickyoung.minecraft.yungslaw.proxy.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/yungslaw/config/ConfigModCompat": {
+    "name": "com/yungnickyoung/minecraft/yungslaw/config/ConfigModCompat",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "quark",
+        "value": {
+          "value": "Quark"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "quark",
+        "value": {
+          "values": [
+            "If enabled, Quark ores will be deleted when using Ore Deletion Mode."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "quark"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "ae2",
+        "value": {
+          "value": "Applied Energistics 2"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "ae2",
+        "value": {
+          "values": [
+            "If enabled, AE2 ores will be deleted when using Ore Deletion Mode."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "ae2"
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/yungslaw/config/ConfigOreMode": {
+    "name": "com/yungnickyoung/minecraft/yungslaw/config/ConfigOreMode",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "oreWhitelist",
+        "value": {
+          "value": "Ore Block Whitelist"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "oreWhitelist",
+        "value": {
+          "values": [
+            "Whitelist for designating blocks as ore blocks for Ore Deletion Mode. Useful if some modded ores you\u0027re using aren\u0027t already supported, \nor if you perhaps only want to remove some of a mod\u0027s ores, but not all."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "oreWhitelist"
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/yungslaw/config/ConfigReplacement": {
+    "name": "com/yungnickyoung/minecraft/yungslaw/config/ConfigReplacement",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "genDistance",
+        "value": {
+          "value": "Generation Distance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "genDistance",
+        "value": {
+          "values": [
+            "If Ore Deletion Mode is disabled, this is the minimum distance from Safe Blocks (e.g. air) at which your Hard Block will replace underground blocks.\nIf Ore Deletion Mode is enabled, this is the minimum distance from Safe Blocks at which ores will start to be deleted."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "genDistance"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "safeBlocks",
+        "value": {
+          "value": "Safe Blocks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "safeBlocks",
+        "value": {
+          "values": [
+            "Blocks that will not be replaced. Any blocks within the Generation Distance of a Safe Block will also not be replaced."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "safeBlocks"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "untouchableBlocks",
+        "value": {
+          "value": "Untouchable Blocks"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "untouchableBlocks",
+        "value": {
+          "values": [
+            "Like Safe Blocks, these blocks will not be replaced. Unlike Safe Blocks, no surrounding blocks will be protected from replacement."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "untouchableBlocks"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "maxAltitude",
+        "value": {
+          "value": "Max Altitude"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "maxAltitude",
+        "value": {
+          "values": [
+            "Maximum altitude at which block replacement or ore deletion can occur."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "maxAltitude"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enableLiquidSafety",
+        "value": {
+          "value": "Mark Liquids As Safe"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableLiquidSafety",
+        "value": {
+          "values": [
+            "If true, liquids such as water and lava will be considered Safe Blocks, meaning blocks close to them won\u0027t be replaced or deleted.\nRecommended: true"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "enableLiquidSafety"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enableOreDeletion",
+        "value": {
+          "value": "Enable Ore Deletion Mode"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableOreDeletion",
+        "value": {
+          "values": [
+            "If enabled, only ore blocks will be changed. The Hard Block will not be used - instead ores will be replaced with the biome\u0027s filler block (usually stone)."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "enableOreDeletion"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "replacementMode",
+        "value": {
+          "value": "Replacement Mode Settings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "replacementMode",
+        "value": {
+          "values": [
+            "Settings for using Replacement Mode (default). These only do anything if Ore Deletion Mode is disabled."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "replacementMode"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "oreMode",
+        "value": {
+          "value": "Ore Deletion Mode Settings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "oreMode",
+        "value": {
+          "values": [
+            "Settings for using Ore Deletion Mode. These only do anything if Ore Deletion Mode is enabled."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "oreMode"
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/yungslaw/config/ConfigReplacementMode": {
+    "name": "com/yungnickyoung/minecraft/yungslaw/config/ConfigReplacementMode",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "hardBlock",
+        "value": {
+          "value": "Hard Block"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "hardBlock",
+        "value": {
+          "values": [
+            "The block that will replace the underground in areas far from Safe Blocks. Defaults to obsidian if value provided is invalid."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "hardBlock"
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/yungslaw/config/Configuration": {
+    "name": "com/yungnickyoung/minecraft/yungslaw/config/Configuration",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "com/yungnickyoung/minecraft/yungslaw/config/Configuration",
+        "values": {
+          "modid": {
+            "value": "yungslaw"
+          },
+          "name": {
+            "value": "YungsLaw-1_12_2"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "whitelistedDimensionIDs",
+        "value": {
+          "value": "Whitelisted Dimension IDs"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "whitelistedDimensionIDs",
+        "value": {
+          "values": [
+            "List of ID\u0027s of dimensions that will use YUNG\u0027s Law. Ignored if Global Whitelisting is enabled."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "whitelistedDimensionIDs"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "enableGlobalWhitelist",
+        "value": {
+          "value": "Enable Global Whitelist"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "enableGlobalWhitelist",
+        "value": {
+          "values": [
+            "Automatically enables YUNG\u0027s Law in every possible dimension."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "enableGlobalWhitelist"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "replacementSettings",
+        "value": {
+          "value": "Replacement Settings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "replacementSettings",
+        "value": {
+          "values": [
+            "Settings for underground block replacement."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "replacementSettings"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "modCompat",
+        "value": {
+          "value": "Mod Compatibility Settings"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "modCompat",
+        "value": {
+          "values": [
+            "Support for modded ores when using Ore Deletion Mode."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "modCompat"
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/yungslaw/event/EventConfig": {
+    "name": "com/yungnickyoung/minecraft/yungslaw/event/EventConfig",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigReload(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/yungslaw/event/EventWorld": {
+    "name": "com/yungnickyoung/minecraft/yungslaw/event/EventWorld",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldUnload(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V"
+      }
+    ]
+  },
+  "com/yungnickyoung/minecraft/yungslaw/world/BlockGenerator": {
+    "name": "com/yungnickyoung/minecraft/yungslaw/world/BlockGenerator",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  }
+}

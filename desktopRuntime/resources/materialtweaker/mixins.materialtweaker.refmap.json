@@ -1,0 +1,44 @@
+{
+  "mappings": {
+    "materialtweaker/mixin/ItemArmorArmorMaterialMixin": {
+      "getDurability": "Lnet/minecraft/item/ItemArmor$ArmorMaterial;func_78046_a(Lnet/minecraft/inventory/EntityEquipmentSlot;)I",
+      "getEnchantability": "Lnet/minecraft/item/ItemArmor$ArmorMaterial;func_78045_a()I",
+      "getDamageReductionAmount": "Lnet/minecraft/item/ItemArmor$ArmorMaterial;func_78044_b(Lnet/minecraft/inventory/EntityEquipmentSlot;)I",
+      "getToughness": "Lnet/minecraft/item/ItemArmor$ArmorMaterial;func_189416_e()F",
+      "getRepairItem": "Lnet/minecraft/item/ItemArmor$ArmorMaterial;func_151685_b()Lnet/minecraft/item/Item;"
+    },
+    "materialtweaker/mixin/RepairOverrideMixin": {
+      "getIsRepairable": "func_82789_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z"
+    },
+    "materialtweaker/mixin/ItemToolMaterialMixin": {
+      "getEnchantability": "Lnet/minecraft/item/Item$ToolMaterial;func_77995_e()I",
+      "getEfficiency": "Lnet/minecraft/item/Item$ToolMaterial;func_77998_b()F",
+      "getAttackDamage": "Lnet/minecraft/item/Item$ToolMaterial;func_78000_c()F",
+      "getMaxUses": "Lnet/minecraft/item/Item$ToolMaterial;func_77997_a()I",
+      "getHarvestLevel": "Lnet/minecraft/item/Item$ToolMaterial;func_77996_d()I",
+      "getRepairItem": "Lnet/minecraft/item/Item$ToolMaterial;func_150995_f()Lnet/minecraft/item/Item;"
+    }
+  },
+  "data": {
+    "searge": {
+      "materialtweaker/mixin/ItemArmorArmorMaterialMixin": {
+        "getDurability": "Lnet/minecraft/item/ItemArmor$ArmorMaterial;func_78046_a(Lnet/minecraft/inventory/EntityEquipmentSlot;)I",
+        "getEnchantability": "Lnet/minecraft/item/ItemArmor$ArmorMaterial;func_78045_a()I",
+        "getDamageReductionAmount": "Lnet/minecraft/item/ItemArmor$ArmorMaterial;func_78044_b(Lnet/minecraft/inventory/EntityEquipmentSlot;)I",
+        "getToughness": "Lnet/minecraft/item/ItemArmor$ArmorMaterial;func_189416_e()F",
+        "getRepairItem": "Lnet/minecraft/item/ItemArmor$ArmorMaterial;func_151685_b()Lnet/minecraft/item/Item;"
+      },
+      "materialtweaker/mixin/RepairOverrideMixin": {
+        "getIsRepairable": "func_82789_a(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z"
+      },
+      "materialtweaker/mixin/ItemToolMaterialMixin": {
+        "getEnchantability": "Lnet/minecraft/item/Item$ToolMaterial;func_77995_e()I",
+        "getEfficiency": "Lnet/minecraft/item/Item$ToolMaterial;func_77998_b()F",
+        "getAttackDamage": "Lnet/minecraft/item/Item$ToolMaterial;func_78000_c()F",
+        "getMaxUses": "Lnet/minecraft/item/Item$ToolMaterial;func_77997_a()I",
+        "getHarvestLevel": "Lnet/minecraft/item/Item$ToolMaterial;func_77996_d()I",
+        "getRepairItem": "Lnet/minecraft/item/Item$ToolMaterial;func_150995_f()Lnet/minecraft/item/Item;"
+      }
+    }
+  }
+}

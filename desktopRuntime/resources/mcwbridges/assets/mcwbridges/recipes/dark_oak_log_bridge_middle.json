@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern": [
+    "F F",
+    "WWW"
+    ],
+    
+    "key":
+    {
+        "F":
+        {
+            "item": "minecraft:dark_oak_fence"
+        },
+        
+        "W":
+        {
+            "item": "minecraft:wooden_slab",
+            "data": 5
+        }
+    },
+    
+    "result":
+    {
+        "item":  "mcwbridges:dark_oak_log_bridge_middle",
+        "count": 4
+    }
+}

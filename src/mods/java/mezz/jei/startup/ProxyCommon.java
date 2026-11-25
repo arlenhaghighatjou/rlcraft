@@ -1,0 +1,43 @@
+package mezz.jei.startup;
+
+import javax.annotation.Nullable;
+import mezz.jei.network.PacketHandler;
+import mezz.jei.network.packets.PacketJei;
+import mezz.jei.util.Log;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.FMLEventChannel;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+
+public class ProxyCommon {
+   @Nullable
+   protected FMLEventChannel channel;
+
+   public ProxyCommon() {
+   }
+
+   public void preInit(FMLPreInitializationEvent event) {
+      PacketHandler packetHandler = new PacketHandler();
+      this.channel = NetworkRegistry.INSTANCE.newEventDrivenChannel("jei");
+      this.channel.register(packetHandler);
+   }
+
+   public void init(FMLInitializationEvent event) {
+   }
+
+   public void loadComplete(FMLLoadCompleteEvent event) {
+   }
+
+   public void sendPacketToServer(PacketJei packet) {
+      Log.get().error("Tried to send packet to the server from the server: {}", packet);
+   }
+
+   public void sendPacketToClient(PacketJei packet, EntityPlayerMP player) {
+      if (this.channel != null) {
+         this.channel.sendTo(packet.getPacket(), player);
+      }
+
+   }
+}

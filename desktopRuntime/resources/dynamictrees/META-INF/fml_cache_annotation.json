@@ -1,0 +1,1315 @@
+{
+  "com/ferreusveritas/dynamictrees/DynamicTrees": {
+    "name": "com/ferreusveritas/dynamictrees/DynamicTrees",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/ferreusveritas/dynamictrees/DynamicTrees",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.5.2859,);before:rustic@(1.0.14,);before:dynamictreesbop@[1.12.2-1.4.3,);before:dynamictreestc@[1.12.2-1.4.2,);before:@[1.12.2-2.0.3,)@[1.12.2-2.0.3,);before:dttraverse@[1.12.2-2.0,);before:dynamictreeshnc@(1.1,);after:reccomplex"
+          },
+          "modid": {
+            "value": "dynamictrees"
+          },
+          "name": {
+            "value": "Dynamic Trees"
+          },
+          "updateJSON": {
+            "value": "https://github.com/DynamicTreesTeam/DynamicTreesVersionInfo/blob/master/DynamicTrees.json?raw\u003dtrue"
+          },
+          "version": {
+            "value": "1.12.2-0.9.29"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "dynamictrees"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.ferreusveritas.dynamictrees.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.ferreusveritas.dynamictrees.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStopped(Lnet/minecraftforge/fml/common/event/FMLServerStoppedEvent;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/ModBlocks": {
+    "name": "com/ferreusveritas/dynamictrees/ModBlocks",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/ferreusveritas/dynamictrees/ModBlocks",
+        "values": {
+          "modid": {
+            "value": "dynamictrees"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "register(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/ModEntities": {
+    "name": "com/ferreusveritas/dynamictrees/ModEntities",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/ferreusveritas/dynamictrees/ModEntities",
+        "values": {
+          "modid": {
+            "value": "dynamictrees"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "register(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/ModItems": {
+    "name": "com/ferreusveritas/dynamictrees/ModItems",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/ferreusveritas/dynamictrees/ModItems",
+        "values": {
+          "modid": {
+            "value": "dynamictrees"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "register(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/ModModels": {
+    "name": "com/ferreusveritas/dynamictrees/ModModels",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/ferreusveritas/dynamictrees/ModModels",
+        "values": {
+          "modid": {
+            "value": "dynamictrees"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "register(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/ModRecipes": {
+    "name": "com/ferreusveritas/dynamictrees/ModRecipes",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/ferreusveritas/dynamictrees/ModRecipes",
+        "values": {
+          "modid": {
+            "value": "dynamictrees"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "register(Lnet/minecraftforge/event/RegistryEvent$Register;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/ModTrees": {
+    "name": "com/ferreusveritas/dynamictrees/ModTrees",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/ferreusveritas/dynamictrees/ModTrees",
+        "values": {
+          "modid": {
+            "value": "dynamictrees"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "newRegistry(Lnet/minecraftforge/event/RegistryEvent$NewRegistry;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/api/IFullGenFeature": {
+    "name": "com/ferreusveritas/dynamictrees/api/IFullGenFeature",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/api/IPostGenFeature": {
+    "name": "com/ferreusveritas/dynamictrees/api/IPostGenFeature",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/api/IPostGrowFeature": {
+    "name": "com/ferreusveritas/dynamictrees/api/IPostGrowFeature",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/api/IPreGenFeature": {
+    "name": "com/ferreusveritas/dynamictrees/api/IPreGenFeature",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/api/cells/CellNull": {
+    "name": "com/ferreusveritas/dynamictrees/api/cells/CellNull",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICell"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/api/treedata/IDropCreatorStorage": {
+    "name": "com/ferreusveritas/dynamictrees/api/treedata/IDropCreatorStorage",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/treedata/IDropCreator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/api/worldgen/BiomePropertySelectors$RandomSpeciesSelector": {
+    "name": "com/ferreusveritas/dynamictrees/api/worldgen/BiomePropertySelectors$RandomSpeciesSelector",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/worldgen/BiomePropertySelectors$ISpeciesSelector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/api/worldgen/BiomePropertySelectors$StaticSpeciesSelector": {
+    "name": "com/ferreusveritas/dynamictrees/api/worldgen/BiomePropertySelectors$StaticSpeciesSelector",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/worldgen/BiomePropertySelectors$ISpeciesSelector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/BlockBranch": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/BlockBranch",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/treedata/ITreePart",
+      "com/ferreusveritas/dynamictrees/api/IFutureBreakable"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/BlockBranchCactus$1": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/BlockBranchCactus$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/BlockBranchThick": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/BlockBranchThick",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/blocks/IMusable"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/BlockDynamicLeaves": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/BlockDynamicLeaves",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/treedata/ITreePart",
+      "com/ferreusveritas/dynamictrees/api/IAgeable",
+      "com/ferreusveritas/dynamictrees/util/IRayTraceCollision"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/BlockDynamicSapling": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/BlockDynamicSapling",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider",
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/BlockFruit": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/BlockFruit",
+    "interfaces": [
+      "net/minecraft/block/IGrowable"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/BlockRooty": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/BlockRooty",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/treedata/ITreePart",
+      "net/minecraft/block/ITileEntityProvider",
+      "com/ferreusveritas/dynamictrees/blocks/MimicProperty$IMimic"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/BlockRootyDirtFake": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/BlockRootyDirtFake",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/treedata/ITreePart",
+      "com/ferreusveritas/dynamictrees/blocks/MimicProperty$IMimic"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/BlockSurfaceRoot$ConnectionLevel": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/BlockSurfaceRoot$ConnectionLevel",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/ExtendedBlockStateWater$ExtendedStateImplementationWater": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/ExtendedBlockStateWater$ExtendedStateImplementationWater",
+    "interfaces": [
+      "net/minecraftforge/common/property/IExtendedBlockState"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/LeavesProperties": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/LeavesProperties",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/treedata/ILeavesProperties"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/LeavesStateMapper": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/LeavesStateMapper",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/statemap/IStateMapper"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/MimicProperty": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/MimicProperty",
+    "interfaces": [
+      "net/minecraftforge/common/property/IUnlistedProperty"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/NullTreePart": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/NullTreePart",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/treedata/ITreePart"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/SpeciesProperty": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/SpeciesProperty",
+    "interfaces": [
+      "net/minecraftforge/common/property/IUnlistedProperty"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/properties/UnlistedPropertyBool": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/properties/UnlistedPropertyBool",
+    "interfaces": [
+      "net/minecraftforge/common/property/IUnlistedProperty"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/properties/UnlistedPropertyFloat": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/properties/UnlistedPropertyFloat",
+    "interfaces": [
+      "net/minecraftforge/common/property/IUnlistedProperty"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/blocks/properties/UnlistedPropertyInt": {
+    "name": "com/ferreusveritas/dynamictrees/blocks/properties/UnlistedPropertyInt",
+    "interfaces": [
+      "net/minecraftforge/common/property/IUnlistedProperty"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellConiferBranch": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellConiferBranch",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICell"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellConiferTopBranch": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellConiferTopBranch",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICell"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellKits$1": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellKits$1",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICellSolver"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellKits$2": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellKits$2",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICellKit"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellKits$3": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellKits$3",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICellKit"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellKits$4": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellKits$4",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICellKit"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellKits$5": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellKits$5",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICellKit"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellKits$5$1": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellKits$5$1",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICell"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellKits$6": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellKits$6",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICellKit"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellKits$7": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellKits$7",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICellKit"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellKits$8": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellKits$8",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICellKit"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellKits$8$1": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellKits$8$1",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICell"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellKits$BasicSolver": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellKits$BasicSolver",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICellSolver"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellMatrix": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellMatrix",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICell"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/cells/CellNormal": {
+    "name": "com/ferreusveritas/dynamictrees/cells/CellNormal",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/cells/ICell"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/compat/CompatHandler": {
+    "name": "com/ferreusveritas/dynamictrees/compat/CompatHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "HandleSereneSeasons()V",
+        "values": {
+          "modid": {
+            "value": "sereneseasons"
+          }
+        }
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/compat/WailaBranchHandler": {
+    "name": "com/ferreusveritas/dynamictrees/compat/WailaBranchHandler",
+    "interfaces": [
+      "mcp/mobius/waila/api/IWailaDataProvider"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/compat/WailaCompat": {
+    "name": "com/ferreusveritas/dynamictrees/compat/WailaCompat",
+    "interfaces": [
+      "mcp/mobius/waila/api/IWailaPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/mobius/waila/api/WailaPlugin;",
+        "target": "com/ferreusveritas/dynamictrees/compat/WailaCompat"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/compat/WailaRootyHandler": {
+    "name": "com/ferreusveritas/dynamictrees/compat/WailaRootyHandler",
+    "interfaces": [
+      "mcp/mobius/waila/api/IWailaDataProvider"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/compat/WailaRootyWaterHandler": {
+    "name": "com/ferreusveritas/dynamictrees/compat/WailaRootyWaterHandler",
+    "interfaces": [
+      "mcp/mobius/waila/api/IWailaDataProvider"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/entities/EntityFallingTree": {
+    "name": "com/ferreusveritas/dynamictrees/entities/EntityFallingTree",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/models/IModelTracker"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/entities/animation/AnimationHandlerFallover": {
+    "name": "com/ferreusveritas/dynamictrees/entities/animation/AnimationHandlerFallover",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/entities/animation/IAnimationHandler"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/entities/animation/AnimationHandlerFallover$1": {
+    "name": "com/ferreusveritas/dynamictrees/entities/animation/AnimationHandlerFallover$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/entities/animation/AnimationHandlerPhysics": {
+    "name": "com/ferreusveritas/dynamictrees/entities/animation/AnimationHandlerPhysics",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/entities/animation/IAnimationHandler"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/entities/animation/AnimationHandlerVoid": {
+    "name": "com/ferreusveritas/dynamictrees/entities/animation/AnimationHandlerVoid",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/entities/animation/IAnimationHandler"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/BiomeSuitabilityEvent": {
+    "name": "com/ferreusveritas/dynamictrees/event/BiomeSuitabilityEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/ferreusveritas/dynamictrees/event/BiomeSuitabilityEvent"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/BlockBreakAnimationClientHandler": {
+    "name": "com/ferreusveritas/dynamictrees/event/BlockBreakAnimationClientHandler",
+    "interfaces": [
+      "net/minecraftforge/client/resource/ISelectiveResourceReloadListener"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerJoinWorldEvent(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "worldUnload(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "worldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderBlockBreakAnim(Lnet/minecraftforge/client/event/RenderWorldLastEvent;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/BlockBreakAnimationClientHandler$RenderGlobalWrapper": {
+    "name": "com/ferreusveritas/dynamictrees/event/BlockBreakAnimationClientHandler$RenderGlobalWrapper",
+    "interfaces": [
+      "net/minecraft/world/IWorldEventListener"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/CommonEventHandler": {
+    "name": "com/ferreusveritas/dynamictrees/event/CommonEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldLoad(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemTooltipAdded(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/DropEventHandler": {
+    "name": "com/ferreusveritas/dynamictrees/event/DropEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHarvestDropsEvent(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/LeafUpdateEventHandler": {
+    "name": "com/ferreusveritas/dynamictrees/event/LeafUpdateEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "UpdateNeighbour(Lnet/minecraftforge/event/world/BlockEvent$NeighborNotifyEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/MissingEventHandler": {
+    "name": "com/ferreusveritas/dynamictrees/event/MissingEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "missingBlockMappings(Lnet/minecraftforge/event/RegistryEvent$MissingMappings;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "missingItemMappings(Lnet/minecraftforge/event/RegistryEvent$MissingMappings;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/ModelBakeEventListener": {
+    "name": "com/ferreusveritas/dynamictrees/event/ModelBakeEventListener",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelBakeEvent(Lnet/minecraftforge/client/event/ModelBakeEvent;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/PoissonDiscEventHandler": {
+    "name": "com/ferreusveritas/dynamictrees/event/PoissonDiscEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldUnload(Lnet/minecraftforge/event/world/WorldEvent$Unload;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onChunkDataLoad(Lnet/minecraftforge/event/world/ChunkDataEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onChunkDataSave(Lnet/minecraftforge/event/world/ChunkDataEvent$Save;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/SeedVoluntaryDropEvent": {
+    "name": "com/ferreusveritas/dynamictrees/event/SeedVoluntaryDropEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/ferreusveritas/dynamictrees/event/SeedVoluntaryDropEvent"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/SeedVoluntaryPlantEvent": {
+    "name": "com/ferreusveritas/dynamictrees/event/SeedVoluntaryPlantEvent",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/Cancelable;",
+        "target": "com/ferreusveritas/dynamictrees/event/SeedVoluntaryPlantEvent"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/TextureGenerationHandler": {
+    "name": "com/ferreusveritas/dynamictrees/event/TextureGenerationHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTextureStitchEvent(Lnet/minecraftforge/client/event/TextureStitchEvent$Pre;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/VanillaSaplingEventHandler": {
+    "name": "com/ferreusveritas/dynamictrees/event/VanillaSaplingEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerPlaceBlock(Lnet/minecraftforge/event/world/BlockEvent$PlaceEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSaplingGrowTree(Lnet/minecraftforge/event/terraingen/SaplingGrowTreeEvent;)V"
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/event/WorldListener": {
+    "name": "com/ferreusveritas/dynamictrees/event/WorldListener",
+    "interfaces": [
+      "net/minecraft/world/IWorldEventListener"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/growthlogic/ConiferLogic": {
+    "name": "com/ferreusveritas/dynamictrees/growthlogic/ConiferLogic",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/growthlogic/IGrowthLogicKit"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/growthlogic/DarkOakLogic": {
+    "name": "com/ferreusveritas/dynamictrees/growthlogic/DarkOakLogic",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/growthlogic/IGrowthLogicKit"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/growthlogic/JungleLogic": {
+    "name": "com/ferreusveritas/dynamictrees/growthlogic/JungleLogic",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/growthlogic/IGrowthLogicKit"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/growthlogic/NullLogic": {
+    "name": "com/ferreusveritas/dynamictrees/growthlogic/NullLogic",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/growthlogic/IGrowthLogicKit"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/items/DendroPotion": {
+    "name": "com/ferreusveritas/dynamictrees/items/DendroPotion",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/substances/ISubstanceEffectProvider",
+      "com/ferreusveritas/dynamictrees/api/substances/IEmptiable"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/ModelRootyWater": {
+    "name": "com/ferreusveritas/dynamictrees/models/ModelRootyWater",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelBlockBonsaiPot": {
+    "name": "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelBlockBonsaiPot",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelBlockBranchBasic": {
+    "name": "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelBlockBranchBasic",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelBlockBranchCactus": {
+    "name": "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelBlockBranchCactus",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelBlockBranchThick": {
+    "name": "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelBlockBranchThick",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/models/ICustomDamageModel"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelBlockRooty": {
+    "name": "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelBlockRooty",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelBlockSurfaceRoot": {
+    "name": "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelBlockSurfaceRoot",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelSapling": {
+    "name": "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelSapling",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelWrapped": {
+    "name": "com/ferreusveritas/dynamictrees/models/bakedmodels/BakedModelWrapped",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/blockmodels/ModelBlockBranchBasic": {
+    "name": "com/ferreusveritas/dynamictrees/models/blockmodels/ModelBlockBranchBasic",
+    "interfaces": [
+      "net/minecraftforge/client/model/IModel"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/blockmodels/ModelBlockSurfaceRoot": {
+    "name": "com/ferreusveritas/dynamictrees/models/blockmodels/ModelBlockSurfaceRoot",
+    "interfaces": [
+      "net/minecraftforge/client/model/IModel"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/loaders/ModelLoaderGeneric": {
+    "name": "com/ferreusveritas/dynamictrees/models/loaders/ModelLoaderGeneric",
+    "interfaces": [
+      "net/minecraftforge/client/model/ICustomModelLoader"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/loaders/ModelLoaderSapling": {
+    "name": "com/ferreusveritas/dynamictrees/models/loaders/ModelLoaderSapling",
+    "interfaces": [
+      "net/minecraftforge/client/model/ICustomModelLoader"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/models/loaders/ModelLoaderSapling$1": {
+    "name": "com/ferreusveritas/dynamictrees/models/loaders/ModelLoaderSapling$1",
+    "interfaces": [
+      "net/minecraftforge/client/model/IModel"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/render/RenderFallingTree$Factory": {
+    "name": "com/ferreusveritas/dynamictrees/render/RenderFallingTree$Factory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/registry/IRenderFactory"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/seasons/SeasonGrowthCalculatorActive": {
+    "name": "com/ferreusveritas/dynamictrees/seasons/SeasonGrowthCalculatorActive",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/seasons/ISeasonGrowthCalculator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/seasons/SeasonGrowthCalculatorNull": {
+    "name": "com/ferreusveritas/dynamictrees/seasons/SeasonGrowthCalculatorNull",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/seasons/ISeasonGrowthCalculator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/seasons/SeasonManager": {
+    "name": "com/ferreusveritas/dynamictrees/seasons/SeasonManager",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/seasons/ISeasonManager"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/seasons/SeasonProviderNull": {
+    "name": "com/ferreusveritas/dynamictrees/seasons/SeasonProviderNull",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/seasons/ISeasonProvider"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/seasons/SeasonProviderSereneSeasons": {
+    "name": "com/ferreusveritas/dynamictrees/seasons/SeasonProviderSereneSeasons",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/seasons/ISeasonProvider"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/dropcreators/DropCreator": {
+    "name": "com/ferreusveritas/dynamictrees/systems/dropcreators/DropCreator",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/treedata/IDropCreator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/dropcreators/DropCreatorSeed": {
+    "name": "com/ferreusveritas/dynamictrees/systems/dropcreators/DropCreatorSeed",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/treedata/IDropCreator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/dropcreators/DropCreatorStorage": {
+    "name": "com/ferreusveritas/dynamictrees/systems/dropcreators/DropCreatorStorage",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/treedata/IDropCreatorStorage"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenBush": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenBush",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IFullGenFeature",
+      "com/ferreusveritas/dynamictrees/api/IPostGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenClearVolume": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenClearVolume",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPreGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenCocoa": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenCocoa",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPostGenFeature",
+      "com/ferreusveritas/dynamictrees/api/IPostGrowFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenConiferTopper": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenConiferTopper",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPostGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenFlareBottom": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenFlareBottom",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPostGenFeature",
+      "com/ferreusveritas/dynamictrees/api/IPostGrowFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenFruit": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenFruit",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPostGrowFeature",
+      "com/ferreusveritas/dynamictrees/api/IPostGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenGroup": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenGroup",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPostGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenHugeMushroom": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenHugeMushroom",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IFullGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenHugeMushrooms": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenHugeMushrooms",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPostGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenMound": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenMound",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPreGenFeature",
+      "com/ferreusveritas/dynamictrees/api/IPostGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenMudHole": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenMudHole",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPreGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenPodzol": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenPodzol",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPostGrowFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenPredicate": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenPredicate",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPostGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenRoots": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenRoots",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPostGrowFeature",
+      "com/ferreusveritas/dynamictrees/api/IPostGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenUndergrowth": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenUndergrowth",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPostGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenVine": {
+    "name": "com/ferreusveritas/dynamictrees/systems/featuregen/FeatureGenVine",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/IPostGenFeature"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeCoder": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeCoder",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeCollector": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeCollector",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeDestroyer": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeDestroyer",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeDisease": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeDisease",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeExtState": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeExtState",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeFindEnds": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeFindEnds",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeFreezer": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeFreezer",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeFruitCocoa": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeFruitCocoa",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeInflator": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeInflator",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeNetVolume": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeNetVolume",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeShrinker": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeShrinker",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeSpecies": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeSpecies",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeTransform": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeTransform",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeTwinkle": {
+    "name": "com/ferreusveritas/dynamictrees/systems/nodemappers/NodeTwinkle",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/network/INodeInspector"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/poissondisc/PoissonDiscProvider": {
+    "name": "com/ferreusveritas/dynamictrees/systems/poissondisc/PoissonDiscProvider",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/worldgen/IPoissonDiscProvider"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/substances/SubstanceDeplete": {
+    "name": "com/ferreusveritas/dynamictrees/systems/substances/SubstanceDeplete",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/substances/ISubstanceEffect"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/substances/SubstanceFertilize": {
+    "name": "com/ferreusveritas/dynamictrees/systems/substances/SubstanceFertilize",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/substances/ISubstanceEffect"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/substances/SubstanceFreeze": {
+    "name": "com/ferreusveritas/dynamictrees/systems/substances/SubstanceFreeze",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/substances/ISubstanceEffect"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/substances/SubstanceGrowth": {
+    "name": "com/ferreusveritas/dynamictrees/systems/substances/SubstanceGrowth",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/substances/ISubstanceEffect"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/substances/SubstanceMega": {
+    "name": "com/ferreusveritas/dynamictrees/systems/substances/SubstanceMega",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/substances/ISubstanceEffect"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/systems/substances/SubstanceTransform": {
+    "name": "com/ferreusveritas/dynamictrees/systems/substances/SubstanceTransform",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/substances/ISubstanceEffect"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/util/BranchDestructionData$1": {
+    "name": "com/ferreusveritas/dynamictrees/util/BranchDestructionData$1",
+    "interfaces": [
+      "java/lang/Iterable"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/util/CoordUtils$1": {
+    "name": "com/ferreusveritas/dynamictrees/util/CoordUtils$1",
+    "interfaces": [
+      "java/lang/Iterable"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/util/CoordUtils$Surround": {
+    "name": "com/ferreusveritas/dynamictrees/util/CoordUtils$Surround",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/util/SimpleVoxmap$1": {
+    "name": "com/ferreusveritas/dynamictrees/util/SimpleVoxmap$1",
+    "interfaces": [
+      "java/lang/Iterable"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/util/SimpleVoxmap$2": {
+    "name": "com/ferreusveritas/dynamictrees/util/SimpleVoxmap$2",
+    "interfaces": [
+      "java/lang/Iterable"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/util/SimpleVoxmap$3": {
+    "name": "com/ferreusveritas/dynamictrees/util/SimpleVoxmap$3",
+    "interfaces": [
+      "java/lang/Iterable"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/util/SuppliedLazyValue": {
+    "name": "com/ferreusveritas/dynamictrees/util/SuppliedLazyValue",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/util/LazyValue"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/BiomeDataBasePopulatorJson": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/BiomeDataBasePopulatorJson",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/worldgen/IBiomeDataBasePopulator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/BiomeRadiusCoordinator": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/BiomeRadiusCoordinator",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/worldgen/IRadiusCoordinator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/TreeGenCancelEventHandler": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/TreeGenCancelEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEvent(Lnet/minecraftforge/event/terraingen/DecorateBiomeEvent$Decorate;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/NORMAL"
+          },
+          "receiveCanceled": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/WorldGeneratorTrees": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/WorldGeneratorTrees",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/WorldGeneratorTrees$GroundFinder": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/WorldGeneratorTrees$GroundFinder",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/api/worldgen/IGroundFinder"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonBiomePropertyApplierChance": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonBiomePropertyApplierChance",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/IJsonBiomeApplier"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonBiomePropertyApplierDensity": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonBiomePropertyApplierDensity",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/IJsonBiomeApplier"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonBiomePropertyApplierSpecies": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonBiomePropertyApplierSpecies",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/IJsonBiomeApplier"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Adder": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Adder",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Const": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Const",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Debug": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Debug",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Divider": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Divider",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$IfGreaterThan": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$IfGreaterThan",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$IfSpecies": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$IfSpecies",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Maximum": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Maximum",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Minimum": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Minimum",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Modulus": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Modulus",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Multiplier": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Multiplier",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Noise": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Noise",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Radius": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Radius",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Rand": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Rand",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Subtractor": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Subtractor",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  },
+  "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Trees": {
+    "name": "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$Trees",
+    "interfaces": [
+      "com/ferreusveritas/dynamictrees/worldgen/json/JsonMath$MathOperator"
+    ]
+  }
+}

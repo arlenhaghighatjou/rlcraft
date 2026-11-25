@@ -28,6 +28,7 @@ sourceSets {
 		java.srcDirs(
 			"src/main/java",
 			"src/game/java",
+                        "src/mods/java",
 			"src/protocol-game/java",
 			"src/protocol-relay/java",
 			"src/platform-api/java"

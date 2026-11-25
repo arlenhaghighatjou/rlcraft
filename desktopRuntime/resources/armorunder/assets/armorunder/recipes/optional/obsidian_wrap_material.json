@@ -1,0 +1,17 @@
+{ "_comment": ["Obsidian lining material for barrier liners" ],
+  "conditions": [{
+     "type": "armorunder:is_allowed",
+     "value": "craft_smart_lining"
+  }],
+  "result": {
+    "item": "armorunder:obsidian_wrap_material"
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "sss", " X ", "sss"
+  ],
+  "key": {
+    "s": { "item": "armorunder:diamond_strong_thread" },
+    "X": { "item": "armorunder:obsidian_goo" }
+  }
+}

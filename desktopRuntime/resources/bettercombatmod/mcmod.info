@@ -1,0 +1,15 @@
+[
+{
+  "modid": "bettercombatmod",
+  "name": "RLCombat",
+  "description": "Adds combat features such as offhand attacking, forked for RLCraft",
+  "version": "1.12.2-2.0.8",
+  "mcversion": "1.12.2",
+  "url": "https://www.curseforge.com/members/fonnymunkey/projects",
+  "updateUrl": "",
+  "authorList": ["Ironfists", "SanAndreasP", "fonnymunkey"],
+  "credits": "",
+  "logoFile": "",
+  "dependencies": []
+}
+]

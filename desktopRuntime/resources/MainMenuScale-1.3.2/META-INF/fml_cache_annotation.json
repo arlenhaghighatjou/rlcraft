@@ -1,0 +1,85 @@
+{
+  "me/modmuss50/mms/Config": {
+    "name": "me/modmuss50/mms/Config",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lreborncore/common/registration/RebornRegistry;",
+        "target": "me/modmuss50/mms/Config",
+        "values": {
+          "modID": {
+            "value": "mainmenuscale"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lreborncore/common/registration/impl/ConfigRegistry;",
+        "target": "GUI_SCALE",
+        "values": {
+          "comment": {
+            "value": "The gui scale for the main menu (0 Auto, 1 small, 2 normal, 3 large)"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lreborncore/common/registration/impl/ConfigRegistry;",
+        "target": "HIGH_RES_HEIGHT",
+        "values": {
+          "comment": {
+            "value": "-1 disabled, the min height that should be used to see if the high res scale should be used"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lreborncore/common/registration/impl/ConfigRegistry;",
+        "target": "HIGH_RES_SCALE",
+        "values": {
+          "comment": {
+            "value": "The gui scale for the main menu with high res (0 Auto, 1 small, 2 normal, 3 large)"
+          }
+        }
+      }
+    ]
+  },
+  "me/modmuss50/mms/MainMenuScale": {
+    "name": "me/modmuss50/mms/MainMenuScale",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "me/modmuss50/mms/MainMenuScale",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "dependencies": {
+            "value": "required-after:reborncore"
+          },
+          "modid": {
+            "value": "mainmenuscale"
+          },
+          "name": {
+            "value": "Main Menu Scale"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "initGuiPre(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Pre;)V"
+      }
+    ]
+  }
+}

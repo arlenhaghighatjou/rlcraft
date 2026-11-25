@@ -1,0 +1,121 @@
+package gigaherz.toolbelt;
+
+import gigaherz.toolbelt.belt.ItemToolBelt;
+import gigaherz.toolbelt.common.GuiHandler;
+import gigaherz.toolbelt.customslots.CapabilityExtensionSlotItem;
+import gigaherz.toolbelt.network.BeltContentsChange;
+import gigaherz.toolbelt.network.OpenBeltSlotInventory;
+import gigaherz.toolbelt.network.SwapItems;
+import gigaherz.toolbelt.network.SyncBeltSlotContents;
+import gigaherz.toolbelt.shadow.commons.ItemRegistered;
+import gigaherz.toolbelt.slot.ExtensionSlotBelt;
+import java.io.File;
+import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
+import org.apache.logging.log4j.Logger;
+
+@EventBusSubscriber
+@Mod(
+   modid = "toolbelt",
+   version = "1.9.14",
+   acceptedMinecraftVersions = "[1.12.0,1.13.0)",
+   dependencies = "after:baubles;after:jei@[4.6,)",
+   guiFactory = "gigaherz.toolbelt.client.config.ConfigGuiFactory"
+)
+public class ToolBelt {
+   public static final String MODID = "toolbelt";
+   public static final String VERSION = "1.9.14";
+   public static final String CHANNEL = "toolbelt";
+   public static ItemToolBelt belt;
+   public static Item pouch;
+   @Instance("toolbelt")
+   public static ToolBelt instance;
+   @SidedProxy(
+      clientSide = "gigaherz.toolbelt.client.ClientProxy",
+      serverSide = "gigaherz.toolbelt.server.ServerProxy"
+   )
+   public static ISideProxy proxy;
+   public static Logger logger;
+   public static GuiHandler guiHandler;
+   public static SimpleNetworkWrapper channel;
+
+   public ToolBelt() {
+   }
+
+   @SubscribeEvent
+   public static void registerBlocks(Register<Block> event) {
+   }
+
+   @SubscribeEvent
+   public static void registerItems(Register<Item> event) {
+      event.getRegistry().registerAll(new Item[]{belt = new ItemToolBelt("belt"), pouch = (new ItemRegistered("pouch")).setCreativeTab(CreativeTabs.TOOLS)});
+   }
+
+   @EventHandler
+   public void preInit(FMLPreInitializationEvent event) {
+      logger = event.getModLog();
+      channel = NetworkRegistry.INSTANCE.newSimpleChannel("toolbelt");
+      int messageNumber = 0;
+      channel.registerMessage(SwapItems.Handler.class, SwapItems.class, messageNumber++, Side.SERVER);
+      channel.registerMessage(BeltContentsChange.Handler.class, BeltContentsChange.class, messageNumber++, Side.CLIENT);
+      channel.registerMessage(OpenBeltSlotInventory.Handler.class, OpenBeltSlotInventory.class, messageNumber++, Side.SERVER);
+      channel.registerMessage(SyncBeltSlotContents.Handler.class, SyncBeltSlotContents.class, messageNumber++, Side.CLIENT);
+      logger.debug("Final message number: " + messageNumber);
+      File configurationFile = event.getSuggestedConfigurationFile();
+      Config.loadConfig(configurationFile);
+      CapabilityExtensionSlotItem.register();
+      ExtensionSlotBelt.register();
+   }
+
+   @EventHandler
+   public void init(FMLInitializationEvent event) {
+      proxy.init();
+      NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler = new GuiHandler());
+   }
+
+   @EventHandler
+   public void postInit(FMLPostInitializationEvent event) {
+      Config.postInit();
+   }
+
+   @SubscribeEvent
+   public static void anvilChange(AnvilUpdateEvent ev) {
+      if (!Config.disableAnvilUpgrading) {
+         ItemStack left = ev.getLeft();
+         ItemStack right = ev.getRight();
+         if (left.getCount() > 0 && left.getItem() == belt) {
+            if (right.getCount() > 0 && right.getItem() == pouch) {
+               int cost = ItemToolBelt.getUpgradeXP(left);
+               if (cost < 0) {
+                  ev.setCanceled(true);
+               } else {
+                  ev.setCost(cost);
+                  ev.setMaterialCost(1);
+                  ev.setOutput(ItemToolBelt.upgrade(left));
+               }
+            }
+         }
+      }
+   }
+
+   public static ResourceLocation location(String path) {
+      return new ResourceLocation("toolbelt", path);
+   }
+}

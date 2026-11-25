@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern": [
+    "WFW",
+    "WWW"
+    ],
+    
+    "key":
+    {
+        "F":
+        {
+            "item": "minecraft:string"
+        },
+        
+        "W":
+        {
+            "item": "minecraft:reeds"
+        }
+    },
+    
+    "result":
+    {
+        "item":  "mcwbridges:bamboo_bridge",
+        "count": 1
+    }
+}

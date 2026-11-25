@@ -1,0 +1,452 @@
+package svenhjol.charm.world.feature;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockEndPortal;
+import net.minecraft.block.BlockEndPortalFrame;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.pattern.BlockPattern.PatternHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+import net.minecraftforge.event.world.WorldEvent.Load;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import svenhjol.charm.world.block.BlockRunePortal;
+import svenhjol.charm.world.block.BlockRunePortalFrame;
+import svenhjol.charm.world.compat.QuarkColoredRunes;
+import svenhjol.charm.world.event.WitherDestroyBlockEvent;
+import svenhjol.charm.world.message.MessagePortalInteract;
+import svenhjol.charm.world.storage.RunePortalSavedData;
+import svenhjol.charm.world.tile.TileRunePortalFrame;
+import svenhjol.meson.Feature;
+import svenhjol.meson.Meson;
+import svenhjol.meson.MesonBlock;
+import svenhjol.meson.handler.NetworkHandler;
+import svenhjol.meson.helper.ForgeHelper;
+import svenhjol.meson.helper.PlayerHelper;
+import svenhjol.meson.helper.SoundHelper;
+import svenhjol.meson.helper.WorldHelper;
+
+public class EndPortalRunes extends Feature {
+   public static BlockRunePortalFrame frame;
+   public static BlockRunePortal portal;
+   public static QuarkColoredRunes quarkRunes;
+   public static boolean allowEnderEyeRemoval;
+   public static long clientTravelTicks;
+   public static long clientUnlinkedTicks;
+   public static long clientLinkedTicks;
+
+   public EndPortalRunes() {
+   }
+
+   public String getDescription() {
+      return "Add Colored Runes in Stronghold End Portal frames. Two portals with the same runes will be linked together.";
+   }
+
+   public void configure() {
+      super.configure();
+      allowEnderEyeRemoval = this.propBoolean("Allow Eyes of Ender removal", "Eyes of Ender can be removed from End Portal frames by right-clicking when sneaking.\nIf false, right-clicking with a rune replaces the Eye of Ender without returning it to the player.", true);
+   }
+
+   public boolean isEnabled() {
+      if (!ForgeHelper.areModsLoaded("quark")) {
+         return false;
+      } else {
+         try {
+            quarkRunes = (QuarkColoredRunes)QuarkColoredRunes.class.getConstructor().newInstance();
+         } catch (Exception var2) {
+            Meson.log("Error loading QuarkColoredRunes compat class");
+            return false;
+         }
+
+         if (!quarkRunes.hasColorRuneFeature()) {
+            Meson.log("Quark ColorRunes feature not enabled");
+            return false;
+         } else {
+            return this.enabled;
+         }
+      }
+   }
+
+   public void preInit(FMLPreInitializationEvent event) {
+      super.preInit(event);
+      portal = new BlockRunePortal();
+      frame = new BlockRunePortalFrame();
+      GameRegistry.registerTileEntity(portal.getTileEntityClass(), new ResourceLocation("charm:rune_portal"));
+      GameRegistry.registerTileEntity(frame.getTileEntityClass(), new ResourceLocation("charm:rune_portal_frame"));
+      NetworkHandler.register(MessagePortalInteract.class, Side.CLIENT);
+   }
+
+   @SubscribeEvent
+   public void onWorldLoad(Load event) {
+      World world = event.getWorld();
+      RunePortalSavedData.get(world);
+   }
+
+   @SubscribeEvent
+   public void onWitherDestroyBlock(WitherDestroyBlockEvent event) {
+      Block block = event.getBlock();
+      if (block == portal || block == frame) {
+         event.setResult(Result.DENY);
+      }
+
+   }
+
+   @SubscribeEvent
+   public void onRightClick(RightClickBlock event) {
+      IBlockState current = event.getWorld().getBlockState(event.getPos());
+      boolean isVanillaFrame = current.getBlock() == Blocks.END_PORTAL_FRAME;
+      boolean isModdedFrame = current.getBlock() == frame;
+      if (isVanillaFrame || isModdedFrame) {
+         World world = event.getWorld();
+         BlockPos pos = event.getPos();
+         ItemStack held = event.getEntityPlayer().getHeldItem(event.getHand());
+         ItemStack drop = null;
+         EntityPlayer player = event.getEntityPlayer();
+         IBlockState changed = null;
+         current = current.getActualState(event.getWorld(), event.getPos());
+         if (quarkRunes.isRune(held) && !player.isSneaking()) {
+            if (isVanillaFrame && ((Boolean)current.getValue(BlockEndPortalFrame.EYE)).booleanValue() && allowEnderEyeRemoval) {
+               drop = new ItemStack(Items.ENDER_EYE, 1);
+               changed = Blocks.END_PORTAL_FRAME.getDefaultState().withProperty(BlockEndPortalFrame.FACING, current.getValue(BlockRunePortalFrame.FACING));
+               deactivate(world, pos);
+            }
+
+            if (isModdedFrame) {
+               drop = quarkRunes.getRuneFromMeta(((MesonBlock.ColorVariant)current.getValue(BlockRunePortalFrame.VARIANT)).ordinal());
+            }
+
+            addRune(world, pos, held);
+            activate(world, pos);
+         } else if (player.isSneaking()) {
+            if (isVanillaFrame && !world.isRemote && ((Boolean)current.getValue(BlockEndPortalFrame.EYE)).booleanValue() && allowEnderEyeRemoval) {
+               drop = new ItemStack(Items.ENDER_EYE, 1);
+            }
+
+            if (isModdedFrame) {
+               drop = quarkRunes.getRuneFromMeta(((MesonBlock.ColorVariant)current.getValue(BlockRunePortalFrame.VARIANT)).ordinal());
+            }
+
+            if (drop != null) {
+               EnumFacing frameFacing = (EnumFacing)current.getValue(BlockEndPortalFrame.FACING);
+               changed = Blocks.END_PORTAL_FRAME.getDefaultState().withProperty(BlockEndPortalFrame.FACING, frameFacing);
+            }
+
+            deactivate(world, pos);
+            if (drop != null) {
+               event.setCanceled(true);
+            }
+         }
+
+         if (changed != null) {
+            world.setBlockState(pos, changed, 3);
+         }
+
+         if (drop != null) {
+            PlayerHelper.addOrDropStack(player, drop);
+         }
+      }
+
+   }
+
+   public static void addRune(World world, BlockPos pos, ItemStack rune) {
+      IBlockState current = world.getBlockState(pos);
+      EnumFacing currentFacing = (EnumFacing)current.getValue(BlockRunePortalFrame.FACING);
+      TileEntity tile = world.getTileEntity(pos);
+      if (tile instanceof TileRunePortalFrame) {
+         currentFacing = ((TileRunePortalFrame)tile).getFacing();
+      }
+
+      IBlockState changed = frame.getDefaultState().withProperty(BlockRunePortalFrame.VARIANT, quarkRunes.getRuneColor(rune)).withProperty(BlockRunePortalFrame.FACING, currentFacing);
+      world.setBlockState(pos, changed, 2);
+      tile = world.getTileEntity(pos);
+      if (tile instanceof TileRunePortalFrame) {
+         ((TileRunePortalFrame)tile).setFacing(currentFacing);
+      }
+
+      world.setBlockState(pos, changed, 2);
+      if (world.isRemote) {
+         SoundHelper.playSoundAtPos(world, pos, SoundEvents.BLOCK_END_PORTAL_FRAME_FILL, 1.0F, 1.0F);
+      }
+
+      rune.shrink(1);
+   }
+
+   public static void activate(World world, BlockPos pos) {
+      Map<Integer, List<Integer>> orderMap = new HashMap();
+      PatternHelper pattern = BlockRunePortalFrame.getOrCreatePortalShape().match(world, pos);
+      if (pattern != null) {
+         BlockPos patternStart = pattern.getFrontTopLeft().add(-5, 0, -5);
+
+         for(int a = 0; a < 6; ++a) {
+            for(int b = 0; b < 6; ++b) {
+               IBlockState state = world.getBlockState(patternStart.add(a, 0, b));
+               if (state.getBlock() == frame) {
+                  int face = ((EnumFacing)state.getValue(BlockRunePortalFrame.FACING)).getIndex();
+                  if (!orderMap.containsKey(Integer.valueOf(face))) {
+                     orderMap.put(Integer.valueOf(face), new ArrayList());
+                  }
+
+                  ((List)orderMap.get(Integer.valueOf(face))).add(Integer.valueOf(frame.getMetaFromState(state)));
+               }
+            }
+         }
+
+         BlockPos thisPortal = pattern.getFrontTopLeft();
+         RunePortalSavedData data = RunePortalSavedData.get(world);
+         if (data != null) {
+            List<Integer> order = new ArrayList();
+
+            for(int i : new int[]{2, 4, 3, 5}) {
+               List<Integer> row = (List)orderMap.get(Integer.valueOf(i));
+               Collections.sort(row);
+               order.addAll(row);
+            }
+
+            data.portals.put(thisPortal, order.stream().mapToInt((ix) -> {
+               return i.intValue();
+            }).toArray());
+            removeCachedPortal(world, thisPortal);
+         }
+
+         if (findPortal(world, thisPortal) != null && !world.isRemote) {
+            NetworkHandler.INSTANCE.sendToAll(new MessagePortalInteract(thisPortal, 1));
+         }
+
+         BlockPos start = thisPortal.add(-3, 0, -3);
+
+         for(int j = 0; j < 3; ++j) {
+            for(int k = 0; k < 3; ++k) {
+               BlockPos p = start.add(j, 0, k);
+               world.setBlockState(p, portal.getDefaultState(), 2);
+               portal.setPortal(world, p, thisPortal);
+            }
+         }
+      }
+
+   }
+
+   public static void deactivate(World world, BlockPos pos) {
+      BlockPos thisPortal = null;
+      PatternHelper pattern = BlockRunePortalFrame.getOrCreatePortalShape().match(world, pos);
+      if (pattern == null) {
+         BlockPos pos1 = pos.add(-3, 0, -3);
+         BlockPos pos2 = pos.add(3, 0, 3);
+
+         for(BlockPos inBox : BlockPos.getAllInBox(pos1, pos2)) {
+            if (world.getBlockState(inBox).getBlock() instanceof BlockEndPortal) {
+               if (thisPortal == null) {
+                  thisPortal = portal.getPortal(world, inBox);
+               }
+
+               world.setBlockToAir(inBox);
+            }
+         }
+
+         if (thisPortal != null) {
+            RunePortalSavedData data = RunePortalSavedData.get(world);
+            if (data != null) {
+               data.portals.remove(thisPortal);
+               removeCachedPortal(world, thisPortal);
+            }
+
+            if (!world.isRemote) {
+               NetworkHandler.INSTANCE.sendToAll(new MessagePortalInteract(thisPortal, 0));
+            }
+         }
+      }
+
+   }
+
+   public static BlockPos findPortal(World world, BlockPos thisPortal) {
+      RunePortalSavedData data = RunePortalSavedData.get(world);
+      BlockPos foundPortal = null;
+      List<BlockPos> matching = new ArrayList();
+      if (data != null && data.portals.containsKey(thisPortal)) {
+         BlockPos linkedPortal = (BlockPos)data.links.get(thisPortal);
+         if (linkedPortal != null) {
+            if (data.portals.containsKey(linkedPortal)) {
+               Meson.debug("EndPortalRunes: [CACHE] found portal", linkedPortal);
+               return linkedPortal;
+            }
+
+            Meson.debug("EndPortalRunes: [CACHE] cleaning unlinked portal", linkedPortal);
+            data.links.remove(thisPortal);
+         }
+
+         List<Integer> o1 = (List)Arrays.stream((int[])data.portals.get(thisPortal)).boxed().collect(Collectors.toList());
+
+         for(BlockPos portalPos : data.portals.keySet()) {
+            if (portalPos.toLong() != thisPortal.toLong()) {
+               List<Integer> o2 = (List)Arrays.stream((int[])data.portals.get(portalPos)).boxed().collect(Collectors.toList());
+               int w = 0;
+
+               boolean matched;
+               while(true) {
+                  Collections.rotate(o2, 1);
+                  matched = o1.equals(o2);
+                  if (matched) {
+                     break;
+                  }
+
+                  ++w;
+                  if (w >= 12) {
+                     break;
+                  }
+               }
+
+               if (matched) {
+                  matching.add(portalPos);
+               }
+            }
+         }
+      }
+
+      if (matching.isEmpty()) {
+         return null;
+      } else {
+         double dist = 0.0D;
+
+         for(BlockPos matchedPortal : matching) {
+            double d = WorldHelper.getDistanceSq(thisPortal, matchedPortal);
+            if (dist == 0.0D || d < dist) {
+               foundPortal = matchedPortal;
+               dist = d;
+            }
+         }
+
+         Meson.debug("EndPortalRunes: found matching portal, caching it", foundPortal);
+         data.links.put(thisPortal, foundPortal);
+         data.links.put(foundPortal, thisPortal);
+         return foundPortal;
+      }
+   }
+
+   public static void removeCachedPortal(World world, BlockPos portal) {
+      RunePortalSavedData data = RunePortalSavedData.get(world);
+      if (data != null) {
+         BlockPos cachedPortal = (BlockPos)data.links.get(portal);
+         if (cachedPortal != null) {
+            data.links.remove(cachedPortal);
+         }
+
+         data.links.clear();
+         data.markDirty();
+      }
+
+   }
+
+   @SideOnly(Side.CLIENT)
+   public static void effectPortalLinked(BlockPos pos) {
+      World world = Minecraft.getMinecraft().world;
+      long time = world.getWorldTime();
+      if (clientLinkedTicks == 0L || time - clientLinkedTicks > 20L) {
+         BlockPos current = pos.add(-3, 0, -3);
+
+         for(int j = 0; j < 3; ++j) {
+            for(int k = 0; k < 3; ++k) {
+               BlockPos p = current.add(j, 0, k);
+
+               for(int i = 0; i < 12; ++i) {
+                  double d0 = world.rand.nextGaussian() * 0.1D;
+                  double d1 = world.rand.nextGaussian() * 0.1D;
+                  double d2 = world.rand.nextGaussian() * 0.1D;
+                  double dx = (double)((float)p.getX() + MathHelper.clamp(world.rand.nextFloat(), 0.25F, 0.75F));
+                  double dy = (double)((float)p.getY() + 1.1F);
+                  double dz = (double)((float)p.getZ() + MathHelper.clamp(world.rand.nextFloat(), 0.25F, 0.75F));
+                  world.spawnParticle(EnumParticleTypes.PORTAL, dx, dy, dz, d0, d1, d2, new int[0]);
+               }
+            }
+         }
+
+         SoundHelper.playSoundAtPos(world, pos, SoundEvents.BLOCK_PORTAL_TRIGGER, 0.8F, 1.45F);
+         clientLinkedTicks = time;
+      }
+
+   }
+
+   @SideOnly(Side.CLIENT)
+   public static void effectPortalUnlinked(BlockPos pos) {
+      World world = Minecraft.getMinecraft().world;
+      long time = world.getWorldTime();
+      if (clientUnlinkedTicks == 0L || time - clientUnlinkedTicks > 20L) {
+         BlockPos current = pos.add(-3, 0, -3);
+
+         for(int j = 0; j < 3; ++j) {
+            for(int k = 0; k < 3; ++k) {
+               BlockPos p = current.add(j, 0, k);
+
+               for(int i = 0; i < 16; ++i) {
+                  double d0 = world.rand.nextGaussian() * 0.02D;
+                  double d1 = world.rand.nextGaussian() * 0.02D;
+                  double d2 = world.rand.nextGaussian() * 0.02D;
+                  double dx = (double)((float)p.getX() + MathHelper.clamp(world.rand.nextFloat(), 0.25F, 0.75F));
+                  double dy = (double)((float)p.getY() + 0.5F);
+                  double dz = (double)((float)p.getZ() + MathHelper.clamp(world.rand.nextFloat(), 0.25F, 0.75F));
+                  world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, dx, dy, dz, d0, d1, d2, new int[0]);
+               }
+            }
+         }
+
+         SoundHelper.playSoundAtPos(world, pos, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 0.75F, 0.7F);
+         clientUnlinkedTicks = time;
+      }
+
+   }
+
+   @SideOnly(Side.CLIENT)
+   public static void effectPortalTravelled(BlockPos pos) {
+      World world = Minecraft.getMinecraft().world;
+      long time = world.getWorldTime();
+      if (clientTravelTicks == 0L || time - clientTravelTicks > 20L) {
+         BlockPos current = pos.add(-3, 0, -3);
+
+         for(int j = 0; j < 3; ++j) {
+            for(int k = 0; k < 3; ++k) {
+               BlockPos p = current.add(j, 0, k);
+
+               for(int i = 0; i < 6; ++i) {
+                  double d0 = world.rand.nextGaussian() * 0.1D;
+                  double d1 = world.rand.nextGaussian() * 0.1D;
+                  double d2 = world.rand.nextGaussian() * 0.1D;
+                  double dx = (double)((float)p.getX() + MathHelper.clamp(world.rand.nextFloat(), 0.25F, 0.75F));
+                  double dy = (double)((float)p.getY() + 0.8F);
+                  double dz = (double)((float)p.getZ() + MathHelper.clamp(world.rand.nextFloat(), 0.25F, 0.75F));
+                  world.spawnParticle(EnumParticleTypes.CLOUD, dx, dy, dz, d0, d1, d2, new int[0]);
+               }
+            }
+         }
+
+         SoundHelper.playSoundAtPos(world, pos, SoundEvents.BLOCK_PORTAL_TRAVEL, 0.75F, 1.0F);
+         clientTravelTicks = time;
+      }
+
+   }
+
+   public boolean hasSubscriptions() {
+      return true;
+   }
+}

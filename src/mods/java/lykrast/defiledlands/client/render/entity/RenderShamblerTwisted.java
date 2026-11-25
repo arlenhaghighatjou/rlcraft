@@ -1,0 +1,37 @@
+package lykrast.defiledlands.client.render.entity;
+
+import lykrast.defiledlands.client.model.ModelShambler;
+import lykrast.defiledlands.client.render.entity.layers.LayerShamblerTwistedEyes;
+import lykrast.defiledlands.common.entity.monster.EntityShamblerTwisted;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
+public class RenderShamblerTwisted extends RenderLiving<EntityShamblerTwisted> {
+   private static final ResourceLocation TEXTURES = new ResourceLocation("defiledlands", "textures/entity/shambler_twisted.png");
+
+   public RenderShamblerTwisted(RenderManager renderManagerIn) {
+      super(renderManagerIn, new ModelShambler(0.0F), 0.5F);
+      this.addLayer(new LayerShamblerTwistedEyes(this));
+   }
+
+   public ModelShambler getMainModel() {
+      return (ModelShambler)super.getMainModel();
+   }
+
+   public void doRender(EntityShamblerTwisted entity, double x, double y, double z, float entityYaw, float partialTicks) {
+      super.doRender(entity, x, y, z, entityYaw, partialTicks);
+   }
+
+   protected ResourceLocation getEntityTexture(EntityShamblerTwisted entity) {
+      return TEXTURES;
+   }
+
+   protected void applyRotations(EntityShamblerTwisted entityLiving, float p_77043_2_, float rotationYaw, float partialTicks) {
+      rotationYaw = rotationYaw + (float)(Math.cos((double)entityLiving.ticksExisted * 3.25D) * 3.141592653589793D * 0.75D);
+      super.applyRotations(entityLiving, p_77043_2_, rotationYaw, partialTicks);
+   }
+}

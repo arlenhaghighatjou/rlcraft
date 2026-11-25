@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" i ",
+		"isi",
+		" i "
+	],
+	"key": {
+		"s": {
+			"item": "spartanshields:shield_basic_wood"
+		},
+		"i": {
+			"tag": "forge:ingots/constantan"
+		}
+	},
+	"result": {
+		"item": "spartanshields:shield_basic_constantan"
+	},
+	"conditions": [
+		{
+			"type" : "spartanshields:item_tag_exists",
+			"item_tag": "forge:ingots/constantan"
+		}
+	]
+}

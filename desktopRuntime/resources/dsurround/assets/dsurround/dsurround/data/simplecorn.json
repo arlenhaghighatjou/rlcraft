@@ -1,0 +1,18 @@
+{
+	"footsteps": {
+		"simplecorn:corn": "NOT_EMITTER",
+		"simplecorn:corn+messy": "MESSY_GROUND",
+		"simplecorn:corn[age=0]+foliage": "brush",
+		"simplecorn:corn[age=1]+foliage": "brush",
+		"simplecorn:corn[age=2]+foliage": "brush_straw_transition",
+		"simplecorn:corn[age=3]+foliage": "brush_straw_transition",
+		"simplecorn:corn[age=4]+foliage": "straw",
+		"simplecorn:corn[age=5]+foliage": "straw",
+		"simplecorn:corn[age=6]+foliage": "straw",
+		"simplecorn:corn[age=7]+foliage": "straw",
+		"simplecorn:corn[age=8]+foliage": "straw",
+		"simplecorn:corn[age=9]+foliage": "straw",
+		"simplecorn:corn[age=10]+foliage": "straw",
+		"simplecorn:corn[age=11]+foliage": "straw"
+	}
+}

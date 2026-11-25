@@ -1,0 +1,64 @@
+package com.mujmajnkraft.bettersurvival.enchantments;
+
+import com.mujmajnkraft.bettersurvival.capabilities.extendedarrowproperties.ArrowPropertiesProvider;
+import com.mujmajnkraft.bettersurvival.capabilities.extendedarrowproperties.IArrowProperties;
+import com.mujmajnkraft.bettersurvival.config.ForgeConfigHandler;
+import com.mujmajnkraft.bettersurvival.init.ModEnchantments;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.Enchantments;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.util.EnumFacing;
+
+public class EnchantmentBlast extends Enchantment {
+   public EnchantmentBlast() {
+      super(Rarity.RARE, EnumEnchantmentType.BOW, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
+      this.setRegistryName("blast");
+      this.setName("mujmajnkraftsbettersurvival.blast");
+   }
+
+   public static void modifyArrow(EntityArrow arrow, EntityLivingBase shooter) {
+      float power = (float)(EnchantmentHelper.getEnchantmentLevel(ModEnchantments.blast, shooter.getHeldItemMainhand()) + 1) / 4.0F;
+      boolean canDestroyBlocks;
+      if (shooter instanceof EntityPlayer) {
+         canDestroyBlocks = ((EntityPlayer)shooter).capabilities.allowEdit;
+      } else {
+         canDestroyBlocks = shooter.getEntityWorld().getGameRules().getBoolean("mobGriefing");
+      }
+
+      IArrowProperties cap = (IArrowProperties)arrow.getCapability(ArrowPropertiesProvider.ARROWPROPERTIES_CAP, (EnumFacing)null);
+      if (cap != null) {
+         cap.setExplosion(power, canDestroyBlocks);
+      }
+
+   }
+
+   public int getMinEnchantability(int enchantmentLevel) {
+      return 15 + (enchantmentLevel - 1) * 20;
+   }
+
+   public int getMaxEnchantability(int enchantmentLevel) {
+      return 50;
+   }
+
+   public int getMaxLevel() {
+      return ForgeConfigHandler.enchantments.blastLevel;
+   }
+
+   public boolean canApplyTogether(Enchantment ench) {
+      return super.canApplyTogether(ench) && ench != Enchantments.PUNCH && ench != ModEnchantments.multishot;
+   }
+
+   public boolean isTreasureEnchantment() {
+      return ForgeConfigHandler.enchantments.bashTreasure;
+   }
+
+   public boolean isAllowedOnBooks() {
+      return ForgeConfigHandler.enchantments.blastLevel != 0;
+   }
+}

@@ -1,0 +1,352 @@
+{
+  "com/alcatrazescapee/alcatrazcore/AlcatrazCore": {
+    "name": "com/alcatrazescapee/alcatrazcore/AlcatrazCore",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/alcatrazescapee/alcatrazcore/AlcatrazCore",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "certificateFingerprint": {
+            "value": "3c2d6be715971d1ed58a028cdb3fae72987fc934"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.4.2705,15.0.0.0);"
+          },
+          "modid": {
+            "value": "alcatrazcore"
+          },
+          "name": {
+            "value": "Alcatraz Core"
+          },
+          "useMetadata": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "version": {
+            "value": "1.0.4"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.alcatrazescapee.alcatrazcore.proxy.ClientProxy"
+          },
+          "modId": {
+            "value": "alcatrazcore"
+          },
+          "serverSide": {
+            "value": "com.alcatrazescapee.alcatrazcore.proxy.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onFingerprintViolation(Lnet/minecraftforge/fml/common/event/FMLFingerprintViolationEvent;)V"
+      }
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/AlcatrazCore$1": {
+    "name": "com/alcatrazescapee/alcatrazcore/AlcatrazCore$1",
+    "interfaces": [
+      "net/minecraftforge/fml/common/ICrashCallable"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/CoreConfig": {
+    "name": "com/alcatrazescapee/alcatrazcore/CoreConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "com/alcatrazescapee/alcatrazcore/CoreConfig",
+        "values": {
+          "modid": {
+            "value": "alcatrazcore"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "showDebugTooltips",
+        "value": {
+          "values": [
+            "When Advanced tooltips are enabled, show extra information about the item",
+            "(Ore dictionary values, NBT data, registry + translation keys, etc.)"
+          ]
+        }
+      }
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/ModEventHandler": {
+    "name": "com/alcatrazescapee/alcatrazcore/ModEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/alcatrazescapee/alcatrazcore/ModEventHandler"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChangedEvent(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/block/BlockCore": {
+    "name": "com/alcatrazescapee/alcatrazcore/block/BlockCore",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/client/IModelProvider"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/block/BlockFluidCore": {
+    "name": "com/alcatrazescapee/alcatrazcore/block/BlockFluidCore",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/client/IModelProvider"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/block/BlockTileCore": {
+    "name": "com/alcatrazescapee/alcatrazcore/block/BlockTileCore",
+    "interfaces": [
+      "net/minecraft/block/ITileEntityProvider"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/client/ClientEventHandler": {
+    "name": "com/alcatrazescapee/alcatrazcore/client/ClientEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/alcatrazescapee/alcatrazcore/client/ClientEventHandler",
+        "values": {
+          "modid": {
+            "value": "alcatrazcore"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemTooltip(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V"
+      }
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/inventory/capability/ItemHandlerItem": {
+    "name": "com/alcatrazescapee/alcatrazcore/inventory/capability/ItemHandlerItem",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/inventory/ingredient/IRecipeIngredient": {
+    "name": "com/alcatrazescapee/alcatrazcore/inventory/ingredient/IRecipeIngredient",
+    "interfaces": [
+      "java/util/function/Predicate"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/inventory/ingredient/IngredientFluidStack": {
+    "name": "com/alcatrazescapee/alcatrazcore/inventory/ingredient/IngredientFluidStack",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/inventory/ingredient/IRecipeIngredient"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/inventory/ingredient/IngredientItemStack": {
+    "name": "com/alcatrazescapee/alcatrazcore/inventory/ingredient/IngredientItemStack",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/inventory/ingredient/IRecipeIngredient"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/inventory/ingredient/IngredientOreDict": {
+    "name": "com/alcatrazescapee/alcatrazcore/inventory/ingredient/IngredientOreDict",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/inventory/ingredient/IRecipeIngredient"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/inventory/recipe/IRecipeCore": {
+    "name": "com/alcatrazescapee/alcatrazcore/inventory/recipe/IRecipeCore",
+    "interfaces": [
+      "java/util/function/Predicate"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/inventory/recipe/RecipeCore": {
+    "name": "com/alcatrazescapee/alcatrazcore/inventory/recipe/RecipeCore",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/inventory/recipe/IRecipeCore"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/inventory/recipe/RecipeManager": {
+    "name": "com/alcatrazescapee/alcatrazcore/inventory/recipe/RecipeManager",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/inventory/recipe/IRecipeManager"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/inventory/recipe/RecipeMultiOutput": {
+    "name": "com/alcatrazescapee/alcatrazcore/inventory/recipe/RecipeMultiOutput",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/inventory/recipe/IRecipeCore"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/item/ItemArmorCore": {
+    "name": "com/alcatrazescapee/alcatrazcore/item/ItemArmorCore",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/client/IModelProvider"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/item/ItemCore": {
+    "name": "com/alcatrazescapee/alcatrazcore/item/ItemCore",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/client/IModelProvider"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/item/tool/ItemHoeCore": {
+    "name": "com/alcatrazescapee/alcatrazcore/item/tool/ItemHoeCore",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/client/IModelProvider"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/item/tool/ItemSwordCore": {
+    "name": "com/alcatrazescapee/alcatrazcore/item/tool/ItemSwordCore",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/client/IModelProvider"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/item/tool/ItemToolCore": {
+    "name": "com/alcatrazescapee/alcatrazcore/item/tool/ItemToolCore",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/client/IModelProvider"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/network/PacketTContainerUpdate": {
+    "name": "com/alcatrazescapee/alcatrazcore/network/PacketTContainerUpdate",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/network/PacketTContainerUpdate$Handler": {
+    "name": "com/alcatrazescapee/alcatrazcore/network/PacketTContainerUpdate$Handler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/network/capability/CapabilityContainerListener": {
+    "name": "com/alcatrazescapee/alcatrazcore/network/capability/CapabilityContainerListener",
+    "interfaces": [
+      "net/minecraft/inventory/IContainerListener"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/network/capability/CapabilityContainerListenerManager$EventHandler": {
+    "name": "com/alcatrazescapee/alcatrazcore/network/capability/CapabilityContainerListenerManager$EventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/alcatrazescapee/alcatrazcore/network/capability/CapabilityContainerListenerManager$EventHandler",
+        "values": {
+          "modid": {
+            "value": "alcatrazcore"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/SERVER"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLoggedInEvent(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerCloneEvent(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onContainerOpenEvent(Lnet/minecraftforge/event/entity/player/PlayerContainerEvent$Open;)V"
+      }
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/proxy/ClientProxy": {
+    "name": "com/alcatrazescapee/alcatrazcore/proxy/ClientProxy",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/proxy/IProxy"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/proxy/ServerProxy": {
+    "name": "com/alcatrazescapee/alcatrazcore/proxy/ServerProxy",
+    "interfaces": [
+      "com/alcatrazescapee/alcatrazcore/proxy/IProxy"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/util/CoreHelpers": {
+    "name": "com/alcatrazescapee/alcatrazcore/util/CoreHelpers",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "com/alcatrazescapee/alcatrazcore/util/CoreHelpers"
+      }
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/util/collections/EnumTable": {
+    "name": "com/alcatrazescapee/alcatrazcore/util/collections/EnumTable",
+    "interfaces": [
+      "com/google/common/collect/Table"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/util/collections/EnumTable$EnumCell": {
+    "name": "com/alcatrazescapee/alcatrazcore/util/collections/EnumTable$EnumCell",
+    "interfaces": [
+      "com/google/common/collect/Table$Cell"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/util/collections/ImmutableHashTable": {
+    "name": "com/alcatrazescapee/alcatrazcore/util/collections/ImmutableHashTable",
+    "interfaces": [
+      "com/google/common/collect/Table"
+    ]
+  },
+  "com/alcatrazescapee/alcatrazcore/util/collections/ImmutablePair": {
+    "name": "com/alcatrazescapee/alcatrazcore/util/collections/ImmutablePair",
+    "interfaces": [
+      "java/util/Map$Entry"
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern": [
+    "F F",
+    "FWF"
+    ],
+    
+    "key":
+    {
+        "F":
+        {
+            "item": "minecraft:acacia_fence"
+        },
+        
+        "W":
+        {
+            "item": "minecraft:wooden_slab",
+            "data": 4
+        }
+    },
+    
+    "result":
+    {
+        "item":  "mcwbridges:acacia_rail_bridge",
+        "count": 4
+    }
+}

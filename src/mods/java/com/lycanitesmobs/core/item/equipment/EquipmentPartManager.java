@@ -1,0 +1,64 @@
+package com.lycanitesmobs.core.item.equipment;
+
+import com.google.gson.JsonObject;
+import com.lycanitesmobs.LycanitesMobs;
+import com.lycanitesmobs.ObjectManager;
+import com.lycanitesmobs.core.JSONLoader;
+import com.lycanitesmobs.core.info.ModInfo;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class EquipmentPartManager extends JSONLoader {
+   public static EquipmentPartManager INSTANCE;
+   public Map<String, ItemEquipmentPart> equipmentParts = new HashMap();
+   public List<ModInfo> loadedGroups = new ArrayList();
+
+   public EquipmentPartManager() {
+   }
+
+   public static EquipmentPartManager getInstance() {
+      if (INSTANCE == null) {
+         INSTANCE = new EquipmentPartManager();
+      }
+
+      return INSTANCE;
+   }
+
+   public void loadAllFromJSON(ModInfo groupInfo) {
+      if (!this.loadedGroups.contains(groupInfo)) {
+         this.loadedGroups.add(groupInfo);
+      }
+
+      try {
+         this.loadAllJson(groupInfo, "Equipment", "equipment", "itemName", false);
+         LycanitesMobs.logDebug("Equipment", "Complete! " + this.equipmentParts.size() + " JSON Equipment Parts Loaded In Total.");
+      } catch (Exception var3) {
+         LycanitesMobs.logWarning("", "No Equipment loaded for: " + groupInfo.name);
+      }
+
+   }
+
+   public void parseJson(ModInfo groupInfo, String name, JsonObject json) {
+      ItemEquipmentPart equipmentPart = new ItemEquipmentPart(groupInfo);
+      equipmentPart.loadFromJSON(json);
+      if (this.equipmentParts.containsKey(equipmentPart.itemName)) {
+         LycanitesMobs.logWarning("", "[Equipment] Tried to add a Equipment Part with a name that is already in use: " + equipmentPart.itemName);
+      } else if (this.equipmentParts.values().contains(equipmentPart)) {
+         LycanitesMobs.logWarning("", "[Equipment] Tried to add a Equipment Part that is already added: " + equipmentPart.itemName);
+      } else {
+         this.equipmentParts.put(equipmentPart.itemName, equipmentPart);
+         ObjectManager.addItem(equipmentPart.itemName, equipmentPart);
+      }
+   }
+
+   public void reload() {
+      this.equipmentParts.clear();
+
+      for(ModInfo group : this.loadedGroups) {
+         this.loadAllFromJSON(group);
+      }
+
+   }
+}

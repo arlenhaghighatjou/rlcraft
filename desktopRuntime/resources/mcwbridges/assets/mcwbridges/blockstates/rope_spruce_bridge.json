@@ -1,0 +1,47 @@
+{
+	"variants":
+	{
+
+		"facing=south,lit=false":
+		{
+			 "model": "mcwbridges:rope_spruce_bridge","y":270
+		},
+		
+		"facing=east,lit=false":
+		{
+			 "model": "mcwbridges:rope_spruce_bridge","y":0
+		},
+		
+		"facing=west,lit=false":
+		{
+			 "model": "mcwbridges:rope_spruce_bridge","y":180
+		},
+		
+		"facing=north,lit=false":
+		{
+			 "model": "mcwbridges:rope_spruce_bridge","y":90
+		},
+		
+		
+		
+		"facing=south,lit=true":
+		{
+			 "model": "mcwbridges:lit/rope_spruce_bridge","y":270
+		},
+		
+		"facing=east,lit=true":
+		{
+			 "model": "mcwbridges:lit/rope_spruce_bridge","y":0
+		},
+		
+		"facing=west,lit=true":
+		{
+			 "model": "mcwbridges:lit/rope_spruce_bridge","y":180
+		},
+		
+		"facing=north,lit=true":
+		{
+			 "model": "mcwbridges:lit/rope_spruce_bridge","y":90
+		}
+	}
+}

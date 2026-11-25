@@ -1,0 +1,3280 @@
+{
+  "codersafterdark/compatskills/CompatSkills": {
+    "name": "codersafterdark/compatskills/CompatSkills",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "codersafterdark/compatskills/CompatSkills",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "1.12,"
+          },
+          "dependencies": {
+            "value": "required-after:reskillable@[1.12.2-1.13.0,);after:baubles;after:bloodmagic@[1.12.2-2.3.0-98,);after:gamestages;after:immersiveengineering@[0.12-92,);after:magneticraft;after:tconstruct;after:theoneprobe;after:projecte@[1.12-PE1.3.1B,);after:thaumcraft@[1.12.2-6.1.BETA20,);after:betterquesting@[3.5.311,);after:astralsorcery"
+          },
+          "modid": {
+            "value": "compatskills"
+          },
+          "name": {
+            "value": "CompatSkills"
+          },
+          "version": {
+            "value": "1.12.2-1.17.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "codersafterdark.compatskills.client.ClientProxy"
+          },
+          "serverSide": {
+            "value": "codersafterdark.compatskills.common.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStart(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/baubles/BaublesTickHandler": {
+    "name": "codersafterdark/compatskills/common/compats/baubles/BaublesTickHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tickHandler(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/betterquesting/BQTaskHandler": {
+    "name": "codersafterdark/compatskills/common/compats/betterquesting/BQTaskHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCacheInvalidate(Lcodersafterdark/reskillable/api/event/CacheInvalidatedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityLiving(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/betterquesting/FactoryTaskRequirement": {
+    "name": "codersafterdark/compatskills/common/compats/betterquesting/FactoryTaskRequirement",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/betterquesting/TaskRequirement": {
+    "name": "codersafterdark/compatskills/common/compats/betterquesting/TaskRequirement",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/betterquesting/gui/GuiTaskRequirementEditor": {
+    "name": "codersafterdark/compatskills/common/compats/betterquesting/gui/GuiTaskRequirementEditor",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener",
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/betterquesting/gui/PanelScrollingStrings": {
+    "name": "codersafterdark/compatskills/common/compats/betterquesting/gui/PanelScrollingStrings",
+    "interfaces": [
+      "betterquesting/api2/client/gui/events/IPEventListener"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/bloodmagic/BindHandler": {
+    "name": "codersafterdark/compatskills/common/compats/bloodmagic/BindHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "bindEvent(LWayofTime/bloodmagic/event/ItemBindEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/RitualHandler": {
+    "name": "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/RitualHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "ritualEvent(LWayofTime/bloodmagic/event/RitualEvent$RitualActivatedEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/RitualHandlerTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/RitualHandlerTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/RitualHandlerTweaker",
+        "value": {
+          "value": "bloodmagic"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/RitualHandlerTweaker",
+        "value": {
+          "value": "mods.compatskills.RitualHandler"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/RitualHandlerTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRitualLock(Ljava/lang/String;[Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRitualCostLock(I[Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRitualCrystalLock(I[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/RitualHandlerTweaker$AddRitualCostLock": {
+    "name": "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/RitualHandlerTweaker$AddRitualCostLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/RitualHandlerTweaker$AddRitualCrystalLock": {
+    "name": "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/RitualHandlerTweaker$AddRitualCrystalLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/RitualHandlerTweaker$AddRitualLock": {
+    "name": "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/RitualHandlerTweaker$AddRitualLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/keys/RitualCostLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/keys/RitualCostLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/FuzzyLockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/keys/RitualCrystalLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/keys/RitualCrystalLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/FuzzyLockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/keys/RitualNameLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/bloodmagic/ritualhandler/keys/RitualNameLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/cyberware/CyberwareEventHandler": {
+    "name": "codersafterdark/compatskills/common/compats/cyberware/CyberwareEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSurgeryAttempt(Lflaxbeard/cyberware/api/CyberwareSurgeryEvent$Pre;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/dynamicswordskills/DSSEventHandler": {
+    "name": "codersafterdark/compatskills/common/compats/dynamicswordskills/DSSEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "interactEvent(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickItem;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "interactEvent(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/electroblob/WizardyEventHandler": {
+    "name": "codersafterdark/compatskills/common/compats/electroblob/WizardyEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onSpellBind(Lelectroblob/wizardry/event/SpellBindEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/gamestages/gamestagelocks/GameStageLock": {
+    "name": "codersafterdark/compatskills/common/compats/gamestages/gamestagelocks/GameStageLock",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/gamestages/gamestagelocks/GameStageLockHandler": {
+    "name": "codersafterdark/compatskills/common/compats/gamestages/gamestagelocks/GameStageLockHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "gameStageAdded(Lnet/darkhax/gamestages/event/GameStageEvent$Add;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/gamestages/gamestagelocks/GameStageLockTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/gamestages/gamestagelocks/GameStageLockTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/gamestages/gamestagelocks/GameStageLockTweaker",
+        "value": {
+          "value": "gamestages"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/gamestages/gamestagelocks/GameStageLockTweaker",
+        "value": {
+          "value": "mods.compatskills.GameStageLocks"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/gamestages/gamestagelocks/GameStageLockTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addGameStageLock(Ljava/lang/String;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/gamestages/gamestagelocks/GameStageLockTweaker$AddGameStageLock": {
+    "name": "codersafterdark/compatskills/common/compats/gamestages/gamestagelocks/GameStageLockTweaker$AddGameStageLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/gamestages/gamestagerequirement/GameStageRequirementHandler": {
+    "name": "codersafterdark/compatskills/common/compats/gamestages/gamestagerequirement/GameStageRequirementHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "gameStageAdded(Lnet/darkhax/gamestages/event/GameStageEvent$Added;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "gameStageRemoved(Lnet/darkhax/gamestages/event/GameStageEvent$Removed;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/gamestages/gamestageunlockable/GameStageUnlockable": {
+    "name": "codersafterdark/compatskills/common/compats/gamestages/gamestageunlockable/GameStageUnlockable",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/gamestages/gamestageunlockable/GameStageUnlockable",
+        "value": {
+          "value": "gamestages"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/gamestages/gamestageunlockable/GameStageUnlockable",
+        "value": {
+          "value": "mods.compatskills.GameStageUnlockable"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/gamestages/gamestageunlockable/GameStageUnlockable"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "name"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "description"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addGameStageUnlockable(Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;I[Ljava/lang/String;)Lcodersafterdark/compatskills/common/compats/gamestages/gamestageunlockable/GameStageUnlockable;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "retrieveIcon()Ljava/lang/String;",
+        "value": {
+          "value": "icon"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "retrieveIcon()Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "changeIcon(Ljava/lang/String;)V",
+        "value": {
+          "value": "icon"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "changeIcon(Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/immersiveengineering/IEMultiBlockGate": {
+    "name": "codersafterdark/compatskills/common/compats/immersiveengineering/IEMultiBlockGate",
+    "interfaces": [
+      "codersafterdark/compatskills/utils/multiblock/MultiBlockGate"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/immersiveengineering/IEMultiBlockGates": {
+    "name": "codersafterdark/compatskills/common/compats/immersiveengineering/IEMultiBlockGates",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/immersiveengineering/IEMultiBlockGates",
+        "value": {
+          "value": "immersiveengineering"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/immersiveengineering/IEMultiBlockGates",
+        "value": {
+          "value": "mods.compatskills.IEMultiBlockGate"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/immersiveengineering/IEMultiBlockGates"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addGate(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/immersiveengineering/IEMultiBlockHandler": {
+    "name": "codersafterdark/compatskills/common/compats/immersiveengineering/IEMultiBlockHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "multiBlockForm(Lblusunrize/immersiveengineering/api/MultiblockHandler$MultiblockFormEvent$Pre;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/magneticraft/MagMultiBlockGate": {
+    "name": "codersafterdark/compatskills/common/compats/magneticraft/MagMultiBlockGate",
+    "interfaces": [
+      "codersafterdark/compatskills/utils/multiblock/MultiBlockGate"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/magneticraft/MagMultiBlockGates": {
+    "name": "codersafterdark/compatskills/common/compats/magneticraft/MagMultiBlockGates",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/magneticraft/MagMultiBlockGates",
+        "value": {
+          "value": "magneticraft"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/magneticraft/MagMultiBlockGates",
+        "value": {
+          "value": "mods.compatskills.MagMultiBlockGates"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/magneticraft/MagMultiBlockGates"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addGate(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/magneticraft/MagMultiBlockHandler": {
+    "name": "codersafterdark/compatskills/common/compats/magneticraft/MagMultiBlockHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "multiBlockForm(Lcom/cout970/magneticraft/api/multiblock/MultiBlockEvent$CheckIntegrity;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/dimension/dimensionlocks/DimensionLockHandler": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/dimension/dimensionlocks/DimensionLockHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDimensionChanging(Lnet/minecraftforge/event/entity/EntityTravelToDimensionEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/dimension/dimensionlocks/DimensionLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/dimension/dimensionlocks/DimensionLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/dimension/dimensionlocks/DimensionLockTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/dimension/dimensionlocks/DimensionLockTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/dimension/dimensionlocks/DimensionLockTweaker",
+        "value": {
+          "value": "mods.compatskills.DimensionLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/dimension/dimensionlocks/DimensionLockTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addDimensionLock(I[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/dimension/dimensionlocks/DimensionLockTweaker$AddDimensionLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/dimension/dimensionlocks/DimensionLockTweaker$AddDimensionLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/dimension/dimensionrequirement/DimensionRequirementHandler": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/dimension/dimensionrequirement/DimensionRequirementHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDimensionChanged(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerChangedDimensionEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/drops/BlockDropsHandler": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/drops/BlockDropsHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockDrops(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/drops/BlockDropsTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/drops/BlockDropsTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/drops/BlockDropsTweaker",
+        "value": {
+          "value": "mods.compatskills.BlockDropsLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/drops/BlockDropsTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addBlockDropLock(Lcrafttweaker/api/item/IItemStack;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/drops/BlockDropsTweaker$AddBlockDropLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/drops/BlockDropsTweaker$AddBlockDropLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/drops/ItemStackDropKey": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/drops/ItemStackDropKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/entity/EntityLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/entity/EntityLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/entity/animaltameevent/AnimalTameEventHandler": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/entity/animaltameevent/AnimalTameEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTame(Lnet/minecraftforge/event/entity/living/AnimalTameEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/entity/animaltameevent/AnimalTameEventTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/entity/animaltameevent/AnimalTameEventTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/entity/animaltameevent/AnimalTameEventTweaker",
+        "value": {
+          "value": "mods.compatskills.AnimalTameLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/entity/animaltameevent/AnimalTameEventTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addTameLock(Lcrafttweaker/api/entity/IEntityDefinition;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/entity/animaltameevent/AnimalTameEventTweaker$AddTameLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/entity/animaltameevent/AnimalTameEventTweaker$AddTameLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/entity/entitydamageevent/EntityDamageEventHandler": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/entity/entitydamageevent/EntityDamageEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAttack(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/entity/entitydamageevent/EntityDamageEventTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/entity/entitydamageevent/EntityDamageEventTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/entity/entitydamageevent/EntityDamageEventTweaker",
+        "value": {
+          "value": "mods.compatskills.EntityDamageLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/entity/entitydamageevent/EntityDamageEventTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEntityLock(Lcrafttweaker/api/entity/IEntityDefinition;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/entity/entitydamageevent/EntityDamageEventTweaker$AddDamageLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/entity/entitydamageevent/EntityDamageEventTweaker$AddDamageLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/entity/entitymountevent/EntityMountEventHandler": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/entity/entitymountevent/EntityMountEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onMount(Lnet/minecraftforge/event/entity/EntityMountEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/entity/entitymountevent/EntityMountEventTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/entity/entitymountevent/EntityMountEventTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/entity/entitymountevent/EntityMountEventTweaker",
+        "value": {
+          "value": "mods.compatskills.EntityMountLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/entity/entitymountevent/EntityMountEventTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addMountLock(Lcrafttweaker/api/entity/IEntityDefinition;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/entity/entitymountevent/EntityMountEventTweaker$AddMountLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/entity/entitymountevent/EntityMountEventTweaker$AddMountLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/health/HealthChangeHandler": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/health/HealthChangeHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onHeal(Lnet/minecraftforge/event/entity/living/LivingHealEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onDamaged(Lnet/minecraftforge/event/entity/living/LivingDamageEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/ItemChangeHandler": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/ItemChangeHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "heldItemChange(Lnet/minecraftforge/event/entity/living/LivingEquipmentChangeEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "interactEvent(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/OreDictionaryTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/OreDictionaryTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/item/OreDictionaryTweaker",
+        "value": {
+          "value": "mods.compatskills.OreDictLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/item/OreDictionaryTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addOreDictLock(Lcrafttweaker/api/oredict/IOreDictEntry;[Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addNBTOreDictLock(Lcrafttweaker/api/oredict/IOreDictEntry;Lcrafttweaker/api/data/IData;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/OreDictionaryTweaker$AddOreDict": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/OreDictionaryTweaker$AddOreDict",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/OreDictionaryTweaker$AddOreDictNBT": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/OreDictionaryTweaker$AddOreDictNBT",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/ParentOreDictLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/ParentOreDictLock",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/ParentLockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/armor/ArmorLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/armor/ArmorLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/FuzzyLockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/armor/ArmorLockTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/armor/ArmorLockTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/item/armor/ArmorLockTweaker",
+        "value": {
+          "value": "mods.compatskills.ArmorLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/item/armor/ArmorLockTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addArmorLock(D[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/armor/ArmorLockTweaker$AddArmorLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/armor/ArmorLockTweaker$AddArmorLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/food/FoodTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/food/FoodTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/item/food/FoodTweaker",
+        "value": {
+          "value": "mods.compatskills.FoodTweaker"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/item/food/FoodTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addHungerLock(I[Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addSaturationLock(F[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/food/FoodTweaker$AddHungerLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/food/FoodTweaker$AddHungerLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/food/FoodTweaker$AddSaturationLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/food/FoodTweaker$AddSaturationLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/food/HungerLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/food/HungerLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/FuzzyLockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/food/SaturationLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/food/SaturationLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/FuzzyLockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/harvestlevel/BlockHarvestLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/harvestlevel/BlockHarvestLock",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/FuzzyLockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/harvestlevel/HarvestLevelTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/harvestlevel/HarvestLevelTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/item/harvestlevel/HarvestLevelTweaker",
+        "value": {
+          "value": "mods.compatskills.HarvestLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/item/harvestlevel/HarvestLevelTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addToolLevelLock(I[Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addToolLevelLock(Ljava/lang/String;I[Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addBlockLevelLock(I[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/harvestlevel/HarvestLevelTweaker$AddBlockLevelLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/harvestlevel/HarvestLevelTweaker$AddBlockLevelLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/harvestlevel/HarvestLevelTweaker$AddToolLevelLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/harvestlevel/HarvestLevelTweaker$AddToolLevelLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/harvestlevel/ToolHarvestLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/harvestlevel/ToolHarvestLock",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/FuzzyLockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/weapon/AttackDamageLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/weapon/AttackDamageLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/FuzzyLockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/weapon/DamageLockTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/weapon/DamageLockTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/item/weapon/DamageLockTweaker",
+        "value": {
+          "value": "mods.compatskills.DamageLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/item/weapon/DamageLockTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addDamageLock(D[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/item/weapon/DamageLockTweaker$AddDamageLock": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/item/weapon/DamageLockTweaker$AddDamageLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/tileentity/TileEntityEventHandler": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/tileentity/TileEntityEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTileEntityInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTileEntityInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$LeftClickBlock;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/tileentity/TileEntityLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/tileentity/TileEntityLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/tileentity/TileEntityLockTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/tileentity/TileEntityLockTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/tileentity/TileEntityLockTweaker",
+        "value": {
+          "value": "mods.compatskills.TileEntityLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/minecraft/tileentity/TileEntityLockTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addTileEntityLock(Ljava/lang/String;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/minecraft/tileentity/TileEntityLockTweaker$AddTileEntity": {
+    "name": "codersafterdark/compatskills/common/compats/minecraft/tileentity/TileEntityLockTweaker$AddTileEntity",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/oreexcavator/ExcavationLockHandler": {
+    "name": "codersafterdark/compatskills/common/compats/oreexcavator/ExcavationLockHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onExcavation(Loreexcavation/events/EventExcavate$Pre;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/oreexcavator/filter/ExcavateRequirementFilter": {
+    "name": "codersafterdark/compatskills/common/compats/oreexcavator/filter/ExcavateRequirementFilter",
+    "interfaces": [
+      "oreexcavation/events/IExcavateFilter"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/oreexcavator/tweakers/ExcavationLockTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/oreexcavator/tweakers/ExcavationLockTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/oreexcavator/tweakers/ExcavationLockTweaker",
+        "value": {
+          "value": "oreexcavation"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/oreexcavator/tweakers/ExcavationLockTweaker",
+        "value": {
+          "value": "mods.compatskills.Excavation"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/oreexcavator/tweakers/ExcavationLockTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addExcavationLock([Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/oreexcavator/tweakers/ExcavationLockTweaker$AddExcavationLock": {
+    "name": "codersafterdark/compatskills/common/compats/oreexcavator/tweakers/ExcavationLockTweaker$AddExcavationLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/projecte/EMCLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/projecte/EMCLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/FuzzyLockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/projecte/ProjectETweaker": {
+    "name": "codersafterdark/compatskills/common/compats/projecte/ProjectETweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/projecte/ProjectETweaker",
+        "value": {
+          "value": "projecte"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/projecte/ProjectETweaker",
+        "value": {
+          "value": "mods.compatskills.EMCLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/projecte/ProjectETweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEMCLock(J[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/projecte/ProjectETweaker$AddEMCLock": {
+    "name": "codersafterdark/compatskills/common/compats/projecte/ProjectETweaker$AddEMCLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/projecte/TransmutationLockHandler": {
+    "name": "codersafterdark/compatskills/common/compats/projecte/TransmutationLockHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAttemptCondenserSet(Lmoze_intel/projecte/api/event/PlayerAttemptCondenserSetEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAttemptLearnEvent(Lmoze_intel/projecte/api/event/PlayerAttemptLearnEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/ModLockTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/ModLockTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/ModLockTweaker",
+        "value": {
+          "value": "crafttweaker"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/ModLockTweaker",
+        "value": {
+          "value": "mods.compatskills.ModLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/ModLockTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addModLock(Ljava/lang/String;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/ModLockTweaker$Add": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/ModLockTweaker$Add",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/NBTLockTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/NBTLockTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/NBTLockTweaker",
+        "value": {
+          "value": "crafttweaker"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/NBTLockTweaker",
+        "value": {
+          "value": "mods.compatskills.NBTLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/NBTLockTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addModNBTLock(Ljava/lang/String;Lcrafttweaker/api/data/IData;[Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addGenericNBTLock(Lcrafttweaker/api/data/IData;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/NBTLockTweaker$AddGenericNBTLock": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/NBTLockTweaker$AddGenericNBTLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/NBTLockTweaker$AddModNBTLock": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/NBTLockTweaker$AddModNBTLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/RequirementTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/RequirementTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/RequirementTweaker",
+        "value": {
+          "value": "crafttweaker"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/RequirementTweaker",
+        "value": {
+          "value": "mods.compatskills.Requirement"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/RequirementTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addRequirement(Lcrafttweaker/api/item/IItemStack;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/RequirementTweaker$Add": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/RequirementTweaker$Add",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/brackethandlers/BracketHandlerSkill": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/brackethandlers/BracketHandlerSkill",
+    "interfaces": [
+      "crafttweaker/zenscript/IBracketHandler"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/BracketHandler;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/brackethandlers/BracketHandlerSkill"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/brackethandlers/BracketHandlerSkill"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/brackethandlers/BracketHandlerUnlockable": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/brackethandlers/BracketHandlerUnlockable",
+    "interfaces": [
+      "crafttweaker/zenscript/IBracketHandler"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/BracketHandler;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/brackethandlers/BracketHandlerUnlockable"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/brackethandlers/BracketHandlerUnlockable"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/customcontent/CrTSkill": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/customcontent/CrTSkill",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/customcontent/CrTSkill",
+        "value": {
+          "value": "mods.compatskills.SkillCreator"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/customcontent/CrTSkill"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "name"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "createSkill(Ljava/lang/String;Ljava/lang/String;)Lcodersafterdark/compatskills/common/compats/reskillable/customcontent/CrTSkill;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "createNewSkill(Ljava/lang/String;Ljava/lang/String;)Lcodersafterdark/compatskills/common/compats/reskillable/customcontent/CrTSkill;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getLevelCap()I",
+        "value": {
+          "value": "levelCap"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getLevelCap()I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setLevelCap(I)V",
+        "value": {
+          "value": "levelCap"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setLevelCap(I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getEnabled()Z",
+        "value": {
+          "value": "enabled"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getEnabled()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setEnabled(Z)V",
+        "value": {
+          "value": "enabled"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setEnabled(Z)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getLevelStaggering()[Ljava/lang/String;",
+        "value": {
+          "value": "levelStaggering"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getLevelStaggering()[Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setLevelStaggering([Ljava/lang/String;)V",
+        "value": {
+          "value": "levelStaggering"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setLevelStaggering([Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setSkillPointInterval(I)V",
+        "value": {
+          "value": "skillPointInterval"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setSkillPointInterval(I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getBaseLevelCost()I",
+        "value": {
+          "value": "baseLevelCost"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getBaseLevelCost()I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setBaseLevelCost(I)V",
+        "value": {
+          "value": "baseLevelCost"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setBaseLevelCost(I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "isHidden()Z",
+        "value": {
+          "value": "hidden"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "isHidden()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setHidden(Z)V",
+        "value": {
+          "value": "hidden"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setHidden(Z)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "hasLevelButton()Z",
+        "value": {
+          "value": "levelButton"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "hasLevelButton()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setLevelButton(Z)V",
+        "value": {
+          "value": "levelButton"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setLevelButton(Z)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setRankIcon(ILjava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeRankIcon(I)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/customcontent/CrTTrait": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/customcontent/CrTTrait",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/customcontent/CrTTrait"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/customcontent/CrTTrait",
+        "value": {
+          "value": "mods.compatskills.TraitCreator"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "onBlockDrops"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "onEnderTeleport"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "onPlayerTick"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "getBreakSpeed"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "onMobDrops"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "onAttackMob"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "onHurt"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "onRightClickBlock"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "onKillMob"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "name"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lstanhebben/zenscript/annotations/ZenProperty;",
+        "target": "description"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "createTrait(Ljava/lang/String;IILjava/lang/String;I[Ljava/lang/String;)Lcodersafterdark/compatskills/common/compats/reskillable/customcontent/CrTTrait;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "createTrait(Ljava/lang/String;IILcodersafterdark/compatskills/common/compats/reskillable/customcontent/CrTSkill;I[Ljava/lang/String;)Lcodersafterdark/compatskills/common/compats/reskillable/customcontent/CrTTrait;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "createNewTrait(Ljava/lang/String;IILjava/lang/String;I[Ljava/lang/String;)Lcodersafterdark/compatskills/common/compats/reskillable/customcontent/CrTTrait;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "createNewTrait(Ljava/lang/String;IILcodersafterdark/compatskills/common/compats/reskillable/customcontent/CrTSkill;I[Ljava/lang/String;)Lcodersafterdark/compatskills/common/compats/reskillable/customcontent/CrTTrait;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getEnabled()Z",
+        "value": {
+          "value": "enabled"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getEnabled()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setEnabled(Z)V",
+        "value": {
+          "value": "enabled"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setEnabled(Z)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "retrieveIcon()Ljava/lang/String;",
+        "value": {
+          "value": "icon"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "retrieveIcon()Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "changeIcon(Ljava/lang/String;)V",
+        "value": {
+          "value": "icon"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "changeIcon(Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/levellocking/SkillLock": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/levellocking/SkillLock",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/levellocking/SkillLockHandler": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/levellocking/SkillLockHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "levelUpEvent(Lcodersafterdark/reskillable/api/event/LevelUpEvent$Pre;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/levellocking/SkillLocksTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/levellocking/SkillLocksTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/levellocking/SkillLocksTweaker",
+        "value": {
+          "value": "crafttweaker"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/levellocking/SkillLocksTweaker",
+        "value": {
+          "value": "mods.compatskills.SkillLocks"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/levellocking/SkillLocksTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addLevelLock(Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill;I[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/levellocking/SkillLocksTweaker$AddLevelLock": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/levellocking/SkillLocksTweaker$AddLevelLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/PlayerExpansion": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/PlayerExpansion",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenExpansion;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/PlayerExpansion",
+        "value": {
+          "value": "crafttweaker.player.IPlayer"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/PlayerExpansion"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getSkillData(Lcrafttweaker/api/player/IPlayer;)Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTPlayerData;",
+        "value": {
+          "value": "skillData"
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTPlayerData": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTPlayerData",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTPlayerData",
+        "value": {
+          "value": "mods.compatskills.playerData"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTPlayerData"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getHasAnyAbilities()Z",
+        "value": {
+          "value": "hasAnyAbilities"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getHasAnyAbilities()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getSkillInfo(Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill;)Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTPlayerSkillInfo;"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTPlayerSkillInfo": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTPlayerSkillInfo",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTPlayerSkillInfo"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTPlayerSkillInfo",
+        "value": {
+          "value": "mods.compatskills.PlayerSkillInfo"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getLevel()I",
+        "value": {
+          "value": "level"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getLevel()I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setLevel(I)V",
+        "value": {
+          "value": "level"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setLevel(I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getSkillPoints()I",
+        "value": {
+          "value": "skillPoints"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getSkillPoints()I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getLevelUpCost()I",
+        "value": {
+          "value": "levelUpCost"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getLevelUpCost()I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getRank()I",
+        "value": {
+          "value": "rank"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getRank()I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "isCapped()Z",
+        "value": {
+          "value": "capped"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "isCapped()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getSkill()Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill;",
+        "value": {
+          "value": "skill"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getSkill()Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "levelUp()V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "respec()V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "unlock(Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTUnlockable;Lcrafttweaker/api/player/IPlayer;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "lock(Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTUnlockable;Lcrafttweaker/api/player/IPlayer;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "isUnlocked(Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTUnlockable;)Z"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill",
+        "value": {
+          "value": "mods.compatskills.Skill"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getKey()Ljava/lang/String;",
+        "value": {
+          "value": "key"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getKey()Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getName()Ljava/lang/String;",
+        "value": {
+          "value": "name"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getName()Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getBackgroundLocation()Ljava/lang/String;",
+        "value": {
+          "value": "backgroundLocation"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getBackgroundLocation()Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setBackgroundLocation(Ljava/lang/String;)V",
+        "value": {
+          "value": "backgroundLocation"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setBackgroundLocation(Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getCap()I",
+        "value": {
+          "value": "cap"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getCap()I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setCap(I)V",
+        "value": {
+          "value": "cap"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setCap(I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getEnabled()Z",
+        "value": {
+          "value": "enabled"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getEnabled()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setEnabled(Z)V",
+        "value": {
+          "value": "enabled"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setEnabled(Z)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "isHidden()Z",
+        "value": {
+          "value": "hidden"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "isHidden()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setHidden(Z)V",
+        "value": {
+          "value": "hidden"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setHidden(Z)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "hasLevelButton()Z",
+        "value": {
+          "value": "levelButton"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "hasLevelButton()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setLevelButton(Z)V",
+        "value": {
+          "value": "levelButton"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setLevelButton(Z)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenOperator;",
+        "target": "compareTo(Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill;)I",
+        "value": {
+          "type": "ENUM",
+          "value": "Lstanhebben/zenscript/annotations/OperatorType;/COMPARE"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getSkillPointInterval()I",
+        "value": {
+          "value": "skillPointInterval"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getSkillPointInterval()I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setSkillPointInterval(I)V",
+        "value": {
+          "value": "skillPointInterval"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setSkillPointInterval(I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getLevelUpCost(I)I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getBaseLevelCost()I",
+        "value": {
+          "value": "baseLevelCost"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getBaseLevelCost()I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setBaseLevelCost(I)V",
+        "value": {
+          "value": "baseLevelCost"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setBaseLevelCost(I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getLevelStaggering()[Ljava/lang/String;",
+        "value": {
+          "value": "levelStaggering"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getLevelStaggering()[Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setLevelStaggering([Ljava/lang/String;)V",
+        "value": {
+          "value": "levelStaggering"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setLevelStaggering([Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTUnlockable": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTUnlockable",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTUnlockable",
+        "value": {
+          "value": "mods.compatskills.Unlockable"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTUnlockable"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getParent()Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill;",
+        "value": {
+          "value": "parent"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getParent()Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setRequirements([Ljava/lang/String;)V",
+        "value": {
+          "value": "requirements"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setRequirements([Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getName()Ljava/lang/String;",
+        "value": {
+          "value": "name"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getName()Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getDescription()Ljava/lang/String;",
+        "value": {
+          "value": "getDescription"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getDescription()Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "hasSpikes()Z",
+        "value": {
+          "value": "spikes"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "hasSpikes()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getCost()I",
+        "value": {
+          "value": "cost"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getCost()I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setCost(I)V",
+        "value": {
+          "value": "cost"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setCost(I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "retrieveIcon()Ljava/lang/String;",
+        "value": {
+          "value": "icon"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "retrieveIcon()Ljava/lang/String;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getX()I",
+        "value": {
+          "value": "x"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getX()I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setX(I)V",
+        "value": {
+          "value": "x"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setX(I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getY()I",
+        "value": {
+          "value": "y"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getY()I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setY(I)V",
+        "value": {
+          "value": "y"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setY(I)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenGetter;",
+        "target": "getEnabled()Z",
+        "value": {
+          "value": "enabled"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "getEnabled()Z"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenSetter;",
+        "target": "setEnabled(Z)V",
+        "value": {
+          "value": "enabled"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "setEnabled(Z)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/skillchange/IChangeHandler": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/skillchange/IChangeHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/skillchange/IChangeHandler"
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/skillchange/IChangeHandler",
+        "value": {
+          "value": "mods.compatskills.IChangeHandler"
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/skillchange/SkillChangeTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/skillchange/SkillChangeTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/skillchange/SkillChangeTweaker",
+        "value": {
+          "value": "crafttweaker"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/skillchange/SkillChangeTweaker",
+        "value": {
+          "value": "mods.compatskills.SkillChange"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/skillchange/SkillChangeTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addLevelUpCommands(Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill;I[Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addLevelUpHandler(Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill;ILcodersafterdark/compatskills/common/compats/reskillable/skillchange/IChangeHandler;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addUnlockableLockCommands(Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTUnlockable;[Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addUnlockableLockHandler(Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTUnlockable;Lcodersafterdark/compatskills/common/compats/reskillable/skillchange/IChangeHandler;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addUnlockableUnlockCommands(Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTUnlockable;[Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addUnlockableUnlockHandler(Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTUnlockable;Lcodersafterdark/compatskills/common/compats/reskillable/skillchange/IChangeHandler;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/skillchange/SkillLevel": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/skillchange/SkillLevel",
+    "interfaces": [
+      "codersafterdark/compatskills/common/compats/reskillable/skillchange/SkillChange"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/skillchange/UnlockableChange": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/skillchange/UnlockableChange",
+    "interfaces": [
+      "codersafterdark/compatskills/common/compats/reskillable/skillchange/SkillChange"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/skillchange/actions/LevelUpAction": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/skillchange/actions/LevelUpAction",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/skillchange/actions/UnlockableAction": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/skillchange/actions/UnlockableAction",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/skillchange/changelisteners/LevelHandler": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/skillchange/changelisteners/LevelHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "levelChangeEvent(Lcodersafterdark/reskillable/api/event/LevelUpEvent$Post;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/skillchange/changelisteners/LockHandler": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/skillchange/changelisteners/LockHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onUnlockableLock(Lcodersafterdark/reskillable/api/event/LockUnlockableEvent$Post;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/skillchange/changelisteners/UnlockHandler": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/skillchange/changelisteners/UnlockHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onUnlockableUnlock(Lcodersafterdark/reskillable/api/event/UnlockUnlockableEvent$Post;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/skillhiding/VisibilityLock": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/skillhiding/VisibilityLock",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/skillhiding/VisibilityLockHandler": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/skillhiding/VisibilityLockHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerJoinHide(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCacheInvalidated(Lcodersafterdark/reskillable/api/event/CacheInvalidatedEvent;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/skillhiding/VisibilityLockTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/skillhiding/VisibilityLockTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/skillhiding/VisibilityLockTweaker",
+        "value": {
+          "value": "crafttweaker"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/skillhiding/VisibilityLockTweaker",
+        "value": {
+          "value": "mods.compatskills.VisibilityLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/skillhiding/VisibilityLockTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addVisibilityLock(Lcodersafterdark/compatskills/common/compats/reskillable/playerexpansion/wrapper/CTSkill;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/skillhiding/VisibilityLockTweaker$AddVisibilityLock": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/skillhiding/VisibilityLockTweaker$AddVisibilityLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/transmutations/AdditionsTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/transmutations/AdditionsTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/transmutations/AdditionsTweaker",
+        "value": {
+          "value": "reskillable"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/transmutations/AdditionsTweaker",
+        "value": {
+          "value": "mods.compatskills.transmutations.additions"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/transmutations/AdditionsTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEntryToReagent(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEntryToReagent(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/block/IBlockState;Lcrafttweaker/api/block/IBlockState;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEntryToReagentAgnostic(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addEntryToReagentAgnostic(Lcrafttweaker/api/block/IBlockState;Lcrafttweaker/api/block/IBlockState;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/transmutations/AdditionsTweaker$AddEntryToAgnosticReagent": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/transmutations/AdditionsTweaker$AddEntryToAgnosticReagent",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/transmutations/AdditionsTweaker$AddEntryToReagent": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/transmutations/AdditionsTweaker$AddEntryToReagent",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/transmutations/ClearTweakers": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/transmutations/ClearTweakers",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/transmutations/ClearTweakers",
+        "value": {
+          "value": "reskillable"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/transmutations/ClearTweakers",
+        "value": {
+          "value": "mods.compatskills.transmutations.clears"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/transmutations/ClearTweakers"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "clearMapOfReagent(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "clearReagentOfEntries(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "clearReagentMap()V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/transmutations/ClearTweakers$ClearMapOfReagent": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/transmutations/ClearTweakers$ClearMapOfReagent",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/transmutations/ClearTweakers$ClearReagentMap": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/transmutations/ClearTweakers$ClearReagentMap",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/transmutations/ClearTweakers$ClearReagentOfEntries": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/transmutations/ClearTweakers$ClearReagentOfEntries",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/transmutations/RemovalTweakers": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/transmutations/RemovalTweakers",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/transmutations/RemovalTweakers",
+        "value": {
+          "value": "reskillable"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/transmutations/RemovalTweakers",
+        "value": {
+          "value": "mods.compatskills.transmutations.removals"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/reskillable/transmutations/RemovalTweakers"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeStartStateFromReagent(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeStartStateFromReagent(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/block/IBlockState;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeStartStateReagentAgnostic(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeStartStateReagentAgnostic(Lcrafttweaker/api/block/IBlockState;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeEndStateFromReagent(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeEndStateFromReagent(Lcrafttweaker/api/item/IItemStack;Lcrafttweaker/api/block/IBlockState;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeEndStateReagentAgnostic(Lcrafttweaker/api/item/IItemStack;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "removeEndStateReagentAgnostic(Lcrafttweaker/api/block/IBlockState;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/transmutations/RemovalTweakers$RemoveEndStateFromReagent": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/transmutations/RemovalTweakers$RemoveEndStateFromReagent",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/transmutations/RemovalTweakers$RemoveEndStateReagentAgnostic": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/transmutations/RemovalTweakers$RemoveEndStateReagentAgnostic",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/transmutations/RemovalTweakers$RemoveStartStateFromReagent": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/transmutations/RemovalTweakers$RemoveStartStateFromReagent",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/reskillable/transmutations/RemovalTweakers$RemoveStartStateReagentAgnostic": {
+    "name": "codersafterdark/compatskills/common/compats/reskillable/transmutations/RemovalTweakers$RemoveStartStateReagentAgnostic",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/scavenge/RequirementProperty": {
+    "name": "codersafterdark/compatskills/common/compats/scavenge/RequirementProperty",
+    "interfaces": [
+      "scavenge/api/block/IResourceCondition"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/scavenge/ScavengeCompatSkills": {
+    "name": "codersafterdark/compatskills/common/compats/scavenge/ScavengeCompatSkills",
+    "interfaces": [
+      "scavenge/api/plugin/ScavengePlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lscavenge/api/plugin/ScavengeLoaded;",
+        "target": "codersafterdark/compatskills/common/compats/scavenge/ScavengeCompatSkills",
+        "values": {
+          "name": {
+            "value": "CompatSkills"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/thaumcraft/KnowledgeHandler": {
+    "name": "codersafterdark/compatskills/common/compats/thaumcraft/KnowledgeHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKnowledgeEvent(Lthaumcraft/api/research/ResearchEvent$Knowledge;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/thaumcraft/ResearchHandler": {
+    "name": "codersafterdark/compatskills/common/compats/thaumcraft/ResearchHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onResearchEvent(Lthaumcraft/api/research/ResearchEvent$Research;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/thaumcraft/ThaumcraftTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/thaumcraft/ThaumcraftTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/thaumcraft/ThaumcraftTweaker",
+        "value": {
+          "value": "thaumcraft"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/thaumcraft/ThaumcraftTweaker",
+        "value": {
+          "value": "mods.compatskills.Thaumcraft"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/thaumcraft/ThaumcraftTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addResearchLock(Ljava/lang/String;[Ljava/lang/String;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addKnowledgeLock(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/thaumcraft/ThaumcraftTweaker$AddKnowledgeLock": {
+    "name": "codersafterdark/compatskills/common/compats/thaumcraft/ThaumcraftTweaker$AddKnowledgeLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/thaumcraft/ThaumcraftTweaker$AddResearchLock": {
+    "name": "codersafterdark/compatskills/common/compats/thaumcraft/ThaumcraftTweaker$AddResearchLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/thaumcraft/keys/KnowledgeKey": {
+    "name": "codersafterdark/compatskills/common/compats/thaumcraft/keys/KnowledgeKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/thaumcraft/keys/ResearchKey": {
+    "name": "codersafterdark/compatskills/common/compats/thaumcraft/keys/ResearchKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/thaumcraft/requirements/TCInvalidateHandler": {
+    "name": "codersafterdark/compatskills/common/compats/thaumcraft/requirements/TCInvalidateHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onResearchEvent(Lthaumcraft/api/research/ResearchEvent$Research;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/theoneprobe/CompatSkillsTOPSupport": {
+    "name": "codersafterdark/compatskills/common/compats/theoneprobe/CompatSkillsTOPSupport",
+    "interfaces": [
+      "java/util/function/Function"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/theoneprobe/CompatSkillsTOPSupport$1": {
+    "name": "codersafterdark/compatskills/common/compats/theoneprobe/CompatSkillsTOPSupport$1",
+    "interfaces": [
+      "mcjty/theoneprobe/api/IProbeInfoProvider"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/theoneprobe/CompatSkillsTOPSupport$2": {
+    "name": "codersafterdark/compatskills/common/compats/theoneprobe/CompatSkillsTOPSupport$2",
+    "interfaces": [
+      "mcjty/theoneprobe/api/IProbeInfoEntityProvider"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/tinkersconstruct/TinkerLockHandler": {
+    "name": "codersafterdark/compatskills/common/compats/tinkersconstruct/TinkerLockHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCraftingMaterial(Lslimeknights/tconstruct/library/events/TinkerCraftingEvent$ToolPartCraftingEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModifierAttached(Lslimeknights/tconstruct/library/events/TinkerCraftingEvent$ToolModifyEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPartReplaced(Lslimeknights/tconstruct/library/events/TinkerCraftingEvent$ToolPartReplaceEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onToolCrafted(Lslimeknights/tconstruct/library/events/TinkerCraftingEvent$ToolCraftingEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGH"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/tinkersconstruct/ToolWrapperLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/tinkersconstruct/ToolWrapperLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/ParentLockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/tinkersconstruct/materiallocks/MaterialLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/tinkersconstruct/materiallocks/MaterialLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/ParentLockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/tinkersconstruct/materiallocks/MaterialLockTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/tinkersconstruct/materiallocks/MaterialLockTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/tinkersconstruct/materiallocks/MaterialLockTweaker",
+        "value": {
+          "value": "tconstruct"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/tinkersconstruct/materiallocks/MaterialLockTweaker",
+        "value": {
+          "value": "mods.compatskills.MaterialLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/tinkersconstruct/materiallocks/MaterialLockTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addMaterialLock(Ljava/lang/String;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/tinkersconstruct/materiallocks/MaterialLockTweaker$AddMaterialLock": {
+    "name": "codersafterdark/compatskills/common/compats/tinkersconstruct/materiallocks/MaterialLockTweaker$AddMaterialLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/tinkersconstruct/modifierlocks/ModifierLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/tinkersconstruct/modifierlocks/ModifierLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/tinkersconstruct/modifierlocks/ModifierLockTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/tinkersconstruct/modifierlocks/ModifierLockTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/tinkersconstruct/modifierlocks/ModifierLockTweaker",
+        "value": {
+          "value": "tconstruct"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/tinkersconstruct/modifierlocks/ModifierLockTweaker",
+        "value": {
+          "value": "mods.compatskills.ModifierLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/tinkersconstruct/modifierlocks/ModifierLockTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addModifierLock(Ljava/lang/String;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/tinkersconstruct/modifierlocks/ModifierLockTweaker$AddModifierLock": {
+    "name": "codersafterdark/compatskills/common/compats/tinkersconstruct/modifierlocks/ModifierLockTweaker$AddModifierLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/tinkersconstruct/toollocks/ToolTypeLockKey": {
+    "name": "codersafterdark/compatskills/common/compats/tinkersconstruct/toollocks/ToolTypeLockKey",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/tinkersconstruct/toollocks/ToolTypeLockTweaker": {
+    "name": "codersafterdark/compatskills/common/compats/tinkersconstruct/toollocks/ToolTypeLockTweaker",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ModOnly;",
+        "target": "codersafterdark/compatskills/common/compats/tinkersconstruct/toollocks/ToolTypeLockTweaker",
+        "value": {
+          "value": "tconstruct"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lstanhebben/zenscript/annotations/ZenClass;",
+        "target": "codersafterdark/compatskills/common/compats/tinkersconstruct/toollocks/ToolTypeLockTweaker",
+        "value": {
+          "value": "mods.compatskills.ToolTypeLock"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lcrafttweaker/annotations/ZenRegister;",
+        "target": "codersafterdark/compatskills/common/compats/tinkersconstruct/toollocks/ToolTypeLockTweaker"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lstanhebben/zenscript/annotations/ZenMethod;",
+        "target": "addToolTypeLock(Lcrafttweaker/api/item/IItemStack;[Ljava/lang/String;)V"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/tinkersconstruct/toollocks/ToolTypeLockTweaker$AddToolTypeLock": {
+    "name": "codersafterdark/compatskills/common/compats/tinkersconstruct/toollocks/ToolTypeLockTweaker$AddToolTypeLock",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/waila/CompatSkillsWailaDataProvider": {
+    "name": "codersafterdark/compatskills/common/compats/waila/CompatSkillsWailaDataProvider",
+    "interfaces": [
+      "mcp/mobius/waila/api/IWailaDataProvider",
+      "mcp/mobius/waila/api/IWailaEntityProvider"
+    ]
+  },
+  "codersafterdark/compatskills/common/compats/waila/CompatSkillsWailaRegister": {
+    "name": "codersafterdark/compatskills/common/compats/waila/CompatSkillsWailaRegister",
+    "interfaces": [
+      "mcp/mobius/waila/api/IWailaPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/mobius/waila/api/WailaPlugin;",
+        "target": "codersafterdark/compatskills/common/compats/waila/CompatSkillsWailaRegister"
+      }
+    ]
+  },
+  "codersafterdark/compatskills/utils/CompatSkillsConfig$Configs": {
+    "name": "codersafterdark/compatskills/utils/CompatSkillsConfig$Configs",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "codersafterdark/compatskills/utils/CompatSkillsConfig$Configs",
+        "values": {
+          "modid": {
+            "value": "compatskills"
+          },
+          "name": {
+            "value": "compatskills"
+          },
+          "type": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/common/config/Config$Type;/INSTANCE"
+          }
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/utils/CompatSkillsConfig$Configs$Hwyla": {
+    "name": "codersafterdark/compatskills/utils/CompatSkillsConfig$Configs$Hwyla",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "HwylaShifting",
+        "value": {
+          "values": [
+            "Should Hwyla Requirements Support require Shifting?"
+          ]
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/utils/CompatSkillsConfig$Configs$Minecraft": {
+    "name": "codersafterdark/compatskills/utils/CompatSkillsConfig$Configs$Minecraft",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "BlockDropsError",
+        "value": {
+          "values": [
+            "Should locked Block Drops post their requirements?"
+          ]
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/utils/CompatSkillsConfig$Configs$Modules": {
+    "name": "codersafterdark/compatskills/utils/CompatSkillsConfig$Configs$Modules",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "compat",
+        "value": {
+          "values": [
+            "A list of all mods that CompatSkills has integrated compatability with.",
+            "Setting any of these to false disables the respective compat:"
+          ]
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/utils/CompatSkillsConfig$Configs$TOP": {
+    "name": "codersafterdark/compatskills/utils/CompatSkillsConfig$Configs$TOP",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "TOPShifting",
+        "value": {
+          "values": [
+            "Should TOP Requirements Support require Shifting?"
+          ]
+        }
+      }
+    ]
+  },
+  "codersafterdark/compatskills/utils/multiblock/MultiBlockAction": {
+    "name": "codersafterdark/compatskills/utils/multiblock/MultiBlockAction",
+    "interfaces": [
+      "crafttweaker/IAction"
+    ]
+  },
+  "codersafterdark/compatskills/utils/multiblock/MultiBlockGate": {
+    "name": "codersafterdark/compatskills/utils/multiblock/MultiBlockGate",
+    "interfaces": [
+      "codersafterdark/reskillable/api/data/LockKey"
+    ]
+  }
+}

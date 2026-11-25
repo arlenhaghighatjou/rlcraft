@@ -1,0 +1,259 @@
+package com.github.alexthe666.iceandfire.event;
+
+import com.github.alexthe666.iceandfire.IceAndFire;
+import com.github.alexthe666.iceandfire.client.render.entity.ICustomStoneLayer;
+import com.github.alexthe666.iceandfire.client.render.entity.layer.LayerStoneEntity;
+import com.github.alexthe666.iceandfire.client.render.entity.layer.LayerStoneEntityCrack;
+import com.github.alexthe666.iceandfire.core.ModKeys;
+import com.github.alexthe666.iceandfire.entity.EntityDragonBase;
+import com.github.alexthe666.iceandfire.entity.EntitySiren;
+import com.github.alexthe666.iceandfire.entity.FrozenEntityProperties;
+import com.github.alexthe666.iceandfire.entity.SirenEntityProperties;
+import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.Random;
+import java.util.Map.Entry;
+import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.GlStateManager.DestFactor;
+import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.client.event.EntityViewRenderEvent.CameraSetup;
+import net.minecraftforge.client.event.RenderLivingEvent.Post;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import org.lwjgl.opengl.GL11;
+
+public class EventClient {
+   private Random rand = new Random();
+   private static final ResourceLocation SIREN_SHADER = new ResourceLocation("iceandfire:shaders/post/siren.json");
+   private static final ResourceLocation TEXTURE_0 = new ResourceLocation("textures/blocks/frosted_ice_0.png");
+   private static final ResourceLocation TEXTURE_1 = new ResourceLocation("textures/blocks/frosted_ice_1.png");
+   private static final ResourceLocation TEXTURE_2 = new ResourceLocation("textures/blocks/frosted_ice_2.png");
+   private static final ResourceLocation TEXTURE_3 = new ResourceLocation("textures/blocks/frosted_ice_3.png");
+
+   public EventClient() {
+   }
+
+   public static void initializeStoneLayer() {
+      for(Entry<Class<? extends Entity>, Render<? extends Entity>> entry : Minecraft.getMinecraft().getRenderManager().entityRenderMap.entrySet()) {
+         Render render = (Render)entry.getValue();
+         if (render instanceof RenderLivingBase && EntityLiving.class.isAssignableFrom((Class)entry.getKey())) {
+            ((RenderLivingBase)render).addLayer(new LayerStoneEntity((RenderLivingBase)render));
+            ((RenderLivingBase)render).addLayer(new LayerStoneEntityCrack((RenderLivingBase)render));
+         }
+      }
+
+      Field renderingRegistryField = ReflectionHelper.findField(RenderingRegistry.class, ObfuscationReflectionHelper.remapFieldNames(RenderingRegistry.class.getName(), new String[]{"INSTANCE", "INSTANCE"}));
+      Field entityRendersField = ReflectionHelper.findField(RenderingRegistry.class, ObfuscationReflectionHelper.remapFieldNames(RenderingRegistry.class.getName(), new String[]{"entityRenderers", "entityRenderers"}));
+      Field entityRendersOldField = ReflectionHelper.findField(RenderingRegistry.class, ObfuscationReflectionHelper.remapFieldNames(RenderingRegistry.class.getName(), new String[]{"entityRenderersOld", "entityRenderersOld"}));
+      RenderingRegistry registry = null;
+
+      try {
+         Field modifier = Field.class.getDeclaredField("modifiers");
+         modifier.setAccessible(true);
+         registry = (RenderingRegistry)renderingRegistryField.get((Object)null);
+      } catch (Exception var13) {
+         var13.printStackTrace();
+      }
+
+      if (registry != null) {
+         Map<Class<? extends Entity>, IRenderFactory<? extends Entity>> entityRenders = null;
+         Map<Class<? extends Entity>, Render<? extends Entity>> entityRendersOld = null;
+
+         try {
+            Field modifier1 = Field.class.getDeclaredField("modifiers");
+            modifier1.setAccessible(true);
+            entityRenders = (Map)entityRendersField.get(registry);
+            entityRendersOld = (Map)entityRendersOldField.get(registry);
+         } catch (Exception var12) {
+            var12.printStackTrace();
+         }
+
+         if (entityRenders != null) {
+            for(Entry<Class<? extends Entity>, IRenderFactory<? extends Entity>> entry : entityRenders.entrySet()) {
+               if (entry.getValue() != null) {
+                  try {
+                     Render render = ((IRenderFactory)entry.getValue()).createRenderFor(Minecraft.getMinecraft().getRenderManager());
+                     if (render != null && render instanceof RenderLivingBase && EntityLiving.class.isAssignableFrom((Class)entry.getKey())) {
+                        LayerRenderer stoneLayer = (LayerRenderer)(render instanceof ICustomStoneLayer ? ((ICustomStoneLayer)render).getStoneLayer((RenderLivingBase)render) : new LayerStoneEntity((RenderLivingBase)render));
+                        LayerRenderer crackLayer = (LayerRenderer)(render instanceof ICustomStoneLayer ? ((ICustomStoneLayer)render).getCrackLayer((RenderLivingBase)render) : new LayerStoneEntityCrack((RenderLivingBase)render));
+                        ((RenderLivingBase)render).addLayer(stoneLayer);
+                        ((RenderLivingBase)render).addLayer(crackLayer);
+                     }
+                  } catch (NullPointerException var11) {
+                     System.out.println("Ice and Fire: Could not apply stone render layer to " + ((Class)entry.getKey()).getSimpleName() + ", someone isn't registering their renderer properly... <.<");
+                  }
+               }
+            }
+         }
+
+         if (entityRendersOld != null) {
+            for(Entry<Class<? extends Entity>, Render<? extends Entity>> entry : entityRendersOld.entrySet()) {
+               Render render = (Render)entry.getValue();
+               if (render instanceof RenderLivingBase && EntityLiving.class.isAssignableFrom((Class)entry.getKey())) {
+                  LayerRenderer stoneLayer = (LayerRenderer)(render instanceof ICustomStoneLayer ? ((ICustomStoneLayer)render).getStoneLayer((RenderLivingBase)render) : new LayerStoneEntity((RenderLivingBase)render));
+                  LayerRenderer crackLayer = (LayerRenderer)(render instanceof ICustomStoneLayer ? ((ICustomStoneLayer)render).getCrackLayer((RenderLivingBase)render) : new LayerStoneEntityCrack((RenderLivingBase)render));
+                  ((RenderLivingBase)render).addLayer(stoneLayer);
+                  ((RenderLivingBase)render).addLayer(crackLayer);
+               }
+            }
+         }
+      }
+
+   }
+
+   @SubscribeEvent
+   public void onCameraSetup(CameraSetup event) {
+      EntityPlayer player = Minecraft.getMinecraft().player;
+      if (player.getRidingEntity() != null && player.getRidingEntity() instanceof EntityDragonBase) {
+         int currentView = IceAndFire.PROXY.getDragon3rdPersonView();
+         float scale = ((EntityDragonBase)player.getRidingEntity()).getRenderSize() / 3.0F;
+         if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 1 && currentView != 0) {
+            if (currentView == 1) {
+               GL11.glTranslatef(scale * 0.5F, 0.0F, -scale * 3.0F);
+            } else if (currentView == 2) {
+               GL11.glTranslatef(0.0F, 0.0F, -scale * 3.0F);
+            } else if (currentView == 3) {
+               GL11.glTranslatef(scale * 0.5F, 0.0F, -scale * 0.5F);
+            }
+         }
+
+         if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 2 && currentView != 0) {
+            if (currentView == 1) {
+               GL11.glTranslatef(-scale * 1.2F, 0.0F, 5.0F);
+            } else if (currentView == 2) {
+               GL11.glTranslatef(scale * 1.2F, 0.0F, 5.0F);
+            } else if (currentView == 3) {
+               GL11.glTranslatef(scale * -1.5F, 0.0F, scale * 1.5F);
+            }
+         }
+      }
+
+   }
+
+   @SubscribeEvent
+   public void onLivingUpdate(LivingUpdateEvent event) {
+      if (event.getEntityLiving() instanceof EntityPlayer) {
+         EntityPlayer player = (EntityPlayer)event.getEntityLiving();
+         if (player.world.isRemote && ModKeys.dragon_change_view.isPressed()) {
+            int currentView = IceAndFire.PROXY.getDragon3rdPersonView();
+            if (currentView + 1 > 3) {
+               currentView = 0;
+            } else {
+               ++currentView;
+            }
+
+            IceAndFire.PROXY.setDragon3rdPersonView(currentView);
+         }
+
+         SirenEntityProperties sirenProps = (SirenEntityProperties)EntityPropertiesHandler.INSTANCE.getProperties(event.getEntityLiving(), SirenEntityProperties.class);
+         if (player.world.isRemote && sirenProps != null) {
+            EntityRenderer renderer = Minecraft.getMinecraft().entityRenderer;
+            EntitySiren siren = sirenProps.getSiren(event.getEntityLiving().world);
+            if (siren == null) {
+               sirenProps.isCharmed = false;
+            }
+
+            if (sirenProps.isCharmed) {
+               if (this.rand.nextInt(40) == 0) {
+                  IceAndFire.PROXY.spawnParticle("siren_appearance", player.world, player.posX, player.posY, player.posZ, 0.0D, 0.0D, 0.0D);
+               }
+
+               if (IceAndFire.CONFIG.sirenShader && sirenProps.isCharmed && !renderer.isShaderActive()) {
+                  renderer.loadShader(SIREN_SHADER);
+               }
+            }
+
+            if (IceAndFire.CONFIG.sirenShader && !sirenProps.isCharmed && renderer != null && renderer.getShaderGroup() != null && renderer.getShaderGroup().getShaderGroupName() != null && SIREN_SHADER.toString().equals(renderer.getShaderGroup().getShaderGroupName())) {
+               renderer.stopUseShader();
+            }
+         }
+      }
+
+   }
+
+   @SubscribeEvent
+   public void onPostRenderLiving(Post event) {
+      FrozenEntityProperties frozenProps = (FrozenEntityProperties)EntityPropertiesHandler.INSTANCE.getProperties(event.getEntity(), FrozenEntityProperties.class);
+      if (frozenProps != null && frozenProps.isFrozen) {
+         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+         GlStateManager.enableNormalize();
+         GlStateManager.enableBlend();
+         GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+         float sideExpand = 0.25F;
+         AxisAlignedBB axisalignedbb1 = new AxisAlignedBB(event.getEntity().getRenderBoundingBox().minX - event.getEntity().posX + event.getX() - (double)sideExpand, event.getEntity().getRenderBoundingBox().minY - event.getEntity().posY + event.getY(), event.getEntity().getRenderBoundingBox().minZ - event.getEntity().posZ + event.getZ() - (double)sideExpand, event.getEntity().getRenderBoundingBox().maxX - event.getEntity().posX + event.getX() + (double)sideExpand, event.getEntity().getRenderBoundingBox().maxY - event.getEntity().posY + event.getY() + (double)sideExpand, event.getEntity().getRenderBoundingBox().maxZ - event.getEntity().posZ + event.getZ() + (double)sideExpand);
+         event.getRenderer().bindTexture(getIceTexture(frozenProps.ticksUntilUnfrozen));
+         renderAABB(axisalignedbb1, 0.0D, 0.0D, 0.0D);
+         GlStateManager.disableBlend();
+         GlStateManager.disableNormalize();
+      }
+
+   }
+
+   private static ResourceLocation getIceTexture(int ticksFrozen) {
+      if (ticksFrozen < 100) {
+         if (ticksFrozen < 50) {
+            return ticksFrozen < 20 ? TEXTURE_3 : TEXTURE_2;
+         } else {
+            return TEXTURE_1;
+         }
+      } else {
+         return TEXTURE_0;
+      }
+   }
+
+   public static void renderAABB(AxisAlignedBB boundingBox, double x, double y, double z) {
+      Tessellator tessellator = Tessellator.getInstance();
+      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+      vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
+      double maxX = boundingBox.maxX * 0.625D;
+      double minX = boundingBox.minX * 0.625D;
+      double maxY = boundingBox.maxY * 0.625D;
+      double minY = boundingBox.minY * 0.625D;
+      double maxZ = boundingBox.maxZ * 0.625D;
+      double minZ = boundingBox.minZ * 0.625D;
+      vertexbuffer.pos(boundingBox.minX, boundingBox.maxY, boundingBox.minZ).tex(minX - maxX, maxY - minY).normal(0.0F, 0.0F, -1.0F).endVertex();
+      vertexbuffer.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.minZ).tex(maxX - minX, maxY - minY).normal(0.0F, 0.0F, -1.0F).endVertex();
+      vertexbuffer.pos(boundingBox.maxX, boundingBox.minY, boundingBox.minZ).tex(maxX - minX, minY - maxY).normal(0.0F, 0.0F, -1.0F).endVertex();
+      vertexbuffer.pos(boundingBox.minX, boundingBox.minY, boundingBox.minZ).tex(minX - maxX, minY - maxY).normal(0.0F, 0.0F, -1.0F).endVertex();
+      vertexbuffer.pos(boundingBox.minX, boundingBox.minY, boundingBox.maxZ).tex(minX - maxX, minY - maxY).normal(0.0F, 0.0F, 1.0F).endVertex();
+      vertexbuffer.pos(boundingBox.maxX, boundingBox.minY, boundingBox.maxZ).tex(maxX - minX, minY - maxY).normal(0.0F, 0.0F, 1.0F).endVertex();
+      vertexbuffer.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.maxZ).tex(maxX - minX, maxY - minY).normal(0.0F, 0.0F, 1.0F).endVertex();
+      vertexbuffer.pos(boundingBox.minX, boundingBox.maxY, boundingBox.maxZ).tex(minX - maxX, maxY - minY).normal(0.0F, 0.0F, 1.0F).endVertex();
+      vertexbuffer.pos(boundingBox.minX, boundingBox.minY, boundingBox.minZ).tex(minX - maxX, minY - maxY).normal(0.0F, -1.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.maxX, boundingBox.minY, boundingBox.minZ).tex(maxX - minX, minY - maxY).normal(0.0F, -1.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.maxX, boundingBox.minY, boundingBox.maxZ).tex(maxX - minX, maxZ - minZ).normal(0.0F, -1.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.minX, boundingBox.minY, boundingBox.maxZ).tex(minX - maxX, maxZ - minZ).normal(0.0F, -1.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.minX, boundingBox.maxY, boundingBox.maxZ).tex(minX - maxX, minY - maxY).normal(0.0F, 1.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.maxZ).tex(maxX - minX, minY - maxY).normal(0.0F, 1.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.minZ).tex(maxX - minX, maxZ - minZ).normal(0.0F, 1.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.minX, boundingBox.maxY, boundingBox.minZ).tex(minX - maxX, maxZ - minZ).normal(0.0F, 1.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.minX, boundingBox.minY, boundingBox.maxZ).tex(minX - maxX, minY - maxY).normal(-1.0F, 0.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.minX, boundingBox.maxY, boundingBox.maxZ).tex(minX - maxX, maxY - minY).normal(-1.0F, 0.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.minX, boundingBox.maxY, boundingBox.minZ).tex(maxX - minX, maxY - minY).normal(-1.0F, 0.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.minX, boundingBox.minY, boundingBox.minZ).tex(maxX - minX, minY - maxY).normal(-1.0F, 0.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.maxX, boundingBox.minY, boundingBox.minZ).tex(minX - maxX, minY - maxY).normal(1.0F, 0.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.minZ).tex(minX - maxX, maxY - minY).normal(1.0F, 0.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.maxX, boundingBox.maxY, boundingBox.maxZ).tex(maxX - minX, maxY - minY).normal(1.0F, 0.0F, 0.0F).endVertex();
+      vertexbuffer.pos(boundingBox.maxX, boundingBox.minY, boundingBox.maxZ).tex(maxX - minX, minY - maxY).normal(1.0F, 0.0F, 0.0F).endVertex();
+      tessellator.draw();
+   }
+}

@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern": [
+    "W W",
+    "WWW"
+    ],
+    
+    "key":
+    {   
+        "W":
+        {
+            "item": "minecraft:stone_slab2",
+            "data": 0
+        }
+    },
+    
+    "result":
+    {
+        "item":  "mcwbridges:orange_sandstone_bridge",
+        "count": 4
+    }
+}

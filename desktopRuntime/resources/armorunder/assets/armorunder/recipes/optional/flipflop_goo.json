@@ -1,0 +1,20 @@
+{ "_comment": ["Mysterious goo that detects temperature changes" ],
+  "conditions": [{
+     "type": "armorunder:is_allowed",
+     "value": "craft_smart_lining",
+     "default_value": true
+  }],
+  "result": {
+    "item": "armorunder:flipflop_goo"
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "qc", "hr"
+  ],
+  "key": {
+    "q": { "type": "forge:ore_dict", "ore": "gemQuartz" },
+    "c": { "item": "armorunder:cooling_goo" },
+    "h": { "item": "armorunder:heating_goo" },
+    "r": { "type": "forge:ore_dict", "ore": "dustRedstone" }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "com/tmtravlr/soundfilters/SoundEventHandler": {
+    "name": "com/tmtravlr/soundfilters/SoundEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playSoundEventHandler(Lnet/minecraftforge/client/event/sound/PlaySoundEvent;)V"
+      }
+    ]
+  },
+  "com/tmtravlr/soundfilters/SoundFiltersMod": {
+    "name": "com/tmtravlr/soundfilters/SoundFiltersMod",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/tmtravlr/soundfilters/SoundFiltersMod",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12]"
+          },
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "modid": {
+            "value": "soundfilters"
+          },
+          "name": {
+            "value": "Sound Filters"
+          },
+          "version": {
+            "value": "0.12.1_for_1.12"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "soundFilters",
+        "value": {
+          "value": "soundfilters"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.tmtravlr.soundfilters.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.tmtravlr.soundfilters.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/tmtravlr/soundfilters/SoundFiltersMod$1": {
+    "name": "com/tmtravlr/soundfilters/SoundFiltersMod$1",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/tmtravlr/soundfilters/SoundTickHandler": {
+    "name": "com/tmtravlr/soundfilters/SoundTickHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "com/tmtravlr/soundfilters/SoundTickHandler$1": {
+    "name": "com/tmtravlr/soundfilters/SoundTickHandler$1",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  },
+  "com/tmtravlr/soundfilters/SoundTickHandler$ComparablePosition": {
+    "name": "com/tmtravlr/soundfilters/SoundTickHandler$ComparablePosition",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "bl4ckscor3/mod/particleculling/CameraHolder": 52,
+  "bl4ckscor3/mod/particleculling/CullCheck": 52,
+  "bl4ckscor3/mod/particleculling/CullThread": 52,
+  "bl4ckscor3/mod/particleculling/ParticleCulling": 52,
+  "bl4ckscor3/mod/particleculling/ParticleCulling$Configuration": 52,
+  "bl4ckscor3/mod/particleculling/ParticleCullingLoadingPlugin": 52,
+  "bl4ckscor3/mod/particleculling/mixin/MixinParticle": 52,
+  "bl4ckscor3/mod/particleculling/mixin/MixinParticleManager": 52,
+  "bl4ckscor3/mod/particleculling/mixin/MixinRenderGlobal": 52
+}

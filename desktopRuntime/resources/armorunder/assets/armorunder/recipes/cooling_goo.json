@@ -1,0 +1,14 @@
+{ "_comment": ["Mysterious goo that chills to touch" ],
+  "result": {
+    "item": "armorunder:cooling_goo",
+    "count": 2
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "Is", "s "
+  ],
+  "key": {
+    "s": { "item": "minecraft:slime_ball" },
+    "I": { "item": "minecraft:packed_ice" }
+  }
+}

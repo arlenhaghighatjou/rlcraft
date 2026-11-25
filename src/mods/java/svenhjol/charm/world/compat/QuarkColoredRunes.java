@@ -1,0 +1,33 @@
+package svenhjol.charm.world.compat;
+
+import net.minecraft.item.ItemStack;
+import svenhjol.charm.world.feature.EndPortalRunes;
+import svenhjol.meson.MesonBlock;
+import vazkii.quark.base.module.ModuleLoader;
+import vazkii.quark.misc.feature.ColorRunes;
+import vazkii.quark.misc.item.ItemRune;
+
+public class QuarkColoredRunes {
+   public QuarkColoredRunes() {
+   }
+
+   public boolean hasColorRuneFeature() {
+      return ModuleLoader.isFeatureEnabled(ColorRunes.class);
+   }
+
+   public boolean isRune(ItemStack stack) {
+      return stack.getItem() instanceof ItemRune;
+   }
+
+   public int getMetaFromRune(ItemStack rune) {
+      return !this.isRune(rune) ? 0 : rune.getItemDamage();
+   }
+
+   public ItemStack getRuneFromMeta(int meta) {
+      return new ItemStack(ColorRunes.rune, 1, meta);
+   }
+
+   public MesonBlock.ColorVariant getRuneColor(ItemStack rune) {
+      return MesonBlock.ColorVariant.byMetadata(EndPortalRunes.quarkRunes.getMetaFromRune(rune));
+   }
+}

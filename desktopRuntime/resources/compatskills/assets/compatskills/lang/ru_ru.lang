@@ -1,0 +1,44 @@
+# FORMATS
+## GameStages
+compatskills.requirements.format.gamestage=GameStage: %s%s
+
+## Minecraft
+compatskills.requirements.format.dimension=Dimension: %s%s
+compatskills.requirements.format.item=Item: %s%s
+
+## Forge
+compatskills.requirements.format.ore_dict=Ore Dictionary Entry: %s%s
+
+
+# Error Messages
+## Game Stages
+compatskills.error.gamestage=Требования для разблокирования этой Стадии не достигнуты!
+
+## Reskillable
+compatskills.error.reskillable.level_lock=Чтобы получить этот Уровень:
+compatskills.error.reskillable.level_lock_2=Пожалуйста, достигните следующих требований!
+
+## Blood Magic
+compatskills.error.bloodmagic.binding=Безмолвные Темные Материи кружат вокруг Вас и затем исчезают
+compatskills.error.bloodmagic.ritual=Ритуал не принёс Вам ожидаемого результата
+
+## Tinker's Construct
+compatskills.error.tconstruct.craft.part=Чем больше молот ударяет, тем больше материал сопротивляется.
+compatskills.error.tconstruct.modify=После бесчисленных попыток, Вы всё еще не можете понять, как модифицировать инструмент.
+compatskills.error.tconstruct.craft.tool=Неважно, какими будут инструкции, новичок не может создать шедевр
+
+## Minecraft
+### Dimension
+compatskills.error.dimension.travel=Неведомая сила не даёт Вам достичь Вашего места назначения
+
+### Entity
+compatskills.error.entity.mount=Как сильно Вы не стараетесь, Вам не удается найти баланс и Вы падаете.
+compatskills.error.entity.tame=Существо противится Вашим попыткам приручения.
+compatskills.error.entity.damage=Ваши атаки не могут причинить урон зверю.
+
+### Tile-Entities
+compatskills.error.tile_entity.interact=Даже после бесчисленных часов Вы не можете сообразить, как работает это устройство.
+
+## Misc:
+compatskills.misc.requirements=Требования:
+compatskills.misc.shift=Нажмите Shift для отображения Требований

@@ -1,0 +1,15 @@
+package com.attributestudios.wolfarmor.api.util;
+
+import com.attributestudios.wolfarmor.api.IWolfArmorCapability;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
+
+/** @deprecated */
+@Deprecated
+public abstract class Capabilities {
+   @CapabilityInject(IWolfArmorCapability.class)
+   public static Capability<IWolfArmorCapability> CAPABILITY_WOLF_ARMOR;
+
+   public Capabilities() {
+   }
+}

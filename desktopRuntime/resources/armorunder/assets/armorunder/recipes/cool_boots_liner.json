@@ -1,0 +1,9 @@
+{ "result": {
+    "item": "armorunder:cool_boots_liner"
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "   ", "x x", "x x"
+  ],
+  "key": { "x": { "item": "armorunder:cool_liner_material" } }
+}

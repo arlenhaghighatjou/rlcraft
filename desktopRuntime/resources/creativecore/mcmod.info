@@ -1,0 +1,16 @@
+[
+{
+  "modid": "creativecore",
+  "name": "CreativeCore",
+  "description": "A core mod required by the most mods of CreativeMD. Contains a packets system, gui-api and other utils.",
+  "mcversion": "${mcversion}",
+  "version": "1.10",
+  "url": "https://www.curseforge.com/minecraft/mc-mods/creativecore",
+  "updateUrl": "",
+  "authorList": ["CreativeMD", "N247S"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

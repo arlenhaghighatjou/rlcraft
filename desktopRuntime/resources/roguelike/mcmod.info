@@ -1,0 +1,17 @@
+[
+{
+	"modid" : "roguelike",
+	"name" : "Roguelike Dungeons",
+	"description" : "Adds randomized dungeons to the world",
+	"version" : "2.4.4",
+	"mcversion": "1.12.2",
+	"url" : "github.com/fnar/minecraft-roguelike",
+	"credits": "",
+	"logoFile": "",
+	"updateUrl": "",
+	"authorList" : ["Greymerk", "Fnar"],
+	"parent": "",
+	"screenshots": [],
+	"dependencies": []
+}
+]

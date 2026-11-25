@@ -1,0 +1,500 @@
+{
+  "lumien/bloodmoon/Bloodmoon": {
+    "name": "lumien/bloodmoon/Bloodmoon",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "lumien/bloodmoon/Bloodmoon",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12,1.13)"
+          },
+          "certificateFingerprint": {
+            "value": "d72e0dd57935b3e9476212aea0c0df352dd76291"
+          },
+          "modid": {
+            "value": "bloodmoon"
+          },
+          "name": {
+            "value": "Bloodmoon"
+          },
+          "version": {
+            "value": "1.5.3"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "Bloodmoon"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "lumien.bloodmoon.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "lumien.bloodmoon.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "lumien/bloodmoon/asm/ClassTransformer": {
+    "name": "lumien/bloodmoon/asm/ClassTransformer",
+    "interfaces": [
+      "net/minecraft/launchwrapper/IClassTransformer"
+    ]
+  },
+  "lumien/bloodmoon/asm/LoadingPlugin": {
+    "name": "lumien/bloodmoon/asm/LoadingPlugin",
+    "interfaces": [
+      "net/minecraftforge/fml/relauncher/IFMLLoadingPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$SortingIndex;",
+        "target": "lumien/bloodmoon/asm/LoadingPlugin",
+        "value": {
+          "type": "INT",
+          "value": "1001"
+        }
+      }
+    ]
+  },
+  "lumien/bloodmoon/asm/MCPNames$MCPFileParser": {
+    "name": "lumien/bloodmoon/asm/MCPNames$MCPFileParser",
+    "interfaces": [
+      "com/google/common/io/LineProcessor"
+    ]
+  },
+  "lumien/bloodmoon/client/ClientBloodmoonHandler": {
+    "name": "lumien/bloodmoon/client/ClientBloodmoonHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "lumien/bloodmoon/config/BloodmoonConfig": {
+    "name": "lumien/bloodmoon/config/BloodmoonConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "lumien/bloodmoon/config/BloodmoonConfig",
+        "values": {
+          "category": {
+            "value": "bloodmoon"
+          },
+          "modid": {
+            "value": "bloodmoon"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "APPEARANCE",
+        "value": {
+          "value": "appearance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "SCHEDULE",
+        "value": {
+          "value": "schedule"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "SPAWNING",
+        "value": {
+          "value": "spawning"
+        }
+      }
+    ]
+  },
+  "lumien/bloodmoon/config/BloodmoonConfig$Appearance": {
+    "name": "lumien/bloodmoon/config/BloodmoonConfig$Appearance",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "RED_MOON",
+        "value": {
+          "value": "RedMoon"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "RED_SKY",
+        "value": {
+          "value": "RedSky"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "RED_LIGHT",
+        "value": {
+          "value": "RedLight"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "BLACK_FOG",
+        "value": {
+          "value": "BlackFog"
+        }
+      }
+    ]
+  },
+  "lumien/bloodmoon/config/BloodmoonConfig$General": {
+    "name": "lumien/bloodmoon/config/BloodmoonConfig$General",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "NO_SLEEP",
+        "value": {
+          "value": "NoSleep"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "NO_SLEEP",
+        "value": {
+          "values": [
+            "Whether players are not able to sleep on a bloodmoon"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "VANISH",
+        "value": {
+          "value": "Vanish"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "VANISH",
+        "value": {
+          "values": [
+            "Whether monsters spawned by a bloodmoon should die at dawn"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "RESPECT_GAMERULE",
+        "value": {
+          "value": "RespectGamerule"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "RESPECT_GAMERULE",
+        "value": {
+          "values": [
+            "Whether bloodmoons should respect the doMobSpawning gamerule"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "SEND_MESSAGE",
+        "value": {
+          "value": "SendMessage"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "SEND_MESSAGE",
+        "value": {
+          "values": [
+            "Whether all players in the overworld should receive a message when the bloodmoon starts"
+          ]
+        }
+      }
+    ]
+  },
+  "lumien/bloodmoon/config/BloodmoonConfig$Schedule": {
+    "name": "lumien/bloodmoon/config/BloodmoonConfig$Schedule",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "CHANCE",
+        "value": {
+          "value": "Chance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "CHANCE",
+        "value": {
+          "values": [
+            "The chance of a bloodmoon occuring at the beginning of a night (0\u003dNever;1\u003dEvery night;0.05\u003d5% of all nights)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "FULLMOON",
+        "value": {
+          "value": "Fullmoon"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "FULLMOON",
+        "value": {
+          "values": [
+            "Whether there should be a bloodmoon whenever there is a full moon"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "NTH_NIGHT",
+        "value": {
+          "value": "NthNight"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "NTH_NIGHT",
+        "value": {
+          "values": [
+            "Every nth night there will be a bloodmoon (0 disables this, 1 would be every night, 2 every second night)"
+          ]
+        }
+      }
+    ]
+  },
+  "lumien/bloodmoon/config/BloodmoonConfig$Spawning": {
+    "name": "lumien/bloodmoon/config/BloodmoonConfig$Spawning",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "SPAWN_SPEED",
+        "value": {
+          "value": "SpawnSpeed"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "SPAWN_SPEED",
+        "value": {
+          "values": [
+            "How much faster enemys spawn on a bloodmoon (0\u003dVanilla)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "SPAWN_LIMIT_MULT",
+        "value": {
+          "value": "SpawnLimitMultiplier"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "SPAWN_LIMIT_MULT",
+        "value": {
+          "values": [
+            "With which number should the default entity limit be multiplicated on a blood moon"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "SPAWN_RANGE",
+        "value": {
+          "value": "SpawnRange"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "SPAWN_RANGE",
+        "value": {
+          "values": [
+            "How close can enemys spawn next to the player on a bloodmoon in blocks? (Vanilla\u003d24)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "SPAWN_DISTANCE",
+        "value": {
+          "value": "WorldSpawnDistance"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "SPAWN_DISTANCE",
+        "value": {
+          "values": [
+            "How close can enemys spawn next to the World Spawn (Vanilla\u003d24)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "SPAWN_WHITELIST",
+        "value": {
+          "value": "SpawnWhitelist"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "SPAWN_WHITELIST",
+        "value": {
+          "values": [
+            "If this isn\u0027t empty only monsters which names are in this list will get spawned by the bloodmoon. (Example: \"Skeleton,Spider\")"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "SPAWN_BLACKLIST",
+        "value": {
+          "value": "SpawnBlacklist"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "SPAWN_BLACKLIST",
+        "value": {
+          "values": [
+            "Monsters which names are on this list won\u0027t get spawned by the bloodmoon (Has no effect when a whitelist is active). (Example: \"Skeleton,Spider\")"
+          ]
+        }
+      }
+    ]
+  },
+  "lumien/bloodmoon/handler/BloodmoonEventHandler": {
+    "name": "lumien/bloodmoon/handler/BloodmoonEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "loadWorld(Lnet/minecraftforge/event/world/WorldEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "livingDrops(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "livingUpdate(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "sleepInBed(Lnet/minecraftforge/event/entity/player/PlayerSleepInBedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChange(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "fogColor(Lnet/minecraftforge/client/event/EntityViewRenderEvent$FogColors;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "playerJoinedWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "endWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      }
+    ]
+  },
+  "lumien/bloodmoon/network/handler/HandleBloodmoonStatus": {
+    "name": "lumien/bloodmoon/network/handler/HandleBloodmoonStatus",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "lumien/bloodmoon/network/handler/HandleBloodmoonStatus$1": {
+    "name": "lumien/bloodmoon/network/handler/HandleBloodmoonStatus$1",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "lumien/bloodmoon/network/messages/MessageBloodmoonStatus": {
+    "name": "lumien/bloodmoon/network/messages/MessageBloodmoonStatus",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage"
+    ]
+  }
+}

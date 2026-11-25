@@ -1,0 +1,18 @@
+{ "conditions": [{
+     "type": "armorunder:is_allowed",
+     "value": "portable_paks"
+  }],
+  "result": {
+    "item": "armorunder:goopak_heat",
+    "count": 3
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "ppp", "xGx", "ppp"
+  ],
+  "key": {
+    "p": { "type": "forge:ore_dict", "ore": "paper" },
+    "x": { "type": "forge:ore_dict", "ore": "itemPakFiller" },
+    "G": { "item": "armorunder:heating_goo" }
+  }
+}

@@ -1,0 +1,209 @@
+{
+  "lellson/foodexpansion/DropHandler": {
+    "name": "lellson/foodexpansion/DropHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityDrop(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      }
+    ]
+  },
+  "lellson/foodexpansion/FoodExpansion": {
+    "name": "lellson/foodexpansion/FoodExpansion",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "lellson/foodexpansion/FoodExpansion",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "foodexpansion"
+          },
+          "name": {
+            "value": "Food Expansion"
+          },
+          "version": {
+            "value": "1.3"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "lellson.foodexpansion.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "lellson.foodexpansion.proxy.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "foodexpansion"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "lellson/foodexpansion/FoodRegistry": {
+    "name": "lellson/foodexpansion/FoodRegistry",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "lellson/foodexpansion/FoodRegistry",
+        "values": {
+          "modid": {
+            "value": "foodexpansion"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "register(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryBacon": {
+    "name": "lellson/foodexpansion/crafting/FactoryBacon",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryBaconAndEgg": {
+    "name": "lellson/foodexpansion/crafting/FactoryBaconAndEgg",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryBeetrootNoodles": {
+    "name": "lellson/foodexpansion/crafting/FactoryBeetrootNoodles",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryBlazeCream": {
+    "name": "lellson/foodexpansion/crafting/FactoryBlazeCream",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryCactusFruit": {
+    "name": "lellson/foodexpansion/crafting/FactoryCactusFruit",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryCarrotPie": {
+    "name": "lellson/foodexpansion/crafting/FactoryCarrotPie",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryCarrotSeedSoup": {
+    "name": "lellson/foodexpansion/crafting/FactoryCarrotSeedSoup",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryChocolateBar": {
+    "name": "lellson/foodexpansion/crafting/FactoryChocolateBar",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryCompressedFlesh": {
+    "name": "lellson/foodexpansion/crafting/FactoryCompressedFlesh",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryDough": {
+    "name": "lellson/foodexpansion/crafting/FactoryDough",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryForbiddenFruit": {
+    "name": "lellson/foodexpansion/crafting/FactoryForbiddenFruit",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryJelly": {
+    "name": "lellson/foodexpansion/crafting/FactoryJelly",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryLollipop": {
+    "name": "lellson/foodexpansion/crafting/FactoryLollipop",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryMelonSalad": {
+    "name": "lellson/foodexpansion/crafting/FactoryMelonSalad",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryNetherWartSoup": {
+    "name": "lellson/foodexpansion/crafting/FactoryNetherWartSoup",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactorySpiderSoup": {
+    "name": "lellson/foodexpansion/crafting/FactorySpiderSoup",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/crafting/FactoryStarvingFruit": {
+    "name": "lellson/foodexpansion/crafting/FactoryStarvingFruit",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/foodexpansion/items/ItemEventHandler": {
+    "name": "lellson/foodexpansion/items/ItemEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "itemUsed(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Finish;)V"
+      }
+    ]
+  }
+}

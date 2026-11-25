@@ -1,0 +1,15 @@
+{
+    "variants": {
+        "facing=north,triggered=true": { "model": "switchbow:arrowdispenser"},
+        "facing=south,triggered=true": { "model": "switchbow:arrowdispenser", "y": 180 },
+        "facing=west,triggered=true":  { "model": "switchbow:arrowdispenser", "y": 270 },
+        "facing=east,triggered=true":  { "model": "switchbow:arrowdispenser", "y": 90 },
+  
+        "facing=north,triggered=false": { "model": "switchbow:arrowdispenser"},
+        "facing=south,triggered=false": { "model": "switchbow:arrowdispenser", "y": 180 },
+        "facing=west,triggered=false":  { "model": "switchbow:arrowdispenser", "y": 270 },
+        "facing=east,triggered=false":  { "model": "switchbow:arrowdispenser", "y": 90 }
+ 
+    }
+	
+}

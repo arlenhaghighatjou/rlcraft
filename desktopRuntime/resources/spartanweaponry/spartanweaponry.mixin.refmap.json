@@ -1,0 +1,31 @@
+{
+  "mappings": {
+    "com/oblivioussp/spartanweaponry/mixin/EntityArrowMixin": {
+      "onCollideWithPlayer(Lnet/minecraft/entity/player/EntityPlayer;)V": "Lnet/minecraft/entity/projectile/EntityArrow;func_70100_b_(Lnet/minecraft/entity/player/EntityPlayer;)V"
+    },
+    "com/oblivioussp/spartanweaponry/mixin/EntityLivingBaseMixin": {
+      "applyArmorCalculations(Lnet/minecraft/util/DamageSource;F)F": "Lnet/minecraft/entity/EntityLivingBase;func_70655_b(Lnet/minecraft/util/DamageSource;F)F",
+      "canBlockDamageSource(Lnet/minecraft/util/DamageSource;)Z": "Lnet/minecraft/entity/EntityLivingBase;func_184583_d(Lnet/minecraft/util/DamageSource;)Z"
+    }
+  },
+  "data": {
+    "notch": {
+      "com/oblivioussp/spartanweaponry/mixin/EntityArrowMixin": {
+        "onCollideWithPlayer(Lnet/minecraft/entity/player/EntityPlayer;)V": "Laeh;d(Laed;)V"
+      },
+      "com/oblivioussp/spartanweaponry/mixin/EntityLivingBaseMixin": {
+        "applyArmorCalculations(Lnet/minecraft/util/DamageSource;F)F": "Lvp;b(Lur;F)F",
+        "canBlockDamageSource(Lnet/minecraft/util/DamageSource;)Z": "Lvp;f(Lur;)Z"
+      }
+    },
+    "searge": {
+      "com/oblivioussp/spartanweaponry/mixin/EntityArrowMixin": {
+        "onCollideWithPlayer(Lnet/minecraft/entity/player/EntityPlayer;)V": "Lnet/minecraft/entity/projectile/EntityArrow;func_70100_b_(Lnet/minecraft/entity/player/EntityPlayer;)V"
+      },
+      "com/oblivioussp/spartanweaponry/mixin/EntityLivingBaseMixin": {
+        "applyArmorCalculations(Lnet/minecraft/util/DamageSource;F)F": "Lnet/minecraft/entity/EntityLivingBase;func_70655_b(Lnet/minecraft/util/DamageSource;F)F",
+        "canBlockDamageSource(Lnet/minecraft/util/DamageSource;)Z": "Lnet/minecraft/entity/EntityLivingBase;func_184583_d(Lnet/minecraft/util/DamageSource;)Z"
+      }
+    }
+  }
+}

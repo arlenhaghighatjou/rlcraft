@@ -1,0 +1,54 @@
+package codersafterdark.compatskills.common.compats.minecraft.tileentity;
+
+import codersafterdark.compatskills.utils.Utils;
+import codersafterdark.reskillable.api.data.PlayerData;
+import codersafterdark.reskillable.api.data.PlayerDataHandler;
+import codersafterdark.reskillable.api.data.RequirementHolder;
+import codersafterdark.reskillable.base.LevelLockHandler;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.LeftClickBlock;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+public class TileEntityEventHandler {
+   public TileEntityEventHandler() {
+   }
+
+   @SubscribeEvent
+   public void onTileEntityInteract(RightClickBlock event) {
+      this.checkEvent(event);
+   }
+
+   @SubscribeEvent
+   public void onTileEntityInteract(LeftClickBlock event) {
+      this.checkEvent(event);
+   }
+
+   private void checkEvent(PlayerInteractEvent event) {
+      if (!event.isCanceled()) {
+         EntityPlayer player = event.getEntityPlayer();
+         if (!Utils.skipPlayer(player)) {
+            TileEntity entity = event.getWorld().getTileEntity(event.getPos());
+            if (entity != null) {
+               ResourceLocation location = TileEntity.getKey(entity.getClass());
+               if (location != null) {
+                  PlayerData data = PlayerDataHandler.get(player);
+                  RequirementHolder requirementHolder = LevelLockHandler.getLockByKey(new TileEntityLockKey(location.toString()));
+                  if (!requirementHolder.equals(LevelLockHandler.EMPTY_LOCK) && !data.matchStats(requirementHolder)) {
+                     event.setCanceled(true);
+                     if (player.getEntityWorld().isRemote) {
+                        TextComponentTranslation error = new TextComponentTranslation("compatskills.error.tile_entity.interact", new Object[0]);
+                        player.sendStatusMessage(Utils.getError(requirementHolder, data, error), false);
+                     }
+                  }
+               }
+            }
+
+         }
+      }
+   }
+}

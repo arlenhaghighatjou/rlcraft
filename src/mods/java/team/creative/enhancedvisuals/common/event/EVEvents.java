@@ -1,0 +1,110 @@
+package team.creative.enhancedvisuals.common.event;
+
+import com.creativemd.creativecore.common.packet.PacketHandler;
+import java.lang.reflect.Field;
+import java.util.List;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.projectile.EntityPotion;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.Explosion;
+import net.minecraftforge.event.entity.ProjectileImpactEvent.Throwable;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.world.ExplosionEvent.Detonate;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import team.creative.enhancedvisuals.EnhancedVisuals;
+import team.creative.enhancedvisuals.client.EVClient;
+import team.creative.enhancedvisuals.client.VisualManager;
+import team.creative.enhancedvisuals.client.sound.SoundMuteHandler;
+import team.creative.enhancedvisuals.common.packet.DamagePacket;
+import team.creative.enhancedvisuals.common.packet.ExplosionPacket;
+import team.creative.enhancedvisuals.common.packet.PotionPacket;
+
+public class EVEvents {
+   private Field size = ReflectionHelper.findField(Explosion.class, new String[]{"size", "size"});
+   private Field exploder = ReflectionHelper.findField(Explosion.class, new String[]{"exploder", "exploder"});
+
+   public EVEvents() {
+   }
+
+   @SubscribeEvent
+   public void explosion(Detonate event) {
+      if (event.getWorld() != null && !event.getWorld().isRemote) {
+         try {
+            int sourceEntity = -1;
+            Entity source = (Entity)this.exploder.get(event.getExplosion());
+            if (source != null) {
+               sourceEntity = source.getEntityId();
+            }
+
+            ExplosionPacket packet = new ExplosionPacket(event.getExplosion().getPosition(), this.size.getFloat(event.getExplosion()), sourceEntity);
+
+            for(Entity entity : event.getAffectedEntities()) {
+               if (entity instanceof EntityPlayerMP) {
+                  PacketHandler.sendPacketToPlayer(packet, (EntityPlayerMP)entity);
+               }
+            }
+         } catch (IllegalAccessException | IllegalArgumentException var7) {
+            var7.printStackTrace();
+         }
+      }
+
+   }
+
+   @SubscribeEvent
+   public void impact(Throwable event) {
+      if (!event.getEntity().world.isRemote && event.getEntity() instanceof EntityPotion && !event.isCanceled()) {
+         EntityPotion entity = (EntityPotion)event.getEntity();
+         AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().grow(4.0D, 2.0D, 4.0D);
+         List<Entity> list = entity.world.getEntitiesWithinAABBExcludingEntity(entity, axisalignedbb);
+         if (!list.isEmpty()) {
+            for(Entity livingentity : list) {
+               if (livingentity instanceof EntityLivingBase && ((EntityLivingBase)livingentity).canBeHitWithPotion() && livingentity instanceof EntityPlayer) {
+                  double d0 = entity.getDistanceSq(livingentity);
+                  if (d0 < 16.0D) {
+                     PacketHandler.sendPacketToPlayer(new PotionPacket(Math.sqrt(d0), entity.getPotion()), (EntityPlayerMP)livingentity);
+                  }
+               }
+            }
+         }
+      }
+
+   }
+
+   @SubscribeEvent
+   public void damage(LivingDamageEvent event) {
+      if (event.getEntity() instanceof EntityPlayerMP) {
+         if (EnhancedVisuals.CONFIG.enableDamageDebug) {
+            ((EntityPlayerMP)event.getEntity()).sendMessage(new TextComponentString(event.getSource().damageType + "," + event.getSource().getDeathMessage(event.getEntityLiving()).getUnformattedText() + "," + event.getAmount()));
+         }
+
+         PacketHandler.sendPacketToPlayer(new DamagePacket(event), (EntityPlayerMP)event.getEntity());
+      }
+
+   }
+
+   @SubscribeEvent
+   @SideOnly(Side.CLIENT)
+   public void clientTick(ClientTickEvent event) {
+      if (event.phase == Phase.START && EVClient.shouldTick()) {
+         EntityPlayer player = Minecraft.getMinecraft().player;
+         VisualManager.onTick(player);
+         SoundMuteHandler.tick();
+      }
+
+   }
+
+   public static boolean areEyesInWater(EntityPlayer player) {
+      return player.isInsideOfMaterial(Material.WATER);
+   }
+}

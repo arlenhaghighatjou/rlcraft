@@ -1,0 +1,11 @@
+{
+	"parent": "mcwbridges:block/parent/lit/rope_bridge_end",
+	"textures": {
+		"5": "mcwbridges:blocks/lead_knot_vert",
+		"1_0": "minecraft:blocks/torch",
+		"2": "minecraft:blocks/planks_big_oak",
+		"3": "minecraft:blocks/log_big_oak_top",
+		"4": "mcwbridges:blocks/lead_knot",
+		"particle": "minecraft:blocks/log_big_oak"
+	}
+}

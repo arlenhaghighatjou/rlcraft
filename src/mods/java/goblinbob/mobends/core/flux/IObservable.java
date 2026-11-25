@@ -1,0 +1,18 @@
+package goblinbob.mobends.core.flux;
+
+import java.util.Set;
+
+public interface IObservable<T> {
+   T getValue();
+
+   Set<IObserver<T>> getObservers();
+
+   default Subscription<T> subscribe(IObserver<T> observer) {
+      this.getObservers().add(observer);
+      return new Subscription<T>(this, observer);
+   }
+
+   default void unsubscribe(IObserver<T> observer) {
+      this.getObservers().remove(observer);
+   }
+}

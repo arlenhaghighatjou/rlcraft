@@ -1,0 +1,13 @@
+[
+    {
+        "modid": "attributefix",
+        "name": "Attribute Fix",
+        "description": "Fixes arbitrary attribute restrictions, and makes them configurable.",
+        "version": "1.0.12",
+        "url": "https://minecraft.curseforge.com/projects/attributefix",
+        "authorList": [
+            "darkhax"
+        ],
+        "credits": ""
+    }
+]

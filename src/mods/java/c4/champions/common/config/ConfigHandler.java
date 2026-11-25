@@ -1,0 +1,412 @@
+package c4.champions.common.config;
+
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.common.config.Config.Comment;
+import net.minecraftforge.common.config.Config.Name;
+import net.minecraftforge.common.config.Config.RequiresMcRestart;
+import net.minecraftforge.common.config.Config.Type;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+@Config(
+   modid = "champions"
+)
+public class ConfigHandler {
+   @Name("Hide Champion Effects")
+   @Comment({"Set whether to hide champion particles and HUD effects"})
+   public static boolean hideEffects = false;
+   @Name("Champions from Spawners")
+   @Comment({"Set whether champions can spawn from mob spawners"})
+   public static boolean championSpawners = false;
+   @Name("Dimension Permission Mode")
+   @Comment({"Set whether the dimension configuration is blacklisted or whitelisted"})
+   @RequiresMcRestart
+   public static ConfigHandler.PermissionMode dimensionPermission = ConfigHandler.PermissionMode.BLACKLIST;
+   @Name("Dimension List")
+   @Comment({"Set which dimensions, listed as number ids, are blacklisted or whitelisted for champion mobs, leave blank to disable this option"})
+   @RequiresMcRestart
+   public static String[] dimensionList = new String[0];
+   @Name("Mob Permission Mode")
+   @Comment({"Set whether the mob configuration is blacklisted or whitelisted"})
+   @RequiresMcRestart
+   public static ConfigHandler.PermissionMode mobPermission = ConfigHandler.PermissionMode.BLACKLIST;
+   @Name("Mob List")
+   @Comment({"Set which mobs are blacklisted or whitelisted for champion mobs, leave blank to disable this option"})
+   @RequiresMcRestart
+   public static String[] mobList = new String[]{"aether_legacy:sun_spirit"};
+   @Name("Champion Mobs List")
+   @Comment({"List of mobs that will always spawn as champions, can optionally include specific tier (i.e. 'minecraft:spider;2') or tier range (i.e. 'minecraft:spider;1;3"})
+   @RequiresMcRestart
+   public static String[] championsList = new String[0];
+   @Name("Loot Source")
+   @Comment({"Set whether champion mobs drop loot from the loot table, config, or both"})
+   public static ConfigHandler.LootSource lootSource = ConfigHandler.LootSource.LOOT_TABLE;
+   @Name("Loot Drops")
+   @Comment({"Sets the loot drops from champions if loot source is set to CONFIG, format is tier;modid:name;metadata;stacksize;enchant(true/false);weight"})
+   @RequiresMcRestart
+   public static String[] lootDrops = new String[0];
+   @Name("Loot Drop Scales to Tier")
+   @Comment({"Sets whether to scale loot drop amount to tier number if LootSource.CONFIG is active"})
+   public static boolean lootScaling = false;
+   @Name("Loot Drops From Fake Players")
+   @Comment({"True if fake players can cause champion loot drops, otherwise false"})
+   public static boolean lootFake = true;
+   @Name("Additional Champion Names")
+   @Comment({"Additional names that will be added to the pool of names given to champions"})
+   public static String[] championNames = new String[0];
+   @Name("Additional Champion Name Suffixes")
+   @Comment({"Additional name suffixes that will be added to the pool of names given to champions"})
+   public static String[] championNameSuffixes = new String[0];
+   @Name("Beacon Blacklist Range")
+   @Comment({"The range an active beacon will prevent champion spawns, 0 to disable"})
+   public static int beaconRange = 64;
+   @Name("Death Message Tier")
+   @Comment({"The tier (and above) of champions that will have death messages sent out upon defeat, 0 to disable"})
+   public static int deathMessageTier = 0;
+   @Name("Client Settings")
+   @Comment({"Settings that are only client-side"})
+   public static ConfigHandler.Client client = new ConfigHandler.Client();
+   @Name("Growth Settings")
+   @Comment({"Settings that affect the growth rate of champion mobs"})
+   public static ConfigHandler.Growth growth = new ConfigHandler.Growth();
+   @Name("Affix Settings")
+   @Comment({"Settings that affect individual affixes"})
+   public static ConfigHandler.Affix affix = new ConfigHandler.Affix();
+   @Name("Scaling Health Integration")
+   @Comment({"Settings for integration with the Scaling Health mod"})
+   public static ConfigHandler.ScalingHealth scalingHealth = new ConfigHandler.ScalingHealth();
+
+   public ConfigHandler() {
+   }
+
+   public static class Affix {
+      @Name("Maximum Ability Range")
+      @Comment({"Set the maximum distance that mobs can use their targeted abilities from, 0 to disable"})
+      public int abilityRange = 0;
+      @Name("Adaptable")
+      @Comment({"Settings for the Adaptable affix"})
+      public ConfigHandler.Affix.Adaptable adaptable = new ConfigHandler.Affix.Adaptable();
+      @Name("Arctic")
+      @Comment({"Settings for the Arctic affix"})
+      public ConfigHandler.Affix.Arctic arctic = new ConfigHandler.Affix.Arctic();
+      @Name("Cinder")
+      @Comment({"Settings for the Cinder affix"})
+      public ConfigHandler.Affix.Cinder cinder = new ConfigHandler.Affix.Cinder();
+      @Name("Dampening")
+      @Comment({"Settings for the Dampening affix"})
+      public ConfigHandler.Affix.Dampening dampening = new ConfigHandler.Affix.Dampening();
+      @Name("Desecrator")
+      @Comment({"Settings for the Desecrator affix"})
+      public ConfigHandler.Affix.Desecrator desecrator = new ConfigHandler.Affix.Desecrator();
+      @Name("Hasty")
+      @Comment({"Settings for the Hasty affix"})
+      public ConfigHandler.Affix.Hasty hasty = new ConfigHandler.Affix.Hasty();
+      @Name("Infested")
+      @Comment({"Settings for the Infested affix"})
+      public ConfigHandler.Affix.Infested infested = new ConfigHandler.Affix.Infested();
+      @Name("Jailer")
+      @Comment({"Settings for the Jailer affix"})
+      public ConfigHandler.Affix.Jailer jailer = new ConfigHandler.Affix.Jailer();
+      @Name("Knockback")
+      @Comment({"Settings for the Knockback affix"})
+      public ConfigHandler.Affix.Knockback knockback = new ConfigHandler.Affix.Knockback();
+      @Name("Lively")
+      @Comment({"Settings for the Lively affix"})
+      public ConfigHandler.Affix.Lively lively = new ConfigHandler.Affix.Lively();
+      @Name("Molten")
+      @Comment({"Settings for the Molten affix"})
+      public ConfigHandler.Affix.Molten molten = new ConfigHandler.Affix.Molten();
+      @Name("Plagued")
+      @Comment({"Settings for the Plagued affix"})
+      public ConfigHandler.Affix.Plagued plagued = new ConfigHandler.Affix.Plagued();
+      @Name("Reflecting")
+      @Comment({"Settings for the Reflecting affix"})
+      public ConfigHandler.Affix.Reflecting reflecting = new ConfigHandler.Affix.Reflecting();
+      @Name("Scrapper")
+      @Comment({"Settings for the Scrapper affix"})
+      public ConfigHandler.Affix.Scrapper scrapper = new ConfigHandler.Affix.Scrapper();
+      @Name("Vortex")
+      @Comment({"Settings for the Vortex affix"})
+      public ConfigHandler.Affix.Vortex vortex = new ConfigHandler.Affix.Vortex();
+
+      public Affix() {
+      }
+
+      public class Adaptable {
+         @Name("Damage Reduction Increment")
+         @Comment({"The increase in damage reduction for each consecutive attack of the same damage type"})
+         public double damageReductionIncrement = 0.15D;
+         @Name("Maximum Damage Reduction")
+         @Comment({"The maximum damage reduction"})
+         public double maxDamageReduction = 0.9D;
+
+         public Adaptable() {
+         }
+      }
+
+      public class Arctic {
+         @Name("Attack Interval")
+         @Comment({"How often the champion will shoot projectiles (in ticks)"})
+         public int attackInterval = 20;
+
+         public Arctic() {
+         }
+      }
+
+      public class Cinder {
+         @Name("Attack Interval")
+         @Comment({"How often the champion will shoot projectiles (in ticks)"})
+         public int attackInterval = 20;
+
+         public Cinder() {
+         }
+      }
+
+      public class Dampening {
+         @Name("Damage Reduction")
+         @Comment({"The amount of damage reduction to apply to indirect attacks"})
+         public double damageReduction = 0.8D;
+
+         public Dampening() {
+         }
+      }
+
+      public class Desecrator {
+         @Name("Attack Interval")
+         @Comment({"How often the champion will create harming clouds (in ticks)"})
+         public int attackInterval = 60;
+         @Name("Cloud Activation Time")
+         @Comment({"How long, in ticks, it takes for the effect cloud to activate after being placed"})
+         public int activationTicks = 20;
+         @Name("Cloud Radius")
+         @Comment({"The radius of the cloud effect"})
+         public double cloudRadius = 4.0D;
+         @Name("Cloud Duration")
+         @Comment({"The duration, in ticks, of the cloud effect"})
+         public int cloudDuration = 200;
+
+         public Desecrator() {
+         }
+      }
+
+      public class Hasty {
+         @Name("Movement Bonus")
+         @Comment({"The base movement speed bonus"})
+         public double movementBonus = 0.25D;
+
+         public Hasty() {
+         }
+      }
+
+      public class Infested {
+         @Name("Silverfish Spawn Amount")
+         @Comment({"How many silverfish to spawn per interval"})
+         public int silverfishAmount = 2;
+         @Name("Silverfish Spawn Interval")
+         @Comment({"How long, in ticks, between silverfish spawns"})
+         public int silverfishInterval = 60;
+         @Name("Silverfish Per Health")
+         @Comment({"The amount of silverfish to infest per health point of the champion"})
+         public double silverfishPerHealth = 0.5D;
+         @Name("Silverfish Total Amount")
+         @Comment({"The total amount of silverfish a champion can house at once"})
+         public int silverfishTotal = 20;
+
+         public Infested() {
+         }
+      }
+
+      public class Jailer {
+         @Name("Chance per Attack")
+         @Comment({"The percent chance that an attack will jail targets"})
+         public double chance = 0.2D;
+
+         public Jailer() {
+         }
+      }
+
+      public class Knockback {
+         @Name("Knockback Multiplier")
+         @Comment({"The multiplier to apply to the knockback strength"})
+         public double multiplier = 5.0D;
+
+         public Knockback() {
+         }
+      }
+
+      public class Lively {
+         @Name("Heal Amount")
+         @Comment({"The amount of health per second regeneration"})
+         public double healAmount = 1.0D;
+         @Name("Passive Multiplier")
+         @Comment({"Multiplier to health regeneration when not aggressive"})
+         public double passiveMultiplier = 5.0D;
+         @Name("Cooldown on Attacked")
+         @Comment({"Set cooldown (in seconds) for regeneration after getting attacked"})
+         public int cooldown = 3;
+
+         public Lively() {
+         }
+      }
+
+      public class Molten {
+         @Name("Water-Resistant")
+         @Comment({"Whether or not champions are damaged by water"})
+         public boolean waterResistant = false;
+
+         public Molten() {
+         }
+      }
+
+      public class Plagued {
+         @Name("Plague Duration")
+         @Comment({"The duration (in ticks) of the plague effect"})
+         public int duration = 300;
+         @Name("Infection Potion")
+         @Comment({"The potion that will be spread through the plague effect"})
+         @RequiresMcRestart
+         public String infectPotion = "minecraft:poison";
+         @Name("Infection Potion Duration")
+         @Comment({"The duration (in ticks) of the infection potion"})
+         public int infectDuration = 200;
+         @Name("Infection Potion Power")
+         @Comment({"The power of the infection potion (base: 1)"})
+         public int infectPower = 1;
+         @Name("Infection Range")
+         @Comment({"The range that the infection will spread from hosts"})
+         public int infectRange = 3;
+
+         public Plagued() {
+         }
+      }
+
+      public class Reflecting {
+         @Name("Minimum Percent of Damage")
+         @Comment({"The minimum percent of damage to reflect back"})
+         public double minimumPerc = 0.1D;
+         @Name("Maximum Percent of Damage")
+         @Comment({"The maximum percent of damage to reflect back"})
+         public double maximumPerc = 0.35D;
+         @Name("Maximum Damage")
+         @Comment({"The maximum amount of damage to reflect back"})
+         public double maxDamage = 100.0D;
+         @Name("Enable Killing Blow")
+         @Comment({"Set whether or not reflected damage can be deadly"})
+         public boolean killingBlow = true;
+
+         public Reflecting() {
+         }
+      }
+
+      public class Scrapper {
+         @Name("Chance per Attack")
+         @Comment({"The percent chance that an attack will injure targets"})
+         public double chance = 0.4D;
+
+         public Scrapper() {
+         }
+      }
+
+      public class Vortex {
+         @Name("Vortex Strength")
+         @Comment({"The strength of the vortex pulling effect"})
+         public double strength = 0.05D;
+
+         public Vortex() {
+         }
+      }
+   }
+
+   public static class Client {
+      @Name("Rank Colors")
+      @Comment({"A list of colors, as numbers, for each rank"})
+      public String[] colors = new String[0];
+      @Name("Health Bar X-Offset")
+      @Comment({"The x-offset for the champion health bars"})
+      public int xOffset = 0;
+      @Name("Health Bar Y-Offset")
+      @Comment({"The y-offset for the champion health bars"})
+      public int yOffset = 0;
+      @Name("Health Bar Visibility Range")
+      @Comment({"The distance, in blocks, from which the health bar can be seen"})
+      public int healthVisibility = 50;
+      @Name("Name Visibility")
+      @Comment({"Set to true to render the names of the champions"})
+      public boolean nameVisibility = true;
+
+      public Client() {
+      }
+   }
+
+   @EventBusSubscriber(
+      modid = "champions"
+   )
+   private static class ConfigEventHandler {
+      private ConfigEventHandler() {
+      }
+
+      @SubscribeEvent
+      public static void onConfigChanged(OnConfigChangedEvent evt) {
+         if (evt.getModID().equals("champions")) {
+            ConfigManager.sync("champions", Type.INSTANCE);
+         }
+
+      }
+   }
+
+   public static class Growth {
+      @Name("Health")
+      @Comment({"The percent increase in health multiplied by the growth factor"})
+      public double health = 0.35D;
+      @Name("Attack Damage")
+      @Comment({"The percent increase in attack damage multiplied by the growth factor"})
+      public double attackDamage = 0.5D;
+      @Name("Armor")
+      @Comment({"The increase in armor multiplied by the growth factor"})
+      public double armor = 2.0D;
+      @Name("Armor Toughness")
+      @Comment({"The increase in armor toughness multiplied by the growth factor"})
+      public double armorToughness = 1.0D;
+      @Name("Knockback Resistance")
+      @Comment({"The increase in knockback resistance multiplied by the growth factor"})
+      public double knockbackResist = 0.05D;
+      @Name("Experience")
+      @Comment({"The increase in experience multiplied by the growth factor"})
+      public double exp = 1.0D;
+      @Name("Creeper Explosion Strength")
+      @Comment({"The increase in creeper explosion strength multiplied by tier, NOT by growth factor"})
+      public int creeperStrength = 2;
+
+      public Growth() {
+      }
+   }
+
+   public static enum LootSource {
+      LOOT_TABLE,
+      CONFIG,
+      BOTH;
+
+      private LootSource() {
+      }
+   }
+
+   public static enum PermissionMode {
+      BLACKLIST,
+      WHITELIST;
+
+      private PermissionMode() {
+      }
+   }
+
+   public static class ScalingHealth {
+      @Name("Tier Spawn Modifiers")
+      @Comment({"List of tiers with numbers to multiply spawn rates by difficulty (i.e. '1;0.02' to increase tier 1 spawns by 2 percent per difficulty). Note that tier spawn chances are cumulative, so increasing lower tier spawns will naturally increase higher tier spawns."})
+      @RequiresMcRestart
+      public String[] spawnModifiers = new String[0];
+
+      public ScalingHealth() {
+      }
+   }
+}

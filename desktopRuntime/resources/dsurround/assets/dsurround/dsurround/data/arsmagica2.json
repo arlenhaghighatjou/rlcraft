@@ -1,0 +1,59 @@
+{
+	"blocks": [
+		{
+			"blocks": [
+				"arsmagica2:liquid_essence"
+			],
+			"effects": [
+				{
+					"effect": "fountain",
+					"chance": 500
+				},
+				{
+					"effect": "bubble",
+					"chance": 1800
+				}
+			]
+		},
+		{
+			"blocks": [
+				"arsmagica2:frost"
+			],
+			"chance": 10000,
+			"sounds": [
+				{
+					"sound": "dsurround:ice",
+					"variable": false
+				}
+			]
+		}
+	],
+	"items": {
+		"LEATHER": [
+			"am2.armor.AMArmor"
+		],
+		"AXE": [
+			"am2.items.ItemBoundAxe",
+			"am2.items.ItemBoundPickaxe"
+		],
+		"BOW": [
+			"am2.items.ItemBoundBow"
+		],
+		"SWORD": [
+			"am2.items.ItemBoundSword"
+		],
+		"TOOL": [
+			"am2.items.ItemBoundHoe",
+			"am2.items.ItemBoundShovel",
+			"am2.items.ItemMagicBroom",
+			"am2.items.ItemSpellStaff"
+		]
+	},
+	"footsteps": {
+		"arsmagica2:witchwood_leaves": "leaves",
+		"arsmagica2:frost": "ice",
+		"arsmagica2:mana_battery": "composite",
+		"arsmagica2:particle_emitter": "glass",
+		"arsmagica2:flicker_habitat": "glass"
+	}
+}

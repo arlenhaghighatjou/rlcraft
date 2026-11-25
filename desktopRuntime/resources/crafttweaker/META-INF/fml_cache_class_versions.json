@@ -1,0 +1,19 @@
+{
+  "crafttweaker/mods/jei/JEI": 52,
+  "crafttweaker/mods/jei/JEIAddonPlugin": 52,
+  "crafttweaker/mods/jei/JEIMod": 52,
+  "crafttweaker/mods/jei/JEIMod$1": 52,
+  "crafttweaker/mods/jei/JEIMod$2": 52,
+  "crafttweaker/mods/jei/actions/AddItemAction": 52,
+  "crafttweaker/mods/jei/actions/DescribeAction": 52,
+  "crafttweaker/mods/jei/actions/HideAction": 52,
+  "crafttweaker/mods/jei/actions/HideCategoryAction": 52,
+  "crafttweaker/mods/jei/actions/HideFluidAction": 52,
+  "crafttweaker/mods/jei/commands/ConflictCommand": 52,
+  "crafttweaker/mods/jei/commands/ConflictCommand$1": 52,
+  "crafttweaker/mods/jei/commands/ConflictCommand$CraftRecipeEntryComparator": 52,
+  "crafttweaker/mods/jei/commands/ConflictCommand$CraftingRecipeEntry": 52,
+  "crafttweaker/mods/jei/recipeWrappers/BrewingRecipeCWrapper": 52,
+  "crafttweaker/mods/jei/recipeWrappers/CraftingRecipeWrapperShaped": 52,
+  "crafttweaker/mods/jei/recipeWrappers/CraftingRecipeWrapperShapeless": 52
+}

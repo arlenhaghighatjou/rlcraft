@@ -1,0 +1,21 @@
+[
+{
+  "modid" : "ichunutil",
+  "name" : "iChunUtil",
+  "version" : "1.12.2-7.2.2",
+  "url" : "http://ichun.me/mods/ichunutil/",
+  "credits" : "",
+  "authorList": [
+    "iChun"
+  ],
+  "description": "Shared library mod required by several of iChun's Mods.",
+  "logoFile" : "",
+  "updateUrl" : "",
+  "parent" : "",
+  "screenshots": [
+  ],
+  "dependencies": [
+    "Forge"
+  ]
+}
+]

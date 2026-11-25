@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "switchbow:items/switchcrossbow"
+  },
+  "display": {
+    "thirdperson_righthand": {
+        "rotation": [ 270, 0, 316 ],
+        "translation": [ 0.00, 0.50, 0.50 ],
+        "scale": [ 1.00, 1.00, 1.00 ]
+    },
+    "thirdperson_lefthand": {
+        "rotation": [ 270, 0, 46 ],
+        "translation": [ 0.00, 0.50, 0.50 ],
+        "scale": [ 1.00, 1.00, 1.00 ]
+    },
+    "firstperson_righthand": {
+        "rotation": [ 308, 358, 324 ],
+        "translation": [ -4.50, 0.00, 0.00 ],
+        "scale": [ 1.00, 1.00, 1.00 ]
+    },
+	 "firstperson_lefthand": {
+        "rotation": [ 312, 0, 54 ],
+        "translation": [ -4.50, 0.00, 0.00 ],
+        "scale": [ 1.00, 1.00, 1.00 ]
+    }
+  },
+  "overrides": [
+    { "predicate": {"cooldown": 0.01 }, "model": "switchbow:item/switchcrossbow_pulling_1" }]
+}

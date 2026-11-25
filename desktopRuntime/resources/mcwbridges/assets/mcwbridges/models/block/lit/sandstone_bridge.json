@@ -1,0 +1,9 @@
+{
+	"parent": "mcwbridges:block/parent/lit/brick_bridge",
+	"textures": {
+		"0": "minecraft:blocks/sand",
+		"2": "minecraft:blocks/sandstone_normal",
+		"1_0": "minecraft:blocks/torch",
+		"particle": "minecraft:blocks/sandstone_normal"
+	}
+}

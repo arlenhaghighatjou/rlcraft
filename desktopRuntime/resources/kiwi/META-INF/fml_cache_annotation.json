@@ -1,0 +1,544 @@
+{
+  "snownee/kiwi/Kiwi": {
+    "name": "snownee/kiwi/Kiwi",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "snownee/kiwi/Kiwi",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12, 1.13)"
+          },
+          "modid": {
+            "value": "kiwi"
+          },
+          "name": {
+            "value": "Kiwi"
+          },
+          "version": {
+            "value": "0.5.3.32"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$InstanceFactory;",
+        "target": "getInstance()Lsnownee/kiwi/Kiwi;"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "snownee/kiwi/KiwiConfig": {
+    "name": "snownee/kiwi/KiwiConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "snownee/kiwi/KiwiConfig",
+        "values": {
+          "category": {
+            "value": ""
+          },
+          "modid": {
+            "value": "kiwi"
+          },
+          "name": {
+            "value": "kiwi"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "snownee/kiwi/KiwiConfig",
+        "value": {
+          "value": "kiwi.config"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "GENERAL",
+        "value": {
+          "values": [
+            "General settings of Kiwi."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "GENERAL",
+        "value": {
+          "value": "kiwi.config.general"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "GENERAL",
+        "value": {
+          "value": "General"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "MODULES",
+        "value": {
+          "values": [
+            "Toggle optional modules of Kiwi."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "MODULES",
+        "value": {
+          "value": "kiwi.config.modules"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "MODULES",
+        "value": {
+          "value": "Modules"
+        }
+      }
+    ]
+  },
+  "snownee/kiwi/KiwiConfig$General": {
+    "name": "snownee/kiwi/KiwiConfig$General",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "orePreference",
+        "value": {
+          "values": [
+            "A list of preferred Mod IDs that results of Cuisine processes should stem from"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "orePreference",
+        "value": {
+          "value": "kiwi.config.general.oredict_preference"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "orePreference",
+        "value": {
+          "value": "OreDict Preference"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "tooltipRequiresShift",
+        "value": {
+          "values": [
+            "Tooltips require pressing shift to be shown"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "tooltipRequiresShift",
+        "value": {
+          "value": "kiwi.config.general.press_shift"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "tooltipRequiresShift",
+        "value": {
+          "value": "Tooltip Requires Shift"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "tooltipWrapWidth",
+        "value": {
+          "values": [
+            "Max line width shown in description of tooltips"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "tooltipWrapWidth",
+        "value": {
+          "value": "kiwi.config.general.tip_width"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "tooltipWrapWidth",
+        "value": {
+          "value": "Tooltip Wrap Width"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "tooltipWrapWidth",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "50"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "replaceDefaultFontRenderer",
+        "value": {
+          "values": [
+            "Use §x (almost) everywhere. Fix MC-109260. Do NOT enable this unless you know what you are doing"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "replaceDefaultFontRenderer",
+        "value": {
+          "value": "Replace Default Font Renderer"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "replaceDefaultFontRenderer"
+      }
+    ]
+  },
+  "snownee/kiwi/KiwiConfig$Modules": {
+    "name": "snownee/kiwi/KiwiConfig$Modules",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "modules",
+        "value": {
+          "values": [
+            "You can set the value to false to force disable the optional module"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$LangKey;",
+        "target": "modules",
+        "value": {
+          "value": "kiwi.config.modules.optional_modules"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "modules",
+        "value": {
+          "value": "Optional Modules"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "modules"
+      }
+    ]
+  },
+  "snownee/kiwi/KiwiManager": {
+    "name": "snownee/kiwi/KiwiManager",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "snownee/kiwi/KiwiManager",
+        "values": {
+          "modid": {
+            "value": "kiwi"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerPotions(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerPotionEffects(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "snownee/kiwi/KiwiModule": {
+    "name": "snownee/kiwi/KiwiModule",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "snownee/kiwi/block/BlockMod": {
+    "name": "snownee/kiwi/block/BlockMod",
+    "interfaces": [
+      "snownee/kiwi/block/IModBlock"
+    ]
+  },
+  "snownee/kiwi/block/BlockModFence": {
+    "name": "snownee/kiwi/block/BlockModFence",
+    "interfaces": [
+      "snownee/kiwi/block/IModBlock"
+    ]
+  },
+  "snownee/kiwi/block/BlockModFenceGate": {
+    "name": "snownee/kiwi/block/BlockModFenceGate",
+    "interfaces": [
+      "snownee/kiwi/block/IModBlock"
+    ]
+  },
+  "snownee/kiwi/block/IModBlock": {
+    "name": "snownee/kiwi/block/IModBlock",
+    "interfaces": [
+      "net/minecraftforge/registries/IForgeRegistryEntry"
+    ]
+  },
+  "snownee/kiwi/client/AdvancedFontRenderer": {
+    "name": "snownee/kiwi/client/AdvancedFontRenderer",
+    "interfaces": [
+      "net/minecraftforge/client/resource/ISelectiveResourceReloadListener"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "snownee/kiwi/client/AdvancedFontRenderer",
+        "values": {
+          "modid": {
+            "value": "kiwi"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLanguageGuiOpening(Lnet/minecraftforge/client/event/GuiScreenEvent$ActionPerformedEvent$Post;)V"
+      }
+    ]
+  },
+  "snownee/kiwi/client/ModelRendering": {
+    "name": "snownee/kiwi/client/ModelRendering",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "snownee/kiwi/client/ModelRendering",
+        "values": {
+          "modid": {
+            "value": "kiwi"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onModelRegister(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "snownee/kiwi/client/gui/GuiContainerMod": {
+    "name": "snownee/kiwi/client/gui/GuiContainerMod",
+    "interfaces": [
+      "snownee/kiwi/client/gui/IMessageHandler"
+    ]
+  },
+  "snownee/kiwi/client/gui/GuiControl": {
+    "name": "snownee/kiwi/client/gui/GuiControl",
+    "interfaces": [
+      "snownee/kiwi/client/gui/IMessageHandler"
+    ]
+  },
+  "snownee/kiwi/client/gui/element/DrawableNineSlice": {
+    "name": "snownee/kiwi/client/gui/element/DrawableNineSlice",
+    "interfaces": [
+      "snownee/kiwi/client/gui/element/IDrawable"
+    ]
+  },
+  "snownee/kiwi/client/gui/element/DrawableResource": {
+    "name": "snownee/kiwi/client/gui/element/DrawableResource",
+    "interfaces": [
+      "snownee/kiwi/client/gui/element/IDrawableStatic"
+    ]
+  },
+  "snownee/kiwi/client/gui/element/IDrawableStatic": {
+    "name": "snownee/kiwi/client/gui/element/IDrawableStatic",
+    "interfaces": [
+      "snownee/kiwi/client/gui/element/IDrawable"
+    ]
+  },
+  "snownee/kiwi/crafting/AbstractDynamicShapedRecipe": {
+    "name": "snownee/kiwi/crafting/AbstractDynamicShapedRecipe",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IShapedRecipe"
+    ]
+  },
+  "snownee/kiwi/crafting/ConditionModuleLoaded": {
+    "name": "snownee/kiwi/crafting/ConditionModuleLoaded",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "snownee/kiwi/crafting/RecipeNoContainers$Factory": {
+    "name": "snownee/kiwi/crafting/RecipeNoContainers$Factory",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IRecipeFactory"
+    ]
+  },
+  "snownee/kiwi/crafting/input/RegularItemStackInput": {
+    "name": "snownee/kiwi/crafting/input/RegularItemStackInput",
+    "interfaces": [
+      "snownee/kiwi/crafting/input/ProcessingInput"
+    ]
+  },
+  "snownee/kiwi/item/IModItem": {
+    "name": "snownee/kiwi/item/IModItem",
+    "interfaces": [
+      "net/minecraftforge/registries/IForgeRegistryEntry"
+    ]
+  },
+  "snownee/kiwi/item/ItemMod": {
+    "name": "snownee/kiwi/item/ItemMod",
+    "interfaces": [
+      "snownee/kiwi/item/IModItem"
+    ]
+  },
+  "snownee/kiwi/item/ItemModBlock": {
+    "name": "snownee/kiwi/item/ItemModBlock",
+    "interfaces": [
+      "snownee/kiwi/item/IModItem"
+    ]
+  },
+  "snownee/kiwi/network/NetworkChannel": {
+    "name": "snownee/kiwi/network/NetworkChannel",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerPacketIncoming(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ServerCustomPacketEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onClientPacketIncoming(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientCustomPacketEvent;)V"
+      }
+    ]
+  },
+  "snownee/kiwi/test/TestModule": {
+    "name": "snownee/kiwi/test/TestModule",
+    "interfaces": [
+      "snownee/kiwi/IModule"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lsnownee/kiwi/KiwiModule;",
+        "target": "snownee/kiwi/test/TestModule",
+        "values": {
+          "disabledByDefault": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "modid": {
+            "value": "kiwi"
+          },
+          "optional": {
+            "type": "BOOL",
+            "value": "true"
+          }
+        }
+      }
+    ]
+  },
+  "snownee/kiwi/test/VariantTest": {
+    "name": "snownee/kiwi/test/VariantTest",
+    "interfaces": [
+      "snownee/kiwi/item/IVariant"
+    ]
+  },
+  "snownee/kiwi/util/VariantsHolder$Type": {
+    "name": "snownee/kiwi/util/VariantsHolder$Type",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "snownee/kiwi/util/definition/ItemDefinition": {
+    "name": "snownee/kiwi/util/definition/ItemDefinition",
+    "interfaces": [
+      "java/lang/Comparable",
+      "snownee/kiwi/crafting/input/ProcessingInput"
+    ]
+  },
+  "snownee/kiwi/util/definition/OreDictDefinition": {
+    "name": "snownee/kiwi/util/definition/OreDictDefinition",
+    "interfaces": [
+      "snownee/kiwi/crafting/input/ProcessingInput"
+    ]
+  },
+  "snownee/kiwi/util/definition/WeirdCompartor": {
+    "name": "snownee/kiwi/util/definition/WeirdCompartor",
+    "interfaces": [
+      "java/util/Comparator"
+    ]
+  }
+}

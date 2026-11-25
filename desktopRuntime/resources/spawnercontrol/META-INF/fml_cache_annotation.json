@@ -1,0 +1,533 @@
+{
+  "ladysnake/spawnercontrol/SpawnerControl": {
+    "name": "ladysnake/spawnercontrol/SpawnerControl",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "ladysnake/spawnercontrol/SpawnerControl",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12, 1.13)"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.2.2596,);"
+          },
+          "guiFactory": {
+            "value": "ladysnake.spawnercontrol.client.MSCConfigFactory"
+          },
+          "modid": {
+            "value": "spawnercontrol"
+          },
+          "name": {
+            "value": "Mob Spawner Control"
+          },
+          "version": {
+            "value": "1.6.3b"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      }
+    ]
+  },
+  "ladysnake/spawnercontrol/SpawnerControl$RegistryHandler": {
+    "name": "ladysnake/spawnercontrol/SpawnerControl$RegistryHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "ladysnake/spawnercontrol/SpawnerControl$RegistryHandler"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockRegister(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemRegister(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRenders(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "ladysnake/spawnercontrol/SpawnerEventHandler": {
+    "name": "ladysnake/spawnercontrol/SpawnerEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "ladysnake/spawnercontrol/SpawnerEventHandler",
+        "values": {
+          "modid": {
+            "value": "spawnercontrol"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lcom/google/common/annotations/VisibleForTesting;",
+        "target": "allSpawners"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAttachCapabilities(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onTickWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onCheckSpawnerSpawn(Lnet/minecraftforge/event/entity/living/LivingSpawnEvent$CheckSpawn;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingSpawnSpecialSpawn(Lnet/minecraftforge/event/entity/living/LivingSpawnEvent$SpecialSpawn;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingDeath(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingExperienceDrop(Lnet/minecraftforge/event/entity/living/LivingExperienceDropEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLivingItemDrop(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockBreak(Lnet/minecraftforge/event/world/BlockEvent$BreakEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockHarvestDrops(Lnet/minecraftforge/event/world/BlockEvent$HarvestDropsEvent;)V"
+      }
+    ]
+  },
+  "ladysnake/spawnercontrol/client/MSCConfigFactory": {
+    "name": "ladysnake/spawnercontrol/client/MSCConfigFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "ladysnake/spawnercontrol/config/MSCConfig": {
+    "name": "ladysnake/spawnercontrol/config/MSCConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "ladysnake/spawnercontrol/config/MSCConfig",
+        "values": {
+          "modid": {
+            "value": "spawnercontrol"
+          },
+          "name": {
+            "value": "spawnercontrol/spawnercontrol"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "ladysnake/spawnercontrol/config/MSCConfig",
+        "values": {
+          "modid": {
+            "value": "spawnercontrol"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Ignore;",
+        "target": "MAIN_CONFIG_FILE"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Ignore;",
+        "target": "VANILLA_CONFIG_CATEGORY"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "alterVanillaSpawner"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "alterVanillaSpawner",
+        "value": {
+          "values": [
+            "If set to false, vanilla spawners won\u0027t be affected by the mod. This mod\u0027s own spawners will be the only ones affected by this config"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "vanillaSpawnerConfig",
+        "value": {
+          "values": [
+            "The spawner configuration for vanilla or vanilla-derived spawners"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "customSpawners"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "customSpawners"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "customSpawners",
+        "value": {
+          "values": [
+            "A list of ids used to generate custom spawner objects",
+            "Each custom spawner uses a separate configuration file, accessible in the \u0027custom spawners config\u0027 category"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresMcRestart;",
+        "target": "makeCreativeTab"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "makeCreativeTab",
+        "value": {
+          "values": [
+            "If set to true, the mod will generate its own creative tab to put custom spawners in"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "ladysnake/spawnercontrol/config/SpawnerConfig": {
+    "name": "ladysnake/spawnercontrol/config/SpawnerConfig",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "spawnConditions",
+        "value": {
+          "values": [
+            "Regroups config options aiming to alter mob spawners spawning conditions"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "mobLoot",
+        "value": {
+          "values": [
+            "Groups config options related to custom drops from mobs spawned by this spawner type"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "mobThreshold",
+        "value": {
+          "values": [
+            "When a spawner has spawned this number of mobs over this lifetime, it will get broken automatically"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "incrementOnMobDeath",
+        "value": {
+          "values": [
+            "If set to true, spawners will count mobs when they are killed rather than when they are spawned"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "spawnRateModifier",
+        "value": {
+          "values": [
+            "This multiplier is applied on the spawner\u0027s spawn delay each time a mob is spawned. \nCan be used to make mobs spawned exponentially faster or slower."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "breakSpawner",
+        "value": {
+          "values": [
+            "If set to false, spawners will only be disabled when expired, not broken"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "xpDropped",
+        "value": {
+          "values": [
+            "The minimum amount of xp dropped by a spawner when broken"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "randXpVariation",
+        "values": {
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "randXpVariation",
+        "value": {
+          "values": [
+            "The formula used to calculate xp dropped is \u0027xpDropped + rand(this number) + rand(this number)\u0027"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "itemsDropped",
+        "value": {
+          "values": [
+            "A list of item ids that a mob spawner drops when broken",
+            "Format: \u0027modid:item(:count(:meta(:chance)))\u0027 (count, meta and chance are optional)"
+          ]
+        }
+      }
+    ]
+  },
+  "ladysnake/spawnercontrol/config/SpawnerConfig$MobLoot": {
+    "name": "ladysnake/spawnercontrol/config/SpawnerConfig$MobLoot",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "xpMultipliers",
+        "value": {
+          "values": [
+            "Individual xp drop multiplier configuration for mobs spawned by this spawner type",
+            "Format: \u0027modid:entity:xpMultiplier(:flatXp)\u0027 (flatXp is optional)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "itemDropRemovals",
+        "value": {
+          "values": [
+            "Individual item drop removal configuration for mobs spawned by this spawner type",
+            "Format: \u0027modid:entity(,modid:item(:meta))(,modid:item(:meta))...\u0027",
+            "Anything in parenthesis is optional, and you can enter as many items as you want",
+            "If don\u0027t enter any items, all item drops are removed from the mob (itemDropAdditions are added afterwards)"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "itemDropAdditions",
+        "value": {
+          "values": [
+            "Individual item drop addition configuration for mobs spawned by this spawner type",
+            "Format: \u0027modid:entity,modid:item(:count(:meta(:chance)))(,modid:item(:count(:meta(:chance))))...\u0027",
+            "Anything in parenthesis is optional, and you can enter as many items as you want",
+            "Eg: minecraft:skeleton,minecraft:dye:100:15:0.5,minecraft:bone:1:1:1"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Ignore;",
+        "target": "lootEntries"
+      }
+    ]
+  },
+  "ladysnake/spawnercontrol/config/SpawnerConfig$MobLoot$MobLootEntry": {
+    "name": "ladysnake/spawnercontrol/config/SpawnerConfig$MobLoot$MobLootEntry",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "xpMultiplier",
+        "value": {
+          "values": [
+            "xp drop multiplier for mobs spawned by this spawner type"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "flatXpIncrease",
+        "value": {
+          "values": [
+            "Flat xp modifier that will be added to mobs spawned by this spawner type"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "removeAllItems",
+        "value": {
+          "values": [
+            "Remove all existing item drops from the mobs spawned by this spawner",
+            "\u0027Added Items\u0027 are added afterwards"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "removedItems",
+        "value": {
+          "values": [
+            "Which items to remove from the drops of the mobs spawned",
+            "Format: \u0027modid:item(:meta)\u0027 (meta is optional)",
+            "If \u0027Remove All Items\u0027 is true, this does nothing"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "addedItems",
+        "value": {
+          "values": [
+            "Which items to add to the drops of the mobs spawned",
+            "Format: \u0027modid:item(:count(:meta(:chance)))\u0027 (count, meta and chance are optional)"
+          ]
+        }
+      }
+    ]
+  },
+  "ladysnake/spawnercontrol/config/SpawnerConfig$SpawnConditions": {
+    "name": "ladysnake/spawnercontrol/config/SpawnerConfig$SpawnConditions",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "forceSpawnerAllSpawns",
+        "value": {
+          "values": [
+            "If set to true, spawners will not run mob-specific checks on any entity"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "forceSpawnerMobSpawns",
+        "value": {
+          "values": [
+            "If set to true, spawners will not run mob-specific checks on hostile mob entities",
+            "This most notably prevents players from disabling a spawner with torches or other light sources"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "checkSunlight",
+        "value": {
+          "values": [
+            "If forceSpawnerMobSpawns is enabled, will prevent hostile mobs from spawning in daylight"
+          ]
+        }
+      }
+    ]
+  },
+  "ladysnake/spawnercontrol/controlledspawner/CapabilityControllableSpawner": {
+    "name": "ladysnake/spawnercontrol/controlledspawner/CapabilityControllableSpawner",
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/capabilities/CapabilityInject;",
+        "target": "CAPABILITY_SPAWNER",
+        "value": {
+          "type": "CLASS",
+          "value": "Lladysnake/spawnercontrol/controlledspawner/IControllableSpawner;"
+        }
+      }
+    ]
+  },
+  "ladysnake/spawnercontrol/controlledspawner/CapabilityControllableSpawner$DefaultControllableSpawner": {
+    "name": "ladysnake/spawnercontrol/controlledspawner/CapabilityControllableSpawner$DefaultControllableSpawner",
+    "interfaces": [
+      "ladysnake/spawnercontrol/controlledspawner/IControllableSpawner"
+    ]
+  },
+  "ladysnake/spawnercontrol/controlledspawner/CapabilityControllableSpawner$Provider": {
+    "name": "ladysnake/spawnercontrol/controlledspawner/CapabilityControllableSpawner$Provider",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilitySerializable"
+    ]
+  },
+  "ladysnake/spawnercontrol/controlledspawner/CapabilityControllableSpawner$Storage": {
+    "name": "ladysnake/spawnercontrol/controlledspawner/CapabilityControllableSpawner$Storage",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/Capability$IStorage"
+    ]
+  }
+}

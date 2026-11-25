@@ -1,0 +1,611 @@
+{
+  "com/github/fnar/minecraft/PositionInfo1_12": {
+    "name": "com/github/fnar/minecraft/PositionInfo1_12",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/PositionInfo"
+    ]
+  },
+  "com/github/fnar/minecraft/WorldEditor1_12": {
+    "name": "com/github/fnar/minecraft/WorldEditor1_12",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/WorldEditor"
+    ]
+  },
+  "com/github/fnar/minecraft/block/SingleBlockBrush": {
+    "name": "com/github/fnar/minecraft/block/SingleBlockBrush",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/BlockBrush"
+    ]
+  },
+  "com/github/fnar/minecraft/item/Arrow": {
+    "name": "com/github/fnar/minecraft/item/Arrow",
+    "interfaces": [
+      "com/github/fnar/minecraft/item/RldItem"
+    ]
+  },
+  "com/github/fnar/minecraft/item/Potion": {
+    "name": "com/github/fnar/minecraft/item/Potion",
+    "interfaces": [
+      "com/github/fnar/minecraft/item/RldItem"
+    ]
+  },
+  "com/github/fnar/minecraft/item/RldBaseItem": {
+    "name": "com/github/fnar/minecraft/item/RldBaseItem",
+    "interfaces": [
+      "com/github/fnar/minecraft/item/RldItem"
+    ]
+  },
+  "com/github/fnar/minecraft/item/mapper/BaseItemMapper1_12": {
+    "name": "com/github/fnar/minecraft/item/mapper/BaseItemMapper1_12",
+    "interfaces": [
+      "com/github/fnar/minecraft/item/ItemMapper"
+    ]
+  },
+  "com/github/fnar/minecraft/item/mapper/ItemMapper1_12": {
+    "name": "com/github/fnar/minecraft/item/mapper/ItemMapper1_12",
+    "interfaces": [
+      "com/github/fnar/minecraft/item/ItemMapper"
+    ]
+  },
+  "com/github/fnar/minecraft/tag/CompoundTag": {
+    "name": "com/github/fnar/minecraft/tag/CompoundTag",
+    "interfaces": [
+      "com/github/fnar/minecraft/tag/Tag"
+    ]
+  },
+  "com/github/fnar/minecraft/tag/IntTag": {
+    "name": "com/github/fnar/minecraft/tag/IntTag",
+    "interfaces": [
+      "com/github/fnar/minecraft/tag/Tag"
+    ]
+  },
+  "com/github/fnar/minecraft/tag/ListTag": {
+    "name": "com/github/fnar/minecraft/tag/ListTag",
+    "interfaces": [
+      "com/github/fnar/minecraft/tag/Tag"
+    ]
+  },
+  "com/github/fnar/minecraft/tag/StringTag": {
+    "name": "com/github/fnar/minecraft/tag/StringTag",
+    "interfaces": [
+      "com/github/fnar/minecraft/tag/Tag"
+    ]
+  },
+  "com/github/fnar/roguelike/Roguelike": {
+    "name": "com/github/fnar/roguelike/Roguelike",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/github/fnar/roguelike/Roguelike",
+        "values": {
+          "acceptableRemoteVersions": {
+            "value": "*"
+          },
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "roguelike"
+          },
+          "name": {
+            "value": "Roguelike Dungeons -- Fnar Edition"
+          },
+          "version": {
+            "value": "2.4.4"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "roguelike"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "modInit(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStart(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "com/github/fnar/roguelike/command/CommandSender1_12": {
+    "name": "com/github/fnar/roguelike/command/CommandSender1_12",
+    "interfaces": [
+      "greymerk/roguelike/command/CommandSender"
+    ]
+  },
+  "com/github/fnar/roguelike/command/ReloadSettingsCommand": {
+    "name": "com/github/fnar/roguelike/command/ReloadSettingsCommand",
+    "interfaces": [
+      "com/github/fnar/roguelike/command/RoguelikeCommand"
+    ]
+  },
+  "com/github/fnar/roguelike/command/RoguelikeCommand": {
+    "name": "com/github/fnar/roguelike/command/RoguelikeCommand",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "com/github/fnar/roguelike/command/SimpleRoguelikeCommand": {
+    "name": "com/github/fnar/roguelike/command/SimpleRoguelikeCommand",
+    "interfaces": [
+      "com/github/fnar/roguelike/command/RoguelikeCommand"
+    ]
+  },
+  "com/github/fnar/roguelike/worldgen/DungeonGenerator1_12": {
+    "name": "com/github/fnar/roguelike/worldgen/DungeonGenerator1_12",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  },
+  "com/github/fnar/roguelike/worldgen/generatables/BaseGeneratable": {
+    "name": "com/github/fnar/roguelike/worldgen/generatables/BaseGeneratable",
+    "interfaces": [
+      "com/github/fnar/roguelike/worldgen/generatables/Generatable"
+    ]
+  },
+  "com/github/fnar/roguelike/worldgen/generatables/thresholds/Entryway": {
+    "name": "com/github/fnar/roguelike/worldgen/generatables/thresholds/Entryway",
+    "interfaces": [
+      "com/github/fnar/roguelike/worldgen/generatables/Generatable"
+    ]
+  },
+  "com/github/fnar/roguelike/worldgen/shape/FnarLine": {
+    "name": "com/github/fnar/roguelike/worldgen/shape/FnarLine",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/shapes/IShape"
+    ]
+  },
+  "com/github/fnar/roguelike/worldgen/shape/FnarLine$FnarLineIterator": {
+    "name": "com/github/fnar/roguelike/worldgen/shape/FnarLine$FnarLineIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "greymerk/roguelike/EntityJoinWorld1_12": {
+    "name": "greymerk/roguelike/EntityJoinWorld1_12",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "OnEntityJoinWorld(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      }
+    ]
+  },
+  "greymerk/roguelike/command/CommandBase1_12": {
+    "name": "greymerk/roguelike/command/CommandBase1_12",
+    "interfaces": [
+      "greymerk/roguelike/command/CommandBase"
+    ]
+  },
+  "greymerk/roguelike/command/CommandRouteBase": {
+    "name": "greymerk/roguelike/command/CommandRouteBase",
+    "interfaces": [
+      "greymerk/roguelike/command/ICommandRouter"
+    ]
+  },
+  "greymerk/roguelike/dungeon/base/RoomIterator": {
+    "name": "greymerk/roguelike/dungeon/base/RoomIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "greymerk/roguelike/dungeon/layout/DungeonNode": {
+    "name": "greymerk/roguelike/dungeon/layout/DungeonNode",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/Bounded"
+    ]
+  },
+  "greymerk/roguelike/dungeon/layout/DungeonTunnel": {
+    "name": "greymerk/roguelike/dungeon/layout/DungeonTunnel",
+    "interfaces": [
+      "java/lang/Iterable",
+      "greymerk/roguelike/worldgen/Bounded"
+    ]
+  },
+  "greymerk/roguelike/dungeon/layout/classic/LayoutGeneratorClassic": {
+    "name": "greymerk/roguelike/dungeon/layout/classic/LayoutGeneratorClassic",
+    "interfaces": [
+      "greymerk/roguelike/dungeon/layout/LayoutGenerator"
+    ]
+  },
+  "greymerk/roguelike/dungeon/layout/mst/LayoutGeneratorMST": {
+    "name": "greymerk/roguelike/dungeon/layout/mst/LayoutGeneratorMST",
+    "interfaces": [
+      "greymerk/roguelike/dungeon/layout/LayoutGenerator"
+    ]
+  },
+  "greymerk/roguelike/dungeon/tasks/DungeonTaskEncase": {
+    "name": "greymerk/roguelike/dungeon/tasks/DungeonTaskEncase",
+    "interfaces": [
+      "greymerk/roguelike/dungeon/tasks/IDungeonTask"
+    ]
+  },
+  "greymerk/roguelike/dungeon/tasks/DungeonTaskFilters": {
+    "name": "greymerk/roguelike/dungeon/tasks/DungeonTaskFilters",
+    "interfaces": [
+      "greymerk/roguelike/dungeon/tasks/IDungeonTask"
+    ]
+  },
+  "greymerk/roguelike/dungeon/tasks/DungeonTaskLayout": {
+    "name": "greymerk/roguelike/dungeon/tasks/DungeonTaskLayout",
+    "interfaces": [
+      "greymerk/roguelike/dungeon/tasks/IDungeonTask"
+    ]
+  },
+  "greymerk/roguelike/dungeon/tasks/DungeonTaskLinks": {
+    "name": "greymerk/roguelike/dungeon/tasks/DungeonTaskLinks",
+    "interfaces": [
+      "greymerk/roguelike/dungeon/tasks/IDungeonTask"
+    ]
+  },
+  "greymerk/roguelike/dungeon/tasks/DungeonTaskLoot": {
+    "name": "greymerk/roguelike/dungeon/tasks/DungeonTaskLoot",
+    "interfaces": [
+      "greymerk/roguelike/dungeon/tasks/IDungeonTask"
+    ]
+  },
+  "greymerk/roguelike/dungeon/tasks/DungeonTaskRooms": {
+    "name": "greymerk/roguelike/dungeon/tasks/DungeonTaskRooms",
+    "interfaces": [
+      "greymerk/roguelike/dungeon/tasks/IDungeonTask"
+    ]
+  },
+  "greymerk/roguelike/dungeon/tasks/DungeonTaskSegments": {
+    "name": "greymerk/roguelike/dungeon/tasks/DungeonTaskSegments",
+    "interfaces": [
+      "greymerk/roguelike/dungeon/tasks/IDungeonTask"
+    ]
+  },
+  "greymerk/roguelike/dungeon/tasks/DungeonTaskTower": {
+    "name": "greymerk/roguelike/dungeon/tasks/DungeonTaskTower",
+    "interfaces": [
+      "greymerk/roguelike/dungeon/tasks/IDungeonTask"
+    ]
+  },
+  "greymerk/roguelike/dungeon/tasks/DungeonTaskTunnels": {
+    "name": "greymerk/roguelike/dungeon/tasks/DungeonTaskTunnels",
+    "interfaces": [
+      "greymerk/roguelike/dungeon/tasks/IDungeonTask"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileArcher": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileArcher",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileAshlea": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileAshlea",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileBaby": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileBaby",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileEvoker": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileEvoker",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileHusk": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileHusk",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileJohnny": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileJohnny",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileMagicArcher": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileMagicArcher",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfilePigZombie": {
+    "name": "greymerk/roguelike/monster/profiles/ProfilePigZombie",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfilePoisonArcher": {
+    "name": "greymerk/roguelike/monster/profiles/ProfilePoisonArcher",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileRleahy": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileRleahy",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileSkeleton": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileSkeleton",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileSwordsman": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileSwordsman",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileVindicator": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileVindicator",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileWitch": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileWitch",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileWitherSkeleton": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileWitherSkeleton",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileZombie": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileZombie",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/monster/profiles/ProfileZombieVillager": {
+    "name": "greymerk/roguelike/monster/profiles/ProfileZombieVillager",
+    "interfaces": [
+      "greymerk/roguelike/monster/MonsterProfile"
+    ]
+  },
+  "greymerk/roguelike/treasure/loot/Book": {
+    "name": "greymerk/roguelike/treasure/loot/Book",
+    "interfaces": [
+      "com/github/fnar/minecraft/item/RldItem"
+    ]
+  },
+  "greymerk/roguelike/treasure/loot/MinecraftItemLootItem": {
+    "name": "greymerk/roguelike/treasure/loot/MinecraftItemLootItem",
+    "interfaces": [
+      "java/lang/Comparable",
+      "greymerk/roguelike/util/IWeighted"
+    ]
+  },
+  "greymerk/roguelike/treasure/loot/provider/LootItem": {
+    "name": "greymerk/roguelike/treasure/loot/provider/LootItem",
+    "interfaces": [
+      "greymerk/roguelike/util/IWeighted"
+    ]
+  },
+  "greymerk/roguelike/treasure/loot/rule/ForEachLootRule": {
+    "name": "greymerk/roguelike/treasure/loot/rule/ForEachLootRule",
+    "interfaces": [
+      "greymerk/roguelike/treasure/loot/rule/LootRule"
+    ]
+  },
+  "greymerk/roguelike/treasure/loot/rule/SingleUseLootRule": {
+    "name": "greymerk/roguelike/treasure/loot/rule/SingleUseLootRule",
+    "interfaces": [
+      "greymerk/roguelike/treasure/loot/rule/LootRule"
+    ]
+  },
+  "greymerk/roguelike/treasure/loot/rule/TypedForEachLootRule": {
+    "name": "greymerk/roguelike/treasure/loot/rule/TypedForEachLootRule",
+    "interfaces": [
+      "greymerk/roguelike/treasure/loot/rule/LootRule"
+    ]
+  },
+  "greymerk/roguelike/treasure/loot/rule/TypedSingleUseLootRule": {
+    "name": "greymerk/roguelike/treasure/loot/rule/TypedSingleUseLootRule",
+    "interfaces": [
+      "greymerk/roguelike/treasure/loot/rule/LootRule"
+    ]
+  },
+  "greymerk/roguelike/util/WeightedChoice": {
+    "name": "greymerk/roguelike/util/WeightedChoice",
+    "interfaces": [
+      "greymerk/roguelike/util/IWeighted"
+    ]
+  },
+  "greymerk/roguelike/util/WeightedRandomizer": {
+    "name": "greymerk/roguelike/util/WeightedRandomizer",
+    "interfaces": [
+      "greymerk/roguelike/util/IWeighted"
+    ]
+  },
+  "greymerk/roguelike/util/graph/Edge": {
+    "name": "greymerk/roguelike/util/graph/Edge",
+    "interfaces": [
+      "java/lang/Comparable"
+    ]
+  },
+  "greymerk/roguelike/worldgen/BlockCheckers": {
+    "name": "greymerk/roguelike/worldgen/BlockCheckers",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/BlockBrush"
+    ]
+  },
+  "greymerk/roguelike/worldgen/BlockColumns": {
+    "name": "greymerk/roguelike/worldgen/BlockColumns",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/BlockBrush"
+    ]
+  },
+  "greymerk/roguelike/worldgen/BlockJumble": {
+    "name": "greymerk/roguelike/worldgen/BlockJumble",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/BlockBrush"
+    ]
+  },
+  "greymerk/roguelike/worldgen/BlockLayers": {
+    "name": "greymerk/roguelike/worldgen/BlockLayers",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/BlockBrush"
+    ]
+  },
+  "greymerk/roguelike/worldgen/BlockStripes": {
+    "name": "greymerk/roguelike/worldgen/BlockStripes",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/BlockBrush"
+    ]
+  },
+  "greymerk/roguelike/worldgen/BlockWeightedRandom": {
+    "name": "greymerk/roguelike/worldgen/BlockWeightedRandom",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/BlockBrush"
+    ]
+  },
+  "greymerk/roguelike/worldgen/filter/CobwebFilter": {
+    "name": "greymerk/roguelike/worldgen/filter/CobwebFilter",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/filter/IFilter"
+    ]
+  },
+  "greymerk/roguelike/worldgen/filter/EncaseFilter": {
+    "name": "greymerk/roguelike/worldgen/filter/EncaseFilter",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/filter/IFilter"
+    ]
+  },
+  "greymerk/roguelike/worldgen/filter/MudFilter": {
+    "name": "greymerk/roguelike/worldgen/filter/MudFilter",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/filter/IFilter"
+    ]
+  },
+  "greymerk/roguelike/worldgen/filter/VineFilter": {
+    "name": "greymerk/roguelike/worldgen/filter/VineFilter",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/filter/IFilter"
+    ]
+  },
+  "greymerk/roguelike/worldgen/filter/WireframeFilter": {
+    "name": "greymerk/roguelike/worldgen/filter/WireframeFilter",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/filter/IFilter"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/Ellipsoid": {
+    "name": "greymerk/roguelike/worldgen/shapes/Ellipsoid",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/shapes/IShape"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/Ellipsoid$EllipsoidIterator": {
+    "name": "greymerk/roguelike/worldgen/shapes/Ellipsoid$EllipsoidIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/IShape": {
+    "name": "greymerk/roguelike/worldgen/shapes/IShape",
+    "interfaces": [
+      "java/lang/Iterable"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/Line": {
+    "name": "greymerk/roguelike/worldgen/shapes/Line",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/shapes/IShape"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/Line$LineIterator": {
+    "name": "greymerk/roguelike/worldgen/shapes/Line$LineIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/MultiShape": {
+    "name": "greymerk/roguelike/worldgen/shapes/MultiShape",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/shapes/IShape"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/RectHollow": {
+    "name": "greymerk/roguelike/worldgen/shapes/RectHollow",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/shapes/IShape"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/RectHollow$RectHollowIterator": {
+    "name": "greymerk/roguelike/worldgen/shapes/RectHollow$RectHollowIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/RectPyramid": {
+    "name": "greymerk/roguelike/worldgen/shapes/RectPyramid",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/shapes/IShape"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/RectPyramid$SquarePyramidIterator": {
+    "name": "greymerk/roguelike/worldgen/shapes/RectPyramid$SquarePyramidIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/RectSolid": {
+    "name": "greymerk/roguelike/worldgen/shapes/RectSolid",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/shapes/IShape",
+      "greymerk/roguelike/worldgen/Bounded"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/RectSolid$RectSolidIterator": {
+    "name": "greymerk/roguelike/worldgen/shapes/RectSolid$RectSolidIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/RectWireframe": {
+    "name": "greymerk/roguelike/worldgen/shapes/RectWireframe",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/shapes/IShape"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/RectWireframe$RectWireframeIterator": {
+    "name": "greymerk/roguelike/worldgen/shapes/RectWireframe$RectWireframeIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/Sphere": {
+    "name": "greymerk/roguelike/worldgen/shapes/Sphere",
+    "interfaces": [
+      "greymerk/roguelike/worldgen/shapes/IShape"
+    ]
+  },
+  "greymerk/roguelike/worldgen/shapes/Sphere$SphereIterator": {
+    "name": "greymerk/roguelike/worldgen/shapes/Sphere$SphereIterator",
+    "interfaces": [
+      "java/util/Iterator"
+    ]
+  }
+}

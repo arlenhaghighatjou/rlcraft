@@ -1,0 +1,29 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"0": "blocks/concrete_powder_light_blue",
+			"1": "blocks/concrete_powder_white",
+			"4": "blocks/wool_colored_white", 
+			"particle": "#0"
+		},
+		"model": "adhooks:launcher"
+	},
+	"variants": {
+		"normal": [
+			{
+				"submodel": "adhooks:web_hook"
+			}
+		],
+		"empty": [
+			{
+				
+			}
+		],
+		"inventory": [
+			{
+				
+			}
+		]
+	}
+}

@@ -1,0 +1,192 @@
+{
+  "lumien/custommainmenu/CustomMainMenu": {
+    "name": "lumien/custommainmenu/CustomMainMenu",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "lumien/custommainmenu/CustomMainMenu",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "modid": {
+            "value": "custommainmenu"
+          },
+          "name": {
+            "value": "Custom Main Menu"
+          },
+          "version": {
+            "value": "2.0.9.1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "INSTANCE",
+        "value": {
+          "value": "custommainmenu"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "lumien/custommainmenu/gui/GuiCustom": {
+    "name": "lumien/custommainmenu/gui/GuiCustom",
+    "interfaces": [
+      "net/minecraft/client/gui/GuiYesNoCallback"
+    ]
+  },
+  "lumien/custommainmenu/handler/CMMEventHandler": {
+    "name": "lumien/custommainmenu/handler/CMMEventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "openGui(Lnet/minecraftforge/client/event/GuiOpenEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "initGuiPostEarly(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "initGuiPost(Lnet/minecraftforge/client/event/GuiScreenEvent$InitGuiEvent$Post;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderScreenPost(Lnet/minecraftforge/client/event/GuiScreenEvent$DrawScreenEvent$Post;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/HIGHEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "lumien/custommainmenu/lib/actions/ActionConnectToServer": {
+    "name": "lumien/custommainmenu/lib/actions/ActionConnectToServer",
+    "interfaces": [
+      "lumien/custommainmenu/lib/actions/IAction"
+    ]
+  },
+  "lumien/custommainmenu/lib/actions/ActionLoadWorld": {
+    "name": "lumien/custommainmenu/lib/actions/ActionLoadWorld",
+    "interfaces": [
+      "lumien/custommainmenu/lib/actions/IAction"
+    ]
+  },
+  "lumien/custommainmenu/lib/actions/ActionOpenFolder": {
+    "name": "lumien/custommainmenu/lib/actions/ActionOpenFolder",
+    "interfaces": [
+      "lumien/custommainmenu/lib/actions/IAction"
+    ]
+  },
+  "lumien/custommainmenu/lib/actions/ActionOpenGUI": {
+    "name": "lumien/custommainmenu/lib/actions/ActionOpenGUI",
+    "interfaces": [
+      "lumien/custommainmenu/lib/actions/IAction"
+    ]
+  },
+  "lumien/custommainmenu/lib/actions/ActionOpenLink": {
+    "name": "lumien/custommainmenu/lib/actions/ActionOpenLink",
+    "interfaces": [
+      "lumien/custommainmenu/lib/actions/IAction"
+    ]
+  },
+  "lumien/custommainmenu/lib/actions/ActionOpenModConfig": {
+    "name": "lumien/custommainmenu/lib/actions/ActionOpenModConfig",
+    "interfaces": [
+      "lumien/custommainmenu/lib/actions/IAction"
+    ]
+  },
+  "lumien/custommainmenu/lib/actions/ActionQuit": {
+    "name": "lumien/custommainmenu/lib/actions/ActionQuit",
+    "interfaces": [
+      "lumien/custommainmenu/lib/actions/IAction"
+    ]
+  },
+  "lumien/custommainmenu/lib/actions/ActionRefresh": {
+    "name": "lumien/custommainmenu/lib/actions/ActionRefresh",
+    "interfaces": [
+      "lumien/custommainmenu/lib/actions/IAction"
+    ]
+  },
+  "lumien/custommainmenu/lib/texts/TextResourceLocation": {
+    "name": "lumien/custommainmenu/lib/texts/TextResourceLocation",
+    "interfaces": [
+      "lumien/custommainmenu/lib/texts/IText"
+    ]
+  },
+  "lumien/custommainmenu/lib/texts/TextString": {
+    "name": "lumien/custommainmenu/lib/texts/TextString",
+    "interfaces": [
+      "lumien/custommainmenu/lib/texts/IText"
+    ]
+  },
+  "lumien/custommainmenu/lib/texts/TextURL": {
+    "name": "lumien/custommainmenu/lib/texts/TextURL",
+    "interfaces": [
+      "lumien/custommainmenu/lib/texts/IText"
+    ]
+  },
+  "lumien/custommainmenu/lib/textures/TextureApng": {
+    "name": "lumien/custommainmenu/lib/textures/TextureApng",
+    "interfaces": [
+      "lumien/custommainmenu/lib/textures/ITexture"
+    ]
+  },
+  "lumien/custommainmenu/lib/textures/TextureResourceLocation": {
+    "name": "lumien/custommainmenu/lib/textures/TextureResourceLocation",
+    "interfaces": [
+      "lumien/custommainmenu/lib/textures/ITexture"
+    ]
+  },
+  "lumien/custommainmenu/lib/textures/TextureURL": {
+    "name": "lumien/custommainmenu/lib/textures/TextureURL",
+    "interfaces": [
+      "lumien/custommainmenu/lib/textures/ITexture"
+    ]
+  }
+}

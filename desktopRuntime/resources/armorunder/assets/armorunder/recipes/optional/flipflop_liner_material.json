@@ -1,0 +1,19 @@
+{ "_comment": ["Special material used for Ozzy liners" ],
+  "conditions": [{
+     "type": "armorunder:is_allowed",
+     "value": "craft_smart_lining",
+     "default_value": true
+  }],
+  "result": {
+    "item": "armorunder:flipflop_liner_material"
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "ccc", " X ", "hhh"
+  ],
+  "key": {
+    "c": { "item": "armorunder:cool_liner_material" },
+    "X": { "item": "armorunder:flipflop_goo" },
+    "h": { "item": "armorunder:warm_liner_material" }
+  }
+}

@@ -1,0 +1,33 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern": [
+    "SFS",
+    "WWW"
+    ],
+    
+    "key":
+    {
+        "F":
+        {
+            "item": "minecraft:string"
+        },
+		
+	    "S":
+        {
+            "item": "minecraft:stick"
+        },
+        
+        
+        "W":
+        {
+            "item": "minecraft:reeds"
+        }
+    },
+    
+    "result":
+    {
+        "item":  "mcwbridges:dry_bamboo_bridge",
+        "count": 1
+    }
+}

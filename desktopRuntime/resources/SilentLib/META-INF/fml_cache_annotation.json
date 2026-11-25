@@ -1,0 +1,705 @@
+{
+  "net/silentchaos512/lib/SilentLib": {
+    "name": "net/silentchaos512/lib/SilentLib",
+    "interfaces": [
+      "net/silentchaos512/lib/base/IModBase"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "net/silentchaos512/lib/SilentLib",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "required-after:forge@[14.23.3.2669,);"
+          },
+          "modid": {
+            "value": "silentlib"
+          },
+          "name": {
+            "value": "Silent Lib"
+          },
+          "version": {
+            "value": "3.0.13"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/lib/SilentLib"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "silentlib"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "net.silentchaos512.lib.proxy.internal.SilentLibClientProxy"
+          },
+          "serverSide": {
+            "value": "net.silentchaos512.lib.proxy.internal.SilentLibServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onServerStarting(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/advancements/GenericIntTrigger": {
+    "name": "net/silentchaos512/lib/advancements/GenericIntTrigger",
+    "interfaces": [
+      "net/minecraft/advancements/ICriterionTrigger"
+    ]
+  },
+  "net/silentchaos512/lib/advancements/UseItemTrigger": {
+    "name": "net/silentchaos512/lib/advancements/UseItemTrigger",
+    "interfaces": [
+      "net/minecraft/advancements/ICriterionTrigger"
+    ]
+  },
+  "net/silentchaos512/lib/advancements/package-info": {
+    "name": "net/silentchaos512/lib/advancements/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/lib/advancements/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/base/package-info": {
+    "name": "net/silentchaos512/lib/base/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/lib/base/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/block/package-info": {
+    "name": "net/silentchaos512/lib/block/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/lib/block/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/client/gui/DebugRenderOverlay": {
+    "name": "net/silentchaos512/lib/client/gui/DebugRenderOverlay",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTick(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$Post;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/client/gui/GuiHandlerBase": {
+    "name": "net/silentchaos512/lib/client/gui/GuiHandlerBase",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "net/silentchaos512/lib/client/gui/button/package-info": {
+    "name": "net/silentchaos512/lib/client/gui/button/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/lib/client/gui/button/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/client/key/KeyTrackerSL": {
+    "name": "net/silentchaos512/lib/client/key/KeyTrackerSL",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onKeyInput(Lnet/minecraftforge/fml/common/gameevent/InputEvent$KeyInputEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/client/model/ILayeredBakedModel": {
+    "name": "net/silentchaos512/lib/client/model/ILayeredBakedModel",
+    "interfaces": [
+      "net/minecraft/client/renderer/block/model/IBakedModel"
+    ]
+  },
+  "net/silentchaos512/lib/client/model/LayeredBakedModel": {
+    "name": "net/silentchaos512/lib/client/model/LayeredBakedModel",
+    "interfaces": [
+      "net/silentchaos512/lib/client/model/ILayeredBakedModel"
+    ]
+  },
+  "net/silentchaos512/lib/client/model/package-info": {
+    "name": "net/silentchaos512/lib/client/model/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/lib/client/model/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/collection/AbstractMatchList": {
+    "name": "net/silentchaos512/lib/collection/AbstractMatchList",
+    "interfaces": [
+      "net/silentchaos512/lib/collection/IMatchList"
+    ]
+  },
+  "net/silentchaos512/lib/command/internal/CommandDataDump$SubCommand": {
+    "name": "net/silentchaos512/lib/command/internal/CommandDataDump$SubCommand",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "net/silentchaos512/lib/command/internal/package-info": {
+    "name": "net/silentchaos512/lib/command/internal/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/lib/command/internal/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/config/AbstractGuiFactory": {
+    "name": "net/silentchaos512/lib/config/AbstractGuiFactory",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "net/silentchaos512/lib/config/ConfigBase": {
+    "name": "net/silentchaos512/lib/config/ConfigBase",
+    "interfaces": [
+      "net/silentchaos512/lib/registry/IPhasedInitializer"
+    ],
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/config/ConfigOption": {
+    "name": "net/silentchaos512/lib/config/ConfigOption",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "net/silentchaos512/lib/config/ConfigOption$BooleanDefault": {
+    "name": "net/silentchaos512/lib/config/ConfigOption$BooleanDefault",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "net/silentchaos512/lib/config/ConfigOption$Comment": {
+    "name": "net/silentchaos512/lib/config/ConfigOption$Comment",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "net/silentchaos512/lib/config/ConfigOption$RangeDouble": {
+    "name": "net/silentchaos512/lib/config/ConfigOption$RangeDouble",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "net/silentchaos512/lib/config/ConfigOption$RangeFloat": {
+    "name": "net/silentchaos512/lib/config/ConfigOption$RangeFloat",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "net/silentchaos512/lib/config/ConfigOption$RangeInt": {
+    "name": "net/silentchaos512/lib/config/ConfigOption$RangeInt",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "net/silentchaos512/lib/config/ConfigOption$RangeLong": {
+    "name": "net/silentchaos512/lib/config/ConfigOption$RangeLong",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "net/silentchaos512/lib/draft/PlayerDataHandler$EventHandler": {
+    "name": "net/silentchaos512/lib/draft/PlayerDataHandler$EventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLogin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/event/ClientTicks": {
+    "name": "net/silentchaos512/lib/event/ClientTicks",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "net/silentchaos512/lib/event/ClientTicks",
+        "values": {
+          "modid": {
+            "value": "silentlib"
+          },
+          "value": {
+            "type": "ENUM",
+            "values": [
+              "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+            ]
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "clientTickEnd(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "renderTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$RenderTickEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/event/Greetings": {
+    "name": "net/silentchaos512/lib/event/Greetings",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "net/silentchaos512/lib/event/Greetings",
+        "values": {
+          "modid": {
+            "value": "silentlib"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLoggedIn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/event/InitialSpawnItems": {
+    "name": "net/silentchaos512/lib/event/InitialSpawnItems",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "net/silentchaos512/lib/event/InitialSpawnItems",
+        "values": {
+          "modid": {
+            "value": "silentlib"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLoggedIn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/event/ServerTicks": {
+    "name": "net/silentchaos512/lib/event/ServerTicks",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "net/silentchaos512/lib/event/ServerTicks",
+        "values": {
+          "modid": {
+            "value": "silentlib"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "serverTicks(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/event/SilentLibClientEvents": {
+    "name": "net/silentchaos512/lib/event/SilentLibClientEvents",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLeftClickEmpty(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$LeftClickEmpty;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLeftClickBlock(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$LeftClickBlock;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/event/SilentLibCommonEvents": {
+    "name": "net/silentchaos512/lib/event/SilentLibCommonEvents",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerLoggedIn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRightClickBlock(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRightClickEntity(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerRightClickItem(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickItem;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/gui/GuiHandlerLibF": {
+    "name": "net/silentchaos512/lib/gui/GuiHandlerLibF",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "net/silentchaos512/lib/gui/config/GuiFactorySL": {
+    "name": "net/silentchaos512/lib/gui/config/GuiFactorySL",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "net/silentchaos512/lib/guidebook/chapter/GuideChapter": {
+    "name": "net/silentchaos512/lib/guidebook/chapter/GuideChapter",
+    "interfaces": [
+      "net/silentchaos512/lib/guidebook/IGuideChapter"
+    ]
+  },
+  "net/silentchaos512/lib/guidebook/entry/GuideEntry": {
+    "name": "net/silentchaos512/lib/guidebook/entry/GuideEntry",
+    "interfaces": [
+      "net/silentchaos512/lib/guidebook/IGuideEntry"
+    ]
+  },
+  "net/silentchaos512/lib/guidebook/package-info": {
+    "name": "net/silentchaos512/lib/guidebook/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/lib/guidebook/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/guidebook/page/GuidePage": {
+    "name": "net/silentchaos512/lib/guidebook/page/GuidePage",
+    "interfaces": [
+      "net/silentchaos512/lib/guidebook/IGuidePage"
+    ]
+  },
+  "net/silentchaos512/lib/item/IEnumItems": {
+    "name": "net/silentchaos512/lib/item/IEnumItems",
+    "interfaces": [
+      "net/minecraft/util/IStringSerializable"
+    ]
+  },
+  "net/silentchaos512/lib/item/package-info": {
+    "name": "net/silentchaos512/lib/item/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/lib/item/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/network/MessageSL": {
+    "name": "net/silentchaos512/lib/network/MessageSL",
+    "interfaces": [
+      "java/io/Serializable",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "net/silentchaos512/lib/recipe/RecipeBaseSL": {
+    "name": "net/silentchaos512/lib/recipe/RecipeBaseSL",
+    "interfaces": [
+      "net/minecraft/item/crafting/IRecipe"
+    ]
+  },
+  "net/silentchaos512/lib/recipe/RecipeJsonHell$ShapedSerializer": {
+    "name": "net/silentchaos512/lib/recipe/RecipeJsonHell$ShapedSerializer",
+    "interfaces": [
+      "net/silentchaos512/lib/recipe/IRecipeSerializer"
+    ]
+  },
+  "net/silentchaos512/lib/recipe/RecipeJsonHell$ShapelessSerializer": {
+    "name": "net/silentchaos512/lib/recipe/RecipeJsonHell$ShapelessSerializer",
+    "interfaces": [
+      "net/silentchaos512/lib/recipe/IRecipeSerializer"
+    ]
+  },
+  "net/silentchaos512/lib/recipe/package-info": {
+    "name": "net/silentchaos512/lib/recipe/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/lib/recipe/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/registry/SRegistry$EventHandler": {
+    "name": "net/silentchaos512/lib/registry/SRegistry$EventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlocks(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerPotions(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBiomes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerSoundEvents(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerPotionTypes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEnchantments(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerVillagerProfessions(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerEntities(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerRecipes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModels(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlockColors(Lnet/minecraftforge/client/event/ColorHandlerEvent$Block;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItemColors(Lnet/minecraftforge/client/event/ColorHandlerEvent$Item;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/registry/package-info": {
+    "name": "net/silentchaos512/lib/registry/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/lib/registry/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/tile/FurnaceFuelBurner": {
+    "name": "net/silentchaos512/lib/tile/FurnaceFuelBurner",
+    "interfaces": [
+      "net/silentchaos512/lib/tile/IFuelBurner"
+    ]
+  },
+  "net/silentchaos512/lib/tile/IInventorySL": {
+    "name": "net/silentchaos512/lib/tile/IInventorySL",
+    "interfaces": [
+      "net/minecraft/inventory/IInventory"
+    ]
+  },
+  "net/silentchaos512/lib/tile/ISidedInventorySL": {
+    "name": "net/silentchaos512/lib/tile/ISidedInventorySL",
+    "interfaces": [
+      "net/minecraft/inventory/ISidedInventory"
+    ]
+  },
+  "net/silentchaos512/lib/tile/SyncVariable": {
+    "name": "net/silentchaos512/lib/tile/SyncVariable",
+    "interfaces": [
+      "java/lang/annotation/Annotation"
+    ]
+  },
+  "net/silentchaos512/lib/tile/SyncVariable$Helper$1": {
+    "name": "net/silentchaos512/lib/tile/SyncVariable$Helper$1",
+    "interfaces": [
+      "net/silentchaos512/lib/util/NBTSerializer"
+    ]
+  },
+  "net/silentchaos512/lib/tile/TileEntityItemProcessor": {
+    "name": "net/silentchaos512/lib/tile/TileEntityItemProcessor",
+    "interfaces": [
+      "net/minecraft/util/ITickable"
+    ],
+    "annotations": [
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/tile/SyncVariable;",
+        "target": "progress",
+        "values": {
+          "name": {
+            "value": "Progress"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/silentchaos512/lib/tile/SyncVariable;",
+        "target": "burner",
+        "values": {
+          "name": {
+            "value": "Burner"
+          }
+        }
+      }
+    ]
+  },
+  "net/silentchaos512/lib/tile/TileInventorySL": {
+    "name": "net/silentchaos512/lib/tile/TileInventorySL",
+    "interfaces": [
+      "net/silentchaos512/lib/tile/IInventorySL"
+    ]
+  },
+  "net/silentchaos512/lib/tile/TileSidedInventorySL": {
+    "name": "net/silentchaos512/lib/tile/TileSidedInventorySL",
+    "interfaces": [
+      "net/minecraft/inventory/ISidedInventory"
+    ]
+  },
+  "net/silentchaos512/lib/tile/package-info": {
+    "name": "net/silentchaos512/lib/tile/package-info",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/lib/tile/package-info"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/util/EntityHelper": {
+    "name": "net/silentchaos512/lib/util/EntityHelper",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "net/silentchaos512/lib/util/EntityHelper",
+        "values": {
+          "modid": {
+            "value": "silentlib"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$WorldTickEvent;)V"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/util/StackHelper": {
+    "name": "net/silentchaos512/lib/util/StackHelper",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lmcp/MethodsReturnNonnullByDefault;",
+        "target": "net/silentchaos512/lib/util/StackHelper"
+      }
+    ]
+  },
+  "net/silentchaos512/lib/world/WorldGeneratorSL": {
+    "name": "net/silentchaos512/lib/world/WorldGeneratorSL",
+    "interfaces": [
+      "net/minecraftforge/fml/common/IWorldGenerator"
+    ]
+  }
+}

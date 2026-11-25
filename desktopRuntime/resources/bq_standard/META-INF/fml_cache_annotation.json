@@ -1,0 +1,766 @@
+{
+  "bq_standard/AdminExecute": {
+    "name": "bq_standard/AdminExecute",
+    "interfaces": [
+      "net/minecraft/command/ICommandSender"
+    ]
+  },
+  "bq_standard/ScoreBQ": {
+    "name": "bq_standard/ScoreBQ",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTPartial"
+    ]
+  },
+  "bq_standard/ScoreboardBQ": {
+    "name": "bq_standard/ScoreboardBQ",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTPartial"
+    ]
+  },
+  "bq_standard/client/gui/editors/GuiEditLootEntry": {
+    "name": "bq_standard/client/gui/editors/GuiEditLootEntry",
+    "interfaces": [
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "bq_standard/client/gui/editors/GuiEditLootGroup": {
+    "name": "bq_standard/client/gui/editors/GuiEditLootGroup",
+    "interfaces": [
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "bq_standard/client/gui/editors/tasks/GuiEditTaskAdvancement": {
+    "name": "bq_standard/client/gui/editors/tasks/GuiEditTaskAdvancement",
+    "interfaces": [
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "bq_standard/client/gui/editors/tasks/GuiEditTaskHunt": {
+    "name": "bq_standard/client/gui/editors/tasks/GuiEditTaskHunt",
+    "interfaces": [
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "bq_standard/client/gui/editors/tasks/GuiEditTaskMeeting": {
+    "name": "bq_standard/client/gui/editors/tasks/GuiEditTaskMeeting",
+    "interfaces": [
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "bq_standard/client/gui/editors/tasks/GuiEditTaskScoreboard": {
+    "name": "bq_standard/client/gui/editors/tasks/GuiEditTaskScoreboard",
+    "interfaces": [
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "bq_standard/client/gui/editors/tasks/GuiEditTaskTame": {
+    "name": "bq_standard/client/gui/editors/tasks/GuiEditTaskTame",
+    "interfaces": [
+      "betterquesting/api/client/gui/misc/IVolatileScreen"
+    ]
+  },
+  "bq_standard/client/gui/tasks/PanelTaskCrafting": {
+    "name": "bq_standard/client/gui/tasks/PanelTaskCrafting",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "lookupRecipe(Lnet/minecraft/item/ItemStack;)V",
+        "values": {
+          "modid": {
+            "value": "jei"
+          }
+        }
+      }
+    ]
+  },
+  "bq_standard/client/gui/tasks/PanelTaskFluid": {
+    "name": "bq_standard/client/gui/tasks/PanelTaskFluid",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "lookupRecipe(Lnet/minecraftforge/fluids/FluidStack;)V",
+        "values": {
+          "modid": {
+            "value": "jei"
+          }
+        }
+      }
+    ]
+  },
+  "bq_standard/client/gui/tasks/PanelTaskInteractEntity": {
+    "name": "bq_standard/client/gui/tasks/PanelTaskInteractEntity",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "lookupRecipe(Lnet/minecraft/item/ItemStack;)V",
+        "values": {
+          "modid": {
+            "value": "jei"
+          }
+        }
+      }
+    ]
+  },
+  "bq_standard/client/gui/tasks/PanelTaskInteractItem": {
+    "name": "bq_standard/client/gui/tasks/PanelTaskInteractItem",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "lookupRecipe(Lnet/minecraft/item/ItemStack;)V",
+        "values": {
+          "modid": {
+            "value": "jei"
+          }
+        }
+      }
+    ]
+  },
+  "bq_standard/client/gui/tasks/PanelTaskLocation$1": {
+    "name": "bq_standard/client/gui/tasks/PanelTaskLocation$1",
+    "interfaces": [
+      "betterquesting/api2/client/gui/resources/textures/IGuiTexture"
+    ]
+  },
+  "bq_standard/client/gui/tasks/PanelTaskRetrieval": {
+    "name": "bq_standard/client/gui/tasks/PanelTaskRetrieval",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "lookupRecipe(Lnet/minecraft/item/ItemStack;)V",
+        "values": {
+          "modid": {
+            "value": "jei"
+          }
+        }
+      }
+    ]
+  },
+  "bq_standard/core/BQ_Standard": {
+    "name": "bq_standard/core/BQ_Standard",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "bq_standard/core/BQ_Standard",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "bq_standard"
+          },
+          "name": {
+            "value": "Standard Expansion"
+          },
+          "version": {
+            "value": "3.4.173"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "bq_standard"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "bq_standard.core.proxies.ClientProxy"
+          },
+          "serverSide": {
+            "value": "bq_standard.core.proxies.CommonProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStart(Lnet/minecraftforge/fml/common/event/FMLServerStartingEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "serverStopped(Lnet/minecraftforge/fml/common/event/FMLServerStoppedEvent;)V"
+      }
+    ]
+  },
+  "bq_standard/core/RegEventHandler": {
+    "name": "bq_standard/core/RegEventHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "bq_standard/core/RegEventHandler"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerModelEvent(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItemEvent(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "bq_standard/handlers/EventHandler": {
+    "name": "bq_standard/handlers/EventHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClickItem(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickItem;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClickBlock(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLeftClickBlock(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$LeftClickBlock;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onRightClickEmpty(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickEmpty;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onLeftClickAir(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$LeftClickEmpty;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityAttack(Lnet/minecraftforge/event/entity/player/AttackEntityEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityInteract(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemCrafted(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$ItemCraftedEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemSmelted(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$ItemSmeltedEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onItemAnvil(Lnet/minecraftforge/event/entity/player/AnvilRepairEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityKilled(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityTamed(Lnet/minecraftforge/event/entity/living/AnimalTameEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onBlockBreak(Lnet/minecraftforge/event/world/BlockEvent$BreakEvent;)V",
+        "values": {
+          "priority": {
+            "type": "ENUM",
+            "value": "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;/LOWEST"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityLiving(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingUpdateEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onAdvancement(Lnet/minecraftforge/event/entity/player/AdvancementEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onEntityCreated(Lnet/minecraftforge/event/entity/EntityJoinWorldEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onServerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$ServerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerJoin(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onWorldSave(Lnet/minecraftforge/event/world/WorldEvent$Save;)V"
+      }
+    ]
+  },
+  "bq_standard/handlers/GuiHandler": {
+    "name": "bq_standard/handlers/GuiHandler",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/IGuiHandler"
+    ]
+  },
+  "bq_standard/handlers/LootSaveLoad": {
+    "name": "bq_standard/handlers/LootSaveLoad",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "bq_standard/handlers/LootSaveLoad"
+      }
+    ]
+  },
+  "bq_standard/handlers/PlayerContainerListener": {
+    "name": "bq_standard/handlers/PlayerContainerListener",
+    "interfaces": [
+      "net/minecraft/inventory/IContainerListener"
+    ]
+  },
+  "bq_standard/importers/AdvImporter": {
+    "name": "bq_standard/importers/AdvImporter",
+    "interfaces": [
+      "betterquesting/api/client/importers/IImporter"
+    ]
+  },
+  "bq_standard/importers/NativeFileImporter": {
+    "name": "bq_standard/importers/NativeFileImporter",
+    "interfaces": [
+      "betterquesting/api/client/importers/IImporter"
+    ]
+  },
+  "bq_standard/importers/ftbq/FTBQFileFIlter": {
+    "name": "bq_standard/importers/ftbq/FTBQFileFIlter",
+    "interfaces": [
+      "java/io/FileFilter"
+    ]
+  },
+  "bq_standard/importers/ftbq/FTBQQuestImporter": {
+    "name": "bq_standard/importers/ftbq/FTBQQuestImporter",
+    "interfaces": [
+      "betterquesting/api/client/importers/IImporter"
+    ]
+  },
+  "bq_standard/importers/hqm/HQMBagImporter": {
+    "name": "bq_standard/importers/hqm/HQMBagImporter",
+    "interfaces": [
+      "betterquesting/api/client/importers/IImporter"
+    ]
+  },
+  "bq_standard/importers/hqm/HQMQuestImporter": {
+    "name": "bq_standard/importers/hqm/HQMQuestImporter",
+    "interfaces": [
+      "betterquesting/api/client/importers/IImporter"
+    ]
+  },
+  "bq_standard/importers/hqm/converters/items/HQMItemBag": {
+    "name": "bq_standard/importers/hqm/converters/items/HQMItemBag",
+    "interfaces": [
+      "bq_standard/importers/hqm/converters/items/HQMItem"
+    ]
+  },
+  "bq_standard/importers/hqm/converters/items/HQMItemHeart": {
+    "name": "bq_standard/importers/hqm/converters/items/HQMItemHeart",
+    "interfaces": [
+      "bq_standard/importers/hqm/converters/items/HQMItem"
+    ]
+  },
+  "bq_standard/rewards/RewardChoice": {
+    "name": "bq_standard/rewards/RewardChoice",
+    "interfaces": [
+      "betterquesting/api/questing/rewards/IReward"
+    ]
+  },
+  "bq_standard/rewards/RewardCommand": {
+    "name": "bq_standard/rewards/RewardCommand",
+    "interfaces": [
+      "betterquesting/api/questing/rewards/IReward"
+    ]
+  },
+  "bq_standard/rewards/RewardItem": {
+    "name": "bq_standard/rewards/RewardItem",
+    "interfaces": [
+      "betterquesting/api/questing/rewards/IReward"
+    ]
+  },
+  "bq_standard/rewards/RewardRecipe": {
+    "name": "bq_standard/rewards/RewardRecipe",
+    "interfaces": [
+      "betterquesting/api/questing/rewards/IReward"
+    ]
+  },
+  "bq_standard/rewards/RewardScoreboard": {
+    "name": "bq_standard/rewards/RewardScoreboard",
+    "interfaces": [
+      "betterquesting/api/questing/rewards/IReward"
+    ]
+  },
+  "bq_standard/rewards/RewardXP": {
+    "name": "bq_standard/rewards/RewardXP",
+    "interfaces": [
+      "betterquesting/api/questing/rewards/IReward"
+    ]
+  },
+  "bq_standard/rewards/factory/FactoryRewardChoice": {
+    "name": "bq_standard/rewards/factory/FactoryRewardChoice",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/rewards/factory/FactoryRewardCommand": {
+    "name": "bq_standard/rewards/factory/FactoryRewardCommand",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/rewards/factory/FactoryRewardItem": {
+    "name": "bq_standard/rewards/factory/FactoryRewardItem",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/rewards/factory/FactoryRewardRecipe": {
+    "name": "bq_standard/rewards/factory/FactoryRewardRecipe",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/rewards/factory/FactoryRewardScoreboard": {
+    "name": "bq_standard/rewards/factory/FactoryRewardScoreboard",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/rewards/factory/FactoryRewardXP": {
+    "name": "bq_standard/rewards/factory/FactoryRewardXP",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/rewards/loot/LootGroup": {
+    "name": "bq_standard/rewards/loot/LootGroup",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTSaveLoad"
+    ]
+  },
+  "bq_standard/rewards/loot/LootGroup$LootEntry": {
+    "name": "bq_standard/rewards/loot/LootGroup$LootEntry",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTSaveLoad"
+    ]
+  },
+  "bq_standard/rewards/loot/LootRegistry": {
+    "name": "bq_standard/rewards/loot/LootRegistry",
+    "interfaces": [
+      "betterquesting/api2/storage/INBTPartial"
+    ]
+  },
+  "bq_standard/tasks/ITaskInventory": {
+    "name": "bq_standard/tasks/ITaskInventory",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "bq_standard/tasks/ITaskTickable": {
+    "name": "bq_standard/tasks/ITaskTickable",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "bq_standard/tasks/TaskAdvancement": {
+    "name": "bq_standard/tasks/TaskAdvancement",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "bq_standard/tasks/TaskBlockBreak": {
+    "name": "bq_standard/tasks/TaskBlockBreak",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "bq_standard/tasks/TaskCheckbox": {
+    "name": "bq_standard/tasks/TaskCheckbox",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "bq_standard/tasks/TaskCrafting": {
+    "name": "bq_standard/tasks/TaskCrafting",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "bq_standard/tasks/TaskFluid": {
+    "name": "bq_standard/tasks/TaskFluid",
+    "interfaces": [
+      "bq_standard/tasks/ITaskInventory",
+      "betterquesting/api/questing/tasks/IFluidTask",
+      "betterquesting/api/questing/tasks/IItemTask"
+    ]
+  },
+  "bq_standard/tasks/TaskHunt": {
+    "name": "bq_standard/tasks/TaskHunt",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "bq_standard/tasks/TaskInteractEntity": {
+    "name": "bq_standard/tasks/TaskInteractEntity",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "bq_standard/tasks/TaskInteractItem": {
+    "name": "bq_standard/tasks/TaskInteractItem",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "bq_standard/tasks/TaskLocation": {
+    "name": "bq_standard/tasks/TaskLocation",
+    "interfaces": [
+      "bq_standard/tasks/ITaskTickable"
+    ]
+  },
+  "bq_standard/tasks/TaskMeeting": {
+    "name": "bq_standard/tasks/TaskMeeting",
+    "interfaces": [
+      "bq_standard/tasks/ITaskTickable"
+    ]
+  },
+  "bq_standard/tasks/TaskRetrieval": {
+    "name": "bq_standard/tasks/TaskRetrieval",
+    "interfaces": [
+      "bq_standard/tasks/ITaskInventory",
+      "betterquesting/api/questing/tasks/IItemTask"
+    ]
+  },
+  "bq_standard/tasks/TaskScoreboard": {
+    "name": "bq_standard/tasks/TaskScoreboard",
+    "interfaces": [
+      "bq_standard/tasks/ITaskTickable"
+    ]
+  },
+  "bq_standard/tasks/TaskTame": {
+    "name": "bq_standard/tasks/TaskTame",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "bq_standard/tasks/TaskTrigger": {
+    "name": "bq_standard/tasks/TaskTrigger",
+    "interfaces": [
+      "betterquesting/api/questing/tasks/ITask"
+    ]
+  },
+  "bq_standard/tasks/TaskXP": {
+    "name": "bq_standard/tasks/TaskXP",
+    "interfaces": [
+      "bq_standard/tasks/ITaskTickable"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskAdvancement": {
+    "name": "bq_standard/tasks/factory/FactoryTaskAdvancement",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskBlockBreak": {
+    "name": "bq_standard/tasks/factory/FactoryTaskBlockBreak",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskCheckbox": {
+    "name": "bq_standard/tasks/factory/FactoryTaskCheckbox",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskCrafting": {
+    "name": "bq_standard/tasks/factory/FactoryTaskCrafting",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskFluid": {
+    "name": "bq_standard/tasks/factory/FactoryTaskFluid",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskHunt": {
+    "name": "bq_standard/tasks/factory/FactoryTaskHunt",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskInteractEntity": {
+    "name": "bq_standard/tasks/factory/FactoryTaskInteractEntity",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskInteractItem": {
+    "name": "bq_standard/tasks/factory/FactoryTaskInteractItem",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskLocation": {
+    "name": "bq_standard/tasks/factory/FactoryTaskLocation",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskMeeting": {
+    "name": "bq_standard/tasks/factory/FactoryTaskMeeting",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskRetrieval": {
+    "name": "bq_standard/tasks/factory/FactoryTaskRetrieval",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskScoreboard": {
+    "name": "bq_standard/tasks/factory/FactoryTaskScoreboard",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskTame": {
+    "name": "bq_standard/tasks/factory/FactoryTaskTame",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskTrigger": {
+    "name": "bq_standard/tasks/factory/FactoryTaskTrigger",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  },
+  "bq_standard/tasks/factory/FactoryTaskXP": {
+    "name": "bq_standard/tasks/factory/FactoryTaskXP",
+    "interfaces": [
+      "betterquesting/api2/registry/IFactoryData"
+    ]
+  }
+}

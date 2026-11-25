@@ -1,0 +1,18 @@
+{ "_comment": ["Lined chestplate to provide +1 warming" ],
+  "conditions": [{ "type": "forge:not",
+      "value": { "type": "armorunder:compat_mode" }
+    },{
+      "type": "forge:mod_loaded",
+      "modid": "toughasnails"
+  }],
+  "result": {
+    "item": "minecraft:leather_chestplate",
+    "nbt": {"carrots:ArmorTLining":"WARM"}
+  },
+  "type": "armorunder:lined_armor_shapeless",
+  "limit": "WARMEST",
+  "ingredients": [
+    { "type": "forge:ore_dict", "ore": "itemChestplate" },
+    { "item": "toughasnails:wool_chestplate" }
+  ]
+}

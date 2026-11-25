@@ -1,0 +1,15 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "snownee.snow.mixin",
+  "refmap": "refmap.snowrealmagic.json",
+  "mixins": [
+    "MixinItemSnow",
+    "ItemBlockAccessor"
+  ],
+  "client": [
+    "MixinBlockRendererDispatcher",
+    "MixinBufferBuilder"
+  ],
+  "server": [],
+  "minVersion": "0.8"
+}

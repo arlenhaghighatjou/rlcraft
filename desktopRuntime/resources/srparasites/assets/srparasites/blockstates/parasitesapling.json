@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "srparasites:parasitestain_dirt"
+  },
+  "variants": {
+    "stage=0,variant=tree": { "model": "srparasites:parasitesapling_tree" },
+    "stage=1,variant=tree": { "model": "srparasites:parasitesapling_tree" },
+    "stage=0,variant=treethin": { "model": "srparasites:parasitesapling_treethin" },
+    "stage=1,variant=treethin": { "model": "srparasites:parasitesapling_treethin" },
+    "stage=0,variant=flowertall": { "model": "srparasites:parasitesapling_flowertall" },
+    "stage=1,variant=flowertall": { "model": "srparasites:parasitesapling_flowertall" },
+    "inventory": [{}]
+  }
+}

@@ -1,0 +1,392 @@
+{
+  "com/oblivioussp/spartanshields/ModSpartanShields": {
+    "name": "com/oblivioussp/spartanshields/ModSpartanShields",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "com/oblivioussp/spartanshields/ModSpartanShields",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "dependencies": {
+            "value": "after:redstoneflux;after:enderio;after:rftools;after:botania;after:redstonearsenal;after:abyssalcraft;after:betterwithmods;after:thaumcraft"
+          },
+          "guiFactory": {
+            "value": "com.oblivioussp.spartanshields.client.gui.GuiFactorySS"
+          },
+          "modid": {
+            "value": "spartanshields"
+          },
+          "name": {
+            "value": "Spartan Shields"
+          },
+          "version": {
+            "value": "1.5.5"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "instance",
+        "value": {
+          "value": "spartanshields"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "com.oblivioussp.spartanshields.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "com.oblivioussp.spartanshields.proxy.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "postInit(Lnet/minecraftforge/fml/common/event/FMLPostInitializationEvent;)V"
+      }
+    ]
+  },
+  "com/oblivioussp/spartanshields/client/gui/GuiFactorySS": {
+    "name": "com/oblivioussp/spartanshields/client/gui/GuiFactorySS",
+    "interfaces": [
+      "net/minecraftforge/fml/client/IModGuiFactory"
+    ]
+  },
+  "com/oblivioussp/spartanshields/event/EventHandlerClient": {
+    "name": "com/oblivioussp/spartanshields/event/EventHandlerClient",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/oblivioussp/spartanshields/event/EventHandlerClient"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onInputEvent(Lnet/minecraftforge/fml/common/gameevent/InputEvent;)V"
+      }
+    ]
+  },
+  "com/oblivioussp/spartanshields/event/EventHandlerClient$1": {
+    "name": "com/oblivioussp/spartanshields/event/EventHandlerClient$1",
+    "interfaces": [
+      "com/google/common/base/Predicate"
+    ]
+  },
+  "com/oblivioussp/spartanshields/event/EventHandlerCommon": {
+    "name": "com/oblivioussp/spartanshields/event/EventHandlerCommon",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/oblivioussp/spartanshields/event/EventHandlerCommon"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "attackEvent(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onPlayerTick(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      }
+    ]
+  },
+  "com/oblivioussp/spartanshields/init/EnchantmentRegistry": {
+    "name": "com/oblivioussp/spartanshields/init/EnchantmentRegistry",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/oblivioussp/spartanshields/init/EnchantmentRegistry"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "register(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/oblivioussp/spartanshields/init/ItemRegistrySS": {
+    "name": "com/oblivioussp/spartanshields/init/ItemRegistrySS",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/oblivioussp/spartanshields/init/ItemRegistrySS"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItems(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "initBotaniaShields()V",
+        "values": {
+          "modid": {
+            "value": "botania"
+          }
+        }
+      }
+    ]
+  },
+  "com/oblivioussp/spartanshields/init/ModelRenderRegistry": {
+    "name": "com/oblivioussp/spartanshields/init/ModelRenderRegistry",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/oblivioussp/spartanshields/init/ModelRenderRegistry"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerItemRenders(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "registerBlockRenders(Lnet/minecraftforge/client/event/ModelRegistryEvent;)V"
+      }
+    ]
+  },
+  "com/oblivioussp/spartanshields/init/RecipeRegistry": {
+    "name": "com/oblivioussp/spartanshields/init/RecipeRegistry",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/oblivioussp/spartanshields/init/RecipeRegistry"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "addRecipes(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "com/oblivioussp/spartanshields/item/ItemShieldBotania": {
+    "name": "com/oblivioussp/spartanshields/item/ItemShieldBotania",
+    "interfaces": [
+      "vazkii/botania/api/mana/IManaUsingItem"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "com/oblivioussp/spartanshields/item/ItemShieldBotania",
+        "values": {
+          "iface": {
+            "value": "vazkii.botania.api.mana.IManaUsingItem"
+          },
+          "modid": {
+            "value": "botania"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Method;",
+        "target": "requestManaForRepair(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/EntityPlayer;I)Z",
+        "values": {
+          "modid": {
+            "value": "botania"
+          }
+        }
+      }
+    ]
+  },
+  "com/oblivioussp/spartanshields/item/ItemShieldElementium": {
+    "name": "com/oblivioussp/spartanshields/item/ItemShieldElementium",
+    "interfaces": [
+      "vazkii/botania/api/item/IPixieSpawner"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "com/oblivioussp/spartanshields/item/ItemShieldElementium",
+        "values": {
+          "iface": {
+            "value": "vazkii.botania.api.item.IPixieSpawner"
+          },
+          "modid": {
+            "value": "botania"
+          }
+        }
+      }
+    ]
+  },
+  "com/oblivioussp/spartanshields/item/ItemShieldEnderium": {
+    "name": "com/oblivioussp/spartanshields/item/ItemShieldEnderium",
+    "interfaces": [
+      "com/oblivioussp/spartanshields/item/IDamageShield"
+    ]
+  },
+  "com/oblivioussp/spartanshields/item/ItemShieldLumium": {
+    "name": "com/oblivioussp/spartanshields/item/ItemShieldLumium",
+    "interfaces": [
+      "com/oblivioussp/spartanshields/item/IDamageShield"
+    ]
+  },
+  "com/oblivioussp/spartanshields/item/ItemShieldPoweredFE": {
+    "name": "com/oblivioussp/spartanshields/item/ItemShieldPoweredFE",
+    "interfaces": [
+      "com/oblivioussp/spartanshields/item/IDamageShield",
+      "com/oblivioussp/spartanshields/item/IItemPoweredFE",
+      "cofh/redstoneflux/api/IEnergyContainerItem"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "com/oblivioussp/spartanshields/item/ItemShieldPoweredFE",
+        "values": {
+          "iface": {
+            "value": "cofh.redstoneflux.api.IEnergyContainerItem"
+          },
+          "modid": {
+            "value": "redstoneflux"
+          }
+        }
+      }
+    ]
+  },
+  "com/oblivioussp/spartanshields/item/ItemShieldPoweredFE$1": {
+    "name": "com/oblivioussp/spartanshields/item/ItemShieldPoweredFE$1",
+    "interfaces": [
+      "net/minecraft/item/IItemPropertyGetter"
+    ]
+  },
+  "com/oblivioussp/spartanshields/item/ItemShieldSignalum": {
+    "name": "com/oblivioussp/spartanshields/item/ItemShieldSignalum",
+    "interfaces": [
+      "com/oblivioussp/spartanshields/item/IDamageShield"
+    ]
+  },
+  "com/oblivioussp/spartanshields/item/ItemShieldSilver": {
+    "name": "com/oblivioussp/spartanshields/item/ItemShieldSilver",
+    "interfaces": [
+      "com/oblivioussp/spartanshields/item/IDamageShield"
+    ]
+  },
+  "com/oblivioussp/spartanshields/item/ItemShieldVoid": {
+    "name": "com/oblivioussp/spartanshields/item/ItemShieldVoid",
+    "interfaces": [
+      "thaumcraft/api/items/IWarpingGear"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Optional$Interface;",
+        "target": "com/oblivioussp/spartanshields/item/ItemShieldVoid",
+        "values": {
+          "iface": {
+            "value": "thaumcraft.api.items.IWarpingGear"
+          },
+          "modid": {
+            "value": "thaumcraft"
+          }
+        }
+      }
+    ]
+  },
+  "com/oblivioussp/spartanshields/item/crafting/RecipeShieldBanners": {
+    "name": "com/oblivioussp/spartanshields/item/crafting/RecipeShieldBanners",
+    "interfaces": [
+      "net/minecraft/item/crafting/IRecipe"
+    ]
+  },
+  "com/oblivioussp/spartanshields/network/PacketBase": {
+    "name": "com/oblivioussp/spartanshields/network/PacketBase",
+    "interfaces": [
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessage",
+      "net/minecraftforge/fml/common/network/simpleimpl/IMessageHandler"
+    ]
+  },
+  "com/oblivioussp/spartanshields/network/PacketBase$1": {
+    "name": "com/oblivioussp/spartanshields/network/PacketBase$1",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "com/oblivioussp/spartanshields/network/PacketBase$2": {
+    "name": "com/oblivioussp/spartanshields/network/PacketBase$2",
+    "interfaces": [
+      "java/lang/Runnable"
+    ]
+  },
+  "com/oblivioussp/spartanshields/proxy/ClientProxy$1": {
+    "name": "com/oblivioussp/spartanshields/proxy/ClientProxy$1",
+    "interfaces": [
+      "net/minecraft/client/renderer/color/IItemColor"
+    ]
+  },
+  "com/oblivioussp/spartanshields/util/ConditionFactoryItemExists": {
+    "name": "com/oblivioussp/spartanshields/util/ConditionFactoryItemExists",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "com/oblivioussp/spartanshields/util/ConditionFactoryModId": {
+    "name": "com/oblivioussp/spartanshields/util/ConditionFactoryModId",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "com/oblivioussp/spartanshields/util/ConditionFactoryOreDict": {
+    "name": "com/oblivioussp/spartanshields/util/ConditionFactoryOreDict",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "com/oblivioussp/spartanshields/util/ConfigHandler": {
+    "name": "com/oblivioussp/spartanshields/util/ConfigHandler",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "com/oblivioussp/spartanshields/util/ConfigHandler"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChangedEvent(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "com/oblivioussp/spartanshields/util/EnergyCapabilityProviderItem": {
+    "name": "com/oblivioussp/spartanshields/util/EnergyCapabilityProviderItem",
+    "interfaces": [
+      "net/minecraftforge/common/capabilities/ICapabilityProvider"
+    ]
+  },
+  "com/oblivioussp/spartanshields/util/EnergyCapabilityProviderItem$1": {
+    "name": "com/oblivioussp/spartanshields/util/EnergyCapabilityProviderItem$1",
+    "interfaces": [
+      "net/minecraftforge/energy/IEnergyStorage"
+    ]
+  }
+}

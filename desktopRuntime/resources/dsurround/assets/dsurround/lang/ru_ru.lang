@@ -1,0 +1,277 @@
+#PARSE_ESCAPES
+# RU Russian Translations
+dsurround.msg.dsurround=Dynamic Surroundings
+
+# Обновления данных
+dsurround.metadata.Name=§3Dynamic Surroundings
+dsurround.metadata.Credits=\n\n§6Wirsbo§r за §2BetterRain§r\n§6MrRube§r за §2Aurora Rubealis§r\n§6Hurricaaane§r за §2Presence Footsteps§r и §2MAtmos§r\n§6Mr_okushama§r за §2Battle Music§r\n§6Ezer'Arch§r за настройки §2Galacticraft §r\n§eИнформация о звуках и текстурах§r на https://tinyurl.com/mggnl76\n\n
+dsurround.metadata.Authors=§6OreCruncher§r,§6Abastro§r
+dsurround.metadata.Description=Добавляет множество §6звуков§r и §6зрительных§r эффектов, чтобы улучшить ваше времяпрепровождение в игре
+
+# Связанные с Minecraft вещи
+soundCategory.ds_footsteps=Footsteps
+soundCategory.ds_biome=Biomes
+
+# Разметка строк
+dsurround.format.TimeOfDay=День %1$d, %2$d:%3$02d %4$s
+dsurround.format.AM=до полудня
+dsurround.format.PM=после полудня
+dsurround.format.SessionTime=Время игры %1$d:%2$02d:%3$02d
+dsurround.format.NoSky=Без облаков
+dsurround.format.Sunrise=Рассвет
+dsurround.format.Sunset=Закат
+dsurround.format.Daytime=День
+dsurround.format.Nighttime=Ночь
+dsurround.format.Play=Проиграть
+dsurround.format.Stop=Стоп
+dsurround.format.Block=Выкл
+dsurround.format.Cull=Отобр.
+
+# Привязки клавиш
+dsurround.cfg.keybind.SelectionBox=Переключить выделение
+dsurround.cfg.keybind.LightLevel=Переключить уровень освещённости
+dsurround.cfg.keybind.ChunkBorders=Переключить границы чанков
+dsurround.cfg.keybind.AnimaniaBadges=Показывать значки существ из Animania
+dsurround.cfg.keybind.msg.ON=§aВкл
+dsurround.cfg.keybind.msg.OFF=§cВыкл
+dsurround.cfg.keybind.msg.Fencing=Выделение блоков %s
+dsurround.cfg.keybind.msg.ChunkBorder=Отображение границ чанков %s
+dsurround.cfg.keybind.msg.LLDisplayMode=Режим отображения уровня освещённости %s
+dsurround.cfg.keybind.msg.LLSafeBlocks=Уровень освещённости: прятать безопасные блоки %s
+dsurround.cfg.keybind.msg.LLDisplay=Отображение уровня освещённости %s
+
+dsurround.msg.RainIntensitySet=§9Интенсивность дождя: %1$s
+dsurround.msg.MinRainIntensitySet=§9Мин. интенсивность дождя: %1$s
+dsurround.msg.MaxRainIntensitySet=§9Макс. интенсивность дождя: %1$s
+dsurround.msg.RainReset=§9Мировые параметры дождя сброшены
+dsurround.msg.BiomeReload=§9Параметры биома перезагружены
+
+dsurround.msg.RainTimeSet=§9Продолж. дождя: %1$s
+dsurround.msg.ThunderTimeSet=§9Продолж. грозы: %1$s
+dsurround.msg.ThunderThresholdSet=§9Порог грозы: %1$s
+
+# Проверка версии
+dsurround.msg.NewVersion.dsurround=["§6Доступно обновление: §9[",{"text":"§2%1$s §ev%2$s§f","color":"gold","hoverEvent":{"action":"show_text","value":{"text":"Нажмите, чтобы открыть страницу мода на CurseForge","color":"aqua"}},"clickEvent":{"action":"open_url","value":"%3$s"}},"§9]"]
+
+# Настройки
+dsurround.cfg.individual=Индивидуальная настройка звука
+dsurround.cfg.individual.tooltip=Опции для настройки звуков индивидуально
+
+dsurround.cfg.asm=Настройки ASM преобразователя
+dsurround.cfg.asm.tooltip=Управляет ASM преобразованиями Dynamic Surroundings, происходящими при запуске
+dsurround.cfg.asm.EnableWeather=Управление погодой
+dsurround.cfg.asm.EnableWeather.tooltip=Вкл/выкл ASM преобразования для возможности управлять погодой (дождь, снег, брызги, песчаная буря, северное сияние)
+dsurround.cfg.asm.DisableArrow=Откл. след от стрелы
+dsurround.cfg.asm.DisableArrow.tooltip=Отключает след из частиц во время полёта стрелы
+dsurround.cfg.asm.DisablePotionIcons=Отключить иконки эффектов зелий инвентаря
+dsurround.cfg.asm.DisablePotionIcons.tooltip=Отключает отрисовку эффектов зелий в инвентаре
+dsurround.cfg.asm.EnableOptionSearch=Включить опцию поиска в настройках
+dsurround.cfg.asm.EnableOptionSearch.tooltip=Включает текстовое поле фильтра поиска в опциях конфигурации мода
+
+dsurround.cfg.logging=Настройки логирования
+dsurround.cfg.logging.tooltip=Определяет как Dynamic Surroundings будет вести лог
+dsurround.cfg.logging.EnableDebug=Отладка
+dsurround.cfg.logging.EnableDebug.tooltip=Вкл/выкл отладочный лог
+dsurround.cfg.logging.VersionCheck=Проверка новых версий
+dsurround.cfg.logging.VersionCheck.tooltip=Вкл/выкл информацию о новых версиях мода
+dsurround.cfg.logging.ServerStats=Статистика сервера
+dsurround.cfg.logging.ServerStats.tooltip=Вкл/выкл отображение статистики сервера
+dsurround.cfg.logging.FlagMask=Маска отладки
+dsurround.cfg.logging.FlagMask.tooltip=Битовая маска для включения различных отладочных трассировок
+
+dsurround.cfg.rain=Дождь
+dsurround.cfg.rain.tooltip=Настройки дождя в клиенте
+dsurround.cfg.rain.RippleStyle=Вид ряби от дождя
+dsurround.cfg.rain.RippleStyle.tooltip=0: круг, 1: тёмный круг, 2: квадрат, 3: пикселизированный круг
+dsurround.cfg.rain.RainVolume=Громкость дождя
+dsurround.cfg.rain.RainVolume.tooltip=Величина громкости дождя
+dsurround.cfg.rain.VanillaRain=Оригинальные алгоритмы
+dsurround.cfg.rain.VanillaRain.tooltip=Использовать оригинальные алгоритмы управления интенсивностью и продолжительностью дождя
+dsurround.cfg.rain.EnableThunder=Фоновая гроза
+dsurround.cfg.rain.EnableThunder.tooltip=Разрешить фоновые раскаты грома во время грозы
+dsurround.cfg.rain.ThunderThreshold=Интенс. дождя для фоновой грозы
+dsurround.cfg.rain.ThunderThreshold.tooltip=Минимальный уровень интенсивности дождя для фоновой грозы
+dsurround.cfg.rain.MinRainStrength=Мин. сила дождя по умолчанию
+dsurround.cfg.rain.MinRainStrength.tooltip=Минимальная сила дождя по умолчанию для измерения
+dsurround.cfg.rain.MaxRainStrength=Макс. сила дождя по умолчанию
+dsurround.cfg.rain.MaxRainStrength.tooltip=Максимальная сила дождя по умолчанию для измерения
+dsurround.cfg.rain.UseVanillaSound=Оригинальный звук дождя
+dsurround.cfg.rain.UseVanillaSound.tooltip=Использовать оригинальный звук дождя вместо звуков из мода
+dsurround.cfg.rain.EnableMagmaNetherrack=Включить брызги на Адском камне и Магмовом блоке
+dsurround.cfg.rain.EnableMagmaNetherrack.tooltip=Включает/отключает частицы лавы на Адском камне и Магмовом блоке во время дождя
+
+dsurround.cfg.fog=Туман
+dsurround.cfg.fog.tooltip=Настройки различных эффектов тумана в клиенте
+dsurround.cfg.fog.Enable=Обработка тумана
+dsurround.cfg.fog.Enable.tooltip=Вкл/выкл обработку тумана
+dsurround.cfg.fog.EnableMorning=Утренний туман
+dsurround.cfg.fog.EnableMorning.tooltip=Включает туман утром, который со времненем рассеется
+dsurround.cfg.fog.MorningFogChance=Вероятность утреннего тумана
+dsurround.cfg.fog.MorningFogChance.tooltip=Величина вероятности утреннего тумана
+dsurround.cfg.fog.EnableWeather=Погодный туман
+dsurround.cfg.fog.EnableWeather.tooltip=Увеличивает плотность тумана в зависимости от силы дождя
+dsurround.cfg.fog.EnableBedrock=Нижний туман
+dsurround.cfg.fog.EnableBedrock.tooltip=Увеличивает плотность тумана при приближении к коренной породе
+dsurround.cfg.fog.DesertFog=Песчаная буря
+dsurround.cfg.fog.DesertFog.tooltip=Вкл/выкл песчаную бурю в пустыне вместо дождя
+dsurround.cfg.fog.ElevationHaze=Высотная дымка
+dsurround.cfg.fog.ElevationHaze.tooltip=Чем выше игрок – тем больше дымка
+dsurround.cfg.fog.BiomeFog=Туман биома
+dsurround.cfg.fog.BiomeFog.tooltip=Включает туман определённой плотности и цвета для каждого биома
+
+dsurround.cfg.general=Основные настройки
+dsurround.cfg.general.tooltip=Различные настройки
+dsurround.cfg.general.HideChat=Скрыть уведомления в чате
+dsurround.cfg.general.HideChat.tooltip=Переключает отображение уведомлений Dynamic Surroundings в чате
+dsurround.cfg.general.ExternalScripts=Внешние файлы настроек
+dsurround.cfg.general.ExternalScripts.tooltip=Файлы настроек для персонализации
+dsurround.cfg.general.StartupSounds=Список звуков при запуске
+dsurround.cfg.general.StartupSounds.tooltip=Звуки, которые будут проигрываться при загрузке главного меню
+dsurround.cfg.general.ChunkCaching=Кэширование чанков
+dsurround.cfg.general.ChunkCaching.tooltip=Вкл/выкл кэширование чанков на стороне клиента для большей производительности
+
+dsurround.cfg.aurora=Северное сияние
+dsurround.cfg.aurora.tooltip=Настройки поведения и отрисовки северного сияния
+dsurround.cfg.aurora.EnableAurora=Северное сияние
+dsurround.cfg.aurora.EnableAurora.tooltip=Вкл/выкл северное сияние на стороне клиента и сервера
+dsurround.cfg.aurora.EnableShader=Использовать шейдеры
+dsurround.cfg.aurora.EnableShader.tooltip=Использовать шейдеры при отрисовке северного сияния
+dsurround.cfg.aurora.MaxBands=Максимум полос
+dsurround.cfg.aurora.MaxBands.tooltip=Ограничение макс. количества полос в сиянии
+
+dsurround.cfg.biomes=Настройки биомов
+dsurround.cfg.biomes.tooltip=Настройки звуков и эффектов в биомах
+dsurround.cfg.biomes.Sealevel=Перезапись уровня моря
+dsurround.cfg.biomes.Sealevel.tooltip=Установка уровня моря для мира (0 – по умолчанию для мира)
+dsurround.cfg.biomes.Aliases=Названия биомов
+dsurround.cfg.biomes.Aliases.tooltip=Список названий биомов
+dsurround.cfg.biomes.DimBlacklist=Чёрный список измерений
+dsurround.cfg.biomes.DimBlacklist.tooltip=ID измерений, где не будут воспроизвдиться звуки биомов
+
+dsurround.cfg.effects=Эффекты
+dsurround.cfg.effects.tooltip=Настройки для различных эффектов
+dsurround.cfg.effects.WaterfallCutoff=Срез звука водопада
+dsurround.cfg.effects.WaterfallCutoff.tooltip=Сила водопада, ниже которой звуки водопада не воспроизводятся
+dsurround.cfg.effects.FXRange=Дальность эффектов
+dsurround.cfg.effects.FXRange.tooltip=Расстояние в блоках вокруг игрока, в пределах которого проигрываются различные эффекты
+dsurround.cfg.effects.Suspend=Откл. частицы в воде
+dsurround.cfg.effects.Suspend.tooltip=Отключает эффект частиц на глубине
+dsurround.cfg.effects.Steam=Струйки пара
+dsurround.cfg.effects.Steam.tooltip=Вкл/выкл струйки пара в местах, где лава соприкасается с водой
+dsurround.cfg.effects.Fire=Струйки огня
+dsurround.cfg.effects.Fire.tooltip=Вкл/выкл струйки огня из лавы
+dsurround.cfg.effects.Bubble=Струи пузырьков
+dsurround.cfg.effects.Bubble.tooltip=Вкл/выкл струи пузырьков под водой
+dsurround.cfg.effects.Dust=Пылинки
+dsurround.cfg.effects.Dust.tooltip=Вкл/выкл падающие пылинки из-под блоков
+dsurround.cfg.effects.Fountain=Струи фонтана
+dsurround.cfg.effects.Fountain.tooltip=Вкл/выкл распыляющиеся струи от фонтана
+dsurround.cfg.effects.Fireflies=Светлячки
+dsurround.cfg.effects.Fireflies.tooltip=Вкл/выкл светлячков, летающих вокруг растений
+dsurround.cfg.effects.Splash=Брызги воды
+dsurround.cfg.effects.Splash.tooltip=Вкл/выкл брызги от стекающей воды
+dsurround.cfg.effects.Popoffs=Всплывашки
+dsurround.cfg.effects.Popoffs.tooltip=Показывать всплывашки урона/исцеления для существ
+dsurround.cfg.effects.CritWords=Критические слова
+dsurround.cfg.effects.CritWords.tooltip=Показывать случайные слова при критических ударах
+dsurround.cfg.effects.Footprints=Следы от шагов
+dsurround.cfg.effects.Footprints.tooltip=Вкл/выкл следы от шагов существ
+dsurround.cfg.effects.FootprintStyle=Вид следов
+dsurround.cfg.effects.FootprintStyle.tooltip=0: след от обуви, 1: квадратный след, 2: след от подковы, 3: птичьи лапки, 4: лапа, 5: сплошной квадрат, 6: пикселизированный квадрат
+dsurround.cfg.effects.ShowBreath=Морозное дыхание
+dsurround.cfg.effects.ShowBreath.tooltip=Включает морозное дыхание существ в холодную погоду
+
+dsurround.cfg.sound=Звук
+dsurround.cfg.sound.tooltip=Основные настройки звуковых эффектов
+dsurround.cfg.sound.BiomeSounds=Звуки биомов
+dsurround.cfg.sound.BiomeSounds.tooltip=Вкл/выкл фоновые звуки в биомах
+dsurround.cfg.sound.AutoConfig=Автонастройка звуковых каналов
+dsurround.cfg.sound.AutoConfig.tooltip=Автоматически настраивать звуковые каналы
+dsurround.cfg.sound.NormalChannels=Количество обычных каналов
+dsurround.cfg.sound.NormalChannels.tooltip=Количество обычных звуковых каналов в звуковой системе (настройка вручную)
+dsurround.cfg.sound.StreamingChannels=Количество потоковых каналов
+dsurround.cfg.sound.StreamingChannels.tooltip=Количество потоковых звуковых каналов в звуковой системе (настройка вручную)
+dsurround.cfg.sound.StreamBufferSize=Размер буфера потока
+dsurround.cfg.sound.StreamBufferSize.tooltip=Размер буфера потока в килобайтах (0: по умолчанию – обычно 128Кб)
+dsurround.cfg.sound.StreamBufferCount=Количество буферов потока на канал
+dsurround.cfg.sound.StreamBufferCount.tooltip=Количество буферов потока на канал (0: по умолчанию – обычно 3 буфера)
+dsurround.cfg.sound.Mute=Глушить в фоне
+dsurround.cfg.sound.Mute.tooltip=Выключает все звуки, когда игра работает в фоне
+dsurround.cfg.sound.ThunderVolume=Громкость грозы
+dsurround.cfg.sound.ThunderVolume.tooltip=Величина громкости грозы
+dsurround.cfg.sound.Jump=Звук прыжка
+dsurround.cfg.sound.Jump.tooltip=Вкл/выкл звук от прыжка игрока
+dsurround.cfg.sound.Equip=Звук экипирования
+dsurround.cfg.sound.Equip.tooltip=Вкл/выкл звуковой эффект экипирования оружия/инструмента
+dsurround.cfg.sound.SwordEquipAsTool=Меч как инструмент
+dsurround.cfg.sound.SwordEquipAsTool.tooltip=Меч по звуку экипируется как инструмент
+dsurround.cfg.sound.Craft=Звук изготовления
+dsurround.cfg.sound.Craft.tooltip=Вкл/выкл звук изготовления предметов
+dsurround.cfg.sound.FootstepQuad=Четвероногие шаги
+dsurround.cfg.sound.FootstepQuad.tooltip=Имитировать ходьбу четвероногих существ
+dsurround.cfg.sound.FootstepCadence=Синхронизация с первым лицом
+dsurround.cfg.sound.FootstepCadence.tooltip=true для синхронизации с рукой от 1-го лица; false для синхронизации с ногами от 3-го лица
+dsurround.cfg.sound.Armor=Звуки от брони
+dsurround.cfg.sound.Armor.tooltip=Вкл/выкл звуки от брони при движении
+dsurround.cfg.sound.Swing=Звук смены предметов
+dsurround.cfg.sound.Swing.tooltip=Вкл/выкл звук смены предметов
+dsurround.cfg.sound.Puddle=Звук мокрой почвы
+dsurround.cfg.sound.Puddle.tooltip=Вкл/выкл чавкающие звуки при ходьбе во время дождя
+dsurround.cfg.sound.CullInterval=Интервал отобранных звуков
+dsurround.cfg.sound.CullInterval.tooltip=Сколько тиков нужно, чтобы был проигран отобранный звук (0, чтобы выключить)
+dsurround.cfg.sound.SoundSettings=Индивидуальная настройка звука
+dsurround.cfg.sound.SoundSettings.tooltip=Настроить отключение, отбор и громкость звуков
+dsurround.cfg.sound.BattleMusic=Боевая музыка
+dsurround.cfg.sound.BattleMusic.tooltip=Вкл/выкл музыку во время боя
+
+dsurround.cfg.player=Эффекты игрока
+dsurround.cfg.player.tooltip=Основные настройки для звуков и эффектов игрока
+dsurround.cfg.player.PotionParticles=Сдерживать частицы зелий
+dsurround.cfg.player.PotionParticles.tooltip=Отключает эффект частиц зелий от игрока
+dsurround.cfg.player.HurtThreshold=Порог боли
+dsurround.cfg.player.HurtThreshold.tooltip=До какого значения должна опустеть полоска здоровья, чтобы появился звук сердцебиения (0, чтобы выключить)
+dsurround.cfg.player.HungerThreshold=Порог голода
+dsurround.cfg.player.HungerThreshold.tooltip=До какого значения должна опустеть полоска еды, чтобы появились звуки урчания (0, чтобы выключить)
+
+dsurround.cfg.speech=Пузырьки с речью
+dsurround.cfg.speech.tooltip=Настройки для пузырьков с речью
+dsurround.cfg.speech.EnableSpeechBubbles=Пузырьки с речью
+dsurround.cfg.speech.EnableSpeechBubbles.tooltip=Вкл/выкл пузырьки с речью над головами игроков
+dsurround.cfg.speech.EnableEntityChat=Болтовня существ
+dsurround.cfg.speech.EnableEntityChat.tooltip=Вкл/выкл пузырьки с речью над существами
+dsurround.cfg.speech.Duration=Продолжительность отображения
+dsurround.cfg.speech.Duration.tooltip=Сколько секунд показывать пузырьки с речью
+dsurround.cfg.speech.Range=Дальность видимости
+dsurround.cfg.speech.Range.tooltip=Расстояние, на котором видны пузырьки. Фильтрация происходит на сервере.
+dsurround.cfg.speech.AnimaniaBadges=Значки Animania
+dsurround.cfg.speech.AnimaniaBadges.tooltip=Вкл/выкл отображение значков еды/воды над существами из Animania
+
+dsurround.cfg.commands=Настройки команд
+dsurround.cfg.commands.tooltip=Настройки для команд
+dsurround.cfg.commands.DS.Name=Имя команды /ds
+dsurround.cfg.commands.DS.Name.tooltip=Имя для команды /ds
+dsurround.cfg.commands.DS.Alias=Псевдоним для команды /ds
+dsurround.cfg.commands.DS.Alias.tooltip=Один или несколько псевдонимов для команды /ds (разделение через пробел)
+dsurround.cfg.commands.Calc.Name=Имя команды /calc
+dsurround.cfg.commands.Calc.Name.tooltip=Имя для команды /calc
+dsurround.cfg.commands.Calc.Alias=Псевдоним для команды /calc
+dsurround.cfg.commands.Calc.Alias.tooltip=Один или несколько псевдонимов для команды /calc (разделение через пробел)
+
+dsurround.cfg.profiles=Встроенные профили
+dsurround.cfg.profiles.tooltip=Настройка встроенных профилей
+
+dsurround.cfg.profiles.noNetherWeather=Откл. погоду в Нижнем мире
+dsurround.cfg.profiles.noNetherWeather.tooltip=Выключает погодные эффекты в Нижнем мире
+dsurround.cfg.profiles.noDustEffects=Откл. пыль
+dsurround.cfg.profiles.noDustEffects.tooltip=Отключает эффект пыли во всех биомах
+
+dsurround.season.format=%1$s %2$s
+dsurround.season.noseason=Нет сезона
+dsurround.season.spring=Весна
+dsurround.season.summer=Лето
+dsurround.season.fall=Осень
+dsurround.season.autumn=Осень
+dsurround.season.winter=Зима
+dsurround.season.early=Начало
+dsurround.season.mid=Середина
+dsurround.season.late=Конец

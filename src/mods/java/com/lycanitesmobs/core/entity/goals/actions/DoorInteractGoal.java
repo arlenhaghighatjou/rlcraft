@@ -1,0 +1,83 @@
+package com.lycanitesmobs.core.entity.goals.actions;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoor;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.pathfinding.Path;
+import net.minecraft.pathfinding.PathPoint;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+
+public abstract class DoorInteractGoal extends EntityAIBase {
+   protected EntityLiving host;
+   protected BlockDoor targetDoor;
+   boolean hasStoppedDoorInteraction;
+   protected int entityPosX;
+   protected int entityPosY;
+   protected int entityPosZ;
+   float entityPositionX;
+   float entityPositionZ;
+
+   public DoorInteractGoal(EntityLiving par1EntityLiving) {
+      this.host = par1EntityLiving;
+   }
+
+   public boolean shouldExecute() {
+      if (!this.host.collidedHorizontally) {
+         return false;
+      } else {
+         Path pathEntity = this.host.getNavigator().getPath();
+         if (pathEntity != null && !pathEntity.isFinished()) {
+            for(int i = 0; i < Math.min(pathEntity.getCurrentPathIndex() + 2, pathEntity.getCurrentPathLength()); ++i) {
+               PathPoint pathpoint = pathEntity.getPathPointFromIndex(i);
+               this.entityPosX = pathpoint.x;
+               this.entityPosY = pathpoint.y + 1;
+               this.entityPosZ = pathpoint.z;
+               if (this.host.getDistanceSq((double)this.entityPosX, this.host.posY, (double)this.entityPosZ) <= 2.25D) {
+                  this.targetDoor = this.findUsableDoor(new BlockPos(this.entityPosX, this.entityPosY, this.entityPosZ));
+                  if (this.targetDoor != null) {
+                     return true;
+                  }
+               }
+            }
+
+            this.entityPosX = MathHelper.floor(this.host.posX);
+            this.entityPosY = MathHelper.floor(this.host.posY + 1.0D);
+            this.entityPosZ = MathHelper.floor(this.host.posZ);
+            this.targetDoor = this.findUsableDoor(new BlockPos(this.entityPosX, this.entityPosY, this.entityPosZ));
+            return this.targetDoor != null;
+         } else {
+            return false;
+         }
+      }
+   }
+
+   public void startExecuting() {
+      this.hasStoppedDoorInteraction = false;
+      this.entityPositionX = (float)((double)((float)this.entityPosX + 0.5F) - this.host.posX);
+      this.entityPositionZ = (float)((double)((float)this.entityPosZ + 0.5F) - this.host.posZ);
+   }
+
+   public boolean shouldContinueExecuting() {
+      return !this.hasStoppedDoorInteraction;
+   }
+
+   public void updateTask() {
+      float f = (float)((double)((float)this.entityPosX + 0.5F) - this.host.posX);
+      float f1 = (float)((double)((float)this.entityPosZ + 0.5F) - this.host.posZ);
+      float f2 = this.entityPositionX * f + this.entityPositionZ * f1;
+      if (f2 < 0.0F) {
+         this.hasStoppedDoorInteraction = true;
+      }
+
+   }
+
+   private BlockDoor findUsableDoor(BlockPos pos) {
+      IBlockState IBlockState = this.host.getEntityWorld().getBlockState(pos);
+      Block block = IBlockState.getBlock();
+      return block instanceof BlockDoor && IBlockState.getMaterial() == Material.WOOD ? (BlockDoor)block : null;
+   }
+}

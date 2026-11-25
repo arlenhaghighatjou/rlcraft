@@ -1,0 +1,16 @@
+[
+{
+  "modid": "notreepunching",
+  "name": "No Tree Punching",
+  "description": "A small mod to make the first day or two of play more believable. Adds a few new tools and early game resource gathering.",
+  "version": "2.0.21",
+  "mcversion": "1.12.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["AlcatrazEscapee"],
+  "credits": "",
+  "logoFile": "assets/icon.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]

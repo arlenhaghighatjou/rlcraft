@@ -1,0 +1,18 @@
+{
+    "parent": "builtin/generated",
+    "textures": {
+        "layer0": "switchbow:items/quiver"
+    },
+    "display": {
+        "thirdperson": {
+        "rotation": [ 356, 254, 172 ],
+        "translation": [ 0.25, 3.50, -1.50 ],
+        "scale": [ 0.80, 0.80, 0.80 ]
+		},
+        "firstperson": {
+            "rotation": [ 0, -135, 25 ],
+            "translation": [ 0, 4, 2 ],
+            "scale": [ 1.7, 1.7, 1.7 ]
+        }
+    }
+}

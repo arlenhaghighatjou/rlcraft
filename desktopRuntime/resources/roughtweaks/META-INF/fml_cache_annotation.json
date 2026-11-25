@@ -1,0 +1,124 @@
+{
+  "lellson/roughTweaks/RoughTweaks": {
+    "name": "lellson/roughTweaks/RoughTweaks",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "lellson/roughTweaks/RoughTweaks",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "modid": {
+            "value": "roughtweaks"
+          },
+          "name": {
+            "value": "Rough Tweaks"
+          },
+          "version": {
+            "value": "1.0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$Instance;",
+        "target": "INSTANCE"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/fml/common/SidedProxy;",
+        "target": "proxy",
+        "values": {
+          "clientSide": {
+            "value": "lellson.roughTweaks.proxy.ClientProxy"
+          },
+          "serverSide": {
+            "value": "lellson.roughTweaks.proxy.ServerProxy"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "init(Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V"
+      }
+    ]
+  },
+  "lellson/roughTweaks/items/RoughItemRegistry": {
+    "name": "lellson/roughTweaks/items/RoughItemRegistry",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "lellson/roughTweaks/items/RoughItemRegistry",
+        "values": {
+          "modid": {
+            "value": "roughtweaks"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "register(Lnet/minecraftforge/event/RegistryEvent$Register;)V"
+      }
+    ]
+  },
+  "lellson/roughTweaks/misc/RoughEvents": {
+    "name": "lellson/roughTweaks/misc/RoughEvents",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "logIn(Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "tickEvent(Lnet/minecraftforge/fml/common/gameevent/TickEvent$PlayerTickEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "dropEvent(Lnet/minecraftforge/event/entity/living/LivingDropsEvent;)V"
+      }
+    ]
+  },
+  "lellson/roughTweaks/misc/factories/FactoryBandage": {
+    "name": "lellson/roughTweaks/misc/factories/FactoryBandage",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/roughTweaks/misc/factories/FactoryMedikit": {
+    "name": "lellson/roughTweaks/misc/factories/FactoryMedikit",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/roughTweaks/misc/factories/FactoryMedikitEnchanted": {
+    "name": "lellson/roughTweaks/misc/factories/FactoryMedikitEnchanted",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/roughTweaks/misc/factories/FactoryPlaster": {
+    "name": "lellson/roughTweaks/misc/factories/FactoryPlaster",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  },
+  "lellson/roughTweaks/misc/factories/FactorySalve": {
+    "name": "lellson/roughTweaks/misc/factories/FactorySalve",
+    "interfaces": [
+      "net/minecraftforge/common/crafting/IConditionFactory"
+    ]
+  }
+}

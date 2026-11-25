@@ -1,0 +1,310 @@
+{
+  "bl4ckscor3/mod/particleculling/ParticleCulling": {
+    "name": "bl4ckscor3/mod/particleculling/ParticleCulling",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "bl4ckscor3/mod/particleculling/ParticleCulling",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "modid": {
+            "value": "particleculling"
+          },
+          "name": {
+            "value": "Particle Culling"
+          },
+          "version": {
+            "value": "v1.4.1"
+          }
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "bl4ckscor3/mod/particleculling/ParticleCulling",
+        "values": {
+          "modid": {
+            "value": "particleculling"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onLoadComplete(Lnet/minecraftforge/fml/common/event/FMLLoadCompleteEvent;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "bl4ckscor3/mod/particleculling/ParticleCulling$Configuration": {
+    "name": "bl4ckscor3/mod/particleculling/ParticleCulling$Configuration",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "bl4ckscor3/mod/particleculling/ParticleCulling$Configuration",
+        "values": {
+          "modid": {
+            "value": "particleculling"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "cullBehindBlocks",
+        "value": {
+          "values": [
+            "Set this to false if you do not want to cull particles that technically are in the player\u0027s view but are obstructed by blocks."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "cullBehindGlass",
+        "value": {
+          "values": [
+            "Set this to true if you don\u0027t want particles to be rendered behind glass and other transparent blocks. This does nothing if \"cullBehindBlocks\" is turned off."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "cullInSpectator",
+        "value": {
+          "values": [
+            "Set this to false to disable particle culling while being in spectator mode. This is useful to take screenshots without having particles removed."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "blockBuffer",
+        "value": {
+          "values": [
+            "The minimum amount of blocks behind which particles start to get culled. Only effective if \"cullBehindBlocks\" is turned on."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "blockBuffer",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "50"
+          },
+          "min": {
+            "type": "INT",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "cullingEnabled",
+        "value": {
+          "values": [
+            "Set this to false to disable all of particle culling\u0027s features."
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Comment;",
+        "target": "ignoredParticles",
+        "value": {
+          "values": [
+            "Add particle classes here that should be ignored by Particle Culling.",
+            "Example: To ignore Minecraft\u0027s breaking particles and any derivates, add \"net.minecraft.client.particle.ParticleBreaking\" to the list"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Ignore;",
+        "target": "ignoredParticleClasses"
+      }
+    ]
+  },
+  "bl4ckscor3/mod/particleculling/ParticleCullingLoadingPlugin": {
+    "name": "bl4ckscor3/mod/particleculling/ParticleCullingLoadingPlugin",
+    "interfaces": [
+      "net/minecraftforge/fml/relauncher/IFMLLoadingPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$MCVersion;",
+        "target": "bl4ckscor3/mod/particleculling/ParticleCullingLoadingPlugin",
+        "value": {
+          "value": "1.12.2"
+        }
+      }
+    ]
+  },
+  "bl4ckscor3/mod/particleculling/mixin/MixinParticle": {
+    "name": "bl4ckscor3/mod/particleculling/mixin/MixinParticle",
+    "interfaces": [
+      "bl4ckscor3/mod/particleculling/CullCheck"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "bl4ckscor3/mod/particleculling/mixin/MixinParticle",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/client/particle/Particle;"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/spongepowered/asm/mixin/Unique;",
+        "target": "culled"
+      }
+    ]
+  },
+  "bl4ckscor3/mod/particleculling/mixin/MixinParticleManager": {
+    "name": "bl4ckscor3/mod/particleculling/mixin/MixinParticleManager",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "bl4ckscor3/mod/particleculling/mixin/MixinParticleManager",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/client/particle/ParticleManager;"
+          ]
+        }
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lorg/spongepowered/asm/mixin/injection/At;",
+        "id": 4,
+        "values": {
+          "target": {
+            "value": "Lnet/minecraft/client/particle/Particle;renderParticle(Lnet/minecraft/client/renderer/BufferBuilder;Lnet/minecraft/entity/Entity;FFFFFF)V"
+          },
+          "value": {
+            "value": "INVOKE"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/injection/Redirect;",
+        "target": "renderParticles(Lnet/minecraft/client/particle/Particle;Lnet/minecraft/client/renderer/BufferBuilder;Lnet/minecraft/entity/Entity;FFFFFF)V",
+        "values": {
+          "at": {
+            "type": "ANNOTATION",
+            "value": "4"
+          },
+          "method": {
+            "values": [
+              "renderParticles"
+            ]
+          }
+        }
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lorg/spongepowered/asm/mixin/injection/At;",
+        "id": 5,
+        "values": {
+          "target": {
+            "value": "Lnet/minecraft/client/particle/Particle;renderParticle(Lnet/minecraft/client/renderer/BufferBuilder;Lnet/minecraft/entity/Entity;FFFFFF)V"
+          },
+          "value": {
+            "value": "INVOKE"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/injection/Redirect;",
+        "target": "renderLitParticles(Lnet/minecraft/client/particle/Particle;Lnet/minecraft/client/renderer/BufferBuilder;Lnet/minecraft/entity/Entity;FFFFFF)V",
+        "values": {
+          "at": {
+            "type": "ANNOTATION",
+            "value": "5"
+          },
+          "method": {
+            "values": [
+              "renderLitParticles"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "bl4ckscor3/mod/particleculling/mixin/MixinRenderGlobal": {
+    "name": "bl4ckscor3/mod/particleculling/mixin/MixinRenderGlobal",
+    "interfaces": [
+      "bl4ckscor3/mod/particleculling/CameraHolder"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "bl4ckscor3/mod/particleculling/mixin/MixinRenderGlobal",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/client/renderer/RenderGlobal;"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/spongepowered/asm/mixin/Unique;",
+        "target": "camera"
+      },
+      {
+        "type": "SUBTYPE",
+        "name": "Lorg/spongepowered/asm/mixin/injection/At;",
+        "id": 6,
+        "value": {
+          "value": "HEAD"
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/injection/Inject;",
+        "target": "setCamera(Lnet/minecraft/entity/Entity;DLnet/minecraft/client/renderer/culling/ICamera;IZLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+        "values": {
+          "at": {
+            "type": "ANNOTATION",
+            "values": [
+              "6"
+            ]
+          },
+          "method": {
+            "values": [
+              "setupTerrain"
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

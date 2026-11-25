@@ -1,0 +1,61 @@
+package c4.corpsecomplex;
+
+import c4.corpsecomplex.proxy.CommonProxy;
+import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+
+@Mod(
+   modid = "corpsecomplex",
+   name = "Corpse Complex",
+   version = "1.0.12.0",
+   dependencies = "required-after:forge@[14.21.1.2387,);after:toughasnails;after:wearablebackpacks;after:powerinventory;after:thut_wearables;after:baubles;after:rpginventory;after:cosmeticarmorreworked;after:galacticraftcore;after:thebetweenlands;after:tombstone;after:advinv",
+   guiFactory = "c4.corpsecomplex.client.gui.GuiFactory",
+   acceptedMinecraftVersions = "[1.12, 1.13)",
+   certificateFingerprint = "b33d2c8df492beff56d1bbbc92da49b8ab7345a1"
+)
+public class CorpseComplex {
+   public static final String MODID = "corpsecomplex";
+   public static final String MODNAME = "Corpse Complex";
+   public static final String MODVER = "1.0.12.0";
+   @SidedProxy(
+      clientSide = "c4.corpsecomplex.proxy.ClientProxy",
+      serverSide = "c4.corpsecomplex.proxy.CommonProxy"
+   )
+   public static CommonProxy proxy;
+   @Instance
+   public static CorpseComplex instance;
+   public static Logger logger;
+   public static boolean isEnderIOLoaded = false;
+
+   public CorpseComplex() {
+   }
+
+   @EventHandler
+   public void preInit(FMLPreInitializationEvent e) {
+      logger = e.getModLog();
+      proxy.preInit(e);
+   }
+
+   @EventHandler
+   public void init(FMLInitializationEvent e) {
+      proxy.init(e);
+      if (Loader.isModLoaded("enderio")) {
+         isEnderIOLoaded = true;
+      }
+
+   }
+
+   @EventHandler
+   public void onFingerPrintViolation(FMLFingerprintViolationEvent evt) {
+      FMLLog.log.log(Level.ERROR, "Invalid fingerprint detected! The file " + evt.getSource().getName() + " may have been tampered with. This version will NOT be supported by the author!");
+   }
+}

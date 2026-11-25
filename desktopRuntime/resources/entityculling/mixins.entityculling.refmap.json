@@ -1,0 +1,20 @@
+{
+  "mappings": {
+    "meldexun/entityculling/mixin/MixinGuiOverlayDebug": {
+      "call": "Lnet/minecraft/client/gui/GuiOverlayDebug;call()Ljava/util/List;"
+    },
+    "meldexun/entityculling/mixin/MixinRenderGlobal": {
+      "renderEntities": "Lnet/minecraft/client/renderer/RenderGlobal;func_180446_a(Lnet/minecraft/entity/Entity;Lnet/minecraft/client/renderer/culling/ICamera;F)V"
+    }
+  },
+  "data": {
+    "searge": {
+      "meldexun/entityculling/mixin/MixinGuiOverlayDebug": {
+        "call": "Lnet/minecraft/client/gui/GuiOverlayDebug;call()Ljava/util/List;"
+      },
+      "meldexun/entityculling/mixin/MixinRenderGlobal": {
+        "renderEntities": "Lnet/minecraft/client/renderer/RenderGlobal;func_180446_a(Lnet/minecraft/entity/Entity;Lnet/minecraft/client/renderer/culling/ICamera;F)V"
+      }
+    }
+  }
+}

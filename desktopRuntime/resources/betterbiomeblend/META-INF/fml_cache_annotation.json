@@ -1,0 +1,266 @@
+{
+  "fionathemortal/betterbiomeblend/BetterBiomeBlend": {
+    "name": "fionathemortal/betterbiomeblend/BetterBiomeBlend",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod;",
+        "target": "fionathemortal/betterbiomeblend/BetterBiomeBlend",
+        "values": {
+          "acceptedMinecraftVersions": {
+            "value": "[1.12.2]"
+          },
+          "clientSideOnly": {
+            "type": "BOOL",
+            "value": "true"
+          },
+          "modid": {
+            "value": "betterbiomeblend"
+          }
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventHandler;",
+        "target": "onPreInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V"
+      }
+    ]
+  },
+  "fionathemortal/betterbiomeblend/BetterBiomeBlendClient": {
+    "name": "fionathemortal/betterbiomeblend/BetterBiomeBlendClient",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/common/Mod$EventBusSubscriber;",
+        "target": "fionathemortal/betterbiomeblend/BetterBiomeBlendClient",
+        "value": {
+          "type": "ENUM",
+          "values": [
+            "Lnet/minecraftforge/fml/relauncher/Side;/CLIENT"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onChunkLoadedEvent(Lnet/minecraftforge/event/world/ChunkEvent$Load;)V"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onConfigChanged(Lnet/minecraftforge/fml/client/event/ConfigChangedEvent$OnConfigChangedEvent;)V"
+      }
+    ]
+  },
+  "fionathemortal/betterbiomeblend/BetterBiomeBlendConfig": {
+    "name": "fionathemortal/betterbiomeblend/BetterBiomeBlendConfig",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/common/config/Config;",
+        "target": "fionathemortal/betterbiomeblend/BetterBiomeBlendConfig",
+        "values": {
+          "modid": {
+            "value": "betterbiomeblend"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$Name;",
+        "target": "blendRadius",
+        "value": {
+          "value": "Blend Radius"
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RangeInt;",
+        "target": "blendRadius",
+        "values": {
+          "max": {
+            "type": "INT",
+            "value": "14"
+          },
+          "min": {
+            "type": "INT",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lnet/minecraftforge/common/config/Config$RequiresWorldRestart;",
+        "target": "blendRadius"
+      }
+    ]
+  },
+  "fionathemortal/betterbiomeblend/MissingMixinFrameworkHandler": {
+    "name": "fionathemortal/betterbiomeblend/MissingMixinFrameworkHandler",
+    "annotations": [
+      {
+        "type": "METHOD",
+        "name": "Lnet/minecraftforge/fml/common/eventhandler/SubscribeEvent;",
+        "target": "onGuiOpen(Lnet/minecraftforge/client/event/GuiOpenEvent;)V"
+      }
+    ]
+  },
+  "fionathemortal/betterbiomeblend/OptifineProxy$1": {
+    "name": "fionathemortal/betterbiomeblend/OptifineProxy$1",
+    "interfaces": [
+      "net/minecraft/world/biome/BiomeColorHelper$ColorResolver"
+    ]
+  },
+  "fionathemortal/betterbiomeblend/core/CoreMod": {
+    "name": "fionathemortal/betterbiomeblend/core/CoreMod",
+    "interfaces": [
+      "net/minecraftforge/fml/relauncher/IFMLLoadingPlugin"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$MCVersion;",
+        "target": "fionathemortal/betterbiomeblend/core/CoreMod",
+        "value": {
+          "value": "1.12.2"
+        }
+      },
+      {
+        "type": "CLASS",
+        "name": "Lnet/minecraftforge/fml/relauncher/IFMLLoadingPlugin$Name;",
+        "target": "fionathemortal/betterbiomeblend/core/CoreMod",
+        "value": {
+          "value": "Better Biome Blend"
+        }
+      }
+    ]
+  },
+  "fionathemortal/betterbiomeblend/core/CoreModMixinInterface": {
+    "name": "fionathemortal/betterbiomeblend/core/CoreModMixinInterface",
+    "interfaces": [
+      "net/minecraftforge/fml/relauncher/IFMLCallHook"
+    ]
+  },
+  "fionathemortal/betterbiomeblend/mixin/AccessorChunkCache": {
+    "name": "fionathemortal/betterbiomeblend/mixin/AccessorChunkCache",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "fionathemortal/betterbiomeblend/mixin/AccessorChunkCache",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/world/ChunkCache;"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/gen/Accessor;",
+        "target": "getWorld()Lnet/minecraft/world/World;"
+      }
+    ]
+  },
+  "fionathemortal/betterbiomeblend/mixin/MixinBiomeColorHelper": {
+    "name": "fionathemortal/betterbiomeblend/mixin/MixinBiomeColorHelper",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "fionathemortal/betterbiomeblend/mixin/MixinBiomeColorHelper",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/world/biome/BiomeColorHelper;"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/Overwrite;",
+        "target": "func_180285_a(Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/biome/BiomeColorHelper$ColorResolver;)I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/Overwrite;",
+        "target": "func_180286_a(Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/util/math/BlockPos;)I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/Overwrite;",
+        "target": "func_180287_b(Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/util/math/BlockPos;)I"
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/Overwrite;",
+        "target": "func_180288_c(Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/util/math/BlockPos;)I"
+      }
+    ]
+  },
+  "fionathemortal/betterbiomeblend/mixin/MixinCustomColors": {
+    "name": "fionathemortal/betterbiomeblend/mixin/MixinCustomColors",
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "fionathemortal/betterbiomeblend/mixin/MixinCustomColors",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/optifine/CustomColors;"
+          ]
+        }
+      },
+      {
+        "type": "METHOD",
+        "name": "Lorg/spongepowered/asm/mixin/Overwrite;",
+        "target": "getSmoothColorMultiplier(Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/util/math/BlockPos;Lnet/optifine/CustomColors$IColorizer;Lnet/optifine/BlockPosM;)I"
+      }
+    ]
+  },
+  "fionathemortal/betterbiomeblend/mixin/MixinWorldClient": {
+    "name": "fionathemortal/betterbiomeblend/mixin/MixinWorldClient",
+    "interfaces": [
+      "fionathemortal/betterbiomeblend/ColorChunkCacheProvider"
+    ],
+    "annotations": [
+      {
+        "type": "CLASS",
+        "name": "Lorg/spongepowered/asm/mixin/Mixin;",
+        "target": "fionathemortal/betterbiomeblend/mixin/MixinWorldClient",
+        "value": {
+          "type": "CLASS",
+          "values": [
+            "Lnet/minecraft/client/multiplayer/WorldClient;"
+          ]
+        }
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/spongepowered/asm/mixin/Unique;",
+        "target": "betterBiomeBlend$threadLocalGrassChunk"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/spongepowered/asm/mixin/Unique;",
+        "target": "betterBiomeBlend$threadLocalWaterChunk"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/spongepowered/asm/mixin/Unique;",
+        "target": "betterBiomeBlend$threadLocalFoliageChunk"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/spongepowered/asm/mixin/Unique;",
+        "target": "betterBiomeBlend$threadLocalGenericChunk"
+      },
+      {
+        "type": "FIELD",
+        "name": "Lorg/spongepowered/asm/mixin/Unique;",
+        "target": "betterBiomeBlend$colorChunkCache"
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+[
+{
+  "modid": "aquaculture",
+  "name": "Aquaculture",
+  "description": "Welcome to Aquaculture! An expansion of Minecraft's fishing system.",
+  "version": "1.12.2-1.6.8",
+  "mcversion": "1.12.2",
+  "url": "http://minecraft.curseforge.com/mc-mods/60028-aquaculture",
+  "updateUrl": "",
+  "authorList": ["Team Metallurgy"],
+  "credits": "Shadowclaimer, Glassmaker, lclc98, Freyja, and Rebelkeithy",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
