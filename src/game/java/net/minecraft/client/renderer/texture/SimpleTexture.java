@@ -34,6 +34,8 @@ import net.minecraft.util.ResourceLocation;
 public class SimpleTexture extends AbstractTexture {
 	private static final Logger logger = LogManager.getLogger();
 	protected final ResourceLocation textureLocation;
+	private int width = 1;
+	private int height = 1;
 
 	public SimpleTexture(ResourceLocation textureResourceLocation) {
 		this.textureLocation = textureResourceLocation;
@@ -47,6 +49,8 @@ public class SimpleTexture extends AbstractTexture {
 			IResource iresource = parIResourceManager.getResource(this.textureLocation);
 			inputstream = iresource.getInputStream();
 			ImageData bufferedimage = TextureUtil.readBufferedImage(inputstream);
+			this.width = bufferedimage.width;
+			this.height = bufferedimage.height;
 			boolean flag = false;
 			boolean flag1 = false;
 			if (iresource.hasMetadata()) {
@@ -71,5 +75,12 @@ public class SimpleTexture extends AbstractTexture {
 
 		}
 
+	}
+	public int getWidth() {
+		return this.width;
+	}
+
+	public int getHeight() {
+		return this.height;
 	}
 }
