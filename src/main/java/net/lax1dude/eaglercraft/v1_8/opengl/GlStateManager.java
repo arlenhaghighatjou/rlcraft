@@ -250,6 +250,10 @@ public class GlStateManager {
 		stateLighting = true;
 	}
 
+	public static boolean isLightingEnabled() {
+		return stateLighting;
+	}
+
 	public static void disableLighting() {
 		stateLighting = false;
 	}

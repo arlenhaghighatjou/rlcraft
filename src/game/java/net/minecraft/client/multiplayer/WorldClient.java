@@ -51,7 +51,7 @@ public class WorldClient extends World
 {
     private final NetHandlerPlayClient connection;
     private ChunkProviderClient clientChunkProvider;
-    private final Set<Entity> entityList = Sets.<Entity>newHashSet();
+    public final Set<Entity> entityList = Sets.<Entity>newHashSet();
     private final Set<Entity> entitySpawnQueue = Sets.<Entity>newHashSet();
     private final Minecraft mc = Minecraft.getMinecraft();
     private final Set<ChunkPos> previousActiveChunkSet = Sets.<ChunkPos>newHashSet();
