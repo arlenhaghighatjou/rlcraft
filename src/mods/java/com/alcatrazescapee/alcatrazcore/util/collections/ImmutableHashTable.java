@@ -114,11 +114,10 @@ public class ImmutableHashTable<R, C, V> implements Table<R, C, V> {
    }
 
    public ImmutableSet<Cell<R, C, V>> cellSet() {
-      return (ImmutableSet)this.TABLE.entrySet().stream().map((r) -> {
-         return (Set)((Map)r.getValue()).entrySet().stream().map((c) -> {
-            return Tables.immutableCell(r.getKey(), c.getKey(), c.getValue());
-         }).collect(Collectors.toSet());
-      }).flatMap(Collection::stream).collect(ImmutableSet.toImmutableSet());
+      ImmutableSet.Builder<Cell<R, C, V>> cells = ImmutableSet.builder();
+      this.TABLE.forEach((row, columns) -> columns.forEach((column, value) ->
+         cells.add(Tables.immutableCell(row, column, value))));
+      return cells.build();
    }
 
    public ImmutableSet<R> rowKeySet() {
@@ -126,15 +125,15 @@ public class ImmutableHashTable<R, C, V> implements Table<R, C, V> {
    }
 
    public ImmutableSet<C> columnKeySet() {
-      return ImmutableSet.copyOf((Collection)this.TABLE.values().stream().flatMap((x) -> {
-         return x.keySet().stream();
-      }).collect(ImmutableSet.toImmutableSet()));
+      ImmutableSet.Builder<C> columns = ImmutableSet.builder();
+      this.TABLE.values().forEach(row -> columns.addAll(row.keySet()));
+      return columns.build();
    }
 
    public ImmutableSet<V> values() {
-      return (ImmutableSet)this.TABLE.values().stream().flatMap((x) -> {
-         return x.values().stream();
-      }).collect(ImmutableSet.toImmutableSet());
+      ImmutableSet.Builder<V> values = ImmutableSet.builder();
+      this.TABLE.values().forEach(row -> values.addAll(row.values()));
+      return values.build();
    }
 
    public ImmutableMap<R, Map<C, V>> rowMap() {

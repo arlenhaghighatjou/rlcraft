@@ -148,11 +148,9 @@ public class EnumTable<R extends Enum<R>, C extends Enum<C>, V> implements Table
    }
 
    public Set<Cell<R, C, V>> cellSet() {
-      return (Set)this.table.entrySet().stream().map((r) -> {
-         return (Set)((EnumMap)r.getValue()).entrySet().stream().map((c) -> {
-            return new EnumTable.EnumCell(r.getKey(), c.getKey(), c.getValue());
-         }).collect(Collectors.toSet());
-      }).flatMap(Collection::stream).collect(Collectors.toSet());
+      return this.table.entrySet().stream().flatMap(row -> row.getValue().entrySet().stream()
+         .map(column -> new EnumCell<>(row.getKey(), column.getKey(), column.getValue())))
+         .collect(Collectors.toSet());
    }
 
    public Set<R> rowKeySet() {

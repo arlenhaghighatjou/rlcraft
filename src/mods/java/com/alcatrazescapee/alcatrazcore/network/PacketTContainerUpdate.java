@@ -1,9 +1,9 @@
 package com.alcatrazescapee.alcatrazcore.network;
 
 import com.alcatrazescapee.alcatrazcore.AlcatrazCore;
-import gnu.trove.map.TIntObjectMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
-import gnu.trove.procedure.TIntObjectProcedure;
+import com.carrotsearch.hppc.IntObjectHashMap;
+import com.carrotsearch.hppc.IntObjectMap;
+import com.carrotsearch.hppc.cursors.IntObjectCursor;
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 @ParametersAreNonnullByDefault
 public abstract class PacketTContainerUpdate<T, D> implements IMessage {
    protected final Capability<T> capability;
-   final TIntObjectMap<D> capabilityData = new TIntObjectHashMap();
+   final IntObjectMap<D> capabilityData = new IntObjectHashMap<>();
    EnumFacing targetFace;
    int windowID;
 
@@ -66,6 +66,7 @@ public abstract class PacketTContainerUpdate<T, D> implements IMessage {
       }
 
       int numEntries = buf.readInt();
+      this.capabilityData.clear();
 
       for(int i = 0; i < numEntries; ++i) {
          int index = buf.readInt();
@@ -84,11 +85,10 @@ public abstract class PacketTContainerUpdate<T, D> implements IMessage {
       }
 
       buf.writeInt(this.capabilityData.size());
-      this.capabilityData.forEachEntry((index, data) -> {
-         buf.writeInt(index);
-         this.serializeCapability(buf, data);
-         return true;
-      });
+      for (IntObjectCursor<D> entry : this.capabilityData) {
+         buf.writeInt(entry.key);
+         this.serializeCapability(buf, entry.value);
+      }
    }
 
    public final boolean hasData() {
@@ -123,15 +123,13 @@ public abstract class PacketTContainerUpdate<T, D> implements IMessage {
                   container = player.openContainer;
                }
 
-               message.capabilityData.forEachEntry((index, data) -> {
-                  ItemStack stack = container.getSlot(index).getStack();
+               for (IntObjectCursor<D> entry : message.capabilityData) {
+                  ItemStack stack = container.getSlot(entry.key).getStack();
                   T cap = (T)stack.getCapability(message.capability, message.targetFace);
                   if (cap != null) {
-                     this.applyCapability(stack, cap, data);
+                     this.applyCapability(stack, cap, entry.value);
                   }
-
-                  return true;
-               });
+               }
             });
             return null;
          }

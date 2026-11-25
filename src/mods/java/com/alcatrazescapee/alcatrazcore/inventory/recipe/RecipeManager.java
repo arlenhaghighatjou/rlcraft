@@ -26,16 +26,12 @@ public class RecipeManager<T extends IRecipeCore> implements IRecipeManager<T> {
    @Nullable
    @Deprecated
    public T get(Object... inputs) {
-      return (T)(this.recipes.stream().filter((x) -> {
-         return (T)x.test(inputs);
-      }).findFirst().orElse((Object)null));
+      return this.recipes.stream().filter(recipe -> recipe.test(inputs)).findFirst().orElse(null);
    }
 
    @Nullable
    public T get(Object input) {
-      return (T)(this.recipes.stream().filter((x) -> {
-         return (T)x.test(input);
-      }).findFirst().orElse((Object)null));
+      return this.recipes.stream().filter(recipe -> recipe.test(input)).findFirst().orElse(null);
    }
 
    @Nonnull

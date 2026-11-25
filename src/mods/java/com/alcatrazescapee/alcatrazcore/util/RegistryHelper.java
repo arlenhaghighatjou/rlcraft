@@ -5,9 +5,11 @@ import com.alcatrazescapee.alcatrazcore.client.IModelProvider;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -104,8 +106,8 @@ public final class RegistryHelper {
       return item;
    }
 
-   public <T extends TileEntity> void registerTile(Class<T> clazz, String name) {
-      TileEntity.register(this.modID + ":" + name.toLowerCase(), clazz);
+   public <T extends TileEntity> void registerTile(Class<T> clazz, String name, Supplier<T> factory) {
+      TileEntity.register(this.modID + ":" + name.toLowerCase(Locale.ROOT), clazz, factory);
    }
 
    public <T extends Fluid> T registerFluid(T fluid, String name) {

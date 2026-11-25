@@ -69,11 +69,10 @@ public class ImmutableEnumTable<R extends Enum<R>, C extends Enum<C>, V> extends
    }
 
    public ImmutableSet<Cell<R, C, V>> cellSet() {
-      return (ImmutableSet)this.table.entrySet().stream().map((r) -> {
-         return (Set)((EnumMap)r.getValue()).entrySet().stream().map((c) -> {
-            return Tables.immutableCell(r.getKey(), c.getKey(), c.getValue());
-         }).collect(Collectors.toSet());
-      }).flatMap(Collection::stream).collect(ImmutableSet.toImmutableSet());
+      ImmutableSet.Builder<Cell<R, C, V>> cells = ImmutableSet.builder();
+      this.table.forEach((row, columns) -> columns.forEach((column, value) ->
+         cells.add(Tables.immutableCell(row, column, value))));
+      return cells.build();
    }
 
    public ImmutableSet<R> rowKeySet() {
@@ -81,15 +80,15 @@ public class ImmutableEnumTable<R extends Enum<R>, C extends Enum<C>, V> extends
    }
 
    public ImmutableSet<C> columnKeySet() {
-      return ImmutableSet.copyOf((Collection)this.table.values().stream().flatMap((x) -> {
-         return x.keySet().stream();
-      }).collect(ImmutableSet.toImmutableSet()));
+      ImmutableSet.Builder<C> columns = ImmutableSet.builder();
+      this.table.values().forEach(row -> columns.addAll(row.keySet()));
+      return columns.build();
    }
 
    public ImmutableSet<V> values() {
-      return (ImmutableSet)this.table.values().stream().flatMap((x) -> {
-         return x.values().stream();
-      }).collect(ImmutableSet.toImmutableSet());
+      ImmutableSet.Builder<V> values = ImmutableSet.builder();
+      this.table.values().forEach(row -> values.addAll(row.values()));
+      return values.build();
    }
 
    public ImmutableMap<R, Map<C, V>> rowMap() {
@@ -98,10 +97,7 @@ public class ImmutableEnumTable<R extends Enum<R>, C extends Enum<C>, V> extends
 
    public ImmutableMap<C, Map<R, V>> columnMap() {
       com.google.common.collect.ImmutableMap.Builder<C, Map<R, V>> b = ImmutableMap.builder();
-      UnmodifiableIterator var2 = this.columnKeySet().iterator();
-
-      while(var2.hasNext()) {
-         C c = var2.next();
+      for (C c : this.columnKeySet()) {
          b.put(c, this.column(c));
       }
 
