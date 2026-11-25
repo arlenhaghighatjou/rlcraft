@@ -465,6 +465,7 @@ public class Minecraft implements IThreadListener
         this.createDisplay();
         this.registerMetadataSerializers();
         EaglerFolderResourcePack.deleteOldResourcePacks(EaglerFolderResourcePack.SERVER_RESOURCE_PACKS, 604800000L);
+        com.arlenh7.eaglercraft.forge.PackDefaults.installResourcePacks(this.gameSettings);
         this.mcResourcePackRepository = new ResourcePackRepository(this.mcDefaultResourcePack, this.metadataSerializer_, this.gameSettings);
         this.mcResourceManager = new SimpleReloadableResourceManager(this.metadataSerializer_);
         this.mcLanguageManager = new LanguageManager(this.metadataSerializer_, this.gameSettings.language);
