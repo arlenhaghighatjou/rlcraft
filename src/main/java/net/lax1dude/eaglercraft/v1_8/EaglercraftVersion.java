@@ -72,6 +72,6 @@ public class EaglercraftVersion {
 
 	public static final boolean forceDemoMode = false;
 
-	public static final String localStorageNamespace = "_eaglercraftX";
+	public static final String localStorageNamespace = "_eaglercraftforge1.12";
 
 }

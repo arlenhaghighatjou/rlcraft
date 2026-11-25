@@ -575,20 +575,7 @@ public class GuiTextField extends Gui
             startX = this.x + this.width;
         }
 
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer bufferbuilder = tessellator.getBuffer();
-        GlStateManager.color(0.0F, 0.0F, 255.0F, 255.0F);
-        GlStateManager.disableTexture2D();
-        GlStateManager.enableColorLogic();
-        GlStateManager.colorLogicOp(GL_OR_REVERSE);
-        bufferbuilder.begin(7, DefaultVertexFormats.POSITION);
-        bufferbuilder.pos((double)startX, (double)endY, 0.0D).endVertex();
-        bufferbuilder.pos((double)endX, (double)endY, 0.0D).endVertex();
-        bufferbuilder.pos((double)endX, (double)startY, 0.0D).endVertex();
-        bufferbuilder.pos((double)startX, (double)startY, 0.0D).endVertex();
-        tessellator.draw();
-        GlStateManager.disableColorLogic();
-        GlStateManager.enableTexture2D();
+        Gui.drawRect(startX, startY, endX, endY, 0x806666FF);
     }
 
     public void setMaxStringLength(int length)
