@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.lax1dude.eaglercraft.v1_8.EagUtils;
@@ -79,6 +82,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
 	private static final byte[] sha1def = new byte[] { -107, 77, 108, 49, 11, -100, -8, -119, -1, -100, -85, -55, 18,
 			-69, -107, 113, -93, -101, -79, 32 };
 	private String splashText;
+	private String forgeModCount;
 	private GuiButton buttonResetDemo;
 	private int panoramaTimer;
 	/**+
@@ -256,6 +260,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
 	 * window resizes, the buttonList is cleared beforehand.
 	 */
 	public void initGui() {
+		List<String> brandings = FMLCommonHandler.instance().getBrandings(false);
+		this.forgeModCount = brandings.get(brandings.size() - 1);
 		if (viewportTexture == null) {
 			viewportTexture = new MainMenuSkyboxTexture(256, 256);
 			backgroundTexture = this.mc.getTextureManager().getDynamicTextureLocation("background", viewportTexture);
@@ -666,9 +672,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
 		if (this.mc.isDemo()) {
 			s += " Demo";
 		}
-		this.drawString(this.fontRenderer, s, 2, this.height - 20, -1);
+		this.drawString(this.fontRenderer, s, 2, this.height - 30, -1);
 		s = EaglercraftVersion.mainMenuStringB;
-		this.drawString(this.fontRenderer, s, 2, this.height - 10, -1);
+		this.drawString(this.fontRenderer, s, 2, this.height - 20, -1);
+		this.drawString(this.fontRenderer, this.forgeModCount, 2, this.height - 10, -1);
 
 		String s1 = EaglercraftVersion.mainMenuStringC;
 		this.drawString(this.fontRenderer, s1, this.width - this.fontRenderer.getStringWidth(s1) - 2,
