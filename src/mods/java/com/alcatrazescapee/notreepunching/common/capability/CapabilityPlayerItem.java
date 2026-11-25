@@ -1,7 +1,5 @@
 package com.alcatrazescapee.notreepunching.common.capability;
 
-import com.alcatrazescapee.alcatrazcore.util.CoreHelpers;
-import java.util.concurrent.Callable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.item.ItemStack;
@@ -10,20 +8,19 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 
 public final class CapabilityPlayerItem {
    public static final ResourceLocation KEY = new ResourceLocation("notreepunching", "player_item");
-   @CapabilityInject(IPlayerItem.class)
-   public static final Capability<IPlayerItem> CAPABILITY = (Capability)CoreHelpers.getNull();
+   public static Capability<IPlayerItem> CAPABILITY;
 
    public CapabilityPlayerItem() {
    }
 
    public static void preInit() {
+      CapabilityManager.INSTANCE.onRegistered(IPlayerItem.class, capability -> CAPABILITY = capability);
       CapabilityManager.INSTANCE.register(IPlayerItem.class, new CapabilityPlayerItem.Storage(), CapabilityPlayerItem.Instance::new);
    }
 

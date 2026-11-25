@@ -1,7 +1,6 @@
 package com.alcatrazescapee.notreepunching.common.items;
 
 import com.alcatrazescapee.alcatrazcore.item.ItemCore;
-import com.alcatrazescapee.alcatrazcore.util.CoreHelpers;
 import com.alcatrazescapee.alcatrazcore.util.OreDictionaryHelper;
 import com.alcatrazescapee.alcatrazcore.util.RegistryHelper;
 import com.alcatrazescapee.alcatrazcore.util.collections.ImmutableEnumTable;
@@ -17,19 +16,17 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.oredict.OreDictionary;
 
-@ObjectHolder("notreepunching")
 public final class ModItems {
-   public static final Item FLINT_SHARD = (Item)CoreHelpers.getNull();
-   public static final Item GRASS_FIBER = (Item)CoreHelpers.getNull();
-   public static final Item GRASS_STRING = (Item)CoreHelpers.getNull();
-   public static final Item CLAY_BRICK = (Item)CoreHelpers.getNull();
-   public static final Item CERAMIC_SMALL_VESSEL = (Item)CoreHelpers.getNull();
-   public static final Item CERAMIC_BUCKET = (Item)CoreHelpers.getNull();
-   public static final Item CLAY_TOOL = (Item)CoreHelpers.getNull();
-   public static final Item FIRE_STARTER = (Item)CoreHelpers.getNull();
+   public static Item FLINT_SHARD;
+   public static Item GRASS_FIBER;
+   public static Item GRASS_STRING;
+   public static Item CLAY_BRICK;
+   public static Item CERAMIC_SMALL_VESSEL;
+   public static Item CERAMIC_BUCKET;
+   public static Item CLAY_TOOL;
+   public static Item FIRE_STARTER;
    private static ImmutableMap<ToolType, Item> FLINT_TOOLS;
    private static ImmutableEnumTable<ToolType, Metal, Item> METAL_TOOLS;
 
@@ -46,20 +43,18 @@ public final class ModItems {
 
    public static void preInit() {
       RegistryHelper r = RegistryHelper.get("notreepunching");
-      r.registerItem(new ItemCore(), "grass_fiber", ModTabs.TAB_ITEMS);
-      r.registerItem(new ItemClayTool(), "clay_tool", ModTabs.TAB_TOOLS);
-      r.registerItem(new ItemFireStarter(), "fire_starter", ModTabs.TAB_TOOLS);
-      r.registerItem(new ItemSmallVessel(), "ceramic_small_vessel", ModTabs.TAB_ITEMS);
-      r.registerItem(new ItemCeramicBucket(), "ceramic_bucket", ModTabs.TAB_ITEMS);
-      Item item;
-      r.registerItem(item = new ItemCore(), "grass_string", ModTabs.TAB_ITEMS);
-      OreDictionaryHelper.register(item, new Object[]{"kindling"});
-      OreDictionaryHelper.register(item, new Object[]{"string"});
-      ItemCore var12;
-      r.registerItem(var12 = new ItemCore(), "flint_shard", ModTabs.TAB_ITEMS);
-      OreDictionaryHelper.register(var12, new Object[]{"shard", "flint"});
-      r.registerItem(var12 = new ItemCore(), "clay_brick", ModTabs.TAB_ITEMS);
-      OreDictionaryHelper.register(var12, new Object[]{"brick", "clay"});
+      GRASS_FIBER = r.registerItem(new ItemCore(), "grass_fiber", ModTabs.TAB_ITEMS);
+      CLAY_TOOL = r.registerItem(new ItemClayTool(), "clay_tool", ModTabs.TAB_TOOLS);
+      FIRE_STARTER = r.registerItem(new ItemFireStarter(), "fire_starter", ModTabs.TAB_TOOLS);
+      CERAMIC_SMALL_VESSEL = r.registerItem(new ItemSmallVessel(), "ceramic_small_vessel", ModTabs.TAB_ITEMS);
+      CERAMIC_BUCKET = r.registerItem(new ItemCeramicBucket(), "ceramic_bucket", ModTabs.TAB_ITEMS);
+      GRASS_STRING = r.registerItem(new ItemCore(), "grass_string", ModTabs.TAB_ITEMS);
+      OreDictionaryHelper.register(GRASS_STRING, "kindling");
+      OreDictionaryHelper.register(GRASS_STRING, "string");
+      FLINT_SHARD = r.registerItem(new ItemCore(), "flint_shard", ModTabs.TAB_ITEMS);
+      OreDictionaryHelper.register(FLINT_SHARD, "shard", "flint");
+      CLAY_BRICK = r.registerItem(new ItemCore(), "clay_brick", ModTabs.TAB_ITEMS);
+      OreDictionaryHelper.register(CLAY_BRICK, "brick", "clay");
 
       for(Stone type : Stone.values()) {
          if (type.isEnabled()) {

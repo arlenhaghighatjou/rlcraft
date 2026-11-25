@@ -1,6 +1,5 @@
 package com.alcatrazescapee.notreepunching.common.blocks;
 
-import com.alcatrazescapee.alcatrazcore.util.CoreHelpers;
 import com.alcatrazescapee.alcatrazcore.util.OreDictionaryHelper;
 import com.alcatrazescapee.alcatrazcore.util.RegistryHelper;
 import com.alcatrazescapee.notreepunching.client.ModTabs;
@@ -11,12 +10,10 @@ import com.alcatrazescapee.notreepunching.util.types.Stone;
 import java.util.function.Function;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
-@ObjectHolder("notreepunching")
 public final class ModBlocks {
-   public static final Block CERAMIC_LARGE_VESSEL = (Block)CoreHelpers.getNull();
-   public static final Block FIRE_PIT = (Block)CoreHelpers.getNull();
+   public static Block CERAMIC_LARGE_VESSEL;
+   public static Block FIRE_PIT;
 
    public ModBlocks() {
    }
@@ -42,9 +39,9 @@ public final class ModBlocks {
          }
       }
 
-      r.registerBlock(new BlockLargeVessel(), "ceramic_large_vessel", ModTabs.TAB_ITEMS);
-      r.registerBlock(new BlockFirePit(), (Function)null, "fire_pit");
-      r.registerTile(TileLargeVessel.class, "ceramic_large_vessel");
-      r.registerTile(TileFirePit.class, "fire_pit");
+      CERAMIC_LARGE_VESSEL = r.registerBlock(new BlockLargeVessel(), "ceramic_large_vessel", ModTabs.TAB_ITEMS);
+      FIRE_PIT = r.registerBlock(new BlockFirePit(), null, "fire_pit");
+      r.registerTile(TileLargeVessel.class, "ceramic_large_vessel", TileLargeVessel::new);
+      r.registerTile(TileFirePit.class, "fire_pit", TileFirePit::new);
    }
 }

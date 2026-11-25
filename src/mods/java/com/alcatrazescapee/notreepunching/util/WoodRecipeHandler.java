@@ -81,9 +81,9 @@ public final class WoodRecipeHandler {
    @Nullable
    static ItemStack getPlankForLog(World world, BlockPos pos, IBlockState state) {
       ItemStack search = state.getBlock().getPickBlock(state, (RayTraceResult)null, world, pos, (EntityPlayer)null);
-      return (ItemStack)WOOD_TYPES.entrySet().stream().filter((x) -> {
-         return CoreHelpers.doStacksMatch((ItemStack)x.getKey(), search);
-      }).map(Entry::getValue).findFirst().orElse((Object)null);
+      return WOOD_TYPES.entrySet().stream()
+         .filter(entry -> CoreHelpers.doStacksMatch(entry.getKey(), search))
+         .map(Entry::getValue).findFirst().orElse(null);
    }
 
    private static void findMatchingRecipes(Collection<IRecipe> recipes, IForgeRegistryModifiable<IRecipe> registry) {
@@ -145,9 +145,7 @@ public final class WoodRecipeHandler {
    @Nullable
    private static IRecipe tryFindRecipeSafely(Collection<IRecipe> recipes, InventoryCrafting tempCrafting) {
       try {
-         return (IRecipe)recipes.stream().filter((x) -> {
-            return x.matches(tempCrafting, (World)null);
-         }).findFirst().orElse((Object)null);
+         return recipes.stream().filter(recipe -> recipe.matches(tempCrafting, null)).findFirst().orElse(null);
       } catch (Exception var3) {
          return null;
       }

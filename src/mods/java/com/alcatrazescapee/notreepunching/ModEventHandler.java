@@ -30,20 +30,33 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBloc
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@EventBusSubscriber(
-   modid = "notreepunching"
-)
 public final class ModEventHandler {
    public ModEventHandler() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(BreakEvent.class, ModEventHandler::breakEvent);
+      bus.register(BreakSpeed.class, ModEventHandler::breakSpeed);
+      bus.register(HarvestDropsEvent.class, EventPriority.LOWEST, ModEventHandler::onHarvestBlock);
+      bus.register(RightClickBlock.class, ModEventHandler::playerInteractEvent);
+      bus.registerGeneric(Register.class, IRecipe.class, EventPriority.LOWEST, false, ModEventHandler::registerRecipes);
+      bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, ModEventHandler::attachEntityCapabilities);
+      bus.registerGeneric(Register.class, Item.class, ModEventHandler::registerItems);
+      bus.registerGeneric(Register.class, Block.class, ModEventHandler::registerBlocks);
+      bus.registerGeneric(Register.class, SoundEvent.class, ModEventHandler::registerSounds);
+      bus.register(HarvestCheck.class, ModEventHandler::harvestBlockInitialCheck);
+      bus.register(OnConfigChangedEvent.class, ModEventHandler::onConfigChangedEvent);
+      if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+         bus.register(ModelRegistryEvent.class, ModEventHandler::registerModels);
+      }
+   }
+
    public static void breakEvent(BreakEvent event) {
       EntityPlayer player = event.getPlayer();
       if (player != null) {
@@ -55,7 +68,6 @@ public final class ModEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void breakSpeed(BreakSpeed event) {
       EntityPlayer player = event.getEntityPlayer();
       if (player != null && !(player instanceof FakePlayer) && !player.isCreative() && ModConfig.GENERAL.enableBreakingChanges) {
@@ -69,9 +81,6 @@ public final class ModEventHandler {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
    public static void onHarvestBlock(HarvestDropsEvent event) {
       EntityPlayer player = event.getHarvester();
       if (!event.getWorld().isRemote && player != null && !(player instanceof FakePlayer) && !player.isCreative() && ModConfig.GENERAL.enableBreakingChanges) {
@@ -94,7 +103,6 @@ public final class ModEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void playerInteractEvent(RightClickBlock event) {
       ItemStack stack = event.getItemStack();
       EntityPlayer player = event.getEntityPlayer();
@@ -114,15 +122,11 @@ public final class ModEventHandler {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
    public static void registerRecipes(Register<IRecipe> event) {
       ModRecipes.registerRecipes(event);
       WoodRecipeHandler.registerRecipes(event);
    }
 
-   @SubscribeEvent
    public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
       if (event.getObject() instanceof EntityPlayer) {
          event.addCapability(CapabilityPlayerItem.KEY, new CapabilityPlayerItem.Instance());
@@ -130,30 +134,25 @@ public final class ModEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void registerItems(Register<Item> event) {
       RegistryHelper.get("notreepunching").initItems(event);
    }
 
-   @SubscribeEvent
    public static void registerBlocks(Register<Block> event) {
       RegistryHelper.get("notreepunching").initBlocks(event);
    }
 
-   @SubscribeEvent
    public static void registerSounds(Register<SoundEvent> event) {
       RegistryHelper.get("notreepunching").initSounds(event);
    }
 
-   @SubscribeEvent
-   public void harvestBlockInitialCheck(HarvestCheck event) {
+   public static void harvestBlockInitialCheck(HarvestCheck event) {
       if (HarvestBlockHandler.isWhitelisted(event.getTargetBlock())) {
          event.setCanHarvest(true);
       }
 
    }
 
-   @SubscribeEvent
    public static void onConfigChangedEvent(OnConfigChangedEvent event) {
       if (event.getModID().equals("notreepunching")) {
          ConfigManager.sync("notreepunching", Type.INSTANCE);
@@ -162,7 +161,6 @@ public final class ModEventHandler {
 
    }
 
-   @SubscribeEvent
    @SideOnly(Side.CLIENT)
    public static void registerModels(ModelRegistryEvent event) {
       RegistryHelper.get("notreepunching").initModels(event);

@@ -10,6 +10,7 @@ import com.alcatrazescapee.notreepunching.util.types.Stone;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -27,7 +28,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -169,18 +169,9 @@ public final class HarvestBlockHandler {
    }
 
    private static Predicate<IBlockState> createPredicate(String entry) throws IllegalArgumentException {
-      if (entry.length() >= 9 && entry.substring(0, 9).equals("material:")) {
-         try {
-            Object obj = ObfuscationReflectionHelper.getPrivateValue(Material.class, (Object)null, new String[]{entry.substring(9).toUpperCase()});
-            if (obj instanceof Material) {
-               Material material = (Material)obj;
-               return (state) -> {
-                  return state.getMaterial() == material;
-               };
-            }
-         } catch (Exception var5) {
-            throw new IllegalArgumentException("Material is incorrect somehow", var5);
-         }
+      if (entry.startsWith("material:")) {
+         Material material = getMaterial(entry.substring(9));
+         return state -> state.getMaterial() == material;
       }
 
       int colon = entry.indexOf(58);
@@ -204,6 +195,47 @@ public final class HarvestBlockHandler {
                return state.getBlock() == block && state.getBlock().getMetaFromState(state) == meta;
             };
          }
+      }
+   }
+   private static Material getMaterial(String name) {
+      switch (name.toUpperCase(Locale.ROOT)) {
+      case "AIR": return Material.AIR;
+      case "GRASS": return Material.GRASS;
+      case "GROUND": return Material.GROUND;
+      case "WOOD": return Material.WOOD;
+      case "ROCK": return Material.ROCK;
+      case "IRON": return Material.IRON;
+      case "ANVIL": return Material.ANVIL;
+      case "WATER": return Material.WATER;
+      case "LAVA": return Material.LAVA;
+      case "LEAVES": return Material.LEAVES;
+      case "PLANTS": return Material.PLANTS;
+      case "VINE": return Material.VINE;
+      case "SPONGE": return Material.SPONGE;
+      case "CLOTH": return Material.CLOTH;
+      case "FIRE": return Material.FIRE;
+      case "SAND": return Material.SAND;
+      case "CIRCUITS": return Material.CIRCUITS;
+      case "CARPET": return Material.CARPET;
+      case "GLASS": return Material.GLASS;
+      case "REDSTONE_LIGHT": return Material.REDSTONE_LIGHT;
+      case "TNT": return Material.TNT;
+      case "CORAL": return Material.CORAL;
+      case "ICE": return Material.ICE;
+      case "PACKED_ICE": return Material.PACKED_ICE;
+      case "SNOW": return Material.SNOW;
+      case "CRAFTED_SNOW": return Material.CRAFTED_SNOW;
+      case "CACTUS": return Material.CACTUS;
+      case "CLAY": return Material.CLAY;
+      case "GOURD": return Material.GOURD;
+      case "DRAGON_EGG": return Material.DRAGON_EGG;
+      case "PORTAL": return Material.PORTAL;
+      case "CAKE": return Material.CAKE;
+      case "WEB": return Material.WEB;
+      case "PISTON": return Material.PISTON;
+      case "BARRIER": return Material.BARRIER;
+      case "STRUCTURE_VOID": return Material.STRUCTURE_VOID;
+      default: throw new IllegalArgumentException("Unknown material " + name);
       }
    }
 }

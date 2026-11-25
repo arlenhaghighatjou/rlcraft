@@ -1,7 +1,6 @@
 package com.alcatrazescapee.notreepunching.common.items;
 
 import com.alcatrazescapee.alcatrazcore.item.tool.ItemToolCore;
-import com.alcatrazescapee.alcatrazcore.item.tool.ItemToolCore.ToolClass;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
@@ -9,7 +8,6 @@ import net.minecraft.block.BlockDirt.DirtType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -72,7 +70,7 @@ public class ItemMattock extends ItemToolCore {
       worldIn.playSound(player, pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
       if (!worldIn.isRemote) {
          worldIn.setBlockState(pos, state, 11);
-         stack.attemptDamageItem(1, itemRand, (EntityPlayerMP)player);
+         stack.damageItem(1, player);
       }
 
    }
