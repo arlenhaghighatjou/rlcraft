@@ -186,6 +186,7 @@ public class Loader
         mods.add(new FMLModContainer<>("shieldbreak", "ShieldBreak", "1.1.3", "", "", "shieldbreak", shieldbreak.core.ShieldBreak::new, shieldbreak.core.ShieldBreak::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("anvilpatch", "Anvil Patch - Lawful", "1.1.1", "", "", "anvilpatch", lumberwizard.anvilpatch.AnvilPatch::new, lumberwizard.anvilpatch.AnvilPatch::handleModStateEvent));
         mods.add(new FMLModContainer<>("collisiondamage", "CollisionDamage", "1.2.2", "", "", "collisiondamage", collisiondamage.core.CollisionDamage::new, collisiondamage.core.CollisionDamage::handleModStateEvent));
+        mods.add(new FMLModContainer<>("bedbreakbegone", "BedBreakBegone", "1.0.2", "", "", "bedbreakbegone", bedbreakbegone.core.BedBreakBegone::new, bedbreakbegone.core.BedBreakBegone::handleModStateEvent).acceptableRemoteVersions("*"));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }

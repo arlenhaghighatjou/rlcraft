@@ -1667,26 +1667,7 @@ public abstract class EntityPlayer extends EntityLivingBase
     @Nullable
     public static BlockPos getBedSpawnLocation(World worldIn, BlockPos bedLocation, boolean forceSpawn)
     {
-        IBlockState state = worldIn.getBlockState(bedLocation);
-        Block block = state.getBlock();
-
-        if (!block.isBed(state, worldIn, bedLocation, null))
-        {
-            if (!forceSpawn)
-            {
-                return null;
-            }
-            else
-            {
-                boolean flag = block.canSpawnInBlock();
-                boolean flag1 = worldIn.getBlockState(bedLocation.up()).getBlock().canSpawnInBlock();
-                return flag && flag1 ? bedLocation : null;
-            }
-        }
-        else
-        {
-            return block.getBedSpawnPosition(state, worldIn, bedLocation, null);
-        }
+        return bedbreakbegone.core.BedBreakBegone.getBedSpawnLocation(worldIn, bedLocation, forceSpawn);
     }
 
     @SideOnly(Side.CLIENT)

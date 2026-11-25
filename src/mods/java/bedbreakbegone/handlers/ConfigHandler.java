@@ -1,13 +1,13 @@
 package bedbreakbegone.handlers;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraftforge.common.config.ConfigEntry;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Config(
    modid = "bedbreakbegone"
@@ -20,14 +20,14 @@ public class ConfigHandler {
    public ConfigHandler() {
    }
 
-   @EventBusSubscriber(
-      modid = "bedbreakbegone"
-   )
-   private static class EventHandler {
+   public static class EventHandler {
       private EventHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.register(OnConfigChangedEvent.class, EventHandler::onConfigChanged);
+      }
+
       public static void onConfigChanged(OnConfigChangedEvent event) {
          if (event.getModID().equals("bedbreakbegone")) {
             ConfigManager.sync("bedbreakbegone", Type.INSTANCE);
@@ -43,5 +43,11 @@ public class ConfigHandler {
 
       public ServerConfig() {
       }
+   }
+
+   public static void register() {
+      ConfigManager.register("bedbreakbegone", "", "general", null,
+         ConfigEntry.category("Server",
+            ConfigEntry.value("Failed Spawn Warning", boolean.class, () -> ConfigHandler.server.spawnWarning, v -> ConfigHandler.server.spawnWarning = (Boolean)v).comment("Output a warning and coordinates in the log when a spawnpoint fails?").langKey("bedbreakbegone.general.server.spawnwarning")).comment("Server Config").langKey("bedbreakbegone.general.server"));
    }
 }
