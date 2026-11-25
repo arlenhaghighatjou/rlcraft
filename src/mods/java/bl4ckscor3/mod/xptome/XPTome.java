@@ -1,5 +1,12 @@
 package bl4ckscor3.mod.xptome;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
+import net.minecraftforge.registries.ObjectHolderRegistry;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.Arrays;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -7,11 +14,7 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModMetadata;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 @Mod(
    modid = "xpbook",
@@ -19,19 +22,29 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
    version = "v1.1.6",
    acceptedMinecraftVersions = "[1.12.2]"
 )
-@EventBusSubscriber
 public class XPTome {
    public static final String MODID = "xpbook";
    public static final String NAME = "XP Tome";
    public static final String VERSION = "v1.1.6";
    public static final String MC_VERSION = "1.12.2";
-   @ObjectHolder("xpbook:xp_book")
-   public static final Item XP_BOOK = null;
+   public static Item XP_BOOK = null;
 
    public XPTome() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         registerHolders();
+         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            ClientReg.register(MinecraftForge.EVENT_BUS);
+         }
+         register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       ModMetadata meta = event.getModMetadata();
       meta.authorList = Arrays.asList("bl4ckscor3");
@@ -42,16 +55,24 @@ public class XPTome {
       meta.version = "v1.1.6";
    }
 
-   @SubscribeEvent
-   public static void onRegisterItems(Register<Item> event) {
-      event.getRegistry().register(((Item)(new ItemXPTome()).setRegistryName(new ResourceLocation("xpbook", "xp_book"))).setUnlocalizedName("xpbook:xp_book"));
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Item.class, XPTome::onRegisterItems);
+      bus.register(AnvilUpdateEvent.class, XPTome::onAnvilUpdate);
    }
 
-   @SubscribeEvent
+   public static void onRegisterItems(Register<Item> event) {
+      XP_BOOK = new ItemXPTome().setRegistryName(new ResourceLocation("xpbook", "xp_book")).setUnlocalizedName("xpbook:xp_book");
+      event.getRegistry().register(XP_BOOK);
+   }
+
    public static void onAnvilUpdate(AnvilUpdateEvent event) {
       if (event.getLeft().getItem() == XP_BOOK || event.getRight().getItem() == XP_BOOK) {
          event.setCanceled(true);
       }
 
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("xpbook:xp_book"), v -> XP_BOOK = v);
    }
 }
