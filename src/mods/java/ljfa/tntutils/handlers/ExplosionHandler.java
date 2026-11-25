@@ -1,5 +1,6 @@
 package ljfa.tntutils.handlers;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import ljfa.tntutils.Config;
 import ljfa.tntutils.asm.HooksExplosion;
 import ljfa.tntutils.util.ListHelper;
@@ -17,13 +18,16 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.ExplosionEvent.Detonate;
 import net.minecraftforge.event.world.ExplosionEvent.Start;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ExplosionHandler {
    public ExplosionHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Start.class, this::onExplosionStart);
+      bus.register(Detonate.class, this::onExplosionDetonate);
+   }
+
    public void onExplosionStart(Start event) {
       if (Config.disableExplosions) {
          event.setCanceled(true);
@@ -34,7 +38,6 @@ public class ExplosionHandler {
 
    }
 
-   @SubscribeEvent
    public void onExplosionDetonate(Detonate event) {
       final World world = event.getWorld();
       if (!world.isRemote) {

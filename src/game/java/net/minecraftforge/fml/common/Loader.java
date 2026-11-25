@@ -220,6 +220,7 @@ public class Loader
         mods.add(new FMLModContainer<>("mcwbridges", "Mcwbridges", "1.0.6", "", "", "mcwbridges", com.mcwbridges.kikoz.Mcwbridges::new, com.mcwbridges.kikoz.Mcwbridges::handleModStateEvent));
         mods.add(new FMLModContainer<>("spawnercontrol", "Mob Spawner Control", "1.6.3b", "required-after:forge@[14.23.2.2596,);", "[1.12, 1.13)", "spawnercontrol", ladysnake.spawnercontrol.SpawnerControl::new, ladysnake.spawnercontrol.SpawnerControl::handleModStateEvent).acceptableRemoteVersions("*").guiFactory(ladysnake.spawnercontrol.client.MSCConfigFactory::new));
         mods.add(new FMLModContainer<>("surge", "Surge", "2.0.79", "", "[1.12.2]", "surge", net.darkhax.surge.Surge::new, net.darkhax.surge.Surge::handleModStateEvent).acceptableRemoteVersions("*"));
+        mods.add(new FMLModContainer<>("tnt_utilities", "TNTUtils", "1.2.3", "", "[1.12,1.13)", "tnt_utilities", ljfa.tntutils.TNTUtils::new, ljfa.tntutils.TNTUtils::handleModStateEvent).acceptableRemoteVersions("*").guiFactory(ljfa.tntutils.gui.TntuGuiFactory::new));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }

@@ -17,9 +17,9 @@ public class CommonProxy {
    }
 
    public void init(FMLInitializationEvent event) {
-      MinecraftForge.EVENT_BUS.register(new ExplosionHandler());
+      (new ExplosionHandler()).register(MinecraftForge.EVENT_BUS);
       if (Config.disableTNT || Config.disableTNTMinecart) {
-         MinecraftForge.EVENT_BUS.register(new EntityJoinHandler());
+         (new EntityJoinHandler()).register(MinecraftForge.EVENT_BUS);
       }
 
    }

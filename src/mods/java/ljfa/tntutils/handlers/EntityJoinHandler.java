@@ -1,5 +1,6 @@
 package ljfa.tntutils.handlers;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import ljfa.tntutils.Config;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -9,13 +10,15 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EntityJoinHandler {
    public EntityJoinHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(EntityJoinWorldEvent.class, this::onEntityJoin);
+   }
+
    public void onEntityJoin(EntityJoinWorldEvent event) {
       Entity ent = event.getEntity();
       if (Config.disableTNT && ent instanceof EntityTNTPrimed) {

@@ -1,6 +1,7 @@
 package ljfa.tntutils;
 
-import java.io.File;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import ljfa.tntutils.exception.InvalidConfigValueException;
@@ -10,7 +11,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Config {
    public static Configuration conf;
@@ -38,14 +38,14 @@ public class Config {
    public Config() {
    }
 
-   public static void loadConfig(File file) {
+   public static void loadConfig(VFile2 file) {
       if (conf == null) {
          conf = new Configuration(file);
       }
 
       conf.load();
       loadValues();
-      MinecraftForge.EVENT_BUS.register(new Config.ChangeHandler());
+      (new Config.ChangeHandler()).register(MinecraftForge.EVENT_BUS);
    }
 
    public static void loadValues() {
@@ -106,7 +106,7 @@ public class Config {
             blackWhiteList.put(block, Integer.valueOf(metamask | ((Integer)blackWhiteList.get(block)).intValue()));
          }
 
-         TNTUtils.logger.debug("Added block to blacklist: %s, mask 0x%X", blockname, Integer.valueOf(metamask));
+         TNTUtils.logger.debug("Added block to blacklist: {}, mask 0x{}", blockname, Integer.toHexString(metamask).toUpperCase());
       }
 
       blacklistActive = blackWhiteList.size() != 0;
@@ -135,7 +135,7 @@ public class Config {
          try {
             float resist = Float.parseFloat(valueStr);
             block.setResistance(resist);
-            TNTUtils.logger.debug("Changed resistance of %s to %g", blockName, Float.valueOf(resist));
+            TNTUtils.logger.debug("Changed resistance of {} to {}", blockName, Float.valueOf(resist));
          } catch (NumberFormatException var10) {
             throw new InvalidConfigValueException("blockResistances: Invalid number format: " + valueStr, var10);
          }
@@ -154,7 +154,10 @@ public class Config {
       public ChangeHandler() {
       }
 
-      @SubscribeEvent
+      public void register(EventBus bus) {
+         bus.register(OnConfigChangedEvent.class, this::onConfigChanged);
+      }
+
       public void onConfigChanged(OnConfigChangedEvent event) {
          if (event.getModID().equals("tnt_utilities")) {
             try {

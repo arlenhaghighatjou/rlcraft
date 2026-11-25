@@ -37,8 +37,8 @@ public class Explosion
     private final double x;
     private final double y;
     private final double z;
-    private final Entity exploder;
-    private final float size;
+    public final Entity exploder;
+    public float size;
     private final List<BlockPos> affectedBlockPositions;
     private final Map<EntityPlayer, Vec3d> playerKnockbackMap;
     private final Vec3d position;
@@ -228,7 +228,7 @@ public class Explosion
                 {
                     if (block.canDropFromExplosion(this))
                     {
-                        block.dropBlockAsItemWithChance(this.world, blockpos, this.world.getBlockState(blockpos), 1.0F / this.size, 0);
+                        block.dropBlockAsItemWithChance(this.world, blockpos, this.world.getBlockState(blockpos), ljfa.tntutils.asm.HooksExplosion.getDropChance(this), 0);
                     }
 
                     block.onBlockExploded(this.world, blockpos, this);
