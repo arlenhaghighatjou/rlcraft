@@ -217,6 +217,7 @@ public class Loader
         mods.add(new FMLModContainer<>("legendarytooltips", "Legendary Tooltips", "1.1.9", "", "[1.12.2]", "legendarytooltips", com.anthonyhilyard.legendarytooltips.LegendaryTooltips::new, com.anthonyhilyard.legendarytooltips.LegendaryTooltips::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("controlling", "Controlling", "3.0.10", "", "[1.12.2]", "controlling", us.getfluxed.controlsearch.Control::new, us.getfluxed.controlsearch.Control::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("testdummy", "MmmMmmMmmMmm", "1.12", "", "[1.12,1.13)", "testdummy", boni.dummy.TestDummyMod::new, boni.dummy.TestDummyMod::handleModStateEvent));
+        mods.add(new FMLModContainer<>("mcwbridges", "Mcwbridges", "1.0.6", "", "", "mcwbridges", com.mcwbridges.kikoz.Mcwbridges::new, com.mcwbridges.kikoz.Mcwbridges::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }
