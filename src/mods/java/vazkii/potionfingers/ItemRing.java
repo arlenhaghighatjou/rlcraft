@@ -57,14 +57,9 @@ public class ItemRing extends ItemMod implements IBauble, IItemColorProvider {
    }
 
    public String getItemStackDisplayName(ItemStack stack) {
-      String name = super.getItemStackDisplayName(stack);
       Potion p = getPotion(stack);
-      String potionName = "N/A";
-      if (p != null) {
-         potionName = I18n.translateToLocal(p.getName());
-      }
-
-      return String.format(name, potionName);
+      String potionName = p == null ? "N/A" : I18n.translateToLocal(p.getName());
+      return I18n.translateToLocalFormatted(this.getUnlocalizedNameInefficiently(stack) + ".name", potionName).trim();
    }
 
    public static ItemStack getRingForPotion(Potion potion) {

@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import vazkii.arl.recipe.RecipeHandler;
 
@@ -30,7 +30,12 @@ public class PotionFingers {
    public PotionFingers() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLPreInitializationEvent) {
+         preInit((FMLPreInitializationEvent)event);
+      }
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       ring = new ItemRing();
       RecipeHandler.addOreDictRecipe(new ItemStack(ring), new Object[]{"LG ", "G G", " G ", 'L', new ItemStack(Blocks.LAPIS_BLOCK), 'G', "ingotGold"});
