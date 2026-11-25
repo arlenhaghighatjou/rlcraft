@@ -1,5 +1,6 @@
 package gigaherz.toolbelt.belt;
 
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import com.google.common.collect.ImmutableList;
@@ -33,7 +34,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.common.Optional.Interface;
 import net.minecraftforge.fml.common.Optional.Method;
@@ -44,9 +44,7 @@ import net.minecraftforge.items.IItemHandler;
    iface = "baubles.api.IBauble"
 )
 public class ItemToolBelt extends ItemRegistered implements IBauble, IExtensionSlotItem {
-   @CapabilityInject(IItemHandler.class)
    public static Capability<IItemHandler> ITEM_HANDLER;
-   @CapabilityInject(IExtensionSlotItem.class)
    public static Capability<IExtensionSlotItem> EXTENSION_SLOT_ITEM;
    public static final ImmutableSet<ResourceLocation> BELT_SLOT_LIST = ImmutableSet.of(RpgEquipment.BELT);
    public static int[] xpCost = new int[]{3, 5, 8, 12, 15, 20, 30};
@@ -235,5 +233,10 @@ public class ItemToolBelt extends ItemRegistered implements IBauble, IExtensionS
 
       public void onContentsChanged(IExtensionSlot slot) {
       }
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(IItemHandler.class, capability -> ITEM_HANDLER = capability);
+      CapabilityManager.INSTANCE.onRegistered(IExtensionSlotItem.class, capability -> EXTENSION_SLOT_ITEM = capability);
    }
 }

@@ -1,5 +1,6 @@
 package gigaherz.toolbelt.client;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import gigaherz.toolbelt.BeltFinder;
 import gigaherz.toolbelt.Config;
 import gigaherz.toolbelt.ISideProxy;
@@ -21,12 +22,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent.Pre;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@EventBusSubscriber({Side.CLIENT})
 public class ClientProxy implements ISideProxy {
    public static KeyBinding keyOpenToolMenu;
    public static KeyBinding keyCycleToolMenuL;
@@ -36,18 +34,21 @@ public class ClientProxy implements ISideProxy {
    public ClientProxy() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, ClientProxy::registerModels);
+      bus.register(Pre.class, ClientProxy::textureStitch);
+      bus.register(InputEvent.class, ClientProxy::handleKeys);
+   }
+
    public static void registerModels(ModelRegistryEvent event) {
       ModelHelpers.registerItemModel(ToolBelt.belt);
       ModelHelpers.registerItemModel(ToolBelt.pouch);
    }
 
-   @SubscribeEvent
    public static void textureStitch(Pre event) {
       event.getMap().registerSprite(ContainerBeltSlot.BACKGROUND_ICON);
    }
 
-   @SubscribeEvent
    public static void handleKeys(InputEvent ev) {
       Minecraft mc = Minecraft.getMinecraft();
 

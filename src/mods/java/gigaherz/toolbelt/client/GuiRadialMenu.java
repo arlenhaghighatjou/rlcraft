@@ -1,5 +1,6 @@
 package gigaherz.toolbelt.client;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.Lists;
 import gigaherz.toolbelt.BeltFinder;
 import gigaherz.toolbelt.Config;
@@ -20,14 +21,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
 
-@EventBusSubscriber({Side.CLIENT})
 public class GuiRadialMenu extends GuiScreen {
    private final BeltFinder.BeltGetter getter;
    private ItemStack stackEquipped;
@@ -48,7 +46,10 @@ public class GuiRadialMenu extends GuiScreen {
       this.startAnimation = (double)Minecraft.getMinecraft().world.getTotalWorldTime() + (double)Minecraft.getMinecraft().getRenderPartialTicks();
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(Pre.class, GuiRadialMenu::overlayEvent);
+   }
+
    public static void overlayEvent(Pre event) {
       if (event.getType() == ElementType.CROSSHAIRS) {
          if (Minecraft.getMinecraft().currentScreen instanceof GuiRadialMenu) {

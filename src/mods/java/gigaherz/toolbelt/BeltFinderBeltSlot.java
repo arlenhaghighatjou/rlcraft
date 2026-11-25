@@ -13,13 +13,16 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 
 public class BeltFinderBeltSlot extends BeltFinder {
    public BeltFinderBeltSlot() {
    }
 
-   @CapabilityInject(ExtensionSlotBelt.class)
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(ExtensionSlotBelt.class, BeltFinderBeltSlot::initBaubles);
+   }
+
    public static void initBaubles(Capability cap) {
       BeltFinder.instances.add(new BeltFinderBeltSlot());
    }

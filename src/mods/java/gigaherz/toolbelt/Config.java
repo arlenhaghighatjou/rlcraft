@@ -1,9 +1,10 @@
 package gigaherz.toolbelt;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 import gigaherz.toolbelt.belt.ItemToolBelt;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
@@ -22,12 +23,9 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
-@EventBusSubscriber
 public class Config {
    private static Configuration config;
    public static ConfigCategory display;
@@ -51,7 +49,7 @@ public class Config {
    public Config() {
    }
 
-   static void loadConfig(File configurationFile) {
+   static void loadConfig(VFile2 configurationFile) {
       config = new Configuration(configurationFile);
       Property bl = config.get("items", "blacklist", new String[0]);
       bl.setComment("List of items to disallow from placing in the belt.");
@@ -113,7 +111,10 @@ public class Config {
       disableAnvilUpgrading = behaviour.get("disableAnvilUpgrading").getBoolean();
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, Config::onConfigChange);
+   }
+
    public static void onConfigChange(OnConfigChangedEvent event) {
       if ("toolbelt".equals(event.getModID())) {
          if (config.hasChanged()) {

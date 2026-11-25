@@ -1,5 +1,6 @@
 package gigaherz.toolbelt.slot;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
 import gigaherz.toolbelt.Config;
@@ -28,7 +29,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
@@ -37,7 +37,6 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
@@ -46,7 +45,6 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class ExtensionSlotBelt implements IExtensionContainer, INBTSerializable<NBTTagCompound> {
    private static final ResourceLocation CAPABILITY_ID = new ResourceLocation("toolbelt", "belt_slot");
-   @CapabilityInject(ExtensionSlotBelt.class)
    public static Capability<ExtensionSlotBelt> CAPABILITY = null;
    public static final ResourceLocation BELT = new ResourceLocation("examplemod", "belt");
    private final EntityLivingBase owner;
@@ -67,11 +65,11 @@ public class ExtensionSlotBelt implements IExtensionContainer, INBTSerializable<
       }, () -> {
          throw new UnsupportedOperationException("Cannot instantiate extension slots without a player, use the class constructor.");
       });
-      MinecraftForge.EVENT_BUS.register(new ExtensionSlotBelt.AttachHandlers());
+      (new ExtensionSlotBelt.AttachHandlers()).register(MinecraftForge.EVENT_BUS);
       if (Config.customBeltSlotEnabled) {
-         MinecraftForge.EVENT_BUS.register(new ExtensionSlotBelt.EventHandlers());
+         (new ExtensionSlotBelt.EventHandlers()).register(MinecraftForge.EVENT_BUS);
       } else {
-         MinecraftForge.EVENT_BUS.register(new ExtensionSlotBelt.EventHandlers.Disabled());
+         (new ExtensionSlotBelt.EventHandlers.Disabled()).register(MinecraftForge.EVENT_BUS);
       }
 
    }
@@ -184,11 +182,14 @@ public class ExtensionSlotBelt implements IExtensionContainer, INBTSerializable<
       this.inventory.deserializeNBT(nbt);
    }
 
-   private static class AttachHandlers {
+   public static class AttachHandlers {
       private AttachHandlers() {
       }
 
-      @SubscribeEvent
+      public void register(EventBus bus) {
+         bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, this::attachCapabilities);
+      }
+
       public void attachCapabilities(final AttachCapabilitiesEvent<Entity> event) {
          if (event.getObject() instanceof EntityPlayer) {
             event.addCapability(ExtensionSlotBelt.CAPABILITY_ID, new ICapabilitySerializable<NBTTagCompound>() {
@@ -223,14 +224,22 @@ public class ExtensionSlotBelt implements IExtensionContainer, INBTSerializable<
       }
    }
 
-   private static class EventHandlers {
+   public static class EventHandlers {
       private EaglercraftRandom rand;
 
       private EventHandlers() {
          this.rand = new EaglercraftRandom();
       }
 
-      @SubscribeEvent
+      public void register(EventBus bus) {
+         bus.register(PlayerLoggedInEvent.class, this::joinWorld);
+         bus.register(PlayerChangedDimensionEvent.class, this::joinWorld);
+         bus.register(StartTracking.class, this::track);
+         bus.register(PlayerTickEvent.class, this::entityTick);
+         bus.register(PlayerDropsEvent.class, this::playerDeath);
+         bus.register(Clone.class, this::playerClone);
+      }
+
       public void joinWorld(PlayerLoggedInEvent event) {
          EntityPlayer target = event.player;
          if (!target.world.isRemote) {
@@ -246,7 +255,6 @@ public class ExtensionSlotBelt implements IExtensionContainer, INBTSerializable<
          }
       }
 
-      @SubscribeEvent
       public void joinWorld(PlayerChangedDimensionEvent event) {
          EntityPlayer target = event.player;
          if (!target.world.isRemote) {
@@ -262,7 +270,6 @@ public class ExtensionSlotBelt implements IExtensionContainer, INBTSerializable<
          }
       }
 
-      @SubscribeEvent
       public void track(StartTracking event) {
          Entity target = event.getTarget();
          if (!target.world.isRemote) {
@@ -280,7 +287,6 @@ public class ExtensionSlotBelt implements IExtensionContainer, INBTSerializable<
          }
       }
 
-      @SubscribeEvent
       public void entityTick(PlayerTickEvent event) {
          ExtensionSlotBelt instance = ExtensionSlotBelt.get(event.player);
          if (instance != null) {
@@ -288,7 +294,6 @@ public class ExtensionSlotBelt implements IExtensionContainer, INBTSerializable<
          }
       }
 
-      @SubscribeEvent
       public void playerDeath(PlayerDropsEvent event) {
          EntityPlayer player = event.getEntityPlayer();
          ExtensionSlotBelt instance = ExtensionSlotBelt.get(player);
@@ -308,7 +313,6 @@ public class ExtensionSlotBelt implements IExtensionContainer, INBTSerializable<
          }
       }
 
-      @SubscribeEvent
       public void playerClone(Clone event) {
          EntityPlayer oldPlayer = event.getOriginal();
          EntityPlayer newPlayer = event.getEntityPlayer();
@@ -361,7 +365,10 @@ public class ExtensionSlotBelt implements IExtensionContainer, INBTSerializable<
          Disabled() {
          }
 
-         @SubscribeEvent
+         public void register(EventBus bus) {
+            bus.register(PlayerTickEvent.class, this::entityTick);
+         }
+
          public void entityTick(PlayerTickEvent event) {
             ExtensionSlotBelt instance = ExtensionSlotBelt.get(event.player);
             if (instance != null) {
@@ -369,5 +376,9 @@ public class ExtensionSlotBelt implements IExtensionContainer, INBTSerializable<
             }
          }
       }
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(ExtensionSlotBelt.class, capability -> CAPABILITY = capability);
    }
 }

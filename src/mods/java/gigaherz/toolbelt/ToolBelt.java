@@ -1,5 +1,10 @@
 package gigaherz.toolbelt;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import gigaherz.toolbelt.belt.ItemToolBelt;
 import gigaherz.toolbelt.common.GuiHandler;
 import gigaherz.toolbelt.customslots.CapabilityExtensionSlotItem;
@@ -9,7 +14,7 @@ import gigaherz.toolbelt.network.SwapItems;
 import gigaherz.toolbelt.network.SyncBeltSlotContents;
 import gigaherz.toolbelt.shadow.commons.ItemRegistered;
 import gigaherz.toolbelt.slot.ExtensionSlotBelt;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -18,20 +23,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
-@EventBusSubscriber
 @Mod(
    modid = "toolbelt",
    version = "1.9.14",
@@ -45,12 +44,7 @@ public class ToolBelt {
    public static final String CHANNEL = "toolbelt";
    public static ItemToolBelt belt;
    public static Item pouch;
-   @Instance("toolbelt")
    public static ToolBelt instance;
-   @SidedProxy(
-      clientSide = "gigaherz.toolbelt.client.ClientProxy",
-      serverSide = "gigaherz.toolbelt.server.ServerProxy"
-   )
    public static ISideProxy proxy;
    public static Logger logger;
    public static GuiHandler guiHandler;
@@ -59,43 +53,72 @@ public class ToolBelt {
    public ToolBelt() {
    }
 
-   @SubscribeEvent
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new gigaherz.toolbelt.client.ClientProxy() : new gigaherz.toolbelt.server.ServerProxy();
+         gigaherz.toolbelt.belt.ItemToolBelt.registerCapabilities();
+         gigaherz.toolbelt.customslots.CapabilityExtensionSlotItem.registerCapabilities();
+         gigaherz.toolbelt.customslots.example.RpgEquipment.registerCapabilities();
+         gigaherz.toolbelt.slot.ExtensionSlotBelt.registerCapabilities();
+         gigaherz.toolbelt.BeltFinderBaubles.registerCapabilities();
+         gigaherz.toolbelt.BeltFinderBeltSlot.registerCapabilities();
+         gigaherz.toolbelt.Config.register(MinecraftForge.EVENT_BUS);
+         gigaherz.toolbelt.ToolBelt.register(MinecraftForge.EVENT_BUS);
+         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            gigaherz.toolbelt.client.ClientProxy.register(MinecraftForge.EVENT_BUS);
+         }
+         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            gigaherz.toolbelt.client.GuiRadialMenu.register(MinecraftForge.EVENT_BUS);
+         }
+         gigaherz.toolbelt.common.BeltEvents.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      }
+
+   }
+
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, ToolBelt::registerBlocks);
+      bus.registerGeneric(Register.class, Item.class, ToolBelt::registerItems);
+      bus.register(AnvilUpdateEvent.class, ToolBelt::anvilChange);
+   }
+
    public static void registerBlocks(Register<Block> event) {
    }
 
-   @SubscribeEvent
    public static void registerItems(Register<Item> event) {
       event.getRegistry().registerAll(new Item[]{belt = new ItemToolBelt("belt"), pouch = (new ItemRegistered("pouch")).setCreativeTab(CreativeTabs.TOOLS)});
    }
 
-   @EventHandler
    public void preInit(FMLPreInitializationEvent event) {
       logger = event.getModLog();
       channel = NetworkRegistry.INSTANCE.newSimpleChannel("toolbelt");
       int messageNumber = 0;
-      channel.registerMessage(SwapItems.Handler.class, SwapItems.class, messageNumber++, Side.SERVER);
-      channel.registerMessage(BeltContentsChange.Handler.class, BeltContentsChange.class, messageNumber++, Side.CLIENT);
-      channel.registerMessage(OpenBeltSlotInventory.Handler.class, OpenBeltSlotInventory.class, messageNumber++, Side.SERVER);
-      channel.registerMessage(SyncBeltSlotContents.Handler.class, SyncBeltSlotContents.class, messageNumber++, Side.CLIENT);
+      channel.registerMessage(new SwapItems.Handler(), SwapItems.class, SwapItems::new, messageNumber++, Side.SERVER);
+      channel.registerMessage(new BeltContentsChange.Handler(), BeltContentsChange.class, BeltContentsChange::new, messageNumber++, Side.CLIENT);
+      channel.registerMessage(new OpenBeltSlotInventory.Handler(), OpenBeltSlotInventory.class, OpenBeltSlotInventory::new, messageNumber++, Side.SERVER);
+      channel.registerMessage(new SyncBeltSlotContents.Handler(), SyncBeltSlotContents.class, SyncBeltSlotContents::new, messageNumber++, Side.CLIENT);
       logger.debug("Final message number: " + messageNumber);
-      File configurationFile = event.getSuggestedConfigurationFile();
+      VFile2 configurationFile = event.getSuggestedConfigurationFile();
       Config.loadConfig(configurationFile);
       CapabilityExtensionSlotItem.register();
       ExtensionSlotBelt.register();
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       proxy.init();
       NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler = new GuiHandler());
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent event) {
       Config.postInit();
    }
 
-   @SubscribeEvent
    public static void anvilChange(AnvilUpdateEvent ev) {
       if (!Config.disableAnvilUpgrading) {
          ItemStack left = ev.getLeft();

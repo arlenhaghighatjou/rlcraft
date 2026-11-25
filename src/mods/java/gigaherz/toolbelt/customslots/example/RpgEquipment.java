@@ -1,5 +1,6 @@
 package gigaherz.toolbelt.customslots.example;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
 import gigaherz.toolbelt.customslots.ExtensionSlotItemHandler;
@@ -17,19 +18,16 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class RpgEquipment implements IExtensionContainer, INBTSerializable<NBTTagCompound> {
    private static final ResourceLocation CAPABILITY_ID = new ResourceLocation("examplemod", "rpg_inventory");
-   @CapabilityInject(RpgEquipment.class)
    public static Capability<RpgEquipment> CAPABILITY = null;
    public static final ResourceLocation RING = new ResourceLocation("examplemod", "ring");
    public static final ResourceLocation TRINKET = new ResourceLocation("examplemod", "trinket");
@@ -59,9 +57,9 @@ public class RpgEquipment implements IExtensionContainer, INBTSerializable<NBTTa
          public void readNBT(Capability<RpgEquipment> capability, RpgEquipment instance, EnumFacing side, NBTBase nbt) {
          }
       }, () -> {
-         return (void)null;
+         return null;
       });
-      MinecraftForge.EVENT_BUS.register(new RpgEquipment.EventHandlers());
+      (new RpgEquipment.EventHandlers()).register(MinecraftForge.EVENT_BUS);
    }
 
    public static RpgEquipment get(EntityPlayer player) {
@@ -157,7 +155,11 @@ public class RpgEquipment implements IExtensionContainer, INBTSerializable<NBTTa
       EventHandlers() {
       }
 
-      @SubscribeEvent
+      public void register(EventBus bus) {
+         bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, this::attachCapabilities);
+         bus.register(PlayerTickEvent.class, this::entityTick);
+      }
+
       public void attachCapabilities(final AttachCapabilitiesEvent<Entity> event) {
          if (event.getObject() instanceof EntityPlayer) {
             event.addCapability(RpgEquipment.CAPABILITY_ID, new ICapabilitySerializable<NBTTagCompound>() {
@@ -184,12 +186,15 @@ public class RpgEquipment implements IExtensionContainer, INBTSerializable<NBTTa
 
       }
 
-      @SubscribeEvent
       public void entityTick(PlayerTickEvent event) {
          RpgEquipment instance = RpgEquipment.get(event.player);
          if (instance != null) {
             instance.tickAllSlots();
          }
       }
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(RpgEquipment.class, capability -> CAPABILITY = capability);
    }
 }

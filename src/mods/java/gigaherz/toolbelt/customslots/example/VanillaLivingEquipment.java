@@ -70,7 +70,7 @@ public class VanillaLivingEquipment implements IExtensionContainer {
       }
 
       public boolean canEquip(@Nonnull ItemStack stack) {
-         return stack.getItem().isValidArmor(stack, this.slot, VanillaLivingEquipment.this.owner) ? true : super.canEquip(stack);
+         return stack.getItem().isValidArmor(stack, this.slot, VanillaLivingEquipment.this.owner) ? true : IExtensionSlot.super.canEquip(stack);
       }
    }
 }

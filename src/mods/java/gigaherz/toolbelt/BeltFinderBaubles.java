@@ -7,13 +7,16 @@ import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 
 public class BeltFinderBaubles extends BeltFinder {
    public BeltFinderBaubles() {
    }
 
-   @CapabilityInject(IBaublesItemHandler.class)
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(IBaublesItemHandler.class, BeltFinderBaubles::initBaubles);
+   }
+
    public static void initBaubles(Capability cap) {
       BeltFinder.instances.add(new BeltFinderBaubles());
    }
