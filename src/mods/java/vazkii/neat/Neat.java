@@ -2,7 +2,7 @@ package vazkii.neat;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(
@@ -25,10 +25,16 @@ public class Neat {
    public Neat() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       NeatConfig.init(event.getSuggestedConfigurationFile());
-      MinecraftForge.EVENT_BUS.register(new ToggleKeybind());
-      MinecraftForge.EVENT_BUS.register(new HealthBarRenderer());
+      (new ToggleKeybind()).register(MinecraftForge.EVENT_BUS);
+      (new HealthBarRenderer()).register(MinecraftForge.EVENT_BUS);
    }
 }

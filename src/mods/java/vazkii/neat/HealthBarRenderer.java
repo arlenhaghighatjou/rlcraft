@@ -1,19 +1,19 @@
 package vazkii.neat;
 
-import java.awt.Color;
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
@@ -29,14 +29,13 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import org.lwjgl.opengl.GL11;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 
 public class HealthBarRenderer {
    List<EntityLivingBase> renderedEntities = new ArrayList();
@@ -44,7 +43,10 @@ public class HealthBarRenderer {
    public HealthBarRenderer() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(RenderWorldLastEvent.class, this::onRenderWorldLast);
+   }
+
    public void onRenderWorldLast(RenderWorldLastEvent event) {
       Minecraft mc = Minecraft.getMinecraft();
       if ((NeatConfig.renderInF1 || Minecraft.isGuiEnabled()) && NeatConfig.draw) {
@@ -64,7 +66,7 @@ public class HealthBarRenderer {
          } else {
             WorldClient client = mc.world;
 
-            for(Entity entity : (Set)ReflectionHelper.getPrivateValue(WorldClient.class, client, new String[]{"entityList", "entityList", "J"})) {
+            for(Entity entity : client.entityList) {
                if (entity != null && entity instanceof EntityLivingBase && entity != mc.player && entity.isInRangeToRender3d((double)renderingVector.getX(), (double)renderingVector.getY(), (double)renderingVector.getZ()) && (entity.ignoreFrustumCheck || frustum.isBoundingBoxInFrustum(entity.getEntityBoundingBox())) && entity.isEntityAlive() && entity.getRecursivePassengers().isEmpty()) {
                   this.renderHealthBar((EntityLivingBase)entity, partialTicks, cameraEntity);
                }
@@ -105,11 +107,11 @@ public class HealthBarRenderer {
                   RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
                   GlStateManager.pushMatrix();
                   GlStateManager.translate((float)(x - renderManager.viewerPosX), (float)(y - renderManager.viewerPosY + (double)passedEntity.height + NeatConfig.heightAbove), (float)(z - renderManager.viewerPosZ));
-                  GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+                  EaglercraftGPU.glNormal3f(0.0F, 1.0F, 0.0F);
                   GlStateManager.rotate(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
                   GlStateManager.rotate(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
                   GlStateManager.scale(-scale, -scale, scale);
-                  boolean lighting = GL11.glGetBoolean(2896);
+                  boolean lighting = GlStateManager.isLightingEnabled();
                   GlStateManager.disableLighting();
                   GlStateManager.depthMask(false);
                   GlStateManager.disableDepth();
@@ -117,7 +119,7 @@ public class HealthBarRenderer {
                   GlStateManager.enableBlend();
                   GlStateManager.blendFunc(770, 771);
                   Tessellator tessellator = Tessellator.getInstance();
-                  BufferBuilder buffer = tessellator.getBuffer();
+                  WorldRenderer buffer = tessellator.getBuffer();
                   float padding = (float)NeatConfig.backgroundPadding;
                   int bgHeight = NeatConfig.backgroundHeight;
                   int barHeight = NeatConfig.barHeight;
@@ -154,10 +156,10 @@ public class HealthBarRenderer {
                   boolean useHue = !NeatConfig.colorByType;
                   if (useHue) {
                      float hue = Math.max(0.0F, health / maxHealth / 3.0F - 0.07F);
-                     Color color = Color.getHSBColor(hue, 1.0F, 1.0F);
-                     r = color.getRed();
-                     g = color.getGreen();
-                     b = color.getBlue();
+                     int color = MathHelper.hsvToRGB(hue, 1.0F, 1.0F);
+                     r = color >> 16 & 255;
+                     g = color >> 8 & 255;
+                     b = color & 255;
                   }
 
                   GlStateManager.translate(0.0F, pastTranslate, 0.0F);
@@ -288,10 +290,10 @@ public class HealthBarRenderer {
    private void renderIcon(int vertexX, int vertexY, ItemStack stack, int intU, int intV) {
       try {
          IBakedModel iBakedModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(stack);
-         TextureAtlasSprite textureAtlasSprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(iBakedModel.getParticleTexture().getIconName());
+         EaglerTextureAtlasSprite textureAtlasSprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(iBakedModel.getParticleTexture().getIconName());
          Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder buffer = tessellator.getBuffer();
+         WorldRenderer buffer = tessellator.getBuffer();
          buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
          buffer.pos((double)vertexX, (double)(vertexY + intV), 0.0D).tex((double)textureAtlasSprite.getMinU(), (double)textureAtlasSprite.getMaxV()).endVertex();
          buffer.pos((double)(vertexX + intU), (double)(vertexY + intV), 0.0D).tex((double)textureAtlasSprite.getMaxU(), (double)textureAtlasSprite.getMaxV()).endVertex();

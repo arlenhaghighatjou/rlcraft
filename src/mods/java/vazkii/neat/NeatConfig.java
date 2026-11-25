@@ -1,13 +1,12 @@
 package vazkii.neat;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class NeatConfig {
    public static boolean draw = true;
@@ -38,11 +37,11 @@ public class NeatConfig {
    public NeatConfig() {
    }
 
-   public static void init(File configFile) {
+   public static void init(VFile2 configFile) {
       config = new Configuration(configFile);
       config.load();
       load();
-      MinecraftForge.EVENT_BUS.register(new NeatConfig.ChangeListener());
+      MinecraftForge.EVENT_BUS.register(OnConfigChangedEvent.class, (new NeatConfig.ChangeListener())::onConfigChanged);
    }
 
    public static void load() {
@@ -95,7 +94,6 @@ public class NeatConfig {
       public ChangeListener() {
       }
 
-      @SubscribeEvent
       public void onConfigChanged(OnConfigChangedEvent eventArgs) {
          if (eventArgs.getModID().equals("neat")) {
             NeatConfig.load();

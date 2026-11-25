@@ -3,7 +3,7 @@ package vazkii.neat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 public class ToggleKeybind {
@@ -14,7 +14,10 @@ public class ToggleKeybind {
       ClientRegistry.registerKeyBinding(this.key);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(KeyInputEvent.class, this::onKeyInput);
+   }
+
    public void onKeyInput(KeyInputEvent event) {
       Minecraft mc = Minecraft.getMinecraft();
       boolean wasDown = this.down;
