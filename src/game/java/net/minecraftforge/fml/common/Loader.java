@@ -238,6 +238,7 @@ public class Loader
         progressBar = ProgressManager.push("Loading", 7);
         progressBar.step("Constructing Mods");
         canonicalConfigDir = new VFile2("config");
+        com.arlenh7.eaglercraft.forge.PackDefaults.install();
         mods = Lists.newArrayList();
         namedMods = Maps.newHashMap();
         modController = new LoadController(this);
