@@ -224,37 +224,6 @@ public class GuiNewControls extends GuiControls {
       return I18n.format(text, new Object[0]);
    }
 
-   public void handleMouseInput() throws IOException {
-      this.superSuperHandleMouseInput();
-      this.keyBindingList.handleMouseInput();
-   }
-
-   public void superSuperHandleMouseInput() {
-      int i = Mouse.getEventX() * this.width / this.mc.displayWidth;
-      int j = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
-      int k = Mouse.getEventButton();
-      if (Mouse.getEventButtonState()) {
-         if (this.mc.gameSettings.touchscreen && this.touchValue++ > 0) {
-            return;
-         }
-
-         this.eventButton = k;
-         this.lastMouseEvent = Minecraft.getSystemTime();
-         this.mouseClicked(i, j, this.eventButton);
-      } else if (k != -1) {
-         if (this.mc.gameSettings.touchscreen && --this.touchValue > 0) {
-            return;
-         }
-
-         this.eventButton = -1;
-         this.mouseReleased(i, j, k);
-      } else if (this.eventButton != -1 && this.lastMouseEvent > 0L) {
-         long l = Minecraft.getSystemTime() - this.lastMouseEvent;
-         this.mouseClickMove(i, j, this.eventButton, l);
-      }
-
-   }
-
    protected void actionPerformed(GuiButton button) {
       if (button.id == 200) {
          this.mc.displayGuiScreen(this.parentScreen);
@@ -435,24 +404,26 @@ public class GuiNewControls extends GuiControls {
          keyCodes.add(Integer.valueOf(-99));
          keyCodes.add(Integer.valueOf(-100));
          List<Integer> removed = new ArrayList();
-         ((GuiNewKeyBindingList)this.keyBindingList).getListEntriesAll().forEach((ix) -> {
-            if (i instanceof GuiNewKeyBindingList.KeyEntry) {
-               removed.add(Integer.valueOf(((GuiNewKeyBindingList.KeyEntry)i).getKeybinding().getKeyCode()));
-            }
+         LinkedList<IGuiListEntry> entries = ((GuiNewKeyBindingList)this.keyBindingList).getListEntriesAll();
 
-         });
+         for(int n = 0, size = entries.size(); n < size; ++n) {
+            IGuiListEntry entry = entries.get(n);
+            if (entry instanceof GuiNewKeyBindingList.KeyEntry) {
+               removed.add(Integer.valueOf(((GuiNewKeyBindingList.KeyEntry)entry).getKeybinding().getKeyCode()));
+            }
+         }
          int[] rem = new int[]{219, 100, 101, 102, 103, 104, 105, 112, 113, 41, 121, 87, 123, 125, 141, 144, 146, 147, 148, 149, 150, 151, 156, 167, 179, 197, 145, 196, 218};
 
          for(int i : rem) {
             removed.add(Integer.valueOf(i));
          }
 
-         keyCodes.forEach((ix) -> {
-            if (i.intValue() >= 0 && (Keyboard.getKeyName(i.intValue()) == null || Keyboard.getKeyName(i.intValue()).isEmpty())) {
-               removed.add(i);
+         for(int n = 0, size = keyCodes.size(); n < size; ++n) {
+            Integer code = keyCodes.get(n);
+            if (code.intValue() >= 0 && (Keyboard.getKeyName(code.intValue()) == null || Keyboard.getKeyName(code.intValue()).isEmpty())) {
+               removed.add(code);
             }
-
-         });
+         }
          keyCodes.removeAll(removed);
          Collections.sort(keyCodes);
          int[] x = new int[]{0};
