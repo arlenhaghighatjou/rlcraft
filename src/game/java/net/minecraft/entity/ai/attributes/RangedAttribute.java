@@ -5,8 +5,8 @@ import net.minecraft.util.math.MathHelper;
 
 public class RangedAttribute extends BaseAttribute
 {
-    private final double minimumValue;
-    private final double maximumValue;
+    private double minimumValue;
+    private double maximumValue;
     private String description;
 
     public RangedAttribute(@Nullable IAttribute parentIn, String unlocalizedNameIn, double defaultValue, double minimumValueIn, double maximumValueIn)
@@ -38,6 +38,26 @@ public class RangedAttribute extends BaseAttribute
     public String getDescription()
     {
         return this.description;
+    }
+
+    public double getMinimumValue()
+    {
+        return this.minimumValue;
+    }
+
+    public double getMaximumValue()
+    {
+        return this.maximumValue;
+    }
+
+    public void setRange(double minimumValue, double maximumValue)
+    {
+        if (minimumValue > maximumValue)
+        {
+            throw new IllegalArgumentException("Minimum value cannot be bigger than maximum value!");
+        }
+        this.minimumValue = minimumValue;
+        this.maximumValue = maximumValue;
     }
 
     public double clampValue(double value)
