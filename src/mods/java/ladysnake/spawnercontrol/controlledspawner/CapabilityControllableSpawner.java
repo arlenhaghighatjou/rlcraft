@@ -1,5 +1,6 @@
 package ladysnake.spawnercontrol.controlledspawner;
 
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -12,12 +13,10 @@ import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 
 public class CapabilityControllableSpawner {
-   @CapabilityInject(IControllableSpawner.class)
    public static Capability<IControllableSpawner> CAPABILITY_SPAWNER;
    public static final ResourceLocation CAPABILITY_KEY = new ResourceLocation("spawnercontrol", "controllable_spawner_cap");
 
@@ -119,5 +118,9 @@ public class CapabilityControllableSpawner {
          }
 
       }
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(IControllableSpawner.class, capability -> CAPABILITY_SPAWNER = capability);
    }
 }

@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.ConfigCategory;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
@@ -24,14 +25,9 @@ public class SpawnerConfigHolder {
    }
 
    public void sync() {
-      try {
-         CustomSpawnersConfig.configManager$sync.invoke(this.configuration, SpawnerConfig.class, "spawnercontrol", this.name, true, this.configObject);
-         this.configObject.mobLoot.lootEntries.invalidateAll();
-         this.configuration.save();
-      } catch (Throwable var2) {
-         SpawnerControl.LOGGER.error("Exception while synchronizing custom spawner config", var2);
-      }
-
+      ConfigManager.sync(this.configuration, this.configObject.entries(), "spawnercontrol", this.name, true);
+      this.configObject.mobLoot.lootEntries.invalidateAll();
+      this.configuration.save();
    }
 
    public Block createBlock() {

@@ -1,11 +1,12 @@
 package ladysnake.spawnercontrol;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.annotations.VisibleForTesting;
+import java.util.HashSet;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.WeakHashMap;
 import java.util.concurrent.ExecutionException;
 import ladysnake.spawnercontrol.config.MSCConfig;
 import ladysnake.spawnercontrol.config.SpawnerConfig;
@@ -44,27 +45,33 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent.SpecialSpawn;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 
-@EventBusSubscriber(
-   modid = "spawnercontrol"
-)
 public class SpawnerEventHandler {
    private static final String NBT_TAG_SPAWNER_POS = "spawnercontrol:spawnerPos";
    @VisibleForTesting
-   static Set<TileEntityMobSpawner> allSpawners = Collections.synchronizedSet(Collections.newSetFromMap(new WeakHashMap()));
+   static Set<TileEntityMobSpawner> allSpawners = new HashSet<TileEntityMobSpawner>();
 
    public SpawnerEventHandler() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(AttachCapabilitiesEvent.class, TileEntity.class, SpawnerEventHandler::onAttachCapabilities);
+      bus.register(WorldTickEvent.class, SpawnerEventHandler::onTickWorldTick);
+      bus.register(CheckSpawn.class, EventPriority.LOWEST, false, SpawnerEventHandler::onCheckSpawnerSpawn);
+      bus.register(SpecialSpawn.class, SpawnerEventHandler::onLivingSpawnSpecialSpawn);
+      bus.register(LivingDeathEvent.class, SpawnerEventHandler::onLivingDeath);
+      bus.register(LivingExperienceDropEvent.class, SpawnerEventHandler::onLivingExperienceDrop);
+      bus.register(LivingDropsEvent.class, EventPriority.LOWEST, false, SpawnerEventHandler::onLivingItemDrop);
+      bus.register(BreakEvent.class, SpawnerEventHandler::onBlockBreak);
+      bus.register(HarvestDropsEvent.class, SpawnerEventHandler::onBlockHarvestDrops);
+   }
+
    public static void onAttachCapabilities(AttachCapabilitiesEvent<TileEntity> event) {
       if (event.getObject() instanceof TileEntityMobSpawner) {
          TileEntityMobSpawner spawner = (TileEntityMobSpawner)event.getObject();
@@ -79,7 +86,6 @@ public class SpawnerEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onTickWorldTick(WorldTickEvent event) {
       if (event.phase != Phase.START && event.side != Side.CLIENT) {
          Iterator<TileEntityMobSpawner> iterator = allSpawners.iterator();
@@ -108,9 +114,6 @@ public class SpawnerEventHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
    public static void onCheckSpawnerSpawn(CheckSpawn event) {
       MobSpawnerBaseLogic spawner = event.getSpawner();
       if (spawner != null) {
@@ -164,7 +167,6 @@ public class SpawnerEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onLivingSpawnSpecialSpawn(SpecialSpawn event) {
       if (event.getSpawner() != null) {
          IControllableSpawner handler = SpawnerUtil.getHandlerIfAffected(event.getWorld(), event.getSpawner().getSpawnerPosition());
@@ -177,7 +179,6 @@ public class SpawnerEventHandler {
       }
    }
 
-   @SubscribeEvent
    public static void onLivingDeath(LivingDeathEvent event) {
       NBTTagCompound data = event.getEntityLiving().getEntityData();
       if (data.hasKey("spawnercontrol:spawnerPos")) {
@@ -208,7 +209,6 @@ public class SpawnerEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onLivingExperienceDrop(LivingExperienceDropEvent event) {
       SpawnerConfig cfg = SpawnerUtil.getConfig(event.getEntityLiving().getEntityData().getTag("spawnercontrol:spawnerPos"));
       if (cfg != null) {
@@ -225,9 +225,6 @@ public class SpawnerEventHandler {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
    public static void onLivingItemDrop(LivingDropsEvent event) {
       EntityLivingBase livingBase = event.getEntityLiving();
       SpawnerConfig cfg = SpawnerUtil.getConfig(livingBase.getEntityData().getTag("spawnercontrol:spawnerPos"));
@@ -283,7 +280,6 @@ public class SpawnerEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onBlockBreak(BreakEvent event) {
       SpawnerConfig cfg = SpawnerUtil.getConfig(event.getWorld(), event.getPos());
       if (cfg != null) {
@@ -297,7 +293,6 @@ public class SpawnerEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onBlockHarvestDrops(HarvestDropsEvent event) {
       if (event.getHarvester() != null) {
          Block block = event.getState().getBlock();

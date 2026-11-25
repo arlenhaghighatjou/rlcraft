@@ -1,8 +1,9 @@
 package ladysnake.spawnercontrol.config;
 
-import com.google.common.io.Files;
-import java.io.File;
-import java.io.IOException;
+import net.minecraftforge.common.config.ConfigEntry;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import java.util.Collection;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -17,15 +18,10 @@ import net.minecraftforge.common.config.Config.RequiresMcRestart;
 import net.minecraftforge.common.config.Config.RequiresWorldRestart;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Config(
    modid = "spawnercontrol",
    name = "spawnercontrol/spawnercontrol"
-)
-@EventBusSubscriber(
-   modid = "spawnercontrol"
 )
 public class MSCConfig {
    @Ignore
@@ -49,7 +45,7 @@ public class MSCConfig {
    }
 
    public static void portConfig() {
-      File oldConfigFile = new File(CustomSpawnersConfig.configDir, "spawnercontrol.cfg");
+      VFile2 oldConfigFile = new VFile2(CustomSpawnersConfig.configDir, "spawnercontrol.cfg");
       if (oldConfigFile.exists()) {
          Configuration oldConfig = new Configuration(oldConfigFile, "1.0");
          Configuration newConfig = CustomSpawnersConfig.getMainConfiguration();
@@ -68,11 +64,7 @@ public class MSCConfig {
 
             newConfig.save();
 
-            try {
-               Files.move(oldConfigFile, new File(CustomSpawnersConfig.configDir, "spawnercontrol_old.cfg"));
-            } catch (IOException var6) {
-               var6.printStackTrace();
-            }
+            oldConfigFile.renameTo(new VFile2(CustomSpawnersConfig.configDir, "spawnercontrol_old.cfg"));
          }
 
       }
@@ -87,12 +79,26 @@ public class MSCConfig {
 
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, MSCConfig::onConfigChanged);
+   }
+
    public static void onConfigChanged(OnConfigChangedEvent event) {
       if (event.getModID().equals("spawnercontrol")) {
          ConfigManager.sync("spawnercontrol", Type.INSTANCE);
-         CustomSpawnersConfig.getCustomSpawnerConfigs().forEach(SpawnerConfigHolder::sync);
+         Collection<SpawnerConfigHolder> holders = CustomSpawnersConfig.getCustomSpawnerConfigs();
+         for(SpawnerConfigHolder holder : holders) {
+            holder.sync();
+         }
       }
 
+   }
+
+   public static void register() {
+      ConfigManager.register("spawnercontrol", "spawnercontrol/spawnercontrol", "general", null,
+         ConfigEntry.value("alterVanillaSpawner", boolean.class, () -> MSCConfig.alterVanillaSpawner, v -> MSCConfig.alterVanillaSpawner = (Boolean)v).comment("If set to false, vanilla spawners won't be affected by the mod. This mod's own spawners will be the only ones affected by this config").requiresWorldRestart(),
+         ConfigEntry.category("vanillaSpawnerConfig", MSCConfig.vanillaSpawnerConfig.entries()).comment("The spawner configuration for vanilla or vanilla-derived spawners"),
+         ConfigEntry.value("customSpawners", String[].class, () -> MSCConfig.customSpawners, v -> MSCConfig.customSpawners = (String[])v).comment("A list of ids used to generate custom spawner objects", "Each custom spawner uses a separate configuration file, accessible in the 'custom spawners config' category").requiresMcRestart().requiresWorldRestart(),
+         ConfigEntry.value("makeCreativeTab", boolean.class, () -> MSCConfig.makeCreativeTab, v -> MSCConfig.makeCreativeTab = (Boolean)v).comment("If set to true, the mod will generate its own creative tab to put custom spawners in").requiresMcRestart());
    }
 }

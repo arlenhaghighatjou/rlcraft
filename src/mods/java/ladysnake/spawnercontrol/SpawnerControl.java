@@ -1,9 +1,12 @@
 package ladysnake.spawnercontrol;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import ladysnake.spawnercontrol.config.CustomSpawnersConfig;
 import ladysnake.spawnercontrol.config.MSCConfig;
@@ -19,19 +22,16 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.registries.IForgeRegistry;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 @Mod(
@@ -54,7 +54,19 @@ public class SpawnerControl {
    public SpawnerControl() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         ladysnake.spawnercontrol.config.MSCConfig.register();
+         ladysnake.spawnercontrol.controlledspawner.CapabilityControllableSpawner.registerCapabilities();
+         ladysnake.spawnercontrol.SpawnerControl.RegistryHandler.register(MinecraftForge.EVENT_BUS);
+         ladysnake.spawnercontrol.SpawnerEventHandler.register(MinecraftForge.EVENT_BUS);
+         ladysnake.spawnercontrol.config.MSCConfig.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       LOGGER = event.getModLog();
       CustomSpawnersConfig.configDir = event.getModConfigurationDirectory();
@@ -62,7 +74,7 @@ public class SpawnerControl {
       CustomSpawnersConfig.initCustomConfig();
       CapabilityManager.INSTANCE.register(IControllableSpawner.class, new CapabilityControllableSpawner.Storage(), CapabilityControllableSpawner.DefaultControllableSpawner::new);
       if (MSCConfig.customSpawners.length > 0) {
-         GameRegistry.registerTileEntity(TileEntityControlledSpawner.class, "spawnercontrol:controlled_spawner");
+         GameRegistry.registerTileEntity(TileEntityControlledSpawner.class, new ResourceLocation("spawnercontrol:controlled_spawner"), TileEntityControlledSpawner::new);
       }
 
       if (MSCConfig.makeCreativeTab) {
@@ -76,26 +88,28 @@ public class SpawnerControl {
 
    }
 
-   @EventBusSubscriber
    public static class RegistryHandler {
       public RegistryHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, Block.class, RegistryHandler::onBlockRegister);
+         bus.registerGeneric(Register.class, Item.class, RegistryHandler::onItemRegister);
+         bus.register(ModelRegistryEvent.class, RegistryHandler::registerRenders);
+      }
+
       public static void onBlockRegister(Register<Block> event) {
-         Stream var10000 = CustomSpawnersConfig.getCustomSpawnerConfigs().stream().map(SpawnerConfigHolder::createBlock);
-         IForgeRegistry var10001 = event.getRegistry();
-         var10000.forEach(var10001::register);
+         for(SpawnerConfigHolder holder : CustomSpawnersConfig.getCustomSpawnerConfigs()) {
+            event.getRegistry().register(holder.createBlock());
+         }
       }
 
-      @SubscribeEvent
       public static void onItemRegister(Register<Item> event) {
-         Stream var10000 = CustomSpawnersConfig.getCustomSpawnerConfigs().stream().map(SpawnerConfigHolder::createItem);
-         IForgeRegistry var10001 = event.getRegistry();
-         var10000.forEach(var10001::register);
+         for(SpawnerConfigHolder holder : CustomSpawnersConfig.getCustomSpawnerConfigs()) {
+            event.getRegistry().register(holder.createItem());
+         }
       }
 
-      @SubscribeEvent
       @SideOnly(Side.CLIENT)
       public static void registerRenders(ModelRegistryEvent event) {
          ModelResourceLocation mrl = new ModelResourceLocation("mob_spawner", "inventory");
