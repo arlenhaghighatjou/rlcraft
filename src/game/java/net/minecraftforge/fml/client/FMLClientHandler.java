@@ -111,6 +111,7 @@ import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
 import net.lax1dude.eaglercraft.v1_8.Display;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.MoreObjects;
@@ -190,6 +191,7 @@ public class FMLClientHandler implements IFMLSidedHandler
     private Map<ServerData, ExtendedServerListData> serverDataTag;
 
     private WeakReference<NetHandlerPlayClient> currentPlayClient;
+    private long lastWindowUpdate;
 
     /**
      * Called to start the whole game off
@@ -843,7 +845,11 @@ public class FMLClientHandler implements IFMLSidedHandler
     public void processWindowMessages()
     {
 		if (this.client != null && this.client.isCallingFromMinecraftThread()) {
-			Display.update();
+			long now = EagRuntime.steadyTimeMillis();
+			if (now - this.lastWindowUpdate >= 50l) {
+				this.lastWindowUpdate = now;
+				Display.update();
+			}
 		}
     }
     // From FontRenderer.renderCharAtPos
