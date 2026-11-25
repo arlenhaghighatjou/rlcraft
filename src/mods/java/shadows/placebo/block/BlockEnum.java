@@ -73,7 +73,7 @@ public abstract class BlockEnum<E extends Enum<E> & IPropertyEnum> extends Block
    }
 
    public IBlockState getStateFromMeta(int meta) {
-      return this.getDefaultState().withProperty(this.property, (Comparable)this.types.get(meta));
+      return this.getDefaultState().withProperty(this.property, this.types.get(meta));
    }
 
    public int getMetaFromState(IBlockState state) {

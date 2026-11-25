@@ -1,6 +1,6 @@
 package shadows.placebo.loot;
 
-import com.google.common.cache.LoadingCache;
+import net.lax1dude.eaglercraft.v1_8.cache.EaglerLoadingCache;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.event.LootTableLoadEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import shadows.placebo.Placebo;
 
 public class PlaceboLootSystem {
@@ -17,14 +17,16 @@ public class PlaceboLootSystem {
    public PlaceboLootSystem() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LootTableLoadEvent.class, this::loadTables);
+   }
+
    public void loadTables(LootTableLoadEvent e) {
       if (e.getName().equals(LootTableList.CHESTS_SIMPLE_DUNGEON)) {
-         Map<ResourceLocation, LootTable> tables = e.getLootTableManager().registeredLootTables.asMap();
-         LoadingCache<ResourceLocation, LootTable> cache = e.getLootTableManager().registeredLootTables;
+         EaglerLoadingCache<ResourceLocation, LootTable> cache = e.getLootTableManager().registeredLootTables;
 
          for(Entry<ResourceLocation, LootTable> et : PLACEBO_TABLES.entrySet()) {
-            if (!tables.containsValue(et.getValue())) {
+            if (cache.getIfPresent(et.getKey()) != et.getValue()) {
                cache.put(et.getKey(), et.getValue());
             }
 

@@ -9,11 +9,9 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class FastShapelessRecipe extends ShapelessRecipes {
    static int packEmpty = RecipeItemHelper.pack(ItemStack.EMPTY);
-   boolean isSimple = ((Boolean)ReflectionHelper.getPrivateValue(ShapelessRecipes.class, this, new String[]{"isSimple"})).booleanValue();
 
    public FastShapelessRecipe(String group, ItemStack output, NonNullList<Ingredient> ingredients) {
       super(group, output, ingredients);

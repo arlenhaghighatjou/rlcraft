@@ -160,7 +160,7 @@ public class RecipeHelper {
       if (input[0] instanceof List) {
          input = ((List)input[0]).toArray();
       } else if (input[0] instanceof Object[]) {
-         input = input[0];
+         input = (Object[])input[0];
       }
 
       NonNullList<Ingredient> inputL = NonNullList.create();
@@ -202,7 +202,7 @@ public class RecipeHelper {
    }
 
    public void register(IForgeRegistry<IRecipe> reg) {
-      reg.registerAll((IForgeRegistryEntry[])this.recipes.toArray(new IRecipe[0]));
+      reg.registerAll(this.recipes.toArray(new IRecipe[0]));
    }
 
    public static <T extends IForgeRegistryEntry<?>> ItemStack makeStack(T thing, int size, int meta) {
