@@ -17,7 +17,7 @@ public class GuiControls extends GuiScreen
     private final GameSettings options;
     public KeyBinding buttonId;
     public long time;
-    private GuiKeyBindingList keyBindingList;
+    protected GuiKeyBindingList keyBindingList;
     private GuiButton buttonReset;
 
     public GuiControls(GuiScreen screen, GameSettings settings)
