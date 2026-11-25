@@ -115,6 +115,11 @@ public class AdvancementManager
 					StandardCharsets.UTF_8)) {
 				Advancement.Builder advancement = JsonUtils.fromJson(GSON, reader, Advancement.Builder.class);
 				advancements.put(id, advancement);
+			} catch (AdvancementRewards.UnknownRecipeException ex) {
+				if (!file.startsWith("recipes/")) {
+					LOGGER.error("Could not load Minecraft advancement " + id, ex);
+					this.hasErrored = true;
+				}
 			} catch (JsonParseException | IOException ex) {
 				LOGGER.error("Could not load Minecraft advancement " + id, ex);
 				this.hasErrored = true;

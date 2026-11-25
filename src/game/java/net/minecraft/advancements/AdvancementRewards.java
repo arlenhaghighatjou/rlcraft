@@ -168,7 +168,7 @@ public class AdvancementRewards
 
                     if (irecipe == null)
                     {
-                        throw new JsonSyntaxException("Unknown recipe '" + aresourcelocation1[k] + "'");
+                        throw new UnknownRecipeException(aresourcelocation1[k]);
                     }
                 }
 
@@ -186,4 +186,11 @@ public class AdvancementRewards
                 return new AdvancementRewards(i, aresourcelocation, aresourcelocation1, functionobject$cacheablefunction);
             }
         }
+    static final class UnknownRecipeException extends JsonParseException
+    {
+        UnknownRecipeException(ResourceLocation recipe)
+        {
+            super("Unknown recipe '" + recipe + "'");
+        }
+    }
 }
