@@ -4,16 +4,19 @@ import baubles.api.IBauble;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 
 public class BaublesCapabilities {
-   @CapabilityInject(IBaublesItemHandler.class)
-   public static final Capability<IBaublesItemHandler> CAPABILITY_BAUBLES = null;
-   @CapabilityInject(IBauble.class)
-   public static final Capability<IBauble> CAPABILITY_ITEM_BAUBLE = null;
+   public static Capability<IBaublesItemHandler> CAPABILITY_BAUBLES = null;
+   public static Capability<IBauble> CAPABILITY_ITEM_BAUBLE = null;
 
    public BaublesCapabilities() {
+   }
+
+   public static void register() {
+      CapabilityManager.INSTANCE.onRegistered(IBaublesItemHandler.class, capability -> CAPABILITY_BAUBLES = capability);
+      CapabilityManager.INSTANCE.onRegistered(IBauble.class, capability -> CAPABILITY_ITEM_BAUBLE = capability);
    }
 
    public static class CapabilityBaubles<T extends IBaublesItemHandler> implements IStorage<IBaublesItemHandler> {

@@ -31,6 +31,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import baubles.client.gui.BaublesGuiFactory;
+import baubles.common.Baubles;
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraft.util.ResourceLocation;
@@ -170,6 +172,7 @@ public class Loader
         mods.add(new InjectedModContainer(mcp));
         mods.add(new InjectedModContainer(new FMLContainer()));
         mods.add(new InjectedModContainer(new ForgeModContainer()));
+        mods.add(new FMLModContainer<>("baubles", "Baubles", "1.5.2", "required-after:forge@[14.21.0.2348,);", "[1.12]", "baubles", Baubles::new, Baubles::handleModStateEvent).guiFactory(BaublesGuiFactory::new));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }

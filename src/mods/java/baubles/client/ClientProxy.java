@@ -23,8 +23,8 @@ public class ClientProxy extends CommonProxy {
    public void registerEventHandlers() {
       super.registerEventHandlers();
       ClientRegistry.registerKeyBinding(KEY_BAUBLES);
-      MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
-      MinecraftForge.EVENT_BUS.register(new GuiEvents());
+      (new ClientEventHandler()).register(MinecraftForge.EVENT_BUS);
+      (new GuiEvents()).register(MinecraftForge.EVENT_BUS);
    }
 
    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {

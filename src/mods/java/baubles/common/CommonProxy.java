@@ -30,8 +30,8 @@ public class CommonProxy implements IGuiHandler {
    }
 
    public void registerEventHandlers() {
-      MinecraftForge.EVENT_BUS.register(new EventHandlerEntity());
-      MinecraftForge.EVENT_BUS.register(new EventHandlerItem());
+      (new EventHandlerEntity()).register(MinecraftForge.EVENT_BUS);
+      (new EventHandlerItem()).register(MinecraftForge.EVENT_BUS);
    }
 
    public void init() {

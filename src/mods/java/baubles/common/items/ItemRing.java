@@ -18,15 +18,18 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 
-@EventBusSubscriber
 public class ItemRing extends Item implements IBauble {
-   @ObjectHolder("baubles:ring")
-   public static final Item RING = null;
+   public static Item RING = null;
+
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Item.class, ItemRing::registerItems);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("baubles:ring"), item -> RING = item);
+   }
 
    public ItemRing() {
       this.setMaxStackSize(1);
@@ -35,7 +38,6 @@ public class ItemRing extends Item implements IBauble {
       this.setCreativeTab(CreativeTabs.TOOLS);
    }
 
-   @SubscribeEvent
    public static void registerItems(Register<Item> event) {
       event.getRegistry().register((new ItemRing()).setUnlocalizedName("Ring").setRegistryName("ring"));
    }

@@ -14,7 +14,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,12 +23,16 @@ public class ClientEventHandler {
    public ClientEventHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, this::registerItemModels);
+      bus.register(PlayerTickEvent.class, this::playerTick);
+      bus.register(ItemTooltipEvent.class, this::tooltipEvent);
+   }
+
    public void registerItemModels(ModelRegistryEvent event) {
       ModelLoader.setCustomModelResourceLocation(ItemRing.RING, 0, new ModelResourceLocation("baubles:ring", "inventory"));
    }
 
-   @SubscribeEvent
    public void playerTick(PlayerTickEvent event) {
       if (event.side == Side.CLIENT && event.phase == Phase.START && ClientProxy.KEY_BAUBLES.isPressed() && FMLClientHandler.instance().getClient().inGameHasFocus) {
          PacketHandler.INSTANCE.sendToServer(new PacketOpenBaublesInventory());
@@ -36,7 +40,6 @@ public class ClientEventHandler {
 
    }
 
-   @SubscribeEvent
    public void tooltipEvent(ItemTooltipEvent event) {
       if (!event.getItemStack().isEmpty() && event.getItemStack().hasCapability(BaublesCapabilities.CAPABILITY_ITEM_BAUBLE, (EnumFacing)null)) {
          IBauble bauble = (IBauble)event.getItemStack().getCapability(BaublesCapabilities.CAPABILITY_ITEM_BAUBLE, (EnumFacing)null);

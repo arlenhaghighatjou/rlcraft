@@ -11,8 +11,8 @@ public class PacketHandler {
    }
 
    public static void init() {
-      INSTANCE.registerMessage(PacketOpenBaublesInventory.class, PacketOpenBaublesInventory.class, 0, Side.SERVER);
-      INSTANCE.registerMessage(PacketOpenNormalInventory.class, PacketOpenNormalInventory.class, 1, Side.SERVER);
-      INSTANCE.registerMessage(PacketSync.Handler.class, PacketSync.class, 2, Side.CLIENT);
+      INSTANCE.registerMessage(new PacketOpenBaublesInventory(), PacketOpenBaublesInventory.class, PacketOpenBaublesInventory::new, 0, Side.SERVER);
+      INSTANCE.registerMessage(new PacketOpenNormalInventory(), PacketOpenNormalInventory.class, PacketOpenNormalInventory::new, 1, Side.SERVER);
+      INSTANCE.registerMessage(new PacketSync.Handler(), PacketSync.class, PacketSync::new, 2, Side.CLIENT);
    }
 }

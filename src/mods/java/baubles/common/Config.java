@@ -1,10 +1,9 @@
 package baubles.common;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Config {
    public static Configuration config;
@@ -13,11 +12,11 @@ public class Config {
    public Config() {
    }
 
-   public static void initialize(File file) {
+   public static void initialize(VFile2 file) {
       config = new Configuration(file);
       config.load();
       load();
-      MinecraftForge.EVENT_BUS.register(Config.ConfigChangeListener.class);
+      MinecraftForge.EVENT_BUS.register(OnConfigChangedEvent.class, ConfigChangeListener::onConfigChanged);
    }
 
    public static void load() {
@@ -37,7 +36,6 @@ public class Config {
       public ConfigChangeListener() {
       }
 
-      @SubscribeEvent
       public static void onConfigChanged(OnConfigChangedEvent eventArgs) {
          if (eventArgs.getModID().equals("baubles")) {
             Config.load();

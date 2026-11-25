@@ -6,13 +6,12 @@ import java.io.IOException;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class GuiPlayerExpanded extends InventoryEffectRenderer {
    public static final ResourceLocation background = new ResourceLocation("baubles", "textures/gui/expanded_inventory.png");
@@ -91,8 +90,8 @@ public class GuiPlayerExpanded extends InventoryEffectRenderer {
 
    public void displayNormalInventory() {
       GuiInventory gui = new GuiInventory(this.mc.player);
-      ReflectionHelper.setPrivateValue(GuiInventory.class, gui, Float.valueOf(this.oldMouseX), new String[]{"oldMouseX", "oldMouseX"});
-      ReflectionHelper.setPrivateValue(GuiInventory.class, gui, Float.valueOf(this.oldMouseY), new String[]{"oldMouseY", "oldMouseY"});
+      gui.oldMouseX = this.oldMouseX;
+      gui.oldMouseY = this.oldMouseY;
       this.mc.displayGuiScreen(gui);
    }
 }

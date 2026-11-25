@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,18 +32,27 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class EventHandlerEntity {
-   private HashMap<UUID, ItemStack[]> baublesSync = new HashMap();
+   private HashMap<EaglercraftUUID, ItemStack[]> baublesSync = new HashMap();
 
    public EventHandlerEntity() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Clone.class, this::cloneCapabilitiesEvent);
+      bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, this::attachCapabilitiesPlayer);
+      bus.register(EntityJoinWorldEvent.class, this::playerJoin);
+      bus.register(StartTracking.class, this::onStartTracking);
+      bus.register(PlayerLoggedOutEvent.class, this::onPlayerLoggedOut);
+      bus.register(PlayerTickEvent.class, this::playerTick);
+      bus.register(PlayerDropsEvent.class, this::playerDeath);
+   }
+
    public void cloneCapabilitiesEvent(Clone event) {
       try {
          BaublesContainer bco = (BaublesContainer)BaublesApi.getBaublesHandler(event.getOriginal());
@@ -56,7 +65,6 @@ public class EventHandlerEntity {
 
    }
 
-   @SubscribeEvent
    public void attachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
       if (event.getObject() instanceof EntityPlayer) {
          event.addCapability(new ResourceLocation("baubles", "container"), new BaublesContainerProvider(new BaublesContainer()));
@@ -64,7 +72,6 @@ public class EventHandlerEntity {
 
    }
 
-   @SubscribeEvent
    public void playerJoin(EntityJoinWorldEvent event) {
       Entity entity = event.getEntity();
       if (entity instanceof EntityPlayerMP) {
@@ -74,7 +81,6 @@ public class EventHandlerEntity {
 
    }
 
-   @SubscribeEvent
    public void onStartTracking(StartTracking event) {
       Entity target = event.getTarget();
       if (target instanceof EntityPlayerMP) {
@@ -83,12 +89,10 @@ public class EventHandlerEntity {
 
    }
 
-   @SubscribeEvent
    public void onPlayerLoggedOut(PlayerLoggedOutEvent event) {
       this.baublesSync.remove(event.player.getUniqueID());
    }
 
-   @SubscribeEvent
    public void playerTick(PlayerTickEvent event) {
       if (event.phase == Phase.END) {
          EntityPlayer player = event.player;
@@ -161,7 +165,6 @@ public class EventHandlerEntity {
 
    }
 
-   @SubscribeEvent
    public void playerDeath(PlayerDropsEvent event) {
       if (event.getEntity() instanceof EntityPlayer && !event.getEntity().world.isRemote && !event.getEntity().world.getGameRules().getBoolean("keepInventory")) {
          this.dropItemsAt(event.getEntityPlayer(), event.getDrops(), event.getEntityPlayer());

@@ -5,13 +5,12 @@ import baubles.api.cap.IBaublesItemHandler;
 import baubles.api.render.IRenderBauble;
 import baubles.common.Config;
 import javax.annotation.Nonnull;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import org.lwjgl.opengl.GL11;
 
 public final class BaublesRenderLayer implements LayerRenderer<EntityPlayer> {
    public BaublesRenderLayer() {
@@ -40,7 +39,6 @@ public final class BaublesRenderLayer implements LayerRenderer<EntityPlayer> {
             Item item = stack.getItem();
             if (item instanceof IRenderBauble) {
                GlStateManager.pushMatrix();
-               GL11.glColor3ub((byte)-1, (byte)-1, (byte)-1);
                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                ((IRenderBauble)stack.getItem()).onPlayerBaubleRender(stack, player, type, partialTicks);
                GlStateManager.popMatrix();
