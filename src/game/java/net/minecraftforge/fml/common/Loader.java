@@ -200,6 +200,7 @@ public class Loader
         mods.add(new FMLModContainer<>("helpfixer", "HelpFixer", "1.12.1-1.5.18", "", "[1.12.2]", "helpfixer", com.matthewprenger.helpfixer.HelpFixer::new, com.matthewprenger.helpfixer.HelpFixer::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("foodexpansion", "Food Expansion", "1.3", "", "[1.12.2]", "fe", lellson.foodexpansion.FoodExpansion::new, lellson.foodexpansion.FoodExpansion::handleModStateEvent));
         mods.add(new FMLModContainer<>("attributefix", "Attribute Fix", "1.0.12", "", "", "attributefix", net.darkhax.attributefix.AttributeFix::new, net.darkhax.attributefix.AttributeFix::handleModStateEvent));
+        mods.add(new FMLModContainer<>("enchdesc", "Enchantment Descriptions", "1.1.20", "", "[1.12.2]", "enchdesc", net.darkhax.enchdesc.EnchantmentDescriptions::new, net.darkhax.enchdesc.EnchantmentDescriptions::handleModStateEvent).clientSideOnly());
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }

@@ -1,5 +1,6 @@
 package net.darkhax.enchdesc.client;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.util.text.TextFormatting;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,26 +12,29 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry.Impl;
 
 @SideOnly(Side.CLIENT)
 public class TooltipHandler {
-   private static final KeyBinding keyBindSneak;
 
    public TooltipHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ItemTooltipEvent.class, this::onTooltipDisplayed);
+   }
+
    public void onTooltipDisplayed(ItemTooltipEvent event) {
       if (event.getEntityPlayer() != null) {
          if (!event.getItemStack().isEmpty() && event.getItemStack().getItem() instanceof ItemEnchantedBook) {
             List<String> tooltip = event.getToolTip();
+            KeyBinding keyBindSneak = Minecraft.getMinecraft().gameSettings.keyBindSneak;
             if (GameSettings.isKeyDown(keyBindSneak)) {
                for(Enchantment enchant : this.getEnchantments(event.getItemStack())) {
                   tooltip.add(I18n.format("tooltip.enchdesc.name", new Object[0]) + ": " + I18n.format(enchant.getName(), new Object[0]));
@@ -82,10 +86,7 @@ public class TooltipHandler {
    }
 
    public static String getTranslationKey(Enchantment enchant) {
-      return enchant != null && enchant.getRegistryName() != null ? String.format("enchantment.%s.%s.desc", enchant.getRegistryName().getResourceDomain(), enchant.getRegistryName().getResourcePath()) : "NULL";
-   }
-
-   static {
-      keyBindSneak = Minecraft.getMinecraft().gameSettings.keyBindSneak;
+      ResourceLocation name = enchant == null ? null : enchant.getRegistryName();
+      return name == null ? "NULL" : "enchantment." + name.getResourceDomain() + "." + name.getResourcePath() + ".desc";
    }
 }

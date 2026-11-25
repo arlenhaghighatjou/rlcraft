@@ -1,6 +1,6 @@
 package net.darkhax.enchdesc.handler;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraftforge.common.config.Configuration;
 
 public final class ConfigurationHandler {
@@ -10,7 +10,7 @@ public final class ConfigurationHandler {
    private ConfigurationHandler() {
    }
 
-   public static void initConfig(File file) {
+   public static void initConfig(VFile2 file) {
       config = new Configuration(file);
       syncConfig();
    }
