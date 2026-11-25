@@ -19,6 +19,7 @@
 
 package net.minecraftforge.fml.common;
 
+import com.arlenh7.eaglercraft.forge.PlatformForge;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -186,7 +187,7 @@ public class FMLCommonHandler
      */
     public Side getEffectiveSide()
     {
-        return effectiveSide;
+        return PlatformForge.isServerThread(effectiveSide == Side.SERVER) ? Side.SERVER : Side.CLIENT;
     }
     /**
      * Raise an exception
