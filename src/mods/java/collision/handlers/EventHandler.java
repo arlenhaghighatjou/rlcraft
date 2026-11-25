@@ -1,8 +1,8 @@
 package collision.handlers;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import collision.packets.PacketCollisionS;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -13,7 +13,10 @@ public class EventHandler {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlayerTickEvent.class, this::playerTick);
+   }
+
    public void playerTick(PlayerTickEvent event) {
       if (event.phase != Phase.START && event.player != null && event.player.world.isRemote) {
          EntityPlayer player = event.player;

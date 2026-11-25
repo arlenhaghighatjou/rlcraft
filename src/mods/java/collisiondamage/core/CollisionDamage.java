@@ -1,11 +1,13 @@
 package collisiondamage.core;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import collision.handlers.PacketHandler;
 import collisiondamage.core.proxies.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
@@ -21,25 +23,32 @@ public class CollisionDamage {
    public static final String NAME = "CollisionDamage";
    public static final String PROXY = "collisiondamage.core.proxies";
    public static final String CHANNEL = "COLLISIONDAMAGE";
-   @Instance("collisiondamage")
    public static CollisionDamage instance;
-   @SidedProxy(
-      clientSide = "collisiondamage.core.proxies.ClientProxy",
-      serverSide = "collisiondamage.core.proxies.CommonProxy"
-   )
    public static CommonProxy proxy;
    public static Logger logger;
 
    public CollisionDamage() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new collisiondamage.core.proxies.ClientProxy() : new collisiondamage.core.proxies.CommonProxy();
+         collision.handlers.ModConfig.register();
+         collision.handlers.ModConfig.EventHandler.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.onInit((FMLInitializationEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       logger = event.getModLog();
       PacketHandler.registerPacket();
    }
 
-   @EventHandler
    public void onInit(FMLInitializationEvent event) {
       proxy.registerHandlers();
    }

@@ -12,6 +12,6 @@ public class PacketHandler {
    }
 
    public static void registerPacket() {
-      INSTANCE.registerMessage(PacketCollisionS.CollisionMessageHandler.class, PacketCollisionS.class, 1, Side.SERVER);
+      INSTANCE.registerMessage(new PacketCollisionS.CollisionMessageHandler(), PacketCollisionS.class, PacketCollisionS::new, 1, Side.SERVER);
    }
 }
