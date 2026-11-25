@@ -1,9 +1,9 @@
 package com.lothrazar.playerbosses;
 
-import java.io.File;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigManager {
    public static boolean renderDebugHitboxes;
@@ -51,12 +51,15 @@ public class ConfigManager {
 
    }
 
-   public static void init(File configFile) {
+   public static void init(VFile2 configFile) {
       config = new Configuration(configFile);
       load();
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, this::onConfigChanged);
+   }
+
    public void onConfigChanged(OnConfigChangedEvent event) {
       if (event.getModID().equalsIgnoreCase("playerbosses")) {
          load();
