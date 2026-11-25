@@ -16,6 +16,8 @@
 
 package net.lax1dude.eaglercraft.v1_8.socket.protocol.handshake;
 
+import com.google.gson.JsonParseException;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -298,7 +300,14 @@ public class HandshakerHandler {
 		}else if(errCode == HandshakePacketTypes.SERVER_ERROR_AUTHENTICATION_REQUIRED) {
 			handleAuthRequired(msg);
 		}else if(errCode == HandshakePacketTypes.SERVER_ERROR_CUSTOM_MESSAGE) {
-			handleError("connect.failed", v3 ? ITextComponent.Serializer.jsonToComponent(msg) : new TextComponentString(msg));
+			ITextComponent detail = null;
+			if(v3) {
+				try {
+					detail = ITextComponent.Serializer.jsonToComponent(msg);
+				}catch(JsonParseException ignored) {
+				}
+			}
+			handleError("connect.failed", detail != null ? detail : new TextComponentString(msg));
 		}else {
 			handleError("connect.failed", new TextComponentString("Server Error Code " + errCode + "\n" + msg));
 		}

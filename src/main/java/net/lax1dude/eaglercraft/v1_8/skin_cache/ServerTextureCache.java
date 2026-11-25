@@ -130,12 +130,16 @@ public abstract class ServerTextureCache {
 			SkinData ret = getForeignSkinImpl(profile, prop);
 			if (ret != null) {
 				return ret;
-			} else if (StateFlags.eaglerPlayerFlag) {
-				return SkinData.getDefaultSkin(profile.getId());
-			} else {
+			} else if (canLookupPlayerTextures(profile)) {
 				return getPlayerSkinImpl(profile, prop);
+			} else {
+				return SkinData.getDefaultSkin(profile.getId());
 			}
 		}
+	}
+
+	private boolean canLookupPlayerTextures(GameProfile profile) {
+		return !StateFlags.eaglerPlayerFlag || netHandler.getPlayerInfo(profile.getId()) != null;
 	}
 
 	private SkinData getPlayerSkinImpl(GameProfile profile, TexturesProperty prop) {
@@ -188,7 +192,7 @@ public abstract class ServerTextureCache {
 		if (uuid.equals(self)) {
 			return EaglerProfile.getActiveCapeResourceLocation();
 		}
-		if (!StateFlags.eaglerPlayerFlag || profile.getTextures().eaglerPlayer != (byte) 0) {
+		if (profile.getTextures().eaglerPlayer != (byte) 0 || canLookupPlayerTextures(profile)) {
 			if (checkEvicted(uuid)) {
 				return null;
 			}

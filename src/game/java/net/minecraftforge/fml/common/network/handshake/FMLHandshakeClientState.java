@@ -68,31 +68,30 @@ enum FMLHandshakeClientState implements IHandshakeState<FMLHandshakeClientState>
         @Override
         public void accept(ChannelHandlerContext ctx, FMLHandshakeMessage msg, Consumer<? super FMLHandshakeClientState> cons)
         {
-            boolean isVanilla = msg == null;
-            if (isVanilla)
+            NetworkDispatcher dispatcher = ctx.channel().attr(NetworkDispatcher.FML_DISPATCHER).get();
+            if (msg != null && !(msg instanceof ServerHello))
             {
-                cons.accept(DONE);
+                cons.accept(ERROR);
+                dispatcher.rejectHandshake("Expected Forge ServerHello");
+                return;
             }
-            else
-            {
-                cons.accept(WAITINGSERVERDATA);
-            }
+
+            cons.accept(msg == null ? DONE : WAITINGSERVERDATA);
             // write our custom packet registration, always
             ctx.writeAndFlush(FMLHandshakeMessage.makeCustomChannelRegistration(NetworkRegistry.INSTANCE.channelNamesFor(Side.CLIENT)));
-            if (isVanilla)
+            if (msg == null)
             {
-                NetworkDispatcher dispatcher = ctx.channel().attr(NetworkDispatcher.FML_DISPATCHER).get();
                 dispatcher.abortClientHandshake("VANILLA");
                 // VANILLA login
                 return;
             }
 
+            dispatcher.beginClientHandshake();
             ServerHello serverHelloPacket = (FMLHandshakeMessage.ServerHello)msg;
             FMLLog.log.info("Server protocol version {}", Integer.toHexString(serverHelloPacket.protocolVersion()));
             if (serverHelloPacket.protocolVersion() > 1)
             {
                 // Server sent us an extra dimension for the logging in player - stash it for retrieval later
-                NetworkDispatcher dispatcher = ctx.channel().attr(NetworkDispatcher.FML_DISPATCHER).get();
                 dispatcher.setOverrideDimension(serverHelloPacket.overrideDim());
             }
             ctx.writeAndFlush(new FMLHandshakeMessage.ClientHello()).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);

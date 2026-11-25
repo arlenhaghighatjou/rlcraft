@@ -66,6 +66,8 @@ import net.minecraft.world.WorldServerDemo;
 import net.minecraft.world.WorldServerMulti;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.WorldType;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
@@ -78,6 +80,7 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 public abstract class MinecraftServer implements ICommandSender, IThreadListener
 {
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final int SPAWN_PRELOAD_RADIUS = 12;
     public static final VFile2 USER_CACHE_FILE = new VFile2("usercache.json");
     private final ISaveFormat anvilConverterForAnvilFile;
     private final List<ITickable> tickables = Lists.<ITickable>newArrayList();
@@ -295,65 +298,66 @@ public abstract class MinecraftServer implements ICommandSender, IThreadListener
     private void updateSpawnChunks(WorldServer world)
     {
         boolean keepLoaded = world.getGameRules().getBoolean("loadSpawnChunks");
-        if (keepLoaded != this.spawnChunksLoaded)
+        if (keepLoaded == this.spawnChunksLoaded)
         {
-            if (keepLoaded)
+            return;
+        }
+
+        if (keepLoaded)
+        {
+            this.initialWorldChunkLoad();
+        }
+        else
+        {
+            this.unloadSpawnChunks(world);
+        }
+        this.spawnChunksLoaded = keepLoaded;
+    }
+
+    private void unloadSpawnChunks(WorldServer world)
+    {
+        BlockPos spawn = world.getSpawnPoint();
+        int spawnX = spawn.getX() >> 4;
+        int spawnZ = spawn.getZ() >> 4;
+        ChunkProviderServer provider = world.getChunkProvider();
+        for (Chunk chunk : provider.getLoadedChunks())
+        {
+            if (Math.abs(chunk.x - spawnX) <= SPAWN_PRELOAD_RADIUS && Math.abs(chunk.z - spawnZ) <= SPAWN_PRELOAD_RADIUS
+                    && !world.getPlayerChunkMap().contains(chunk.x, chunk.z))
             {
-                this.initialWorldChunkLoad();
+                provider.queueUnload(chunk);
             }
-            else
-            {
-                BlockPos spawn = world.getSpawnPoint();
-                net.minecraft.world.gen.ChunkProviderServer provider = world.getChunkProvider();
-                for (int x = -192; x <= 192; x += 16)
-                {
-                    for (int z = -192; z <= 192; z += 16)
-                    {
-                        int chunkX = (spawn.getX() + x) >> 4;
-                        int chunkZ = (spawn.getZ() + z) >> 4;
-                        if (!world.getPlayerChunkMap().contains(chunkX, chunkZ))
-                        {
-                            net.minecraft.world.chunk.Chunk chunk = provider.getLoadedChunk(chunkX, chunkZ);
-                            if (chunk != null)
-                            {
-                                provider.queueUnload(chunk);
-                            }
-                        }
-                    }
-                }
-            }
-            this.spawnChunksLoaded = keepLoaded;
         }
     }
 
     public void initialWorldChunkLoad()
     {
-        int i = 16;
-        int j = 4;
-        int k = 192;
-        int l = 625;
-        int i1 = 0;
         this.setUserMessage("menu.generatingTerrain");
-        int j1 = 0;
         LOGGER.info("Preparing start region for level 0");
-        WorldServer worldserver = net.minecraftforge.common.DimensionManager.getWorld(j1);
-        BlockPos blockpos = worldserver.getSpawnPoint();
-        long k1 = getCurrentTimeMillis();
+        WorldServer world = net.minecraftforge.common.DimensionManager.getWorld(0);
+        BlockPos spawn = world.getSpawnPoint();
+        int spawnX = spawn.getX() >> 4;
+        int spawnZ = spawn.getZ() >> 4;
+        int diameter = SPAWN_PRELOAD_RADIUS * 2 + 1;
+        int totalChunks = diameter * diameter;
+        int loadedChunks = 0;
+        long lastProgress = getCurrentTimeMillis();
+        ChunkProviderServer provider = world.getChunkProvider();
 
-        for (int l1 = -192; l1 <= 192 && this.isServerRunning(); l1 += 16)
+        for (int x = -SPAWN_PRELOAD_RADIUS; x <= SPAWN_PRELOAD_RADIUS && this.isServerRunning(); ++x)
         {
-            for (int i2 = -192; i2 <= 192 && this.isServerRunning(); i2 += 16)
+            for (int z = -SPAWN_PRELOAD_RADIUS; z <= SPAWN_PRELOAD_RADIUS && this.isServerRunning(); ++z)
             {
-                long j2 = getCurrentTimeMillis();
+                long now = getCurrentTimeMillis();
 
-                if (j2 - k1 > 1000L)
+                if (now - lastProgress > 1000L)
                 {
-                    this.outputPercentRemaining("Preparing spawn area", i1 * 100 / 625);
-                    k1 = j2;
+                    this.outputPercentRemaining("Preparing spawn area", loadedChunks * 100 / totalChunks);
+                    lastProgress = now;
                 }
 
-                ++i1;
-                worldserver.getChunkProvider().provideChunk(blockpos.getX() + l1 >> 4, blockpos.getZ() + i2 >> 4);
+                provider.provideChunk(spawnX + x, spawnZ + z);
+                ++loadedChunks;
             }
         }
 

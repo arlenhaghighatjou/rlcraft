@@ -200,6 +200,11 @@ public class NetworkDispatcher {
         this.state = ConnectionState.AWAITING_HANDSHAKE;
     }
 
+    void beginClientHandshake()
+    {
+        this.state = ConnectionState.HANDSHAKING;
+    }
+
     private void completeClientSideConnection(ConnectionType type)
     {
         this.connectionType = type;
