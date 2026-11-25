@@ -1,13 +1,15 @@
 package lumien.chunkanimator.handler;
 
-import java.util.WeakHashMap;
 import lumien.chunkanimator.ChunkAnimator;
-import net.minecraft.client.Minecraft;
+import lumien.chunkanimator.config.ChunkAnimatorConfig;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
-import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
+import net.minecraft.util.math.MathHelper;
 import penner.easing.Back;
 import penner.easing.Bounce;
 import penner.easing.Circ;
@@ -21,94 +23,99 @@ import penner.easing.Quint;
 import penner.easing.Sine;
 
 public class AnimationHandler {
-   WeakHashMap<Object, AnimationHandler.AnimationData> timeStamps = new WeakHashMap();
+   private int cooldown;
 
-   public AnimationHandler() {
+   public void startCooldown() {
+      this.cooldown = 10;
    }
 
-   public void preRender(Object renderChunk, BlockPos pos) {
-      Vector3f offset = this.getOffset(renderChunk, pos);
-      if (offset != null) {
-         GlStateManager.translate(offset.x, offset.y, offset.z);
+   public void tick() {
+      if (this.cooldown > 0) {
+         --this.cooldown;
+      }
+   }
+
+   public void setOrigin(RenderChunk chunk) {
+      chunk.animationStart = RenderChunk.NO_ANIMATION;
+      chunk.animationFacing = null;
+      EntityPlayerSP player = Minecraft.getMinecraft().player;
+      if (player == null) {
+         return;
       }
 
+      ChunkAnimatorConfig config = ChunkAnimator.INSTANCE.config;
+      BlockPos pos = chunk.getPosition();
+      int dx = MathHelper.floor(player.posX) - pos.getX() - 8;
+      int dz = MathHelper.floor(player.posZ) - pos.getZ() - 8;
+      if ((config.disableAroundPlayer() || this.cooldown > 0)
+          && (double)dx * dx + (double)dz * dz <= 4096.0D) {
+         return;
+      }
+
+      chunk.animationStart = RenderChunk.ANIMATION_PENDING;
+      if (config.getMode() == 3) {
+         chunk.animationFacing = getFacing(dx, dz);
+      }
    }
 
-   public Vector3f getOffset(Object renderChunk, BlockPos position) {
-      if (this.timeStamps.containsKey(renderChunk)) {
-         AnimationHandler.AnimationData animationData = (AnimationHandler.AnimationData)this.timeStamps.get(renderChunk);
-         long time = animationData.timeStamp;
-         int mode = ChunkAnimator.INSTANCE.config.getMode();
-         if (time == -1L) {
-            time = System.currentTimeMillis();
-            animationData.timeStamp = time;
-            if (mode == 4) {
-               BlockPos zeroedPlayerPosition = Minecraft.getMinecraft().player.getPosition();
-               zeroedPlayerPosition = zeroedPlayerPosition.add(0, -zeroedPlayerPosition.getY(), 0);
-               BlockPos zeroedCenteredChunkPos = position.add(8, -position.getY(), 8);
-               Vec3i dif = zeroedPlayerPosition.subtract(zeroedCenteredChunkPos);
-               int difX = Math.abs(dif.getX());
-               int difZ = Math.abs(dif.getZ());
-               EnumFacing chunkFacing;
-               if (difX > difZ) {
-                  if (dif.getX() > 0) {
-                     chunkFacing = EnumFacing.EAST;
-                  } else {
-                     chunkFacing = EnumFacing.WEST;
-                  }
-               } else if (dif.getZ() > 0) {
-                  chunkFacing = EnumFacing.SOUTH;
-               } else {
-                  chunkFacing = EnumFacing.NORTH;
-               }
+   public void preRender(RenderChunk chunk) {
+      if (chunk.animationStart == RenderChunk.NO_ANIMATION) {
+         return;
+      }
 
-               animationData.chunkFacing = chunkFacing;
-            }
-         }
-
-         long timeDif = System.currentTimeMillis() - time;
-         int animationDuration = ChunkAnimator.INSTANCE.config.getAnimationDuration();
-         if (timeDif < (long)animationDuration) {
-            int chunkY = position.getY();
-            if (mode == 2) {
-               if ((double)chunkY < Minecraft.getMinecraft().world.provider.getHorizon()) {
-                  mode = 0;
-               } else {
-                  mode = 1;
-               }
-            }
-
-            if (mode == 4) {
-               mode = 3;
-            }
-
-            switch(mode) {
-            case 0:
-               return new Vector3f(0.0F, (float)(-chunkY) + this.getFunctionValue((float)timeDif, 0.0F, (float)chunkY, (float)animationDuration), 0.0F);
-            case 1:
-               return new Vector3f(0.0F, (float)(256 - chunkY) - this.getFunctionValue((float)timeDif, 0.0F, (float)(256 - chunkY), (float)animationDuration), 0.0F);
-            case 2:
-            default:
-               break;
-            case 3:
-               EnumFacing chunkFacing = animationData.chunkFacing;
-               if (chunkFacing != null) {
-                  Vec3i vec = chunkFacing.getDirectionVec();
-                  float mod = -(200.0F - 200.0F / (float)animationDuration * (float)timeDif);
-                  mod = -(200.0F - this.getFunctionValue((float)timeDif, 0.0F, 200.0F, (float)animationDuration));
-                  return new Vector3f((float)vec.getX() * mod, 0.0F, (float)vec.getZ() * mod);
-               }
-            }
-         } else {
-            this.timeStamps.remove(renderChunk);
+      long now = EagRuntime.steadyTimeMillis();
+      ChunkAnimatorConfig config = ChunkAnimator.INSTANCE.config;
+      int duration = config.getAnimationDuration();
+      int mode = config.getMode();
+      BlockPos pos = chunk.getPosition();
+      if (chunk.animationStart == RenderChunk.ANIMATION_PENDING) {
+         chunk.animationStart = now;
+         EntityPlayerSP player = Minecraft.getMinecraft().player;
+         if (mode == 4 && player != null) {
+            chunk.animationFacing = getFacing(MathHelper.floor(player.posX) - pos.getX() - 8,
+               MathHelper.floor(player.posZ) - pos.getZ() - 8);
          }
       }
 
-      return null;
+      long elapsed = now - chunk.animationStart;
+      if (elapsed >= duration) {
+         chunk.animationStart = RenderChunk.NO_ANIMATION;
+         return;
+      }
+
+      if (mode == 2) {
+         mode = pos.getY() < Minecraft.getMinecraft().world.provider.getHorizon() ? 0 : 1;
+      }
+      float remaining = 1.0F - this.getFunctionValue(elapsed, 0.0F, 1.0F, duration);
+      switch (mode) {
+      case 0:
+         GlStateManager.translate(0.0F, -pos.getY() * remaining, 0.0F);
+         break;
+      case 1:
+         GlStateManager.translate(0.0F, (256 - pos.getY()) * remaining, 0.0F);
+         break;
+      case 3:
+      case 4:
+         if (chunk.animationFacing != null) {
+            float offset = -200.0F * remaining;
+            GlStateManager.translate(chunk.animationFacing.getFrontOffsetX() * offset, 0.0F,
+               chunk.animationFacing.getFrontOffsetZ() * offset);
+         }
+         break;
+      default:
+         break;
+      }
+   }
+
+   private static EnumFacing getFacing(int dx, int dz) {
+      if (Math.abs(dx) > Math.abs(dz)) {
+         return dx > 0 ? EnumFacing.EAST : EnumFacing.WEST;
+      }
+      return dz > 0 ? EnumFacing.SOUTH : EnumFacing.NORTH;
    }
 
    private float getFunctionValue(float t, float b, float c, float d) {
-      switch(ChunkAnimator.INSTANCE.config.getEasingFunction()) {
+      switch (ChunkAnimator.INSTANCE.config.getEasingFunction()) {
       case 0:
          return Linear.easeOut(t, b, c, d);
       case 1:
@@ -121,8 +128,6 @@ public class AnimationHandler {
          return Quint.easeOut(t, b, c, d);
       case 5:
          return Expo.easeOut(t, b, c, d);
-      case 6:
-         return Sine.easeOut(t, b, c, d);
       case 7:
          return Circ.easeOut(t, b, c, d);
       case 8:
@@ -131,56 +136,9 @@ public class AnimationHandler {
          return Bounce.easeOut(t, b, c, d);
       case 10:
          return Elastic.easeOut(t, b, c, d);
+      case 6:
       default:
          return Sine.easeOut(t, b, c, d);
-      }
-   }
-
-   public void setOrigin(Object renderChunk, BlockPos position) {
-      if (Minecraft.getMinecraft().player != null) {
-         boolean flag = true;
-         BlockPos zeroedPlayerPosition = Minecraft.getMinecraft().player.getPosition();
-         zeroedPlayerPosition = zeroedPlayerPosition.add(0, -zeroedPlayerPosition.getY(), 0);
-         BlockPos zeroedCenteredChunkPos = position.add(8, -position.getY(), 8);
-         if (ChunkAnimator.INSTANCE.config.disableAroundPlayer()) {
-            flag = zeroedPlayerPosition.distanceSq(zeroedCenteredChunkPos) > 4096.0D;
-         }
-
-         if (flag) {
-            EnumFacing chunkFacing = null;
-            if (ChunkAnimator.INSTANCE.config.getMode() == 3) {
-               Vec3i dif = zeroedPlayerPosition.subtract(zeroedCenteredChunkPos);
-               int difX = Math.abs(dif.getX());
-               int difZ = Math.abs(dif.getZ());
-               if (difX > difZ) {
-                  if (dif.getX() > 0) {
-                     chunkFacing = EnumFacing.EAST;
-                  } else {
-                     chunkFacing = EnumFacing.WEST;
-                  }
-               } else if (dif.getZ() > 0) {
-                  chunkFacing = EnumFacing.SOUTH;
-               } else {
-                  chunkFacing = EnumFacing.NORTH;
-               }
-            }
-
-            AnimationHandler.AnimationData animationData = new AnimationHandler.AnimationData(-1L, chunkFacing);
-            this.timeStamps.put(renderChunk, animationData);
-         } else if (this.timeStamps.containsKey(renderChunk)) {
-            this.timeStamps.remove(renderChunk);
-         }
-      }
-
-   }
-
-   private class AnimationData {
-      public long timeStamp;
-      public EnumFacing chunkFacing;
-
-      public AnimationData(long timeStamp, EnumFacing chunkFacing) {
-         this.timeStamp = timeStamp;
-         this.chunkFacing = chunkFacing;
       }
    }
 }

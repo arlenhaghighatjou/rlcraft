@@ -31,6 +31,10 @@ public abstract class ChunkRenderContainer
     {
         BlockPos blockpos = renderChunkIn.getPosition();
         GlStateManager.translate((float)((double)blockpos.getX() - this.viewEntityX), (float)((double)blockpos.getY() - this.viewEntityY), (float)((double)blockpos.getZ() - this.viewEntityZ));
+        if (lumien.chunkanimator.ChunkAnimator.INSTANCE != null)
+        {
+            lumien.chunkanimator.ChunkAnimator.INSTANCE.animationHandler.preRender(renderChunkIn);
+        }
     }
 
     public void addRenderChunk(RenderChunk renderChunkIn, BlockRenderLayer layer)

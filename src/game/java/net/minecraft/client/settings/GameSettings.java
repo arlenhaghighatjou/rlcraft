@@ -263,6 +263,10 @@ public class GameSettings
 
     public void setOptionFloatValue(GameSettings.Options settingsOption, float value)
     {
+        if (settingsOption == GameSettings.Options.RENDER_DISTANCE)
+        {
+            lumien.chunkanimator.ChunkAnimator.startCooldown();
+        }
         if (settingsOption == GameSettings.Options.SENSITIVITY)
         {
             this.mouseSensitivity = value;
@@ -341,6 +345,10 @@ public class GameSettings
 
     public void setOptionValue(GameSettings.Options settingsOption, int value)
     {
+        if (settingsOption == GameSettings.Options.GRAPHICS || settingsOption == GameSettings.Options.AMBIENT_OCCLUSION || settingsOption == GameSettings.Options.USE_VBO)
+        {
+            lumien.chunkanimator.ChunkAnimator.startCooldown();
+        }
         if (settingsOption == GameSettings.Options.RENDER_DISTANCE)
         {
             this.setOptionFloatValue(settingsOption, MathHelper.clamp((float)(this.renderDistanceChunks + value), settingsOption.getValueMin(), settingsOption.getValueMax()));

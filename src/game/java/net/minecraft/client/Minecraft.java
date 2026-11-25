@@ -1856,6 +1856,7 @@ public class Minecraft implements IThreadListener
     {
         if (auxKey == 30)
         {
+            lumien.chunkanimator.ChunkAnimator.startCooldown();
             GlStateManager.recompileShaders();
             this.renderGlobal.loadRenderers();
             this.debugFeedbackTranslated("debug.reload_chunks.message");

@@ -31,6 +31,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderChunk
 {
+    public static final long NO_ANIMATION = -2L;
+    public static final long ANIMATION_PENDING = -1L;
+    public long animationStart = NO_ANIMATION;
+    public EnumFacing animationFacing;
     public static enum ShadowFrustumState
     {
         OUTSIDE,
@@ -91,6 +95,10 @@ public class RenderChunk
         {
             this.stopCompileTask();
             this.position.setPos(x, y, z);
+            if (lumien.chunkanimator.ChunkAnimator.INSTANCE != null)
+            {
+                lumien.chunkanimator.ChunkAnimator.INSTANCE.animationHandler.setOrigin(this);
+            }
             this.boundingBox = new AxisAlignedBB((double)x, (double)y, (double)z, (double)(x + 16), (double)(y + 16), (double)(z + 16));
             EnumFacing[] facings = EnumFacing._VALUES;
 
