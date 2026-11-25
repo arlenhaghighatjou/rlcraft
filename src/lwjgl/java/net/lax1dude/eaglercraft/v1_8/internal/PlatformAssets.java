@@ -23,6 +23,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -48,6 +51,34 @@ public class PlatformAssets {
 		return (new File("resources", path)).isFile();
 	}
 	
+	public static List<String> listResources(String prefix) {
+		List<String> ret = new ArrayList<>();
+		collectResources(new File("resources"), "", prefix, ret);
+		Collections.sort(ret);
+		return ret;
+	}
+
+	private static void collectResources(File directory, String path, String prefix, List<String> ret) {
+		File[] files = directory.listFiles();
+		if(files == null) {
+			return;
+		}
+		for(int i = 0; i < files.length; ++i) {
+			String name = path + files[i].getName();
+			if(files[i].isDirectory()) {
+				String folder = name + "/";
+				if(prefix.startsWith(folder) || folder.startsWith(prefix)) {
+					collectResources(files[i], folder, prefix, ret);
+				}
+			}else if(name.startsWith(prefix)) {
+				ret.add(name);
+			}
+		}
+	}
+
+	public static void putResource(String path, byte[] data) {
+	}
+
 	public static byte[] getResourceBytes(String path) {
 		File loadFile = new File("resources", path);
 		byte[] ret = new byte[(int) loadFile.length()];

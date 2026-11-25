@@ -8,6 +8,7 @@ import com.arlenh7.eaglercraft.network.INetworkManager;
 import com.google.common.collect.ImmutableList;
 
 import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerIntegratedServerWorker;
+import net.minecraft.init.Bootstrap;
 import net.minecraft.network.INetHandler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.IThreadListener;
@@ -28,6 +29,7 @@ public final class FMLServerHandler implements IFMLSidedHandler
 
 	public static void load()
 	{
+		Bootstrap.register();
 		if (Loader.instance().getLoaderState() != LoaderState.NOINIT) return;
 		FMLCommonHandler.instance().beginLoading(new FMLServerHandler());
 		Loader loader = Loader.instance();

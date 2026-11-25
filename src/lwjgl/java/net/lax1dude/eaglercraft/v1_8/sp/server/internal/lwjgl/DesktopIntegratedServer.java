@@ -16,6 +16,7 @@
 
 package net.lax1dude.eaglercraft.v1_8.sp.server.internal.lwjgl;
 
+import com.arlenh7.eaglercraft.forge.FMLServerHandler;
 import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerIntegratedServerWorker;
 import net.lax1dude.eaglercraft.v1_8.sp.server.internal.ServerPlatformSingleplayer;
 
@@ -35,6 +36,7 @@ public class DesktopIntegratedServer implements Runnable {
 	public void run() {
 		try {
 			ServerPlatformSingleplayer.initializeContext();
+			FMLServerHandler.load();
 			EaglerIntegratedServerWorker.serverMain();
 		}finally {
 			serverThread = null;

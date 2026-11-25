@@ -127,6 +127,14 @@ public class EagRuntime {
 		return PlatformAssets.getResourceExists(path);
 	}
 
+	public static List<String> listResources(String prefix) {
+		return PlatformAssets.listResources(prefix);
+	}
+
+	public static void putResource(String path, byte[] data) {
+		PlatformAssets.putResource(path, data);
+	}
+
 	public static byte[] getResourceBytes(String path) {
 		return PlatformAssets.getResourceBytes(path);
 	}

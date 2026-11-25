@@ -505,8 +505,6 @@ public class EaglerIntegratedServerWorker {
 			// signal thread startup successful
 			sendIPCPacket(new IPCPacketFFProcessKeepAlive(0xFF));
 			
-			com.arlenh7.eaglercraft.forge.FMLServerHandler.load();
-			
 			ServerPlatformSingleplayer.setCrashCallbackWASM(EaglerIntegratedServerWorker::sendIntegratedServerCrashWASMCB);
 			
 			while(true) {

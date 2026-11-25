@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -48,16 +49,12 @@ public class CraftingManager
     }
 
 	private static boolean parseJsonRecipes() {
-		String directory = "/assets/minecraft/recipes/";
-		String index = net.lax1dude.eaglercraft.v1_8.EagRuntime.getResourceString(directory + "_files.txt");
-		if (index == null) {
-			LOGGER.error("Could not find the Minecraft recipe index");
-			return false;
-		}
+		String directory = "assets/minecraft/recipes/";
+		List<String> files = net.lax1dude.eaglercraft.v1_8.EagRuntime.listResources(directory);
 		Gson gson = new GsonBuilder().create();
-		for (String file : index.split("\n")) {
-			file = file.trim();
-			if (file.isEmpty()) {
+		for (int i = 0, l = files.size(); i < l; ++i) {
+			String file = files.get(i).substring(directory.length());
+			if (!file.endsWith(".json") || file.startsWith("_")) {
 				continue;
 			}
 			try (Reader reader = new java.io.InputStreamReader(

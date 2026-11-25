@@ -578,8 +578,8 @@ public class CraftingHelper {
 
 	private static boolean loadBundledRecipes(ModContainer mod, JsonContext context) {
 		String directory = "assets/" + mod.getModId() + "/recipes/";
-		String index = net.lax1dude.eaglercraft.v1_8.EagRuntime.getResourceString("/" + directory + "_files.txt");
-		if (index == null) {
+		List<String> files = net.lax1dude.eaglercraft.v1_8.EagRuntime.listResources(directory);
+		if (files.isEmpty()) {
 			return true;
 		}
 		Loader.instance().setActiveModContainer(mod);
@@ -592,8 +592,8 @@ public class CraftingHelper {
 			return false;
 		}
 		boolean success = true;
-		for (String file : index.split("\n")) {
-			file = file.trim();
+		for (int i = 0, l = files.size(); i < l; ++i) {
+			String file = files.get(i).substring(directory.length());
 			if (!file.endsWith(".json") || file.startsWith("_")) {
 				continue;
 			}

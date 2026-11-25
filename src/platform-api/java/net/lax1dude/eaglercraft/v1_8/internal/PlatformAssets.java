@@ -17,6 +17,7 @@
 package net.lax1dude.eaglercraft.v1_8.internal;
 
 import java.io.InputStream;
+import java.util.List;
 
 import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
 
@@ -25,6 +26,10 @@ public class PlatformAssets {
 	public static native boolean getResourceExists(String path);
 	
 	public static native byte[] getResourceBytes(String path);
+
+	public static native List<String> listResources(String prefix);
+
+	public static native void putResource(String path, byte[] data);
 
 	public static native ImageData loadImageFile(InputStream data);
 

@@ -17,7 +17,10 @@
 package net.lax1dude.eaglercraft.v1_8.internal;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.teavm.interop.Async;
@@ -71,6 +74,21 @@ public class PlatformAssets {
 		}
 	}
 	
+	public static List<String> listResources(String prefix) {
+		List<String> ret = new ArrayList<>();
+		for(Map.Entry<String,byte[]> entry : assets.entrySet()) {
+			if(entry.getValue() != MISSING_FILE && entry.getKey().startsWith(prefix)) {
+				ret.add(entry.getKey());
+			}
+		}
+		Collections.sort(ret);
+		return ret;
+	}
+
+	public static void putResource(String path, byte[] data) {
+		assets.put(path.startsWith("/") ? path.substring(1) : path, data);
+	}
+
 	public static byte[] getResourceBytes(String path) {
 		if(path.startsWith("/")) {
 			path = path.substring(1);

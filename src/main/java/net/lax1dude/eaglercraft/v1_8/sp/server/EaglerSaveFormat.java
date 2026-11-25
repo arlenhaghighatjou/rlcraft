@@ -30,7 +30,6 @@ import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.lax1dude.eaglercraft.v1_8.EaglerOutputStream;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.init.Bootstrap;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.datafix.DataFixesManager;
 import net.minecraft.util.datafix.FixTypes;
@@ -42,15 +41,18 @@ import net.minecraft.world.storage.WorldInfo;
 public class EaglerSaveFormat extends SaveFormatOld {
 
 	private final VFile2 virtualSavesDirectory;
+	private DataFixer worldFixer;
 
 	public EaglerSaveFormat(VFile2 parFile) {
-		super(new File(parFile.getPath()), createFixer(), false);
+		super(new File(parFile.getPath()), null, false);
 		this.virtualSavesDirectory = parFile;
 	}
 
-	private static DataFixer createFixer() {
-		Bootstrap.register();
-		return DataFixesManager.createFixer();
+	private DataFixer fixer() {
+		if (this.worldFixer == null) {
+			this.worldFixer = DataFixesManager.createFixer();
+		}
+		return this.worldFixer;
 	}
 
 	public static final VFile2 worldsList = WorldsDB.newVFile("worlds_list.txt");
@@ -62,7 +64,7 @@ public class EaglerSaveFormat extends SaveFormatOld {
 
 	public ISaveHandler getSaveLoader(String s, boolean flag) {
 		validateFolder(s);
-		return new EaglerSaveHandler(this.virtualSavesDirectory, s, flag, this.dataFixer);
+		return new EaglerSaveHandler(this.virtualSavesDirectory, s, flag, fixer());
 	}
 
 	public VFile2 getWorldPath(String folder) {
@@ -86,7 +88,7 @@ public class EaglerSaveFormat extends SaveFormatOld {
 			try (InputStream input = level.getInputStream()) {
 				NBTTagCompound root = CompressedStreamTools.readCompressed(input);
 				if (root.hasKey("Data", 10)) {
-					return new WorldInfo(this.dataFixer.process(FixTypes.LEVEL, root.getCompoundTag("Data")));
+					return new WorldInfo(fixer().process(FixTypes.LEVEL, root.getCompoundTag("Data")));
 				}
 			} catch (IOException | RuntimeException ex) {
 				EaglerIntegratedServerWorker.logger.warn("Could not read world metadata {}", level.getPath(), ex);

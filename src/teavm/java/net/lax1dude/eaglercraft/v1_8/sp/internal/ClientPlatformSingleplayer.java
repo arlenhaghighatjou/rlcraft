@@ -37,6 +37,7 @@ import net.lax1dude.eaglercraft.v1_8.internal.teavm.ClientMain;
 import net.lax1dude.eaglercraft.v1_8.internal.teavm.TeaVMBlobURLManager;
 import net.lax1dude.eaglercraft.v1_8.internal.teavm.TeaVMClientConfigAdapter;
 import net.lax1dude.eaglercraft.v1_8.internal.teavm.TeaVMUtils;
+import com.arlenh7.eaglercraft.network.ServerAssets;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import net.lax1dude.eaglercraft.v1_8.sp.server.internal.teavm.SingleThreadWorker;
@@ -87,8 +88,8 @@ public class ClientPlatformSingleplayer {
 	@JSBody(params = { "w", "ch", "dat" }, script = "w.postMessage({ ch: ch, dat : dat });")
 	private static native void sendWorkerPacket(Worker w, String channel, ArrayBuffer arr);
 
-	@JSBody(params = { "w", "workerArgs" }, script = "w.postMessage({ msg : workerArgs });")
-	private static native void sendWorkerStartPacket(Worker w, String workerArgs);
+	@JSBody(params = { "w", "workerArgs", "assets" }, script = "w.postMessage({ msg : workerArgs, assets : assets }, [assets]);")
+	private static native void sendWorkerStartPacket(Worker w, String workerArgs, ArrayBuffer assets);
 
 	private static class WorkerBinaryPacketHandlerImpl implements WorkerBinaryPacketHandler {
 		
@@ -275,7 +276,7 @@ public class ClientPlatformSingleplayer {
 				}
 			});
 			registerPacketHandler(workerObj, new WorkerBinaryPacketHandlerImpl());
-			sendWorkerStartPacket(workerObj, PlatformRuntime.getClientConfigAdapter().getIntegratedServerOpts().toString());
+			sendWorkerStartPacket(workerObj, PlatformRuntime.getClientConfigAdapter().getIntegratedServerOpts().toString(), TeaVMUtils.unwrapArrayBuffer(ServerAssets.pack()));
 		}
 	}
 

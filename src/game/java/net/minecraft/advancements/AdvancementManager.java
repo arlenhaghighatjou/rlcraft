@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import net.minecraft.util.EnumTypeAdapterFactory;
@@ -98,16 +99,11 @@ public class AdvancementManager
 	}
 
 	private void loadBuiltInAdvancements(Map<ResourceLocation, Advancement.Builder> advancements) {
-		String directory = "/assets/minecraft/advancements/";
-		String index = net.lax1dude.eaglercraft.v1_8.EagRuntime.getResourceString(directory + "_files.txt");
-		if (index == null) {
-			LOGGER.error("Could not find the Minecraft advancement index");
-			this.hasErrored = true;
-			return;
-		}
-		for (String file : index.split("\n")) {
-			file = file.trim();
-			if (file.isEmpty()) {
+		String directory = "assets/minecraft/advancements/";
+		List<String> files = net.lax1dude.eaglercraft.v1_8.EagRuntime.listResources(directory);
+		for (int i = 0, l = files.size(); i < l; ++i) {
+			String file = files.get(i).substring(directory.length());
+			if (!file.endsWith(".json") || file.startsWith("_")) {
 				continue;
 			}
 			ResourceLocation id = new ResourceLocation("minecraft", file.substring(0, file.length() - 5));

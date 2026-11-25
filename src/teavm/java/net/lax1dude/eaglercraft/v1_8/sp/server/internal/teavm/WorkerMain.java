@@ -24,10 +24,14 @@ import org.teavm.interop.AsyncCallback;
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSFunctor;
 import org.teavm.jso.JSObject;
+import org.teavm.jso.typedarrays.ArrayBuffer;
 
+import com.arlenh7.eaglercraft.forge.FMLServerHandler;
+import com.arlenh7.eaglercraft.network.ServerAssets;
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.lax1dude.eaglercraft.v1_8.internal.PlatformRuntime;
 import net.lax1dude.eaglercraft.v1_8.internal.teavm.TeaVMClientConfigAdapter;
+import net.lax1dude.eaglercraft.v1_8.internal.teavm.TeaVMUtils;
 import net.lax1dude.eaglercraft.v1_8.sp.ipc.IPCPacket15Crashed;
 import net.lax1dude.eaglercraft.v1_8.sp.ipc.IPCPacketFFProcessKeepAlive;
 import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerIntegratedServerWorker;
@@ -46,9 +50,11 @@ public class WorkerMain {
 				throw new NullPointerException("startup arguments is null!");
 			}
 			((TeaVMClientConfigAdapter)TeaVMClientConfigAdapter.instance).loadJSON(new JSONObject(startArgs));
+			ServerAssets.unpack(TeaVMUtils.wrapByteArrayBuffer(startAssets));
 			__println(systemOut, false, "WorkerMain: [INFO] initializing server runtime");
-			EaglerIntegratedServerWorker.enableLoggingRedirector(true);
 			ServerPlatformSingleplayer.initializeContext();
+			FMLServerHandler.load();
+			EaglerIntegratedServerWorker.enableLoggingRedirector(true);
 			__println(systemOut, false, "WorkerMain: [INFO] starting worker thread");
 			PlatformRuntime.setThreadName("IntegratedServer");
 			EaglerIntegratedServerWorker.serverMain();
@@ -75,11 +81,13 @@ public class WorkerMain {
 
 	@JSFunctor
 	private static interface WorkerArgumentsPacketHandler extends JSObject {
-		public void onMessage(String msg);
+		public void onMessage(String msg, ArrayBuffer assets);
 	}
 
-	@JSBody(params = { "wb" }, script = "__eaglerXOnMessage = function(o) { wb(o.data.msg); }; addEventListener(\"message\", function(evt) { __eaglerXOnMessage(evt); });")
+	@JSBody(params = { "wb" }, script = "__eaglerXOnMessage = function(o) { wb(o.data.msg, o.data.assets); }; addEventListener(\"message\", function(evt) { __eaglerXOnMessage(evt); });")
 	private static native void setOnMessage(WorkerArgumentsPacketHandler cb);
+
+	private static ArrayBuffer startAssets;
 
 	@Async
 	private static native String getStartArgs();
@@ -88,8 +96,9 @@ public class WorkerMain {
 		setOnMessage(new WorkerArgumentsPacketHandler() {
 
 			@Override
-			public void onMessage(String msg) {
+			public void onMessage(String msg, ArrayBuffer assets) {
 				ServerPlatformSingleplayer.register();
+				startAssets = assets;
 				cb.complete(msg);
 			}
 
