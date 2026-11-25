@@ -721,6 +721,7 @@ public class Minecraft implements IThreadListener
     {
         GlStateManager.recompileShaders();
         List<IResourcePack> list = Lists.newArrayList(this.defaultResourcePacks);
+        lumien.resourceloader.ResourceLoader.insertNormalPack(list);
 
         for (ResourcePackRepository.Entry resourcepackrepository$entry : this.mcResourcePackRepository.getRepositoryEntries())
         {
@@ -731,6 +732,7 @@ public class Minecraft implements IThreadListener
         {
             list.add(this.mcResourcePackRepository.getServerResourcePack());
         }
+        lumien.resourceloader.ResourceLoader.insertForcedPack(list);
 
         try
         {
@@ -741,6 +743,8 @@ public class Minecraft implements IThreadListener
             LOGGER.info("Caught error stitching, removing all assigned resourcepacks", (Throwable)runtimeexception);
             list.clear();
             list.addAll(this.defaultResourcePacks);
+            lumien.resourceloader.ResourceLoader.insertNormalPack(list);
+            lumien.resourceloader.ResourceLoader.insertForcedPack(list);
             this.mcResourcePackRepository.setRepositories(Collections.emptyList());
             this.mcResourceManager.reloadResources(list);
             this.gameSettings.resourcePacks.clear();

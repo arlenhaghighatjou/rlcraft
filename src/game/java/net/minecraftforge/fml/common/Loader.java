@@ -209,6 +209,7 @@ public class Loader
         mods.add(new FMLModContainer<>("blockoverlayfix", "Block Overlay Fix", "1.0.0", "", "[1.12.2]", "blockoverlayfix", meldexun.blockoverlayfix.BlockOverlayFix::new, meldexun.blockoverlayfix.BlockOverlayFix::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("potionfingers", "Potion Fingers", "r1.0-8", vazkii.potionfingers.PotionFingers.DEPENDENCIES, "[1.12.2]", "potionfingers", vazkii.potionfingers.PotionFingers::new, vazkii.potionfingers.PotionFingers::handleModStateEvent));
         mods.add(new FMLModContainer<>("chunkanimator", "Chunk Animator", "1.12.2-1.2", "", "[1.12.2]", "chunkanimator", lumien.chunkanimator.ChunkAnimator::new, lumien.chunkanimator.ChunkAnimator::handleModStateEvent).clientSideOnly().guiFactory(lumien.chunkanimator.config.ChunkAnimatorGuiFactory::new));
+        mods.add(new FMLModContainer<>("resourceloader", "Resource Loader", "1.5.3", "", "[1.12,1.13)", "resourceloader", lumien.resourceloader.ResourceLoader::new, lumien.resourceloader.ResourceLoader::handleModStateEvent).clientSideOnly());
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }

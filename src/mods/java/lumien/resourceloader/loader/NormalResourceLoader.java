@@ -1,83 +1,114 @@
 package lumien.resourceloader.loader;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
-import lumien.resourceloader.ResourceLoader;
-import net.minecraft.client.Minecraft;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.lax1dude.eaglercraft.v1_8.minecraft.ResourceIndex;
+import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.data.IMetadataSection;
 import net.minecraft.client.resources.data.MetadataSerializer;
 import net.minecraft.util.ResourceLocation;
-import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class NormalResourceLoader implements IResourcePack {
-   boolean debug = false;
+   private final String root;
+   private final String name;
+   private final ResourceIndex index = new ResourceIndex() {
+      @Override
+      protected Collection<String> getPropertiesFiles0() {
+         return listMinecraftAssets(".properties", "optifine", "mcpatcher");
+      }
+
+      @Override
+      protected Collection<String> getCITPotionsFiles0() {
+         return listMinecraftAssets(".png", "optifine/cit/potion", "mcpatcher/cit/potion");
+      }
+   };
 
    public NormalResourceLoader() {
+      this("resources", "CustomResources");
    }
 
-   public InputStream getInputStream(ResourceLocation rl) throws IOException {
-      if (!this.resourceExists(rl)) {
+   protected NormalResourceLoader(String root, String name) {
+      this.root = root;
+      this.name = name;
+   }
+
+   @Override
+   public InputStream getInputStream(ResourceLocation location) throws IOException {
+      VFile2 path = this.resolve(location);
+      InputStream stream = path == null ? null : path.getInputStream();
+      if (stream == null) {
+         throw new FileNotFoundException(location.toString());
+      }
+      return stream;
+   }
+
+   @Override
+   public boolean resourceExists(ResourceLocation location) {
+      VFile2 path = this.resolve(location);
+      return path != null && path.exists();
+   }
+
+   private VFile2 resolve(ResourceLocation location) {
+      String domain = location.getResourceDomain();
+      if (domain.contains("/") || domain.contains("\\") || domain.equals(".") || domain.equals("..")) {
          return null;
-      } else {
-         File file = new File(new File(Minecraft.getMinecraft().mcDataDir, "resources/" + rl.getResourceDomain()), rl.getResourcePath());
-         String realFileName = file.getCanonicalFile().getName();
-         if (!realFileName.equals(file.getName())) {
-            ResourceLoader.logger.log(Level.WARN, "[NormalResourceLoader] Resource Location " + rl.toString() + " only matches the file " + realFileName + " because RL is running in an environment that isn't case sensitive in regards to file names. This will not work properly on for example Linux.");
-         }
-
-         return new FileInputStream(file);
       }
+      String parent = this.root + "/" + domain + "/";
+      VFile2 path = new VFile2(parent, location.getResourcePath());
+      return path.getPath().startsWith(parent) ? path : null;
    }
 
-   public boolean resourceExists(ResourceLocation rl) {
-      File fileRequested = new File(new File(Minecraft.getMinecraft().mcDataDir, "resources/" + rl.getResourceDomain()), rl.getResourcePath());
-      if (this.debug && !fileRequested.isFile()) {
-         ResourceLoader.logger.log(Level.DEBUG, "[NormalResourceLoader] Asked for resource " + rl.toString() + " but can't find a file at " + fileRequested.getAbsolutePath());
-      }
-
-      return fileRequested.isFile();
-   }
-
-   public Set getResourceDomains() {
-      File folder = new File(Minecraft.getMinecraft().mcDataDir, "resources");
-      if (!folder.exists()) {
-         folder.mkdir();
-      }
-
-      HashSet<String> folders = new HashSet();
-      ResourceLoader.logger.log(Level.DEBUG, "[NormalResourceLoader] Resource Loader Domains: ");
-      File[] resourceDomains = folder.listFiles(DirectoryFileFilter.DIRECTORY);
-
-      for(File resourceFolder : resourceDomains) {
-         if (resourceFolder.getName().equals("debug")) {
-            this.debug = true;
+   @Override
+   public Set<String> getResourceDomains() {
+      Set<String> domains = new LinkedHashSet<>();
+      int prefixLength = this.root.length() + 1;
+      for (String file : new VFile2(this.root).listFilenames(true)) {
+         int separator = file.indexOf('/', prefixLength);
+         if (separator > prefixLength) {
+            domains.add(file.substring(prefixLength, separator));
          }
       }
-
-      for(File resourceFolder : resourceDomains) {
-         ResourceLoader.logger.log(Level.DEBUG, "[NormalResourceLoader]  - " + resourceFolder.getName() + " | " + resourceFolder.getAbsolutePath());
-         folders.add(resourceFolder.getName());
-      }
-
-      return folders;
+      return domains;
    }
 
-   public IMetadataSection getPackMetadata(MetadataSerializer p_135058_1_, String p_135058_2_) throws IOException {
+   private List<String> listMinecraftAssets(String suffix, String... folders) {
+      String prefix = this.root + "/minecraft/";
+      List<String> matches = new ArrayList<>();
+      for (String folder : folders) {
+         for (String file : new VFile2(prefix, folder).listFilenames(true)) {
+            if (file.endsWith(suffix)) {
+               matches.add(file.substring(prefix.length()));
+            }
+         }
+      }
+      return matches;
+   }
+
+   @Override
+   public <T extends IMetadataSection> T getPackMetadata(MetadataSerializer serializer, String section) {
       return null;
    }
 
-   public BufferedImage getPackImage() throws IOException {
+   @Override
+   public ImageData getPackImage() {
       return null;
    }
 
+   @Override
    public String getPackName() {
-      return "CustomResources";
+      return this.name;
+   }
+
+   @Override
+   public ResourceIndex getEaglerFileIndex() {
+      return this.index;
    }
 }
