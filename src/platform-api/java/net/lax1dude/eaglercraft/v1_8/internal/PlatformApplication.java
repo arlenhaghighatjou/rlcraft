@@ -20,6 +20,8 @@ public class PlatformApplication {
 
 	public static native void openLink(String url);
 
+	public static native boolean openResourceFolder(String path);
+
 	public static native void setClipboard(String text);
 
 	public static native String getClipboard();

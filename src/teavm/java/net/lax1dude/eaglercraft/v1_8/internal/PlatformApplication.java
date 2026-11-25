@@ -68,6 +68,10 @@ public class PlatformApplication {
 		}
 	}
 
+	public static boolean openResourceFolder(String path) {
+		return false;
+	}
+
 	public static void setClipboard(String text) {
 		boolean b = false;
 		try {

@@ -320,6 +320,10 @@ public class EagRuntime {
 		PlatformApplication.openLink(url);
 	}
 
+	public static boolean openResourceFolder(String path) {
+		return PlatformApplication.openResourceFolder(path);
+	}
+
 	public static void displayFileChooser(String mime, String ext) {
 		PlatformApplication.displayFileChooser(mime, ext);
 	}

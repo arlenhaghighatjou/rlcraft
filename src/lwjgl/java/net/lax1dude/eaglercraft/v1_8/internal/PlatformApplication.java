@@ -43,6 +43,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.Filesystem;
 import net.lax1dude.eaglercraft.v1_8.internal.buffer.ByteBuffer;
 import net.lax1dude.eaglercraft.v1_8.internal.lwjgl.MainMenuCreditsDialog;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
@@ -80,6 +81,29 @@ public class PlatformApplication {
 
 	public static void setClipboard(String text) {
 		glfwSetClipboardString(win, text);
+	}
+
+	public static boolean openResourceFolder(String path) {
+		IEaglerFilesystem handle = Filesystem.getHandleFor(EagRuntime.getConfiguration().getResourcePacksDB());
+		try {
+			String name = handle.getInternalDBName();
+			String prefix = "desktopruntime:";
+			if (!name.startsWith(prefix) || !Desktop.isDesktopSupported()) {
+				return false;
+			}
+			File root = new File(name.substring(prefix.length())).getCanonicalFile();
+			File folder = new File(root, path).getCanonicalFile();
+			if (!folder.toPath().startsWith(root.toPath()) || !folder.isDirectory()) {
+				return false;
+			}
+			Desktop.getDesktop().open(folder);
+			return true;
+		} catch (IOException | UnsupportedOperationException ex) {
+			PlatformRuntime.logger.error("Could not open resource folder {}", path, ex);
+			return false;
+		} finally {
+			handle.closeHandle();
+		}
 	}
 	
 	public static String getClipboard() {
