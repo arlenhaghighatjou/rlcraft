@@ -1,20 +1,19 @@
 package fonnymunkey.portaldupebegone;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
-@EventBusSubscriber(
-   modid = "portaldupebegone"
-)
 public class EventHandler {
    public EventHandler() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(EntityTravelToDimensionEvent.class, EventHandler::dimensionChangeEvent);
+   }
+
    public static void dimensionChangeEvent(EntityTravelToDimensionEvent event) {
       if (!event.getEntity().world.isRemote) {
          if (event.getEntity() instanceof EntityLiving && !(event.getEntity() instanceof EntityPlayer)) {

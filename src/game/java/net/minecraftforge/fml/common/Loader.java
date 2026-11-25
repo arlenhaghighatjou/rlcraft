@@ -177,6 +177,7 @@ public class Loader
         mods.add(new InjectedModContainer(mcp));
         mods.add(new InjectedModContainer(new FMLContainer()));
         mods.add(new InjectedModContainer(new ForgeModContainer()));
+        mods.add(new FMLModContainer<>("portaldupebegone", "PortalDupeBegone", "1.0.0", "", "", "portaldupebegone", fonnymunkey.portaldupebegone.PortalDupeBegone::new, fonnymunkey.portaldupebegone.PortalDupeBegone::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("baubles", "Baubles", "1.5.2", "required-after:forge@[14.21.0.2348,);", "[1.12]", "baubles", Baubles::new, Baubles::handleModStateEvent).guiFactory(BaublesGuiFactory::new));
         mods.add(new FMLModContainer<>("autoreglib", "AutoRegLib", "1.3-32", "required-after:forge@[14.21.1.2387,)", "[1.12.2]", "autoreglib", AutoRegLib::new, AutoRegLib::handleModStateEvent));
         mods.add(new FMLModContainer<>("placebo", "Placebo", "1.6.0", "", "[1.12.2]", "placebo", Placebo::new, Placebo::handleModStateEvent).acceptableRemoteVersions("*"));
