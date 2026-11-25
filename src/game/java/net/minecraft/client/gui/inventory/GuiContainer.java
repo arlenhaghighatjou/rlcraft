@@ -31,8 +31,8 @@ public abstract class GuiContainer extends GuiScreen
     protected int xSize = 176;
     protected int ySize = 166;
     public Container inventorySlots;
-    protected int guiLeft;
-    protected int guiTop;
+    public int guiLeft;
+    public int guiTop;
     private Slot hoveredSlot;
     private int primaryTouchPoint = -1;
     private int lastTouchX = -1;
