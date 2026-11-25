@@ -17,7 +17,4 @@ public class RenderDummy extends RenderBiped<EntityDummy> {
    protected ResourceLocation getEntityTexture(EntityDummy p_110775_1_) {
       return texture;
    }
-
-   protected void func_82421_b() {
-   }
 }

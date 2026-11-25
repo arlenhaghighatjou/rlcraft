@@ -17,7 +17,7 @@ public class CommonProxy {
 
    public void init() {
       this.network = NetworkRegistry.INSTANCE.newSimpleChannel("TestDummy");
-      this.network.registerMessage(DamageMessage.MessageHandlerClient.class, DamageMessage.class, 0, Side.CLIENT);
-      this.network.registerMessage(SyncEquipmentMessage.MessageHandlerClient.class, SyncEquipmentMessage.class, 1, Side.CLIENT);
+      this.network.registerMessage(new DamageMessage.MessageHandlerClient(), DamageMessage.class, DamageMessage::new, 0, Side.CLIENT);
+      this.network.registerMessage(new SyncEquipmentMessage.MessageHandlerClient(), SyncEquipmentMessage.class, SyncEquipmentMessage::new, 1, Side.CLIENT);
    }
 }
