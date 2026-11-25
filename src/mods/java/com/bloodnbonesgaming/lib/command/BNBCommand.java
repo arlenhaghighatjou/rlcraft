@@ -232,7 +232,7 @@ public class BNBCommand implements ICommand {
       while(unmodifiableiterator.hasNext()) {
          Entry<IProperty<?>, Comparable<?>> entry = (Entry)unmodifiableiterator.next();
          IProperty<T> iproperty = (IProperty)entry.getKey();
-         T t = entry.getValue();
+         T t = (T)entry.getValue();
          String s = iproperty.getName(t);
          stateMap.put(iproperty.getName(), s);
       }

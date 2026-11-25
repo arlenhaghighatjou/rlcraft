@@ -297,11 +297,11 @@ public class JsonToNBTExtended {
             }
 
             if (p_193603_2_ == 1) {
-               list.add(Byte.valueOf(((NBTPrimitive)nbtbase).getByte()));
+               list.add((T)Byte.valueOf(((NBTPrimitive)nbtbase).getByte()));
             } else if (p_193603_2_ == 4) {
-               list.add(Long.valueOf(((NBTPrimitive)nbtbase).getLong()));
+               list.add((T)Long.valueOf(((NBTPrimitive)nbtbase).getLong()));
             } else {
-               list.add(Integer.valueOf(((NBTPrimitive)nbtbase).getInt()));
+               list.add((T)Integer.valueOf(((NBTPrimitive)nbtbase).getInt()));
             }
 
             if (this.hasElementSeparator()) {

@@ -1,82 +1,54 @@
 package com.bloodnbonesgaming.lib.util.script;
 
 import com.bloodnbonesgaming.lib.BNBGamingLib;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 
 public class ScriptUtil {
-   private static Map<String, Class> mainClassKeywords = new HashMap();
+   private static Map<String, ScriptConstructor> mainClassKeywords = new HashMap();
 
    public ScriptUtil() {
    }
 
-   public static boolean readScript(File file, Object mainObj, Map<String, Class> classKeywords) {
+   public static boolean readScript(VFile2 file, ScriptTarget mainObj, Map<String, ScriptConstructor> classKeywords) {
       return readScript(file, mainObj, classKeywords, (Map)null);
    }
 
-   public static boolean readScript(File file, Object mainObj, Map<String, Class> classKeywords, Map<String, Object> localVariables) {
+   public static boolean readScript(VFile2 file, ScriptTarget mainObj, Map<String, ScriptConstructor> classKeywords, Map<String, Object> localVariables) {
       List<String> scriptLines = getScriptLines(file);
-      return !scriptLines.isEmpty() ? (new ScriptParser(scriptLines, file.getAbsolutePath(), mainObj, classKeywords, localVariables)).parseScript() : true;
+      return !scriptLines.isEmpty() ? (new ScriptParser(scriptLines, file.getPath(), mainObj, classKeywords, localVariables)).parseScript() : true;
    }
 
-   public static Class getClassForKeyword(String keyword) {
-      return (Class)mainClassKeywords.get(keyword);
+   public static ScriptConstructor getClassForKeyword(String keyword) {
+      return mainClassKeywords.get(keyword);
    }
 
-   public static List<String> getScriptLines(File file) {
+   public static List<String> getScriptLines(VFile2 file) {
       List<String> array = new ArrayList();
-
-      try {
-         BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
-         Throwable var3 = null;
-
-         try {
-            String line;
-            try {
-               while((line = r.readLine()) != null) {
-                  array.add(line.trim());
-               }
-            } catch (Throwable var13) {
-               var3 = var13;
-               throw var13;
-            }
-         } finally {
-            if (r != null) {
-               if (var3 != null) {
-                  try {
-                     r.close();
-                  } catch (Throwable var12) {
-                     var3.addSuppressed(var12);
-                  }
-               } else {
-                  r.close();
-               }
-            }
-
-         }
-      } catch (IOException var15) {
+      String[] lines = file.getAllLines();
+      if (lines == null) {
          BNBGamingLib.libInstance.getLog().error("Failed to load script file " + file.getName());
+         return array;
+      }
+
+      for(int i = 0; i < lines.length; ++i) {
+         array.add(lines[i].trim());
       }
 
       return array;
    }
 
-   public static void addClassKeyword(String keyword, Class clazz) {
-      if (keyword != null && clazz != null) {
-         mainClassKeywords.put(keyword, clazz);
+   public static void addClassKeyword(String keyword, ScriptConstructor constructor) {
+      if (keyword != null && constructor != null) {
+         mainClassKeywords.put(keyword, constructor);
       }
 
    }
 
-   public static void addClassKeywords(Map<String, Class> keywords) {
+   public static void addClassKeywords(Map<String, ScriptConstructor> keywords) {
       if (keywords != null && !keywords.isEmpty()) {
          mainClassKeywords.putAll(keywords);
       }

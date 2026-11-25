@@ -1,87 +1,107 @@
 package com.bloodnbonesgaming.lib.network;
 
 import com.bloodnbonesgaming.lib.exception.MessageAlreadyRegisteredException;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import gnu.trove.map.TByteObjectMap;
-import gnu.trove.map.TObjectByteMap;
-import gnu.trove.map.hash.TByteObjectHashMap;
-import gnu.trove.map.hash.TObjectByteHashMap;
-import java.util.BitSet;
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.Packet;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class NetworkManager {
    public static final NetworkManager INSTANCE = new NetworkManager();
-   final Map<Side, TObjectByteMap<Class<? extends ConsumableMessage>>> discriminators = Maps.newEnumMap(Side.class);
-   final Map<Side, TByteObjectMap<Class<? extends ConsumableMessage>>> discriminatorsR = Maps.newEnumMap(Side.class);
-   private final BNBSimpleNetworkWrapper serverToClient = new BNBSimpleNetworkWrapper("BNBServerToClient", Side.CLIENT);
-   private final BNBSimpleNetworkWrapper clientToServer = new BNBSimpleNetworkWrapper("BNBClientToServer", Side.SERVER);
-   private final Map<Side, BitSet> indicesMap = Maps.newEnumMap(Side.class);
-   final Map<Side, Set<MessageConsumer>> consumers = Maps.newEnumMap(Side.class);
+   private final Map<Side, Map<Class<? extends ConsumableMessage>, Byte>> discriminators = new EnumMap<>(Side.class);
+   private final Map<Side, Map<Byte, Class<? extends ConsumableMessage>>> classes = new EnumMap<>(Side.class);
+   private final Map<Side, Set<MessageConsumer>> consumers = new EnumMap<>(Side.class);
+   private final SimpleNetworkWrapper serverToClient = NetworkRegistry.INSTANCE.newSimpleChannel("BNBServerToClient");
+   private final SimpleNetworkWrapper clientToServer = NetworkRegistry.INSTANCE.newSimpleChannel("BNBClientToServer");
 
    private NetworkManager() {
-      this.indicesMap.put(Side.CLIENT, new BitSet(256));
-      this.indicesMap.put(Side.SERVER, new BitSet(256));
-      this.discriminators.put(Side.SERVER, new TObjectByteHashMap());
-      this.discriminators.put(Side.CLIENT, new TObjectByteHashMap());
-      this.discriminatorsR.put(Side.SERVER, new TByteObjectHashMap());
-      this.discriminatorsR.put(Side.CLIENT, new TByteObjectHashMap());
-      this.consumers.put(Side.SERVER, Sets.newHashSet());
-      this.consumers.put(Side.CLIENT, Sets.newHashSet());
-   }
-
-   public byte registerMessage(Side side, Class<? extends ConsumableMessage> messageClass) throws MessageAlreadyRegisteredException {
-      byte disc = (byte)((BitSet)this.indicesMap.get(side)).nextClearBit(0);
-      if (disc >= 0 && disc <= 127) {
-         if (side == Side.SERVER) {
-            this.clientToServer.registerMessage(messageClass, disc, side);
-         } else {
-            this.serverToClient.registerMessage(messageClass, disc, side);
-         }
-
-         ((BitSet)this.indicesMap.get(side)).set(disc);
-         ((TObjectByteMap)this.discriminators.get(side)).put(messageClass, disc);
-         return disc;
-      } else {
-         throw new RuntimeException(String.format("No more discriminator bytes left on side %s!", side));
+      for (Side side : Side.values()) {
+         this.discriminators.put(side, new LinkedHashMap<>());
+         this.classes.put(side, new LinkedHashMap<>());
+         this.consumers.put(side, new LinkedHashSet<>());
       }
    }
 
-   public byte registerMessage(Class<? extends ConsumableMessage> messageClass) throws MessageAlreadyRegisteredException {
-      return this.registerMessage(FMLCommonHandler.instance().getEffectiveSide(), messageClass);
+   public <T extends ConsumableMessage> byte registerMessage(Side side, Class<T> type, Supplier<T> factory) {
+      Map<Class<? extends ConsumableMessage>, Byte> registered = this.discriminators.get(side);
+      if (registered.containsKey(type)) {
+         throw new MessageAlreadyRegisteredException();
+      }
+      if (registered.size() > Byte.MAX_VALUE) {
+         throw new IllegalStateException("No discriminator bytes remain on side " + side);
+      }
+      byte id = (byte)registered.size();
+      SimpleNetworkWrapper channel = side == Side.SERVER ? this.clientToServer : this.serverToClient;
+      channel.registerMessage((message, context) -> {
+         this.dispatch(message, id, context);
+         return null;
+      }, type, factory, id, side);
+      registered.put(type, id);
+      this.classes.get(side).put(id, type);
+      return id;
    }
 
-   public byte findDiscriminator(Side side, Class<? extends ConsumableMessage> messageClass) {
-      TObjectByteMap map = (TObjectByteMap)this.discriminators.get(side);
-      byte disc = map.get(messageClass);
-      return disc == map.getNoEntryValue() ? -1 : disc;
+   public <T extends ConsumableMessage> byte registerMessage(Class<T> type, Supplier<T> factory) {
+      return this.registerMessage(FMLCommonHandler.instance().getEffectiveSide(), type, factory);
    }
 
-   public byte findDiscriminator(Class<? extends ConsumableMessage> messageClass) {
-      return this.findDiscriminator(FMLCommonHandler.instance().getEffectiveSide(), messageClass);
+   public byte findDiscriminator(Side side, Class<? extends ConsumableMessage> type) {
+      return this.discriminators.get(side).getOrDefault(type, (byte)-1);
    }
 
-   public Class<?> findClass(Side side, byte discriminator) {
-      return !this.isDiscriminatorInUse(side, discriminator) ? null : (Class)((TByteObjectMap)this.discriminatorsR.get(side)).get(discriminator);
+   public byte findDiscriminator(Class<? extends ConsumableMessage> type) {
+      return this.findDiscriminator(FMLCommonHandler.instance().getEffectiveSide(), type);
    }
 
-   public Class<?> findClass(byte discriminator) {
-      return this.findClass(FMLCommonHandler.instance().getEffectiveSide(), discriminator);
+   public Class<?> findClass(Side side, byte id) {
+      return this.classes.get(side).get(id);
    }
 
-   public boolean isDiscriminatorInUse(Side side, byte discriminator) {
-      return ((BitSet)this.indicesMap.get(side)).get(discriminator);
+   public Class<?> findClass(byte id) {
+      return this.findClass(FMLCommonHandler.instance().getEffectiveSide(), id);
+   }
+
+   public boolean isDiscriminatorInUse(Side side, byte id) {
+      return this.classes.get(side).containsKey(id);
    }
 
    public void registerConsumer(Side side, MessageConsumer consumer) {
-      ((Set)this.consumers.get(side)).add(consumer);
+      this.consumers.get(side).add(consumer);
+   }
+
+   private void dispatch(ConsumableMessage message, byte id, MessageContext context) {
+      if (message.isConsumed()) {
+         return;
+      }
+      BNBMessageContext bnbContext = new BNBMessageContext(context.netHandler, context.side);
+      Set<IMessage> replies = new LinkedHashSet<>();
+      for (MessageConsumer consumer : this.consumers.get(context.side)) {
+         IMessage reply = consumer.consume(message, id, bnbContext);
+         if (reply != null) {
+            replies.add(reply);
+         }
+         if (message.isConsumed()) {
+            break;
+         }
+      }
+      for (IMessage reply : replies) {
+         if (context.side == Side.CLIENT) {
+            this.sendToServer(reply);
+         } else {
+            this.sendToClient(reply, context.getServerHandler().player);
+         }
+      }
    }
 
    public void sendToClient(IMessage message, EntityPlayerMP player) {
@@ -104,7 +124,7 @@ public class NetworkManager {
       this.clientToServer.sendToServer(message);
    }
 
-   public Packet toPacket(IMessage message) {
+   public Packet<?> toPacket(IMessage message) {
       return this.serverToClient.getPacketFrom(message);
    }
 }

@@ -15,7 +15,7 @@ public class LogHelper {
    }
 
    public void all(Object object) {
-      this.log(Level.ALL, object);
+      this.log(Level.TRACE, object);
    }
 
    public void debug(Object object) {

@@ -121,7 +121,7 @@ public class ItemBlockData {
    }
 
    private <T extends Comparable<T>> IBlockState withProperty(IBlockState state, IProperty<T> property, String value) {
-      return state.withProperty(property, (Comparable)property.parseValue(value).get());
+      return state.withProperty(property, property.parseValue(value).get());
    }
 
    public ItemPredicate buildItemPredicate() throws Exception {

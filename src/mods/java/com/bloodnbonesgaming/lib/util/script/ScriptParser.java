@@ -2,10 +2,6 @@ package com.bloodnbonesgaming.lib.util.script;
 
 import com.bloodnbonesgaming.lib.BNBGamingLib;
 import com.bloodnbonesgaming.lib.util.data.ItemBlockData;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,16 +14,16 @@ import net.minecraftforge.fml.common.Loader;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-public class ScriptParser {
+public class ScriptParser implements ScriptTarget {
    private Object mainObj;
    private final Map<String, Object> localVariables = new HashMap();
    private final List<String> script;
    private final String fileName;
-   private final Map<String, Class> classKeywords;
-   private static final Object WRONG_SIDE = new Object();
+   private final Map<String, ScriptConstructor> classKeywords;
+   private static final Object[] NO_ARGS = new Object[0];
    private boolean canceled = false;
 
-   public ScriptParser(List<String> script, String fileName, Object mainObj, Map<String, Class> classKeywords, Map<String, Object> localVariables) {
+   public ScriptParser(List<String> script, String fileName, Object mainObj, Map<String, ScriptConstructor> classKeywords, Map<String, Object> localVariables) {
       this.mainObj = mainObj;
       this.script = script;
       this.fileName = fileName;
@@ -51,12 +47,23 @@ public class ScriptParser {
       return this.localVariables.get(name);
    }
 
-   public Class<?> getClassForKeyword(String keyword) {
-      return this.classKeywords != null && this.classKeywords.containsKey(keyword) ? (Class)this.classKeywords.get(keyword) : ScriptUtil.getClassForKeyword(keyword);
+   public ScriptConstructor getClassForKeyword(String keyword) {
+      ScriptConstructor constructor = this.classKeywords != null ? this.classKeywords.get(keyword) : null;
+      return constructor != null ? constructor : ScriptUtil.getClassForKeyword(keyword);
+   }
+
+   public Object call(String method, Object[] args) throws Exception {
+      if (method.equals("addRequiredMod") && args.length == 1 && args[0] instanceof String) {
+         this.addRequiredMod((String)args[0]);
+         return null;
+      }
+
+      return NO_METHOD;
    }
 
    public boolean parseScript() {
-      for(String line : this.script) {
+      for(int lineNumber = 0, size = this.script.size(); lineNumber < size; ++lineNumber) {
+         String line = this.script.get(lineNumber);
          if (this.canceled) {
             break;
          }
@@ -67,7 +74,7 @@ public class ScriptParser {
                   throw new Exception("Not a local variable or method call.");
                }
             } catch (Throwable var4) {
-               BNBGamingLib.libInstance.getLog().error("Error reading script in file " + this.fileName + " on line " + (this.script.indexOf(line) + 1) + (var4.getMessage() != null ? ": " + var4.getMessage() : ": See stack trace below."));
+               BNBGamingLib.libInstance.getLog().error("Error reading script in file " + this.fileName + " on line " + (lineNumber + 1) + (var4.getMessage() != null ? ": " + var4.getMessage() : ": See stack trace below."));
                if (var4.getMessage() == null) {
                   var4.printStackTrace();
                }
@@ -89,8 +96,8 @@ public class ScriptParser {
 
    public Object handleMethod(String line) throws Throwable {
       Object reference = this.getMethodCallObject(line);
-      if (reference == WRONG_SIDE) {
-         return WRONG_SIDE;
+      if (reference == ScriptTarget.WRONG_SIDE) {
+         return ScriptTarget.WRONG_SIDE;
       } else {
          String method;
          if (reference != this.mainObj) {
@@ -205,359 +212,27 @@ public class ScriptParser {
    }
 
    public Object findAndCallMethod(Object reference, String methodName, String methodBody) throws Throwable {
-      List<Method> possibleMethods = new ArrayList();
-
-      for(Method method : reference.getClass().getMethods()) {
-         if (method.getName().equals(methodName)) {
-            possibleMethods.add(method);
-         }
-      }
-
-      if (possibleMethods.isEmpty()) {
+      if (!(reference instanceof ScriptTarget)) {
          throw new Exception("No method of name " + methodName + " could be found.");
-      } else if (methodBody == null) {
-         for(Method method : possibleMethods) {
-            if (method.getParameterCount() == 0) {
-               try {
-                  if (!BNBGamingLib.proxy.client() && method.isAnnotationPresent(ClientOnly.class)) {
-                     return WRONG_SIDE;
-                  }
-
-                  return method.invoke(reference, (Object[])null);
-               } catch (Exception var14) {
-                  if (var14 instanceof InvocationTargetException) {
-                     throw new Exception(((InvocationTargetException)var14).getCause().getLocalizedMessage());
-                  }
-
-                  throw new Exception(var14.getLocalizedMessage());
-               }
-            }
-         }
-
-         throw new Exception("No method of name " + methodName + " found with the correct number of arguments.");
-      } else {
-         String[] trimmed = this.trim(this.splitArguments(methodBody));
-         Object[] arguments = this.parseArguments(trimmed);
-         Method genericMethod = null;
-
-         label227:
-         for(Method method : possibleMethods) {
-            if (method.getParameterCount() == 1) {
-               Class<?> type = method.getParameterTypes()[0];
-               if (type.isArray() && type.getComponentType() == Object.class) {
-                  genericMethod = method;
-                  continue;
-               }
-            }
-
-            if (method.getParameterCount() == arguments.length) {
-               if (method.isAnnotationPresent(ScriptArgs.class)) {
-                  ScriptArgs anno = (ScriptArgs)method.getAnnotation(ScriptArgs.class);
-                  ArgType[] argTypes = anno.args();
-                  Object[] args = ArgType.transformArgs(arguments, argTypes);
-                  if (args != null) {
-                     try {
-                        if (!BNBGamingLib.proxy.client() && method.isAnnotationPresent(ClientOnly.class)) {
-                           return WRONG_SIDE;
-                        }
-
-                        return method.invoke(reference, args);
-                     } catch (Exception var17) {
-                        if (var17 instanceof InvocationTargetException) {
-                           throw new Exception(((InvocationTargetException)var17).getCause().getLocalizedMessage());
-                        }
-
-                        throw new Exception(var17.getLocalizedMessage());
-                     }
-                  }
-
-                  BNBGamingLib.libInstance.getLog().info("Args could not be cast using annotation");
-               } else {
-                  Parameter[] parameters = method.getParameters();
-                  Object[] castArgs = new Object[arguments.length];
-                  System.arraycopy(arguments, 0, castArgs, 0, arguments.length);
-
-                  for(int i = 0; i < arguments.length; ++i) {
-                     if (arguments[i] == null) {
-                        if (parameters[i].getType().isPrimitive()) {
-                           continue label227;
-                        }
-                     } else {
-                        Class<?> type = parameters[i].getType();
-                        if (type.isPrimitive()) {
-                           if (type == Boolean.TYPE && arguments[i].getClass() != Boolean.class) {
-                              continue label227;
-                           }
-
-                           if (type == Byte.TYPE) {
-                              if (arguments[i].getClass() != BigDecimal.class) {
-                                 continue label227;
-                              }
-
-                              castArgs[i] = ((BigDecimal)arguments[i]).byteValueExact();
-                           } else if (type == Short.TYPE) {
-                              if (arguments[i].getClass() != BigDecimal.class) {
-                                 continue label227;
-                              }
-
-                              castArgs[i] = ((BigDecimal)arguments[i]).shortValueExact();
-                           } else if (type == Integer.TYPE) {
-                              if (arguments[i].getClass() != BigDecimal.class) {
-                                 continue label227;
-                              }
-
-                              castArgs[i] = ((BigDecimal)arguments[i]).intValueExact();
-                           } else if (type == Double.TYPE) {
-                              if (arguments[i].getClass() != BigDecimal.class) {
-                                 continue label227;
-                              }
-
-                              castArgs[i] = ((BigDecimal)arguments[i]).doubleValue();
-                           } else if (type == Float.TYPE) {
-                              if (arguments[i].getClass() != BigDecimal.class) {
-                                 continue label227;
-                              }
-
-                              castArgs[i] = ((BigDecimal)arguments[i]).floatValue();
-                           } else if (type == Long.TYPE) {
-                              if (arguments[i].getClass() != BigDecimal.class) {
-                                 continue label227;
-                              }
-
-                              castArgs[i] = ((BigDecimal)arguments[i]).longValueExact();
-                           }
-                        } else if (type == Byte.class) {
-                           if (arguments[i].getClass() != BigDecimal.class) {
-                              continue label227;
-                           }
-
-                           castArgs[i] = ((BigDecimal)arguments[i]).byteValueExact();
-                        } else if (type == Short.class) {
-                           if (arguments[i].getClass() != BigDecimal.class) {
-                              continue label227;
-                           }
-
-                           castArgs[i] = ((BigDecimal)arguments[i]).shortValueExact();
-                        } else if (type == Integer.class) {
-                           if (arguments[i].getClass() != BigDecimal.class) {
-                              continue label227;
-                           }
-
-                           castArgs[i] = ((BigDecimal)arguments[i]).intValueExact();
-                        } else if (type == Double.class) {
-                           if (arguments[i].getClass() != BigDecimal.class) {
-                              continue label227;
-                           }
-
-                           castArgs[i] = ((BigDecimal)arguments[i]).doubleValue();
-                        } else if (type == Float.class) {
-                           if (arguments[i].getClass() != BigDecimal.class) {
-                              continue label227;
-                           }
-
-                           castArgs[i] = ((BigDecimal)arguments[i]).floatValue();
-                        } else if (type == Long.class) {
-                           if (arguments[i].getClass() != BigDecimal.class) {
-                              continue label227;
-                           }
-
-                           castArgs[i] = ((BigDecimal)arguments[i]).longValueExact();
-                        } else if (!type.isAssignableFrom(arguments[i].getClass())) {
-                           continue label227;
-                        }
-                     }
-                  }
-
-                  try {
-                     if (!BNBGamingLib.proxy.client() && method.isAnnotationPresent(ClientOnly.class)) {
-                        return WRONG_SIDE;
-                     }
-
-                     return method.invoke(reference, castArgs);
-                  } catch (Exception var16) {
-                     if (var16 instanceof InvocationTargetException) {
-                        throw ((InvocationTargetException)var16).getCause();
-                     }
-
-                     throw new Exception(var16.getLocalizedMessage());
-                  }
-               }
-            }
-         }
-
-         if (genericMethod != null) {
-            try {
-               if (!BNBGamingLib.proxy.client() && genericMethod.isAnnotationPresent(ClientOnly.class)) {
-                  return WRONG_SIDE;
-               } else {
-                  return genericMethod.invoke(reference, (Object)arguments);
-               }
-            } catch (Exception var15) {
-               if (var15 instanceof InvocationTargetException) {
-                  throw new Exception(((InvocationTargetException)var15).getCause().getLocalizedMessage());
-               } else {
-                  throw new Exception(var15.getLocalizedMessage());
-               }
-            }
-         } else {
-            throw new Exception("No method of name " + methodName + " found with the correct parameters.");
-         }
       }
+
+      Object[] arguments = methodBody == null ? NO_ARGS : this.parseArguments(this.trim(this.splitArguments(methodBody)));
+      Object result = ((ScriptTarget)reference).call(methodName, arguments);
+      if (result == ScriptTarget.NO_METHOD) {
+         throw new Exception("No method of name " + methodName + " found with the correct parameters.");
+      }
+
+      return result;
    }
 
-   public Object findAndCallConstructor(Class<?> clazz, String methodBody) throws Exception {
-      if (methodBody != null && !methodBody.isEmpty()) {
-         String[] trimmed = this.trim(this.splitArguments(methodBody));
-         Object[] arguments = this.parseArguments(trimmed);
-         Constructor<?> genericConstructor = null;
-
-         label179:
-         for(Constructor<?> constructor : clazz.getConstructors()) {
-            if (constructor.getParameterCount() == 1) {
-               Class<?> type = constructor.getParameterTypes()[0];
-               if (type.isArray() && type.getComponentType() == Object.class) {
-                  genericConstructor = constructor;
-                  continue;
-               }
-            }
-
-            if (constructor.getParameterCount() == arguments.length) {
-               if (constructor.isAnnotationPresent(ScriptArgs.class)) {
-                  ScriptArgs anno = (ScriptArgs)constructor.getAnnotation(ScriptArgs.class);
-                  ArgType[] argTypes = anno.args();
-                  Object[] args = ArgType.transformArgs(arguments, argTypes);
-                  if (args != null) {
-                     try {
-                        if (!BNBGamingLib.proxy.client() && constructor.isAnnotationPresent(ClientOnly.class)) {
-                           return WRONG_SIDE;
-                        }
-
-                        return constructor.newInstance(args);
-                     } catch (Exception var17) {
-                        if (var17 instanceof InvocationTargetException) {
-                           throw new Exception(((InvocationTargetException)var17).getCause().getLocalizedMessage());
-                        }
-
-                        throw new Exception(var17.getLocalizedMessage());
-                     }
-                  }
-
-                  BNBGamingLib.libInstance.getLog().info("Args could not be cast using annotation");
-               } else {
-                  Parameter[] parameters = constructor.getParameters();
-                  Object[] castArgs = new Object[arguments.length];
-                  System.arraycopy(arguments, 0, castArgs, 0, arguments.length);
-
-                  for(int i = 0; i < parameters.length; ++i) {
-                     if (arguments[i] == null) {
-                        if (parameters[i].getType().isPrimitive()) {
-                           continue label179;
-                        }
-                     } else {
-                        Class<?> type = parameters[i].getType();
-                        if (type.isPrimitive()) {
-                           if (type == Boolean.TYPE && arguments[i].getClass() != Boolean.class) {
-                              continue label179;
-                           }
-
-                           if (type == Byte.TYPE) {
-                              if (arguments[i].getClass() != BigDecimal.class) {
-                                 continue label179;
-                              }
-
-                              castArgs[i] = ((BigDecimal)arguments[i]).byteValueExact();
-                           } else if (type == Short.TYPE) {
-                              if (arguments[i].getClass() != BigDecimal.class) {
-                                 continue label179;
-                              }
-
-                              castArgs[i] = ((BigDecimal)arguments[i]).shortValueExact();
-                           } else if (type == Integer.TYPE) {
-                              if (arguments[i].getClass() != BigDecimal.class) {
-                                 continue label179;
-                              }
-
-                              castArgs[i] = ((BigDecimal)arguments[i]).intValueExact();
-                           } else if (type == Double.TYPE) {
-                              if (arguments[i].getClass() != BigDecimal.class) {
-                                 continue label179;
-                              }
-
-                              castArgs[i] = ((BigDecimal)arguments[i]).doubleValue();
-                           } else if (type == Float.TYPE) {
-                              if (arguments[i].getClass() != BigDecimal.class) {
-                                 continue label179;
-                              }
-
-                              castArgs[i] = ((BigDecimal)arguments[i]).floatValue();
-                           } else if (type == Long.TYPE) {
-                              if (arguments[i].getClass() != BigDecimal.class) {
-                                 continue label179;
-                              }
-
-                              castArgs[i] = ((BigDecimal)arguments[i]).longValueExact();
-                           }
-                        } else if (!type.isAssignableFrom(arguments[i].getClass())) {
-                           continue label179;
-                        }
-                     }
-                  }
-
-                  try {
-                     if (!BNBGamingLib.proxy.client() && constructor.isAnnotationPresent(ClientOnly.class)) {
-                        return WRONG_SIDE;
-                     }
-
-                     return constructor.newInstance(castArgs);
-                  } catch (Exception var16) {
-                     if (var16 instanceof InvocationTargetException) {
-                        throw new Exception("Failed to create new instance of constructor: " + ((InvocationTargetException)var16).getCause().getLocalizedMessage());
-                     }
-
-                     throw new Exception("Failed to create new instance of constructor: " + var16.getLocalizedMessage());
-                  }
-               }
-            }
-         }
-
-         if (genericConstructor != null) {
-            try {
-               if (!BNBGamingLib.proxy.client() && genericConstructor.isAnnotationPresent(ClientOnly.class)) {
-                  return WRONG_SIDE;
-               } else {
-                  return genericConstructor.newInstance((Object)arguments);
-               }
-            } catch (Exception var15) {
-               if (var15 instanceof InvocationTargetException) {
-                  throw new Exception(((InvocationTargetException)var15).getCause().getLocalizedMessage());
-               } else {
-                  throw new Exception(var15.getLocalizedMessage());
-               }
-            }
-         } else {
-            throw new Exception("No constructor found with the correct parameters.");
-         }
-      } else {
-         for(Constructor<?> constructor : clazz.getConstructors()) {
-            if (constructor.getParameterCount() == 0) {
-               try {
-                  if (!BNBGamingLib.proxy.client() && constructor.isAnnotationPresent(ClientOnly.class)) {
-                     return WRONG_SIDE;
-                  }
-
-                  return constructor.newInstance((Object[])null);
-               } catch (Exception var14) {
-                  if (var14 instanceof InvocationTargetException) {
-                     throw new Exception(((InvocationTargetException)var14).getCause().getLocalizedMessage());
-                  }
-
-                  throw new Exception(var14.getLocalizedMessage());
-               }
-            }
-         }
-
-         throw new Exception("No constructor found with the correct number of arguments.");
+   public Object findAndCallConstructor(ScriptConstructor constructor, String methodBody) throws Exception {
+      Object[] arguments = methodBody != null && !methodBody.isEmpty() ? this.parseArguments(this.trim(this.splitArguments(methodBody))) : NO_ARGS;
+      Object result = constructor.create(arguments);
+      if (result == ScriptTarget.NO_METHOD) {
+         throw new Exception("No constructor found with the correct parameters.");
       }
+
+      return result;
    }
 
    public Object[] parseArguments(String[] arguments) throws Exception {
@@ -849,7 +524,7 @@ public class ScriptParser {
             int start = trimMethod.indexOf("(");
             int end = StringUtils.lastIndexOf(trimMethod, ")");
             String[] methodSplit = new String[]{trimMethod.substring(0, start), trimMethod.substring(start + 1, end)};
-            Class<?> clazz = this.getClassForKeyword(methodSplit[0]);
+            ScriptConstructor clazz = this.getClassForKeyword(methodSplit[0]);
             if (clazz != null) {
                Object returnObj;
                if (methodSplit.length == 1) {

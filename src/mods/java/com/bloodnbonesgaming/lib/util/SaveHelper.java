@@ -1,44 +1,36 @@
 package com.bloodnbonesgaming.lib.util;
 
 import com.google.gson.Gson;
-import java.io.File;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 
 public class SaveHelper {
-   private static File serverSaveFolder;
+   private static VFile2 serverSaveFolder;
 
    public SaveHelper() {
    }
 
-   public static void setServerSaveFolder(File saveFolder) {
+   public static void setServerSaveFolder(VFile2 saveFolder) {
       serverSaveFolder = saveFolder;
    }
 
-   public static void saveDataForPlayer(EaglercraftUUID playerUUID, File subFile, Object objToSave) {
-      File directory = subFile != null ? new File(serverSaveFolder, subFile.getPath()) : serverSaveFolder;
-      directory.mkdirs();
-      File file = new File(directory, playerUUID.toString() + ".json");
-      JsonHelper.writeGson(objToSave, file);
+   private static VFile2 playerFile(EaglercraftUUID playerUUID, String subFolder) {
+      return subFolder != null ? new VFile2(serverSaveFolder, subFolder, playerUUID.toString() + ".json") : new VFile2(serverSaveFolder, playerUUID.toString() + ".json");
    }
 
-   public static void saveDataForPlayer(EaglercraftUUID playerUUID, File subFile, Object objToSave, Gson gson) {
-      File directory = subFile != null ? new File(serverSaveFolder, subFile.getPath()) : serverSaveFolder;
-      directory.mkdirs();
-      File file = new File(directory, playerUUID.toString() + ".json");
-      JsonHelper.writeGson(objToSave, file, gson);
+   public static void saveDataForPlayer(EaglercraftUUID playerUUID, String subFolder, Object objToSave) {
+      JsonHelper.writeGson(objToSave, playerFile(playerUUID, subFolder));
    }
 
-   public static <T> T loadDataForPlayer(EaglercraftUUID playerUUID, File subFile, Class<T> clazz) {
-      File directory = subFile != null ? new File(serverSaveFolder, subFile.getPath()) : serverSaveFolder;
-      directory.mkdirs();
-      File file = new File(directory, playerUUID.toString() + ".json");
-      return (T)JsonHelper.readGson(clazz, file);
+   public static void saveDataForPlayer(EaglercraftUUID playerUUID, String subFolder, Object objToSave, Gson gson) {
+      JsonHelper.writeGson(objToSave, playerFile(playerUUID, subFolder), gson);
    }
 
-   public static <T> T loadDataForPlayer(EaglercraftUUID playerUUID, File subFile, Class<T> clazz, Gson gson) {
-      File directory = subFile != null ? new File(serverSaveFolder, subFile.getPath()) : serverSaveFolder;
-      directory.mkdirs();
-      File file = new File(directory, playerUUID.toString() + ".json");
-      return (T)JsonHelper.readGson(clazz, file, gson);
+   public static <T> T loadDataForPlayer(EaglercraftUUID playerUUID, String subFolder, Class<T> clazz) {
+      return JsonHelper.readGson(clazz, playerFile(playerUUID, subFolder));
+   }
+
+   public static <T> T loadDataForPlayer(EaglercraftUUID playerUUID, String subFolder, Class<T> clazz, Gson gson) {
+      return JsonHelper.readGson(clazz, playerFile(playerUUID, subFolder), gson);
    }
 }
