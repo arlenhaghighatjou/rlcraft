@@ -53,6 +53,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.ObjectHolderRegistry;
 
+import shadows.placebo.Placebo;
 import vazkii.arl.AutoRegLib;
 import vazkii.neat.GuiFactory;
 import vazkii.neat.Neat;
@@ -178,6 +179,7 @@ public class Loader
         mods.add(new InjectedModContainer(new ForgeModContainer()));
         mods.add(new FMLModContainer<>("baubles", "Baubles", "1.5.2", "required-after:forge@[14.21.0.2348,);", "[1.12]", "baubles", Baubles::new, Baubles::handleModStateEvent).guiFactory(BaublesGuiFactory::new));
         mods.add(new FMLModContainer<>("autoreglib", "AutoRegLib", "1.3-32", "required-after:forge@[14.21.1.2387,)", "[1.12.2]", "autoreglib", AutoRegLib::new, AutoRegLib::handleModStateEvent));
+        mods.add(new FMLModContainer<>("placebo", "Placebo", "1.6.0", "", "[1.12.2]", "placebo", Placebo::new, Placebo::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("neat", "Neat", "1.4-17", "", "[1.12.2]", "neat", Neat::new, Neat::handleModStateEvent).clientSideOnly().guiFactory(GuiFactory::new));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");

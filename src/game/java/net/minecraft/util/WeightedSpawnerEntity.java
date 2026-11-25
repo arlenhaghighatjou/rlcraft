@@ -4,7 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class WeightedSpawnerEntity extends WeightedRandom.Item
 {
-    private final NBTTagCompound nbt;
+    public NBTTagCompound nbt;
 
     public WeightedSpawnerEntity()
     {

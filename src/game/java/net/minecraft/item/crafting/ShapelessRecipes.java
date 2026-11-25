@@ -16,7 +16,7 @@ public class ShapelessRecipes extends net.minecraftforge.registries.IForgeRegist
     private final ItemStack recipeOutput;
     public final NonNullList<Ingredient> recipeItems;
     private final String group;
-    private final boolean isSimple;
+    public final boolean isSimple;
 
     public ShapelessRecipes(String group, ItemStack output, NonNullList<Ingredient> ingredients)
     {
