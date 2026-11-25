@@ -331,7 +331,7 @@ public class Minecraft implements IThreadListener
     private final Thread mcThread = Thread.currentThread();
     private ModelManager modelManager;
     private BlockRendererDispatcher blockRenderDispatcher;
-    private final GuiToast toastGui;
+    private GuiToast toastGui;
     volatile boolean running = true;
     public String debug = "";
     public boolean renderChunksMany = true;
@@ -2979,6 +2979,11 @@ public class Minecraft implements IThreadListener
     public GuiToast getToastGui()
     {
         return this.toastGui;
+    }
+
+    public void setToastGui(GuiToast toastGui)
+    {
+        this.toastGui = java.util.Objects.requireNonNull(toastGui);
     }
 
     public Tutorial getTutorial()

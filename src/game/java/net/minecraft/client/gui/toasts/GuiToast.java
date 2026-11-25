@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.util.ResourceLocation;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.math.MathHelper;
@@ -17,12 +18,29 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiToast extends Gui
 {
     private final Minecraft mc;
-    private final GuiToast.ToastInstance<?>[] visible = new GuiToast.ToastInstance[5];
-    private final Deque<IToast> toastsQueue = new ArrayDeque<>();
+    protected GuiToast.ToastInstance<?>[] visible;
+    private final Deque<IToast> toastsQueue;
 
     public GuiToast(Minecraft mcIn)
     {
+        this(mcIn, 5, new ArrayDeque<>());
+    }
+
+    protected GuiToast(Minecraft mcIn, int slots, Deque<IToast> queue)
+    {
         this.mc = mcIn;
+        this.visible = new ToastInstance<?>[slots];
+        this.toastsQueue = queue;
+    }
+
+    protected ToastInstance<?> createInstance(IToast toast)
+    {
+        return new ToastInstance<>(toast);
+    }
+
+    public ResourceLocation getToastTexture()
+    {
+        return IToast.TEXTURE_TOASTS;
     }
 
     public void drawToast(ScaledResolution resolution)
@@ -42,7 +60,7 @@ public class GuiToast extends Gui
 
                 if (this.visible[i] == null && !this.toastsQueue.isEmpty())
                 {
-                    this.visible[i] = new GuiToast.ToastInstance(this.toastsQueue.removeFirst());
+                    this.visible[i] = this.createInstance(this.toastsQueue.removeFirst());
                 }
             }
         }
@@ -104,14 +122,14 @@ public class GuiToast extends Gui
     }
 
     @SideOnly(Side.CLIENT)
-    class ToastInstance<T extends IToast>
+    protected class ToastInstance<T extends IToast>
     {
-        private final T toast;
-        private long animationTime;
-        private long visibleTime;
-        private IToast.Visibility visibility;
+        protected final T toast;
+        protected long animationTime;
+        protected long visibleTime;
+        protected IToast.Visibility visibility;
 
-        private ToastInstance(T toastIn)
+        protected ToastInstance(T toastIn)
         {
             this.animationTime = -1L;
             this.visibleTime = -1L;
@@ -124,7 +142,7 @@ public class GuiToast extends Gui
             return this.toast;
         }
 
-        private float getVisibility(long p_193686_1_)
+        protected float getVisibility(long p_193686_1_)
         {
             float f = MathHelper.clamp((float)(p_193686_1_ - this.animationTime) / 600.0F, 0.0F, 1.0F);
             f = f * f;

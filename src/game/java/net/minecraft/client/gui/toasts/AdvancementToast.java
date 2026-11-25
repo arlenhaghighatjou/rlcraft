@@ -27,7 +27,7 @@ public class AdvancementToast implements IToast
 
     public IToast.Visibility draw(GuiToast toastGui, long delta)
     {
-        toastGui.getMinecraft().getTextureManager().bindTexture(TEXTURE_TOASTS);
+        toastGui.getMinecraft().getTextureManager().bindTexture(toastGui.getToastTexture());
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         DisplayInfo displayinfo = this.advancement.getDisplay();
         toastGui.drawTexturedModalRect(0, 0, 0, 0, 160, 32);

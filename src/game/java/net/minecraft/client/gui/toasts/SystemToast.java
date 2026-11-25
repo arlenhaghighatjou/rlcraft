@@ -30,7 +30,7 @@ public class SystemToast implements IToast
             this.newDisplay = false;
         }
 
-        toastGui.getMinecraft().getTextureManager().bindTexture(TEXTURE_TOASTS);
+        toastGui.getMinecraft().getTextureManager().bindTexture(toastGui.getToastTexture());
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         toastGui.drawTexturedModalRect(0, 0, 0, 64, 160, 32);
 

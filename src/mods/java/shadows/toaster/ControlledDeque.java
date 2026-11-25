@@ -15,7 +15,7 @@ public class ControlledDeque extends BlockedDeque<IToast> {
 
    public boolean isBlocked(IToast toast) {
       if (ToastControl.ToastControlConfig.printClasses) {
-         ToastControl.LOGGER.info(toast.getClass());
+         ToastControl.LOGGER.info(toast.getClass().getName());
       }
 
       if (ToastControl.ToastControlConfig.global) {
@@ -24,7 +24,7 @@ public class ControlledDeque extends BlockedDeque<IToast> {
          return true;
       } else if (ToastControl.ToastControlConfig.globalModded && !this.isVanillaToast(toast)) {
          return true;
-      } else if (ToastControl.BLOCKED_CLASSES.contains(toast.getClass())) {
+      } else if (ToastControl.BLOCKED_CLASSES.contains(toast.getClass().getName())) {
          return true;
       } else {
          return toast instanceof AdvancementToast && ToastControl.ToastControlConfig.advancements || toast instanceof RecipeToast && ToastControl.ToastControlConfig.recipes || toast instanceof SystemToast && ToastControl.ToastControlConfig.system || toast instanceof TutorialToast && ToastControl.ToastControlConfig.tutorial;

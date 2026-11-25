@@ -30,7 +30,7 @@ public class TutorialToast implements IToast
 
     public IToast.Visibility draw(GuiToast toastGui, long delta)
     {
-        toastGui.getMinecraft().getTextureManager().bindTexture(TEXTURE_TOASTS);
+        toastGui.getMinecraft().getTextureManager().bindTexture(toastGui.getToastTexture());
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         toastGui.drawTexturedModalRect(0, 0, 0, 96, 160, 32);
         this.icon.draw(toastGui, 6, 6);

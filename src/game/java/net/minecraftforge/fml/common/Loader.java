@@ -204,6 +204,7 @@ public class Loader
         mods.add(new FMLModContainer<>("roughtweaks", "Rough Tweaks", "1.0", "", "[1.12.2]", "roughtweaks", lellson.roughTweaks.RoughTweaks::new, lellson.roughTweaks.RoughTweaks::handleModStateEvent));
         mods.add(new FMLModContainer<>("alcatrazcore", "Alcatraz Core", "1.0.4", com.alcatrazescapee.alcatrazcore.AlcatrazCore.DEPENDENCIES, "[1.12.2]", "alcatrazcore", com.alcatrazescapee.alcatrazcore.AlcatrazCore::new, com.alcatrazescapee.alcatrazcore.AlcatrazCore::handleModStateEvent));
         mods.add(new FMLModContainer<>("notreepunching", "No Tree Punching", "2.0.21", com.alcatrazescapee.notreepunching.NoTreePunching.DEPENDENCIES, "[1.12.2]", "notreepunching", com.alcatrazescapee.notreepunching.NoTreePunching::new, com.alcatrazescapee.notreepunching.NoTreePunching::handleModStateEvent));
+        mods.add(new FMLModContainer<>("toastcontrol", "Toast Control", "1.8.1", shadows.toaster.ToastControl.DEPS, "[1.12.2]", "toastcontrol", shadows.toaster.ToastControl::new, shadows.toaster.ToastControl::handleModStateEvent).clientSideOnly());
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }
