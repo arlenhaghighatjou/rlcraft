@@ -1,9 +1,9 @@
 package com.matthewprenger.helpfixer;
 
+import net.minecraftforge.fml.common.event.FMLEvent;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.Function;
 import javax.annotation.Nonnull;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandHelp;
@@ -12,7 +12,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
@@ -22,7 +21,7 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
    modid = "helpfixer",
    name = "HelpFixer",
    acceptableRemoteVersions = "*",
-   acceptedMinecraftVersions = "[1.12.1]"
+   acceptedMinecraftVersions = "[1.12.2]"
 )
 public final class HelpFixer {
    private static final Logger log = LogManager.getLogger();
@@ -56,7 +55,15 @@ public final class HelpFixer {
    public HelpFixer() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLServerStartingEvent) {
+         this.onServerStarting((FMLServerStartingEvent)event);
+      } else if (event instanceof FMLServerStartedEvent) {
+         this.onServerStarted((FMLServerStartedEvent)event);
+      }
+
+   }
+
    public void onServerStarting(FMLServerStartingEvent event) {
       event.registerServerCommand(new CommandHelp() {
          protected List<ICommand> getSortedPossibleCommands(ICommandSender sender, MinecraftServer server) {
@@ -85,7 +92,6 @@ public final class HelpFixer {
       });
    }
 
-   @EventHandler
    public void onServerStarted(FMLServerStartedEvent event) {
       for(ICommand command : FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager().getCommands().values()) {
          if (!validCompareTo(command)) {

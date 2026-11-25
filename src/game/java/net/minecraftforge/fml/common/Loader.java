@@ -197,6 +197,7 @@ public class Loader
         mods.add(new FMLModContainer<>("xpbook", "XP Tome", "v1.1.6", "", "[1.12.2]", "xptome-1.12.2-v1.1.6", bl4ckscor3.mod.xptome.XPTome::new, bl4ckscor3.mod.xptome.XPTome::handleModStateEvent));
         mods.add(new FMLModContainer<>("sit", "Sit", "v1.3", "", "[1.12.2]", "sit-1.12.2-v1.3", bl4ckscor3.mod.sit.Sit::new, bl4ckscor3.mod.sit.Sit::handleModStateEvent));
         mods.add(new FMLModContainer<>("friendlyendermite", "Friendly Endermite", "1.0", "", "[1.12.2]", "friendlyendermite", com.creativemd.friendlyendermite.FriendlyEndermite::new, com.creativemd.friendlyendermite.FriendlyEndermite::handleModStateEvent).acceptableRemoteVersions("*"));
+        mods.add(new FMLModContainer<>("helpfixer", "HelpFixer", "1.12.1-1.5.18", "", "[1.12.2]", "helpfixer", com.matthewprenger.helpfixer.HelpFixer::new, com.matthewprenger.helpfixer.HelpFixer::handleModStateEvent).acceptableRemoteVersions("*"));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }
