@@ -1,17 +1,16 @@
 package com.creativemd.friendlyendermite;
 
-import java.lang.reflect.Field;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-@EventBusSubscriber
 @Mod(
    modid = "friendlyendermite",
    name = "Friendly Endermite",
@@ -22,25 +21,31 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 public class FriendlyEndermite {
    public static final String modid = "friendlyendermite";
    public static final String version = "1.0";
-   private static Field targetClassField = ReflectionHelper.findField(EntityAINearestAttackableTarget.class, new String[]{"targetClass", "targetClass"});
 
    public FriendlyEndermite() {
    }
 
-   @SubscribeEvent
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         register(MinecraftForge.EVENT_BUS);
+      }
+
+   }
+
+   public static void register(EventBus bus) {
+      bus.register(EntityJoinWorldEvent.class, FriendlyEndermite::entitySpawned);
+   }
+
    public static void entitySpawned(EntityJoinWorldEvent event) {
       if (event.getEntity() instanceof EntityEnderman) {
          EntityEnderman man = (EntityEnderman)event.getEntity();
 
-         try {
-            for(EntityAITaskEntry task : man.targetTasks.taskEntries) {
-               if (task.action instanceof EntityAINearestAttackableTarget && targetClassField.get(task.action) == EntityEndermite.class) {
-                  man.targetTasks.removeTask(task.action);
-                  return;
-               }
+         for (EntityAITaskEntry task : man.targetTasks.taskEntries) {
+            if (task.action instanceof EntityAINearestAttackableTarget
+                  && ((EntityAINearestAttackableTarget<?>) task.action).getTargetClass() == EntityEndermite.class) {
+               man.targetTasks.removeTask(task.action);
+               return;
             }
-         } catch (IllegalAccessException | IllegalArgumentException var4) {
-            var4.printStackTrace();
          }
       }
 

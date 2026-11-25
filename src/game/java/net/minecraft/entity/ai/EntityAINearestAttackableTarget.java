@@ -23,6 +23,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 public class EntityAINearestAttackableTarget<T extends EntityLivingBase> extends EntityAITarget
 {
     protected final Class<T> targetClass;
+
+    public Class<T> getTargetClass()
+    {
+        return this.targetClass;
+    }
     private final int targetChance;
     protected final EntityAINearestAttackableTarget.Sorter sorter;
     protected final Predicate <? super T > targetEntitySelector;
