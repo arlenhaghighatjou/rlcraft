@@ -1,7 +1,7 @@
 package svenhjol.meson;
 
 import net.minecraftforge.common.MinecraftForge;
-import org.apache.logging.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import svenhjol.meson.asm.MesonLoadingPlugin;
 import svenhjol.meson.registry.ProxyRegistry;
 import svenhjol.meson.registry.VillagerRegistry;

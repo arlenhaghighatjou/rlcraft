@@ -16,7 +16,7 @@ import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import shieldbreak.core.ShieldBreak;
 import shieldbreak.util.PotionEntry;
 

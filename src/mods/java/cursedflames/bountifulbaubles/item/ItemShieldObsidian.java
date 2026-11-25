@@ -1,7 +1,7 @@
 package cursedflames.bountifulbaubles.item;
 
 import cursedflames.bountifulbaubles.baubleeffect.IFireResistance;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@ public class ItemShieldObsidian extends ItemShieldCobalt implements IFireResista
       return repair.getItem() == Item.getItemFromBlock(Blocks.OBSIDIAN);
    }
 
-   public UUID getFireResistID() {
+   public EaglercraftUUID getFireResistID() {
       return ItemTrinketObsidianSkull.FIRE_RESIST_UUID;
    }
 }

@@ -1,7 +1,7 @@
 package lykrast.defiledlands.common.util;
 
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraftforge.common.DungeonHooks.DungeonMob;
@@ -38,7 +38,7 @@ public class DungeonDefiledList {
       return 0;
    }
 
-   public static ResourceLocation getRandomDungeonMob(Random rand) {
+   public static ResourceLocation getRandomDungeonMob(EaglercraftRandom rand) {
       DungeonMob mob = (DungeonMob)WeightedRandom.getRandomItem(rand, dungeonMobs);
       return mob.type;
    }

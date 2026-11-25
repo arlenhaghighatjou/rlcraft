@@ -3,7 +3,7 @@ package jaredbgreat.dldungeons.pieces.chests;
 import jaredbgreat.dldungeons.ConfigHandler;
 import jaredbgreat.dldungeons.api.DLDEvent;
 import jaredbgreat.dldungeons.builder.AbstractBlock;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
@@ -28,7 +28,7 @@ public class BasicChest {
       this.category = category;
    }
 
-   public void place(World world, int x, int y, int z, Random random) {
+   public void place(World world, int x, int y, int z, EaglercraftRandom random) {
       BlockPos pos = new BlockPos(x, y, z);
       this.level += random.nextInt(2);
       this.level = Math.min(6, Math.min(this.level, 6));
@@ -52,7 +52,7 @@ public class BasicChest {
       }
    }
 
-   protected void fillChest(TileEntityChest chest, LootType kind, Random random) {
+   protected void fillChest(TileEntityChest chest, LootType kind, EaglercraftRandom random) {
       int num = random.nextInt(Math.max(2, A1 + this.level / B1)) + C1;
 
       for(int i = 0; i < num; ++i) {

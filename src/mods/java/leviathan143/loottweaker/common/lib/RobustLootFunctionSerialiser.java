@@ -8,8 +8,8 @@ import java.lang.reflect.Type;
 import leviathan143.loottweaker.common.darkmagic.LootFunctionManagerAccessors;
 import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager.Serializer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class RobustLootFunctionSerialiser implements JsonSerializer<LootFunction> {
    private static final Logger SANITY_LOGGER = LogManager.getLogger("loottweaker.sanity_checks");

@@ -3,8 +3,8 @@ package org.orecruncher.lib.gfx.shaders;
 import java.nio.FloatBuffer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.opengl.GL11;
 

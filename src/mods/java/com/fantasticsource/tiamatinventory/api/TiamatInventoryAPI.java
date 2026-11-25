@@ -3,13 +3,13 @@ package com.fantasticsource.tiamatinventory.api;
 import com.fantasticsource.tools.ReflectionTool;
 import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.Loader;
 
 public class TiamatInventoryAPI {
    private static Field clientInventoryField = null;
-   private static LinkedHashMap<UUID, ITiamatPlayerInventory> tiamatServerInventories = null;
+   private static LinkedHashMap<EaglercraftUUID, ITiamatPlayerInventory> tiamatServerInventories = null;
 
    public TiamatInventoryAPI() {
    }

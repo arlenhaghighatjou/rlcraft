@@ -10,7 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import javax.annotation.Nonnull;
 import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class JsonUtil {
    private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();

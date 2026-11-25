@@ -6,8 +6,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
@@ -157,7 +157,7 @@ public class RecurrentReflect {
       return this.f_WorldStructureGenerationData_entryMap.get(i_WorldStructureGenerationData);
    }
 
-   public Object removeEntry(Object i_WorldStructureGenerationData, UUID uuid) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+   public Object removeEntry(Object i_WorldStructureGenerationData, EaglercraftUUID uuid) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
       return this.m_WorldStructureGenerationData_removeEntry.invoke(i_WorldStructureGenerationData, uuid);
    }
 
@@ -165,7 +165,7 @@ public class RecurrentReflect {
       this.m_WorldGenStructures_complementStructuresInChunk.invoke((Object)null, chunkPos, world, structuresComplementList);
    }
 
-   public void planStaticStructuresInChunk(Random random, ChunkPos chunkPos, WorldServer world, BlockPos spawnPos, @Nullable Object structurePredicate) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+   public void planStaticStructuresInChunk(EaglercraftRandom random, ChunkPos chunkPos, WorldServer world, BlockPos spawnPos, @Nullable Object structurePredicate) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
       this.m_WorldGenStructures_planStaticStructuresInChunk.invoke((Object)null, random, chunkPos, world, spawnPos, structurePredicate);
    }
 
@@ -221,7 +221,7 @@ public class RecurrentReflect {
       return this.m_CachedStructureSelectors_get.invoke(cached, biome, provider);
    }
 
-   public List<Pair<Object, Object>> getStructurePairsWithSelector(Object selector, Random random, Biome biome, WorldProvider provider, Float spawnDistance) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+   public List<Pair<Object, Object>> getStructurePairsWithSelector(Object selector, EaglercraftRandom random, Biome biome, WorldProvider provider, Float spawnDistance) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
       return (List)this.m_MixingStructureSelector_generatedStructures.invoke(selector, random, biome, provider, spawnDistance);
    }
 

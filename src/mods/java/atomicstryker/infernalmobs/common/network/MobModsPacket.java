@@ -3,7 +3,7 @@ package atomicstryker.infernalmobs.common.network;
 import atomicstryker.infernalmobs.common.InfernalMobsCore;
 import atomicstryker.infernalmobs.common.MobModifier;
 import atomicstryker.infernalmobs.common.network.NetworkHelper.IPacket;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

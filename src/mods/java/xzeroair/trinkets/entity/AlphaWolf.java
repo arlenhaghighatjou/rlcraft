@@ -1,6 +1,6 @@
 package xzeroair.trinkets.entity;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Function;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -149,7 +149,7 @@ public class AlphaWolf extends EntityWolf {
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
       this.getEntityAttribute(JumpAttribute.Jump).setBaseValue(0.7D);
-      UpdatingAttribute atkDamage = (new UpdatingAttribute(UUID.fromString("76c436ad-d830-48ff-8b3c-fa3bcc1891c2"), SharedMonsterAttributes.ATTACK_DAMAGE)).setSavedInNBT(true);
+      UpdatingAttribute atkDamage = (new UpdatingAttribute(EaglercraftUUID.fromString("76c436ad-d830-48ff-8b3c-fa3bcc1891c2"), SharedMonsterAttributes.ATTACK_DAMAGE)).setSavedInNBT(true);
       atkDamage.addModifier(this, 4.0D, 2);
    }
 

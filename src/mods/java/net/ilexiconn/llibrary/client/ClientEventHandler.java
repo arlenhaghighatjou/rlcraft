@@ -1,6 +1,6 @@
 package net.ilexiconn.llibrary.client;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.client.gui.SnackbarGUI;
 import net.ilexiconn.llibrary.client.gui.survivaltab.PageButtonGUI;
@@ -20,7 +20,7 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
@@ -178,7 +178,7 @@ public enum ClientEventHandler {
    public void onRenderPlayer(net.minecraftforge.client.event.RenderPlayerEvent.Post event) {
       EntityPlayer player = event.getEntityPlayer();
       if (LLibrary.CONFIG.hasPatreonEffects() && ClientProxy.PATRONS != null && (ClientProxy.MINECRAFT.gameSettings.thirdPersonView != 0 || player != ClientProxy.MINECRAFT.player)) {
-         UUID id = player.getGameProfile().getId();
+         EaglercraftUUID id = player.getGameProfile().getId();
          if (id != null && ClientProxy.PATRONS.contains(id.toString())) {
             GlStateManager.pushMatrix();
             GlStateManager.translate(event.getX(), event.getY(), event.getZ());

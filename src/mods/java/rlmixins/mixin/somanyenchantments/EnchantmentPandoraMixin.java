@@ -7,7 +7,7 @@ import com.Shultrea.Rin.Utility_Sector.EnchantmentLister;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -40,7 +40,7 @@ public abstract class EnchantmentPandoraMixin extends Enchantment {
    public void HandleEnchant(PlayerTickEvent e) {
       if (e.phase == Phase.END && e.player != null && !e.player.world.isRemote) {
          if (e.player.ticksExisted % 600 == 0) {
-            Random rand = e.player.world.rand;
+            EaglercraftRandom rand = e.player.world.rand;
             InventoryPlayer inv = e.player.inventory;
             ItemStack cursed = null;
             int curseLevel = 0;

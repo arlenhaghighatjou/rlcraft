@@ -5,7 +5,7 @@ import com.lycanitesmobs.ObjectManager;
 import com.lycanitesmobs.client.AssetManager;
 import com.lycanitesmobs.core.block.BlockFireBase;
 import com.lycanitesmobs.core.config.ConfigBase;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -36,7 +36,7 @@ public class BlockDoomfire extends BlockFireBase {
       this.setLightLevel(0.8F);
    }
 
-   public Item getItemDropped(IBlockState state, Random random, int zero) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom random, int zero) {
       return null;
    }
 
@@ -62,7 +62,7 @@ public class BlockDoomfire extends BlockFireBase {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random) {
+   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, EaglercraftRandom random) {
       super.randomDisplayTick(state, world, pos, random);
       int x = pos.getX();
       int y = pos.getY();

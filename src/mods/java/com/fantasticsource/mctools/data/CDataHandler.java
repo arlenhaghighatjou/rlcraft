@@ -4,7 +4,7 @@ import com.fantasticsource.mctools.MCTools;
 import com.fantasticsource.mctools.Network;
 import com.fantasticsource.tools.component.CStringUTF8;
 import com.fantasticsource.tools.component.Component;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package vazkii.quark.world.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -14,7 +14,7 @@ public abstract class MultiChunkFeatureGenerator {
          int radius = this.getFeatureRadius();
          int chunkRadius = (int)Math.ceil((double)radius / 16.0D);
          long worldSeed = this.modifyWorldSeed(world.getSeed());
-         Random worldRandom = new Random(worldSeed);
+         EaglercraftRandom worldRandom = new EaglercraftRandom(worldSeed);
          long xSeed = worldRandom.nextLong() >> 3;
          long zSeed = worldRandom.nextLong() >> 3;
          long ourChunkSeed = xSeed * (long)chunkX + zSeed * (long)chunkZ ^ worldSeed;
@@ -22,7 +22,7 @@ public abstract class MultiChunkFeatureGenerator {
          for(int x = chunkX - chunkRadius; x <= chunkX + chunkRadius; ++x) {
             for(int z = chunkZ - chunkRadius; z <= chunkZ + chunkRadius; ++z) {
                long chunkSeed = xSeed * (long)x + zSeed * (long)z ^ worldSeed;
-               Random chunkRandom = new Random(chunkSeed);
+               EaglercraftRandom chunkRandom = new EaglercraftRandom(chunkSeed);
                BlockPos[] sources = this.getSourcesInChunk(chunkRandom, x, z);
 
                for(BlockPos source : sources) {
@@ -54,9 +54,9 @@ public abstract class MultiChunkFeatureGenerator {
 
    public abstract int getFeatureRadius();
 
-   public abstract void generateChunkPart(BlockPos var1, Random var2, int var3, int var4, World var5);
+   public abstract void generateChunkPart(BlockPos var1, EaglercraftRandom var2, int var3, int var4, World var5);
 
-   public abstract BlockPos[] getSourcesInChunk(Random var1, int var2, int var3);
+   public abstract BlockPos[] getSourcesInChunk(EaglercraftRandom var1, int var2, int var3);
 
    public void forEachChunkBlock(int chunkX, int chunkZ, int minY, int maxY, Consumer<BlockPos> func) {
       BlockPos first = new BlockPos(chunkX * 16, 0, chunkZ * 16);

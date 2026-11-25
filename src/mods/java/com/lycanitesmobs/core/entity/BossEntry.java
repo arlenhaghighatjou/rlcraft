@@ -1,10 +1,10 @@
 package com.lycanitesmobs.core.entity;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 
 public class BossEntry {
-   public UUID uuid;
+   public EaglercraftUUID uuid;
    public Entity entity;
    public long lastUpdated = -1L;
    public int nearbyRange = 30;

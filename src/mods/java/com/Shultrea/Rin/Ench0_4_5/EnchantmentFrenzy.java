@@ -5,7 +5,7 @@ import com.Shultrea.Rin.Enum.EnumList;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.entity.EntityLiving;
@@ -47,7 +47,7 @@ public class EnchantmentFrenzy extends EnchantmentBase {
    public void onAttack(LivingAttackEvent event) {
       if (!event.isCanceled() && event.getAmount() > 0.0F && event.getSource().getTrueSource() != null && event.getSource().damageType.equals("player")) {
          World world = event.getEntityLiving().world;
-         Random random = new Random();
+         EaglercraftRandom random = new EaglercraftRandom();
          EntityLivingBase attacker = (EntityLivingBase)event.getSource().getTrueSource();
          EntityLivingBase victim = event.getEntityLiving();
          if (attacker.getHeldItemMainhand().isEmpty()) {

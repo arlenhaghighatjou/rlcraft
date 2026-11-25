@@ -1,6 +1,6 @@
 package ivorius.ivtoolkit.blocks;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;

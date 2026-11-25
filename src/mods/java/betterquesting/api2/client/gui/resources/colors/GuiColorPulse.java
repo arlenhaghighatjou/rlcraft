@@ -1,7 +1,7 @@
 package betterquesting.api2.client.gui.resources.colors;
 
 import betterquesting.api.utils.RenderUtils;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GuiColorPulse implements IGuiColor {
    private static final double RAD = Math.toRadians(360.0D);

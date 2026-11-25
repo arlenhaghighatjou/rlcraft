@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import java.util.function.Function;
 import javax.annotation.Nonnull;
@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public final class NameCache implements INameCache {
    public static final NameCache INSTANCE = new NameCache();
-   private final HashMap<UUID, NBTTagCompound> cache = new HashMap();
+   private final HashMap<EaglercraftUUID, NBTTagCompound> cache = new HashMap();
    private List<String> nameCache = null;
 
    public NameCache() {
@@ -40,22 +40,22 @@ public final class NameCache implements INameCache {
       }
    }
 
-   public synchronized String getName(@Nonnull UUID uuid) {
+   public synchronized String getName(@Nonnull EaglercraftUUID uuid) {
       NBTTagCompound tag = (NBTTagCompound)this.cache.get(uuid);
       return tag == null ? uuid.toString() : tag.getString("name");
    }
 
-   public synchronized UUID getUUID(@Nonnull String name) {
-      for(Entry<UUID, NBTTagCompound> entry : this.cache.entrySet()) {
+   public synchronized EaglercraftUUID getUUID(@Nonnull String name) {
+      for(Entry<EaglercraftUUID, NBTTagCompound> entry : this.cache.entrySet()) {
          if (((NBTTagCompound)entry.getValue()).getString("name").equalsIgnoreCase(name)) {
-            return (UUID)entry.getKey();
+            return (EaglercraftUUID)entry.getKey();
          }
       }
 
       return null;
    }
 
-   public synchronized boolean isOP(@Nonnull UUID uuid) {
+   public synchronized boolean isOP(@Nonnull EaglercraftUUID uuid) {
       NBTTagCompound tag = (NBTTagCompound)this.cache.get(uuid);
       return tag != null && tag.getBoolean("isOP");
    }
@@ -64,11 +64,11 @@ public final class NameCache implements INameCache {
       return this.cache.size();
    }
 
-   public synchronized NBTTagList writeToNBT(NBTTagList nbt, @Nullable List<UUID> users) {
-      for(Entry<UUID, NBTTagCompound> entry : this.cache.entrySet()) {
+   public synchronized NBTTagList writeToNBT(NBTTagList nbt, @Nullable List<EaglercraftUUID> users) {
+      for(Entry<EaglercraftUUID, NBTTagCompound> entry : this.cache.entrySet()) {
          if (users == null || users.contains(entry.getKey())) {
             NBTTagCompound jn = new NBTTagCompound();
-            jn.setString("uuid", ((UUID)entry.getKey()).toString());
+            jn.setString("uuid", ((EaglercraftUUID)entry.getKey()).toString());
             jn.setString("name", ((NBTTagCompound)entry.getValue()).getString("name"));
             jn.setBoolean("isOP", ((NBTTagCompound)entry.getValue()).getBoolean("isOP"));
             nbt.appendTag(jn);
@@ -87,7 +87,7 @@ public final class NameCache implements INameCache {
          NBTTagCompound jn = nbt.getCompoundTagAt(i);
 
          try {
-            UUID uuid = UUID.fromString(jn.getString("uuid"));
+            EaglercraftUUID uuid = EaglercraftUUID.fromString(jn.getString("uuid"));
             String name = jn.getString("name");
             boolean isOP = jn.getBoolean("isOP");
             NBTTagCompound j2 = new NBTTagCompound();

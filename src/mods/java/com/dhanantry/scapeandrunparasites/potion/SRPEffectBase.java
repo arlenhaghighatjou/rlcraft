@@ -13,7 +13,7 @@ import com.dhanantry.scapeandrunparasites.world.SRPWorldData;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -34,7 +34,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class SRPEffectBase extends Potion {
    private ResourceLocation icon;
@@ -96,7 +96,7 @@ public class SRPEffectBase extends Potion {
       } else if (this == SRPPotions.RAGE_E) {
          if (entity.world.isRemote) {
             for(int i = 0; i <= 3; ++i) {
-               this.spawnParticles(SRPEnumParticle.GCLOUD, new Random(), entity);
+               this.spawnParticles(SRPEnumParticle.GCLOUD, new EaglercraftRandom(), entity);
             }
          }
       } else if (this == SRPPotions.PREY_E) {
@@ -121,7 +121,7 @@ public class SRPEffectBase extends Potion {
 
    }
 
-   private void spawnParticles(SRPEnumParticle particleType, Random rand, EntityLivingBase entity) {
+   private void spawnParticles(SRPEnumParticle particleType, EaglercraftRandom rand, EntityLivingBase entity) {
       double d0 = rand.nextGaussian() * 0.02D;
       double d1 = rand.nextGaussian() * 0.02D;
       double d2 = rand.nextGaussian() * 0.02D;

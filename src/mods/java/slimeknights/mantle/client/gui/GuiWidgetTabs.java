@@ -3,14 +3,14 @@ package slimeknights.mantle.client.gui;
 import com.google.common.collect.Lists;
 import java.util.List;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 @SideOnly(Side.CLIENT)
 public class GuiWidgetTabs extends GuiWidget {

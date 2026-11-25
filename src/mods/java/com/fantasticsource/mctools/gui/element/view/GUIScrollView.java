@@ -3,7 +3,7 @@ package com.fantasticsource.mctools.gui.element.view;
 import com.fantasticsource.mctools.gui.GUIScreen;
 import com.fantasticsource.mctools.gui.element.GUIElement;
 import com.fantasticsource.tools.Tools;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GUIScrollView extends GUIView {
    public double internalHeight;

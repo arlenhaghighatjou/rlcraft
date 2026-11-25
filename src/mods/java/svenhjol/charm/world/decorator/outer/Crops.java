@@ -1,7 +1,7 @@
 package svenhjol.charm.world.decorator.outer;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockBeetroot;
 import net.minecraft.block.BlockCarrot;
 import net.minecraft.block.BlockCrops;
@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import svenhjol.meson.decorator.MesonOuterDecorator;
 
 public class Crops extends MesonOuterDecorator {
-   public Crops(World world, BlockPos pos, Random rand, List<ChunkPos> chunks) {
+   public Crops(World world, BlockPos pos, EaglercraftRandom rand, List<ChunkPos> chunks) {
       super(world, pos, rand, chunks);
    }
 

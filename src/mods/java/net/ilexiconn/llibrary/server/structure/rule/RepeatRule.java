@@ -1,6 +1,6 @@
 package net.ilexiconn.llibrary.server.structure.rule;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
 
@@ -30,13 +30,13 @@ public abstract class RepeatRule {
       return this.spacingZ;
    }
 
-   public abstract boolean continueRepeating(World var1, Random var2, MutableBlockPos var3);
+   public abstract boolean continueRepeating(World var1, EaglercraftRandom var2, MutableBlockPos var3);
 
-   public abstract void repeat(World var1, Random var2, MutableBlockPos var3);
+   public abstract void repeat(World var1, EaglercraftRandom var2, MutableBlockPos var3);
 
-   public abstract void reset(World var1, Random var2, MutableBlockPos var3);
+   public abstract void reset(World var1, EaglercraftRandom var2, MutableBlockPos var3);
 
-   public void init(World world, Random random, MutableBlockPos pos) {
+   public void init(World world, EaglercraftRandom random, MutableBlockPos pos) {
       this.reset(world, random, pos);
    }
 }

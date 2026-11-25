@@ -8,19 +8,19 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 
 public class ModelEmpty implements IBakedModel {
    public static final ModelEmpty INSTANCE = new ModelEmpty();
    private static final List<BakedQuad> DUMMY_LIST = Collections.emptyList();
-   private TextureAtlasSprite particleTexture;
+   private EaglerTextureAtlasSprite particleTexture;
 
    private ModelEmpty() {
       this.particleTexture = null;
    }
 
-   public ModelEmpty(TextureAtlasSprite particleTexture) {
+   public ModelEmpty(EaglerTextureAtlasSprite particleTexture) {
       this.particleTexture = particleTexture;
    }
 
@@ -40,7 +40,7 @@ public class ModelEmpty implements IBakedModel {
       return false;
    }
 
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       return this.particleTexture;
    }
 

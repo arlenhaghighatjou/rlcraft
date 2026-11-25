@@ -1,6 +1,6 @@
 package com.github.fnar.minecraft.item;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Record extends RldBaseItem {
    private Record.Song song;
@@ -42,7 +42,7 @@ public class Record extends RldBaseItem {
       private Song() {
       }
 
-      public static Record.Song chooseRandom(Random random) {
+      public static Record.Song chooseRandom(EaglercraftRandom random) {
          return values()[random.nextInt(values().length)];
       }
 

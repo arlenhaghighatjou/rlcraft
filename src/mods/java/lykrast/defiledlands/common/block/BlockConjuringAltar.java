@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.init.ModBlocks;
 import lykrast.defiledlands.common.tileentity.TileConjuringAltar;
 import net.minecraft.block.ITileEntityProvider;
@@ -36,7 +36,7 @@ public class BlockConjuringAltar extends BlockCorrupted implements ITileEntityPr
       return state.withProperty(ACTIVE, Boolean.valueOf(this.isActive(worldIn, pos)));
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return ModBlocks.stoneDefiled.getItemDropped(ModBlocks.stoneDefiled.getDefaultState(), rand, fortune);
    }
 

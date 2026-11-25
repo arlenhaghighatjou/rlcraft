@@ -41,7 +41,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class InventoryModule extends Module {
    public static ArrayList<Class<? extends DeathInventoryHandler>> handlerClasses;

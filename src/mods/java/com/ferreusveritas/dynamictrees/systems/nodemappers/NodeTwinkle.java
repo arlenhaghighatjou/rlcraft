@@ -3,7 +3,7 @@ package com.ferreusveritas.dynamictrees.systems.nodemappers;
 import com.ferreusveritas.dynamictrees.DynamicTrees;
 import com.ferreusveritas.dynamictrees.api.TreeHelper;
 import com.ferreusveritas.dynamictrees.api.network.INodeInspector;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -31,7 +31,7 @@ public class NodeTwinkle implements INodeInspector {
       return false;
    }
 
-   public static void spawnParticles(World world, EnumParticleTypes particleType, int x, int y, int z, int numParticles, Random random) {
+   public static void spawnParticles(World world, EnumParticleTypes particleType, int x, int y, int z, int numParticles, EaglercraftRandom random) {
       for(int i1 = 0; i1 < numParticles; ++i1) {
          double mx = random.nextGaussian() * 0.02D;
          double my = random.nextGaussian() * 0.02D;

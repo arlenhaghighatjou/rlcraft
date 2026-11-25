@@ -1,6 +1,6 @@
 package rustic.common.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -22,7 +22,7 @@ public class WorldGenOliveTree extends WorldGenAbstractTree {
       super(notify);
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int i = rand.nextInt(3) + 4;
       boolean flag = true;
       if (position.getY() >= 1 && position.getY() + i + 1 <= 256) {

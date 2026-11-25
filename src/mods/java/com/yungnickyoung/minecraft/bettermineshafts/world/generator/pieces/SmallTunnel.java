@@ -8,7 +8,7 @@ import com.yungnickyoung.minecraft.bettermineshafts.world.generator.BetterMinesh
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.MineshaftVariantSettings;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.BlockFence;
@@ -41,7 +41,7 @@ public class SmallTunnel extends MineshaftPiece {
    public SmallTunnel() {
    }
 
-   public SmallTunnel(int i, int chunkPieceLen, Random random, StructureBoundingBox blockBox, EnumFacing direction, MineshaftVariantSettings settings) {
+   public SmallTunnel(int i, int chunkPieceLen, EaglercraftRandom random, StructureBoundingBox blockBox, EnumFacing direction, MineshaftVariantSettings settings) {
       super(i, chunkPieceLen, settings);
       this.setCoordBaseMode(direction);
       this.boundingBox = blockBox;
@@ -68,14 +68,14 @@ public class SmallTunnel extends MineshaftPiece {
 
    }
 
-   public static StructureBoundingBox determineBoxPosition(List<StructureComponent> list, Random random, int x, int y, int z, EnumFacing direction) {
+   public static StructureBoundingBox determineBoxPosition(List<StructureComponent> list, EaglercraftRandom random, int x, int y, int z, EnumFacing direction) {
       StructureBoundingBox blockBox = BoxUtil.boxFromCoordsWithRotation(x, y, z, 5, 5, 8, direction);
       StructureComponent intersectingPiece = StructureComponent.findIntersecting(list, blockBox);
       return intersectingPiece != null ? null : blockBox;
    }
 
    @ParametersAreNonnullByDefault
-   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, Random random) {
+   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, EaglercraftRandom random) {
       EnumFacing direction = this.getCoordBaseMode();
       if (direction != null) {
          switch(direction) {
@@ -98,7 +98,7 @@ public class SmallTunnel extends MineshaftPiece {
    }
 
    @ParametersAreNonnullByDefault
-   public boolean addComponentParts(World world, Random random, StructureBoundingBox box) {
+   public boolean addComponentParts(World world, EaglercraftRandom random, StructureBoundingBox box) {
       if (this.isLiquidInStructureBoundingBox(world, box)) {
          return false;
       } else if (!this.isInOcean(world, 0, 0) && !this.isInOcean(world, 4, 7)) {
@@ -120,14 +120,14 @@ public class SmallTunnel extends MineshaftPiece {
       }
    }
 
-   private void generateCobwebs(World world, StructureBoundingBox box, Random random) {
+   private void generateCobwebs(World world, StructureBoundingBox box, EaglercraftRandom random) {
       this.supports.forEach((z) -> {
          this.chanceReplaceAir(world, box, random, Configuration.spawnRates.cobwebSpawnRate, 1, 3, z.intValue() - 1, 1, 3, z.intValue() + 1, Blocks.WEB.getDefaultState());
          this.chanceReplaceAir(world, box, random, Configuration.spawnRates.cobwebSpawnRate, 3, 3, z.intValue() - 1, 3, 3, z.intValue() + 1, Blocks.WEB.getDefaultState());
       });
    }
 
-   private void generateChestCarts(World world, StructureBoundingBox box, Random random, ResourceLocation lootTableId) {
+   private void generateChestCarts(World world, StructureBoundingBox box, EaglercraftRandom random, ResourceLocation lootTableId) {
       for(int z = 0; z <= 7; ++z) {
          if (random.nextFloat() < Configuration.spawnRates.smallShaftChestMinecartSpawnRate) {
             BlockPos blockPos = new BlockPos(this.getXWithOffset(2, z), this.getYWithOffset(1), this.getZWithOffset(2, z));
@@ -141,7 +141,7 @@ public class SmallTunnel extends MineshaftPiece {
 
    }
 
-   private void generateSupports(World world, StructureBoundingBox box, Random random) {
+   private void generateSupports(World world, StructureBoundingBox box, EaglercraftRandom random) {
       IBlockState supportBlock = this.getSupportBlock();
       if (supportBlock.getBlock() instanceof BlockFence) {
          supportBlock = supportBlock.withProperty(BlockFence.WEST, Boolean.valueOf(true)).withProperty(BlockFence.EAST, Boolean.valueOf(true));
@@ -161,7 +161,7 @@ public class SmallTunnel extends MineshaftPiece {
 
    }
 
-   private void generateRails(World world, StructureBoundingBox box, Random random) {
+   private void generateRails(World world, StructureBoundingBox box, EaglercraftRandom random) {
       for(int z = 0; z <= 7; ++z) {
          if (random.nextFloat() < 0.3F) {
             this.fill(world, box, 2, 1, z, 2, 1, z + 1, Blocks.RAIL.getDefaultState());
@@ -171,7 +171,7 @@ public class SmallTunnel extends MineshaftPiece {
 
    }
 
-   private void generateTntCarts(World world, StructureBoundingBox box, Random random) {
+   private void generateTntCarts(World world, StructureBoundingBox box, EaglercraftRandom random) {
       for(int z = 0; z <= 7; ++z) {
          if (random.nextFloat() < Configuration.spawnRates.smallShaftTntMinecartSpawnRate) {
             BlockPos blockPos = new BlockPos(this.getXWithOffset(2, z), this.getYWithOffset(1), this.getZWithOffset(2, z));
@@ -184,7 +184,7 @@ public class SmallTunnel extends MineshaftPiece {
 
    }
 
-   private void generateTorches(World world, StructureBoundingBox box, Random random) {
+   private void generateTorches(World world, StructureBoundingBox box, EaglercraftRandom random) {
       IBlockState leftTorch = Integrations.getLeftTorch(random);
       IBlockState rightTorch = Integrations.getRightTorch(random);
 
@@ -251,7 +251,7 @@ public class SmallTunnel extends MineshaftPiece {
 
    }
 
-   private void buildSupports(Random random) {
+   private void buildSupports(EaglercraftRandom random) {
       for(int z = 0; z <= 7; ++z) {
          int r = random.nextInt(7);
          if (r == 0) {

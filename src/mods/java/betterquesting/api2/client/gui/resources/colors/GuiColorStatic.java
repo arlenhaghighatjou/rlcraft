@@ -1,7 +1,7 @@
 package betterquesting.api2.client.gui.resources.colors;
 
 import java.awt.Color;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GuiColorStatic implements IGuiColor {
    private final int argb;

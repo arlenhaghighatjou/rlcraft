@@ -1,6 +1,6 @@
 package prospector.traverse.blocks.base;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
@@ -29,7 +29,7 @@ public class BlockTraverseSapling extends BlockSapling {
       ShootingStar.registerModel(new ModelCompound("traverse", this, "sapling", new IProperty[]{STAGE, TYPE}));
    }
 
-   public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void generateTree(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (TerrainGen.saplingGrowTree(worldIn, rand, pos)) {
          if (this.generator.generate(worldIn, rand, pos)) {
             worldIn.setBlockToAir(pos);

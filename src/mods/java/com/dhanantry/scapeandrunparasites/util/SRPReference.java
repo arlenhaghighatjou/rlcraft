@@ -2,7 +2,7 @@ package com.dhanantry.scapeandrunparasites.util;
 
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SRPReference {
    public static final String MOD_ID = "srparasites";
@@ -133,7 +133,7 @@ public class SRPReference {
    public static void setSimPlayerName(EntityParasiteBase in) {
       if (SRPConfig.parasiteNameTagChance > in.world.rand.nextDouble()) {
          if (SRPConfig.easterEggs) {
-            Random rand = new Random();
+            EaglercraftRandom rand = new EaglercraftRandom();
             String[] mans = new String[]{"Bliketod", "Spooky", "odxico", "Fishman", "Hurricane Lord", "V_SABITRON", "AnderHorlo", "BigPumpkin", "Weissair", "ZETA", "CylexicDragonheart", "genericvarient", "fomy2176", "tishaak", "Paul", "kazware", "cloudybog", "Ike", "LifeCraft", "The_Harbinger69", "sdbinkley", "Dero", "Thismightbekevin", "Tabcaps", "Zecabone", "The FacelessLord", "Salamand0r", "yodxxx1", "Tarzan", "Grape Juice", "LxnaAbxss", "Nanja!", "bugengxinshiba", "Doomsday", "RainingLamppost", "Crimson Gaming", "Guest21730qe2", "Golden Breeze", "Wartin", "Starmitzy", "Rynhex", "Bullfighter", "cboss999", "Fearthetater", "JSwizzle", "KaijuCreeper", "Razor Edge"};
             if (in.world.rand.nextInt(3) == 0) {
                mans = new String[]{"JohnySilverHand", "Cephelo", "Sansrriorar", "a cats", "LoneGuy", "Robert 25", "ZETA", "Zanity", "LazyKitch", "DanieloXXelo"};
@@ -148,7 +148,7 @@ public class SRPReference {
    public static void setSimPlayerNameSub1(EntityParasiteBase in) {
       if (SRPConfig.parasiteNameTagChance > in.world.rand.nextDouble()) {
          if (SRPConfig.easterEggs) {
-            Random rand = new Random();
+            EaglercraftRandom rand = new EaglercraftRandom();
             String[] mans = new String[]{"Grape Juice", "Nanja!", "Tarzan", "bugengxinshiba", "Zecabone", "yodxxx1", "The FacelessLord", "Tabcaps", "Lifecraft", "tishaak", "Weissair", "Hurricane Lord", "Bliketod", "Spooky", "Crimson Gaming", "Guest21730qe2", "Golden Breeze", "Starmitzy"};
             if (in.world.rand.nextInt(3) == 0) {
                mans = new String[]{"JohnySilverHand", "Cephelo", "Sansrriorar", "a cats", "LoneGuy", "Robert 25", "ZETA", "Zanity", "LazyKitch", "DanieloXXelo"};

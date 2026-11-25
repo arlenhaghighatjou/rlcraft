@@ -1,6 +1,6 @@
 package meldexun.configutil;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

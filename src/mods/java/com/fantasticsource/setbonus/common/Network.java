@@ -10,7 +10,7 @@ import com.fantasticsource.setbonus.common.bonusrequirements.setrequirement.Set;
 import com.fantasticsource.setbonus.common.bonusrequirements.setrequirement.SetRequirement;
 import com.fantasticsource.setbonus.server.ServerBonus;
 import com.fantasticsource.setbonus.server.ServerData;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.HashSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;

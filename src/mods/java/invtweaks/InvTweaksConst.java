@@ -3,7 +3,7 @@ package invtweaks;
 import java.io.File;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class InvTweaksConst {
    public static final String MOD_VERSION = "1.64+dev.151.822d839";

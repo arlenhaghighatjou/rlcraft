@@ -2,7 +2,7 @@ package rustic.common.blocks.crops;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
@@ -64,7 +64,7 @@ public class BlockLeavesApple extends BlockLeaves implements IColoredBlock, IGro
       return 3;
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       super.updateTick(worldIn, pos, state, rand);
       int i = ((Integer)state.getValue(AGE)).intValue();
       if (i < this.getMaxAge() && isAirAdjacent(worldIn, pos, state)) {
@@ -89,11 +89,11 @@ public class BlockLeavesApple extends BlockLeaves implements IColoredBlock, IGro
       return ((Integer)state.getValue(AGE)).intValue() < this.getMaxAge() && isAirAdjacent(worldIn, pos, state);
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return ((Integer)state.getValue(AGE)).intValue() < this.getMaxAge() && isAirAdjacent(worldIn, pos, state);
    }
 
-   public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       int i = ((Integer)state.getValue(AGE)).intValue() + this.getBonemealAgeIncrease(worldIn);
       int j = this.getMaxAge();
       if (i > j) {
@@ -124,13 +124,13 @@ public class BlockLeavesApple extends BlockLeaves implements IColoredBlock, IGro
 
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(ModBlocks.APPLE_SAPLING);
    }
 
    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
       List<ItemStack> ret = new ArrayList();
-      Random rand = world instanceof World ? ((World)world).rand : new Random();
+      EaglercraftRandom rand = world instanceof World ? ((World)world).rand : new EaglercraftRandom();
       int chance = this.getSaplingDropChance(state);
       if (fortune > 0) {
          chance -= 2 << fortune;

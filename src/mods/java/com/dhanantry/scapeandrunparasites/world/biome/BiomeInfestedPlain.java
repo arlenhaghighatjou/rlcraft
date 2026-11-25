@@ -4,7 +4,7 @@ import com.dhanantry.scapeandrunparasites.block.BlockParasiteBush;
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteBush;
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteTree;
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteTreeThin;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -31,19 +31,19 @@ public class BiomeInfestedPlain extends BiomeParasite {
       this.decorator.bigMushroomsPerChunk = 1;
    }
 
-   public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+   public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand) {
       return rand.nextInt(3) == 0 ? treePT : treeP;
    }
 
-   public WorldGenerator getRandomWorldGenForGrass(Random rand) {
+   public WorldGenerator getRandomWorldGenForGrass(EaglercraftRandom rand) {
       return rand.nextInt(2) == 0 ? this.grassP2 : this.grassP1;
    }
 
-   public void decorate(World worldIn, Random rand, BlockPos pos) {
+   public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos) {
       super.decorate(worldIn, rand, pos);
    }
 
-   public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
+   public void genTerrainBlocks(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
       super.genTerrainBlocks(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
       double d0 = 1.0D;
       if (d0 > 0.0D) {

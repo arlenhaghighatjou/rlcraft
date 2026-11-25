@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -30,7 +30,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class ForgeItem extends Item implements IForgeUnit {
    private final UnitEnabled unitEnabled;
@@ -57,11 +57,11 @@ public class ForgeItem extends Item implements IForgeUnit {
       this.register();
    }
 
-   public static UUID getAttackDamageModifierUUID() {
+   public static EaglercraftUUID getAttackDamageModifierUUID() {
       return ATTACK_DAMAGE_MODIFIER;
    }
 
-   public static UUID getAttackSpeedModifierUUID() {
+   public static EaglercraftUUID getAttackSpeedModifierUUID() {
       return ATTACK_SPEED_MODIFIER;
    }
 

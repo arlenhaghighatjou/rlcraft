@@ -4,7 +4,7 @@ import com.dhanantry.scapeandrunparasites.block.BlockParasiteBush;
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteBall;
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteBigBall;
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteBush;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockFlower.EnumFlowerType;
@@ -30,7 +30,7 @@ public class BiomeParasiteDecorator extends BiomeDecorator {
    public BiomeParasiteDecorator() {
    }
 
-   public void decorate(World worldIn, Random random, Biome biome, BlockPos pos) {
+   public void decorate(World worldIn, EaglercraftRandom random, Biome biome, BlockPos pos) {
       if (this.decorating) {
          throw new RuntimeException("Already decorating");
       } else {
@@ -52,7 +52,7 @@ public class BiomeParasiteDecorator extends BiomeDecorator {
       }
    }
 
-   protected void genDecorations(Biome biomeIn, World worldIn, Random random) {
+   protected void genDecorations(Biome biomeIn, World worldIn, EaglercraftRandom random) {
       ChunkPos forgeChunkPos = new ChunkPos(this.chunkPos);
       MinecraftForge.EVENT_BUS.post(new Pre(worldIn, random, forgeChunkPos));
       this.generateOres(worldIn, random);

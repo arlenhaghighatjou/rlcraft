@@ -3,7 +3,7 @@ package com.github.fnar.minecraft.block.spawner;
 import com.google.common.collect.Sets;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -54,7 +54,7 @@ public enum MobType {
       this.name = "minecraft:" + name;
    }
 
-   public static MobType chooseAmong(MobType[] mobTypes, Random random) {
+   public static MobType chooseAmong(MobType[] mobTypes, EaglercraftRandom random) {
       return mobTypes[random.nextInt(mobTypes.length)];
    }
 

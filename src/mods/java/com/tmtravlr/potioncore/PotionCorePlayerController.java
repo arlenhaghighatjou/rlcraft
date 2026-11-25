@@ -1,7 +1,7 @@
 package com.tmtravlr.potioncore;
 
 import com.tmtravlr.potioncore.network.CToSMessage;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.network.NetHandlerPlayClient;

@@ -9,7 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemDye;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class ComfortsUtil {
    public static List<PotionEffect> debuffs = new ArrayList();

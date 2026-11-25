@@ -1,6 +1,6 @@
 package paulevs.betternether.structures.plants;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
 import net.minecraft.block.state.IBlockState;
@@ -15,7 +15,7 @@ public class StructureMedRedMushroom implements IStructure {
    public StructureMedRedMushroom() {
    }
 
-   public void generate(World world, BlockPos pos, Random random) {
+   public void generate(World world, BlockPos pos, EaglercraftRandom random) {
       Block under = world.getBlockState(pos).getBlock();
       if (under instanceof BlockNetherrack || under == Blocks.SOUL_SAND) {
          for(int i = 0; i < 10; ++i) {
@@ -39,7 +39,7 @@ public class StructureMedRedMushroom implements IStructure {
 
    }
 
-   private void grow(World chunk, BlockPos pos, Random random) {
+   private void grow(World chunk, BlockPos pos, EaglercraftRandom random) {
       int size = 2 + random.nextInt(3);
 
       for(int y = 1; y <= size; ++y) {

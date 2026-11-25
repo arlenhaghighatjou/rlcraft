@@ -46,10 +46,10 @@ import betterquesting.storage.NameCache;
 import betterquesting.storage.QuestSettings;
 import bqtweaker.client.gui.panels.PanelPlayerPortraitOverride;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.NBTTagCompound;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class GuiPartyManageOverride extends GuiScreenCanvas implements IPEventListener, INeedsRefresh {
    private IParty party;
@@ -62,7 +62,7 @@ public class GuiPartyManageOverride extends GuiScreenCanvas implements IPEventLi
    }
 
    public void refreshGui() {
-      UUID playerID = QuestingAPI.getQuestingUUID(this.mc.player);
+      EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(this.mc.player);
       DBEntry<IParty> tmp = PartyManager.INSTANCE.getParty(playerID);
       if (tmp == null) {
          this.mc.displayGuiScreen(new GuiPartyCreate(this.parent));
@@ -79,7 +79,7 @@ public class GuiPartyManageOverride extends GuiScreenCanvas implements IPEventLi
 
    public void initPanel() {
       super.initPanel();
-      UUID playerID = QuestingAPI.getQuestingUUID(this.mc.player);
+      EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(this.mc.player);
       DBEntry<IParty> tmp = PartyManager.INSTANCE.getParty(playerID);
       if (tmp == null) {
          this.mc.displayGuiScreen(new GuiPartyCreate(this.parent));
@@ -134,14 +134,14 @@ public class GuiPartyManageOverride extends GuiScreenCanvas implements IPEventLi
          cvRightHalf.addPanel(this.scUserList);
          this.scUserList.getTransform().setParent(cvUserList.getTransform());
          cvUserList.setScrollDriverY(this.scUserList);
-         List<UUID> partyMemList = this.party.getMembers();
+         List<EaglercraftUUID> partyMemList = this.party.getMembers();
          int elSize = RenderUtils.getStringWidth("...", this.fontRenderer);
          int cvWidth = cvUserList.getTransform().getWidth();
          boolean hardcore = ((Boolean)QuestSettings.INSTANCE.getProperty(NativeProps.HARDCORE)).booleanValue();
          ItemTexture txHeart = new ItemTexture(new BigItemStack(BetterQuesting.extraLife));
 
          for(int i = 0; i < partyMemList.size(); ++i) {
-            UUID mid = (UUID)partyMemList.get(i);
+            EaglercraftUUID mid = (EaglercraftUUID)partyMemList.get(i);
             String mName = NameCache.INSTANCE.getName(mid);
             if (RenderUtils.getStringWidth(mName, this.fontRenderer) > cvWidth - 58) {
                mName = this.mc.fontRenderer.trimStringToWidth(mName, cvWidth - 58 - elSize) + "...";

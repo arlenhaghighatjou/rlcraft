@@ -18,7 +18,7 @@ import mezz.jei.input.IClickedIngredient;
 import mezz.jei.input.IShowsRecipeFocuses;
 import mezz.jei.util.MathUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class RecipeCatalysts implements IShowsRecipeFocuses {
    private static final int ingredientSize = 16;

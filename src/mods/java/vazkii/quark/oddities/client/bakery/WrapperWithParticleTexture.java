@@ -9,15 +9,15 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class WrapperWithParticleTexture implements IBakedModel {
-   private final TextureAtlasSprite sprite;
+   private final EaglerTextureAtlasSprite sprite;
    private final IBakedModel parent;
 
-   public WrapperWithParticleTexture(TextureAtlasSprite sprite, IBakedModel parent) {
+   public WrapperWithParticleTexture(EaglerTextureAtlasSprite sprite, IBakedModel parent) {
       this.sprite = sprite;
       this.parent = parent;
    }
@@ -49,7 +49,7 @@ public class WrapperWithParticleTexture implements IBakedModel {
    }
 
    @Nonnull
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       return this.sprite;
    }
 

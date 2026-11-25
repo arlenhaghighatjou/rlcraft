@@ -6,7 +6,7 @@ import com.charles445.rltweaker.debug.DebugUtil;
 import com.charles445.rltweaker.util.ErrorUtil;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,8 +19,8 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class MotionCheckHandler {
-   public Set<UUID> rotationErrors = new HashSet();
-   public Set<UUID> motionErrors = new HashSet();
+   public Set<EaglercraftUUID> rotationErrors = new HashSet();
+   public Set<EaglercraftUUID> motionErrors = new HashSet();
 
    public MotionCheckHandler() {
       MinecraftForge.EVENT_BUS.register(this);

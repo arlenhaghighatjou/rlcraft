@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -103,7 +103,7 @@ public abstract class BlockBranch extends Block implements ITreePart, IFutureBre
       return this.getFamily().isWood();
    }
 
-   public abstract boolean checkForRot(World var1, BlockPos var2, Species var3, int var4, Random var5, float var6, boolean var7);
+   public abstract boolean checkForRot(World var1, BlockPos var2, Species var3, int var4, EaglercraftRandom var5, float var6, boolean var7);
 
    public static int setSupport(int branches, int leaves) {
       return (branches & 15) << 4 | leaves & 15;
@@ -387,11 +387,11 @@ public abstract class BlockBranch extends Block implements ITreePart, IFutureBre
       destroyMode = BlockBranch.EnumDestroyMode.SLOPPY;
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return null;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 

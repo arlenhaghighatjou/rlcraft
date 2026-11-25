@@ -1,6 +1,6 @@
 package vazkii.quark.base.network.message;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
@@ -15,12 +15,12 @@ import vazkii.quark.world.base.ChainHandler;
 
 public class MessageSyncChain extends NetworkMessage<MessageSyncChain> {
    public int vehicle;
-   public UUID other;
+   public EaglercraftUUID other;
 
    public MessageSyncChain() {
    }
 
-   public MessageSyncChain(int vehicle, UUID other) {
+   public MessageSyncChain(int vehicle, EaglercraftUUID other) {
       this.vehicle = vehicle;
       this.other = other;
    }

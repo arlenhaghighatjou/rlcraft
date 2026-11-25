@@ -1,6 +1,6 @@
 package ivorius.ivtoolkit.random.values;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class IConstant implements IValue {
    public int constant;
@@ -9,7 +9,7 @@ public class IConstant implements IValue {
       this.constant = constant;
    }
 
-   public Integer getValue(Random random) {
+   public Integer getValue(EaglercraftRandom random) {
       return this.constant;
    }
 }

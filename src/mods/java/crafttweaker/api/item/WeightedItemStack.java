@@ -3,7 +3,7 @@ package crafttweaker.api.item;
 import crafttweaker.annotations.ZenRegister;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenGetter;
 
@@ -18,7 +18,7 @@ public final class WeightedItemStack implements IWeightedIngredient {
       this.p = p;
    }
 
-   public static List<IItemStack> pickRandomDrops(Random random, WeightedItemStack[] items) {
+   public static List<IItemStack> pickRandomDrops(EaglercraftRandom random, WeightedItemStack[] items) {
       ArrayList<IItemStack> result = new ArrayList();
 
       for(WeightedItemStack item : items) {

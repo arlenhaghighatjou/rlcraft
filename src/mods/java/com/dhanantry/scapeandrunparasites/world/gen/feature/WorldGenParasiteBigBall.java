@@ -4,7 +4,7 @@ import com.dhanantry.scapeandrunparasites.block.BlockParasiteTrunk;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
 import com.dhanantry.scapeandrunparasites.world.gen.WorldGenCustomStructures;
 import com.dhanantry.scapeandrunparasites.world.gen.structure.WorldGenStructure;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
@@ -15,7 +15,7 @@ public class WorldGenParasiteBigBall extends WorldGenParasiteGenAbstract {
       super(notify);
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int i = 12;
       boolean flag = true;
       if (worldIn.getBlockState(position.down()).getBlock() == Blocks.AIR) {
@@ -43,7 +43,7 @@ public class WorldGenParasiteBigBall extends WorldGenParasiteGenAbstract {
          } else {
             int extra = rand.nextInt(6) + 2;
             BlockPos current = position.up(9 + extra);
-            WorldGenCustomStructures.generateInPosition(new WorldGenStructure("ballbig"), new Random(), worldIn, current, 6);
+            WorldGenCustomStructures.generateInPosition(new WorldGenStructure("ballbig"), new EaglercraftRandom(), worldIn, current, 6);
             BlockPos center = new BlockPos(position.getX(), position.getY(), position.getZ());
             boolean skip = true;
 
@@ -99,7 +99,7 @@ public class WorldGenParasiteBigBall extends WorldGenParasiteGenAbstract {
       }
    }
 
-   private BlockPos placeColumn(World worldIn, BlockPos pos, int in, Random rand, double extraChance) {
+   private BlockPos placeColumn(World worldIn, BlockPos pos, int in, EaglercraftRandom rand, double extraChance) {
       --in;
       int current = pos.getY();
       int atm = current;

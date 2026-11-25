@@ -1,6 +1,6 @@
 package knightminer.inspirations.utility.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import knightminer.inspirations.utility.InspirationsUtility;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLever;
@@ -37,7 +37,7 @@ public class BlockRedstoneTorchLever extends BlockLever {
 
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(InspirationsUtility.redstoneTorchLever);
    }
 
@@ -100,10 +100,10 @@ public class BlockRedstoneTorchLever extends BlockLever {
       return 2;
    }
 
-   public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom random) {
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       IBlockState newState = this.togglePower(state).withProperty(POWERED, Boolean.valueOf(this.isBlockPowered(state, world, pos)));
       world.setBlockState(pos, newState);
       EnumFacing enumfacing = ((EnumOrientation)state.getValue(FACING)).getFacing();
@@ -112,7 +112,7 @@ public class BlockRedstoneTorchLever extends BlockLever {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, EaglercraftRandom rand) {
       if (this.powered) {
          EnumOrientation orientation = (EnumOrientation)state.getValue(FACING);
          EnumFacing facing = orientation.getFacing();

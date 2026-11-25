@@ -5,7 +5,7 @@ import net.darkhax.surge.core.SurgeLoadingPlugin;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 @Mod(
    modid = "surge",

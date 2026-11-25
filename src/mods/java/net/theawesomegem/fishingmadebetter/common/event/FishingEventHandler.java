@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialLiquid;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -634,7 +634,7 @@ public class FishingEventHandler {
 
    }
 
-   private void updateReelTarget(Random random, IFishingData fishingData, int fishSpeed) {
+   private void updateReelTarget(EaglercraftRandom random, IFishingData fishingData, int fishSpeed) {
       int prevTugging = fishingData.getFishTugging();
       if (prevTugging == 0) {
          fishSpeed = fishSpeed * (random.nextInt(3) - 1) * Math.max(0, RandomUtil.getRandomInRange(random, -this.getDistanceTime(fishingData.getFishWeight()), 1));

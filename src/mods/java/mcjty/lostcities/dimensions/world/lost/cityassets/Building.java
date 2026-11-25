@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import mcjty.lostcities.api.ILostCityBuilding;
 import org.apache.commons.lang3.tuple.Pair;
@@ -123,7 +123,7 @@ public class Building implements ILostCityBuilding {
       return this.fillerBlock;
    }
 
-   public String getRandomPart(Random random, ConditionContext info) {
+   public String getRandomPart(EaglercraftRandom random, ConditionContext info) {
       List<String> partNames = new ArrayList();
 
       for(Pair<Predicate<ConditionContext>, String> pair : this.parts) {
@@ -139,7 +139,7 @@ public class Building implements ILostCityBuilding {
       }
    }
 
-   public String getRandomPart2(Random random, ConditionContext info) {
+   public String getRandomPart2(EaglercraftRandom random, ConditionContext info) {
       List<String> partNames = new ArrayList();
 
       for(Pair<Predicate<ConditionContext>, String> pair : this.parts2) {

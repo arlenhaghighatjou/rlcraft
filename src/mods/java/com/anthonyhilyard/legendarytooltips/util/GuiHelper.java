@@ -1,7 +1,7 @@
 package com.anthonyhilyard.legendarytooltips.util;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -26,7 +26,7 @@ public class GuiHelper {
       GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
       GlStateManager.shadeModel(7425);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buffer = tessellator.getBuffer();
+      WorldRenderer buffer = tessellator.getBuffer();
       buffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
       buffer.pos((double)right, (double)top, (double)zLevel).color(endRed, endGreen, endBlue, endAlpha).endVertex();
       buffer.pos((double)left, (double)top, (double)zLevel).color(startRed, startGreen, startBlue, startAlpha).endVertex();

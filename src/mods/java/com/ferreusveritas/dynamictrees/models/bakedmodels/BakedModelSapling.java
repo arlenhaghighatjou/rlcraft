@@ -12,8 +12,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BakedModelSapling implements IBakedModel {
    private static IBakedModel[] modelMap;
    private static IBakedModel errorSaplingModel;
-   private static TextureAtlasSprite particleTexture;
+   private static EaglerTextureAtlasSprite particleTexture;
 
    public static IBakedModel getModelForSapling(Species species) {
       int modelId = species.saplingModelId;
@@ -35,7 +35,7 @@ public class BakedModelSapling implements IBakedModel {
       return bakedModel != null ? bakedModel : errorSaplingModel;
    }
 
-   public BakedModelSapling(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+   public BakedModelSapling(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter) {
       try {
          IModel model = ModelLoaderRegistry.getModel(new ResourceLocation("dynamictrees", "block/saplings/error"));
          if (model != null) {
@@ -45,7 +45,7 @@ public class BakedModelSapling implements IBakedModel {
          var11.printStackTrace();
       }
 
-      particleTexture = (TextureAtlasSprite)bakedTextureGetter.apply(new ResourceLocation("blocks/dirt"));
+      particleTexture = (EaglerTextureAtlasSprite)bakedTextureGetter.apply(new ResourceLocation("blocks/dirt"));
       modelMap = new IBakedModel[Species.REGISTRY.getEntries().size()];
       int modelId = 0;
 
@@ -93,7 +93,7 @@ public class BakedModelSapling implements IBakedModel {
       return true;
    }
 
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       return particleTexture;
    }
 

@@ -4,7 +4,7 @@ import baubles.api.cap.BaublesCapabilities;
 import cursedflames.bountifulbaubles.ModConfig;
 import cursedflames.bountifulbaubles.baubleeffect.EnumBaubleModifier;
 import cursedflames.bountifulbaubles.util.XpUtil;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -92,7 +92,7 @@ public class TileReforger extends GenericTileEntity {
       }
    }
 
-   private int getReforgeCost(Random rand) {
+   private int getReforgeCost(EaglercraftRandom rand) {
       int min = ModConfig.reforgeCostMin.getInt(80);
       int max = ModConfig.reforgeCostMax.getInt(320);
       if (min > max) {

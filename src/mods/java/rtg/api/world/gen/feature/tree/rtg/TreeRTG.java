@@ -2,7 +2,7 @@ package rtg.api.world.gen.feature.tree.rtg;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockPlanks;
@@ -57,16 +57,16 @@ public abstract class TreeRTG extends WorldGenAbstractTree {
       this.allowBarkCoveredLogs = RTGConfig.barkCoveredLogs();
    }
 
-   public void buildTrunk(World world, Random rand, int x, int y, int z) {
+   public void buildTrunk(World world, EaglercraftRandom rand, int x, int y, int z) {
    }
 
-   public void buildBranch(World world, Random rand, int x, int y, int z, int dX, int dZ, int logLength, int leaveSize) {
+   public void buildBranch(World world, EaglercraftRandom rand, int x, int y, int z, int dX, int dZ, int logLength, int leaveSize) {
    }
 
    public void buildLeaves(World world, int x, int y, int z) {
    }
 
-   public void buildLeaves(World world, Random rand, int x, int y, int z, int size) {
+   public void buildLeaves(World world, EaglercraftRandom rand, int x, int y, int z, int size) {
    }
 
    protected boolean isGroundValid(World world, BlockPos trunkPos) {

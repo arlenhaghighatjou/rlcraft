@@ -1,6 +1,6 @@
 package tschipp.tschipplib.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
@@ -126,7 +126,7 @@ public abstract class TSSlab extends BlockSlab {
 	
 
 	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune)
+	public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune)
 	{
 		if(this.isDouble())
 		{

@@ -13,25 +13,25 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ItemTransformVec3f;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.property.IExtendedBlockState;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class BakedModelSidedBlock implements IBakedModel {
    final String name;
-   public TextureAtlasSprite[][] textures;
+   public EaglerTextureAtlasSprite[][] textures;
    private static final ItemCameraTransforms defaultTransforms = new ItemCameraTransforms(new ItemTransformVec3f(new Vector3f(75.0F, 45.0F, 0.0F), new Vector3f(0.0F, 0.25F, 0.0F), new Vector3f(0.375F, 0.375F, 0.375F)), new ItemTransformVec3f(new Vector3f(75.0F, 45.0F, 0.0F), new Vector3f(0.0F, 0.15625F, 0.0F), new Vector3f(0.375F, 0.375F, 0.375F)), new ItemTransformVec3f(new Vector3f(0.0F, 45.0F, 0.0F), new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(0.4F, 0.4F, 0.4F)), new ItemTransformVec3f(new Vector3f(0.0F, 225.0F, 0.0F), new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(0.4F, 0.4F, 0.4F)), new ItemTransformVec3f(new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(1.0F, 1.0F, 1.0F)), new ItemTransformVec3f(new Vector3f(30.0F, 225.0F, 0.0F), new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(0.625F, 0.625F, 0.625F)), new ItemTransformVec3f(new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(0.0F, 0.1875F, 0.0F), new Vector3f(0.25F, 0.25F, 0.25F)), new ItemTransformVec3f(new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(0.5F, 0.5F, 0.5F)));
 
-   public BakedModelSidedBlock(String name, TextureAtlasSprite[][] textures) {
+   public BakedModelSidedBlock(String name, EaglerTextureAtlasSprite[][] textures) {
       this.name = name;
       this.textures = textures;
    }
 
    @Nonnull
    public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
-      TextureAtlasSprite[] tex = new TextureAtlasSprite[6];
+      EaglerTextureAtlasSprite[] tex = new EaglerTextureAtlasSprite[6];
 
       for(int i = 0; i < tex.length; ++i) {
          tex[i] = this.textures[i][0];
@@ -61,7 +61,7 @@ public class BakedModelSidedBlock implements IBakedModel {
       return (List)ModelLoaderSidedBlock.getInstance().getModelCache().get(key);
    }
 
-   private static List<BakedQuad> bakeQuads(TextureAtlasSprite[] sprites) {
+   private static List<BakedQuad> bakeQuads(EaglerTextureAtlasSprite[] sprites) {
       List<BakedQuad> quads = Lists.newArrayListWithExpectedSize(6);
       float[] colour = new float[]{1.0F, 1.0F, 1.0F, 1.0F};
       Vector3f[] vertices = new Vector3f[]{new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(0.0F, 0.0F, 1.0F), new Vector3f(1.0F, 0.0F, 1.0F), new Vector3f(1.0F, 0.0F, 0.0F)};
@@ -92,7 +92,7 @@ public class BakedModelSidedBlock implements IBakedModel {
    }
 
    @Nonnull
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       return this.textures[0][0];
    }
 

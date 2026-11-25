@@ -33,7 +33,7 @@ import betterquesting.storage.QuestSettings;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.Entity;
@@ -117,7 +117,7 @@ public class EventHandler {
                   List<DBEntry<IQuest>> activeQuests = QuestDatabase.INSTANCE.bulkLookup(qc.getActiveQuests());
                   List<DBEntry<IQuest>> pendingAutoClaims = QuestDatabase.INSTANCE.bulkLookup(qc.getPendingAutoClaims());
                   QuestCache.QResetTime[] pendingResets = qc.getScheduledResets();
-                  UUID uuid = QuestingAPI.getQuestingUUID(player);
+                  EaglercraftUUID uuid = QuestingAPI.getQuestingUUID(player);
                   boolean refreshCache = false;
                   if (!editMode && player.ticksExisted % 60 == 0) {
                      List<Integer> com = new ArrayList();
@@ -153,7 +153,7 @@ public class EventHandler {
                         }
 
                         if (((Boolean)entry.getProperty(NativeProps.GLOBAL)).booleanValue()) {
-                           entry.resetUser((UUID)null, false);
+                           entry.resetUser((EaglercraftUUID)null, false);
                         } else {
                            entry.resetUser(uuid, false);
                         }
@@ -275,7 +275,7 @@ public class EventHandler {
    public void onLivingDeath(LivingDeathEvent event) {
       if (!event.getEntityLiving().world.isRemote && ((Boolean)QuestSettings.INSTANCE.getProperty(NativeProps.HARDCORE)).booleanValue()) {
          if (event.getEntityLiving() instanceof EntityPlayer) {
-            UUID uuid = QuestingAPI.getQuestingUUID((EntityPlayer)event.getEntityLiving());
+            EaglercraftUUID uuid = QuestingAPI.getQuestingUUID((EntityPlayer)event.getEntityLiving());
             int lives = LifeDatabase.INSTANCE.getLives(uuid);
             LifeDatabase.INSTANCE.setLives(uuid, lives - 1);
          }
@@ -338,7 +338,7 @@ public class EventHandler {
                if (party != null) {
                   NetNameSync.quickSync((EntityPlayerMP)null, party.getID());
                } else {
-                  NetNameSync.sendNames(new EntityPlayerMP[]{playerMP}, new UUID[]{QuestingAPI.getQuestingUUID(playerMP)}, (String[])null);
+                  NetNameSync.sendNames(new EntityPlayerMP[]{playerMP}, new EaglercraftUUID[]{QuestingAPI.getQuestingUUID(playerMP)}, (String[])null);
                }
             }
          }

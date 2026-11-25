@@ -3,7 +3,7 @@ package com.github.alexthe666.iceandfire.structures;
 import com.github.alexthe666.iceandfire.block.BlockGoldPile;
 import com.github.alexthe666.iceandfire.core.ModBlocks;
 import com.github.alexthe666.iceandfire.entity.MyrmexHive;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBone;
 import net.minecraft.block.BlockChest;
@@ -35,9 +35,9 @@ public class WorldGenMyrmexDecoration {
    public WorldGenMyrmexDecoration() {
    }
 
-   public static void generateSkeleton(World worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand) {
+   public static void generateSkeleton(World worldIn, BlockPos blockpos, BlockPos origin, int radius, EaglercraftRandom rand) {
       if (worldIn.getBlockState(blockpos.down()).isSideSolid(worldIn, blockpos.down(), EnumFacing.UP)) {
-         EnumFacing direction = EnumFacing.HORIZONTALS[(new Random()).nextInt(3)];
+         EnumFacing direction = EnumFacing.HORIZONTALS[(new EaglercraftRandom()).nextInt(3)];
          Axis oppositeAxis = direction.getAxis() == Axis.X ? Axis.Z : Axis.X;
          int maxRibHeight = rand.nextInt(2);
 
@@ -81,7 +81,7 @@ public class WorldGenMyrmexDecoration {
 
    }
 
-   public static void generateLeaves(World worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand) {
+   public static void generateLeaves(World worldIn, BlockPos blockpos, BlockPos origin, int radius, EaglercraftRandom rand) {
       if (worldIn.getBlockState(blockpos.down()).isSideSolid(worldIn, blockpos.down(), EnumFacing.UP)) {
          IBlockState leaf = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, EnumType.OAK).withProperty(BlockLeaves.DECAYABLE, Boolean.valueOf(false));
 
@@ -122,14 +122,14 @@ public class WorldGenMyrmexDecoration {
 
    }
 
-   public static void generatePumpkins(World worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand) {
+   public static void generatePumpkins(World worldIn, BlockPos blockpos, BlockPos origin, int radius, EaglercraftRandom rand) {
       if (worldIn.getBlockState(blockpos.down()).isSideSolid(worldIn, blockpos.down(), EnumFacing.UP)) {
          worldIn.setBlockState(blockpos, BiomeDictionary.hasType(worldIn.getBiome(blockpos), Type.JUNGLE) ? Blocks.MELON_BLOCK.getDefaultState() : Blocks.PUMPKIN.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(rand.nextInt(3))));
       }
 
    }
 
-   public static void generateCocoon(World worldIn, BlockPos blockpos, Random rand, boolean jungle, ResourceLocation lootTable) {
+   public static void generateCocoon(World worldIn, BlockPos blockpos, EaglercraftRandom rand, boolean jungle, ResourceLocation lootTable) {
       if (worldIn.getBlockState(blockpos.down()).isSideSolid(worldIn, blockpos.down(), EnumFacing.UP)) {
          worldIn.setBlockState(blockpos, jungle ? ModBlocks.jungle_myrmex_cocoon.getDefaultState() : ModBlocks.desert_myrmex_cocoon.getDefaultState(), 3);
          if (worldIn.getTileEntity(blockpos) != null && worldIn.getTileEntity(blockpos) instanceof TileEntityLockableLoot && !((TileEntityLockableLoot)worldIn.getTileEntity(blockpos)).isInvalid()) {
@@ -140,23 +140,23 @@ public class WorldGenMyrmexDecoration {
 
    }
 
-   public static void generateMushrooms(World worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand) {
+   public static void generateMushrooms(World worldIn, BlockPos blockpos, BlockPos origin, int radius, EaglercraftRandom rand) {
       if (worldIn.getBlockState(blockpos.down()).isSideSolid(worldIn, blockpos.down(), EnumFacing.UP)) {
          worldIn.setBlockState(blockpos, rand.nextBoolean() ? Blocks.BROWN_MUSHROOM.getDefaultState() : Blocks.RED_MUSHROOM.getDefaultState());
       }
 
    }
 
-   public static void generateGold(World worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand) {
+   public static void generateGold(World worldIn, BlockPos blockpos, BlockPos origin, int radius, EaglercraftRandom rand) {
       IBlockState gold = rand.nextBoolean() ? ModBlocks.goldPile.getDefaultState() : ModBlocks.silverPile.getDefaultState();
       if (worldIn.getBlockState(blockpos.down()).isSideSolid(worldIn, blockpos.down(), EnumFacing.UP)) {
          worldIn.setBlockState(blockpos, gold.withProperty(BlockGoldPile.LAYERS, Integer.valueOf(8)), 3);
-         worldIn.setBlockState(MyrmexHive.getGroundedPos(worldIn, blockpos.north()), gold.withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new Random()).nextInt(7))), 3);
-         worldIn.setBlockState(MyrmexHive.getGroundedPos(worldIn, blockpos.south()), gold.withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new Random()).nextInt(7))), 3);
-         worldIn.setBlockState(MyrmexHive.getGroundedPos(worldIn, blockpos.west()), gold.withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new Random()).nextInt(7))), 3);
-         worldIn.setBlockState(MyrmexHive.getGroundedPos(worldIn, blockpos.east()), gold.withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new Random()).nextInt(7))), 3);
+         worldIn.setBlockState(MyrmexHive.getGroundedPos(worldIn, blockpos.north()), gold.withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new EaglercraftRandom()).nextInt(7))), 3);
+         worldIn.setBlockState(MyrmexHive.getGroundedPos(worldIn, blockpos.south()), gold.withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new EaglercraftRandom()).nextInt(7))), 3);
+         worldIn.setBlockState(MyrmexHive.getGroundedPos(worldIn, blockpos.west()), gold.withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new EaglercraftRandom()).nextInt(7))), 3);
+         worldIn.setBlockState(MyrmexHive.getGroundedPos(worldIn, blockpos.east()), gold.withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new EaglercraftRandom()).nextInt(7))), 3);
          if (rand.nextInt(3) == 0) {
-            worldIn.setBlockState(blockpos.up(), Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.HORIZONTALS[(new Random()).nextInt(3)]), 3);
+            worldIn.setBlockState(blockpos.up(), Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.HORIZONTALS[(new EaglercraftRandom()).nextInt(3)]), 3);
             if (worldIn.getBlockState(blockpos.up()).getBlock() instanceof BlockChest) {
                TileEntity tileentity1 = worldIn.getTileEntity(blockpos.up());
                if (tileentity1 instanceof TileEntityChest && !((TileEntityChest)tileentity1).isInvalid()) {
@@ -168,7 +168,7 @@ public class WorldGenMyrmexDecoration {
 
    }
 
-   public static void generateTrashHeap(World worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand) {
+   public static void generateTrashHeap(World worldIn, BlockPos blockpos, BlockPos origin, int radius, EaglercraftRandom rand) {
       if (worldIn.getBlockState(blockpos.down()).isSideSolid(worldIn, blockpos.down(), EnumFacing.UP)) {
          Block blob = Blocks.DIRT;
          switch(rand.nextInt(3)) {
@@ -205,7 +205,7 @@ public class WorldGenMyrmexDecoration {
 
    }
 
-   public static void generateTrashOre(World worldIn, BlockPos blockpos, BlockPos origin, int radius, Random rand) {
+   public static void generateTrashOre(World worldIn, BlockPos blockpos, BlockPos origin, int radius, EaglercraftRandom rand) {
       Block current = worldIn.getBlockState(blockpos).getBlock();
       if (origin.distanceSq(blockpos) <= (double)(radius * radius) && (current == Blocks.DIRT || current == Blocks.SAND || current == Blocks.COBBLESTONE || current == Blocks.GRAVEL)) {
          Block ore = Blocks.REDSTONE_ORE;

@@ -9,7 +9,7 @@ import de.Whitedraco.switchbow.entity.arrow.upgrade.EntityArrowLuckUpgrade;
 import de.Whitedraco.switchbow.helper.HelperMethodes;
 import de.Whitedraco.switchbow.proxy.packets.ParticleFreezePacket;
 import de.Whitedraco.switchbow.proxy.packets.ParticleLovePacket;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventHandler {
    private final int procentArrowBlock = 75;
-   UUID loveUUID = UUID.fromString("93c6cc7f-a79e-4c07-b64a-91618d7d54b7");
+   EaglercraftUUID loveUUID = EaglercraftUUID.fromString("93c6cc7f-a79e-4c07-b64a-91618d7d54b7");
    AttributeModifier Love;
 
    public EventHandler() {

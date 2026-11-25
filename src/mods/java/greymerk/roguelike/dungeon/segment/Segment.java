@@ -35,7 +35,7 @@ import greymerk.roguelike.dungeon.segment.part.SegmentTomb;
 import greymerk.roguelike.dungeon.segment.part.SegmentTrap;
 import greymerk.roguelike.dungeon.segment.part.SegmentWall;
 import greymerk.roguelike.dungeon.segment.part.SegmentWheat;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum Segment {
    ANKH,
@@ -151,7 +151,7 @@ public enum Segment {
       }
    }
 
-   public static Segment getRandom(Random rand) {
+   public static Segment getRandom(EaglercraftRandom rand) {
       Segment[] values = values();
       return values[rand.nextInt(values.length)];
    }

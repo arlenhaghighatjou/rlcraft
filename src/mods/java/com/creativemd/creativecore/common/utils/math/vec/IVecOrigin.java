@@ -5,7 +5,7 @@ import com.creativemd.creativecore.common.utils.math.box.BoxCorner;
 import com.creativemd.creativecore.common.utils.math.box.OrientatedBoundingBox;
 import javax.vecmath.Matrix3d;
 import javax.vecmath.Vector3d;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumFacing.Axis;

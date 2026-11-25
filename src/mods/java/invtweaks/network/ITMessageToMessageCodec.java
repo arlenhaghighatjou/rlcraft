@@ -4,7 +4,7 @@ import invtweaks.network.packets.ITPacket;
 import invtweaks.network.packets.ITPacketClick;
 import invtweaks.network.packets.ITPacketLogin;
 import invtweaks.network.packets.ITPacketSortComplete;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraftforge.fml.common.network.FMLIndexedMessageToMessageCodec;
 import org.jetbrains.annotations.NotNull;

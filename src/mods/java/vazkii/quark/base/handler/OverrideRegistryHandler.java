@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.minecraftforge.registries.IForgeRegistryEntry.Impl;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import org.apache.logging.log4j.core.Logger;
 import vazkii.arl.util.ProxyRegistry;
 import vazkii.quark.base.Quark;

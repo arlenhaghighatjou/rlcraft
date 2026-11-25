@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -41,7 +41,7 @@ public class WeightedSelector {
       });
    }
 
-   public static <T> T selectWeightless(Random rand, Collection<T> items, int counted) {
+   public static <T> T selectWeightless(EaglercraftRandom rand, Collection<T> items, int counted) {
       counted = rand.nextInt(counted);
       Iterator<T> iterator = items.iterator();
 
@@ -56,19 +56,19 @@ public class WeightedSelector {
       return item;
    }
 
-   public static <T extends WeightedSelector.Item> T selectItem(Random rand, Collection<T> items) {
+   public static <T extends WeightedSelector.Item> T selectItem(EaglercraftRandom rand, Collection<T> items) {
       return (T)selectItem(rand, items, totalWeight(items));
    }
 
-   public static <T extends WeightedSelector.Item> T selectItem(Random rand, Collection<T> items, double totalWeight) {
+   public static <T extends WeightedSelector.Item> T selectItem(EaglercraftRandom rand, Collection<T> items, double totalWeight) {
       return (T)selectItem(rand, items, totalWeight, false);
    }
 
-   public static <T extends WeightedSelector.Item> T selectItem(Random rand, Collection<T> items, boolean remove) {
+   public static <T extends WeightedSelector.Item> T selectItem(EaglercraftRandom rand, Collection<T> items, boolean remove) {
       return (T)selectItem(rand, items, totalWeight(items), remove);
    }
 
-   public static <T extends WeightedSelector.Item> T selectItem(Random rand, Collection<T> items, double totalWeight, boolean remove) {
+   public static <T extends WeightedSelector.Item> T selectItem(EaglercraftRandom rand, Collection<T> items, double totalWeight, boolean remove) {
       if (items.size() == 0) {
          throw new IndexOutOfBoundsException();
       } else {
@@ -91,19 +91,19 @@ public class WeightedSelector {
       }
    }
 
-   public static <T> T select(Random rand, Collection<T> items, ToDoubleFunction<T> weightFunction) {
+   public static <T> T select(EaglercraftRandom rand, Collection<T> items, ToDoubleFunction<T> weightFunction) {
       return (T)select(rand, items, weightFunction, totalWeight(items, weightFunction));
    }
 
-   public static <T> T select(Random rand, Collection<T> items, ToDoubleFunction<T> weightFunction, double totalWeight) {
+   public static <T> T select(EaglercraftRandom rand, Collection<T> items, ToDoubleFunction<T> weightFunction, double totalWeight) {
       return (T)select(rand, items, weightFunction, totalWeight, false);
    }
 
-   public static <T> T select(Random rand, Collection<T> items, ToDoubleFunction<T> weightFunction, boolean remove) {
+   public static <T> T select(EaglercraftRandom rand, Collection<T> items, ToDoubleFunction<T> weightFunction, boolean remove) {
       return (T)select(rand, items, weightFunction, totalWeight(items, weightFunction), remove);
    }
 
-   public static <T> T select(Random rand, Collection<T> items, ToDoubleFunction<T> weightFunction, double totalWeight, boolean remove) {
+   public static <T> T select(EaglercraftRandom rand, Collection<T> items, ToDoubleFunction<T> weightFunction, double totalWeight, boolean remove) {
       if (items.size() == 0) {
          throw new IndexOutOfBoundsException();
       } else {
@@ -126,19 +126,19 @@ public class WeightedSelector {
       }
    }
 
-   public static <T> T select(Random rand, Collection<WeightedSelector.SimpleItem<T>> items) {
+   public static <T> T select(EaglercraftRandom rand, Collection<WeightedSelector.SimpleItem<T>> items) {
       return (T)((WeightedSelector.SimpleItem)selectItem(rand, items)).getItem();
    }
 
-   public static <T> T select(Random rand, Collection<WeightedSelector.SimpleItem<T>> items, double totalWeight) {
+   public static <T> T select(EaglercraftRandom rand, Collection<WeightedSelector.SimpleItem<T>> items, double totalWeight) {
       return (T)((WeightedSelector.SimpleItem)selectItem(rand, items, totalWeight)).getItem();
    }
 
-   public static <T> T select(Random rand, Collection<WeightedSelector.SimpleItem<T>> items, boolean remove) {
+   public static <T> T select(EaglercraftRandom rand, Collection<WeightedSelector.SimpleItem<T>> items, boolean remove) {
       return (T)((WeightedSelector.SimpleItem)selectItem(rand, items, remove)).getItem();
    }
 
-   public static <T> T select(Random rand, Collection<WeightedSelector.SimpleItem<T>> items, double totalWeight, boolean remove) {
+   public static <T> T select(EaglercraftRandom rand, Collection<WeightedSelector.SimpleItem<T>> items, double totalWeight, boolean remove) {
       return (T)((WeightedSelector.SimpleItem)selectItem(rand, items, totalWeight, remove)).getItem();
    }
 

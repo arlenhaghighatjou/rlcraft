@@ -9,8 +9,8 @@ import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 @Config(
    modid = "loottweaker"

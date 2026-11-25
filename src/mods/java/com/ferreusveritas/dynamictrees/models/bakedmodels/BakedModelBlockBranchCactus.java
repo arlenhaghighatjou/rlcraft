@@ -22,7 +22,7 @@ import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ModelBlock;
 import net.minecraft.client.renderer.block.model.ModelRotation;
 import net.minecraft.client.renderer.block.model.SimpleBakedModel.Builder;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -33,21 +33,21 @@ import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 @SideOnly(Side.CLIENT)
 public class BakedModelBlockBranchCactus implements IBakedModel {
    protected ModelBlock modelBlock = new ModelBlock((ResourceLocation)null, (List)null, (Map)null, false, false, ItemCameraTransforms.DEFAULT, (List)null);
-   TextureAtlasSprite barkParticles;
+   EaglerTextureAtlasSprite barkParticles;
    private final IBakedModel[][] sleeves = new IBakedModel[6][2];
    private final IBakedModel[][] cores = new IBakedModel[3][2];
    private final IBakedModel[] rings = new IBakedModel[2];
    private final IBakedModel[] coreSpikes = new IBakedModel[2];
    private IBakedModel sleeveTopSpikes;
 
-   public BakedModelBlockBranchCactus(ResourceLocation barkRes, ResourceLocation ringsRes, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-      TextureAtlasSprite barkIcon = (TextureAtlasSprite)bakedTextureGetter.apply(barkRes);
-      TextureAtlasSprite ringIcon = (TextureAtlasSprite)bakedTextureGetter.apply(ringsRes);
+   public BakedModelBlockBranchCactus(ResourceLocation barkRes, ResourceLocation ringsRes, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter) {
+      EaglerTextureAtlasSprite barkIcon = (EaglerTextureAtlasSprite)bakedTextureGetter.apply(barkRes);
+      EaglerTextureAtlasSprite ringIcon = (EaglerTextureAtlasSprite)bakedTextureGetter.apply(ringsRes);
       this.barkParticles = barkIcon;
 
       for(int i = 0; i < 2; ++i) {
@@ -67,7 +67,7 @@ public class BakedModelBlockBranchCactus implements IBakedModel {
 
    }
 
-   public IBakedModel bakeSleeve(int radius, EnumFacing dir, TextureAtlasSprite bark, TextureAtlasSprite top) {
+   public IBakedModel bakeSleeve(int radius, EnumFacing dir, EaglerTextureAtlasSprite bark, EaglerTextureAtlasSprite top) {
       int dradius = radius * 2;
       int halfSize = (16 - dradius) / 2;
       int halfSizeX = dir.getFrontOffsetX() != 0 ? halfSize : dradius;
@@ -148,7 +148,7 @@ public class BakedModelBlockBranchCactus implements IBakedModel {
       return builder.makeBakedModel();
    }
 
-   public IBakedModel bakeCore(int radius, Axis axis, TextureAtlasSprite icon) {
+   public IBakedModel bakeCore(int radius, Axis axis, EaglerTextureAtlasSprite icon) {
       Vector3f posFrom = new Vector3f((float)(8 - radius), (float)(8 - radius), (float)(8 - radius));
       Vector3f posTo = new Vector3f((float)(8 + radius), (float)(8 + radius), (float)(8 + radius));
       Map<EnumFacing, BlockPartFace> mapFacesIn = Maps.newEnumMap(EnumFacing.class);
@@ -169,7 +169,7 @@ public class BakedModelBlockBranchCactus implements IBakedModel {
       return builder.makeBakedModel();
    }
 
-   public IBakedModel bakeCoreSpikes(int radius, TextureAtlasSprite bark) {
+   public IBakedModel bakeCoreSpikes(int radius, EaglerTextureAtlasSprite bark) {
       float minV = (float)(8 - radius);
       float maxV = (float)(8 + radius);
       Vector3f posFrom = new Vector3f((float)(8 - radius), (float)(8 - radius), (float)(8 - radius));
@@ -202,7 +202,7 @@ public class BakedModelBlockBranchCactus implements IBakedModel {
       return builder.makeBakedModel();
    }
 
-   public IBakedModel bakeTopSleeveSpikes(TextureAtlasSprite bark) {
+   public IBakedModel bakeTopSleeveSpikes(EaglerTextureAtlasSprite bark) {
       float minV = 4.0F;
       float maxV = 12.0F;
       Vector3f posFrom = new Vector3f(4.0F, 16.0F, 4.0F);
@@ -238,7 +238,7 @@ public class BakedModelBlockBranchCactus implements IBakedModel {
       }
    }
 
-   protected int[] vertexToInts(float x, float y, float z, int color, TextureAtlasSprite texture, float u, float v) {
+   protected int[] vertexToInts(float x, float y, float z, int color, EaglerTextureAtlasSprite texture, float u, float v) {
       return new int[]{Float.floatToRawIntBits(x), Float.floatToRawIntBits(y), Float.floatToRawIntBits(z), color, Float.floatToRawIntBits(texture.getInterpolatedU((double)u)), Float.floatToRawIntBits(texture.getInterpolatedV((double)v)), 0};
    }
 
@@ -356,7 +356,7 @@ public class BakedModelBlockBranchCactus implements IBakedModel {
       return true;
    }
 
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       return this.barkParticles;
    }
 

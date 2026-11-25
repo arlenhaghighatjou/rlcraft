@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class InvTweaksShortcutMapping {
    @NotNull

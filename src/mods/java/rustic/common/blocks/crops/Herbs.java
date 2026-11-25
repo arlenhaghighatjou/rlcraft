@@ -2,7 +2,7 @@ package rustic.common.blocks.crops;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -193,7 +193,7 @@ public class Herbs {
       MARSH_MALLOW.initModel();
    }
 
-   public static BlockHerbBase getRandomHerbForBiome(Biome biome, Random rand) {
+   public static BlockHerbBase getRandomHerbForBiome(Biome biome, EaglercraftRandom rand) {
       List<BlockHerbBase> herbs = new ArrayList();
       if (BiomeDictionary.hasType(biome, Type.JUNGLE)) {
          herbs.add(BLOOD_ORCHID);
@@ -232,12 +232,12 @@ public class Herbs {
       return (BlockHerbBase)herbs.get(rand.nextInt(herbs.size()));
    }
 
-   public static BlockHerbBase getRandomCaveHerb(Random rand) {
+   public static BlockHerbBase getRandomCaveHerb(EaglercraftRandom rand) {
       BlockHerbBase[] herbs = new BlockHerbBase[]{CORE_ROOT_CROP, MOONCAP};
       return herbs[rand.nextInt(herbs.length)];
    }
 
-   public static BlockHerbBase getRandomNetherHerb(Random rand) {
+   public static BlockHerbBase getRandomNetherHerb(EaglercraftRandom rand) {
       return DEATHSTALK;
    }
 }

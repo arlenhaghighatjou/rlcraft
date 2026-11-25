@@ -6,7 +6,7 @@ import com.github.alexthe666.iceandfire.entity.EntitySnowVillager;
 import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockNewLog;
@@ -55,7 +55,7 @@ public class SnowVillagePieces {
       MapGenStructureIO.registerStructureComponent(SnowVillagePieces.Well.class, "ViW");
    }
 
-   public static List<SnowVillagePieces.PieceWeight> getStructureVillageWeightedPieceList(Random random, int size) {
+   public static List<SnowVillagePieces.PieceWeight> getStructureVillageWeightedPieceList(EaglercraftRandom random, int size) {
       List<SnowVillagePieces.PieceWeight> list = Lists.newArrayList();
       list.add(new SnowVillagePieces.PieceWeight(SnowVillagePieces.TorchNew.class, 75, MathHelper.getInt(random, 5 + size, 6 + size)));
       list.add(new SnowVillagePieces.PieceWeight(SnowVillagePieces.WoodHut.class, 65, MathHelper.getInt(random, 3 + size, 5 + size)));
@@ -85,14 +85,14 @@ public class SnowVillagePieces {
       return flag ? i : -1;
    }
 
-   private static SnowVillagePieces.Village findAndCreateComponentFactory(SnowVillagePieces.Start start, SnowVillagePieces.PieceWeight weight, List<StructureComponent> structureComponents, Random rand, int structureMinX, int structureMinY, int structureMinZ, EnumFacing facing, int componentType) {
+   private static SnowVillagePieces.Village findAndCreateComponentFactory(SnowVillagePieces.Start start, SnowVillagePieces.PieceWeight weight, List<StructureComponent> structureComponents, EaglercraftRandom rand, int structureMinX, int structureMinY, int structureMinZ, EnumFacing facing, int componentType) {
       Class<? extends SnowVillagePieces.Village> oclass = weight.villagePieceClass;
       SnowVillagePieces.Torch.findPieceBox(start, structureComponents, rand, structureMinX, structureMinY, structureMinZ, facing);
       Object village = rand.nextBoolean() ? SnowVillagePieces.WoodHut.createPiece(start, structureComponents, rand, structureMinX, structureMinY, structureMinZ, facing, componentType) : SnowVillagePieces.TorchNew.createPiece(start, structureComponents, rand, structureMinX, structureMinY, structureMinZ, facing, componentType);
       return (SnowVillagePieces.Village)village;
    }
 
-   private static SnowVillagePieces.Village generateComponent(SnowVillagePieces.Start start, List<StructureComponent> structureComponents, Random rand, int structureMinX, int structureMinY, int structureMinZ, EnumFacing facing, int componentType) {
+   private static SnowVillagePieces.Village generateComponent(SnowVillagePieces.Start start, List<StructureComponent> structureComponents, EaglercraftRandom rand, int structureMinX, int structureMinY, int structureMinZ, EnumFacing facing, int componentType) {
       int i = updatePieceWeight(start.structureVillageWeightedPieceList);
       if (i <= 0) {
          return null;
@@ -133,7 +133,7 @@ public class SnowVillagePieces {
       }
    }
 
-   private static StructureComponent generateAndAddComponent(SnowVillagePieces.Start start, List<StructureComponent> structureComponents, Random rand, int structureMinX, int structureMinY, int structureMinZ, EnumFacing facing, int componentType) {
+   private static StructureComponent generateAndAddComponent(SnowVillagePieces.Start start, List<StructureComponent> structureComponents, EaglercraftRandom rand, int structureMinX, int structureMinY, int structureMinZ, EnumFacing facing, int componentType) {
       if (componentType > 50) {
          return null;
       } else if (Math.abs(structureMinX - start.getBoundingBox().minX) <= 112 && Math.abs(structureMinZ - start.getBoundingBox().minZ) <= 112) {
@@ -150,7 +150,7 @@ public class SnowVillagePieces {
       }
    }
 
-   private static StructureComponent generateAndAddRoadPiece(SnowVillagePieces.Start start, List<StructureComponent> p_176069_1_, Random rand, int p_176069_3_, int p_176069_4_, int p_176069_5_, EnumFacing facing, int p_176069_7_) {
+   private static StructureComponent generateAndAddRoadPiece(SnowVillagePieces.Start start, List<StructureComponent> p_176069_1_, EaglercraftRandom rand, int p_176069_3_, int p_176069_4_, int p_176069_5_, EnumFacing facing, int p_176069_7_) {
       if (p_176069_7_ > 3 + start.terrainType) {
          return null;
       } else if (Math.abs(p_176069_3_ - start.getBoundingBox().minX) <= 112 && Math.abs(p_176069_5_ - start.getBoundingBox().minZ) <= 112) {
@@ -172,18 +172,18 @@ public class SnowVillagePieces {
       public House1() {
       }
 
-      public House1(SnowVillagePieces.Start start, int type, Random rand, StructureBoundingBox p_i45571_4_, EnumFacing facing) {
+      public House1(SnowVillagePieces.Start start, int type, EaglercraftRandom rand, StructureBoundingBox p_i45571_4_, EnumFacing facing) {
          super(start, type);
          this.setCoordBaseMode(facing);
          this.boundingBox = p_i45571_4_;
       }
 
-      public static SnowVillagePieces.House1 createPiece(SnowVillagePieces.Start start, List<StructureComponent> p_175850_1_, Random rand, int p_175850_3_, int p_175850_4_, int p_175850_5_, EnumFacing facing, int p_175850_7_) {
+      public static SnowVillagePieces.House1 createPiece(SnowVillagePieces.Start start, List<StructureComponent> p_175850_1_, EaglercraftRandom rand, int p_175850_3_, int p_175850_4_, int p_175850_5_, EnumFacing facing, int p_175850_7_) {
          StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175850_3_, p_175850_4_, p_175850_5_, 0, 0, 0, 9, 9, 6, facing);
          return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175850_1_, structureboundingbox) == null ? new SnowVillagePieces.House1(start, p_175850_7_, rand, structureboundingbox, facing) : null;
       }
 
-      public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
+      public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn) {
          if (this.averageGroundLvl < 0) {
             this.averageGroundLvl = this.getAverageGroundLevel(worldIn, structureBoundingBoxIn);
             if (this.averageGroundLvl < 0) {
@@ -292,13 +292,13 @@ public class SnowVillagePieces {
       public House2() {
       }
 
-      public House2(SnowVillagePieces.Start start, int type, Random rand, StructureBoundingBox p_i45563_4_, EnumFacing facing) {
+      public House2(SnowVillagePieces.Start start, int type, EaglercraftRandom rand, StructureBoundingBox p_i45563_4_, EnumFacing facing) {
          super(start, type);
          this.setCoordBaseMode(facing);
          this.boundingBox = p_i45563_4_;
       }
 
-      public static SnowVillagePieces.House2 createPiece(SnowVillagePieces.Start start, List<StructureComponent> p_175855_1_, Random rand, int p_175855_3_, int p_175855_4_, int p_175855_5_, EnumFacing facing, int p_175855_7_) {
+      public static SnowVillagePieces.House2 createPiece(SnowVillagePieces.Start start, List<StructureComponent> p_175855_1_, EaglercraftRandom rand, int p_175855_3_, int p_175855_4_, int p_175855_5_, EnumFacing facing, int p_175855_7_) {
          StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175855_3_, p_175855_4_, p_175855_5_, 0, 0, 0, 10, 6, 7, facing);
          return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175855_1_, structureboundingbox) == null ? new SnowVillagePieces.House2(start, p_175855_7_, rand, structureboundingbox, facing) : null;
       }
@@ -313,7 +313,7 @@ public class SnowVillagePieces {
          this.hasMadeChest = tagCompound.getBoolean("Chest");
       }
 
-      public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
+      public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn) {
          if (this.averageGroundLvl < 0) {
             this.averageGroundLvl = this.getAverageGroundLevel(worldIn, structureBoundingBoxIn);
             if (this.averageGroundLvl < 0) {
@@ -403,18 +403,18 @@ public class SnowVillagePieces {
       public House3() {
       }
 
-      public House3(SnowVillagePieces.Start start, int type, Random rand, StructureBoundingBox p_i45561_4_, EnumFacing facing) {
+      public House3(SnowVillagePieces.Start start, int type, EaglercraftRandom rand, StructureBoundingBox p_i45561_4_, EnumFacing facing) {
          super(start, type);
          this.setCoordBaseMode(facing);
          this.boundingBox = p_i45561_4_;
       }
 
-      public static SnowVillagePieces.House3 createPiece(SnowVillagePieces.Start start, List<StructureComponent> p_175849_1_, Random rand, int p_175849_3_, int p_175849_4_, int p_175849_5_, EnumFacing facing, int p_175849_7_) {
+      public static SnowVillagePieces.House3 createPiece(SnowVillagePieces.Start start, List<StructureComponent> p_175849_1_, EaglercraftRandom rand, int p_175849_3_, int p_175849_4_, int p_175849_5_, EnumFacing facing, int p_175849_7_) {
          StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175849_3_, p_175849_4_, p_175849_5_, 0, 0, 0, 9, 7, 12, facing);
          return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175849_1_, structureboundingbox) == null ? new SnowVillagePieces.House3(start, p_175849_7_, rand, structureboundingbox, facing) : null;
       }
 
-      public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
+      public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn) {
          if (this.averageGroundLvl < 0) {
             this.averageGroundLvl = this.getAverageGroundLevel(worldIn, structureBoundingBoxIn);
             if (this.averageGroundLvl < 0) {
@@ -554,14 +554,14 @@ public class SnowVillagePieces {
       public Path() {
       }
 
-      public Path(SnowVillagePieces.Start start, int p_i45562_2_, Random rand, StructureBoundingBox p_i45562_4_, EnumFacing facing) {
+      public Path(SnowVillagePieces.Start start, int p_i45562_2_, EaglercraftRandom rand, StructureBoundingBox p_i45562_4_, EnumFacing facing) {
          super(start, p_i45562_2_);
          this.setCoordBaseMode(facing);
          this.boundingBox = p_i45562_4_;
          this.length = Math.max(p_i45562_4_.getXSize(), p_i45562_4_.getZSize());
       }
 
-      public static StructureBoundingBox findPieceBox(SnowVillagePieces.Start start, List<StructureComponent> p_175848_1_, Random rand, int p_175848_3_, int p_175848_4_, int p_175848_5_, EnumFacing facing) {
+      public static StructureBoundingBox findPieceBox(SnowVillagePieces.Start start, List<StructureComponent> p_175848_1_, EaglercraftRandom rand, int p_175848_3_, int p_175848_4_, int p_175848_5_, EnumFacing facing) {
          for(int i = 7 * MathHelper.getInt(rand, 3, 5); i >= 7; i -= 7) {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175848_3_, p_175848_4_, p_175848_5_, 0, 0, 0, 3, 3, i, facing);
             if (StructureComponent.findIntersecting(p_175848_1_, structureboundingbox) == null) {
@@ -582,7 +582,7 @@ public class SnowVillagePieces {
          this.length = tagCompound.getInteger("Length");
       }
 
-      public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand) {
+      public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, EaglercraftRandom rand) {
          boolean flag = false;
 
          for(int i = rand.nextInt(5); i < this.length - 8; i += 2 + rand.nextInt(5)) {
@@ -638,7 +638,7 @@ public class SnowVillagePieces {
 
       }
 
-      public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
+      public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn) {
          IBlockState iblockstate = this.getBiomeSpecificBlockState(ModBlocks.frozenGrassPath.getDefaultState());
          IBlockState iblockstate1 = this.getBiomeSpecificBlockState(Blocks.PLANKS.getDefaultState().withProperty(BlockPlanks.VARIANT, EnumType.SPRUCE));
          IBlockState iblockstate2 = this.getBiomeSpecificBlockState(Blocks.GRAVEL.getDefaultState());
@@ -728,7 +728,7 @@ public class SnowVillagePieces {
       public Start() {
       }
 
-      public Start(BiomeProvider chunkManagerIn, int p_i2104_2_, Random rand, int p_i2104_4_, int p_i2104_5_, List<SnowVillagePieces.PieceWeight> p_i2104_6_, int p_i2104_7_) {
+      public Start(BiomeProvider chunkManagerIn, int p_i2104_2_, EaglercraftRandom rand, int p_i2104_4_, int p_i2104_5_, List<SnowVillagePieces.PieceWeight> p_i2104_6_, int p_i2104_7_) {
          super((SnowVillagePieces.Start)null, 0, rand, p_i2104_4_, p_i2104_5_);
          this.worldChunkMngr = chunkManagerIn;
          this.structureVillageWeightedPieceList = p_i2104_6_;
@@ -745,18 +745,18 @@ public class SnowVillagePieces {
       public Torch() {
       }
 
-      public Torch(SnowVillagePieces.Start start, int p_i45568_2_, Random rand, StructureBoundingBox p_i45568_4_, EnumFacing facing) {
+      public Torch(SnowVillagePieces.Start start, int p_i45568_2_, EaglercraftRandom rand, StructureBoundingBox p_i45568_4_, EnumFacing facing) {
          super(start, p_i45568_2_);
          this.setCoordBaseMode(facing);
          this.boundingBox = p_i45568_4_;
       }
 
-      public static StructureBoundingBox findPieceBox(SnowVillagePieces.Start start, List<StructureComponent> p_175856_1_, Random rand, int p_175856_3_, int p_175856_4_, int p_175856_5_, EnumFacing facing) {
+      public static StructureBoundingBox findPieceBox(SnowVillagePieces.Start start, List<StructureComponent> p_175856_1_, EaglercraftRandom rand, int p_175856_3_, int p_175856_4_, int p_175856_5_, EnumFacing facing) {
          StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175856_3_, p_175856_4_, p_175856_5_, 0, 0, 0, 3, 4, 2, facing);
          return StructureComponent.findIntersecting(p_175856_1_, structureboundingbox) != null ? null : structureboundingbox;
       }
 
-      public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
+      public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn) {
          if (this.averageGroundLvl < 0) {
             this.averageGroundLvl = this.getAverageGroundLevel(worldIn, structureBoundingBoxIn);
             if (this.averageGroundLvl < 0) {
@@ -788,18 +788,18 @@ public class SnowVillagePieces {
       public TorchNew() {
       }
 
-      public TorchNew(SnowVillagePieces.Start start, int p_i45568_2_, Random rand, StructureBoundingBox p_i45568_4_, EnumFacing facing) {
+      public TorchNew(SnowVillagePieces.Start start, int p_i45568_2_, EaglercraftRandom rand, StructureBoundingBox p_i45568_4_, EnumFacing facing) {
          super(start, p_i45568_2_);
          this.setCoordBaseMode(facing);
          this.boundingBox = p_i45568_4_;
       }
 
-      public static SnowVillagePieces.TorchNew createPiece(SnowVillagePieces.Start start, List<StructureComponent> p_175853_1_, Random rand, int p_175853_3_, int p_175853_4_, int p_175853_5_, EnumFacing facing, int p_175853_7_) {
+      public static SnowVillagePieces.TorchNew createPiece(SnowVillagePieces.Start start, List<StructureComponent> p_175853_1_, EaglercraftRandom rand, int p_175853_3_, int p_175853_4_, int p_175853_5_, EnumFacing facing, int p_175853_7_) {
          StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175853_3_, p_175853_4_, p_175853_5_, 0, 0, 0, 4, 6, 5, facing);
          return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175853_1_, structureboundingbox) == null ? new SnowVillagePieces.TorchNew(start, p_175853_7_, rand, structureboundingbox, facing) : null;
       }
 
-      public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
+      public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn) {
          if (this.averageGroundLvl < 0) {
             this.averageGroundLvl = this.getAverageGroundLevel(worldIn, structureBoundingBoxIn);
             if (this.averageGroundLvl < 0) {
@@ -868,7 +868,7 @@ public class SnowVillagePieces {
          this.isZombieInfested = tagCompound.getBoolean("Zombie");
       }
 
-      protected StructureComponent getNextComponentNN(SnowVillagePieces.Start start, List<StructureComponent> structureComponents, Random rand, int p_74891_4_, int p_74891_5_) {
+      protected StructureComponent getNextComponentNN(SnowVillagePieces.Start start, List<StructureComponent> structureComponents, EaglercraftRandom rand, int p_74891_4_, int p_74891_5_) {
          EnumFacing enumfacing = this.getCoordBaseMode();
          if (enumfacing != null) {
             switch(enumfacing) {
@@ -887,7 +887,7 @@ public class SnowVillagePieces {
          }
       }
 
-      protected StructureComponent getNextComponentPP(SnowVillagePieces.Start start, List<StructureComponent> structureComponents, Random rand, int p_74894_4_, int p_74894_5_) {
+      protected StructureComponent getNextComponentPP(SnowVillagePieces.Start start, List<StructureComponent> structureComponents, EaglercraftRandom rand, int p_74894_4_, int p_74894_5_) {
          EnumFacing enumfacing = this.getCoordBaseMode();
          if (enumfacing != null) {
             switch(enumfacing) {
@@ -1043,7 +1043,7 @@ public class SnowVillagePieces {
          return Blocks.SPRUCE_DOOR;
       }
 
-      protected void createVillageDoor(World p_189927_1_, StructureBoundingBox p_189927_2_, Random p_189927_3_, int p_189927_4_, int p_189927_5_, int p_189927_6_, EnumFacing p_189927_7_) {
+      protected void createVillageDoor(World p_189927_1_, StructureBoundingBox p_189927_2_, EaglercraftRandom p_189927_3_, int p_189927_4_, int p_189927_5_, int p_189927_6_, EnumFacing p_189927_7_) {
          if (!this.isZombieInfested) {
             this.generateDoor(p_189927_1_, p_189927_2_, p_189927_3_, p_189927_4_, p_189927_5_, p_189927_6_, EnumFacing.NORTH, this.biomeDoor());
          }
@@ -1071,7 +1071,7 @@ public class SnowVillagePieces {
       public Well() {
       }
 
-      public Well(SnowVillagePieces.Start start, int type, Random rand, int x, int z) {
+      public Well(SnowVillagePieces.Start start, int type, EaglercraftRandom rand, int x, int z) {
          super(start, type);
          this.setCoordBaseMode(Plane.HORIZONTAL.random(rand));
          if (this.getCoordBaseMode().getAxis() == Axis.Z) {
@@ -1082,14 +1082,14 @@ public class SnowVillagePieces {
 
       }
 
-      public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand) {
+      public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, EaglercraftRandom rand) {
          SnowVillagePieces.generateAndAddRoadPiece((SnowVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.minX - 1, this.boundingBox.maxY - 4, this.boundingBox.minZ + 1, EnumFacing.WEST, this.getComponentType());
          SnowVillagePieces.generateAndAddRoadPiece((SnowVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.maxX + 1, this.boundingBox.maxY - 4, this.boundingBox.minZ + 1, EnumFacing.EAST, this.getComponentType());
          SnowVillagePieces.generateAndAddRoadPiece((SnowVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.minX + 1, this.boundingBox.maxY - 4, this.boundingBox.minZ - 1, EnumFacing.NORTH, this.getComponentType());
          SnowVillagePieces.generateAndAddRoadPiece((SnowVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.minX + 1, this.boundingBox.maxY - 4, this.boundingBox.maxZ + 1, EnumFacing.SOUTH, this.getComponentType());
       }
 
-      public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
+      public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn) {
          if (this.averageGroundLvl < 0) {
             this.averageGroundLvl = this.getAverageGroundLevel(worldIn, structureBoundingBoxIn);
             if (this.averageGroundLvl < 0) {
@@ -1125,7 +1125,7 @@ public class SnowVillagePieces {
       public WoodHut() {
       }
 
-      public WoodHut(SnowVillagePieces.Start start, int type, Random rand, StructureBoundingBox structurebb, EnumFacing facing) {
+      public WoodHut(SnowVillagePieces.Start start, int type, EaglercraftRandom rand, StructureBoundingBox structurebb, EnumFacing facing) {
          super(start, type);
          this.setCoordBaseMode(facing);
          this.boundingBox = structurebb;
@@ -1133,7 +1133,7 @@ public class SnowVillagePieces {
          this.tablePosition = rand.nextInt(3);
       }
 
-      public static SnowVillagePieces.WoodHut createPiece(SnowVillagePieces.Start start, List<StructureComponent> p_175853_1_, Random rand, int p_175853_3_, int p_175853_4_, int p_175853_5_, EnumFacing facing, int p_175853_7_) {
+      public static SnowVillagePieces.WoodHut createPiece(SnowVillagePieces.Start start, List<StructureComponent> p_175853_1_, EaglercraftRandom rand, int p_175853_3_, int p_175853_4_, int p_175853_5_, EnumFacing facing, int p_175853_7_) {
          StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175853_3_, p_175853_4_, p_175853_5_, 0, 0, 0, 4, 6, 5, facing);
          return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175853_1_, structureboundingbox) == null ? new SnowVillagePieces.WoodHut(start, p_175853_7_, rand, structureboundingbox, facing) : null;
       }
@@ -1150,7 +1150,7 @@ public class SnowVillagePieces {
          this.isTallHouse = tagCompound.getBoolean("C");
       }
 
-      public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
+      public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn) {
          if (this.averageGroundLvl < 0) {
             this.averageGroundLvl = this.getAverageGroundLevel(worldIn, structureBoundingBoxIn);
             if (this.averageGroundLvl < 0) {

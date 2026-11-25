@@ -1,6 +1,6 @@
 package vazkii.quark.world.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHugeMushroom;
@@ -44,7 +44,7 @@ public class BlockHugeGlowshroom extends BlockMod implements IQuarkBlock {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       super.randomDisplayTick(stateIn, worldIn, pos, rand);
       if (rand.nextInt(10) == 0) {
          worldIn.spawnParticle(EnumParticleTypes.END_ROD, (double)((float)pos.getX() + rand.nextFloat()), (double)((float)pos.getY() + rand.nextFloat()), (double)((float)pos.getZ() + rand.nextFloat()), 0.0D, 0.0D, 0.0D, new int[0]);
@@ -69,7 +69,7 @@ public class BlockHugeGlowshroom extends BlockMod implements IQuarkBlock {
       return false;
    }
 
-   public static boolean setInPosition(World worldIn, Random rand, BlockPos position, boolean update) {
+   public static boolean setInPosition(World worldIn, EaglercraftRandom rand, BlockPos position, boolean update) {
       Block block = UndergroundBiomes.glowshroom_block;
       int i = rand.nextInt(3) + 4;
       if (rand.nextInt(12) == 0) {
@@ -167,7 +167,7 @@ public class BlockHugeGlowshroom extends BlockMod implements IQuarkBlock {
       }
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return Math.max(0, random.nextInt(10) - 7);
    }
 
@@ -186,7 +186,7 @@ public class BlockHugeGlowshroom extends BlockMod implements IQuarkBlock {
    }
 
    @Nonnull
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(UndergroundBiomes.glowshroom);
    }
 

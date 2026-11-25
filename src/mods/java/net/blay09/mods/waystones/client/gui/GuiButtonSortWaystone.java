@@ -3,7 +3,7 @@ package net.blay09.mods.waystones.client.gui;
 import net.blay09.mods.waystones.util.WaystoneEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 

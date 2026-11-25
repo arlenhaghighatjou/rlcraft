@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
@@ -30,8 +30,8 @@ import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class Dungeon {
    public static final int NUM_LAYERS = 5;
@@ -74,7 +74,7 @@ public class Dungeon {
 
    private static boolean isSpawnChanceHit(int chunkX, int chunkZ) {
       double spawnChance = RogueConfig.DUNGEONS_SPAWN_CHANCE.getDouble();
-      Random rand = new Random((long)Objects.hash(new Object[]{chunkX, chunkZ, Integer.valueOf(31)}));
+      EaglercraftRandom rand = new EaglercraftRandom((long)Objects.hash(new Object[]{chunkX, chunkZ, Integer.valueOf(31)}));
       return (double)rand.nextFloat() < spawnChance;
    }
 
@@ -122,7 +122,7 @@ public class Dungeon {
 
    }
 
-   public void spawnInChunk(Random rand, int chunkX, int chunkZ) {
+   public void spawnInChunk(EaglercraftRandom rand, int chunkX, int chunkZ) {
       if (canSpawnInChunk(chunkX, chunkZ, this.editor)) {
          logger.info("Trying to spawn dungeon at chunkX {} and chunkZ {}...", Integer.valueOf(chunkX), Integer.valueOf(chunkZ));
          int x = chunkX * 16;
@@ -136,14 +136,14 @@ public class Dungeon {
 
    }
 
-   private Optional<Coord> selectLocation(Random rand, int x, int z) {
+   private Optional<Coord> selectLocation(EaglercraftRandom rand, int x, int z) {
       int attempts = RogueConfig.DUNGEONS_SPAWN_ATTEMPTS.getInt();
       return IntStream.range(0, attempts).mapToObj((i) -> {
          return getNearbyCoord(rand, x, z);
       }).filter(this::canGenerateDungeonHere).findFirst();
    }
 
-   private static Coord getNearbyCoord(Random random, int x, int z) {
+   private static Coord getNearbyCoord(EaglercraftRandom random, int x, int z) {
       int distance = random.nextInt(getSpawnRadius());
       double angle = random.nextDouble() * 2.0D * 3.141592653589793D;
       int xOffset = (int)(Math.cos(angle) * (double)distance);

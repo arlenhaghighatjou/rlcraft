@@ -4,7 +4,7 @@ import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.core.ModBlocks;
 import com.github.alexthe666.iceandfire.entity.tile.TileEntityPixieHouse;
 import com.github.alexthe666.iceandfire.item.ICustomRendered;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
@@ -70,7 +70,7 @@ public class BlockPixieHouse extends BlockContainer implements ICustomRendered {
       super.breakBlock(worldIn, pos, state);
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 
@@ -78,7 +78,7 @@ public class BlockPixieHouse extends BlockContainer implements ICustomRendered {
       worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       this.checkFall(worldIn, pos);
    }
 

@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
@@ -75,7 +75,7 @@ public class BlockBlackApple extends Block {
       return EnumOffsetType.XZ;
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return ItemsRegister.BLACK_APPLE;
    }
 }

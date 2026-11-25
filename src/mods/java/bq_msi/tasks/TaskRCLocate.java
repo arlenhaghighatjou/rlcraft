@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,7 +33,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TaskRCLocate implements ITaskTickable {
-   private final Set<UUID> completeUsers = new TreeSet();
+   private final Set<EaglercraftUUID> completeUsers = new TreeSet();
    public String structure = "";
    public String name = "New Structure";
    public int dim = 0;
@@ -50,15 +50,15 @@ public class TaskRCLocate implements ITaskTickable {
       return "bq_msi.task.rc_locate";
    }
 
-   public boolean isComplete(UUID uuid) {
+   public boolean isComplete(EaglercraftUUID uuid) {
       return this.completeUsers.contains(uuid);
    }
 
-   public void setComplete(UUID uuid) {
+   public void setComplete(EaglercraftUUID uuid) {
       this.completeUsers.add(uuid);
    }
 
-   public void resetUser(@Nullable UUID uuid) {
+   public void resetUser(@Nullable EaglercraftUUID uuid) {
       if (uuid == null) {
          this.completeUsers.clear();
       } else {
@@ -154,7 +154,7 @@ public class TaskRCLocate implements ITaskTickable {
       this.hideInfo = nbt.getBoolean("hideInfo");
    }
 
-   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<EaglercraftUUID> users) {
       NBTTagList jArray = new NBTTagList();
       this.completeUsers.forEach((uuid) -> {
          if (users == null || users.contains(uuid)) {
@@ -175,7 +175,7 @@ public class TaskRCLocate implements ITaskTickable {
 
       for(int i = 0; i < cList.tagCount(); ++i) {
          try {
-            this.completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
+            this.completeUsers.add(EaglercraftUUID.fromString(cList.getStringTagAt(i)));
          } catch (Exception var6) {
             ;
          }

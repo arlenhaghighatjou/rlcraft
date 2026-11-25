@@ -1,6 +1,6 @@
 package cursedflames.bountifulbaubles.baubleeffect;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 
 public interface IFireResistance {
    default float getResistance() {
@@ -15,5 +15,5 @@ public interface IFireResistance {
       return 0.0F;
    }
 
-   UUID getFireResistID();
+   EaglercraftUUID getFireResistID();
 }

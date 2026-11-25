@@ -1,6 +1,6 @@
 package rtg.api.world.gen.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockVine;
 import net.minecraft.block.properties.PropertyBool;
@@ -39,7 +39,7 @@ public class WorldGenVinesRTG extends WorldGenerator {
       this.propWest = propWest;
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       for(; position.getY() < this.maxY; position = position.up()) {
          if (worldIn.isAirBlock(position)) {
             Block north = worldIn.getBlockState(position.north()).getBlock();
@@ -61,7 +61,7 @@ public class WorldGenVinesRTG extends WorldGenerator {
       return true;
    }
 
-   protected void addVine(World worldIn, Random rand, BlockPos pos, EnumFacing enumfacing) {
+   protected void addVine(World worldIn, EaglercraftRandom rand, BlockPos pos, EnumFacing enumfacing) {
       IBlockState iblockstate = this.vineBlock.getDefaultState().withProperty(this.propNorth, Boolean.valueOf(enumfacing == EnumFacing.SOUTH)).withProperty(this.propEast, Boolean.valueOf(enumfacing == EnumFacing.WEST)).withProperty(this.propSouth, Boolean.valueOf(enumfacing == EnumFacing.NORTH)).withProperty(this.propWest, Boolean.valueOf(enumfacing == EnumFacing.EAST));
       this.setBlockAndNotifyAdequately(worldIn, pos, iblockstate);
       int i = rand.nextInt(4) + 1;

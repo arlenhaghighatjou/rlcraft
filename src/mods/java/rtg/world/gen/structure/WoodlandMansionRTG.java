@@ -3,7 +3,7 @@ package rtg.world.gen.structure;
 import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import javax.annotation.ParametersAreNonnullByDefault;
 import mcp.MethodsReturnNonnullByDefault;
@@ -61,7 +61,7 @@ public final class WoodlandMansionRTG extends MapGenStructure {
 
       int x = i / this.spacing;
       int z = j / this.spacing;
-      Random random = this.world.setRandomSeed(x, z, 10387319);
+      EaglercraftRandom random = this.world.setRandomSeed(x, z, 10387319);
       x = x * this.spacing;
       z = z * this.spacing;
       x = x + (random.nextInt(this.spacing - this.separation) + random.nextInt(this.spacing - this.separation)) / 2;
@@ -77,13 +77,13 @@ public final class WoodlandMansionRTG extends MapGenStructure {
       private boolean isValid;
       private final ChunkGeneratorRTG chunkGenerator;
 
-      Start(ChunkGeneratorRTG chunkGenerator, World world, Random rand, int chunkX, int chunkZ) {
+      Start(ChunkGeneratorRTG chunkGenerator, World world, EaglercraftRandom rand, int chunkX, int chunkZ) {
          super(chunkX, chunkZ);
          this.chunkGenerator = chunkGenerator;
          this.create(world, rand, new ChunkPos(chunkX, chunkZ));
       }
 
-      private void create(World world, Random rand, ChunkPos chunkPos) {
+      private void create(World world, EaglercraftRandom rand, ChunkPos chunkPos) {
          Rotation rotation = Rotation.values()[rand.nextInt(Rotation.values().length)];
          ChunkPrimer chunkprimer = new ChunkPrimer();
          float[] chunkNoise = this.chunkGenerator.getLandscape(world.getBiomeProvider(), chunkPos).noise;
@@ -117,7 +117,7 @@ public final class WoodlandMansionRTG extends MapGenStructure {
 
       }
 
-      public void generateStructure(World worldIn, Random rand, StructureBoundingBox structurebb) {
+      public void generateStructure(World worldIn, EaglercraftRandom rand, StructureBoundingBox structurebb) {
          super.generateStructure(worldIn, rand, structurebb);
          int i = this.boundingBox.minY;
 

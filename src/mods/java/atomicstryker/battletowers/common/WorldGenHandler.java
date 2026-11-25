@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -118,7 +118,7 @@ public class WorldGenHandler implements IWorldGenerator
     }
 
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
+    public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
     {
         WorldHandle wh = getWorldHandle(world);
         if (wh.disableGenerationHook > 0)
@@ -163,7 +163,7 @@ public class WorldGenHandler implements IWorldGenerator
         return result;
     }
 
-    private void generateSurface(WorldHandle wh, World world, Random random, int xActual, int zActual)
+    private void generateSurface(WorldHandle wh, World world, EaglercraftRandom random, int xActual, int zActual)
     {
         TowerPosition pos = canTowerSpawnAt(wh, world, xActual, zActual);
         if (pos != null)
@@ -186,7 +186,7 @@ public class WorldGenHandler implements IWorldGenerator
         }
     }
 
-    private boolean attemptToSpawnTower(World world, TowerPosition pos, Random random, int x, int y, int z)
+    private boolean attemptToSpawnTower(World world, TowerPosition pos, EaglercraftRandom random, int x, int y, int z)
     {
         int choice = generator.getChosenTowerOrdinal(world, random, x, y, z);
         pos.type = choice;

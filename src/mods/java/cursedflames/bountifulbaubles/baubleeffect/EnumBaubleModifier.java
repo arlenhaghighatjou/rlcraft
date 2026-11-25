@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttribute;
@@ -43,7 +43,7 @@ public enum EnumBaubleModifier {
    public static final Set<IAttribute> attributes = new HashSet();
    private static final List<EnumBaubleModifier> VALUES;
    private static final int TOTAL_WEIGHT;
-   private static final Random RANDOM;
+   private static final EaglercraftRandom RANDOM;
 
    private EnumBaubleModifier(String name, IAttribute attribute, double amount, int operation, int weight) {
       this.name = name;
@@ -111,6 +111,6 @@ public enum EnumBaubleModifier {
 
       VALUES = Collections.unmodifiableList(Arrays.asList(values()));
       TOTAL_WEIGHT = getTotalWeight();
-      RANDOM = new Random();
+      RANDOM = new EaglercraftRandom();
    }
 }

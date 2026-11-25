@@ -3,7 +3,7 @@ package de.mennomax.astikorcarts.client.gui.inventory;
 import de.mennomax.astikorcarts.entity.EntityPlowCart;
 import de.mennomax.astikorcarts.inventory.ContainerPlowCart;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;

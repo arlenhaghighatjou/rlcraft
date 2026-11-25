@@ -1,6 +1,6 @@
 package org.orecruncher.lib.gfx;
 
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.CullFace;
 import org.lwjgl.opengl.GL11;
 

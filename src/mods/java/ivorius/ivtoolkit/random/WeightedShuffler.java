@@ -2,14 +2,14 @@ package ivorius.ivtoolkit.random;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.ToDoubleFunction;
 
 public class WeightedShuffler {
    public WeightedShuffler() {
    }
 
-   public static <T> Iterator<T> iterateShuffled(final Random rand, final List<T> items, final ToDoubleFunction<T> weightFunction) {
+   public static <T> Iterator<T> iterateShuffled(final EaglercraftRandom rand, final List<T> items, final ToDoubleFunction<T> weightFunction) {
       return new Iterator<T>() {
          double totalWeight = WeightedSelector.totalWeight(items, weightFunction);
 
@@ -25,7 +25,7 @@ public class WeightedShuffler {
       };
    }
 
-   public static <T> Iterator<T> iterateShuffled(Random rand, List<WeightedSelector.SimpleItem<T>> items) {
+   public static <T> Iterator<T> iterateShuffled(EaglercraftRandom rand, List<WeightedSelector.SimpleItem<T>> items) {
       final Iterator<WeightedSelector.SimpleItem<T>> iterator = iterateShuffled(rand, items, WeightedSelector.Item::getWeight);
       return new Iterator<T>() {
          public boolean hasNext() {
@@ -38,15 +38,15 @@ public class WeightedShuffler {
       };
    }
 
-   public static <T extends WeightedSelector.Item> Iterator<T> iterateShuffledItems(Random rand, List<T> items) {
+   public static <T extends WeightedSelector.Item> Iterator<T> iterateShuffledItems(EaglercraftRandom rand, List<T> items) {
       return iterateShuffled(rand, items, WeightedSelector.Item::getWeight);
    }
 
-   public static <T extends WeightedSelector.Item> void shuffleItems(Random rand, List<T> items) {
+   public static <T extends WeightedSelector.Item> void shuffleItems(EaglercraftRandom rand, List<T> items) {
       shuffleItems(rand, items, WeightedSelector.totalWeight(items));
    }
 
-   public static <T extends WeightedSelector.Item> void shuffleItems(Random rand, List<T> items, double totalWeight) {
+   public static <T extends WeightedSelector.Item> void shuffleItems(EaglercraftRandom rand, List<T> items, double totalWeight) {
       int size = items.size();
 
       for(int shuffled = 0; shuffled < size - 1; ++shuffled) {
@@ -58,11 +58,11 @@ public class WeightedShuffler {
 
    }
 
-   public static <T> void shuffle(Random rand, List<T> items, ToDoubleFunction<T> weightFunction) {
+   public static <T> void shuffle(EaglercraftRandom rand, List<T> items, ToDoubleFunction<T> weightFunction) {
       shuffle(rand, items, weightFunction, WeightedSelector.totalWeight(items, weightFunction));
    }
 
-   public static <T> void shuffle(Random rand, List<T> items, ToDoubleFunction<T> weightFunction, double totalWeight) {
+   public static <T> void shuffle(EaglercraftRandom rand, List<T> items, ToDoubleFunction<T> weightFunction, double totalWeight) {
       int size = items.size();
 
       for(int shuffled = 0; shuffled < size - 1; ++shuffled) {

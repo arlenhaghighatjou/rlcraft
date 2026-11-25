@@ -1,6 +1,6 @@
 package net.ilexiconn.llibrary.server.structure.rule;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
 
@@ -22,11 +22,11 @@ public class RandomRule extends FixedRule {
 
    }
 
-   public void reset(World world, Random random, MutableBlockPos pos) {
+   public void reset(World world, EaglercraftRandom random, MutableBlockPos pos) {
       this.times = random.nextInt(this.max - this.min) + this.min;
    }
 
-   public void init(World world, Random random, MutableBlockPos pos) {
+   public void init(World world, EaglercraftRandom random, MutableBlockPos pos) {
       this.countdown = this.times;
    }
 }

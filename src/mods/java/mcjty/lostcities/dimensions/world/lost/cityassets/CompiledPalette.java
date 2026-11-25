@@ -2,7 +2,7 @@ package mcjty.lostcities.dimensions.world.lost.cityassets;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.Map.Entry;
 import mcjty.lostcities.dimensions.world.terraingen.LostCitiesTerrainGenerator;
@@ -143,7 +143,7 @@ public class CompiledPalette {
       return o instanceof Character;
    }
 
-   public Character get(char c, Random rand) {
+   public Character get(char c, EaglercraftRandom rand) {
       try {
          Object o = this.palette.get(Character.valueOf(c));
          if (o instanceof Character) {

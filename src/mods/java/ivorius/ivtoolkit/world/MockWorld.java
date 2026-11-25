@@ -3,7 +3,7 @@ package ivorius.ivtoolkit.world;
 import ivorius.ivtoolkit.blocks.IvTileEntityHelper;
 import ivorius.ivtoolkit.tools.IvWorldData;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -50,7 +50,7 @@ public interface MockWorld extends IBlockAccess {
 
    boolean removeEntity(Entity var1);
 
-   Random rand();
+   EaglercraftRandom rand();
 
    default boolean setBlockState(BlockPos coord, IBlockState block) {
       return this.setBlockState(coord, block, 3);
@@ -143,7 +143,7 @@ public interface MockWorld extends IBlockAccess {
          return true;
       }
 
-      public Random rand() {
+      public EaglercraftRandom rand() {
          return this.world.rand;
       }
 
@@ -171,7 +171,7 @@ public interface MockWorld extends IBlockAccess {
 
    public static class WorldData implements MockWorld {
       public IvWorldData worldData;
-      public Random random = new Random();
+      public EaglercraftRandom random = new EaglercraftRandom();
 
       public WorldData(IvWorldData worldData) {
          this.worldData = worldData;
@@ -232,7 +232,7 @@ public interface MockWorld extends IBlockAccess {
          });
       }
 
-      public Random rand() {
+      public EaglercraftRandom rand() {
          return this.random;
       }
    }

@@ -1,6 +1,6 @@
 package jaredbgreat.dldungeons.themes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public final class Element implements Autoselecting {
    private static final Degree NONE = Degree.NONE;
@@ -29,7 +29,7 @@ public final class Element implements Autoselecting {
       this.never = this.prob6 == this.prob1;
    }
 
-   public Degree select(Random random) {
+   public Degree select(EaglercraftRandom random) {
       int roll = random.nextInt(this.probScale);
       if (roll < this.prob1) {
          return Degree.NONE;

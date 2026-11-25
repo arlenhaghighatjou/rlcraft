@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.lycanitesmobs.core.helpers.JSONHelper;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.Vec3i;
 
 public class DungeonSector {
@@ -75,7 +75,7 @@ public class DungeonSector {
 
    }
 
-   public Vec3i getRandomSize(Random random) {
+   public Vec3i getRandomSize(EaglercraftRandom random) {
       int x = this.sizeMin.getX();
       if (this.sizeMax.getX() > x) {
          x += random.nextInt(this.sizeMax.getX() - x + 1);

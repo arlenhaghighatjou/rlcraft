@@ -1,6 +1,6 @@
 package tschipp.tschipplib.helper;
 
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

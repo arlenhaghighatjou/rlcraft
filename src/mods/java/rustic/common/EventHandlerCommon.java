@@ -1,7 +1,7 @@
 package rustic.common;
 
 import com.google.common.collect.Sets;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -46,7 +46,7 @@ import rustic.common.items.ModItems;
 import rustic.common.util.GenericUtils;
 
 public class EventHandlerCommon {
-   private Random rand = new Random();
+   private EaglercraftRandom rand = new EaglercraftRandom();
 
    public EventHandlerCommon() {
    }

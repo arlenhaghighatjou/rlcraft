@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.init.ModItems;
 import lykrast.defiledlands.common.item.ItemBlockTooltip;
 import net.minecraft.block.SoundType;
@@ -32,20 +32,20 @@ public class BlockHephaestiteOre extends BlockCorrupted implements ICustomItemBl
       super.onEntityWalk(worldIn, pos, entityIn);
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return ModItems.hephaestite;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return random.nextInt(3) + 1;
    }
 
-   public int quantityDroppedWithBonus(int fortune, Random random) {
+   public int quantityDroppedWithBonus(int fortune, EaglercraftRandom random) {
       return this.quantityDropped(random) + random.nextInt(fortune + 1);
    }
 
    public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune) {
-      Random rand = world instanceof World ? ((World)world).rand : new Random();
+      EaglercraftRandom rand = world instanceof World ? ((World)world).rand : new EaglercraftRandom();
       return MathHelper.getInt(rand, 1, 3);
    }
 

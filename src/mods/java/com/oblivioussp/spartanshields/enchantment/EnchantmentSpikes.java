@@ -1,7 +1,7 @@
 package com.oblivioussp.spartanshields.enchantment;
 
 import com.oblivioussp.spartanshields.init.EnchantmentRegistry;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.entity.Entity;
@@ -34,7 +34,7 @@ public class EnchantmentSpikes extends EnchantmentSS {
    }
 
    public void onUserAttacked(EntityLivingBase user, Entity attacker, int level) {
-      Random random = user.getRNG();
+      EaglercraftRandom random = user.getRNG();
       ItemStack itemStack = EnchantmentHelper.getEnchantedItem(EnchantmentRegistry.enchSpikes, user);
       ItemStack activeStack = user.getActiveItemStack();
       if (!activeStack.isEmpty() && activeStack == itemStack) {
@@ -53,11 +53,11 @@ public class EnchantmentSpikes extends EnchantmentSS {
 
    }
 
-   public static boolean shouldHit(int level, Random rnd) {
+   public static boolean shouldHit(int level, EaglercraftRandom rnd) {
       return level <= 0 ? false : rnd.nextFloat() < 0.2F * (float)level;
    }
 
-   public static int getDamage(int level, Random rnd) {
+   public static int getDamage(int level, EaglercraftRandom rnd) {
       return level == 1 ? 2 : 2 + rnd.nextInt(level - 1);
    }
 }

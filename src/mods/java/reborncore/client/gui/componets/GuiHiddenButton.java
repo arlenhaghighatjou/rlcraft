@@ -3,7 +3,7 @@ package reborncore.client.gui.componets;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import org.lwjgl.opengl.GL11;
 
 public class GuiHiddenButton extends GuiButton {

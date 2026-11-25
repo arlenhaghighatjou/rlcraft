@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.MultipartBakedModel;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import pl.asie.foamfix.util.MethodHandleHelper;
 
@@ -68,7 +68,7 @@ public class FoamyMultipartBakedModel implements IBakedModel {
       return false;
    }
 
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       return this.models[0].getParticleTexture();
    }
 

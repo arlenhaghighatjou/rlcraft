@@ -14,7 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 
@@ -30,7 +30,7 @@ public class MCLinkAPI {
       return new JsonObject();
    }
 
-   public void updateSupporterInfo(@Nonnull Collection<UUID> playerIDs, Collection<String> tokens) {
+   public void updateSupporterInfo(@Nonnull Collection<EaglercraftUUID> playerIDs, Collection<String> tokens) {
       JsonObject jsonBase = new JsonObject();
       JsonObject jsonTokens = new JsonObject();
       JsonObject jsonServices = new JsonObject();

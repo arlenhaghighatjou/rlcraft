@@ -6,7 +6,7 @@ import com.creativemd.creativecore.common.gui.GuiRenderHelper;
 import com.creativemd.creativecore.common.gui.client.style.Style;
 import com.creativemd.creativecore.common.gui.controls.container.client.GuiSlotControl;
 import java.util.List;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public abstract class GuiAvatarLabelClickable extends GuiClickableLabel {
    public int avatarSize;

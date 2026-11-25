@@ -15,7 +15,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Direction;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SegmentTrap extends SegmentBase {
    public SegmentTrap() {
@@ -100,7 +100,7 @@ public class SegmentTrap extends SegmentBase {
 
    private void placeDispenser(WorldEditor editor, Direction outward, Coord origin) {
       Coord dispenser = origin.copy().translate(outward, 4).up();
-      Random random = editor.getRandom();
+      EaglercraftRandom random = editor.getRandom();
       Direction towardsCenter = outward.reverse();
       BlockType.DISPENSER.getBrush().setFacing(towardsCenter).stroke(editor, dispenser);
 
@@ -120,7 +120,7 @@ public class SegmentTrap extends SegmentBase {
       SingleBlockBrush.AIR.stroke(editor, cursor.translate(towardsCenter));
    }
 
-   private RldItemStack choosePayload(Random rand) {
+   private RldItemStack choosePayload(EaglercraftRandom rand) {
       switch(rand.nextInt(3)) {
       case 0:
       default:

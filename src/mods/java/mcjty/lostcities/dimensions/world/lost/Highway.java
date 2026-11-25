@@ -2,7 +2,7 @@ package mcjty.lostcities.dimensions.world.lost;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import mcjty.lostcities.config.LostCityProfile;
 import mcjty.lostcities.dimensions.world.LostCityChunkGenerator;
@@ -20,12 +20,12 @@ public class Highway {
 
    private static void makePerlin(long seed) {
       if (perlinX == null) {
-         Random random = new Random(seed);
+         EaglercraftRandom random = new EaglercraftRandom(seed);
          perlinX = new NoiseGeneratorPerlin(random, 4);
       }
 
       if (perlinZ == null) {
-         Random random = new Random(seed ^ 879190747L);
+         EaglercraftRandom random = new EaglercraftRandom(seed ^ 879190747L);
          perlinZ = new NoiseGeneratorPerlin(random, 4);
       }
 

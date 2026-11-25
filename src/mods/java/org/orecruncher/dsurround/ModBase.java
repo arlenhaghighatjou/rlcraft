@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnection
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import org.orecruncher.dsurround.proxy.IProxy;
 import org.orecruncher.lib.VersionChecker;
 import org.orecruncher.lib.VersionHelper;

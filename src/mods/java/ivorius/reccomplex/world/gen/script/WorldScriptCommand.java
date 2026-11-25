@@ -1,6 +1,6 @@
 package ivorius.reccomplex.world.gen.script;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import ivorius.ivtoolkit.random.WeightedSelector;
 import ivorius.ivtoolkit.random.WeightedSelector.Item;
 import ivorius.ivtoolkit.tools.IvCollections;

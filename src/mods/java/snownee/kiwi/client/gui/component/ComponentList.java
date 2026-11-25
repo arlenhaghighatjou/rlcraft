@@ -3,12 +3,12 @@ package snownee.kiwi.client.gui.component;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.client.config.GuiUtils;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 import org.lwjgl.opengl.GL11;
 import snownee.kiwi.client.gui.GuiControl;
 
@@ -183,7 +183,7 @@ public abstract class ComponentList extends Component {
 
       this.applyScrollLimits();
       Tessellator tess = Tessellator.getInstance();
-      BufferBuilder worldr = tess.getBuffer();
+      WorldRenderer worldr = tess.getBuffer();
       worldr.setTranslation((double)offsetX, (double)offsetY, 0.0D);
       ScaledResolution res = new ScaledResolution(this.parent.mc);
       double scaleW = (double)this.parent.mc.displayWidth / res.getScaledWidth_double();

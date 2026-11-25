@@ -1,7 +1,7 @@
 package c4.comforts.common.blocks;
 
 import c4.comforts.common.items.ComfortsItems;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
@@ -49,7 +49,7 @@ public class BlockSleepingBag extends BlockBase {
    }
 
    @Nonnull
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return (Item)(state.getValue(BlockBed.PART) == EnumPartType.FOOT ? Items.AIR : ComfortsItems.SLEEPING_BAG);
    }
 

@@ -9,7 +9,7 @@ import mods.octarinecore.client.resource.ModelRenderRegistryConfigurable;
 import mods.octarinecore.common.config.ConfigurableBlockMatcher;
 import mods.octarinecore.common.config.ModelTextureList;
 import net.minecraft.block.state.IBlockState;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 @Metadata(

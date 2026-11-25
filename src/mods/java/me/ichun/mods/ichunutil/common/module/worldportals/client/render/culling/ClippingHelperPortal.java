@@ -2,7 +2,7 @@ package me.ichun.mods.ichunutil.common.module.worldportals.client.render.culling
 
 import java.nio.FloatBuffer;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.culling.ClippingHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;

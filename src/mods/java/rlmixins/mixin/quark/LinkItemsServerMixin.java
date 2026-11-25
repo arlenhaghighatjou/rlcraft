@@ -1,6 +1,6 @@
 package rlmixins.mixin.quark;
 
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;

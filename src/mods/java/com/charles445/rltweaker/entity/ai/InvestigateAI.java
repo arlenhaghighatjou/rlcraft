@@ -3,7 +3,7 @@ package com.charles445.rltweaker.entity.ai;
 import com.charles445.rltweaker.handler.InvestigateAIHandler;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -154,7 +154,7 @@ public class InvestigateAI extends EntityAIBase {
    }
 
    private BlockPos calculateTarget(Vec3d target, InvestigateAIConfig.Entry entry) {
-      Random rand = this.entity.getRNG();
+      EaglercraftRandom rand = this.entity.getRNG();
       double dist = this.entity.getDistance(target.x, target.y, target.z);
       double horizontalOffset = Math.min((double)entry.horizontalOffsetBase + dist * (double)entry.horizontalOffsetScale, (double)entry.horizontalOffsetMax);
       double verticalOffset = Math.min((double)entry.verticalOffsetBase + dist * (double)entry.verticalOffsetScale, (double)entry.verticalOffsetMax);

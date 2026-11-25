@@ -2,7 +2,7 @@ package ivorius.ivtoolkit.maze.classic;
 
 import ivorius.ivtoolkit.math.AxisAlignedTransform2D;
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Stack;
 
 public class MazeGeneratorClassic {
@@ -22,7 +22,7 @@ public class MazeGeneratorClassic {
       MazeGenerator.generateStartPathsForEnclosedMaze(maze, startPoints, blockedRooms, transform, Byte.valueOf((byte)3), Byte.valueOf((byte)3), Byte.valueOf((byte)2));
    }
 
-   public static void generatePaths(Random rand, Maze<Byte> maze, int[] pathWeights, MazeRoom startPoint) {
+   public static void generatePaths(EaglercraftRandom rand, Maze<Byte> maze, int[] pathWeights, MazeRoom startPoint) {
       for(int i = 0; i < maze.dimensions.length; ++i) {
          if (maze.dimensions[i] < 3) {
             return;

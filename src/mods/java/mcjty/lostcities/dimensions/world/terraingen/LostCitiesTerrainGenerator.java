@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -847,7 +847,7 @@ public class LostCitiesTerrainGenerator extends NormalTerrainGenerator {
       return biome == Biomes.OCEAN || biome == Biomes.DEEP_OCEAN || biome == Biomes.FROZEN_OCEAN || biome == Biomes.RIVER || biome == Biomes.FROZEN_RIVER || biome == Biomes.BEACH || biome == Biomes.COLD_BEACH;
    }
 
-   private void flattenChunkBorder(BuildingInfo info, int x, int offset, int z, Random rand, int level) {
+   private void flattenChunkBorder(BuildingInfo info, int x, int offset, int z, EaglercraftRandom rand, int level) {
       this.driver.current(x, 0, z);
 
       for(int y = 0; y <= level - offset - rand.nextInt(2); ++y) {
@@ -863,7 +863,7 @@ public class LostCitiesTerrainGenerator extends NormalTerrainGenerator {
       this.clearRange(info, x, z, level + offset + r, 230, info.waterLevel > info.groundLevel);
    }
 
-   private void flattenChunkBorderDownwards(BuildingInfo info, int x, int offset, int z, Random rand, int level) {
+   private void flattenChunkBorderDownwards(BuildingInfo info, int x, int offset, int z, EaglercraftRandom rand, int level) {
       int r = rand.nextInt(2);
       this.clearRange(info, x, z, level + offset + r, 230, info.waterLevel > info.groundLevel);
    }
@@ -871,7 +871,7 @@ public class LostCitiesTerrainGenerator extends NormalTerrainGenerator {
    private void doCityChunk(int chunkX, int chunkZ, BuildingInfo info) {
       boolean building = info.hasBuilding;
       ChunkHeightmap heightmap = this.provider.getHeightmap(info.chunkX, info.chunkZ);
-      Random rand = new Random(this.provider.seed * 377L + (long)chunkZ * 341873128712L + (long)chunkX * 132897987541L);
+      EaglercraftRandom rand = new EaglercraftRandom(this.provider.seed * 377L + (long)chunkZ * 341873128712L + (long)chunkX * 132897987541L);
       rand.nextFloat();
       rand.nextFloat();
       if (info.profile.isDefault()) {
@@ -1175,7 +1175,7 @@ public class LostCitiesTerrainGenerator extends NormalTerrainGenerator {
       return null;
    }
 
-   private void fixAfterExplosionNew(BuildingInfo info, Random rand) {
+   private void fixAfterExplosionNew(BuildingInfo info, EaglercraftRandom rand) {
       int start = info.getDamageArea().getLowestExplosionHeight();
       if (start != -1) {
          int end = info.getDamageArea().getHighestExplosionHeight();
@@ -1362,7 +1362,7 @@ public class LostCitiesTerrainGenerator extends NormalTerrainGenerator {
       }
    }
 
-   private void generateStreet(BuildingInfo info, ChunkHeightmap heightmap, Random rand) {
+   private void generateStreet(BuildingInfo info, ChunkHeightmap heightmap, EaglercraftRandom rand) {
       boolean xRail = info.hasXCorridor();
       boolean zRail = info.hasZCorridor();
       if (xRail || zRail) {
@@ -1621,7 +1621,7 @@ public class LostCitiesTerrainGenerator extends NormalTerrainGenerator {
 
    }
 
-   private void generateRandomVegetation(BuildingInfo info, Random rand, int height) {
+   private void generateRandomVegetation(BuildingInfo info, EaglercraftRandom rand, int height) {
       if (height != 0) {
          if (info.getXmin().hasBuilding) {
             for(int x = 0; x < info.profile.THICKNESS_OF_RANDOM_LEAFBLOCKS; ++x) {
@@ -1984,7 +1984,7 @@ public class LostCitiesTerrainGenerator extends NormalTerrainGenerator {
       return oy + part.getSliceCount();
    }
 
-   private void generateDebris(Random rand, BuildingInfo info) {
+   private void generateDebris(EaglercraftRandom rand, BuildingInfo info) {
       this.generateDebrisFromChunk(rand, info, info.getXmin(), (xx, zz) -> {
          return (15.0F - (float)xx.intValue()) / 16.0F;
       });
@@ -2011,7 +2011,7 @@ public class LostCitiesTerrainGenerator extends NormalTerrainGenerator {
       });
    }
 
-   private void generateDebrisFromChunk(Random rand, BuildingInfo info, BuildingInfo adjacentInfo, BiFunction<Integer, Integer, Float> locationFactor) {
+   private void generateDebrisFromChunk(EaglercraftRandom rand, BuildingInfo info, BuildingInfo adjacentInfo, BiFunction<Integer, Integer, Float> locationFactor) {
       if (adjacentInfo.hasBuilding) {
          char filler = adjacentInfo.getCompiledPalette().get(adjacentInfo.getBuilding().getFillerBlock()).charValue();
          float damageFactor = adjacentInfo.getDamageArea().getDamageFactor();

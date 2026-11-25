@@ -1,7 +1,7 @@
 package com.lycanitesmobs.core.entity.goals.actions;
 
 import com.lycanitesmobs.core.entity.BaseCreatureEntity;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -43,7 +43,7 @@ public class RandomPositionGenerator {
 
    private static Vec3d getTargetBlock(BaseCreatureEntity entity, int range, int height, Vec3d target, int heightLevel) {
       PathNavigate pathNavigate = entity.getNavigator();
-      Random random = entity.getRNG();
+      EaglercraftRandom random = entity.getRNG();
       boolean validTarget = false;
       int targetX = 0;
       int targetY = 0;

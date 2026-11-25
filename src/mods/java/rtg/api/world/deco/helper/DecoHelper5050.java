@@ -1,6 +1,6 @@
 package rtg.api.world.deco.helper;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.ChunkPos;
 import rtg.api.world.RTGWorld;
 import rtg.api.world.biome.IRealisticBiome;
@@ -19,7 +19,7 @@ public class DecoHelper5050 extends DecoBase {
       }
    }
 
-   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, Random rand, ChunkPos chunkPos, float river, boolean hasVillage) {
+   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, EaglercraftRandom rand, ChunkPos chunkPos, float river, boolean hasVillage) {
       if (rand.nextBoolean()) {
          this.deco1.generate(biome, rtgWorld, rand, chunkPos, river, hasVillage);
       } else {

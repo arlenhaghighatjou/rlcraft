@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.zip.GZIPInputStream;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTSizeTracker;
@@ -19,7 +19,7 @@ import net.minecraft.util.math.MathHelper;
 
 public final class PacketAssembly {
    public static final PacketAssembly INSTANCE = new PacketAssembly();
-   private final HashMap<UUID, byte[]> buffer = new HashMap();
+   private final HashMap<EaglercraftUUID, byte[]> buffer = new HashMap();
    private byte[] serverBuf = null;
    private static final int bufSize = 20480;
 
@@ -56,7 +56,7 @@ public final class PacketAssembly {
       }
    }
 
-   public NBTTagCompound assemblePacket(UUID owner, NBTTagCompound tags) {
+   public NBTTagCompound assemblePacket(EaglercraftUUID owner, NBTTagCompound tags) {
       int size = tags.getInteger("size");
       int index = tags.getInteger("index");
       boolean end = tags.getBoolean("end");
@@ -88,7 +88,7 @@ public final class PacketAssembly {
       }
    }
 
-   public byte[] getBuffer(UUID owner) {
+   public byte[] getBuffer(EaglercraftUUID owner) {
       if (owner == null) {
          return this.serverBuf;
       } else {
@@ -98,13 +98,13 @@ public final class PacketAssembly {
       }
    }
 
-   public void setBuffer(UUID owner, byte[] value) {
+   public void setBuffer(EaglercraftUUID owner, byte[] value) {
       if (owner == null) {
          this.serverBuf = value;
       } else {
          synchronized(this.buffer) {
             if (this.buffer.containsKey(owner)) {
-               throw new IllegalStateException("Attepted to start more than one BQ packet assembly for UUID " + owner.toString());
+               throw new IllegalStateException("Attepted to start more than one BQ packet assembly for EaglercraftUUID " + owner.toString());
             }
 
             this.buffer.put(owner, value);
@@ -113,7 +113,7 @@ public final class PacketAssembly {
 
    }
 
-   public void clearBuffer(UUID owner) {
+   public void clearBuffer(EaglercraftUUID owner) {
       if (owner == null) {
          this.serverBuf = null;
       } else {

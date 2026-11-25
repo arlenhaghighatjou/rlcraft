@@ -1,6 +1,6 @@
 package com.github.fnar.util;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Color {
    public static final int BOUND = 256;
@@ -33,7 +33,7 @@ public class Color {
       this.blue = blue;
    }
 
-   public static Color random(Random random) {
+   public static Color random(EaglercraftRandom random) {
       return new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
    }
 

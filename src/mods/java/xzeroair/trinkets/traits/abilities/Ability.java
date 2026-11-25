@@ -2,7 +2,7 @@ package xzeroair.trinkets.traits.abilities;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -18,7 +18,7 @@ public class Ability implements IAbilityInterface {
    private String uuid;
    private String translationKey;
    private boolean removeAbility;
-   protected Random random = Reference.random;
+   protected EaglercraftRandom random = Reference.random;
    protected TickHandler tickHandler = new TickHandler();
    protected boolean enabled;
    protected int value;

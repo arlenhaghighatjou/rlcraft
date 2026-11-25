@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -78,7 +78,7 @@ public class CanvasQuestLine extends CanvasScrolling {
       this.lastQL = line;
       if (line != null) {
          EntityPlayer player = Minecraft.getMinecraft().player;
-         UUID pid = QuestingAPI.getQuestingUUID(player);
+         EaglercraftUUID pid = QuestingAPI.getQuestingUUID(player);
          String bgString = (String)line.getProperty(NativeProps.BG_IMAGE);
          if (!StringUtils.isNullOrEmpty(bgString)) {
             int bgSize = ((Integer)line.getProperty(NativeProps.BG_SIZE)).intValue();

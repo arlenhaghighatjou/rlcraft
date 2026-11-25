@@ -7,7 +7,7 @@ import com.charles445.rltweaker.util.CompatUtil;
 import com.charles445.rltweaker.util.CriticalException;
 import com.charles445.rltweaker.util.ErrorUtil;
 import java.lang.reflect.InvocationTargetException;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -37,9 +37,9 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class BetterSurvivalHandler {
-   private final UUID UUID_BLINDNESS = UUID.fromString("a6107045-134f-4c14-a645-75c3ae5c7a27");
-   private final UUID UUID_COMPENSATION = UUID.fromString("a6107045-134f-4c04-a645-75c3ae5c7a27");
-   private final UUID UUID_SPEED = UUID.fromString("e6107045-134f-4c54-a645-75c3ae5c7a27");
+   private final EaglercraftUUID UUID_BLINDNESS = EaglercraftUUID.fromString("a6107045-134f-4c14-a645-75c3ae5c7a27");
+   private final EaglercraftUUID UUID_COMPENSATION = EaglercraftUUID.fromString("a6107045-134f-4c04-a645-75c3ae5c7a27");
+   private final EaglercraftUUID UUID_SPEED = EaglercraftUUID.fromString("e6107045-134f-4c54-a645-75c3ae5c7a27");
    BetterSurvivalReflect reflector;
 
    public BetterSurvivalHandler() {

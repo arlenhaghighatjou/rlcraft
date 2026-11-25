@@ -2,10 +2,10 @@ package com.teamacronymcoders.base.util;
 
 import com.teamacronymcoders.base.client.ClientHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
@@ -25,14 +25,14 @@ public final class TextureUtils {
 
    public static void renderFluidCuboid(FluidStack fluid, BlockPos pos, double x, double y, double z, double x1, double y1, double z1, double x2, double y2, double z2) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder renderer = tessellator.getBuffer();
+      WorldRenderer renderer = tessellator.getBuffer();
       renderer.begin(7, DefaultVertexFormats.BLOCK);
       mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
       int color = fluid.getFluid().getColor(fluid);
       int brightness = ClientHelper.world().getCombinedLight(pos, fluid.getFluid().getLuminosity());
       pre(x, y, z);
-      TextureAtlasSprite still = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
-      TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getFlowing(fluid).toString());
+      EaglerTextureAtlasSprite still = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
+      EaglerTextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getFlowing(fluid).toString());
       putTexturedQuad(renderer, still, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.DOWN, color, brightness, false);
       putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.NORTH, color, brightness, true);
       putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.EAST, color, brightness, true);
@@ -43,7 +43,7 @@ public final class TextureUtils {
       post();
    }
 
-   public static void putTexturedQuad(BufferBuilder renderer, TextureAtlasSprite sprite, double x, double y, double z, double w, double h, double d, EnumFacing face, int color, int brightness, boolean flowing) {
+   public static void putTexturedQuad(WorldRenderer renderer, EaglerTextureAtlasSprite sprite, double x, double y, double z, double w, double h, double d, EnumFacing face, int color, int brightness, boolean flowing) {
       int l1 = brightness >> 16 & '\uffff';
       int l2 = brightness & '\uffff';
       int a = color >> 24 & 255;
@@ -53,7 +53,7 @@ public final class TextureUtils {
       putTexturedQuad(renderer, sprite, x, y, z, w, h, d, face, r, g, b, a, l1, l2, flowing);
    }
 
-   public static void putTexturedQuad(BufferBuilder renderer, TextureAtlasSprite sprite, double x, double y, double z, double w, double h, double d, EnumFacing face, int r, int g, int b, int a, int light1, int light2, boolean flowing) {
+   public static void putTexturedQuad(WorldRenderer renderer, EaglerTextureAtlasSprite sprite, double x, double y, double z, double w, double h, double d, EnumFacing face, int r, int g, int b, int a, int light1, int light2, boolean flowing) {
       double size = 16.0D;
       if (flowing) {
          size = 8.0D;
@@ -182,7 +182,7 @@ public final class TextureUtils {
       GlStateManager.popMatrix();
    }
 
-   public static TextureAtlasSprite getSprite(ResourceLocation textureLocation) {
+   public static EaglerTextureAtlasSprite getSprite(ResourceLocation textureLocation) {
       return mc.getTextureMapBlocks().getTextureExtry(textureLocation.toString());
    }
 }

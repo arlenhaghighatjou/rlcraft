@@ -6,13 +6,13 @@ import com.github.fnar.util.Color;
 import greymerk.roguelike.monster.Mob;
 import greymerk.roguelike.monster.MonsterProfile;
 import greymerk.roguelike.treasure.loot.Equipment;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ProfileJohnny implements MonsterProfile {
    public ProfileJohnny() {
    }
 
-   public Mob apply(Mob mob, int level, int difficulty, Random random) {
+   public Mob apply(Mob mob, int level, int difficulty, EaglercraftRandom random) {
       mob.setMobType(MobType.VINDICATOR);
       mob.equipMainhand((new SpecialAxe(random, Equipment.rollQuality(random, 4))).asStack());
       mob.equipArmor(random, level, Color.random(random), difficulty);

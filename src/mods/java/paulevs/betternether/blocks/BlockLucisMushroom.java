@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -35,11 +35,11 @@ public class BlockLucisMushroom extends Block {
       this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, BlockLucisMushroom.EnumDir.NORTH).withProperty(SHAPE, BlockLucisMushroom.EnumShape.CENTER));
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Items.GLOWSTONE_DUST;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return random.nextInt(3);
    }
 

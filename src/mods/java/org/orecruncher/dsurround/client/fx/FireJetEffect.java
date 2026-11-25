@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.fx;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import net.minecraft.block.BlockLiquid;
@@ -24,7 +24,7 @@ public class FireJetEffect extends JetEffect {
       return BlockEffectType.FIRE_JET;
    }
 
-   public boolean canTrigger(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull Random random) {
+   public boolean canTrigger(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EaglercraftRandom random) {
       if (!state.getMaterial().isSolid() && !state.getMaterial().isLiquid()) {
          return false;
       } else {
@@ -32,7 +32,7 @@ public class FireJetEffect extends JetEffect {
       }
    }
 
-   public void doEffect(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull Random random) {
+   public void doEffect(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EaglercraftRandom random) {
       Material blockMaterial = state.getMaterial();
       int blockCount;
       float spawnHeight;

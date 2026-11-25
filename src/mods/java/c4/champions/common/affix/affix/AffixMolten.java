@@ -21,7 +21,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class AffixMolten extends AffixBase {
    private static final Field IMMUNE_TO_FIRE = ReflectionHelper.findField(Entity.class, "isImmuneToFire", "isImmuneToFire");

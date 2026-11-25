@@ -37,8 +37,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class GuiFluidSelection extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
    private final ICallback<FluidStack> callback;

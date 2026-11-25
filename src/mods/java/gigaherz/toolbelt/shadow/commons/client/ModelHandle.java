@@ -8,12 +8,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
@@ -186,7 +186,7 @@ public class ModelHandle {
 
    private static void renderModel(IBakedModel model, VertexFormat fmt) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder worldrenderer = tessellator.getBuffer();
+      WorldRenderer worldrenderer = tessellator.getBuffer();
       worldrenderer.begin(7, fmt);
 
       for(BakedQuad bakedquad : model.getQuads((IBlockState)null, (EnumFacing)null, 0L)) {
@@ -198,7 +198,7 @@ public class ModelHandle {
 
    private static void renderModel(IBakedModel model, VertexFormat fmt, int color) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder worldrenderer = tessellator.getBuffer();
+      WorldRenderer worldrenderer = tessellator.getBuffer();
       worldrenderer.begin(7, fmt);
 
       for(BakedQuad bakedquad : model.getQuads((IBlockState)null, (EnumFacing)null, 0L)) {

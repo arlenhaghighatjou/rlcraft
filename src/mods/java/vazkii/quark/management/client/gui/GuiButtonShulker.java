@@ -4,7 +4,7 @@ import java.awt.Color;
 import net.minecraft.block.BlockShulkerBox;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiShulkerBox;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemDye;
 import net.minecraft.tileentity.TileEntity;

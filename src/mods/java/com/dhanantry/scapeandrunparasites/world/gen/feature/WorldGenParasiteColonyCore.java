@@ -4,7 +4,7 @@ import com.dhanantry.scapeandrunparasites.block.BlockColonyCore;
 import com.dhanantry.scapeandrunparasites.block.BlockParasiteRubbleDense;
 import com.dhanantry.scapeandrunparasites.block.BlockParasiteStain;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -13,7 +13,7 @@ public class WorldGenParasiteColonyCore extends WorldGenParasiteGenAbstract {
       super(notify);
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int core = 1;
       switch(core) {
       case 1:
@@ -118,7 +118,7 @@ public class WorldGenParasiteColonyCore extends WorldGenParasiteGenAbstract {
       }
    }
 
-   private BlockPos placeColumn(World worldIn, BlockPos pos, int in, Random rand, double extraChance) {
+   private BlockPos placeColumn(World worldIn, BlockPos pos, int in, EaglercraftRandom rand, double extraChance) {
       int current = pos.getY();
       int atm = current;
       int times = 0;

@@ -4,7 +4,7 @@ import com.github.alexthe666.iceandfire.entity.MyrmexHive;
 import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
@@ -142,7 +142,7 @@ public class MyrmexWorldData extends WorldSavedData {
       get(world).hiveList.add(hive);
    }
 
-   public MyrmexHive getHiveFromUUID(UUID id) {
+   public MyrmexHive getHiveFromUUID(EaglercraftUUID id) {
       for(MyrmexHive hive : this.hiveList) {
          if (hive.hiveUUID != null && hive.hiveUUID.equals(id)) {
             return hive;

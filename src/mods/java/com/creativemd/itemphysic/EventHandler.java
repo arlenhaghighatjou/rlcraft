@@ -8,12 +8,12 @@ import com.creativemd.itemphysic.physics.ServerPhysic;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.util.ITooltipFlag.TooltipFlags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -53,7 +53,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EventHandler {
    public static int Droppower = 1;
    public static List<EntityPlayer> toCancel = new ArrayList();
-   private final Random avRandomizer = new Random();
+   private final EaglercraftRandom avRandomizer = new EaglercraftRandom();
    @SideOnly(Side.CLIENT)
    public static int power;
    @SideOnly(Side.CLIENT)

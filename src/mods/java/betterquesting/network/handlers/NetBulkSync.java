@@ -12,7 +12,7 @@ import betterquesting.questing.party.PartyInvitations;
 import betterquesting.questing.party.PartyManager;
 import betterquesting.storage.NameCache;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -53,11 +53,11 @@ public class NetBulkSync {
 
    public static void sendSync(@Nonnull EntityPlayerMP player) {
       boolean nameChanged = NameCache.INSTANCE.updateName(player);
-      UUID playerID = QuestingAPI.getQuestingUUID(player);
+      EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(player);
       NetSettingSync.sendSync(player);
       NetQuestSync.sendSync(player, (int[])null, true, true);
       NetChapterSync.sendSync(player, (int[])null);
-      NetLifeSync.sendSync(new EntityPlayerMP[]{player}, new UUID[]{playerID});
+      NetLifeSync.sendSync(new EntityPlayerMP[]{player}, new EaglercraftUUID[]{playerID});
       DBEntry<IParty> party = PartyManager.INSTANCE.getParty(playerID);
       List<Entry<Integer, Long>> invites = PartyInvitations.INSTANCE.getPartyInvites(playerID);
       int partyCount = invites.size() + (party == null ? 0 : 1);
@@ -78,7 +78,7 @@ public class NetBulkSync {
       if (party != null) {
          NetNameSync.quickSync(nameChanged ? null : player, party.getID());
       } else {
-         NetNameSync.sendNames(new EntityPlayerMP[]{player}, new UUID[]{playerID}, (String[])null);
+         NetNameSync.sendNames(new EntityPlayerMP[]{player}, new EaglercraftUUID[]{playerID}, (String[])null);
       }
 
       NetInviteSync.sendSync(player);

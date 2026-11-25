@@ -1,7 +1,7 @@
 package rustic.common.blocks.crops;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
@@ -62,7 +62,7 @@ public abstract class BlockHerbBase extends BlockBush implements IGrowable, IPla
       return CROPS_AABB[((Integer)state.getValue(this.getAgeProperty())).intValue()];
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       super.updateTick(worldIn, pos, state, rand);
       if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
          int i = this.getAge(state);
@@ -84,7 +84,7 @@ public abstract class BlockHerbBase extends BlockBush implements IGrowable, IPla
    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
       List<ItemStack> ret = super.getDrops(world, pos, state, fortune);
       int age = this.getAge(state);
-      Random rand = world instanceof World ? ((World)world).rand : new Random();
+      EaglercraftRandom rand = world instanceof World ? ((World)world).rand : new EaglercraftRandom();
       if (age >= this.getMaxAge()) {
          int k = 2 + fortune;
 
@@ -124,11 +124,11 @@ public abstract class BlockHerbBase extends BlockBush implements IGrowable, IPla
       return !this.isMaxAge(state);
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return true;
    }
 
-   public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       int i = this.getAge(state) + this.getBonemealAgeIncrease(worldIn);
       int j = this.getMaxAge();
       if (i > j) {
@@ -163,7 +163,7 @@ public abstract class BlockHerbBase extends BlockBush implements IGrowable, IPla
       return new ItemStack(this.getHerb());
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return this.getHerb();
    }
 

@@ -1,15 +1,15 @@
 package com.creativemd.creativecore.common.packet;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class CreativeMessageHandler implements IMessage {
    public boolean isLast = true;
-   public UUID uuid;
+   public EaglercraftUUID uuid;
    public CreativeCorePacket packet = null;
    public CreativeMessageHandler.MessageType type;
    public EntityPlayer player;
@@ -43,7 +43,7 @@ public class CreativeMessageHandler implements IMessage {
          }
       } else {
          this.amount = buf.readInt();
-         this.uuid = UUID.fromString(CreativeCorePacket.readString(buf));
+         this.uuid = EaglercraftUUID.fromString(CreativeCorePacket.readString(buf));
          int length = buf.readInt();
          this.content = ByteBufAllocator.DEFAULT.directBuffer();
          byte[] data = new byte[length];
@@ -67,7 +67,7 @@ public class CreativeMessageHandler implements IMessage {
          buf.writeBytes(this.content);
       } else {
          this.amount = (int)Math.ceil((double)this.content.writerIndex() / (double)packetSize);
-         this.uuid = UUID.randomUUID();
+         this.uuid = EaglercraftUUID.randomUUID();
          int id = CreativeCorePacket.getId(this.packet);
 
          for(int i = 0; i < this.amount; ++i) {

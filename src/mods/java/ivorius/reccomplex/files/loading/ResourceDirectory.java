@@ -1,6 +1,6 @@
 package ivorius.reccomplex.files.loading;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import ivorius.reccomplex.RecurrentComplex;
 import ivorius.reccomplex.files.RCFiles;
 import java.io.File;

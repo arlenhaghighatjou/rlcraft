@@ -6,7 +6,7 @@ import com.yungnickyoung.minecraft.bettermineshafts.world.generator.MineshaftVar
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.pieces.MineshaftPiece;
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.pieces.VerticalEntrance;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -66,7 +66,7 @@ public class MapGenBetterMineshaft extends MapGenMineshaft {
       public Start() {
       }
 
-      public Start(World world, Random random, int chunkX, int chunkZ, MineshaftVariantSettings settings) {
+      public Start(World world, EaglercraftRandom random, int chunkX, int chunkZ, MineshaftVariantSettings settings) {
          super(chunkX, chunkZ);
          EnumFacing direction = EnumFacing.NORTH;
          int r = random.nextInt(4);

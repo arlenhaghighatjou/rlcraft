@@ -1,15 +1,15 @@
 package rustic.client.renderer;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -44,7 +44,7 @@ public class CrushingTubRenderer extends TileEntitySpecialRenderer<TileEntityCru
       if (itemStackHandler.getSlots() > 0 && !itemStackHandler.getStackInSlot(0).isEmpty() && te.getWorld() != null) {
          ItemStack stack = itemStackHandler.getStackInSlot(0);
          int itemCount = (int)Math.ceil((double)stack.getCount() / 8.0D);
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          rand.setSeed(te.getWorld().getSeed());
 
          for(int i = 0; i < itemCount; ++i) {
@@ -73,7 +73,7 @@ public class CrushingTubRenderer extends TileEntitySpecialRenderer<TileEntityCru
          this.green = c >> 8 & 255;
          this.red = c >> 16 & 255;
          this.a = c >> 24 & 255;
-         TextureAtlasSprite sprite = (TextureAtlasSprite)FluidClientUtil.stillTextures.get(fluid);
+         EaglerTextureAtlasSprite sprite = (EaglerTextureAtlasSprite)FluidClientUtil.stillTextures.get(fluid);
          if (sprite == null) {
             return;
          }
@@ -95,7 +95,7 @@ public class CrushingTubRenderer extends TileEntitySpecialRenderer<TileEntityCru
          GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
          Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
          Tessellator tess = Tessellator.getInstance();
-         BufferBuilder buffer = tess.getBuffer();
+         WorldRenderer buffer = tess.getBuffer();
          buffer.begin(7, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
          buffer.pos(x + 0.0625D, y + 0.0625D + 0.5D * (double)((float)amount / (float)capacity), z + 0.0625D).tex(this.minU, this.minV).lightmap(this.lightx, this.lighty).color(this.red, this.green, this.blue, this.a).endVertex();
          buffer.pos(x + 0.9375D, y + 0.0625D + 0.5D * (double)((float)amount / (float)capacity), z + 0.0625D).tex(this.maxU, this.minV).lightmap(this.lightx, this.lighty).color(this.red, this.green, this.blue, this.a).endVertex();

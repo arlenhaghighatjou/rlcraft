@@ -60,7 +60,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -94,7 +94,7 @@ import net.minecraftforge.event.RegistryEvent.NewRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.IForgeRegistryEntry.Impl;
-import org.apache.logging.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 
 public class Species extends Impl<Species> {
    public static final Species NULLSPECIES = new Species() {
@@ -117,7 +117,7 @@ public class Species extends Impl<Species> {
          return false;
       }
 
-      public boolean generate(World world, BlockPos pos, Biome biome, Random random, int radius, SafeChunkBounds safeBounds) {
+      public boolean generate(World world, BlockPos pos, Biome biome, EaglercraftRandom random, int radius, SafeChunkBounds safeBounds) {
          return false;
       }
 
@@ -141,7 +141,7 @@ public class Species extends Impl<Species> {
          return this;
       }
 
-      public boolean update(World world, BlockRooty rootyDirt, BlockPos rootPos, int soilLife, ITreePart treeBase, BlockPos treePos, Random random, boolean rapid) {
+      public boolean update(World world, BlockRooty rootyDirt, BlockPos rootPos, int soilLife, ITreePart treeBase, BlockPos treePos, EaglercraftRandom random, boolean rapid) {
          return false;
       }
 
@@ -425,7 +425,7 @@ public class Species extends Impl<Species> {
       return this.dropCreatorStorage.getDropCreators();
    }
 
-   public List<ItemStack> getTreeHarvestDrops(World world, BlockPos leafPos, List<ItemStack> dropList, Random random) {
+   public List<ItemStack> getTreeHarvestDrops(World world, BlockPos leafPos, List<ItemStack> dropList, EaglercraftRandom random) {
       dropList = TreeRegistry.globalDropCreatorStorage.getHarvestDrop(world, this, leafPos, random, dropList, 0, 0);
       return this.dropCreatorStorage.getHarvestDrop(world, this, leafPos, random, dropList, 0, 0);
    }
@@ -436,7 +436,7 @@ public class Species extends Impl<Species> {
    }
 
    public List<ItemStack> getLeavesDrops(IBlockAccess access, BlockPos breakPos, List<ItemStack> dropList, int fortune) {
-      Random random = access instanceof World ? ((World)access).rand : new Random();
+      EaglercraftRandom random = access instanceof World ? ((World)access).rand : new EaglercraftRandom();
       dropList = TreeRegistry.globalDropCreatorStorage.getLeavesDrop(access, this, breakPos, random, dropList, fortune);
       return this.dropCreatorStorage.getLeavesDrop(access, this, breakPos, random, dropList, fortune);
    }
@@ -495,7 +495,7 @@ public class Species extends Impl<Species> {
       return this.canBoneMeal();
    }
 
-   public boolean canUseBoneMealNow(World world, Random rand, BlockPos pos) {
+   public boolean canUseBoneMealNow(World world, EaglercraftRandom rand, BlockPos pos) {
       return this.canBoneMeal();
    }
 
@@ -596,7 +596,7 @@ public class Species extends Impl<Species> {
       return this.isAcceptableSoil(world, pos, soilBlockState);
    }
 
-   public boolean update(World world, BlockRooty rootyDirt, BlockPos rootPos, int soilLife, ITreePart treeBase, BlockPos treePos, Random random, boolean natural) {
+   public boolean update(World world, BlockRooty rootyDirt, BlockPos rootPos, int soilLife, ITreePart treeBase, BlockPos treePos, EaglercraftRandom random, boolean natural) {
       List<BlockPos> ends = this.getEnds(world, treePos, treeBase);
       if (this.handleRot(world, ends, rootPos, treePos, soilLife, SafeChunkBounds.ANY)) {
          return false;
@@ -642,7 +642,7 @@ public class Species extends Impl<Species> {
       return ends.isEmpty() && !TreeHelper.isBranch(world.getBlockState(treePos));
    }
 
-   public boolean rot(World world, BlockPos pos, int neighborCount, int radius, Random random, boolean rapid) {
+   public boolean rot(World world, BlockPos pos, int neighborCount, int radius, EaglercraftRandom random, boolean rapid) {
       if (radius <= 1) {
          BlockDynamicLeaves leaves = (BlockDynamicLeaves)this.getLeavesProperties().getDynamicLeavesState().getBlock();
 
@@ -665,11 +665,11 @@ public class Species extends Impl<Species> {
       }
    }
 
-   public float rotChance(World world, BlockPos pos, Random rand, int radius) {
+   public float rotChance(World world, BlockPos pos, EaglercraftRandom rand, int radius) {
       return 0.3F + (float)(8 - radius) * 0.1F;
    }
 
-   public boolean grow(World world, BlockRooty rootyDirt, BlockPos rootPos, int soilLife, ITreePart treeBase, BlockPos treePos, Random random, boolean natural) {
+   public boolean grow(World world, BlockRooty rootyDirt, BlockPos rootPos, int soilLife, ITreePart treeBase, BlockPos treePos, EaglercraftRandom random, boolean natural) {
       float growthRate = this.getGrowthRate(world, rootPos) * ModConfigs.treeGrowthMultiplier * (float)ModConfigs.treeGrowthFolding;
 
       while(true) {
@@ -748,7 +748,7 @@ public class Species extends Impl<Species> {
       return true;
    }
 
-   public boolean handleDisease(World world, ITreePart baseTreePart, BlockPos treePos, Random random, int soilLife) {
+   public boolean handleDisease(World world, ITreePart baseTreePart, BlockPos treePos, EaglercraftRandom random, int soilLife) {
       if (soilLife == 0 && ModConfigs.diseaseChance > random.nextFloat()) {
          baseTreePart.analyse(world.getBlockState(treePos), world, treePos, EnumFacing.DOWN, new MapSignal(new INodeInspector[]{new NodeDisease(this)}));
          return true;
@@ -946,7 +946,7 @@ public class Species extends Impl<Species> {
       return ModBlocks.blockBonsaiPot;
    }
 
-   public boolean generate(World world, BlockPos rootPos, Biome biome, Random random, int radius, SafeChunkBounds safeBounds) {
+   public boolean generate(World world, BlockPos rootPos, Biome biome, EaglercraftRandom random, int radius, SafeChunkBounds safeBounds) {
       if (this.genFeatureOverride != null) {
          return this.genFeatureOverride.generate(world, rootPos, this, biome, random, radius, safeBounds);
       } else {

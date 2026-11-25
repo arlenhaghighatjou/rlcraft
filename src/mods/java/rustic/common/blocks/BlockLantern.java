@@ -1,6 +1,6 @@
 package rustic.common.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -68,7 +68,7 @@ public class BlockLantern extends BlockBase {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       EnumFacing enumfacing = (EnumFacing)stateIn.getValue(FACING);
       double d0 = (double)pos.getX() + 0.5D;
       double d1 = (double)pos.getY() + 0.33D;

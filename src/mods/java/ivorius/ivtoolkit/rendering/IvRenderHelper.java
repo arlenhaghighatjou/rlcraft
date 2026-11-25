@@ -1,12 +1,12 @@
 package ivorius.ivtoolkit.rendering;
 
 import ivorius.ivtoolkit.tools.BufferBuilderAccessor;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
@@ -20,7 +20,7 @@ public class IvRenderHelper {
    }
 
    public static void drawRectFullScreen(int screenWidth, int screenHeight) {
-      BufferBuilder renderer = Tessellator.getInstance().getBuffer();
+      WorldRenderer renderer = Tessellator.getInstance().getBuffer();
       renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
       renderer.pos(0.0D, 0.0D, 0.0D).tex(0.0D, 1.0D).endVertex();
       renderer.pos(0.0D, (double)screenHeight, 0.0D).tex(0.0D, 0.0D).endVertex();
@@ -34,9 +34,9 @@ public class IvRenderHelper {
       float r = (float)(color >> 16 & 255) / 255.0F;
       float g = (float)(color >> 8 & 255) / 255.0F;
       float b = (float)(color & 255) / 255.0F;
-      BufferBuilder renderer = Tessellator.getInstance().getBuffer();
+      WorldRenderer renderer = Tessellator.getInstance().getBuffer();
       float usedTicks = ticks / 200.0F;
-      Random random = new Random(432L);
+      EaglercraftRandom random = new EaglercraftRandom(432L);
       GlStateManager.disableTexture2D();
       GlStateManager.shadeModel(7425);
       GlStateManager.enableBlend();
@@ -84,7 +84,7 @@ public class IvRenderHelper {
       GL11.glEnable(3008);
    }
 
-   public static void renderParticle(BufferBuilder renderer, float time, float scale) {
+   public static void renderParticle(WorldRenderer renderer, float time, float scale) {
       float f1 = ActiveRenderInfo.getRotationX();
       float f2 = ActiveRenderInfo.getRotationZ();
       float f3 = ActiveRenderInfo.getRotationYZ();
@@ -105,7 +105,7 @@ public class IvRenderHelper {
       Tessellator.getInstance().draw();
    }
 
-   public static void drawNormalCube(BufferBuilder tessellator, float size, float in, boolean lined) {
+   public static void drawNormalCube(WorldRenderer tessellator, float size, float in, boolean lined) {
       if (lined) {
          tessellator.begin(3, DefaultVertexFormats.POSITION);
       } else {
@@ -179,7 +179,7 @@ public class IvRenderHelper {
       Tessellator.getInstance().draw();
    }
 
-   public static void drawCuboid(BufferBuilder tessellator, float sizeX, float sizeY, float sizeZ, float in, boolean lined) {
+   public static void drawCuboid(WorldRenderer tessellator, float sizeX, float sizeY, float sizeZ, float in, boolean lined) {
       if (lined) {
          tessellator.begin(3, DefaultVertexFormats.POSITION);
       } else {
@@ -253,7 +253,7 @@ public class IvRenderHelper {
       Tessellator.getInstance().draw();
    }
 
-   public static void renderCuboid(BufferBuilder tessellator, float sizeX, float sizeY, float sizeZ, float in) {
+   public static void renderCuboid(WorldRenderer tessellator, float sizeX, float sizeY, float sizeZ, float in) {
       tessellator.pos((double)(-sizeX * in), (double)(-sizeY * in), (double)(-sizeZ)).endVertex();
       tessellator.pos((double)(-sizeX * in), (double)(sizeY * in), (double)(-sizeZ)).endVertex();
       tessellator.pos((double)(sizeX * in), (double)(sizeY * in), (double)(-sizeZ)).endVertex();
@@ -280,7 +280,7 @@ public class IvRenderHelper {
       tessellator.pos((double)(-sizeX * in), (double)(-sizeY), (double)(sizeZ * in)).endVertex();
    }
 
-   public static void drawModelCuboid(BufferBuilder renderer, float x, float y, float z, float sizeX, float sizeY, float sizeZ) {
+   public static void drawModelCuboid(WorldRenderer renderer, float x, float y, float z, float sizeX, float sizeY, float sizeZ) {
       float tM = 0.0625F;
       float transX = (x + sizeX * 0.5F) * tM;
       float transY = (y + sizeY * 0.5F) * tM - 0.5F;

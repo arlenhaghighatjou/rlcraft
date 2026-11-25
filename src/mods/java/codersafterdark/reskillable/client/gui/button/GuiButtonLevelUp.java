@@ -5,7 +5,7 @@ import codersafterdark.reskillable.client.gui.GuiSkillInfo;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GuiButtonLevelUp extends GuiButton {
    int cost = Integer.MAX_VALUE;

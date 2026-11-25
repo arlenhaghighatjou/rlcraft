@@ -5,8 +5,8 @@ import com.teammetallurgy.aquaculture.items.ItemAdminFishingRod;
 import com.teammetallurgy.aquaculture.items.ItemAquacultureFishingRod;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -38,7 +38,7 @@ public class RenderCustomFishinghook extends Render<EntityCustomFishHook> {
          GlStateManager.scale(0.5F, 0.5F, 0.5F);
          this.bindEntityTexture(entity);
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder bufferBuilder = tessellator.getBuffer();
+         WorldRenderer bufferBuilder = tessellator.getBuffer();
          GlStateManager.rotate(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
          GlStateManager.rotate((float)(this.renderManager.options.thirdPersonView == 2 ? -1 : 1) * -this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
          if (this.renderOutlines) {

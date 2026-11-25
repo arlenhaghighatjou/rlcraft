@@ -19,12 +19,12 @@ import mods.octarinecore.common.Double3;
 import mods.octarinecore.common.Rotation;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import org.jetbrains.annotations.NotNull;
 
 @SideOnly(Side.CLIENT)
@@ -33,7 +33,7 @@ import org.jetbrains.annotations.NotNull;
    bv = {1, 0, 3},
    k = 1,
    d1 = {"\u0000B\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0010\u0002\n\u0000\n\u0002\u0010\u000b\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\b\u0007\u0018\u00002\u00020\u0001B\u0005¢\u0006\u0002\u0010\u0002J\b\u0010\u000b\u001a\u00020\fH\u0016J\u0010\u0010\r\u001a\u00020\u000e2\u0006\u0010\u000f\u001a\u00020\u0010H\u0016J(\u0010\u0011\u001a\u00020\u000e2\u0006\u0010\u000f\u001a\u00020\u00102\u0006\u0010\u0012\u001a\u00020\u00132\u0006\u0010\u0014\u001a\u00020\u00152\u0006\u0010\u0016\u001a\u00020\u0017H\u0016R\u0011\u0010\u0003\u001a\u00020\u0004¢\u0006\b\n\u0000\u001a\u0004\b\u0005\u0010\u0006R\u0011\u0010\u0007\u001a\u00020\b¢\u0006\b\n\u0000\u001a\u0004\b\t\u0010\n¨\u0006\u0018"},
-   d2 = {"Lmods/betterfoliage/client/render/RenderMycelium;", "Lmods/octarinecore/client/render/AbstractBlockRenderingHandler;", "()V", "myceliumIcon", "Lmods/octarinecore/client/resource/IconSet;", "getMyceliumIcon", "()Lmods/octarinecore/client/resource/IconSet;", "myceliumModel", "Lmods/octarinecore/client/resource/ModelSet;", "getMyceliumModel", "()Lmods/octarinecore/client/resource/ModelSet;", "afterPreStitch", "", "isEligible", "", "ctx", "Lmods/octarinecore/client/render/BlockContext;", "render", "dispatcher", "Lnet/minecraft/client/renderer/BlockRendererDispatcher;", "renderer", "Lnet/minecraft/client/renderer/BufferBuilder;", "layer", "Lnet/minecraft/util/BlockRenderLayer;", "BetterFoliage-MC1.12"}
+   d2 = {"Lmods/betterfoliage/client/render/RenderMycelium;", "Lmods/octarinecore/client/render/AbstractBlockRenderingHandler;", "()V", "myceliumIcon", "Lmods/octarinecore/client/resource/IconSet;", "getMyceliumIcon", "()Lmods/octarinecore/client/resource/IconSet;", "myceliumModel", "Lmods/octarinecore/client/resource/ModelSet;", "getMyceliumModel", "()Lmods/octarinecore/client/resource/ModelSet;", "afterPreStitch", "", "isEligible", "", "ctx", "Lmods/octarinecore/client/render/BlockContext;", "render", "dispatcher", "Lnet/minecraft/client/renderer/BlockRendererDispatcher;", "renderer", "Lnet/minecraft/client/renderer/WorldRenderer;", "layer", "Lnet/minecraft/util/BlockRenderLayer;", "BetterFoliage-MC1.12"}
 )
 public final class RenderMycelium extends AbstractBlockRenderingHandler {
    @NotNull
@@ -63,7 +63,7 @@ public final class RenderMycelium extends AbstractBlockRenderingHandler {
       return Config.INSTANCE.getEnabled() && Config.shortGrass.INSTANCE.getMyceliumEnabled() ? Config.blocks.INSTANCE.getMycelium().matchesClass(ctx.getBlock()) : false;
    }
 
-   public boolean render(@NotNull BlockContext ctx, @NotNull BlockRendererDispatcher dispatcher, @NotNull BufferBuilder renderer, @NotNull BlockRenderLayer layer) {
+   public boolean render(@NotNull BlockContext ctx, @NotNull BlockRendererDispatcher dispatcher, @NotNull WorldRenderer renderer, @NotNull BlockRenderLayer layer) {
       Intrinsics.checkParameterIsNotNull(ctx, "ctx");
       Intrinsics.checkParameterIsNotNull(dispatcher, "dispatcher");
       Intrinsics.checkParameterIsNotNull(renderer, "renderer");
@@ -84,12 +84,12 @@ public final class RenderMycelium extends AbstractBlockRenderingHandler {
                return true;
             } else {
                final Integer[] rand = ctx.semiRandomArray(2);
-               ModelRenderer.render$default(RendererHolder.getModelRenderer(), renderer, this.myceliumModel.get(rand[0].intValue()), Rotation.Companion.getIdentity(), ctx.getBlockCenter().plus(isSnowed ? Utils.getSnowOffset() : Double3.Companion.getZero()), false, (Function2)null, new Function3<ShadingContext, Integer, Quad, TextureAtlasSprite>() {
+               ModelRenderer.render$default(RendererHolder.getModelRenderer(), renderer, this.myceliumModel.get(rand[0].intValue()), Rotation.Companion.getIdentity(), ctx.getBlockCenter().plus(isSnowed ? Utils.getSnowOffset() : Double3.Companion.getZero()), false, (Function2)null, new Function3<ShadingContext, Integer, Quad, EaglerTextureAtlasSprite>() {
                   @NotNull
-                  public final TextureAtlasSprite invoke(@NotNull ShadingContext $noName_0, int qi, @NotNull Quad $noName_2) {
+                  public final EaglerTextureAtlasSprite invoke(@NotNull ShadingContext $noName_0, int qi, @NotNull Quad $noName_2) {
                      Intrinsics.checkParameterIsNotNull($noName_0, "<anonymous parameter 0>");
                      Intrinsics.checkParameterIsNotNull($noName_2, "<anonymous parameter 2>");
-                     TextureAtlasSprite var10000 = RenderMycelium.this.getMyceliumIcon().get(rand[qi & 1].intValue());
+                     EaglerTextureAtlasSprite var10000 = RenderMycelium.this.getMyceliumIcon().get(rand[qi & 1].intValue());
                      if (var10000 == null) {
                         Intrinsics.throwNpe();
                      }

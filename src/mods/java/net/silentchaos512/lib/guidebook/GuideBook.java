@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -91,7 +91,7 @@ public abstract class GuideBook {
    public abstract String[] getQuotes();
 
    @Nonnull
-   public String selectQuote(Random rand) {
+   public String selectQuote(EaglercraftRandom rand) {
       String[] quotes = this.getQuotes();
       return quotes.length > 0 ? quotes[rand.nextInt(quotes.length)] : "";
    }

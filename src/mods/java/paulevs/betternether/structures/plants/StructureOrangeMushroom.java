@@ -1,6 +1,6 @@
 package paulevs.betternether.structures.plants;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +14,7 @@ public class StructureOrangeMushroom implements IStructure {
    public StructureOrangeMushroom() {
    }
 
-   public void generate(World world, BlockPos pos, Random random) {
+   public void generate(World world, BlockPos pos, EaglercraftRandom random) {
       Block under = world.getBlockState(pos).getBlock();
       if (under instanceof BlockNetherMycelium) {
          for(int i = 0; i < 10; ++i) {

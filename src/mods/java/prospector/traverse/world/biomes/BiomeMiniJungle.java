@@ -1,6 +1,6 @@
 package prospector.traverse.world.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockTallGrass.EnumType;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityOcelot;
@@ -43,15 +43,15 @@ public class BiomeMiniJungle extends Biome implements WorldGenConstants {
       return TraverseConfig.disableCustomSkies ? super.getSkyColorByTemp(currentTemperature) : -3997717;
    }
 
-   public WorldGenerator getRandomWorldGenForGrass(Random rand) {
+   public WorldGenerator getRandomWorldGenForGrass(EaglercraftRandom rand) {
       return rand.nextInt(4) == 0 ? new WorldGenTallGrass(EnumType.FERN) : new WorldGenTallGrass(EnumType.GRASS);
    }
 
-   public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+   public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand) {
       return (WorldGenAbstractTree)(rand.nextInt(10) == 0 ? BIG_TREE_FEATURE : new WorldGenTrees(false, 2 + rand.nextInt(3), JUNGLE_LOG, JUNGLE_LEAVES, true));
    }
 
-   public void decorate(World worldIn, Random rand, BlockPos pos) {
+   public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos) {
       super.decorate(worldIn, rand, pos);
       int i = rand.nextInt(16) + 8;
       int j = rand.nextInt(16) + 8;

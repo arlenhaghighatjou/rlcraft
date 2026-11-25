@@ -6,9 +6,9 @@ import javax.vecmath.Vector3d;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.TextureOffset;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -238,7 +238,7 @@ public class AdvancedModelRenderer extends ModelRenderer {
    private void compileDisplayList(float scale) {
       this.displayList = GLAllocation.generateDisplayLists(1);
       GlStateManager.glNewList(this.displayList, 4864);
-      BufferBuilder buffer = Tessellator.getInstance().getBuffer();
+      WorldRenderer buffer = Tessellator.getInstance().getBuffer();
 
       for(ModelBox box : this.cubeList) {
          box.render(buffer, scale);

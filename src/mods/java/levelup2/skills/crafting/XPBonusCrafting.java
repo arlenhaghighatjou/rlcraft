@@ -2,7 +2,7 @@ package levelup2.skills.crafting;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import levelup2.config.LevelUpConfig;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 public class XPBonusCrafting extends BaseSkill {
-   private Random rand = new Random();
+   private EaglercraftRandom rand = new EaglercraftRandom();
 
    public XPBonusCrafting() {
    }

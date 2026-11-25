@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.lib.scanner;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
@@ -32,7 +32,7 @@ public abstract class RandomScanner extends Scanner {
    }
 
    @Nonnull
-   protected BlockPos nextPos(@Nonnull MutableBlockPos workingPos, @Nonnull Random rand) {
+   protected BlockPos nextPos(@Nonnull MutableBlockPos workingPos, @Nonnull EaglercraftRandom rand) {
       return workingPos.setPos(this.playerX + this.randomRange(this.xRange), this.playerY + this.randomRange(this.yRange), this.playerZ + this.randomRange(this.zRange));
    }
 }

@@ -1,6 +1,6 @@
 package svenhjol.charm.world.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockEndPortal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -99,7 +99,7 @@ public class BlockRunePortal extends BlockEndPortal implements IMesonBlock {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState state, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState state, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       float f = rand.nextFloat();
       EnumParticleTypes particle;
       if (f < 0.5F) {

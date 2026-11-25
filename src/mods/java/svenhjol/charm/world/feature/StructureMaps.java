@@ -3,7 +3,7 @@ package svenhjol.charm.world.feature;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
 import net.minecraft.init.Items;
@@ -153,7 +153,7 @@ public class StructureMaps extends Feature {
       public StructureMapTrade() {
       }
 
-      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
          if (!StructureMaps.structures.isEmpty()) {
             StructureMaps.Structure structure = (StructureMaps.Structure)StructureMaps.structures.get(random.nextInt(StructureMaps.structures.size()));
             ItemStack map = StructureMaps.createMap(merchant.getWorld(), merchant.getPos(), structure);

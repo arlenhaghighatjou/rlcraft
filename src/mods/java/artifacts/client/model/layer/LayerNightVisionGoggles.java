@@ -6,7 +6,7 @@ import artifacts.common.util.RenderHelper;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import javax.annotation.Nonnull;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;

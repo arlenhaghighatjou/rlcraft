@@ -1,6 +1,6 @@
 package me.ichun.mods.ichunutil.common.packet;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import me.ichun.mods.ichunutil.common.core.network.AbstractPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;

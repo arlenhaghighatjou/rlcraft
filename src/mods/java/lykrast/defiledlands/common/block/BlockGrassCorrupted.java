@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -32,11 +32,11 @@ public class BlockGrassCorrupted extends BlockCorrupted {
       return state.withProperty(SNOWY, Boolean.valueOf(block == Blocks.SNOW || block == Blocks.SNOW_LAYER));
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return ModBlocks.dirtDefiled.getItemDropped(ModBlocks.dirtDefiled.getDefaultState(), rand, fortune);
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       super.updateTick(worldIn, pos, state, rand);
       if (!worldIn.isRemote) {
          if (worldIn.getLightFromNeighbors(pos.up()) < 4 && worldIn.getBlockState(pos.up()).getLightOpacity(worldIn, pos.up()) > 2) {
@@ -60,7 +60,7 @@ public class BlockGrassCorrupted extends BlockCorrupted {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       super.randomDisplayTick(stateIn, worldIn, pos, rand);
       if (rand.nextInt(10) == 0) {
          worldIn.spawnParticle(EnumParticleTypes.TOWN_AURA, (double)((float)pos.getX() + rand.nextFloat()), (double)((float)pos.getY() + 1.1F), (double)((float)pos.getZ() + rand.nextFloat()), 0.0D, 0.0D, 0.0D, new int[0]);

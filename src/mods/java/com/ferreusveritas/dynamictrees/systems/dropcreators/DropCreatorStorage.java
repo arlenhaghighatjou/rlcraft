@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -49,7 +49,7 @@ public class DropCreatorStorage implements IDropCreatorStorage {
       return dropList;
    }
 
-   public List<ItemStack> getHarvestDrop(World world, Species species, BlockPos leafPos, Random random, List<ItemStack> dropList, int soilLife, int fortune) {
+   public List<ItemStack> getHarvestDrop(World world, Species species, BlockPos leafPos, EaglercraftRandom random, List<ItemStack> dropList, int soilLife, int fortune) {
       dropList = this.makeDropListIfNull(dropList);
 
       for(IDropCreator dropCreator : this.dropCreators.values()) {
@@ -59,7 +59,7 @@ public class DropCreatorStorage implements IDropCreatorStorage {
       return dropList;
    }
 
-   public List<ItemStack> getVoluntaryDrop(World world, Species species, BlockPos rootPos, Random random, List<ItemStack> dropList, int soilLife) {
+   public List<ItemStack> getVoluntaryDrop(World world, Species species, BlockPos rootPos, EaglercraftRandom random, List<ItemStack> dropList, int soilLife) {
       dropList = this.makeDropListIfNull(dropList);
 
       for(IDropCreator dropCreator : this.dropCreators.values()) {
@@ -69,7 +69,7 @@ public class DropCreatorStorage implements IDropCreatorStorage {
       return dropList;
    }
 
-   public List<ItemStack> getLeavesDrop(IBlockAccess access, Species species, BlockPos breakPos, Random random, List<ItemStack> dropList, int fortune) {
+   public List<ItemStack> getLeavesDrop(IBlockAccess access, Species species, BlockPos breakPos, EaglercraftRandom random, List<ItemStack> dropList, int fortune) {
       dropList = this.makeDropListIfNull(dropList);
 
       for(IDropCreator dropCreator : this.dropCreators.values()) {
@@ -79,7 +79,7 @@ public class DropCreatorStorage implements IDropCreatorStorage {
       return dropList;
    }
 
-   public List<ItemStack> getLogsDrop(World world, Species species, BlockPos rootPos, Random random, List<ItemStack> dropList, float volume) {
+   public List<ItemStack> getLogsDrop(World world, Species species, BlockPos rootPos, EaglercraftRandom random, List<ItemStack> dropList, float volume) {
       dropList = this.makeDropListIfNull(dropList);
 
       for(IDropCreator dropCreator : this.dropCreators.values()) {

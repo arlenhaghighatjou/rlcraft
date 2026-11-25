@@ -1,7 +1,7 @@
 package jaredbgreat.dldungeons.themes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public interface Autoselecting {
-   Autoselectable select(Random var1);
+   Autoselectable select(EaglercraftRandom var1);
 }

@@ -1,6 +1,6 @@
 package vazkii.quark.tweaks.feature;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
@@ -10,14 +10,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import vazkii.quark.base.module.Feature;
 
 public class SheepArmor extends Feature {
-   public static AttributeModifier sheepArmor = new AttributeModifier(UUID.fromString("6e915cea-3f18-485d-a818-373fe4f75f7f"), "sheep_armor", 1.0D, 0);
+   public static AttributeModifier sheepArmor = new AttributeModifier(EaglercraftUUID.fromString("6e915cea-3f18-485d-a818-373fe4f75f7f"), "sheep_armor", 1.0D, 0);
 
    public SheepArmor() {
    }
 
    public void setupConfig() {
       double armorAmount = this.loadPropDouble("Sheep Armor Amount", "The amount of armor points to give to a sheep when it is not sheared.", 1.0D);
-      sheepArmor = new AttributeModifier(UUID.fromString("6e915cea-3f18-485d-a818-373fe4f75f7f"), "sheep_armor", armorAmount, 0);
+      sheepArmor = new AttributeModifier(EaglercraftUUID.fromString("6e915cea-3f18-485d-a818-373fe4f75f7f"), "sheep_armor", armorAmount, 0);
    }
 
    @SubscribeEvent

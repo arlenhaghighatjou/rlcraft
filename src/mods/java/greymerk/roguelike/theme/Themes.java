@@ -39,7 +39,7 @@ import greymerk.roguelike.theme.builtin.ThemeStone;
 import greymerk.roguelike.theme.builtin.ThemeTemple;
 import greymerk.roguelike.theme.builtin.ThemeTerracotta;
 import greymerk.roguelike.theme.builtin.ThemeTower;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum Themes {
    BLING(new ThemeBling()),
@@ -92,7 +92,7 @@ public enum Themes {
       return this.theme;
    }
 
-   public static Themes random(Random random) {
+   public static Themes random(EaglercraftRandom random) {
       Themes[] values = values();
       return values[random.nextInt(values.length)];
    }

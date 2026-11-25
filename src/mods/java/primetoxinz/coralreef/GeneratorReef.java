@@ -1,6 +1,6 @@
 package primetoxinz.coralreef;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +17,7 @@ import org.apache.commons.lang3.ArrayUtils;
 public class GeneratorReef implements IWorldGenerator {
    protected static final int OCTAVES = 2;
    protected static final double NOISE_SCALE = 0.03125D;
-   protected static final NoiseGeneratorOctaves CORAL_REEF_NOISE = new NoiseGeneratorOctaves(new Random(3364L), 2);
+   protected static final NoiseGeneratorOctaves CORAL_REEF_NOISE = new NoiseGeneratorOctaves(new EaglercraftRandom(3364L), 2);
    public static final int CHUNK_SIZE = 16;
    private WorldGenerator genReef = new WorldGenReef(CoralReef.REEF.getDefaultState().withProperty(BlockReef.TYPES, Integer.valueOf(0)));
    private WorldGenerator genReefRock = new WorldGenRock(CoralReef.REEF.getDefaultState().withProperty(BlockReef.TYPES, Integer.valueOf(1)));
@@ -26,7 +26,7 @@ public class GeneratorReef implements IWorldGenerator {
    public GeneratorReef() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (ArrayUtils.isEmpty(CoralReef.ConfigHandler.dimensions) || ArrayUtils.contains(CoralReef.ConfigHandler.dimensions, world.provider.getDimension())) {
          this.reef(world, random, chunkX, chunkZ);
          if (random.nextDouble() <= CoralReef.ConfigHandler.rock.chance) {
@@ -36,14 +36,14 @@ public class GeneratorReef implements IWorldGenerator {
 
    }
 
-   private void rock(World world, Random rand, int chunkX, int chunkZ) {
+   private void rock(World world, EaglercraftRandom rand, int chunkX, int chunkZ) {
       int x = chunkX * 16 + 8 + rand.nextInt(16);
       int z = chunkZ * 16 + 8 + rand.nextInt(16);
       BlockPos pos = getTop(world, x, z);
       this.genReefRock.generate(world, rand, pos.up());
    }
 
-   private boolean reefFromNoise(int x, int y, int z, Random rand) {
+   private boolean reefFromNoise(int x, int y, int z, EaglercraftRandom rand) {
       double d = this.noise[x * 16 + z] / 2.0D;
       int seaLevel = 64;
       double ybelow = (double)Math.max(0, seaLevel - y);
@@ -53,7 +53,7 @@ public class GeneratorReef implements IWorldGenerator {
       return d > 0.005D;
    }
 
-   private void reef(World world, Random rand, int chunkX, int chunkZ) {
+   private void reef(World world, EaglercraftRandom rand, int chunkX, int chunkZ) {
       this.noise = CORAL_REEF_NOISE.generateNoiseOctaves(this.noise, chunkX * 16, 0, chunkZ * 16, 16, 1, 16, 0.03125D, 1.0D, 0.03125D);
 
       for(int x = 0; x < 16; ++x) {

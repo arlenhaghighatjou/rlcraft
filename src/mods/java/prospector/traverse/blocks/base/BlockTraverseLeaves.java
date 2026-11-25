@@ -2,7 +2,7 @@ package prospector.traverse.blocks.base;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.properties.IProperty;
@@ -41,7 +41,7 @@ public class BlockTraverseLeaves extends BlockLeaves {
       ShootingStar.registerModel(new ModelCompound("traverse", this, "leaves", new IProperty[]{CHECK_DECAY, DECAYABLE}));
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return random.nextInt(this.saplingDropChance) == 0 ? 1 : 0;
    }
 
@@ -85,7 +85,7 @@ public class BlockTraverseLeaves extends BlockLeaves {
       return meta;
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return this.sapling;
    }
 

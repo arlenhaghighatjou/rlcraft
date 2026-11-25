@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -47,7 +47,7 @@ public class RCSaplingGenerator {
    public RCSaplingGenerator() {
    }
 
-   public static boolean maybeGrowSapling(WorldServer world, BlockPos pos, Random random) {
+   public static boolean maybeGrowSapling(WorldServer world, BlockPos pos, EaglercraftRandom random) {
       if (RCConfig.saplingTriggerChance > 0.0D && (RCConfig.saplingTriggerChance >= 1.0D || (double)random.nextFloat() >= RCConfig.saplingTriggerChance)) {
          Pair<Structure<?>, SaplingGeneration> pair = findRandomSapling(world, pos, random, true);
          if (pair == null) {
@@ -62,7 +62,7 @@ public class RCSaplingGenerator {
    }
 
    @Nullable
-   public static Pair<Structure<?>, SaplingGeneration> findRandomSapling(WorldServer world, BlockPos pos, Random random, boolean considerVanilla) {
+   public static Pair<Structure<?>, SaplingGeneration> findRandomSapling(WorldServer world, BlockPos pos, EaglercraftRandom random, boolean considerVanilla) {
       Environment baseEnv = Environment.inNature(world, new StructureBoundingBox(pos, pos));
       List<Pair<Structure<?>, SaplingGeneration>> applicable = (List)StructureRegistry.INSTANCE.getGenerationTypes(SaplingGeneration.class).stream().filter((pair1) -> {
          return ((SaplingGeneration)pair1.getRight()).generatesIn(baseEnv.withGeneration((GenerationType)pair1.getRight()));
@@ -97,7 +97,7 @@ public class RCSaplingGenerator {
       return pair;
    }
 
-   public static int complexity(WorldServer world, BlockPos pos, Random random, List<RCSaplingGenerator.Predictor> predictors) {
+   public static int complexity(WorldServer world, BlockPos pos, EaglercraftRandom random, List<RCSaplingGenerator.Predictor> predictors) {
       return predictors.stream().mapToInt((a) -> {
          return a.complexity(world, pos, world.getBlockState(pos), random);
       }).filter((i) -> {
@@ -109,7 +109,7 @@ public class RCSaplingGenerator {
       return (double)RCConfig.tweakedSpawnRate(StructureRegistry.INSTANCE.id(p.getLeft())) * ((SaplingGeneration)p.getRight()).getActiveWeight();
    }
 
-   public static void growSapling(WorldServer world, BlockPos pos, Random random, Structure<?> structure, SaplingGeneration saplingGenInfo) {
+   public static void growSapling(WorldServer world, BlockPos pos, EaglercraftRandom random, Structure<?> structure, SaplingGeneration saplingGenInfo) {
       int[] strucSize = structure.size();
       Multimap<AxisAlignedTransform2D, BlockPos> placeables = saplingGenInfo.pattern.testAll(world, pos, strucSize, structure.isRotatable(), structure.isMirrorable());
       AxisAlignedTransform2D transform = (AxisAlignedTransform2D)Lists.newArrayList(placeables.keys()).get(random.nextInt(placeables.keys().size()));
@@ -141,6 +141,6 @@ public class RCSaplingGenerator {
    }
 
    interface Predictor {
-      int complexity(World var1, BlockPos var2, IBlockState var3, Random var4);
+      int complexity(World var1, BlockPos var2, IBlockState var3, EaglercraftRandom var4);
    }
 }

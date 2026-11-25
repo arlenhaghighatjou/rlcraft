@@ -1,7 +1,7 @@
 package team.creative.enhancedvisuals.common.packet;
 
 import com.creativemd.creativecore.common.packet.CreativeCorePacket;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;

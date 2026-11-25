@@ -1,11 +1,11 @@
 package xzeroair.trinkets.client.gui.hud.mana;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -18,7 +18,7 @@ public class ManaGui extends Gui {
    public static ResourceLocation background = null;
    private static ResourceLocation manaBar = new ResourceLocation(Reference.RESOURCE_PREFIX + "textures/gui/mana_bar.png");
    private final Minecraft mc;
-   private final Random rand = new Random();
+   private final EaglercraftRandom rand = new EaglercraftRandom();
    private float oldMouseX;
    private float oldMouseY;
 
@@ -98,7 +98,7 @@ public class ManaGui extends Gui {
       float f = 1.0F / tileWidth;
       float f1 = 1.0F / tileHeight;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       int xF = flipH ? x - width : x;
       int xF2 = flipH ? x : x + width;
       int yF = flipV ? y : y - height;

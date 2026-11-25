@@ -5,13 +5,13 @@ import com.github.fnar.minecraft.block.spawner.MobType;
 import com.github.fnar.util.Color;
 import greymerk.roguelike.monster.Mob;
 import greymerk.roguelike.monster.MonsterProfile;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ProfileWitherSkeleton implements MonsterProfile {
    public ProfileWitherSkeleton() {
    }
 
-   public Mob apply(Mob mob, int level, int difficulty, Random rand) {
+   public Mob apply(Mob mob, int level, int difficulty, EaglercraftRandom rand) {
       mob.setMobType(MobType.WITHERSKELETON);
       mob.equipSword(rand, level, Difficulty.fromInt(difficulty));
       mob.equipArmor(rand, level, Color.random(rand), difficulty);

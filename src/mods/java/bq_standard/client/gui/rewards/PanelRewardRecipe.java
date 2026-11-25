@@ -19,7 +19,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class PanelRewardRecipe extends CanvasEmpty {
    private final RewardRecipe reward;

@@ -1,7 +1,7 @@
 package com.github.alexthe666.iceandfire.message;
 
 import com.github.alexthe666.iceandfire.entity.EntityDragonBase;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.ilexiconn.llibrary.server.network.AbstractMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

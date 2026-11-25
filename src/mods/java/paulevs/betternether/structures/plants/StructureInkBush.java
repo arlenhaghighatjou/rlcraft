@@ -1,6 +1,6 @@
 package paulevs.betternether.structures.plants;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
 import net.minecraft.block.material.Material;
@@ -15,7 +15,7 @@ public class StructureInkBush implements IStructure {
    public StructureInkBush() {
    }
 
-   public void generate(World world, BlockPos pos, Random random) {
+   public void generate(World world, BlockPos pos, EaglercraftRandom random) {
       Block under = world.getBlockState(pos).getBlock();
       if (under instanceof BlockNetherrack || under == Blocks.SOUL_SAND) {
          IBlockState state = BlocksRegister.BLOCK_INK_BUSH.getDefaultState();

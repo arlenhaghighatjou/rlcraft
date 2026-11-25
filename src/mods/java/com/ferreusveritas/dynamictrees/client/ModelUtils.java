@@ -4,12 +4,12 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockPart;
 import net.minecraft.client.renderer.block.model.BlockPartFace;
 import net.minecraft.client.renderer.block.model.FaceBakery;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.model.ITransformation;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class ModelUtils {
    public ModelUtils() {
@@ -67,7 +67,7 @@ public class ModelUtils {
       return new Vector3f[]{new Vector3f((float)aabb.minX, (float)aabb.minY, (float)aabb.minZ), new Vector3f((float)aabb.maxX, (float)aabb.maxY, (float)aabb.maxZ)};
    }
 
-   public static BakedQuad makeBakedQuad(BlockPart blockPart, BlockPartFace partFace, TextureAtlasSprite atlasSprite, EnumFacing dir, ITransformation transform, boolean uvlocked) {
+   public static BakedQuad makeBakedQuad(BlockPart blockPart, BlockPartFace partFace, EaglerTextureAtlasSprite atlasSprite, EnumFacing dir, ITransformation transform, boolean uvlocked) {
       return (new FaceBakery()).makeBakedQuad(blockPart.positionFrom, blockPart.positionTo, partFace, atlasSprite, dir, transform, blockPart.partRotation, uvlocked, blockPart.shade);
    }
 }

@@ -8,7 +8,7 @@ import ivorius.reccomplex.client.rendering.OperationRenderer;
 import ivorius.reccomplex.client.rendering.SchematicQuadCache;
 import ivorius.reccomplex.utils.RCAxisAlignedTransform;
 import ivorius.reccomplex.world.gen.feature.structure.schematics.SchematicFile;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

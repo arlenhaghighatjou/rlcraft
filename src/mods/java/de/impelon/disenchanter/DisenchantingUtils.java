@@ -6,7 +6,7 @@ import de.impelon.disenchanter.item.ItemExperienceJar;
 import de.impelon.disenchanter.proxy.CommonProxy;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,15 +25,15 @@ public class DisenchantingUtils {
    public DisenchantingUtils() {
    }
 
-   public static ItemStack disenchantInInventory(IDisenchantmentItemHandler inventory, World world, BlockPos position, Random random) {
+   public static ItemStack disenchantInInventory(IDisenchantmentItemHandler inventory, World world, BlockPos position, EaglercraftRandom random) {
       return disenchantInInventory(inventory, 0, world, position, random);
    }
 
-   public static ItemStack disenchantInInventory(IDisenchantmentItemHandler inventory, int startIndex, World world, BlockPos position, Random random) {
+   public static ItemStack disenchantInInventory(IDisenchantmentItemHandler inventory, int startIndex, World world, BlockPos position, EaglercraftRandom random) {
       return disenchantInInventory(inventory, startIndex, DisenchantingProperties.getPropertiesFromStateAt(world, position), (float)getEnchantingPower(world, position), world, position, random);
    }
 
-   public static ItemStack disenchantInInventory(IDisenchantmentItemHandler inventory, int startIndex, DisenchantingProperties properties, float power, World world, BlockPos position, Random random) {
+   public static ItemStack disenchantInInventory(IDisenchantmentItemHandler inventory, int startIndex, DisenchantingProperties properties, float power, World world, BlockPos position, EaglercraftRandom random) {
       ItemStack result = simulateDisenchantingInInventory(inventory, false, startIndex, properties, power, random);
       if (!result.isEmpty() && !world.isRemote) {
          world.playSound((EntityPlayer)null, position, CommonProxy.disenchantmentTableUse, SoundCategory.BLOCKS, properties.is(TableVariant.AUTOMATIC) ? 0.5F : 1.0F, random.nextFloat() * 0.1F + 0.9F);
@@ -42,15 +42,15 @@ public class DisenchantingUtils {
       return result;
    }
 
-   public static ItemStack simulateDisenchantingInInventory(IDisenchantmentItemHandler inventory, boolean ignoreEnchantmentLoss, World world, BlockPos position, Random random) {
+   public static ItemStack simulateDisenchantingInInventory(IDisenchantmentItemHandler inventory, boolean ignoreEnchantmentLoss, World world, BlockPos position, EaglercraftRandom random) {
       return simulateDisenchantingInInventory(inventory, ignoreEnchantmentLoss, 0, world, position, random);
    }
 
-   public static ItemStack simulateDisenchantingInInventory(IDisenchantmentItemHandler inventory, boolean ignoreEnchantmentLoss, int startIndex, World world, BlockPos position, Random random) {
+   public static ItemStack simulateDisenchantingInInventory(IDisenchantmentItemHandler inventory, boolean ignoreEnchantmentLoss, int startIndex, World world, BlockPos position, EaglercraftRandom random) {
       return simulateDisenchantingInInventory(inventory, ignoreEnchantmentLoss, startIndex, DisenchantingProperties.getPropertiesFromStateAt(world, position), (float)getEnchantingPower(world, position), random);
    }
 
-   public static ItemStack simulateDisenchantingInInventory(IDisenchantmentItemHandler inventory, boolean ignoreEnchantmentLoss, int startIndex, DisenchantingProperties properties, float power, Random random) {
+   public static ItemStack simulateDisenchantingInInventory(IDisenchantmentItemHandler inventory, boolean ignoreEnchantmentLoss, int startIndex, DisenchantingProperties properties, float power, EaglercraftRandom random) {
       if (properties.hasPersistantInventory() && !inventory.getOutputStack().isEmpty()) {
          return ItemStack.EMPTY;
       } else {
@@ -95,11 +95,11 @@ public class DisenchantingUtils {
       }
    }
 
-   public static boolean disenchant(ItemStack source, ItemStack target, boolean ignoreEnchantmentLoss, int startIndex, World world, BlockPos position, Random random) {
+   public static boolean disenchant(ItemStack source, ItemStack target, boolean ignoreEnchantmentLoss, int startIndex, World world, BlockPos position, EaglercraftRandom random) {
       return disenchant(source, target, ignoreEnchantmentLoss, startIndex, DisenchantingProperties.getPropertiesFromStateAt(world, position), (float)getEnchantingPower(world, position), random);
    }
 
-   public static boolean disenchant(ItemStack source, ItemStack target, boolean ignoreEnchantmentLoss, int startIndex, DisenchantingProperties properties, float power, Random random) {
+   public static boolean disenchant(ItemStack source, ItemStack target, boolean ignoreEnchantmentLoss, int startIndex, DisenchantingProperties properties, float power, EaglercraftRandom random) {
       int flatDmg = DisenchanterConfig.disenchanting.flatDamage;
       double durabilityDmg = DisenchanterConfig.disenchanting.maxDurabilityDamage;
       double reducibleDmg = DisenchanterConfig.disenchanting.maxDurabilityDamageReducible;
@@ -123,7 +123,7 @@ public class DisenchantingUtils {
       return hasTransferredEnchantments;
    }
 
-   public static boolean transferEnchantment(ItemStack source, ItemStack target, int index, boolean ignoreEnchantmentLoss, float power, Random random) {
+   public static boolean transferEnchantment(ItemStack source, ItemStack target, int index, boolean ignoreEnchantmentLoss, float power, EaglercraftRandom random) {
       if (!source.isEmpty() && !target.isEmpty() && source.getTagCompound() != null) {
          NBTTagList enchants = getEnchantmentList(source);
          if (enchants == null) {

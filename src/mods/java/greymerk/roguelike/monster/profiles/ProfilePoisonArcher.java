@@ -6,13 +6,13 @@ import com.github.fnar.minecraft.item.Potion;
 import com.github.fnar.util.Color;
 import greymerk.roguelike.monster.Mob;
 import greymerk.roguelike.monster.MonsterProfile;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ProfilePoisonArcher implements MonsterProfile {
    public ProfilePoisonArcher() {
    }
 
-   public Mob apply(Mob mob, int level, int difficulty, Random random) {
+   public Mob apply(Mob mob, int level, int difficulty, EaglercraftRandom random) {
       mob.equipBow(random, level, Difficulty.fromInt(difficulty));
       mob.equipArrows(Arrow.newArrow().withTip(Potion.Effect.POISON.asItem().withAmplification()));
       mob.equipArmor(random, level, Color.PALE_LIME_GREEN, difficulty);

@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockDoublePlant.EnumPlantType;
 import net.minecraft.block.BlockFlower.EnumFlowerType;
 import net.minecraft.util.math.BlockPos;
@@ -43,7 +43,7 @@ public class DecoFlowersRTG extends DecoBase {
       this.addDecoTypes(new DecoBase.DecoType[]{DecoBase.DecoType.FLOWER});
    }
 
-   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, Random rand, ChunkPos chunkPos, float river, boolean hasVillage) {
+   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, EaglercraftRandom rand, ChunkPos chunkPos, float river, boolean hasVillage) {
       if (this.flowers != null && !this.flowers.isEmpty() || this.plants != null && !this.plants.isEmpty()) {
          if (TerrainGen.decorate(rtgWorld.world(), rand, chunkPos, EventType.FLOWERS)) {
             int loopCount = this.strengthFactor > 0.0F ? (int)this.strengthFactor : this.loops;

@@ -1,10 +1,10 @@
 package xzeroair.trinkets.races.elf;
 
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nonnull;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.EntityLivingBase;
@@ -29,9 +29,9 @@ import xzeroair.trinkets.util.helpers.DrawingHelper;
 
 public class RaceElf extends EntityRacePropertiesHandler {
    public static final ElfConfig serverConfig;
-   protected UpdatingAttribute bonusSpeed = (new UpdatingAttribute(UUID.fromString("628dedc0-5f63-4b45-bccb-ecb0fe881b49"), SharedMonsterAttributes.MOVEMENT_SPEED)).setSavedInNBT(false);
-   protected UpdatingAttribute bonusAtkSpeed = (new UpdatingAttribute(UUID.fromString("628dedc0-5f63-4b45-bccb-ecb0fe881b49"), SharedMonsterAttributes.ATTACK_SPEED)).setSavedInNBT(false);
-   protected UpdatingAttribute jump = (new UpdatingAttribute(UUID.fromString("628dedc0-5f63-4b45-bccb-ecb0fe881b49"), JumpAttribute.Jump)).setSavedInNBT(false);
+   protected UpdatingAttribute bonusSpeed = (new UpdatingAttribute(EaglercraftUUID.fromString("628dedc0-5f63-4b45-bccb-ecb0fe881b49"), SharedMonsterAttributes.MOVEMENT_SPEED)).setSavedInNBT(false);
+   protected UpdatingAttribute bonusAtkSpeed = (new UpdatingAttribute(EaglercraftUUID.fromString("628dedc0-5f63-4b45-bccb-ecb0fe881b49"), SharedMonsterAttributes.ATTACK_SPEED)).setSavedInNBT(false);
+   protected UpdatingAttribute jump = (new UpdatingAttribute(EaglercraftUUID.fromString("628dedc0-5f63-4b45-bccb-ecb0fe881b49"), JumpAttribute.Jump)).setSavedInNBT(false);
    private ModelBase ears = new ElfEars();
    public static final ResourceLocation TEXTURE = new ResourceLocation("xat:textures/ears.png");
    public static final ResourceLocation TEXTURE_INNER = new ResourceLocation("xat:textures/inner_ears.png");
@@ -71,7 +71,7 @@ public class RaceElf extends EntityRacePropertiesHandler {
    }
 
    public void endTransformation() {
-      AttributeHelper.removeAttributes(this.entity, UUID.fromString("628dedc0-5f63-4b45-bccb-ecb0fe881b49"));
+      AttributeHelper.removeAttributes(this.entity, EaglercraftUUID.fromString("628dedc0-5f63-4b45-bccb-ecb0fe881b49"));
    }
 
    @SideOnly(Side.CLIENT)

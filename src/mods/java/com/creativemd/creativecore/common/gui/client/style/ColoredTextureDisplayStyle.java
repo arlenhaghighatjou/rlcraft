@@ -2,7 +2,7 @@ package com.creativemd.creativecore.common.gui.client.style;
 
 import com.creativemd.creativecore.common.utils.mc.ColorUtils;
 import javax.vecmath.Vector4f;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 public class ColoredTextureDisplayStyle extends TextureDisplayStyle {

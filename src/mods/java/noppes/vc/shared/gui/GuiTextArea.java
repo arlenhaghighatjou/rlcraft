@@ -5,14 +5,14 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.MathHelper;
 import noppes.vc.client.ClientProxy;
 import noppes.vc.client.FontContainer;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class GuiTextArea extends GuiTextFieldNop {
    public boolean inMenu = true;
@@ -290,7 +290,7 @@ public class GuiTextArea extends GuiTextFieldNop {
          p_146188_1_ = this.posX + this.width;
       }
 
-      BufferBuilder tessellator = Tessellator.getInstance().getBuffer();
+      WorldRenderer tessellator = Tessellator.getInstance().getBuffer();
       GlStateManager.color(0.0F, 0.0F, 255.0F, 255.0F);
       GlStateManager.disableTexture2D();
       GlStateManager.enableColorLogic();

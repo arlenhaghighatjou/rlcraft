@@ -3,7 +3,7 @@ package greymerk.roguelike.monster;
 import com.github.fnar.minecraft.block.spawner.MobType;
 import com.github.fnar.minecraft.entity.SlotMapper1_12;
 import com.github.fnar.minecraft.item.mapper.ItemMapper1_12;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.BiConsumer;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.boss.EntityDragon;
@@ -42,7 +42,7 @@ public class EntityProfiler1_12 {
    public EntityProfiler1_12() {
    }
 
-   public static EntityLiving applyProfile(EntityLiving oldEntity, int level, Random random, int difficulty) {
+   public static EntityLiving applyProfile(EntityLiving oldEntity, int level, EaglercraftRandom random, int difficulty) {
       Mob mob = applyProfile(oldEntity, level, difficulty, random);
       if (mob == null) {
          return null;
@@ -134,7 +134,7 @@ public class EntityProfiler1_12 {
       }
    }
 
-   private static Mob applyProfile(EntityLiving entityLiving, int level, int difficulty, Random random) {
+   private static Mob applyProfile(EntityLiving entityLiving, int level, int difficulty, EaglercraftRandom random) {
       if (entityLiving instanceof EntityBlaze) {
          return (new Mob()).withMobType(MobType.BLAZE);
       } else if (entityLiving instanceof EntityCaveSpider) {

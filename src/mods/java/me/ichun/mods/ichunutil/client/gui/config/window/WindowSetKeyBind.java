@@ -13,8 +13,8 @@ import me.ichun.mods.ichunutil.common.core.config.annotations.ConfigProp;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.text.translation.I18n;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class WindowSetKeyBind extends Window {
    public GuiConfigs parent;

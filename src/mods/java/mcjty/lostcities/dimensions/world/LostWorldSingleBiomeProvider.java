@@ -2,7 +2,7 @@ package mcjty.lostcities.dimensions.world;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
@@ -42,7 +42,7 @@ public class LostWorldSingleBiomeProvider extends BiomeProvider {
    }
 
    @Nullable
-   public BlockPos findBiomePosition(int x, int z, int range, List<Biome> biomes, Random random) {
+   public BlockPos findBiomePosition(int x, int z, int range, List<Biome> biomes, EaglercraftRandom random) {
       return biomes.contains(this.biome) ? new BlockPos(x - range + random.nextInt(range * 2 + 1), 0, z - range + random.nextInt(range * 2 + 1)) : null;
    }
 

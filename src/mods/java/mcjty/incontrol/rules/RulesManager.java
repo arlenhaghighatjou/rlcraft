@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import mcjty.incontrol.InControl;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class RulesManager {
    public static List<SpawnRule> rules = new ArrayList();

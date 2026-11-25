@@ -6,7 +6,7 @@ import goblinbob.mobends.core.math.matrix.IMat4x4d;
 import goblinbob.mobends.core.math.vector.IVec3f;
 import goblinbob.mobends.core.math.vector.Vec3f;
 import goblinbob.mobends.core.util.GlHelper;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class ModelPartTransform implements IModelPart {
    public Vec3f position;

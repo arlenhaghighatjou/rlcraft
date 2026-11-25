@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFarmland;
@@ -78,7 +78,7 @@ public class FIEvents {
 				ItemStack harveststack = player.getHeldItemMainhand();
 
 				int fortunelevel = event.getFortuneLevel();
-				Random rand = new Random();
+				EaglercraftRandom rand = new EaglercraftRandom();
 
 				if(rand.nextFloat() < FIConfig.gamblePickaxeChance + (fortunelevel * FIConfig.gamblePickaxeFortuneChance))
 				{
@@ -288,7 +288,7 @@ public class FIEvents {
 	{
 		DamageSource source = event.getSource();
 		EntityLivingBase entity = event.getEntityLiving();
-		Random rand = new Random();
+		EaglercraftRandom rand = new EaglercraftRandom();
 
 
 		if(entity instanceof EntityPlayer)

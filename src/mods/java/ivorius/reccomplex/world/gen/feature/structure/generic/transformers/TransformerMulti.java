@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -197,7 +197,7 @@ public class TransformerMulti extends Transformer<TransformerMulti.InstanceData>
          JsonObject jsonObject = JsonUtils.asJsonObject(json, "transformerMultiData");
          TransformerMulti.Data data = new TransformerMulti.Data();
          data.environmentExpression.setExpression(JsonUtils.getString(jsonObject, "environmentMatcher", ""));
-         Transformer.idRandomizers.push(new Random(-559038737L));
+         Transformer.idRandomizers.push(new EaglercraftRandom(-559038737L));
          Transformer[] transformers = (Transformer[])TransformerMulti.gson.fromJson(jsonObject.get("transformers"), Transformer[].class);
          if (transformers != null) {
             Collections.addAll(data.transformers, transformers);

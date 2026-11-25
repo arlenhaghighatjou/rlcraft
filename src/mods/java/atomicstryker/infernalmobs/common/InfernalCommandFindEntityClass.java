@@ -1,6 +1,6 @@
 package atomicstryker.infernalmobs.common;
 
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;

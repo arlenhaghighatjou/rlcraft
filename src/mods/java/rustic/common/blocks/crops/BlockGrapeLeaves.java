@@ -3,7 +3,7 @@ package rustic.common.blocks.crops;
 import com.google.common.base.Predicate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -169,7 +169,7 @@ public class BlockGrapeLeaves extends BlockRopeBase implements IGrowable, IColor
       }
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       super.updateTick(worldIn, pos, state, rand);
       if (!this.isBlockSupported(worldIn, pos, state)) {
          this.dropBlock(worldIn, pos, state);
@@ -206,11 +206,11 @@ public class BlockGrapeLeaves extends BlockRopeBase implements IGrowable, IColor
       }
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return true;
    }
 
-   public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       if (((Integer)state.getValue(DIST)).intValue() > 0) {
          worldIn.setBlockState(pos, state.withProperty(GRAPES, Boolean.valueOf(true)), 3);
       } else {

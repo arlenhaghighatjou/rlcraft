@@ -1,7 +1,7 @@
 package ivorius.reccomplex.gui;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import ivorius.reccomplex.RecurrentComplex;
 import ivorius.reccomplex.files.SimpleLeveledRegistry;
 import ivorius.reccomplex.files.loading.ResourceDirectory;

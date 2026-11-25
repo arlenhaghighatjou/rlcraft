@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -46,7 +46,7 @@ public class MazeGenerator {
 
    }
 
-   public static <T> MazePath randomEmptyPathInMaze(Random rand, Maze<T> maze, Collection<Integer> applicableDimensions) {
+   public static <T> MazePath randomEmptyPathInMaze(EaglercraftRandom rand, Maze<T> maze, Collection<Integer> applicableDimensions) {
       List<MazePath> paths = Lists.newArrayList(maze.allPaths());
       Iterator<MazePath> iterator = paths.iterator();
 
@@ -66,7 +66,7 @@ public class MazeGenerator {
 
    /** @deprecated */
    @Deprecated
-   public static MazeRoom randomRoomInMaze(Random rand, Maze maze, int... distanceFromOutside) {
+   public static MazeRoom randomRoomInMaze(EaglercraftRandom rand, Maze maze, int... distanceFromOutside) {
       int[] position = new int[maze.dimensions.length];
 
       for(int i = 0; i < maze.dimensions.length; ++i) {
@@ -78,7 +78,7 @@ public class MazeGenerator {
 
    /** @deprecated */
    @Deprecated
-   public static MazePath randomPathInMaze(Random rand, Maze maze, int... distanceFromOutside) {
+   public static MazePath randomPathInMaze(EaglercraftRandom rand, Maze maze, int... distanceFromOutside) {
       List<WeightedSelector.SimpleItem<Integer>> dimensionWeights = new ArrayList();
 
       for(int dim = 0; dim < maze.dimensions.length; ++dim) {

@@ -1,6 +1,6 @@
 package sereneseasons.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
@@ -100,7 +100,7 @@ public class BlockSeasonSensor extends BlockContainer implements ISSBlock {
       }
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(SSBlocks.season_sensors[0]);
    }
 

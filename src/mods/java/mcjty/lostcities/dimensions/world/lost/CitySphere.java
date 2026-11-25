@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import mcjty.lostcities.LostCities;
@@ -52,7 +52,7 @@ public class CitySphere implements ILostSphere {
          ChunkCoord center = sphere.getCenter();
          BuildingInfo info = BuildingInfo.getBuildingInfo(center.getChunkX(), center.getChunkZ(), provider);
          CityStyle cs = info.getCityStyle();
-         Random rand = new Random(info.provider.seed + (long)center.getChunkX() * 837971201L + (long)center.getChunkZ() * 961744153L);
+         EaglercraftRandom rand = new EaglercraftRandom(info.provider.seed + (long)center.getChunkX() * 837971201L + (long)center.getChunkZ() * 961744153L);
          rand.nextFloat();
          rand.nextFloat();
          Character glass = info.getCompiledPalette().get(cs.getSphereGlassBlock().charValue(), rand);
@@ -234,7 +234,7 @@ public class CitySphere implements ILostSphere {
       }
    }
 
-   private static float getSphereRadius(ChunkCoord center, LostCityChunkGenerator provider, Random rand) {
+   private static float getSphereRadius(ChunkCoord center, LostCityChunkGenerator provider, EaglercraftRandom rand) {
       PredefinedCity city = City.getPredefinedCity(center.getChunkX(), center.getChunkZ(), provider);
       LostCityProfile profile = provider.getProfile();
       return city != null ? (float)city.getRadius() * profile.CITYSPHERE_FACTOR : (float)profile.CITY_MINRADIUS + (float)rand.nextInt(profile.CITY_MAXRADIUS - profile.CITY_MINRADIUS) * profile.CITYSPHERE_FACTOR;
@@ -326,7 +326,7 @@ public class CitySphere implements ILostSphere {
    private static CitySphere getSphereAtCenter(ChunkCoord center, LostCityChunkGenerator provider, @Nullable PredefinedSphere predef) {
       int chunkX = center.getChunkX();
       int chunkZ = center.getChunkZ();
-      Random rand = new Random(provider.seed + (long)chunkX * 961744153L + (long)chunkZ * 837971201L);
+      EaglercraftRandom rand = new EaglercraftRandom(provider.seed + (long)chunkX * 961744153L + (long)chunkZ * 837971201L);
       rand.nextFloat();
       rand.nextFloat();
       LostCityProfile profile = provider.getProfile();
@@ -426,7 +426,7 @@ public class CitySphere implements ILostSphere {
       }
    }
 
-   private static BlockPos getSphereCenterPosition(ChunkCoord center, LostCityChunkGenerator provider, Random rand) {
+   private static BlockPos getSphereCenterPosition(ChunkCoord center, LostCityChunkGenerator provider, EaglercraftRandom rand) {
       int cx = center.getChunkX() * 16 + rand.nextInt(16) - 8;
       int cz = center.getChunkZ() * 16 + rand.nextInt(16) - 8;
       return new BlockPos(cx, provider.getProfile().GROUNDLEVEL, cz);

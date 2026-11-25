@@ -2,14 +2,14 @@ package paulevs.betternether.biomes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import paulevs.betternether.world.BNWorldGenerator;
 
 public class NetherBiome {
-   static NoiseGeneratorOctaves featureScatter = new NoiseGeneratorOctaves(new Random(1337L), 3);
+   static NoiseGeneratorOctaves featureScatter = new NoiseGeneratorOctaves(new EaglercraftRandom(1337L), 3);
    float plantDensity = 1.0F;
    String name;
    NetherBiome edge;
@@ -25,16 +25,16 @@ public class NetherBiome {
       this.subbiomes = new ArrayList();
    }
 
-   public void genSurfColumn(World world, BlockPos pos, Random random) {
+   public void genSurfColumn(World world, BlockPos pos, EaglercraftRandom random) {
    }
 
-   public void genFloorObjects(World world, BlockPos pos, Random random) {
+   public void genFloorObjects(World world, BlockPos pos, EaglercraftRandom random) {
    }
 
-   public void genWallObjects(World world, BlockPos origin, BlockPos pos, Random random) {
+   public void genWallObjects(World world, BlockPos origin, BlockPos pos, EaglercraftRandom random) {
    }
 
-   public void genCeilObjects(World world, BlockPos pos, Random random) {
+   public void genCeilObjects(World world, BlockPos pos, EaglercraftRandom random) {
    }
 
    protected double getFeatureNoise(BlockPos pos) {

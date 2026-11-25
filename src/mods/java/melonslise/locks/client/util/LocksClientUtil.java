@@ -1,6 +1,6 @@
 package melonslise.locks.client.util;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.relauncher.Side;
@@ -15,7 +15,7 @@ public final class LocksClientUtil {
       float f = 1.0F / (float)textureWidth;
       float f1 = 1.0F / (float)textureHeight;
       Tessellator tes = Tessellator.getInstance();
-      BufferBuilder bld = tes.getBuffer();
+      WorldRenderer bld = tes.getBuffer();
       bld.begin(7, DefaultVertexFormats.POSITION_TEX);
       bld.pos((double)x, (double)(y + (float)height), 0.0D).tex((double)((float)u * f), (double)((float)(v + height) * f1)).endVertex();
       bld.pos((double)(x + (float)width), (double)(y + (float)height), 0.0D).tex((double)((float)(u + width) * f), (double)((float)(v + height) * f1)).endVertex();

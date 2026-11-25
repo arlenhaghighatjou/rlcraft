@@ -15,7 +15,7 @@ import net.minecraft.client.resources.data.IMetadataSection;
 import net.minecraft.client.resources.data.MetadataSerializer;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class OverridingResourceLoader implements IResourcePack {
    boolean debug = false;

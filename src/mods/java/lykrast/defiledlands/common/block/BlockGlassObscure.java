@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.item.ItemBlockTooltip;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -20,7 +20,7 @@ public class BlockGlassObscure extends BlockCorrupted implements ICustomItemBloc
       this.setLightOpacity(255);
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 

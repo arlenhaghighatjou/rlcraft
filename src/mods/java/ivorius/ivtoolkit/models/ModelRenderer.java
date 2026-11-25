@@ -17,13 +17,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class ModelRenderer {
    private static final FloatBuffer MATRIX_BUFFER = GLAllocation.createDirectFloatBuffer(16);
@@ -35,7 +35,7 @@ public class ModelRenderer {
    }
 
    public static void renderModelDirectly(Model model) {
-      BufferBuilder renderer = Tessellator.getInstance().getBuffer();
+      WorldRenderer renderer = Tessellator.getInstance().getBuffer();
       model.calculateTransforms();
       model.nodes.stream().filter((node) -> {
          return node.parts.size() > 0;
@@ -52,7 +52,7 @@ public class ModelRenderer {
       });
    }
 
-   private static void renderNodePart(BufferBuilder renderer, NodePart nodePart) {
+   private static void renderNodePart(WorldRenderer renderer, NodePart nodePart) {
       MeshPart meshPart = nodePart.meshPart;
       Material material = nodePart.material;
       Matrix4f[] bones = nodePart.bones;

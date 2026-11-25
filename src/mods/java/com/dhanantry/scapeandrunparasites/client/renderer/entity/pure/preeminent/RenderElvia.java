@@ -3,7 +3,7 @@ package com.dhanantry.scapeandrunparasites.client.renderer.entity.pure.preeminen
 import com.dhanantry.scapeandrunparasites.client.model.entity.pure.preeminent.ModelElvia;
 import com.dhanantry.scapeandrunparasites.client.renderer.RenderMalleable;
 import com.dhanantry.scapeandrunparasites.entity.monster.pure.preeminent.EntityElvia;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;

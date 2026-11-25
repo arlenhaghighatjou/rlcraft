@@ -25,7 +25,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.utils.QuestTranslation;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.text.TextFormatting;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class GuiTextEditor extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
    private final ICallback<String> callback;

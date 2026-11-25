@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import net.minecraft.advancements.Advancement;
@@ -28,10 +28,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class TaskAdvancement implements ITask {
-   private final Set<UUID> completeUsers = new TreeSet();
+   private final Set<EaglercraftUUID> completeUsers = new TreeSet();
    public ResourceLocation advID;
 
    public TaskAdvancement() {
@@ -57,7 +57,7 @@ public class TaskAdvancement implements ITask {
          if (adv != null) {
             PlayerAdvancements playerAdv = pInfo.PLAYER.getServer().getPlayerList().getPlayerAdvancements((EntityPlayerMP)pInfo.PLAYER);
             if (playerAdv.getProgress(adv).isDone()) {
-               this.setComplete(pInfo.UUID);
+               this.setComplete(pInfo.EaglercraftUUID);
             }
 
             pInfo.markDirty(Collections.singletonList(Integer.valueOf(quest.getID())));
@@ -65,15 +65,15 @@ public class TaskAdvancement implements ITask {
       }
    }
 
-   public boolean isComplete(UUID uuid) {
+   public boolean isComplete(EaglercraftUUID uuid) {
       return this.completeUsers.contains(uuid);
    }
 
-   public void setComplete(UUID uuid) {
+   public void setComplete(EaglercraftUUID uuid) {
       this.completeUsers.add(uuid);
    }
 
-   public void resetUser(@Nullable UUID uuid) {
+   public void resetUser(@Nullable EaglercraftUUID uuid) {
       if (uuid == null) {
          this.completeUsers.clear();
       } else {
@@ -94,7 +94,7 @@ public class TaskAdvancement implements ITask {
       return new GuiEditTaskAdvancement(parent, quest, this);
    }
 
-   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<EaglercraftUUID> users) {
       NBTTagList jArray = new NBTTagList();
       this.completeUsers.forEach((uuid) -> {
          if (users == null || users.contains(uuid)) {
@@ -115,9 +115,9 @@ public class TaskAdvancement implements ITask {
 
       for(int i = 0; i < cList.tagCount(); ++i) {
          try {
-            this.completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
+            this.completeUsers.add(EaglercraftUUID.fromString(cList.getStringTagAt(i)));
          } catch (Exception var6) {
-            BQ_Standard.logger.log(Level.ERROR, "Unable to load UUID for task", var6);
+            BQ_Standard.logger.log(Level.ERROR, "Unable to load EaglercraftUUID for task", var6);
          }
       }
 

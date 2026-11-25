@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 import meldexun.renderlib.util.BufferUtil;
 import meldexun.renderlib.util.GLUtil;
 import meldexun.renderlib.util.UnsafeBuffer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL31;
 import org.lwjgl.opengl.GL43;

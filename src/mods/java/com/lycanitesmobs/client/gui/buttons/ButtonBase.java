@@ -1,7 +1,7 @@
 package com.lycanitesmobs.client.gui.buttons;
 
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
@@ -17,7 +17,7 @@ public class ButtonBase extends GuiButton {
    public void drawTexturedModalRect(int x, int y, int u, int v, int width, int height, int resolution) {
       float scaleX = 0.00390625F * (float)resolution;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexbuffer.pos((double)(x + 0), (double)(y + height), (double)this.zLevel).tex((double)((float)(u + 0) * scaleX), (double)((float)(v + height) * scaleX)).endVertex();
       vertexbuffer.pos((double)(x + width), (double)(y + height), (double)this.zLevel).tex((double)((float)(u + width) * scaleX), (double)((float)(v + height) * scaleX)).endVertex();

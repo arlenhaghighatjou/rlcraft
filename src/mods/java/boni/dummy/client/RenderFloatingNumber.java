@@ -1,5 +1,6 @@
 package boni.dummy.client;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import boni.dummy.EntityDpsFloatingNumber;
 import boni.dummy.EntityFloatingNumber;
 import java.text.DecimalFormat;
@@ -37,7 +38,7 @@ public class RenderFloatingNumber extends Render<EntityFloatingNumber> {
       GL11.glTranslated(0.0D, -l / 10.0D, 0.0D);
       GL11.glDisable(2896);
       GL11.glDepthMask(false);
-      GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+      EaglercraftGPU.glNormal3f(0.0F, 1.0F, 0.0F);
       GL11.glRotatef(this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
       GL11.glRotatef(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
       String s = df.format((double)(entity.damage / 2.0F));

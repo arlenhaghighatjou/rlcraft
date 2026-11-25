@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import mcjty.lostcities.config.LostCityProfile;
 import mcjty.lostcities.dimensions.world.LostCityChunkGenerator;
 import mcjty.lostcities.dimensions.world.lost.cityassets.AssetRegistries;
@@ -75,7 +75,7 @@ public class City {
       if (city != null) {
          return true;
       } else {
-         Random rand = new Random(provider.seed + (long)chunkZ * 797003437L + (long)chunkX * 295075153L);
+         EaglercraftRandom rand = new EaglercraftRandom(provider.seed + (long)chunkZ * 797003437L + (long)chunkX * 295075153L);
          rand.nextFloat();
          rand.nextFloat();
          if (provider.getProfile().isSpace()) {
@@ -98,7 +98,7 @@ public class City {
       if (city != null) {
          return (float)city.getRadius();
       } else {
-         Random rand = new Random(provider.seed + (long)chunkZ * 100001653L + (long)chunkX * 295075153L);
+         EaglercraftRandom rand = new EaglercraftRandom(provider.seed + (long)chunkZ * 100001653L + (long)chunkX * 295075153L);
          rand.nextFloat();
          rand.nextFloat();
          LostCityProfile profile = provider.getProfile();
@@ -115,7 +115,7 @@ public class City {
       if (city != null && city.getCityStyle() != null) {
          return city.getCityStyle();
       } else {
-         Random rand = new Random(provider.seed + (long)chunkZ * 899809363L + (long)chunkX * 256203221L);
+         EaglercraftRandom rand = new EaglercraftRandom(provider.seed + (long)chunkZ * 899809363L + (long)chunkX * 256203221L);
          rand.nextFloat();
          rand.nextFloat();
          return provider.worldStyle.getRandomCityStyle(provider, chunkX, chunkZ, rand);
@@ -123,7 +123,7 @@ public class City {
    }
 
    public static CityStyle getCityStyle(int chunkX, int chunkZ, LostCityChunkGenerator provider, LostCityProfile profile) {
-      Random rand = new Random(provider.seed + (long)chunkZ * 593441843L + (long)chunkX * 217645177L);
+      EaglercraftRandom rand = new EaglercraftRandom(provider.seed + (long)chunkZ * 593441843L + (long)chunkX * 217645177L);
       rand.nextFloat();
       rand.nextFloat();
       int offset = (profile.CITY_MAXRADIUS + 15) / 16;

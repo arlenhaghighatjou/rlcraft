@@ -1,6 +1,6 @@
 package rustic.common.blocks.crops;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -69,7 +69,7 @@ public class BlockGrapeStem extends BlockBase implements IGrowable, IPlantable {
       return CROPS_AABB[((Integer)state.getValue(AGE)).intValue()];
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       super.updateTick(worldIn, pos, state, rand);
       if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
          int i = ((Integer)state.getValue(AGE)).intValue();
@@ -104,11 +104,11 @@ public class BlockGrapeStem extends BlockBase implements IGrowable, IPlantable {
       return super.canPlaceBlockAt(worldIn, pos) && soil.getBlock().canSustainPlant(soil, worldIn, pos.down(), EnumFacing.UP, this);
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return true;
    }
 
-   public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       if (((Integer)state.getValue(AGE)).intValue() < this.getMaxAge()) {
          int i = ((Integer)state.getValue(AGE)).intValue() + this.getBonemealAgeIncrease(worldIn);
          int j = this.getMaxAge();

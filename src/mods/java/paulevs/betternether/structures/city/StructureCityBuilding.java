@@ -1,7 +1,7 @@
 package paulevs.betternether.structures.city;
 
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -186,7 +186,7 @@ public class StructureCityBuilding extends StructureNBT {
       return building;
    }
 
-   public StructureCityBuilding getRandomRotated(Random random) {
+   public StructureCityBuilding getRandomRotated(EaglercraftRandom random) {
       return this.getRotated(Rotation.values()[random.nextInt(Rotation.values().length)]);
    }
 

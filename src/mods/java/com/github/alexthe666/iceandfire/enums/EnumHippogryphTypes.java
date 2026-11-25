@@ -2,7 +2,7 @@ package com.github.alexthe666.iceandfire.enums;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -37,7 +37,7 @@ public enum EnumHippogryphTypes {
    }
 
    public static EnumHippogryphTypes getRandomType() {
-      return getWildTypes()[(new Random()).nextInt(getWildTypes().length - 1)];
+      return getWildTypes()[(new EaglercraftRandom()).nextInt(getWildTypes().length - 1)];
    }
 
    public static EnumHippogryphTypes getBiomeType(Biome biome) {
@@ -56,7 +56,7 @@ public enum EnumHippogryphTypes {
       } else if (types.contains(GRAY) && types.contains(CHESTNUT)) {
          return GRAY;
       } else {
-         return (EnumHippogryphTypes)types.get((new Random()).nextInt(types.size()));
+         return (EnumHippogryphTypes)types.get((new EaglercraftRandom()).nextInt(types.size()));
       }
    }
 }

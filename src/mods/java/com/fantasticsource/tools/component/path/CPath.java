@@ -6,7 +6,7 @@ import com.fantasticsource.tools.component.CInt;
 import com.fantasticsource.tools.component.CLong;
 import com.fantasticsource.tools.component.Component;
 import com.fantasticsource.tools.datastructures.VectorN;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;

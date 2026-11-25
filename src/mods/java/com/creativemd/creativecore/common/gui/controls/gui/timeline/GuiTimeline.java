@@ -12,7 +12,7 @@ import com.creativemd.creativecore.common.utils.math.SmoothValue;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;

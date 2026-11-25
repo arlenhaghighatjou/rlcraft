@@ -1,13 +1,13 @@
 package rustic.common.crafting;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
 import rustic.common.Config;
 import rustic.common.blocks.fluids.FluidBooze;
 
 public class BrewingBarrelRecipe implements IBrewingBarrelRecipe {
-   private static final Random rand = new Random();
+   private static final EaglercraftRandom rand = new EaglercraftRandom();
    protected final FluidStack input;
    protected final FluidStack output;
 

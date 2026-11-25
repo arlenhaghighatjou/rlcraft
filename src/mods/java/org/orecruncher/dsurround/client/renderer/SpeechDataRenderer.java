@@ -1,10 +1,11 @@
 package org.orecruncher.dsurround.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -74,7 +75,7 @@ public class SpeechDataRenderer {
          float locZ = (float)(entity.prevPosZ + (entity.posZ - entity.prevPosZ) * (double)partialTicks - interpZ());
          OpenGlState glState = OpenGlState.push();
          GlStateManager.translate(locX, locY + entity.height + 0.25F, locZ);
-         GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+         EaglercraftGPU.glNormal3f(0.0F, 1.0F, 0.0F);
          GlStateManager.rotate(yaw, 0.0F, 1.0F, 0.0F);
          GlStateManager.rotate(pitch, 1.0F, 0.0F, 0.0F);
          float scale = -1.0F;
@@ -88,7 +89,7 @@ public class SpeechDataRenderer {
          float green = B_COLOR.green;
          float blue = B_COLOR.blue;
          float alpha = 0.5F;
-         BufferBuilder buffer = Tessellator.getInstance().getBuffer();
+         WorldRenderer buffer = Tessellator.getInstance().getBuffer();
          buffer.begin(5, DefaultVertexFormats.POSITION_COLOR);
          buffer.pos(ctx.left, ctx.top, 0.0D).color(red, green, blue, 0.5F).endVertex();
          buffer.pos(ctx.left, ctx.bottom, 0.0D).color(red, green, blue, 0.5F).endVertex();

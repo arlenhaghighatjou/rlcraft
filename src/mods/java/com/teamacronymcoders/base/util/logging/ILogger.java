@@ -1,6 +1,6 @@
 package com.teamacronymcoders.base.util.logging;
 
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public interface ILogger {
    void warning(String var1);

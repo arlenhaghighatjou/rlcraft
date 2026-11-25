@@ -1,7 +1,7 @@
 package de.Whitedraco.switchbow.helper;
 
 import de.Whitedraco.switchbow.item.armor.ArcherArmor;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 
@@ -15,7 +15,7 @@ public class HelperMethodes {
       if (min >= max) {
          throw new IllegalArgumentException("max must be greater than min");
       } else {
-         Random r = new Random();
+         EaglercraftRandom r = new EaglercraftRandom();
          return r.nextInt(max - min + 1) + min;
       }
    }

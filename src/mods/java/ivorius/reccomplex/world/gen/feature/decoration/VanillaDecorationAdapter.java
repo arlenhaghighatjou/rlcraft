@@ -2,7 +2,7 @@ package ivorius.reccomplex.world.gen.feature.decoration;
 
 import ivorius.reccomplex.RecurrentComplex;
 import ivorius.reccomplex.world.gen.feature.RCWorldgenMonitor;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
@@ -15,7 +15,7 @@ public class VanillaDecorationAdapter implements RCBiomeDecorator.Adapter {
    public VanillaDecorationAdapter() {
    }
 
-   public int amount(WorldServer worldIn, Random random, Biome biomeIn, BiomeDecorator decorator, BlockPos chunkPos, RCBiomeDecorator.DecorationType type) {
+   public int amount(WorldServer worldIn, EaglercraftRandom random, Biome biomeIn, BiomeDecorator decorator, BlockPos chunkPos, RCBiomeDecorator.DecorationType type) {
       switch(type) {
       case TREE:
          int vanillaAmount = decorator.treesPerChunk;
@@ -37,7 +37,7 @@ public class VanillaDecorationAdapter implements RCBiomeDecorator.Adapter {
       }
    }
 
-   public boolean mayGiveUp(WorldServer worldIn, Random random, Biome biome, BiomeDecorator decorator, BlockPos chunkPos, RCBiomeDecorator.DecorationType type) {
+   public boolean mayGiveUp(WorldServer worldIn, EaglercraftRandom random, Biome biome, BiomeDecorator decorator, BlockPos chunkPos, RCBiomeDecorator.DecorationType type) {
       return type != RCBiomeDecorator.DecorationType.DESERT_WELL && type != RCBiomeDecorator.DecorationType.FOSSIL && (type != RCBiomeDecorator.DecorationType.TREE || decorator.treesPerChunk != 0);
    }
 
@@ -45,7 +45,7 @@ public class VanillaDecorationAdapter implements RCBiomeDecorator.Adapter {
       return true;
    }
 
-   public void generate(WorldServer worldIn, Random random, Biome biomeIn, BiomeDecorator decorator, BlockPos chunkPos, RCBiomeDecorator.DecorationType type) {
+   public void generate(WorldServer worldIn, EaglercraftRandom random, Biome biomeIn, BiomeDecorator decorator, BlockPos chunkPos, RCBiomeDecorator.DecorationType type) {
       RCWorldgenMonitor.start("simulating vanilla decoration");
 
       try {

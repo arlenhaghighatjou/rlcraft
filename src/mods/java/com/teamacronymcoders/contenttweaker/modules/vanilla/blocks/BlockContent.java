@@ -29,7 +29,7 @@ import crafttweaker.mc1120.world.MCBlockAccess;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -165,11 +165,11 @@ public class BlockContent extends BlockBase implements IHasBlockColor, IHasItemC
    }
 
    @ParametersAreNonnullByDefault
-   public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom random) {
       this.activateBlockAction(this.blockRepresentation.getOnRandomTick(), world, pos, state);
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       this.activateBlockAction(this.blockRepresentation.getOnUpdateTick(), world, pos, state);
       if (this.blockRepresentation.hasGravity() && !world.isRemote && (world.isAirBlock(pos.down()) || BlockFalling.canFallThrough(world.getBlockState(pos.down()))) && pos.getY() >= 0 && world.isAreaLoaded(pos.add(-32, -32, -32), pos.add(32, 32, 32))) {
          world.spawnEntity(new EntityFallingBlock(world, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, world.getBlockState(pos)));

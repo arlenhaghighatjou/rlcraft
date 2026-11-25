@@ -1,6 +1,6 @@
 package vazkii.quark.world.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.SoundType;
@@ -28,7 +28,7 @@ public class BlockGlowcelium extends BlockMod implements IQuarkBlock {
       this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          if (worldIn.getBlockState(pos.up()).getLightOpacity(worldIn, pos.up()) > 2) {
             worldIn.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, DirtType.DIRT));
@@ -47,7 +47,7 @@ public class BlockGlowcelium extends BlockMod implements IQuarkBlock {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       super.randomDisplayTick(stateIn, worldIn, pos, rand);
       if (rand.nextInt(40) == 0) {
          worldIn.spawnParticle(EnumParticleTypes.END_ROD, (double)((float)pos.getX() + rand.nextFloat()), (double)((float)pos.getY() + 1.15F), (double)((float)pos.getZ() + rand.nextFloat()), 0.0D, 0.0D, 0.0D, new int[0]);
@@ -56,7 +56,7 @@ public class BlockGlowcelium extends BlockMod implements IQuarkBlock {
    }
 
    @Nonnull
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Blocks.DIRT.getItemDropped(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, DirtType.DIRT), rand, fortune);
    }
 }

@@ -3,9 +3,9 @@ package com.teamacronymcoders.base.client.models;
 import java.lang.reflect.Field;
 import javax.annotation.Nonnull;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumType;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumUsage;
 import net.minecraft.util.EnumFacing;
@@ -26,7 +26,7 @@ public class SmartLightingQuad extends BakedQuad {
    boolean ignoreLight;
    public static int staticBrightness;
 
-   public SmartLightingQuad(int[] vertexDataIn, int tintIndexIn, EnumFacing faceIn, TextureAtlasSprite spriteIn, VertexFormat format, BlockPos p) {
+   public SmartLightingQuad(int[] vertexDataIn, int tintIndexIn, EnumFacing faceIn, EaglerTextureAtlasSprite spriteIn, VertexFormat format, BlockPos p) {
       super(vertexDataIn, tintIndexIn, faceIn, spriteIn, false, format);
       this.blockPos = p;
       this.relativePos = new int[4][];
@@ -38,7 +38,7 @@ public class SmartLightingQuad extends BakedQuad {
 
    }
 
-   public SmartLightingQuad(int[] vertexDataIn, int tintIndexIn, EnumFacing faceIn, TextureAtlasSprite spriteIn, VertexFormat format) {
+   public SmartLightingQuad(int[] vertexDataIn, int tintIndexIn, EnumFacing faceIn, EaglerTextureAtlasSprite spriteIn, VertexFormat format) {
       super(vertexDataIn, tintIndexIn, faceIn, spriteIn, false, format);
       this.ignoreLight = true;
    }

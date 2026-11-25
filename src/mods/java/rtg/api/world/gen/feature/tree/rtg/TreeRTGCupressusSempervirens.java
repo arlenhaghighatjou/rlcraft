@@ -1,6 +1,6 @@
 package rtg.api.world.gen.feature.tree.rtg;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -8,7 +8,7 @@ public class TreeRTGCupressusSempervirens extends TreeRTG {
    public TreeRTGCupressusSempervirens() {
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       if (!this.isGroundValid(world, pos)) {
          return false;
       } else {

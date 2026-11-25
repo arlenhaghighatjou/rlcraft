@@ -2,13 +2,13 @@ package ivorius.ivtoolkit.logic;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public abstract class IvChatBot {
-   public Random random;
+   public EaglercraftRandom random;
    public List<IvChatLine> sendQueue = new ArrayList();
 
-   public IvChatBot(Random rand) {
+   public IvChatBot(EaglercraftRandom rand) {
       this.random = rand;
    }
 

@@ -2,12 +2,12 @@ package jaredbgreat.dldungeons.planner;
 
 import jaredbgreat.dldungeons.ConfigHandler;
 import jaredbgreat.dldungeons.rooms.Room;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Node {
    Room hubRoom;
 
-   public Node(int x, int y, int z, Random random, Dungeon dungeon) {
+   public Node(int x, int y, int z, EaglercraftRandom random, Dungeon dungeon) {
       int xdim = random.nextInt(dungeon.size.maxRoomSize / 2 - 3) + dungeon.size.maxRoomSize / 2 + 4;
       int zdim = random.nextInt(dungeon.size.maxRoomSize / 2 - 3) + dungeon.size.maxRoomSize / 2 + 4;
       int ymod = xdim <= zdim ? (int)Math.sqrt((double)xdim) : (int)Math.sqrt((double)zdim);

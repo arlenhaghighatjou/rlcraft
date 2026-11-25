@@ -1,6 +1,6 @@
 package vazkii.quark.misc.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTNT;
@@ -117,7 +117,7 @@ public class BlockGunpowder extends BlockQuarkDust {
       }
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       worldIn.setBlockToAir(pos);
       if (worldIn instanceof WorldServer) {
          ((WorldServer)worldIn).spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, 8, 0.2D, 0.0D, 0.2D, 0.0D, new int[0]);
@@ -159,7 +159,7 @@ public class BlockGunpowder extends BlockQuarkDust {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       if (((Boolean)stateIn.getValue(LIT)).booleanValue()) {
          float x = (float)pos.getX() + 0.2F + rand.nextFloat() * 0.6F;
          float y = (float)pos.getY() + 0.2F;
@@ -171,7 +171,7 @@ public class BlockGunpowder extends BlockQuarkDust {
    }
 
    @Nonnull
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Items.GUNPOWDER;
    }
 

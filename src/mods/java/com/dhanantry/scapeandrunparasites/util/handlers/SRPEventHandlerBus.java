@@ -29,9 +29,9 @@ import com.dhanantry.scapeandrunparasites.world.SRPWorldEntitySpawner;
 import com.dhanantry.scapeandrunparasites.world.biome.BiomeParasite;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.FogMode;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -95,7 +95,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class SRPEventHandlerBus {
    public static float fog = 0.0F;
@@ -365,7 +365,7 @@ public class SRPEventHandlerBus {
       }
    }
 
-   private int hasResistance(String damage, ArrayList<String> resistanceS, ArrayList<Integer> resistanceI, boolean stage, Random rand) {
+   private int hasResistance(String damage, ArrayList<String> resistanceS, ArrayList<Integer> resistanceI, boolean stage, EaglercraftRandom rand) {
       if (this.checkList(damage)) {
          return 0;
       } else {
@@ -679,7 +679,7 @@ public class SRPEventHandlerBus {
 
    private void setCOTH(EntityLivingBase target, byte evo) {
       if (!target.isChild()) {
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          switch(evo) {
          case 1:
             if (rand.nextDouble() < SRPConfigSystems.mobSpawningCOTHChanceOne) {
@@ -1065,7 +1065,7 @@ public class SRPEventHandlerBus {
          if (drop.length != 0) {
             String[] dropping = new String[4];
             String[] dropped = new String[drop.length];
-            Random rand = new Random();
+            EaglercraftRandom rand = new EaglercraftRandom();
             boolean always = false;
             int quantity = 0;
             int realquantity = 0;

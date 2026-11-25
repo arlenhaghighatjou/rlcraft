@@ -4,7 +4,7 @@ import com.dhanantry.scapeandrunparasites.block.BlockBiomeCore;
 import com.dhanantry.scapeandrunparasites.block.BlockParasiteRubbleDense;
 import com.dhanantry.scapeandrunparasites.block.BlockParasiteStain;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -16,7 +16,7 @@ public class WorldGenParasiteNodeCore extends WorldGenParasiteGenAbstract {
       this.core = stage;
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       switch(this.core) {
       case 1:
          BlockPos helper = position;
@@ -300,7 +300,7 @@ public class WorldGenParasiteNodeCore extends WorldGenParasiteGenAbstract {
       }
    }
 
-   private BlockPos placeColumn(World worldIn, BlockPos pos, int in, Random rand, double extraChance) {
+   private BlockPos placeColumn(World worldIn, BlockPos pos, int in, EaglercraftRandom rand, double extraChance) {
       int current = pos.getY();
       int atm = current;
       int times = 0;

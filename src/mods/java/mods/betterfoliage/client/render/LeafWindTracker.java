@@ -1,6 +1,6 @@
 package mods.betterfoliage.client.render;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import kotlin.Metadata;
 import kotlin.jvm.internal.Intrinsics;
 import mods.betterfoliage.client.config.Config;
@@ -24,11 +24,11 @@ import org.jetbrains.annotations.NotNull;
    bv = {1, 0, 3},
    k = 1,
    d1 = {"\u0000>\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0010\t\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\b\u0007\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\bÇ\u0002\u0018\u00002\u00020\u0001B\u0007\b\u0002¢\u0006\u0002\u0010\u0002J\u000e\u0010\u0015\u001a\u00020\u00162\u0006\u0010\u0017\u001a\u00020\u0018J\u0010\u0010\u0019\u001a\u00020\u00162\u0006\u0010\u001a\u001a\u00020\u001bH\u0007J\u0010\u0010\u001c\u001a\u00020\u00162\u0006\u0010\u001a\u001a\u00020\u001dH\u0007R\u0011\u0010\u0003\u001a\u00020\u0004¢\u0006\b\n\u0000\u001a\u0004\b\u0005\u0010\u0006R\u001a\u0010\u0007\u001a\u00020\bX\u0086\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\t\u0010\n\"\u0004\b\u000b\u0010\fR\u001a\u0010\r\u001a\u00020\u000eX\u0086\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\u000f\u0010\u0010\"\u0004\b\u0011\u0010\u0012R\u0011\u0010\u0013\u001a\u00020\u0004¢\u0006\b\n\u0000\u001a\u0004\b\u0014\u0010\u0006¨\u0006\u001e"},
-   d2 = {"Lmods/betterfoliage/client/render/LeafWindTracker;", "", "()V", "current", "Lmods/octarinecore/common/Double3;", "getCurrent", "()Lmods/octarinecore/common/Double3;", "nextChange", "", "getNextChange", "()J", "setNextChange", "(J)V", "random", "Ljava/util/Random;", "getRandom", "()Ljava/util/Random;", "setRandom", "(Ljava/util/Random;)V", "target", "getTarget", "changeWind", "", "world", "Lnet/minecraft/world/World;", "handleWorldLoad", "event", "Lnet/minecraftforge/event/world/WorldEvent$Load;", "handleWorldTick", "Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;", "BetterFoliage-MC1.12"}
+   d2 = {"Lmods/betterfoliage/client/render/LeafWindTracker;", "", "()V", "current", "Lmods/octarinecore/common/Double3;", "getCurrent", "()Lmods/octarinecore/common/Double3;", "nextChange", "", "getNextChange", "()J", "setNextChange", "(J)V", "random", "Ljava/util/EaglercraftRandom;", "getRandom", "()Ljava/util/EaglercraftRandom;", "setRandom", "(Ljava/util/EaglercraftRandom;)V", "target", "getTarget", "changeWind", "", "world", "Lnet/minecraft/world/World;", "handleWorldLoad", "event", "Lnet/minecraftforge/event/world/WorldEvent$Load;", "handleWorldTick", "Lnet/minecraftforge/fml/common/gameevent/TickEvent$ClientTickEvent;", "BetterFoliage-MC1.12"}
 )
 public final class LeafWindTracker {
    @NotNull
-   private static Random random = new Random();
+   private static EaglercraftRandom random = new EaglercraftRandom();
    @NotNull
    private static final Double3 target = Double3.Companion.getZero();
    @NotNull
@@ -37,11 +37,11 @@ public final class LeafWindTracker {
    public static final LeafWindTracker INSTANCE;
 
    @NotNull
-   public final Random getRandom() {
+   public final EaglercraftRandom getRandom() {
       return random;
    }
 
-   public final void setRandom(@NotNull Random var1) {
+   public final void setRandom(@NotNull EaglercraftRandom var1) {
       Intrinsics.checkParameterIsNotNull(<set-?>, "<set-?>");
       random = <set-?>;
    }

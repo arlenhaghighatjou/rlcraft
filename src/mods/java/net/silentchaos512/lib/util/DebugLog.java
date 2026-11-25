@@ -1,7 +1,7 @@
 package net.silentchaos512.lib.util;
 
 import net.silentchaos512.lib.base.IModBase;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 /** @deprecated */
 @Deprecated

@@ -1,6 +1,6 @@
 package xzeroair.trinkets.network.configsync;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;

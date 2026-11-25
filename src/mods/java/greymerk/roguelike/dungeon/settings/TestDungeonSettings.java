@@ -9,7 +9,7 @@ import greymerk.roguelike.dungeon.segment.SegmentGenerator;
 import greymerk.roguelike.dungeon.towers.TowerType;
 import greymerk.roguelike.theme.Themes;
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
@@ -18,9 +18,9 @@ import java.util.stream.Stream;
 
 public class TestDungeonSettings extends DungeonSettings {
    public static final SettingIdentifier ID = new SettingIdentifier("test", "dungeon");
-   private final Random random;
+   private final EaglercraftRandom random;
 
-   public TestDungeonSettings(Random random) {
+   public TestDungeonSettings(EaglercraftRandom random) {
       super(ID);
       this.random = random;
       this.setExclusive(true);

@@ -1,12 +1,12 @@
 package com.ferreusveritas.dynamictrees.util;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class MathHelper {
    public MathHelper() {
    }
 
-   public static int selectRandomFromDistribution(Random random, int[] distMap) {
+   public static int selectRandomFromDistribution(EaglercraftRandom random, int[] distMap) {
       int distSize = 0;
 
       for(int i = 0; i < distMap.length; ++i) {

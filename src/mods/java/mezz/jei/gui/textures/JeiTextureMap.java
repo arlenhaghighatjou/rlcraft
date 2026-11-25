@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.ITextureMapPopulator;
 import net.minecraft.client.renderer.texture.PngSizeInfo;
 import net.minecraft.client.renderer.texture.Stitcher;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.resources.IResource;
@@ -55,7 +55,7 @@ public class JeiTextureMap extends TextureMap {
       Iterator map = this.mapRegisteredSprites.entrySet().iterator();
 
       while(true) {
-         TextureAtlasSprite textureatlassprite;
+         EaglerTextureAtlasSprite textureatlassprite;
          while(true) {
             if (!map.hasNext()) {
                ProgressManager.pop(bar);
@@ -71,7 +71,7 @@ public class JeiTextureMap extends TextureMap {
                ProgressManager.pop(bar);
                bar = ProgressManager.push("Texture mipmap and upload", stitcher.getStichSlots().size());
 
-               for(TextureAtlasSprite textureatlassprite1 : stitcher.getStichSlots()) {
+               for(EaglerTextureAtlasSprite textureatlassprite1 : stitcher.getStichSlots()) {
                   bar.step(textureatlassprite1.getIconName());
                   if (textureatlassprite1 == this.missingImage || this.generateMipmaps(resourceManager, textureatlassprite1)) {
                      String s = textureatlassprite1.getIconName();
@@ -94,7 +94,7 @@ public class JeiTextureMap extends TextureMap {
                   }
                }
 
-               for(TextureAtlasSprite textureatlassprite2 : map.values()) {
+               for(EaglerTextureAtlasSprite textureatlassprite2 : map.values()) {
                   textureatlassprite2.copyFrom(this.missingImage);
                }
 
@@ -102,14 +102,14 @@ public class JeiTextureMap extends TextureMap {
                return;
             }
 
-            Entry<String, TextureAtlasSprite> entry = (Entry)map.next();
-            textureatlassprite = (TextureAtlasSprite)entry.getValue();
+            Entry<String, EaglerTextureAtlasSprite> entry = (Entry)map.next();
+            textureatlassprite = (EaglerTextureAtlasSprite)entry.getValue();
             ResourceLocation resourcelocation = this.getResourceLocation(textureatlassprite);
             bar.step(resourcelocation.getResourcePath());
             IResource iresource = null;
             if (textureatlassprite.hasCustomLoader(resourceManager, resourcelocation)) {
                if (textureatlassprite.load(resourceManager, resourcelocation, (l) -> {
-                  return (TextureAtlasSprite)this.mapRegisteredSprites.get(l.toString());
+                  return (EaglerTextureAtlasSprite)this.mapRegisteredSprites.get(l.toString());
                })) {
                   continue;
                }
@@ -135,7 +135,7 @@ public class JeiTextureMap extends TextureMap {
       }
    }
 
-   private boolean generateMipmaps(IResourceManager resourceManager, TextureAtlasSprite texture) {
+   private boolean generateMipmaps(IResourceManager resourceManager, EaglerTextureAtlasSprite texture) {
       ResourceLocation resourcelocation = this.getResourceLocation(texture);
       IResource iresource = null;
       if (!texture.hasCustomLoader(resourceManager, resourcelocation)) {
@@ -179,7 +179,7 @@ public class JeiTextureMap extends TextureMap {
       }
    }
 
-   private ResourceLocation getResourceLocation(TextureAtlasSprite p_184396_1_) {
+   private ResourceLocation getResourceLocation(EaglerTextureAtlasSprite p_184396_1_) {
       ResourceLocation resourcelocation = new ResourceLocation(p_184396_1_.getIconName());
       return new ResourceLocation(resourcelocation.getResourceDomain(), String.format("%s/%s%s", this.basePath, resourcelocation.getResourcePath(), ".png"));
    }

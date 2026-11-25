@@ -6,7 +6,7 @@ import com.yungnickyoung.minecraft.bettermineshafts.util.BoxUtil;
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.MineshaftVariantSettings;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
@@ -30,7 +30,7 @@ public class OreDeposit extends MineshaftPiece {
    public OreDeposit() {
    }
 
-   public OreDeposit(int i, int chunkPieceLen, Random random, StructureBoundingBox blockBox, EnumFacing direction, MineshaftVariantSettings settings) {
+   public OreDeposit(int i, int chunkPieceLen, EaglercraftRandom random, StructureBoundingBox blockBox, EnumFacing direction, MineshaftVariantSettings settings) {
       super(i, chunkPieceLen, settings);
       this.setCoordBaseMode(direction);
       this.boundingBox = blockBox;
@@ -48,13 +48,13 @@ public class OreDeposit extends MineshaftPiece {
       this.oreType = OreDeposit.OreType.valueOf(tag.getInteger("OreType"));
    }
 
-   public static StructureBoundingBox determineBoxPosition(List<StructureComponent> list, Random random, int x, int y, int z, EnumFacing direction) {
+   public static StructureBoundingBox determineBoxPosition(List<StructureComponent> list, EaglercraftRandom random, int x, int y, int z, EnumFacing direction) {
       StructureBoundingBox blockBox = BoxUtil.boxFromCoordsWithRotation(x, y, z, 5, 5, 4, direction);
       StructureComponent intersectingPiece = StructureComponent.findIntersecting(list, blockBox);
       return intersectingPiece != null ? null : blockBox;
    }
 
-   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, Random random) {
+   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, EaglercraftRandom random) {
       int r = random.nextInt(100);
 
       for(OreDeposit.OreType oreType : OreDeposit.OreType.values()) {
@@ -75,7 +75,7 @@ public class OreDeposit extends MineshaftPiece {
    }
 
    @ParametersAreNonnullByDefault
-   public boolean addComponentParts(World world, Random random, StructureBoundingBox box) {
+   public boolean addComponentParts(World world, EaglercraftRandom random, StructureBoundingBox box) {
       if (this.isLiquidInStructureBoundingBox(world, box)) {
          return false;
       } else if (!this.isInOcean(world, 0, 0) && !this.isInOcean(world, 4, 3)) {

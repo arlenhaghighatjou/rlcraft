@@ -19,7 +19,7 @@ import java.nio.ByteOrder;
 import java.nio.InvalidMarkException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.regex.Matcher;
 import sun.misc.Cleaner;
 
@@ -992,7 +992,7 @@ public class Tools {
       return (char)((int)((double)maxvalue * Math.random()));
    }
 
-   public static double randomGaussian(Random random, double center, double range) {
+   public static double randomGaussian(EaglercraftRandom random, double center, double range) {
       double result;
       for(result = random.nextGaussian() * 0.5D; result < -1.0D || result > 1.0D; result = random.nextGaussian() * 0.5D) {
          ;

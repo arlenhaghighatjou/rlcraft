@@ -5,7 +5,7 @@ import com.google.common.collect.HashBiMap;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.commons.ClassRemapper;
@@ -88,7 +88,7 @@ final class InnerClassGenerator implements IClassGenerator {
          name = "Anonymous";
       }
 
-      return String.format("%s$%s$%s", targetClass, name, UUID.randomUUID().toString().replace("-", ""));
+      return String.format("%s$%s$%s", targetClass, name, EaglercraftUUID.randomUUID().toString().replace("-", ""));
    }
 
    static class InnerClassAdapter extends ClassRemapper {

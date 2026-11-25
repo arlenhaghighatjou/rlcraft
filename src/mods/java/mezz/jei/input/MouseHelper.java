@@ -6,7 +6,7 @@ import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent.Post;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 @EventBusSubscriber(
    modid = "jei",

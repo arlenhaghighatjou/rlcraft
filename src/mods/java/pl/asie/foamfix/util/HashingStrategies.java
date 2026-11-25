@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemTransformVec3f;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public final class HashingStrategies {
    public static final Strategy<Object> FASTUTIL_IDENTITY = new Strategy<Object>() {

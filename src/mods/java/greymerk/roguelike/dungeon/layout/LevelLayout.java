@@ -6,7 +6,7 @@ import greymerk.roguelike.worldgen.Coord;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -57,7 +57,7 @@ public class LevelLayout {
       return this.tunnels;
    }
 
-   public void setStartEnd(Random param1, DungeonNode param2) {
+   public void setStartEnd(EaglercraftRandom param1, DungeonNode param2) {
       // $FF: Couldn't be decompiled
    }
 

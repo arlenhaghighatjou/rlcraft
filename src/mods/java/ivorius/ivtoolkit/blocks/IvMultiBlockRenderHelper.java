@@ -1,6 +1,6 @@
 package ivorius.ivtoolkit.blocks;
 
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class IvMultiBlockRenderHelper {
    public IvMultiBlockRenderHelper() {

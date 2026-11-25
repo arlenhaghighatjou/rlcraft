@@ -9,13 +9,13 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import noppes.vc.containers.ContainerEmpty;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public abstract class GuiContainerBasic extends GuiContainer {
    public boolean drawDefaultBackground = false;

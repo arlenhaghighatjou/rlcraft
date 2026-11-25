@@ -1,7 +1,7 @@
 package com.oblivioussp.spartanweaponry.client.render.projectile;
 
 import com.oblivioussp.spartanweaponry.entity.projectile.EntityBoomerang;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 

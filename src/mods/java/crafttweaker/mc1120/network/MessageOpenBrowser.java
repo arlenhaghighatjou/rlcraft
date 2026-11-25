@@ -1,7 +1,7 @@
 package crafttweaker.mc1120.network;
 
 import crafttweaker.mc1120.CraftTweaker;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;

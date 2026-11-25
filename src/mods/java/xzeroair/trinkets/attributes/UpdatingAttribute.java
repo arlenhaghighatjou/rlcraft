@@ -1,6 +1,6 @@
 package xzeroair.trinkets.attributes;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -12,20 +12,20 @@ import xzeroair.trinkets.util.compat.firstaid.FirstAidCompat;
 public class UpdatingAttribute {
    public String modifierName;
    public String attribute;
-   public UUID uuid;
+   public EaglercraftUUID uuid;
    public double amount;
    public int operation;
    public boolean isSavedInNBT;
 
-   public UpdatingAttribute(UUID uuid, IAttribute attribute) {
+   public UpdatingAttribute(EaglercraftUUID uuid, IAttribute attribute) {
       this("xat." + attribute.getName() + ".modifier", uuid, attribute.getName());
    }
 
-   public UpdatingAttribute(String name, UUID uuid, IAttribute attribute) {
+   public UpdatingAttribute(String name, EaglercraftUUID uuid, IAttribute attribute) {
       this(name, uuid, attribute.getName());
    }
 
-   public UpdatingAttribute(String name, UUID uuid, String attributeName) {
+   public UpdatingAttribute(String name, EaglercraftUUID uuid, String attributeName) {
       this.modifierName = name;
       this.uuid = uuid;
       this.attribute = attributeName;
@@ -70,7 +70,7 @@ public class UpdatingAttribute {
       World world = entity == null ? null : entity.getEntityWorld();
       if (entity != null && world != null) {
          IAttributeInstance AttributeInstance = entity.getAttributeMap().getAttributeInstanceByName(this.attribute);
-         if (AttributeInstance != null && this.uuid.compareTo(UUID.fromString("00000000-0000-0000-0000-000000000000")) != 0) {
+         if (AttributeInstance != null && this.uuid.compareTo(EaglercraftUUID.fromString("00000000-0000-0000-0000-000000000000")) != 0) {
             if (AttributeInstance.getModifier(this.uuid) != null) {
                AttributeModifier m = AttributeInstance.getModifier(this.uuid);
                if (amount == 0.0D || m.getAmount() != amount || m.getOperation() != operation) {

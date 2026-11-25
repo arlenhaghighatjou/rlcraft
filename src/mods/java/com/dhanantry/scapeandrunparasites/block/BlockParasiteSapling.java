@@ -5,7 +5,7 @@ import com.dhanantry.scapeandrunparasites.item.ItemBlockVariant;
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteTallFlower;
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteTree;
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteTreeThin;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.properties.IProperty;
@@ -44,7 +44,7 @@ public class BlockParasiteSapling extends BlockBush implements IGrowable, IMetaN
       return SAPLING_AABB;
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          super.updateTick(worldIn, pos, state, rand);
          if (!worldIn.isAreaLoaded(pos, 1)) {
@@ -58,7 +58,7 @@ public class BlockParasiteSapling extends BlockBush implements IGrowable, IMetaN
 
    }
 
-   public void grow(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void grow(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (((Integer)state.getValue(STAGE)).intValue() == 0) {
          worldIn.setBlockState(pos, state.cycleProperty(STAGE), 4);
       } else {
@@ -67,7 +67,7 @@ public class BlockParasiteSapling extends BlockBush implements IGrowable, IMetaN
 
    }
 
-   public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void generateTree(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (TerrainGen.saplingGrowTree(worldIn, rand, pos)) {
          WorldGenerator worldgenerator = (WorldGenerator)(rand.nextInt(10) == 0 ? new WorldGenBigTree(true) : new WorldGenTrees(true));
          int i = 0;
@@ -124,11 +124,11 @@ public class BlockParasiteSapling extends BlockBush implements IGrowable, IMetaN
       return true;
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return (double)worldIn.rand.nextFloat() < 0.45D;
    }
 
-   public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       this.grow(worldIn, pos, state, rand);
    }
 

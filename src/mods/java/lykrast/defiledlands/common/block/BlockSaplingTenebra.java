@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.init.ModBlocks;
 import lykrast.defiledlands.common.world.feature.WorldGenTenebra;
 import net.minecraft.block.BlockSapling;
@@ -24,7 +24,7 @@ public class BlockSaplingTenebra extends BlockSapling {
       this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, Integer.valueOf(0)));
    }
 
-   public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void generateTree(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (TerrainGen.saplingGrowTree(worldIn, rand, pos)) {
          int i = 0;
          int j = 0;

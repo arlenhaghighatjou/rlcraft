@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -235,7 +235,7 @@ public class BlurredValueField implements NBTCompoundObject, BlurrablePivot {
       return this.offset[d] + (this.size[d] * chunkPos + roundUpCorrection) / this.chunkCount[d];
    }
 
-   public boolean addValue(double value, Random random) {
+   public boolean addValue(double value, EaglercraftRandom random) {
       int[] pos = new int[this.size.length];
 
       for(int i = 0; i < pos.length; ++i) {

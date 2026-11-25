@@ -4,7 +4,7 @@ import betterquesting.api.properties.NativeProps;
 import betterquesting.api.storage.ILifeDatabase;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import java.util.function.Function;
 import javax.annotation.Nonnull;
@@ -15,28 +15,28 @@ import net.minecraft.util.math.MathHelper;
 
 public final class LifeDatabase implements ILifeDatabase {
    public static final LifeDatabase INSTANCE = new LifeDatabase();
-   private final HashMap<UUID, Integer> playerLives = new HashMap();
+   private final HashMap<EaglercraftUUID, Integer> playerLives = new HashMap();
 
    public LifeDatabase() {
    }
 
-   public synchronized int getLives(@Nonnull UUID uuid) {
+   public synchronized int getLives(@Nonnull EaglercraftUUID uuid) {
       return ((Integer)this.playerLives.computeIfAbsent(uuid, (k) -> {
          return (Integer)QuestSettings.INSTANCE.getProperty(NativeProps.LIVES_DEF);
       })).intValue();
    }
 
-   public synchronized void setLives(@Nonnull UUID uuid, int value) {
+   public synchronized void setLives(@Nonnull EaglercraftUUID uuid, int value) {
       this.playerLives.put(uuid, Integer.valueOf(MathHelper.clamp(value, 0, ((Integer)QuestSettings.INSTANCE.getProperty(NativeProps.LIVES_MAX)).intValue())));
    }
 
-   public synchronized NBTTagCompound writeToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+   public synchronized NBTTagCompound writeToNBT(NBTTagCompound nbt, @Nullable List<EaglercraftUUID> users) {
       NBTTagList jul = new NBTTagList();
 
-      for(Entry<UUID, Integer> entry : this.playerLives.entrySet()) {
+      for(Entry<EaglercraftUUID, Integer> entry : this.playerLives.entrySet()) {
          if (users == null || users.contains(entry.getKey())) {
             NBTTagCompound j = new NBTTagCompound();
-            j.setString("uuid", ((UUID)entry.getKey()).toString());
+            j.setString("uuid", ((EaglercraftUUID)entry.getKey()).toString());
             j.setInteger("lives", ((Integer)entry.getValue()).intValue());
             jul.appendTag(j);
          }
@@ -57,7 +57,7 @@ public final class LifeDatabase implements ILifeDatabase {
          NBTTagCompound j = tagList.getCompoundTagAt(i);
 
          try {
-            UUID uuid = UUID.fromString(j.getString("uuid"));
+            EaglercraftUUID uuid = EaglercraftUUID.fromString(j.getString("uuid"));
             int lives = j.getInteger("lives");
             this.playerLives.put(uuid, Integer.valueOf(lives));
          } catch (Exception var8) {

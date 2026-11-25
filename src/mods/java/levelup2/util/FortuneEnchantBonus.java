@@ -3,7 +3,7 @@ package levelup2.util;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -26,7 +26,7 @@ public class FortuneEnchantBonus extends LootFunction {
       this.limit = limit;
    }
 
-   public ItemStack apply(ItemStack stack, Random rand, LootContext context) {
+   public ItemStack apply(ItemStack stack, EaglercraftRandom rand, LootContext context) {
       Entity entity = context.getKillerPlayer();
       if (entity != null && entity instanceof EntityLivingBase) {
          int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantment.getEnchantmentByLocation("fortune"), (EntityLivingBase)entity);

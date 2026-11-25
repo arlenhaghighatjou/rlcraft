@@ -1,7 +1,7 @@
 package org.orecruncher.dsurround.client.fx.particle.mote;
 
 import javax.annotation.Nonnull;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;

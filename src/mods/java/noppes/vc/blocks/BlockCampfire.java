@@ -1,10 +1,10 @@
 package noppes.vc.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -80,7 +80,7 @@ public class BlockCampfire extends BlockBasicLightable {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, EaglercraftRandom rand) {
       if (state.getBlock() == VCBlocks.campfire) {
          if (rand.nextInt(36) == 0) {
             world.playSound((double)((float)pos.getX() + 0.5F), (double)((float)pos.getY() + 0.5F), (double)((float)pos.getZ() + 0.5F), SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.BLOCKS, 1.0F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.3F, false);

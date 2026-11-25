@@ -1,6 +1,6 @@
 package svenhjol.charm.crafting.ai;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityEndermite;
@@ -29,7 +29,7 @@ public class AIFormEndermite extends EntityAIWander {
       } else if (!this.silverfish.getNavigator().noPath()) {
          return false;
       } else {
-         Random random = this.silverfish.getRNG();
+         EaglercraftRandom random = this.silverfish.getRNG();
          if ((double)random.nextFloat() < EnderPearlBlock.endermiteChance) {
             this.facing = EnumFacing.random(random);
             BlockPos blockpos = (new BlockPos(this.silverfish.posX, this.silverfish.posY + 0.5D, this.silverfish.posZ)).offset(this.facing);

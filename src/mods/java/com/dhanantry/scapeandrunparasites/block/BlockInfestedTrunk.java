@@ -6,7 +6,7 @@ import com.dhanantry.scapeandrunparasites.util.ParasiteEventWorld;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigSystems;
 import com.dhanantry.scapeandrunparasites.world.SRPWorldData;
 import com.dhanantry.scapeandrunparasites.world.biome.BiomeParasite;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -55,7 +55,7 @@ public class BlockInfestedTrunk extends BlockRotatedPillar {
       return false;
    }
 
-   public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void randomTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (worldIn.isAreaLoaded(pos, 3)) {
          if (rand.nextDouble() < 0.5D) {
             if (worldIn.getBiome(pos) instanceof BiomeParasite) {
@@ -77,7 +77,7 @@ public class BlockInfestedTrunk extends BlockRotatedPillar {
       }
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (worldIn.isAreaLoaded(pos, 3)) {
          if (!worldIn.isRemote) {
             this.getMetaFromState(state);

@@ -2,8 +2,8 @@ package com.dhanantry.scapeandrunparasites.network;
 
 import com.dhanantry.scapeandrunparasites.client.particle.ParticleSpawner;
 import com.dhanantry.scapeandrunparasites.client.particle.SRPEnumParticle;
-import io.netty.buffer.ByteBuf;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -61,30 +61,30 @@ public class SRPPacketParticle implements IMessage {
       private void handle(SRPPacketParticle message, MessageContext ctx) {
          switch(message.type) {
          case 1:
-            this.spawnParticles(SRPEnumParticle.GSPLASH, new Random(), message, 0, 0, 0);
+            this.spawnParticles(SRPEnumParticle.GSPLASH, new EaglercraftRandom(), message, 0, 0, 0);
             break;
          case 2:
             for(int i = 0; i <= 3; ++i) {
-               this.spawnParticles(SRPEnumParticle.GCLOUD, new Random(), message, 0, 0, 0);
+               this.spawnParticles(SRPEnumParticle.GCLOUD, new EaglercraftRandom(), message, 0, 0, 0);
             }
 
             return;
          case 3:
             for(int i = 0; i <= 5; ++i) {
-               this.spawnParticles(SRPEnumParticle.RHAPPY, new Random(), message, 0, 0, 0);
+               this.spawnParticles(SRPEnumParticle.RHAPPY, new EaglercraftRandom(), message, 0, 0, 0);
             }
 
             return;
          case 4:
             for(int i = 0; i <= 23; ++i) {
-               this.spawnParticles(SRPEnumParticle.GCLOUD, new Random(), message, 125, 227, 118);
+               this.spawnParticles(SRPEnumParticle.GCLOUD, new EaglercraftRandom(), message, 125, 227, 118);
             }
          case 5:
          }
 
       }
 
-      private void spawnParticles(SRPEnumParticle particleType, Random rand, SRPPacketParticle message, int r, int g, int b) {
+      private void spawnParticles(SRPEnumParticle particleType, EaglercraftRandom rand, SRPPacketParticle message, int r, int g, int b) {
          double d0 = rand.nextGaussian() * 0.02D;
          double d1 = rand.nextGaussian() * 0.02D;
          double d2 = rand.nextGaussian() * 0.02D;

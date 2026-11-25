@@ -1,6 +1,6 @@
 package xzeroair.trinkets.util.handlers;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -11,7 +11,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 
 public class StealHandler {
-   private Random rand = new Random();
+   private EaglercraftRandom rand = new EaglercraftRandom();
    private EntityLivingBase player;
    int cooldown = 0;
    int counter = 0;

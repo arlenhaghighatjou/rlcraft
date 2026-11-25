@@ -1,10 +1,10 @@
 package com.creativemd.creativecore.common.packet;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -130,9 +130,9 @@ public class PacketReciever implements IMessageHandler<CreativeMessageHandler, I
 
    public static class PacketKey {
       public final int packetId;
-      public final UUID uuid;
+      public final EaglercraftUUID uuid;
 
-      public PacketKey(int packetId, UUID uuid) {
+      public PacketKey(int packetId, EaglercraftUUID uuid) {
          this.packetId = packetId;
          this.uuid = uuid;
       }
@@ -157,13 +157,13 @@ public class PacketReciever implements IMessageHandler<CreativeMessageHandler, I
    public static class PacketValue {
       public static long timeToWait = 60000L;
       public final ByteBuf buf;
-      public final UUID uuid;
+      public final EaglercraftUUID uuid;
       public final CreativeCorePacket packet;
       public final int amount;
       public int received;
       public long lastReceivedPart = System.currentTimeMillis();
 
-      public PacketValue(ByteBuf buf, UUID uuid, CreativeCorePacket packet, int amount) {
+      public PacketValue(ByteBuf buf, EaglercraftUUID uuid, CreativeCorePacket packet, int amount) {
          this.buf = buf;
          this.packet = packet;
          this.amount = amount;

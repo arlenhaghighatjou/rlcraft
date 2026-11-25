@@ -3,7 +3,7 @@ package ivorius.reccomplex.world.storage.loot;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import ivorius.reccomplex.json.NBTToJson;
 import javax.annotation.Nullable;
 import net.minecraftforge.fml.common.network.ByteBufUtils;

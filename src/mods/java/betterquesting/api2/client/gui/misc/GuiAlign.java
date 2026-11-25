@@ -3,7 +3,7 @@ package betterquesting.api2.client.gui.misc;
 import java.nio.FloatBuffer;
 import org.lwjgl.util.vector.ReadableVector4f;
 import org.lwjgl.util.vector.Vector;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class GuiAlign {
    public static final ReadableVector4f FULL_BOX = new GuiAlign.ImmutableVec4f(0.0F, 0.0F, 1.0F, 1.0F);

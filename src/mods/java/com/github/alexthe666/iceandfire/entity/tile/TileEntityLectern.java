@@ -4,7 +4,7 @@ import com.github.alexthe666.iceandfire.core.ModItems;
 import com.github.alexthe666.iceandfire.enums.EnumBestiaryPages;
 import com.github.alexthe666.iceandfire.inventory.ContainerLectern;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -31,7 +31,7 @@ public class TileEntityLectern extends TileEntity implements ITickable, ISidedIn
    private static final int[] slotsTop = new int[]{0};
    private static final int[] slotsBottom = new int[]{2, 1};
    private static final int[] slotsSides = new int[]{1};
-   private static Random rand = new Random();
+   private static EaglercraftRandom rand = new EaglercraftRandom();
    public float pageFlip;
    public float pageFlipPrev;
    public float pageHelp1;

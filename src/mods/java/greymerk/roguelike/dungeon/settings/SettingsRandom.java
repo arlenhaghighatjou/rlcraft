@@ -19,7 +19,7 @@ import greymerk.roguelike.treasure.loot.rule.ForEachLootRule;
 import greymerk.roguelike.treasure.loot.rule.SingleUseLootRule;
 import greymerk.roguelike.treasure.loot.rule.TypedForEachLootRule;
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
@@ -27,7 +27,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class SettingsRandom extends DungeonSettings {
-   public SettingsRandom(Random random) {
+   public SettingsRandom(EaglercraftRandom random) {
       this.setTowerSettings(new TowerSettings(TowerType.random(random), Themes.random(random)));
       IntStream.range(0, 5).forEach((i) -> {
          LevelSettings var10000 = (LevelSettings)this.getLevelSettings().put(Integer.valueOf(i), this.createRandomLevel(random, i));
@@ -68,7 +68,7 @@ public class SettingsRandom extends DungeonSettings {
 
    }
 
-   private LevelSettings createRandomLevel(Random random, int i) {
+   private LevelSettings createRandomLevel(EaglercraftRandom random, int i) {
       LevelSettings level = new LevelSettings(i);
       level.setGenerator(i % 2 == 0 ? LayoutGenerator.Type.CLASSIC : LayoutGenerator.Type.MST);
       level.setNumRooms(15);

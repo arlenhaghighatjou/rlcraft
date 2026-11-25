@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
@@ -156,7 +156,7 @@ public class WorldScriptStructureGenerator implements WorldScript<WorldScriptStr
 
    public WorldScriptStructureGenerator.InstanceData prepareInstanceData(StructurePrepareContext context, BlockPos pos) {
       WorldScriptStructureGenerator.InstanceData instanceData = null;
-      Random random = context.random;
+      EaglercraftRandom random = context.random;
       AxisAlignedTransform2D transform = context.transform;
       if (this.simpleMode) {
          if (this.structureNames.size() > 0) {

@@ -1,6 +1,6 @@
 package com.fantasticsource.tools.component;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 
 public interface IObfuscatedComponent {
    static <T extends Component & IObfuscatedComponent> T writeMarkedObf(ByteBuf buf, T component) {

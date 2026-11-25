@@ -11,7 +11,7 @@ import mezz.jei.input.IMouseHandler;
 import mezz.jei.input.IPaged;
 import mezz.jei.util.MathUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class RecipeGuiTabs implements IMouseHandler, IPaged {
    private final IRecipeGuiLogic recipeGuiLogic;

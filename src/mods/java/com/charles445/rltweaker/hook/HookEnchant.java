@@ -5,7 +5,7 @@ import com.charles445.rltweaker.config.ModConfig;
 import com.charles445.rltweaker.util.ErrorUtil;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 
@@ -30,7 +30,7 @@ public class HookEnchant {
       return !isEnchantmentBlacklisted(enchant) ? list.add(enchant) : false;
    }
 
-   public static Enchantment getRandomRestricted(Object registry, Random rand) {
+   public static Enchantment getRandomRestricted(Object registry, EaglercraftRandom rand) {
       int overload = 50000;
 
       Enchantment ench;

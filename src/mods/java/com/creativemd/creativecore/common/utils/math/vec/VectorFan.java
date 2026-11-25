@@ -14,7 +14,7 @@ import java.util.List;
 import javax.vecmath.Vector2f;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -206,7 +206,7 @@ public class VectorFan {
 
    public void renderPreview(int red, int green, int blue, int alpha) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(6, DefaultVertexFormats.POSITION_COLOR);
 
       for(int i = 0; i < this.coords.length; ++i) {
@@ -219,7 +219,7 @@ public class VectorFan {
 
    public void renderPreview(float offX, float offY, float offZ, float scaleX, float scaleY, float scaleZ, int red, int green, int blue, int alpha) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(6, DefaultVertexFormats.POSITION_COLOR);
 
       for(int i = 0; i < this.coords.length; ++i) {
@@ -232,7 +232,7 @@ public class VectorFan {
 
    public void renderLines(int red, int green, int blue, int alpha) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
 
       int index;
       for(index = 0; index < this.coords.length - 3; index += 2) {
@@ -261,7 +261,7 @@ public class VectorFan {
 
    public void renderLines(float offX, float offY, float offZ, float scaleX, float scaleY, float scaleZ, int red, int green, int blue, int alpha) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
 
       int index;
       for(index = 0; index < this.coords.length - 3; index += 2) {
@@ -290,7 +290,7 @@ public class VectorFan {
 
    public void renderLines(float offX, float offY, float offZ, float scaleX, float scaleY, float scaleZ, int red, int green, int blue, int alpha, Vector3d center, double grow) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
 
       int index;
       for(index = 0; index < this.coords.length - 3; index += 2) {
@@ -315,7 +315,7 @@ public class VectorFan {
 
    }
 
-   protected void renderLinePoint(BufferBuilder bufferbuilder, Vector3f vec, float offX, float offY, float offZ, float scaleX, float scaleY, float scaleZ, int red, int green, int blue, int alpha, Vector3d center, double grow) {
+   protected void renderLinePoint(WorldRenderer bufferbuilder, Vector3f vec, float offX, float offY, float offZ, float scaleX, float scaleY, float scaleZ, int red, int green, int blue, int alpha, Vector3d center, double grow) {
       float x = vec.x * scaleX + offX;
       if ((double)x > center.x) {
          x = (float)((double)x + grow);
@@ -340,7 +340,7 @@ public class VectorFan {
       bufferbuilder.pos((double)x, (double)y, (double)z).color(red, green, blue, alpha).endVertex();
    }
 
-   protected void renderLinePoint(BufferBuilder bufferbuilder, Vector3f vec, int red, int green, int blue, int alpha, Vector3d center, double grow) {
+   protected void renderLinePoint(WorldRenderer bufferbuilder, Vector3f vec, int red, int green, int blue, int alpha, Vector3d center, double grow) {
       float x = vec.x;
       if ((double)x > center.x) {
          x = (float)((double)x + grow);
@@ -367,7 +367,7 @@ public class VectorFan {
 
    public void renderLines(int red, int green, int blue, int alpha, Vector3d center, double grow) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
 
       int index;
       for(index = 0; index < this.coords.length - 3; index += 2) {

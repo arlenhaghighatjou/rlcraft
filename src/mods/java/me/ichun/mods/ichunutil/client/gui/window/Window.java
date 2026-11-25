@@ -6,7 +6,7 @@ import me.ichun.mods.ichunutil.client.gui.window.element.Element;
 import me.ichun.mods.ichunutil.client.gui.window.element.ElementMinimize;
 import me.ichun.mods.ichunutil.client.gui.window.element.ElementTitle;
 import me.ichun.mods.ichunutil.client.render.RendererHelper;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.text.translation.I18n;
 
 public class Window {

@@ -1,6 +1,6 @@
 package tschipp.callablehorses.common.helper;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,7 +43,7 @@ public class HorseHelper {
    @Nullable
    public static EntityPlayer getPlayerFromUUID(String uuid, World world) {
       MinecraftServer server = ((WorldServer)world).getMinecraftServer();
-      EntityPlayerMP owner = server.getPlayerList().getPlayerByUUID(UUID.fromString(uuid));
+      EntityPlayerMP owner = server.getPlayerList().getPlayerByUUID(EaglercraftUUID.fromString(uuid));
       return owner;
    }
 

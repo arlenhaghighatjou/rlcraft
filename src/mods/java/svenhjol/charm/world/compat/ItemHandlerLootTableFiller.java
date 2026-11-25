@@ -3,7 +3,7 @@ package svenhjol.charm.world.compat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -41,7 +41,7 @@ public class ItemHandlerLootTableFiller {
 
    }
 
-   private static List<ItemStack> generateLootForPools(LootTable table, Random rand, LootContext context, int lootSize) {
+   private static List<ItemStack> generateLootForPools(LootTable table, EaglercraftRandom rand, LootContext context, int lootSize) {
       List<ItemStack> loot = table.generateLootForPools(rand, context);
       if (lootSize > 0) {
          int i = 0;

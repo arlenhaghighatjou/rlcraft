@@ -6,7 +6,7 @@ import ivorius.reccomplex.utils.SaveDirectoryData;
 import ivorius.reccomplex.world.storage.loot.GenericItemCollectionRegistry;
 import ivorius.reccomplex.world.storage.loot.GenericLootTable;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -65,7 +65,7 @@ public class ItemLootTableComponentTag extends Item implements GeneratingItem {
       return super.onItemRightClick(worldIn, playerIn, handIn);
    }
 
-   public void generateInInventory(WorldServer server, IItemHandlerModifiable inventory, Random random, ItemStack stack, int fromSlot) {
+   public void generateInInventory(WorldServer server, IItemHandlerModifiable inventory, EaglercraftRandom random, ItemStack stack, int fromSlot) {
       GenericLootTable.Component component = component(stack);
       if (component != null) {
          inventory.setStackInSlot(fromSlot, component.getRandomItemStack(random));

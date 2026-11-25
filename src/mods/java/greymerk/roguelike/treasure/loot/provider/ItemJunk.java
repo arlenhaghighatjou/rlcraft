@@ -12,14 +12,14 @@ import com.github.fnar.minecraft.item.RldItemStack;
 import com.github.fnar.minecraft.item.Shield;
 import greymerk.roguelike.treasure.loot.PotionMixture;
 import greymerk.roguelike.util.DyeColor;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ItemJunk extends LootItem {
    public ItemJunk(int weight, int level) {
       super(weight, level);
    }
 
-   public RldItemStack getLootItem(Random random) {
+   public RldItemStack getLootItem(EaglercraftRandom random) {
       if (this.level > 0 && random.nextInt(200) == 0) {
          if (this.level > 2 && random.nextInt(10) == 0) {
             return ArmourType.HORSE.asItem().diamond().asStack();
@@ -101,7 +101,7 @@ public class ItemJunk extends LootItem {
       }
    }
 
-   private RldItemStack getTippedArrow(Random rand, int level) {
+   private RldItemStack getTippedArrow(EaglercraftRandom rand, int level) {
       return Arrow.newArrow().withTip(Potion.Effect.chooseRandom(rand).asItem()).asStack().withCount(rand.nextInt(level) * 2 + 4);
    }
 }

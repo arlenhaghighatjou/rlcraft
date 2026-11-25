@@ -10,11 +10,11 @@ import goblinbob.mobends.core.network.NetworkConfiguration;
 import goblinbob.mobends.core.util.Draw;
 import java.io.IOException;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 import org.lwjgl.opengl.GL11;
 
 public class GuiBendsMenu extends GuiScreen {

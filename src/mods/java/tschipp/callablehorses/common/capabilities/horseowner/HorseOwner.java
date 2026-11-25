@@ -1,6 +1,6 @@
 package tschipp.callablehorses.common.capabilities.horseowner;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.passive.AbstractHorse;
@@ -29,7 +29,7 @@ public class HorseOwner implements IHorseOwner {
          ++this.horseNum;
          IStoredHorse horse = (IStoredHorse)entity.getCapability(HorseProvider.HORSE_CAPABILITY, (EnumFacing)null);
          horse.setHorseNum(this.horseNum);
-         entity.setUniqueId(UUID.randomUUID());
+         entity.setUniqueId(EaglercraftUUID.randomUUID());
          entity.extinguish();
          ((AbstractHorse)entity).hurtTime = 0;
          entity.dimension = world.provider.getDimension();
@@ -46,7 +46,7 @@ public class HorseOwner implements IHorseOwner {
    }
 
    public void setHorse(AbstractHorse horse, EntityPlayer player) {
-      this.storageUUID = UUID.randomUUID().toString();
+      this.storageUUID = EaglercraftUUID.randomUUID().toString();
       IStoredHorse storedHorse = (IStoredHorse)horse.getCapability(HorseProvider.HORSE_CAPABILITY, (EnumFacing)null);
       storedHorse.setHorseNum(this.horseNum);
       storedHorse.setOwned(true);

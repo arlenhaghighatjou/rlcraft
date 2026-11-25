@@ -4,7 +4,7 @@ import de.impelon.disenchanter.DisenchanterMain;
 import de.impelon.disenchanter.inventory.InventoryUtils;
 import de.impelon.disenchanter.tileentity.TileEntityDisenchantmentTable;
 import de.impelon.disenchanter.tileentity.TileEntityDisenchantmentTableAutomatic;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -51,7 +51,7 @@ public class BlockDisenchantmentTable extends BlockContainer {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState state, World w, BlockPos pos, Random random) {
+   public void randomDisplayTick(IBlockState state, World w, BlockPos pos, EaglercraftRandom random) {
       super.randomDisplayTick(state, w, pos, random);
       int x = pos.getX();
       int y = pos.getY();
@@ -199,7 +199,7 @@ public class BlockDisenchantmentTable extends BlockContainer {
       super.breakBlock(w, pos, state);
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return ItemStack.EMPTY.getItem();
    }
 

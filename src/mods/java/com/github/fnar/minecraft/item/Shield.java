@@ -2,7 +2,7 @@ package com.github.fnar.minecraft.item;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 
@@ -20,12 +20,12 @@ public class Shield extends RldBaseItem {
       return ItemType.SHIELD;
    }
 
-   public Shield withRandomPattern(Random random) {
+   public Shield withRandomPattern(EaglercraftRandom random) {
       this.withDesign(Design.randomDesign(random));
       return this;
    }
 
-   public Shield withRandomPatterns(Random random, int count) {
+   public Shield withRandomPatterns(EaglercraftRandom random, int count) {
       IntStream.range(0, count).forEach((i) -> {
          this.withRandomPattern(random);
       });

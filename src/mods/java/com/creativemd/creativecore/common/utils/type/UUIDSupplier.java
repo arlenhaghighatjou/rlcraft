@@ -1,31 +1,31 @@
 package com.creativemd.creativecore.common.utils.type;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 
 public class UUIDSupplier {
-   private final UUID original;
-   public UUID uuid;
+   private final EaglercraftUUID original;
+   public EaglercraftUUID uuid;
 
    public UUIDSupplier() {
-      this(UUID.randomUUID());
+      this(EaglercraftUUID.randomUUID());
    }
 
-   public UUIDSupplier(UUID uuid) {
+   public UUIDSupplier(EaglercraftUUID uuid) {
       this.original = uuid;
       this.uuid = uuid;
    }
 
-   public UUIDSupplier(UUID original, UUID uuid) {
+   public UUIDSupplier(EaglercraftUUID original, EaglercraftUUID uuid) {
       this.original = original;
       this.uuid = uuid;
    }
 
-   public UUID original() {
+   public EaglercraftUUID original() {
       return this.original;
    }
 
-   public UUID next() {
-      this.uuid = new UUID(this.uuid.getMostSignificantBits(), this.uuid.getLeastSignificantBits() + 1L);
+   public EaglercraftUUID next() {
+      this.uuid = new EaglercraftUUID(this.uuid.getMostSignificantBits(), this.uuid.getLeastSignificantBits() + 1L);
       return this.uuid;
    }
 }

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -88,7 +88,7 @@ public abstract class VisualTypeTexture extends VisualType {
    public void render(VisualHandler handler, Visual visual, TextureManager manager, int screenWidth, int screenHeight, float partialTicks) {
       manager.bindTexture(this.getResource(visual));
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder renderer = tessellator.getBuffer();
+      WorldRenderer renderer = tessellator.getBuffer();
       float red = visual.color != null ? (float)visual.color.getRed() / 255.0F : 1.0F;
       float green = visual.color != null ? (float)visual.color.getGreen() / 255.0F : 1.0F;
       float blue = visual.color != null ? (float)visual.color.getBlue() / 255.0F : 1.0F;

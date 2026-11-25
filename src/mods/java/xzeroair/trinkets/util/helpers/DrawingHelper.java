@@ -1,9 +1,9 @@
 package xzeroair.trinkets.util.helpers;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
@@ -24,7 +24,7 @@ public class DrawingHelper {
       float f = 1.0F / tileWidth;
       float f1 = 1.0F / tileHeight;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       bufferbuilder.pos(x, y + height, z).tex((double)(u * f), (double)((v + (float)vHeight) * f1)).endVertex();
       bufferbuilder.pos(x + width, y + height, z).tex((double)((u + (float)uWidth) * f), (double)((v + (float)vHeight) * f1)).endVertex();
@@ -52,7 +52,7 @@ public class DrawingHelper {
       float f = 1.0F / tileWidth;
       float f1 = 1.0F / tileHeight;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
       bufferbuilder.pos(x, y + height, z).tex((double)(u * f), (double)((v + (float)vHeight) * f1)).color(r, g, b, a).endVertex();
       bufferbuilder.pos(x + width, y + height, z).tex((double)((u + (float)uWidth) * f), (double)((v + (float)vHeight) * f1)).color(r, g, b, a).endVertex();

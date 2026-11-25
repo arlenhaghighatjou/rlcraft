@@ -8,7 +8,7 @@ import com.github.alexthe666.iceandfire.core.ModSounds;
 import com.github.alexthe666.iceandfire.entity.tile.TileEntityEggInIce;
 import com.github.alexthe666.iceandfire.enums.EnumDragonEgg;
 import com.google.common.base.Optional;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 public class EntityDragonEgg extends EntityLiving implements IBlacklistedFromStatues, IDeadMob {
    private static final DataParameter<Integer> DRAGON_TYPE = EntityDataManager.createKey(EntityDragonEgg.class, DataSerializers.VARINT);
    private static final DataParameter<Integer> DRAGON_AGE = EntityDataManager.createKey(EntityDragonEgg.class, DataSerializers.VARINT);
-   protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(EntityDragonEgg.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+   protected static final DataParameter<Optional<EaglercraftUUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(EntityDragonEgg.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 
    public EntityDragonEgg(World worldIn) {
       super(worldIn);
@@ -69,7 +69,7 @@ public class EntityDragonEgg extends EntityLiving implements IBlacklistedFromSta
       }
 
       if (!s.isEmpty()) {
-         this.setOwnerId(UUID.fromString(s));
+         this.setOwnerId(EaglercraftUUID.fromString(s));
       }
 
    }
@@ -82,11 +82,11 @@ public class EntityDragonEgg extends EntityLiving implements IBlacklistedFromSta
    }
 
    @Nullable
-   public UUID getOwnerId() {
-      return (UUID)((Optional)this.dataManager.get(OWNER_UNIQUE_ID)).orNull();
+   public EaglercraftUUID getOwnerId() {
+      return (EaglercraftUUID)((Optional)this.dataManager.get(OWNER_UNIQUE_ID)).orNull();
    }
 
-   public void setOwnerId(@Nullable UUID p_184754_1_) {
+   public void setOwnerId(@Nullable EaglercraftUUID p_184754_1_) {
       this.dataManager.set(OWNER_UNIQUE_ID, Optional.fromNullable(p_184754_1_));
    }
 

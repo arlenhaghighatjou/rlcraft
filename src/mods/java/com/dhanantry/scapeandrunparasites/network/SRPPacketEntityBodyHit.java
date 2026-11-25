@@ -2,7 +2,7 @@ package com.dhanantry.scapeandrunparasites.network;
 
 import com.dhanantry.scapeandrunparasites.SRPMain;
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityBodyParts;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayerMP;

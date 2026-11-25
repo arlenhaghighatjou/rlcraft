@@ -22,8 +22,8 @@ import java.util.List;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class ToolboxToolScale implements IToolboxTool {
    private CanvasQuestLine gui;

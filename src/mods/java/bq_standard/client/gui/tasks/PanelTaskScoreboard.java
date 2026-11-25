@@ -12,7 +12,7 @@ import bq_standard.tasks.TaskScoreboard;
 import java.text.DecimalFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextFormatting;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class PanelTaskScoreboard extends CanvasEmpty {
    private final TaskScoreboard task;

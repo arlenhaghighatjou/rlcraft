@@ -3,7 +3,7 @@ package rtg.world.gen;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
@@ -69,7 +69,7 @@ public class ChunkGeneratorRTG implements IChunkGenerator {
    private BiomeAnalyzer analyzer = new BiomeAnalyzer();
    private int[] xyinverted;
    private boolean mapFeaturesEnabled;
-   private Random rand;
+   private EaglercraftRandom rand;
    private Biome[] baseBiomesList;
 
    public ChunkGeneratorRTG(RTGWorld rtgWorld) {
@@ -78,7 +78,7 @@ public class ChunkGeneratorRTG implements IChunkGenerator {
       this.world = rtgWorld.world();
       this.rtgWorld = rtgWorld;
       this.settings = rtgWorld.getGeneratorSettings();
-      this.rand = new Random(rtgWorld.seed());
+      this.rand = new EaglercraftRandom(rtgWorld.seed());
       this.rtgWorld.setRandom(this.rand);
       this.mapFeaturesEnabled = this.world.getWorldInfo().isMapFeaturesEnabled();
       this.caveGenerator = TerrainGen.getModdedMapGen(new MapGenCavesRTG(this.settings.caveChance, this.settings.caveDensity), EventType.CAVE);

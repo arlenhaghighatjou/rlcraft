@@ -2,7 +2,7 @@ package com.github.fnar.minecraft.item.mapper;
 
 import com.github.fnar.minecraft.item.RldBaseItem;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -12,7 +12,7 @@ import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 
 public abstract class RldBaseItemMapper1_12<T extends RldBaseItem> extends BaseItemMapper1_12<T> {
-   private static final Random RAND = new Random(0L);
+   private static final EaglercraftRandom RAND = new EaglercraftRandom(0L);
    private final EnchantmentMapper1_12 enchantmentMapper = new EnchantmentMapper1_12();
 
    public RldBaseItemMapper1_12() {
@@ -30,7 +30,7 @@ public abstract class RldBaseItemMapper1_12<T extends RldBaseItem> extends BaseI
       return itemStack;
    }
 
-   public static ItemStack enchantItem(Random rand, ItemStack item, int enchantLevel) {
+   public static ItemStack enchantItem(EaglercraftRandom rand, ItemStack item, int enchantLevel) {
       if (item == null) {
          return null;
       } else {

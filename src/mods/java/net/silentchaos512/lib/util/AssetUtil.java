@@ -1,8 +1,8 @@
 package net.silentchaos512.lib.util;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -50,7 +50,7 @@ public class AssetUtil {
       GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
       GlStateManager.shadeModel(7425);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder renderer = tessellator.getBuffer();
+      WorldRenderer renderer = tessellator.getBuffer();
       renderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
       renderer.pos((double)left, (double)top, (double)zLevel).color(f1, f2, f3, f).endVertex();
       renderer.pos((double)left, (double)bottom, (double)zLevel).color(f1, f2, f3, f).endVertex();

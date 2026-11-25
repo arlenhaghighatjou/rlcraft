@@ -1,6 +1,6 @@
 package svenhjol.charm.crafting.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.Block;
@@ -84,7 +84,7 @@ public class BlockLantern extends MesonBlock {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       if (Lantern.playSound && rand.nextFloat() <= 0.04F) {
          worldIn.playSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, CharmSounds.LITTLE_FIRE, SoundCategory.BLOCKS, 0.24F, 1.0F, false);
       }
@@ -95,7 +95,7 @@ public class BlockLantern extends MesonBlock {
       worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (Lantern.falling) {
          this.checkFallable(worldIn, pos);
       }

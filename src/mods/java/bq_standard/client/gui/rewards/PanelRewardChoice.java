@@ -18,9 +18,9 @@ import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.storage.DBEntry;
 import bq_standard.network.handlers.NetRewardChoice;
 import bq_standard.rewards.RewardChoice;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class PanelRewardChoice extends CanvasEmpty {
    private final DBEntry<IQuest> quest;
@@ -39,7 +39,7 @@ public class PanelRewardChoice extends CanvasEmpty {
       PanelVScrollBar scList = new PanelVScrollBar(new GuiTransform(GuiAlign.RIGHT_EDGE, new GuiPadding(-8, 0, 0, 0), 0));
       this.addPanel(scList);
       cvList.setScrollDriverY(scList);
-      UUID uuid = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
+      EaglercraftUUID uuid = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
       int sel = this.reward.getSelecton(uuid);
       PanelItemSlot slot = new PanelItemSlot(new GuiTransform(new Vector4f(0.0F, 0.5F, 0.0F, 0.5F), 0, -16, 32, 32, 0), -1, sel < 0 ? null : (BigItemStack)this.reward.choices.get(sel));
       this.addPanel(slot);

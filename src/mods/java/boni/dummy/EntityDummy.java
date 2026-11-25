@@ -2,7 +2,7 @@ package boni.dummy;
 
 import boni.dummy.network.DamageMessage;
 import boni.dummy.network.SyncEquipmentMessage;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;

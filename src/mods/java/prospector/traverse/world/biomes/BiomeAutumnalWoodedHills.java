@@ -1,6 +1,6 @@
 package prospector.traverse.world.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
@@ -34,7 +34,7 @@ public class BiomeAutumnalWoodedHills extends Biome implements WorldGenConstants
       return super.getModdedBiomeFoliageColor(-2960609);
    }
 
-   public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+   public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand) {
       int num = rand.nextInt(5);
       if (num == 0) {
          return new TraverseTreeGenerator(true, 4, OAK_LOG, RED_AUTUMNAL_LEAVES);

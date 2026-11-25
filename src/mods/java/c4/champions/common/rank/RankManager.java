@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.fml.common.Loader;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class RankManager {
    private static final Rank[] DEFAULT_RANKS = new Rank[]{new Rank(1, 1, 1, 0.05F, 16776960, new String[0]), new Rank(2, 2, 4, 0.2F, 16750848, new String[0]), new Rank(3, 3, 9, 0.2F, 6750207, new String[0]), new Rank(4, 4, 16, 0.2F, 13382655, new String[0])};

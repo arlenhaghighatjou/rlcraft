@@ -1,6 +1,6 @@
 package rtg.api.world.gen.feature.tree.rtg;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -22,7 +22,7 @@ public class TreeRTGCocosNucifera extends TreeRTG {
       this.crownSize = 7;
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       if (!this.isGroundValid(world, pos, true)) {
          return false;
       } else {
@@ -81,7 +81,7 @@ public class TreeRTGCocosNucifera extends TreeRTG {
       }
    }
 
-   public double getRandomDir(Random rand) {
+   public double getRandomDir(EaglercraftRandom rand) {
       switch(rand.nextInt(4)) {
       case 0:
          return -180.0D;

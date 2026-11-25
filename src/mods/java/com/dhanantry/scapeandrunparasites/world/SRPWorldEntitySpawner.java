@@ -8,7 +8,7 @@ import com.google.common.collect.Sets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
@@ -170,7 +170,7 @@ public class SRPWorldEntitySpawner {
    @Nullable
    public static SpawnListEntry getSpawnListEntryForTypeAt(WorldServer worldServerIn, BlockPos pos) {
       List<SpawnListEntry> list = SRPSpawning.getSpawns(SRPWorldData.get(worldServerIn).getEvolutionPhase());
-      return list != null && !list.isEmpty() ? (SpawnListEntry)WeightedRandom.getRandomItem(new Random(), list) : null;
+      return list != null && !list.isEmpty() ? (SpawnListEntry)WeightedRandom.getRandomItem(new EaglercraftRandom(), list) : null;
    }
 
    public static boolean canCreatureTypeSpawnAtLocation(SpawnPlacementType spawnPlacementTypeIn, World worldIn, BlockPos pos) {

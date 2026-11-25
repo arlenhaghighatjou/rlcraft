@@ -3,7 +3,7 @@ package com.github.alexthe666.iceandfire.structures;
 import com.github.alexthe666.iceandfire.block.BlockGoldPile;
 import com.github.alexthe666.iceandfire.core.ModBlocks;
 import com.github.alexthe666.iceandfire.entity.EntityFireDragon;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -19,7 +19,7 @@ public class WorldGenFireDragonRoosts extends WorldGenerator {
    public WorldGenFireDragonRoosts() {
    }
 
-   public static void burnGround(World world, Random rand, BlockPos position, int radius) {
+   public static void burnGround(World world, EaglercraftRandom rand, BlockPos position, int radius) {
       for(int i = 0; radius >= 0 && i < 3; ++i) {
          int j = radius + rand.nextInt(2);
          int k = radius + rand.nextInt(2);
@@ -57,7 +57,7 @@ public class WorldGenFireDragonRoosts extends WorldGenerator {
 
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int dragonAge = 50 + rand.nextInt(25);
       burnGround(worldIn, rand, position, dragonAge / 5);
       this.generateStructures(worldIn, rand, position, dragonAge / 5);
@@ -66,7 +66,7 @@ public class WorldGenFireDragonRoosts extends WorldGenerator {
       dragon.growDragon(dragonAge);
       dragon.setAgingDisabled(true);
       dragon.setHealth(dragon.getMaxHealth());
-      dragon.setVariant((new Random()).nextInt(4));
+      dragon.setVariant((new EaglercraftRandom()).nextInt(4));
       dragon.setPositionAndRotation((double)position.getX() + 0.5D, (double)worldIn.getHeight(position).getY() + 1.5D, (double)position.getZ() + 0.5D, rand.nextFloat() * 360.0F, 0.0F);
       dragon.homePos = position;
       dragon.hasHomePosition = true;
@@ -75,7 +75,7 @@ public class WorldGenFireDragonRoosts extends WorldGenerator {
       return true;
    }
 
-   public void generateStructures(World world, Random rand, BlockPos position, int radius) {
+   public void generateStructures(World world, EaglercraftRandom rand, BlockPos position, int radius) {
       for(int i = 0; radius >= 0 && i < 3; ++i) {
          int j = radius + rand.nextInt(2);
          int k = radius + rand.nextInt(2);
@@ -104,15 +104,15 @@ public class WorldGenFireDragonRoosts extends WorldGenerator {
 
    }
 
-   public void generateGoldPile(World world, Random rand, BlockPos position) {
-      int height = 1 + (new Random()).nextInt(7);
+   public void generateGoldPile(World world, EaglercraftRandom rand, BlockPos position) {
+      int height = 1 + (new EaglercraftRandom()).nextInt(7);
       int chance = rand.nextInt(100);
       if (chance < 20) {
-         world.setBlockState(position, Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.HORIZONTALS[(new Random()).nextInt(3)]), 3);
+         world.setBlockState(position, Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.HORIZONTALS[(new EaglercraftRandom()).nextInt(3)]), 3);
          if (world.getBlockState(position).getBlock() instanceof BlockChest) {
             TileEntity tileentity1 = world.getTileEntity(position);
             if (tileentity1 instanceof TileEntityChest && !((TileEntityChest)tileentity1).isInvalid()) {
-               ((TileEntityChest)tileentity1).setLootTable(WorldGenFireDragonCave.FIREDRAGON_CHEST, (new Random()).nextLong());
+               ((TileEntityChest)tileentity1).setLootTable(WorldGenFireDragonCave.FIREDRAGON_CHEST, (new EaglercraftRandom()).nextLong());
             }
          }
       } else {
@@ -121,7 +121,7 @@ public class WorldGenFireDragonRoosts extends WorldGenerator {
 
    }
 
-   public void generateArchNS(World world, Random rand, BlockPos position) {
+   public void generateArchNS(World world, EaglercraftRandom rand, BlockPos position) {
       int height = 3 + rand.nextInt(1);
       int width = 1 + rand.nextInt(2);
 
@@ -136,7 +136,7 @@ public class WorldGenFireDragonRoosts extends WorldGenerator {
 
    }
 
-   public void generateArchEW(World world, Random rand, BlockPos position) {
+   public void generateArchEW(World world, EaglercraftRandom rand, BlockPos position) {
       int height = 3 + rand.nextInt(1);
       int width = 1 + rand.nextInt(2);
 

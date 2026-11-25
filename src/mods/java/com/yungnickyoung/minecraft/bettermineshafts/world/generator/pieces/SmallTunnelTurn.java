@@ -5,7 +5,7 @@ import com.yungnickyoung.minecraft.bettermineshafts.world.generator.BetterMinesh
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.MineshaftVariantSettings;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.BlockRail;
@@ -30,7 +30,7 @@ public class SmallTunnelTurn extends MineshaftPiece {
    public SmallTunnelTurn() {
    }
 
-   public SmallTunnelTurn(int i, int chunkPieceLen, Random random, StructureBoundingBox blockBox, EnumFacing direction, MineshaftVariantSettings settings) {
+   public SmallTunnelTurn(int i, int chunkPieceLen, EaglercraftRandom random, StructureBoundingBox blockBox, EnumFacing direction, MineshaftVariantSettings settings) {
       super(i, chunkPieceLen, settings);
       this.setCoordBaseMode(direction);
       this.turnDirection = random.nextBoolean() ? SmallTunnelTurn.TurnDirection.LEFT : SmallTunnelTurn.TurnDirection.RIGHT;
@@ -49,13 +49,13 @@ public class SmallTunnelTurn extends MineshaftPiece {
       this.turnDirection = SmallTunnelTurn.TurnDirection.valueOf(tag.getInteger("TurnDirection"));
    }
 
-   public static StructureBoundingBox determineBoxPosition(List<StructureComponent> list, Random random, int x, int y, int z, EnumFacing direction) {
+   public static StructureBoundingBox determineBoxPosition(List<StructureComponent> list, EaglercraftRandom random, int x, int y, int z, EnumFacing direction) {
       StructureBoundingBox blockBox = BoxUtil.boxFromCoordsWithRotation(x, y, z, 5, 5, 5, direction);
       StructureComponent intersectingPiece = StructureComponent.findIntersecting(list, blockBox);
       return intersectingPiece != null ? null : blockBox;
    }
 
-   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, Random random) {
+   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, EaglercraftRandom random) {
       EnumFacing direction = this.getCoordBaseMode();
       if (direction != null) {
          EnumFacing nextDirection = this.turnDirection == SmallTunnelTurn.TurnDirection.LEFT ? direction.rotateYCCW() : direction.rotateY();
@@ -78,7 +78,7 @@ public class SmallTunnelTurn extends MineshaftPiece {
    }
 
    @ParametersAreNonnullByDefault
-   public boolean addComponentParts(World world, Random random, StructureBoundingBox box) {
+   public boolean addComponentParts(World world, EaglercraftRandom random, StructureBoundingBox box) {
       if (this.isLiquidInStructureBoundingBox(world, box)) {
          return false;
       } else if (!this.isInOcean(world, 0, 0) && !this.isInOcean(world, 4, 4)) {

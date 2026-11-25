@@ -4,7 +4,7 @@ import net.minecraft.block.BlockSnow;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BlockModelRenderer;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -40,7 +40,7 @@ public abstract class MixinBlockRendererDispatcher {
       method = {"renderBlock"},
       at = {@At("RETURN")}
    )
-   private void srm_renderBlock(IBlockState blockStateIn, BlockPos pos, IBlockAccess world, BufferBuilder bufferBuilderIn, CallbackInfoReturnable<Boolean> info) {
+   private void srm_renderBlock(IBlockState blockStateIn, BlockPos pos, IBlockAccess world, WorldRenderer bufferBuilderIn, CallbackInfoReturnable<Boolean> info) {
       if (blockStateIn.getBlock() == Blocks.SNOW_LAYER && ((Integer)blockStateIn.getValue(BlockSnow.LAYERS)).intValue() < 8) {
          TileEntity tileEntity = world.getTileEntity(pos);
          if (tileEntity instanceof SnowTile) {

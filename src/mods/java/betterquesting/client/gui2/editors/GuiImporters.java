@@ -33,7 +33,7 @@ import betterquesting.network.handlers.NetImport;
 import java.io.File;
 import java.util.List;
 import net.minecraft.client.gui.GuiScreen;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class GuiImporters extends GuiScreenCanvas implements IPEventListener, ICallback<File[]> {
    private PanelTextBox impName;

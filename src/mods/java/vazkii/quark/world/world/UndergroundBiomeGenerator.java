@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import net.minecraft.block.state.IBlockState;
@@ -34,14 +34,14 @@ public class UndergroundBiomeGenerator extends MultiChunkFeatureGenerator {
       return (int)Math.ceil((double)Math.max(this.info.minXSize + this.info.xVariation, this.info.minZSize + this.info.zVariation));
    }
 
-   public void generateChunkPart(BlockPos src, Random random, int chunkX, int chunkZ, World world) {
+   public void generateChunkPart(BlockPos src, EaglercraftRandom random, int chunkX, int chunkZ, World world) {
       int radiusX = this.info.minXSize + random.nextInt(this.info.xVariation);
       int radiusY = this.info.minYSize + random.nextInt(this.info.yVariation);
       int radiusZ = this.info.minZSize + random.nextInt(this.info.zVariation);
       this.apply(world, src, random, chunkX, chunkZ, radiusX, radiusY, radiusZ);
    }
 
-   public BlockPos[] getSourcesInChunk(Random random, int chunkX, int chunkZ) {
+   public BlockPos[] getSourcesInChunk(EaglercraftRandom random, int chunkX, int chunkZ) {
       return this.info.rarity > 0 && random.nextInt(this.info.rarity) == 0 ? new BlockPos[]{new BlockPos(chunkX * 16 + random.nextInt(16), this.info.minY + random.nextInt(this.info.maxY - this.info.minY), chunkZ * 16 + random.nextInt(16))} : new BlockPos[0];
    }
 
@@ -54,7 +54,7 @@ public class UndergroundBiomeGenerator extends MultiChunkFeatureGenerator {
       return BiomeTypeConfigHandler.biomeTypeIntersectCheck(this.info.types, biome) && this.info.biome.isValidBiome(biome);
    }
 
-   public void apply(World world, BlockPos center, Random random, int chunkX, int chunkZ, int radiusX, int radiusY, int radiusZ) {
+   public void apply(World world, BlockPos center, EaglercraftRandom random, int chunkX, int chunkZ, int radiusX, int radiusY, int radiusZ) {
       int centerX = center.getX();
       int centerY = center.getY();
       int centerZ = center.getZ();

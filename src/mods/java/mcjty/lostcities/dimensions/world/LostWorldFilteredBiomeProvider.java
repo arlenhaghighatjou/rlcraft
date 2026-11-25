@@ -1,7 +1,7 @@
 package mcjty.lostcities.dimensions.world;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import mcjty.lostcities.config.BiomeSelectionStrategy;
 import mcjty.lostcities.config.LostCityProfile;
@@ -138,7 +138,7 @@ public class LostWorldFilteredBiomeProvider extends BiomeProvider {
    }
 
    @Nullable
-   public BlockPos findBiomePosition(int x, int z, int range, List<Biome> biomes, Random random) {
+   public BlockPos findBiomePosition(int x, int z, int range, List<Biome> biomes, EaglercraftRandom random) {
       return this.original.findBiomePosition(x, z, range, biomes, random);
    }
 

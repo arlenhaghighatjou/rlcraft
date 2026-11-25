@@ -2,7 +2,7 @@ package vazkii.quark.world.block;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -55,7 +55,7 @@ public class BlockVariantLeaves extends BlockLeaves implements IQuarkBlock, IBlo
    }
 
    @Nonnull
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(TreeVariants.variant_sapling);
    }
 

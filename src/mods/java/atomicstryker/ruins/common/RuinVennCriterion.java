@@ -12,8 +12,8 @@ import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 /**
  * Criterion against which collections of strings can be tested. The conditions to be met in order to satisfy a

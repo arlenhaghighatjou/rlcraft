@@ -1,6 +1,6 @@
 package vazkii.quark.world.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.item.Item;
@@ -74,7 +74,7 @@ public class Biotite extends Feature {
       if (generateByDragon && event.getEntityLiving() instanceof EntityDragon && !event.getEntity().getEntityWorld().isRemote) {
          EntityDragon dragon = (EntityDragon)event.getEntity();
          if (dragon.deathTicks > 0 && dragon.deathTicks % generationDelay == 0) {
-            Random rand = dragon.getEntityWorld().rand;
+            EaglercraftRandom rand = dragon.getEntityWorld().rand;
             BlockPos basePos = dragon.getPosition();
             basePos = new BlockPos(basePos.getX() - 128, 0, basePos.getZ() - 128);
 

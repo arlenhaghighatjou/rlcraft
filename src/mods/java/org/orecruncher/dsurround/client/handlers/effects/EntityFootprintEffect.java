@@ -2,7 +2,7 @@ package org.orecruncher.dsurround.client.handlers.effects;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.Entity;
@@ -21,7 +21,7 @@ import org.orecruncher.lib.random.XorShiftRandom;
 
 @SideOnly(Side.CLIENT)
 public class EntityFootprintEffect extends EntityEffect {
-   protected static final Random RANDOM = XorShiftRandom.current();
+   protected static final EaglercraftRandom RANDOM = XorShiftRandom.current();
    protected Generator generator;
    public static final IEntityEffectFactoryFilter DEFAULT_FILTER = (e, eei) -> {
       return eei.effects.contains("footprint");

@@ -1,7 +1,7 @@
 package snownee.kiwi.network;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;

@@ -1,6 +1,6 @@
 package paulevs.betternether.structures.plants;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
 import net.minecraft.block.state.IBlockState;
@@ -14,7 +14,7 @@ public class StructureSmoker implements IStructure {
    public StructureSmoker() {
    }
 
-   public void generate(World world, BlockPos pos, Random random) {
+   public void generate(World world, BlockPos pos, EaglercraftRandom random) {
       Block under = world.getBlockState(pos).getBlock();
       if (under instanceof BlockNetherrack || under == Blocks.SOUL_SAND) {
          IBlockState state = BlocksRegister.BLOCK_SMOKER.getDefaultState();

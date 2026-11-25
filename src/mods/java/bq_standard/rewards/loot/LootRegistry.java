@@ -6,7 +6,7 @@ import betterquesting.api2.storage.SimpleDatabase;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.ToIntFunction;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTTagCompound;
@@ -41,7 +41,7 @@ public class LootRegistry extends SimpleDatabase<LootGroup> implements INBTParti
       return i;
    }
 
-   public LootGroup getWeightedGroup(float weight, Random rand) {
+   public LootGroup getWeightedGroup(float weight, EaglercraftRandom rand) {
       int total = this.getTotalWeight();
       if (total <= 0) {
          return null;

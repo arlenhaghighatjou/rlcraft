@@ -7,10 +7,10 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.ingredients.IIngredientRenderer;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.util.ITooltipFlag;
@@ -66,7 +66,7 @@ public class FluidStackRenderer implements IIngredientRenderer<FluidStack> {
       if (fluidStack != null) {
          Fluid fluid = fluidStack.getFluid();
          if (fluid != null) {
-            TextureAtlasSprite fluidStillSprite = getStillFluidSprite(minecraft, fluid);
+            EaglerTextureAtlasSprite fluidStillSprite = getStillFluidSprite(minecraft, fluid);
             int fluidColor = fluid.getColor(fluidStack);
             int scaledAmount = fluidStack.amount * this.height / this.capacityMb;
             if (fluidStack.amount > 0 && scaledAmount < 1) {
@@ -82,7 +82,7 @@ public class FluidStackRenderer implements IIngredientRenderer<FluidStack> {
       }
    }
 
-   private void drawTiledSprite(Minecraft minecraft, int xPosition, int yPosition, int tiledWidth, int tiledHeight, int color, int scaledAmount, TextureAtlasSprite sprite) {
+   private void drawTiledSprite(Minecraft minecraft, int xPosition, int yPosition, int tiledWidth, int tiledHeight, int color, int scaledAmount, EaglerTextureAtlasSprite sprite) {
       minecraft.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
       setGLColorFromInt(color);
       int xTileCount = tiledWidth / 16;
@@ -107,10 +107,10 @@ public class FluidStackRenderer implements IIngredientRenderer<FluidStack> {
 
    }
 
-   private static TextureAtlasSprite getStillFluidSprite(Minecraft minecraft, Fluid fluid) {
+   private static EaglerTextureAtlasSprite getStillFluidSprite(Minecraft minecraft, Fluid fluid) {
       TextureMap textureMapBlocks = minecraft.getTextureMapBlocks();
       ResourceLocation fluidStill = fluid.getStill();
-      TextureAtlasSprite fluidStillSprite = null;
+      EaglerTextureAtlasSprite fluidStillSprite = null;
       if (fluidStill != null) {
          fluidStillSprite = textureMapBlocks.getTextureExtry(fluidStill.toString());
       }
@@ -129,7 +129,7 @@ public class FluidStackRenderer implements IIngredientRenderer<FluidStack> {
       GlStateManager.color(red, green, blue, 1.0F);
    }
 
-   private static void drawTextureWithMasking(double xCoord, double yCoord, TextureAtlasSprite textureSprite, int maskTop, int maskRight, double zLevel) {
+   private static void drawTextureWithMasking(double xCoord, double yCoord, EaglerTextureAtlasSprite textureSprite, int maskTop, int maskRight, double zLevel) {
       double uMin = (double)textureSprite.getMinU();
       double uMax = (double)textureSprite.getMaxU();
       double vMin = (double)textureSprite.getMinV();
@@ -137,7 +137,7 @@ public class FluidStackRenderer implements IIngredientRenderer<FluidStack> {
       uMax = uMax - (double)maskRight / 16.0D * (uMax - uMin);
       vMax = vMax - (double)maskTop / 16.0D * (vMax - vMin);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferBuilder = tessellator.getBuffer();
+      WorldRenderer bufferBuilder = tessellator.getBuffer();
       bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       bufferBuilder.pos(xCoord, yCoord + 16.0D, zLevel).tex(uMin, vMax).endVertex();
       bufferBuilder.pos(xCoord + 16.0D - (double)maskRight, yCoord + 16.0D, zLevel).tex(uMax, vMax).endVertex();

@@ -9,7 +9,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.tmtravlr.qualitytools.QualityToolsMod;
 import com.tmtravlr.qualitytools.network.SToCMessage;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -35,7 +35,7 @@ import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class ConfigLoader {
    public static HashMap<String, QualityType> qualityTypes = new HashMap();

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockFire;
 import net.minecraft.block.BlockTorch;
@@ -50,7 +50,7 @@ public class SectorInstance {
    public IBlockState airBlock;
    public int chunksBuilt = 0;
 
-   public SectorInstance(DungeonLayout layout, DungeonSector dungeonSector, Random random) {
+   public SectorInstance(DungeonLayout layout, DungeonSector dungeonSector, EaglercraftRandom random) {
       this.layout = layout;
       this.dungeonSector = dungeonSector;
       this.roomSize = this.dungeonSector.getRandomSize(random);
@@ -70,7 +70,7 @@ public class SectorInstance {
       return offset;
    }
 
-   public void init(Random random) {
+   public void init(EaglercraftRandom random) {
       if (this.parentConnector == null) {
          throw new RuntimeException("[Dungeon] Tried to initialise a Sector Instance with a null Parent Connector: " + this);
       } else {
@@ -176,7 +176,7 @@ public class SectorInstance {
       }
    }
 
-   public int getConnectorOffset(Random random, int length, int start) {
+   public int getConnectorOffset(EaglercraftRandom random, int length, int start) {
       int entrancePadding = 2;
       return "room".equalsIgnoreCase(this.dungeonSector.type) && length > entrancePadding * 2 ? start + entrancePadding + random.nextInt(length - entrancePadding * 2) + 1 : start + Math.round((float)length / 2.0F);
    }
@@ -187,7 +187,7 @@ public class SectorInstance {
       return connector;
    }
 
-   public SectorConnector getRandomConnector(Random random, SectorInstance sectorInstance) {
+   public SectorConnector getRandomConnector(EaglercraftRandom random, SectorInstance sectorInstance) {
       List<SectorConnector> openConnectors = this.getOpenConnectors(sectorInstance);
       if (openConnectors.isEmpty()) {
          return null;
@@ -335,7 +335,7 @@ public class SectorInstance {
       return new BlockPos(centerX, startPos.getY(), centerZ);
    }
 
-   public void placeBlock(World world, ChunkPos chunkPos, BlockPos blockPos, IBlockState blockState, EnumFacing facing, Random random) {
+   public void placeBlock(World world, ChunkPos chunkPos, BlockPos blockPos, IBlockState blockState, EnumFacing facing, EaglercraftRandom random) {
       int chunkOffset = 8;
       if (blockPos.getX() >= chunkPos.getXStart() + chunkOffset && blockPos.getX() <= chunkPos.getXEnd() + chunkOffset) {
          if (blockPos.getY() > 0 && blockPos.getY() < world.getHeight()) {
@@ -386,7 +386,7 @@ public class SectorInstance {
       }
    }
 
-   public void build(World world, ChunkPos chunkPos, Random random) {
+   public void build(World world, ChunkPos chunkPos, EaglercraftRandom random) {
       this.clearArea(world, chunkPos, random);
       this.buildFloor(world, chunkPos, random, 0);
       this.buildWalls(world, chunkPos, random);
@@ -411,7 +411,7 @@ public class SectorInstance {
 
    }
 
-   public void clearArea(World world, ChunkPos chunkPos, Random random) {
+   public void clearArea(World world, ChunkPos chunkPos, EaglercraftRandom random) {
       BlockPos startPos = this.getRoomBoundsMin();
       BlockPos stopPos = this.getRoomBoundsMax();
       int startX = Math.min(startPos.getX(), stopPos.getX());
@@ -440,7 +440,7 @@ public class SectorInstance {
 
    }
 
-   public void buildFloor(World world, ChunkPos chunkPos, Random random, int offsetY) {
+   public void buildFloor(World world, ChunkPos chunkPos, EaglercraftRandom random, int offsetY) {
       BlockPos startPos = this.getRoomBoundsMin().add(0, offsetY, 0);
       BlockPos stopPos = this.getRoomBoundsMax().add(0, offsetY, 0);
       int startX = Math.min(startPos.getX(), stopPos.getX());
@@ -474,7 +474,7 @@ public class SectorInstance {
 
    }
 
-   public void buildWalls(World world, ChunkPos chunkPos, Random random) {
+   public void buildWalls(World world, ChunkPos chunkPos, EaglercraftRandom random) {
       BlockPos startPos = this.getRoomBoundsMin();
       BlockPos stopPos = this.getRoomBoundsMax();
       int startX = Math.min(startPos.getX(), stopPos.getX());
@@ -523,7 +523,7 @@ public class SectorInstance {
 
    }
 
-   public void buildCeiling(World world, ChunkPos chunkPos, Random random) {
+   public void buildCeiling(World world, ChunkPos chunkPos, EaglercraftRandom random) {
       BlockPos startPos = this.getRoomBoundsMin();
       BlockPos stopPos = this.getRoomBoundsMax();
       int startX = Math.min(startPos.getX(), stopPos.getX());
@@ -557,11 +557,11 @@ public class SectorInstance {
 
    }
 
-   public void buildEntrances(World world, ChunkPos chunkPos, Random random) {
+   public void buildEntrances(World world, ChunkPos chunkPos, EaglercraftRandom random) {
       this.parentConnector.buildEntrance(world, chunkPos, random);
    }
 
-   public void buildStairs(World world, ChunkPos chunkPos, Random random) {
+   public void buildStairs(World world, ChunkPos chunkPos, EaglercraftRandom random) {
       BlockPos startPos = this.getRoomBoundsMin();
       BlockPos stopPos = this.getRoomBoundsMax();
       Vec3i size = this.getRoomSize();
@@ -633,7 +633,7 @@ public class SectorInstance {
 
    }
 
-   public void spawnMob(World world, ChunkPos chunkPos, BlockPos blockPos, MobSpawn mobSpawn, Random random) {
+   public void spawnMob(World world, ChunkPos chunkPos, BlockPos blockPos, MobSpawn mobSpawn, EaglercraftRandom random) {
       int chunkOffset = 8;
       if (blockPos.getX() >= chunkPos.getXStart() + chunkOffset && blockPos.getX() <= chunkPos.getXEnd() + chunkOffset) {
          if (blockPos.getY() > 0 && blockPos.getY() < world.getHeight()) {

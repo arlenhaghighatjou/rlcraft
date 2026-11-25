@@ -1,6 +1,6 @@
 package slimeknights.mantle.util;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
@@ -40,20 +40,20 @@ public class TradeGeneric implements ITradeList {
    }
 
    @Nonnull
-   protected ItemStack getInput(Random random) {
+   protected ItemStack getInput(EaglercraftRandom random) {
       return this.input.isEmpty() ? new ItemStack(Items.EMERALD) : this.input.copy();
    }
 
-   protected ItemStack getInput2(Random random) {
+   protected ItemStack getInput2(EaglercraftRandom random) {
       return this.input2.isEmpty() ? ItemStack.EMPTY : this.input2.copy();
    }
 
    @Nonnull
-   protected ItemStack getOutput(Random random) {
+   protected ItemStack getOutput(EaglercraftRandom random) {
       return this.output.isEmpty() ? new ItemStack(Items.EMERALD) : this.output.copy();
    }
 
-   public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+   public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
       ItemStack input = this.getInput(random);
       ItemStack output = this.getOutput(random);
       int size = 1;

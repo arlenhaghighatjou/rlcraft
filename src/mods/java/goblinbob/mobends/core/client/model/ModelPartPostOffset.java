@@ -1,8 +1,8 @@
 package goblinbob.mobends.core.client.model;
 
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.GlStateManager;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class ModelPartPostOffset extends ModelPart {
    protected Vector3f postOffset = new Vector3f(0.0F, 0.0F, 0.0F);

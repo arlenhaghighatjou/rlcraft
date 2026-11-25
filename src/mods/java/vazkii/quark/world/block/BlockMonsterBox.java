@@ -1,6 +1,6 @@
 package vazkii.quark.world.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -27,12 +27,12 @@ public class BlockMonsterBox extends BlockModContainer implements IQuarkBlock {
       this.setSoundType(SoundType.METAL);
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 
    @Nonnull
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Items.AIR;
    }
 

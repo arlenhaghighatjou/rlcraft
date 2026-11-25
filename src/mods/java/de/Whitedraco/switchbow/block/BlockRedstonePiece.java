@@ -1,6 +1,6 @@
 package de.Whitedraco.switchbow.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockCompressedPowered;
 import net.minecraft.block.material.MapColor;
@@ -33,7 +33,7 @@ public class BlockRedstonePiece extends BlockCompressedPowered {
    }
 
    @Nullable
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return null;
    }
 

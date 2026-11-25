@@ -3,7 +3,7 @@ package mcjty.lostcities.dimensions.world;
 import com.google.common.collect.Lists;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.Rotation;
@@ -51,7 +51,7 @@ public class LostWoodlandMansion extends MapGenStructure {
 
       int k = i / 80;
       int l = j / 80;
-      Random random = this.world.setRandomSeed(k, l, 10387319);
+      EaglercraftRandom random = this.world.setRandomSeed(k, l, 10387319);
       k = k * 80;
       l = l * 80;
       k = k + (random.nextInt(60) + random.nextInt(60)) / 2;
@@ -82,12 +82,12 @@ public class LostWoodlandMansion extends MapGenStructure {
       public Start() {
       }
 
-      public Start(World world, LostCityChunkGenerator provider, Random random, int chunkX, int chunkZ) {
+      public Start(World world, LostCityChunkGenerator provider, EaglercraftRandom random, int chunkX, int chunkZ) {
          super(chunkX, chunkZ);
          this.create(world, provider, random, chunkX, chunkZ);
       }
 
-      private void create(World world, LostCityChunkGenerator provider, Random random, int chunkX, int chunkZ) {
+      private void create(World world, LostCityChunkGenerator provider, EaglercraftRandom random, int chunkX, int chunkZ) {
          Rotation rotation = Rotation.values()[random.nextInt(Rotation.values().length)];
          ChunkPrimer chunkprimer = provider.getChunkPrimer(chunkX, chunkZ, false);
          int i = 5;
@@ -119,7 +119,7 @@ public class LostWoodlandMansion extends MapGenStructure {
 
       }
 
-      public void generateStructure(World worldIn, Random rand, StructureBoundingBox structurebb) {
+      public void generateStructure(World worldIn, EaglercraftRandom rand, StructureBoundingBox structurebb) {
          super.generateStructure(worldIn, rand, structurebb);
          int i = this.boundingBox.minY;
 

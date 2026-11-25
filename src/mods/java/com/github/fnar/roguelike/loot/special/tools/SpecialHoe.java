@@ -4,10 +4,10 @@ import com.github.fnar.minecraft.item.RldItem;
 import com.github.fnar.minecraft.item.ToolType;
 import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.util.TextFormat;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SpecialHoe extends SpecialTool {
-   public SpecialHoe(Random random, Quality quality) {
+   public SpecialHoe(EaglercraftRandom random, Quality quality) {
       this.withName(quality == Quality.DIAMOND ? "Useless Hoe" : quality.getDescriptor() + " Hoe");
       this.withRldItem(this.getItem(quality));
       this.withToolEnchantments(random);

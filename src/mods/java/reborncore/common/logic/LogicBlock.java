@@ -2,7 +2,7 @@ package reborncore.common.logic;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockContainer;
@@ -113,7 +113,7 @@ public class LogicBlock extends BlockContainer {
             this.addItemsToList(inventory, items);
 
             for(ItemStack itemStack : items) {
-               Random rand = new Random();
+               EaglercraftRandom rand = new EaglercraftRandom();
                float dX = rand.nextFloat() * 0.8F + 0.1F;
                float dY = rand.nextFloat() * 0.8F + 0.1F;
                float dZ = rand.nextFloat() * 0.8F + 0.1F;

@@ -1,6 +1,6 @@
 package xzeroair.trinkets.traits.abilities.base;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +11,7 @@ public abstract class AbilityBase {
    private AbilityHandler handler;
    private EntityLivingBase entity;
    private boolean removeAbility = false;
-   protected Random random = Reference.random;
+   protected EaglercraftRandom random = Reference.random;
    protected int value = -1;
    protected boolean enabled = false;
 

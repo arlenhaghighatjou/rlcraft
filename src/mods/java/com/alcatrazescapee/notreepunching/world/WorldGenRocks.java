@@ -5,7 +5,7 @@ import com.alcatrazescapee.notreepunching.ModConfig;
 import com.alcatrazescapee.notreepunching.common.blocks.BlockRock;
 import com.alcatrazescapee.notreepunching.util.types.Stone;
 import com.google.common.collect.Sets;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -22,7 +22,7 @@ public class WorldGenRocks implements IWorldGenerator {
    public WorldGenRocks() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (world.provider != null && world.provider.getDimension() == 0 && ModConfig.GENERAL.looseRocksGeneration) {
          for(int i = 0; i < ModConfig.GENERAL.looseRocksFrequency; ++i) {
             int xCoord = chunkX * 16 + random.nextInt(16) + 8;
@@ -35,7 +35,7 @@ public class WorldGenRocks implements IWorldGenerator {
 
    }
 
-   private void placeRock(World world, BlockPos pos, Random random) {
+   private void placeRock(World world, BlockPos pos, EaglercraftRandom random) {
       IBlockState state = world.getBlockState(pos.up());
       if (!state.getMaterial().isLiquid() && !state.isOpaqueCube() && state.getBlock().isReplaceable(world, pos.up())) {
          IBlockState stateDown = world.getBlockState(pos);

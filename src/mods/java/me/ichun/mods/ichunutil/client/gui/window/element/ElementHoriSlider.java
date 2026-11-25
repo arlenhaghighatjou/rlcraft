@@ -6,7 +6,7 @@ import me.ichun.mods.ichunutil.client.render.RendererHelper;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.translation.I18n;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class ElementHoriSlider extends Element {
    public double prevSliderProg;

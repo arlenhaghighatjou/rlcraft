@@ -3,7 +3,7 @@ package melonslise.locks.common.config;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.NavigableMap;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.Function;
@@ -94,15 +94,15 @@ public final class LocksConfig {
       return skipGeneratingItems.contains(regName) || skipGeneratingItems.contains(regNameMeta);
    }
 
-   public static boolean canGen(Random rng) {
+   public static boolean canGen(EaglercraftRandom rng) {
       return LocksUtil.chance(rng, COMMON.generationChance);
    }
 
-   public static boolean canEnchant(Random rng) {
+   public static boolean canEnchant(EaglercraftRandom rng) {
       return LocksUtil.chance(rng, COMMON.generationEnchantChance);
    }
 
-   public static ItemStack getRandomLock(Random rng) {
+   public static ItemStack getRandomLock(EaglercraftRandom rng) {
       int rngNumber = rng.nextInt(weightTotal) + 1;
       ItemStack stack = new ItemStack((Item)weightedGeneratedLocks.ceilingEntry(Integer.valueOf(rngNumber)).getValue());
       int pinout = MathHelper.clamp(((Integer)weightedGeneratedPins.ceilingEntry(Integer.valueOf(rngNumber)).getValue()).intValue(), 0, 30);

@@ -2,9 +2,9 @@ package xzeroair.trinkets.races.faelis;
 
 import java.util.Iterator;
 import java.util.TreeMap;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nonnull;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,8 +35,8 @@ import xzeroair.trinkets.util.helpers.DrawingHelper;
 
 public class RaceFaelis extends EntityRacePropertiesHandler {
    public static FaelisConfig serverConfig;
-   protected UpdatingAttribute movement = (new UpdatingAttribute(UUID.fromString("1c9ba72a-a558-4ccc-a997-777bf3a9859a"), SharedMonsterAttributes.MOVEMENT_SPEED)).setSavedInNBT(false);
-   protected UpdatingAttribute jump = (new UpdatingAttribute(UUID.fromString("1c9ba72a-a558-4ccc-a997-777bf3a9859a"), JumpAttribute.Jump)).setSavedInNBT(false);
+   protected UpdatingAttribute movement = (new UpdatingAttribute(EaglercraftUUID.fromString("1c9ba72a-a558-4ccc-a997-777bf3a9859a"), SharedMonsterAttributes.MOVEMENT_SPEED)).setSavedInNBT(false);
+   protected UpdatingAttribute jump = (new UpdatingAttribute(EaglercraftUUID.fromString("1c9ba72a-a558-4ccc-a997-777bf3a9859a"), JumpAttribute.Jump)).setSavedInNBT(false);
    private FaelisEars ears = new FaelisEars();
    public static final ResourceLocation TEXTURE = new ResourceLocation("xat:textures/ears.png");
    public static final ResourceLocation TEXTURE_INNER = new ResourceLocation("xat:textures/inner_ears.png");
@@ -106,7 +106,7 @@ public class RaceFaelis extends EntityRacePropertiesHandler {
    }
 
    public void endTransformation() {
-      AttributeHelper.removeAttributes(this.entity, UUID.fromString("1c9ba72a-a558-4ccc-a997-777bf3a9859a"));
+      AttributeHelper.removeAttributes(this.entity, EaglercraftUUID.fromString("1c9ba72a-a558-4ccc-a997-777bf3a9859a"));
    }
 
    public float hurtEntity(EntityLivingBase target, DamageSource source, float dmg) {

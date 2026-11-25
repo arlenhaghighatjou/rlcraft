@@ -6,7 +6,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Direction;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -32,7 +32,7 @@ public class Node {
 
    }
 
-   public void update(Random random) {
+   public void update(EaglercraftRandom random) {
       this.edges.forEach((edge) -> {
          edge.update(random);
       });

@@ -1,6 +1,6 @@
 package vazkii.quark.decoration.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -57,7 +57,7 @@ public class BlockColoredFlowerPot extends BlockCustomFlowerPot implements IQuar
    }
 
    @Nonnull
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(this);
    }
 

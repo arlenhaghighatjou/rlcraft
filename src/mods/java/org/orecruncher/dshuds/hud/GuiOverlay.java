@@ -1,8 +1,8 @@
 package org.orecruncher.dshuds.hud;
 
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Post;
@@ -40,7 +40,7 @@ public abstract class GuiOverlay extends Gui {
       GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
       GlStateManager.shadeModel(7425);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder t = tessellator.getBuffer();
+      WorldRenderer t = tessellator.getBuffer();
       t.begin(7, DefaultVertexFormats.POSITION_COLOR);
       t.pos((double)(left + right), (double)top, 0.0D).color(f1, f2, f3, f).endVertex();
       t.pos((double)left, (double)top, 0.0D).color(f1, f2, f3, f).endVertex();

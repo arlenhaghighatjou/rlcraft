@@ -2,11 +2,11 @@ package com.tmtravlr.qualitytools.reforging;
 
 import com.tmtravlr.qualitytools.QualityToolsMod;
 import com.tmtravlr.qualitytools.network.CToSMessage;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import java.io.IOException;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;

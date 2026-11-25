@@ -3,7 +3,7 @@ package com.Shultrea.Rin.Ench0_1_0;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentSwifterSlashes extends EnchantmentBase {
-   public static final UUID CACHED_UUID = UUID.fromString("e6109481-134f-4c54-a535-29c3ae5c7a21");
+   public static final EaglercraftUUID CACHED_UUID = EaglercraftUUID.fromString("e6109481-134f-4c54-a535-29c3ae5c7a21");
 
    public EnchantmentSwifterSlashes() {
       super(Rarity.VERY_RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});

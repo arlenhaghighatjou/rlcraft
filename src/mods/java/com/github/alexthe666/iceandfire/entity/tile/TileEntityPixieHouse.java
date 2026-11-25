@@ -4,8 +4,8 @@ import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.entity.EntityPixie;
 import com.github.alexthe666.iceandfire.message.MessageUpdatePixieHouse;
 import com.github.alexthe666.iceandfire.message.MessageUpdatePixieHouseModel;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,11 +22,11 @@ public class TileEntityPixieHouse extends TileEntity implements ITickable {
    public int houseType;
    public boolean hasPixie;
    public boolean tamedPixie;
-   public UUID pixieOwnerUUID;
+   public EaglercraftUUID pixieOwnerUUID;
    public int pixieType;
    public int ticksExisted;
    public NonNullList<ItemStack> pixieItems = NonNullList.withSize(1, ItemStack.EMPTY);
-   private Random rand = new Random();
+   private EaglercraftRandom rand = new EaglercraftRandom();
 
    public TileEntityPixieHouse() {
    }
@@ -76,7 +76,7 @@ public class TileEntityPixieHouse extends TileEntity implements ITickable {
 
    public void update() {
       ++this.ticksExisted;
-      if (!this.world.isRemote && this.hasPixie && (new Random()).nextInt(100) == 0) {
+      if (!this.world.isRemote && this.hasPixie && (new EaglercraftRandom()).nextInt(100) == 0) {
          this.releasePixie();
       }
 
@@ -88,7 +88,7 @@ public class TileEntityPixieHouse extends TileEntity implements ITickable {
 
    public void releasePixie() {
       EntityPixie pixie = new EntityPixie(this.world);
-      pixie.setPositionAndRotation((double)((float)this.pos.getX() + 0.5F), (double)((float)this.pos.getY() + 1.0F), (double)((float)this.pos.getZ() + 0.5F), (float)(new Random()).nextInt(360), 0.0F);
+      pixie.setPositionAndRotation((double)((float)this.pos.getX() + 0.5F), (double)((float)this.pos.getY() + 1.0F), (double)((float)this.pos.getZ() + 0.5F), (float)(new EaglercraftRandom()).nextInt(360), 0.0F);
       pixie.setHeldItem(EnumHand.MAIN_HAND, (ItemStack)this.pixieItems.get(0));
       pixie.setColor(this.pixieType);
       if (!this.world.isRemote) {

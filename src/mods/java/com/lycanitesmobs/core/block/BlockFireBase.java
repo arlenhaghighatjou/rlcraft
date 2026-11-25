@@ -3,7 +3,7 @@ package com.lycanitesmobs.core.block;
 import com.lycanitesmobs.client.localisation.LanguageManager;
 import com.lycanitesmobs.core.info.ModInfo;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.block.SoundType;
@@ -89,7 +89,7 @@ public class BlockFireBase extends BlockBase {
       return this.tickRate;
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState blockState, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState blockState, EaglercraftRandom rand) {
       if (!((Boolean)blockState.getValue(STATIC)).booleanValue() && world.isAreaLoaded(pos, 2)) {
          boolean permanent = ((Boolean)blockState.getValue(PERMANENT)).booleanValue();
          if (!world.getGameRules().getBoolean("doFireTick")) {
@@ -226,7 +226,7 @@ public class BlockFireBase extends BlockBase {
       }
    }
 
-   private void tryCatchFire(World world, BlockPos pos, int chance, Random random, int age, EnumFacing face) {
+   private void tryCatchFire(World world, BlockPos pos, int chance, EaglercraftRandom random, int age, EnumFacing face) {
       int flammability = this.getBlockFlammability(world, pos, face);
       if (Math.round((float)random.nextInt(chance) / this.spreadChance) < flammability) {
          IBlockState blockState = world.getBlockState(pos);
@@ -272,12 +272,12 @@ public class BlockFireBase extends BlockBase {
       return world.isRainingAt(pos) || world.isRainingAt(pos.west()) || world.isRainingAt(pos.east()) || world.isRainingAt(pos.north()) || world.isRainingAt(pos.south());
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 
    protected ItemStack getSilkTouchDrop(IBlockState state) {
-      return new ItemStack(this.getItemDropped(state, (Random)null, 0), 1, 0);
+      return new ItemStack(this.getItemDropped(state, (EaglercraftRandom)null, 0), 1, 0);
    }
 
    @SideOnly(Side.CLIENT)

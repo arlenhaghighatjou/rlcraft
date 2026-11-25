@@ -1,6 +1,6 @@
 package net.silentchaos512.scalinghealth.utils;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -10,15 +10,15 @@ import net.silentchaos512.scalinghealth.ScalingHealth;
 import net.silentchaos512.scalinghealth.config.Config;
 
 public class ModifierHandler {
-   public static final UUID MODIFIER_ID_HEALTH = UUID.fromString("c0bef565-35f6-4dc5-bb4c-3644c382e6ce");
-   public static final UUID MODIFIER_ID_DAMAGE = UUID.fromString("d3560b15-c459-451c-86a8-0247015ae899");
+   public static final EaglercraftUUID MODIFIER_ID_HEALTH = EaglercraftUUID.fromString("c0bef565-35f6-4dc5-bb4c-3644c382e6ce");
+   public static final EaglercraftUUID MODIFIER_ID_DAMAGE = EaglercraftUUID.fromString("d3560b15-c459-451c-86a8-0247015ae899");
    public static final String MODIFIER_NAME_HEALTH = "ScalingHealth.HealthModifier";
    public static final String MODIFIER_NAME_DAMAGE = "ScalingHealth.DamageModifier";
 
    public ModifierHandler() {
    }
 
-   private static void setModifier(IAttributeInstance attr, UUID id, String name, double amount, int op) {
+   private static void setModifier(IAttributeInstance attr, EaglercraftUUID id, String name, double amount, int op) {
       if (attr != null) {
          double normalValue = attr.getBaseValue();
          double difference = amount - normalValue;

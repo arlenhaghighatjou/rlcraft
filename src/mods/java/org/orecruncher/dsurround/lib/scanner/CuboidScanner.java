@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.lib.scanner;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
@@ -101,7 +101,7 @@ public abstract class CuboidScanner extends Scanner {
    }
 
    @Nullable
-   protected BlockPos nextPos(@Nonnull MutableBlockPos workingPos, @Nonnull Random rand) {
+   protected BlockPos nextPos(@Nonnull MutableBlockPos workingPos, @Nonnull EaglercraftRandom rand) {
       if (this.scanFinished) {
          return null;
       } else {

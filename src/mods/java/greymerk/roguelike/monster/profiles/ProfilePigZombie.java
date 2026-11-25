@@ -5,13 +5,13 @@ import com.github.fnar.minecraft.block.spawner.MobType;
 import com.github.fnar.util.Color;
 import greymerk.roguelike.monster.Mob;
 import greymerk.roguelike.monster.MonsterProfile;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ProfilePigZombie implements MonsterProfile {
    public ProfilePigZombie() {
    }
 
-   public Mob apply(Mob mob, int level, int difficulty, Random random) {
+   public Mob apply(Mob mob, int level, int difficulty, EaglercraftRandom random) {
       mob.setMobType(MobType.PIGZOMBIE);
       mob.equipSword(random, level, Difficulty.fromInt(difficulty));
       mob.equipShield(random);

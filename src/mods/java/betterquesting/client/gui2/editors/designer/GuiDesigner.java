@@ -29,8 +29,8 @@ import betterquesting.questing.QuestLineDatabase;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.gui.GuiScreen;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class GuiDesigner extends GuiScreenCanvas implements IVolatileScreen, INeedsRefresh, IPEventListener {
    private IQuestLine questLine;

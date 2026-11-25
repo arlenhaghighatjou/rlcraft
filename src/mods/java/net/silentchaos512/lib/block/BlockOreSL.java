@@ -1,6 +1,6 @@
 package net.silentchaos512.lib.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.SoundType;
@@ -30,15 +30,15 @@ public class BlockOreSL extends BlockOre {
    }
 
    @Nonnull
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return this.droppedItem;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return this.quantityMin + random.nextInt(this.quantityMax - this.quantityMin + 1);
    }
 
-   public int quantityDroppedWithBonus(int fortune, Random random) {
+   public int quantityDroppedWithBonus(int fortune, EaglercraftRandom random) {
       int quantity = this.quantityDropped(random);
       if (fortune > 0 && this.getItemDropped(this.getDefaultState(), random, fortune) != Item.getItemFromBlock(this)) {
          float bonus = this.bonusAmount(fortune, random);
@@ -52,7 +52,7 @@ public class BlockOreSL extends BlockOre {
       return MathHelper.clamp(quantity, 0, 64);
    }
 
-   public float bonusAmount(int fortune, Random random) {
+   public float bonusAmount(int fortune, EaglercraftRandom random) {
       return (float)(random.nextInt(fortune + 2) - 1);
    }
 

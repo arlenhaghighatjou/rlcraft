@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.world.biome;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.entity.monster.EntityHost;
 import lykrast.defiledlands.common.entity.monster.EntityScuttler;
 import lykrast.defiledlands.common.entity.monster.EntityShambler;
@@ -77,11 +77,11 @@ public abstract class BiomeDefiled extends Biome {
       return 0.13F;
    }
 
-   public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+   public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand) {
       return (WorldGenAbstractTree)(rand.nextInt(5) > 0 ? tenebraGen : TREE_FEATURE);
    }
 
-   public void decorate(World worldIn, Random rand, BlockPos pos) {
+   public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos) {
       for(int i = 0; i < 80; ++i) {
          int x = rand.nextInt(16) + 8;
          int z = rand.nextInt(16) + 8;

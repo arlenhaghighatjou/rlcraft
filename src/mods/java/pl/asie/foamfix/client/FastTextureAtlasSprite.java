@@ -2,7 +2,7 @@ package pl.asie.foamfix.client;
 
 import java.nio.ByteBuffer;
 import java.util.List;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import org.lwjgl.opengl.ARBCopyImage;
 import org.lwjgl.opengl.GL11;
@@ -11,7 +11,7 @@ import pl.asie.foamfix.FoamFix;
 import pl.asie.foamfix.api.IFoamFixSprite;
 import pl.asie.foamfix.shared.FoamFixShared;
 
-public class FastTextureAtlasSprite extends TextureAtlasSprite implements IFoamFixSprite {
+public class FastTextureAtlasSprite extends EaglerTextureAtlasSprite implements IFoamFixSprite {
    private int textureId = -1;
    private int mipLevels = 0;
 

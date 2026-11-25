@@ -2,7 +2,7 @@ package paulevs.betternether.blocks;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
@@ -57,11 +57,11 @@ public class BlockWartSeed extends Block implements IGrowable {
       }
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return (double)worldIn.rand.nextFloat() < 0.45D;
    }
 
-   public void grow(World world, Random random, BlockPos pos, IBlockState state) {
+   public void grow(World world, EaglercraftRandom random, BlockPos pos, IBlockState state) {
       IBlockState bricks = Blocks.NETHER_BRICK.getDefaultState();
       IBlockState redBricks = Blocks.RED_NETHER_BRICK.getDefaultState();
       IBlockState wart = Blocks.NETHER_WART_BLOCK.getDefaultState();

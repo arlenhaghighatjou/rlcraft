@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.lycanitesmobs.core.dungeon.instance.SectorInstance;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -122,39 +122,39 @@ public class DungeonTheme {
 
    }
 
-   public IBlockState getFloor(SectorInstance sectorInstance, char patternChar, Random random) {
+   public IBlockState getFloor(SectorInstance sectorInstance, char patternChar, EaglercraftRandom random) {
       return this.getBlockState(sectorInstance, patternChar, random, this.floorBlocks);
    }
 
-   public IBlockState getWall(SectorInstance sectorInstance, char patternChar, Random random) {
+   public IBlockState getWall(SectorInstance sectorInstance, char patternChar, EaglercraftRandom random) {
       return this.getBlockState(sectorInstance, patternChar, random, this.wallBlocks);
    }
 
-   public IBlockState getCeiling(SectorInstance sectorInstance, char patternChar, Random random) {
+   public IBlockState getCeiling(SectorInstance sectorInstance, char patternChar, EaglercraftRandom random) {
       return this.getBlockState(sectorInstance, patternChar, random, this.ceilingBlocks);
    }
 
-   public IBlockState getLight(char patternChar, Random random) {
+   public IBlockState getLight(char patternChar, EaglercraftRandom random) {
       return this.getBlockState((SectorInstance)null, patternChar, random, this.lightBlocks);
    }
 
-   public IBlockState getTorch(char patternChar, Random random) {
+   public IBlockState getTorch(char patternChar, EaglercraftRandom random) {
       return this.getBlockState((SectorInstance)null, patternChar, random, this.torchBlocks);
    }
 
-   public IBlockState getStairs(char patternChar, Random random) {
+   public IBlockState getStairs(char patternChar, EaglercraftRandom random) {
       return this.getBlockState((SectorInstance)null, patternChar, random, this.stairBlocks);
    }
 
-   public IBlockState getPit(char patternChar, Random random) {
+   public IBlockState getPit(char patternChar, EaglercraftRandom random) {
       return this.getBlockState((SectorInstance)null, patternChar, random, this.pitBlocks);
    }
 
-   public IBlockState getAir(char patternChar, Random random) {
+   public IBlockState getAir(char patternChar, EaglercraftRandom random) {
       return this.getBlockState((SectorInstance)null, patternChar, random, this.airBlocks);
    }
 
-   public IBlockState getBlockState(SectorInstance sectorInstance, char patternChar, Random random, List<ThemeBlock> blockList) {
+   public IBlockState getBlockState(SectorInstance sectorInstance, char patternChar, EaglercraftRandom random, List<ThemeBlock> blockList) {
       if (patternChar == '0') {
          return null;
       } else {

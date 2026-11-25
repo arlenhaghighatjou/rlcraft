@@ -17,9 +17,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -314,7 +314,7 @@ public class WorldPortalRenderer {
          Queue<Particle> queue = particlemanager.fxLayers[3][i];
          if (!queue.isEmpty()) {
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuffer();
+            WorldRenderer bufferbuilder = tessellator.getBuffer();
 
             for(Particle particle : queue) {
                if (!portal.getCullRender() || canDrawParticle(particle, pair.getFaceOn(), pair.getPos())) {
@@ -359,7 +359,7 @@ public class WorldPortalRenderer {
 
                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                Tessellator tessellator = Tessellator.getInstance();
-               BufferBuilder bufferbuilder = tessellator.getBuffer();
+               WorldRenderer bufferbuilder = tessellator.getBuffer();
                bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
                for(Particle particle : particlemanager.fxLayers[i][jj]) {

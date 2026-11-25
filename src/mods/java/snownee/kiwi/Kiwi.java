@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import snownee.kiwi.block.IModBlock;
 import snownee.kiwi.client.AdvancedFontRenderer;
 import snownee.kiwi.item.IModItem;

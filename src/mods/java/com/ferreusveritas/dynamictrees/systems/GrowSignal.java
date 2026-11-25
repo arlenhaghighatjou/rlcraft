@@ -1,7 +1,7 @@
 package com.ferreusveritas.dynamictrees.systems;
 
 import com.ferreusveritas.dynamictrees.trees.Species;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
@@ -17,7 +17,7 @@ public class GrowSignal {
    public float tapering;
    public boolean success;
    public boolean choked;
-   public Random rand;
+   public EaglercraftRandom rand;
 
    public GrowSignal(Species species, BlockPos rootPos, float energy) {
       this.species = species;
@@ -27,7 +27,7 @@ public class GrowSignal {
       this.numTurns = 0;
       this.numSteps = 0;
       this.tapering = 0.3F;
-      this.rand = new Random();
+      this.rand = new EaglercraftRandom();
       this.success = true;
       this.choked = false;
       this.rootPos = rootPos;

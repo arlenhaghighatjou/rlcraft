@@ -10,7 +10,7 @@ import com.ferreusveritas.dynamictrees.blocks.BlockBranch;
 import com.ferreusveritas.dynamictrees.systems.nodemappers.NodeFindEnds;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockDoublePlant;
@@ -35,7 +35,7 @@ public class FeatureGenPodzol implements IPostGrowFeature {
          TreeHelper.startAnalysisFromRoot(world, rootPos, new MapSignal(new INodeInspector[]{endFinder}));
          List<BlockPos> endPoints = endFinder.getEnds();
          if (!endPoints.isEmpty()) {
-            Random random = world.rand;
+            EaglercraftRandom random = world.rand;
             BlockPos pos = (BlockPos)endPoints.get(random.nextInt(endPoints.size()));
             int x = pos.getX() + random.nextInt(5) - 2;
             int z = pos.getZ() + random.nextInt(5) - 2;

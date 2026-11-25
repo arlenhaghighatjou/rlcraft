@@ -5,7 +5,7 @@ import com.github.fnar.roguelike.loot.special.SpecialEquipment;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Quality;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Supplier;
 
 public class SpecialtyLootItem extends LootItem {
@@ -27,11 +27,11 @@ public class SpecialtyLootItem extends LootItem {
       this.quality = quality;
    }
 
-   public static boolean rollForSpecial(Random random) {
+   public static boolean rollForSpecial(EaglercraftRandom random) {
       return random.nextDouble() < 0.05D;
    }
 
-   public RldItemStack getLootItem(Random random) {
+   public RldItemStack getLootItem(EaglercraftRandom random) {
       Equipment equipmentType = (Equipment)Optional.ofNullable(this.type).orElseGet(() -> {
          return Equipment.random(random);
       });

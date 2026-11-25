@@ -12,7 +12,7 @@ import ivorius.reccomplex.world.gen.feature.WorldStructureGenerationData;
 import ivorius.reccomplex.world.gen.feature.structure.Structure;
 import ivorius.reccomplex.world.gen.feature.structure.StructureRegistry;
 import ivorius.reccomplex.world.gen.feature.structure.context.StructureLoadContext;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import net.minecraft.command.CommandException;
@@ -34,7 +34,7 @@ public class CommandSightInfo extends SimpleCommand {
       var10001.getClass();
       Parameters parameters = Parameters.of(args, var10001::declare);
       WorldStructureGenerationData generationData = WorldStructureGenerationData.get(sender.getEntityWorld());
-      WorldStructureGenerationData.Entry entry = generationData.getEntry(UUID.fromString((String)parameters.get(0).require()));
+      WorldStructureGenerationData.Entry entry = generationData.getEntry(EaglercraftUUID.fromString((String)parameters.get(0).require()));
       if (entry == null) {
          throw RecurrentComplex.translations.commandException("commands.rcsightinfo.unknown");
       } else {

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.Map.Entry;
 import java.util.function.Function;
@@ -25,7 +25,7 @@ public class MazeComponentConnector {
    public MazeComponentConnector() {
    }
 
-   public static <M extends WeightedMazeComponent<C>, C> List<PlacedMazeComponent<M, C>> connect(MorphingMazeComponent<C> maze, List<M> components, ConnectionStrategy<C> connectionStrategy, MazePredicate<C> predicate, Random random, int reverses) {
+   public static <M extends WeightedMazeComponent<C>, C> List<PlacedMazeComponent<M, C>> connect(MorphingMazeComponent<C> maze, List<M> components, ConnectionStrategy<C> connectionStrategy, MazePredicate<C> predicate, EaglercraftRandom random, int reverses) {
       List<MultiMazeComponent<M, C>> multis = (List)IvFunctions.group(components, (c) -> {
          return Triple.of(c.rooms(), c.exits(), c.reachability());
       }).stream().map((c) -> {
@@ -36,7 +36,7 @@ public class MazeComponentConnector {
       }).collect(Collectors.toList());
    }
 
-   protected static <M extends MultiMazeComponent<MO, C>, MO extends WeightedMazeComponent<C>, C> List<PlacedMazeComponent<M, C>> connectMulti(MorphingMazeComponent<C> maze, List<M> components, ConnectionStrategy<C> connectionStrategy, MazePredicate<C> predicate, Random random, int reverses) {
+   protected static <M extends MultiMazeComponent<MO, C>, MO extends WeightedMazeComponent<C>, C> List<PlacedMazeComponent<M, C>> connectMulti(MorphingMazeComponent<C> maze, List<M> components, ConnectionStrategy<C> connectionStrategy, MazePredicate<C> predicate, EaglercraftRandom random, int reverses) {
       List<MazeComponentConnector.ReverseInfo<M, C>> placeOrder = new ArrayList();
       MazeComponentConnector.ReverseInfo<M, C> reversing = null;
       List<PlacedMazeComponent<M, C>> result = new ArrayList();
@@ -85,7 +85,7 @@ public class MazeComponentConnector {
          }
 
          if (reversing.triedIndices < shiftedComponents.size()) {
-            Iterator<ShiftedMazeComponent<M, C>> shuffler = WeightedShuffler.<ShiftedMazeComponent<M, C>>iterateShuffled(new Random(reversing.shuffleSeed), shiftedComponents);
+            Iterator<ShiftedMazeComponent<M, C>> shuffler = WeightedShuffler.<ShiftedMazeComponent<M, C>>iterateShuffled(new EaglercraftRandom(reversing.shuffleSeed), shiftedComponents);
 
             for(int i = 0; i < reversing.triedIndices; ++i) {
                shuffler.next();
@@ -142,7 +142,7 @@ public class MazeComponentConnector {
       };
    }
 
-   private static <M extends WeightedMazeComponent<C>, C> void addAllExits(MazePredicate<C> placementStrategy, List<Triple<MazeRoom, MazePassage, C>> exitStack, Set<Entry<MazePassage, C>> entries, Random random) {
+   private static <M extends WeightedMazeComponent<C>, C> void addAllExits(MazePredicate<C> placementStrategy, List<Triple<MazeRoom, MazePassage, C>> exitStack, Set<Entry<MazePassage, C>> entries, EaglercraftRandom random) {
       for(Entry<MazePassage, C> exit : entries) {
          MazePassage connection = (MazePassage)exit.getKey();
          C c = (C)exit.getValue();
@@ -157,7 +157,7 @@ public class MazeComponentConnector {
 
    }
 
-   private static <C> void addRandomly(List<Triple<MazeRoom, MazePassage, C>> exitStack, Random random, MazePassage connection, C c, MazeRoom left) {
+   private static <C> void addRandomly(List<Triple<MazeRoom, MazePassage, C>> exitStack, EaglercraftRandom random, MazePassage connection, C c, MazeRoom left) {
       exitStack.add(random.nextInt(exitStack.size() + 1), Triple.of(left, connection, c));
    }
 

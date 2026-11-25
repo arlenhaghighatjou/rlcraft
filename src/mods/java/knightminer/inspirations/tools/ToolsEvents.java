@@ -2,7 +2,7 @@ package knightminer.inspirations.tools;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import knightminer.inspirations.common.Config;
 import knightminer.inspirations.common.network.InspirationsNetwork;
 import knightminer.inspirations.library.Util;
@@ -210,7 +210,7 @@ public class ToolsEvents {
                   crook.damageItem(1, player);
                }
 
-               Random rand = world.rand;
+               EaglercraftRandom rand = world.rand;
                ItemStack sapling = new ItemStack(block.getItemDropped(state, rand, event.getFortuneLevel()), 1, block.damageDropped(state));
                List<ItemStack> drops = event.getDrops();
 

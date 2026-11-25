@@ -1,7 +1,7 @@
 package rustic.common.blocks;
 
 import com.google.common.base.Predicate;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockButton;
 import net.minecraft.block.SoundType;
@@ -140,7 +140,7 @@ public class BlockCandleLever extends BlockCandle {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       EnumFacing enumfacing = (EnumFacing)stateIn.getValue(FACING);
       boolean pulled = ((Boolean)stateIn.getValue(BlockButton.POWERED)).booleanValue();
       double x = (double)pos.getX() + 0.5D;
@@ -157,10 +157,10 @@ public class BlockCandleLever extends BlockCandle {
 
    }
 
-   public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom random) {
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote && ((Boolean)state.getValue(BlockButton.POWERED)).booleanValue()) {
          worldIn.setBlockState(pos, state.withProperty(BlockButton.POWERED, Boolean.valueOf(false)));
          this.notifyNeighbors(worldIn, pos, (EnumFacing)state.getValue(FACING));

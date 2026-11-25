@@ -4,7 +4,7 @@ import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -31,7 +31,7 @@ import vazkii.quark.world.item.ItemChain;
 public class ChainLinkage extends Feature {
    public static boolean craftsArmor;
    public static Item chain;
-   private static final TIntObjectMap<UUID> AWAIT_MAP = new TIntObjectHashMap();
+   private static final TIntObjectMap<EaglercraftUUID> AWAIT_MAP = new TIntObjectHashMap();
 
    public ChainLinkage() {
    }
@@ -52,7 +52,7 @@ public class ChainLinkage extends Feature {
 
    }
 
-   public static void queueChainUpdate(int vehicle, UUID other) {
+   public static void queueChainUpdate(int vehicle, EaglercraftUUID other) {
       if (other != null) {
          AWAIT_MAP.put(vehicle, other);
       }
@@ -104,7 +104,7 @@ public class ChainLinkage extends Feature {
                entity.entityDropItem(new ItemStack(chain), 0.0F);
             }
 
-            ChainHandler.setLink(entity, (UUID)null, true);
+            ChainHandler.setLink(entity, (EaglercraftUUID)null, true);
          }
 
          event.setCancellationResult(EnumActionResult.SUCCESS);
@@ -124,7 +124,7 @@ public class ChainLinkage extends Feature {
                entity.entityDropItem(new ItemStack(chain), 0.0F);
             }
 
-            ChainHandler.setLink(entity, (UUID)null, true);
+            ChainHandler.setLink(entity, (EaglercraftUUID)null, true);
          }
 
          event.setCancellationResult(EnumActionResult.SUCCESS);
@@ -156,7 +156,7 @@ public class ChainLinkage extends Feature {
       if (event.getWorld().isRemote && ChainHandler.canBeLinked(target)) {
          int id = target.getEntityId();
          if (AWAIT_MAP.containsKey(id)) {
-            target.getEntityData().setUniqueId("Quark:VehicleLink", (UUID)AWAIT_MAP.get(id));
+            target.getEntityData().setUniqueId("Quark:VehicleLink", (EaglercraftUUID)AWAIT_MAP.get(id));
          }
 
          AWAIT_MAP.remove(id);

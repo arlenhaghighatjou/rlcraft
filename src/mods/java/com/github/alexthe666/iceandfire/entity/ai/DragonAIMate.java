@@ -4,7 +4,7 @@ import com.github.alexthe666.iceandfire.core.ModBlocks;
 import com.github.alexthe666.iceandfire.entity.EntityDragonBase;
 import com.github.alexthe666.iceandfire.entity.EntityDragonEgg;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -97,7 +97,7 @@ public class DragonAIMate extends EntityAIBase {
          int nestZ = (int)(this.dragon.isMale() ? this.targetMate.posZ : this.dragon.posZ);
          egg.setLocationAndAngles((double)((float)nestX - 0.5F), (double)((float)nestY + 1.0F), (double)((float)nestZ - 0.5F), 0.0F, 0.0F);
          this.theWorld.spawnEntity(egg);
-         Random random = this.dragon.getRNG();
+         EaglercraftRandom random = this.dragon.getRNG();
 
          for(int i = 0; i < 17; ++i) {
             double d0 = random.nextGaussian() * 0.02D;

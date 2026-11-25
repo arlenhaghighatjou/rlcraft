@@ -14,7 +14,7 @@ import com.lycanitesmobs.core.network.MessageSummoningPedestalSummonSet;
 import com.lycanitesmobs.core.pets.SummonSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -33,7 +33,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 public class TileEntitySummoningPedestal extends TileEntityBase {
    public long updateTick = 0L;
    public PortalEntity summoningPortal;
-   public UUID ownerUUID;
+   public EaglercraftUUID ownerUUID;
    public String ownerName = "";
    public SummonSet summonSet;
    public int summonAmount = 1;
@@ -95,10 +95,10 @@ public class TileEntitySummoningPedestal extends TileEntityBase {
 
             for(BaseCreatureEntity possibleEntity : this.getWorld().getEntitiesWithinAABB(BaseCreatureEntity.class, new AxisAlignedBB((double)(this.getPos().getX() - range), (double)(this.getPos().getY() - range), (double)(this.getPos().getZ() - range), (double)(this.getPos().getX() + range), (double)(this.getPos().getY() + range), (double)(this.getPos().getZ() + range)))) {
                for(String loadMinionID : this.loadMinionIDs) {
-                  UUID uuid = null;
+                  EaglercraftUUID uuid = null;
 
                   try {
-                     uuid = UUID.fromString(loadMinionID);
+                     uuid = EaglercraftUUID.fromString(loadMinionID);
                   } catch (Exception var11) {
                      ;
                   }
@@ -195,7 +195,7 @@ public class TileEntitySummoningPedestal extends TileEntityBase {
 
    }
 
-   public UUID getOwnerUUID() {
+   public EaglercraftUUID getOwnerUUID() {
       return this.ownerUUID;
    }
 
@@ -331,7 +331,7 @@ public class TileEntitySummoningPedestal extends TileEntityBase {
       if (this.getWorld().isRemote) {
          NBTTagCompound syncData = packet.getNbtCompound();
          if (syncData.hasKey("OwnerUUID")) {
-            this.ownerUUID = UUID.fromString(syncData.getString("OwnerUUID"));
+            this.ownerUUID = EaglercraftUUID.fromString(syncData.getString("OwnerUUID"));
          }
 
          if (syncData.hasKey("OwnerName")) {
@@ -360,7 +360,7 @@ public class TileEntitySummoningPedestal extends TileEntityBase {
       if (nbtTagCompound.hasKey("OwnerUUID")) {
          String uuidString = nbtTagCompound.getString("OwnerUUID");
          if (!"".equals(uuidString)) {
-            this.ownerUUID = UUID.fromString(uuidString);
+            this.ownerUUID = EaglercraftUUID.fromString(uuidString);
          } else {
             this.ownerUUID = null;
          }

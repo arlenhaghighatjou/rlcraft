@@ -2,7 +2,7 @@ package melonslise.locks.common.util;
 
 import java.util.Objects;
 import java.util.Observable;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import melonslise.locks.common.item.LockItem;
 import melonslise.locks.common.item.LockingItem;
 import net.minecraft.item.ItemStack;
@@ -11,7 +11,7 @@ public class Lock extends Observable {
    public final int id;
    protected byte[] combination;
    protected boolean locked;
-   public final Random rng;
+   public final EaglercraftRandom rng;
 
    protected Lock(int id, byte[] combination, boolean locked) {
       this.id = id;
@@ -33,9 +33,9 @@ public class Lock extends Observable {
       this.locked = locked;
    }
 
-   private Random createNewRng(int id) {
+   private EaglercraftRandom createNewRng(int id) {
       long overworldSeed = LocksUtil.getOverworldSeed();
-      return new Random((long)id ^ Math.abs(overworldSeed) * 17317L + overworldSeed);
+      return new EaglercraftRandom((long)id ^ Math.abs(overworldSeed) * 17317L + overworldSeed);
    }
 
    public static Lock from(ItemStack stack) {

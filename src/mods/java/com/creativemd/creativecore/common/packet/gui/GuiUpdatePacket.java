@@ -3,7 +3,7 @@ package com.creativemd.creativecore.common.packet.gui;
 import com.creativemd.creativecore.common.gui.container.SubContainer;
 import com.creativemd.creativecore.common.gui.mc.ContainerSub;
 import com.creativemd.creativecore.common.packet.CreativeCorePacket;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;

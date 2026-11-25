@@ -2,8 +2,8 @@ package betterquesting.network;
 
 import betterquesting.api.api.QuestingAPI;
 import betterquesting.core.BetterQuesting;
-import io.netty.buffer.ByteBuf;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class PacketQuesting implements IMessage {
    protected NBTTagCompound tags = new NBTTagCompound();
@@ -40,7 +40,7 @@ public class PacketQuesting implements IMessage {
 
       public IMessage onMessage(PacketQuesting packet, MessageContext ctx) {
          if (packet != null && packet.tags != null) {
-            NBTTagCompound message = PacketAssembly.INSTANCE.assemblePacket((UUID)null, packet.tags);
+            NBTTagCompound message = PacketAssembly.INSTANCE.assemblePacket((EaglercraftUUID)null, packet.tags);
             if (message == null) {
                return null;
             } else if (!message.hasKey("ID")) {

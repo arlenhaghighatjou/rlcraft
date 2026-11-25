@@ -5,10 +5,10 @@ import kotlin.jvm.internal.Intrinsics;
 import mods.betterfoliage.client.config.Config;
 import mods.octarinecore.client.render.HSB;
 import mods.octarinecore.client.resource.ModelRenderKey;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 @Metadata(
@@ -28,12 +28,12 @@ public final class StandardGrassKey implements ModelRenderKey<GrassInfo> {
    public GrassInfo resolveSprites(@NotNull TextureMap atlas) {
       Intrinsics.checkParameterIsNotNull(atlas, "atlas");
       String logName = "StandardGrassKey";
-      TextureAtlasSprite var10000 = mods.octarinecore.client.resource.Utils.get(atlas, this.textureName);
+      EaglerTextureAtlasSprite var10000 = mods.octarinecore.client.resource.Utils.get(atlas, this.textureName);
       if (var10000 == null) {
          var10000 = atlas.getMissingSprite();
       }
 
-      TextureAtlasSprite texture = var10000;
+      EaglerTextureAtlasSprite texture = var10000;
       this.getLogger().log(Level.DEBUG, logName + ": texture " + this.textureName);
       HSB.Companion var6 = HSB.Companion;
       Intrinsics.checkExpressionValueIsNotNull(texture, "texture");

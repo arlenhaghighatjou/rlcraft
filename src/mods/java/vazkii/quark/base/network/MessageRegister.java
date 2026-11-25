@@ -1,8 +1,8 @@
 package vazkii.quark.base.network;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.io.IOException;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
@@ -70,7 +70,7 @@ public class MessageRegister {
       NetworkHandler.register(MessageSyncChain.class, Side.CLIENT);
       NetworkMessage.mapHandler(LockDirectionHotkey.LockProfile.class, LockDirectionHotkey.LockProfile::readProfile, LockDirectionHotkey.LockProfile::writeProfile);
       NetworkMessage.mapHandler(ITextComponent.class, MessageRegister::readComponent, MessageRegister::writeComponent);
-      NetworkMessage.mapHandler(UUID.class, MessageRegister::readUUID, MessageRegister::writeUUID);
+      NetworkMessage.mapHandler(EaglercraftUUID.class, MessageRegister::readUUID, MessageRegister::writeUUID);
    }
 
    private static ITextComponent readComponent(ByteBuf buf) {
@@ -85,11 +85,11 @@ public class MessageRegister {
       (new PacketBuffer(buf)).writeTextComponent(comp);
    }
 
-   private static UUID readUUID(ByteBuf buf) {
+   private static EaglercraftUUID readUUID(ByteBuf buf) {
       return buf.readBoolean() ? null : (new PacketBuffer(buf)).readUniqueId();
    }
 
-   private static void writeUUID(UUID uuid, ByteBuf buf) {
+   private static void writeUUID(EaglercraftUUID uuid, ByteBuf buf) {
       if (uuid == null) {
          buf.writeBoolean(true);
       } else {

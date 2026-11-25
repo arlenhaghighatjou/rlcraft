@@ -4,7 +4,7 @@ import c4.champions.common.capability.CapabilityChampionship;
 import c4.champions.common.capability.IChampionship;
 import c4.champions.common.rank.RankManager;
 import com.google.common.collect.Maps;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.Map;
 import java.util.Map.Entry;
 import net.minecraft.client.Minecraft;

@@ -2,7 +2,7 @@ package com.ferreusveritas.dynamictrees.blocks;
 
 import com.ferreusveritas.dynamictrees.seasons.SeasonHelper;
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.SoundType;
@@ -40,7 +40,7 @@ public class BlockLeavesSnow extends BlockSnow {
       return 0;
    }
 
-   public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom random) {
       super.randomTick(world, pos, state, random);
       if (SeasonHelper.shouldSnowMelt(world, pos)) {
          world.setBlockToAir(pos);

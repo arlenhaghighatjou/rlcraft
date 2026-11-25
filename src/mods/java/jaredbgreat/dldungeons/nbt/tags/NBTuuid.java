@@ -1,20 +1,20 @@
 package jaredbgreat.dldungeons.nbt.tags;
 
 import jaredbgreat.dldungeons.nbt.NBTType;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagLong;
 
 public class NBTuuid extends ITag {
-   public final UUID data;
+   public final EaglercraftUUID data;
 
    NBTuuid(String label, String name, String data) {
       super(label, name);
-      this.data = UUID.fromString(data);
+      this.data = EaglercraftUUID.fromString(data);
    }
 
-   NBTuuid(String label, String name, UUID data) {
+   NBTuuid(String label, String name, EaglercraftUUID data) {
       super(label, name);
       this.data = data;
    }

@@ -3,7 +3,7 @@ package com.tmtravlr.potioncore;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -27,7 +27,7 @@ public class PotionCoreHelper {
    public static float vanillaJumpBoostModifier = 0.75F;
    public static final String INVUL_PROJECTILE_TAG = "Potion Core - Projectile Invulnerability";
    public static final String INVUL_MAGIC_TAG = "Potion Core - Magic Invulnerability";
-   public static final UUID TEMP_UUID = UUID.fromString("a6684e4c-f9da-4c3d-9ec1-a07ff26da4ef");
+   public static final EaglercraftUUID TEMP_UUID = EaglercraftUUID.fromString("a6684e4c-f9da-4c3d-9ec1-a07ff26da4ef");
    public static boolean hasServer = false;
    public static int nextId = 1;
 

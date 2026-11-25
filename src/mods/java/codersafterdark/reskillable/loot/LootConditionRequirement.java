@@ -10,7 +10,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -32,7 +32,7 @@ public class LootConditionRequirement implements LootCondition {
    }
 
    @ParametersAreNonnullByDefault
-   public boolean testCondition(Random rand, LootContext context) {
+   public boolean testCondition(EaglercraftRandom rand, LootContext context) {
       return context.getKillerPlayer() instanceof EntityPlayer ? PlayerDataHandler.get((EntityPlayer)context.getKillerPlayer()).matchStats(this.requirementHolder) : !this.requiresPlayer;
    }
 

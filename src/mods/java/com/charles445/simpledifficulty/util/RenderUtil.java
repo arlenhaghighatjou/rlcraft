@@ -1,6 +1,6 @@
 package com.charles445.simpledifficulty.util;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
@@ -13,7 +13,7 @@ public class RenderUtil {
       float f1 = 0.00390625F;
       double z = 0.0D;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       bufferbuilder.pos((double)x, (double)(y + (float)height), z).tex((double)((float)texX * f), (double)((float)(texY + height) * f1)).endVertex();
       bufferbuilder.pos((double)(x + (float)width), (double)(y + (float)height), z).tex((double)((float)(texX + width) * f), (double)((float)(texY + height) * f1)).endVertex();

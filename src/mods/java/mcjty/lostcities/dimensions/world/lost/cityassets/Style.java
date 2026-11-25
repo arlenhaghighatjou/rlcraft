@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import mcjty.lostcities.api.ILostCityAsset;
 import mcjty.lostcities.dimensions.world.LostCityChunkGenerator;
 import org.apache.commons.lang3.tuple.Pair;
@@ -67,7 +67,7 @@ public class Style implements ILostCityAsset {
       return this.name;
    }
 
-   public Palette getRandomPalette(LostCityChunkGenerator provider, Random random) {
+   public Palette getRandomPalette(LostCityChunkGenerator provider, EaglercraftRandom random) {
       Palette palette = new Palette();
 
       for(List<Pair<Float, String>> pairs : this.randomPaletteChoices) {

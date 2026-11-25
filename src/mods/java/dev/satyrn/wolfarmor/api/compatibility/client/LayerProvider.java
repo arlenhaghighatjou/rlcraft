@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 
 @SideOnly(Side.CLIENT)
 public class LayerProvider extends Provider.ProviderType {

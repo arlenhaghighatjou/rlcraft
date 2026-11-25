@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -31,7 +31,7 @@ public class Poem {
       this.text = text;
    }
 
-   public static Poem randomPoem(Random random, Integer maxTitleLength, Person author) {
+   public static Poem randomPoem(EaglercraftRandom random, Integer maxTitleLength, Person author) {
       Poem.StitchedTheme theme = Poem.StitchedTheme.random(author);
       Poem.PoemContext poemContext = new Poem.PoemContext();
 
@@ -57,7 +57,7 @@ public class Poem {
    }
 
    @Nonnull
-   protected static String randomTitle(Random random, Poem.PoemContext poemContext, Integer maxLength, Poem.StitchedTheme theme) {
+   protected static String randomTitle(EaglercraftRandom random, Poem.PoemContext poemContext, Integer maxLength, Poem.StitchedTheme theme) {
       int i = 0;
 
       while(true) {
@@ -86,11 +86,11 @@ public class Poem {
       }
    }
 
-   private static String evaluate(Random random, List<List<TokenReplacer.Token>> patterns, Poem.PoemContext context, Poem.StitchedTheme theme) throws TokenReplacer.OverpoemedException {
+   private static String evaluate(EaglercraftRandom random, List<List<TokenReplacer.Token>> patterns, Poem.PoemContext context, Poem.StitchedTheme theme) throws TokenReplacer.OverpoemedException {
       return TokenReplacer.evaluate(random, (List)getRandomElementFrom(patterns, random), context, theme);
    }
 
-   private static <O> O getRandomElementFrom(List<O> list, Random random) {
+   private static <O> O getRandomElementFrom(List<O> list, EaglercraftRandom random) {
       return (O)list.get(random.nextInt(list.size()));
    }
 
@@ -168,7 +168,7 @@ public class Poem {
       public PoemContext() {
       }
 
-      public boolean add(Random random, List<String> list, float continueChance, String value) {
+      public boolean add(EaglercraftRandom random, List<String> list, float continueChance, String value) {
          list.add(value);
          return random.nextFloat() < continueChance;
       }
@@ -182,7 +182,7 @@ public class Poem {
       }
 
       public static Poem.StitchedTheme random(Person author) {
-         Random styleRandom = new Random((long)author.hashCode());
+         EaglercraftRandom styleRandom = new EaglercraftRandom((long)author.hashCode());
          SymbolTokenizer<TokenReplacer.Token> tokenizer = new SymbolTokenizer<TokenReplacer.Token>(new SymbolTokenizer.SimpleCharacterRules('\\', (Character)null, new char[0], (char[])null), Poem.factory());
          Poem.StitchedTheme stitchedTheme = new Poem.StitchedTheme();
          HashMultimap<String, List<TokenReplacer.Token>> map = HashMultimap.create();

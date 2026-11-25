@@ -3,7 +3,7 @@ package goblinbob.mobends.core.client.gui.packswindow;
 import goblinbob.mobends.core.client.gui.elements.GuiElement;
 import goblinbob.mobends.core.util.Draw;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GuiAddPackButton extends GuiElement {
    private static final int WIDTH = 100;

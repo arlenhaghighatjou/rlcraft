@@ -3,7 +3,7 @@ package com.github.alexthe666.iceandfire.client.gui;
 import com.github.alexthe666.iceandfire.inventory.ContainerMyrmexCocoon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;

@@ -1,7 +1,7 @@
 package svenhjol.charm.world.decorator.outer;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockSlab;
@@ -15,7 +15,7 @@ import svenhjol.charm.world.feature.VillageDecorations;
 import svenhjol.meson.decorator.MesonOuterDecorator;
 
 public class Erosion extends MesonOuterDecorator {
-   public Erosion(World world, BlockPos pos, Random rand, List<ChunkPos> chunks) {
+   public Erosion(World world, BlockPos pos, EaglercraftRandom rand, List<ChunkPos> chunks) {
       super(world, pos, rand, chunks);
    }
 

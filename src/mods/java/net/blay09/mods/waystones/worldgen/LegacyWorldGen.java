@@ -1,6 +1,6 @@
 package net.blay09.mods.waystones.worldgen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.blay09.mods.waystones.WaystoneConfig;
 import net.blay09.mods.waystones.Waystones;
 import net.blay09.mods.waystones.block.BlockWaystone;
@@ -19,7 +19,7 @@ public class LegacyWorldGen implements IWorldGenerator {
    public LegacyWorldGen() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (world.provider.getDimension() == 0) {
          if (random.nextFloat() <= WaystoneConfig.worldGen.legacyChance / 10000.0F) {
             for(int i = 0; i < 5; ++i) {

@@ -3,7 +3,7 @@ package lumien.custommainmenu.lib.actions;
 import lumien.custommainmenu.CustomMainMenu;
 import lumien.custommainmenu.gui.GuiCustom;
 import net.minecraft.client.gui.GuiMainMenu;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class ActionRefresh implements IAction {
    public ActionRefresh() {

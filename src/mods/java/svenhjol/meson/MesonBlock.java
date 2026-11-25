@@ -1,6 +1,6 @@
 package svenhjol.meson;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import svenhjol.meson.iface.IMesonBlock;
@@ -51,7 +51,7 @@ public abstract class MesonBlock extends Block implements IMesonBlock {
       }
 
       public static MesonBlock.ColorVariant random() {
-         return byMetadata((new Random()).nextInt(values().length));
+         return byMetadata((new EaglercraftRandom()).nextInt(values().length));
       }
 
       static {
@@ -86,7 +86,7 @@ public abstract class MesonBlock extends Block implements IMesonBlock {
       }
 
       public static MesonBlock.WoodVariant random() {
-         return byMetadata((new Random()).nextInt(values().length));
+         return byMetadata((new EaglercraftRandom()).nextInt(values().length));
       }
 
       static {

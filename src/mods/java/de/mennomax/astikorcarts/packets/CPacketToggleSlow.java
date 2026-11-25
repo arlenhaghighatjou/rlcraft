@@ -3,7 +3,7 @@ package de.mennomax.astikorcarts.packets;
 import de.mennomax.astikorcarts.capabilities.IPull;
 import de.mennomax.astikorcarts.capabilities.PullProvider;
 import de.mennomax.astikorcarts.entity.AbstractDrawn;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;

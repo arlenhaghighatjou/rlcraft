@@ -1,7 +1,7 @@
 package org.orecruncher.dsurround.client.renderer.weather;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -43,7 +43,7 @@ public class StormSplashRenderer {
    protected static final int PARTICLE_SOUND_CHANCE = 3;
    private static final Int2ObjectOpenHashMap<StormSplashRenderer> splashRenderers = new Int2ObjectOpenHashMap();
    private static final StormSplashRenderer DEFAULT = new StormSplashRenderer();
-   protected final Random RANDOM = new XorShiftRandom();
+   protected final EaglercraftRandom RANDOM = new XorShiftRandom();
    protected final NoiseGeneratorSimplex GENERATOR;
    protected final MutableBlockPos pos;
    protected int rainSoundCounter;

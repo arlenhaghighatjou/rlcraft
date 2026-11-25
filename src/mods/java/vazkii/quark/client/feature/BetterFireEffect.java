@@ -1,10 +1,10 @@
 package vazkii.quark.client.feature;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -31,13 +31,13 @@ public class BetterFireEffect extends Feature {
       if (ModuleLoader.isFeatureEnabled(BetterFireEffect.class) && enableDifferentRender) {
          GlStateManager.disableLighting();
          TextureMap texturemap = Minecraft.getMinecraft().getTextureMapBlocks();
-         TextureAtlasSprite textureatlassprite = texturemap.getAtlasSprite("minecraft:blocks/fire_layer_0");
+         EaglerTextureAtlasSprite textureatlassprite = texturemap.getAtlasSprite("minecraft:blocks/fire_layer_0");
          GlStateManager.pushMatrix();
          GlStateManager.translate((float)x, (float)y, (float)z);
          float f = Math.min(entity.width, entity.height) * 1.8F;
          GlStateManager.scale(f, f, f);
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder bufferbuilder = tessellator.getBuffer();
+         WorldRenderer bufferbuilder = tessellator.getBuffer();
          float f1 = 0.5F;
          float f2 = 0.0F;
          float f4 = (float)(entity.posY - entity.getEntityBoundingBox().minY);

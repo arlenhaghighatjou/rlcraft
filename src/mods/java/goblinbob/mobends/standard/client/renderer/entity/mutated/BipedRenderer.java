@@ -4,7 +4,7 @@ import goblinbob.mobends.core.client.MutatedRenderer;
 import goblinbob.mobends.core.data.EntityData;
 import goblinbob.mobends.standard.data.BipedEntityData;
 import goblinbob.mobends.standard.main.ModConfig;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
 
 public class BipedRenderer<T extends EntityLivingBase> extends MutatedRenderer<T> {

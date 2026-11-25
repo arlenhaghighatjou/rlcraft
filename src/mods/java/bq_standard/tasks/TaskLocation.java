@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,10 +28,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.RayTraceResult.Type;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class TaskLocation implements ITaskTickable {
-   private final Set<UUID> completeUsers = new TreeSet();
+   private final Set<EaglercraftUUID> completeUsers = new TreeSet();
    public String name = "New Location";
    public String structure = "";
    public String biome = "";
@@ -56,15 +56,15 @@ public class TaskLocation implements ITaskTickable {
       return "bq_standard.task.location";
    }
 
-   public boolean isComplete(UUID uuid) {
+   public boolean isComplete(EaglercraftUUID uuid) {
       return this.completeUsers.contains(uuid);
    }
 
-   public void setComplete(UUID uuid) {
+   public void setComplete(EaglercraftUUID uuid) {
       this.completeUsers.add(uuid);
    }
 
-   public void resetUser(@Nullable UUID uuid) {
+   public void resetUser(@Nullable EaglercraftUUID uuid) {
       if (uuid == null) {
          this.completeUsers.clear();
       } else {
@@ -162,7 +162,7 @@ public class TaskLocation implements ITaskTickable {
       this.taxiCab = nbt.getBoolean("taxiCabDist");
    }
 
-   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<EaglercraftUUID> users) {
       NBTTagList jArray = new NBTTagList();
       this.completeUsers.forEach((uuid) -> {
          if (users == null || users.contains(uuid)) {
@@ -183,9 +183,9 @@ public class TaskLocation implements ITaskTickable {
 
       for(int i = 0; i < cList.tagCount(); ++i) {
          try {
-            this.completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
+            this.completeUsers.add(EaglercraftUUID.fromString(cList.getStringTagAt(i)));
          } catch (Exception var6) {
-            BQ_Standard.logger.log(Level.ERROR, "Unable to load UUID for task", var6);
+            BQ_Standard.logger.log(Level.ERROR, "Unable to load EaglercraftUUID for task", var6);
          }
       }
 

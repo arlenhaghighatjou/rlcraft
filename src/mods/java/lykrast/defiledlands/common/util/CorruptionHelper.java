@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.util;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.world.biome.BiomeDefiled;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -11,7 +11,7 @@ public class CorruptionHelper {
    public CorruptionHelper() {
    }
 
-   public static void spread(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public static void spread(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote && canSpread(worldIn, pos, rand)) {
          for(int i = 0; i < 4; ++i) {
             BlockPos blockpos = pos.add(rand.nextInt(5) - 2, rand.nextInt(5) - 2, rand.nextInt(5) - 2);
@@ -26,7 +26,7 @@ public class CorruptionHelper {
 
    }
 
-   public static boolean canSpread(World worldIn, BlockPos pos, Random rand) {
+   public static boolean canSpread(World worldIn, BlockPos pos, EaglercraftRandom rand) {
       Biome biome = worldIn.getBiome(pos);
       return biome instanceof BiomeDefiled || !Config.confinedSpread;
    }

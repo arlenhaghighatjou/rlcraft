@@ -2,7 +2,7 @@ package invtweaks.api;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.nbt.NBTTagCompound;
 
 public interface IItemTree {
@@ -28,7 +28,7 @@ public interface IItemTree {
 
    List<IItemTreeItem> getItems(String var1);
 
-   IItemTreeItem getRandomItem(Random var1);
+   IItemTreeItem getRandomItem(EaglercraftRandom var1);
 
    boolean containsItem(String var1);
 

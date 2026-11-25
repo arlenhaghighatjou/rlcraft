@@ -6,7 +6,7 @@ import com.alcatrazescapee.notreepunching.common.ModMaterials;
 import com.alcatrazescapee.notreepunching.common.recipe.KnifeRecipe;
 import com.alcatrazescapee.notreepunching.common.recipe.ModRecipes;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.enchantment.Enchantment;
@@ -67,7 +67,7 @@ public class ItemKnife extends ItemToolCore {
          BlockPos pos = new BlockPos(entity.posX, entity.posY, entity.posZ);
          if (target.isShearable(stack, entity.world, pos)) {
             List<ItemStack> drops = target.onSheared(stack, entity.world, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
-            Random rand = new Random();
+            EaglercraftRandom rand = new EaglercraftRandom();
 
             for(ItemStack stack1 : drops) {
                if (stack1 != null && !stack1.isEmpty()) {

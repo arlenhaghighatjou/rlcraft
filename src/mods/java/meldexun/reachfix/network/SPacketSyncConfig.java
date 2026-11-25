@@ -1,7 +1,7 @@
 package meldexun.reachfix.network;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import meldexun.configutil.ConfigUtil;
 import meldexun.reachfix.config.ReachFixConfig;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

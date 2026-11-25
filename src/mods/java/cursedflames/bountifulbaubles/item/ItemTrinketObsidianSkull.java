@@ -4,11 +4,11 @@ import baubles.api.BaubleType;
 import cursedflames.bountifulbaubles.BountifulBaubles;
 import cursedflames.bountifulbaubles.baubleeffect.IFireResistance;
 import cursedflames.bountifulbaubles.item.base.AGenericItemBauble;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.item.ItemStack;
 
 public class ItemTrinketObsidianSkull extends AGenericItemBauble implements IFireResistance {
-   public static final UUID FIRE_RESIST_UUID = UUID.fromString("ecde20fe-73a4-466d-8796-9884d6297ba6");
+   public static final EaglercraftUUID FIRE_RESIST_UUID = EaglercraftUUID.fromString("ecde20fe-73a4-466d-8796-9884d6297ba6");
 
    public ItemTrinketObsidianSkull() {
       super("trinketObsidianSkull", BountifulBaubles.TAB);
@@ -27,7 +27,7 @@ public class ItemTrinketObsidianSkull extends AGenericItemBauble implements IFir
       return 1.1F;
    }
 
-   public UUID getFireResistID() {
+   public EaglercraftUUID getFireResistID() {
       return FIRE_RESIST_UUID;
    }
 }

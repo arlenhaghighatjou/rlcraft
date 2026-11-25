@@ -1,6 +1,6 @@
 package vazkii.quark.world.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockStone.EnumType;
@@ -22,7 +22,7 @@ public class FairyRingGenerator implements IWorldGenerator {
    public FairyRingGenerator() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (FairyRings.dimensions.canSpawnHere(world)) {
          int x = chunkX * 16 + 8 + random.nextInt(16);
          int z = chunkZ * 16 + 8 + random.nextInt(16);

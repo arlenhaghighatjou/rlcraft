@@ -9,7 +9,7 @@ import betterquesting.api2.storage.SimpleDatabase;
 import betterquesting.storage.QuestSettings;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,7 +17,7 @@ import net.minecraft.nbt.NBTTagList;
 
 public class PartyManager extends SimpleDatabase<IParty> implements IPartyDatabase {
    public static final PartyManager INSTANCE = new PartyManager();
-   private final HashMap<UUID, Integer> partyCache = new HashMap();
+   private final HashMap<EaglercraftUUID, Integer> partyCache = new HashMap();
 
    public PartyManager() {
    }
@@ -32,7 +32,7 @@ public class PartyManager extends SimpleDatabase<IParty> implements IPartyDataba
    }
 
    @Nullable
-   public synchronized DBEntry<IParty> getParty(@Nonnull UUID uuid) {
+   public synchronized DBEntry<IParty> getParty(@Nonnull EaglercraftUUID uuid) {
       if (!((Boolean)QuestSettings.INSTANCE.getProperty(NativeProps.PARTY_ENABLE)).booleanValue()) {
          return null;
       } else {

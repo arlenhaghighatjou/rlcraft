@@ -1,7 +1,7 @@
 package snownee.kiwi.util;
 
-import com.mojang.authlib.GameProfile;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -325,13 +325,13 @@ public class NBTHelper {
       return new byte[0];
    }
 
-   public NBTHelper setUUID(String key, UUID value) {
+   public NBTHelper setUUID(String key, EaglercraftUUID value) {
       this.getTagInternal(key).setUniqueId(this.getLastNode(key), value);
       return this;
    }
 
    @Nullable
-   public UUID getUUID(String key) {
+   public EaglercraftUUID getUUID(String key) {
       NBTTagCompound subTag = this.getTagInternal(key, false, true);
       if (subTag != null) {
          String actualKey = this.getLastNode(key);

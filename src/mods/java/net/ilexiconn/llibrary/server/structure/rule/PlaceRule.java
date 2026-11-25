@@ -1,6 +1,6 @@
 package net.ilexiconn.llibrary.server.structure.rule;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
 
@@ -10,15 +10,15 @@ public class PlaceRule extends RepeatRule {
    public PlaceRule() {
    }
 
-   public boolean continueRepeating(World world, Random rand, MutableBlockPos position) {
+   public boolean continueRepeating(World world, EaglercraftRandom rand, MutableBlockPos position) {
       return !this.placed;
    }
 
-   public void repeat(World world, Random rand, MutableBlockPos position) {
+   public void repeat(World world, EaglercraftRandom rand, MutableBlockPos position) {
       this.placed = true;
    }
 
-   public void reset(World world, Random random, MutableBlockPos pos) {
+   public void reset(World world, EaglercraftRandom random, MutableBlockPos pos) {
       this.placed = false;
    }
 }

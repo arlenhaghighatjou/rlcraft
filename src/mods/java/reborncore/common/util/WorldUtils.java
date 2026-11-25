@@ -1,7 +1,7 @@
 package reborncore.common.util;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,7 @@ public class WorldUtils {
    }
 
    public static void dropItem(ItemStack itemStack, World world, BlockPos pos) {
-      Random rand = new Random();
+      EaglercraftRandom rand = new EaglercraftRandom();
       float dX = rand.nextFloat() * 0.8F + 0.1F;
       float dY = rand.nextFloat() * 0.8F + 0.1F;
       float dZ = rand.nextFloat() * 0.8F + 0.1F;

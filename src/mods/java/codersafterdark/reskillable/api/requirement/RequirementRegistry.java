@@ -6,7 +6,7 @@ import codersafterdark.reskillable.api.skill.Skill;
 import com.google.common.collect.Maps;
 import java.util.Map;
 import net.minecraft.util.ResourceLocation;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class RequirementRegistry {
    private Map<String, RequirementFunction<String, Requirement>> requirementHandlers = Maps.newHashMap();

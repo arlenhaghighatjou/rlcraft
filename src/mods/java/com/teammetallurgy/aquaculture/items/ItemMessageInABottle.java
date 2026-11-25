@@ -2,7 +2,7 @@ package com.teammetallurgy.aquaculture.items;
 
 import com.teammetallurgy.aquaculture.items.meta.MetaItem;
 import com.teammetallurgy.aquaculture.items.meta.SubItem;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,7 +13,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class ItemMessageInABottle extends SubItem {
-   private Random rand = new Random();
+   private EaglercraftRandom rand = new EaglercraftRandom();
 
    public ItemMessageInABottle(MetaItem metaItem) {
       super(metaItem);

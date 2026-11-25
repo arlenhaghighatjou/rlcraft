@@ -1,7 +1,7 @@
 package ichttt.mods.firstaid.common.network;
 
 import ichttt.mods.firstaid.client.DebuffTimedSound;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.network.ByteBufUtils;

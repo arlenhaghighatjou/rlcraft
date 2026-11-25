@@ -3,14 +3,14 @@ package com.creativemd.creativecore.client.rendering.model;
 import com.creativemd.creativecore.client.rendering.RenderBox;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.model.pipeline.IVertexConsumer;
 import net.minecraftforge.client.model.pipeline.LightUtil;
 
 public class CreativeBakedQuad extends BakedQuad {
-   public static TextureAtlasSprite missingSprite = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelManager().getTextureMap().getMissingSprite();
+   public static EaglerTextureAtlasSprite missingSprite = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelManager().getTextureMap().getMissingSprite();
    public static final ThreadLocal<CreativeBakedQuad> lastRenderedQuad = new ThreadLocal();
    public final RenderBox cube;
    public boolean shouldOverrideColor;

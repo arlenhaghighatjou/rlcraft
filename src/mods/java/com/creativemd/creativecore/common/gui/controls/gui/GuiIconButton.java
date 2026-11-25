@@ -5,7 +5,7 @@ import com.creativemd.creativecore.common.gui.client.style.ColoredTextureDisplay
 import com.creativemd.creativecore.common.gui.client.style.DisplayStyle;
 import com.creativemd.creativecore.common.gui.client.style.Style;
 import com.creativemd.creativecore.common.utils.mc.ColorUtils;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public abstract class GuiIconButton extends GuiButton {
    private int iconIndex;

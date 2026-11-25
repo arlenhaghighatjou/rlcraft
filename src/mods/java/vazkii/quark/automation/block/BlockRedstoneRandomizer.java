@@ -1,7 +1,7 @@
 package vazkii.quark.automation.block;
 
 import java.util.EnumSet;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -45,7 +45,7 @@ public class BlockRedstoneRandomizer extends BlockMod implements IQuarkBlock {
       this.setSoundType(SoundType.WOOD);
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       boolean isPowered = this.isPowered(state);
       boolean willBePowered = this.shouldBePowered(worldIn, pos, state);
       if (isPowered != willBePowered) {

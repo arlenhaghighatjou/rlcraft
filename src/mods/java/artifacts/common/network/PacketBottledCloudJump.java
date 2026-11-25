@@ -1,7 +1,7 @@
 package artifacts.common.network;
 
 import artifacts.common.init.ModSoundEvents;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumParticleTypes;

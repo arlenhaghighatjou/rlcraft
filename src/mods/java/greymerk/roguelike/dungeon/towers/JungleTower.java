@@ -13,7 +13,7 @@ import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class JungleTower extends Tower {
    public JungleTower(WorldEditor worldEditor, Theme theme) {
@@ -346,7 +346,7 @@ public class JungleTower extends Tower {
       this.decorate(this.editor, this.editor.getRandom(), origin);
    }
 
-   private void decorate(WorldEditor editor, Random rand, Coord origin) {
+   private void decorate(WorldEditor editor, EaglercraftRandom rand, Coord origin) {
       List<Coord> spots = new ArrayList();
 
       for(Direction dir : Direction.CARDINAL) {
@@ -429,7 +429,7 @@ public class JungleTower extends Tower {
       VineBlock.vine().fill(editor, RectSolid.newRect(start, end));
    }
 
-   private void tree(WorldEditor editor, Random rand, Coord origin) {
+   private void tree(WorldEditor editor, EaglercraftRandom rand, Coord origin) {
       Wood jungle = Wood.JUNGLE;
       BlockBrush leaves = jungle.getLeaves();
       BlockBrush log = jungle.getLog();
@@ -468,7 +468,7 @@ public class JungleTower extends Tower {
       leaves.stroke(editor, cursor);
    }
 
-   public void leafSpill(WorldEditor editor, Random rand, Coord origin, int count) {
+   public void leafSpill(WorldEditor editor, EaglercraftRandom rand, Coord origin, int count) {
       if (count >= 0) {
          BlockBrush leaves = Wood.JUNGLE.getLeaves();
          leaves.stroke(editor, origin);

@@ -2,7 +2,7 @@ package com.github.alexthe666.iceandfire.client.particle;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleFlame;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -33,7 +33,7 @@ public class ParticleDragonIce extends ParticleFlame {
       this.particleTextureIndexY = particleTextureIndex / 16;
    }
 
-   public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+   public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
       if (this.particleAge > 7) {
          this.setExpired();
       }

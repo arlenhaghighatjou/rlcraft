@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import melonslise.locks.client.gui.sprite.action.IAction;
 import melonslise.locks.client.util.LocksClientUtil;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

@@ -31,12 +31,12 @@ import betterquesting.questing.party.PartyManager;
 import betterquesting.storage.NameCache;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.NBTTagCompound;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class GuiPartyInvite extends GuiScreenCanvas implements IPEventListener {
    private IParty party;
@@ -49,7 +49,7 @@ public class GuiPartyInvite extends GuiScreenCanvas implements IPEventListener {
 
    public void initPanel() {
       super.initPanel();
-      UUID playerID = QuestingAPI.getQuestingUUID(this.mc.player);
+      EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(this.mc.player);
       DBEntry<IParty> tmp = PartyManager.INSTANCE.getParty(playerID);
       if (tmp == null) {
          this.mc.displayGuiScreen(this.parent);
@@ -84,7 +84,7 @@ public class GuiPartyInvite extends GuiScreenCanvas implements IPEventListener {
             nameList.add(info.getGameProfile().getName());
          });
          nameList.removeIf((entry) -> {
-            UUID memID = NameCache.INSTANCE.getUUID(entry);
+            EaglercraftUUID memID = NameCache.INSTANCE.getUUID(entry);
             return memID != null && this.party.getStatus(memID) != null;
          });
 

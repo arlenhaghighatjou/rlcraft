@@ -7,8 +7,8 @@ import me.ichun.mods.ichunutil.client.gui.window.Window;
 import me.ichun.mods.ichunutil.client.render.RendererHelper;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.renderer.GlStateManager;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class ElementNumberInput extends Element implements ITextInput {
    public ArrayList<GuiTextField> textFields;

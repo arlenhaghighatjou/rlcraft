@@ -1,6 +1,6 @@
 package net.blay09.mods.waystones.network.message;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import javax.annotation.Nullable;
 import net.blay09.mods.waystones.WarpMode;
 import net.blay09.mods.waystones.util.WaystoneEntry;

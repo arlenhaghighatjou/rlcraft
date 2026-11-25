@@ -2,8 +2,8 @@ package xzeroair.trinkets.client.particles;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleFlame;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -28,7 +28,7 @@ public class ParticleFireBreath extends ParticleFlame {
       this.particleScale = scale;
    }
 
-   public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+   public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
       float fT = ((float)this.particleAge + partialTicks) / (float)this.particleMaxAge;
       float flameScale = this.particleScale;
       int i = (int)(((float)this.particleAge + partialTicks) * 30.0F / (float)this.particleMaxAge);

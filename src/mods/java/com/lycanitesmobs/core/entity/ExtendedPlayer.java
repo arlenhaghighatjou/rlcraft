@@ -22,7 +22,7 @@ import com.lycanitesmobs.core.pets.PlayerFamiliars;
 import com.lycanitesmobs.core.pets.SummonSet;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -258,7 +258,7 @@ public class ExtendedPlayer {
    }
 
    public void loadFamiliars() {
-      Map<UUID, PetEntry> playerFamiliars = PlayerFamiliars.INSTANCE.getFamiliarsForPlayer(this.player);
+      Map<EaglercraftUUID, PetEntry> playerFamiliars = PlayerFamiliars.INSTANCE.getFamiliarsForPlayer(this.player);
       if (!playerFamiliars.isEmpty()) {
          for(PetEntry petEntry : playerFamiliars.values()) {
             if (this.petManager.hasEntry(petEntry)) {

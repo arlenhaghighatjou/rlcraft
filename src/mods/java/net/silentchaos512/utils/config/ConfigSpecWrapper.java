@@ -8,7 +8,7 @@ import com.electronwill.nightconfig.core.file.FileConfig;
 import com.electronwill.nightconfig.core.io.ParsingMode;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import java.nio.file.Path;
-import org.apache.logging.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import org.apache.logging.log4j.util.Supplier;
 
 public class ConfigSpecWrapper {

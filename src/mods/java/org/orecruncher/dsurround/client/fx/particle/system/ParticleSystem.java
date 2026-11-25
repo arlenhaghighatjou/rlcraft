@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.fx.particle.system;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -14,7 +14,7 @@ import org.orecruncher.lib.random.XorShiftRandom;
 
 @SideOnly(Side.CLIENT)
 public abstract class ParticleSystem {
-   protected static final Random RANDOM = XorShiftRandom.current();
+   protected static final EaglercraftRandom RANDOM = XorShiftRandom.current();
    protected static final GameSettings SETTINGS;
    protected final World world;
    protected final double posX;

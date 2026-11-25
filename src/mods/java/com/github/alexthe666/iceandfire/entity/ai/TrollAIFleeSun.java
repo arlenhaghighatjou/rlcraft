@@ -1,7 +1,7 @@
 package com.github.alexthe666.iceandfire.entity.ai;
 
 import com.github.alexthe666.iceandfire.entity.EntityTroll;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.math.BlockPos;
@@ -51,7 +51,7 @@ public class TrollAIFleeSun extends EntityAIBase {
 
    @Nullable
    private Vec3d findPossibleShelter() {
-      Random random = this.troll.getRNG();
+      EaglercraftRandom random = this.troll.getRNG();
       BlockPos blockpos = new BlockPos(this.troll.posX, this.troll.getEntityBoundingBox().minY, this.troll.posZ);
 
       for(int i = 0; i < 10; ++i) {

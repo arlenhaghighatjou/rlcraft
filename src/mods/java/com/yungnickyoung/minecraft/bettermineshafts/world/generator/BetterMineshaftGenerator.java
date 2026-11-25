@@ -13,7 +13,7 @@ import com.yungnickyoung.minecraft.bettermineshafts.world.generator.pieces.Small
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.pieces.SmallTunnelTurn;
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.pieces.ZombieVillagerRoom;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
@@ -22,7 +22,7 @@ public class BetterMineshaftGenerator {
    public BetterMineshaftGenerator() {
    }
 
-   public static MineshaftPiece generateAndAddBigTunnelPiece(StructureComponent structurePiece, List<StructureComponent> list, Random random, int x, int y, int z, EnumFacing direction, int l, int pieceChainLen) {
+   public static MineshaftPiece generateAndAddBigTunnelPiece(StructureComponent structurePiece, List<StructureComponent> list, EaglercraftRandom random, int x, int y, int z, EnumFacing direction, int l, int pieceChainLen) {
       if (pieceChainLen > 3) {
          return null;
       } else {
@@ -40,7 +40,7 @@ public class BetterMineshaftGenerator {
       }
    }
 
-   public static MineshaftPiece generateAndAddSmallTunnelPiece(StructureComponent structurePiece, List<StructureComponent> list, Random random, int x, int y, int z, EnumFacing direction, int l, int pieceChainLen) {
+   public static MineshaftPiece generateAndAddSmallTunnelPiece(StructureComponent structurePiece, List<StructureComponent> list, EaglercraftRandom random, int x, int y, int z, EnumFacing direction, int l, int pieceChainLen) {
       int rand = random.nextInt(100);
       MineshaftVariantSettings settings = ((MineshaftPiece)structurePiece).getSettings();
       if (pieceChainLen > Configuration.spawnRates.smallShaftPieceChainLength - 2) {
@@ -124,7 +124,7 @@ public class BetterMineshaftGenerator {
       }
    }
 
-   public static MineshaftPiece generateAndAddSideRoomPiece(StructureComponent structurePiece, List<StructureComponent> list, Random random, int x, int y, int z, EnumFacing direction, int l, int pieceChainLen) {
+   public static MineshaftPiece generateAndAddSideRoomPiece(StructureComponent structurePiece, List<StructureComponent> list, EaglercraftRandom random, int x, int y, int z, EnumFacing direction, int l, int pieceChainLen) {
       MineshaftVariantSettings settings = ((MineshaftPiece)structurePiece).getSettings();
       StructureBoundingBox blockBox = SideRoom.determineBoxPosition(list, random, x, y, z, direction);
       if (blockBox != null) {
@@ -137,7 +137,7 @@ public class BetterMineshaftGenerator {
       }
    }
 
-   public static MineshaftPiece generateAndAddSideRoomDungeonPiece(StructureComponent structurePiece, List<StructureComponent> list, Random random, int x, int y, int z, EnumFacing direction, int l, int pieceChainLen) {
+   public static MineshaftPiece generateAndAddSideRoomDungeonPiece(StructureComponent structurePiece, List<StructureComponent> list, EaglercraftRandom random, int x, int y, int z, EnumFacing direction, int l, int pieceChainLen) {
       MineshaftVariantSettings settings = ((MineshaftPiece)structurePiece).getSettings();
       StructureBoundingBox blockBox = SideRoomDungeon.determineBoxPosition(list, random, x, y, z, direction);
       if (blockBox != null) {

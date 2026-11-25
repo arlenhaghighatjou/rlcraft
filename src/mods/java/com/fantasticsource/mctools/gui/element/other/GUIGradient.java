@@ -3,7 +3,7 @@ package com.fantasticsource.mctools.gui.element.other;
 import com.fantasticsource.mctools.gui.GUIScreen;
 import com.fantasticsource.mctools.gui.element.GUIElement;
 import com.fantasticsource.tools.datastructures.Color;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GUIGradient extends GUIElement {
    private Color[] colors;

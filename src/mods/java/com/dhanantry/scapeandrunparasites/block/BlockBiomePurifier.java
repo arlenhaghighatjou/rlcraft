@@ -8,7 +8,7 @@ import com.dhanantry.scapeandrunparasites.init.SRPPotions;
 import com.dhanantry.scapeandrunparasites.network.SRPPacketParticle;
 import com.dhanantry.scapeandrunparasites.util.ParasiteEventWorld;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -52,7 +52,7 @@ public class BlockBiomePurifier extends BlockBase {
       }
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          if (worldIn.isAreaLoaded(pos, 3)) {
             int raan = 32;

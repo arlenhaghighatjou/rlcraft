@@ -1,7 +1,7 @@
 package com.github.alexthe666.iceandfire.entity;
 
 import com.github.alexthe666.iceandfire.core.ModItems;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.Item;
@@ -53,7 +53,7 @@ public class EntityDeathWormEgg extends EntityThrowable {
 
       if (!this.world.isRemote && this.thrower != null) {
          EntityDeathWorm deathworm = new EntityDeathWorm(this.world);
-         deathworm.setVariant((new Random()).nextInt(3));
+         deathworm.setVariant((new EaglercraftRandom()).nextInt(3));
          deathworm.setTamed(true);
          deathworm.setWormHome(new BlockPos(this));
          deathworm.setWormAge(1);

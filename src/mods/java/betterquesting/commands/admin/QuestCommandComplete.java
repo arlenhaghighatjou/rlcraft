@@ -10,7 +10,7 @@ import betterquesting.storage.NameCache;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -49,7 +49,7 @@ public class QuestCommandComplete extends QuestCommandBase {
    }
 
    public void runCommand(MinecraftServer server, CommandBase command, ICommandSender sender, String[] args) throws CommandException {
-      UUID uuid;
+      EaglercraftUUID uuid;
       if (args.length >= 3) {
          uuid = this.findPlayerID(server, sender, args[2]);
          if (uuid == null) {

@@ -1,12 +1,12 @@
 package cursedflames.bountifulbaubles.wormhole;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 public class PlayerTarget implements IWormholeTarget {
-   public UUID id;
+   public EaglercraftUUID id;
    public String name = "";
    public boolean enabled = true;
 
@@ -23,7 +23,7 @@ public class PlayerTarget implements IWormholeTarget {
       this.name = player.getName();
    }
 
-   public PlayerTarget(UUID id) {
+   public PlayerTarget(EaglercraftUUID id) {
       this.id = id;
    }
 

@@ -26,10 +26,10 @@ import me.ichun.mods.ichunutil.common.core.config.types.Colour;
 import me.ichun.mods.ichunutil.common.core.config.types.NestedIntArray;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.math.MathHelper;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class ElementPropSetter extends Element {
    public int spacerL;

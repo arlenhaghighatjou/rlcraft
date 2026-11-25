@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.fml.common.Loader;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public abstract class Module {
    public boolean enabled;

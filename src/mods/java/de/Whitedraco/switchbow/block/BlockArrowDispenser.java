@@ -3,7 +3,7 @@ package de.Whitedraco.switchbow.block;
 import de.Whitedraco.switchbow.Initial;
 import de.Whitedraco.switchbow.entity.EntityArrowLauncher;
 import de.Whitedraco.switchbow.tileentity.TileEntityArrowDispenser;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -50,7 +50,7 @@ public class BlockArrowDispenser extends BlockContainer {
    public static final PropertyDirection FACING = BlockHorizontal.FACING;
    public static final PropertyBool TRIGGERED = PropertyBool.create("triggered");
    public static final RegistryDefaulted<Item, IBehaviorDispenseItem> DISPENSE_BEHAVIOR_REGISTRY = new RegistryDefaulted(new BehaviorDefaultDispenseItem());
-   private Random rand = new Random();
+   private EaglercraftRandom rand = new EaglercraftRandom();
 
    public BlockArrowDispenser(String Name) {
       super(Material.WOOD);
@@ -301,7 +301,7 @@ public class BlockArrowDispenser extends BlockContainer {
 
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          this.dispense(worldIn, pos);
       }

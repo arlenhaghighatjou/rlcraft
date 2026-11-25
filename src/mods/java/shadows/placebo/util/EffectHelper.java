@@ -1,6 +1,6 @@
 package shadows.placebo.util;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.concurrent.ThreadLocalRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,7 +30,7 @@ public class EffectHelper {
       attr.setString("Name", "MobProperties|" + Integer.toString(ThreadLocalRandom.current().nextInt(), 36));
       attr.setDouble("Amount", value);
       attr.setInteger("Operation", operation);
-      UUID id = UUID.randomUUID();
+      EaglercraftUUID id = EaglercraftUUID.randomUUID();
       attr.setLong("UUIDMost", id.getMostSignificantBits());
       attr.setLong("UUIDLeast", id.getLeastSignificantBits());
       tag.getTagList("AttributeModifiers", tag.getId()).appendTag(tag);

@@ -1,6 +1,6 @@
 package net.ilexiconn.llibrary.server.structure;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -21,7 +21,7 @@ public abstract class StructureGenerator {
       }
    }
 
-   public abstract void generate(World var1, BlockPos var2, Random var3);
+   public abstract void generate(World var1, BlockPos var2, EaglercraftRandom var3);
 
    public abstract StructureGenerator rotate(EnumFacing var1, EnumFacing var2);
 

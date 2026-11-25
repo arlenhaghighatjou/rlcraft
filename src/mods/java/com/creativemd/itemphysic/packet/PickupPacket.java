@@ -3,8 +3,8 @@ package com.creativemd.itemphysic.packet;
 import com.creativemd.creativecore.common.packet.CreativeCorePacket;
 import com.creativemd.itemphysic.EventHandler;
 import com.creativemd.itemphysic.physics.ServerPhysic;
-import io.netty.buffer.ByteBuf;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,13 +12,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.WorldServer;
 
 public class PickupPacket extends CreativeCorePacket {
-   public UUID uuid;
+   public EaglercraftUUID uuid;
    public boolean rightClick;
 
    public PickupPacket() {
    }
 
-   public PickupPacket(UUID uuid, boolean rightClick) {
+   public PickupPacket(EaglercraftUUID uuid, boolean rightClick) {
       this.uuid = uuid;
       this.rightClick = rightClick;
    }
@@ -32,7 +32,7 @@ public class PickupPacket extends CreativeCorePacket {
    public void readBytes(ByteBuf buf) {
       long least = buf.readLong();
       long most = buf.readLong();
-      this.uuid = new UUID(most, least);
+      this.uuid = new EaglercraftUUID(most, least);
       this.rightClick = buf.readBoolean();
    }
 

@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -33,11 +33,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class TaskTame implements ITask {
-   private final Set<UUID> completeUsers = new TreeSet();
-   public final HashMap<UUID, Integer> userProgress = new HashMap();
+   private final Set<EaglercraftUUID> completeUsers = new TreeSet();
+   public final HashMap<EaglercraftUUID, Integer> userProgress = new HashMap();
    public String idName = "minecraft:wolf";
    public int required = 1;
    public boolean ignoreNBT = true;
@@ -56,11 +56,11 @@ public class TaskTame implements ITask {
    }
 
    public void detect(ParticipantInfo pInfo, DBEntry<IQuest> quest) {
-      List<Tuple<UUID, Integer>> progress = this.getBulkProgress(pInfo.ALL_UUIDS);
+      List<Tuple<EaglercraftUUID, Integer>> progress = this.getBulkProgress(pInfo.ALL_UUIDS);
       int prev = this.completeUsers.size();
       progress.forEach((value) -> {
          if (((Integer)value.getSecond()).intValue() >= this.required) {
-            this.setComplete((UUID)value.getFirst());
+            this.setComplete((EaglercraftUUID)value.getFirst());
          }
 
       });
@@ -81,13 +81,13 @@ public class TaskTame implements ITask {
                NBTTagCompound subjectTags = new NBTTagCompound();
                entity.writeToNBTOptional(subjectTags);
                if (this.ignoreNBT || ItemComparison.CompareNBTTag(this.targetTags, subjectTags, true)) {
-                  List<Tuple<UUID, Integer>> progress = this.getBulkProgress(pInfo.ALL_UUIDS);
+                  List<Tuple<EaglercraftUUID, Integer>> progress = this.getBulkProgress(pInfo.ALL_UUIDS);
                   progress.forEach((value) -> {
-                     if (!this.isComplete((UUID)value.getFirst())) {
+                     if (!this.isComplete((EaglercraftUUID)value.getFirst())) {
                         int np = Math.min(this.required, ((Integer)value.getSecond()).intValue() + 1);
-                        this.setUserProgress((UUID)value.getFirst(), np);
+                        this.setUserProgress((EaglercraftUUID)value.getFirst(), np);
                         if (np >= this.required) {
-                           this.setComplete((UUID)value.getFirst());
+                           this.setComplete((EaglercraftUUID)value.getFirst());
                         }
 
                      }
@@ -99,15 +99,15 @@ public class TaskTame implements ITask {
       }
    }
 
-   public boolean isComplete(UUID uuid) {
+   public boolean isComplete(EaglercraftUUID uuid) {
       return this.completeUsers.contains(uuid);
    }
 
-   public void setComplete(UUID uuid) {
+   public void setComplete(EaglercraftUUID uuid) {
       this.completeUsers.add(uuid);
    }
 
-   public void resetUser(@Nullable UUID uuid) {
+   public void resetUser(@Nullable EaglercraftUUID uuid) {
       if (uuid == null) {
          this.completeUsers.clear();
          this.userProgress.clear();
@@ -157,9 +157,9 @@ public class TaskTame implements ITask {
 
       for(int i = 0; i < cList.tagCount(); ++i) {
          try {
-            this.completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
+            this.completeUsers.add(EaglercraftUUID.fromString(cList.getStringTagAt(i)));
          } catch (Exception var9) {
-            BQ_Standard.logger.log(Level.ERROR, "Unable to load UUID for task", var9);
+            BQ_Standard.logger.log(Level.ERROR, "Unable to load EaglercraftUUID for task", var9);
          }
       }
 
@@ -168,7 +168,7 @@ public class TaskTame implements ITask {
       for(int n = 0; n < pList.tagCount(); ++n) {
          try {
             NBTTagCompound pTag = pList.getCompoundTagAt(n);
-            UUID uuid = UUID.fromString(pTag.getString("uuid"));
+            EaglercraftUUID uuid = EaglercraftUUID.fromString(pTag.getString("uuid"));
             this.userProgress.put(uuid, Integer.valueOf(pTag.getInteger("value")));
          } catch (Exception var8) {
             BQ_Standard.logger.log(Level.ERROR, "Unable to load user progress for task", var8);
@@ -177,7 +177,7 @@ public class TaskTame implements ITask {
 
    }
 
-   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<EaglercraftUUID> users) {
       NBTTagList jArray = new NBTTagList();
       NBTTagList progArray = new NBTTagList();
       if (users != null) {
@@ -212,20 +212,20 @@ public class TaskTame implements ITask {
       return nbt;
    }
 
-   private void setUserProgress(UUID uuid, int progress) {
+   private void setUserProgress(EaglercraftUUID uuid, int progress) {
       this.userProgress.put(uuid, Integer.valueOf(progress));
    }
 
-   public int getUsersProgress(UUID uuid) {
+   public int getUsersProgress(EaglercraftUUID uuid) {
       Integer n = (Integer)this.userProgress.get(uuid);
       return n == null ? 0 : n.intValue();
    }
 
-   private List<Tuple<UUID, Integer>> getBulkProgress(@Nonnull List<UUID> uuids) {
+   private List<Tuple<EaglercraftUUID, Integer>> getBulkProgress(@Nonnull List<EaglercraftUUID> uuids) {
       if (uuids.size() <= 0) {
          return Collections.emptyList();
       } else {
-         List<Tuple<UUID, Integer>> list = new ArrayList();
+         List<Tuple<EaglercraftUUID, Integer>> list = new ArrayList();
          uuids.forEach((key) -> {
             list.add(new Tuple(key, this.getUsersProgress(key)));
          });

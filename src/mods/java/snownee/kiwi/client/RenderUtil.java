@@ -1,6 +1,6 @@
 package snownee.kiwi.client;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
@@ -24,7 +24,7 @@ public class RenderUtil {
       float scaleX = 1.0F / textureWidth;
       float scaleY = 1.0F / textureHeight;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       float u1 = (float)u * scaleX;
       float u2 = (float)(u + width) * scaleX;
       float v1 = (float)v * scaleY;

@@ -6,7 +6,7 @@ import com.teamacronymcoders.base.renderer.entity.minecart.RenderMinecartBase;
 import java.awt.Color;
 import java.util.Optional;
 import java.util.function.Consumer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;

@@ -2,11 +2,11 @@ package me.ichun.mods.ichunutil.client.render;
 
 import java.awt.image.BufferedImage;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 
-public class TextureAtlasSpriteBufferedImage extends TextureAtlasSprite {
+public class TextureAtlasSpriteBufferedImage extends EaglerTextureAtlasSprite {
    public BufferedImage image;
 
    public TextureAtlasSpriteBufferedImage(ResourceLocation rl, BufferedImage image) {

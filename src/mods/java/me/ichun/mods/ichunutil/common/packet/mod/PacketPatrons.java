@@ -1,6 +1,6 @@
 package me.ichun.mods.ichunutil.common.packet.mod;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.HashSet;
 import me.ichun.mods.ichunutil.client.module.patron.PatronEffectRenderer;
 import me.ichun.mods.ichunutil.common.iChunUtil;

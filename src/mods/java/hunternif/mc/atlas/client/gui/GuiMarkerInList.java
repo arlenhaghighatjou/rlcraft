@@ -4,7 +4,7 @@ import hunternif.mc.atlas.client.Textures;
 import hunternif.mc.atlas.client.gui.core.GuiToggleButton;
 import hunternif.mc.atlas.registry.MarkerType;
 import hunternif.mc.atlas.util.AtlasRenderHelper;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiMarkerInList extends GuiToggleButton {

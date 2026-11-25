@@ -4,7 +4,7 @@ import com.endertech.minecraft.forge.configs.ColorARGB;
 import com.endertech.minecraft.forge.configs.ForgeNBT;
 import com.endertech.minecraft.forge.data.INetSerializable;
 import com.endertech.minecraft.forge.math.Vect3d;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;

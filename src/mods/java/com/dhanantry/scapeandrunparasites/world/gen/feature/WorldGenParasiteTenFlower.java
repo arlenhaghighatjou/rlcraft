@@ -2,7 +2,7 @@ package com.dhanantry.scapeandrunparasites.world.gen.feature;
 
 import com.dhanantry.scapeandrunparasites.block.BlockParasiteStain;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
@@ -13,7 +13,7 @@ public class WorldGenParasiteTenFlower extends WorldGenParasiteGenAbstract {
       super(notify);
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int i = 12;
       boolean flag = true;
       if (worldIn.getBlockState(position.down()).getBlock() == Blocks.AIR) {
@@ -156,7 +156,7 @@ public class WorldGenParasiteTenFlower extends WorldGenParasiteGenAbstract {
       }
    }
 
-   private BlockPos placeColumn(World worldIn, BlockPos pos, int in, Random rand, double extraChance) {
+   private BlockPos placeColumn(World worldIn, BlockPos pos, int in, EaglercraftRandom rand, double extraChance) {
       int current = pos.getY();
       int atm = current;
       int times = 0;

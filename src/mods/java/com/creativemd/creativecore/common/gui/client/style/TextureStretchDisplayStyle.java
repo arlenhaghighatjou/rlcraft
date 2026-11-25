@@ -1,7 +1,7 @@
 package com.creativemd.creativecore.common.gui.client.style;
 
 import com.creativemd.creativecore.common.gui.GuiRenderHelper;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.util.ResourceLocation;

@@ -3,7 +3,7 @@ package org.jwaresoftware.mcmods.lib.loot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
@@ -21,7 +21,7 @@ public final class KilledByRealPlayerCondition implements LootCondition {
       this._thorough = universal;
    }
 
-   public boolean testCondition(Random rand, LootContext context) {
+   public boolean testCondition(EaglercraftRandom rand, LootContext context) {
       Entity e = context.getKillerPlayer();
       if (e == null && this._thorough) {
          e = context.getKiller();

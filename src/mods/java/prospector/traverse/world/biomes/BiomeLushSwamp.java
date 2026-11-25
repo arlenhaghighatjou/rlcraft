@@ -1,6 +1,6 @@
 package prospector.traverse.world.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockFlower.EnumFlowerType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -39,15 +39,15 @@ public class BiomeLushSwamp extends Biome implements WorldGenConstants {
       this.spawnableMonsterList.add(new SpawnListEntry(EntitySlime.class, 1, 1, 1));
    }
 
-   public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+   public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand) {
       return CUSTOM_SWAMP_TREE_FEATURE;
    }
 
-   public EnumFlowerType pickRandomFlower(Random rand, BlockPos pos) {
+   public EnumFlowerType pickRandomFlower(EaglercraftRandom rand, BlockPos pos) {
       return EnumFlowerType.BLUE_ORCHID;
    }
 
-   public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
+   public void genTerrainBlocks(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
       double d0 = GRASS_COLOR_NOISE.getValue((double)x * 0.25D, (double)z * 0.25D);
       if (d0 > 0.0D) {
          int i = x & 15;
@@ -69,7 +69,7 @@ public class BiomeLushSwamp extends Biome implements WorldGenConstants {
       this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
    }
 
-   public void decorate(World worldIn, Random rand, BlockPos pos) {
+   public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos) {
       super.decorate(worldIn, rand, pos);
       if (TerrainGen.decorate(worldIn, rand, pos, EventType.FOSSIL) && rand.nextInt(64) == 0) {
          (new WorldGenFossils()).generate(worldIn, rand, pos);

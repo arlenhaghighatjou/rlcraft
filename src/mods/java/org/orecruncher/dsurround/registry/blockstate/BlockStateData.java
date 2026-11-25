@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.registry.blockstate;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraftforge.fml.relauncher.Side;
@@ -62,7 +62,7 @@ public class BlockStateData {
    }
 
    @Nullable
-   public SoundEffect getSoundToPlay(@Nonnull Random random) {
+   public SoundEffect getSoundToPlay(@Nonnull EaglercraftRandom random) {
       return null;
    }
 

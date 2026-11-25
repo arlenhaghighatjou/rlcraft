@@ -1,6 +1,6 @@
 package svenhjol.charm.world.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -27,11 +27,11 @@ public class BlockNetherGoldDeposit extends MesonBlock {
       return "charm";
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Items.GOLD_NUGGET;
    }
 
-   public int quantityDropped(IBlockState state, int fortune, Random random) {
+   public int quantityDropped(IBlockState state, int fortune, EaglercraftRandom random) {
       if (fortune > 0) {
          int i = random.nextInt(fortune + 2) - 1;
          if (i < 0) {
@@ -45,7 +45,7 @@ public class BlockNetherGoldDeposit extends MesonBlock {
    }
 
    public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune) {
-      Random rand = world instanceof World ? ((World)world).rand : new Random();
+      EaglercraftRandom rand = world instanceof World ? ((World)world).rand : new EaglercraftRandom();
       return MathHelper.getInt(rand, NetherGoldDeposits.minNuggets, NetherGoldDeposits.maxNuggets);
    }
 }

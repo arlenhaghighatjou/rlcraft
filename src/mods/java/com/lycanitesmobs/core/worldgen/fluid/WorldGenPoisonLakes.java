@@ -5,7 +5,7 @@ import com.lycanitesmobs.ObjectManager;
 import com.lycanitesmobs.core.IWorldGenBase;
 import com.lycanitesmobs.core.config.ConfigSpawning;
 import com.lycanitesmobs.core.info.ModInfo;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -38,7 +38,7 @@ public class WorldGenPoisonLakes extends WorldGenLakes implements IWorldGenBase 
       this.dimensionWhitelist = config.getBool("WorldGen Dimensions", this.name + " Dimensions Whitelist Mode", this.dimensionWhitelist);
    }
 
-   public void onWorldGen(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void onWorldGen(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (this.isValidDimension(world)) {
          if (this.generateSurfaceChance > 0.0D) {
             Biome biome = world.getBiome(new BlockPos(chunkX * 16, 0, chunkZ * 16));
@@ -78,7 +78,7 @@ public class WorldGenPoisonLakes extends WorldGenLakes implements IWorldGenBase 
       }
    }
 
-   public boolean generate(World world, Random random, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom random, BlockPos pos) {
       return super.generate(world, random, pos);
    }
 

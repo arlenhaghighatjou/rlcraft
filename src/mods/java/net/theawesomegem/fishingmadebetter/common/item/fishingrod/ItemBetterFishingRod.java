@@ -2,7 +2,7 @@ package net.theawesomegem.fishingmadebetter.common.item.fishingrod;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -60,7 +60,7 @@ public abstract class ItemBetterFishingRod extends ItemFishingRod {
       if (playerIn.fishEntity != null) {
          int dmg = playerIn.fishEntity.handleHookRetraction();
          if (!playerIn.capabilities.isCreativeMode && itemstack.isItemStackDamageable()) {
-            Random rand = playerIn.getRNG();
+            EaglercraftRandom rand = playerIn.getRNG();
             if (dmg > 0) {
                int i = EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, itemstack);
                int j = 0;

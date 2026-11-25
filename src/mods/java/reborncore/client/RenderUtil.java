@@ -2,11 +2,11 @@ package reborncore.client;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -34,11 +34,11 @@ public class RenderUtil {
       engine().bindTexture(BLOCK_TEX);
    }
 
-   public static TextureAtlasSprite getStillTexture(FluidStack fluid) {
+   public static EaglerTextureAtlasSprite getStillTexture(FluidStack fluid) {
       return fluid != null && fluid.getFluid() != null ? getStillTexture(fluid.getFluid()) : null;
    }
 
-   public static TextureAtlasSprite getStillTexture(Fluid fluid) {
+   public static EaglerTextureAtlasSprite getStillTexture(Fluid fluid) {
       ResourceLocation iconKey = fluid.getStill();
       return iconKey == null ? null : Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(iconKey.toString());
    }
@@ -49,7 +49,7 @@ public class RenderUtil {
 
    public static void renderGuiTank(FluidStack fluid, int capacity, int amount, double x, double y, double zLevel, double width, double height) {
       if (fluid != null && fluid.getFluid() != null && fluid.amount > 0) {
-         TextureAtlasSprite icon = getStillTexture(fluid);
+         EaglerTextureAtlasSprite icon = getStillTexture(fluid);
          if (icon != null) {
             int renderAmount = (int)Math.max(Math.min(height, (double)amount * height / (double)capacity), 1.0D);
             int posY = (int)(y + height - (double)renderAmount);
@@ -69,7 +69,7 @@ public class RenderUtil {
                   double minV = (double)icon.getMinV();
                   double maxV = (double)icon.getMaxV();
                   Tessellator tessellator = Tessellator.getInstance();
-                  BufferBuilder tes = tessellator.getBuffer();
+                  WorldRenderer tes = tessellator.getBuffer();
                   tes.begin(7, DefaultVertexFormats.POSITION_TEX);
                   tes.pos((double)drawX, (double)(drawY + drawHeight), 0.0D).tex(minU, minV + (maxV - minV) * (double)drawHeight / 16.0D).endVertex();
                   tes.pos((double)(drawX + drawWidth), (double)(drawY + drawHeight), 0.0D).tex(minU + (maxU - minU) * (double)drawWidth / 16.0D, minV + (maxV - minV) * (double)drawHeight / 16.0D).endVertex();
@@ -105,7 +105,7 @@ public class RenderUtil {
       GlStateManager.popMatrix();
    }
 
-   public static void drawBar(BufferBuilder renderer, int x, int y, int width, int height, int red, int green, int blue, int alpha) {
+   public static void drawBar(WorldRenderer renderer, int x, int y, int width, int height, int red, int green, int blue, int alpha) {
       renderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
       renderer.pos((double)x, (double)y, 0.0D).color(red, green, blue, alpha).endVertex();
       renderer.pos((double)x, (double)(y + height), 0.0D).color(red, green, blue, alpha).endVertex();

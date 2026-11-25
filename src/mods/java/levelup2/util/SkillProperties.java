@@ -3,7 +3,7 @@ package levelup2.util;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.ArrayList;
 import java.util.List;
 import levelup2.api.IPlayerSkill;

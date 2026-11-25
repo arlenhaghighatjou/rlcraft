@@ -13,7 +13,7 @@ import com.github.alexthe666.iceandfire.entity.ai.DragonAIWander;
 import com.github.alexthe666.iceandfire.entity.ai.DragonAIWatchClosest;
 import com.github.alexthe666.iceandfire.entity.ai.DragonAIWaterTarget;
 import com.google.common.base.Predicate;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
@@ -165,7 +165,7 @@ public class EntityIceDragon extends EntityDragonBase {
       if (this.getAnimation() == ANIMATION_WINGBLAST) {
          return false;
       } else {
-         switch((new Random()).nextInt(4)) {
+         switch((new EaglercraftRandom()).nextInt(4)) {
          case 0:
             if (this.getAnimation() != ANIMATION_BITE) {
                this.setAnimation(ANIMATION_BITE);
@@ -179,7 +179,7 @@ public class EntityIceDragon extends EntityDragonBase {
             }
             break;
          case 1:
-            if ((new Random()).nextInt(2) == 0 && this.isDirectPathBetweenPoints(this, this.getPositionVector(), entityIn.getPositionVector()) && entityIn.width < this.width * 0.5F && this.getControllingPassenger() == null && this.getDragonStage() > 1 && !(entityIn instanceof EntityDragonBase) && !DragonUtils.isAnimaniaMob(entityIn)) {
+            if ((new EaglercraftRandom()).nextInt(2) == 0 && this.isDirectPathBetweenPoints(this, this.getPositionVector(), entityIn.getPositionVector()) && entityIn.width < this.width * 0.5F && this.getControllingPassenger() == null && this.getDragonStage() > 1 && !(entityIn instanceof EntityDragonBase) && !DragonUtils.isAnimaniaMob(entityIn)) {
                if (this.getAnimation() != ANIMATION_SHAKEPREY) {
                   this.setAnimation(ANIMATION_SHAKEPREY);
                   entityIn.startRiding(this);

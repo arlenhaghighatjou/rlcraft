@@ -1,7 +1,7 @@
 package xzeroair.trinkets.traits.abilities;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -252,7 +252,7 @@ public class AbilityEnderQueen extends Ability implements ITickableAbility, IPot
       boolean flag = false;
       BlockPos blockpos = new BlockPos(entity);
       World world = entity.world;
-      Random random = this.random;
+      EaglercraftRandom random = this.random;
       if (world.isBlockLoaded(blockpos)) {
          boolean flag1 = false;
 

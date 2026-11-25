@@ -2,9 +2,9 @@ package org.orecruncher.dsurround.client.aurora;
 
 import java.nio.ByteBuffer;
 import java.util.List;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -14,7 +14,7 @@ public class VertexUploader {
    public VertexUploader() {
    }
 
-   public void draw(BufferBuilder bufferBuilderIn) {
+   public void draw(WorldRenderer bufferBuilderIn) {
       if (bufferBuilderIn.getVertexCount() > 0) {
          VertexFormat vertexformat = bufferBuilderIn.getVertexFormat();
          int i = vertexformat.getNextOffset();

@@ -5,8 +5,8 @@ import gnu.trove.map.hash.TObjectIntHashMap;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import net.minecraft.client.renderer.OpenGlHelper;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.ContextCapabilities;
 import org.lwjgl.opengl.GL11;
@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.vector.Matrix;
 import org.lwjgl.util.vector.Matrix2f;
 import org.lwjgl.util.vector.Matrix3f;
-import org.lwjgl.util.vector.Matrix4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
 
 public class IvShaderInstance {
    public Logger logger;

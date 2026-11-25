@@ -36,7 +36,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -110,7 +110,7 @@ public class TransformerReplace extends TransformerSingleBlock<TransformerReplac
       return new TransformerReplace.InstanceData(blockState, blockState.tileEntityInfo != null ? blockState.tileEntityInfo.copy() : null);
    }
 
-   public WeightedBlockState selectRandomBlockState(Random random) {
+   public WeightedBlockState selectRandomBlockState(EaglercraftRandom random) {
       WeightedBlockState blockState;
       if (((ArrayList)this.destination.getContents()).size() > 0) {
          blockState = (WeightedBlockState)WeightedSelector.selectItem(random, (Collection)this.destination.getContents());

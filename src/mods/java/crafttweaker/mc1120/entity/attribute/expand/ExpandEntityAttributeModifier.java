@@ -3,7 +3,7 @@ package crafttweaker.mc1120.entity.attribute.expand;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.entity.attribute.IEntityAttributeModifier;
 import crafttweaker.api.minecraft.CraftTweakerMC;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenExpansion;
@@ -24,7 +24,7 @@ public class ExpandEntityAttributeModifier {
 
    @ZenMethodStatic
    public static IEntityAttributeModifier createModifier(String name, double amount, int operation, @Optional String uuid) {
-      AttributeModifier modifier = uuid == null ? new AttributeModifier(name, amount, operation) : new AttributeModifier(UUID.fromString(uuid), name, amount, operation);
+      AttributeModifier modifier = uuid == null ? new AttributeModifier(name, amount, operation) : new AttributeModifier(EaglercraftUUID.fromString(uuid), name, amount, operation);
       return CraftTweakerMC.getIEntityAttributeModifier(modifier);
    }
 

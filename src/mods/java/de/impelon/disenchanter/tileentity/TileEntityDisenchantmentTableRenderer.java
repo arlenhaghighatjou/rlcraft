@@ -1,7 +1,7 @@
 package de.impelon.disenchanter.tileentity;
 
 import de.impelon.disenchanter.DisenchanterConfig;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityEnchantmentTableRenderer;
 import net.minecraft.tileentity.TileEntityEnchantmentTable;
 import net.minecraft.util.math.MathHelper;

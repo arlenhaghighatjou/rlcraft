@@ -1,7 +1,7 @@
 package noppes.vc.client.renderer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.tileentity.TileEntity;
 import noppes.vc.blocks.tiles.TileCampfire;
 import noppes.vc.client.models.ModelCampfire;

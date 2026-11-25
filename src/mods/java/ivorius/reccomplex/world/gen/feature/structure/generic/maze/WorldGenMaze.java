@@ -28,7 +28,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
@@ -63,7 +63,7 @@ public class WorldGenMaze {
    }
 
    @Nullable
-   public static PlacedStructure place(Random random, Environment environment, BlockPos shift, int[] roomSize, PlacedMazeComponent<MazeComponentStructure<Connector>, Connector> placedComponent, BlockPos pos, AxisAlignedTransform2D transform) {
+   public static PlacedStructure place(EaglercraftRandom random, Environment environment, BlockPos shift, int[] roomSize, PlacedMazeComponent<MazeComponentStructure<Connector>, Connector> placedComponent, BlockPos pos, AxisAlignedTransform2D transform) {
       MazeComponentStructure<Connector> componentInfo = (MazeComponentStructure)placedComponent.component();
       Structure<?> structure = (Structure)StructureRegistry.INSTANCE.get(componentInfo.structureID);
       if (structure == null) {

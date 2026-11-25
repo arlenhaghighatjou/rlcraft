@@ -1,6 +1,6 @@
 package vazkii.quark.misc.ai;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityEndermite;
@@ -30,7 +30,7 @@ public class EntityAIFormShulker extends EntityAIWander {
       } else if (!this.endermite.getNavigator().noPath()) {
          return false;
       } else {
-         Random random = this.endermite.getRNG();
+         EaglercraftRandom random = this.endermite.getRNG();
          if (random.nextDouble() < EndermitesIntoShulkers.chance) {
             this.facing = EnumFacing.random(random);
             BlockPos blockpos = (new BlockPos(this.endermite.posX, this.endermite.posY + 0.5D, this.endermite.posZ)).offset(this.facing);

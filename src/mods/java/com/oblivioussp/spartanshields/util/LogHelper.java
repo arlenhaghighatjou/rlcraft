@@ -1,7 +1,7 @@
 package com.oblivioussp.spartanshields.util;
 
 import net.minecraftforge.fml.common.FMLLog;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class LogHelper {
    public LogHelper() {

@@ -11,7 +11,7 @@ import cursedflames.bountifulbaubles.item.ItemShieldObsidian;
 import cursedflames.bountifulbaubles.item.ModItems;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -64,7 +64,7 @@ public class EventHandler {
             float damageMultiLava = 1.0F;
             float maxDamageNegate = 0.0F;
             IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
-            Set<UUID> found = new HashSet();
+            Set<EaglercraftUUID> found = new HashSet();
 
             for(int i = -2; i < baubles.getSlots(); ++i) {
                ItemStack stack = i >= 0 ? baubles.getStackInSlot(i) : (i == -2 ? player.getHeldItemMainhand() : player.getHeldItemOffhand());
@@ -104,7 +104,7 @@ public class EventHandler {
             float damageMultiLava = 1.0F;
             float maxDamageNegate = 0.0F;
             IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
-            Set<UUID> found = new HashSet();
+            Set<EaglercraftUUID> found = new HashSet();
 
             for(int i = -2; i < baubles.getSlots(); ++i) {
                ItemStack stack = i >= 0 ? baubles.getStackInSlot(i) : (i == -2 ? player.getHeldItemMainhand() : player.getHeldItemOffhand());

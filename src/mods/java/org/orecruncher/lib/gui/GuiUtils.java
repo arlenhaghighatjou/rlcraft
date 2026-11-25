@@ -3,8 +3,8 @@ package org.orecruncher.lib.gui;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -45,7 +45,7 @@ public final class GuiUtils {
       float f1 = (float)(color >> 8 & 255) / 255.0F;
       float f2 = (float)(color & 255) / 255.0F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       GlStateManager.enableBlend();
       GlStateManager.disableTexture2D();
       GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
@@ -76,7 +76,7 @@ public final class GuiUtils {
       GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
       GlStateManager.shadeModel(7425);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder t = tessellator.getBuffer();
+      WorldRenderer t = tessellator.getBuffer();
       t.begin(7, DefaultVertexFormats.POSITION_COLOR);
       t.pos((double)(left + right), (double)top, 0.0D).color(f1, f2, f3, f).endVertex();
       t.pos((double)left, (double)top, 0.0D).color(f1, f2, f3, f).endVertex();
@@ -104,7 +104,7 @@ public final class GuiUtils {
       float zLevel = 0.0F;
       Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexbuffer.pos((double)(x + 0), (double)(y + height), 0.0D).tex((double)u.x, (double)v.x).endVertex();
       vertexbuffer.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)u.y, (double)v.x).endVertex();

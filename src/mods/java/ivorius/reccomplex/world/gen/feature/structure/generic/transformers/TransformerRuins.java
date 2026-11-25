@@ -47,7 +47,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
@@ -118,7 +118,7 @@ public class TransformerRuins extends Transformer<TransformerRuins.InstanceData>
       return !state.isNormalCube() && state.getMaterial() != Material.AIR ? 1 : 0;
    }
 
-   public static void shuffleArray(Object[] ar, Random rand) {
+   public static void shuffleArray(Object[] ar, EaglercraftRandom rand) {
       for(int i = ar.length - 1; i > 0; --i) {
          int index = rand.nextInt(i + 1);
          Object a = ar[index];
@@ -135,7 +135,7 @@ public class TransformerRuins extends Transformer<TransformerRuins.InstanceData>
    }
 
    @Nonnull
-   protected static IBlockState randomPlacement(Random random, IBlockState stairs) {
+   protected static IBlockState randomPlacement(EaglercraftRandom random, IBlockState stairs) {
       return stairs.withProperty(BlockStairs.FACING, EnumFacing.getHorizontal(random.nextInt(4))).withProperty(BlockStairs.HALF, random.nextBoolean() ? EnumHalf.BOTTOM : EnumHalf.TOP);
    }
 
@@ -220,7 +220,7 @@ public class TransformerRuins extends Transformer<TransformerRuins.InstanceData>
 
    }
 
-   public void decayBlock(World world, Random random, IBlockState state, BlockPos pos, StructureBoundingBox boundingBox) {
+   public void decayBlock(World world, EaglercraftRandom random, IBlockState state, BlockPos pos, StructureBoundingBox boundingBox) {
       IBlockState newState = state;
       if (random.nextFloat() < this.blockErosion) {
          if (state.getBlock() == Blocks.STONEBRICK && state.getProperties().get(BlockStoneBrick.VARIANT) != EnumType.MOSSY) {
@@ -293,7 +293,7 @@ public class TransformerRuins extends Transformer<TransformerRuins.InstanceData>
    }
 
    @Nonnull
-   protected IBlockState maybeErodeShape(Random random, IBlockState newState, Block block, PropertyEnum<?> variant, Object value, Block oakStairs) {
+   protected IBlockState maybeErodeShape(EaglercraftRandom random, IBlockState newState, Block block, PropertyEnum<?> variant, Object value, Block oakStairs) {
       if (newState.getBlock() == block && (variant == null || newState.getProperties().get(variant) == value)) {
          newState = this.erodeShape(random, newState, oakStairs);
       }
@@ -302,7 +302,7 @@ public class TransformerRuins extends Transformer<TransformerRuins.InstanceData>
    }
 
    @Nonnull
-   protected IBlockState erodeShape(Random random, IBlockState newState, Block stairs) {
+   protected IBlockState erodeShape(EaglercraftRandom random, IBlockState newState, Block stairs) {
       if (random.nextFloat() < this.blockErosion * 0.125F) {
          newState = randomPlacement(random, stairs.getDefaultState());
       }

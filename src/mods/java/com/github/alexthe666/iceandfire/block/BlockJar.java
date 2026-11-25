@@ -6,7 +6,7 @@ import com.github.alexthe666.iceandfire.core.ModItems;
 import com.github.alexthe666.iceandfire.core.ModSounds;
 import com.github.alexthe666.iceandfire.entity.tile.TileEntityJar;
 import com.github.alexthe666.iceandfire.item.ICustomRendered;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
@@ -81,7 +81,7 @@ public class BlockJar extends BlockContainer implements ICustomRendered {
       worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       this.checkFall(world, pos);
    }
 
@@ -102,7 +102,7 @@ public class BlockJar extends BlockContainer implements ICustomRendered {
 
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(ModBlocks.jar_empty);
    }
 

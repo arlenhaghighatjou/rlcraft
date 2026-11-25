@@ -1,7 +1,7 @@
 package ivorius.ivtoolkit.random.values;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public interface DValue extends RandomValue<Double> {
-   Double getValue(Random var1);
+   Double getValue(EaglercraftRandom var1);
 }

@@ -54,8 +54,8 @@ import net.theawesomegem.fishingmadebetter.common.recipe.RecipeFishSliceRaw;
 import net.theawesomegem.fishingmadebetter.common.recipe.RecipeRodAttachment;
 import net.theawesomegem.fishingmadebetter.util.HandlerUtil;
 import net.theawesomegem.fishingmadebetter.util.RebornCraftingHelper;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class CommonProxy {
    public static Logger Logger;

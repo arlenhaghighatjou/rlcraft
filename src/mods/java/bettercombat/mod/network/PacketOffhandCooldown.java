@@ -1,7 +1,7 @@
 package bettercombat.mod.network;
 
 import bettercombat.mod.util.ScheduledPacketTask;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

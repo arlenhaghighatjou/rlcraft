@@ -1,6 +1,6 @@
 package com.oblivioussp.spartanweaponry.mixin;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,7 +11,7 @@ public class EntityMixin {
    @Shadow
    public World world;
    @Shadow
-   public Random rand;
+   public EaglercraftRandom rand;
    @Shadow
    public double posX;
    @Shadow

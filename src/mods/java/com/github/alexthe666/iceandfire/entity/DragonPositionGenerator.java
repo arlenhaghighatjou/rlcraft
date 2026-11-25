@@ -1,6 +1,6 @@
 package com.github.alexthe666.iceandfire.entity;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityCreature;
@@ -21,7 +21,7 @@ public class DragonPositionGenerator {
    @Nullable
    public static Vec3d generateRandomPos(EntityCreature mob, int xz, int y, @Nullable Vec3d vec, boolean skipWater) {
       PathNavigate pathnavigate = mob.getNavigator();
-      Random random = mob.getRNG();
+      EaglercraftRandom random = mob.getRNG();
       boolean flag;
       if (mob.hasHome()) {
          double d0 = mob.getHomePosition().distanceSq((double)MathHelper.floor(mob.posX), (double)MathHelper.floor(mob.posY), (double)MathHelper.floor(mob.posZ)) + 4.0D;

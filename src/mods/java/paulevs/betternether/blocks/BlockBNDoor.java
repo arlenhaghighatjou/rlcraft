@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.BlockDoor.EnumDoorHalf;
@@ -38,7 +38,7 @@ public class BlockBNDoor extends BlockDoor {
       world.setBlockState(pos.up(), state.withProperty(HALF, EnumDoorHalf.UPPER));
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(this);
    }
 

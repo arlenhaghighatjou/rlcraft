@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.init.ModItems;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -16,11 +16,11 @@ public class BlockScarliteOre extends BlockGeneric {
       super(Material.ROCK, SoundType.STONE, hardness, resistance, "pickaxe", 2);
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return ModItems.scarlite;
    }
 
-   public int quantityDroppedWithBonus(int fortune, Random random) {
+   public int quantityDroppedWithBonus(int fortune, EaglercraftRandom random) {
       if (fortune > 0) {
          int i = random.nextInt(fortune + 2) - 1;
          if (i < 0) {
@@ -34,7 +34,7 @@ public class BlockScarliteOre extends BlockGeneric {
    }
 
    public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune) {
-      Random rand = world instanceof World ? ((World)world).rand : new Random();
+      EaglercraftRandom rand = world instanceof World ? ((World)world).rand : new EaglercraftRandom();
       return MathHelper.getInt(rand, 4, 8);
    }
 }

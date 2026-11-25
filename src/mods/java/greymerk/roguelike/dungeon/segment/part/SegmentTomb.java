@@ -16,13 +16,13 @@ import greymerk.roguelike.worldgen.Direction;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SegmentTomb extends SegmentBase {
    public SegmentTomb() {
    }
 
-   private static void tomb(WorldEditor editor, Random rand, LevelSettings level, Theme theme, Direction dir, Coord pos) {
+   private static void tomb(WorldEditor editor, EaglercraftRandom rand, LevelSettings level, Theme theme, Direction dir, Coord pos) {
       Direction[] orthogonals = dir.orthogonals();
       Coord start = pos.copy();
       start.translate(dir, 3);

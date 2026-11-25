@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 import net.minecraft.client.Minecraft;
@@ -24,7 +24,7 @@ import net.minecraft.util.text.ITextComponent.Serializer;
 public class GuiElementTextRandom extends GuiElementBase {
    public static final Gson GSON = (new GsonBuilder()).registerTypeHierarchyAdapter(ITextComponent.class, new Serializer()).registerTypeHierarchyAdapter(Style.class, new net.minecraft.util.text.Style.Serializer()).registerTypeAdapterFactory(new EnumTypeAdapterFactory()).create();
    private static final Pattern PATTERN = Pattern.compile("(.+) \\S+");
-   private final Random random = new Random();
+   private final EaglercraftRandom random = new EaglercraftRandom();
    private final List<String> strings = new ArrayList();
    private final Map<String, List<String>> stagedStrings = new HashMap();
    private long systemTime = -100L;

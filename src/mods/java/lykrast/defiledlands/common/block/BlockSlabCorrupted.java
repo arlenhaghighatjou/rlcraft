@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.util.CorruptionHelper;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
@@ -14,7 +14,7 @@ public abstract class BlockSlabCorrupted extends BlockSlab {
       this.setTickRandomly(true);
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       CorruptionHelper.spread(worldIn, pos, state, rand);
       super.updateTick(worldIn, pos, state, rand);
    }

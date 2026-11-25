@@ -1,6 +1,6 @@
 package primetoxinz.coralreef;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +14,7 @@ public class WorldGenReef extends WorldGenerator {
       this.state = state;
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos pos) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos pos) {
       if (isOceanFloor(worldIn, pos) && rand.nextDouble() <= CoralReef.ConfigHandler.reef.reefSparsity) {
          worldIn.setBlockState(pos, this.state);
          if (rand.nextDouble() <= CoralReef.ConfigHandler.reef.coralSparsity) {

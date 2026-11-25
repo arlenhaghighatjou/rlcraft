@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -68,11 +68,11 @@ public class BlockOrangeMushroom extends Block implements IGrowable {
       return this.canStay(worldIn, pos) && ((Integer)state.getValue(SIZE)).intValue() < 3;
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return ((Integer)state.getValue(SIZE)).intValue() < 3 && rand.nextInt(4) == 0;
    }
 
-   public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       int s = ((Integer)state.getValue(SIZE)).intValue() + 1;
       if (s < 4) {
          worldIn.setBlockState(pos, state.withProperty(SIZE, Integer.valueOf(((Integer)state.getValue(SIZE)).intValue() + 1)));
@@ -92,7 +92,7 @@ public class BlockOrangeMushroom extends Block implements IGrowable {
 
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!this.canStay(worldIn, pos)) {
          this.dropBlockAsItem(worldIn, pos, state, 0);
          worldIn.setBlockToAir(pos);
@@ -105,7 +105,7 @@ public class BlockOrangeMushroom extends Block implements IGrowable {
 
    }
 
-   private void spawnSeeds(World world, BlockPos pos, Random random) {
+   private void spawnSeeds(World world, BlockPos pos, EaglercraftRandom random) {
       if (!world.isRemote) {
          ItemStack drop = new ItemStack(this, 1 + random.nextInt(3));
          EntityItem itemEntity = new EntityItem(world, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, drop);

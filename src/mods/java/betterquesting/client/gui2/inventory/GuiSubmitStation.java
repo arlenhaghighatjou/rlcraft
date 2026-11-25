@@ -36,8 +36,8 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefresh {
    private final ContainerSubmitStation ssContainer;

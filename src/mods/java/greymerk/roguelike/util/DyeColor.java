@@ -1,7 +1,7 @@
 package greymerk.roguelike.util;
 
 import com.github.fnar.minecraft.item.Dye;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum DyeColor {
    BLACK,
@@ -28,7 +28,7 @@ public enum DyeColor {
       return values()[(int)(Math.random() * (double)values().length)];
    }
 
-   public static DyeColor chooseRandom(Random random) {
+   public static DyeColor chooseRandom(EaglercraftRandom random) {
       return values()[random.nextInt(values().length)];
    }
 

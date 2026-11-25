@@ -8,7 +8,7 @@ import ichttt.mods.firstaid.client.HUDHandler;
 import ichttt.mods.firstaid.common.CapProvider;
 import ichttt.mods.firstaid.common.config.ConfigEntry;
 import ichttt.mods.firstaid.common.config.ExtraConfig;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.Objects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;

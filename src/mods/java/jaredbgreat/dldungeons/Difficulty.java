@@ -1,6 +1,6 @@
 package jaredbgreat.dldungeons;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum Difficulty {
    NONE(0, 0, 0, 0, 0, -1, false, "No spawners."),
@@ -30,19 +30,19 @@ public enum Difficulty {
       this.label = label;
    }
 
-   public boolean addmob(Random random) {
+   public boolean addmob(EaglercraftRandom random) {
       return random.nextInt(10) < this.spawners;
    }
 
-   public boolean multimob(Random random) {
+   public boolean multimob(EaglercraftRandom random) {
       return random.nextInt(20) < this.spawners + this.promote;
    }
 
-   private boolean promote(Random random) {
+   private boolean promote(EaglercraftRandom random) {
       return random.nextInt(10) < this.promote;
    }
 
-   public int moblevel(Random random) {
+   public int moblevel(EaglercraftRandom random) {
       int lev = 0;
       boolean pr = true;
 
@@ -57,7 +57,7 @@ public enum Difficulty {
       return lev;
    }
 
-   public int nodelevel(Random random) {
+   public int nodelevel(EaglercraftRandom random) {
       int lev = this.nodelev;
       boolean pr = true;
 

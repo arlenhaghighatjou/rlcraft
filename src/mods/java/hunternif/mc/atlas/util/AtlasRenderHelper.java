@@ -1,8 +1,8 @@
 package hunternif.mc.atlas.util;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -18,7 +18,7 @@ public class AtlasRenderHelper {
       double minV = v / (double)imageHeight;
       double maxV = (v + (double)height) / (double)imageHeight;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder renderer = tessellator.getBuffer();
+      WorldRenderer renderer = tessellator.getBuffer();
       renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
       renderer.pos((double)((int)(x + scaleX * (double)width)), (double)((int)(y + scaleY * (double)height)), 0.0D).tex(maxU, maxV).endVertex();
       renderer.pos((double)((int)(x + scaleX * (double)width)), (double)((int)y), 0.0D).tex(maxU, minV).endVertex();
@@ -46,7 +46,7 @@ public class AtlasRenderHelper {
       double minV = v / 6.0D;
       double maxV = (v + 1.0D) / 6.0D;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder renderer = tessellator.getBuffer();
+      WorldRenderer renderer = tessellator.getBuffer();
       renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
       renderer.pos((double)(x + tileHalfSize), (double)(y + tileHalfSize), 0.0D).tex(maxU, maxV).endVertex();
       renderer.pos((double)(x + tileHalfSize), (double)y, 0.0D).tex(maxU, minV).endVertex();

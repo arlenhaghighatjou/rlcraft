@@ -4,9 +4,9 @@ import com.bloodnbonesgaming.lib.util.data.MinMaxBoundsDouble;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.collect.UnmodifiableIterator;
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -28,8 +28,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.math.BlockPos;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public final class NbtUtilExtended {
    private static final Logger LOGGER = LogManager.getLogger();
@@ -50,9 +50,9 @@ public final class NbtUtilExtended {
       }
 
       try {
-         UUID uuid;
+         EaglercraftUUID uuid;
          try {
-            uuid = UUID.fromString(s1);
+            uuid = EaglercraftUUID.fromString(s1);
          } catch (Throwable var12) {
             uuid = null;
          }
@@ -220,15 +220,15 @@ public final class NbtUtilExtended {
       }
    }
 
-   public static NBTTagCompound createUUIDTag(UUID uuid) {
+   public static NBTTagCompound createUUIDTag(EaglercraftUUID uuid) {
       NBTTagCompound nbttagcompound = new NBTTagCompound();
       nbttagcompound.setLong("M", uuid.getMostSignificantBits());
       nbttagcompound.setLong("L", uuid.getLeastSignificantBits());
       return nbttagcompound;
    }
 
-   public static UUID getUUIDFromTag(NBTTagCompound tag) {
-      return new UUID(tag.getLong("M"), tag.getLong("L"));
+   public static EaglercraftUUID getUUIDFromTag(NBTTagCompound tag) {
+      return new EaglercraftUUID(tag.getLong("M"), tag.getLong("L"));
    }
 
    public static BlockPos getPosFromTag(NBTTagCompound tag) {

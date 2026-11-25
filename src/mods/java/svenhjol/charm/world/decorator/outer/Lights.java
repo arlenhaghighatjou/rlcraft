@@ -1,7 +1,7 @@
 package svenhjol.charm.world.decorator.outer;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -14,7 +14,7 @@ import svenhjol.charm.world.compat.FutureMcBlocks;
 import svenhjol.meson.decorator.MesonOuterDecorator;
 
 public class Lights extends MesonOuterDecorator {
-   public Lights(World world, BlockPos pos, Random rand, List<ChunkPos> chunks) {
+   public Lights(World world, BlockPos pos, EaglercraftRandom rand, List<ChunkPos> chunks) {
       super(world, pos, rand, chunks);
    }
 

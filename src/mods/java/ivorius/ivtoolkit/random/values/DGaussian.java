@@ -1,6 +1,6 @@
 package ivorius.ivtoolkit.random.values;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class DGaussian implements DValue {
    public double min;
@@ -11,7 +11,7 @@ public class DGaussian implements DValue {
       this.max = max;
    }
 
-   public Double getValue(Random random) {
+   public Double getValue(EaglercraftRandom random) {
       return this.min + this.max * 0.5D + (random.nextDouble() - random.nextDouble()) * (this.max - this.min) * 0.5D;
    }
 }

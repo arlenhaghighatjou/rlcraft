@@ -37,7 +37,7 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class GuiEditTaskHunt extends GuiScreenCanvas implements IVolatileScreen {
    private final DBEntry<IQuest> quest;

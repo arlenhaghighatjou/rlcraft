@@ -12,7 +12,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Direction;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SegmentSpawner extends SegmentBase {
    public SegmentSpawner() {
@@ -35,7 +35,7 @@ public class SegmentSpawner extends SegmentBase {
 
    }
 
-   private void generateSpawner(WorldEditor editor, Random rand, DungeonLevel level, Direction dir, Coord origin, Theme theme) {
+   private void generateSpawner(WorldEditor editor, EaglercraftRandom rand, DungeonLevel level, Direction dir, Coord origin, Theme theme) {
       Coord spawnerCoord = origin.copy().translate(dir, 4).up(1);
       Spawner spawner = level.getSettings().getSpawnerSettings().isEmpty() ? MobType.chooseAmong(MobType.COMMON_MOBS, rand).asSpawner() : (Spawner)level.getSettings().getSpawnerSettings().getSpawners().get(editor.getRandom());
       BaseRoom.generateSpawnerSafe(editor, spawner, spawnerCoord);

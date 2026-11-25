@@ -7,7 +7,7 @@ import com.github.fnar.util.Color;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Quality;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -27,17 +27,17 @@ public class ArmourLootItem extends LootItem {
       this.enchant = enchant;
    }
 
-   public RldItemStack getLootItem(Random random) {
+   public RldItemStack getLootItem(EaglercraftRandom random) {
       return SpecialtyLootItem.rollForSpecial(random) ? SpecialArmour.createArmour(random, this.getArmourType(random), this.getQuality(random)).asStack() : this.getArmourType(random).asItem().withQuality(this.getQuality(random)).withColor(Color.random(random)).plzEnchantAtLevel(this.enchant ? getEnchantmentLevel(random, this.level) : 0).asStack();
    }
 
-   private Quality getQuality(Random random) {
+   private Quality getQuality(EaglercraftRandom random) {
       return (Quality)Optional.ofNullable(this.quality).orElseGet(() -> {
          return Equipment.rollQuality(random, this.level);
       });
    }
 
-   private ArmourType getArmourType(Random random) {
+   private ArmourType getArmourType(EaglercraftRandom random) {
       return (ArmourType)Optional.ofNullable(this.equipment).map(Equipment::asArmourType).orElseGet(() -> {
          return ArmourType.random(random);
       });

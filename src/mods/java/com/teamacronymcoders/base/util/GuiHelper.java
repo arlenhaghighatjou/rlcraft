@@ -6,12 +6,12 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -215,7 +215,7 @@ public class GuiHelper extends GuiScreen {
    public static void renderGuiTank(FluidStack fluid, int capacity, int amount, double x, double y, double width, double height) {
       GL11.glPushAttrib(1048575);
       if (fluid != null && fluid.getFluid() != null && fluid.amount > 0) {
-         TextureAtlasSprite icon = getStillTexture(fluid);
+         EaglerTextureAtlasSprite icon = getStillTexture(fluid);
          if (icon != null) {
             int renderAmount = (int)Math.max(Math.min(height, (double)amount * height / (double)capacity), 1.0D);
             int posY = (int)(y + height - (double)renderAmount);
@@ -235,7 +235,7 @@ public class GuiHelper extends GuiScreen {
                   double minV = (double)icon.getMinV();
                   double maxV = (double)icon.getMaxV();
                   Tessellator tessellator = Tessellator.getInstance();
-                  BufferBuilder tes = tessellator.getBuffer();
+                  WorldRenderer tes = tessellator.getBuffer();
                   tes.begin(7, DefaultVertexFormats.POSITION_TEX);
                   tes.pos((double)drawX, (double)(drawY + drawHeight), 0.0D).tex(minU, minV + (maxV - minV) * (double)drawHeight / 16.0D).endVertex();
                   tes.pos((double)(drawX + drawWidth), (double)(drawY + drawHeight), 0.0D).tex(minU + (maxU - minU) * (double)drawWidth / 16.0D, minV + (maxV - minV) * (double)drawHeight / 16.0D).endVertex();
@@ -255,12 +255,12 @@ public class GuiHelper extends GuiScreen {
       renderGuiTank(tank.getFluid(), tank.getCapacity(), tank.getFluidAmount(), x, y, width, height);
    }
 
-   public static TextureAtlasSprite getStillTexture(Fluid fluid) {
+   public static EaglerTextureAtlasSprite getStillTexture(Fluid fluid) {
       ResourceLocation iconKey = fluid.getStill();
       return iconKey == null ? null : Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(iconKey.toString());
    }
 
-   public static TextureAtlasSprite getStillTexture(FluidStack fluid) {
+   public static EaglerTextureAtlasSprite getStillTexture(FluidStack fluid) {
       return fluid != null && fluid.getFluid() != null ? getStillTexture(fluid.getFluid()) : null;
    }
 

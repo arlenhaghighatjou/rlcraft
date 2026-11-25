@@ -1,6 +1,6 @@
 package prospector.traverse.world.features;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -39,7 +39,7 @@ public class WorldGenFirTree extends WorldGenAbstractTree implements WorldGenCon
       this.stateLeaves = stateLeaves;
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int treeHeight = rand.nextInt(15) + this.minTreeHeight;
       int nakedLogHeight = 4 + rand.nextInt(2);
       int leavesHeight = treeHeight - nakedLogHeight;

@@ -1,7 +1,7 @@
 package dev.satyrn.wolfarmor.api.item;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 
 public interface IItemWolfArmor {
-   UUID ARMOR_UUID = UUID.fromString("0DA1275D-85A6-427A-B187-57DF958AC68B");
+   EaglercraftUUID ARMOR_UUID = EaglercraftUUID.fromString("0DA1275D-85A6-427A-B187-57DF958AC68B");
 }

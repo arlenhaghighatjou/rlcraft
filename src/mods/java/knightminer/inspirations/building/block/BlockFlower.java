@@ -1,7 +1,7 @@
 package knightminer.inspirations.building.block;
 
 import java.util.Locale;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockBush;
@@ -69,11 +69,11 @@ public class BlockFlower extends BlockBush implements IGrowable {
       return state.getValue(TYPE) != BlockFlower.FlowerType.CYAN;
    }
 
-   public boolean canUseBonemeal(World world, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World world, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return true;
    }
 
-   public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       EnumPlantType type = ((BlockFlower.FlowerType)state.getValue(TYPE)).getDouble();
       if (type != null) {
          if (worldIn.isAirBlock(pos.up())) {

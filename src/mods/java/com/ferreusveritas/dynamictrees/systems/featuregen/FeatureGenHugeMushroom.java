@@ -6,7 +6,7 @@ import com.ferreusveritas.dynamictrees.util.BlockBounds;
 import com.ferreusveritas.dynamictrees.util.SafeChunkBounds;
 import com.ferreusveritas.dynamictrees.util.SimpleVoxmap;
 import com.google.common.collect.Iterables;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHugeMushroom;
 import net.minecraft.block.BlockHugeMushroom.EnumType;
@@ -66,11 +66,11 @@ public class FeatureGenHugeMushroom implements IFullGenFeature {
       }
    }
 
-   protected int getMushroomHeight(World world, BlockPos rootPos, Biome biome, Random random, int radius, SafeChunkBounds safeBounds) {
+   protected int getMushroomHeight(World world, BlockPos rootPos, Biome biome, EaglercraftRandom random, int radius, SafeChunkBounds safeBounds) {
       return this.height > 0 ? this.height : random.nextInt(9) + 2;
    }
 
-   public boolean generate(World world, BlockPos rootPos, Species species, Biome biome, Random random, int radius, SafeChunkBounds safeBounds) {
+   public boolean generate(World world, BlockPos rootPos, Species species, Biome biome, EaglercraftRandom random, int radius, SafeChunkBounds safeBounds) {
       BlockPos genPos = rootPos.up();
       int height = this.getMushroomHeight(world, rootPos, biome, random, radius, safeBounds);
       IBlockState soilState = world.getBlockState(rootPos);

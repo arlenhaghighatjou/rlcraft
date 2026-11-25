@@ -1,6 +1,6 @@
 package com.ferreusveritas.dynamictrees.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -30,7 +30,7 @@ public class BlockRootySand extends BlockRooty {
       return MimicProperty.getSandMimic(access, pos);
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(Blocks.SAND);
    }
 

@@ -3,7 +3,7 @@ package com.mujmajnkraft.bettersurvival.enchantments;
 import com.mujmajnkraft.bettersurvival.config.ForgeConfigHandler;
 import com.mujmajnkraft.bettersurvival.init.ModEnchantments;
 import com.mujmajnkraft.bettersurvival.items.ItemCustomShield;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -42,11 +42,11 @@ public class EnchantmentReflection extends Enchantment {
       return ForgeConfigHandler.enchantments.reflectionLevel;
    }
 
-   public static boolean shouldHit(int level, Random rnd) {
+   public static boolean shouldHit(int level, EaglercraftRandom rnd) {
       return level <= 0 ? false : rnd.nextFloat() < 0.15F * (float)level;
    }
 
-   public static int getDamage(int level, Random rnd) {
+   public static int getDamage(int level, EaglercraftRandom rnd) {
       return level > 10 ? level - 10 : 1 + rnd.nextInt(4);
    }
 

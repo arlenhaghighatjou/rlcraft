@@ -9,7 +9,7 @@ import cursedflames.bountifulbaubles.item.base.IItemAttributeModifier;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BaubleAttributeModifierHandler {
-   public static final List<UUID> UUIDs = Arrays.asList(UUID.fromString("2a111cc4-2bbe-44b3-829a-743d0dbe3cdd"), UUID.fromString("3fee9d69-c684-4899-ba19-471028b6dada"), UUID.fromString("9c65c059-741d-4be9-8b59-927fe3e17d21"), UUID.fromString("1cfce6d0-ea70-4c59-be25-8edae075bebb"), UUID.fromString("052eece9-5e65-4955-a279-33f22a16ecdb"), UUID.fromString("829d9a80-a0fc-4b17-90b3-71ec7cc91d47"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660c9d"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660c9e"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660c9f"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca0"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca1"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca2"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca3"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca4"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca5"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca6"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca7"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca8"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca9"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660caa"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cab"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cac"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cad"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cae"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660caf"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb0"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb1"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb2"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb3"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb4"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb5"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb6"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb7"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb8"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb9"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cba"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cbb"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cbc"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cbd"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cbe"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cbf"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc0"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc1"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc2"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc3"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc4"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc5"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc6"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc7"), UUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc8"));
+   public static final List<EaglercraftUUID> UUIDs = Arrays.asList(EaglercraftUUID.fromString("2a111cc4-2bbe-44b3-829a-743d0dbe3cdd"), EaglercraftUUID.fromString("3fee9d69-c684-4899-ba19-471028b6dada"), EaglercraftUUID.fromString("9c65c059-741d-4be9-8b59-927fe3e17d21"), EaglercraftUUID.fromString("1cfce6d0-ea70-4c59-be25-8edae075bebb"), EaglercraftUUID.fromString("052eece9-5e65-4955-a279-33f22a16ecdb"), EaglercraftUUID.fromString("829d9a80-a0fc-4b17-90b3-71ec7cc91d47"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660c9d"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660c9e"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660c9f"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca0"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca1"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca2"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca3"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca4"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca5"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca6"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca7"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca8"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660ca9"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660caa"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cab"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cac"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cad"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cae"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660caf"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb0"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb1"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb2"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb3"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb4"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb5"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb6"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb7"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb8"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cb9"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cba"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cbb"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cbc"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cbd"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cbe"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cbf"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc0"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc1"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc2"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc3"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc4"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc5"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc6"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc7"), EaglercraftUUID.fromString("86c0b8cf-648b-4d98-8207-9d44bb660cc8"));
 
    public BaubleAttributeModifierHandler() {
    }
@@ -69,7 +69,7 @@ public class BaubleAttributeModifierHandler {
             } else {
                if (modifier) {
                   for(IAttribute a : itemMods.keySet()) {
-                     UUID id = ((AttributeModifier)itemMods.get(a)).getID();
+                     EaglercraftUUID id = ((AttributeModifier)itemMods.get(a)).getID();
                      boolean hasAttribute = false;
 
                      for(int i = 0; i < baubles.getSlots(); ++i) {
@@ -138,12 +138,12 @@ public class BaubleAttributeModifierHandler {
    }
 
    public static void removeModifier(EntityPlayer player, EnumBaubleModifier mod, int slot) {
-      player.getEntityAttribute(mod.attribute).removeModifier((UUID)UUIDs.get(slot));
+      player.getEntityAttribute(mod.attribute).removeModifier((EaglercraftUUID)UUIDs.get(slot));
    }
 
    public static void removeAllSlotModifiers(EntityPlayer player, int slot) {
       for(IAttribute attribute : EnumBaubleModifier.attributes) {
-         player.getEntityAttribute(attribute).removeModifier((UUID)UUIDs.get(slot));
+         player.getEntityAttribute(attribute).removeModifier((EaglercraftUUID)UUIDs.get(slot));
       }
 
    }
@@ -153,15 +153,15 @@ public class BaubleAttributeModifierHandler {
 
       for(int slot = 0; slot < baubles.getSlots(); ++slot) {
          for(IAttribute attribute : EnumBaubleModifier.attributes) {
-            player.getEntityAttribute(attribute).removeModifier((UUID)UUIDs.get(slot));
+            player.getEntityAttribute(attribute).removeModifier((EaglercraftUUID)UUIDs.get(slot));
          }
       }
 
    }
 
    public static void addModifier(EntityPlayer player, EnumBaubleModifier mod, int slot) {
-      if (player.getEntityAttribute(mod.attribute).getModifier((UUID)UUIDs.get(slot)) == null) {
-         player.getEntityAttribute(mod.attribute).applyModifier(new AttributeModifier((UUID)UUIDs.get(slot), "Bauble slot " + String.valueOf(slot) + " modifier", mod.amount, mod.operation));
+      if (player.getEntityAttribute(mod.attribute).getModifier((EaglercraftUUID)UUIDs.get(slot)) == null) {
+         player.getEntityAttribute(mod.attribute).applyModifier(new AttributeModifier((EaglercraftUUID)UUIDs.get(slot), "Bauble slot " + String.valueOf(slot) + " modifier", mod.amount, mod.operation));
       }
 
    }

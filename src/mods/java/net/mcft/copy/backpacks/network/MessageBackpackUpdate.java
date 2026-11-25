@@ -1,6 +1,6 @@
 package net.mcft.copy.backpacks.network;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.mcft.copy.backpacks.api.IBackpack;
 import net.mcft.copy.backpacks.misc.BackpackCapability;
 import net.minecraft.entity.Entity;

@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
@@ -42,11 +42,11 @@ public class BlockInkBushSeed extends Block implements IGrowable {
       return this.canStay(worldIn, pos);
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return (double)worldIn.rand.nextFloat() < 0.45D;
    }
 
-   public void grow(World world, Random random, BlockPos pos, IBlockState state) {
+   public void grow(World world, EaglercraftRandom random, BlockPos pos, IBlockState state) {
       world.setBlockState(pos, BlocksRegister.BLOCK_INK_BUSH.getDefaultState());
    }
 
@@ -87,7 +87,7 @@ public class BlockInkBushSeed extends Block implements IGrowable {
       return this.canStay(worldIn, pos);
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!this.canStay(worldIn, pos)) {
          this.dropBlockAsItem(worldIn, pos, state, 0);
          worldIn.setBlockToAir(pos);

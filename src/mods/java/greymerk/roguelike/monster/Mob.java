@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -42,7 +42,7 @@ public class Mob {
    public Mob() {
    }
 
-   public Mob withRandomEquipment(int level, Random random) {
+   public Mob withRandomEquipment(int level, EaglercraftRandom random) {
       if (!this.isEquippable()) {
          return this;
       } else {
@@ -92,7 +92,7 @@ public class Mob {
       this.name = name;
    }
 
-   public void equipArmor(Random random, int level, Color color, int difficulty) {
+   public void equipArmor(EaglercraftRandom random, int level, Color color, int difficulty) {
       Arrays.stream(ArmourType.values()).filter((armourType) -> {
          return !armourType.equals(ArmourType.HORSE);
       }).forEach((armourType) -> {
@@ -100,31 +100,31 @@ public class Mob {
       });
    }
 
-   private RldItemStack createArmor(Random random, int level, ArmourType armourType, Color color, Difficulty difficulty) {
+   private RldItemStack createArmor(EaglercraftRandom random, int level, ArmourType armourType, Color color, Difficulty difficulty) {
       return rollForSpecial(random, level, difficulty) ? SpecialArmour.createArmour(random, armourType, Equipment.rollQuality(random, level)).asStack() : armourType.asItem().withQuality(Equipment.rollQuality(random, level)).withColor(color).plzEnchantAtLevel(getEnchantmentLevel(random, level, difficulty)).asStack();
    }
 
-   public void equipSword(Random random, int level, Difficulty difficulty) {
+   public void equipSword(EaglercraftRandom random, int level, Difficulty difficulty) {
       this.equipMainhand(createSword(random, level, difficulty));
    }
 
-   private static RldItemStack createSword(Random random, int level, Difficulty difficulty) {
+   private static RldItemStack createSword(EaglercraftRandom random, int level, Difficulty difficulty) {
       return rollForSpecial(random, level, difficulty) ? SpecialSword.newSpecialSword(random, Equipment.rollQuality(random, level)).asStack() : WeaponType.SWORD.asItem().withQuality(Equipment.rollQuality(random, level)).plzEnchantAtLevel(getEnchantmentLevel(random, level, difficulty)).asStack();
    }
 
-   public void equipBow(Random random, int level, Difficulty difficulty) {
+   public void equipBow(EaglercraftRandom random, int level, Difficulty difficulty) {
       this.equipMainhand(this.createBow(random, level, difficulty));
    }
 
-   private RldItemStack createBow(Random random, int level, Difficulty difficulty) {
+   private RldItemStack createBow(EaglercraftRandom random, int level, Difficulty difficulty) {
       return rollForSpecial(random, level, difficulty) ? SpecialBow.newSpecialBow(random, Equipment.rollQuality(random, level)).asStack() : WeaponType.BOW.asItem().withQuality(Equipment.rollQuality(random, level)).plzEnchantAtLevel(getEnchantmentLevel(random, level, difficulty)).asStack();
    }
 
-   public void equipTool(Random random, int level, Difficulty difficulty) {
+   public void equipTool(EaglercraftRandom random, int level, Difficulty difficulty) {
       this.equipMainhand(createTool(random, level, difficulty));
    }
 
-   private static RldItemStack createTool(Random random, int level, Difficulty difficulty) {
+   private static RldItemStack createTool(EaglercraftRandom random, int level, Difficulty difficulty) {
       if (rollForSpecial(random, level, difficulty)) {
          return SpecialTool.createTool(random, Equipment.rollQuality(random, level));
       } else {
@@ -132,15 +132,15 @@ public class Mob {
       }
    }
 
-   private static boolean rollForSpecial(Random random, int level, Difficulty difficulty) {
+   private static boolean rollForSpecial(EaglercraftRandom random, int level, Difficulty difficulty) {
       return SpecialtyLootItem.rollForSpecial(random) && rollForEnchanted(random, level, difficulty);
    }
 
-   private static int getEnchantmentLevel(Random random, int level, Difficulty difficulty) {
+   private static int getEnchantmentLevel(EaglercraftRandom random, int level, Difficulty difficulty) {
       return rollForEnchanted(random, level, difficulty) ? ((Integer)RogueConfig.MOBS_ITEMS_ENCHANTMENTS_LEVELS.getIntAtIndexIfNonNegative(level).orElse(Integer.valueOf(LootItem.getEnchantmentLevel(random, level)))).intValue() : 0;
    }
 
-   public static boolean rollForEnchanted(Random random, int level, Difficulty difficulty) {
+   public static boolean rollForEnchanted(EaglercraftRandom random, int level, Difficulty difficulty) {
       double roll = random.nextDouble();
       return roll < getEnchantmentChance(level, difficulty).doubleValue();
    }
@@ -169,7 +169,7 @@ public class Mob {
       this.equipOffhand(arrow.asStack());
    }
 
-   public void equipShield(Random rand) {
+   public void equipShield(EaglercraftRandom rand) {
       this.equipOffhand(createPatternedShield(rand).asStack());
    }
 
@@ -181,11 +181,11 @@ public class Mob {
       this.equip(Slot.MAINHAND, itemStack);
    }
 
-   public Mob apply(MonsterProfileType monsterProfile, int level, int difficulty, Random random) {
+   public Mob apply(MonsterProfileType monsterProfile, int level, int difficulty, EaglercraftRandom random) {
       return monsterProfile.apply(this, level, difficulty, random);
    }
 
-   private static RldBaseItem chooseMainhand(Random random, int level) {
+   private static RldBaseItem chooseMainhand(EaglercraftRandom random, int level) {
       if (random.nextBoolean()) {
          return WeaponType.random(random).asItem().withQuality(Equipment.rollQuality(random, level));
       } else {
@@ -193,11 +193,11 @@ public class Mob {
       }
    }
 
-   private static Shield createPatternedShield(Random random) {
+   private static Shield createPatternedShield(EaglercraftRandom random) {
       return Shield.newShield().withRandomPatterns(random, 1 + random.nextInt(8));
    }
 
-   private RldBaseItem chooseOffhand(Random random) {
+   private RldBaseItem chooseOffhand(EaglercraftRandom random) {
       return random.nextBoolean() ? createPatternedShield(random) : null;
    }
 
@@ -205,7 +205,7 @@ public class Mob {
       return Lists.newArrayList(new ToolType[]{ToolType.AXE, ToolType.HOE, ToolType.PICKAXE, ToolType.SHOVEL});
    }
 
-   private static Armour chooseArmourItem(Random random, int level, ArmourType armourItem) {
+   private static Armour chooseArmourItem(EaglercraftRandom random, int level, ArmourType armourItem) {
       return armourItem.asItem().withQuality(Equipment.rollQuality(random, level));
    }
 

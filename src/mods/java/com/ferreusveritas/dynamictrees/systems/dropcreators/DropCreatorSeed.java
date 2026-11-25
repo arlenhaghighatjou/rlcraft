@@ -5,7 +5,7 @@ import com.ferreusveritas.dynamictrees.api.treedata.IDropCreator;
 import com.ferreusveritas.dynamictrees.event.SeedVoluntaryDropEvent;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -40,7 +40,7 @@ public class DropCreatorSeed implements IDropCreator {
       return new ResourceLocation("dynamictrees", "seed");
    }
 
-   public List<ItemStack> getHarvestDrop(World world, Species species, BlockPos leafPos, Random random, List<ItemStack> dropList, int soilLife, int fortune) {
+   public List<ItemStack> getHarvestDrop(World world, Species species, BlockPos leafPos, EaglercraftRandom random, List<ItemStack> dropList, int soilLife, int fortune) {
       float rarity = this.getHarvestRarity();
       rarity = rarity * ((float)(fortune + 1) / 64.0F);
       rarity = (float)((double)rarity * Math.min((double)(species.seasonalSeedDropFactor(world, leafPos) + 0.15F), 1.0D));
@@ -51,7 +51,7 @@ public class DropCreatorSeed implements IDropCreator {
       return dropList;
    }
 
-   public List<ItemStack> getVoluntaryDrop(World world, Species species, BlockPos rootPos, Random random, List<ItemStack> dropList, int soilLife) {
+   public List<ItemStack> getVoluntaryDrop(World world, Species species, BlockPos rootPos, EaglercraftRandom random, List<ItemStack> dropList, int soilLife) {
       if (this.getVoluntaryRarity() * ModConfigs.seedDropRate * species.seasonalSeedDropFactor(world, rootPos) > random.nextFloat()) {
          dropList.add(species.getSeedStack(1));
          SeedVoluntaryDropEvent seedDropEvent = new SeedVoluntaryDropEvent(world, rootPos, species, dropList);
@@ -64,7 +64,7 @@ public class DropCreatorSeed implements IDropCreator {
       return dropList;
    }
 
-   public List<ItemStack> getLeavesDrop(IBlockAccess access, Species species, BlockPos breakPos, Random random, List<ItemStack> dropList, int fortune) {
+   public List<ItemStack> getLeavesDrop(IBlockAccess access, Species species, BlockPos breakPos, EaglercraftRandom random, List<ItemStack> dropList, int fortune) {
       int chance = 20;
       if (fortune > 0) {
          chance -= 2 << fortune;
@@ -88,7 +88,7 @@ public class DropCreatorSeed implements IDropCreator {
       return dropList;
    }
 
-   public List<ItemStack> getLogsDrop(World world, Species species, BlockPos breakPos, Random random, List<ItemStack> dropList, float volume) {
+   public List<ItemStack> getLogsDrop(World world, Species species, BlockPos breakPos, EaglercraftRandom random, List<ItemStack> dropList, float volume) {
       return dropList;
    }
 }

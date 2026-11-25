@@ -1,7 +1,7 @@
 package com.yyon.grapplinghook.network;
 
 import com.yyon.grapplinghook.grapplemod;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.IThreadListener;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

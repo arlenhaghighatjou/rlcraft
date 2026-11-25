@@ -1,11 +1,11 @@
 package net.silentchaos512.scalinghealth.client;
 
 import java.awt.Color;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +28,7 @@ public final class HeartDisplayHandler extends Gui {
    private long lastSystemTime = 0L;
    private int playerHealth = 0;
    private int lastPlayerHealth = 0;
-   private Random rand = new Random();
+   private EaglercraftRandom rand = new EaglercraftRandom();
 
    private HeartDisplayHandler() {
    }

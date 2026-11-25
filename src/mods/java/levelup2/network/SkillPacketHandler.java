@@ -1,7 +1,7 @@
 package levelup2.network;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import java.util.Map;
 import levelup2.LevelUp2;
 import levelup2.api.IPlayerSkill;

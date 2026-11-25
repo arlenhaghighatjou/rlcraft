@@ -3,7 +3,7 @@ package de.Whitedraco.switchbow.entity;
 import de.Whitedraco.switchbow.Config.BlackListBurialBlockConfig;
 import de.Whitedraco.switchbow.Config.BlackListConfig;
 import de.Whitedraco.switchbow.Config.SwitchBowConfig;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Vector;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
@@ -20,7 +20,7 @@ import net.minecraft.world.WorldServer;
 public class EntityBurial extends Entity {
    Vector<PosBlockSave> PosBlockData = new Vector();
    boolean setPos = true;
-   private UUID targetMobUUID;
+   private EaglercraftUUID targetMobUUID;
    private int targetMobNetworkId;
    int Speed = 6;
    int SpeedCount = 0;

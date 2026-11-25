@@ -1,7 +1,7 @@
 package ivorius.ivtoolkit.models;
 
 import ivorius.ivtoolkit.models.utils.ArrayMap;
-import org.lwjgl.util.vector.Matrix4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
 
 public class NodePart {
    public MeshPart meshPart;

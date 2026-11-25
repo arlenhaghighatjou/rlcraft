@@ -38,7 +38,7 @@ import betterquesting.questing.QuestDatabase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.math.MathHelper;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class GuiQuest extends GuiScreenCanvas implements IPEventListener, INeedsRefresh {
    private final int questID;

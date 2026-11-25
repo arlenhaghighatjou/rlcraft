@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
@@ -45,7 +45,7 @@ public class TileMatrixEnchanter extends TileMatrixEnchanterBase {
    private static final String TAG_CHARGE = "charge";
    public EnchantmentMatrix matrix;
    private boolean matrixDirty = false;
-   private UUID matrixId;
+   private EaglercraftUUID matrixId;
    public final Map<Enchantment, Integer> influences = new HashMap();
    public int bookshelfPower;
    public int enchantability;
@@ -218,7 +218,7 @@ public class TileMatrixEnchanter extends TileMatrixEnchanterBase {
 
    private void makeUUID() {
       if (!this.world.isRemote) {
-         this.matrixId = UUID.randomUUID();
+         this.matrixId = EaglercraftUUID.randomUUID();
       }
 
    }
@@ -288,11 +288,11 @@ public class TileMatrixEnchanter extends TileMatrixEnchanterBase {
       if (cmp.hasKey("matrix")) {
          long least = cmp.getLong("uuidLess");
          long most = cmp.getLong("uuidMost");
-         UUID newId = new UUID(most, least);
+         EaglercraftUUID newId = new EaglercraftUUID(most, least);
          if (!newId.equals(this.matrixId)) {
             NBTTagCompound matrixCmp = cmp.getCompoundTag("matrix");
             this.matrixId = newId;
-            this.matrix = new EnchantmentMatrix(this.getStackInSlot(0), new Random());
+            this.matrix = new EnchantmentMatrix(this.getStackInSlot(0), new EaglercraftRandom());
             this.matrix.readFromNBT(matrixCmp);
          }
       } else {

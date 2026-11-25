@@ -4,7 +4,7 @@ import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.core.ModSounds;
 import com.github.alexthe666.iceandfire.entity.EntityPixie;
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityMoveHelper.Action;
 import net.minecraft.entity.player.EntityPlayer;
@@ -74,7 +74,7 @@ public class PixieAISteal extends EntityAIBase {
             }
          }
 
-         int slot = ((Integer)slotlist.get((new Random()).nextInt(slotlist.size()))).intValue();
+         int slot = ((Integer)slotlist.get((new EaglercraftRandom()).nextInt(slotlist.size()))).intValue();
          ItemStack randomItem = this.temptingPlayer.inventory.getStackInSlot(slot);
          this.temptedEntity.setHeldItem(EnumHand.MAIN_HAND, randomItem);
          this.temptingPlayer.inventory.removeStackFromSlot(slot);

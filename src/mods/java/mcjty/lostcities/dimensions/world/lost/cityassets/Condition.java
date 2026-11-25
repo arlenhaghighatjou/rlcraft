@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import mcjty.lostcities.api.ILostCityAsset;
 import mcjty.lostcities.varia.Tools;
@@ -47,7 +47,7 @@ public class Condition implements ILostCityAsset {
       return object;
    }
 
-   public String getRandomValue(Random random, ConditionContext info) {
+   public String getRandomValue(EaglercraftRandom random, ConditionContext info) {
       List<Pair<Float, String>> values = new ArrayList();
 
       for(Pair<Predicate<ConditionContext>, Pair<Float, String>> pair : this.valueSelector) {

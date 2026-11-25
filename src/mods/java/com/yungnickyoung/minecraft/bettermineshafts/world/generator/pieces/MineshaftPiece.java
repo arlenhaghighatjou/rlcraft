@@ -5,7 +5,7 @@ import com.yungnickyoung.minecraft.bettermineshafts.util.BlockSetSelector;
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.MineshaftVariantSettings;
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.MineshaftVariants;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.Block;
@@ -62,7 +62,7 @@ public abstract class MineshaftPiece extends StructureComponent {
       return this.settings;
    }
 
-   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, Random random) {
+   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, EaglercraftRandom random) {
    }
 
    protected BlockSetSelector getMainSelector() {
@@ -109,7 +109,7 @@ public abstract class MineshaftPiece extends StructureComponent {
       return Blocks.TRAPDOOR.getDefaultState();
    }
 
-   protected void addVines(World world, StructureBoundingBox boundingBox, EnumFacing facing, Random random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+   protected void addVines(World world, StructureBoundingBox boundingBox, EnumFacing facing, EaglercraftRandom random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
       MutableBlockPos mutable = new MutableBlockPos();
 
       for(int x = minX; x <= maxX; ++x) {
@@ -126,7 +126,7 @@ public abstract class MineshaftPiece extends StructureComponent {
 
    }
 
-   protected void addVines(World world, StructureBoundingBox boundingBox, Random random, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+   protected void addVines(World world, StructureBoundingBox boundingBox, EaglercraftRandom random, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
       if (this.settings.vineChance > 0.0F) {
          this.addVines(world, boundingBox, EnumFacing.EAST, random, this.settings.vineChance, minX, minY, minZ, maxX, maxY, maxZ);
          this.addVines(world, boundingBox, EnumFacing.WEST, random, this.settings.vineChance, minX, minY, minZ, maxX, maxY, maxZ);
@@ -135,7 +135,7 @@ public abstract class MineshaftPiece extends StructureComponent {
       }
    }
 
-   protected void addBiomeDecorations(World world, StructureBoundingBox box, Random random, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+   protected void addBiomeDecorations(World world, StructureBoundingBox box, EaglercraftRandom random, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
       for(int x = minX; x <= maxX; ++x) {
          for(int y = minY; y <= maxY; ++y) {
             for(int z = minZ; z <= maxZ; ++z) {
@@ -172,7 +172,7 @@ public abstract class MineshaftPiece extends StructureComponent {
 
    }
 
-   protected void generateLeg(World world, Random random, StructureBoundingBox box, int x, int z, BlockSetSelector selector) {
+   protected void generateLeg(World world, EaglercraftRandom random, StructureBoundingBox box, int x, int z, BlockSetSelector selector) {
       MutableBlockPos mutable = new MutableBlockPos(x, -1, z);
 
       for(IBlockState state = this.getBlockStateFromPos(world, mutable, box); this.getYWithOffset(mutable.getY()) > 0 && (state == AIR || LIQUIDS.contains(state.getMaterial())); state = this.getBlockStateFromPos(world, mutable, box)) {
@@ -193,7 +193,7 @@ public abstract class MineshaftPiece extends StructureComponent {
 
    }
 
-   protected void fill(World world, StructureBoundingBox blockBox, Random random, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, BlockSetSelector selector) {
+   protected void fill(World world, StructureBoundingBox blockBox, EaglercraftRandom random, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, BlockSetSelector selector) {
       for(int x = minX; x <= maxX; ++x) {
          for(int y = minY; y <= maxY; ++y) {
             for(int z = minZ; z <= maxZ; ++z) {
@@ -218,7 +218,7 @@ public abstract class MineshaftPiece extends StructureComponent {
 
    }
 
-   protected void replaceAir(World world, StructureBoundingBox blockBox, Random random, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, BlockSetSelector selector) {
+   protected void replaceAir(World world, StructureBoundingBox blockBox, EaglercraftRandom random, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, BlockSetSelector selector) {
       for(int x = minX; x <= maxX; ++x) {
          for(int y = minY; y <= maxY; ++y) {
             for(int z = minZ; z <= maxZ; ++z) {
@@ -246,7 +246,7 @@ public abstract class MineshaftPiece extends StructureComponent {
 
    }
 
-   protected void replaceNonAir(World world, StructureBoundingBox blockBox, Random random, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, BlockSetSelector selector) {
+   protected void replaceNonAir(World world, StructureBoundingBox blockBox, EaglercraftRandom random, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, BlockSetSelector selector) {
       for(int x = minX; x <= maxX; ++x) {
          for(int y = minY; y <= maxY; ++y) {
             for(int z = minZ; z <= maxZ; ++z) {
@@ -260,7 +260,7 @@ public abstract class MineshaftPiece extends StructureComponent {
 
    }
 
-   protected void chanceFill(World world, StructureBoundingBox blockBox, Random random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, IBlockState blockState) {
+   protected void chanceFill(World world, StructureBoundingBox blockBox, EaglercraftRandom random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, IBlockState blockState) {
       for(int x = minX; x <= maxX; ++x) {
          for(int y = minY; y <= maxY; ++y) {
             for(int z = minZ; z <= maxZ; ++z) {
@@ -273,7 +273,7 @@ public abstract class MineshaftPiece extends StructureComponent {
 
    }
 
-   protected void chanceFill(World world, StructureBoundingBox blockBox, Random random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, BlockSetSelector selector) {
+   protected void chanceFill(World world, StructureBoundingBox blockBox, EaglercraftRandom random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, BlockSetSelector selector) {
       for(int x = minX; x <= maxX; ++x) {
          for(int y = minY; y <= maxY; ++y) {
             for(int z = minZ; z <= maxZ; ++z) {
@@ -286,7 +286,7 @@ public abstract class MineshaftPiece extends StructureComponent {
 
    }
 
-   protected void chanceReplaceAir(World world, StructureBoundingBox blockBox, Random random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, IBlockState blockState) {
+   protected void chanceReplaceAir(World world, StructureBoundingBox blockBox, EaglercraftRandom random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, IBlockState blockState) {
       for(int x = minX; x <= maxX; ++x) {
          for(int y = minY; y <= maxY; ++y) {
             for(int z = minZ; z <= maxZ; ++z) {
@@ -302,7 +302,7 @@ public abstract class MineshaftPiece extends StructureComponent {
 
    }
 
-   protected void chanceReplaceAir(World world, StructureBoundingBox blockBox, Random random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, BlockSetSelector selector) {
+   protected void chanceReplaceAir(World world, StructureBoundingBox blockBox, EaglercraftRandom random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, BlockSetSelector selector) {
       for(int x = minX; x <= maxX; ++x) {
          for(int y = minY; y <= maxY; ++y) {
             for(int z = minZ; z <= maxZ; ++z) {
@@ -318,7 +318,7 @@ public abstract class MineshaftPiece extends StructureComponent {
 
    }
 
-   protected void chanceReplaceNonAir(World world, StructureBoundingBox blockBox, Random random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, IBlockState blockState) {
+   protected void chanceReplaceNonAir(World world, StructureBoundingBox blockBox, EaglercraftRandom random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, IBlockState blockState) {
       for(int x = minX; x <= maxX; ++x) {
          for(int y = minY; y <= maxY; ++y) {
             for(int z = minZ; z <= maxZ; ++z) {
@@ -334,7 +334,7 @@ public abstract class MineshaftPiece extends StructureComponent {
 
    }
 
-   protected void chanceReplaceNonAir(World world, StructureBoundingBox blockBox, Random random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, BlockSetSelector selector) {
+   protected void chanceReplaceNonAir(World world, StructureBoundingBox blockBox, EaglercraftRandom random, float chance, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, BlockSetSelector selector) {
       for(int x = minX; x <= maxX; ++x) {
          for(int y = minY; y <= maxY; ++y) {
             for(int z = minZ; z <= maxZ; ++z) {
@@ -350,7 +350,7 @@ public abstract class MineshaftPiece extends StructureComponent {
 
    }
 
-   protected void chanceAddBlock(World world, Random random, float chance, IBlockState block, int x, int y, int z, StructureBoundingBox blockBox) {
+   protected void chanceAddBlock(World world, EaglercraftRandom random, float chance, IBlockState block, int x, int y, int z, StructureBoundingBox blockBox) {
       if (random.nextFloat() < chance) {
          this.setBlockState(world, block, x, y, z, blockBox);
       }

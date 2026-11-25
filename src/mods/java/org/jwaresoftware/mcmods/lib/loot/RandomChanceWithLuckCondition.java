@@ -3,7 +3,7 @@ package org.jwaresoftware.mcmods.lib.loot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
@@ -19,7 +19,7 @@ public final class RandomChanceWithLuckCondition implements LootCondition {
       this._luckMultiplier = luckMultiplier;
    }
 
-   public boolean testCondition(Random rand, LootContext context) {
+   public boolean testCondition(EaglercraftRandom rand, LootContext context) {
       float luck = context.getLuck();
       return rand.nextFloat() < this._chance + luck * this._luckMultiplier;
    }

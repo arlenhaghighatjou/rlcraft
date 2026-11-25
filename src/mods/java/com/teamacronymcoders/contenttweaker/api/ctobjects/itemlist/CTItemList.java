@@ -5,7 +5,7 @@ import crafttweaker.api.item.WeightedItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.mc1120.item.MCItemStack;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
 public class CTItemList implements ICTItemList {
-   private static final Random RANDOM = new Random();
+   private static final EaglercraftRandom RANDOM = new EaglercraftRandom();
    private final NonNullList<ItemStack> nonNullList;
 
    public CTItemList(NonNullList<ItemStack> nonNullList) {

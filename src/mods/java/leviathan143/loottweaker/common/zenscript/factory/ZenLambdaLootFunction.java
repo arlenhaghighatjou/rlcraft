@@ -10,7 +10,7 @@ import crafttweaker.api.util.IRandom;
 import crafttweaker.mc1120.util.MCRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import leviathan143.loottweaker.common.zenscript.wrapper.ZenLootContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
@@ -34,7 +34,7 @@ public class ZenLambdaLootFunction extends LootFunction {
       this.id = INSTANCES.size() - 1;
    }
 
-   public ItemStack apply(ItemStack stack, Random rand, LootContext context) {
+   public ItemStack apply(ItemStack stack, EaglercraftRandom rand, LootContext context) {
       IItemStack stackIn = CraftTweakerMC.getIItemStack(stack);
       IItemStack stackOut = this.delegate.apply(stackIn, new MCRandom(rand), new ZenLootContext(context));
       return CraftTweakerMC.getItemStack(stackOut);

@@ -6,7 +6,7 @@ import com.charles445.rltweaker.debug.DebugUtil;
 import com.charles445.rltweaker.util.ErrorUtil;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -38,8 +38,8 @@ import net.minecraftforge.items.IItemHandler;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class HookMinecraft {
-   public static Set<UUID> rotationErrors = new HashSet();
-   public static Set<UUID> motionErrors = new HashSet();
+   public static Set<EaglercraftUUID> rotationErrors = new HashSet();
+   public static Set<EaglercraftUUID> motionErrors = new HashSet();
 
    public HookMinecraft() {
    }

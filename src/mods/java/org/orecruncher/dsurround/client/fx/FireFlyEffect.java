@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.fx;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -22,7 +22,7 @@ public class FireFlyEffect extends BlockEffect {
       return BlockEffectType.FIREFLY;
    }
 
-   public void doEffect(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull Random random) {
+   public void doEffect(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EaglercraftRandom random) {
       World world = provider.getWorld();
       if (world != null) {
          AxisAlignedBB box = state.getBoundingBox(world, pos);

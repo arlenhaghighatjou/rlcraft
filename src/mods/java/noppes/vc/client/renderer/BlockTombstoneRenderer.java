@@ -1,8 +1,9 @@
 package noppes.vc.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
@@ -72,7 +73,7 @@ public class BlockTombstoneRenderer extends BlockRendererBasic {
             float f3 = 0.00665F;
             GlStateManager.translate(0.0F, -0.64F, meta == 0 ? 0.095F : 0.126F);
             GlStateManager.scale(f3, -f3, f3);
-            GL11.glNormal3f(0.0F, 0.0F, -1.0F * f3);
+            EaglercraftGPU.glNormal3f(0.0F, 0.0F, -1.0F * f3);
             GlStateManager.depthMask(false);
             FontRenderer fontrenderer = this.getFontRenderer();
             float lineOffset = 0.0F;

@@ -1,6 +1,6 @@
 package ivorius.reccomplex.network;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import ivorius.ivtoolkit.network.IvPacketHelper;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

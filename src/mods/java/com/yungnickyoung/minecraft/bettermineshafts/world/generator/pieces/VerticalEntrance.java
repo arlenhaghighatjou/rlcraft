@@ -6,7 +6,7 @@ import com.yungnickyoung.minecraft.bettermineshafts.util.SurfaceUtil;
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.BetterMineshaftGenerator;
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.MineshaftVariantSettings;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -31,7 +31,7 @@ public class VerticalEntrance extends MineshaftPiece {
    public VerticalEntrance() {
    }
 
-   public VerticalEntrance(int i, int pieceChainLen, Random random, MutableBlockPos centerPos, EnumFacing direction, MineshaftVariantSettings settings) {
+   public VerticalEntrance(int i, int pieceChainLen, EaglercraftRandom random, MutableBlockPos centerPos, EnumFacing direction, MineshaftVariantSettings settings) {
       super(i, pieceChainLen, settings);
       this.setCoordBaseMode(direction);
       this.centerPos = new BlockPos(centerPos);
@@ -69,7 +69,7 @@ public class VerticalEntrance extends MineshaftPiece {
       return new StructureBoundingBox(centerPos.getX() - 2, centerPos.getY(), centerPos.getZ() - 2, centerPos.getX() + 12, 256, centerPos.getZ() + 12);
    }
 
-   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, Random random) {
+   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, EaglercraftRandom random) {
       EnumFacing direction = this.getCoordBaseMode();
       if (direction != null) {
          switch(direction) {
@@ -91,7 +91,7 @@ public class VerticalEntrance extends MineshaftPiece {
    }
 
    @ParametersAreNonnullByDefault
-   public boolean addComponentParts(World world, Random random, StructureBoundingBox box) {
+   public boolean addComponentParts(World world, EaglercraftRandom random, StructureBoundingBox box) {
       if (!this.hasTunnel) {
          this.determineEnumFacing(world);
       }
@@ -105,7 +105,7 @@ public class VerticalEntrance extends MineshaftPiece {
       }
    }
 
-   private void generateVerticalShaft(World world, Random random, StructureBoundingBox box) {
+   private void generateVerticalShaft(World world, EaglercraftRandom random, StructureBoundingBox box) {
       int shaftStartX = 0;
       int shaftStartZ = 0;
       int shaftEndX = 4;
@@ -128,7 +128,7 @@ public class VerticalEntrance extends MineshaftPiece {
       this.addVines(world, box, random, shaftStartX + 1, 0, shaftStartZ + 1, shaftEndX - 1, this.localYEnd - 4, shaftEndZ - 1);
    }
 
-   private void generateSurfaceTunnel(World world, Random random, StructureBoundingBox box) {
+   private void generateSurfaceTunnel(World world, EaglercraftRandom random, StructureBoundingBox box) {
       int tunnelStartX = 0;
       int tunnelStartZ = 0;
       int tunnelEndX = 0;

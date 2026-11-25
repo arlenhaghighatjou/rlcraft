@@ -7,7 +7,7 @@ import jaredbgreat.dldungeons.util.cache.Coords;
 import jaredbgreat.dldungeons.util.cache.WeakCache;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.IntPredicate;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,7 +20,7 @@ public class Builder {
    public Builder() {
    }
 
-   public static void placeDungeon(Random random, int chunkX, int chunkZ, World world) throws Throwable {
+   public static void placeDungeon(EaglercraftRandom random, int chunkX, int chunkZ, World world) throws Throwable {
       if (!world.isRemote) {
          if (!MinecraftForge.TERRAIN_GEN_BUS.post(new DLDEvent.PlaceDungeonBegin(chunkX, chunkZ, world))) {
             DoomlikeDungeons.profiler.startTask("Create Dungeons");

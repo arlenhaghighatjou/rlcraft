@@ -1,6 +1,6 @@
 package svenhjol.charm.enchanting.enchantment;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -79,6 +79,6 @@ public class EnchantmentRustingCurse extends MesonEnchantment implements IMesonE
    }
 
    private void damageItem(EntityPlayer player, ItemStack item) {
-      item.attemptDamageItem((new Random()).nextInt(this.rustDamage), player.world.rand, (EntityPlayerMP)player);
+      item.attemptDamageItem((new EaglercraftRandom()).nextInt(this.rustDamage), player.world.rand, (EntityPlayerMP)player);
    }
 }

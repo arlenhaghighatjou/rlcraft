@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -19,7 +19,7 @@ public class RandomDamageDistribution extends DamageDistribution {
    public static final RandomDamageDistribution NEAREST_KILL = new RandomDamageDistribution(true, false);
    public static final RandomDamageDistribution ANY_NOKILL = new RandomDamageDistribution(false, true);
    public static final RandomDamageDistribution ANY_KILL = new RandomDamageDistribution(false, false);
-   private static final Random RANDOM = new Random();
+   private static final EaglercraftRandom RANDOM = new EaglercraftRandom();
    private final boolean nearestFirst;
    private final boolean tryNoKill;
 

@@ -4,7 +4,7 @@ import com.ferreusveritas.dynamictrees.seasons.SeasonHelper;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.IGrowable;
@@ -71,7 +71,7 @@ public class BlockFruit extends Block implements IGrowable {
       return this.species;
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!this.canBlockStay(world, pos, state)) {
          this.dropBlock(world, pos, state);
       } else {
@@ -122,7 +122,7 @@ public class BlockFruit extends Block implements IGrowable {
       return 0.2F;
    }
 
-   protected BlockFruit.MatureFruitAction matureAction(World world, BlockPos pos, IBlockState state, Random rand) {
+   protected BlockFruit.MatureFruitAction matureAction(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       return BlockFruit.MatureFruitAction.Nothing;
    }
 
@@ -163,11 +163,11 @@ public class BlockFruit extends Block implements IGrowable {
       return ((Integer)state.getValue(AGE)).intValue() < 3;
    }
 
-   public boolean canUseBonemeal(World world, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World world, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return this.bonemealable;
    }
 
-   public void grow(World world, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World world, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       int age = ((Integer)state.getValue(AGE)).intValue();
       int newAge = MathHelper.clamp(age + 1, 0, 3);
       if (newAge != age) {

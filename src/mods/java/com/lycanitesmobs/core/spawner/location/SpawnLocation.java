@@ -7,7 +7,7 @@ import com.lycanitesmobs.core.spawner.CoordSorterNearest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
@@ -72,7 +72,7 @@ public class SpawnLocation {
       return this.sortSpawnPositions(spawnPositions, world, triggerPos);
    }
 
-   public int getOffset(Random random, int min, int max) {
+   public int getOffset(EaglercraftRandom random, int min, int max) {
       if (max <= min) {
          return 0;
       } else {

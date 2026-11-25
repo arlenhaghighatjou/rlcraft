@@ -1,7 +1,7 @@
 package com.github.fnar.minecraft.item;
 
 import greymerk.roguelike.util.DyeColor;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Design {
    private final DesignPattern designPattern;
@@ -12,7 +12,7 @@ public class Design {
       this.color = color;
    }
 
-   static Design randomDesign(Random random) {
+   static Design randomDesign(EaglercraftRandom random) {
       return DesignPattern.chooseRandom(random).withColor(DyeColor.chooseRandom(random));
    }
 

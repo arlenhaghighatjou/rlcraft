@@ -7,8 +7,8 @@ import java.util.Collection;
 import java.util.function.Function;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelBlock;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.IModelState;
@@ -28,7 +28,7 @@ public class ModelBlockBranchThick extends ModelBlockBranchBasic {
       return ImmutableList.copyOf(new ResourceLocation[]{this.barkTexture, this.ringsTexture, this.thickRingsTexture});
    }
 
-   public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+   public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter) {
       try {
          return new BakedModelBlockBranchThick(this.barkTexture, this.ringsTexture, this.thickRingsTexture, bakedTextureGetter);
       } catch (Exception var5) {

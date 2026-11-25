@@ -6,7 +6,7 @@ import com.github.alexthe666.iceandfire.item.ItemTrollLeather;
 import com.github.alexthe666.iceandfire.item.ItemTrollWeapon;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
@@ -62,14 +62,14 @@ public enum EnumTroll {
       }
 
       if (types.isEmpty()) {
-         return values()[(new Random()).nextInt(values().length)];
+         return values()[(new EaglercraftRandom()).nextInt(values().length)];
       } else {
-         return (EnumTroll)types.get((new Random()).nextInt(types.size()));
+         return (EnumTroll)types.get((new EaglercraftRandom()).nextInt(types.size()));
       }
    }
 
    public static EnumTroll.Weapon getWeaponForType(EnumTroll troll) {
-      return troll.weapons[(new Random()).nextInt(troll.weapons.length)];
+      return troll.weapons[(new EaglercraftRandom()).nextInt(troll.weapons.length)];
    }
 
    public static enum Weapon {

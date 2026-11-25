@@ -1,6 +1,6 @@
 package paulevs.betternether.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBone;
 import net.minecraft.block.BlockNetherrack;
@@ -20,7 +20,7 @@ public class NetherBoneReef extends NetherGrasslands {
       super(name);
    }
 
-   public void genFloorObjects(World chunk, BlockPos pos, Random random) {
+   public void genFloorObjects(World chunk, BlockPos pos, EaglercraftRandom random) {
       Block ground = chunk.getBlockState(pos).getBlock();
       if (random.nextFloat() <= this.plantDensity) {
          if (!(ground instanceof BlockNetherrack) && ground != Blocks.SOUL_SAND) {
@@ -36,7 +36,7 @@ public class NetherBoneReef extends NetherGrasslands {
 
    }
 
-   public void genWallObjects(World world, BlockPos origin, BlockPos pos, Random random) {
+   public void genWallObjects(World world, BlockPos origin, BlockPos pos, EaglercraftRandom random) {
       if (random.nextFloat() <= this.plantDensity && BlocksRegister.BLOCK_BONE_MUSHROOM != Blocks.AIR && random.nextBoolean() && (world.getBlockState(origin).getBlock() == Blocks.BONE_BLOCK || world.getBlockState(origin).getBlock() == BlocksRegister.BLOCK_BONE)) {
          BlockPos dir = pos.subtract(origin);
          EnumFacing facing = EnumFacing.getFacingFromVector((float)dir.getX(), (float)dir.getY(), (float)dir.getZ());

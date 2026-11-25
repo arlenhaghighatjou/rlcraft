@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -323,7 +323,7 @@ public class RuinTemplate
     /**
      * @return the finalized y value of the embedded template or -1 if there was an exception
      */
-    public int doBuild(World world, Random random, int xBase, int yBase, int zBase, int rotate, boolean is_player, boolean ignore_ceiling)
+    public int doBuild(World world, EaglercraftRandom random, int xBase, int yBase, int zBase, int rotate, boolean is_player, boolean ignore_ceiling)
     {
         try
         {
@@ -338,7 +338,7 @@ public class RuinTemplate
         }
     }
 
-    private int doBuildNested(World world, Random random, int xBase, int yBase, int zBase, int rotate, boolean is_player, boolean ignore_ceiling)
+    private int doBuildNested(World world, EaglercraftRandom random, int xBase, int yBase, int zBase, int rotate, boolean is_player, boolean ignore_ceiling)
     {
         /*
          * we need to shift the base coordinates and take care of any rotations
@@ -521,7 +521,7 @@ public class RuinTemplate
             }
             else
             {
-                debugPrinter.printf("Spawnchance [%.2f] too low. Random got [%.2f], no spawn\n", ad.spawnchance, randres);
+                debugPrinter.printf("Spawnchance [%.2f] too low. EaglercraftRandom got [%.2f], no spawn\n", ad.spawnchance, randres);
             }
         }
 
@@ -553,7 +553,7 @@ public class RuinTemplate
         return fill_block;
     }
 
-    private void doLateRuns(World world, Random random, ArrayList<RuinRuleProcess> laterun, ArrayList<RuinRuleProcess> lastrun)
+    private void doLateRuns(World world, EaglercraftRandom random, ArrayList<RuinRuleProcess> laterun, ArrayList<RuinRuleProcess> lastrun)
     {
         for (RuinRuleProcess rp : laterun)
         {
@@ -566,7 +566,7 @@ public class RuinTemplate
         }
     }
 
-    private void levelSite(World world, Block fillBlockID, int xBase, int y, int zBase, boolean eastwest, Random random, int rotate, RuinTemplateRule rule0)
+    private void levelSite(World world, Block fillBlockID, int xBase, int y, int zBase, boolean eastwest, EaglercraftRandom random, int rotate, RuinTemplateRule rule0)
     {
         /*
          * Add blocks around the build site to level it in as needed. setup some
@@ -1177,7 +1177,7 @@ public class RuinTemplate
         }
 
         // resolve all the VariantRules in this group by selecting one variant for each
-        public ArrayList<RuinTemplateRule> getVariants(Random random)
+        public ArrayList<RuinTemplateRule> getVariants(EaglercraftRandom random)
         {
             final ArrayList<RuinTemplateRule> variants = new ArrayList<>();
             for (final VariantGroup variantGroup: variantGroups)
@@ -1241,7 +1241,7 @@ public class RuinTemplate
             }
 
             // resolve all the VariantRules in this group by selecting one variant for each
-            public ArrayList<RuinTemplateRule> getVariants(Random random, final int ruleIndexInitial)
+            public ArrayList<RuinTemplateRule> getVariants(EaglercraftRandom random, final int ruleIndexInitial)
             {
                 final ArrayList<RuinTemplateRule> variants = new ArrayList<>();
                 for (int i = 0; i < repeatCount; ++i)
@@ -1304,7 +1304,7 @@ public class RuinTemplate
                 }
 
                 // generate a random selector based on the variants in this VariantRule
-                public int getRandomSelector(Random random, final int ruleIndex)
+                public int getRandomSelector(EaglercraftRandom random, final int ruleIndex)
                 {
                     final int selector = random.nextInt(weightsTotal);
                     if (debugging && weightsTotal > 1)

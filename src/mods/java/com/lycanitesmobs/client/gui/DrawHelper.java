@@ -2,8 +2,8 @@ package com.lycanitesmobs.client.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -43,7 +43,7 @@ public class DrawHelper {
       this.preDraw();
       this.getMinecraft().getTextureManager().bindTexture(texture);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buffer = tessellator.getBuffer();
+      WorldRenderer buffer = tessellator.getBuffer();
       buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       buffer.pos((double)x, (double)(y + height), (double)z).tex(0.0D, (double)v).endVertex();
       buffer.pos((double)(x + width), (double)(y + height), (double)z).tex((double)u, (double)v).endVertex();
@@ -58,7 +58,7 @@ public class DrawHelper {
       this.getMinecraft().getTextureManager().bindTexture(texture);
       float scaleX = 0.00390625F * resolution;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buffer = tessellator.getBuffer();
+      WorldRenderer buffer = tessellator.getBuffer();
       buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       buffer.pos((double)(x + 0.0F), (double)(y + height), (double)z).tex((double)((u + 0.0F) * scaleX), (double)((v + height) * scaleX)).endVertex();
       buffer.pos((double)(x + width), (double)(y + height), (double)z).tex((double)((u + width) * scaleX), (double)((v + height) * scaleX)).endVertex();
@@ -109,7 +109,7 @@ public class DrawHelper {
       this.preDraw();
       float scaleX = 0.00390625F * (float)resolution;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buffer = tessellator.getBuffer();
+      WorldRenderer buffer = tessellator.getBuffer();
       buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       buffer.pos((double)((float)x), (double)((float)(y + height)), 0.0D).tex((double)((float)u * scaleX), (double)((float)(v + height) * scaleX)).endVertex();
       buffer.pos((double)((float)(x + width)), (double)((float)(y + height)), 0.0D).tex((double)((float)(u + width) * scaleX), (double)((float)(v + height) * scaleX)).endVertex();

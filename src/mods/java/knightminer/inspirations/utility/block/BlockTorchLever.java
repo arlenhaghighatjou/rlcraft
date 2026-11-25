@@ -1,6 +1,6 @@
 package knightminer.inspirations.utility.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.properties.IProperty;
@@ -37,7 +37,7 @@ public class BlockTorchLever extends BlockTorch {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, EaglercraftRandom rand) {
       EnumFacing facing = (EnumFacing)state.getValue(FACING);
       double x = (double)pos.getX() + 0.5D;
       double y = (double)pos.getY() + 0.7D;

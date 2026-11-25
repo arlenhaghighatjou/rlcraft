@@ -9,7 +9,7 @@ import gigaherz.toolbelt.customslots.IExtensionContainer;
 import gigaherz.toolbelt.customslots.IExtensionSlot;
 import gigaherz.toolbelt.network.SyncBeltSlotContents;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.concurrent.Callable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -224,10 +224,10 @@ public class ExtensionSlotBelt implements IExtensionContainer, INBTSerializable<
    }
 
    private static class EventHandlers {
-      private Random rand;
+      private EaglercraftRandom rand;
 
       private EventHandlers() {
-         this.rand = new Random();
+         this.rand = new EaglercraftRandom();
       }
 
       @SubscribeEvent

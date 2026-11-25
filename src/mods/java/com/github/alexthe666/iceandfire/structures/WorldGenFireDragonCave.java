@@ -4,7 +4,7 @@ import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.block.BlockGoldPile;
 import com.github.alexthe666.iceandfire.core.ModBlocks;
 import com.github.alexthe666.iceandfire.entity.EntityFireDragon;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -24,17 +24,17 @@ public class WorldGenFireDragonCave extends WorldGenerator {
    }
 
    public static void setGoldPile(World world, BlockPos pos) {
-      int chance = (new Random()).nextInt(99) + 1;
+      int chance = (new EaglercraftRandom()).nextInt(99) + 1;
       if (!(world.getBlockState(pos).getBlock() instanceof BlockChest)) {
          if (chance < 60) {
-            boolean generateGold = IceAndFire.CONFIG.dragonDenGoldAmount > 1 ? (new Random()).nextInt(IceAndFire.CONFIG.dragonDenGoldAmount) == 0 : true;
-            world.setBlockState(pos, generateGold ? ModBlocks.goldPile.getDefaultState().withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new Random()).nextInt(7))) : Blocks.AIR.getDefaultState(), 3);
+            boolean generateGold = IceAndFire.CONFIG.dragonDenGoldAmount > 1 ? (new EaglercraftRandom()).nextInt(IceAndFire.CONFIG.dragonDenGoldAmount) == 0 : true;
+            world.setBlockState(pos, generateGold ? ModBlocks.goldPile.getDefaultState().withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new EaglercraftRandom()).nextInt(7))) : Blocks.AIR.getDefaultState(), 3);
          } else if (chance > 60 && chance < 62) {
-            world.setBlockState(pos, Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.HORIZONTALS[(new Random()).nextInt(3)]), 3);
+            world.setBlockState(pos, Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.HORIZONTALS[(new EaglercraftRandom()).nextInt(3)]), 3);
             if (world.getBlockState(pos).getBlock() instanceof BlockChest) {
                TileEntity tileentity1 = world.getTileEntity(pos);
                if (tileentity1 instanceof TileEntityChest && !((TileEntityChest)tileentity1).isInvalid()) {
-                  ((TileEntityChest)tileentity1).setLootTable(FIREDRAGON_CHEST, (new Random()).nextLong());
+                  ((TileEntityChest)tileentity1).setLootTable(FIREDRAGON_CHEST, (new EaglercraftRandom()).nextLong());
                }
             }
          }
@@ -45,9 +45,9 @@ public class WorldGenFireDragonCave extends WorldGenerator {
    public static void setOres(World world, BlockPos pos) {
       float hardness = world.getBlockState(pos).getBlock().getBlockHardness(world.getBlockState(pos), world, pos);
       if (hardness != -1.0F && !world.isAirBlock(pos)) {
-         boolean vien_chance = (new Random()).nextInt(IceAndFire.CONFIG.oreToStoneRatioForDragonCaves + 1) == 0;
+         boolean vien_chance = (new EaglercraftRandom()).nextInt(IceAndFire.CONFIG.oreToStoneRatioForDragonCaves + 1) == 0;
          if (vien_chance) {
-            int chance = (new Random()).nextInt(199) + 1;
+            int chance = (new EaglercraftRandom()).nextInt(199) + 1;
             if (chance < 30) {
                world.setBlockState(pos, Blocks.IRON_ORE.getDefaultState(), 3);
             }
@@ -80,7 +80,7 @@ public class WorldGenFireDragonCave extends WorldGenerator {
                world.setBlockState(pos, Blocks.EMERALD_ORE.getDefaultState(), 3);
             }
          } else {
-            int chance = (new Random()).nextInt(2);
+            int chance = (new EaglercraftRandom()).nextInt(2);
             if (chance == 0) {
                world.setBlockState(pos, ModBlocks.charedStone.getDefaultState(), 3);
             } else {
@@ -91,7 +91,7 @@ public class WorldGenFireDragonCave extends WorldGenerator {
       }
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int dragonAge = 75 + rand.nextInt(50);
       int i1 = dragonAge / 4;
       int i2 = i1 - 2;
@@ -155,7 +155,7 @@ public class WorldGenFireDragonCave extends WorldGenerator {
       dragon.growDragon(dragonAge);
       dragon.setAgingDisabled(true);
       dragon.setHealth(dragon.getMaxHealth());
-      dragon.setVariant((new Random()).nextInt(4));
+      dragon.setVariant((new EaglercraftRandom()).nextInt(4));
       dragon.setPositionAndRotation((double)position.getX() + 0.5D, (double)position.getY() + 0.5D, (double)position.getZ() + 0.5D, rand.nextFloat() * 360.0F, 0.0F);
       dragon.setSleeping(true);
       dragon.homePos = position;

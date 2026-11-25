@@ -3,7 +3,7 @@ package com.teamacronymcoders.base.renderer.entity.minecart;
 import com.teamacronymcoders.base.entities.EntityMinecartBase;
 import javax.annotation.Nonnull;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderMinecart;
 import net.minecraft.client.renderer.texture.TextureMap;

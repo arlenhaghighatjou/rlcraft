@@ -1,7 +1,7 @@
 package svenhjol.charm.world.decorator.outer;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockPumpkin;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -13,7 +13,7 @@ import svenhjol.charm.world.feature.VillageDecorations;
 import svenhjol.meson.decorator.MesonOuterDecorator;
 
 public class Pumpkins extends MesonOuterDecorator {
-   public Pumpkins(World world, BlockPos pos, Random rand, List<ChunkPos> chunks) {
+   public Pumpkins(World world, BlockPos pos, EaglercraftRandom rand, List<ChunkPos> chunks) {
       super(world, pos, rand, chunks);
    }
 

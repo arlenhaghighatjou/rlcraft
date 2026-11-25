@@ -1,6 +1,6 @@
 package rtg.api.world.gen.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockSand.EnumType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -18,7 +18,7 @@ public class WorldGenJungleCacti extends WorldGenerator {
       this.extraHeight = extraHeight;
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       int x = pos.getX();
       int y = pos.getY();
       int z = pos.getZ();

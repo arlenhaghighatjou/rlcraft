@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -236,11 +236,11 @@ public class DungeonSchematic {
       }
    }
 
-   public int getRandomSectorCount(Random random) {
+   public int getRandomSectorCount(EaglercraftRandom random) {
       return this.sectorCountMax <= this.sectorCountMin ? this.sectorCountMin : this.sectorCountMin + random.nextInt(this.sectorCountMax - this.sectorCountMin + 1);
    }
 
-   public DungeonSector getRandomSector(String type, Random random) {
+   public DungeonSector getRandomSector(String type, EaglercraftRandom random) {
       List<String> sectorList;
       if ("entrance".equalsIgnoreCase(type)) {
          sectorList = this.entrances;
@@ -290,7 +290,7 @@ public class DungeonSchematic {
       }
    }
 
-   public String getNextConnectingSector(String parentType, Random random) {
+   public String getNextConnectingSector(String parentType, EaglercraftRandom random) {
       if ("room".equalsIgnoreCase(parentType)) {
          return random.nextDouble() <= this.roomToRoomChance ? "room" : "corridor";
       } else if ("corridor".equalsIgnoreCase(parentType)) {
@@ -302,7 +302,7 @@ public class DungeonSchematic {
       }
    }
 
-   public DungeonTheme getRandomTheme(Random random) {
+   public DungeonTheme getRandomTheme(EaglercraftRandom random) {
       List<DungeonTheme> themes = new ArrayList();
 
       for(String themeName : this.themes) {
@@ -322,7 +322,7 @@ public class DungeonSchematic {
       }
    }
 
-   public MobSpawn getRandomMobSpawn(int level, boolean boss, Random random) {
+   public MobSpawn getRandomMobSpawn(int level, boolean boss, EaglercraftRandom random) {
       int levelMin = level;
       int levelMax = level;
       if (level < 0) {
@@ -364,7 +364,7 @@ public class DungeonSchematic {
       }
    }
 
-   public ResourceLocation getRandomLootTable(int level, Random random) {
+   public ResourceLocation getRandomLootTable(int level, EaglercraftRandom random) {
       if (level < 0) {
          level = -level * 2;
       }
@@ -389,7 +389,7 @@ public class DungeonSchematic {
       }
    }
 
-   public List<ItemStack> getRandomLoot(Random random) {
+   public List<ItemStack> getRandomLoot(EaglercraftRandom random) {
       List<ItemStack> loot = new ArrayList();
 
       for(ItemDrop itemDrop : this.loot) {

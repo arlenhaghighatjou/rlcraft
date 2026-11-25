@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.annotation.Nonnull;
-import net.minecraft.client.renderer.GlStateManager;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class CanvasScrolling implements IGuiCanvas {
    private final List<IGuiPanel> guiPanels = new CopyOnWriteArrayList();

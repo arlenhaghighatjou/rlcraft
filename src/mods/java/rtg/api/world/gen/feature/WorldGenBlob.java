@@ -2,7 +2,7 @@ package rtg.api.world.gen.feature;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -29,7 +29,7 @@ public class WorldGenBlob extends WorldGenerator {
       this.allowInWater = allowInWater;
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       if (!this.enabled) {
          return false;
       } else {

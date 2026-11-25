@@ -2,7 +2,7 @@ package paulevs.betternether.world;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGravel;
 import net.minecraft.block.BlockNetherBrick;
@@ -86,7 +86,7 @@ public class BNWorldGenerator {
    private static float oreDensity = 9.765625E-4F;
    public static boolean enablePlayerDamage;
    public static boolean enableMobDamage;
-   private static Random coordinateRandom;
+   private static EaglercraftRandom coordinateRandom;
    private static IBlockState state_air = Blocks.AIR.getDefaultState();
    private static CityStructureManager cityManager;
    private static BlockPos pos;
@@ -101,7 +101,7 @@ public class BNWorldGenerator {
       noise3d = new WorleyNoiseIDDistorted3D(seed, BiomeRegister.biomeCount);
       subbiomesNoise = new WorleyNoiseIDDistorted3D(~seed, 256);
       dither = new Dither(seed);
-      coordinateRandom = new Random();
+      coordinateRandom = new EaglercraftRandom();
       if (ConfigLoader.hasCities()) {
          cityManager = new CityStructureManager(seed);
          cityManager.load(world);
@@ -139,7 +139,7 @@ public class BNWorldGenerator {
 
    }
 
-   private static NetherBiome getBiomeLocal(int x, int y, int z, Random random) {
+   private static NetherBiome getBiomeLocal(int x, int y, int z, EaglercraftRandom random) {
       x = x + random.nextInt(2) >> 1;
       if (x > 7) {
          x = 7;
@@ -158,7 +158,7 @@ public class BNWorldGenerator {
       return BIO_ARRAY[x][y][z];
    }
 
-   public static void generate(World world, int cx, int cz, Random random) {
+   public static void generate(World world, int cx, int cz, EaglercraftRandom random) {
       if (!world.isRemote) {
          int sx = cx << 4 | 8;
          int sz = cz << 4 | 8;
@@ -320,7 +320,7 @@ public class BNWorldGenerator {
       return !isAir(chunk, pos) && (chunk.getBlockState(pos).getBlock() instanceof BlockNetherrack || chunk.getBlockState(pos).getBlock() instanceof BlockSoulSand || chunk.getBlockState(pos).getBlock() instanceof BlockGravel);
    }
 
-   private static void spawnOre(IBlockState state, World world, BlockPos pos, Random random) {
+   private static void spawnOre(IBlockState state, World world, BlockPos pos, EaglercraftRandom random) {
       for(int i = 0; i < 6 + random.nextInt(11); ++i) {
          BlockPos local = pos.add(random.nextInt(3), random.nextInt(3), random.nextInt(3));
          if (world.getBlockState(local).getBlock() == Blocks.NETHERRACK) {

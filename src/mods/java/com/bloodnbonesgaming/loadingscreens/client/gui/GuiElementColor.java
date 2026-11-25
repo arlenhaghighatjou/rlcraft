@@ -1,8 +1,8 @@
 package com.bloodnbonesgaming.loadingscreens.client.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -21,7 +21,7 @@ public class GuiElementColor extends GuiElementTexture {
    void drawTexture(int x, int y, int texWidth, int texHeight, int width, int height, double texStartX, double texStartY, double texEndX, double texEndY) {
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
       bufferbuilder.pos((double)(x + 0), (double)(y + height), 0.0D).color(255, 0, 0, 255).endVertex();
       bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).color(255, 0, 0, 255).endVertex();

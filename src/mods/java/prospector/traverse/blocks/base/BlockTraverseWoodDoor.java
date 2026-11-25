@@ -1,6 +1,6 @@
 package prospector.traverse.blocks.base;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.SoundType;
@@ -39,7 +39,7 @@ public class BlockTraverseWoodDoor extends BlockDoor {
       return SoundType.WOOD;
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return state.getValue(HALF) == EnumDoorHalf.UPPER ? Items.AIR : this.getDoorItem().getItem();
    }
 

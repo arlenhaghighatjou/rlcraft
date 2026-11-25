@@ -10,7 +10,7 @@ import com.lycanitesmobs.core.info.CreatureInfo;
 import com.lycanitesmobs.core.info.CreatureManager;
 import com.lycanitesmobs.core.info.Subspecies;
 import com.lycanitesmobs.core.info.Variant;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 
 public class PetEntry {
    public PetManager petManager;
-   public UUID petEntryID;
+   public EaglercraftUUID petEntryID;
    private String type;
    public boolean active = true;
    public int respawnTime = 0;
@@ -51,7 +51,7 @@ public class PetEntry {
 
    public static PetEntry createFromEntity(EntityPlayer player, BaseCreatureEntity entity, String petType) {
       CreatureInfo creatureInfo = entity.creatureInfo;
-      PetEntry petEntry = new PetEntry(UUID.randomUUID(), petType, player, creatureInfo.getName());
+      PetEntry petEntry = new PetEntry(EaglercraftUUID.randomUUID(), petType, player, creatureInfo.getName());
       if (entity.hasCustomName()) {
          petEntry.setEntityName(entity.getCustomNameTag());
       }
@@ -63,7 +63,7 @@ public class PetEntry {
       return petEntry;
    }
 
-   public PetEntry(UUID petEntryID, String type, EntityLivingBase host, String summonType) {
+   public PetEntry(EaglercraftUUID petEntryID, String type, EntityLivingBase host, String summonType) {
       this.petEntryID = petEntryID;
       this.type = type;
       this.host = host;
@@ -460,8 +460,8 @@ public class PetEntry {
    }
 
    public void readFromNBT(NBTTagCompound nbtTagCompound) {
-      if (nbtTagCompound.hasUniqueId("UUID")) {
-         this.petEntryID = nbtTagCompound.getUniqueId("UUID");
+      if (nbtTagCompound.hasUniqueId("EaglercraftUUID")) {
+         this.petEntryID = nbtTagCompound.getUniqueId("EaglercraftUUID");
       }
 
       if (nbtTagCompound.hasKey("Type")) {
@@ -520,7 +520,7 @@ public class PetEntry {
    }
 
    public void writeToNBT(NBTTagCompound nbtTagCompound) {
-      nbtTagCompound.setUniqueId("UUID", this.petEntryID);
+      nbtTagCompound.setUniqueId("EaglercraftUUID", this.petEntryID);
       nbtTagCompound.setString("Type", this.getType());
       nbtTagCompound.setBoolean("Active", this.active);
       nbtTagCompound.setInteger("RespawnTime", this.respawnTime);

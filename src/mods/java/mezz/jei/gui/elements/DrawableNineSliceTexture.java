@@ -2,9 +2,9 @@ package mezz.jei.gui.elements;
 
 import mezz.jei.gui.textures.TextureInfo;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -18,7 +18,7 @@ public class DrawableNineSliceTexture {
 
    public void draw(Minecraft minecraft, int xOffset, int yOffset, int width, int height) {
       ResourceLocation location = this.info.getLocation();
-      TextureAtlasSprite sprite = this.info.getSprite();
+      EaglerTextureAtlasSprite sprite = this.info.getSprite();
       int leftWidth = this.info.getSliceLeft();
       int rightWidth = this.info.getSliceRight();
       int topHeight = this.info.getSliceTop();
@@ -38,7 +38,7 @@ public class DrawableNineSliceTexture {
       float vTop = vMin + vSize * ((float)topHeight / (float)textureHeight);
       float vBottom = vMax - vSize * ((float)bottomHeight / (float)textureHeight);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferBuilder = tessellator.getBuffer();
+      WorldRenderer bufferBuilder = tessellator.getBuffer();
       bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       draw(bufferBuilder, uMin, (double)vMin, uLeft, vTop, xOffset, yOffset, leftWidth, topHeight);
       draw(bufferBuilder, uMin, (double)vBottom, uLeft, vMax, xOffset, yOffset + height - bottomHeight, leftWidth, bottomHeight);
@@ -65,7 +65,7 @@ public class DrawableNineSliceTexture {
       tessellator.draw();
    }
 
-   private void drawTiled(BufferBuilder bufferBuilder, float uMin, float vMin, float uMax, float vMax, int xOffset, int yOffset, int tiledWidth, int tiledHeight, int width, int height) {
+   private void drawTiled(WorldRenderer bufferBuilder, float uMin, float vMin, float uMax, float vMax, int xOffset, int yOffset, int tiledWidth, int tiledHeight, int width, int height) {
       int xTileCount = tiledWidth / width;
       int xRemainder = tiledWidth - xTileCount * width;
       int yTileCount = tiledHeight / height;
@@ -92,7 +92,7 @@ public class DrawableNineSliceTexture {
 
    }
 
-   private static void draw(BufferBuilder bufferBuilder, float minU, double minV, float maxU, float maxV, int xOffset, int yOffset, int width, int height) {
+   private static void draw(WorldRenderer bufferBuilder, float minU, double minV, float maxU, float maxV, int xOffset, int yOffset, int width, int height) {
       bufferBuilder.pos((double)xOffset, (double)(yOffset + height), 0.0D).tex((double)minU, (double)maxV).endVertex();
       bufferBuilder.pos((double)(xOffset + width), (double)(yOffset + height), 0.0D).tex((double)maxU, (double)maxV).endVertex();
       bufferBuilder.pos((double)(xOffset + width), (double)yOffset, 0.0D).tex((double)maxU, minV).endVertex();

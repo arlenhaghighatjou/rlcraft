@@ -1,7 +1,7 @@
 package com.chaosthedude.realistictorches.blocks;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.EnumFacing;
@@ -20,7 +20,7 @@ public class BlockTorchUnlit extends BlockRealisticTorch {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, EaglercraftRandom rand) {
       if (ConfigHandler.unlitParticlesEnabled) {
          EnumFacing facing = (EnumFacing)state.getValue(FACING);
          double x = (double)pos.getX() + 0.5D;

@@ -1,6 +1,6 @@
 package net.theawesomegem.fishingmadebetter.common.capability.fishing;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.theawesomegem.fishingmadebetter.common.configuration.CustomConfigurationHandler;
 import net.theawesomegem.fishingmadebetter.common.data.FishCaughtData;
@@ -227,7 +227,7 @@ public class FishingData implements IFishingData {
       this.minigameBackground = minigameBackground;
    }
 
-   public void startFishing(Random random, ItemStack fishingRod, Integer[] minigameBackground) {
+   public void startFishing(EaglercraftRandom random, ItemStack fishingRod, Integer[] minigameBackground) {
       if (!this.isFishing()) {
          if (this.fishPopulation != null) {
             String fishId = this.fishPopulation.fishId;

@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ItemStackHolder;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.minecraftforge.registries.IForgeRegistryEntry.Impl;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.jwaresoftware.mcmods.armorunder.ArmorUnderwear;
 import org.jwaresoftware.mcmods.armorunder.ModConfig;
 import org.jwaresoftware.mcmods.lib.Armory;

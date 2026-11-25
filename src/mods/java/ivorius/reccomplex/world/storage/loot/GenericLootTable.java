@@ -22,7 +22,7 @@ import ivorius.reccomplex.utils.expression.DependencyExpression;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedRandom.Item;
@@ -46,7 +46,7 @@ public class GenericLootTable implements LootTable {
       return builder.create();
    }
 
-   public ItemStack getRandomItemStack(WorldServer server, Random random) {
+   public ItemStack getRandomItemStack(WorldServer server, EaglercraftRandom random) {
       int max = 0;
 
       for(GenericLootTable.Component component : this.components) {
@@ -82,7 +82,7 @@ public class GenericLootTable implements LootTable {
          return new GenericLootTable.Component();
       }
 
-      public ItemStack getRandomItemStack(Random random) {
+      public ItemStack getRandomItemStack(EaglercraftRandom random) {
          if (this.items.size() == 0) {
             return null;
          } else {
@@ -172,7 +172,7 @@ public class GenericLootTable implements LootTable {
          return new GenericLootTable.RandomizedItemStack(chestContent.theItemId.copy(), chestContent.minStackSize, chestContent.maxStackSize, (double)chestContent.itemWeight / (double)defaultWeight);
       }
 
-      public ItemStack generateStack(Random random) {
+      public ItemStack generateStack(EaglercraftRandom random) {
          int min = Math.min(this.max, this.min);
          int max = Math.max(this.max, this.min);
          ItemStack stack = this.itemStack.copy();

@@ -3,7 +3,7 @@ package com.elenai.elenaidodge.network.message;
 import com.elenai.elenaidodge.ElenaiDodge;
 import com.elenai.elenaidodge.capability.weight.IWeight;
 import com.elenai.elenaidodge.capability.weight.WeightProvider;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.FMLCommonHandler;

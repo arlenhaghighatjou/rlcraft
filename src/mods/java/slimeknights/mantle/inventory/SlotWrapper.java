@@ -1,7 +1,7 @@
 package slimeknights.mantle.inventory;
 
 import javax.annotation.Nonnull;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -85,7 +85,7 @@ public class SlotWrapper extends Slot {
    }
 
    @Nonnull
-   public TextureAtlasSprite getBackgroundSprite() {
+   public EaglerTextureAtlasSprite getBackgroundSprite() {
       return this.parent.getBackgroundSprite();
    }
 

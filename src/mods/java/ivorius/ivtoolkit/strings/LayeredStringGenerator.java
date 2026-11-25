@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class LayeredStringGenerator {
    public LayeredStringGenerator.Layer baseLayer;
@@ -14,16 +14,16 @@ public class LayeredStringGenerator {
       this.baseLayer = baseLayer;
    }
 
-   public String randomString(Random random) {
+   public String randomString(EaglercraftRandom random) {
       return this.baseLayer.randomString(random);
    }
 
-   private static <O> O getRandomElementFrom(List<O> list, Random random) {
+   private static <O> O getRandomElementFrom(List<O> list, EaglercraftRandom random) {
       return (O)list.get(random.nextInt(list.size()));
    }
 
    public interface Layer {
-      String randomString(Random var1);
+      String randomString(EaglercraftRandom var1);
    }
 
    public static class LayerSimple implements LayeredStringGenerator.Layer {
@@ -59,7 +59,7 @@ public class LayeredStringGenerator {
 
       }
 
-      public String randomString(Random random) {
+      public String randomString(EaglercraftRandom random) {
          StringBuilder stringBuilder = new StringBuilder();
          String component = (String)WeightedSelector.select(random, this.baseStrings);
 
@@ -99,7 +99,7 @@ public class LayeredStringGenerator {
 
       }
 
-      public String randomString(Random random) {
+      public String randomString(EaglercraftRandom random) {
          return (String)WeightedSelector.select(random, this.baseStrings);
       }
    }
@@ -111,7 +111,7 @@ public class LayeredStringGenerator {
          this.parent = parent;
       }
 
-      public String randomString(Random random) {
+      public String randomString(EaglercraftRandom random) {
          return firstCharUppercase(this.parent.randomString(random));
       }
 

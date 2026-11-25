@@ -3,7 +3,7 @@ package invtweaks;
 import invtweaks.api.container.ContainerSection;
 import invtweaks.container.ContainerSectionManager;
 import net.minecraft.client.Minecraft;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 public class InvTweaksGuiSettingsButton extends InvTweaksGuiIconButton {

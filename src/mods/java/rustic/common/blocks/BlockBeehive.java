@@ -2,7 +2,7 @@ package rustic.common.blocks;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.SoundType;
@@ -66,17 +66,17 @@ public class BlockBeehive extends BlockBase {
       return false;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return random.nextInt(5);
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return ModItems.HONEYCOMB;
    }
 
    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
       List<ItemStack> ret = new ArrayList();
-      Random rand = world instanceof World ? ((World)world).rand : new Random();
+      EaglercraftRandom rand = world instanceof World ? ((World)world).rand : new EaglercraftRandom();
       ItemStack honeycomb = new ItemStack(this.getItemDropped(state, rand, fortune), this.quantityDropped(rand), this.damageDropped(state));
       if (!honeycomb.isEmpty()) {
          ret.add(honeycomb);

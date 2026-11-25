@@ -51,12 +51,12 @@ import betterquesting.questing.QuestLineDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.Tuple;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class GuiQuestLines extends GuiScreenCanvas implements IPEventListener, INeedsRefresh {
    private IQuestLine selectedLine = null;
@@ -284,7 +284,7 @@ public class GuiQuestLines extends GuiScreenCanvas implements IPEventListener, I
       boolean canEdit = ((IQuestSettings)QuestingAPI.getAPI(ApiReference.SETTINGS)).canUserEdit(this.mc.player);
       List<DBEntry<IQuestLine>> lineList = QuestLineDatabase.INSTANCE.getSortedEntries();
       this.visChapters.clear();
-      UUID playerID = QuestingAPI.getQuestingUUID(this.mc.player);
+      EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(this.mc.player);
 
       for(DBEntry<IQuestLine> dbEntry : lineList) {
          IQuestLine ql = dbEntry.getValue();

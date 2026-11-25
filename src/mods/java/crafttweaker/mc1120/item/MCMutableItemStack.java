@@ -8,7 +8,7 @@ import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.player.IPlayer;
 import crafttweaker.mc1120.data.NBTConverter;
 import crafttweaker.mc1120.data.NBTUpdater;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -36,7 +36,7 @@ public class MCMutableItemStack extends MCItemStack implements IMutableItemStack
 
    public boolean attemptDamageItem(int amount, IPlayer player) {
       EntityPlayer mcplayer = CraftTweakerMC.getPlayer(player);
-      return this.origin.attemptDamageItem(amount, mcplayer != null ? mcplayer.world.rand : new Random(), mcplayer instanceof EntityPlayerMP ? (EntityPlayerMP)mcplayer : null);
+      return this.origin.attemptDamageItem(amount, mcplayer != null ? mcplayer.world.rand : new EaglercraftRandom(), mcplayer instanceof EntityPlayerMP ? (EntityPlayerMP)mcplayer : null);
    }
 
    public IItemStack withTag(IData tag, boolean matchTagExact) {

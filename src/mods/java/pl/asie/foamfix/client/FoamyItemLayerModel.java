@@ -19,8 +19,8 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
@@ -54,18 +54,18 @@ public class FoamyItemLayerModel implements IModel {
       return this.parent.getTextures();
    }
 
-   public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+   public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter) {
       return bakeStatic(this.parent, state, format, bakedTextureGetter);
    }
 
-   public static IBakedModel bakeStatic(ItemLayerModel parent, IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+   public static IBakedModel bakeStatic(ItemLayerModel parent, IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter) {
       ImmutableMap<TransformType, TRSRTransformation> map = PerspectiveMapWrapper.getTransforms(state);
       TRSRTransformation guiTransform = (TRSRTransformation)map.get(TransformType.GUI);
       Builder<BakedQuad> builder = ImmutableList.builder();
       Optional<TRSRTransformation> transform = state.apply(Optional.empty());
       List<ResourceLocation> textures = (List)parent.getTextures();
-      Builder<TextureAtlasSprite> textureAtlas = new Builder();
-      TextureAtlasSprite particle = (TextureAtlasSprite)bakedTextureGetter.apply(textures.isEmpty() ? MISSINGNO : (ResourceLocation)textures.get(0));
+      Builder<EaglerTextureAtlasSprite> textureAtlas = new Builder();
+      EaglerTextureAtlasSprite particle = (EaglerTextureAtlasSprite)bakedTextureGetter.apply(textures.isEmpty() ? MISSINGNO : (ResourceLocation)textures.get(0));
 
       ItemOverrideList list;
       try {
@@ -76,7 +76,7 @@ public class FoamyItemLayerModel implements IModel {
 
       if (guiTransform != null && !guiTransform.isIdentity()) {
          for(int i = 0; i < textures.size(); ++i) {
-            TextureAtlasSprite sprite = (TextureAtlasSprite)bakedTextureGetter.apply((ResourceLocation)textures.get(i));
+            EaglerTextureAtlasSprite sprite = (EaglerTextureAtlasSprite)bakedTextureGetter.apply((ResourceLocation)textures.get(i));
             textureAtlas.add(sprite);
          }
 
@@ -84,7 +84,7 @@ public class FoamyItemLayerModel implements IModel {
       } else {
          if (BUILD_QUAD != null) {
             for(int i = 0; i < textures.size(); ++i) {
-               TextureAtlasSprite sprite = (TextureAtlasSprite)bakedTextureGetter.apply((ResourceLocation)textures.get(i));
+               EaglerTextureAtlasSprite sprite = (EaglerTextureAtlasSprite)bakedTextureGetter.apply((ResourceLocation)textures.get(i));
                textureAtlas.add(sprite);
 
                try {
@@ -95,7 +95,7 @@ public class FoamyItemLayerModel implements IModel {
             }
          } else {
             for(int i = 0; i < textures.size(); ++i) {
-               TextureAtlasSprite sprite = (TextureAtlasSprite)bakedTextureGetter.apply((ResourceLocation)textures.get(i));
+               EaglerTextureAtlasSprite sprite = (EaglerTextureAtlasSprite)bakedTextureGetter.apply((ResourceLocation)textures.get(i));
                textureAtlas.add(sprite);
                UnmodifiableIterator t = ItemLayerModel.getQuadsForSprite(i, sprite, format, transform).iterator();
 
@@ -120,7 +120,7 @@ public class FoamyItemLayerModel implements IModel {
       MethodHandle handle = null;
 
       try {
-         handle = MethodHandles.lookup().unreflect(ReflectionHelper.findMethod(ItemLayerModel.class, "buildQuad", "buildQuad", new Class[]{VertexFormat.class, Optional.class, EnumFacing.class, TextureAtlasSprite.class, Integer.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE}));
+         handle = MethodHandles.lookup().unreflect(ReflectionHelper.findMethod(ItemLayerModel.class, "buildQuad", "buildQuad", new Class[]{VertexFormat.class, Optional.class, EnumFacing.class, EaglerTextureAtlasSprite.class, Integer.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE}));
       } catch (Exception var3) {
          var3.printStackTrace();
       }
@@ -155,7 +155,7 @@ public class FoamyItemLayerModel implements IModel {
             Builder<BakedQuad> builder = new Builder();
 
             for(int i = 0; i < this.parent.textures.size(); ++i) {
-               TextureAtlasSprite sprite = (TextureAtlasSprite)this.parent.textures.get(i);
+               EaglerTextureAtlasSprite sprite = (EaglerTextureAtlasSprite)this.parent.textures.get(i);
                builder.addAll(ItemLayerModel.getQuadsForSprite(i, sprite, this.parent.format, this.parent.transform));
             }
 
@@ -177,7 +177,7 @@ public class FoamyItemLayerModel implements IModel {
          return false;
       }
 
-      public TextureAtlasSprite getParticleTexture() {
+      public EaglerTextureAtlasSprite getParticleTexture() {
          return this.parent.particle;
       }
 
@@ -187,8 +187,8 @@ public class FoamyItemLayerModel implements IModel {
    }
 
    public static class DynamicItemModel implements IBakedModel {
-      private final List<TextureAtlasSprite> textures;
-      private final TextureAtlasSprite particle;
+      private final List<EaglerTextureAtlasSprite> textures;
+      private final EaglerTextureAtlasSprite particle;
       private final ImmutableList<BakedQuad> fastQuads;
       private final ImmutableMap<TransformType, TRSRTransformation> transforms;
       private final VertexFormat format;
@@ -196,7 +196,7 @@ public class FoamyItemLayerModel implements IModel {
       private final IBakedModel otherModel;
       private final ItemOverrideList overrides;
 
-      public DynamicItemModel(ImmutableList<BakedQuad> quads, TextureAtlasSprite particle, ImmutableMap<TransformType, TRSRTransformation> transforms, ItemOverrideList overrides, List<TextureAtlasSprite> textures, VertexFormat format, Optional<TRSRTransformation> transform) {
+      public DynamicItemModel(ImmutableList<BakedQuad> quads, EaglerTextureAtlasSprite particle, ImmutableMap<TransformType, TRSRTransformation> transforms, ItemOverrideList overrides, List<EaglerTextureAtlasSprite> textures, VertexFormat format, Optional<TRSRTransformation> transform) {
          this.fastQuads = quads;
          this.particle = particle;
          this.transforms = transforms;
@@ -223,7 +223,7 @@ public class FoamyItemLayerModel implements IModel {
          return false;
       }
 
-      public TextureAtlasSprite getParticleTexture() {
+      public EaglerTextureAtlasSprite getParticleTexture() {
          return this.particle;
       }
 
@@ -240,13 +240,13 @@ public class FoamyItemLayerModel implements IModel {
    public static class Static3DItemModel implements IBakedModel {
       private final ImmutableMap<TransformType, TRSRTransformation> transforms;
       private final VertexFormat format;
-      private final TextureAtlasSprite particle;
+      private final EaglerTextureAtlasSprite particle;
       private final ItemOverrideList overrides;
-      private final List<TextureAtlasSprite> textures;
+      private final List<EaglerTextureAtlasSprite> textures;
       private final Optional<TRSRTransformation> transform;
       private SoftReference<List<BakedQuad>> quadsSoft = null;
 
-      public Static3DItemModel(ImmutableMap<TransformType, TRSRTransformation> transforms, VertexFormat format, TextureAtlasSprite particle, ItemOverrideList overrides, List<TextureAtlasSprite> textures, Optional<TRSRTransformation> transform) {
+      public Static3DItemModel(ImmutableMap<TransformType, TRSRTransformation> transforms, VertexFormat format, EaglerTextureAtlasSprite particle, ItemOverrideList overrides, List<EaglerTextureAtlasSprite> textures, Optional<TRSRTransformation> transform) {
          this.transforms = transforms;
          this.format = format;
          this.particle = particle;
@@ -265,7 +265,7 @@ public class FoamyItemLayerModel implements IModel {
             Builder<BakedQuad> builder = new Builder();
 
             for(int i = 0; i < this.textures.size(); ++i) {
-               TextureAtlasSprite sprite = (TextureAtlasSprite)this.textures.get(i);
+               EaglerTextureAtlasSprite sprite = (EaglerTextureAtlasSprite)this.textures.get(i);
                builder.addAll(ItemLayerModel.getQuadsForSprite(i, sprite, this.format, this.transform));
             }
 
@@ -287,7 +287,7 @@ public class FoamyItemLayerModel implements IModel {
          return false;
       }
 
-      public TextureAtlasSprite getParticleTexture() {
+      public EaglerTextureAtlasSprite getParticleTexture() {
          return this.particle;
       }
 

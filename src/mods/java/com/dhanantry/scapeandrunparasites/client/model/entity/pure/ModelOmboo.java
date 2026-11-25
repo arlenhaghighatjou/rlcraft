@@ -3,7 +3,7 @@ package com.dhanantry.scapeandrunparasites.client.model.entity.pure;
 import com.dhanantry.scapeandrunparasites.client.model.ModelSRP;
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 

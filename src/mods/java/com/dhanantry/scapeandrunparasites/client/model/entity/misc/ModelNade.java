@@ -2,7 +2,7 @@ package com.dhanantry.scapeandrunparasites.client.model.entity.misc;
 
 import com.dhanantry.scapeandrunparasites.client.model.ModelSRP;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class ModelNade extends ModelSRP {

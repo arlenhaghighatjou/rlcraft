@@ -17,7 +17,7 @@ import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraftforge.fml.common.Loader;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import slimeknights.mantle.pulsar.config.IConfiguration;
 import slimeknights.mantle.pulsar.pulse.PulseMeta;
 

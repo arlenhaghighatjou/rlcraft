@@ -5,7 +5,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
@@ -204,7 +204,7 @@ public class BattleTowersReflect {
       return this.con_WorldGenHandler$TowerPosition.newInstance(worldGenHandler, x, y, z, type, underground);
    }
 
-   public boolean attemptToSpawnTower(Object worldGenHandler, World world, Object towerPosition, Random random, int x, int y, int z) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+   public boolean attemptToSpawnTower(Object worldGenHandler, World world, Object towerPosition, EaglercraftRandom random, int x, int y, int z) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
       return ((Boolean)this.m_WorldGenHandler_attemptToSpawnTower.invoke(worldGenHandler, world, towerPosition, random, x, y, z)).booleanValue();
    }
 

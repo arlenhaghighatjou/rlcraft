@@ -7,7 +7,7 @@ import com.github.fnar.minecraft.item.WeaponType;
 import com.github.fnar.roguelike.loot.special.SpecialEquipment;
 import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.util.TextFormat;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SpecialSword extends SpecialEquipment {
    public SpecialSword() {
@@ -27,15 +27,15 @@ public class SpecialSword extends SpecialEquipment {
       return this;
    }
 
-   public static SpecialEquipment newSpecialSword(Random random, Quality quality) {
+   public static SpecialEquipment newSpecialSword(EaglercraftRandom random, Quality quality) {
       return (new SpecialSword()).withQuality(quality).withRldItem(getItem().withQuality(quality)).withSwordEnchantments(random).withCommonEnchantments(random).withName(quality.getDescriptor() + " Blade");
    }
 
-   public SpecialSword withSwordEnchantments(Random random) {
+   public SpecialSword withSwordEnchantments(EaglercraftRandom random) {
       return this.withSharpness(random).withLooting(random).withFiery(random);
    }
 
-   public SpecialSword withSharpness(Random random) {
+   public SpecialSword withSharpness(EaglercraftRandom random) {
       if (random.nextBoolean()) {
          return this;
       } else {
@@ -49,7 +49,7 @@ public class SpecialSword extends SpecialEquipment {
       }
    }
 
-   public SpecialSword withLooting(Random random) {
+   public SpecialSword withLooting(EaglercraftRandom random) {
       if (random.nextBoolean()) {
          return this;
       } else {
@@ -70,7 +70,7 @@ public class SpecialSword extends SpecialEquipment {
       }
    }
 
-   public SpecialSword withFiery(Random random) {
+   public SpecialSword withFiery(EaglercraftRandom random) {
       if (random.nextBoolean()) {
          return this;
       } else {

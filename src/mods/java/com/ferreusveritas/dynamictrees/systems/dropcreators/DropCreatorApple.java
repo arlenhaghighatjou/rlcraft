@@ -2,7 +2,7 @@ package com.ferreusveritas.dynamictrees.systems.dropcreators;
 
 import com.ferreusveritas.dynamictrees.trees.Species;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +16,7 @@ public class DropCreatorApple extends DropCreator {
       super(new ResourceLocation("dynamictrees", "apple"));
    }
 
-   public List<ItemStack> getLeavesDrop(IBlockAccess access, Species species, BlockPos breakPos, Random random, List<ItemStack> dropList, int fortune) {
+   public List<ItemStack> getLeavesDrop(IBlockAccess access, Species species, BlockPos breakPos, EaglercraftRandom random, List<ItemStack> dropList, int fortune) {
       int chance = 200;
       if (fortune > 0) {
          chance -= 10 << fortune;

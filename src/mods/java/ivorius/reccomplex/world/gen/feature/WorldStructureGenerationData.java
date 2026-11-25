@@ -17,9 +17,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -39,7 +39,7 @@ public class WorldStructureGenerationData extends WorldSavedData {
    private static final String IDENTIFIER = "reccomplex-structuredata";
    protected final Set<ChunkPos> checkedChunks;
    protected final Set<ChunkPos> checkedChunksFinal;
-   protected final Map<UUID, WorldStructureGenerationData.Entry> entryMap;
+   protected final Map<EaglercraftUUID, WorldStructureGenerationData.Entry> entryMap;
    protected final SetMultimap<ChunkPos, WorldStructureGenerationData.Entry> chunkMap;
    protected final SetMultimap<String, WorldStructureGenerationData.StructureEntry> instanceMap;
 
@@ -110,11 +110,11 @@ public class WorldStructureGenerationData extends WorldSavedData {
       return Sets.intersection(this.checkedChunks, rasterized);
    }
 
-   public WorldStructureGenerationData.Entry getEntry(UUID id) {
+   public WorldStructureGenerationData.Entry getEntry(EaglercraftUUID id) {
       return (WorldStructureGenerationData.Entry)this.entryMap.get(id);
    }
 
-   public WorldStructureGenerationData.Entry removeEntry(UUID id) {
+   public WorldStructureGenerationData.Entry removeEntry(EaglercraftUUID id) {
       WorldStructureGenerationData.Entry entry = (WorldStructureGenerationData.Entry)this.entryMap.remove(id);
       this.chunkMap.values().removeIf((e) -> {
          return e.uuid.equals(id);
@@ -193,14 +193,14 @@ public class WorldStructureGenerationData extends WorldSavedData {
       public CustomEntry() {
       }
 
-      public CustomEntry(@Nonnull UUID uuid, StructureBoundingBox boundingBox, String name) {
+      public CustomEntry(@Nonnull EaglercraftUUID uuid, StructureBoundingBox boundingBox, String name) {
          super(uuid, boundingBox);
          this.name = name;
       }
 
       @Nonnull
       public static WorldStructureGenerationData.CustomEntry from(String name, StructureBoundingBox boundingBox) {
-         return new WorldStructureGenerationData.CustomEntry(UUID.randomUUID(), boundingBox, name);
+         return new WorldStructureGenerationData.CustomEntry(EaglercraftUUID.randomUUID(), boundingBox, name);
       }
 
       public String description() {
@@ -220,24 +220,24 @@ public class WorldStructureGenerationData extends WorldSavedData {
 
    public abstract static class Entry implements NBTCompoundObject {
       @Nonnull
-      protected UUID uuid = UUID.randomUUID();
+      protected EaglercraftUUID uuid = EaglercraftUUID.randomUUID();
       protected StructureBoundingBox boundingBox = new StructureBoundingBox();
       protected boolean blocking = true;
 
       public Entry() {
       }
 
-      public Entry(@Nonnull UUID uuid, StructureBoundingBox boundingBox) {
+      public Entry(@Nonnull EaglercraftUUID uuid, StructureBoundingBox boundingBox) {
          this.uuid = uuid;
          this.boundingBox = boundingBox;
       }
 
       @Nonnull
-      public UUID getUuid() {
+      public EaglercraftUUID getUuid() {
          return this.uuid;
       }
 
-      public void setUuid(@Nonnull UUID uuid) {
+      public void setUuid(@Nonnull EaglercraftUUID uuid) {
          this.uuid = uuid;
       }
 
@@ -279,7 +279,7 @@ public class WorldStructureGenerationData extends WorldSavedData {
       }
 
       public void readFromNBT(NBTTagCompound compound) {
-         this.uuid = new UUID(compound.getLong("UUIDMS"), compound.getLong("UUIDLS"));
+         this.uuid = new EaglercraftUUID(compound.getLong("UUIDMS"), compound.getLong("UUIDLS"));
          this.boundingBox = new StructureBoundingBox(compound.getIntArray("boundingBox"));
          this.blocking = !compound.hasKey("blocking", 1) || compound.getBoolean("blocking");
       }
@@ -304,7 +304,7 @@ public class WorldStructureGenerationData extends WorldSavedData {
       public StructureEntry() {
       }
 
-      public StructureEntry(@Nonnull UUID uuid, StructureBoundingBox boundingBox, String structureID, String generationInfoID, AxisAlignedTransform2D transform, boolean preventComplementation) {
+      public StructureEntry(@Nonnull EaglercraftUUID uuid, StructureBoundingBox boundingBox, String structureID, String generationInfoID, AxisAlignedTransform2D transform, boolean preventComplementation) {
          super(uuid, boundingBox);
          this.structureID = structureID;
          this.generationInfoID = generationInfoID;
@@ -314,7 +314,7 @@ public class WorldStructureGenerationData extends WorldSavedData {
 
       @Nonnull
       public static WorldStructureGenerationData.StructureEntry complete(String structureID, String generationInfoID, StructureBoundingBox boundingBox, AxisAlignedTransform2D transform, boolean hasBeenGenerated) {
-         return new WorldStructureGenerationData.StructureEntry(UUID.randomUUID(), boundingBox, structureID, generationInfoID, transform, hasBeenGenerated);
+         return new WorldStructureGenerationData.StructureEntry(EaglercraftUUID.randomUUID(), boundingBox, structureID, generationInfoID, transform, hasBeenGenerated);
       }
 
       public String getStructureID() {
@@ -345,7 +345,7 @@ public class WorldStructureGenerationData extends WorldSavedData {
          super.readFromNBT(compound);
          this.structureID = compound.getString("structureID");
          this.generationInfoID = compound.hasKey(this.generationInfoID, 8) ? compound.getString("generationInfoID") : null;
-         this.seed = compound.hasKey("seed") ? compound.getLong("seed") : (new Random()).nextLong();
+         this.seed = compound.hasKey("seed") ? compound.getLong("seed") : (new EaglercraftRandom()).nextLong();
          this.transform = RCAxisAlignedTransform.read(compound, "rotation", "mirrorX");
          if (compound.hasKey("lowerCoord")) {
             BlockPos lowerCoord = BlockPositions.readFromNBT("lowerCoord", compound);

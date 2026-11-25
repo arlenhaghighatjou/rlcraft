@@ -1,7 +1,7 @@
 package rustic.common.network;
 
-import io.netty.buffer.ByteBuf;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumParticleTypes;
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import rustic.common.items.ModItems;
 
 public class MessageShameFX implements IMessage {
-   public static Random rand = new Random();
+   public static EaglercraftRandom rand = new EaglercraftRandom();
    int num = 0;
    double x = 0.0D;
    double y = 0.0D;

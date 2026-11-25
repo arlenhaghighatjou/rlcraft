@@ -5,7 +5,7 @@ import c4.corpsecomplex.common.modules.compatibility.enderio.EnderIOIntegration;
 import c4.corpsecomplex.common.modules.inventory.InventoryModule;
 import c4.corpsecomplex.common.modules.inventory.enchantment.EnchantmentModule;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +17,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public final class DeathStackHelper {
-   private static Random generator = new Random();
+   private static EaglercraftRandom generator = new EaglercraftRandom();
 
    private DeathStackHelper() {
    }

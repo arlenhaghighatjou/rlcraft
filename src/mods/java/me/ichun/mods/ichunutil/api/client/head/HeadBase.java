@@ -1,7 +1,7 @@
 package me.ichun.mods.ichunutil.api.client.head;
 
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.BooleanSupplier;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
@@ -9,7 +9,7 @@ import net.minecraft.client.model.ModelChicken;
 import net.minecraft.client.model.ModelPolarBear;
 import net.minecraft.client.model.ModelQuadruped;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -31,7 +31,7 @@ public class HeadBase<E extends EntityLivingBase> {
    public float eyeScale = 0.75F;
    public float headTop = 0.5F;
    public float headFront = 0.25F;
-   public Random livingRand = new Random();
+   public EaglercraftRandom livingRand = new EaglercraftRandom();
    public int[] acidTime;
 
    public HeadBase() {

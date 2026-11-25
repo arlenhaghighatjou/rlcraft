@@ -17,7 +17,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.utils.QuestTranslation;
 import bq_standard.core.BQ_Standard;
 import bq_standard.tasks.TaskRetrieval;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import mezz.jei.Internal;
 import mezz.jei.api.recipe.IFocus.Mode;
 import mezz.jei.gui.Focus;
@@ -36,7 +36,7 @@ public class PanelTaskRetrieval extends CanvasEmpty {
 
    public void initPanel() {
       super.initPanel();
-      UUID uuid = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
+      EaglercraftUUID uuid = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
       int[] progress = this.task.getUsersProgress(uuid);
       boolean isComplete = this.task.isComplete(uuid);
       String sCon = (this.task.consume ? TextFormatting.RED : TextFormatting.GREEN) + QuestTranslation.translate(this.task.consume ? "gui.yes" : "gui.no", new Object[0]);

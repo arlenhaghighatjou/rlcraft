@@ -2,7 +2,7 @@ package com.creativemd.creativecore.common.config.premade;
 
 import com.creativemd.creativecore.common.config.api.CreativeConfig;
 import com.creativemd.creativecore.common.config.api.ICreativeConfig;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class DecimalMinMax implements ICreativeConfig {
    @CreativeConfig
@@ -15,7 +15,7 @@ public class DecimalMinMax implements ICreativeConfig {
       this.max = max;
    }
 
-   public double next(Random rand) {
+   public double next(EaglercraftRandom rand) {
       return this.min == this.max ? this.min : this.min + rand.nextDouble() * (this.max - this.min);
    }
 

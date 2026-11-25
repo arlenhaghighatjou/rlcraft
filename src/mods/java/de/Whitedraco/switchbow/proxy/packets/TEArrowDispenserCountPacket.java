@@ -1,7 +1,7 @@
 package de.Whitedraco.switchbow.proxy.packets;
 
 import de.Whitedraco.switchbow.tileentity.TileEntityArrowDispenser;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

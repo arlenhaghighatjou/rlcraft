@@ -1,7 +1,7 @@
 package vazkii.arl.block;
 
 import java.util.HashMap;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
@@ -99,11 +99,11 @@ public abstract class BlockModSlab extends BlockSlab implements IModBlock {
    }
 
    @Nonnull
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(this.getSingleBlock());
    }
 
-   public int quantityDropped(IBlockState state, int fortune, @Nonnull Random random) {
+   public int quantityDropped(IBlockState state, int fortune, @Nonnull EaglercraftRandom random) {
       return super.quantityDropped(state, fortune, random);
    }
 

@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.lib.scanner;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.concurrent.Callable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,7 +25,7 @@ public abstract class Scanner implements ITickable, Callable<Void> {
    protected final int blocksPerTick;
    protected final int volume;
    protected final ScanLocus locus;
-   protected final Random random;
+   protected final EaglercraftRandom random;
    protected final MutableBlockPos workingPos;
    protected ModLog log;
 
@@ -70,7 +70,7 @@ public abstract class Scanner implements ITickable, Callable<Void> {
       return this.volume;
    }
 
-   public abstract void blockScan(@Nonnull IBlockState var1, @Nonnull BlockPos var2, @Nonnull Random var3);
+   public abstract void blockScan(@Nonnull IBlockState var1, @Nonnull BlockPos var2, @Nonnull EaglercraftRandom var3);
 
    protected boolean interestingBlock(IBlockState state) {
       return state != Blocks.AIR.getDefaultState();
@@ -107,5 +107,5 @@ public abstract class Scanner implements ITickable, Callable<Void> {
    }
 
    @Nullable
-   protected abstract BlockPos nextPos(@Nonnull MutableBlockPos var1, @Nonnull Random var2);
+   protected abstract BlockPos nextPos(@Nonnull MutableBlockPos var1, @Nonnull EaglercraftRandom var2);
 }

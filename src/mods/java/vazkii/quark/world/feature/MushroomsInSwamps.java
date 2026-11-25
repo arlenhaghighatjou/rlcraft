@@ -1,6 +1,6 @@
 package vazkii.quark.world.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -28,7 +28,7 @@ public class MushroomsInSwamps extends Feature {
       World world = event.getWorld();
       if (event.getPlacementPos() != null) {
          Biome biome = world.getBiome(event.getPlacementPos());
-         Random rand = event.getRand();
+         EaglercraftRandom rand = event.getRand();
          if ((biome == Biomes.SWAMPLAND || biome == Biomes.MUTATED_SWAMPLAND) && event.getType() == EventType.BIG_SHROOM) {
             if (bigMushroomsPerChunk < 1.0D && rand.nextDouble() > bigMushroomsPerChunk) {
                return;

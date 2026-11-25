@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.sound;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -19,7 +19,7 @@ import org.orecruncher.lib.random.XorShiftRandom;
 public abstract class Emitter {
    protected static final int ERROR_DELAY = 10;
    protected static final int ERROR_DELAY_RANDOM = 6;
-   protected static final Random RANDOM = XorShiftRandom.current();
+   protected static final EaglercraftRandom RANDOM = XorShiftRandom.current();
    protected static final ITimeKeeper timer = EnvironStateHandler.EnvironState::getTickCounter;
    protected final RecordTitleEmitter titleEmitter;
    protected final SoundEffect effect;

@@ -6,13 +6,13 @@ import com.github.fnar.util.Color;
 import greymerk.roguelike.monster.Mob;
 import greymerk.roguelike.monster.MonsterProfile;
 import greymerk.roguelike.monster.MonsterProfileType;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ProfileZombie implements MonsterProfile {
    public ProfileZombie() {
    }
 
-   public Mob apply(Mob mob, int level, int difficulty, Random random) {
+   public Mob apply(Mob mob, int level, int difficulty, EaglercraftRandom random) {
       mob.setMobType(MobType.ZOMBIE);
       if (level == 4 && random.nextInt(20) == 0) {
          return MonsterProfileType.PIG_ZOMBIE.apply(mob, level, difficulty, random);

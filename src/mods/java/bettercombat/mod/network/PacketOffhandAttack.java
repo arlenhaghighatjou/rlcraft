@@ -1,7 +1,7 @@
 package bettercombat.mod.network;
 
 import bettercombat.mod.util.Helpers;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketAnimation;

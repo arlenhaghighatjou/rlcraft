@@ -1,6 +1,6 @@
 package net.blay09.mods.waystones.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.blay09.mods.waystones.GlobalWaystones;
 import net.blay09.mods.waystones.WarpMode;
@@ -249,7 +249,7 @@ public class BlockWaystone extends BlockContainer {
 
    }
 
-   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, EaglercraftRandom rand) {
       if (!WaystoneConfig.client.disableParticles && rand.nextFloat() < 0.75F) {
          TileWaystone tileWaystone = this.getTileWaystone(world, pos);
          if (tileWaystone == null) {

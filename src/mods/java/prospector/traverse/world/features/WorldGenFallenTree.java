@@ -1,6 +1,6 @@
 package prospector.traverse.world.features;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockLog.EnumAxis;
@@ -28,7 +28,7 @@ public class WorldGenFallenTree extends WorldGenAbstractTree implements WorldGen
       this.stateWood = stateWood;
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int num = rand.nextInt(5);
       EnumFacing orientation;
       if (num == 0) {

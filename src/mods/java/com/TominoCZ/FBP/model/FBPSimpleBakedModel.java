@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -16,7 +16,7 @@ import org.apache.commons.lang3.tuple.Pair;
 public class FBPSimpleBakedModel implements IBakedModel {
    private final List<BakedQuad>[] quads;
    private final IBakedModel parent;
-   private TextureAtlasSprite particle;
+   private EaglerTextureAtlasSprite particle;
 
    public FBPSimpleBakedModel() {
       this((IBakedModel)null);
@@ -32,7 +32,7 @@ public class FBPSimpleBakedModel implements IBakedModel {
 
    }
 
-   public void setParticle(TextureAtlasSprite particle) {
+   public void setParticle(EaglerTextureAtlasSprite particle) {
       this.particle = particle;
    }
 
@@ -56,7 +56,7 @@ public class FBPSimpleBakedModel implements IBakedModel {
       return false;
    }
 
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       if (this.particle != null) {
          return this.particle;
       } else {

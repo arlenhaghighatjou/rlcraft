@@ -2,7 +2,7 @@ package rtg.api.world;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.event.world.WorldEvent.Load;
@@ -39,7 +39,7 @@ public final class RTGWorld {
    private final RTGChunkGenSettings generatorSettings;
    private final SimplexNoise[] simplexNoiseInstances = new SimplexNoise[10];
    private final CellularNoise[] cellularNoiseInstances = new CellularNoise[5];
-   private Random generatorRandom = null;
+   private EaglercraftRandom generatorRandom = null;
 
    private RTGWorld(World world) {
       this.world = world;
@@ -63,7 +63,7 @@ public final class RTGWorld {
       return (RTGWorld)INSTANCE_CACHE.get(world);
    }
 
-   public void setRandom(Random random) {
+   public void setRandom(EaglercraftRandom random) {
       if (this.generatorRandom == null) {
          this.generatorRandom = random;
       }
@@ -82,13 +82,13 @@ public final class RTGWorld {
       return this.world().getSeed();
    }
 
-   public Random rand() {
+   public EaglercraftRandom rand() {
       return this.generatorRandom;
    }
 
    public long getChunkSeed(int chunkX, int chunkZ) {
       long seed = this.world().getSeed();
-      Random rand = new Random(seed);
+      EaglercraftRandom rand = new EaglercraftRandom(seed);
       return (long)chunkX * (rand.nextLong() / 2L * 2L + 1L) + (long)chunkZ * (rand.nextLong() / 2L * 2L + 1L) ^ seed;
    }
 

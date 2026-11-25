@@ -33,7 +33,7 @@ import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteTenF
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteTree;
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteTreeThin;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.BlockBush;
@@ -167,7 +167,7 @@ public class ParasiteEventWorld {
                int key = data.setNode(pos.getX(), pos.getY(), pos.getZ(), 0);
                if (key == 1) {
                   WorldGenParasiteNodeCore gen = new WorldGenParasiteNodeCore(false, 1);
-                  gen.generate(worldIn, new Random(), pos);
+                  gen.generate(worldIn, new EaglercraftRandom(), pos);
                   SpreadBiome(worldIn, pos, 1);
                   ParasiteEventEntity.alertAllPlayerDim(worldIn, SRPConfigWorld.nodeWarning, 10);
                   return 1;
@@ -215,7 +215,7 @@ public class ParasiteEventWorld {
       return data.totalNodePoints(0);
    }
 
-   public static void canInfestBlock(World worldIn, BlockPos pos, Random rand, int stage, boolean fromVenkrol) {
+   public static void canInfestBlock(World worldIn, BlockPos pos, EaglercraftRandom rand, int stage, boolean fromVenkrol) {
       if (blockInfestedCount <= SRPConfig.BlockInfestedLimit) {
          if (worldIn.getDifficulty() != EnumDifficulty.PEACEFUL) {
             int covertedBlocks = 0;
@@ -352,7 +352,7 @@ public class ParasiteEventWorld {
       }
    }
 
-   public static void spreadBiomeBlockStain(World worldIn, BlockPos pos, Random rand) {
+   public static void spreadBiomeBlockStain(World worldIn, BlockPos pos, EaglercraftRandom rand) {
       int covertedBlocks = 0;
 
       for(int dir = 0; dir <= 5; ++dir) {
@@ -408,7 +408,7 @@ public class ParasiteEventWorld {
 
    }
 
-   public static void spreadBiomeBlockTrunk(World worldIn, BlockPos pos, Random rand) {
+   public static void spreadBiomeBlockTrunk(World worldIn, BlockPos pos, EaglercraftRandom rand) {
       int posx = pos.getX();
       int posz = pos.getZ();
       int posy = pos.getY();
@@ -456,7 +456,7 @@ public class ParasiteEventWorld {
       return atm;
    }
 
-   public static void spawnGenFeatureParasite(World worldIn, BlockPos pos, Random rand) {
+   public static void spawnGenFeatureParasite(World worldIn, BlockPos pos, EaglercraftRandom rand) {
       double bonus = 0.0D;
       if (worldIn.getBlockState(pos).getBlock() != Blocks.AIR && worldIn.getBlockState(pos).getMaterial() == Material.WATER) {
          pos = ParasiteEventEntity.getFloor(worldIn, pos, 10);
@@ -542,7 +542,7 @@ public class ParasiteEventWorld {
       }
    }
 
-   public static void spawnGenRoofParasite(World worldIn, BlockPos pos, Random rand) {
+   public static void spawnGenRoofParasite(World worldIn, BlockPos pos, EaglercraftRandom rand) {
       if (worldIn.getBlockState(pos).getBlock() == Blocks.AIR) {
          worldIn.setBlockState(pos, SRPBlocks.ParasiteBush.getDefaultState().withProperty(BlockParasiteBush.VARIANT, BlockParasiteBush.EnumType.BINE));
          pos = pos.down();
@@ -577,7 +577,7 @@ public class ParasiteEventWorld {
       }
    }
 
-   public static void spawnGenFeatureInfested(World worldIn, BlockPos pos, Random rand) {
+   public static void spawnGenFeatureInfested(World worldIn, BlockPos pos, EaglercraftRandom rand) {
       double bonus = 0.0D;
       if (worldIn.getBlockState(pos).getBlock() != Blocks.AIR && worldIn.getBlockState(pos).getMaterial() == Material.WATER) {
          pos = ParasiteEventEntity.getFloor(worldIn, pos, 10);
@@ -604,7 +604,7 @@ public class ParasiteEventWorld {
 
    }
 
-   public static void spawnGenRoofInfested(World worldIn, BlockPos pos, Random rand) {
+   public static void spawnGenRoofInfested(World worldIn, BlockPos pos, EaglercraftRandom rand) {
       if (worldIn.getBlockState(pos).getBlock() == Blocks.AIR) {
          if (rand.nextInt(5) == 0) {
             worldIn.setBlockState(pos, SRPBlocks.InfestedBush.getDefaultState().withProperty(BlockInfestedBush.VARIANT, BlockInfestedBush.EnumType.VINE));
@@ -659,7 +659,7 @@ public class ParasiteEventWorld {
             int key = data.setColony(newPos.getX(), newPos.getY(), newPos.getZ(), 0);
             if (key == 1) {
                WorldGenParasiteColonyCore gen = new WorldGenParasiteColonyCore(false);
-               gen.generate(worldIn, new Random(), newPos);
+               gen.generate(worldIn, new EaglercraftRandom(), newPos);
                ParasiteEventEntity.alertAllPlayerDim(worldIn, SRPConfigWorld.colonyWarning, 11);
                return 1;
             } else {

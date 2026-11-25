@@ -9,7 +9,7 @@ import ivorius.reccomplex..shadow.mcopts.commands.parameters.expect.Expect;
 import ivorius.reccomplex..shadow.mcopts.commands.parameters.expect.MCE;
 import ivorius.reccomplex.world.gen.feature.WorldStructureGenerationData;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -29,7 +29,7 @@ public class CommandSightDelete extends CommandSplit {
             var10001.getClass();
             Parameters parameters = Parameters.of(args, var10001::declare);
             WorldStructureGenerationData generationData = WorldStructureGenerationData.get(sender.getEntityWorld());
-            WorldStructureGenerationData.Entry entry = generationData.removeEntry(UUID.fromString((String)parameters.get(0).require()));
+            WorldStructureGenerationData.Entry entry = generationData.removeEntry(EaglercraftUUID.fromString((String)parameters.get(0).require()));
             if (entry == null) {
                throw RecurrentComplex.translations.commandException("commands.rcsightinfo.unknown");
             } else {

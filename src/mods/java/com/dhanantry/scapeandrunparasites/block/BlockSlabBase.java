@@ -1,7 +1,7 @@
 package com.dhanantry.scapeandrunparasites.block;
 
 import com.dhanantry.scapeandrunparasites.SRPMain;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockSlab.EnumBlockHalf;
 import net.minecraft.block.material.Material;
@@ -37,7 +37,7 @@ public abstract class BlockSlabBase extends BlockSlab {
 
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(this);
    }
 

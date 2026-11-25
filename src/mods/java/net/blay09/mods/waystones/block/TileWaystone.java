@@ -1,6 +1,6 @@
 package net.blay09.mods.waystones.block;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.blay09.mods.waystones.worldgen.NameGenerator;
 import net.minecraft.block.state.IBlockState;
@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class TileWaystone extends TileEntity {
    private boolean isDummy;
    private String waystoneName = "";
-   private UUID owner;
+   private EaglercraftUUID owner;
    private boolean isGlobal;
    private boolean wasGenerated = true;
    private boolean isMossy;

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import javax.imageio.ImageIO;
 import net.minecraft.client.Minecraft;
@@ -94,7 +94,7 @@ public class PanoramaMaker extends Feature {
          }
 
          if (!validFiles.isEmpty()) {
-            File[] files = (File[])validFiles.get((new Random()).nextInt(validFiles.size()));
+            File[] files = (File[])validFiles.get((new EaglercraftRandom()).nextInt(validFiles.size()));
             Arrays.sort(files);
             Minecraft mc = Minecraft.getMinecraft();
             ResourceLocation[] resources = new ResourceLocation[6];

@@ -1,6 +1,6 @@
 package me.ichun.mods.googlyeyes.common.tracker;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
 import me.ichun.mods.ichunutil.api.client.head.HeadBase;
@@ -12,7 +12,7 @@ import net.minecraft.util.math.MathHelper;
 public class GooglyTracker {
    public final EntityLivingBase parent;
    public final HeadBase helper;
-   public final Random rand;
+   public final EaglercraftRandom rand;
    public final float renderChance;
    public boolean shouldUpdate = true;
    public long lastUpdateRequest;
@@ -24,7 +24,7 @@ public class GooglyTracker {
    public GooglyTracker(@Nonnull EntityLivingBase parent, @Nonnull HeadBase helper) {
       this.parent = parent;
       this.helper = helper;
-      this.rand = new Random((long)(Math.abs(parent.hashCode()) * 8134));
+      this.rand = new EaglercraftRandom((long)(Math.abs(parent.hashCode()) * 8134));
       this.renderChance = this.rand.nextFloat();
       this.eyes = new GooglyTracker.EyeInfo[helper.getEyeCount(parent)];
 

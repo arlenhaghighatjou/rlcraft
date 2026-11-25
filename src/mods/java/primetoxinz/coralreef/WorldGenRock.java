@@ -1,6 +1,6 @@
 package primetoxinz.coralreef;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,7 +16,7 @@ public class WorldGenRock extends WorldGenerator {
       this.state = state;
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       for(; position.getY() > 3; position = position.down()) {
          if (!worldIn.isAirBlock(position.down()) && !worldIn.isAirBlock(position)) {
             Block block = worldIn.getBlockState(position.down()).getBlock();

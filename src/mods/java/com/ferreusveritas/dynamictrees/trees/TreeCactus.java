@@ -16,7 +16,7 @@ import com.ferreusveritas.dynamictrees.util.CoordUtils;
 import com.ferreusveritas.dynamictrees.util.SafeChunkBounds;
 import com.ferreusveritas.dynamictrees.worldgen.JoCode;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
@@ -116,7 +116,7 @@ public class TreeCactus extends TreeFamily {
          this.setBasicGrowingParameters(0.875F, 4.0F, 4, 2, 1.0F);
          this.setSoilLongevity(1);
          this.addDropCreator(new DropCreator(new ResourceLocation("dynamictrees", "cactusseeds")) {
-            public List<ItemStack> getLogsDrop(World world, Species species, BlockPos breakPos, Random random, List<ItemStack> dropList, float volume) {
+            public List<ItemStack> getLogsDrop(World world, Species species, BlockPos breakPos, EaglercraftRandom random, List<ItemStack> dropList, float volume) {
                for(int numLogs = (int)(volume / 2.0F); numLogs > 0; numLogs -= 64) {
                   dropList.add(species.getSeedStack(Math.min(numLogs, 64)));
                }

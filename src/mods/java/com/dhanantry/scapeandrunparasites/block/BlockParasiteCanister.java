@@ -2,7 +2,7 @@ package com.dhanantry.scapeandrunparasites.block;
 
 import com.dhanantry.scapeandrunparasites.init.SRPItems;
 import com.dhanantry.scapeandrunparasites.item.ItemBlockVariant;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -52,7 +52,7 @@ public class BlockParasiteCanister extends BlockBase implements IMetaName {
       return this.getMetaFromState(state);
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (worldIn.isAreaLoaded(pos, 3)) {
          if (!worldIn.isRemote && (BlockParasiteCanister.EnumType)state.getValue(VARIANT) == BlockParasiteCanister.EnumType.CYST && worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR) {
             worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
@@ -61,7 +61,7 @@ public class BlockParasiteCanister extends BlockBase implements IMetaName {
       }
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       switch((BlockParasiteCanister.EnumType)state.getValue(VARIANT)) {
       case CYST:
          return super.getItemDropped(state, rand, fortune);
@@ -76,7 +76,7 @@ public class BlockParasiteCanister extends BlockBase implements IMetaName {
       }
    }
 
-   public int quantityDropped(IBlockState state, int fortune, Random random) {
+   public int quantityDropped(IBlockState state, int fortune, EaglercraftRandom random) {
       if ((BlockParasiteCanister.EnumType)state.getValue(VARIANT) == BlockParasiteCanister.EnumType.SAC) {
          return random.nextDouble() < 0.05D ? 1 : 0;
       } else {

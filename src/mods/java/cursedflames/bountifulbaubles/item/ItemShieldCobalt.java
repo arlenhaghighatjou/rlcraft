@@ -12,11 +12,11 @@ import cursedflames.bountifulbaubles.item.base.IItemAttributeModifier;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -46,8 +46,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import vazkii.botania.api.item.IPhantomInkable;
 
 public class ItemShieldCobalt extends ItemShield implements IBauble, IRenderBauble, IItemAttributeModifier, IRenderObject {
-   public static final UUID KNOCKBACK_RESISTANCE_UUID = UUID.fromString("418ed1da-15ae-4c7b-ac5e-4807ca52ffe3");
-   public static final UUID KNOCKBACK_RESISTANCE_BAUBLE_UUID = UUID.fromString("9016ba1d-70dd-46c4-b0b4-fc4ea39886c1");
+   public static final EaglercraftUUID KNOCKBACK_RESISTANCE_UUID = EaglercraftUUID.fromString("418ed1da-15ae-4c7b-ac5e-4807ca52ffe3");
+   public static final EaglercraftUUID KNOCKBACK_RESISTANCE_BAUBLE_UUID = EaglercraftUUID.fromString("9016ba1d-70dd-46c4-b0b4-fc4ea39886c1");
    private static final Map<IAttribute, AttributeModifier> modMap = new HashMap();
 
    public ItemShieldCobalt(String name) {

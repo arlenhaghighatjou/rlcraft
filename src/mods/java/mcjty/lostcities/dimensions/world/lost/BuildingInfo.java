@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import mcjty.lostcities.api.ILostChunkInfo;
@@ -197,7 +197,7 @@ public class BuildingInfo implements ILostChunkInfo {
       return AssetRegistries.STYLES.get(this.provider.worldStyle.getOutsideStyle());
    }
 
-   private void createPalette(Random rand) {
+   private void createPalette(EaglercraftRandom rand) {
       Style style;
       if (!this.isCity) {
          style = this.getOutsideStyle();
@@ -308,7 +308,7 @@ public class BuildingInfo implements ILostChunkInfo {
             characteristics.cityLevel = getCityLevel(chunkX, chunkZ, provider);
          }
 
-         Random rand = getBuildingRandom(chunkX, chunkZ, provider.seed);
+         EaglercraftRandom rand = getBuildingRandom(chunkX, chunkZ, provider.seed);
          characteristics.couldHaveBuilding = characteristics.isCity && checkBuildingPossibility(chunkX, chunkZ, provider, profile, characteristics.section, characteristics.cityLevel, rand);
          if (profile.isSpace() && characteristics.section == -1) {
             float dist = CitySphere.getRelativeDistanceToCityCenter(chunkX, chunkZ, provider);
@@ -413,7 +413,7 @@ public class BuildingInfo implements ILostChunkInfo {
       return getChunkCharacteristics(chunkX, chunkZ, provider).isCity;
    }
 
-   private static boolean checkBuildingPossibility(int chunkX, int chunkZ, LostCityChunkGenerator provider, LostCityProfile profile, int section, int cityLevel, Random rand) {
+   private static boolean checkBuildingPossibility(int chunkX, int chunkZ, LostCityChunkGenerator provider, LostCityProfile profile, int section, int cityLevel, EaglercraftRandom rand) {
       float bc = rand.nextFloat();
       PredefinedCity.PredefinedBuilding predefinedBuilding = City.getPredefinedBuilding(chunkX, chunkZ, provider);
       if (predefinedBuilding != null) {
@@ -504,7 +504,7 @@ public class BuildingInfo implements ILostChunkInfo {
          if (predefinedStreet != null) {
             return false;
          } else if (isMultiBuildingCandidate(chunkX, chunkZ, provider, profile)) {
-            Random rand = getBuildingRandom(chunkX, chunkZ, provider.seed);
+            EaglercraftRandom rand = getBuildingRandom(chunkX, chunkZ, provider.seed);
             return rand.nextFloat() < profile.BUILDING2X2_CHANCE;
          } else {
             return false;
@@ -601,7 +601,7 @@ public class BuildingInfo implements ILostChunkInfo {
       this.cityLevel = characteristics.cityLevel;
       this.buildingType = characteristics.buildingType;
       this.multiBuilding = characteristics.multiBuilding;
-      Random rand = getBuildingRandom(chunkX, chunkZ, provider.seed);
+      EaglercraftRandom rand = getBuildingRandom(chunkX, chunkZ, provider.seed);
       rand.nextFloat();
       boolean b = characteristics.couldHaveBuilding;
       if (b && this.building2x2Section < 0) {
@@ -885,7 +885,7 @@ public class BuildingInfo implements ILostChunkInfo {
    private static int getCityLevelSpace(int chunkX, int chunkZ, LostCityChunkGenerator provider) {
       if (CitySphere.intersectsWithCitySphere(chunkX, chunkZ, provider)) {
          float dist = CitySphere.getRelativeDistanceToCityCenter(chunkX, chunkZ, provider);
-         Random rand = new Random(provider.seed + (long)chunkZ * 817505771L + (long)chunkX * 217645177L);
+         EaglercraftRandom rand = new EaglercraftRandom(provider.seed + (long)chunkZ * 817505771L + (long)chunkX * 217645177L);
          rand.nextFloat();
          rand.nextFloat();
          if (dist < 0.3F) {
@@ -977,7 +977,7 @@ public class BuildingInfo implements ILostChunkInfo {
       }
    }
 
-   private Block getRandomDoor(Random rand) {
+   private Block getRandomDoor(EaglercraftRandom rand) {
       Block doorBlock;
       switch(rand.nextInt(7)) {
       case 0:
@@ -1338,8 +1338,8 @@ public class BuildingInfo implements ILostChunkInfo {
       }
    }
 
-   public static Random getBuildingRandom(int chunkX, int chunkZ, long seed) {
-      Random rand = new QualityRandom(seed + (long)chunkZ * 341873128712L + (long)chunkX * 132897987541L);
+   public static EaglercraftRandom getBuildingRandom(int chunkX, int chunkZ, long seed) {
+      EaglercraftRandom rand = new QualityRandom(seed + (long)chunkZ * 341873128712L + (long)chunkX * 132897987541L);
       rand.nextFloat();
       rand.nextFloat();
       return rand;

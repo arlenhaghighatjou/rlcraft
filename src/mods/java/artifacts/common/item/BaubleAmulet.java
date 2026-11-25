@@ -6,7 +6,7 @@ import artifacts.common.init.ModLootTables;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -77,7 +77,7 @@ public class BaubleAmulet extends BaubleBase {
                event.setCanceled(true);
             } else if (event.getSource().getTrueSource() instanceof EntityLiving && ModConfig.general.shockChance > 0.0D && (ModConfig.general.pendantCooldown <= 0 || !((EntityPlayer)event.getEntity()).getCooldownTracker().hasCooldown(ModItems.SHOCK_PENDANT))) {
                EntityLiving attacker = (EntityLiving)event.getSource().getTrueSource();
-               Random random = ((EntityPlayer)event.getEntity()).getRNG();
+               EaglercraftRandom random = ((EntityPlayer)event.getEntity()).getRNG();
                if ((double)random.nextFloat() < ModConfig.general.shockChance && attacker.world.canSeeSky(attacker.getPosition().up())) {
                   attacker.world.addWeatherEffect(new EntityLightningBolt(attacker.world, attacker.posX, attacker.posY, attacker.posZ, false));
                   if (ModConfig.general.pendantCooldown > 0) {
@@ -89,7 +89,7 @@ public class BaubleAmulet extends BaubleBase {
 
          if ((hasUltimatePendant || BaublesApi.isBaubleEquipped((EntityPlayer)event.getEntity(), ModItems.FLAME_PENDANT) != -1) && event.getSource().getTrueSource() instanceof EntityLiving && ModConfig.general.flameChance > 0.0D && (ModConfig.general.pendantCooldown <= 0 || !((EntityPlayer)event.getEntity()).getCooldownTracker().hasCooldown(ModItems.FLAME_PENDANT))) {
             EntityLiving attacker = (EntityLiving)event.getSource().getTrueSource();
-            Random random = ((EntityPlayer)event.getEntity()).getRNG();
+            EaglercraftRandom random = ((EntityPlayer)event.getEntity()).getRNG();
             if (!attacker.isImmuneToFire() && attacker.attackable() && (double)random.nextFloat() < ModConfig.general.flameChance) {
                attacker.setFire(4);
                attacker.attackEntityFrom((new EntityDamageSource("onFire", event.getEntity())).setFireDamage(), 2.0F);
@@ -101,7 +101,7 @@ public class BaubleAmulet extends BaubleBase {
 
          if ((hasUltimatePendant || BaublesApi.isBaubleEquipped((EntityPlayer)event.getEntity(), ModItems.THORN_PENDANT) != -1) && event.getSource().getTrueSource() instanceof EntityLiving && ModConfig.general.thornChance > 0.0D && (ModConfig.general.pendantCooldown <= 0 || !((EntityPlayer)event.getEntity()).getCooldownTracker().hasCooldown(ModItems.THORN_PENDANT))) {
             EntityLiving attacker = (EntityLiving)event.getSource().getTrueSource();
-            Random random = ((EntityPlayer)event.getEntity()).getRNG();
+            EaglercraftRandom random = ((EntityPlayer)event.getEntity()).getRNG();
             if (attacker.attackable() && (double)random.nextFloat() < ModConfig.general.thornChance) {
                attacker.attackEntityFrom(DamageSource.causeThornsDamage(event.getEntity()), (float)(2 + random.nextInt(3)));
                if (ModConfig.general.pendantCooldown > 0) {

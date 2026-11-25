@@ -3,7 +3,7 @@ package atomicstryker.multimine.common.network;
 import atomicstryker.multimine.client.MultiMineClient;
 import atomicstryker.multimine.common.MultiMineServer;
 import atomicstryker.multimine.common.network.NetworkHelper.IPacket;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.client.FMLClientHandler;

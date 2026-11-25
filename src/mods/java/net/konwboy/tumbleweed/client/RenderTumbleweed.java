@@ -1,7 +1,7 @@
 package net.konwboy.tumbleweed.client;
 
 import net.konwboy.tumbleweed.common.EntityTumbleweed;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

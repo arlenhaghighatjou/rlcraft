@@ -1,7 +1,7 @@
 package greymerk.roguelike.treasure.loot;
 
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ChestType {
    public static ChestType EMPTY = new ChestType("EMPTY");
@@ -32,7 +32,7 @@ public class ChestType {
       this.identity = identity.toUpperCase();
    }
 
-   public static ChestType chooseRandomAmong(Random random, ChestType[] chestTypes) {
+   public static ChestType chooseRandomAmong(EaglercraftRandom random, ChestType[] chestTypes) {
       return chestTypes[random.nextInt(chestTypes.length)];
    }
 

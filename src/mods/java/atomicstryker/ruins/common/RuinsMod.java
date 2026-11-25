@@ -4,7 +4,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -173,7 +173,7 @@ public class RuinsMod
     private class RuinsWorldGenerator implements IWorldGenerator
     {
         @Override
-        public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
+        public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
         {
             if (world.isRemote || !world.getWorldInfo().isMapFeaturesEnabled())
             {
@@ -209,7 +209,7 @@ public class RuinsMod
         }
     }
 
-    private void generateNether(World world, Random random, int chunkX, int chunkZ)
+    private void generateNether(World world, EaglercraftRandom random, int chunkX, int chunkZ)
     {
         WorldHandle wh = getWorldHandle(world);
         if (wh.fileHandle != null)
@@ -222,7 +222,7 @@ public class RuinsMod
         }
     }
 
-    private void generateSurface(World world, Random random, int chunkX, int chunkZ)
+    private void generateSurface(World world, EaglercraftRandom random, int chunkX, int chunkZ)
     {
         WorldHandle wh = getWorldHandle(world);
         if (wh.fileHandle != null)

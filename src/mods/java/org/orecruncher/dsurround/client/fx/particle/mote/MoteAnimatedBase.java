@@ -1,7 +1,7 @@
 package org.orecruncher.dsurround.client.fx.particle.mote;
 
 import javax.annotation.Nonnull;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -87,7 +87,7 @@ public abstract class MoteAnimatedBase extends MoteMotionBase {
       return 15728880;
    }
 
-   public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+   public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
       double x = (double)this.renderX(partialTicks);
       double y = (double)this.renderY(partialTicks);
       double z = (double)this.renderZ(partialTicks);

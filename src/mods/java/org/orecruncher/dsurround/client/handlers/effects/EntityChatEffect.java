@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -47,7 +47,7 @@ public class EntityChatEffect extends EntityEffect {
    private static final Translations xlate = new Translations();
    private static final ObjectArray<String> minecraftSplashText = new ObjectArray();
    private static final Map<String, EntityChatEffect.EntityChatData> messages = new Object2ObjectOpenHashMap();
-   protected static final Random random;
+   protected static final EaglercraftRandom random;
    protected final EntityChatEffect.EntityChatData data;
    protected long nextChat;
    public static final IEntityEffectFactoryFilter DEFAULT_FILTER;

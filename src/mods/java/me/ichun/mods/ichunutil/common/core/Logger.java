@@ -1,7 +1,7 @@
 package me.ichun.mods.ichunutil.common.core;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 
 public class Logger {
    public final String modName;

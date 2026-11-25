@@ -1,7 +1,7 @@
 package org.orecruncher.dsurround.client.aurora;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,7 +30,7 @@ public class AuroraShaderBand extends AuroraBase {
    };
    protected final float auroraWidth;
    protected final float panelTexWidth;
-   protected final BufferBuilder buffer;
+   protected final WorldRenderer buffer;
 
    public AuroraShaderBand(long seed) {
       super(seed, true);
@@ -51,8 +51,8 @@ public class AuroraShaderBand extends AuroraBase {
       return 18.0F;
    }
 
-   protected BufferBuilder createList() {
-      BufferBuilder renderer = new BufferBuilder(4096);
+   protected WorldRenderer createList() {
+      WorldRenderer renderer = new WorldRenderer(4096);
       Panel[] array = this.band.getNodeList();
       renderer.begin(5, DefaultVertexFormats.POSITION_TEX);
       double posY = (double)array[0].getModdedY();

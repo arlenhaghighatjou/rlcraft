@@ -21,7 +21,7 @@ import net.theawesomegem.fishingmadebetter.DefaultFishes;
 import net.theawesomegem.fishingmadebetter.common.data.FishData;
 import net.theawesomegem.fishingmadebetter.proxy.CommonProxy;
 import net.theawesomegem.fishingmadebetter.util.TextUtils;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class CustomConfigurationHandler {
    public static Map<String, FishData> fishDataMap = new HashMap();

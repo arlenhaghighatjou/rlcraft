@@ -8,7 +8,7 @@ import ichttt.mods.firstaid.api.event.FirstAidLivingDamageEvent;
 import ichttt.mods.firstaid.common.network.MessageUpdatePart;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BrokenHeartBaubleHandler {
-   public static final UUID MODIFIER_UUID = UUID.fromString("554f3929-4193-4ae5-a4da-4b528a89ca32");
+   public static final EaglercraftUUID MODIFIER_UUID = EaglercraftUUID.fromString("554f3929-4193-4ae5-a4da-4b528a89ca32");
 
    public BrokenHeartBaubleHandler() {
    }

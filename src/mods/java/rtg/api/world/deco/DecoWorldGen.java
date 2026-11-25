@@ -1,6 +1,6 @@
 package rtg.api.world.deco;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -32,7 +32,7 @@ public class DecoWorldGen extends DecoBase {
       this.setEventType(eventtype);
    }
 
-   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, Random rand, ChunkPos chunkPos, float river, boolean hasVillage) {
+   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, EaglercraftRandom rand, ChunkPos chunkPos, float river, boolean hasVillage) {
       for(int i = 0; i <= this.loops; ++i) {
          BlockPos pos = getOffsetPos(chunkPos).add(rand.nextInt(16), 0, rand.nextInt(16));
          int y = rtgWorld.world().getHeight(pos).getY();

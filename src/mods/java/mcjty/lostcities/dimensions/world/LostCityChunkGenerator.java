@@ -3,7 +3,7 @@ package mcjty.lostcities.dimensions.world;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import mcjty.lostcities.LostCities;
 import mcjty.lostcities.api.IChunkPrimerFactory;
@@ -76,7 +76,7 @@ public class LostCityChunkGenerator implements IChunkGenerator, ILostChunkGenera
    private LostCityProfile profile;
    private LostCityProfile outsideProfile;
    public WorldStyle worldStyle;
-   public Random rand;
+   public EaglercraftRandom rand;
    public long seed;
    public int dimensionId;
    public World worldObj;
@@ -160,7 +160,7 @@ public class LostCityChunkGenerator implements IChunkGenerator, ILostChunkGenera
          this.worldObj = world;
          this.worldType = world.getWorldInfo().getTerrainType();
          this.seed = seed;
-         this.rand = new Random((seed + 516L) * 314L);
+         this.rand = new EaglercraftRandom((seed + 516L) * 314L);
          int waterLevel = (byte)(this.profile.GROUNDLEVEL - this.profile.WATERLEVEL_OFFSET);
          if (waterLevel <= 0) {
             waterLevel = 1;
@@ -305,7 +305,7 @@ public class LostCityChunkGenerator implements IChunkGenerator, ILostChunkGenera
       return chunkprimer;
    }
 
-   private void generateTrees(Random random, int chunkX, int chunkZ, World world, LostCityChunkGenerator provider) {
+   private void generateTrees(EaglercraftRandom random, int chunkX, int chunkZ, World world, LostCityChunkGenerator provider) {
       BuildingInfo info = BuildingInfo.getBuildingInfo(chunkX, chunkZ, provider);
 
       for(BlockPos pos : info.getSaplingTodo()) {
@@ -318,7 +318,7 @@ public class LostCityChunkGenerator implements IChunkGenerator, ILostChunkGenera
       info.clearSaplingTodo();
    }
 
-   private void generateVines(Random random, int chunkX, int chunkZ, World world, LostCityChunkGenerator provider) {
+   private void generateVines(EaglercraftRandom random, int chunkX, int chunkZ, World world, LostCityChunkGenerator provider) {
       int cx = chunkX * 16;
       int cz = chunkZ * 16;
       BuildingInfo info = BuildingInfo.getBuildingInfo(chunkX, chunkZ, provider);
@@ -376,7 +376,7 @@ public class LostCityChunkGenerator implements IChunkGenerator, ILostChunkGenera
 
    }
 
-   private void createVineStrip(Random random, World world, int bottom, PropertyBool direction, BlockPos pos, BlockPos vineHolderPos) {
+   private void createVineStrip(EaglercraftRandom random, World world, int bottom, PropertyBool direction, BlockPos pos, BlockPos vineHolderPos) {
       if (!world.isAirBlock(vineHolderPos)) {
          if (world.isAirBlock(pos)) {
             world.setBlockState(pos, Blocks.VINE.getDefaultState().withProperty(direction, Boolean.valueOf(true)));
@@ -400,7 +400,7 @@ public class LostCityChunkGenerator implements IChunkGenerator, ILostChunkGenera
       return nbt.getString("id");
    }
 
-   private void generateLootSpawners(Random random, final int chunkX, final int chunkZ, final World world, LostCityChunkGenerator chunkGenerator) {
+   private void generateLootSpawners(EaglercraftRandom random, final int chunkX, final int chunkZ, final World world, LostCityChunkGenerator chunkGenerator) {
       BuildingInfo info = BuildingInfo.getBuildingInfo(chunkX, chunkZ, chunkGenerator);
 
       for(Pair<BlockPos, BuildingInfo.ConditionTodo> pair : info.getMobSpawnerTodo()) {
@@ -475,7 +475,7 @@ public class LostCityChunkGenerator implements IChunkGenerator, ILostChunkGenera
       info.clearLightingUpdateTodo();
    }
 
-   private void createLoot(final BuildingInfo info, Random random, final World world, final BlockPos pos, BuildingInfo.ConditionTodo todo) {
+   private void createLoot(final BuildingInfo info, EaglercraftRandom random, final World world, final BlockPos pos, BuildingInfo.ConditionTodo todo) {
       if (random.nextFloat() >= this.profile.CHEST_WITHOUT_LOOT_CHANCE) {
          TileEntity tileentity = world.getTileEntity(pos);
          if (tileentity instanceof TileEntityLockableLoot && todo != null) {

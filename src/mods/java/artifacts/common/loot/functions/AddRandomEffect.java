@@ -3,7 +3,7 @@ package artifacts.common.loot.functions;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.ParametersAreNonnullByDefault;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.item.ItemStack;
@@ -21,7 +21,7 @@ public class AddRandomEffect extends LootFunction {
       super(conditions);
    }
 
-   public ItemStack apply(ItemStack stack, Random random, LootContext context) {
+   public ItemStack apply(ItemStack stack, EaglercraftRandom random, LootContext context) {
       PotionType type = (PotionType)PotionType.REGISTRY.getRandomObject(random);
       if (type == PotionType.getPotionTypeForName("empty")) {
          type = PotionType.getPotionTypeForName("water");

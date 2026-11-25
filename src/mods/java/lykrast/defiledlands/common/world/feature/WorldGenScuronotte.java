@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.world.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.init.ModBlocks;
 import net.minecraft.block.BlockBush;
 import net.minecraft.util.math.BlockPos;
@@ -11,7 +11,7 @@ public class WorldGenScuronotte extends WorldGenerator {
    public WorldGenScuronotte() {
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       for(int i = 0; i < 8; ++i) {
          BlockPos blockpos = position.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
          if (worldIn.isAirBlock(blockpos) && (!worldIn.provider.isNether() || blockpos.getY() < worldIn.getHeight() - 1) && ((BlockBush)ModBlocks.scuronotte).canBlockStay(worldIn, blockpos, ModBlocks.scuronotte.getDefaultState())) {

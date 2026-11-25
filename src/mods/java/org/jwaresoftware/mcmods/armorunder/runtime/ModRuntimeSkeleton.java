@@ -2,7 +2,7 @@ package org.jwaresoftware.mcmods.armorunder.runtime;
 
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -15,8 +15,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.event.FMLStateEvent;
 import net.minecraftforge.oredict.OreDictionary;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.jwaresoftware.mcmods.armorunder.ModConfig;
 import org.jwaresoftware.mcmods.armorunder.ModInfo;
 import org.jwaresoftware.mcmods.armorunder.ModItem;
@@ -37,7 +37,7 @@ import org.jwaresoftware.mcmods.lib.loot.RandomChanceWithLuckCondition;
 
 abstract class ModRuntimeSkeleton implements IModRuntime {
    protected static final Logger _modLogInstance = LogManager.getLogger("AUW");
-   protected static final Random _modPRNG = new Random();
+   protected static final EaglercraftRandom _modPRNG = new EaglercraftRandom();
    protected final Map<String, Boolean> _flags = new Hashtable();
    protected ModConfig _mainConfig = ModConfig.getInstance();
 
@@ -50,7 +50,7 @@ abstract class ModRuntimeSkeleton implements IModRuntime {
       return _modLogInstance;
    }
 
-   public Random getPRNG() {
+   public EaglercraftRandom getPRNG() {
       return _modPRNG;
    }
 

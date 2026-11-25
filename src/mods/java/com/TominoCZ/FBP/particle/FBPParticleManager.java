@@ -21,7 +21,7 @@ import net.minecraft.client.particle.ParticleRain;
 import net.minecraft.client.particle.ParticleSmokeNormal;
 import net.minecraft.client.renderer.DestroyBlockProgress;
 import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -53,7 +53,7 @@ public class FBPParticleManager extends ParticleManager {
    private static MethodHandle mZ;
    private static IParticleFactory particleFactory;
    private static IBlockState blockState;
-   private static TextureAtlasSprite white;
+   private static EaglerTextureAtlasSprite white;
    private static Lookup lookup;
    Minecraft mc;
 
@@ -180,7 +180,7 @@ public class FBPParticleManager extends ParticleManager {
             blockState = Block.getStateById(parameters[0]);
             if (blockState != null && (!FBP.frozen || FBP.spawnWhileFrozen) && (FBP.spawnRedstoneBlockParticles || blockState.getBlock() != Blocks.REDSTONE_BLOCK)) {
                if (!(blockState.getBlock() instanceof BlockLiquid) && !FBP.INSTANCE.isBlacklisted(blockState.getBlock(), true)) {
-                  toSpawn = (new FBPParticleDigging(this.world, xCoord, yCoord + 0.10000000149011612D, zCoord, xSpeed, ySpeed, zSpeed, -1.0F, 1.0F, 1.0F, 1.0F, blockState, (EnumFacing)null, (TextureAtlasSprite)null)).init().multipleParticleScaleBy(0.6F);
+                  toSpawn = (new FBPParticleDigging(this.world, xCoord, yCoord + 0.10000000149011612D, zCoord, xSpeed, ySpeed, zSpeed, -1.0F, 1.0F, 1.0F, 1.0F, blockState, (EnumFacing)null, (EaglerTextureAtlasSprite)null)).init().multipleParticleScaleBy(0.6F);
                } else {
                   toSpawn = particle;
                }
@@ -198,7 +198,7 @@ public class FBPParticleManager extends ParticleManager {
          state = state.getActualState(this.world, pos);
          b = state.getBlock();
          int i = 4;
-         TextureAtlasSprite texture = this.mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
+         EaglerTextureAtlasSprite texture = this.mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
 
          for(int j = 0; j < FBP.particlesPerAxis; ++j) {
             for(int k = 0; k < FBP.particlesPerAxis; ++k) {
@@ -284,7 +284,7 @@ public class FBPParticleManager extends ParticleManager {
                }
 
                if (!FBP.INSTANCE.isBlacklisted(iblockstate.getBlock(), true)) {
-                  Particle toSpawn = (new FBPParticleDigging(this.world, d0, d1, d2, 0.0D, 0.0D, 0.0D, -2.0F, 1.0F, 1.0F, 1.0F, iblockstate, side, (TextureAtlasSprite)null)).setBlockPos(pos);
+                  Particle toSpawn = (new FBPParticleDigging(this.world, d0, d1, d2, 0.0D, 0.0D, 0.0D, -2.0F, 1.0F, 1.0F, 1.0F, iblockstate, side, (EaglerTextureAtlasSprite)null)).setBlockPos(pos);
                   if (FBP.smartBreaking) {
                      toSpawn = ((FBPParticleDigging)toSpawn).MultiplyVelocity(side == EnumFacing.UP ? 0.7F : 0.15F);
                      toSpawn = toSpawn.multipleParticleScaleBy(0.325F + (float)damage / 10.0F * 0.5F);

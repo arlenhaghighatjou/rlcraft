@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -32,7 +32,7 @@ public class TextureSetMap extends SaveData {
    }
 
    public TextureSet createAndRegister(ResourceLocation... textures) {
-      TextureSet set = new TextureSet(UUID.randomUUID().toString(), textures);
+      TextureSet set = new TextureSet(EaglercraftUUID.randomUUID().toString(), textures);
       this.register(set);
       return set;
    }

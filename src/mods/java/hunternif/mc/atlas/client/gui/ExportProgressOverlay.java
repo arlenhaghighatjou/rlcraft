@@ -3,8 +3,8 @@ package hunternif.mc.atlas.client.gui;
 import hunternif.mc.atlas.util.ExportImageUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
@@ -45,7 +45,7 @@ public enum ExportProgressOverlay {
 
          GlStateManager.disableTexture2D();
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder vb = tessellator.getBuffer();
+         WorldRenderer vb = tessellator.getBuffer();
          vb.begin(7, DefaultVertexFormats.POSITION_COLOR);
          vb.pos((double)x, (double)y, 0.0D).color(0.5F, 0.5F, 0.5F, 1.0F).endVertex();
          vb.pos((double)x, (double)(y + barHeight), 0.0D).color(0.5F, 0.5F, 0.5F, 1.0F).endVertex();

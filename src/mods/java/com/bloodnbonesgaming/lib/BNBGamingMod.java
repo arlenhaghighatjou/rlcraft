@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.Mod.CustomProperty;
 import net.minecraftforge.fml.relauncher.Side;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public abstract class BNBGamingMod {
    protected LogHelper log;

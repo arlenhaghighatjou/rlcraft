@@ -2,7 +2,7 @@ package com.github.alexthe666.iceandfire.world.village;
 
 import com.github.alexthe666.iceandfire.world.WorldGenAnimalFarm;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -17,17 +17,17 @@ public class ComponentAnimalFarm extends Village {
    public ComponentAnimalFarm() {
    }
 
-   public ComponentAnimalFarm(Start startPiece, int p2, Random random, StructureBoundingBox structureBox, EnumFacing facing) {
+   public ComponentAnimalFarm(Start startPiece, int p2, EaglercraftRandom random, StructureBoundingBox structureBox, EnumFacing facing) {
       this.setCoordBaseMode(facing);
       this.boundingBox = structureBox;
    }
 
-   public static ComponentAnimalFarm buildComponent(Start startPiece, List<StructureComponent> pieces, Random random, int x, int y, int z, EnumFacing facing, int p5) {
+   public static ComponentAnimalFarm buildComponent(Start startPiece, List<StructureComponent> pieces, EaglercraftRandom random, int x, int y, int z, EnumFacing facing, int p5) {
       StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(x, y, z, 0, 0, 0, 8, 7, 8, facing);
       return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(pieces, structureboundingbox) == null ? new ComponentAnimalFarm(startPiece, p5, random, structureboundingbox, facing) : null;
    }
 
-   public boolean addComponentParts(World world, Random random, StructureBoundingBox sbb) {
+   public boolean addComponentParts(World world, EaglercraftRandom random, StructureBoundingBox sbb) {
       if (this.averageGroundLevel < 0) {
          this.averageGroundLevel = this.getAverageGroundLevel(world, sbb);
          if (this.averageGroundLevel < 0) {

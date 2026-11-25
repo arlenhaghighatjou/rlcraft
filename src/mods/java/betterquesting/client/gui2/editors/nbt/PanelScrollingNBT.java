@@ -42,7 +42,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.fluids.FluidStack;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class PanelScrollingNBT extends CanvasScrolling implements IPEventListener {
    private NBTBase nbt;

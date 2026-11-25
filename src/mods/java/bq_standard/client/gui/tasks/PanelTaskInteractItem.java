@@ -17,7 +17,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetIcon;
 import bq_standard.client.theme.BQSTextures;
 import bq_standard.core.BQ_Standard;
 import bq_standard.tasks.TaskInteractItem;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import mezz.jei.Internal;
 import mezz.jei.api.recipe.IFocus.Mode;
 import mezz.jei.gui.Focus;
@@ -49,7 +49,7 @@ public class PanelTaskInteractItem extends CanvasEmpty {
       }
 
       this.addPanel(new PanelGeneric(new GuiTransform(GuiAlign.MID_CENTER, -8, -32, 16, 16, 0), PresetIcon.ICON_RIGHT.getTexture()));
-      UUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
+      EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
       int prog = this.task.getUsersProgress(playerID);
       this.addPanel((new PanelTextBox(new GuiTransform(GuiAlign.MID_CENTER, -16, -14, 32, 14, 0), prog + "/" + this.task.required)).setAlignment(1).setColor(PresetColor.TEXT_MAIN.getColor()));
       this.addPanel(new PanelGeneric(new GuiTransform(GuiAlign.MID_CENTER, -48, 8, 24, 24, 0), BQSTextures.HAND_LEFT.getTexture()));

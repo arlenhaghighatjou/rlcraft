@@ -1,7 +1,7 @@
 package ivorius.ivtoolkit.models;
 
 import org.lwjgl.util.vector.Quaternion;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class NodeKeyframe {
    public float keytime;

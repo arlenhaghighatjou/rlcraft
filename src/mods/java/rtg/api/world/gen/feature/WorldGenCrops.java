@@ -1,6 +1,6 @@
 package rtg.api.world.gen.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
@@ -28,11 +28,11 @@ public class WorldGenCrops extends WorldGenerator {
    }
 
    @ParametersAreNonnullByDefault
-   public boolean generate(World world, Random rand, BlockPos blockPos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos blockPos) {
       return this.generate(world, rand, blockPos.getX(), blockPos.getY(), blockPos.getZ());
    }
 
-   public boolean generate(World world, Random rand, int x, int y, int z) {
+   public boolean generate(World world, EaglercraftRandom rand, int x, int y, int z) {
       while(true) {
          if (y > 0) {
             IBlockState b = world.getBlockState(new BlockPos(x, y, z));

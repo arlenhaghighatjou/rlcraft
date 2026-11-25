@@ -1,7 +1,7 @@
 package com.github.alexthe666.iceandfire.client.render.entity.layer;
 
 import com.github.alexthe666.iceandfire.entity.EntitySeaSerpent;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.RenderLivingBase;

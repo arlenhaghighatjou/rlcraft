@@ -12,7 +12,7 @@ import com.dhanantry.scapeandrunparasites.util.ParasiteEventEntity;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -194,7 +194,7 @@ public class EntityAIDodAttack extends EntityAIBase {
          entityout.setDead();
          return false;
       } else {
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          double x = in.posX;
          double y = in.posY;
          double z = in.posZ;

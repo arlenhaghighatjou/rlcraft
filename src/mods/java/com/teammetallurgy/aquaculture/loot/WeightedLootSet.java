@@ -3,7 +3,7 @@ package com.teammetallurgy.aquaculture.loot;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -45,7 +45,7 @@ public class WeightedLootSet {
    }
 
    public ItemStack getRandomLoot() {
-      Random rand = new Random();
+      EaglercraftRandom rand = new EaglercraftRandom();
       int weight = rand.nextInt(this.totalWeight + 1);
       ItemStack stack = null;
       Set<Integer> keySet = this.loot.keySet();

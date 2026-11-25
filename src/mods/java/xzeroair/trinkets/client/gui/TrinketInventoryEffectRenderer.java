@@ -2,7 +2,7 @@ package xzeroair.trinkets.client.gui;
 
 import com.google.common.collect.Ordering;
 import java.util.Collection;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraft.potion.Potion;

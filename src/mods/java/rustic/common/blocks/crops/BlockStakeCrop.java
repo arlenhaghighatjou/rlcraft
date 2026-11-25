@@ -2,7 +2,7 @@ package rustic.common.blocks.crops;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -104,7 +104,7 @@ public class BlockStakeCrop extends BlockBase implements IGrowable, IPlantable {
 
    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
       List<ItemStack> stacks = new ArrayList();
-      Random rand = world instanceof World ? ((World)world).rand : new Random();
+      EaglercraftRandom rand = world instanceof World ? ((World)world).rand : new EaglercraftRandom();
       stacks.add(new ItemStack(this.getSeed(), rand.nextInt(2) + 1));
       if (((Integer)state.getValue(AGE)).intValue() >= this.getMaxAge()) {
          stacks.add(new ItemStack(this.getCrop()));
@@ -118,7 +118,7 @@ public class BlockStakeCrop extends BlockBase implements IGrowable, IPlantable {
       this.checkAndDropBlock(worldIn, pos, state);
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       super.updateTick(worldIn, pos, state, rand);
       this.checkAndDropBlock(worldIn, pos, state);
       if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
@@ -162,11 +162,11 @@ public class BlockStakeCrop extends BlockBase implements IGrowable, IPlantable {
       return ((Integer)state.getValue(AGE)).intValue() < this.getMaxAge();
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return true;
    }
 
-   public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       int i = ((Integer)state.getValue(AGE)).intValue() + this.getBonemealAgeIncrease(worldIn);
       int j = this.getMaxAge();
       if (i > j) {

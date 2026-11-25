@@ -26,7 +26,7 @@ import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraftforge.event.world.WorldEvent.PotentialSpawns;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class PotentialSpawnRule extends RuleBase<EventGetter> {
    public static final IEventQuery<PotentialSpawns> EVENT_QUERY = new IEventQuery<PotentialSpawns>() {

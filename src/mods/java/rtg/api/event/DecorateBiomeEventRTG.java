@@ -1,6 +1,6 @@
 package rtg.api.event;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
@@ -9,7 +9,7 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType
 import net.minecraftforge.fml.common.eventhandler.Event.HasResult;
 
 public class DecorateBiomeEventRTG extends DecorateBiomeEvent {
-   public DecorateBiomeEventRTG(World world, Random rand, BlockPos pos) {
+   public DecorateBiomeEventRTG(World world, EaglercraftRandom rand, BlockPos pos) {
       super(world, rand, pos);
    }
 
@@ -18,14 +18,14 @@ public class DecorateBiomeEventRTG extends DecorateBiomeEvent {
       private final EventType type;
       private int amount;
 
-      public DecorateRTG(World world, Random rand, BlockPos pos, EventType type, int amount) {
+      public DecorateRTG(World world, EaglercraftRandom rand, BlockPos pos, EventType type, int amount) {
          super(world, rand, pos, type);
          this.amount = -1;
          this.type = type;
          this.amount = amount;
       }
 
-      public DecorateRTG(World world, Random rand, BlockPos pos, EventType type) {
+      public DecorateRTG(World world, EaglercraftRandom rand, BlockPos pos, EventType type) {
          this(world, rand, pos, type, -1);
       }
 

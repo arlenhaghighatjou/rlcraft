@@ -2,7 +2,7 @@ package svenhjol.charm.base;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockShulkerBox;
@@ -65,7 +65,7 @@ public final class ASMHooks {
       return LeatherArmorInvisibility.isArmorInvisible(entity, item);
    }
 
-   public static boolean addComponentParts(StructureComponent component, World world, Random rand, StructureBoundingBox box) {
+   public static boolean addComponentParts(StructureComponent component, World world, EaglercraftRandom rand, StructureBoundingBox box) {
       StructureEventBase.AddComponentPartsEvent preEvent = new StructureEventBase.Pre(component, world, box);
       MinecraftForge.EVENT_BUS.post(preEvent);
       if (preEvent.getResult() == Result.DENY) {

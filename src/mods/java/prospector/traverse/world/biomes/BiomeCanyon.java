@@ -1,6 +1,6 @@
 package prospector.traverse.world.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSand.EnumType;
@@ -47,7 +47,7 @@ public class BiomeCanyon extends Biome implements WorldGenConstants {
       return super.getModdedBiomeGrassColor(-7306931);
    }
 
-   public WorldGenerator getRandomWorldGenForGrass(Random rand) {
+   public WorldGenerator getRandomWorldGenForGrass(EaglercraftRandom rand) {
       return DEAD_GRASS_FEATURE;
    }
 
@@ -59,7 +59,7 @@ public class BiomeCanyon extends Biome implements WorldGenConstants {
       return super.getModdedBiomeFoliageColor(-6389427);
    }
 
-   public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
+   public void genTerrainBlocks(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
       int i = worldIn.getSeaLevel();
       IBlockState iblockstate = this.topBlock;
       IBlockState iblockstate1 = this.fillerBlock;

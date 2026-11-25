@@ -1,6 +1,6 @@
 package mcjty.lostcities.network;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import mcjty.lostcities.config.LostCityProfile;
 import mcjty.lostcities.dimensions.world.WorldTypeTools;
 import net.minecraft.entity.player.EntityPlayerMP;

@@ -9,7 +9,7 @@ import ivorius.reccomplex.commands.parameters.expect.RCE;
 import ivorius.reccomplex.files.loading.ResourceDirectory;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;

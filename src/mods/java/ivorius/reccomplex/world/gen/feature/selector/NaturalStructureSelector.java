@@ -8,7 +8,7 @@ import ivorius.reccomplex.utils.expression.DimensionExpression;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.DoublePredicate;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.Biome;
@@ -67,7 +67,7 @@ public class NaturalStructureSelector {
       public SimpleCategory() {
       }
 
-      public int structuresInBiome(Biome biome, WorldProvider worldProvider, double totalWeight, Float distanceToSpawn, Random random) {
+      public int structuresInBiome(Biome biome, WorldProvider worldProvider, double totalWeight, Float distanceToSpawn, EaglercraftRandom random) {
          return (int)Arrays.stream(this.spawnChance(biome, worldProvider)).filter((chance) -> {
             return random.nextDouble() < chance * this.amountMultiplier(totalWeight) * this.distanceMultiplier(distanceToSpawn) * (double)RCConfig.structureSpawnChanceModifier;
          }).count();

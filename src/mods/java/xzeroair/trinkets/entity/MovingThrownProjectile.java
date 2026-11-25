@@ -4,7 +4,7 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -297,7 +297,7 @@ public class MovingThrownProjectile extends EntityFireball implements IProjectil
 
    public void spawnParticle() {
       try {
-         Random random = Reference.random;
+         EaglercraftRandom random = Reference.random;
          double d0 = (double)(random.nextFloat() * 2.0F - 1.0F);
          double d1 = (double)(random.nextFloat() * 2.0F - 1.0F);
          double d2 = (double)(random.nextFloat() * 2.0F - 1.0F);

@@ -1,7 +1,7 @@
 package net.silentchaos512.lib.client.particle;
 
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import net.silentchaos512.lib.client.render.BufferBuilderSL;
@@ -17,7 +17,7 @@ public class ParticleSL extends Particle {
       super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
    }
 
-   public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+   public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
       BufferBuilderSL bufferBuilderSl = BufferBuilderSL.INSTANCE.internalAcquireMC12(buffer);
       this.clRenderParticle(bufferBuilderSl, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
    }

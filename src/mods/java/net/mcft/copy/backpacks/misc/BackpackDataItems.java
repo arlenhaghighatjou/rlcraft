@@ -3,7 +3,7 @@ package net.mcft.copy.backpacks.misc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.mcft.copy.backpacks.api.IBackpackData;
 import net.mcft.copy.backpacks.misc.util.NbtUtils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -76,7 +76,7 @@ public class BackpackDataItems implements IBackpackData {
    }
 
    public static void generateLoot(ItemStackHandler items, String tableStr, long seed, World world, EntityPlayer player) {
-      Random rnd = new Random(seed);
+      EaglercraftRandom rnd = new EaglercraftRandom(seed);
       double maxFullness = 0.6D + rnd.nextDouble() * 0.2D;
       int maxOccupiedSlots = (int)Math.ceil((double)items.getSlots() * maxFullness);
       LootTableManager manager = world.getLootTableManager();

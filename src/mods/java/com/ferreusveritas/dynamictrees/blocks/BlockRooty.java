@@ -17,7 +17,7 @@ import com.ferreusveritas.dynamictrees.util.BranchDestructionData;
 import com.ferreusveritas.dynamictrees.util.CoordUtils;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -98,7 +98,7 @@ public class BlockRooty extends Block implements ITreePart, ITileEntityProvider,
       return ((Integer)state.getValue(LIFE)).intValue();
    }
 
-   public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom random) {
       if (random.nextInt(ModConfigs.treeGrowthFolding) == 0) {
          this.updateTree(state, world, pos, random, true);
       }
@@ -109,7 +109,7 @@ public class BlockRooty extends Block implements ITreePart, ITileEntityProvider,
       return EnumFacing.UP;
    }
 
-   public void updateTree(IBlockState rootyState, World world, BlockPos rootPos, Random random, boolean natural) {
+   public void updateTree(IBlockState rootyState, World world, BlockPos rootPos, EaglercraftRandom random, boolean natural) {
       if (CoordUtils.isSurroundedByLoadedChunks(world, rootPos)) {
          boolean viable = false;
          Species species = this.getSpecies(rootyState, world, rootPos);
@@ -157,7 +157,7 @@ public class BlockRooty extends Block implements ITreePart, ITileEntityProvider,
 
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(Blocks.DIRT);
    }
 
@@ -339,7 +339,7 @@ public class BlockRooty extends Block implements ITreePart, ITileEntityProvider,
    public boolean addHitEffects(IBlockState state, World world, RayTraceResult target, ParticleManager manager) {
       BlockPos pos = target.getBlockPos();
       IBlockState mimicState = (IBlockState)((IExtendedBlockState)this.getExtendedState(state, world, pos)).getValue(MimicProperty.MIMIC);
-      Random rand = world.rand;
+      EaglercraftRandom rand = world.rand;
       int x = pos.getX();
       int y = pos.getY();
       int z = pos.getZ();

@@ -16,8 +16,8 @@ import net.minecraft.world.storage.loot.LootContext.EntityTarget;
 import net.minecraft.world.storage.loot.RandomValueRange.Serializer;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.functions.LootFunction;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class LootTableDumper {
    public static final LootTableDumper DEFAULT = new LootTableDumper(new File("dumps/loot_tables"), (new GsonBuilder()).registerTypeAdapter(RandomValueRange.class, new Serializer()).registerTypeAdapter(LootPool.class, new net.minecraft.world.storage.loot.LootPool.Serializer()).registerTypeAdapter(LootTable.class, new net.minecraft.world.storage.loot.LootTable.Serializer()).registerTypeHierarchyAdapter(LootEntry.class, new RobustLootEntrySerialiser()).registerTypeHierarchyAdapter(LootFunction.class, new RobustLootFunctionSerialiser()).registerTypeHierarchyAdapter(LootCondition.class, new RobustLootConditionSerialiser()).registerTypeHierarchyAdapter(EntityTarget.class, new net.minecraft.world.storage.loot.LootContext.EntityTarget.Serializer()).create());

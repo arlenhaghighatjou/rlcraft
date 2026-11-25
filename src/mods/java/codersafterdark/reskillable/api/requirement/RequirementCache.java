@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -44,7 +44,7 @@ public class RequirementCache {
    private boolean valid;
    private boolean isRemote;
    private boolean dirtyCache;
-   private UUID uuid;
+   private EaglercraftUUID uuid;
 
    /** @deprecated */
    @Deprecated
@@ -53,7 +53,7 @@ public class RequirementCache {
       cacheMap.put(new RequirementCache.SidedUUID(this.uuid, this.isRemote), this);
    }
 
-   private RequirementCache(UUID uuid, boolean isClientPlayer) {
+   private RequirementCache(EaglercraftUUID uuid, boolean isClientPlayer) {
       this.requirementCache = new HashMap();
       this.recentlyInvalidated = new HashSet();
       this.valid = true;
@@ -65,7 +65,7 @@ public class RequirementCache {
       return getCache(player.getUniqueID(), player.getEntityWorld().isRemote);
    }
 
-   public static RequirementCache getCache(UUID uuid, boolean isRemote) {
+   public static RequirementCache getCache(EaglercraftUUID uuid, boolean isRemote) {
       RequirementCache.SidedUUID sidedUUID = new RequirementCache.SidedUUID(uuid, isRemote);
       if (cacheMap.containsKey(sidedUUID)) {
          return (RequirementCache)cacheMap.get(sidedUUID);
@@ -80,7 +80,7 @@ public class RequirementCache {
       return hasCache(player.getUniqueID(), player.getEntityWorld().isRemote);
    }
 
-   public static boolean hasCache(UUID uuid, boolean isRemote) {
+   public static boolean hasCache(EaglercraftUUID uuid, boolean isRemote) {
       return cacheMap.containsKey(new RequirementCache.SidedUUID(uuid, isRemote));
    }
 
@@ -99,7 +99,7 @@ public class RequirementCache {
 
    }
 
-   public static void invalidateCache(UUID uuid, Class<? extends Requirement>... cacheTypes) {
+   public static void invalidateCache(EaglercraftUUID uuid, Class<? extends Requirement>... cacheTypes) {
       boolean hasServer = hasCache(uuid, false);
       boolean hasClient = hasCache(uuid, true);
       if (hasServer) {
@@ -126,12 +126,12 @@ public class RequirementCache {
 
    /** @deprecated */
    @Deprecated
-   public static void invalidateCacheNoPacket(UUID uuid, Class<? extends Requirement>... cacheTypes) {
+   public static void invalidateCacheNoPacket(EaglercraftUUID uuid, Class<? extends Requirement>... cacheTypes) {
       invalidateCacheNoPacket(uuid, true, cacheTypes);
       invalidateCacheNoPacket(uuid, false, cacheTypes);
    }
 
-   public static void invalidateCacheNoPacket(UUID uuid, boolean isRemote, Class<? extends Requirement>... cacheTypes) {
+   public static void invalidateCacheNoPacket(EaglercraftUUID uuid, boolean isRemote, Class<? extends Requirement>... cacheTypes) {
       getCache(uuid, isRemote).invalidateCache(cacheTypes);
    }
 
@@ -141,11 +141,11 @@ public class RequirementCache {
 
    /** @deprecated */
    @Deprecated
-   public static boolean requirementAchieved(UUID uuid, Requirement requirement) {
+   public static boolean requirementAchieved(EaglercraftUUID uuid, Requirement requirement) {
       return requirementAchieved(uuid, true, requirement) || requirementAchieved(uuid, false, requirement);
    }
 
-   public static boolean requirementAchieved(UUID uuid, boolean isRemote, Requirement requirement) {
+   public static boolean requirementAchieved(EaglercraftUUID uuid, boolean isRemote, Requirement requirement) {
       return getCache(uuid, isRemote).requirementAchieved(requirement);
    }
 
@@ -179,7 +179,7 @@ public class RequirementCache {
       removeCache(player.getUniqueID(), player.getEntityWorld().isRemote);
    }
 
-   public static void removeCache(UUID uuid, boolean isRemote) {
+   public static void removeCache(EaglercraftUUID uuid, boolean isRemote) {
       RequirementCache.SidedUUID sidedUUID = new RequirementCache.SidedUUID(uuid, isRemote);
       if (cacheMap.containsKey(sidedUUID)) {
          ((RequirementCache)cacheMap.get(sidedUUID)).valid = false;
@@ -310,10 +310,10 @@ public class RequirementCache {
    }
 
    private static class SidedUUID {
-      private final UUID uuid;
+      private final EaglercraftUUID uuid;
       private final boolean isRemote;
 
-      private SidedUUID(UUID uuid, boolean isRemote) {
+      private SidedUUID(EaglercraftUUID uuid, boolean isRemote) {
          this.uuid = uuid;
          this.isRemote = isRemote;
       }

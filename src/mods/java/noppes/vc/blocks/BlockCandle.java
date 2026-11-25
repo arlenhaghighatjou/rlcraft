@@ -1,6 +1,6 @@
 package noppes.vc.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -62,7 +62,7 @@ public class BlockCandle extends BlockBasicLightable {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, EaglercraftRandom rand) {
       if (this != this.unlitBlock()) {
          TileCandle tile = (TileCandle)world.getTileEntity(pos);
          int x = pos.getX();

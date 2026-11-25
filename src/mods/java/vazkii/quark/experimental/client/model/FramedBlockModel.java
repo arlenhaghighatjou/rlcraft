@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -43,14 +43,14 @@ public class FramedBlockModel extends BakedModelWrapper<IBakedModel> {
          if (cache.containsKey(cacheId)) {
             data = (FramedBlockModel.RetextureData)cache.get(cacheId);
          } else {
-            TextureAtlasSprite[] sprites = new TextureAtlasSprite[]{this.getParticleTexture()};
+            EaglerTextureAtlasSprite[] sprites = new EaglerTextureAtlasSprite[]{this.getParticleTexture()};
             int[] tintIndices = new int[]{0};
             if (texState != null && texState.getBlock() != Blocks.AIR) {
                IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(texState);
                sprites[0] = model.getParticleTexture();
                List<BakedQuad> texQuads = model.getQuads(texState, side, rand);
                if (texQuads.size() > 0) {
-                  sprites = new TextureAtlasSprite[texQuads.size()];
+                  sprites = new EaglerTextureAtlasSprite[texQuads.size()];
                   tintIndices = new int[texQuads.size()];
 
                   for(int i = 0; i < texQuads.size(); ++i) {
@@ -94,15 +94,15 @@ public class FramedBlockModel extends BakedModelWrapper<IBakedModel> {
 
    private static class RetextureData {
       private static final String[] SIDES = new String[]{"down", "up", "north", "south", "west", "east"};
-      private final TextureAtlasSprite[] sprites;
+      private final EaglerTextureAtlasSprite[] sprites;
       private final int[] tintIndices;
 
-      public RetextureData(TextureAtlasSprite[] sprites, int[] tintIndices) {
+      public RetextureData(EaglerTextureAtlasSprite[] sprites, int[] tintIndices) {
          this.sprites = sprites;
          this.tintIndices = tintIndices;
       }
 
-      private TextureAtlasSprite getSprite(int side) {
+      private EaglerTextureAtlasSprite getSprite(int side) {
          return this.sprites[Math.min(this.sprites.length - 1, side)];
       }
 

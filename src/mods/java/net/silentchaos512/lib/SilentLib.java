@@ -21,8 +21,8 @@ import net.silentchaos512.lib.network.internal.MessageLeftClick;
 import net.silentchaos512.lib.proxy.internal.SilentLibCommonProxy;
 import net.silentchaos512.lib.util.I18nHelper;
 import net.silentchaos512.lib.util.LogHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 @Mod(
    modid = "silentlib",

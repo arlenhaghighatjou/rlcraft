@@ -1,6 +1,6 @@
 package rustic.common.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -17,7 +17,7 @@ public class WorldGenAllTrees extends WorldGenerator {
    public WorldGenAllTrees() {
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       boolean ret = false;
       if (this.generateOliveTrees(world, rand, pos)) {
          ret = true;
@@ -30,7 +30,7 @@ public class WorldGenAllTrees extends WorldGenerator {
       return ret;
    }
 
-   private boolean generateOliveTrees(World world, Random rand, BlockPos pos) {
+   private boolean generateOliveTrees(World world, EaglercraftRandom rand, BlockPos pos) {
       boolean generated = false;
       Biome biome = world.getBiome(pos);
       boolean validBiome = !BiomeDictionary.hasType(biome, Type.SNOWY) && (BiomeDictionary.hasType(biome, Type.FOREST) || BiomeDictionary.hasType(biome, Type.PLAINS) || BiomeDictionary.hasType(biome, Type.MOUNTAIN));
@@ -49,7 +49,7 @@ public class WorldGenAllTrees extends WorldGenerator {
       return generated;
    }
 
-   private boolean generateIronwoodTrees(World world, Random rand, BlockPos pos) {
+   private boolean generateIronwoodTrees(World world, EaglercraftRandom rand, BlockPos pos) {
       boolean generated = false;
       Biome biome = world.getBiome(pos);
       boolean validBiome = !BiomeDictionary.hasType(biome, Type.DRY) && (BiomeDictionary.hasType(biome, Type.FOREST) || BiomeDictionary.hasType(biome, Type.PLAINS) || BiomeDictionary.hasType(biome, Type.MOUNTAIN) || BiomeDictionary.hasType(biome, Type.SWAMP) || BiomeDictionary.hasType(biome, Type.JUNGLE));

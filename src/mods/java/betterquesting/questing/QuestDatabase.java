@@ -5,7 +5,7 @@ import betterquesting.api.questing.IQuestDatabase;
 import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.SimpleDatabase;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -111,7 +111,7 @@ public final class QuestDatabase extends SimpleDatabase<IQuest> implements IQues
 
    }
 
-   public synchronized NBTTagList writeProgressToNBT(NBTTagList json, @Nullable List<UUID> users) {
+   public synchronized NBTTagList writeProgressToNBT(NBTTagList json, @Nullable List<EaglercraftUUID> users) {
       for(DBEntry<IQuest> entry : this.getEntries()) {
          NBTTagCompound jq = (NBTTagCompound)((IQuest)entry.getValue()).writeProgressToNBT(new NBTTagCompound(), users);
          jq.setInteger("questID", entry.getID());

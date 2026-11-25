@@ -11,7 +11,7 @@ import ivorius.reccomplex.world.gen.feature.structure.context.StructureSpawnCont
 import ivorius.reccomplex.world.gen.feature.structure.generic.transformers.RunTransformer;
 import ivorius.reccomplex.world.gen.feature.structure.generic.transformers.TransformerMulti;
 import ivorius.reccomplex.world.gen.script.WorldScriptMulti;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.Block;
@@ -50,7 +50,7 @@ public class BlockScript extends Block implements UnstableBlock {
       return 4;
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          TileEntityBlockScript tileEntity = (TileEntityBlockScript)worldIn.getTileEntity(pos);
          StructureGenerator<NBTStorable> generator = (new StructureGenerator<NBTStorable>()).world((WorldServer)worldIn).boundingBox(new StructureBoundingBox(pos, pos)).transform(AxisAlignedTransform2D.ORIGINAL);

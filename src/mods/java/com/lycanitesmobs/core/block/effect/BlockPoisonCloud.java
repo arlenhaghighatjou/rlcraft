@@ -4,7 +4,7 @@ import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.AssetManager;
 import com.lycanitesmobs.core.block.BlockBase;
 import com.lycanitesmobs.core.config.ConfigBase;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -41,7 +41,7 @@ public class BlockPoisonCloud extends BlockBase {
       this.setLightOpacity(1);
    }
 
-   public boolean canRemove(World world, BlockPos pos, IBlockState state, Random rand) {
+   public boolean canRemove(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       return world.getBlockState(pos.down()).getBlock() == Blocks.MYCELIUM ? false : super.canRemove(world, pos, state, rand);
    }
 
@@ -57,7 +57,7 @@ public class BlockPoisonCloud extends BlockBase {
       return new BlockStateContainer(this, new IProperty[]{AGE});
    }
 
-   public Item getItemDropped(IBlockState blockState, Random random, int fortune) {
+   public Item getItemDropped(IBlockState blockState, EaglercraftRandom random, int fortune) {
       return null;
    }
 
@@ -65,7 +65,7 @@ public class BlockPoisonCloud extends BlockBase {
       return 0;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 1;
    }
 
@@ -78,7 +78,7 @@ public class BlockPoisonCloud extends BlockBase {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random) {
+   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, EaglercraftRandom random) {
       super.randomDisplayTick(state, world, pos, random);
       int x = pos.getX();
       int y = pos.getY();

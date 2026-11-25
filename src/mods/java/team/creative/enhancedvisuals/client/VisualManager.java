@@ -7,7 +7,7 @@ import com.creativemd.creativecore.common.utils.type.HashMapList;
 import java.awt.Color;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -23,7 +23,7 @@ import team.creative.enhancedvisuals.common.visual.VisualRegistry;
 
 public class VisualManager {
    private static Minecraft mc = Minecraft.getMinecraft();
-   public static Random rand = new Random();
+   public static EaglercraftRandom rand = new EaglercraftRandom();
    private static HashMapList<VisualCategory, Visual> visuals = new HashMapList();
 
    public VisualManager() {
@@ -132,7 +132,7 @@ public class VisualManager {
       }
    }
 
-   public static int generateOffset(Random rand, int dimensionLength, int spacingBuffer) {
+   public static int generateOffset(EaglercraftRandom rand, int dimensionLength, int spacingBuffer) {
       int half = dimensionLength / 2;
       float multiplier = (float)(1.0D - Math.pow(rand.nextDouble(), 2.0D));
       float textureCenterPosition = rand.nextInt(2) == 0 ? (float)half + (float)half * multiplier : (float)half - (float)half * multiplier;

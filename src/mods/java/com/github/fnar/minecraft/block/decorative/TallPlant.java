@@ -5,7 +5,7 @@ import com.github.fnar.minecraft.block.redstone.TrapdoorBlock;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Direction;
 import greymerk.roguelike.worldgen.WorldEditor;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum TallPlant {
    SUNFLOWER,
@@ -37,7 +37,7 @@ public enum TallPlant {
       return TallPlantBlock.tallPlantBlock().setTallPlant(this);
    }
 
-   public static TallPlant chooseRandom(Random random) {
+   public static TallPlant chooseRandom(EaglercraftRandom random) {
       return values()[random.nextInt(values().length)];
    }
 }

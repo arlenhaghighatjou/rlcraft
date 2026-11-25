@@ -1,6 +1,6 @@
 package net.silentchaos512.scalinghealth.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +15,7 @@ public class SHWorldGenerator extends WorldGeneratorSL {
       super(allowRetrogren, "scalinghealth_retrogen");
    }
 
-   public void generateSurface(World world, Random random, int posX, int posZ) {
+   public void generateSurface(World world, EaglercraftRandom random, int posX, int posZ) {
       Block block = ModBlocks.crystalOre;
       IBlockState state = block.getDefaultState();
       float trueVeinCount = Config.HEART_CRYSTAL_ORE_VEIN_COUNT;
@@ -46,9 +46,9 @@ public class SHWorldGenerator extends WorldGeneratorSL {
 
    }
 
-   protected void generateNether(World world, Random random, int posX, int posZ) {
+   protected void generateNether(World world, EaglercraftRandom random, int posX, int posZ) {
    }
 
-   protected void generateEnd(World world, Random random, int posX, int posZ) {
+   protected void generateEnd(World world, EaglercraftRandom random, int posX, int posZ) {
    }
 }

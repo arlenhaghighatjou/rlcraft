@@ -7,9 +7,9 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.CullFace;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -41,7 +41,7 @@ public class BlockOverlayFix {
             double z = mc.player.lastTickPosZ + (mc.player.posZ - mc.player.lastTickPosZ) * (double)partialTicks;
             AxisAlignedBB aabb = new AxisAlignedBB(x - error, y - error, z - error, x + error, y + error, z + error);
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder bufferBuilder = tessellator.getBuffer();
+            WorldRenderer bufferBuilder = tessellator.getBuffer();
             boolean[] startedBuilding = new boolean[1];
             forEachNearbyPos(x, y, z, error, (pos) -> {
                IBlockState state = mc.world.getBlockState(pos);

@@ -1,13 +1,13 @@
 package levelup2.api;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 public interface IProcessor {
    void extraProcessing(EntityPlayer var1);
 
-   void setUUID(UUID var1);
+   void setUUID(EaglercraftUUID var1);
 
    EntityPlayer getPlayerFromUUID();
 

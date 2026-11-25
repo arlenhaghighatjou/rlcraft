@@ -13,11 +13,11 @@ import me.ichun.mods.ichunutil.common.core.util.IOUtil;
 import me.ichun.mods.ichunutil.common.module.tabula.project.components.Animation;
 import me.ichun.mods.ichunutil.common.module.tabula.project.components.CubeGroup;
 import me.ichun.mods.ichunutil.common.module.tabula.project.components.CubeInfo;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.translation.I18n;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class ElementListTree extends Element {
    public int spacerL;

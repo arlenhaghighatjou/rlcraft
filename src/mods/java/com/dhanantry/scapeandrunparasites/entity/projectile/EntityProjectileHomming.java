@@ -2,7 +2,7 @@ package com.dhanantry.scapeandrunparasites.entity.projectile;
 
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -30,10 +30,10 @@ public class EntityProjectileHomming extends EntityLiving {
    private EntityLivingBase owner;
    private Entity target;
    @Nullable
-   private UUID ownerUniqueId;
+   private EaglercraftUUID ownerUniqueId;
    private BlockPos ownerBlockPos;
    @Nullable
-   private UUID targetUniqueId;
+   private EaglercraftUUID targetUniqueId;
    private BlockPos targetBlockPos;
 
    public EntityProjectileHomming(World worldIn) {

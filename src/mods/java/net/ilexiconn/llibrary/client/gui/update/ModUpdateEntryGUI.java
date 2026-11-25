@@ -3,7 +3,7 @@ package net.ilexiconn.llibrary.client.gui.update;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;

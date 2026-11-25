@@ -1,6 +1,6 @@
 package vazkii.quark.oddities.tile;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
@@ -25,7 +25,7 @@ public abstract class TileMatrixEnchanterBase extends TileSimpleInventory implem
    public float bookRotation;
    public float bookRotationPrev;
    public float tRot;
-   private static final Random rand = new Random();
+   private static final EaglercraftRandom rand = new EaglercraftRandom();
    private String customName;
 
    public TileMatrixEnchanterBase() {

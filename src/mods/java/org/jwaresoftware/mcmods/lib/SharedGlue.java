@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -941,7 +941,7 @@ public final class SharedGlue extends OldNames {
    }
 
    @Nullable
-   public static final EntityLivingBase findEntityByUUID(@Nonnull World world, @Nonnull UUID uuid) {
+   public static final EntityLivingBase findEntityByUUID(@Nonnull World world, @Nonnull EaglercraftUUID uuid) {
       if (uuid != null && world != null) {
          List<EntityLivingBase> hit = world.getEntities(EntityLivingBase.class, (e) -> {
             return uuid.equals(e.getPersistentID());

@@ -1,8 +1,8 @@
 package vazkii.arl.client;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -11,12 +11,12 @@ public final class AtlasSpriteHelper {
    public AtlasSpriteHelper() {
    }
 
-   public static TextureAtlasSprite forName(TextureMap ir, ResourceLocation res) {
+   public static EaglerTextureAtlasSprite forName(TextureMap ir, ResourceLocation res) {
       return ir.registerSprite(res);
    }
 
    public static void renderIconThicc(Tessellator tess, float maxU, float maxV, float minU, float minV, int width, int height, float thickness) {
-      BufferBuilder wr = tess.getBuffer();
+      WorldRenderer wr = tess.getBuffer();
       wr.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
       wr.pos(0.0D, 0.0D, 0.0D).tex((double)maxU, (double)minV).normal(0.0F, 0.0F, 1.0F).endVertex();
       wr.pos(1.0D, 0.0D, 0.0D).tex((double)minU, (double)minV).normal(0.0F, 0.0F, 1.0F).endVertex();
@@ -83,7 +83,7 @@ public final class AtlasSpriteHelper {
       tess.draw();
    }
 
-   public static void renderIconThicc(TextureAtlasSprite icon, float thickness) {
+   public static void renderIconThicc(EaglerTextureAtlasSprite icon, float thickness) {
       renderIconThicc(Tessellator.getInstance(), icon.getMaxU(), icon.getMinV(), icon.getMinU(), icon.getMaxV(), icon.getIconWidth(), icon.getIconHeight(), thickness);
    }
 }

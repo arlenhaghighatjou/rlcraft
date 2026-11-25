@@ -1,10 +1,10 @@
 package melonslise.locks.common.util;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import io.netty.util.internal.ThreadLocalRandom;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -50,7 +50,7 @@ public final class LocksUtil {
    private LocksUtil() {
    }
 
-   public static void shuffle(byte[] array, Random rng) {
+   public static void shuffle(byte[] array, EaglercraftRandom rng) {
       for(int a = array.length - 1; a > 0; --a) {
          int index = rng.nextInt(a + 1);
          byte temp = array[index];
@@ -237,7 +237,7 @@ public final class LocksUtil {
       }
    }
 
-   public static boolean chance(Random rng, double ch) {
+   public static boolean chance(EaglercraftRandom rng, double ch) {
       return ch == 1.0D || ch != 0.0D && rng.nextDouble() <= ch;
    }
 

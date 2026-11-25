@@ -1,7 +1,7 @@
 package goblinbob.mobends.core.client.gui.elements;
 
 import java.util.LinkedList;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public abstract class GuiElement implements IGuiElement, IGuiElementsContainer {
    protected int x;

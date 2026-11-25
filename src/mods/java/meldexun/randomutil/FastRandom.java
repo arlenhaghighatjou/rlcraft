@@ -1,8 +1,8 @@
 package meldexun.randomutil;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
-public class FastRandom extends Random {
+public class FastRandom extends EaglercraftRandom {
    private static final long serialVersionUID = 5655469615636521736L;
    private long seed;
    private static final long multiplier = 25214903917L;

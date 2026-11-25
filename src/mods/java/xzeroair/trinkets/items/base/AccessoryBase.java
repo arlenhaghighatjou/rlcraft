@@ -2,7 +2,7 @@ package xzeroair.trinkets.items.base;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -47,7 +47,7 @@ import xzeroair.trinkets.util.interfaces.IAccessoryInterface;
 import xzeroair.trinkets.util.interfaces.IsModelLoaded;
 
 public abstract class AccessoryBase extends Item implements IsModelLoaded, IAccessoryInterface, ItemAbilityProvider, IElementProvider {
-   protected UUID uuid;
+   protected EaglercraftUUID uuid;
 
    public AccessoryBase(String name) {
       this.setUnlocalizedName(name);
@@ -164,12 +164,12 @@ public abstract class AccessoryBase extends Item implements IsModelLoaded, IAcce
       return "trinket";
    }
 
-   public UUID getUUID() {
+   public EaglercraftUUID getUUID() {
       return this.uuid;
    }
 
    protected void setUUID(String uuid) {
-      this.uuid = UUID.fromString(uuid);
+      this.uuid = EaglercraftUUID.fromString(uuid);
    }
 
    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {

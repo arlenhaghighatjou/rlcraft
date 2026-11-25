@@ -4,10 +4,10 @@ import greymerk.roguelike.dungeon.layout.classic.LayoutGeneratorClassic;
 import greymerk.roguelike.dungeon.layout.mst.LayoutGeneratorMST;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Coord;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public interface LayoutGenerator {
-   LevelLayout generate(Coord var1, Random var2);
+   LevelLayout generate(Coord var1, EaglercraftRandom var2);
 
    LevelLayout getLayout();
 

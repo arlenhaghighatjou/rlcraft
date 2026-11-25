@@ -2,7 +2,7 @@ package nightkosh.advanced_fishing.core;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumParticleTypes;
@@ -45,11 +45,11 @@ public class ParticlesManager implements IParticlesManager {
       return (ISpawnWakeParticles)WAKE_PARTICLES.getOrDefault(block, ParticlesManager::spawnWaterWakeParticles);
    }
 
-   private static void spawnWaterSplashParticles(WorldServer world, Random rand, double x, double y, double z) {
+   private static void spawnWaterSplashParticles(WorldServer world, EaglercraftRandom rand, double x, double y, double z) {
       world.spawnParticle(EnumParticleTypes.WATER_SPLASH, x, y, z, 2 + rand.nextInt(2), 0.1D, 0.0D, 0.1D, 0.0D, new int[0]);
    }
 
-   private static void spawnLavaSplashParticles(WorldServer world, Random rand, double x, double y, double z) {
+   private static void spawnLavaSplashParticles(WorldServer world, EaglercraftRandom rand, double x, double y, double z) {
       int num = 2 + rand.nextInt(2);
       world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x, y, z, num, 0.1D, 0.0D, 0.1D, 0.0D, new int[0]);
       world.spawnParticle(EnumParticleTypes.LAVA, x, y, z, num, 0.1D, 0.0D, 0.1D, 0.0D, new int[0]);

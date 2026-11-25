@@ -1,6 +1,6 @@
 package rtg.world.biome.realistic.vanilla;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
@@ -42,7 +42,7 @@ public class RealisticBiomeVanillaFrozenRiver extends RealisticBiomeBase {
       }
 
       public void paintTerrain(ChunkPrimer primer, int i, int j, int x, int z, int depth, RTGWorld rtgWorld, float[] noise, float river, Biome[] base) {
-         Random rand = rtgWorld.rand();
+         EaglercraftRandom rand = rtgWorld.rand();
          SimplexNoise simplex = rtgWorld.simplexInstance(0);
          if (river > 0.05F && river + simplex.noise2f((float)i / 10.0F, (float)j / 10.0F) * 0.15F > 0.8F) {
             for(int k = 255; k > -1; --k) {

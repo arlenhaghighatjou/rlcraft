@@ -7,7 +7,7 @@ import betterquesting.api2.client.gui.panels.IGuiPanel;
 import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.utils.ParticipantInfo;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.NBTTagCompound;
@@ -44,7 +44,7 @@ public class TaskPlaceholder implements ITask {
       this.nbtData.setTag("orig_data", nbt.getCompoundTag("orig_data"));
    }
 
-   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<EaglercraftUUID> users) {
       nbt.setTag("orig_prog", this.nbtData.getCompoundTag("orig_prog"));
       return nbt;
    }
@@ -64,14 +64,14 @@ public class TaskPlaceholder implements ITask {
    public void detect(ParticipantInfo participant, DBEntry<IQuest> quest) {
    }
 
-   public boolean isComplete(UUID uuid) {
+   public boolean isComplete(EaglercraftUUID uuid) {
       return false;
    }
 
-   public void setComplete(UUID uuid) {
+   public void setComplete(EaglercraftUUID uuid) {
    }
 
-   public void resetUser(UUID uuid) {
+   public void resetUser(EaglercraftUUID uuid) {
    }
 
    public IGuiPanel getTaskGui(IGuiRect rect, DBEntry<IQuest> quest) {

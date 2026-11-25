@@ -1,8 +1,8 @@
 package ivorius.ivtoolkit.math;
 
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class IvMatrixHelper {
    public IvMatrixHelper() {

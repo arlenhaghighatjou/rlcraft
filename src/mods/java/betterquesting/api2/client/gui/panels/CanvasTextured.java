@@ -3,7 +3,7 @@ package betterquesting.api2.client.gui.panels;
 import betterquesting.api2.client.gui.misc.IGuiRect;
 import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import javax.annotation.Nullable;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class CanvasTextured extends CanvasEmpty {
    private IGuiTexture bgTexture;

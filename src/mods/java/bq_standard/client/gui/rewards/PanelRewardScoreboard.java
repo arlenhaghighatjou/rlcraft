@@ -8,7 +8,7 @@ import betterquesting.api2.client.gui.panels.content.PanelTextBox;
 import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import bq_standard.rewards.RewardScoreboard;
 import net.minecraft.util.text.TextFormatting;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class PanelRewardScoreboard extends CanvasEmpty {
    private final RewardScoreboard reward;

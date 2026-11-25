@@ -2,7 +2,7 @@ package paulevs.betternether.structures.city;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 
@@ -64,7 +64,7 @@ public class CityGenerator {
 
    }
 
-   private void attachBuildings(Random random, ArrayList<BuildingInfo> city) {
+   private void attachBuildings(EaglercraftRandom random, ArrayList<BuildingInfo> city) {
       for(BlockPos pos : this.ends) {
          boolean generate = true;
 
@@ -121,7 +121,7 @@ public class CityGenerator {
       this.add.clear();
    }
 
-   public ArrayList<BuildingInfo> generate(BlockPos pos, Random random) {
+   public ArrayList<BuildingInfo> generate(BlockPos pos, EaglercraftRandom random) {
       ArrayList<BuildingInfo> city = new ArrayList();
       this.placeCenterBuilding(pos, (StructureCityBuilding)this.centers.get(random.nextInt(this.centers.size())), city);
 

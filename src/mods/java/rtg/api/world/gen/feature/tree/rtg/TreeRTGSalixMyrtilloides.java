@@ -1,6 +1,6 @@
 package rtg.api.world.gen.feature.tree.rtg;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +14,7 @@ public class TreeRTGSalixMyrtilloides extends TreeRTG {
       this.setLogBlock(Blocks.LOG.getDefaultState()).setLeavesBlock(Blocks.LEAVES.getDefaultState());
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       if (!this.isGroundValid(world, pos, RTGConfig.treesCanGenerateOnSand())) {
          return false;
       } else {
@@ -61,7 +61,7 @@ public class TreeRTGSalixMyrtilloides extends TreeRTG {
       }
    }
 
-   private void createLeavesAroundBranch(World world, Random rand, int x, int y, int z, int s, int c) {
+   private void createLeavesAroundBranch(World world, EaglercraftRandom rand, int x, int y, int z, int s, int c) {
       int t = (int)Math.pow((double)s, 2.0D);
 
       for(int i = -s; i <= s; ++i) {
@@ -80,7 +80,7 @@ public class TreeRTGSalixMyrtilloides extends TreeRTG {
 
    }
 
-   private void createVine(World world, Random rand, int x, int y, int z) {
+   private void createVine(World world, EaglercraftRandom rand, int x, int y, int z) {
       int r = rand.nextInt(3) + 5;
 
       for(int i = -1; i > -r; --i) {
@@ -89,7 +89,7 @@ public class TreeRTGSalixMyrtilloides extends TreeRTG {
 
    }
 
-   private void createTrunk(World world, Random rand, int x, int y, int z) {
+   private void createTrunk(World world, EaglercraftRandom rand, int x, int y, int z) {
       int[] pos = new int[]{0, 0, 1, 0, 0, 1, -1, 0, 0, -1};
 
       for(int t = 0; t < 5; ++t) {

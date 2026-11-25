@@ -1,9 +1,9 @@
 package de.Whitedraco.switchbow.renderer;
 
 import de.Whitedraco.switchbow.entity.EntityLightningBoltSwitchBow;
-import java.util.Random;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -19,7 +19,7 @@ public class RenderLightnigBoltSwitchBow extends Render<EntityLightningBoltSwitc
 
    public void doRender(EntityLightningBoltSwitchBow entity, double x, double y, double z, float entityYaw, float partialTicks) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       GlStateManager.disableTexture2D();
       GlStateManager.disableLighting();
       GlStateManager.enableBlend();
@@ -28,7 +28,7 @@ public class RenderLightnigBoltSwitchBow extends Render<EntityLightningBoltSwitc
       double[] adouble1 = new double[8];
       double d0 = 0.0D;
       double d1 = 0.0D;
-      Random random = new Random(entity.boltVertex);
+      EaglercraftRandom random = new EaglercraftRandom(entity.boltVertex);
 
       for(int i = 7; i >= 0; --i) {
          adouble[i] = d0;
@@ -38,7 +38,7 @@ public class RenderLightnigBoltSwitchBow extends Render<EntityLightningBoltSwitc
       }
 
       for(int k1 = 0; k1 < 4; ++k1) {
-         Random random1 = new Random(entity.boltVertex);
+         EaglercraftRandom random1 = new EaglercraftRandom(entity.boltVertex);
 
          for(int j = 0; j < 3; ++j) {
             int k = 7;

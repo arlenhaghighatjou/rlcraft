@@ -14,12 +14,12 @@ import java.util.function.Supplier;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockModelRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -68,7 +68,7 @@ public class CreativeModelPipeline {
       }
    }
 
-   public static void renderBlockFaceSmooth(IBlockAccess world, IBlockState state, BlockPos pos, BufferBuilder buffer, BlockRenderLayer layer, List<BakedQuad> quads, float[] afloat, EnumFacing facing, BitSet set, Object ambientOcclusionFace, RenderBox cube) {
+   public static void renderBlockFaceSmooth(IBlockAccess world, IBlockState state, BlockPos pos, WorldRenderer buffer, BlockRenderLayer layer, List<BakedQuad> quads, float[] afloat, EnumFacing facing, BitSet set, Object ambientOcclusionFace, RenderBox cube) {
       try {
          SingletonList<BakedQuad> list = (SingletonList)singletonList.get();
          if (ForgeModContainer.forgeLightPipelineEnabled) {
@@ -184,7 +184,7 @@ public class CreativeModelPipeline {
 
    }
 
-   public static void renderBlockFaceFlat(IBlockAccess world, IBlockState state, BlockPos pos, BufferBuilder buffer, BlockRenderLayer layer, List<BakedQuad> quads, EnumFacing facing, BitSet set, RenderBox cube, Object renderEnv) {
+   public static void renderBlockFaceFlat(IBlockAccess world, IBlockState state, BlockPos pos, WorldRenderer buffer, BlockRenderLayer layer, List<BakedQuad> quads, EnumFacing facing, BitSet set, RenderBox cube, Object renderEnv) {
       int light = state.getPackedLightmapCoords(world, pos.offset(facing));
 
       try {
@@ -244,7 +244,7 @@ public class CreativeModelPipeline {
 
    }
 
-   public static void overwriteColor(IBlockAccess world, IBlockState state, BlockPos pos, BufferBuilder buffer, BlockRenderLayer layer, BakedQuad quad, RenderBox cube, Object ambientOcclusionFace, VertexLighterFlat lighter) {
+   public static void overwriteColor(IBlockAccess world, IBlockState state, BlockPos pos, WorldRenderer buffer, BlockRenderLayer layer, BakedQuad quad, RenderBox cube, Object ambientOcclusionFace, VertexLighterFlat lighter) {
       if (FMLClientHandler.instance().hasOptifine() && ambientOcclusionFace != null) {
          ambientOcclusionFace = OptifineHelper.getAoFace(ambientOcclusionFace);
       }
@@ -354,11 +354,11 @@ public class CreativeModelPipeline {
          ambientOcclusionFaceClassConstructor = ReflectionHelper.findConstructor(ambientOcclusionFaceClass, new Class[]{BlockModelRenderer.class});
          vertexColorMultiplierField = ReflectionHelper.findField(ambientOcclusionFaceClass, new String[]{"vertexColorMultiplier", "vertexColorMultiplier"});
          if (FMLClientHandler.instance().hasOptifine()) {
-            renderQuadsSmoothMethod = ReflectionHelper.findMethod(BlockModelRenderer.class, "renderQuadsSmooth", "renderQuadsSmooth", new Class[]{IBlockAccess.class, IBlockState.class, BlockPos.class, BufferBuilder.class, List.class, OptifineHelper.renderEnvClass});
-            renderQuadsFlatMethod = ReflectionHelper.findMethod(BlockModelRenderer.class, "renderQuadsFlat", "renderQuadsFlat", new Class[]{IBlockAccess.class, IBlockState.class, BlockPos.class, Integer.TYPE, Boolean.TYPE, BufferBuilder.class, List.class, OptifineHelper.renderEnvClass});
+            renderQuadsSmoothMethod = ReflectionHelper.findMethod(BlockModelRenderer.class, "renderQuadsSmooth", "renderQuadsSmooth", new Class[]{IBlockAccess.class, IBlockState.class, BlockPos.class, WorldRenderer.class, List.class, OptifineHelper.renderEnvClass});
+            renderQuadsFlatMethod = ReflectionHelper.findMethod(BlockModelRenderer.class, "renderQuadsFlat", "renderQuadsFlat", new Class[]{IBlockAccess.class, IBlockState.class, BlockPos.class, Integer.TYPE, Boolean.TYPE, WorldRenderer.class, List.class, OptifineHelper.renderEnvClass});
          } else {
-            renderQuadsSmoothMethod = ReflectionHelper.findMethod(BlockModelRenderer.class, "renderQuadsSmooth", "renderQuadsSmooth", new Class[]{IBlockAccess.class, IBlockState.class, BlockPos.class, BufferBuilder.class, List.class, float[].class, BitSet.class, ambientOcclusionFaceClass});
-            renderQuadsFlatMethod = ReflectionHelper.findMethod(BlockModelRenderer.class, "renderQuadsFlat", "renderQuadsFlat", new Class[]{IBlockAccess.class, IBlockState.class, BlockPos.class, Integer.TYPE, Boolean.TYPE, BufferBuilder.class, List.class, BitSet.class});
+            renderQuadsSmoothMethod = ReflectionHelper.findMethod(BlockModelRenderer.class, "renderQuadsSmooth", "renderQuadsSmooth", new Class[]{IBlockAccess.class, IBlockState.class, BlockPos.class, WorldRenderer.class, List.class, float[].class, BitSet.class, ambientOcclusionFaceClass});
+            renderQuadsFlatMethod = ReflectionHelper.findMethod(BlockModelRenderer.class, "renderQuadsFlat", "renderQuadsFlat", new Class[]{IBlockAccess.class, IBlockState.class, BlockPos.class, Integer.TYPE, Boolean.TYPE, WorldRenderer.class, List.class, BitSet.class});
          }
 
          lighterFlatField = ReflectionHelper.findField(ForgeBlockModelRenderer.class, new String[]{"lighterFlat"});
@@ -367,7 +367,7 @@ public class CreativeModelPipeline {
          wrSmoothField = ReflectionHelper.findField(ForgeBlockModelRenderer.class, new String[]{"wrSmooth", "consumerSmooth"});
 
          try {
-            setBufferMethod = ReflectionHelper.findMethod(VertexBufferConsumer.class, "setBuffer", "setBuffer", new Class[]{BufferBuilder.class});
+            setBufferMethod = ReflectionHelper.findMethod(VertexBufferConsumer.class, "setBuffer", "setBuffer", new Class[]{WorldRenderer.class});
          } catch (UnableToFindMethodException var4) {
             setBufferMethod = null;
          }

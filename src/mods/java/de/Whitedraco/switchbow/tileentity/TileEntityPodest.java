@@ -5,7 +5,7 @@ import de.Whitedraco.switchbow.Config.SwitchBowConfig;
 import de.Whitedraco.switchbow.proxy.packets.ParticleFreezePacket;
 import de.Whitedraco.switchbow.proxy.packets.TEPodestParticlePacket;
 import de.Whitedraco.switchbow.proxy.packets.TEPodestUpdatePacket;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
@@ -24,7 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class TileEntityPodest extends TileEntityLockableLoot implements IInventory, ITickable {
-   private static final Random RNG = new Random();
+   private static final EaglercraftRandom RNG = new EaglercraftRandom();
    private static final double particleShowWight = 40.0D;
    private NonNullList<ItemStack> stacks = NonNullList.withSize(1, ItemStack.EMPTY);
    protected String customName;

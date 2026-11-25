@@ -2,7 +2,7 @@ package com.ferreusveritas.dynamictrees.api.worldgen;
 
 import com.ferreusveritas.dynamictrees.trees.Species;
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -21,15 +21,15 @@ public class BiomePropertySelectors {
    }
 
    public interface IChanceSelector {
-      BiomePropertySelectors.EnumChance getChance(Random var1, @Nonnull Species var2, int var3);
+      BiomePropertySelectors.EnumChance getChance(EaglercraftRandom var1, @Nonnull Species var2, int var3);
    }
 
    public interface IDensitySelector {
-      double getDensity(Random var1, double var2);
+      double getDensity(EaglercraftRandom var1, double var2);
    }
 
    public interface ISpeciesSelector {
-      BiomePropertySelectors.SpeciesSelection getSpecies(BlockPos var1, IBlockState var2, Random var3);
+      BiomePropertySelectors.SpeciesSelection getSpecies(BlockPos var1, IBlockState var2, EaglercraftRandom var3);
    }
 
    public static class RandomSpeciesSelector implements BiomePropertySelectors.ISpeciesSelector {
@@ -55,7 +55,7 @@ public class BiomePropertySelectors {
          return this;
       }
 
-      public BiomePropertySelectors.SpeciesSelection getSpecies(BlockPos pos, IBlockState dirt, Random random) {
+      public BiomePropertySelectors.SpeciesSelection getSpecies(BlockPos pos, IBlockState dirt, EaglercraftRandom random) {
          int chance = random.nextInt(this.totalWeight);
 
          for(BiomePropertySelectors.RandomSpeciesSelector.Entry entry : this.decisionTable) {
@@ -118,7 +118,7 @@ public class BiomePropertySelectors {
          this(new BiomePropertySelectors.SpeciesSelection());
       }
 
-      public BiomePropertySelectors.SpeciesSelection getSpecies(BlockPos pos, IBlockState dirt, Random random) {
+      public BiomePropertySelectors.SpeciesSelection getSpecies(BlockPos pos, IBlockState dirt, EaglercraftRandom random) {
          return this.decision;
       }
    }

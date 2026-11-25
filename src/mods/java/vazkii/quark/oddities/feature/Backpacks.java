@@ -1,6 +1,6 @@
 package vazkii.quark.oddities.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -157,7 +157,7 @@ public class Backpacks extends Feature {
       public BackpackTrade() {
       }
 
-      public void addMerchantRecipe(@Nonnull IMerchant merchant, @Nonnull MerchantRecipeList recipeList, @Nonnull Random random) {
+      public void addMerchantRecipe(@Nonnull IMerchant merchant, @Nonnull MerchantRecipeList recipeList, @Nonnull EaglercraftRandom random) {
          int emeraldCount = random.nextInt(Backpacks.maxEmeralds - Backpacks.minEmeralds) + Backpacks.minEmeralds;
          recipeList.add(new MerchantRecipe(new ItemStack(Items.LEATHER, Backpacks.leatherCount), new ItemStack(Items.EMERALD, emeraldCount), new ItemStack(Backpacks.backpack)));
       }

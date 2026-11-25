@@ -4,8 +4,8 @@ import net.minecraft.block.BlockSnow;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -37,7 +37,7 @@ public class RenderFallingSnow extends Render<FallingSnowEntity> {
                GlStateManager.pushMatrix();
                GlStateManager.disableLighting();
                Tessellator tessellator = Tessellator.getInstance();
-               BufferBuilder bufferbuilder = tessellator.getBuffer();
+               WorldRenderer bufferbuilder = tessellator.getBuffer();
                if (this.renderOutlines) {
                   GlStateManager.enableColorMaterial();
                   GlStateManager.enableOutlineMode(this.getTeamColor(entity));

@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -172,7 +172,7 @@ class FileHandler
         }
     }
 
-    RuinTemplate getTemplate(Random random, String biome)
+    RuinTemplate getTemplate(EaglercraftRandom random, String biome)
     {
         try
         {
@@ -194,7 +194,7 @@ class FileHandler
         }
     }
 
-    boolean useGeneric(Random random, String biome)
+    boolean useGeneric(EaglercraftRandom random, String biome)
     {
         double[] val = vars.get(biome);
         return RuinsMod.BIOME_ANY.equals(biome) || (val != null && random.nextDouble() >= val[CHANCE]);

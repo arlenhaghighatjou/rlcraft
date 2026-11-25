@@ -1,6 +1,6 @@
 package prospector.traverse.world.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockFlower.EnumFlowerColor;
 import net.minecraft.block.BlockFlower.EnumFlowerType;
 import net.minecraft.entity.passive.EntityDonkey;
@@ -38,7 +38,7 @@ public class BiomeMeadow extends Biome implements WorldGenConstants {
 
    }
 
-   public EnumFlowerType pickRandomFlower(Random rand, BlockPos pos) {
+   public EnumFlowerType pickRandomFlower(EaglercraftRandom rand, BlockPos pos) {
       double d0 = GRASS_COLOR_NOISE.getValue((double)pos.getX() / 200.0D, (double)pos.getZ() / 200.0D);
       if (d0 < -0.8D) {
          int j = rand.nextInt(5);

@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.bettermineshafts.integration;
 import com.google.common.collect.Lists;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import net.minecraft.block.BlockTorch;
@@ -60,7 +60,7 @@ public class Integrations {
       });
    }
 
-   public static IBlockState getLantern(Random random) {
+   public static IBlockState getLantern(EaglercraftRandom random) {
       if (LANTERNS.size() == 0) {
          return null;
       } else {
@@ -80,7 +80,7 @@ public class Integrations {
       }
    }
 
-   public static IBlockState getLeftTorch(Random random) {
+   public static IBlockState getLeftTorch(EaglercraftRandom random) {
       if (LEFT_TORCHES.size() == 0) {
          return null;
       } else {
@@ -100,7 +100,7 @@ public class Integrations {
       }
    }
 
-   public static IBlockState getRightTorch(Random random) {
+   public static IBlockState getRightTorch(EaglercraftRandom random) {
       if (RIGHT_TORCHES.size() == 0) {
          return null;
       } else {

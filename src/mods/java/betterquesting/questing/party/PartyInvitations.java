@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -25,14 +25,14 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
+public class PartyInvitations implements INBTPartial<NBTTagList, EaglercraftUUID> {
    public static final PartyInvitations INSTANCE = new PartyInvitations();
-   private final HashMap<UUID, HashMap<Integer, Long>> invites = new HashMap();
+   private final HashMap<EaglercraftUUID, HashMap<Integer, Long>> invites = new HashMap();
 
    public PartyInvitations() {
    }
 
-   public synchronized void postInvite(@Nonnull UUID uuid, int id, long expiryTime) {
+   public synchronized void postInvite(@Nonnull EaglercraftUUID uuid, int id, long expiryTime) {
       if (expiryTime <= 0L) {
          BetterQuesting.logger.error("Received an invite that has already expired!");
       } else {
@@ -46,7 +46,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
       }
    }
 
-   public synchronized boolean acceptInvite(@Nonnull UUID uuid, int id) {
+   public synchronized boolean acceptInvite(@Nonnull EaglercraftUUID uuid, int id) {
       HashMap<Integer, Long> userInvites = (HashMap)this.invites.get(uuid);
       if (userInvites != null && userInvites.size() > 0) {
          long timestamp = ((Long)userInvites.get(Integer.valueOf(id))).longValue();
@@ -67,7 +67,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
       }
    }
 
-   public synchronized void revokeInvites(@Nonnull UUID uuid, int... ids) {
+   public synchronized void revokeInvites(@Nonnull EaglercraftUUID uuid, int... ids) {
       HashMap<Integer, Long> userInvites = (HashMap)this.invites.get(uuid);
       if (userInvites != null && userInvites.size() > 0) {
          for(int i : ids) {
@@ -81,7 +81,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
       }
    }
 
-   public synchronized List<Entry<Integer, Long>> getPartyInvites(@Nonnull UUID uuid) {
+   public synchronized List<Entry<Integer, Long>> getPartyInvites(@Nonnull EaglercraftUUID uuid) {
       HashMap<Integer, Long> userInvites = (HashMap)this.invites.get(uuid);
       if (userInvites != null && userInvites.size() > 0) {
          List<Entry<Integer, Long>> list = new ArrayList(userInvites.entrySet());
@@ -100,10 +100,10 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
 
    public synchronized void cleanExpired() {
       MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-      Iterator<Entry<UUID, HashMap<Integer, Long>>> iterA = this.invites.entrySet().iterator();
+      Iterator<Entry<EaglercraftUUID, HashMap<Integer, Long>>> iterA = this.invites.entrySet().iterator();
 
       while(iterA.hasNext()) {
-         Entry<UUID, HashMap<Integer, Long>> userInvites = (Entry)iterA.next();
+         Entry<EaglercraftUUID, HashMap<Integer, Long>> userInvites = (Entry)iterA.next();
          List<Integer> revoked = new ArrayList();
          Iterator<Entry<Integer, Long>> iterB = ((HashMap)userInvites.getValue()).entrySet().iterator();
 
@@ -115,7 +115,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
             }
          }
 
-         EntityPlayerMP player = server.getPlayerList().getPlayerByUUID((UUID)userInvites.getKey());
+         EntityPlayerMP player = server.getPlayerList().getPlayerByUUID((EaglercraftUUID)userInvites.getKey());
          if (player != null && revoked.size() >= 0) {
             int[] revAry = new int[revoked.size()];
 
@@ -137,7 +137,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
       this.invites.clear();
    }
 
-   public synchronized NBTTagList writeToNBT(NBTTagList nbt, @Nullable List<UUID> subset) {
+   public synchronized NBTTagList writeToNBT(NBTTagList nbt, @Nullable List<EaglercraftUUID> subset) {
       if (subset != null) {
          subset.forEach((uuid) -> {
             NBTTagCompound userTag = new NBTTagCompound();
@@ -160,9 +160,9 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
             nbt.appendTag(userTag);
          });
       } else {
-         for(Entry<UUID, HashMap<Integer, Long>> userMap : this.invites.entrySet()) {
+         for(Entry<EaglercraftUUID, HashMap<Integer, Long>> userMap : this.invites.entrySet()) {
             NBTTagCompound userTag = new NBTTagCompound();
-            userTag.setString("uuid", ((UUID)userMap.getKey()).toString());
+            userTag.setString("uuid", ((EaglercraftUUID)userMap.getKey()).toString());
             NBTTagList invList = new NBTTagList();
 
             for(Entry<Integer, Long> invEntry : ((HashMap)userMap.getValue()).entrySet()) {
@@ -188,9 +188,9 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
       for(int i = 0; i < nbt.tagCount(); ++i) {
          NBTTagCompound userEntry = nbt.getCompoundTagAt(i);
 
-         UUID uuid;
+         EaglercraftUUID uuid;
          try {
-            uuid = UUID.fromString(userEntry.getString("uuid"));
+            uuid = EaglercraftUUID.fromString(userEntry.getString("uuid"));
          } catch (Exception var13) {
             continue;
          }

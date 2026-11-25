@@ -3,7 +3,7 @@ package me.ichun.mods.ichunutil.client.gui.window.element;
 import me.ichun.mods.ichunutil.client.gui.Theme;
 import me.ichun.mods.ichunutil.client.gui.window.Window;
 import me.ichun.mods.ichunutil.client.render.RendererHelper;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class ElementCheckBox extends ElementToggle {
    public ElementCheckBox(Window window, int x, int y, int ID, boolean igMin, int sideH, int sideV, String Tooltip, boolean state) {

@@ -2,7 +2,7 @@ package vazkii.quark.world.world;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -24,7 +24,7 @@ public class CrystalCaveGenerator implements IWorldGenerator {
       this.dims = dims;
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (random.nextDouble() <= CrystalCaves.crystalCaveRarity && this.dims.canSpawnHere(world)) {
          int x = chunkX * 16 + random.nextInt(16);
          int z = chunkZ * 16 + random.nextInt(16);
@@ -43,7 +43,7 @@ public class CrystalCaveGenerator implements IWorldGenerator {
       }
    }
 
-   public void makeCrystalCaveAt(World world, BlockPos source, Random rand) {
+   public void makeCrystalCaveAt(World world, BlockPos source, EaglercraftRandom rand) {
       double expandX = (rand.nextDouble() - 0.5D) * 2.0D;
       double expandY = (rand.nextDouble() - 0.5D) * 0.10000000149011612D;
       double expandZ = (rand.nextDouble() - 0.5D) * 2.0D;
@@ -83,7 +83,7 @@ public class CrystalCaveGenerator implements IWorldGenerator {
 
    }
 
-   private void hollowOut(World world, BlockPos source, Random rand, int width, IBlockState crystal1, IBlockState crystal2) {
+   private void hollowOut(World world, BlockPos source, EaglercraftRandom rand, int width, IBlockState crystal1, IBlockState crystal2) {
       List<BlockPos> crystals = new ArrayList();
       int max = width * width;
 
@@ -127,7 +127,7 @@ public class CrystalCaveGenerator implements IWorldGenerator {
 
    }
 
-   private void makeCrystal(World world, BlockPos source, Random rand, IBlockState crystal) {
+   private void makeCrystal(World world, BlockPos source, EaglercraftRandom rand, IBlockState crystal) {
       boolean up = rand.nextBoolean();
       EnumFacing shift = up ? EnumFacing.UP : EnumFacing.DOWN;
       BlockPos startPos = source;

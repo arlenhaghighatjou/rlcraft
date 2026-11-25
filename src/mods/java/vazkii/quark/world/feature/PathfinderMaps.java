@@ -5,7 +5,7 @@ import com.google.common.collect.Multimap;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
@@ -185,7 +185,7 @@ public class PathfinderMaps extends Feature {
          this.level = level;
       }
 
-      public void addMerchantRecipe(@Nonnull IMerchant merchant, @Nonnull MerchantRecipeList recipeList, @Nonnull Random random) {
+      public void addMerchantRecipe(@Nonnull IMerchant merchant, @Nonnull MerchantRecipeList recipeList, @Nonnull EaglercraftRandom random) {
          List<PathfinderMaps.TradeInfo> tradeInfo = new ArrayList(PathfinderMaps.trades.get(Integer.valueOf(this.level)));
          if (!tradeInfo.isEmpty()) {
             if (PathfinderMaps.unlockAllAtOnce) {
@@ -205,7 +205,7 @@ public class PathfinderMaps extends Feature {
          }
       }
 
-      private void unlock(IMerchant merchant, MerchantRecipeList recipeList, Random random, PathfinderMaps.TradeInfo info) {
+      private void unlock(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random, PathfinderMaps.TradeInfo info) {
          int i = random.nextInt(info.maxPrice - info.minPrice + 1) + info.minPrice;
          ItemStack itemstack = PathfinderMaps.createMap(merchant.getWorld(), merchant.getPos(), info);
          if (!itemstack.isEmpty()) {

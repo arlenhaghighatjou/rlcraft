@@ -10,7 +10,7 @@ import mezz.jei.input.ClickedIngredient;
 import mezz.jei.util.ErrorUtil;
 import mezz.jei.util.Log;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;

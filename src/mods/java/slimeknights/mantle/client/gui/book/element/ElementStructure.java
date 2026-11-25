@@ -5,15 +5,15 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 import slimeknights.mantle.client.book.StructureBlockAccess;
 import slimeknights.mantle.client.book.StructureInfo;
 import slimeknights.mantle.client.book.data.element.BlockData;
@@ -129,7 +129,7 @@ public class ElementStructure extends SizedBookElement implements IButtonClickHa
                if (!this.blockAccess.isAirBlock(pos)) {
                   IBlockState state = this.blockAccess.getBlockState(pos);
                   Tessellator tessellator = Tessellator.getInstance();
-                  BufferBuilder buffer = tessellator.getBuffer();
+                  WorldRenderer buffer = tessellator.getBuffer();
                   buffer.begin(7, DefaultVertexFormats.BLOCK);
                   blockRender.renderBlock(state, pos, this.blockAccess, buffer);
                   tessellator.draw();

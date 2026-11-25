@@ -46,18 +46,18 @@ import betterquesting.questing.party.PartyInvitations;
 import betterquesting.questing.party.PartyManager;
 import betterquesting.storage.LifeDatabase;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.NBTTagCompound;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class GuiPartyCreate extends GuiScreenCanvas implements IPEventListener, INeedsRefresh {
    private PanelTextField<String> flName;
    private CanvasScrolling invitePanel;
    private PanelVScrollBar inviteScroll;
-   private UUID playerID;
+   private EaglercraftUUID playerID;
 
    public GuiPartyCreate(GuiScreen parent) {
       super(parent);

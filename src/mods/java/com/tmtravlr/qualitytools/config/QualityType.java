@@ -8,8 +8,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import java.lang.reflect.Type;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.ItemStack;
@@ -19,7 +19,7 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.JsonUtils;
 
 public class QualityType {
-   public static final Random RAND = new Random();
+   public static final EaglercraftRandom RAND = new EaglercraftRandom();
    public String[] slots;
    public QualityEntry[] qualities;
    public QualityItem[] blacklist;
@@ -71,7 +71,7 @@ public class QualityType {
 
          for(String attributeName : entry.attributeMap.keySet()) {
             for(AttributeModifier modifier : entry.attributeMap.get(attributeName)) {
-               NBTTagCompound modifierTag = SharedMonsterAttributes.writeAttributeModifierToNBT(new AttributeModifier(UUID.randomUUID(), modifier.getName(), modifier.getAmount(), modifier.getOperation()));
+               NBTTagCompound modifierTag = SharedMonsterAttributes.writeAttributeModifierToNBT(new AttributeModifier(EaglercraftUUID.randomUUID(), modifier.getName(), modifier.getAmount(), modifier.getOperation()));
                modifierTag.setString("AttributeName", attributeName);
                modifierList.appendTag(modifierTag);
             }

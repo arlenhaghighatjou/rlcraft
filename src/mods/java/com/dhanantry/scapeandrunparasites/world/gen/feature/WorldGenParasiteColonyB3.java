@@ -4,7 +4,7 @@ import com.dhanantry.scapeandrunparasites.block.BlockParasiteRubble;
 import com.dhanantry.scapeandrunparasites.block.BlockParasiteRubbleDense;
 import com.dhanantry.scapeandrunparasites.block.BlockParasiteStain;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +18,7 @@ public class WorldGenParasiteColonyB3 extends WorldGenParasiteColonyBase {
       this.floor = SRPBlocks.ParasiteStain.getDefaultState().withProperty(BlockParasiteStain.VARIANT, BlockParasiteStain.EnumType.DIRT);
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       this.placeWallsTopOut(worldIn, position.down(3), 3, rand, 1, this.floorColony);
       this.addFloor(worldIn, position.down(1), 10, true);
       int ll1 = 9;
@@ -55,7 +55,7 @@ public class WorldGenParasiteColonyB3 extends WorldGenParasiteColonyBase {
       }
    }
 
-   private BlockPos placeWallsBottom(World worldIn, BlockPos position, int loop, Random rand, IBlockState state, int oY) {
+   private BlockPos placeWallsBottom(World worldIn, BlockPos position, int loop, EaglercraftRandom rand, IBlockState state, int oY) {
       BlockPos currentP = position;
 
       for(int current = 0; current < loop; currentP = currentP.up()) {
@@ -194,7 +194,7 @@ public class WorldGenParasiteColonyB3 extends WorldGenParasiteColonyBase {
       return currentP;
    }
 
-   private BlockPos placeWallsTopIn(World worldIn, BlockPos position, int loop, boolean vine, Random rand, int longer, IBlockState state) {
+   private BlockPos placeWallsTopIn(World worldIn, BlockPos position, int loop, boolean vine, EaglercraftRandom rand, int longer, IBlockState state) {
       BlockPos currentP = position;
 
       for(int current = 0; current < loop; currentP = currentP.up()) {
@@ -268,7 +268,7 @@ public class WorldGenParasiteColonyB3 extends WorldGenParasiteColonyBase {
       return currentP;
    }
 
-   private BlockPos placeWallsTopOut(World worldIn, BlockPos position, int loop, Random rand, int longer, IBlockState state) {
+   private BlockPos placeWallsTopOut(World worldIn, BlockPos position, int loop, EaglercraftRandom rand, int longer, IBlockState state) {
       BlockPos currentP = position;
 
       for(int current = 0; current < loop; currentP = currentP.up()) {
@@ -342,7 +342,7 @@ public class WorldGenParasiteColonyB3 extends WorldGenParasiteColonyBase {
       return currentP;
    }
 
-   private void addEntrance(World worldIn, BlockPos position, Random rand, IBlockState state) {
+   private void addEntrance(World worldIn, BlockPos position, EaglercraftRandom rand, IBlockState state) {
       int chance = 1;
 
       for(int i = 0; i <= 3; ++i) {
@@ -411,7 +411,7 @@ public class WorldGenParasiteColonyB3 extends WorldGenParasiteColonyBase {
 
    }
 
-   private BlockPos placeWallsBottomS(World worldIn, BlockPos position, int loop, Random rand, IBlockState state, int oY) {
+   private BlockPos placeWallsBottomS(World worldIn, BlockPos position, int loop, EaglercraftRandom rand, IBlockState state, int oY) {
       BlockPos currentP = position;
 
       for(int current = 0; current < loop; currentP = currentP.up()) {
@@ -550,7 +550,7 @@ public class WorldGenParasiteColonyB3 extends WorldGenParasiteColonyBase {
       return currentP;
    }
 
-   private BlockPos placeWallsTopInS(World worldIn, BlockPos position, int loop, boolean vine, Random rand, int longer, IBlockState state) {
+   private BlockPos placeWallsTopInS(World worldIn, BlockPos position, int loop, boolean vine, EaglercraftRandom rand, int longer, IBlockState state) {
       BlockPos currentP = position;
 
       for(int current = 0; current < loop; currentP = currentP.up()) {

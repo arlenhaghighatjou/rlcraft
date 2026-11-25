@@ -1,7 +1,7 @@
 package paulevs.betternether.blocks;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockNetherrack;
 import net.minecraft.block.BlockSoulSand;
@@ -46,7 +46,7 @@ public class BlockNetherGrass extends BlockBush implements IShearable {
       return NonNullList.withSize(1, new ItemStack(this, 1));
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 

@@ -2,7 +2,7 @@ package svenhjol.charm.tweaks.feature;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.item.Item;
@@ -43,7 +43,7 @@ public class ExtraRecords extends Feature {
    @SubscribeEvent
    public void onDeath(LivingDeathEvent event) {
       if (event.getEntityLiving() instanceof EntityZombie && event.getSource().getTrueSource() instanceof EntitySkeleton) {
-         event.getEntityLiving().dropItem((Item)records.get((new Random()).nextInt(records.size())), 1);
+         event.getEntityLiving().dropItem((Item)records.get((new EaglercraftRandom()).nextInt(records.size())), 1);
       }
 
    }

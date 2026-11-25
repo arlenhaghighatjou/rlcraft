@@ -2,7 +2,7 @@ package rtg.api.world.gen.feature.tree.rtg;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockSapling;
@@ -25,7 +25,7 @@ public class TreeRTGQuercusRobur extends TreeRTG {
    int heightLimitLimit = 12;
    int leafDistanceLimit = 4;
    List<TreeRTGQuercusRobur.FoliageCoordinates> foliageCoords;
-   private Random rand;
+   private EaglercraftRandom rand;
    private World world;
    private BlockPos basePos = BlockPos.ORIGIN;
 
@@ -222,10 +222,10 @@ public class TreeRTGQuercusRobur extends TreeRTG {
       this.leafDistanceLimit = 5;
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       this.world = worldIn;
       this.basePos = position;
-      this.rand = new Random(rand.nextLong());
+      this.rand = new EaglercraftRandom(rand.nextLong());
       int x = position.getX();
       int y = position.getY();
       int z = position.getZ();

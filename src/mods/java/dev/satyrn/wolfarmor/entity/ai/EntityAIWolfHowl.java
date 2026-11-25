@@ -1,7 +1,7 @@
 package dev.satyrn.wolfarmor.entity.ai;
 
 import dev.satyrn.wolfarmor.WolfArmorMod;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.SoundEvents;
@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class EntityAIWolfHowl extends EntityAIBase {
    private final EntityWolf entity;
-   private final Random random;
+   private final EaglercraftRandom random;
    private int soundTimer;
 
    public EntityAIWolfHowl(EntityWolf entity) {

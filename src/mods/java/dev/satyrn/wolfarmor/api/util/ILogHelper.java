@@ -1,8 +1,8 @@
 package dev.satyrn.wolfarmor.api.util;
 
 import javax.annotation.Nonnull;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public interface ILogHelper {
    void initializeLogger(Logger var1);

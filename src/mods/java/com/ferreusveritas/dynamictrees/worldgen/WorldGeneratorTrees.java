@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -55,7 +55,7 @@ public class WorldGeneratorTrees implements IWorldGenerator {
       return (!allAir || flatGeneratorInfo.getBiome() == Biome.getIdForBiome(Biomes.VOID)) && flatGeneratorInfo.getWorldFeatures().containsKey("decoration");
    }
 
-   public void generate(Random randomUnused, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom randomUnused, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (!dimensionForceGeneration.stream().noneMatch((p) -> {
          return p.test(world);
       }) || world.getWorldType() != WorldType.FLAT || ((Boolean)flatWorldsDecoration.computeIfAbsent(Integer.valueOf(world.provider.getDimension()), (d) -> {

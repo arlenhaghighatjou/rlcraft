@@ -3,7 +3,7 @@ package atomicstryker.battletowers.common;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 import atomicstryker.battletowers.common.network.ChestAttackedPacket;
 import atomicstryker.battletowers.common.network.LoginPacket;

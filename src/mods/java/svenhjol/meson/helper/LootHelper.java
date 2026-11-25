@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 import net.minecraft.item.Item;
@@ -66,7 +66,7 @@ public class LootHelper {
 
    public static ResourceLocation getRandomLootTable(LootHelper.RARITY rarity, LootHelper.TYPE type) {
       List<ResourceLocation> tables = getLootTables(rarity, type);
-      return (ResourceLocation)tables.get((new Random()).nextInt(tables.size()));
+      return (ResourceLocation)tables.get((new EaglercraftRandom()).nextInt(tables.size()));
    }
 
    private static void checkLootTable(LootHelper.RARITY rarity, LootHelper.TYPE type) {

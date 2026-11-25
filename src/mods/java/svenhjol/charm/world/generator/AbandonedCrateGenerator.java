@@ -1,6 +1,6 @@
 package svenhjol.charm.world.generator;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +18,7 @@ public class AbandonedCrateGenerator implements IWorldGenerator {
    public AbandonedCrateGenerator() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (world.provider.getDimension() == 0) {
          float f = random.nextFloat();
          if ((double)f <= AbandonedCrates.generateChance) {

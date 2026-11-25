@@ -18,7 +18,7 @@ import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -59,7 +59,7 @@ public final class ColorGetter {
    private static List<Color> getItemColors(ItemStack itemStack, int colorCount) {
       ItemColors itemColors = Minecraft.getMinecraft().getItemColors();
       int renderColor = itemColors.colorMultiplier(itemStack, 0);
-      TextureAtlasSprite textureAtlasSprite = getTextureAtlasSprite(itemStack);
+      EaglerTextureAtlasSprite textureAtlasSprite = getTextureAtlasSprite(itemStack);
       return getColors(textureAtlasSprite, renderColor, colorCount);
    }
 
@@ -75,11 +75,11 @@ public final class ColorGetter {
 
       BlockColors blockColors = Minecraft.getMinecraft().getBlockColors();
       int renderColor = blockColors.colorMultiplier(blockState, (IBlockAccess)null, (BlockPos)null, 0);
-      TextureAtlasSprite textureAtlasSprite = getTextureAtlasSprite(blockState);
+      EaglerTextureAtlasSprite textureAtlasSprite = getTextureAtlasSprite(blockState);
       return textureAtlasSprite == null ? Collections.emptyList() : getColors(textureAtlasSprite, renderColor, colorCount);
    }
 
-   public static List<Color> getColors(TextureAtlasSprite textureAtlasSprite, int renderColor, int colorCount) {
+   public static List<Color> getColors(EaglerTextureAtlasSprite textureAtlasSprite, int renderColor, int colorCount) {
       BufferedImage bufferedImage = getBufferedImage(textureAtlasSprite);
       if (bufferedImage == null) {
          return Collections.emptyList();
@@ -104,7 +104,7 @@ public final class ColorGetter {
    }
 
    @Nullable
-   private static BufferedImage getBufferedImage(TextureAtlasSprite textureAtlasSprite) {
+   private static BufferedImage getBufferedImage(EaglerTextureAtlasSprite textureAtlasSprite) {
       int iconWidth = textureAtlasSprite.getIconWidth();
       int iconHeight = textureAtlasSprite.getIconHeight();
       int frameCount = textureAtlasSprite.getFrameCount();
@@ -124,19 +124,19 @@ public final class ColorGetter {
    }
 
    @Nullable
-   private static TextureAtlasSprite getTextureAtlasSprite(IBlockState blockState) {
+   private static EaglerTextureAtlasSprite getTextureAtlasSprite(IBlockState blockState) {
       Minecraft minecraft = Minecraft.getMinecraft();
       BlockRendererDispatcher blockRendererDispatcher = minecraft.getBlockRendererDispatcher();
       BlockModelShapes blockModelShapes = blockRendererDispatcher.getBlockModelShapes();
-      TextureAtlasSprite textureAtlasSprite = blockModelShapes.getTexture(blockState);
+      EaglerTextureAtlasSprite textureAtlasSprite = blockModelShapes.getTexture(blockState);
       return textureAtlasSprite == minecraft.getTextureMapBlocks().getMissingSprite() ? null : textureAtlasSprite;
    }
 
-   private static TextureAtlasSprite getTextureAtlasSprite(ItemStack itemStack) {
+   private static EaglerTextureAtlasSprite getTextureAtlasSprite(ItemStack itemStack) {
       RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
       ItemModelMesher itemModelMesher = renderItem.getItemModelMesher();
       IBakedModel itemModel = itemModelMesher.getItemModel(itemStack);
-      TextureAtlasSprite particleTexture = itemModel.getParticleTexture();
-      return (TextureAtlasSprite)Preconditions.checkNotNull(particleTexture);
+      EaglerTextureAtlasSprite particleTexture = itemModel.getParticleTexture();
+      return (EaglerTextureAtlasSprite)Preconditions.checkNotNull(particleTexture);
    }
 }

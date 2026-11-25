@@ -7,7 +7,7 @@ import com.ferreusveritas.dynamictrees.util.SafeChunkBounds;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -45,7 +45,7 @@ public class FeatureGenHugeMushrooms implements IPostGenFeature {
          BlockPos lowest = (BlockPos)Collections.min(endPoints, (a, b) -> {
             return (boolean)(a.getY() - b.getY());
          });
-         Random rand = world.rand;
+         EaglercraftRandom rand = world.rand;
          int success = 0;
          if (radius >= 5) {
             for(int tries = 0; tries < this.maxAttempts; ++tries) {

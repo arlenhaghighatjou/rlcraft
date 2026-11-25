@@ -1,6 +1,6 @@
 package paulevs.betternether.structures.plants;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockHugeMushroom;
 import net.minecraft.block.BlockHugeMushroom.EnumType;
 import net.minecraft.block.state.IBlockState;
@@ -16,7 +16,7 @@ public class StructureWartCap implements IStructure {
    public StructureWartCap() {
    }
 
-   public void generate(World world, BlockPos pos, Random random) {
+   public void generate(World world, BlockPos pos, EaglercraftRandom random) {
       int radius = 3 + random.nextInt(3);
       int r2 = radius * radius;
       int r3 = r2 >> 1;

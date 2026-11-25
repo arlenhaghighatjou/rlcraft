@@ -1,6 +1,6 @@
 package prospector.traverse.world.features;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockVine;
@@ -37,7 +37,7 @@ public class WorldGenCustomSwampTree extends WorldGenAbstractTree implements Wor
       this.stateLeaves = stateLeaves;
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int i;
       for(i = rand.nextInt(4) + this.minTreeHeight; worldIn.getBlockState(position.down()).getMaterial() == Material.WATER; position = position.down()) {
          ;

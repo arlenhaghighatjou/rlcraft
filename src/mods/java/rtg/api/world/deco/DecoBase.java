@@ -2,7 +2,7 @@ package rtg.api.world.deco;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -48,7 +48,7 @@ public abstract class DecoBase {
       return !this.checkRiver || river <= this.maxRiver && river >= this.minRiver;
    }
 
-   public abstract void generate(IRealisticBiome var1, RTGWorld var2, Random var3, ChunkPos var4, float var5, boolean var6);
+   public abstract void generate(IRealisticBiome var1, RTGWorld var2, EaglercraftRandom var3, ChunkPos var4, float var5, boolean var6);
 
    /** @deprecated */
    @Deprecated
@@ -100,7 +100,7 @@ public abstract class DecoBase {
       return new BlockPos(pos.x * 16 + 8, 0, pos.z * 16 + 8);
    }
 
-   public static int getRangedRandom(Random rand, int min, int max) {
+   public static int getRangedRandom(EaglercraftRandom rand, int min, int max) {
       return min + rand.nextInt(max - min + 1);
    }
 

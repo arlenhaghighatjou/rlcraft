@@ -4,7 +4,7 @@ import de.Whitedraco.switchbow.Initial;
 import de.Whitedraco.switchbow.gui.ContainerQuiver;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Vector;
 import javax.annotation.Nullable;
 import net.minecraft.client.util.ITooltipFlag;
@@ -27,7 +27,7 @@ public class ItemQuiver extends Item {
    private static final int inventorySize = 9;
    private static final ItemStack[] inventory = new ItemStack[9];
    public ItemStack[] stacks = new ItemStack[9];
-   private Random field_146021_j = new Random();
+   private EaglercraftRandom field_146021_j = new EaglercraftRandom();
    protected String field_146020_a;
 
    public ItemQuiver() {

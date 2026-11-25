@@ -24,10 +24,10 @@ import javax.annotation.Nonnull;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.item.ItemStack;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class GuiScreenCanvas extends GuiScreen implements IScene {
    private final List<IGuiPanel> guiPanels = new CopyOnWriteArrayList();

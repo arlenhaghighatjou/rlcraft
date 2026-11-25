@@ -1,7 +1,7 @@
 package rustic.common.world;
 
 import com.google.common.base.Predicate;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -28,7 +28,7 @@ public class WorldGeneratorRustic implements IWorldGenerator {
    public WorldGeneratorRustic() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       BlockPos chunkCenter = new BlockPos(chunkX * 16 + 8, world.getHeight(chunkX * 16 + 8, chunkZ * 16 + 8), chunkZ * 16 + 8);
       if (Config.OVERWORLD_GENERATION_WHITELIST.contains(Integer.valueOf(world.provider.getDimension())) && (world.getWorldType() != WorldType.FLAT || world.getWorldInfo().getGeneratorOptions().contains("decoration"))) {
          if (random.nextFloat() < Config.WILDBERRY_GEN_CHANCE) {

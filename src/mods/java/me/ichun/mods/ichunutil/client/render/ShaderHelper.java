@@ -3,7 +3,7 @@ package me.ichun.mods.ichunutil.client.render;
 import gnu.trove.map.hash.TIntFloatHashMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import me.ichun.mods.ichunutil.common.iChunUtil;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import org.lwjgl.opengl.ARBShaderObjects;
 
 public final class ShaderHelper {

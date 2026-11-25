@@ -2,7 +2,7 @@ package com.elenai.elenaidodge.network.message;
 
 import com.elenai.elenaidodge.ElenaiDodge;
 import com.elenai.elenaidodge.particle.ParticleGenerator;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.fml.common.FMLCommonHandler;

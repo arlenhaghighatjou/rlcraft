@@ -1,6 +1,6 @@
 package prospector.traverse.world.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSand.EnumType;
@@ -31,7 +31,7 @@ public class BiomeCragCliffs extends Biome implements WorldGenConstants {
    public static IBlockState blueRock;
    public static BiomeProperties properties = new BiomeProperties("Crag Cliffs");
 
-   public void decorate(World worldIn, Random rand, BlockPos pos) {
+   public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos) {
       if (!TraverseConfig.disallowBoulders && TerrainGen.decorate(worldIn, rand, pos, EventType.ROCK)) {
          int genChance = rand.nextInt(9);
          if (genChance == 0) {
@@ -63,7 +63,7 @@ public class BiomeCragCliffs extends Biome implements WorldGenConstants {
       return super.getModdedBiomeGrassColor(-7306931);
    }
 
-   public WorldGenerator getRandomWorldGenForGrass(Random rand) {
+   public WorldGenerator getRandomWorldGenForGrass(EaglercraftRandom rand) {
       return COLD_GRASS_FEATURE;
    }
 
@@ -75,7 +75,7 @@ public class BiomeCragCliffs extends Biome implements WorldGenConstants {
       return super.getModdedBiomeFoliageColor(-6389427);
    }
 
-   public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
+   public void genTerrainBlocks(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
       int i = worldIn.getSeaLevel();
       IBlockState iblockstate = this.topBlock;
       IBlockState iblockstate1 = this.fillerBlock;

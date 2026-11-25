@@ -16,7 +16,7 @@ import ivorius.reccomplex.world.gen.feature.WorldGenStructures;
 import ivorius.reccomplex.world.gen.feature.structure.Structure;
 import java.io.File;
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -82,7 +82,7 @@ public class CommandRetrogen extends CommandExpecting {
       return new ChunkPos(x + pos.x, z + pos.z);
    }
 
-   public static Random getRandom(WorldServer world, ChunkPos pos) {
+   public static EaglercraftRandom getRandom(WorldServer world, ChunkPos pos) {
       return world.setRandomSeed(pos.x, pos.z, -559038737);
    }
 

@@ -1,10 +1,10 @@
 package hunternif.mc.atlas.core;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Tile {
    public final int biomeID;
-   private static final Random RANDOM = new Random();
+   private static final EaglercraftRandom RANDOM = new EaglercraftRandom();
    private transient short variationNumber;
 
    public Tile(int biomeID) {

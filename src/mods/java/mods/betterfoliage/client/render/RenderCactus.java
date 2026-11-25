@@ -32,14 +32,14 @@ import mods.octarinecore.common.Double3;
 import mods.octarinecore.common.Int3;
 import mods.octarinecore.common.Rotation;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumFacing.Axis;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,7 +49,7 @@ import org.jetbrains.annotations.Nullable;
    bv = {1, 0, 3},
    k = 1,
    d1 = {"\u0000f\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010 \n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0010\u0006\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0010\u0002\n\u0000\n\u0002\u0010\u000b\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\b\u0007\u0018\u00002\u00020\u0001B\u0005¢\u0006\u0002\u0010\u0002J\b\u0010\u001e\u001a\u00020\u001fH\u0016J\u0010\u0010 \u001a\u00020!2\u0006\u0010\"\u001a\u00020#H\u0016J(\u0010$\u001a\u00020!2\u0006\u0010\"\u001a\u00020#2\u0006\u0010%\u001a\u00020&2\u0006\u0010'\u001a\u00020(2\u0006\u0010)\u001a\u00020*H\u0016R\u0017\u0010\u0003\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004¢\u0006\b\n\u0000\u001a\u0004\b\u0006\u0010\u0007R\u0014\u0010\b\u001a\u00020\tX\u0086D¢\u0006\b\n\u0000\u001a\u0004\b\n\u0010\u000bR\u0011\u0010\f\u001a\u00020\r¢\u0006\b\n\u0000\u001a\u0004\b\u000e\u0010\u000fR\u0011\u0010\u0010\u001a\u00020\u0011¢\u0006\b\n\u0000\u001a\u0004\b\u0012\u0010\u0013R\u0011\u0010\u0014\u001a\u00020\u0015¢\u0006\b\n\u0000\u001a\u0004\b\u0016\u0010\u0017R\u0011\u0010\u0018\u001a\u00020\u0015¢\u0006\b\n\u0000\u001a\u0004\b\u0019\u0010\u0017R\u0011\u0010\u001a\u001a\u00020\u001b¢\u0006\b\n\u0000\u001a\u0004\b\u001c\u0010\u001d¨\u0006+"},
-   d2 = {"Lmods/betterfoliage/client/render/RenderCactus;", "Lmods/octarinecore/client/render/AbstractBlockRenderingHandler;", "()V", "cactusArmRotation", "", "Lmods/octarinecore/common/Rotation;", "getCactusArmRotation", "()Ljava/util/List;", "cactusStemRadius", "", "getCactusStemRadius", "()D", "iconArm", "Lmods/octarinecore/client/resource/IconSet;", "getIconArm", "()Lmods/octarinecore/client/resource/IconSet;", "iconCross", "Lmods/octarinecore/client/resource/IconHolder;", "getIconCross", "()Lmods/octarinecore/client/resource/IconHolder;", "modelArm", "Lmods/octarinecore/client/resource/ModelSet;", "getModelArm", "()Lmods/octarinecore/client/resource/ModelSet;", "modelCross", "getModelCross", "modelStem", "Lmods/octarinecore/client/resource/ModelHolder;", "getModelStem", "()Lmods/octarinecore/client/resource/ModelHolder;", "afterPreStitch", "", "isEligible", "", "ctx", "Lmods/octarinecore/client/render/BlockContext;", "render", "dispatcher", "Lnet/minecraft/client/renderer/BlockRendererDispatcher;", "renderer", "Lnet/minecraft/client/renderer/BufferBuilder;", "layer", "Lnet/minecraft/util/BlockRenderLayer;", "BetterFoliage-MC1.12"}
+   d2 = {"Lmods/betterfoliage/client/render/RenderCactus;", "Lmods/octarinecore/client/render/AbstractBlockRenderingHandler;", "()V", "cactusArmRotation", "", "Lmods/octarinecore/common/Rotation;", "getCactusArmRotation", "()Ljava/util/List;", "cactusStemRadius", "", "getCactusStemRadius", "()D", "iconArm", "Lmods/octarinecore/client/resource/IconSet;", "getIconArm", "()Lmods/octarinecore/client/resource/IconSet;", "iconCross", "Lmods/octarinecore/client/resource/IconHolder;", "getIconCross", "()Lmods/octarinecore/client/resource/IconHolder;", "modelArm", "Lmods/octarinecore/client/resource/ModelSet;", "getModelArm", "()Lmods/octarinecore/client/resource/ModelSet;", "modelCross", "getModelCross", "modelStem", "Lmods/octarinecore/client/resource/ModelHolder;", "getModelStem", "()Lmods/octarinecore/client/resource/ModelHolder;", "afterPreStitch", "", "isEligible", "", "ctx", "Lmods/octarinecore/client/render/BlockContext;", "render", "dispatcher", "Lnet/minecraft/client/renderer/BlockRendererDispatcher;", "renderer", "Lnet/minecraft/client/renderer/WorldRenderer;", "layer", "Lnet/minecraft/util/BlockRenderLayer;", "BetterFoliage-MC1.12"}
 )
 public final class RenderCactus extends AbstractBlockRenderingHandler {
    private final double cactusStemRadius = 0.4375D;
@@ -112,7 +112,7 @@ public final class RenderCactus extends AbstractBlockRenderingHandler {
       return Config.INSTANCE.getEnabled() && Config.cactus.INSTANCE.getEnabled() && Config.blocks.INSTANCE.getCactus().matchesClass(ctx.getBlock());
    }
 
-   public boolean render(@NotNull final BlockContext ctx, @NotNull BlockRendererDispatcher dispatcher, @NotNull BufferBuilder renderer, @NotNull BlockRenderLayer layer) {
+   public boolean render(@NotNull final BlockContext ctx, @NotNull BlockRendererDispatcher dispatcher, @NotNull WorldRenderer renderer, @NotNull BlockRenderLayer layer) {
       Intrinsics.checkParameterIsNotNull(ctx, "ctx");
       Intrinsics.checkParameterIsNotNull(dispatcher, "dispatcher");
       Intrinsics.checkParameterIsNotNull(renderer, "renderer");
@@ -124,32 +124,32 @@ public final class RenderCactus extends AbstractBlockRenderingHandler {
          ColumnTextureInfo var10000 = (ColumnTextureInfo)StandardCactusRegistry.INSTANCE.get(ctx);
          if (var10000 != null) {
             final ColumnTextureInfo icons = var10000;
-            ModelRenderer.render$default(RendererHolder.getModelRenderer(), renderer, this.modelStem.getModel(), Rotation.Companion.getIdentity(), (Double3)null, false, (Function2)null, new Function3<ShadingContext, Integer, Quad, TextureAtlasSprite>() {
+            ModelRenderer.render$default(RendererHolder.getModelRenderer(), renderer, this.modelStem.getModel(), Rotation.Companion.getIdentity(), (Double3)null, false, (Function2)null, new Function3<ShadingContext, Integer, Quad, EaglerTextureAtlasSprite>() {
                @Nullable
-               public final TextureAtlasSprite invoke(@NotNull ShadingContext ctx, int qi, @NotNull Quad q) {
+               public final EaglerTextureAtlasSprite invoke(@NotNull ShadingContext ctx, int qi, @NotNull Quad q) {
                   Intrinsics.checkParameterIsNotNull(ctx, "ctx");
                   Intrinsics.checkParameterIsNotNull(q, "q");
-                  TextureAtlasSprite var10000;
+                  EaglerTextureAtlasSprite var10000;
                   switch(qi) {
                   case 0:
-                     var10000 = (TextureAtlasSprite)icons.getBottom().invoke(ctx, Integer.valueOf(qi), q);
+                     var10000 = (EaglerTextureAtlasSprite)icons.getBottom().invoke(ctx, Integer.valueOf(qi), q);
                      break;
                   case 1:
-                     var10000 = (TextureAtlasSprite)icons.getTop().invoke(ctx, Integer.valueOf(qi), q);
+                     var10000 = (EaglerTextureAtlasSprite)icons.getTop().invoke(ctx, Integer.valueOf(qi), q);
                      break;
                   default:
-                     var10000 = (TextureAtlasSprite)icons.getSide().invoke(ctx, Integer.valueOf(qi), q);
+                     var10000 = (EaglerTextureAtlasSprite)icons.getSide().invoke(ctx, Integer.valueOf(qi), q);
                   }
 
                   return var10000;
                }
             }, ModelRendererKt.getNoPost(), 56, (Object)null);
-            ModelRenderer.render$default(RendererHolder.getModelRenderer(), renderer, this.modelCross.get(ctx.random(0)), Rotation.Companion.getIdentity(), (Double3)null, false, (Function2)null, new Function3<ShadingContext, Integer, Quad, TextureAtlasSprite>() {
+            ModelRenderer.render$default(RendererHolder.getModelRenderer(), renderer, this.modelCross.get(ctx.random(0)), Rotation.Companion.getIdentity(), (Double3)null, false, (Function2)null, new Function3<ShadingContext, Integer, Quad, EaglerTextureAtlasSprite>() {
                @NotNull
-               public final TextureAtlasSprite invoke(@NotNull ShadingContext $noName_0, int $noName_1, @NotNull Quad $noName_2) {
+               public final EaglerTextureAtlasSprite invoke(@NotNull ShadingContext $noName_0, int $noName_1, @NotNull Quad $noName_2) {
                   Intrinsics.checkParameterIsNotNull($noName_0, "<anonymous parameter 0>");
                   Intrinsics.checkParameterIsNotNull($noName_2, "<anonymous parameter 2>");
-                  TextureAtlasSprite var10000 = RenderCactus.this.getIconCross().getIcon();
+                  EaglerTextureAtlasSprite var10000 = RenderCactus.this.getIconCross().getIcon();
                   if (var10000 == null) {
                      Intrinsics.throwNpe();
                   }
@@ -157,12 +157,12 @@ public final class RenderCactus extends AbstractBlockRenderingHandler {
                   return var10000;
                }
             }, ModelRendererKt.getNoPost(), 56, (Object)null);
-            ModelRenderer.render$default(RendererHolder.getModelRenderer(), renderer, this.modelArm.get(ctx.random(1)), (Rotation)this.cactusArmRotation.get(ctx.random(2) % 4), (Double3)null, false, (Function2)null, new Function3<ShadingContext, Integer, Quad, TextureAtlasSprite>() {
+            ModelRenderer.render$default(RendererHolder.getModelRenderer(), renderer, this.modelArm.get(ctx.random(1)), (Rotation)this.cactusArmRotation.get(ctx.random(2) % 4), (Double3)null, false, (Function2)null, new Function3<ShadingContext, Integer, Quad, EaglerTextureAtlasSprite>() {
                @NotNull
-               public final TextureAtlasSprite invoke(@NotNull ShadingContext $noName_0, int $noName_1, @NotNull Quad $noName_2) {
+               public final EaglerTextureAtlasSprite invoke(@NotNull ShadingContext $noName_0, int $noName_1, @NotNull Quad $noName_2) {
                   Intrinsics.checkParameterIsNotNull($noName_0, "<anonymous parameter 0>");
                   Intrinsics.checkParameterIsNotNull($noName_2, "<anonymous parameter 2>");
-                  TextureAtlasSprite var10000 = RenderCactus.this.getIconArm().get(ctx.random(3));
+                  EaglerTextureAtlasSprite var10000 = RenderCactus.this.getIconArm().get(ctx.random(3));
                   if (var10000 == null) {
                      Intrinsics.throwNpe();
                   }

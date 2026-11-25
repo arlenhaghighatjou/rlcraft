@@ -4,7 +4,7 @@ import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.PositionTextureVertex;
 import net.minecraft.client.model.TexturedQuad;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -62,7 +62,7 @@ public class ModelCustomUVBox extends ModelBox {
    }
 
    @SideOnly(Side.CLIENT)
-   public void render(BufferBuilder renderer, float scale) {
+   public void render(WorldRenderer renderer, float scale) {
       if (this.quadList2 == null) {
          super.render(renderer, scale);
       } else {

@@ -1,6 +1,6 @@
 package jaredbgreat.dldungeons.themes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum Degree implements Autoselectable {
    NONE(0),
@@ -17,7 +17,7 @@ public enum Degree implements Autoselectable {
       this.value = val;
    }
 
-   public boolean use(Random random) {
+   public boolean use(EaglercraftRandom random) {
       return random.nextInt(10) < this.value;
    }
 }

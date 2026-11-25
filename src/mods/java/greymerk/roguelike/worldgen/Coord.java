@@ -6,7 +6,7 @@ import greymerk.roguelike.worldgen.shapes.RectSolid;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.stream.Collectors;
 
 public class Coord {
@@ -49,7 +49,7 @@ public class Coord {
 
    }
 
-   public static List<Coord> randomFrom(List<Coord> coords, int limit, Random random) {
+   public static List<Coord> randomFrom(List<Coord> coords, int limit, EaglercraftRandom random) {
       ArrayList<Coord> coordsShuffled = Lists.newArrayList(coords);
       Collections.shuffle(coordsShuffled, random);
       return (List)coordsShuffled.stream().limit((long)limit).collect(Collectors.toList());

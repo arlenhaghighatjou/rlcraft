@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.world.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.init.ModBlocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -10,7 +10,7 @@ public class WorldGenVilespine extends WorldGenerator {
    public WorldGenVilespine() {
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       for(int i = 0; i < 10; ++i) {
          BlockPos blockpos = position.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
          if (worldIn.isAirBlock(blockpos)) {

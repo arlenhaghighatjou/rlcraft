@@ -12,7 +12,7 @@ import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.QuestDatabase;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
@@ -73,7 +73,7 @@ public class NetQuestSync {
          BQThreadedIO.INSTANCE.enqueue(() -> {
             NBTTagList dataList = new NBTTagList();
             List<DBEntry<IQuest>> questSubset = questIDs == null ? QuestDatabase.INSTANCE.getEntries() : QuestDatabase.INSTANCE.bulkLookup(questIDs);
-            List<UUID> pidList = player == null ? null : Collections.singletonList(QuestingAPI.getQuestingUUID(player));
+            List<EaglercraftUUID> pidList = player == null ? null : Collections.singletonList(QuestingAPI.getQuestingUUID(player));
 
             for(DBEntry<IQuest> entry : questSubset) {
                NBTTagCompound tag = new NBTTagCompound();

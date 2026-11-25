@@ -1,6 +1,6 @@
 package com.charles445.rltweaker.util;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
@@ -19,7 +19,7 @@ public class LootUtil {
          super(conditionsIn);
       }
 
-      public ItemStack apply(ItemStack stack, Random rand, LootContext context) {
+      public ItemStack apply(ItemStack stack, EaglercraftRandom rand, LootContext context) {
          return stack;
       }
    }
@@ -28,7 +28,7 @@ public class LootUtil {
       public FailCondition() {
       }
 
-      public boolean testCondition(Random rand, LootContext context) {
+      public boolean testCondition(EaglercraftRandom rand, LootContext context) {
          return false;
       }
    }

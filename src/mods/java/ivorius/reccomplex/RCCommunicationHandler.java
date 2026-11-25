@@ -13,7 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLInterModComms.IMCMessage;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class RCCommunicationHandler extends IvFMLIntercommHandler {
    public RCCommunicationHandler(Logger logger, String modOwnerID, Object modInstance) {

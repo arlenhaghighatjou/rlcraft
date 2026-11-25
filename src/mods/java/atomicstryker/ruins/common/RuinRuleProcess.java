@@ -1,6 +1,6 @@
 package atomicstryker.ruins.common;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.world.World;
 
@@ -19,7 +19,7 @@ class RuinRuleProcess
         rotate = rot;
     }
 
-    public void doBlock(World world, Random random)
+    public void doBlock(World world, EaglercraftRandom random)
     {
         rule.doBlock(world, random, x, y, z, rotate);
     }

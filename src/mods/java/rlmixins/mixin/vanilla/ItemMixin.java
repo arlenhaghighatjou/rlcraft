@@ -1,7 +1,7 @@
 package rlmixins.mixin.vanilla;
 
 import com.google.common.collect.Multimap;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -16,8 +16,8 @@ import rlmixins.wrapper.SMEWrapper;
 
 @Mixin({Item.class})
 public abstract class ItemMixin {
-   private static final UUID SS_UUID = UUID.fromString("fc1c8dca-9411-4a4e-97a4-90e66c883a77");
-   private static final UUID HW_UUID = UUID.fromString("e2765897-134f-4c14-a535-29c3ae5c7a21");
+   private static final EaglercraftUUID SS_UUID = EaglercraftUUID.fromString("fc1c8dca-9411-4a4e-97a4-90e66c883a77");
+   private static final EaglercraftUUID HW_UUID = EaglercraftUUID.fromString("e2765897-134f-4c14-a535-29c3ae5c7a21");
 
    public ItemMixin() {
    }

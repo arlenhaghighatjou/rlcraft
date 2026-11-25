@@ -9,7 +9,7 @@ import ivorius.reccomplex.gui.loot.TableDataSourceLootGenMultiTag;
 import ivorius.reccomplex.world.storage.loot.LootTable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
@@ -55,7 +55,7 @@ public class ItemLootGenMultiTag extends ItemLootGenerationTag implements ItemSy
       Minecraft.getMinecraft().displayGuiScreen(new GuiEditItemStack(player, slot, new TableDataSourceLootGenMultiTag()));
    }
 
-   public void generateInInventory(WorldServer server, IItemHandlerModifiable inventory, Random random, ItemStack stack, int fromSlot) {
+   public void generateInInventory(WorldServer server, IItemHandlerModifiable inventory, EaglercraftRandom random, ItemStack stack, int fromSlot) {
       LootTable lootTable = lootTable(stack);
       inventory.setStackInSlot(fromSlot, ItemStack.EMPTY);
       if (lootTable != null) {

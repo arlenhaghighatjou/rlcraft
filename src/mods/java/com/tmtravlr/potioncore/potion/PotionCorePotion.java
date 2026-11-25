@@ -1,7 +1,7 @@
 package com.tmtravlr.potioncore.potion;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -69,7 +69,7 @@ public abstract class PotionCorePotion extends Potion {
       float widthRatio = 0.055555556F;
       float heightRatio = 0.055555556F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexBuffer = tessellator.getBuffer();
+      WorldRenderer vertexBuffer = tessellator.getBuffer();
       vertexBuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexBuffer.pos((double)(x + 0), (double)(y + height), 0.0D).tex(0.0D, (double)((float)height * heightRatio)).endVertex();
       vertexBuffer.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((float)width * widthRatio), (double)((float)height * heightRatio)).endVertex();

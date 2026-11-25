@@ -32,7 +32,7 @@ import com.dhanantry.scapeandrunparasites.util.config.SRPConfigWorld;
 import com.dhanantry.scapeandrunparasites.world.SRPExplotion;
 import com.dhanantry.scapeandrunparasites.world.SRPWorldData;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
@@ -65,7 +65,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class ParasiteEventEntity {
    public static boolean canSpawnNext = true;
@@ -200,7 +200,7 @@ public class ParasiteEventEntity {
 
    public static boolean SummonM(EntityParasiteBase entityin, String[] out, int range, @Nullable EntityLivingBase target) {
       if (!entityin.world.isRemote) {
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          double x = entityin.posX;
          double y = entityin.posY;
          double z = entityin.posZ;
@@ -340,7 +340,7 @@ public class ParasiteEventEntity {
 
    public static boolean SummonM(EntityParasiteBase entityin, String[] out, int range, double tx, double ty, double tz, @Nullable EntityLivingBase target, boolean pod) {
       if (!entityin.world.isRemote) {
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          double x = tx;
          double y = ty;
          double z = tz;
@@ -475,7 +475,7 @@ public class ParasiteEventEntity {
 
    public static boolean spawnBiomassFromProjectile(EntityParasiteBase entityin, String[] out, @Nullable EntityLivingBase target) {
       if (!entityin.world.isRemote) {
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          String[] entityC = new String[3];
          int index = rand.nextInt(out.length);
          int limit = 0;
@@ -533,7 +533,7 @@ public class ParasiteEventEntity {
 
    public static boolean spawnBiomassFromVomit(EntityParasiteBase entityin, String[] out, @Nullable EntityLivingBase target) {
       if (!entityin.world.isRemote) {
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          String[] entityC = new String[3];
          int index = rand.nextInt(out.length);
          int limit = 0;
@@ -611,7 +611,7 @@ public class ParasiteEventEntity {
             mobListG = air;
          }
 
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          String[] entityC = new String[3];
          int index = rand.nextInt(mobListG.length);
          int limit = 0;
@@ -848,7 +848,7 @@ public class ParasiteEventEntity {
       if (SRPConfigSystems.mergeRandom) {
          entityin.particleStatus((byte)7);
          String[] entityC = new String[2];
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          int index = rand.nextInt(SRPConfigSystems.mergeMobTable.length);
          boolean flag = true;
 
@@ -893,7 +893,7 @@ public class ParasiteEventEntity {
             }
          }
 
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          int index = rand.nextInt(SRPConfigSystems.mergeMobTable.length);
          boolean flag = true;
 
@@ -947,7 +947,7 @@ public class ParasiteEventEntity {
 
          try {
             double minus = EquipCheck(player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem().getRegistryName().toString(), player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem().getRegistryName().toString(), player.getItemStackFromSlot(EntityEquipmentSlot.LEGS).getItem().getRegistryName().toString(), player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem().getRegistryName().toString());
-            Random rand = new Random();
+            EaglercraftRandom rand = new EaglercraftRandom();
             if (rand.nextDouble() <= chance) {
                if (rand.nextDouble() <= minus) {
                   entityIn.attackEntityFrom(DamageSource.STARVE, damage);
@@ -963,7 +963,7 @@ public class ParasiteEventEntity {
          }
       }
 
-      Random rand = new Random();
+      EaglercraftRandom rand = new EaglercraftRandom();
       if (rand.nextDouble() <= chance) {
          entityIn.attackEntityFrom(DamageSource.STARVE, damage);
       }
@@ -1049,7 +1049,7 @@ public class ParasiteEventEntity {
       } else if (entityin.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
          return false;
       } else {
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          World world = entityin.world;
          double randomx = (double)rand.nextInt(range);
          double randomz = (double)rand.nextInt(range);
@@ -1151,7 +1151,7 @@ public class ParasiteEventEntity {
 
    public static boolean spawnFromBlock(World world, String[] out, int range, BlockPos pos) {
       if (!world.isRemote) {
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          double x = (double)pos.getX();
          double y = (double)pos.getY();
          double z = (double)pos.getZ();
@@ -1263,7 +1263,7 @@ public class ParasiteEventEntity {
    public static void spawnBeckonNE(SRPWorldData data, double chance, World world, EntityParasiteBase in) {
       long worldT = world.getWorldTime();
       long seconds = (worldT - SRPAttributes.lastTimeD1) / 20L;
-      Random rand = new Random();
+      EaglercraftRandom rand = new EaglercraftRandom();
       if (rand.nextDouble() < chance && data.getCurrentV() < SRPConfigSystems.rsMaxVenkrols && (long)SRPConfigSystems.rsCooldown < Math.abs(seconds) && SummonM(in, new String[]{"srparasites:beckon_si;1;1"}, 7, in.getAttackTarget())) {
          if (SRPConfigSystems.rsSounds) {
             in.playSound(SRPSounds.VENKROLSI, 4.0F, 1.0F);
@@ -1499,7 +1499,7 @@ public class ParasiteEventEntity {
          in.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 80, 4, false, false));
          return false;
       } else {
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          double x = (double)posIn.getX();
          double y = (double)posIn.getY();
          double z = (double)posIn.getZ();

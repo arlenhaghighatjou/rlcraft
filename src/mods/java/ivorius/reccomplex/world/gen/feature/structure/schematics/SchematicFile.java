@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import java.util.function.ToIntFunction;
 import java.util.stream.Stream;
@@ -177,7 +177,7 @@ public class SchematicFile {
       for(NBTTagCompound entityCompound : this.entityCompounds) {
          Entity entity = EntityList.createEntityFromNBT(entityCompound, world);
          if (entity != null) {
-            RCAccessorEntity.setEntityUniqueID(entity, UUID.randomUUID());
+            RCAccessorEntity.setEntityUniqueID(entity, EaglercraftUUID.randomUUID());
             PosTransformer.transformEntityPos(entity, transform, areaSize);
             Mover.moveEntity(entity, origin);
             world.spawnEntity(entity);

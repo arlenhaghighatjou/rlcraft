@@ -5,7 +5,7 @@ import com.TominoCZ.FBP.material.FBPMaterial;
 import com.TominoCZ.FBP.node.BlockNode;
 import com.TominoCZ.FBP.particle.FBPParticleBlock;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -372,7 +372,7 @@ public class FBPAnimationDummyBlock extends Block {
       return this.blockNodes.containsKey(pos) ? ((BlockNode)this.blockNodes.get(pos)).originalBlock.getExpDrop(state, world, pos, fortune) : super.getExpDrop(state, world, pos, fortune);
    }
 
-   public Item getItemDropped(IBlockState state, Random r, int i) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom r, int i) {
       return null;
    }
 

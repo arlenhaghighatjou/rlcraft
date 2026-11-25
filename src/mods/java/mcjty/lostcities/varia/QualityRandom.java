@@ -1,8 +1,8 @@
 package mcjty.lostcities.varia;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
-public class QualityRandom extends Random {
+public class QualityRandom extends EaglercraftRandom {
    private long u;
    private long v;
    private long w;

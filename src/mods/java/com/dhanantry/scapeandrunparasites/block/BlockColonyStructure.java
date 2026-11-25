@@ -22,7 +22,7 @@ import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteTenF
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteTree;
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteTreeThin;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.material.EnumPushReaction;
@@ -51,7 +51,7 @@ public class BlockColonyStructure extends BlockBase {
 
    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
       int i = 2;
-      Random rand = new Random();
+      EaglercraftRandom rand = new EaglercraftRandom();
       if (!worldIn.isRemote && i == -2) {
          this.updateTick(worldIn, pos, state, rand);
       }
@@ -65,7 +65,7 @@ public class BlockColonyStructure extends BlockBase {
 
       if (!worldIn.isRemote && i == 2) {
          WorldGenParasiteColonyBase tree = new WorldGenParasiteColonyB3(false, 1);
-         tree.generate(worldIn, new Random(), pos.up());
+         tree.generate(worldIn, new EaglercraftRandom(), pos.up());
       }
 
       if (!worldIn.isRemote && i == 3) {
@@ -141,13 +141,13 @@ public class BlockColonyStructure extends BlockBase {
 
       if (!worldIn.isRemote && i == 15) {
          WorldGenParasiteBigBall tree = new WorldGenParasiteBigBall(false);
-         tree.generate(worldIn, new Random(), pos.up());
+         tree.generate(worldIn, new EaglercraftRandom(), pos.up());
       }
 
       return false;
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (worldIn.isAreaLoaded(pos, 3) && !worldIn.isRemote) {
          if (SRPConfigWorld.coloniesActivated) {
             SRPWorldData data = SRPWorldData.get(worldIn);
@@ -168,16 +168,16 @@ public class BlockColonyStructure extends BlockBase {
                      if (rand.nextInt(4) == 0) {
                         if (this.makePillar(worldIn, pos, 23, 4)) {
                            WorldGenParasiteColonyBase tree = new WorldGenParasiteColonyB3(false, 2);
-                           tree.generate(worldIn, new Random(), pos.up());
+                           tree.generate(worldIn, new EaglercraftRandom(), pos.up());
                         }
                      } else if (rand.nextBoolean()) {
                         if (this.makePillar(worldIn, pos, 23, 4)) {
                            WorldGenParasiteColonyBase tree = new WorldGenParasiteColonyB2(false, 2);
-                           tree.generate(worldIn, new Random(), pos.up());
+                           tree.generate(worldIn, new EaglercraftRandom(), pos.up());
                         }
                      } else if (this.makePillar(worldIn, pos, 23, 4)) {
                         WorldGenParasiteColonyBase tree = new WorldGenParasiteColonyB1(false, 2);
-                        tree.generate(worldIn, new Random(), pos.up());
+                        tree.generate(worldIn, new EaglercraftRandom(), pos.up());
                      }
                   }
                   break;
@@ -186,11 +186,11 @@ public class BlockColonyStructure extends BlockBase {
                      if (rand.nextBoolean()) {
                         if (this.makePillar(worldIn, pos, 13, 3)) {
                            WorldGenParasiteColonyBS1 tree = new WorldGenParasiteColonyBS1(false, 2);
-                           tree.generate(worldIn, new Random(), pos.up());
+                           tree.generate(worldIn, new EaglercraftRandom(), pos.up());
                         }
                      } else if (this.makePillar(worldIn, pos, 13, 3)) {
                         WorldGenParasiteColonyBS1 tree = new WorldGenParasiteColonyBS1(false, 2);
-                        tree.generate(worldIn, new Random(), pos.up());
+                        tree.generate(worldIn, new EaglercraftRandom(), pos.up());
                      }
                   }
                }

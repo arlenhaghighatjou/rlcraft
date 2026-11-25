@@ -5,7 +5,7 @@ import com.fantasticsource.mctools.gui.element.GUIElement;
 import com.fantasticsource.tools.Tools;
 import com.fantasticsource.tools.TrigLookupTable;
 import com.fantasticsource.tools.datastructures.Color;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GUIEllipse extends GUIElement {
    protected Color color;

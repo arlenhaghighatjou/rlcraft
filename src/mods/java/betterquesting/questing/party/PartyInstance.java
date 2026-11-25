@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 public class PartyInstance implements IParty {
-   private final HashMap<UUID, EnumPartyStatus> members = new HashMap();
-   private List<UUID> memCache = null;
+   private final HashMap<EaglercraftUUID, EnumPartyStatus> members = new HashMap();
+   private List<EaglercraftUUID> memCache = null;
    private final PropertyContainer pInfo = new PropertyContainer();
 
    public PartyInstance() {
@@ -46,7 +46,7 @@ public class PartyInstance implements IParty {
       return this.pInfo;
    }
 
-   public void kickUser(@Nonnull UUID uuid) {
+   public void kickUser(@Nonnull EaglercraftUUID uuid) {
       if (this.members.containsKey(uuid)) {
          EnumPartyStatus old = (EnumPartyStatus)this.members.get(uuid);
          this.members.remove(uuid);
@@ -58,20 +58,20 @@ public class PartyInstance implements IParty {
       }
    }
 
-   public void setStatus(@Nonnull UUID uuid, @Nonnull EnumPartyStatus priv) {
+   public void setStatus(@Nonnull EaglercraftUUID uuid, @Nonnull EnumPartyStatus priv) {
       EnumPartyStatus old = (EnumPartyStatus)this.members.get(uuid);
       if (old != priv) {
          this.members.put(uuid, priv);
          if (priv == EnumPartyStatus.OWNER) {
-            for(UUID mem : this.getMembers()) {
+            for(EaglercraftUUID mem : this.getMembers()) {
                if (mem != uuid && this.members.get(mem) == EnumPartyStatus.OWNER) {
                   this.members.put(mem, EnumPartyStatus.ADMIN);
                }
             }
          } else if (old == EnumPartyStatus.OWNER) {
-            UUID migrate = null;
+            EaglercraftUUID migrate = null;
 
-            for(UUID mem : this.getMembers()) {
+            for(EaglercraftUUID mem : this.getMembers()) {
                if (mem != uuid) {
                   if (this.members.get(mem) == EnumPartyStatus.ADMIN) {
                      migrate = mem;
@@ -96,11 +96,11 @@ public class PartyInstance implements IParty {
       }
    }
 
-   public EnumPartyStatus getStatus(@Nonnull UUID uuid) {
+   public EnumPartyStatus getStatus(@Nonnull EaglercraftUUID uuid) {
       return (EnumPartyStatus)this.members.get(uuid);
    }
 
-   public List<UUID> getMembers() {
+   public List<EaglercraftUUID> getMembers() {
       if (this.memCache == null) {
          this.refreshCache();
       }
@@ -109,23 +109,23 @@ public class PartyInstance implements IParty {
    }
 
    private void hostMigrate() {
-      for(Entry<UUID, EnumPartyStatus> entry : this.members.entrySet()) {
+      for(Entry<EaglercraftUUID, EnumPartyStatus> entry : this.members.entrySet()) {
          if (entry.getValue() == EnumPartyStatus.OWNER) {
             return;
          }
       }
 
-      UUID migrate = null;
+      EaglercraftUUID migrate = null;
 
-      for(Entry<UUID, EnumPartyStatus> entry : this.members.entrySet()) {
+      for(Entry<EaglercraftUUID, EnumPartyStatus> entry : this.members.entrySet()) {
          EnumPartyStatus status = (EnumPartyStatus)entry.getValue();
          if (status == EnumPartyStatus.ADMIN || status == EnumPartyStatus.OWNER) {
-            migrate = (UUID)entry.getKey();
+            migrate = (EaglercraftUUID)entry.getKey();
             break;
          }
 
          if (migrate == null) {
-            migrate = (UUID)entry.getKey();
+            migrate = (EaglercraftUUID)entry.getKey();
          }
       }
 
@@ -140,9 +140,9 @@ public class PartyInstance implements IParty {
    public NBTTagCompound writeToNBT(NBTTagCompound json) {
       NBTTagList memJson = new NBTTagList();
 
-      for(Entry<UUID, EnumPartyStatus> mem : this.members.entrySet()) {
+      for(Entry<EaglercraftUUID, EnumPartyStatus> mem : this.members.entrySet()) {
          NBTTagCompound jm = new NBTTagCompound();
-         jm.setString("uuid", ((UUID)mem.getKey()).toString());
+         jm.setString("uuid", ((EaglercraftUUID)mem.getKey()).toString());
          jm.setString("status", ((EnumPartyStatus)mem.getValue()).toString());
          memJson.appendTag(jm);
       }
@@ -167,7 +167,7 @@ public class PartyInstance implements IParty {
          try {
             NBTTagCompound jMem = memList.getCompoundTagAt(i);
             if (jMem.hasKey("uuid", 8) && jMem.hasKey("status")) {
-               UUID uuid = UUID.fromString(jMem.getString("uuid"));
+               EaglercraftUUID uuid = EaglercraftUUID.fromString(jMem.getString("uuid"));
                EnumPartyStatus priv = EnumPartyStatus.valueOf(jMem.getString("status"));
                this.members.put(uuid, priv);
             }

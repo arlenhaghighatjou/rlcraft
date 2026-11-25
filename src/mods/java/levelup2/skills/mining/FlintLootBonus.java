@@ -1,6 +1,6 @@
 package levelup2.skills.mining;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
 import levelup2.util.Library;
@@ -37,7 +37,7 @@ public class FlintLootBonus extends BaseSkill {
       if (this.isActive()) {
          if (evt.getHarvester() != null && !evt.getWorld().isRemote) {
             IBlockState state = evt.getState();
-            Random rand = evt.getHarvester().getRNG();
+            EaglercraftRandom rand = evt.getHarvester().getRNG();
             int skill = SkillRegistry.getSkillLevel(evt.getHarvester(), this.getSkillName());
             if (!evt.isSilkTouching() && skill > 0 && state.getBlock() instanceof BlockGravel && rand.nextInt(10) < skill) {
                Library.removeFromList(evt.getDrops(), new ItemStack(state.getBlock()));

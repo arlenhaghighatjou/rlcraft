@@ -3,7 +3,7 @@ package com.lycanitesmobs.core.block.effect;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.core.block.BlockBase;
 import com.lycanitesmobs.core.config.ConfigBase;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -33,7 +33,7 @@ public class BlockQuickWeb extends BlockBase {
       this.setLightOpacity(1);
    }
 
-   public Item getItemDropped(IBlockState blockState, Random random, int fortune) {
+   public Item getItemDropped(IBlockState blockState, EaglercraftRandom random, int fortune) {
       return null;
    }
 
@@ -41,7 +41,7 @@ public class BlockQuickWeb extends BlockBase {
       return 0;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 1;
    }
 

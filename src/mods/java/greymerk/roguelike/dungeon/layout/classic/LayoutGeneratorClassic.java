@@ -7,7 +7,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Direction;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntPredicate;
@@ -30,14 +30,14 @@ public class LayoutGeneratorClassic implements LayoutGenerator {
       this.range = range;
    }
 
-   public LevelLayout generate(Coord start, Random random) {
+   public LevelLayout generate(Coord start, EaglercraftRandom random) {
       this.setStart(start);
       Node startNode = new Node(this, start, Direction.randomCardinal(random));
       List<Node> gNodes = this.generateGraph(startNode, random);
       return this.generateLayoutFromGraph(gNodes, startNode, random);
    }
 
-   private List<Node> generateGraph(Node startNode, Random random) {
+   private List<Node> generateGraph(Node startNode, EaglercraftRandom random) {
       this.graphNodes = new ArrayList();
       this.graphNodes.add(startNode);
 
@@ -49,7 +49,7 @@ public class LayoutGeneratorClassic implements LayoutGenerator {
       return this.graphNodes;
    }
 
-   private LevelLayout generateLayoutFromGraph(List<Node> graphNodes, Node startNode, Random random) {
+   private LevelLayout generateLayoutFromGraph(List<Node> graphNodes, Node startNode, EaglercraftRandom random) {
       DungeonNode startDungeonNode = null;
 
       for(Node node : graphNodes) {
@@ -66,7 +66,7 @@ public class LayoutGeneratorClassic implements LayoutGenerator {
       return this.layout;
    }
 
-   public void update(List<Node> nodes, Random random) {
+   public void update(List<Node> nodes, EaglercraftRandom random) {
       if (!this.isFull(nodes)) {
          for(int i = 0; i < nodes.size(); ++i) {
             ((Node)nodes.get(i)).update(random);

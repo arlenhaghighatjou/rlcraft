@@ -1,6 +1,6 @@
 package prospector.traverse.world.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockDirt.DirtType;
 import net.minecraft.init.Blocks;
@@ -30,7 +30,7 @@ public class BiomeRockyPlateau extends Biome implements WorldGenConstants {
       this.spawnableCreatureList.clear();
    }
 
-   public void decorate(World worldIn, Random rand, BlockPos pos) {
+   public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos) {
       int coarseDirtChance = rand.nextInt(7);
       if (coarseDirtChance == 0) {
          int k6 = rand.nextInt(16) + 8;

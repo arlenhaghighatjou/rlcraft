@@ -4,7 +4,7 @@ import betterquesting.api.api.QuestingAPI;
 import betterquesting.storage.NameCache;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -54,7 +54,7 @@ public abstract class QuestCommandBase {
       return new WrongUsageException(message, new Object[0]);
    }
 
-   public UUID findPlayerID(MinecraftServer server, ICommandSender sender, String name) {
+   public EaglercraftUUID findPlayerID(MinecraftServer server, ICommandSender sender, String name) {
       EntityPlayerMP player = null;
 
       try {
@@ -63,14 +63,14 @@ public abstract class QuestCommandBase {
          ;
       }
 
-      UUID playerID;
+      EaglercraftUUID playerID;
       if (player == null) {
          if (name.startsWith("@")) {
             return null;
          }
 
          try {
-            playerID = UUID.fromString(name);
+            playerID = EaglercraftUUID.fromString(name);
          } catch (Exception var7) {
             playerID = NameCache.INSTANCE.getUUID(name);
          }

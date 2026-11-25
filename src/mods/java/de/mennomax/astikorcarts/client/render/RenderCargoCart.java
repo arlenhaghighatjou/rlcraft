@@ -3,7 +3,7 @@ package de.mennomax.astikorcarts.client.render;
 import de.mennomax.astikorcarts.client.model.ModelCargoCart;
 import de.mennomax.astikorcarts.entity.EntityCargoCart;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

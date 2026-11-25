@@ -5,7 +5,7 @@ import com.github.alexthe666.iceandfire.entity.MyrmexHive;
 import com.github.alexthe666.iceandfire.message.MessageGetMyrmexHive;
 import com.github.alexthe666.iceandfire.message.MessageSetMyrmexHiveNull;
 import com.github.alexthe666.iceandfire.world.MyrmexWorldData;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -39,7 +39,7 @@ public class ItemMyrmexStaff extends Item {
    public void onUpdate(ItemStack stack, World world, Entity entity, int f, boolean f1) {
       if (stack.getTagCompound() == null) {
          stack.setTagCompound(new NBTTagCompound());
-         stack.getTagCompound().setUniqueId("HiveUUID", new UUID(0L, 0L));
+         stack.getTagCompound().setUniqueId("HiveUUID", new EaglercraftUUID(0L, 0L));
       }
 
    }
@@ -49,7 +49,7 @@ public class ItemMyrmexStaff extends Item {
       if (playerIn.isSneaking()) {
          return super.onItemRightClick(worldIn, playerIn, hand);
       } else {
-         UUID id = itemStackIn.getTagCompound().getUniqueId("HiveUUID");
+         EaglercraftUUID id = itemStackIn.getTagCompound().getUniqueId("HiveUUID");
          if (!worldIn.isRemote) {
             MyrmexHive hive = MyrmexWorldData.get(worldIn).getHiveFromUUID(id);
             MyrmexWorldData.get(worldIn);
@@ -59,7 +59,7 @@ public class ItemMyrmexStaff extends Item {
             } else {
                IceAndFire.NETWORK_WRAPPER.sendToAll(new MessageSetMyrmexHiveNull());
             }
-         } else if (id != null && !id.equals(new UUID(0L, 0L))) {
+         } else if (id != null && !id.equals(new EaglercraftUUID(0L, 0L))) {
             IceAndFire.PROXY.openMyrmexStaffGui(itemStackIn);
          }
 
@@ -72,7 +72,7 @@ public class ItemMyrmexStaff extends Item {
       if (!player.isSneaking()) {
          return super.onItemUse(player, worldIn, pos, hand, side, hitX, hitY, hitZ);
       } else {
-         UUID id = player.getHeldItem(hand).getTagCompound().getUniqueId("HiveUUID");
+         EaglercraftUUID id = player.getHeldItem(hand).getTagCompound().getUniqueId("HiveUUID");
          if (!worldIn.isRemote) {
             MyrmexHive hive = MyrmexWorldData.get(worldIn).getHiveFromUUID(id);
             if (hive != null) {
@@ -80,7 +80,7 @@ public class ItemMyrmexStaff extends Item {
             } else {
                IceAndFire.NETWORK_WRAPPER.sendToAll(new MessageSetMyrmexHiveNull());
             }
-         } else if (id != null && !id.equals(new UUID(0L, 0L))) {
+         } else if (id != null && !id.equals(new EaglercraftUUID(0L, 0L))) {
             IceAndFire.PROXY.openMyrmexAddRoomGui(player.getHeldItem(hand), pos, player.getHorizontalFacing());
          }
 

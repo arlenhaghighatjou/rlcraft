@@ -4,7 +4,7 @@ import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.core.ModBlocks;
 import com.github.alexthe666.iceandfire.core.ModItems;
 import com.github.alexthe666.iceandfire.structures.WorldUtils;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -113,7 +113,7 @@ public class BlockSilverPile extends Block {
       }
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return ModItems.silverNugget;
    }
 
@@ -134,7 +134,7 @@ public class BlockSilverPile extends Block {
       return ((Integer)state.getValue(LAYERS)).intValue() - 1;
    }
 
-   public int quantityDropped(IBlockState state, int fortune, Random random) {
+   public int quantityDropped(IBlockState state, int fortune, EaglercraftRandom random) {
       return ((Integer)state.getValue(LAYERS)).intValue() + 1;
    }
 

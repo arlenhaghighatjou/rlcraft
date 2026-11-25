@@ -1,7 +1,7 @@
 package de.mennomax.astikorcarts.packets;
 
 import de.mennomax.astikorcarts.entity.AbstractDrawn;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

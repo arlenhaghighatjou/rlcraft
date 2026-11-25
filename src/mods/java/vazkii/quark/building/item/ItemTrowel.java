@@ -2,7 +2,7 @@ package vazkii.quark.building.item;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -51,7 +51,7 @@ public class ItemTrowel extends ItemMod implements IQuarkItem {
          return EnumActionResult.PASS;
       } else {
          long seed = ItemNBTHelper.getLong(ourStack, "placing_seed", 0L);
-         Random rand = new Random(seed);
+         EaglercraftRandom rand = new EaglercraftRandom(seed);
          ItemNBTHelper.setLong(ourStack, "placing_seed", rand.nextLong());
          ItemStack target = (ItemStack)targets.get(rand.nextInt(targets.size()));
          EnumActionResult result = this.placeBlock(target, player, pos, facing, worldIn, hand, hitX, hitY, hitZ);

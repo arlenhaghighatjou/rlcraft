@@ -3,7 +3,7 @@ package yalter.mousetweaks.handlers;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 import yalter.mousetweaks.Constants;
 import yalter.mousetweaks.IGuiScreenHandler;
 import yalter.mousetweaks.MouseButton;

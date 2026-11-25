@@ -1,6 +1,6 @@
 package xzeroair.trinkets.client.particles;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.Vec3d;
 import xzeroair.trinkets.util.Reference;
 
@@ -8,7 +8,7 @@ public class LightningVertex {
    private double z;
    private double y;
    private double x;
-   private Random rand = Reference.random;
+   private EaglercraftRandom rand = Reference.random;
    private int rx;
    private int ry;
    private int rz;

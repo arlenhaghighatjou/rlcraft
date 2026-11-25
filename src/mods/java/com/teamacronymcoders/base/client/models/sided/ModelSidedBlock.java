@@ -10,8 +10,8 @@ import java.util.function.Function;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
@@ -40,8 +40,8 @@ public class ModelSidedBlock implements IModel {
 
    @Nonnull
    @ParametersAreNonnullByDefault
-   public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-      TextureAtlasSprite[][] tex = new TextureAtlasSprite[6][3];
+   public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter) {
+      EaglerTextureAtlasSprite[][] tex = new EaglerTextureAtlasSprite[6][3];
 
       for(EnumFacing f : EnumFacing.VALUES) {
          for(SideType cfg : SideType.values()) {

@@ -1,6 +1,6 @@
 package rustic.common.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +14,7 @@ public class WorldGenNetherHerbs extends WorldGenerator {
    public WorldGenNetherHerbs() {
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       BlockHerbBase herb = Herbs.getRandomNetherHerb(rand);
       boolean ret = false;
 
@@ -31,7 +31,7 @@ public class WorldGenNetherHerbs extends WorldGenerator {
       return ret;
    }
 
-   private boolean generateHerb(World world, Random rand, BlockPos pos, BlockHerbBase herb) {
+   private boolean generateHerb(World world, EaglercraftRandom rand, BlockPos pos, BlockHerbBase herb) {
       if (world.isAirBlock(pos)) {
          int i;
          for(i = 0; world.isAirBlock(pos.down(i)) && i < 24; ++i) {

@@ -1,6 +1,6 @@
 package melonslise.locks.common.capability;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
@@ -45,7 +45,7 @@ public class LockableWorldGenHandler implements ILockableWorldGenHandler {
    public void tryGeneratingLocks() {
       if (this.phase.get() == 1) {
          World world = this.chunk.getWorld();
-         Random rand = world.rand;
+         EaglercraftRandom rand = world.rand;
          ILockableHandler lockables = (ILockableHandler)world.getCapability(LocksCapabilities.LOCKABLE_HANDLER, (EnumFacing)null);
 
          for(Entry<BlockPos, TileEntity> entry : this.chunk.getTileEntityMap().entrySet()) {

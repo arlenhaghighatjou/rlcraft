@@ -8,7 +8,7 @@ import com.dhanantry.scapeandrunparasites.init.SRPSounds;
 import com.dhanantry.scapeandrunparasites.util.SRPAttributes;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigMobs;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.MoverType;
@@ -235,7 +235,7 @@ public class EntitySoo extends EntityPPure {
                }
             }
          } else {
-            Random random = EntitySoo.this.getRNG();
+            EaglercraftRandom random = EntitySoo.this.getRNG();
             double d0 = EntitySoo.this.posX + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
             double d1 = EntitySoo.this.posY + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
             double d2 = EntitySoo.this.posZ + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);

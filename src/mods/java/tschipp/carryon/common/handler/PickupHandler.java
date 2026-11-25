@@ -1,7 +1,7 @@
 package tschipp.carryon.common.handler;
 
 import java.lang.reflect.Method;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -155,11 +155,11 @@ public class PickupHandler {
 
             if (toPickUp instanceof EntityTameable) {
                EntityTameable tamecheck = (EntityTameable)toPickUp;
-               UUID OwnerCheck = tamecheck.getOwnerId();
+               EaglercraftUUID OwnerCheck = tamecheck.getOwnerId();
                if ((CarryOnConfig.settings.pickupHostileMobs || !toPickUp.isCreatureType(EnumCreatureType.MONSTER, false) || CarryOnConfig.settings.tamedHostileMobExemption && OwnerCheck != null || player.isCreative()) && (CarryOnConfig.settings.pickupHostileMobs || !toPickUp.isCreatureType(EnumCreatureType.MONSTER, false) || CarryOnConfig.settings.tamedHostileMobExemption && OwnerCheck != null || player.isCreative()) && (toPickUp.height <= CarryOnConfig.settings.maxEntityHeight && toPickUp.width <= CarryOnConfig.settings.maxEntityWidth || player.isCreative())) {
                   double distance = pos.distanceSqToCenter(player.posX, player.posY + 0.5D, player.posZ);
                   if (distance < Math.pow(CarryOnConfig.settings.maxDistance, 2.0D)) {
-                     UUID playerID = EntityPlayer.getUUID(player.getGameProfile());
+                     EaglercraftUUID playerID = EntityPlayer.getUUID(player.getGameProfile());
                      if (OwnerCheck != null && !OwnerCheck.equals(playerID)) {
                         return false;
                      }

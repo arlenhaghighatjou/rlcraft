@@ -3,8 +3,8 @@ package com.TominoCZ.FBP.model;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.model.pipeline.IVertexConsumer;
@@ -73,7 +73,7 @@ public final class FBPModelTransformer {
          this.parent.setApplyDiffuseLighting(diffuse);
       }
 
-      public void setTexture(TextureAtlasSprite texture) {
+      public void setTexture(EaglerTextureAtlasSprite texture) {
          this.parent.setTexture(texture);
       }
 

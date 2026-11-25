@@ -1,6 +1,6 @@
 package paulevs.betternether.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.BlockNetherWart;
@@ -18,7 +18,7 @@ public class NetherPoorGrasslands extends NetherGrasslands {
       super(name);
    }
 
-   public void genFloorObjects(World world, BlockPos pos, Random random) {
+   public void genFloorObjects(World world, BlockPos pos, EaglercraftRandom random) {
       Block ground = world.getBlockState(pos).getBlock();
       if (random.nextFloat() <= this.plantDensity && ground instanceof BlockNetherrack || ground == Blocks.SOUL_SAND) {
          boolean reeds = false;

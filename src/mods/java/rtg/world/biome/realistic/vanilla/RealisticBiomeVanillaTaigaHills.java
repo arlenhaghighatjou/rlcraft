@@ -1,6 +1,6 @@
 package rtg.world.biome.realistic.vanilla;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt.DirtType;
 import net.minecraft.block.state.IBlockState;
@@ -53,7 +53,7 @@ public class RealisticBiomeVanillaTaigaHills extends RealisticBiomeBase {
       }
 
       public void paintTerrain(ChunkPrimer primer, int i, int j, int x, int z, int depth, RTGWorld rtgWorld, float[] noise, float river, Biome[] base) {
-         Random rand = rtgWorld.rand();
+         EaglercraftRandom rand = rtgWorld.rand();
          SimplexNoise simplex = rtgWorld.simplexInstance(0);
          float p = simplex.noise2f((float)i / 8.0F, (float)j / 8.0F) * 0.5F;
          float c = TerrainBase.calcCliff(x, z, noise);

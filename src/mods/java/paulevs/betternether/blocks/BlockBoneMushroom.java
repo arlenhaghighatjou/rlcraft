@@ -1,7 +1,7 @@
 package paulevs.betternether.blocks;
 
 import com.google.common.base.Predicate;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBone;
@@ -168,14 +168,14 @@ public class BlockBoneMushroom extends Block {
 
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (((Integer)state.getValue(AGE)).intValue() < 2 && rand.nextInt(32) == 0) {
          worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(((Integer)state.getValue(AGE)).intValue() + 1)));
       }
 
    }
 
-   private void spawnSeeds(World world, BlockPos pos, Random random) {
+   private void spawnSeeds(World world, BlockPos pos, EaglercraftRandom random) {
       if (!world.isRemote) {
          ItemStack drop = new ItemStack(this, 2 + random.nextInt(3));
          EntityItem itemEntity = new EntityItem(world, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, drop);

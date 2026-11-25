@@ -13,7 +13,7 @@ import ivorius.reccomplex.world.gen.feature.structure.context.StructureSpawnCont
 import ivorius.reccomplex.world.gen.feature.structure.generic.generation.NaturalGeneration;
 import ivorius.reccomplex.world.gen.feature.structure.generic.generation.StaticGeneration;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -32,7 +32,7 @@ public class WorldGenStructures {
    public WorldGenStructures() {
    }
 
-   public static void planStaticStructuresInChunk(Random random, ChunkPos chunkPos, WorldServer world, BlockPos spawnPos, @Nullable Predicate<Structure> structurePredicate) {
+   public static void planStaticStructuresInChunk(EaglercraftRandom random, ChunkPos chunkPos, WorldServer world, BlockPos spawnPos, @Nullable Predicate<Structure> structurePredicate) {
       StaticGeneration.structuresAt(StructureRegistry.INSTANCE, chunkPos, world, spawnPos).forEach((triple) -> {
          StaticGeneration staticGenInfo = (StaticGeneration)triple.getMiddle();
          Structure<?> structure = (Structure)triple.getLeft();
@@ -47,7 +47,7 @@ public class WorldGenStructures {
       return MathHelper.sqrt((float)((left.x - right.x) * (left.x - right.x) + (left.z - right.z) * (left.z - right.z)));
    }
 
-   public static void planStructuresInChunk(Random random, ChunkPos chunkPos, WorldServer world, Biome biomeGen, @Nullable Predicate<Structure> structurePredicate) {
+   public static void planStructuresInChunk(EaglercraftRandom random, ChunkPos chunkPos, WorldServer world, Biome biomeGen, @Nullable Predicate<Structure> structurePredicate) {
       MixingStructureSelector<NaturalGeneration, NaturalStructureSelector.Category> structureSelector = (MixingStructureSelector)NaturalGeneration.selectors(StructureRegistry.INSTANCE).get(biomeGen, world.provider);
       float distanceToSpawn = distance(new ChunkPos(world.getSpawnPoint()), chunkPos);
       List<Pair<Structure<?>, NaturalGeneration>> generated = structureSelector.generatedStructures(random, world.getBiome(chunkPos.getBlock(0, 0, 0)), world.provider, Float.valueOf(distanceToSpawn));
@@ -58,7 +58,7 @@ public class WorldGenStructures {
       });
    }
 
-   public static boolean generateOneStructureInChunk(Random random, ChunkPos chunkPos, WorldServer world, Biome biomeGen) {
+   public static boolean generateOneStructureInChunk(EaglercraftRandom random, ChunkPos chunkPos, WorldServer world, Biome biomeGen) {
       MixingStructureSelector<NaturalGeneration, NaturalStructureSelector.Category> structureSelector = (MixingStructureSelector)NaturalGeneration.selectors(StructureRegistry.INSTANCE).get(biomeGen, world.provider);
       float distanceToSpawn = distance(new ChunkPos(world.getSpawnPoint()), chunkPos);
 
@@ -114,11 +114,11 @@ public class WorldGenStructures {
    }
 
    public static BlockSurfacePos randomSurfacePos(ChunkPos chunkPos, long seed) {
-      Random posRandom = new Random(seed ^ 1298319823120938102L);
+      EaglercraftRandom posRandom = new EaglercraftRandom(seed ^ 1298319823120938102L);
       return BlockSurfacePos.from(chunkPos.getBlock(posRandom.nextInt(16) + 8, 0, posRandom.nextInt(16) + 8));
    }
 
-   public static boolean decorate(WorldServer world, Random random, ChunkPos chunkPos, @Nullable Predicate<Structure> structurePredicate) {
+   public static boolean decorate(WorldServer world, EaglercraftRandom random, ChunkPos chunkPos, @Nullable Predicate<Structure> structurePredicate) {
       boolean generated = false;
       boolean worldWantsStructures = world.getWorldInfo().isMapFeaturesEnabled();
       WorldStructureGenerationData data = WorldStructureGenerationData.get(world);

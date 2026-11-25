@@ -2,7 +2,7 @@ package com.dhanantry.scapeandrunparasites.block;
 
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import com.dhanantry.scapeandrunparasites.item.ItemBlockVariant;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockWeb;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -32,7 +32,7 @@ public class BlockWebBase extends BlockWeb implements IMetaName {
       this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, BlockWebBase.EnumType.ONE));
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          worldIn.setBlockToAir(pos);
       }

@@ -6,7 +6,7 @@ import com.github.fnar.roguelike.loot.special.tools.SpecialTool;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Quality;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -26,21 +26,21 @@ public class ToolLootItem extends LootItem {
       this.quality = quality;
    }
 
-   public RldItemStack getLootItem(Random random) {
+   public RldItemStack getLootItem(EaglercraftRandom random) {
       return SpecialtyLootItem.rollForSpecial(random) ? SpecialTool.createTool(random, this.getQuality(random)) : this.getToolType(random).asItem().withQuality(this.getQuality(random)).plzEnchantAtLevel(this.getEnchantLevel(random)).asStack();
    }
 
-   private int getEnchantLevel(Random random) {
+   private int getEnchantLevel(EaglercraftRandom random) {
       return this.enchant ? LootItem.getEnchantmentLevel(random, this.level) : 0;
    }
 
-   private Quality getQuality(Random random) {
+   private Quality getQuality(EaglercraftRandom random) {
       return (Quality)Optional.ofNullable(this.quality).orElseGet(() -> {
          return Equipment.rollQuality(random, this.level);
       });
    }
 
-   private ToolType getToolType(Random random) {
+   private ToolType getToolType(EaglercraftRandom random) {
       return (ToolType)Optional.ofNullable(this.type).map(Equipment::asToolType).orElseGet(() -> {
          return ToolType.random(random);
       });

@@ -3,7 +3,7 @@ package vazkii.quark.world.feature;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -53,10 +53,10 @@ public class DungeonTweaksCompat {
       }
    }
 
-   public static void fireDungeonSpawn(TileEntity tile, World world, Random random) {
+   public static void fireDungeonSpawn(TileEntity tile, World world, EaglercraftRandom random) {
       if (isLegacy) {
          try {
-            Constructor<? extends Event> constructor = Class.forName("com.EvilNotch.dungeontweeks.main.Events.EventDungeon$Post").getConstructor(TileEntity.class, BlockPos.class, Random.class, ResourceLocation.class, World.class);
+            Constructor<? extends Event> constructor = Class.forName("com.EvilNotch.dungeontweeks.main.Events.EventDungeon$Post").getConstructor(TileEntity.class, BlockPos.class, EaglercraftRandom.class, ResourceLocation.class, World.class);
             Event event = (Event)constructor.newInstance(tile, tile.getPos(), random, quark, world);
             MinecraftForge.EVENT_BUS.post(event);
          } catch (Throwable var6) {
@@ -64,7 +64,7 @@ public class DungeonTweaksCompat {
          }
       } else {
          try {
-            Method fireDungeonTweaks = Class.forName("com.evilnotch.dungeontweeks.main.world.worldgen.mobs.DungeonMobs").getMethod("fireDungeonTweaks", ResourceLocation.class, TileEntity.class, Random.class, World.class);
+            Method fireDungeonTweaks = Class.forName("com.evilnotch.dungeontweeks.main.world.worldgen.mobs.DungeonMobs").getMethod("fireDungeonTweaks", ResourceLocation.class, TileEntity.class, EaglercraftRandom.class, World.class);
             fireDungeonTweaks.invoke((Object)null, quark, tile, random, world);
          } catch (Throwable var5) {
             var5.printStackTrace();

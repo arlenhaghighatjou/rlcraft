@@ -1,12 +1,12 @@
 package com.github.alexthe666.iceandfire.structures;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class WorldUtils {
-   public static Random rand = new Random();
+   public static EaglercraftRandom rand = new EaglercraftRandom();
 
    public WorldUtils() {
    }

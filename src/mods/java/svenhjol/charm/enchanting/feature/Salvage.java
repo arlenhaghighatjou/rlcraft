@@ -2,7 +2,7 @@ package svenhjol.charm.enchanting.feature;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemArmor;
@@ -20,7 +20,7 @@ import svenhjol.meson.helper.SoundHelper;
 public class Salvage extends Feature {
    public static EnchantmentSalvage enchantment;
    public static int minEnchantability;
-   public static Map<UUID, ItemStack> ignoreEquipped = new HashMap();
+   public static Map<EaglercraftUUID, ItemStack> ignoreEquipped = new HashMap();
 
    public Salvage() {
    }
@@ -51,7 +51,7 @@ public class Salvage extends Feature {
    public void onDestroy(PlayerDestroyItemEvent event) {
       if (!event.getEntityPlayer().world.isRemote && EnchantmentHelper.hasEnchantment(enchantment, event.getOriginal())) {
          EntityPlayer player = event.getEntityPlayer();
-         UUID playerId = player.getUniqueID();
+         EaglercraftUUID playerId = player.getUniqueID();
          ItemStack item = event.getOriginal();
          if (ignoreEquipped.containsKey(playerId)) {
             ItemStack ignored = (ItemStack)ignoreEquipped.get(playerId);

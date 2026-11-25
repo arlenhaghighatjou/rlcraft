@@ -2,7 +2,7 @@ package de.Whitedraco.switchbow.renderer.tileentity;
 
 import de.Whitedraco.switchbow.tileentity.TileEntityPodest;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;

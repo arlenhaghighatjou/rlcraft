@@ -14,7 +14,7 @@ import knightminer.inspirations.shared.client.TextureModel;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.common.property.IExtendedBlockState;

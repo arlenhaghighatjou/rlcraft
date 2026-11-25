@@ -2,7 +2,7 @@ package net.ilexiconn.llibrary.client.gui.element;
 
 import java.util.Collection;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,7 +33,7 @@ public interface IElementGUI {
 
    void drawTexturedModalRect(float var1, float var2, int var3, int var4, int var5, int var6);
 
-   void drawTexturedModalRect(int var1, int var2, TextureAtlasSprite var3, int var4, int var5);
+   void drawTexturedModalRect(int var1, int var2, EaglerTextureAtlasSprite var3, int var4, int var5);
 
    int getHeight();
 

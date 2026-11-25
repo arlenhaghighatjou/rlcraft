@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import levelup2.LevelUp2;
 import levelup2.api.IPlayerSkill;
 import levelup2.network.SkillPacketHandler;
@@ -15,11 +15,11 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
@@ -27,7 +27,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 import net.minecraftforge.fml.relauncher.Side;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class GuiSkills extends GuiScreen {
    private static final int X_MIN = SkillRegistry.smallestDisplayColumn * 32 - 12;
@@ -219,7 +219,7 @@ public class GuiSkills extends GuiScreen {
       int l1 = y + 288 >> 4;
       int i2 = (x + 288) % 16;
       int j2 = (y + 288) % 16;
-      Random random = new Random();
+      EaglercraftRandom random = new EaglercraftRandom();
       float f = 16.0F;
       float f1 = 16.0F;
 
@@ -230,7 +230,7 @@ public class GuiSkills extends GuiScreen {
          for(int i4 = 0; (float)i4 * f1 - (float)i2 < 224.0F; ++i4) {
             random.setSeed((long)(this.mc.getSession().getPlayerID().hashCode() + k1 + i4 + (l1 + l3) * 16));
             int j4 = random.nextInt(1 + l1 + l3) + (l1 + l3) / 2;
-            TextureAtlasSprite textureatlassprite = this.getTexture(Blocks.SAND);
+            EaglerTextureAtlasSprite textureatlassprite = this.getTexture(Blocks.SAND);
             if (j4 <= 37 && l1 + l3 != 35) {
                if (j4 == 22) {
                   if (random.nextInt(2) == 0) {
@@ -458,7 +458,7 @@ public class GuiSkills extends GuiScreen {
       return skill.getLevelCost(((Integer)this.skills.get(skill.getSkillName())).intValue()) > -1;
    }
 
-   private TextureAtlasSprite getTexture(Block blockIn) {
+   private EaglerTextureAtlasSprite getTexture(Block blockIn) {
       return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(blockIn.getDefaultState());
    }
 

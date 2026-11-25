@@ -5,7 +5,7 @@ import com.github.alexthe666.iceandfire.enums.EnumBestiaryPages;
 import com.github.alexthe666.iceandfire.enums.EnumTroll;
 import com.google.common.collect.Maps;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
@@ -192,7 +192,7 @@ public class ModVillagers {
       career.addTrade(5, new ITradeList[]{new EntityMyrmexBase.BasicTrade(new ItemStack(ModItems.myrmex_jungle_resin), new ItemStack(ModItems.myrmex_jungle_egg, 1, 4), new PriceInfo(50, 64), new PriceInfo(1, 1))});
    }
 
-   public void setRandomProfession(EntityVillager entity, Random rand) {
+   public void setRandomProfession(EntityVillager entity, EaglercraftRandom rand) {
       entity.setProfession((VillagerProfession)this.professions.get(Integer.valueOf(rand.nextInt(this.professions.size()))));
    }
 
@@ -214,7 +214,7 @@ public class ModVillagers {
          this.priceInfo = priceInfo;
       }
 
-      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
          int i = 1;
          if (this.priceInfo != null) {
             i = this.priceInfo.getPrice(random);
@@ -243,7 +243,7 @@ public class ModVillagers {
          this.price = priceIn;
       }
 
-      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
          int i = 1;
          if (this.price != null) {
             i = this.price.getPrice(random);

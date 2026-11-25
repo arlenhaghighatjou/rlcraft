@@ -5,7 +5,7 @@ import goblinbob.mobends.core.bender.IPreviewer;
 import goblinbob.mobends.core.client.event.DataUpdateHandler;
 import goblinbob.mobends.standard.data.SpiderData;
 import java.util.Map;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.monster.EntitySpider;
 
 public class SpiderPreviewer implements IPreviewer<SpiderData> {

@@ -1,7 +1,7 @@
 package com.github.fnar.minecraft.item;
 
 import greymerk.roguelike.util.DyeColor;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum DesignPattern {
    BASE,
@@ -51,7 +51,7 @@ public enum DesignPattern {
       return values()[(int)(Math.random() * (double)values().length)];
    }
 
-   public static DesignPattern chooseRandom(Random random) {
+   public static DesignPattern chooseRandom(EaglercraftRandom random) {
       return values()[random.nextInt(values().length)];
    }
 

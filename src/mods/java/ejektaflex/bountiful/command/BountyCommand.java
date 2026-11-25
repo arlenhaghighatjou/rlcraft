@@ -1,6 +1,6 @@
 package ejektaflex.bountiful.command;
 
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import ejektaflex.bountiful.Bountiful;
 import ejektaflex.bountiful.api.enum.EnumBountyRarity;
 import ejektaflex.bountiful.api.ext.ExtMiscKt;

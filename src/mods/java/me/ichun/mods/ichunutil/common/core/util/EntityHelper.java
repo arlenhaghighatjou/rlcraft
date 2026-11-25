@@ -4,7 +4,7 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.properties.Property;
 import java.lang.reflect.Method;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -50,12 +50,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityHelper {
-   public static final UUID uuidExample = UUID.fromString("DEADBEEF-DEAD-BEEF-DEAD-DEADBEEFD00D");
+   public static final EaglercraftUUID uuidExample = EaglercraftUUID.fromString("DEADBEEF-DEAD-BEEF-DEAD-DEADBEEFD00D");
    public static HashMap<String, GameProfile> gameProfileCache = new HashMap();
    public static PlayerProfileCache profileCache;
    public static MinecraftSessionService sessionService;
    private static GameProfile dummyProfile = new GameProfile(uuidExample, "ForgeDev");
-   public static final Map<UUID, BossInfoClient> BOSS_INFO_STORE = Maps.newLinkedHashMap();
+   public static final Map<EaglercraftUUID, BossInfoClient> BOSS_INFO_STORE = Maps.newLinkedHashMap();
 
    public EntityHelper() {
    }
@@ -69,7 +69,7 @@ public class EntityHelper {
       return dummyProfile;
    }
 
-   public static GameProfile getGameProfile(@Nonnull UUID uuid, @Nullable String playerName) {
+   public static GameProfile getGameProfile(@Nonnull EaglercraftUUID uuid, @Nullable String playerName) {
       if (playerName != null && gameProfileCache.containsKey(playerName)) {
          return (GameProfile)gameProfileCache.get(playerName);
       } else {
@@ -102,7 +102,7 @@ public class EntityHelper {
 
          GameProfile gameprofile = profileCache.getGameProfileForUsername(playerName);
          if (gameprofile == null) {
-            return new GameProfile((UUID)null, playerName);
+            return new GameProfile((EaglercraftUUID)null, playerName);
          } else {
             Property property = (Property)Iterables.getFirst(gameprofile.getProperties().get("textures"), (Object)null);
             if (property == null) {
@@ -118,10 +118,10 @@ public class EntityHelper {
    @SideOnly(Side.CLIENT)
    public static void storeBossStatus() {
       BOSS_INFO_STORE.clear();
-      Iterator<Entry<UUID, BossInfoClient>> ite = Minecraft.getMinecraft().ingameGUI.getBossOverlay().mapBossInfos.entrySet().iterator();
+      Iterator<Entry<EaglercraftUUID, BossInfoClient>> ite = Minecraft.getMinecraft().ingameGUI.getBossOverlay().mapBossInfos.entrySet().iterator();
 
       while(ite.hasNext()) {
-         Entry<UUID, BossInfoClient> e = (Entry)ite.next();
+         Entry<EaglercraftUUID, BossInfoClient> e = (Entry)ite.next();
          BOSS_INFO_STORE.put(e.getKey(), e.getValue());
          ite.remove();
       }
@@ -130,11 +130,11 @@ public class EntityHelper {
 
    @SideOnly(Side.CLIENT)
    public static void restoreBossStatus() {
-      Map<UUID, BossInfoClient> bossMap = Minecraft.getMinecraft().ingameGUI.getBossOverlay().mapBossInfos;
-      Iterator<Entry<UUID, BossInfoClient>> ite = BOSS_INFO_STORE.entrySet().iterator();
+      Map<EaglercraftUUID, BossInfoClient> bossMap = Minecraft.getMinecraft().ingameGUI.getBossOverlay().mapBossInfos;
+      Iterator<Entry<EaglercraftUUID, BossInfoClient>> ite = BOSS_INFO_STORE.entrySet().iterator();
 
       while(ite.hasNext()) {
-         Entry<UUID, BossInfoClient> e = (Entry)ite.next();
+         Entry<EaglercraftUUID, BossInfoClient> e = (Entry)ite.next();
          bossMap.put(e.getKey(), e.getValue());
          ite.remove();
       }

@@ -1,7 +1,7 @@
 package tschipp.forgottenitems.items;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IItemColor;
@@ -124,7 +124,7 @@ public class ItemCraftingRune extends TSItem {
 
 			if(tintIndex == 1 && stack.hasTagCompound() && stack.getTagCompound().hasKey("id"))
 			{
-				Random rand = new Random((stack.getTagCompound().getInteger("id") * 3) + FIM.RECIPE_AMOUNT + stack.getMetadata());
+				EaglercraftRandom rand = new EaglercraftRandom((stack.getTagCompound().getInteger("id") * 3) + FIM.RECIPE_AMOUNT + stack.getMetadata());
 				return (rand.nextInt(16777215));
 			}
 			return -1;

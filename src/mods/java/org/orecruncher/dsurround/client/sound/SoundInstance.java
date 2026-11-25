@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.sound;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.client.audio.PositionedSound;
 import net.minecraft.client.audio.SoundHandler;
@@ -20,7 +20,7 @@ import paulscode.sound.SoundSystemConfig;
 @SideOnly(Side.CLIENT)
 public class SoundInstance extends PositionedSound implements ISoundInstance {
    protected static final float ATTENUATION_OFFSET = 32.0F;
-   protected static final Random RANDOM = XorShiftRandom.current();
+   protected static final EaglercraftRandom RANDOM = XorShiftRandom.current();
    protected final MutableBlockPos pos;
    protected float volumeThrottle;
    protected SoundState state;

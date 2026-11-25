@@ -3,8 +3,8 @@ package com.yyon.grapplinghook.entities;
 import com.yyon.grapplinghook.vec;
 import com.yyon.grapplinghook.controllers.SegmentHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
@@ -112,7 +112,7 @@ public class RenderGrappleArrow<T extends Entity> extends Render<T> {
             GlStateManager.disableCull();
             this.bindTexture(this.getEntityTexture(entity));
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder vertexbuffer = tessellator.getBuffer();
+            WorldRenderer vertexbuffer = tessellator.getBuffer();
             if (segmenthandler == null) {
                this.drawSegment(thispos, handpos, arrow.taut, tessellator, vertexbuffer);
             } else {
@@ -153,7 +153,7 @@ public class RenderGrappleArrow<T extends Entity> extends Render<T> {
       }
    }
 
-   public void drawDebug(vec point, Tessellator tessellator, BufferBuilder vertexbuffer, float R, float G, float B) {
+   public void drawDebug(vec point, Tessellator tessellator, WorldRenderer vertexbuffer, float R, float G, float B) {
       double X = point.x;
       double Y = point.y;
       double Z = point.z;
@@ -183,7 +183,7 @@ public class RenderGrappleArrow<T extends Entity> extends Render<T> {
       tessellator.draw();
    }
 
-   public void drawSegment(vec start, vec finish, double taut, Tessellator tessellator, BufferBuilder vertexbuffer) {
+   public void drawSegment(vec start, vec finish, double taut, Tessellator tessellator, WorldRenderer vertexbuffer) {
       if (start.sub(finish).length() >= 0.05D) {
          double x = start.x;
          double y = start.y;

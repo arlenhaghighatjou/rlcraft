@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -64,7 +64,7 @@ public class PathedParticleManager {
          GlStateManager.enableBlend();
          renderer.bindTexture(PARTICLE_TEXTURES);
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder bufferbuilder = tessellator.getBuffer();
+         WorldRenderer bufferbuilder = tessellator.getBuffer();
 
          for(Entry<Pair<SourceFactor, DestFactor>, ArrayList<PathedParticle>> entry : particles.entrySet()) {
             GlStateManager.blendFunc((SourceFactor)((Pair)entry.getKey()).getKey(), (DestFactor)((Pair)entry.getKey()).getValue());

@@ -1,7 +1,7 @@
 package xzeroair.trinkets.util;
 
 import java.text.DecimalFormat;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Reference {
    public static final String MODID = "xat";
@@ -17,7 +17,7 @@ public class Reference {
    public static final String FINGERPRINT = "@FINGERPRINT@";
    public static final String filePath = "/trinkets/";
    public static final String configPath = "/trinkets/Trinkets_And_Baubles";
-   public static Random random = new Random();
+   public static EaglercraftRandom random = new EaglercraftRandom();
    public static final DecimalFormat DECIMALFORMAT = new DecimalFormat("#.###");
    private static final int ATTRIBUTE_MODIFIER_OPERATION_ADD = 0;
    private static final int ATTRIBUTE_MODIFIER_OPERATION_MULTIPLY_OLD_AMOUNT = 1;

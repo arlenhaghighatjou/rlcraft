@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -47,7 +47,7 @@ public class MCEntityAttributeInstance implements IEntityAttributeInstance {
    }
 
    public IEntityAttributeModifier getModifier(String uuid) {
-      return (IEntityAttributeModifier)Optional.ofNullable(this.attributeInstance.getModifier(UUID.fromString(uuid))).map(MCEntityAttributeModifier::new).orElse((Object)null);
+      return (IEntityAttributeModifier)Optional.ofNullable(this.attributeInstance.getModifier(EaglercraftUUID.fromString(uuid))).map(MCEntityAttributeModifier::new).orElse((Object)null);
    }
 
    public void applyModifier(IEntityAttributeModifier modifier) {
@@ -55,11 +55,11 @@ public class MCEntityAttributeInstance implements IEntityAttributeInstance {
    }
 
    public void removeModifier(IEntityAttributeModifier modifier) {
-      this.attributeInstance.removeModifier((UUID)modifier.getInternal());
+      this.attributeInstance.removeModifier((EaglercraftUUID)modifier.getInternal());
    }
 
    public void removeModifier(String uuid) {
-      this.attributeInstance.removeModifier(UUID.fromString(uuid));
+      this.attributeInstance.removeModifier(EaglercraftUUID.fromString(uuid));
    }
 
    public void removeAllModifiers() {

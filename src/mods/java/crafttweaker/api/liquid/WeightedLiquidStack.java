@@ -5,7 +5,7 @@ import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IWeightedIngredient;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenGetter;
 
@@ -20,7 +20,7 @@ public final class WeightedLiquidStack implements IWeightedIngredient {
       this.p = p;
    }
 
-   public static List<ILiquidStack> pickRandomDrops(Random random, WeightedLiquidStack[] items) {
+   public static List<ILiquidStack> pickRandomDrops(EaglercraftRandom random, WeightedLiquidStack[] items) {
       ArrayList<ILiquidStack> result = new ArrayList();
 
       for(WeightedLiquidStack item : items) {

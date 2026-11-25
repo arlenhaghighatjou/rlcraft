@@ -2,7 +2,7 @@ package com.charles445.rltweaker.network;
 
 import com.charles445.rltweaker.RLTweaker;
 import com.charles445.rltweaker.util.ReflectUtil;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import net.minecraft.client.Minecraft;

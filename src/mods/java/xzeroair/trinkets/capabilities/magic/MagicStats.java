@@ -1,6 +1,6 @@
 package xzeroair.trinkets.capabilities.magic;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.BiFunction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,7 +30,7 @@ public class MagicStats extends CapabilityBase<MagicStats, EntityLivingBase> {
    private boolean sync = false;
    private double manaUpdateTickRate = 0.0D;
    private double manaRegenTimeout = 0.0D;
-   private UpdatingAttribute MANA_BONUS = (new UpdatingAttribute("BonusMax", UUID.fromString("a3b8802c-e521-45c0-b126-eb45692f68eb"), MagicAttributes.MAX_MANA)).setSavedInNBT(true);
+   private UpdatingAttribute MANA_BONUS = (new UpdatingAttribute("BonusMax", EaglercraftUUID.fromString("a3b8802c-e521-45c0-b126-eb45692f68eb"), MagicAttributes.MAX_MANA)).setSavedInNBT(true);
 
    public MagicStats(EntityLivingBase e) {
       super(e);

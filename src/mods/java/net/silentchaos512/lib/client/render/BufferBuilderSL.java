@@ -1,15 +1,15 @@
 package net.silentchaos512.lib.client.render;
 
 import java.nio.ByteBuffer;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 
 /** @deprecated */
 @Deprecated
 public class BufferBuilderSL {
    public static final BufferBuilderSL INSTANCE = new BufferBuilderSL();
-   private BufferBuilder buffer;
+   private WorldRenderer buffer;
 
    public BufferBuilderSL() {
    }
@@ -19,12 +19,12 @@ public class BufferBuilderSL {
       return this;
    }
 
-   public BufferBuilderSL internalAcquireMC12(BufferBuilder bufferBuilder) {
+   public BufferBuilderSL internalAcquireMC12(WorldRenderer bufferBuilder) {
       this.buffer = bufferBuilder;
       return this;
    }
 
-   public BufferBuilder internalGetBufferMC12() {
+   public WorldRenderer internalGetBufferMC12() {
       return this.buffer;
    }
 

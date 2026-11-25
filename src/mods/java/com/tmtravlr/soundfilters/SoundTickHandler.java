@@ -3,7 +3,7 @@ package com.tmtravlr.soundfilters;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListMap;
 import net.minecraft.block.Block;
@@ -143,7 +143,7 @@ public class SoundTickHandler {
             --profileTickCountdown;
             if (profileTickCountdown <= 0) {
                profileTickCountdown = 13;
-               Random rand = new Random();
+               EaglercraftRandom rand = new EaglercraftRandom();
                TreeSet<SoundTickHandler.ComparablePosition> visited = new TreeSet(CPcomparator);
                ArrayList<IBlockState> blocksFound = new ArrayList();
                LinkedList<SoundTickHandler.ComparablePosition> toVisit = new LinkedList();

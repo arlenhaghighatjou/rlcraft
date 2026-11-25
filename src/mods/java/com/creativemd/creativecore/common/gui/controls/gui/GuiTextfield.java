@@ -6,8 +6,8 @@ import com.creativemd.creativecore.common.gui.event.gui.GuiControlChangedEvent;
 import java.util.ArrayList;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.LogicOp;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -393,7 +393,7 @@ public class GuiTextfield extends GuiFocusControl {
       }
 
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       GlStateManager.color(0.0F, 0.0F, 255.0F, 255.0F);
       GlStateManager.disableTexture2D();
       GlStateManager.enableColorLogic();

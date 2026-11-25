@@ -1,6 +1,6 @@
 package rtg.api.world.deco;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -123,7 +123,7 @@ public class DecoTree extends DecoBase {
       return this.treeType == DecoTree.TreeType.RTG_TREE && this.tree == null ? false : super.properlyDefined();
    }
 
-   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, Random rand, ChunkPos chunkPos, float river, boolean hasVillage) {
+   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, EaglercraftRandom rand, ChunkPos chunkPos, float river, boolean hasVillage) {
       BlockPos offsetPos = getOffsetPos(chunkPos);
       float noise = rtgWorld.simplexInstance(0).noise2f((float)offsetPos.getX() / this.distribution.getNoiseDivisor(), (float)offsetPos.getZ() / this.distribution.getNoiseDivisor()) * this.distribution.getNoiseFactor() + this.distribution.getNoiseAddend();
       int loopCount = this.strengthFactorForLoops > 0.0F ? (int)this.strengthFactorForLoops : this.loops;
@@ -173,7 +173,7 @@ public class DecoTree extends DecoBase {
       }
    }
 
-   public boolean isValidTreeCondition(float noise, Random rand) {
+   public boolean isValidTreeCondition(float noise, EaglercraftRandom rand) {
       switch(this.treeCondition) {
       case ALWAYS_GENERATE:
          return true;

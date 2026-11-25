@@ -1,7 +1,7 @@
 package org.orecruncher.dsurround.client.aurora;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -25,7 +25,7 @@ public final class AuroraClassic extends AuroraBase {
    public void render(float partialTick) {
       float alpha = this.getAlpha();
       Tessellator tess = Tessellator.getInstance();
-      BufferBuilder renderer = tess.getBuffer();
+      WorldRenderer renderer = tess.getBuffer();
       double tranY = this.getTranslationY(partialTick);
       double tranX = this.getTranslationX(partialTick);
       double tranZ = this.getTranslationZ(partialTick);

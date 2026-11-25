@@ -46,7 +46,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -189,10 +189,10 @@ public class grapplemod {
    public void registerRenderers() {
    }
 
-   public void generateNether(World world, Random random, int chunkX, int chunkZ) {
+   public void generateNether(World world, EaglercraftRandom random, int chunkX, int chunkZ) {
    }
 
-   public void generateSurface(World world, Random random, int chunkX, int chunkZ) {
+   public void generateSurface(World world, EaglercraftRandom random, int chunkX, int chunkZ) {
    }
 
    public int addFuel(ItemStack fuel) {

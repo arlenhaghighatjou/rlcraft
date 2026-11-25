@@ -1,6 +1,6 @@
 package ivorius.ivtoolkit.random.values;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class DConstant implements DValue {
    public double constant;
@@ -9,7 +9,7 @@ public class DConstant implements DValue {
       this.constant = constant;
    }
 
-   public Double getValue(Random random) {
+   public Double getValue(EaglercraftRandom random) {
       return this.constant;
    }
 }

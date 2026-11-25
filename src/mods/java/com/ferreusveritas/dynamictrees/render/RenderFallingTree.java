@@ -9,8 +9,8 @@ import java.util.List;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -67,7 +67,7 @@ public class RenderFallingTree extends Render<EntityFallingTree> {
 
    public void drawBakedQuads(List<ModelEntityFallingTree.TreeQuadData> inQuads, int brightness, Species species, EntityFallingTree entity) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buffer = tessellator.getBuffer();
+      WorldRenderer buffer = tessellator.getBuffer();
       buffer.begin(7, DefaultVertexFormats.BLOCK);
 
       for(ModelEntityFallingTree.TreeQuadData treeQuad : inQuads) {
@@ -78,7 +78,7 @@ public class RenderFallingTree extends Render<EntityFallingTree> {
       tessellator.draw();
    }
 
-   public void drawBakedQuad(BufferBuilder buffer, BakedQuad bakedQuad, int brightness, int color) {
+   public void drawBakedQuad(WorldRenderer buffer, BakedQuad bakedQuad, int brightness, int color) {
       buffer.addVertexData(bakedQuad.getVertexData());
       buffer.putBrightness4(brightness, brightness, brightness, brightness);
       if (bakedQuad.hasTintIndex()) {

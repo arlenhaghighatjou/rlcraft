@@ -8,7 +8,7 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.theawesomegem.fishingmadebetter.proxy.CommonProxy;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class LootHandler {
    public static final ResourceLocation FMB_JUNK = new ResourceLocation("fishingmadebetter", "fishing_junk");

@@ -1,7 +1,7 @@
 package net.mcft.copy.backpacks.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -27,7 +27,7 @@ public class GuiTextureResource extends ResourceLocation {
       float scaleX = 1.0F / (float)this.defaultWidth;
       float scaleY = 1.0F / (float)this.defaultHeight;
       Tessellator tess = Tessellator.getInstance();
-      BufferBuilder vb = tess.getBuffer();
+      WorldRenderer vb = tess.getBuffer();
       vb.begin(7, DefaultVertexFormats.POSITION_TEX);
       vb.pos((double)(x + 0), (double)(y + h), (double)zLevel).tex((double)((float)(u + 0) * scaleX), (double)((float)(v + h) * scaleY)).endVertex();
       vb.pos((double)(x + w), (double)(y + h), (double)zLevel).tex((double)((float)(u + w) * scaleX), (double)((float)(v + h) * scaleY)).endVertex();

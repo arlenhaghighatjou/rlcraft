@@ -3,7 +3,7 @@ package artifacts.client.model.layer;
 import baubles.common.Config;
 import javax.annotation.Nonnull;
 import net.minecraft.client.model.ModelPlayer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.player.EntityPlayer;

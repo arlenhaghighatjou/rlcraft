@@ -2,7 +2,7 @@ package svenhjol.charm.world.decorator.inner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.state.IBlockState;
@@ -44,7 +44,7 @@ import svenhjol.meson.helper.WorldHelper;
 public abstract class VillageInnerDecorator extends MesonInnerDecorator {
    protected CharmDecoratorItems items = new CharmDecoratorItems(this);
    public BlockPos pos = this.getPos();
-   public Random villageRand = this.getVillageRand();
+   public EaglercraftRandom villageRand = this.getVillageRand();
    public Biome biome = this.getBiome();
    public QuarkDecoratorItems quarkItems;
    public int floor = 1;
@@ -107,9 +107,9 @@ public abstract class VillageInnerDecorator extends MesonInnerDecorator {
       return WorldHelper.getChunkPos(this.getPos());
    }
 
-   public Random getVillageRand() {
+   public EaglercraftRandom getVillageRand() {
       long seed = this.getSeed();
-      Random rand = new Random();
+      EaglercraftRandom rand = new EaglercraftRandom();
       rand.setSeed(seed);
       return rand;
    }
@@ -465,7 +465,7 @@ public abstract class VillageInnerDecorator extends MesonInnerDecorator {
          }
 
          if (VillageDecorations.carpet) {
-            this.items.addRug(this.floor, 3, 3, 6, 6, (Random)null);
+            this.items.addRug(this.floor, 3, 3, 6, 6, (EaglercraftRandom)null);
          }
 
          if (VillageDecorations.torches) {
@@ -492,7 +492,7 @@ public abstract class VillageInnerDecorator extends MesonInnerDecorator {
             }
 
             if (VillageDecorations.carpet) {
-               this.items.addRug(1, 1, 2, 2, 2, (Random)null);
+               this.items.addRug(1, 1, 2, 2, 2, (EaglercraftRandom)null);
             }
          } else if (VillageDecorations.storage) {
             if (this.uncommon()) {
@@ -610,7 +610,7 @@ public abstract class VillageInnerDecorator extends MesonInnerDecorator {
             }
 
             if (VillageDecorations.carpet) {
-               this.items.addRug(1, 1, 2, 2, 2, (Random)null);
+               this.items.addRug(1, 1, 2, 2, 2, (EaglercraftRandom)null);
             }
          } else if (VillageDecorations.storage && this.uncommon()) {
             this.items.addStorageBlock(1, 1, 3, EnumFacing.SOUTH);

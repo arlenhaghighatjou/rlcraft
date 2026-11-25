@@ -2,7 +2,7 @@ package com.dhanantry.scapeandrunparasites.client.renderer.entity.infected;
 
 import com.dhanantry.scapeandrunparasites.client.model.entity.infected.ModelInfHorse;
 import com.dhanantry.scapeandrunparasites.entity.monster.infected.EntityInfHorse;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

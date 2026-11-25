@@ -12,13 +12,13 @@ import mods.octarinecore.client.render.BlockContext;
 import mods.octarinecore.metaprog.Reflection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import org.jetbrains.annotations.NotNull;
 
 @SideOnly(Side.CLIENT)
@@ -34,7 +34,7 @@ public final class OptifineCustomColors {
    @NotNull
    private static final ThreadLocalDelegate renderEnv$delegate = new ThreadLocalDelegate(null.INSTANCE);
    @NotNull
-   private static final BakedQuad fakeQuad = new BakedQuad(new int[0], 1, EnumFacing.UP, (TextureAtlasSprite)null, true, DefaultVertexFormats.BLOCK);
+   private static final BakedQuad fakeQuad = new BakedQuad(new int[0], 1, EnumFacing.UP, (EaglerTextureAtlasSprite)null, true, DefaultVertexFormats.BLOCK);
    public static final OptifineCustomColors INSTANCE;
 
    static {

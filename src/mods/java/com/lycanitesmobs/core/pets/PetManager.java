@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,10 +15,10 @@ import net.minecraft.world.World;
 
 public class PetManager {
    public EntityLivingBase host;
-   public Map<UUID, PetEntry> entries = new HashMap();
+   public Map<EaglercraftUUID, PetEntry> entries = new HashMap();
    public List<PetEntry> newEntries = new ArrayList();
    public List<PetEntry> removedEntries = new ArrayList();
-   public Map<UUID, NBTTagCompound> entryNBTs = new HashMap();
+   public Map<EaglercraftUUID, NBTTagCompound> entryNBTs = new HashMap();
 
    public PetManager(EntityLivingBase host) {
       this.host = host;
@@ -50,7 +50,7 @@ public class PetManager {
       }
    }
 
-   public PetEntry getEntry(UUID id) {
+   public PetEntry getEntry(EaglercraftUUID id) {
       return (PetEntry)this.entries.get(id);
    }
 
@@ -76,8 +76,8 @@ public class PetManager {
          }
 
          for(NBTTagCompound nbtEntry : this.entryNBTs.values()) {
-            if (!(this.host instanceof EntityPlayer) || !nbtEntry.getString("Type").equalsIgnoreCase("familiar") || PlayerFamiliars.INSTANCE.playerFamiliars.containsKey(this.host.getUniqueID()) && ((Map)PlayerFamiliars.INSTANCE.playerFamiliars.get(this.host.getUniqueID())).containsKey(nbtEntry.getUniqueId("UUID"))) {
-               PetEntry petEntry = new PetEntry(nbtEntry.getUniqueId("UUID"), nbtEntry.getString("Type"), this.host, nbtEntry.getString("SummonType"));
+            if (!(this.host instanceof EntityPlayer) || !nbtEntry.getString("Type").equalsIgnoreCase("familiar") || PlayerFamiliars.INSTANCE.playerFamiliars.containsKey(this.host.getUniqueID()) && ((Map)PlayerFamiliars.INSTANCE.playerFamiliars.get(this.host.getUniqueID())).containsKey(nbtEntry.getUniqueId("EaglercraftUUID"))) {
+               PetEntry petEntry = new PetEntry(nbtEntry.getUniqueId("EaglercraftUUID"), nbtEntry.getString("Type"), this.host, nbtEntry.getString("SummonType"));
                petEntry.readFromNBT(nbtEntry);
                if (petEntry.active) {
                   this.addEntry(petEntry);
@@ -152,15 +152,15 @@ public class PetManager {
 
          for(int i = 0; i < entryList.tagCount(); ++i) {
             NBTTagCompound nbtEntry = entryList.getCompoundTagAt(i);
-            if (!nbtEntry.hasUniqueId("UUID") && nbtEntry.hasKey("EntryName")) {
+            if (!nbtEntry.hasUniqueId("EaglercraftUUID") && nbtEntry.hasKey("EntryName")) {
                LycanitesMobs.logInfo("", "[Pets] Converting Pet Entry NBT from older mod version: " + nbtEntry.getString("EntryName") + "...");
-               nbtEntry.setUniqueId("UUID", UUID.randomUUID());
+               nbtEntry.setUniqueId("EaglercraftUUID", EaglercraftUUID.randomUUID());
             }
 
-            if (nbtEntry.hasUniqueId("UUID")) {
-               this.entryNBTs.put(nbtEntry.getUniqueId("UUID"), nbtEntry);
+            if (nbtEntry.hasUniqueId("EaglercraftUUID")) {
+               this.entryNBTs.put(nbtEntry.getUniqueId("EaglercraftUUID"), nbtEntry);
             } else {
-               LycanitesMobs.logWarning("", "[Pets] A Pet Entry was missing a UUID and EntryName, this is either a bug or NBT data has been tampered with, please report this!");
+               LycanitesMobs.logWarning("", "[Pets] A Pet Entry was missing a EaglercraftUUID and EntryName, this is either a bug or NBT data has been tampered with, please report this!");
             }
          }
 

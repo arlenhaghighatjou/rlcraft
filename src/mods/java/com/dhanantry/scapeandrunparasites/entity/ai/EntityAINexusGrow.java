@@ -13,7 +13,7 @@ import com.dhanantry.scapeandrunparasites.util.ParasiteEventWorld;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigSystems;
 import com.dhanantry.scapeandrunparasites.world.SRPWorldData;
 import com.dhanantry.scapeandrunparasites.world.biome.BiomeParasite;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.ai.EntityAIBase;
 
 public class EntityAINexusGrow extends EntityAIBase {
@@ -90,7 +90,7 @@ public class EntityAINexusGrow extends EntityAIBase {
          this.canGrow = false;
       } else {
          if (SRPConfigSystems.useEvolution) {
-            Random rand = new Random();
+            EaglercraftRandom rand = new EaglercraftRandom();
             switch(SRPWorldData.get(this.parent.world).getEvolutionPhase()) {
             case -1:
                this.canGrow = false;

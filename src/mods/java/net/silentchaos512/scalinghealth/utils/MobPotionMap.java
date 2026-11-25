@@ -2,7 +2,7 @@ package net.silentchaos512.scalinghealth.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.potion.Potion;
 
 public class MobPotionMap {
@@ -20,7 +20,7 @@ public class MobPotionMap {
       this.list.clear();
    }
 
-   public MobPotionMap.PotionEntry getRandom(Random rand, int maxWeight) {
+   public MobPotionMap.PotionEntry getRandom(EaglercraftRandom rand, int maxWeight) {
       this.temp.clear();
 
       for(MobPotionMap.PotionEntry pot : this.list) {

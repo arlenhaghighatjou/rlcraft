@@ -1,6 +1,6 @@
 package com.lycanitesmobs.client.obj;
 
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class ObjObject {
    private String name;

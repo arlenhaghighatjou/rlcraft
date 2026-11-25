@@ -20,7 +20,7 @@ import ivorius.reccomplex.world.gen.feature.structure.context.StructureSpawnCont
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
@@ -67,7 +67,7 @@ public abstract class TransformerAbstractCloud<S extends TransformerAbstractClou
    }
 
    public TObjectDoubleMap<BlockPos> buildCloud(S instanceData, IvWorldData worldData, StructurePrepareContext context, TransformerMulti transformer, TransformerMulti.InstanceData transformerInstanceData) {
-      Random random = context.random;
+      EaglercraftRandom random = context.random;
       Environment environment = context.environment;
       BlockPos lowerCoord = StructureBoundingBoxes.min(context.boundingBox);
       int[] strucSize = new int[]{worldData.blockCollection.width, worldData.blockCollection.height, worldData.blockCollection.length};

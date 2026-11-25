@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -39,12 +39,12 @@ import net.minecraft.util.Tuple;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class TaskRetrieval implements ITaskInventory, IItemTask {
-   private final Set<UUID> completeUsers = new TreeSet();
+   private final Set<EaglercraftUUID> completeUsers = new TreeSet();
    public final NonNullList<BigItemStack> requiredItems = NonNullList.create();
-   private final HashMap<UUID, int[]> userProgress = new HashMap();
+   private final HashMap<EaglercraftUUID, int[]> userProgress = new HashMap();
    public boolean partialMatch = true;
    public boolean ignoreNBT = false;
    public boolean consume = true;
@@ -62,11 +62,11 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
       return FactoryTaskRetrieval.INSTANCE.getRegistryName();
    }
 
-   public boolean isComplete(UUID uuid) {
+   public boolean isComplete(EaglercraftUUID uuid) {
       return this.completeUsers.contains(uuid);
    }
 
-   public void setComplete(UUID uuid) {
+   public void setComplete(EaglercraftUUID uuid) {
       this.completeUsers.add(uuid);
    }
 
@@ -78,8 +78,8 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
    }
 
    public void detect(ParticipantInfo pInfo, DBEntry<IQuest> quest) {
-      if (!this.isComplete(pInfo.UUID)) {
-         List<Tuple<UUID, int[]>> progress = this.getBulkProgress(this.consume ? Collections.singletonList(pInfo.UUID) : pInfo.ALL_UUIDS);
+      if (!this.isComplete(pInfo.EaglercraftUUID)) {
+         List<Tuple<EaglercraftUUID, int[]>> progress = this.getBulkProgress(this.consume ? Collections.singletonList(pInfo.EaglercraftUUID) : pInfo.ALL_UUIDS);
          boolean updated = false;
          if (!this.consume) {
             if (this.groupDetect) {
@@ -90,7 +90,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
                for(int i = 0; i < this.requiredItems.size(); ++i) {
                   int r = ((BigItemStack)this.requiredItems.get(i)).stackSize;
 
-                  for(Tuple<UUID, int[]> value : progress) {
+                  for(Tuple<EaglercraftUUID, int[]> value : progress) {
                      int n = ((int[])value.getSecond())[i];
                      if (n != 0 && n < r) {
                         ((int[])value.getSecond())[i] = 0;
@@ -122,7 +122,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
                      BigItemStack rStack = (BigItemStack)this.requiredItems.get(j);
                      if (ItemComparison.StackMatch(rStack.getBaseStack(), stack, !this.ignoreNBT, this.partialMatch) || ItemComparison.OreDictionaryMatch(rStack.getOreIngredient(), rStack.GetTagCompound(), stack, !this.ignoreNBT, this.partialMatch)) {
                         for(int n = 0; n < progress.size(); ++n) {
-                           Tuple<UUID, int[]> value = (Tuple)progress.get(n);
+                           Tuple<EaglercraftUUID, int[]> value = (Tuple)progress.get(n);
                            if (((int[])value.getSecond())[j] < rStack.stackSize) {
                               int remaining = rStack.stackSize - ((int[])value.getSecond())[j];
                               if (this.consume) {
@@ -154,11 +154,11 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
    }
 
    private void checkAndComplete(ParticipantInfo pInfo, DBEntry<IQuest> quest, boolean resync) {
-      List<Tuple<UUID, int[]>> progress = this.getBulkProgress(this.consume ? Collections.singletonList(pInfo.UUID) : pInfo.ALL_UUIDS);
+      List<Tuple<EaglercraftUUID, int[]>> progress = this.getBulkProgress(this.consume ? Collections.singletonList(pInfo.EaglercraftUUID) : pInfo.ALL_UUIDS);
       boolean updated = resync;
 
       label38:
-      for(Tuple<UUID, int[]> value : progress) {
+      for(Tuple<EaglercraftUUID, int[]> value : progress) {
          for(int j = 0; j < this.requiredItems.size(); ++j) {
             if (((int[])value.getSecond())[j] < ((BigItemStack)this.requiredItems.get(j)).stackSize) {
                continue label38;
@@ -168,12 +168,12 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
          updated = true;
          if (!this.consume) {
             progress.forEach((pair) -> {
-               this.setComplete((UUID)pair.getFirst());
+               this.setComplete((EaglercraftUUID)pair.getFirst());
             });
             break;
          }
 
-         this.setComplete((UUID)value.getFirst());
+         this.setComplete((EaglercraftUUID)value.getFirst());
       }
 
       if (updated) {
@@ -227,9 +227,9 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
 
       for(int i = 0; i < cList.tagCount(); ++i) {
          try {
-            this.completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
+            this.completeUsers.add(EaglercraftUUID.fromString(cList.getStringTagAt(i)));
          } catch (Exception var11) {
-            BQ_Standard.logger.log(Level.ERROR, "Unable to load UUID for task", var11);
+            BQ_Standard.logger.log(Level.ERROR, "Unable to load EaglercraftUUID for task", var11);
          }
       }
 
@@ -238,7 +238,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
       for(int n = 0; n < pList.tagCount(); ++n) {
          try {
             NBTTagCompound pTag = pList.getCompoundTagAt(n);
-            UUID uuid = UUID.fromString(pTag.getString("uuid"));
+            EaglercraftUUID uuid = EaglercraftUUID.fromString(pTag.getString("uuid"));
             int[] data = new int[this.requiredItems.size()];
             NBTTagList dNbt = pTag.getTagList("data", 3);
 
@@ -254,7 +254,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
 
    }
 
-   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<EaglercraftUUID> users) {
       NBTTagList jArray = new NBTTagList();
       NBTTagList progArray = new NBTTagList();
       if (users != null) {
@@ -301,7 +301,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
       return nbt;
    }
 
-   public void resetUser(@Nullable UUID uuid) {
+   public void resetUser(@Nullable EaglercraftUUID uuid) {
       if (uuid == null) {
          this.completeUsers.clear();
          this.userProgress.clear();
@@ -316,7 +316,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
       return new PanelTaskRetrieval(rect, this);
    }
 
-   public boolean canAcceptItem(UUID owner, DBEntry<IQuest> quest, ItemStack stack) {
+   public boolean canAcceptItem(EaglercraftUUID owner, DBEntry<IQuest> quest, ItemStack stack) {
       if (owner != null && stack != null && !stack.isEmpty() && this.consume && !this.isComplete(owner) && this.requiredItems.size() > 0) {
          int[] progress = this.getUsersProgress(owner);
 
@@ -333,7 +333,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
       }
    }
 
-   public ItemStack submitItem(UUID owner, DBEntry<IQuest> quest, ItemStack input) {
+   public ItemStack submitItem(EaglercraftUUID owner, DBEntry<IQuest> quest, ItemStack input) {
       if (owner != null && !input.isEmpty() && this.consume && !this.isComplete(owner)) {
          ItemStack stack = input.copy();
          int[] progress = this.getUsersProgress(owner);
@@ -388,20 +388,20 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
       return null;
    }
 
-   public void setUserProgress(UUID uuid, int[] progress) {
+   public void setUserProgress(EaglercraftUUID uuid, int[] progress) {
       this.userProgress.put(uuid, progress);
    }
 
-   public int[] getUsersProgress(UUID uuid) {
+   public int[] getUsersProgress(EaglercraftUUID uuid) {
       int[] progress = (int[])this.userProgress.get(uuid);
       return progress != null && progress.length == this.requiredItems.size() ? progress : new int[this.requiredItems.size()];
    }
 
-   private List<Tuple<UUID, int[]>> getBulkProgress(@Nonnull List<UUID> uuids) {
+   private List<Tuple<EaglercraftUUID, int[]>> getBulkProgress(@Nonnull List<EaglercraftUUID> uuids) {
       if (uuids.size() <= 0) {
          return Collections.emptyList();
       } else {
-         List<Tuple<UUID, int[]>> list = new ArrayList();
+         List<Tuple<EaglercraftUUID, int[]>> list = new ArrayList();
          uuids.forEach((key) -> {
             list.add(new Tuple(key, this.getUsersProgress(key)));
          });
@@ -409,9 +409,9 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
       }
    }
 
-   private void setBulkProgress(@Nonnull List<Tuple<UUID, int[]>> list) {
+   private void setBulkProgress(@Nonnull List<Tuple<EaglercraftUUID, int[]>> list) {
       list.forEach((entry) -> {
-         this.setUserProgress((UUID)entry.getFirst(), (int[])entry.getSecond());
+         this.setUserProgress((EaglercraftUUID)entry.getFirst(), (int[])entry.getSecond());
       });
    }
 }

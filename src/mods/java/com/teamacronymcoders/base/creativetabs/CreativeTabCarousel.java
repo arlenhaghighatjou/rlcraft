@@ -4,7 +4,7 @@ import com.google.common.base.Stopwatch;
 import com.teamacronymcoders.base.util.ItemStackUtils;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import net.minecraft.init.Items;
@@ -16,7 +16,7 @@ public class CreativeTabCarousel extends CreativeTabBase {
    private int currentStackSize;
    private ItemStack currentIconStack;
    private Stopwatch watch = Stopwatch.createStarted();
-   private Random random = new Random();
+   private EaglercraftRandom random = new EaglercraftRandom();
 
    public CreativeTabCarousel(String label) {
       super(label, (Supplier)null);

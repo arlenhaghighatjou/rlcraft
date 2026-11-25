@@ -2,7 +2,7 @@ package com.charles445.simpledifficulty.network;
 
 import com.charles445.simpledifficulty.SimpleDifficulty;
 import com.charles445.simpledifficulty.config.ModConfig;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.FMLCommonHandler;

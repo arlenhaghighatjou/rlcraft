@@ -5,20 +5,20 @@ import com.google.common.collect.HashBiMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.util.IntIdentityHashBiMap;
 
 public class TrinketRegistry<K, V> extends TrinketRegistrySimple<K, V> {
    protected final IntIdentityHashBiMap<V> underlyingIntegerMap = new IntIdentityHashBiMap(256);
    protected final Map<V, K> inverseObjectRegistry;
-   protected final Map<UUID, V> uuidObjectRegistry = new HashMap();
+   protected final Map<EaglercraftUUID, V> uuidObjectRegistry = new HashMap();
 
    public TrinketRegistry() {
       this.inverseObjectRegistry = ((BiMap)this.registryObjects).inverse();
    }
 
-   public void register(int id, K key, UUID uuid, V value) {
+   public void register(int id, K key, EaglercraftUUID uuid, V value) {
       this.underlyingIntegerMap.put(value, id);
       this.uuidObjectRegistry.put(uuid, value);
       this.putObject(key, value);
@@ -52,7 +52,7 @@ public class TrinketRegistry<K, V> extends TrinketRegistrySimple<K, V> {
    }
 
    @Nullable
-   public V getObjectByUUID(UUID uuid) {
+   public V getObjectByUUID(EaglercraftUUID uuid) {
       return (V)this.uuidObjectRegistry.get(uuid);
    }
 

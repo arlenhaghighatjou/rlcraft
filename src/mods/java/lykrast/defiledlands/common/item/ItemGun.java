@@ -1,7 +1,7 @@
 package lykrast.defiledlands.common.item;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import lykrast.defiledlands.common.init.ModEnchantments;
 import lykrast.defiledlands.common.util.LocUtils;
@@ -40,7 +40,7 @@ public abstract class ItemGun extends Item {
       }
    }
 
-   protected void consumeAmmo(ItemStack gun, ItemStack ammo, EntityPlayer playerIn, Random rand) {
+   protected void consumeAmmo(ItemStack gun, ItemStack ammo, EntityPlayer playerIn, EaglercraftRandom rand) {
       int level = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.economical, gun);
       if (level <= 0 || rand.nextInt(level + 2) <= 1) {
          ammo.shrink(1);

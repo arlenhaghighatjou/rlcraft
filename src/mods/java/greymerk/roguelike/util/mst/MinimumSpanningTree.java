@@ -10,18 +10,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 
 public class MinimumSpanningTree {
    List<MSTPoint> points;
    Set<Edge<MSTPoint>> mstEdges;
 
-   public MinimumSpanningTree(Random rand, int size, int edgeLength) {
+   public MinimumSpanningTree(EaglercraftRandom rand, int size, int edgeLength) {
       this(rand, size, edgeLength, new Coord(0, 0, 0));
    }
 
-   public MinimumSpanningTree(Random rand, int size, int edgeLength, Coord origin) {
+   public MinimumSpanningTree(EaglercraftRandom rand, int size, int edgeLength, Coord origin) {
       this.points = new ArrayList();
       this.mstEdges = new HashSet();
       this.generatePoints(rand, size, edgeLength, origin);
@@ -39,7 +39,7 @@ public class MinimumSpanningTree {
 
    }
 
-   private void generatePoints(Random rand, int size, int edgeLength, Coord origin) {
+   private void generatePoints(EaglercraftRandom rand, int size, int edgeLength, Coord origin) {
       int offset = size / 2 * edgeLength;
 
       for(int i = 0; i < size; ++i) {

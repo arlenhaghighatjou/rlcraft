@@ -1,8 +1,8 @@
 package ivorius.reccomplex.network;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import ivorius.ivtoolkit.network.IvPacketHelper;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Supplier;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -10,13 +10,13 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class PacketInspectEntity implements IMessage {
    private NBTTagCompound data;
-   private UUID uuid;
+   private EaglercraftUUID uuid;
    private String name;
 
    public PacketInspectEntity() {
    }
 
-   public PacketInspectEntity(NBTTagCompound data, UUID uuid, String name) {
+   public PacketInspectEntity(NBTTagCompound data, EaglercraftUUID uuid, String name) {
       this.data = data;
       this.uuid = uuid;
       this.name = name;
@@ -30,11 +30,11 @@ public class PacketInspectEntity implements IMessage {
       this.data = data;
    }
 
-   public UUID getUuid() {
+   public EaglercraftUUID getUuid() {
       return this.uuid;
    }
 
-   public void setUuid(UUID uuid) {
+   public void setUuid(EaglercraftUUID uuid) {
       this.uuid = uuid;
    }
 
@@ -50,7 +50,7 @@ public class PacketInspectEntity implements IMessage {
       this.data = (NBTTagCompound)IvPacketHelper.maybeRead(buf, (Object)null, () -> {
          return ByteBufUtils.readTag(buf);
       });
-      this.uuid = UUID.fromString(ByteBufUtils.readUTF8String(buf));
+      this.uuid = EaglercraftUUID.fromString(ByteBufUtils.readUTF8String(buf));
       this.name = ByteBufUtils.readUTF8String(buf);
    }
 

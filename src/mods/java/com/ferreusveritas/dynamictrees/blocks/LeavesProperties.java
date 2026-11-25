@@ -6,7 +6,7 @@ import com.ferreusveritas.dynamictrees.api.cells.ICellKit;
 import com.ferreusveritas.dynamictrees.api.treedata.ILeavesProperties;
 import com.ferreusveritas.dynamictrees.cells.CellKits;
 import com.ferreusveritas.dynamictrees.trees.TreeFamily;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
@@ -71,7 +71,7 @@ public class LeavesProperties implements ILeavesProperties {
          return 15;
       }
 
-      public boolean updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+      public boolean updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
          return false;
       }
    };
@@ -166,7 +166,7 @@ public class LeavesProperties implements ILeavesProperties {
       return Minecraft.getMinecraft().getBlockColors().colorMultiplier(this.getPrimitiveLeaves(), world, pos, 0);
    }
 
-   public boolean updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public boolean updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       return true;
    }
 

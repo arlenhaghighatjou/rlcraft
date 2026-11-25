@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.BlockSlab.EnumBlockHalf;
 import net.minecraft.block.material.Material;
@@ -33,7 +33,7 @@ public abstract class BlockSlabCorruptedStone extends BlockSlabCorrupted impleme
       this.setDefaultState(iblockstate.withProperty(VARIANT, BlockSlabCorruptedStone.Variant.STONE));
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(this);
    }
 

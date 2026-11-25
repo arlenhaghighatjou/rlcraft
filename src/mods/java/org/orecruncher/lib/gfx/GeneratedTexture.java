@@ -2,7 +2,7 @@ package org.orecruncher.lib.gfx;
 
 import java.nio.IntBuffer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.ResourceLocation;

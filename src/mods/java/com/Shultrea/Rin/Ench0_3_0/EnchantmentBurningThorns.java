@@ -3,7 +3,7 @@ package com.Shultrea.Rin.Ench0_3_0;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -46,7 +46,7 @@ public class EnchantmentBurningThorns extends EnchantmentBase {
    public void onUserHurt(EntityLivingBase user, Entity attacker, int level) {
       if (user != null) {
          if (attacker != null && !attacker.isDead) {
-            Random random = user.getRNG();
+            EaglercraftRandom random = user.getRNG();
             ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.THORNS, user);
             if (shouldHit(level, random)) {
                if (attacker != null) {
@@ -65,11 +65,11 @@ public class EnchantmentBurningThorns extends EnchantmentBase {
       }
    }
 
-   public static boolean shouldHit(int level, Random rnd) {
+   public static boolean shouldHit(int level, EaglercraftRandom rnd) {
       return level <= 0 ? false : rnd.nextFloat() < 0.14F * (float)level;
    }
 
-   public static int getDamage(int level, Random rnd) {
+   public static int getDamage(int level, EaglercraftRandom rnd) {
       return level > 10 ? level - 9 : 2 + rnd.nextInt(3);
    }
 

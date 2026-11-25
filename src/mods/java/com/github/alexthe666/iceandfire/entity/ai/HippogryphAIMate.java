@@ -3,7 +3,7 @@ package com.github.alexthe666.iceandfire.entity.ai;
 import com.github.alexthe666.iceandfire.entity.EntityHippogryph;
 import com.github.alexthe666.iceandfire.item.ItemHippogryphEgg;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -94,7 +94,7 @@ public class HippogryphAIMate extends EntityAIBase {
          this.targetMate.resetInLove();
          egg.setLocationAndAngles(this.hippo.posX, this.hippo.posY, this.hippo.posZ, 0.0F, 0.0F);
          this.world.spawnEntity(egg);
-         Random random = this.hippo.getRNG();
+         EaglercraftRandom random = this.hippo.getRNG();
 
          for(int i = 0; i < 7; ++i) {
             double d0 = random.nextGaussian() * 0.02D;

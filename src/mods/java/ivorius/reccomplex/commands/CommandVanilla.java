@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -76,7 +76,7 @@ public class CommandVanilla extends CommandSplit {
             WorldServer world = (WorldServer)parameters.get("dimension").to(MCP.dimension(server, sender)).require();
             BlockSurfacePos pos = (BlockSurfacePos)parameters.get(IvP.surfacePos("x", "z", sender.getPosition(), false)).require();
             String seed = (String)parameters.get("seed").optional().orElseGet(() -> {
-               return Person.chaoticName(new Random(), (new Random()).nextBoolean());
+               return Person.chaoticName(new EaglercraftRandom(), (new EaglercraftRandom()).nextBoolean());
             });
             boolean suggest = parameters.has("suggest");
             Biome biome = (Biome)parameters.get("biome").to(MCP::biome).optional().orElse((Object)null);
@@ -89,7 +89,7 @@ public class CommandVanilla extends CommandSplit {
             try {
                MapGenStructure gen = type.generator(suggest);
                ChunkPos chunkPos = pos.chunkCoord();
-               Random random = new Random(RCStrings.seed(seed).longValue());
+               EaglercraftRandom random = new EaglercraftRandom(RCStrings.seed(seed).longValue());
                ReflectionHelper.setPrivateValue(MapGenBase.class, gen, random, "rand", "rand");
                CommandVanilla.recursiveGenerate(gen, world, chunkPos);
                StructureStart structureStart = MapGenStructureHook.getStructureStart(gen, chunkPos);

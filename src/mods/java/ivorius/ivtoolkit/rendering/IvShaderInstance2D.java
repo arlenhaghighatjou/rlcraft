@@ -1,6 +1,6 @@
 package ivorius.ivtoolkit.rendering;
 
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public abstract class IvShaderInstance2D extends IvShaderInstance implements Iv2DScreenEffect {
    public IvShaderInstance2D(Logger logger) {

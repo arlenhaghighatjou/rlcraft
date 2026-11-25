@@ -1,6 +1,6 @@
 package mods.octarinecore.client.resource;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import kotlin.Metadata;
 import kotlin.jvm.internal.Intrinsics;
 import mods.octarinecore.common.Int3;
@@ -36,7 +36,7 @@ public final class SimplexNoise implements IWorldLoadListener {
       Intrinsics.checkParameterIsNotNull(world, "world");
       WorldInfo var10005 = world.getWorldInfo();
       Intrinsics.checkExpressionValueIsNotNull(var10005, "world.worldInfo");
-      this.noise = new NoiseGeneratorSimplex(new Random(var10005.getSeed()));
+      this.noise = new NoiseGeneratorSimplex(new EaglercraftRandom(var10005.getSeed()));
    }
 
    public final int get(int x, int z) {

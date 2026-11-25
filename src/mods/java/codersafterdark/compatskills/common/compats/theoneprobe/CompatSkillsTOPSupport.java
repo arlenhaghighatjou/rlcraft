@@ -23,7 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class CompatSkillsTOPSupport implements Function<ITheOneProbe, Void> {
    public static ITheOneProbe probe;

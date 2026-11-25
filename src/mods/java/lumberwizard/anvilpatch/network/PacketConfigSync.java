@@ -1,6 +1,6 @@
 package lumberwizard.anvilpatch.network;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import lumberwizard.anvilpatch.AnvilPatch;
 import lumberwizard.anvilpatch.ModConfig;
 import net.minecraft.client.Minecraft;

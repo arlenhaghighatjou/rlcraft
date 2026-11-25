@@ -3,7 +3,7 @@ package net.ilexiconn.llibrary.server.structure;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.ilexiconn.llibrary.server.structure.rule.FixedRule;
 import net.ilexiconn.llibrary.server.structure.rule.RepeatRule;
@@ -39,7 +39,7 @@ public class StructureBuilder extends StructureGenerator {
    public StructureBuilder() {
    }
 
-   public void generate(World world, BlockPos pos, Random random) {
+   public void generate(World world, BlockPos pos, EaglercraftRandom random) {
       MutableBlockPos mutablePos = new MutableBlockPos();
 
       for(ComponentInfo layer : this.components) {

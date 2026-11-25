@@ -1,7 +1,7 @@
 package com.dhanantry.scapeandrunparasites.block;
 
 import com.dhanantry.scapeandrunparasites.entity.tile.TileEntityDod;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -23,7 +23,7 @@ public class BlockDod extends BlockBase implements ITileEntityProvider {
       return flag;
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          if (worldIn.isAreaLoaded(pos, 3)) {
             ;

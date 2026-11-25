@@ -1,6 +1,6 @@
 package rtg.api.world.deco;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.event.terraingen.TerrainGen;
@@ -29,7 +29,7 @@ public class DecoCrop extends DecoBase {
       this.addDecoTypes(new DecoBase.DecoType[]{DecoBase.DecoType.WHEAT});
    }
 
-   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, Random rand, ChunkPos chunkPos, float river, boolean hasVillage) {
+   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, EaglercraftRandom rand, ChunkPos chunkPos, float river, boolean hasVillage) {
       if (this.chance > 1 && rand.nextInt(this.chance) == 0 && TerrainGen.decorate(rtgWorld.world(), rand, chunkPos, EventType.CUSTOM)) {
          for(int i = 0; (float)i < this.strengthFactor; ++i) {
             BlockPos pos = getOffsetPos(chunkPos).add(rand.nextInt(16), 0, rand.nextInt(16));

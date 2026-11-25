@@ -1,6 +1,6 @@
 package ivorius.ivtoolkit.random.values;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ILinear implements IValue {
    public int min;
@@ -11,7 +11,7 @@ public class ILinear implements IValue {
       this.max = max;
    }
 
-   public Integer getValue(Random random) {
+   public Integer getValue(EaglercraftRandom random) {
       return this.min + random.nextInt(this.max - this.min + 1);
    }
 }

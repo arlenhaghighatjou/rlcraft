@@ -3,7 +3,7 @@ package yalter.mousetweaks.forge;
 import com.google.common.base.MoreObjects;
 import java.util.EnumSet;
 import java.util.function.Predicate;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 import yalter.mousetweaks.IMouseState;
 import yalter.mousetweaks.Main;
 import yalter.mousetweaks.MouseButton;

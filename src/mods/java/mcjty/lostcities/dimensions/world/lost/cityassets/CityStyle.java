@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import mcjty.lostcities.api.ILostCityCityStyle;
 import mcjty.lostcities.varia.Tools;
 import org.apache.commons.lang3.tuple.Pair;
@@ -445,35 +445,35 @@ public class CityStyle implements ILostCityCityStyle {
       return object;
    }
 
-   public String getRandomStair(Random random) {
+   public String getRandomStair(EaglercraftRandom random) {
       return Tools.getRandomFromList(random, this.stairSelector);
    }
 
-   public String getRandomFront(Random random) {
+   public String getRandomFront(EaglercraftRandom random) {
       return Tools.getRandomFromList(random, this.frontSelector);
    }
 
-   public String getRandomRailDungeon(Random random) {
+   public String getRandomRailDungeon(EaglercraftRandom random) {
       return Tools.getRandomFromList(random, this.railDungeonSelector);
    }
 
-   public String getRandomPark(Random random) {
+   public String getRandomPark(EaglercraftRandom random) {
       return Tools.getRandomFromList(random, this.parkSelector);
    }
 
-   public String getRandomBridge(Random random) {
+   public String getRandomBridge(EaglercraftRandom random) {
       return Tools.getRandomFromList(random, this.bridgeSelector);
    }
 
-   public String getRandomFountain(Random random) {
+   public String getRandomFountain(EaglercraftRandom random) {
       return Tools.getRandomFromList(random, this.fountainSelector);
    }
 
-   public String getRandomBuilding(Random random) {
+   public String getRandomBuilding(EaglercraftRandom random) {
       return Tools.getRandomFromList(random, this.buildingSelector);
    }
 
-   public String getRandomMultiBuilding(Random random) {
+   public String getRandomMultiBuilding(EaglercraftRandom random) {
       return Tools.getRandomFromList(random, this.multiBuildingSelector);
    }
 }

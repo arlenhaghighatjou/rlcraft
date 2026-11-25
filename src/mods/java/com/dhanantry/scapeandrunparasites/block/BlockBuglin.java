@@ -4,7 +4,7 @@ import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import com.dhanantry.scapeandrunparasites.entity.monster.inborn.EntityLodo;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigMobs;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -32,7 +32,7 @@ public class BlockBuglin extends BlockBase {
       this.setDefaultState(this.blockState.getBaseState());
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          if (worldIn.isAreaLoaded(pos, 3)) {
             if (worldIn.getDifficulty() != EnumDifficulty.PEACEFUL) {

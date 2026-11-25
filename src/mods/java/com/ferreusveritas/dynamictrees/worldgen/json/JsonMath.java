@@ -5,7 +5,7 @@ import com.ferreusveritas.dynamictrees.trees.Species;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
@@ -104,12 +104,12 @@ public class JsonMath {
       }
    }
 
-   public float apply(Random random, float noise) {
+   public float apply(EaglercraftRandom random, float noise) {
       JsonMath.MathContext mc = new JsonMath.MathContext(noise, random);
       return this.rootOp.apply(mc);
    }
 
-   public float apply(Random random, Species species, float radius) {
+   public float apply(EaglercraftRandom random, Species species, float radius) {
       JsonMath.MathContext mc = new JsonMath.MathSpeciesContext(random, species, radius);
       return this.rootOp.apply(mc);
    }
@@ -262,9 +262,9 @@ public class JsonMath {
 
    public static class MathContext {
       public float noise;
-      public Random rand;
+      public EaglercraftRandom rand;
 
-      public MathContext(float noise, Random random) {
+      public MathContext(float noise, EaglercraftRandom random) {
          this.noise = noise;
          this.rand = random;
       }
@@ -278,7 +278,7 @@ public class JsonMath {
       public float radius;
       public Species species;
 
-      public MathSpeciesContext(Random random, Species species, float radius) {
+      public MathSpeciesContext(EaglercraftRandom random, Species species, float radius) {
          super(0.0F, random);
          this.radius = radius;
          this.species = species;

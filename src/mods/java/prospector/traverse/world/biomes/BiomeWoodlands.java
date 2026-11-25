@@ -1,6 +1,6 @@
 package prospector.traverse.world.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockFlower.EnumFlowerColor;
 import net.minecraft.block.BlockFlower.EnumFlowerType;
 import net.minecraft.entity.passive.EntityWolf;
@@ -42,7 +42,7 @@ public class BiomeWoodlands extends Biome implements WorldGenConstants {
 
    }
 
-   public EnumFlowerType pickRandomFlower(Random rand, BlockPos pos) {
+   public EnumFlowerType pickRandomFlower(EaglercraftRandom rand, BlockPos pos) {
       double d0 = GRASS_COLOR_NOISE.getValue((double)pos.getX() / 200.0D, (double)pos.getZ() / 200.0D);
       if (d0 < -0.8D) {
          int j = rand.nextInt(4);
@@ -77,12 +77,12 @@ public class BiomeWoodlands extends Biome implements WorldGenConstants {
       return super.getModdedBiomeFoliageColor(-8085942);
    }
 
-   public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+   public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand) {
       int num = rand.nextInt(3);
       return (WorldGenAbstractTree)(num == 0 ? new WorldGenShrub(OAK_LOG, OAK_LEAVES) : TREE_FEATURE);
    }
 
-   public void decorate(World worldIn, Random rand, BlockPos pos) {
+   public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos) {
       if (TerrainGen.decorate(worldIn, rand, pos, EventType.TREE)) {
          int genChance = rand.nextInt(5);
          if (genChance == 0) {

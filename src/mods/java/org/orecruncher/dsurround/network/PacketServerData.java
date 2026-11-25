@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.network;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import it.unimi.dsi.fastutil.ints.Int2DoubleOpenHashMap;
 import java.util.ArrayList;
 import java.util.Collections;

@@ -13,8 +13,8 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.CullFace;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
@@ -195,7 +195,7 @@ public class PotionCoreEventHandlerClient {
       double uMult = 0.015625D;
       double vMult = 0.03125D;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexBuffer = tessellator.getBuffer();
+      WorldRenderer vertexBuffer = tessellator.getBuffer();
       vertexBuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexBuffer.pos(x, y + height, z).tex(uStart * uMult, vEnd * vMult).endVertex();
       vertexBuffer.pos(x + width, y + height, z).tex(uEnd * uMult, vEnd * vMult).endVertex();
@@ -239,7 +239,7 @@ public class PotionCoreEventHandlerClient {
    private static void drawGlintRectangle(double x, double y, double z, double width, double height) {
       double uWidth = width / 80.0D;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexBuffer = tessellator.getBuffer();
+      WorldRenderer vertexBuffer = tessellator.getBuffer();
       vertexBuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexBuffer.pos(x, y + height, z).tex(0.0D, 1.0D).endVertex();
       vertexBuffer.pos(x + width, y + height, z).tex(uWidth, 1.0D).endVertex();

@@ -10,7 +10,7 @@ import com.ferreusveritas.dynamictrees.api.treedata.ILeavesProperties;
 import com.ferreusveritas.dynamictrees.api.treedata.ITreePart;
 import com.ferreusveritas.dynamictrees.systems.GrowSignal;
 import com.ferreusveritas.dynamictrees.trees.TreeFamily;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -38,7 +38,7 @@ public class BlockRootyDirtFake extends Block implements ITreePart, MimicPropert
       this.setCreativeTab(ModTabs.dynamicTreesTab);
    }
 
-   public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom random) {
       for(EnumFacing dir : EnumFacing.VALUES) {
          if (TreeHelper.isBranch(world.getBlockState(pos.add(dir.getDirectionVec())))) {
             return;

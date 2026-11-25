@@ -4,10 +4,10 @@ import com.github.fnar.minecraft.block.BlockType;
 import com.github.fnar.minecraft.block.Material;
 import com.github.fnar.minecraft.block.SingleBlockBrush;
 import greymerk.roguelike.util.DyeColor;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ColoredBlock extends SingleBlockBrush {
-   private DyeColor color = DyeColor.chooseRandom(new Random());
+   private DyeColor color = DyeColor.chooseRandom(new EaglercraftRandom());
 
    public ColoredBlock(BlockType blockType, Material material) {
       super(blockType, material);

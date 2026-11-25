@@ -13,7 +13,7 @@ import com.dhanantry.scapeandrunparasites.init.SRPSounds;
 import com.dhanantry.scapeandrunparasites.util.SRPAttributes;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigMobs;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
@@ -454,7 +454,7 @@ public class EntityOronco extends EntityPAncient implements EntityCanShoot {
                }
             }
          } else {
-            Random random = EntityOronco.this.getRNG();
+            EaglercraftRandom random = EntityOronco.this.getRNG();
             double d0 = EntityOronco.this.posX + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
             double d1 = EntityOronco.this.posY + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
             double d2 = EntityOronco.this.posZ + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);

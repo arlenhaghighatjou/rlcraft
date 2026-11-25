@@ -2,7 +2,7 @@ package rustic.common.world;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,7 +20,7 @@ public class WorldGenWildberries extends WorldGenerator {
    public WorldGenWildberries() {
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       Biome biome = world.getBiome(pos);
 
       for(Type type : biomeBlacklist) {
@@ -43,7 +43,7 @@ public class WorldGenWildberries extends WorldGenerator {
       return ret;
    }
 
-   private boolean generateBush(World world, Random rand, BlockPos pos) {
+   private boolean generateBush(World world, EaglercraftRandom rand, BlockPos pos) {
       IBlockState state = world.getBlockState(pos);
       if (state.getMaterial().isLiquid()) {
          return false;

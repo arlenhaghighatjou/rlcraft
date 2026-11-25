@@ -11,7 +11,7 @@ import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class CanvasResizeable implements IGuiCanvas {
    private final List<IGuiPanel> guiPanels;

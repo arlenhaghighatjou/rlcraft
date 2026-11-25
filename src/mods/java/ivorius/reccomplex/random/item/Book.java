@@ -8,7 +8,7 @@ import ivorius.reccomplex.random.Person;
 import ivorius.reccomplex.random.Poem;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -24,18 +24,18 @@ public class Book {
    public Book() {
    }
 
-   public static ItemStack any(Random random) {
+   public static ItemStack any(EaglercraftRandom random) {
       return random.nextFloat() < 0.5F ? generic(random) : poem(random);
    }
 
-   public static ItemStack generic(Random random) {
+   public static ItemStack generic(EaglercraftRandom random) {
       ItemStack stack = new ItemStack(Items.BOOK);
       String bookName = Person.chaoticName(random, random.nextFloat() < 0.8F);
       stack.setStackDisplayName(bookName);
       return stack;
    }
 
-   public static ItemStack poem(Random random) {
+   public static ItemStack poem(EaglercraftRandom random) {
       ItemStack stack = new ItemStack(Items.WRITTEN_BOOK);
       Person author = Person.randomHuman(random, random.nextFloat() < 0.9F);
       Poem poem = Poem.randomPoem(random, Integer.valueOf(32), author);

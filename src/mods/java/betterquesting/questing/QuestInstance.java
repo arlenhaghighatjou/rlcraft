@@ -22,7 +22,7 @@ import betterquesting.storage.PropertyContainer;
 import betterquesting.storage.QuestSettings;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -36,12 +36,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class QuestInstance implements IQuest {
    private final TaskStorage tasks = new TaskStorage();
    private final RewardStorage rewards = new RewardStorage();
-   private final HashMap<UUID, NBTTagCompound> completeUsers = new HashMap();
+   private final HashMap<EaglercraftUUID, NBTTagCompound> completeUsers = new HashMap();
    private int[] preRequisites = new int[0];
    private final PropertyContainer qInfo = new PropertyContainer();
 
@@ -77,7 +77,7 @@ public class QuestInstance implements IQuest {
    }
 
    public void update(EntityPlayer player) {
-      UUID playerID = QuestingAPI.getQuestingUUID(player);
+      EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(player);
       int done = 0;
 
       for(DBEntry<ITask> entry : this.tasks.getEntries()) {
@@ -97,7 +97,7 @@ public class QuestInstance implements IQuest {
    }
 
    public void detect(EntityPlayer player) {
-      UUID playerID = QuestingAPI.getQuestingUUID(player);
+      EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(player);
       QuestCache qc = (QuestCache)player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, (EnumFacing)null);
       if (qc != null) {
          int questID = QuestDatabase.INSTANCE.getID(this);
@@ -142,7 +142,7 @@ public class QuestInstance implements IQuest {
       }
    }
 
-   public boolean hasClaimed(UUID uuid) {
+   public boolean hasClaimed(EaglercraftUUID uuid) {
       if (this.rewards.size() <= 0) {
          return true;
       } else {
@@ -164,7 +164,7 @@ public class QuestInstance implements IQuest {
    }
 
    public boolean canClaim(EntityPlayer player) {
-      UUID pID = QuestingAPI.getQuestingUUID(player);
+      EaglercraftUUID pID = QuestingAPI.getQuestingUUID(player);
       NBTTagCompound entry = this.getCompletionInfo(pID);
       if (entry != null && !this.hasClaimed(pID) && !this.canSubmit(player)) {
          DBEntry<IQuest> dbe = new DBEntry<IQuest>(QuestDatabase.INSTANCE.getID(this), this);
@@ -189,7 +189,7 @@ public class QuestInstance implements IQuest {
          (rew.getValue()).claimReward(player, dbe);
       }
 
-      UUID pID = QuestingAPI.getQuestingUUID(player);
+      EaglercraftUUID pID = QuestingAPI.getQuestingUUID(player);
       QuestCache qc = (QuestCache)player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, (EnumFacing)null);
       synchronized(this.completeUsers) {
          NBTTagCompound entry = this.getCompletionInfo(pID);
@@ -209,7 +209,7 @@ public class QuestInstance implements IQuest {
    }
 
    public boolean canSubmit(@Nonnull EntityPlayer player) {
-      UUID playerID = QuestingAPI.getQuestingUUID(player);
+      EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(player);
       synchronized(this.completeUsers) {
          NBTTagCompound entry = this.getCompletionInfo(playerID);
          if (entry == null) {
@@ -234,7 +234,7 @@ public class QuestInstance implements IQuest {
       }
    }
 
-   public boolean isUnlocked(UUID uuid) {
+   public boolean isUnlocked(EaglercraftUUID uuid) {
       if (this.preRequisites.length <= 0) {
          return true;
       } else {
@@ -251,7 +251,7 @@ public class QuestInstance implements IQuest {
       }
    }
 
-   public void setComplete(UUID uuid, long timestamp) {
+   public void setComplete(EaglercraftUUID uuid, long timestamp) {
       if (uuid != null) {
          synchronized(this.completeUsers) {
             NBTTagCompound entry = this.getCompletionInfo(uuid);
@@ -266,7 +266,7 @@ public class QuestInstance implements IQuest {
       }
    }
 
-   public boolean isComplete(UUID uuid) {
+   public boolean isComplete(EaglercraftUUID uuid) {
       if (((Boolean)this.qInfo.getProperty(NativeProps.GLOBAL)).booleanValue()) {
          return this.completeUsers.size() > 0;
       } else {
@@ -274,7 +274,7 @@ public class QuestInstance implements IQuest {
       }
    }
 
-   public EnumQuestState getState(UUID uuid) {
+   public EnumQuestState getState(EaglercraftUUID uuid) {
       if (this.isComplete(uuid)) {
          return this.hasClaimed(uuid) ? EnumQuestState.COMPLETED : EnumQuestState.UNCLAIMED;
       } else {
@@ -282,13 +282,13 @@ public class QuestInstance implements IQuest {
       }
    }
 
-   public NBTTagCompound getCompletionInfo(UUID uuid) {
+   public NBTTagCompound getCompletionInfo(EaglercraftUUID uuid) {
       synchronized(this.completeUsers) {
          return (NBTTagCompound)this.completeUsers.get(uuid);
       }
    }
 
-   public void setCompletionInfo(UUID uuid, NBTTagCompound nbt) {
+   public void setCompletionInfo(EaglercraftUUID uuid, NBTTagCompound nbt) {
       if (uuid != null) {
          synchronized(this.completeUsers) {
             if (nbt == null) {
@@ -301,7 +301,7 @@ public class QuestInstance implements IQuest {
       }
    }
 
-   public void resetUser(@Nullable UUID uuid, boolean fullReset) {
+   public void resetUser(@Nullable EaglercraftUUID uuid, boolean fullReset) {
       synchronized(this.completeUsers) {
          if (fullReset) {
             if (uuid == null) {
@@ -374,14 +374,14 @@ public class QuestInstance implements IQuest {
       this.setupProps();
    }
 
-   public NBTTagCompound writeProgressToNBT(NBTTagCompound json, @Nullable List<UUID> users) {
+   public NBTTagCompound writeProgressToNBT(NBTTagCompound json, @Nullable List<EaglercraftUUID> users) {
       synchronized(this.completeUsers) {
          NBTTagList comJson = new NBTTagList();
 
-         for(Entry<UUID, NBTTagCompound> entry : this.completeUsers.entrySet()) {
+         for(Entry<EaglercraftUUID, NBTTagCompound> entry : this.completeUsers.entrySet()) {
             if (users == null || users.contains(entry.getKey())) {
                NBTTagCompound tags = ((NBTTagCompound)entry.getValue()).copy();
-               tags.setString("uuid", ((UUID)entry.getKey()).toString());
+               tags.setString("uuid", ((EaglercraftUUID)entry.getKey()).toString());
                comJson.appendTag(tags);
             }
          }
@@ -405,10 +405,10 @@ public class QuestInstance implements IQuest {
             NBTTagCompound entry = comList.getCompoundTagAt(i).copy();
 
             try {
-               UUID uuid = UUID.fromString(entry.getString("uuid"));
+               EaglercraftUUID uuid = EaglercraftUUID.fromString(entry.getString("uuid"));
                this.completeUsers.put(uuid, entry);
             } catch (Exception var9) {
-               BetterQuesting.logger.log(Level.ERROR, "Unable to load UUID for quest", var9);
+               BetterQuesting.logger.log(Level.ERROR, "Unable to load EaglercraftUUID for quest", var9);
             }
          }
 
@@ -416,7 +416,7 @@ public class QuestInstance implements IQuest {
       }
    }
 
-   public void setClaimed(UUID uuid, long timestamp) {
+   public void setClaimed(EaglercraftUUID uuid, long timestamp) {
       synchronized(this.completeUsers) {
          NBTTagCompound entry = this.getCompletionInfo(uuid);
          if (entry != null) {

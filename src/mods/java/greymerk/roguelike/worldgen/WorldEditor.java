@@ -12,7 +12,7 @@ import greymerk.roguelike.treasure.TreasureManager;
 import greymerk.roguelike.util.DyeColor;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
@@ -31,9 +31,9 @@ public interface WorldEditor {
 
    boolean isMaterialAt(Material var1, Coord var2);
 
-   Random getRandom();
+   EaglercraftRandom getRandom();
 
-   Random getRandom(Coord var1);
+   EaglercraftRandom getRandom(Coord var1);
 
    boolean setBlock(Coord var1, SingleBlockBrush var2, boolean var3, boolean var4);
 

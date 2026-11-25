@@ -1,8 +1,8 @@
 package de.Whitedraco.switchbow.renderer.arrow;
 
 import de.Whitedraco.switchbow.entity.arrow.EntityArrowSplit;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -38,7 +38,7 @@ public class RenderArrowSplit<T extends EntityArrowSplit> extends Render<T> {
       GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks - 90.0F, 0.0F, 1.0F, 0.0F);
       GlStateManager.rotate(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks, 0.0F, 0.0F, 1.0F);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       int i = 0;
       float f = 0.0F;
       float f1 = 0.5F;

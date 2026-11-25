@@ -7,7 +7,7 @@ import com.ferreusveritas.dynamictrees.models.bakedmodels.BakedModelSapling;
 import com.ferreusveritas.dynamictrees.systems.substances.SubstanceGrowth;
 import com.ferreusveritas.dynamictrees.tileentity.TileEntitySpecies;
 import com.ferreusveritas.dynamictrees.trees.Species;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -111,7 +111,7 @@ public class BlockDynamicSapling extends Block implements ITileEntityProvider, I
       return tileentity != null && tileentity.receiveClientEvent(id, param);
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       this.grow(world, rand, pos, state);
    }
 
@@ -147,7 +147,7 @@ public class BlockDynamicSapling extends Block implements ITileEntityProvider, I
       return canSaplingStay(world, this.getSpecies(world, pos, state), pos);
    }
 
-   public void grow(World world, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World world, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       Species species = this.getSpecies(world, pos, state);
       if (this.canBlockStay(world, pos, state)) {
          species.transitionToTree(world, pos);
@@ -182,7 +182,7 @@ public class BlockDynamicSapling extends Block implements ITileEntityProvider, I
 
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return null;
    }
 
@@ -215,7 +215,7 @@ public class BlockDynamicSapling extends Block implements ITileEntityProvider, I
       return this.getSpecies(world, pos, state).canGrowWithBoneMeal(world, pos);
    }
 
-   public boolean canUseBonemeal(World world, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World world, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return this.getSpecies(world, pos, state).canUseBoneMealNow(world, rand, pos);
    }
 
@@ -250,7 +250,7 @@ public class BlockDynamicSapling extends Block implements ITileEntityProvider, I
       if (state instanceof IExtendedBlockState) {
          Species species = (Species)((IExtendedBlockState)this.getExtendedState(state, world, pos)).getValue(SpeciesProperty.SPECIES);
          IBakedModel model = BakedModelSapling.getModelForSapling(species);
-         Random rand = world.rand;
+         EaglercraftRandom rand = world.rand;
          int x = pos.getX();
          int y = pos.getY();
          int z = pos.getZ();

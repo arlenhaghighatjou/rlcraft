@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.common.model.TRSRTransformation;
@@ -20,7 +20,7 @@ import org.apache.commons.lang3.tuple.Pair;
 public class BakedSimple implements IBakedModel {
    private final List<BakedQuad> quads;
    private final ImmutableMap<TransformType, TRSRTransformation> transforms;
-   private final TextureAtlasSprite particle;
+   private final EaglerTextureAtlasSprite particle;
    private final boolean ambientOcclusion;
    private final boolean isGui3d;
    private final ItemOverrideList overrides;
@@ -33,7 +33,7 @@ public class BakedSimple implements IBakedModel {
       this(quads, transforms, base.getParticleTexture(), base.isAmbientOcclusion(), base.isGui3d(), base.getOverrides());
    }
 
-   public BakedSimple(List<BakedQuad> quads, ImmutableMap<TransformType, TRSRTransformation> transforms, TextureAtlasSprite particle, boolean ambientOcclusion, boolean isGui3d, ItemOverrideList overrides) {
+   public BakedSimple(List<BakedQuad> quads, ImmutableMap<TransformType, TRSRTransformation> transforms, EaglerTextureAtlasSprite particle, boolean ambientOcclusion, boolean isGui3d, ItemOverrideList overrides) {
       this.quads = quads;
       this.particle = particle;
       this.transforms = transforms;
@@ -60,7 +60,7 @@ public class BakedSimple implements IBakedModel {
    }
 
    @Nonnull
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       return this.particle;
    }
 

@@ -4,7 +4,7 @@ import com.dhanantry.scapeandrunparasites.SRPMain;
 import com.dhanantry.scapeandrunparasites.item.ItemBlockVariant;
 import com.dhanantry.scapeandrunparasites.util.ParasiteEventWorld;
 import com.dhanantry.scapeandrunparasites.world.biome.BiomeParasite;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -95,7 +95,7 @@ public class BlockParasiteTrunk extends BlockRotatedPillar implements IMetaName 
       return BlockParasiteTrunk.EnumType.values();
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (worldIn.isAreaLoaded(pos, 3)) {
          if (worldIn.getBiome(pos) instanceof BiomeParasite) {
             ParasiteEventWorld.spreadBiomeBlockTrunk(worldIn, pos, rand);

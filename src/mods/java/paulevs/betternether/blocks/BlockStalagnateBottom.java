@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockFaceShape;
@@ -61,7 +61,7 @@ public class BlockStalagnateBottom extends BlockStalagnateBase {
       return side != EnumFacing.UP && side != EnumFacing.DOWN || iblockstate != blockState;
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(BlocksRegister.BLOCK_STALAGNATE_STEM);
    }
 

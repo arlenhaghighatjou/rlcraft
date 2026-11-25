@@ -10,7 +10,7 @@ import com.fantasticsource.tools.component.CLong;
 import com.fantasticsource.tools.component.CUUID;
 import com.fantasticsource.tools.component.Component;
 import com.fantasticsource.tools.component.path.CPath;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import javax.annotation.Nullable;
@@ -53,7 +53,7 @@ public class CBipedAnimation extends Component {
    public static Field LAYER_HELD_ITEM_LIVING_ENTITY_RENDERER_FIELD;
    public static final HashMap<Entity, ArrayList<CBipedAnimation>> ANIMATION_DATA = new HashMap();
    protected static boolean initialized = false;
-   public UUID id;
+   public EaglercraftUUID id;
    public long startTime;
    public long pauseTime;
    public long pauseAt;
@@ -75,7 +75,7 @@ public class CBipedAnimation extends Component {
    }
 
    public CBipedAnimation(CModelRendererAnimation head, CModelRendererAnimation chest, CModelRendererAnimation leftArm, CModelRendererAnimation rightArm, CModelRendererAnimation leftLeg, CModelRendererAnimation rightLeg, CModelRendererAnimation leftItem, CModelRendererAnimation rightItem) {
-      this.id = UUID.randomUUID();
+      this.id = EaglercraftUUID.randomUUID();
       this.startTime = 0L;
       this.pauseTime = -1L;
       this.pauseAt = Long.MIN_VALUE;
@@ -172,7 +172,7 @@ public class CBipedAnimation extends Component {
    }
 
    @SideOnly(Side.CLIENT)
-   public static boolean removeAnimations(Entity entity, UUID id) {
+   public static boolean removeAnimations(Entity entity, EaglercraftUUID id) {
       ArrayList<CBipedAnimation> list = (ArrayList)ANIMATION_DATA.get(entity);
       if (list == null) {
          return false;

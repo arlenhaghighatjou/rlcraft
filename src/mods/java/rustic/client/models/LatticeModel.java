@@ -11,9 +11,9 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ModelRotation;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -31,7 +31,7 @@ public class LatticeModel implements IModel {
    public LatticeModel() {
    }
 
-   public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+   public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter) {
       IBakedModel base = null;
       IBakedModel[] bars = new IBakedModel[6];
       IBakedModel leaves = null;
@@ -125,7 +125,7 @@ public class LatticeModel implements IModel {
          return false;
       }
 
-      public TextureAtlasSprite getParticleTexture() {
+      public EaglerTextureAtlasSprite getParticleTexture() {
          return this.base.getParticleTexture();
       }
 

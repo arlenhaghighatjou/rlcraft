@@ -7,7 +7,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.INBTProgress;
 import betterquesting.api2.storage.INBTSaveLoad;
 import betterquesting.api2.utils.ParticipantInfo;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,11 +22,11 @@ public interface ITask extends INBTSaveLoad<NBTTagCompound>, INBTProgress<NBTTag
 
    void detect(ParticipantInfo var1, DBEntry<IQuest> var2);
 
-   boolean isComplete(UUID var1);
+   boolean isComplete(EaglercraftUUID var1);
 
-   void setComplete(UUID var1);
+   void setComplete(EaglercraftUUID var1);
 
-   void resetUser(@Nullable UUID var1);
+   void resetUser(@Nullable EaglercraftUUID var1);
 
    @Nullable
    @SideOnly(Side.CLIENT)

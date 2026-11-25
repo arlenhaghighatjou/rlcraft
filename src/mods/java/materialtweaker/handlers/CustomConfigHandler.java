@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 import materialtweaker.core.MaterialTweaker;
 import materialtweaker.util.ArmorAttributeEntry;
 import materialtweaker.util.ToolAttributeEntry;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class CustomConfigHandler {
    private static File configFolder = null;

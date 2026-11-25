@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.bettermineshafts.util;
 import com.yungnickyoung.minecraft.bettermineshafts.BetterMineshafts;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import java.util.function.BinaryOperator;
 import net.minecraft.block.state.IBlockState;
@@ -50,7 +50,7 @@ public class BlockSetSelector {
       }
    }
 
-   public IBlockState get(Random random) {
+   public IBlockState get(EaglercraftRandom random) {
       float target = random.nextFloat();
       float currBottom = 0.0F;
 

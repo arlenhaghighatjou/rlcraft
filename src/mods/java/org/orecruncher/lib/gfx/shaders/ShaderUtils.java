@@ -3,7 +3,7 @@ package org.orecruncher.lib.gfx.shaders;
 import java.nio.FloatBuffer;
 import net.minecraft.client.renderer.GLAllocation;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Matrix4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
 
 public class ShaderUtils {
    private static final FloatBuffer SCRATCH = GLAllocation.createDirectFloatBuffer(16);

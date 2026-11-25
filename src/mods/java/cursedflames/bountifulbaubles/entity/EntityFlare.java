@@ -5,7 +5,7 @@ import elucent.albedo.event.GatherLightsEvent;
 import elucent.albedo.lighting.ILightProvider;
 import elucent.albedo.lighting.Light;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -112,7 +112,7 @@ public class EntityFlare extends EntityArrow implements ILightProvider {
       }
 
       if (compound.hasUniqueId("thrower")) {
-         UUID thrower = compound.getUniqueId("thrower");
+         EaglercraftUUID thrower = compound.getUniqueId("thrower");
          this.shootingEntity = this.world.getPlayerEntityByUUID(thrower);
       }
 

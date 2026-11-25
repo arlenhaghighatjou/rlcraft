@@ -1,6 +1,6 @@
 package com.yyon.grapplinghook;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class GrappleCustomization {

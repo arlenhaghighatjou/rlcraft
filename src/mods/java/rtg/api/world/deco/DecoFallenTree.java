@@ -1,6 +1,6 @@
 package rtg.api.world.deco;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -37,7 +37,7 @@ public class DecoFallenTree extends DecoBase {
       this.addDecoTypes(new DecoBase.DecoType[]{DecoBase.DecoType.FALLEN_TREE});
    }
 
-   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, Random rand, ChunkPos chunkPos, float river, boolean hasVillage) {
+   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, EaglercraftRandom rand, ChunkPos chunkPos, float river, boolean hasVillage) {
       BlockPos offsetpos = getOffsetPos(chunkPos);
       if (this.randomLogBlocks.length > 0) {
          this.setLogBlock(this.randomLogBlocks[rand.nextInt(this.randomLogBlocks.length)]);
@@ -62,7 +62,7 @@ public class DecoFallenTree extends DecoBase {
 
    }
 
-   public boolean isValidLogCondition(Random rand) {
+   public boolean isValidLogCondition(EaglercraftRandom rand) {
       switch(this.logCondition) {
       case ALWAYS_GENERATE:
          return true;

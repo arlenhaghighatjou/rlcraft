@@ -2,10 +2,10 @@ package paulevs.betternether.entities;
 
 import elucent.albedo.lighting.ILightProvider;
 import elucent.albedo.lighting.Light;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -41,7 +41,7 @@ public class EntityFirefly extends EntityAmbientCreature implements IAnimals, IL
    private static final DataParameter<Byte> B = EntityDataManager.createKey(EntityFirefly.class, DataSerializers.BYTE);
    private static final DataParameter<Float> SIZE = EntityDataManager.createKey(EntityFirefly.class, DataSerializers.FLOAT);
    private static final DataParameter<Float> OFFSET = EntityDataManager.createKey(EntityFirefly.class, DataSerializers.FLOAT);
-   private Random random;
+   private EaglercraftRandom random;
    private boolean sitting;
    private boolean wantToSit;
    private float sitY;
@@ -52,7 +52,7 @@ public class EntityFirefly extends EntityAmbientCreature implements IAnimals, IL
       this.setSize(0.25F, 0.25F);
       this.setNoGravity(true);
       this.isImmuneToFire = true;
-      this.random = new Random();
+      this.random = new EaglercraftRandom();
    }
 
    public boolean getCanSpawnHere() {

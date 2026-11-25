@@ -1,7 +1,7 @@
 package com.dhanantry.scapeandrunparasites.world.gen.feature;
 
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockSlab.EnumBlockHalf;
@@ -17,7 +17,7 @@ public class WorldGenParasiteSpine extends WorldGenParasiteGenAbstract {
       super(notify);
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int i = 28;
       boolean flag = true;
       if (worldIn.getBlockState(position.down()).getBlock() == Blocks.AIR) {
@@ -161,7 +161,7 @@ public class WorldGenParasiteSpine extends WorldGenParasiteGenAbstract {
       this.setBlockAndNotifyAdequately(worldIn, pos, SRPBlocks.ParasiteRubble.getDefaultState());
    }
 
-   private BlockPos placeColumn(World worldIn, BlockPos pos, int in, Random rand, int direction, int slabs, boolean stair) {
+   private BlockPos placeColumn(World worldIn, BlockPos pos, int in, EaglercraftRandom rand, int direction, int slabs, boolean stair) {
       int current = pos.getY();
       int atm = current;
       int times = 0;

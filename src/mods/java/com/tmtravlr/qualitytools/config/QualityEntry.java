@@ -8,7 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.text.TextFormatting;
@@ -55,7 +55,7 @@ public class QualityEntry {
                   String attributeName = JsonUtils.getString(jsonAttribute, "name");
                   float amount = JsonUtils.getFloat(jsonAttribute, "amount");
                   int operation = JsonUtils.getInt(jsonAttribute, "operation", 0);
-                  AttributeModifier modifier = new AttributeModifier(new UUID(1L, 1L), "qualitytools", (double)amount, operation);
+                  AttributeModifier modifier = new AttributeModifier(new EaglercraftUUID(1L, 1L), "qualitytools", (double)amount, operation);
                   entry.attributeMap.put(attributeName, modifier);
                }
             }

@@ -2,7 +2,7 @@ package com.Shultrea.Rin.Ench0_1_0;
 
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.enchantment.Enchantment.Rarity;
@@ -43,7 +43,7 @@ public class EnchantmentFieryEdge extends EnchantmentBase {
       if (target instanceof EntityLivingBase) {
          EntityLivingBase victim = (EntityLivingBase)target;
          target.setFire(level * 6);
-         Random randy = new Random();
+         EaglercraftRandom randy = new EaglercraftRandom();
          if (victim.isBurning() && randy.nextInt(10 - level * 2) < 3) {
             victim.hurtResistantTime = 0;
          }

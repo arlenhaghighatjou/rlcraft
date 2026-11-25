@@ -3,7 +3,7 @@ package com.Shultrea.Rin.Ench0_4_0;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class EnchantmentStrengthenedVitality extends EnchantmentBase {
-   public static final UUID CACHED_UUID = UUID.fromString("e681-134f-4c54-a535-29c3ae5c7a21");
+   public static final EaglercraftUUID CACHED_UUID = EaglercraftUUID.fromString("e681-134f-4c54-a535-29c3ae5c7a21");
 
    public EnchantmentStrengthenedVitality() {
       super(Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_CHEST, new EntityEquipmentSlot[]{EntityEquipmentSlot.CHEST});

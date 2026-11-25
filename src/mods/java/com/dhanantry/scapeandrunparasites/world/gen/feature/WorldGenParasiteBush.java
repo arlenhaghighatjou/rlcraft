@@ -3,7 +3,7 @@ package com.dhanantry.scapeandrunparasites.world.gen.feature;
 import com.dhanantry.scapeandrunparasites.block.BlockInfestedBush;
 import com.dhanantry.scapeandrunparasites.block.BlockParasiteBush;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -28,7 +28,7 @@ public class WorldGenParasiteBush extends WorldGenParasiteGenAbstract {
       this.parasite = false;
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       if (this.type == 3) {
          this.flowerGen(worldIn, rand, position);
          return true;
@@ -82,7 +82,7 @@ public class WorldGenParasiteBush extends WorldGenParasiteGenAbstract {
       }
    }
 
-   public boolean flowerGen(World worldIn, Random rand, BlockPos position) {
+   public boolean flowerGen(World worldIn, EaglercraftRandom rand, BlockPos position) {
       for(int i = 0; i < 64; ++i) {
          BlockPos blockpos = position.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
          if (this.parasite) {
@@ -97,7 +97,7 @@ public class WorldGenParasiteBush extends WorldGenParasiteGenAbstract {
       return true;
    }
 
-   public boolean VinGen(World worldIn, Random rand, BlockPos position) {
+   public boolean VinGen(World worldIn, EaglercraftRandom rand, BlockPos position) {
       for(int i = 0; i < 10; ++i) {
          BlockPos blockpos = position.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
          if (worldIn.getBlockState(blockpos).getBlock() == Blocks.AIR) {

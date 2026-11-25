@@ -1,7 +1,7 @@
 package gigaherz.toolbelt.network;
 
 import gigaherz.toolbelt.ToolBelt;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

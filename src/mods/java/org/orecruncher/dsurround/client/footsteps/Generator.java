@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.footsteps;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,7 +40,7 @@ import org.orecruncher.lib.random.XorShiftRandom;
 @SideOnly(Side.CLIENT)
 public class Generator {
    public static final double PROBE_DEPTH = 0.0625D;
-   protected static final Random RANDOM = XorShiftRandom.current();
+   protected static final EaglercraftRandom RANDOM = XorShiftRandom.current();
    protected static final int BRUSH_INTERVAL = 100;
    protected static final Consumer<Footprint> GENERATE_PRINT = (print) -> {
       Vec3d loc = print.getStepLocation();

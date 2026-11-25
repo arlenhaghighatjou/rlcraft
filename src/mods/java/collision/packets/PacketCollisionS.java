@@ -2,7 +2,7 @@ package collision.packets;
 
 import collision.handlers.ModConfig;
 import collisiondamage.core.CollisionDamage;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;

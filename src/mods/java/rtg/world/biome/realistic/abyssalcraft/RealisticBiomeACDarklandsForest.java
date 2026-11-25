@@ -2,7 +2,7 @@ package rtg.world.biome.realistic.abyssalcraft;
 
 import com.shinoow.abyssalcraft.api.biome.ACBiomes;
 import com.shinoow.abyssalcraft.api.block.ACBlocks;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
@@ -77,7 +77,7 @@ public class RealisticBiomeACDarklandsForest extends RealisticBiomeACBase {
       }
 
       public void paintTerrain(ChunkPrimer primer, int i, int j, int x, int z, int depth, RTGWorld rtgWorld, float[] noise, float river, Biome[] base) {
-         Random rand = rtgWorld.rand();
+         EaglercraftRandom rand = rtgWorld.rand();
          SimplexNoise simplex = rtgWorld.simplexInstance(0);
          float c = TerrainBase.calcCliff(x, z, noise);
          int cliff = 0;

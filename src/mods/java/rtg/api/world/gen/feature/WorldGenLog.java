@@ -1,7 +1,7 @@
 package rtg.api.world.gen.feature;
 
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockLog.EnumAxis;
@@ -27,7 +27,7 @@ public class WorldGenLog extends WorldGenerator {
       this.generateLeaves = false;
    }
 
-   public boolean generate(@Nonnull World world, @Nonnull Random rand, @Nonnull BlockPos pos) {
+   public boolean generate(@Nonnull World world, @Nonnull EaglercraftRandom rand, @Nonnull BlockPos pos) {
       int x = pos.getX();
       int y = pos.getY();
       int z = pos.getZ();
@@ -107,7 +107,7 @@ public class WorldGenLog extends WorldGenerator {
       }
    }
 
-   private void addLeaves(World world, Random rand, int dir, int x, int y, int z) {
+   private void addLeaves(World world, EaglercraftRandom rand, int dir, int x, int y, int z) {
       if (dir == 0) {
          IBlockState b = world.getBlockState(new BlockPos(x, y, z - 1));
          if ((b.getMaterial() == Material.AIR || b.getMaterial() == Material.VINE || b.getMaterial() == Material.PLANTS) && rand.nextInt(3) == 0) {

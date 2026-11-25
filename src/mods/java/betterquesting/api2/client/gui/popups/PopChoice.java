@@ -17,7 +17,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class PopChoice extends CanvasEmpty {
    private final String message;

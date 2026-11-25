@@ -6,7 +6,7 @@ import com.mujmajnkraft.bettersurvival.capabilities.spearsinentity.ISpearsIn;
 import com.mujmajnkraft.bettersurvival.capabilities.spearsinentity.SpearsInProvider;
 import com.mujmajnkraft.bettersurvival.integration.InFCompat;
 import com.mujmajnkraft.bettersurvival.items.ItemSpear;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 
 public class EntityFlyingSpear extends EntityArrow {
    private static DataParameter<ItemStack> SPEAR = EntityDataManager.createKey(EntityFlyingSpear.class, DataSerializers.ITEM_STACK);
-   private static DataParameter<Optional<UUID>> SHOOTER = EntityDataManager.createKey(EntityFlyingSpear.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+   private static DataParameter<Optional<EaglercraftUUID>> SHOOTER = EntityDataManager.createKey(EntityFlyingSpear.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 
    public EntityFlyingSpear(World worldIn) {
       super(worldIn);
@@ -50,13 +50,13 @@ public class EntityFlyingSpear extends EntityArrow {
 
    public void setShooter(Entity entity) {
       this.shootingEntity = entity;
-      UUID id = entity == null ? null : entity.getUniqueID();
+      EaglercraftUUID id = entity == null ? null : entity.getUniqueID();
       this.dataManager.set(SHOOTER, Optional.fromNullable(id));
    }
 
    @Nullable
    public Entity getShooter() {
-      UUID id = (UUID)((Optional)this.dataManager.get(SHOOTER)).orNull();
+      EaglercraftUUID id = (EaglercraftUUID)((Optional)this.dataManager.get(SHOOTER)).orNull();
       this.shootingEntity = id == null ? null : this.world.getPlayerEntityByUUID(id);
       return this.shootingEntity;
    }
@@ -134,7 +134,7 @@ public class EntityFlyingSpear extends EntityArrow {
       NBTTagCompound tag = (NBTTagCompound)compound.getTag("Spear");
       this.setSpear(new ItemStack(tag));
       if (compound.hasKey("shooter")) {
-         this.setShooter(this.world.getPlayerEntityByUUID(UUID.fromString(compound.getString("shooter"))));
+         this.setShooter(this.world.getPlayerEntityByUUID(EaglercraftUUID.fromString(compound.getString("shooter"))));
       }
 
    }

@@ -18,7 +18,7 @@ import com.lycanitesmobs.core.item.ChargeItem;
 import com.lycanitesmobs.core.item.consumable.CreatureTreatItem;
 import com.lycanitesmobs.core.item.special.ItemSoulstone;
 import java.util.HashMap;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -50,10 +50,10 @@ public class TameableCreatureEntity extends AgeableCreatureEntity implements IEn
    public float stamina = this.getStaminaMax();
    public float staminaRecovery = 0.5F;
    public float sittingGuardRange = 16.0F;
-   public UUID ownerUUID;
+   public EaglercraftUUID ownerUUID;
    public boolean fromSummoningPedestal = false;
    protected static final DataParameter<Byte> TAMED = EntityDataManager.createKey(BaseCreatureEntity.class, DataSerializers.BYTE);
-   protected static final DataParameter<Optional<UUID>> OWNER_ID = EntityDataManager.createKey(BaseCreatureEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+   protected static final DataParameter<Optional<EaglercraftUUID>> OWNER_ID = EntityDataManager.createKey(BaseCreatureEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
    protected static final DataParameter<Float> HUNGER = EntityDataManager.createKey(BaseCreatureEntity.class, DataSerializers.FLOAT);
    protected static final DataParameter<Float> STAMINA = EntityDataManager.createKey(BaseCreatureEntity.class, DataSerializers.FLOAT);
    protected static final DataParameter<Integer> LOYALTY = EntityDataManager.createKey(TameableCreatureEntity.class, DataSerializers.VARINT);
@@ -543,14 +543,14 @@ public class TameableCreatureEntity extends AgeableCreatureEntity implements IEn
       return super.isDamageEntityApplicable(entity);
    }
 
-   public void setOwnerId(UUID ownerUUID) {
+   public void setOwnerId(EaglercraftUUID ownerUUID) {
       this.ownerUUID = ownerUUID;
       this.dataManager.set(OWNER_ID, Optional.fromNullable(ownerUUID));
       this.setTamed(ownerUUID != null);
    }
 
    public Entity getOwner() {
-      UUID uuid = this.getOwnerId();
+      EaglercraftUUID uuid = this.getOwnerId();
       return (Entity)(uuid == null ? super.getOwner() : this.getEntityWorld().getPlayerEntityByUUID(uuid));
    }
 
@@ -558,10 +558,10 @@ public class TameableCreatureEntity extends AgeableCreatureEntity implements IEn
       this.setOwnerId(player.getUniqueID());
    }
 
-   public UUID getOwnerId() {
+   public EaglercraftUUID getOwnerId() {
       if (this.getEntityWorld().isRemote) {
          try {
-            return (UUID)this.getUUIDFromDataManager(OWNER_ID).orNull();
+            return (EaglercraftUUID)this.getUUIDFromDataManager(OWNER_ID).orNull();
          } catch (Exception var2) {
             ;
          }
@@ -968,7 +968,7 @@ public class TameableCreatureEntity extends AgeableCreatureEntity implements IEn
 
    public AgeableCreatureEntity createChild(AgeableCreatureEntity baby) {
       AgeableCreatureEntity spawnedBaby = super.createChild(baby);
-      UUID ownerId = this.getOwnerId();
+      EaglercraftUUID ownerId = this.getOwnerId();
       if (ownerId != null && spawnedBaby != null && spawnedBaby instanceof TameableCreatureEntity) {
          TameableCreatureEntity tamedBaby = (TameableCreatureEntity)spawnedBaby;
          tamedBaby.setOwnerId(ownerId);
@@ -1025,7 +1025,7 @@ public class TameableCreatureEntity extends AgeableCreatureEntity implements IEn
       if (nbtTagCompound.hasUniqueId("OwnerId")) {
          this.setOwnerId(nbtTagCompound.getUniqueId("OwnerId"));
       } else {
-         this.setOwnerId((UUID)null);
+         this.setOwnerId((EaglercraftUUID)null);
       }
 
       if (nbtTagCompound.hasKey("FromSummoningPedestal")) {

@@ -1,7 +1,7 @@
 package com.yyon.grapplinghook.network;
 
 import com.yyon.grapplinghook.GrappleConfig;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;

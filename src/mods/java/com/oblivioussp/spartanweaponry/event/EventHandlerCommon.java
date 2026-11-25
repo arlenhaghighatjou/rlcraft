@@ -15,7 +15,7 @@ import com.oblivioussp.spartanweaponry.util.Log;
 import com.oblivioussp.spartanweaponry.util.QuiverHelper;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -57,7 +57,7 @@ import net.minecraftforge.items.IItemHandler;
 
 @EventBusSubscriber
 public class EventHandlerCommon {
-   public static Random rand = new Random();
+   public static EaglercraftRandom rand = new EaglercraftRandom();
    public static int tickCounter = 0;
 
    public EventHandlerCommon() {

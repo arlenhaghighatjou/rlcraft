@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 import net.minecraft.util.math.BlockPos;
@@ -57,7 +57,7 @@ public class PoissonDiscProvider implements IPoissonDiscProvider {
       }
    }
 
-   public List<PoissonDisc> generatePoissonDiscs(Random random, int chunkX, int chunkZ) {
+   public List<PoissonDisc> generatePoissonDiscs(EaglercraftRandom random, int chunkX, int chunkZ) {
       List<PoissonDisc> allDiscs = this.discCache1;
       List<PoissonDisc> unsolvedDiscs = this.discCache2;
       allDiscs.clear();

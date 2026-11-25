@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import noppes.vc.shared.util.NaturalOrderComparator;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class GuiScroll extends GuiScreen {
    public static final ResourceLocation resource = new ResourceLocation("variedcommodities", "textures/gui/misc.png");

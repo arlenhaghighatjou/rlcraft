@@ -5,8 +5,8 @@ import ivorius.ivtoolkit.models.textures.TextureProvider;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import net.minecraft.util.ResourceLocation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class MinecraftModelLoader {
    private static Logger logger = LogManager.getLogger("Models");

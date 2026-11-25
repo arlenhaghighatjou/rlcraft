@@ -3,7 +3,7 @@ package vazkii.quark.oddities.client.gui.button;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import vazkii.quark.oddities.client.gui.GuiMatrixEnchanting;
 
 public class GuiButtonMatrixEnchantingPlus extends GuiButton {

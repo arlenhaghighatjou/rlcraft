@@ -20,7 +20,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ModelRotation;
 import net.minecraft.client.renderer.block.model.SimpleBakedModel.Builder;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.EnumFacing.Axis;
@@ -31,7 +31,7 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 @SideOnly(Side.CLIENT)
 public class BakedModelBlockBranchThick extends BakedModelBlockBranchBasic implements ICustomDamageModel {
@@ -40,11 +40,11 @@ public class BakedModelBlockBranchThick extends BakedModelBlockBranchBasic imple
    private final IBakedModel[] trunksTopRings = new IBakedModel[16];
    private final IBakedModel[] trunksBotRings = new IBakedModel[16];
 
-   public BakedModelBlockBranchThick(ResourceLocation barkRes, ResourceLocation ringsRes, ResourceLocation thickRingsRes, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+   public BakedModelBlockBranchThick(ResourceLocation barkRes, ResourceLocation ringsRes, ResourceLocation thickRingsRes, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter) {
       super(barkRes, ringsRes, bakedTextureGetter);
-      TextureAtlasSprite barkIcon = (TextureAtlasSprite)bakedTextureGetter.apply(barkRes);
-      TextureAtlasSprite ringIcon = (TextureAtlasSprite)bakedTextureGetter.apply(ringsRes);
-      TextureAtlasSprite thickRingIcon = (TextureAtlasSprite)bakedTextureGetter.apply(thickRingsRes);
+      EaglerTextureAtlasSprite barkIcon = (EaglerTextureAtlasSprite)bakedTextureGetter.apply(barkRes);
+      EaglerTextureAtlasSprite ringIcon = (EaglerTextureAtlasSprite)bakedTextureGetter.apply(ringsRes);
+      EaglerTextureAtlasSprite thickRingIcon = (EaglerTextureAtlasSprite)bakedTextureGetter.apply(thickRingsRes);
       this.barkParticles = barkIcon;
 
       for(int i = 0; i < 16; ++i) {
@@ -57,7 +57,7 @@ public class BakedModelBlockBranchThick extends BakedModelBlockBranchBasic imple
 
    }
 
-   public IBakedModel bakeTrunkBark(int radius, TextureAtlasSprite bark, boolean side) {
+   public IBakedModel bakeTrunkBark(int radius, EaglerTextureAtlasSprite bark, boolean side) {
       Builder builder = (new Builder(this.modelBlock, ItemOverrideList.NONE)).setTexture(bark);
       AxisAlignedBB wholeVolume = new AxisAlignedBB((double)(8 - radius), 0.0D, (double)(8 - radius), (double)(8 + radius), 16.0D, (double)(8 + radius));
       EnumFacing[] run = side ? EnumFacing.HORIZONTALS : new EnumFacing[]{EnumFacing.UP, EnumFacing.DOWN};
@@ -87,11 +87,11 @@ public class BakedModelBlockBranchThick extends BakedModelBlockBranchBasic imple
       return builder.makeBakedModel();
    }
 
-   public IBakedModel bakeTrunkRings(int radius, TextureAtlasSprite ring, EnumFacing face) {
+   public IBakedModel bakeTrunkRings(int radius, EaglerTextureAtlasSprite ring, EnumFacing face) {
       return this.bakeTrunkRings(radius, ring, face, ModConfigs.fancyThickRings);
    }
 
-   public IBakedModel bakeTrunkRings(int radius, TextureAtlasSprite ring, EnumFacing face, boolean fancy) {
+   public IBakedModel bakeTrunkRings(int radius, EaglerTextureAtlasSprite ring, EnumFacing face, boolean fancy) {
       Builder builder = (new Builder(this.modelBlock, ItemOverrideList.NONE)).setTexture(ring);
       AxisAlignedBB wholeVolume = new AxisAlignedBB((double)(8 - radius), 0.0D, (double)(8 - radius), (double)(8 + radius), 16.0D, (double)(8 + radius));
       int wholeVolumeWidth = fancy ? 48 : radius * 2;

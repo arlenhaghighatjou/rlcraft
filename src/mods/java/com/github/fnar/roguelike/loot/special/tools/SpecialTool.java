@@ -4,17 +4,17 @@ import com.github.fnar.minecraft.item.Enchantment;
 import com.github.fnar.minecraft.item.RldItemStack;
 import com.github.fnar.roguelike.loot.special.SpecialEquipment;
 import greymerk.roguelike.treasure.loot.Quality;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SpecialTool extends SpecialEquipment {
    public SpecialTool() {
    }
 
-   public static RldItemStack createTool(Random random, Quality quality) {
+   public static RldItemStack createTool(EaglercraftRandom random, Quality quality) {
       return chooseTool(random, quality).asStack();
    }
 
-   private static SpecialTool chooseTool(Random random, Quality quality) {
+   private static SpecialTool chooseTool(EaglercraftRandom random, Quality quality) {
       switch(random.nextInt(4)) {
       case 0:
          return new SpecialPickaxe(random, quality);
@@ -28,7 +28,7 @@ public class SpecialTool extends SpecialEquipment {
       }
    }
 
-   protected void withFortune(Random random) {
+   protected void withFortune(EaglercraftRandom random) {
       if (random.nextDouble() < 0.15D) {
          int enchantmentLevel = random.nextInt(4);
          if (enchantmentLevel > 0) {
@@ -43,7 +43,7 @@ public class SpecialTool extends SpecialEquipment {
       }
    }
 
-   protected void withSilkTouch(Random random) {
+   protected void withSilkTouch(EaglercraftRandom random) {
       if (random.nextDouble() < 0.15D) {
          this.withEnchantment(Enchantment.Effect.SILK_TOUCH);
          if (random.nextBoolean()) {
@@ -55,7 +55,7 @@ public class SpecialTool extends SpecialEquipment {
       }
    }
 
-   protected void withEfficiency(Random random) {
+   protected void withEfficiency(EaglercraftRandom random) {
       int enchantmentLevel = random.nextInt(4);
       if (enchantmentLevel > 0) {
          this.withEnchantment(Enchantment.Effect.EFFICIENCY.atLevel(enchantmentLevel));
@@ -66,7 +66,7 @@ public class SpecialTool extends SpecialEquipment {
       }
    }
 
-   protected SpecialTool withToolEnchantments(Random random) {
+   protected SpecialTool withToolEnchantments(EaglercraftRandom random) {
       this.withEfficiency(random);
       this.withSilkTouch(random);
       this.withFortune(random);

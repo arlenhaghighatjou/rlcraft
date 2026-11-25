@@ -1,6 +1,6 @@
 package prospector.traverse.world.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -23,11 +23,11 @@ public class BiomeAridHighland extends BiomeDesert implements WorldGenConstants 
       this.decorator.treesPerChunk = 1;
    }
 
-   public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+   public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand) {
       return (WorldGenAbstractTree)(rand.nextInt(3) == 0 ? TREE_FEATURE : ACACIA_TREE_FEATURE);
    }
 
-   public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
+   public void genTerrainBlocks(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
       if (noiseVal > 1.0D) {
          this.topBlock = GRASS;
          this.fillerBlock = SAND;
@@ -51,7 +51,7 @@ public class BiomeAridHighland extends BiomeDesert implements WorldGenConstants 
       return super.getModdedBiomeFoliageColor(-8347602);
    }
 
-   public void decorate(World worldIn, Random rand, BlockPos pos) {
+   public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos) {
       if (TerrainGen.decorate(worldIn, rand, pos, EventType.TREE) && rand.nextInt(5) == 0) {
          int k6 = rand.nextInt(16) + 8;
          int l = rand.nextInt(16) + 8;

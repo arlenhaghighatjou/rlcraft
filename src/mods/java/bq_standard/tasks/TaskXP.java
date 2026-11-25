@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -24,11 +24,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class TaskXP implements ITaskTickable {
-   private final Set<UUID> completeUsers = new TreeSet();
-   private final HashMap<UUID, Long> userProgress = new HashMap();
+   private final Set<EaglercraftUUID> completeUsers = new TreeSet();
+   private final HashMap<EaglercraftUUID, Long> userProgress = new HashMap();
    public boolean levels = true;
    public int amount = 30;
    public boolean consume = true;
@@ -40,35 +40,35 @@ public class TaskXP implements ITaskTickable {
       return FactoryTaskXP.INSTANCE.getRegistryName();
    }
 
-   public boolean isComplete(UUID uuid) {
+   public boolean isComplete(EaglercraftUUID uuid) {
       return this.completeUsers.contains(uuid);
    }
 
-   public void setComplete(UUID uuid) {
+   public void setComplete(EaglercraftUUID uuid) {
       this.completeUsers.add(uuid);
    }
 
    public void tickTask(@Nonnull ParticipantInfo pInfo, DBEntry<IQuest> quest) {
       if (!this.consume && pInfo.PLAYER.ticksExisted % 60 == 0) {
-         long curProg = this.getUsersProgress(pInfo.UUID);
+         long curProg = this.getUsersProgress(pInfo.EaglercraftUUID);
          long nxtProg = XPHelper.getPlayerXP(pInfo.PLAYER);
          if (curProg != nxtProg) {
-            this.setUserProgress(pInfo.UUID, XPHelper.getPlayerXP(pInfo.PLAYER));
+            this.setUserProgress(pInfo.EaglercraftUUID, XPHelper.getPlayerXP(pInfo.PLAYER));
             pInfo.markDirty(Collections.singletonList(Integer.valueOf(quest.getID())));
          }
 
          long rawXP = this.levels ? XPHelper.getLevelXP(this.amount) : (long)this.amount;
-         long totalXP = this.getUsersProgress(pInfo.UUID);
+         long totalXP = this.getUsersProgress(pInfo.EaglercraftUUID);
          if (totalXP >= rawXP) {
-            this.setComplete(pInfo.UUID);
+            this.setComplete(pInfo.EaglercraftUUID);
          }
 
       }
    }
 
    public void detect(ParticipantInfo pInfo, DBEntry<IQuest> quest) {
-      if (!this.isComplete(pInfo.UUID)) {
-         long progress = this.getUsersProgress(pInfo.UUID);
+      if (!this.isComplete(pInfo.EaglercraftUUID)) {
+         long progress = this.getUsersProgress(pInfo.EaglercraftUUID);
          long rawXP = this.levels ? XPHelper.getLevelXP(this.amount) : (long)this.amount;
          long plrXP = XPHelper.getPlayerXP(pInfo.PLAYER);
          long remaining = rawXP - progress;
@@ -76,17 +76,17 @@ public class TaskXP implements ITaskTickable {
          boolean changed = false;
          if (this.consume && cost != 0L) {
             progress = progress + cost;
-            this.setUserProgress(pInfo.UUID, progress);
+            this.setUserProgress(pInfo.EaglercraftUUID, progress);
             XPHelper.addXP(pInfo.PLAYER, -cost);
             changed = true;
          } else if (!this.consume && progress != plrXP) {
-            this.setUserProgress(pInfo.UUID, plrXP);
+            this.setUserProgress(pInfo.EaglercraftUUID, plrXP);
             changed = true;
          }
 
-         long totalXP = this.getUsersProgress(pInfo.UUID);
+         long totalXP = this.getUsersProgress(pInfo.EaglercraftUUID);
          if (totalXP >= rawXP) {
-            this.setComplete(pInfo.UUID);
+            this.setComplete(pInfo.EaglercraftUUID);
             changed = true;
          }
 
@@ -124,9 +124,9 @@ public class TaskXP implements ITaskTickable {
 
       for(int i = 0; i < cList.tagCount(); ++i) {
          try {
-            this.completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
+            this.completeUsers.add(EaglercraftUUID.fromString(cList.getStringTagAt(i)));
          } catch (Exception var9) {
-            BQ_Standard.logger.log(Level.ERROR, "Unable to load UUID for task", var9);
+            BQ_Standard.logger.log(Level.ERROR, "Unable to load EaglercraftUUID for task", var9);
          }
       }
 
@@ -135,7 +135,7 @@ public class TaskXP implements ITaskTickable {
       for(int n = 0; n < pList.tagCount(); ++n) {
          try {
             NBTTagCompound pTag = pList.getCompoundTagAt(n);
-            UUID uuid = UUID.fromString(pTag.getString("uuid"));
+            EaglercraftUUID uuid = EaglercraftUUID.fromString(pTag.getString("uuid"));
             this.userProgress.put(uuid, Long.valueOf(pTag.getLong("value")));
          } catch (Exception var8) {
             BQ_Standard.logger.log(Level.ERROR, "Unable to load user progress for task", var8);
@@ -144,7 +144,7 @@ public class TaskXP implements ITaskTickable {
 
    }
 
-   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<EaglercraftUUID> users) {
       NBTTagList jArray = new NBTTagList();
       NBTTagList progArray = new NBTTagList();
       if (users != null) {
@@ -179,7 +179,7 @@ public class TaskXP implements ITaskTickable {
       return nbt;
    }
 
-   public void resetUser(@Nullable UUID uuid) {
+   public void resetUser(@Nullable EaglercraftUUID uuid) {
       if (uuid == null) {
          this.completeUsers.clear();
          this.userProgress.clear();
@@ -198,11 +198,11 @@ public class TaskXP implements ITaskTickable {
       return null;
    }
 
-   public void setUserProgress(UUID uuid, long progress) {
+   public void setUserProgress(EaglercraftUUID uuid, long progress) {
       this.userProgress.put(uuid, Long.valueOf(progress));
    }
 
-   public long getUsersProgress(UUID uuid) {
+   public long getUsersProgress(EaglercraftUUID uuid) {
       Long n = (Long)this.userProgress.get(uuid);
       return n == null ? 0L : n.longValue();
    }

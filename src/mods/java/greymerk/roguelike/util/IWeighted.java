@@ -1,9 +1,9 @@
 package greymerk.roguelike.util;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public interface IWeighted<T> {
    int getWeight();
 
-   T get(Random var1);
+   T get(EaglercraftRandom var1);
 }

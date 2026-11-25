@@ -10,7 +10,7 @@ import com.charles445.rltweaker.util.ErrorUtil;
 import com.charles445.rltweaker.util.WorldGeneratorWrapper;
 import com.google.common.base.Function;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.Consumer;
 import net.minecraft.entity.Entity;
@@ -286,7 +286,7 @@ public class BattleTowersHandler {
       public BTWorldGenerator() {
       }
 
-      public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+      public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
          int alignment = 2;
          if (chunkX % alignment == 0) {
             if (chunkZ % alignment == 0) {

@@ -22,9 +22,9 @@ import nightkosh.advanced_fishing.api.fishing_catch.ICatch;
 import nightkosh.advanced_fishing.api.fishing_catch.ICatchManager;
 import nightkosh.advanced_fishing.api.fishing_catch.IWaterCatch;
 import nightkosh.advanced_fishing.api.fishing_catch.IWaterCondition;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class CatchManager implements ICatchManager {
    public static final CatchManager INSTANCE = new CatchManager();

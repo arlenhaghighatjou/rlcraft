@@ -3,7 +3,7 @@ package com.lycanitesmobs.core.block.building;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.core.block.BlockBase;
 import com.lycanitesmobs.core.entity.creature.EntityVespidQueen;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -52,7 +52,7 @@ public class BlockPropolis extends BlockBase {
       return this.tickRate + world.rand.nextInt(100);
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random random) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom random) {
       if (!world.isRemote) {
          if (this.getMetaFromState(state) < 8) {
             double range = 32.0D;

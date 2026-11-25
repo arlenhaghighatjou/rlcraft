@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +40,7 @@ public class TotemOfHolding extends Feature {
    private static final String TAG_DEATH_Z = "quark:deathZ";
    private static final String TAG_DEATH_DIM = "quark:deathDim";
    @SideOnly(Side.CLIENT)
-   public static TextureAtlasSprite totemSprite;
+   public static EaglerTextureAtlasSprite totemSprite;
    public static Item soul_compass;
    public static boolean darkSoulsMode;
    public static boolean enableOnPK;

@@ -5,7 +5,7 @@ import com.github.alexthe666.iceandfire.core.ModItems;
 import com.github.alexthe666.iceandfire.core.ModSounds;
 import com.github.alexthe666.iceandfire.structures.WorldGenMyrmexHive;
 import com.github.alexthe666.iceandfire.world.MyrmexWorldData;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -24,7 +24,7 @@ public class EntityMyrmexEgg extends EntityLiving implements IBlacklistedFromSta
    private static final DataParameter<Boolean> MYRMEX_TYPE = EntityDataManager.createKey(EntityMyrmexEgg.class, DataSerializers.BOOLEAN);
    private static final DataParameter<Integer> MYRMEX_AGE = EntityDataManager.createKey(EntityMyrmexEgg.class, DataSerializers.VARINT);
    private static final DataParameter<Integer> MYRMEX_CASTE = EntityDataManager.createKey(EntityMyrmexEgg.class, DataSerializers.VARINT);
-   public UUID hiveUUID;
+   public EaglercraftUUID hiveUUID;
 
    public EntityMyrmexEgg(World worldIn) {
       super(worldIn);
@@ -43,7 +43,7 @@ public class EntityMyrmexEgg extends EntityLiving implements IBlacklistedFromSta
       tag.setBoolean("Jungle", this.isJungle());
       tag.setInteger("MyrmexAge", this.getMyrmexAge());
       tag.setInteger("MyrmexCaste", this.getMyrmexCaste());
-      tag.setUniqueId("HiveUUID", this.hiveUUID == null ? (this.hiveUUID = UUID.randomUUID()) : this.hiveUUID);
+      tag.setUniqueId("HiveUUID", this.hiveUUID == null ? (this.hiveUUID = EaglercraftUUID.randomUUID()) : this.hiveUUID);
    }
 
    public void readEntityFromNBT(NBTTagCompound tag) {

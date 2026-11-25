@@ -1,7 +1,7 @@
 package com.dhanantry.scapeandrunparasites.block;
 
 import com.dhanantry.scapeandrunparasites.item.ItemBlockVariant;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -62,7 +62,7 @@ public class BlockParasiteRubbleDense extends BlockBase implements IMetaName {
       return new ItemBlockVariant(this);
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
    }
 
    public static enum EnumType implements IStringSerializable {

@@ -56,7 +56,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -203,7 +203,7 @@ public abstract class BaseCreatureEntity extends EntityLiving {
    private EntityLivingBase parentTarget;
    private EntityLivingBase avoidTarget;
    private EntityLivingBase fixateTarget;
-   private UUID fixateUUID = null;
+   private EaglercraftUUID fixateUUID = null;
    private EntityLivingBase perchTarget;
    public List<EntityPlayer> playerTargets = new ArrayList();
    public List<EntityLivingBase> minions = new ArrayList();
@@ -560,7 +560,7 @@ public abstract class BaseCreatureEntity extends EntityLiving {
       }
    }
 
-   public Optional<UUID> getUUIDFromDataManager(DataParameter<Optional<UUID>> key) {
+   public Optional<EaglercraftUUID> getUUIDFromDataManager(DataParameter<Optional<EaglercraftUUID>> key) {
       try {
          return (Optional)this.getDataManager().get(key);
       } catch (Exception var3) {
@@ -3026,7 +3026,7 @@ public abstract class BaseCreatureEntity extends EntityLiving {
       return null;
    }
 
-   public UUID getOwnerId() {
+   public EaglercraftUUID getOwnerId() {
       return null;
    }
 
@@ -4212,7 +4212,7 @@ public abstract class BaseCreatureEntity extends EntityLiving {
          }
 
          if (nbtTagCompound.hasKey("FixateUUIDMost") && nbtTagCompound.hasKey("FixateUUIDLeast")) {
-            this.fixateUUID = new UUID(nbtTagCompound.getLong("FixateUUIDMost"), nbtTagCompound.getLong("FixateUUIDLeast"));
+            this.fixateUUID = new EaglercraftUUID(nbtTagCompound.getLong("FixateUUIDMost"), nbtTagCompound.getLong("FixateUUIDLeast"));
          }
 
          if (nbtTagCompound.hasKey("MinionIds")) {

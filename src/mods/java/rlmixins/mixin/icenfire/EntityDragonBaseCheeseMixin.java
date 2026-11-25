@@ -4,7 +4,7 @@ import com.github.alexthe666.iceandfire.entity.EntityDragonBase;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

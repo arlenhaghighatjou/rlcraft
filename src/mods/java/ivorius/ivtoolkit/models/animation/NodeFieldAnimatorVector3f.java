@@ -1,6 +1,6 @@
 package ivorius.ivtoolkit.models.animation;
 
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class NodeFieldAnimatorVector3f extends NodeFieldAnimator<Vector3f> {
    public NodeFieldAnimatorVector3f() {

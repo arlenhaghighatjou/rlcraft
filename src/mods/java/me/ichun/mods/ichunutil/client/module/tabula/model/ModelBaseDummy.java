@@ -7,7 +7,7 @@ import me.ichun.mods.ichunutil.common.module.tabula.project.components.CubeInfo;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class ModelBaseDummy extends ModelBase {

@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.function.Function;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelBlock;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.client.model.animation.ModelBlockAnimation;
@@ -19,7 +19,7 @@ public class VanillaModelWrapperInject {
    public VanillaModelWrapperInject() {
    }
 
-   private IBakedModel bakeNormal(ModelBlock model, IModelState perState, IModelState modelState, List<TRSRTransformation> newTransforms, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, boolean uvLocked) {
+   private IBakedModel bakeNormal(ModelBlock model, IModelState perState, IModelState modelState, List<TRSRTransformation> newTransforms, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter, boolean uvLocked) {
       IBakedModel bakedModel = this.bakeNormal_foamfix_old(model, perState, modelState, newTransforms, format, bakedTextureGetter, uvLocked);
       if (bakedModel instanceof PerspectiveMapWrapper && (this.animation == null || this.animation.getClips().isEmpty())) {
          try {
@@ -33,7 +33,7 @@ public class VanillaModelWrapperInject {
       }
    }
 
-   private IBakedModel bakeNormal_foamfix_old(ModelBlock model, IModelState perState, IModelState modelState, List<TRSRTransformation> newTransforms, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, boolean uvLocked) {
+   private IBakedModel bakeNormal_foamfix_old(ModelBlock model, IModelState perState, IModelState modelState, List<TRSRTransformation> newTransforms, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter, boolean uvLocked) {
       return null;
    }
 }

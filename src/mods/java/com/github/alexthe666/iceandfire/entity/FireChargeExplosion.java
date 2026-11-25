@@ -7,7 +7,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -33,7 +33,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 public class FireChargeExplosion extends Explosion {
    private final boolean isFlaming;
    private final boolean isSmoking;
-   private final Random explosionRNG = new Random();
+   private final EaglercraftRandom explosionRNG = new EaglercraftRandom();
    private final World worldObj;
    private final double explosionX;
    private final double explosionY;
@@ -234,7 +234,7 @@ public class FireChargeExplosion extends Explosion {
       } else {
          for(BlockPos blockpos1 : this.affectedBlockPositions) {
             if (this.worldObj.getBlockState(blockpos1).getMaterial() == Material.AIR && this.worldObj.getBlockState(blockpos1.down()).isFullBlock() && this.explosionRNG.nextInt(3) == 0) {
-               this.worldObj.setBlockState(blockpos1, (new Random()).nextBoolean() ? Blocks.SNOW_LAYER.getDefaultState() : ModBlocks.dragon_ice_spikes.getDefaultState());
+               this.worldObj.setBlockState(blockpos1, (new EaglercraftRandom()).nextBoolean() ? Blocks.SNOW_LAYER.getDefaultState() : ModBlocks.dragon_ice_spikes.getDefaultState());
             }
          }
       }

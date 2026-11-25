@@ -2,7 +2,7 @@ package com.charles445.rltweaker.network;
 
 import com.charles445.rltweaker.config.ModConfig;
 import com.charles445.rltweaker.util.VersionDelimiter;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

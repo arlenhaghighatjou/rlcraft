@@ -2,7 +2,7 @@ package com.ferreusveritas.dynamictrees.systems.dropcreators;
 
 import com.ferreusveritas.dynamictrees.trees.Species;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -13,7 +13,7 @@ public class DropCreatorLogs extends DropCreator {
       super(new ResourceLocation("dynamictrees", "logs"));
    }
 
-   public List<ItemStack> getLogsDrop(World world, Species species, BlockPos breakPos, Random random, List<ItemStack> dropList, float volume) {
+   public List<ItemStack> getLogsDrop(World world, Species species, BlockPos breakPos, EaglercraftRandom random, List<ItemStack> dropList, float volume) {
       Species.LogsAndSticks las = species.getLogsAndSticks(volume);
 
       for(int numLogs = las.logs; numLogs > 0; numLogs -= 64) {

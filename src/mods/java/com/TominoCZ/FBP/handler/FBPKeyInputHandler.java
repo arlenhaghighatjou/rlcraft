@@ -12,8 +12,8 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.MouseInputEvent;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class FBPKeyInputHandler {
    Minecraft mc = Minecraft.getMinecraft();

@@ -8,7 +8,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
@@ -71,7 +71,7 @@ public class RandomAnimalTextures extends Feature {
       if (!choose) {
          return (ResourceLocation)styles.get(styles.size() - 1);
       } else {
-         UUID id = e.getUniqueID();
+         EaglercraftUUID id = e.getUniqueID();
          long most = id.getMostSignificantBits();
          if (shinyAnimalChance > 0 && most % (long)shinyAnimalChance == 0L) {
             return (ResourceLocation)shinyTextures.get(type);

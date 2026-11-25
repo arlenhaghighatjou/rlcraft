@@ -12,7 +12,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.utils.QuestTranslation;
 import bq_standard.rewards.RewardCommand;
 import net.minecraft.init.Blocks;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class PanelRewardCommand extends CanvasEmpty {
    private final RewardCommand reward;

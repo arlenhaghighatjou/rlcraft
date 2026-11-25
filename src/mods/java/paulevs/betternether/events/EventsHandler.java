@@ -1,6 +1,6 @@
 package paulevs.betternether.events;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
 import net.minecraft.block.state.IBlockState;
@@ -34,7 +34,7 @@ public class EventsHandler {
    }
 
    public static void init() {
-      featureScatter = new NoiseGeneratorOctaves(new Random(1337L), 3);
+      featureScatter = new NoiseGeneratorOctaves(new EaglercraftRandom(1337L), 3);
    }
 
    @SubscribeEvent
@@ -58,7 +58,7 @@ public class EventsHandler {
    @SubscribeEvent
    public void onPopulate(Post event) {
       if (!event.getWorld().isRemote && event.getWorld().provider.getDimensionType() == DimensionType.NETHER) {
-         Random random = event.getRand();
+         EaglercraftRandom random = event.getRand();
          World world = event.getWorld();
          BNWorldGenerator.generate(world, event.getChunkX(), event.getChunkZ(), world.rand);
       }
@@ -80,7 +80,7 @@ public class EventsHandler {
    public void boneGrow(BonemealEvent event) {
       Block block = event.getBlock().getBlock();
       World world = event.getWorld();
-      Random random = world.rand;
+      EaglercraftRandom random = world.rand;
       if (!world.isRemote && block instanceof BlockNetherrack) {
          IBlockState grass = BlocksRegister.BLOCK_NETHER_GRASS.getDefaultState();
          IBlockState moss = BlocksRegister.BLOCK_NETHERRACK_MOSS.getDefaultState();

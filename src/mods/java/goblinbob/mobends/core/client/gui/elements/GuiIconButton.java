@@ -3,7 +3,7 @@ package goblinbob.mobends.core.client.gui.elements;
 import goblinbob.mobends.core.client.gui.GuiBendsMenu;
 import goblinbob.mobends.core.util.Draw;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 

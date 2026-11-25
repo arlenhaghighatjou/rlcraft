@@ -1,6 +1,6 @@
 package levelup2.capability;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import levelup2.api.IProcessor;
 import levelup2.player.IPlayerClass;
 import levelup2.util.Library;
@@ -50,20 +50,20 @@ public class PlayerCapability {
 
    public static class CapabilityProcessorDefault implements IProcessor {
       private EntityPlayer player;
-      protected UUID playerUUID;
+      protected EaglercraftUUID playerUUID;
       protected TileEntity tile;
 
       public CapabilityProcessorDefault(TileEntity entity) {
          this.tile = entity;
       }
 
-      public void setUUID(UUID playerUUID) {
+      public void setUUID(EaglercraftUUID playerUUID) {
          this.playerUUID = playerUUID;
       }
 
       public void readFromNBT(NBTTagCompound tag) {
          if (tag.hasKey("player_uuid")) {
-            this.playerUUID = UUID.fromString(tag.getString("player_uuid"));
+            this.playerUUID = EaglercraftUUID.fromString(tag.getString("player_uuid"));
             this.player = Library.getPlayerFromUUID(this.playerUUID);
          }
 

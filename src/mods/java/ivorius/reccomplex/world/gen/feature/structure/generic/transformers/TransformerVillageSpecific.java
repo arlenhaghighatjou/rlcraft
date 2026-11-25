@@ -27,7 +27,7 @@ import ivorius.reccomplex.world.gen.feature.structure.context.StructurePrepareCo
 import ivorius.reccomplex.world.gen.feature.structure.context.StructureSpawnContext;
 import ivorius.reccomplex.world.gen.feature.structure.generic.WeightedBlockState;
 import java.lang.reflect.Type;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTBase;
@@ -98,7 +98,7 @@ public class TransformerVillageSpecific extends TransformerSingleBlock<NBTNone> 
          return type != null;
       }
 
-      public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
+      public boolean addComponentParts(World worldIn, EaglercraftRandom randomIn, StructureBoundingBox structureBoundingBoxIn) {
          return false;
       }
 

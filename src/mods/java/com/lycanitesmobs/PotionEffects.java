@@ -11,7 +11,7 @@ import com.lycanitesmobs.core.info.CreatureGroup;
 import com.lycanitesmobs.core.info.CreatureManager;
 import com.lycanitesmobs.core.network.MessageEntityVelocity;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -37,13 +37,13 @@ import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PotionEffects {
-   private static final UUID swiftswimmingMoveBoostUUID = UUID.fromString("6d4fe17f-06eb-4ebc-a573-364b79faed5e");
+   private static final EaglercraftUUID swiftswimmingMoveBoostUUID = EaglercraftUUID.fromString("6d4fe17f-06eb-4ebc-a573-364b79faed5e");
    private static final AttributeModifier swiftswimmingMoveBoost = (new AttributeModifier(swiftswimmingMoveBoostUUID, "Swiftswimming Speed Boost", 1.0D, 2)).setSaved(false);
-   private static final UUID swiftswimmingMoveBoostUUID2 = UUID.fromString("6d4fe17f-06eb-4ebc-a573-364b79faed5d");
+   private static final EaglercraftUUID swiftswimmingMoveBoostUUID2 = EaglercraftUUID.fromString("6d4fe17f-06eb-4ebc-a573-364b79faed5d");
    private static final AttributeModifier swiftswimmingMoveBoost2 = (new AttributeModifier(swiftswimmingMoveBoostUUID2, "Swiftswimming Speed Boost 2", 2.0D, 2)).setSaved(false);
-   private static final UUID swiftswimmingMoveBoostUUID3 = UUID.fromString("6d4fe17f-06eb-4ebc-a573-364b79faed5c");
+   private static final EaglercraftUUID swiftswimmingMoveBoostUUID3 = EaglercraftUUID.fromString("6d4fe17f-06eb-4ebc-a573-364b79faed5c");
    private static final AttributeModifier swiftswimmingMoveBoost3 = (new AttributeModifier(swiftswimmingMoveBoostUUID3, "Swiftswimming Speed Boost 3", 3.0D, 2)).setSaved(false);
-   private static final UUID swiftswimmingMoveBoostUUID4 = UUID.fromString("6d4fe17f-06eb-4ebc-a573-364b79faed5b");
+   private static final EaglercraftUUID swiftswimmingMoveBoostUUID4 = EaglercraftUUID.fromString("6d4fe17f-06eb-4ebc-a573-364b79faed5b");
    private static final AttributeModifier swiftswimmingMoveBoost4 = (new AttributeModifier(swiftswimmingMoveBoostUUID4, "Swiftswimming Speed Boost 4", 4.0D, 2)).setSaved(false);
    public boolean disableNausea = false;
 

@@ -2,7 +2,7 @@ package com.dhanantry.scapeandrunparasites.client.renderer.entity.ancient;
 
 import com.dhanantry.scapeandrunparasites.client.model.entity.projectile.ModelDropPod;
 import com.dhanantry.scapeandrunparasites.entity.projectile.EntityDropPod;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

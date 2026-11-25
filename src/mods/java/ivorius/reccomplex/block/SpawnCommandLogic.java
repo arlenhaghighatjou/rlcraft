@@ -1,6 +1,6 @@
 package ivorius.reccomplex.block;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import ivorius.reccomplex.RCConfig;
 import ivorius.reccomplex.utils.accessor.RCAccessorCommandBase;
 import java.text.SimpleDateFormat;

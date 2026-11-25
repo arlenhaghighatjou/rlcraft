@@ -2,7 +2,7 @@ package mcjty.lostcities.varia;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
@@ -43,7 +43,7 @@ public class Tools {
       return meta == 0 ? state.getBlock().getRegistryName().toString() : state.getBlock().getRegistryName().toString() + "@" + meta;
    }
 
-   public static String getRandomFromList(Random random, List<Pair<Float, String>> list) {
+   public static String getRandomFromList(EaglercraftRandom random, List<Pair<Float, String>> list) {
       if (list.isEmpty()) {
          return null;
       } else {

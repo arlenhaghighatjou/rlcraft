@@ -1,6 +1,6 @@
 package mcjty.lostcities.dimensions.world.terraingen;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import mcjty.lostcities.config.LostCityConfiguration;
 import mcjty.lostcities.dimensions.world.LostCityChunkGenerator;
 import mcjty.lostcities.dimensions.world.driver.IPrimerDriver;
@@ -113,7 +113,7 @@ public class IslandTerrainGenerator {
          this.noiseData2 = this.noiseGen1.generateNoiseOctaves(this.noiseData2, chunkX2, chunkY2, chunkZ2, sizeX, sizeY, sizeZ, d0, d1, d0);
          this.noiseData3 = this.noiseGen2.generateNoiseOctaves(this.noiseData3, chunkX2, chunkY2, chunkZ2, sizeX, sizeY, sizeZ, d0, d1, d0);
          int k1 = 0;
-         Random random = new Random((long)(chunkX2 * 13 + chunkY2 * 157 + chunkZ2 * 13883));
+         EaglercraftRandom random = new EaglercraftRandom((long)(chunkX2 * 13 + chunkY2 * 157 + chunkZ2 * 13883));
          random.nextFloat();
 
          for(int x = 0; x < sizeX; ++x) {

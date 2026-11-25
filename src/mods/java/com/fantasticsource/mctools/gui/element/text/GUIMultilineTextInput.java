@@ -7,7 +7,7 @@ import com.fantasticsource.tools.Tools;
 import com.fantasticsource.tools.datastructures.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GUIMultilineTextInput extends GUITextInput {
    public GUIMultilineTextInput(GUIScreen screen, String text, TextFilter filter) {

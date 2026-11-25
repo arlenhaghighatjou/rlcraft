@@ -1,8 +1,8 @@
 package ivorius.ivtoolkit.models.utils;
 
-import org.lwjgl.util.vector.Matrix4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
 import org.lwjgl.util.vector.Quaternion;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class MatrixMathUtils {
    public MatrixMathUtils() {

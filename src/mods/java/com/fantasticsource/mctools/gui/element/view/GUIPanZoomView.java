@@ -4,7 +4,7 @@ import com.fantasticsource.fantasticlib.config.FantasticConfig;
 import com.fantasticsource.mctools.gui.GUIScreen;
 import com.fantasticsource.mctools.gui.element.GUIElement;
 import com.fantasticsource.tools.Tools;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GUIPanZoomView extends GUIView {
    public double viewX = 0.0D;

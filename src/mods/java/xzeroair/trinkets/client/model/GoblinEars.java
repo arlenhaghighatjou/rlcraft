@@ -2,8 +2,8 @@ package xzeroair.trinkets.client.model;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -46,7 +46,7 @@ public class GoblinEars extends ModelBase {
       float f = 1.0F / tileWidth;
       float f1 = 1.0F / tileHeight;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       bufferbuilder.pos(x, y + height, z).tex((double)(u * f), (double)((v + (float)vHeight) * f1)).endVertex();
       bufferbuilder.pos(x + width, y + height, z + width).tex((double)((u + (float)uWidth) * f), (double)((v + (float)vHeight) * f1)).endVertex();
@@ -59,7 +59,7 @@ public class GoblinEars extends ModelBase {
       float f = 1.0F / tileWidth;
       float f1 = 1.0F / tileHeight;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       double offset2 = -width;
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       bufferbuilder.pos(x, y + height, z).tex((double)(u * f), (double)((v + (float)vHeight) * f1)).endVertex();

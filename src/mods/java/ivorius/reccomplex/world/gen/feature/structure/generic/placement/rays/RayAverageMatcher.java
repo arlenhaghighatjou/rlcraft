@@ -29,7 +29,7 @@ import ivorius.reccomplex.world.gen.feature.structure.generic.placement.FactorLi
 import ivorius.reccomplex.world.gen.feature.structure.generic.placement.StructurePlaceContext;
 import java.lang.reflect.Type;
 import java.util.OptionalInt;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -69,7 +69,7 @@ public class RayAverageMatcher extends FactorLimit.Ray {
       return null;
    }
 
-   public static int getAverageGroundLevel(boolean up, int y, Set<BlockPos> surface, Predicate<BlockPos> predicate, int wHeight, double samples, Random random) {
+   public static int getAverageGroundLevel(boolean up, int y, Set<BlockPos> surface, Predicate<BlockPos> predicate, int wHeight, double samples, EaglercraftRandom random) {
       TIntList list = new TIntArrayList(surface.size());
       MutableBlockPos pos = new MutableBlockPos();
 

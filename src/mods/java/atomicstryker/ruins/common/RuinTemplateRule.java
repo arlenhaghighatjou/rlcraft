@@ -4,13 +4,13 @@ import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.google.common.collect.Lists;
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -341,7 +341,7 @@ public class RuinTemplateRule
         }
     }
 
-    public void doBlock(World world, Random random, int x, int y, int z, int rotate)
+    public void doBlock(World world, EaglercraftRandom random, int x, int y, int z, int rotate)
     {
         // check to see if we can create this block
         if (random.nextDouble() < chance)
@@ -402,13 +402,13 @@ public class RuinTemplateRule
         }
     }
 
-    private void doNormalBlock(World world, Random random, int x, int y, int z, int rotate)
+    private void doNormalBlock(World world, EaglercraftRandom random, int x, int y, int z, int rotate)
     {
         int blocknum = getBlockNum(random);
         handleBlockSpawning(world, random, x, y, z, blocknum, rotate, blockStrings[blocknum]);
     }
 
-    private void doAboveBlock(World world, Random random, int x, int y, int z, int rotate)
+    private void doAboveBlock(World world, EaglercraftRandom random, int x, int y, int z, int rotate)
     {
         BlockPos pos = new BlockPos(x, y - 1, z);
         if ((condition <= 0) ^ owner.isIgnoredBlock(world.getBlockState(pos).getBlock(), world, pos))
@@ -419,7 +419,7 @@ public class RuinTemplateRule
         handleBlockSpawning(world, random, x, y, z, blocknum, rotate, blockStrings[blocknum]);
     }
 
-    private void doAdjacentBlock(World world, Random random, int x, int y, int z, int rotate)
+    private void doAdjacentBlock(World world, EaglercraftRandom random, int x, int y, int z, int rotate)
     {
         BlockPos a = new BlockPos(x + 1, y, z);
         BlockPos b = new BlockPos(x, y, z + 1);
@@ -436,7 +436,7 @@ public class RuinTemplateRule
         handleBlockSpawning(world, random, x, y, z, blocknum, rotate, blockStrings[blocknum]);
     }
 
-    private void doUnderBlock(World world, Random random, int x, int y, int z, int rotate)
+    private void doUnderBlock(World world, EaglercraftRandom random, int x, int y, int z, int rotate)
     {
         BlockPos pos = new BlockPos(x, y + 1, z);
         if ((condition <= 0) ^ owner.isIgnoredBlock(world.getBlockState(pos).getBlock(), world, pos))
@@ -448,7 +448,7 @@ public class RuinTemplateRule
         handleBlockSpawning(world, random, x, y, z, blocknum, rotate, blockStrings[blocknum]);
     }
 
-    private void handleBlockSpawning(World world, Random random, int x, int y, int z, int blocknum, int rotate, String blockString)
+    private void handleBlockSpawning(World world, EaglercraftRandom random, int x, int y, int z, int blocknum, int rotate, String blockString)
     {
         Block blockID = blockIDs[blocknum];
         BlockPos pos = new BlockPos(x, y, z);
@@ -565,7 +565,7 @@ public class RuinTemplateRule
         return false;
     }
 
-    private void doSpecialBlock(World world, Random random, int x, int y, int z, int blocknum, int rotate, final String dataString)
+    private void doSpecialBlock(World world, EaglercraftRandom random, int x, int y, int z, int blocknum, int rotate, final String dataString)
     {
         if (dataString.equals("preserveBlock"))
         {
@@ -695,7 +695,7 @@ public class RuinTemplateRule
                     // split segment like this:
                     // 1b4d8438-e714-3553-a433-059f2d3b1fd2-AtomicStryker-3
                     String[] moresplits = splits[3].split("-");
-                    UUID id = UUID.fromString(moresplits[0] + "-" + moresplits[1] + "-" + moresplits[2] + "-" + moresplits[3] + "-" + moresplits[4]);
+                    EaglercraftUUID id = EaglercraftUUID.fromString(moresplits[0] + "-" + moresplits[1] + "-" + moresplits[2] + "-" + moresplits[3] + "-" + moresplits[4]);
                     GameProfile playerprofile = new GameProfile(id, moresplits[5]);
                     ReflectionHelper.setPrivateValue(TileEntitySkull.class, tes, playerprofile, 2);
                 }
@@ -750,7 +750,7 @@ public class RuinTemplateRule
         }
     }
 
-    private int getBlockNum(Random random)
+    private int getBlockNum(EaglercraftRandom random)
     {
         // random selection using weights assigned in config file
         int blockIndex = 0;
@@ -790,7 +790,7 @@ public class RuinTemplateRule
         }
     }
 
-    private void addEasyMobSpawn(World world, Random random, int x, int y, int z)
+    private void addEasyMobSpawn(World world, EaglercraftRandom random, int x, int y, int z)
     {
         switch (random.nextInt(2))
         {
@@ -803,7 +803,7 @@ public class RuinTemplateRule
         }
     }
 
-    private void addMediumMobSpawn(World world, Random random, int x, int y, int z)
+    private void addMediumMobSpawn(World world, EaglercraftRandom random, int x, int y, int z)
     {
         switch (random.nextInt(4))
         {
@@ -822,7 +822,7 @@ public class RuinTemplateRule
         }
     }
 
-    private void addHardMobSpawn(World world, Random random, int x, int y, int z)
+    private void addHardMobSpawn(World world, EaglercraftRandom random, int x, int y, int z)
     {
         switch (random.nextInt(4))
         {
@@ -841,7 +841,7 @@ public class RuinTemplateRule
         }
     }
 
-    private void addUprightMobSpawn(World world, Random random, int x, int y, int z)
+    private void addUprightMobSpawn(World world, EaglercraftRandom random, int x, int y, int z)
     {
         switch (random.nextInt(3))
         {
@@ -857,7 +857,7 @@ public class RuinTemplateRule
         }
     }
 
-    private void addEasyChest(World world, Random random, int x, int y, int z, int blocknum, int direction, int items)
+    private void addEasyChest(World world, EaglercraftRandom random, int x, int y, int z, int blocknum, int direction, int items)
     {
         TileEntityChest chest = (TileEntityChest) realizeBlock(world, x, y, z, Blocks.CHEST, blocknum, direction);
         if (chest != null)
@@ -874,7 +874,7 @@ public class RuinTemplateRule
         }
     }
 
-    private void addMediumChest(World world, Random random, int x, int y, int z, int blocknum, int direction, int items)
+    private void addMediumChest(World world, EaglercraftRandom random, int x, int y, int z, int blocknum, int direction, int items)
     {
         TileEntityChest chest = (TileEntityChest) realizeBlock(world, x, y, z, Blocks.CHEST, blocknum, direction);
         if (chest != null)
@@ -898,7 +898,7 @@ public class RuinTemplateRule
         }
     }
 
-    private void addHardChest(World world, Random random, int x, int y, int z, int blocknum, int direction, int items)
+    private void addHardChest(World world, EaglercraftRandom random, int x, int y, int z, int blocknum, int direction, int items)
     {
         TileEntityChest chest = (TileEntityChest) realizeBlock(world, x, y, z, Blocks.CHEST, blocknum, direction);
         if (chest != null)
@@ -922,7 +922,7 @@ public class RuinTemplateRule
         }
     }
 
-    private void addChestGenChest(World world, Random random, int x, int y, int z, String gen, int targetCount, int blocknum, int direction)
+    private void addChestGenChest(World world, EaglercraftRandom random, int x, int y, int z, String gen, int targetCount, int blocknum, int direction)
     {
         TileEntityChest chest = (TileEntityChest) realizeBlock(world, x, y, z, Blocks.CHEST, blocknum, direction);
         if (chest != null)
@@ -983,7 +983,7 @@ public class RuinTemplateRule
         }
     }
 
-    private List<Integer> getEmptySlotsRandomized(IInventory inventory, Random rand)
+    private List<Integer> getEmptySlotsRandomized(IInventory inventory, EaglercraftRandom rand)
     {
         List<Integer> list = Lists.<Integer> newArrayList();
 
@@ -999,7 +999,7 @@ public class RuinTemplateRule
         return list;
     }
 
-    private void shuffleItems(List<ItemStack> stacks, int targetSize, Random rand)
+    private void shuffleItems(List<ItemStack> stacks, int targetSize, EaglercraftRandom rand)
     {
         List<ItemStack> list = Lists.<ItemStack> newArrayList();
         Iterator<ItemStack> iterator = stacks.iterator();
@@ -1052,7 +1052,7 @@ public class RuinTemplateRule
         Collections.shuffle(stacks, rand);
     }
 
-    private void addIInventoryBlock(World world, Random random, int x, int y, int z, Block block, String itemDataWithoutNBT, RuinTextLumper lumper, int blocknum, int direction)
+    private void addIInventoryBlock(World world, EaglercraftRandom random, int x, int y, int z, Block block, String itemDataWithoutNBT, RuinTextLumper lumper, int blocknum, int direction)
     {
         TileEntity te = realizeBlock(world, x, y, z, block, blocknum, direction);
         if (te instanceof IInventory)
@@ -1307,7 +1307,7 @@ public class RuinTemplateRule
         return "";
     }
 
-    private ItemStack getNormalStack(Random random)
+    private ItemStack getNormalStack(EaglercraftRandom random)
     {
         int rand = random.nextInt(25);
         switch (rand)
@@ -1355,7 +1355,7 @@ public class RuinTemplateRule
         }
     }
 
-    private ItemStack getLootStack(Random random)
+    private ItemStack getLootStack(EaglercraftRandom random)
     {
         int rand = random.nextInt(25);
         switch (rand)

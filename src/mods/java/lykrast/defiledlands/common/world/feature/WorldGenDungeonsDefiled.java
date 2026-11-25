@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.world.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.block.BlockStoneDefiledDecoration;
 import lykrast.defiledlands.common.init.ModBlocks;
 import lykrast.defiledlands.common.util.DungeonDefiledList;
@@ -16,8 +16,8 @@ import net.minecraft.util.EnumFacing.Plane;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class WorldGenDungeonsDefiled extends WorldGenerator {
    private static final Logger LOGGER = LogManager.getLogger();
@@ -28,7 +28,7 @@ public class WorldGenDungeonsDefiled extends WorldGenerator {
    public WorldGenDungeonsDefiled() {
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int j = rand.nextInt(2) + 2;
       int k = -j - 1;
       int l = j + 1;
@@ -122,7 +122,7 @@ public class WorldGenDungeonsDefiled extends WorldGenerator {
       }
    }
 
-   private ResourceLocation pickMobSpawner(Random rand) {
+   private ResourceLocation pickMobSpawner(EaglercraftRandom rand) {
       return DungeonDefiledList.getRandomDungeonMob(rand);
    }
 }

@@ -5,7 +5,7 @@ import com.google.common.base.Predicates;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -190,7 +190,7 @@ public class RayTraceHelper {
    }
 
    public static void drawPath(Vec3d start, Vec3d end, World world, RayTraceHelper.Beam beam, int color, double density) {
-      Random rand = new Random();
+      EaglercraftRandom rand = new EaglercraftRandom();
       double dist = beam.getDist();
       double r1 = rand.nextDouble() * (double)(rand.nextBoolean() ? -1 : 1);
       double r2 = rand.nextDouble() * (double)(rand.nextBoolean() ? -1 : 1);
@@ -236,7 +236,7 @@ public class RayTraceHelper {
       private double dist;
       private double accuracy;
       private final boolean canBreak;
-      private final Random rand = new Random();
+      private final EaglercraftRandom rand = new EaglercraftRandom();
 
       public Beam(World world, EntityLivingBase player, double maxDist, double accuracy, boolean canBreak) {
          this.world = world;

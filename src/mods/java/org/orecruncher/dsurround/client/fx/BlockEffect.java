@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.fx;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
@@ -48,11 +48,11 @@ public abstract class BlockEffect implements ISpecialEffect {
       return this.chance == 0;
    }
 
-   public boolean canTrigger(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull Random random) {
+   public boolean canTrigger(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EaglercraftRandom random) {
       return !this.alwaysExecute() && random.nextInt(this.getChance()) != 0 ? false : ExpressionEngine.instance().check(this.getConditions());
    }
 
-   public abstract void doEffect(@Nonnull IBlockAccessEx var1, @Nonnull IBlockState var2, @Nonnull BlockPos var3, @Nonnull Random var4);
+   public abstract void doEffect(@Nonnull IBlockAccessEx var1, @Nonnull IBlockState var2, @Nonnull BlockPos var3, @Nonnull EaglercraftRandom var4);
 
    @Nonnull
    public String toString() {

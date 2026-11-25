@@ -12,7 +12,7 @@ import com.oblivioussp.spartanweaponry.util.ConfigHandler;
 import com.oblivioussp.spartanweaponry.util.QuiverHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

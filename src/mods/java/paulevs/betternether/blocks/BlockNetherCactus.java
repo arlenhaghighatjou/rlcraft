@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -93,7 +93,7 @@ public class BlockNetherCactus extends Block {
       }
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       IBlockState normal = this.getDefaultState().withProperty(SHAPE, BlockNetherCactus.EnumShape.SIDE);
       if (this.canStay(worldIn, pos) && worldIn.isAirBlock(pos.up())) {
          int i;

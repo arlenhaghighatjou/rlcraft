@@ -2,7 +2,7 @@ package svenhjol.charm.world.decorator.outer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -14,7 +14,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import svenhjol.meson.decorator.MesonOuterDecorator;
 
 public class Mushrooms extends MesonOuterDecorator {
-   public Mushrooms(World world, BlockPos pos, Random rand, List<ChunkPos> chunks) {
+   public Mushrooms(World world, BlockPos pos, EaglercraftRandom rand, List<ChunkPos> chunks) {
       super(world, pos, rand, chunks);
    }
 

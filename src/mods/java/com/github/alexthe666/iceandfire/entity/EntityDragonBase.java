@@ -12,7 +12,7 @@ import com.github.alexthe666.iceandfire.enums.EnumDragonEgg;
 import com.github.alexthe666.iceandfire.message.MessageDragonArmor;
 import com.github.alexthe666.iceandfire.message.MessageDragonControl;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.ilexiconn.llibrary.client.model.tools.ChainBuffer;
 import net.ilexiconn.llibrary.server.animation.Animation;
@@ -1749,7 +1749,7 @@ public abstract class EntityDragonBase extends EntityTameable implements IMultip
       this.setGender(this.getRNG().nextBoolean());
       int age = this.getRNG().nextInt(80) + 1;
       this.growDragon(age);
-      this.setVariant((new Random()).nextInt(4));
+      this.setVariant((new EaglercraftRandom()).nextInt(4));
       this.setSleeping(false);
       this.updateAttributes();
       double healthStep = (this.maximumHealth - this.minimumHealth) / 125.0D;
@@ -2018,7 +2018,7 @@ public abstract class EntityDragonBase extends EntityTameable implements IMultip
       int k = MathHelper.floor(this.posZ);
       BlockPos pos = new BlockPos(i, j, k);
       EntityDragonEgg dragon = new EntityDragonEgg(this.world);
-      dragon.setType(EnumDragonEgg.byMetadata((new Random()).nextInt(3) + (this.isFire ? 0 : 4)));
+      dragon.setType(EnumDragonEgg.byMetadata((new EaglercraftRandom()).nextInt(3) + (this.isFire ? 0 : 4)));
       dragon.setPosition((double)pos.getX() + 0.5D, (double)(pos.getY() + 1), (double)pos.getZ() + 0.5D);
       return dragon;
    }

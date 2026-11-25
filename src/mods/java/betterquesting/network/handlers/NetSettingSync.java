@@ -18,7 +18,7 @@ import net.minecraft.util.Tuple;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class NetSettingSync {
    private static final ResourceLocation ID_NAME = new ResourceLocation("betterquesting:setting_sync");

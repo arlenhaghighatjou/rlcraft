@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
@@ -38,7 +38,7 @@ import lumien.custommainmenu.lib.textures.ITexture;
 import lumien.custommainmenu.lib.textures.TextureApng;
 import lumien.custommainmenu.lib.textures.TextureResourceLocation;
 import lumien.custommainmenu.lib.textures.TextureURL;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class GuiConfig {
    public String name;
@@ -422,7 +422,7 @@ public class GuiConfig {
    }
 
    private String getStringPlease(JsonElement jsonElement) {
-      Random rng = new Random();
+      EaglercraftRandom rng = new EaglercraftRandom();
       if (jsonElement.isJsonPrimitive()) {
          return jsonElement.getAsString();
       } else if (jsonElement.isJsonArray()) {

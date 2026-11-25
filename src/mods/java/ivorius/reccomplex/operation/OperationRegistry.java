@@ -2,8 +2,8 @@ package ivorius.reccomplex.operation;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import ivorius.ivtoolkit.lang.IvClasses;
 import ivorius.ivtoolkit.tools.IvWorldData;
 import ivorius.ivtoolkit.tools.NBTCompoundObjects;

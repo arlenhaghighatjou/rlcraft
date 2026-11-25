@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.bettermineshafts.world.generator.pieces;
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.BetterMineshaftGenerator;
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.MineshaftVariantSettings;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.BlockLadder;
 import net.minecraft.block.BlockRail;
@@ -26,13 +26,13 @@ public class LayeredIntersection5 extends MineshaftPiece {
    public LayeredIntersection5() {
    }
 
-   public LayeredIntersection5(int i, int pieceChainLen, Random random, StructureBoundingBox blockBox, EnumFacing direction, MineshaftVariantSettings settings) {
+   public LayeredIntersection5(int i, int pieceChainLen, EaglercraftRandom random, StructureBoundingBox blockBox, EnumFacing direction, MineshaftVariantSettings settings) {
       super(i, pieceChainLen, settings);
       this.setCoordBaseMode(direction);
       this.boundingBox = blockBox;
    }
 
-   public static StructureBoundingBox determineBoxPosition(List<StructureComponent> list, Random random, int x, int y, int z, EnumFacing direction) {
+   public static StructureBoundingBox determineBoxPosition(List<StructureComponent> list, EaglercraftRandom random, int x, int y, int z, EnumFacing direction) {
       StructureBoundingBox blockBox = new StructureBoundingBox(x, y, z, x, y + 10 - 1, z);
       switch(direction) {
       case NORTH:
@@ -57,7 +57,7 @@ public class LayeredIntersection5 extends MineshaftPiece {
       return intersectingPiece != null ? null : blockBox;
    }
 
-   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, Random random) {
+   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, EaglercraftRandom random) {
       EnumFacing direction = this.getCoordBaseMode();
       if (direction != null) {
          switch(direction) {
@@ -81,7 +81,7 @@ public class LayeredIntersection5 extends MineshaftPiece {
    }
 
    @ParametersAreNonnullByDefault
-   public boolean addComponentParts(World world, Random random, StructureBoundingBox box) {
+   public boolean addComponentParts(World world, EaglercraftRandom random, StructureBoundingBox box) {
       if (this.isLiquidInStructureBoundingBox(world, box)) {
          return false;
       } else if (!this.isInOcean(world, 0, 0) && !this.isInOcean(world, 4, 4)) {

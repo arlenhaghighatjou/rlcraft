@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.logging.ILogger;
@@ -49,7 +49,7 @@ class MixinProcessor {
    private final List<MixinConfig> configs = new ArrayList();
    private final List<MixinConfig> pendingConfigs = new ArrayList();
    private final ReEntranceLock lock;
-   private final String sessionId = UUID.randomUUID().toString();
+   private final String sessionId = EaglercraftUUID.randomUUID().toString();
    private final Extensions extensions;
    private final IHotSwap hotSwapper;
    private final MixinCoprocessors coprocessors = new MixinCoprocessors();

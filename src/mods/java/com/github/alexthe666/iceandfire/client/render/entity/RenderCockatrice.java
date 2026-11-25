@@ -3,9 +3,9 @@ package com.github.alexthe666.iceandfire.client.render.entity;
 import com.github.alexthe666.iceandfire.client.model.ModelCockatrice;
 import com.github.alexthe666.iceandfire.entity.EntityCockatrice;
 import com.github.alexthe666.iceandfire.entity.EntityGorgon;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -64,7 +64,7 @@ public class RenderCockatrice extends RenderLiving<EntityCockatrice> {
       if (!blindness && entitylivingbase != null && EntityGorgon.isEntityLookingAt(entity, entitylivingbase, 0.6000000238418579D) && EntityGorgon.isEntityLookingAt(entitylivingbase, entity, 0.6000000238418579D)) {
          float f = entity.getAttackAnimationScale(partialTicks);
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder bufferbuilder = tessellator.getBuffer();
+         WorldRenderer bufferbuilder = tessellator.getBuffer();
          this.bindTexture(TEXTURE_BEAM);
          GlStateManager.glTexParameteri(3553, 10242, 10497);
          GlStateManager.glTexParameteri(3553, 10243, 10497);

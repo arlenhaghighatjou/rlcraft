@@ -11,13 +11,13 @@ import com.github.alexthe666.iceandfire.entity.FrozenEntityProperties;
 import com.github.alexthe666.iceandfire.entity.SirenEntityProperties;
 import java.lang.reflect.Field;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -41,7 +41,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.lwjgl.opengl.GL11;
 
 public class EventClient {
-   private Random rand = new Random();
+   private EaglercraftRandom rand = new EaglercraftRandom();
    private static final ResourceLocation SIREN_SHADER = new ResourceLocation("iceandfire:shaders/post/siren.json");
    private static final ResourceLocation TEXTURE_0 = new ResourceLocation("textures/blocks/frosted_ice_0.png");
    private static final ResourceLocation TEXTURE_1 = new ResourceLocation("textures/blocks/frosted_ice_1.png");
@@ -221,7 +221,7 @@ public class EventClient {
 
    public static void renderAABB(AxisAlignedBB boundingBox, double x, double y, double z) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
       double maxX = boundingBox.maxX * 0.625D;

@@ -1,7 +1,7 @@
 package lykrast.defiledlands.common.entity.passive;
 
 import com.google.common.collect.Sets;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

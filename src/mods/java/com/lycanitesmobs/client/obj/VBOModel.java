@@ -2,8 +2,8 @@ package com.lycanitesmobs.client.obj;
 
 import javax.vecmath.Vector2f;
 import javax.vecmath.Vector4f;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;

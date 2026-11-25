@@ -54,7 +54,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -218,7 +218,7 @@ public class WorldScriptMazeGenerator implements WorldScript<WorldScriptMazeGene
       return new WorldScriptMazeGenerator.InstanceData(nbt instanceof NBTTagCompound ? (NBTTagCompound)nbt : new NBTTagCompound());
    }
 
-   public List<PlacedMazeComponent<MazeComponentStructure<Connector>, Connector>> getPlacedRooms(Random random, AxisAlignedTransform2D transform, Environment environment) {
+   public List<PlacedMazeComponent<MazeComponentStructure<Connector>, Connector>> getPlacedRooms(EaglercraftRandom random, AxisAlignedTransform2D transform, Environment environment) {
       if (this.mazeComponent.rooms.isEmpty()) {
          return null;
       } else {

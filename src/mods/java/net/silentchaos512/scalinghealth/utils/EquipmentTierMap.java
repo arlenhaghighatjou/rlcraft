@@ -2,7 +2,7 @@ package net.silentchaos512.scalinghealth.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.silentchaos512.scalinghealth.ScalingHealth;
@@ -41,7 +41,7 @@ public class EquipmentTierMap {
          if (list.isEmpty()) {
             return ItemStack.EMPTY;
          } else {
-            Random rand = ScalingHealth.random;
+            EaglercraftRandom rand = ScalingHealth.random;
             return ((StackProducer)list.get(rand.nextInt(list.size()))).get(rand);
          }
       } else {

@@ -1,7 +1,7 @@
 package svenhjol.charm.world.decorator.outer;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -22,7 +22,7 @@ import svenhjol.charm.world.feature.VillageDecorations;
 import svenhjol.meson.decorator.MesonOuterDecorator;
 
 public class Barrels extends MesonOuterDecorator {
-   public Barrels(World world, BlockPos pos, Random rand, List<ChunkPos> chunks) {
+   public Barrels(World world, BlockPos pos, EaglercraftRandom rand, List<ChunkPos> chunks) {
       super(world, pos, rand, chunks);
    }
 

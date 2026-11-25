@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -39,7 +39,7 @@ public class DecoBoulder extends DecoBase {
       this.addDecoTypes(new DecoBase.DecoType[]{DecoBase.DecoType.BOULDER});
    }
 
-   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, Random rand, ChunkPos chunkPos, float river, boolean hasVillage) {
+   public void generate(IRealisticBiome biome, RTGWorld rtgWorld, EaglercraftRandom rand, ChunkPos chunkPos, float river, boolean hasVillage) {
       if (rtgWorld.getGeneratorSettings().useBoulders && TerrainGen.decorate(rtgWorld.world(), rand, chunkPos, EventType.ROCK)) {
          for(int i = 0; (float)i < this.strengthFactor; ++i) {
             BlockPos pos = getOffsetPos(chunkPos).add(rand.nextInt(16), 0, rand.nextInt(16));

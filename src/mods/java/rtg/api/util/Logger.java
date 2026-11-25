@@ -1,7 +1,7 @@
 package rtg.api.util;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import rtg.RTGConfig;
 
 public final class Logger {

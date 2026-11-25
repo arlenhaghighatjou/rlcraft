@@ -9,7 +9,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.utils.ParticipantInfo;
 import bq_standard.tasks.ITaskInventory;
 import java.util.HashMap;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -19,11 +19,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
 public class PlayerContainerListener implements IContainerListener {
-   private static final HashMap<UUID, PlayerContainerListener> LISTEN_MAP = new HashMap();
+   private static final HashMap<EaglercraftUUID, PlayerContainerListener> LISTEN_MAP = new HashMap();
    private EntityPlayer player;
 
    static void refreshListener(@Nonnull EntityPlayer player) {
-      UUID uuid = QuestingAPI.getQuestingUUID(player);
+      EaglercraftUUID uuid = QuestingAPI.getQuestingUUID(player);
       PlayerContainerListener listener = (PlayerContainerListener)LISTEN_MAP.get(uuid);
       if (listener != null) {
          listener.player = player;

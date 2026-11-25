@@ -1,6 +1,6 @@
 package rustic.common.tileentity;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -47,7 +47,7 @@ public class TileEntityApiary extends TileEntity implements ITickable {
    private int reproductionTimer = 0;
    private int productionTime = 600;
    private int productionTimer = 0;
-   private Random random = new Random();
+   private EaglercraftRandom random = new EaglercraftRandom();
 
    public TileEntityApiary() {
    }

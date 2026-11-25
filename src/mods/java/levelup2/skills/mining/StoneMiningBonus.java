@@ -1,6 +1,6 @@
 package levelup2.skills.mining;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import levelup2.config.LevelUpConfig;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
@@ -47,7 +47,7 @@ public class StoneMiningBonus extends BaseSkill {
          if (evt.getHarvester() != null && !evt.getWorld().isRemote) {
             int skill = SkillRegistry.getSkillLevel(evt.getHarvester(), this.getSkillName());
             IBlockState state = evt.getState();
-            Random rand = evt.getHarvester().getRNG();
+            EaglercraftRandom rand = evt.getHarvester().getRNG();
             this.dropOreChunks(evt, skill, state, rand);
          }
 
@@ -73,7 +73,7 @@ public class StoneMiningBonus extends BaseSkill {
 
    }
 
-   private void dropOreChunks(HarvestDropsEvent evt, int skill, IBlockState state, Random rand) {
+   private void dropOreChunks(HarvestDropsEvent evt, int skill, IBlockState state, EaglercraftRandom rand) {
       if (!Library.getOreList().isEmpty() && Library.getOreList().contains(state.getBlock())) {
          if (rand.nextDouble() <= (double)skill / 20.0D) {
             int fortuneBonus = LevelUpConfig.fortuneOre && evt.getFortuneLevel() > 0 ? rand.nextInt(evt.getFortuneLevel() + 1) : 0;

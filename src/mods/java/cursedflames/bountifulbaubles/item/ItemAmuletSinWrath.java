@@ -4,7 +4,7 @@ import baubles.api.BaublesApi;
 import cursedflames.bountifulbaubles.item.base.IItemAttributeModifier;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemAmuletSinWrath extends ItemAmuletSin implements IItemAttributeModifier {
    private static final Map<IAttribute, AttributeModifier> modMap = new HashMap();
-   public static final UUID DAMAGE_UUID = UUID.fromString("2d75d7e2-38bb-465e-a2b1-8a59c552fe40");
+   public static final EaglercraftUUID DAMAGE_UUID = EaglercraftUUID.fromString("2d75d7e2-38bb-465e-a2b1-8a59c552fe40");
 
    public ItemAmuletSinWrath() {
       super("amuletSinWrath", "amulet_sin_wrath");

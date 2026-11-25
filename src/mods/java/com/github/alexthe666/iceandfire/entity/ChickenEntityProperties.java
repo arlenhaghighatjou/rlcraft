@@ -1,13 +1,13 @@
 package com.github.alexthe666.iceandfire.entity;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.ilexiconn.llibrary.server.entity.EntityProperties;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class ChickenEntityProperties extends EntityProperties<EntityAnimal> {
    public int timeUntilNextEgg = 1;
-   private static Random rand = new Random();
+   private static EaglercraftRandom rand = new EaglercraftRandom();
 
    public ChickenEntityProperties() {
    }

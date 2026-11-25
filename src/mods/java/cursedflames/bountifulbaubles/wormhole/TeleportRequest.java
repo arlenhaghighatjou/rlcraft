@@ -4,7 +4,7 @@ import cursedflames.bountifulbaubles.network.NBTPacket;
 import cursedflames.bountifulbaubles.network.PacketHandler;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,11 +16,11 @@ public class TeleportRequest {
    public static int REQ_EXPIRY_TIME = 400;
    public final long reqTickTime;
    public final World world;
-   public final UUID origin;
-   public final UUID target;
+   public final EaglercraftUUID origin;
+   public final EaglercraftUUID target;
    public TeleportRequest.Status status = TeleportRequest.Status.PENDING;
 
-   private TeleportRequest(World world, UUID origin, UUID target) {
+   private TeleportRequest(World world, EaglercraftUUID origin, EaglercraftUUID target) {
       this.reqTickTime = world.getTotalWorldTime();
       this.world = world;
       this.origin = origin;
@@ -46,7 +46,7 @@ public class TeleportRequest {
    public static void acceptReject(EntityPlayer target, boolean accept, String name) {
       long timeoutTime = target.world.getTotalWorldTime() - (long)REQ_EXPIRY_TIME;
       EntityPlayer originPlayer = null;
-      UUID origin;
+      EaglercraftUUID origin;
       if (name != null && name.length() != 0) {
          originPlayer = target.world.getPlayerEntityByName(name);
          if (originPlayer == null) {

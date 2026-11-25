@@ -1,12 +1,12 @@
 package com.lycanitesmobs.core.entity;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class CreatureRelationshipEntry {
    protected CreatureRelationships creatureRelationships;
-   protected UUID targetEntityUUID;
+   protected EaglercraftUUID targetEntityUUID;
    protected int reputation = 0;
 
    public CreatureRelationshipEntry(CreatureRelationships creatureRelationships) {
@@ -58,7 +58,7 @@ public class CreatureRelationshipEntry {
       return this.reputation >= this.creatureRelationships.getCreatureEntity().creatureInfo.getFriendlyReputation();
    }
 
-   public UUID getTargetEntityUUID() {
+   public EaglercraftUUID getTargetEntityUUID() {
       return this.targetEntityUUID;
    }
 

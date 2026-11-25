@@ -1,7 +1,7 @@
 package betterquesting.api2.client.gui.misc;
 
 import org.lwjgl.util.vector.ReadableVector4f;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public final class GuiTransform implements IGuiRect {
    private IGuiRect parent;

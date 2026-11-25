@@ -19,7 +19,7 @@ import com.ferreusveritas.dynamictrees.util.IRayTraceCollision;
 import com.ferreusveritas.dynamictrees.util.SafeChunkBounds;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockLeaves;
@@ -59,7 +59,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDynamicLeaves extends BlockLeaves implements ITreePart, IAgeable, IRayTraceCollision {
    public static boolean passableLeavesModLoaded = false;
-   protected static Random backupRng = new Random();
+   protected static EaglercraftRandom backupRng = new EaglercraftRandom();
    public static final PropertyInteger HYDRO = PropertyInteger.create("hydro", 1, 4);
    public static final PropertyInteger TREE = PropertyInteger.create("tree", 0, 3);
    public ILeavesProperties[] properties = new ILeavesProperties[]{LeavesProperties.NULLPROPERTIES, LeavesProperties.NULLPROPERTIES, LeavesProperties.NULLPROPERTIES, LeavesProperties.NULLPROPERTIES};
@@ -110,7 +110,7 @@ public class BlockDynamicLeaves extends BlockLeaves implements ITreePart, IAgeab
       return this.getProperties(world.getBlockState(pos)).getFireSpreadSpeed();
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (rand == null) {
          rand = backupRng;
       }
@@ -138,7 +138,7 @@ public class BlockDynamicLeaves extends BlockLeaves implements ITreePart, IAgeab
 
    }
 
-   protected void doTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   protected void doTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (this.canTickAt(worldIn, pos) && this.getProperties(state).updateTick(worldIn, pos, state, rand)) {
          this.age(worldIn, pos, state, rand, SafeChunkBounds.ANY);
       }
@@ -151,7 +151,7 @@ public class BlockDynamicLeaves extends BlockLeaves implements ITreePart, IAgeab
       return xm > 1 && xm < 14 && zm > 1 && zm < 14 && worldIn.isBlockLoaded(pos) || worldIn.isAreaLoaded(pos, 2);
    }
 
-   public int age(World world, BlockPos pos, IBlockState state, Random rand, SafeChunkBounds safeBounds) {
+   public int age(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand, SafeChunkBounds safeBounds) {
       ILeavesProperties leavesProperties = this.getProperties(state);
       int oldHydro = ((Integer)state.getValue(HYDRO)).intValue();
       boolean worldGen = safeBounds != SafeChunkBounds.ANY;
@@ -483,11 +483,11 @@ public class BlockDynamicLeaves extends BlockLeaves implements ITreePart, IAgeab
       return Species.NULLSPECIES;
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return null;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 

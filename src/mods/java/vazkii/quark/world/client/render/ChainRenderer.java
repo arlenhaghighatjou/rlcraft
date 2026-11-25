@@ -4,8 +4,8 @@ import com.google.common.base.Predicate;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -25,7 +25,7 @@ public class ChainRenderer {
    public ChainRenderer() {
    }
 
-   public static void drawChainSegment(double x, double y, double z, BufferBuilder buf, double offsetX, double offsetY, double offsetZ, double xOff, double zOff, float baseR, float baseG, float baseB, double height) {
+   public static void drawChainSegment(double x, double y, double z, WorldRenderer buf, double offsetX, double offsetY, double offsetZ, double xOff, double zOff, float baseR, float baseG, float baseB, double height) {
       buf.begin(5, DefaultVertexFormats.POSITION_COLOR);
       double centroid = xOff + zOff / 2.0D;
 
@@ -81,7 +81,7 @@ public class ChainRenderer {
          }
 
          Tessellator tess = Tessellator.getInstance();
-         BufferBuilder buf = tess.getBuffer();
+         WorldRenderer buf = tess.getBuffer();
          double yaw = interp((double)entity.prevRotationYaw, (double)entity.rotationYaw, (double)(partialTicks * 0.5F)) * 3.141592653589793D / 180.0D;
          double pitch = interp((double)entity.prevRotationPitch, (double)entity.rotationPitch, (double)(partialTicks * 0.5F)) * 3.141592653589793D / 180.0D;
          double rotX = Math.cos(yaw);

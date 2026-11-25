@@ -1,7 +1,7 @@
 package svenhjol.meson.decorator;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,7 +16,7 @@ import net.minecraft.world.gen.structure.StructureComponent;
 import svenhjol.meson.Meson;
 
 public abstract class MesonInnerDecorator {
-   protected Random rand;
+   protected EaglercraftRandom rand;
    protected World world;
    protected StructureComponent structure;
    protected StructureBoundingBox box;
@@ -27,7 +27,7 @@ public abstract class MesonInnerDecorator {
       this.structure = structure;
       this.world = world;
       this.box = box;
-      this.rand = new Random();
+      this.rand = new EaglercraftRandom();
       this.rand.setSeed((long)structure.hashCode());
 
       try {
@@ -55,7 +55,7 @@ public abstract class MesonInnerDecorator {
       return this.box;
    }
 
-   public Random getRand() {
+   public EaglercraftRandom getRand() {
       return this.rand;
    }
 

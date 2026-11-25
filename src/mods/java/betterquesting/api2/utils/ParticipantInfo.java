@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,23 +22,23 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class ParticipantInfo {
    public final EntityPlayer PLAYER;
-   public final UUID UUID;
-   public final List<UUID> ALL_UUIDS;
+   public final EaglercraftUUID EaglercraftUUID;
+   public final List<EaglercraftUUID> ALL_UUIDS;
    public final List<EntityPlayer> ACTIVE_PLAYERS;
-   public final List<UUID> ACTIVE_UUIDS;
+   public final List<EaglercraftUUID> ACTIVE_UUIDS;
    public final DBEntry<IParty> PARTY_INSTANCE;
 
    public ParticipantInfo(@Nonnull EntityPlayer player) {
       this.PLAYER = player;
-      this.UUID = QuestingAPI.getQuestingUUID(player);
-      this.PARTY_INSTANCE = PartyManager.INSTANCE.getParty(this.UUID);
+      this.EaglercraftUUID = QuestingAPI.getQuestingUUID(player);
+      this.PARTY_INSTANCE = PartyManager.INSTANCE.getParty(this.EaglercraftUUID);
       MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
       if (this.PARTY_INSTANCE != null && server != null && !(player instanceof FakePlayer)) {
          List<EntityPlayer> actPl = new ArrayList();
-         List<UUID> actID = new ArrayList();
-         List<UUID> allID = new ArrayList();
+         List<EaglercraftUUID> actID = new ArrayList();
+         List<EaglercraftUUID> allID = new ArrayList();
 
-         for(UUID mem : (this.PARTY_INSTANCE.getValue()).getMembers()) {
+         for(EaglercraftUUID mem : (this.PARTY_INSTANCE.getValue()).getMembers()) {
             allID.add(mem);
             EntityPlayer pMem = server.getPlayerList().getPlayerByUUID(mem);
             if (pMem != null) {
@@ -52,8 +52,8 @@ public class ParticipantInfo {
          this.ALL_UUIDS = Collections.unmodifiableList(allID);
       } else {
          this.ACTIVE_PLAYERS = Collections.singletonList(player);
-         this.ACTIVE_UUIDS = Collections.singletonList(this.UUID);
-         this.ALL_UUIDS = Collections.singletonList(this.UUID);
+         this.ACTIVE_UUIDS = Collections.singletonList(this.EaglercraftUUID);
+         this.ALL_UUIDS = Collections.singletonList(this.EaglercraftUUID);
       }
    }
 

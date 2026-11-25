@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.bettercaves.world.mineshaft;
 import com.yungnickyoung.minecraft.bettercaves.config.io.ConfigLoader;
 import com.yungnickyoung.minecraft.bettercaves.config.util.ConfigHolder;
 import com.yungnickyoung.minecraft.bettercaves.util.BetterCavesUtils;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -53,11 +53,11 @@ public class MapGenBetterMineshaft extends MapGenMineshaft {
    }
 
    private class StructureBetterMineshaftStart extends StructureMineshaftStart {
-      public StructureBetterMineshaftStart(World worldIn, Random rand, int chunkX, int chunkZ, Type type) {
+      public StructureBetterMineshaftStart(World worldIn, EaglercraftRandom rand, int chunkX, int chunkZ, Type type) {
          super(worldIn, rand, chunkX, chunkZ, type);
       }
 
-      public void generateStructure(World worldIn, Random rand, StructureBoundingBox structurebb) {
+      public void generateStructure(World worldIn, EaglercraftRandom rand, StructureBoundingBox structurebb) {
          this.components.removeIf((component) -> {
             return component.getBoundingBox().minY < MapGenBetterMineshaft.this.liquidAltitude + 5 || component.getBoundingBox().intersectsWith(structurebb) && !component.addComponentParts(worldIn, rand, structurebb);
          });

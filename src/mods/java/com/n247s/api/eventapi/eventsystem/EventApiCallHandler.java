@@ -9,7 +9,7 @@ import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class EventApiCallHandler extends CallHandler {
    private static final Logger log = EventApi.logger;

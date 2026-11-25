@@ -13,7 +13,7 @@ import greymerk.roguelike.worldgen.Direction;
 import greymerk.roguelike.worldgen.WorldEditor;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SegmentGenerator {
    protected Segment arch;
@@ -101,7 +101,7 @@ public class SegmentGenerator {
       return segments;
    }
 
-   private SegmentBase pickSegment(Random random, Direction dir, Coord pos) {
+   private SegmentBase pickSegment(EaglercraftRandom random, Direction dir, Coord pos) {
       int z = pos.getZ();
       if ((dir == Direction.NORTH || dir == Direction.SOUTH) && z % 3 == 0) {
          return this.pickSegment(z % 6 == 0, random);
@@ -111,7 +111,7 @@ public class SegmentGenerator {
       }
    }
 
-   private SegmentBase pickSegment(boolean isArch, Random random) {
+   private SegmentBase pickSegment(boolean isArch, EaglercraftRandom random) {
       return isArch ? Segment.getSegment(this.getArch()) : (this.getSegments().isEmpty() ? Segment.getSegment(Segment.WALL) : Segment.getSegment((Segment)this.getSegments().get(random)));
    }
 

@@ -1,6 +1,6 @@
 package rtg.world.biome.realistic.novamterram;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -54,7 +54,7 @@ public abstract class RealisticBiomeNTBaseBeach extends RealisticBiomeNTBase {
       }
 
       public void paintTerrain(ChunkPrimer primer, int i, int j, int x, int z, int depth, RTGWorld rtgWorld, float[] noise, float river, Biome[] base) {
-         Random rand = rtgWorld.rand();
+         EaglercraftRandom rand = rtgWorld.rand();
 
          for(int k = 255; k > -1; --k) {
             Block b = primer.getBlockState(x, k, z).getBlock();

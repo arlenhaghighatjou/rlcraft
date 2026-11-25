@@ -2,7 +2,7 @@ package com.fantasticsource.mctools.animation;
 
 import com.fantasticsource.tools.component.Component;
 import com.fantasticsource.tools.component.path.CPath;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.io.InputStream;
 import java.io.OutputStream;
 

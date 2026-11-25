@@ -10,8 +10,8 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)

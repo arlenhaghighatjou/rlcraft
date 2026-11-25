@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.common.model.TRSRTransformation;
@@ -22,10 +22,10 @@ import org.apache.commons.lang3.tuple.Pair;
 @SideOnly(Side.CLIENT)
 public class BakedTabulaModel implements IBakedModel {
    private ImmutableList<BakedQuad> quads;
-   private TextureAtlasSprite particle;
+   private EaglerTextureAtlasSprite particle;
    private ImmutableMap<TransformType, TRSRTransformation> transforms;
 
-   public BakedTabulaModel(ImmutableList<BakedQuad> quads, TextureAtlasSprite particle, ImmutableMap<TransformType, TRSRTransformation> transforms) {
+   public BakedTabulaModel(ImmutableList<BakedQuad> quads, EaglerTextureAtlasSprite particle, ImmutableMap<TransformType, TRSRTransformation> transforms) {
       this.quads = quads;
       this.particle = particle;
       this.transforms = transforms;
@@ -47,7 +47,7 @@ public class BakedTabulaModel implements IBakedModel {
       return false;
    }
 
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       return this.particle;
    }
 

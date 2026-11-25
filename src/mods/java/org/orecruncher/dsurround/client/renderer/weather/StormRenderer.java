@@ -1,11 +1,11 @@
 package org.orecruncher.dsurround.client.renderer.weather;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -37,11 +37,11 @@ import org.orecruncher.lib.random.XorShiftRandom;
 public class StormRenderer {
    private static final double[] RAIN_X_COORDS = new double[1024];
    private static final double[] RAIN_Y_COORDS = new double[1024];
-   private final Random random = new XorShiftRandom();
+   private final EaglercraftRandom random = new XorShiftRandom();
    private final MutableBlockPos mutable = new MutableBlockPos();
    private static ResourceLocation effectTexture;
    private static boolean isDrawing;
-   private static BufferBuilder worldrenderer;
+   private static WorldRenderer worldrenderer;
    private static int locY;
 
    public StormRenderer() {

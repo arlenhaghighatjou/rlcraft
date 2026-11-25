@@ -4,8 +4,8 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.IChunkLoader;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.Optional.Interface;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.spongepowered.common.bridge.world.chunk.ChunkProviderBridge;
 
 @Interface(

@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import lykrast.defiledlands.common.init.ModBlocks;
 import lykrast.defiledlands.common.util.PlantUtils;
@@ -54,7 +54,7 @@ public class BlockVilespine extends BlockGeneric implements IPlantable {
       return REED_AABB;
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if ((worldIn.getBlockState(pos.down()).getBlock() == ModBlocks.vilespine || this.checkForDrop(worldIn, pos, state)) && worldIn.isAirBlock(pos.up())) {
          int i;
          for(i = 1; worldIn.getBlockState(pos.down(i)).getBlock() == this; ++i) {

@@ -3,9 +3,9 @@ package com.dhanantry.scapeandrunparasites.client.renderer.entity.adapted;
 import com.dhanantry.scapeandrunparasites.client.model.entity.adapted.ModelRanracAdapted;
 import com.dhanantry.scapeandrunparasites.client.renderer.RenderMalleable;
 import com.dhanantry.scapeandrunparasites.entity.monster.adapted.EntityRanracAdapted;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -58,7 +58,7 @@ public class RenderRanracAdapted extends RenderMalleable<EntityRanracAdapted> {
       if (entitylivingbase != null) {
          float f = 10.0F;
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder bufferbuilder = tessellator.getBuffer();
+         WorldRenderer bufferbuilder = tessellator.getBuffer();
          this.bindTexture(GUARDIAN_BEAM_TEXTURE);
          GlStateManager.glTexParameteri(3553, 10242, 10497);
          GlStateManager.glTexParameteri(3553, 10243, 10497);

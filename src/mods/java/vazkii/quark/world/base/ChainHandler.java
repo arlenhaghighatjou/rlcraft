@@ -1,7 +1,7 @@
 package vazkii.quark.world.base;
 
 import com.google.common.base.Predicate;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.item.EntityMinecart;
@@ -62,7 +62,7 @@ public class ChainHandler {
       }
    }
 
-   public static UUID getLink(Entity vehicle) {
+   public static EaglercraftUUID getLink(Entity vehicle) {
       if (!canBeLinked(vehicle)) {
          return null;
       } else {
@@ -79,7 +79,7 @@ public class ChainHandler {
    }
 
    public static <T extends Entity> Entity getLinked(T vehicle) {
-      UUID uuid = getLink(vehicle);
+      EaglercraftUUID uuid = getLink(vehicle);
       if (uuid == null) {
          return null;
       } else {
@@ -111,21 +111,21 @@ public class ChainHandler {
    }
 
    private static <T extends Entity> void breakChain(T cart) {
-      setLink(cart, (UUID)null, true);
+      setLink(cart, (EaglercraftUUID)null, true);
       if (!cart.world.isRemote && cart.world.getGameRules().getBoolean("doEntityDrops")) {
          cart.entityDropItem(new ItemStack(ChainLinkage.chain), 0.0F);
       }
 
    }
 
-   public static void updateLinkState(Entity entity, UUID uuid, EntityPlayer player) {
+   public static void updateLinkState(Entity entity, EaglercraftUUID uuid, EntityPlayer player) {
       if (player instanceof EntityPlayerMP) {
          NetworkHandler.INSTANCE.sendTo(new MessageSyncChain(entity.getEntityId(), uuid), (EntityPlayerMP)player);
       }
 
    }
 
-   public static void setLink(Entity entity, UUID uuid, boolean sync) {
+   public static void setLink(Entity entity, EaglercraftUUID uuid, boolean sync) {
       if (canBeLinked(entity)) {
          if (entity.getUniqueID().equals(uuid)) {
             return;

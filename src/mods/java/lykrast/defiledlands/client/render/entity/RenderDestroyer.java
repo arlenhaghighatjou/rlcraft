@@ -2,7 +2,7 @@ package lykrast.defiledlands.client.render.entity;
 
 import lykrast.defiledlands.client.model.ModelDestroyer;
 import lykrast.defiledlands.common.entity.boss.EntityDestroyer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.RenderLiving;

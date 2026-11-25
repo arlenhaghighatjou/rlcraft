@@ -4,7 +4,7 @@ import com.github.fnar.minecraft.block.BlockType;
 import com.github.fnar.minecraft.block.SingleBlockBrush;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class FlowerPotBlock extends SingleBlockBrush {
    private Plant content;
@@ -22,7 +22,7 @@ public class FlowerPotBlock extends SingleBlockBrush {
       return this.content;
    }
 
-   public FlowerPotBlock withRandomContent(Random random) {
+   public FlowerPotBlock withRandomContent(EaglercraftRandom random) {
       return this.setContent(Plant.chooseRandom(random));
    }
 

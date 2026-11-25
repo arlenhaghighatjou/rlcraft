@@ -11,9 +11,9 @@ import com.creativemd.creativecore.common.gui.event.gui.GuiToolTipEvent;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.math.Vec3d;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 import org.lwjgl.opengl.GL11;
 
 public abstract class GuiParent extends GuiControl implements IControlParent {

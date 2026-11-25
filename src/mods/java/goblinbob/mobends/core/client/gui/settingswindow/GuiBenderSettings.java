@@ -4,7 +4,7 @@ import goblinbob.mobends.core.bender.EntityBender;
 import goblinbob.mobends.core.client.gui.elements.GuiSmallToggleButton;
 import goblinbob.mobends.core.client.gui.elements.IGuiListElement;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GuiBenderSettings implements IGuiListElement {
    private final EntityBender<?> bender;

@@ -1,7 +1,7 @@
 package com.github.fnar.minecraft.item;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum ToolType {
    AXE,
@@ -15,11 +15,11 @@ public enum ToolType {
    private ToolType() {
    }
 
-   public static ToolType randomAmong(Random random, List<ToolType> values) {
+   public static ToolType randomAmong(EaglercraftRandom random, List<ToolType> values) {
       return (ToolType)values.get(random.nextInt(values.size()));
    }
 
-   public static ToolType random(Random random) {
+   public static ToolType random(EaglercraftRandom random) {
       int choice = random.nextInt(values().length);
       return values()[choice];
    }

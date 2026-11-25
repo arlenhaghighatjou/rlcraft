@@ -4,7 +4,7 @@ import com.mujmajnkraft.bettersurvival.config.ForgeConfigHandler;
 import com.mujmajnkraft.bettersurvival.init.ModEnchantments;
 import com.mujmajnkraft.bettersurvival.integration.SwitchBowCompat;
 import com.mujmajnkraft.bettersurvival.items.ItemCrossbow;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -35,8 +35,8 @@ public class EnchantmentMultishot extends Enchantment {
       int l = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multishot, bow);
 
       for(int x = 0; x < l; ++x) {
-         float Yaw = (new Random()).nextFloat() * 30.0F - 15.0F;
-         float Pitch = (new Random()).nextFloat() * 30.0F - 15.0F;
+         float Yaw = (new EaglercraftRandom()).nextFloat() * 30.0F - 15.0F;
+         float Pitch = (new EaglercraftRandom()).nextFloat() * 30.0F - 15.0F;
          boolean flag = shooter.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, bow) > 0;
          ItemStack ammo = ItemStack.EMPTY;
          if (bow.getItem() instanceof ItemCrossbow) {

@@ -16,12 +16,12 @@ import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.BlockTallGrass.EnumType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import org.jetbrains.annotations.NotNull;
 
 @SideOnly(Side.CLIENT)
@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
    bv = {1, 0, 3},
    k = 1,
    d1 = {"\u0000J\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0002\n\u0002\u0010\t\n\u0002\b\u0003\n\u0002\u0010\u000b\n\u0002\b\u0006\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0010\u000e\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0002\bÇ\u0002\u0018\u00002\u00020\u0001B\u0007\b\u0002¢\u0006\u0002\u0010\u0002J\u000e\u0010\r\u001a\u00020\u00042\u0006\u0010\u000e\u001a\u00020\u000fJ\u0018\u0010\u0010\u001a\u00020\u00042\u0006\u0010\u0011\u001a\u00020\u00042\u0006\u0010\u000e\u001a\u00020\u000fH\u0007J)\u0010\u0012\u001a\u00020\u00132\u0006\u0010\u0014\u001a\u00020\u00152\b\b\u0002\u0010\u0016\u001a\u00020\b2\f\u0010\u0017\u001a\b\u0012\u0004\u0012\u00020\u00130\u0018H\u0086\bJ)\u0010\u0019\u001a\u00020\u00132\u0006\u0010\u0014\u001a\u00020\u00152\b\b\u0002\u0010\u0016\u001a\u00020\b2\f\u0010\u0017\u001a\b\u0012\u0004\u0012\u00020\u00130\u0018H\u0086\bJ\u0016\u0010\u001a\u001a\u00020\u00132\u0006\u0010\u001b\u001a\u00020\u001c2\u0006\u0010\u000e\u001a\u00020\u000fJ9\u0010\u001d\u001a\u00020\u00132\u0006\u0010\u001e\u001a\u00020\u00042\u0006\u0010\u001f\u001a\u00020 2\u0006\u0010\u0014\u001a\u00020\u00152\b\b\u0002\u0010\u0016\u001a\u00020\b2\f\u0010\u0017\u001a\b\u0012\u0004\u0012\u00020\u00130\u0018H\u0086\bJ9\u0010\u001d\u001a\u00020\u00132\u0006\u0010!\u001a\u00020\u000f2\u0006\u0010\u001f\u001a\u00020 2\u0006\u0010\u0014\u001a\u00020\u00152\b\b\u0002\u0010\u0016\u001a\u00020\b2\f\u0010\u0017\u001a\b\u0012\u0004\u0012\u00020\u00130\u0018H\u0086\bR\u0011\u0010\u0003\u001a\u00020\u0004¢\u0006\b\n\u0000\u001a\u0004\b\u0005\u0010\u0006R\u001c\u0010\u0007\u001a\u00020\b8\u0006X\u0087\u0004¢\u0006\u000e\n\u0000\u0012\u0004\b\t\u0010\u0002\u001a\u0004\b\u0007\u0010\nR\u0011\u0010\u000b\u001a\u00020\u0004¢\u0006\b\n\u0000\u001a\u0004\b\f\u0010\u0006¨\u0006\""},
-   d2 = {"Lmods/betterfoliage/client/integration/ShadersModIntegration;", "", "()V", "grassDefaultBlockId", "", "getGrassDefaultBlockId", "()J", "isAvailable", "", "isAvailable$annotations", "()Z", "leavesDefaultBlockId", "getLeavesDefaultBlockId", "blockIdFor", "blockState", "Lnet/minecraft/block/state/IBlockState;", "getBlockIdOverride", "original", "grass", "", "renderer", "Lnet/minecraft/client/renderer/BufferBuilder;", "enabled", "func", "Lkotlin/Function0;", "leaves", "logEntityData", "name", "", "renderAs", "blockId", "renderType", "Lnet/minecraft/util/EnumBlockRenderType;", "state", "BetterFoliage-MC1.12"}
+   d2 = {"Lmods/betterfoliage/client/integration/ShadersModIntegration;", "", "()V", "grassDefaultBlockId", "", "getGrassDefaultBlockId", "()J", "isAvailable", "", "isAvailable$annotations", "()Z", "leavesDefaultBlockId", "getLeavesDefaultBlockId", "blockIdFor", "blockState", "Lnet/minecraft/block/state/IBlockState;", "getBlockIdOverride", "original", "grass", "", "renderer", "Lnet/minecraft/client/renderer/WorldRenderer;", "enabled", "func", "Lkotlin/Function0;", "leaves", "logEntityData", "name", "", "renderAs", "blockId", "renderType", "Lnet/minecraft/util/EnumBlockRenderType;", "state", "BetterFoliage-MC1.12"}
 )
 public final class ShadersModIntegration {
    private static final boolean isAvailable = Reflection.allAvailable(Refs.INSTANCE.getSVertexBuilder(), Refs.INSTANCE.getPushEntity_state(), Refs.INSTANCE.getPushEntity_num(), Refs.INSTANCE.getPopEntity());
@@ -91,7 +91,7 @@ public final class ShadersModIntegration {
       }
    }
 
-   public final void renderAs(long blockId, @NotNull EnumBlockRenderType renderType, @NotNull BufferBuilder renderer, boolean enabled, @NotNull Function0<Unit> func) {
+   public final void renderAs(long blockId, @NotNull EnumBlockRenderType renderType, @NotNull WorldRenderer renderer, boolean enabled, @NotNull Function0<Unit> func) {
       int $i$f$renderAs = 0;
       Intrinsics.checkParameterIsNotNull(renderType, "renderType");
       Intrinsics.checkParameterIsNotNull(renderer, "renderer");
@@ -113,7 +113,7 @@ public final class ShadersModIntegration {
 
    }
 
-   public final void renderAs(@NotNull IBlockState state, @NotNull EnumBlockRenderType renderType, @NotNull BufferBuilder renderer, boolean enabled, @NotNull Function0<Unit> func) {
+   public final void renderAs(@NotNull IBlockState state, @NotNull EnumBlockRenderType renderType, @NotNull WorldRenderer renderer, boolean enabled, @NotNull Function0<Unit> func) {
       int $i$f$renderAs = 0;
       Intrinsics.checkParameterIsNotNull(state, "state");
       Intrinsics.checkParameterIsNotNull(renderType, "renderType");
@@ -138,7 +138,7 @@ public final class ShadersModIntegration {
 
    }
 
-   public final void grass(@NotNull BufferBuilder renderer, boolean enabled, @NotNull Function0<Unit> func) {
+   public final void grass(@NotNull WorldRenderer renderer, boolean enabled, @NotNull Function0<Unit> func) {
       int $i$f$grass = 0;
       Intrinsics.checkParameterIsNotNull(renderer, "renderer");
       Intrinsics.checkParameterIsNotNull(func, "func");
@@ -162,7 +162,7 @@ public final class ShadersModIntegration {
 
    }
 
-   public final void leaves(@NotNull BufferBuilder renderer, boolean enabled, @NotNull Function0<Unit> func) {
+   public final void leaves(@NotNull WorldRenderer renderer, boolean enabled, @NotNull Function0<Unit> func) {
       int $i$f$leaves = 0;
       Intrinsics.checkParameterIsNotNull(renderer, "renderer");
       Intrinsics.checkParameterIsNotNull(func, "func");

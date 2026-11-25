@@ -3,7 +3,7 @@ package de.Whitedraco.switchbow.proxy;
 import de.Whitedraco.switchbow.helper.SwitchBowHelper;
 import de.Whitedraco.switchbow.item.ItemSwitchBow;
 import de.Whitedraco.switchbow.item.ItemSwitchCrossbow;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

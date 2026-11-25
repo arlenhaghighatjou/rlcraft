@@ -6,7 +6,7 @@ import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
@@ -29,7 +29,7 @@ public class RoomsSetting {
       child.inherit(parent);
    }
 
-   public static RoomsSetting getRandom(Random random, int numRooms) {
+   public static RoomsSetting getRandom(EaglercraftRandom random, int numRooms) {
       RoomsSetting rooms = new RoomsSetting();
       IntStream.range(0, numRooms).forEach((i) -> {
          rooms.add(RoomType.getRandomIntersection(random).newRandomRoomSetting(1));

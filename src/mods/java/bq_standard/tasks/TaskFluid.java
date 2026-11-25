@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -43,12 +43,12 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
-   private final Set<UUID> completeUsers = new TreeSet();
+   private final Set<EaglercraftUUID> completeUsers = new TreeSet();
    public final NonNullList<FluidStack> requiredFluids = NonNullList.create();
-   public final Map<UUID, int[]> userProgress = new HashMap();
+   public final Map<EaglercraftUUID, int[]> userProgress = new HashMap();
    public boolean ignoreNbt = false;
    public boolean consume = true;
    public boolean groupDetect = false;
@@ -65,11 +65,11 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
       return "bq_standard.task.fluid";
    }
 
-   public boolean isComplete(UUID uuid) {
+   public boolean isComplete(EaglercraftUUID uuid) {
       return this.completeUsers.contains(uuid);
    }
 
-   public void setComplete(UUID uuid) {
+   public void setComplete(EaglercraftUUID uuid) {
       this.completeUsers.add(uuid);
    }
 
@@ -81,8 +81,8 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
    }
 
    public void detect(ParticipantInfo pInfo, DBEntry<IQuest> quest) {
-      if (!this.isComplete(pInfo.UUID)) {
-         List<Tuple<UUID, int[]>> progress = this.getBulkProgress(this.consume ? Collections.singletonList(pInfo.UUID) : pInfo.ALL_UUIDS);
+      if (!this.isComplete(pInfo.EaglercraftUUID)) {
+         List<Tuple<EaglercraftUUID, int[]>> progress = this.getBulkProgress(this.consume ? Collections.singletonList(pInfo.EaglercraftUUID) : pInfo.ALL_UUIDS);
          boolean updated = false;
          if (!this.consume) {
             if (this.groupDetect) {
@@ -93,7 +93,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
                for(int i = 0; i < this.requiredFluids.size(); ++i) {
                   int r = ((FluidStack)this.requiredFluids.get(i)).amount;
 
-                  for(Tuple<UUID, int[]> value : progress) {
+                  for(Tuple<EaglercraftUUID, int[]> value : progress) {
                      int n = ((int[])value.getSecond())[i];
                      if (n != 0 && n < r) {
                         ((int[])value.getSecond())[i] = 0;
@@ -131,7 +131,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
 
                         FluidStack sample = handler.drain(drainOG, false);
                         if (sample != null && sample.amount > 0) {
-                           for(Tuple<UUID, int[]> value : progress) {
+                           for(Tuple<EaglercraftUUID, int[]> value : progress) {
                               if (((int[])value.getSecond())[j] < rStack.amount) {
                                  int remaining = rStack.amount - ((int[])value.getSecond())[j];
                                  FluidStack drain = rStack.copy();
@@ -171,11 +171,11 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
    }
 
    private void checkAndComplete(ParticipantInfo pInfo, DBEntry<IQuest> quest, boolean resync) {
-      List<Tuple<UUID, int[]>> progress = this.getBulkProgress(this.consume ? Collections.singletonList(pInfo.UUID) : pInfo.ALL_UUIDS);
+      List<Tuple<EaglercraftUUID, int[]>> progress = this.getBulkProgress(this.consume ? Collections.singletonList(pInfo.EaglercraftUUID) : pInfo.ALL_UUIDS);
       boolean updated = resync;
 
       label38:
-      for(Tuple<UUID, int[]> value : progress) {
+      for(Tuple<EaglercraftUUID, int[]> value : progress) {
          boolean hasAll = true;
 
          for(int j = 0; j < this.requiredFluids.size(); ++j) {
@@ -187,12 +187,12 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
          updated = true;
          if (!this.consume) {
             progress.forEach((pair) -> {
-               this.setComplete((UUID)pair.getFirst());
+               this.setComplete((EaglercraftUUID)pair.getFirst());
             });
             break;
          }
 
-         this.setComplete((UUID)value.getFirst());
+         this.setComplete((EaglercraftUUID)value.getFirst());
       }
 
       if (updated) {
@@ -244,9 +244,9 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
 
       for(int i = 0; i < cList.tagCount(); ++i) {
          try {
-            this.completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
+            this.completeUsers.add(EaglercraftUUID.fromString(cList.getStringTagAt(i)));
          } catch (Exception var11) {
-            BQ_Standard.logger.log(Level.ERROR, "Unable to load UUID for task", var11);
+            BQ_Standard.logger.log(Level.ERROR, "Unable to load EaglercraftUUID for task", var11);
          }
       }
 
@@ -255,7 +255,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
       for(int n = 0; n < pList.tagCount(); ++n) {
          try {
             NBTTagCompound pTag = pList.getCompoundTagAt(n);
-            UUID uuid = UUID.fromString(pTag.getString("uuid"));
+            EaglercraftUUID uuid = EaglercraftUUID.fromString(pTag.getString("uuid"));
             int[] data = new int[this.requiredFluids.size()];
             NBTTagList dNbt = pTag.getTagList("data", 3);
 
@@ -271,7 +271,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
 
    }
 
-   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<EaglercraftUUID> users) {
       NBTTagList jArray = new NBTTagList();
       NBTTagList progArray = new NBTTagList();
       if (users != null) {
@@ -318,7 +318,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
       return nbt;
    }
 
-   public void resetUser(UUID uuid) {
+   public void resetUser(EaglercraftUUID uuid) {
       if (uuid == null) {
          this.completeUsers.clear();
          this.userProgress.clear();
@@ -339,7 +339,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
       return null;
    }
 
-   public boolean canAcceptFluid(UUID owner, DBEntry<IQuest> quest, FluidStack fluid) {
+   public boolean canAcceptFluid(EaglercraftUUID owner, DBEntry<IQuest> quest, FluidStack fluid) {
       if (owner != null && fluid != null && fluid.getFluid() != null && this.consume && !this.isComplete(owner) && this.requiredFluids.size() > 0) {
          int[] progress = this.getUsersProgress(owner);
 
@@ -360,7 +360,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
       }
    }
 
-   public boolean canAcceptItem(UUID owner, DBEntry<IQuest> quest, ItemStack item) {
+   public boolean canAcceptItem(EaglercraftUUID owner, DBEntry<IQuest> quest, ItemStack item) {
       if (owner != null && item != null && !item.isEmpty() && this.consume && !this.isComplete(owner) && this.requiredFluids.size() > 0) {
          IFluidHandlerItem handler = FluidUtil.getFluidHandler(item);
          if (handler == null) {
@@ -383,11 +383,11 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
       }
    }
 
-   public FluidStack submitFluid(UUID owner, DBEntry<IQuest> quest, FluidStack fluid) {
+   public FluidStack submitFluid(EaglercraftUUID owner, DBEntry<IQuest> quest, FluidStack fluid) {
       return this.submitFluidInternal(owner, quest, fluid, true);
    }
 
-   private FluidStack submitFluidInternal(UUID owner, DBEntry<IQuest> quest, FluidStack fluid, boolean doFill) {
+   private FluidStack submitFluidInternal(EaglercraftUUID owner, DBEntry<IQuest> quest, FluidStack fluid, boolean doFill) {
       if (owner != null && fluid != null && fluid.amount > 0 && this.consume && !this.isComplete(owner) && this.requiredFluids.size() > 0) {
          int[] progress = (int[])this.getUsersProgress(owner).clone();
          boolean updated = false;
@@ -437,7 +437,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
       }
    }
 
-   public ItemStack submitItem(UUID owner, DBEntry<IQuest> quest, ItemStack input) {
+   public ItemStack submitItem(EaglercraftUUID owner, DBEntry<IQuest> quest, ItemStack input) {
       if (owner != null && !input.isEmpty() && this.consume && !this.isComplete(owner)) {
          ItemStack item = input.splitStack(1);
          IFluidHandlerItem handler = FluidUtil.getFluidHandler(item);
@@ -465,20 +465,20 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
       }
    }
 
-   private void setUserProgress(UUID uuid, int[] progress) {
+   private void setUserProgress(EaglercraftUUID uuid, int[] progress) {
       this.userProgress.put(uuid, progress);
    }
 
-   public int[] getUsersProgress(UUID uuid) {
+   public int[] getUsersProgress(EaglercraftUUID uuid) {
       int[] progress = (int[])this.userProgress.get(uuid);
       return progress != null && progress.length == this.requiredFluids.size() ? progress : new int[this.requiredFluids.size()];
    }
 
-   private List<Tuple<UUID, int[]>> getBulkProgress(@Nonnull List<UUID> uuids) {
+   private List<Tuple<EaglercraftUUID, int[]>> getBulkProgress(@Nonnull List<EaglercraftUUID> uuids) {
       if (uuids.size() <= 0) {
          return Collections.emptyList();
       } else {
-         List<Tuple<UUID, int[]>> list = new ArrayList();
+         List<Tuple<EaglercraftUUID, int[]>> list = new ArrayList();
          uuids.forEach((key) -> {
             list.add(new Tuple(key, this.getUsersProgress(key)));
          });
@@ -486,9 +486,9 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
       }
    }
 
-   private void setBulkProgress(@Nonnull List<Tuple<UUID, int[]>> list) {
+   private void setBulkProgress(@Nonnull List<Tuple<EaglercraftUUID, int[]>> list) {
       list.forEach((entry) -> {
-         this.setUserProgress((UUID)entry.getFirst(), (int[])entry.getSecond());
+         this.setUserProgress((EaglercraftUUID)entry.getFirst(), (int[])entry.getSecond());
       });
    }
 }

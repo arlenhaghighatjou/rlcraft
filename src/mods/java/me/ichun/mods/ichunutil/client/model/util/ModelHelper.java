@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import me.ichun.mods.ichunutil.common.core.util.ObfHelper;
 import me.ichun.mods.ichunutil.common.module.tabula.project.components.CubeInfo;
@@ -33,7 +33,7 @@ import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.ReflectionHelper.UnableToAccessFieldException;
 
 public class ModelHelper {
-   public static Random rand = new Random();
+   public static EaglercraftRandom rand = new EaglercraftRandom();
    public static HashMap<Class<? extends ModelBase>, ModelRenderer[]> armMappings = new HashMap();
    public static HashMap<Class<? extends Render>, ArrayList<ModelRenderer>> classToModelRendererMap = new HashMap();
 

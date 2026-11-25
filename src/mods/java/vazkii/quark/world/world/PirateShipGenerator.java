@@ -1,7 +1,7 @@
 package vazkii.quark.world.world;
 
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockDispenser;
@@ -40,7 +40,7 @@ public class PirateShipGenerator implements IWorldGenerator {
       this.dims = dims;
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (world instanceof WorldServer && this.dims.canSpawnHere(world)) {
          WorldServer sWorld = (WorldServer)world;
          int x = chunkX * 16 + random.nextInt(16);
@@ -61,7 +61,7 @@ public class PirateShipGenerator implements IWorldGenerator {
       }
    }
 
-   public static void generateShipAt(WorldServer world, Random random, BlockPos pos) {
+   public static void generateShipAt(WorldServer world, EaglercraftRandom random, BlockPos pos) {
       MinecraftServer server = world.getMinecraftServer();
       Template template = world.getStructureTemplateManager().getTemplate(server, PirateShips.SHIP_STRUCTURE);
       PlacementSettings settings = new PlacementSettings();

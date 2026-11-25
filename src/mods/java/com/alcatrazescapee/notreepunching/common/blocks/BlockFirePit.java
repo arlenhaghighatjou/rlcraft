@@ -7,7 +7,7 @@ import com.alcatrazescapee.notreepunching.ModConfig;
 import com.alcatrazescapee.notreepunching.NoTreePunching;
 import com.alcatrazescapee.notreepunching.client.particle.ParticleManager;
 import com.alcatrazescapee.notreepunching.common.tile.TileFirePit;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -97,7 +97,7 @@ public class BlockFirePit extends BlockTileCore {
       return false;
    }
 
-   public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom random) {
       if (!worldIn.isRemote && worldIn.canBlockSeeSky(pos) && worldIn.isRaining() && worldIn.getTopSolidOrLiquidBlock(pos).getY() < pos.getY() + 2) {
          worldIn.setBlockState(pos, state.withProperty(LIT, Boolean.valueOf(false)));
       }
@@ -105,7 +105,7 @@ public class BlockFirePit extends BlockTileCore {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       if (((Boolean)stateIn.getValue(LIT)).booleanValue()) {
          ParticleManager.generateFirePitFlame(worldIn, pos);
          worldIn.playSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.BLOCKS, 1.0F, 1.0F, false);

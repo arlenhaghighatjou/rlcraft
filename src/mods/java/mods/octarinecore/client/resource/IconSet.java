@@ -7,7 +7,7 @@ import kotlin.collections.IntIterator;
 import kotlin.jvm.internal.Intrinsics;
 import kotlin.ranges.IntRange;
 import kotlin.ranges.RangesKt;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
@@ -19,13 +19,13 @@ import org.jetbrains.annotations.Nullable;
    bv = {1, 0, 3},
    k = 1,
    d1 = {"\u0000<\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u000e\n\u0002\b\u0005\n\u0002\u0010\u0011\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0010\b\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\b\u0006\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\u0018\u00002\u00020\u0001B\u0015\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0002\u0010\u0005J\u0013\u0010\u001a\u001a\u0004\u0018\u00010\n2\u0006\u0010\u001b\u001a\u00020\u0010H\u0086\u0002J\u0010\u0010\u001c\u001a\u00020\u001d2\u0006\u0010\u001e\u001a\u00020\u001fH\u0016J\u0010\u0010 \u001a\u00020\u001d2\u0006\u0010\u001e\u001a\u00020\u001fH\u0016R\u0011\u0010\u0002\u001a\u00020\u0003¢\u0006\b\n\u0000\u001a\u0004\b\u0006\u0010\u0007R\u001b\u0010\b\u001a\n\u0012\u0006\u0012\u0004\u0018\u00010\n0\t¢\u0006\n\n\u0002\u0010\r\u001a\u0004\b\u000b\u0010\fR\u0011\u0010\u0004\u001a\u00020\u0003¢\u0006\b\n\u0000\u001a\u0004\b\u000e\u0010\u0007R\u001a\u0010\u000f\u001a\u00020\u0010X\u0086\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\u0011\u0010\u0012\"\u0004\b\u0013\u0010\u0014R\u001b\u0010\u0015\u001a\n\u0012\u0006\u0012\u0004\u0018\u00010\u00160\t¢\u0006\n\n\u0002\u0010\u0019\u001a\u0004\b\u0017\u0010\u0018¨\u0006!"},
-   d2 = {"Lmods/octarinecore/client/resource/IconSet;", "Lmods/octarinecore/client/resource/IStitchListener;", "domain", "", "namePattern", "(Ljava/lang/String;Ljava/lang/String;)V", "getDomain", "()Ljava/lang/String;", "icons", "", "Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;", "getIcons", "()[Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;", "[Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;", "getNamePattern", "num", "", "getNum", "()I", "setNum", "(I)V", "resources", "Lnet/minecraft/util/ResourceLocation;", "getResources", "()[Lnet/minecraft/util/ResourceLocation;", "[Lnet/minecraft/util/ResourceLocation;", "get", "idx", "onPostStitch", "", "atlas", "Lnet/minecraft/client/renderer/texture/TextureMap;", "onPreStitch", "BetterFoliage-MC1.12"}
+   d2 = {"Lmods/octarinecore/client/resource/IconSet;", "Lmods/octarinecore/client/resource/IStitchListener;", "domain", "", "namePattern", "(Ljava/lang/String;Ljava/lang/String;)V", "getDomain", "()Ljava/lang/String;", "icons", "", "Lnet/minecraft/client/renderer/texture/EaglerTextureAtlasSprite;", "getIcons", "()[Lnet/minecraft/client/renderer/texture/EaglerTextureAtlasSprite;", "[Lnet/minecraft/client/renderer/texture/EaglerTextureAtlasSprite;", "getNamePattern", "num", "", "getNum", "()I", "setNum", "(I)V", "resources", "Lnet/minecraft/util/ResourceLocation;", "getResources", "()[Lnet/minecraft/util/ResourceLocation;", "[Lnet/minecraft/util/ResourceLocation;", "get", "idx", "onPostStitch", "", "atlas", "Lnet/minecraft/client/renderer/texture/TextureMap;", "onPreStitch", "BetterFoliage-MC1.12"}
 )
 public final class IconSet implements IStitchListener {
    @NotNull
    private final ResourceLocation[] resources;
    @NotNull
-   private final TextureAtlasSprite[] icons;
+   private final EaglerTextureAtlasSprite[] icons;
    private int num;
    @NotNull
    private final String domain;
@@ -38,7 +38,7 @@ public final class IconSet implements IStitchListener {
    }
 
    @NotNull
-   public final TextureAtlasSprite[] getIcons() {
+   public final EaglerTextureAtlasSprite[] getIcons() {
       return this.icons;
    }
 
@@ -61,7 +61,7 @@ public final class IconSet implements IStitchListener {
       while(var4.hasNext()) {
          int element$iv = ((IntIterator)var4).nextInt();
          int $i$a$-forEach-IconSet$onPreStitch$1 = 0;
-         this.icons[element$iv] = (TextureAtlasSprite)null;
+         this.icons[element$iv] = (EaglerTextureAtlasSprite)null;
          String var10000 = this.domain;
          StringBuilder var10001 = (new StringBuilder()).append("textures/");
          String var8 = this.namePattern;
@@ -105,7 +105,7 @@ public final class IconSet implements IStitchListener {
       int $i$f$forEach = 0;
 
       int element$iv;
-      TextureAtlasSprite[] var10000;
+      EaglerTextureAtlasSprite[] var10000;
       ResourceLocation var10003;
       for(Iterator var4 = $this$forEach$iv.iterator(); var4.hasNext(); var10000[element$iv] = Utils.get(atlas, var10003)) {
          element$iv = ((IntIterator)var4).nextInt();
@@ -120,7 +120,7 @@ public final class IconSet implements IStitchListener {
    }
 
    @Nullable
-   public final TextureAtlasSprite get(int idx) {
+   public final EaglerTextureAtlasSprite get(int idx) {
       return this.num == 0 ? null : this.icons[idx % this.num];
    }
 
@@ -141,6 +141,6 @@ public final class IconSet implements IStitchListener {
       this.domain = domain;
       this.namePattern = namePattern;
       this.resources = new ResourceLocation[16];
-      this.icons = new TextureAtlasSprite[16];
+      this.icons = new EaglerTextureAtlasSprite[16];
    }
 }

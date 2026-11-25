@@ -4,7 +4,7 @@ import com.github.fnar.minecraft.item.RldBaseItem;
 import com.github.fnar.minecraft.item.RldItemStack;
 import com.google.common.primitives.Ints;
 import greymerk.roguelike.util.IWeighted;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class MinecraftItemLootItem implements Comparable<MinecraftItemLootItem>, IWeighted<RldItemStack> {
    private final RldBaseItem item;
@@ -23,7 +23,7 @@ public class MinecraftItemLootItem implements Comparable<MinecraftItemLootItem>,
       this.weight = weight;
    }
 
-   private int getStackSize(Random rand) {
+   private int getStackSize(EaglercraftRandom rand) {
       if (this.max == 1) {
          return 1;
       } else {
@@ -46,7 +46,7 @@ public class MinecraftItemLootItem implements Comparable<MinecraftItemLootItem>,
       return this.weight;
    }
 
-   public RldItemStack get(Random rand) {
+   public RldItemStack get(EaglercraftRandom rand) {
       if (this.enchantingLevel > 0) {
          this.item.plzEnchantAtLevel(this.enchantingLevel);
       }

@@ -19,7 +19,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.init.SoundEvents;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 @SideOnly(Side.CLIENT)
 public abstract class ElementGUI extends GuiScreen implements IElementGUI {

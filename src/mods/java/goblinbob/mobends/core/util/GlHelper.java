@@ -7,7 +7,7 @@ import goblinbob.mobends.core.math.matrix.MatrixUtils;
 import goblinbob.mobends.core.math.vector.IVec3dRead;
 import goblinbob.mobends.core.math.vector.IVec3fRead;
 import java.nio.FloatBuffer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 

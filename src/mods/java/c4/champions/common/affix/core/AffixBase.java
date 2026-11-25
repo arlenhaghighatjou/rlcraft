@@ -4,7 +4,7 @@ import c4.champions.common.affix.AffixRegistry;
 import c4.champions.common.affix.IAffix;
 import c4.champions.common.capability.IChampionship;
 import c4.champions.common.config.ConfigHandler;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -15,7 +15,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 
 public abstract class AffixBase implements IAffix {
-   protected static final Random rand = new Random();
+   protected static final EaglercraftRandom rand = new EaglercraftRandom();
    private final String identifier;
    private final AffixCategory category;
    private final int tier;

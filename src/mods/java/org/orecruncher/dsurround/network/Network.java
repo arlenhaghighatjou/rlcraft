@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -42,7 +42,7 @@ import org.orecruncher.lib.task.Scheduler;
 )
 public final class Network {
    private static final ObjectField<NetworkDispatcher, EntityPlayerMP> player = new ObjectField(NetworkDispatcher.class, "player", (String)null);
-   private static final ObjectOpenHashSet<UUID> blockList = new ObjectOpenHashSet();
+   private static final ObjectOpenHashSet<EaglercraftUUID> blockList = new ObjectOpenHashSet();
    private static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel("dsurround");
 
    public Network() {

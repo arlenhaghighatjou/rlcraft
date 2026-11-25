@@ -14,7 +14,7 @@ import com.ferreusveritas.dynamictrees.systems.GrowSignal;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import com.ferreusveritas.dynamictrees.trees.TreeFamily;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -103,7 +103,7 @@ public class BlockBranchBasic extends BlockBranch {
       return true;
    }
 
-   public boolean checkForRot(World world, BlockPos pos, Species species, int radius, Random rand, float chance, boolean rapid) {
+   public boolean checkForRot(World world, BlockPos pos, Species species, int radius, EaglercraftRandom rand, float chance, boolean rapid) {
       if (rapid || chance != 0.0F && rand.nextFloat() <= chance) {
          int neigh = 0;
 

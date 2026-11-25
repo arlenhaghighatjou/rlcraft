@@ -5,7 +5,7 @@ import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
 import com.Shultrea.Rin.Utility_Sector.MsgSP_Particle;
 import com.Shultrea.Rin.Utility_Sector.SMEnetwork;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentSmelter extends EnchantmentBase {
-   Random random = new Random();
+   EaglercraftRandom random = new EaglercraftRandom();
 
    public EnchantmentSmelter() {
       super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});

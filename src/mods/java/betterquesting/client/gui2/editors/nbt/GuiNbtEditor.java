@@ -25,7 +25,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class GuiNbtEditor extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
    private final NBTBase nbt;

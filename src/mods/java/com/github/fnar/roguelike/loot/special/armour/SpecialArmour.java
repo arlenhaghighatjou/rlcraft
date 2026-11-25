@@ -6,13 +6,13 @@ import com.github.fnar.minecraft.item.Enchantment;
 import com.github.fnar.roguelike.loot.special.SpecialEquipment;
 import com.github.fnar.util.Color;
 import greymerk.roguelike.treasure.loot.Quality;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SpecialArmour extends SpecialEquipment {
    public SpecialArmour() {
    }
 
-   public static SpecialArmour createArmour(Random random, ArmourType armourType, Quality quality) {
+   public static SpecialArmour createArmour(EaglercraftRandom random, ArmourType armourType, Quality quality) {
       switch(armourType) {
       case HELMET:
          return new SpecialHelmet(random, quality);
@@ -26,7 +26,7 @@ public class SpecialArmour extends SpecialEquipment {
       }
    }
 
-   public static int getProtectionLevel(Quality quality, Random random) {
+   public static int getProtectionLevel(Quality quality, EaglercraftRandom random) {
       switch(quality) {
       case WOOD:
          return 1 + (random.nextDouble() < 0.33D ? 1 : 0);
@@ -64,38 +64,38 @@ public class SpecialArmour extends SpecialEquipment {
       }
    }
 
-   protected void withRandomColour(Random random) {
+   protected void withRandomColour(EaglercraftRandom random) {
       if (this.getQuality() == Quality.WOOD) {
          ((Armour)this.rldItem).withColor(Color.random(random));
       }
 
    }
 
-   protected void withProtection(Random random) {
+   protected void withProtection(EaglercraftRandom random) {
       int level = getProtectionLevel(this.getQuality(), random);
       this.withEnchantment(Enchantment.Effect.PROTECTION.atLevel(level));
       this.withSuffix("of Defense");
    }
 
-   protected void withProjectileProtection(Random random) {
+   protected void withProjectileProtection(EaglercraftRandom random) {
       int level = getProtectionLevel(this.getQuality(), random);
       this.withEnchantment(Enchantment.Effect.PROJECTILE_PROTECTION.atLevel(level));
       this.withSuffix("of Deflection");
    }
 
-   protected void withBlastProtection(Random random) {
+   protected void withBlastProtection(EaglercraftRandom random) {
       int level = getProtectionLevel(this.getQuality(), random);
       this.withEnchantment(Enchantment.Effect.BLAST_PROTECTION.atLevel(level));
       this.withSuffix("of Integrity");
    }
 
-   protected void withFlameProtection(Random random) {
+   protected void withFlameProtection(EaglercraftRandom random) {
       int level = getProtectionLevel(this.getQuality(), random);
       this.withEnchantment(Enchantment.Effect.FIRE_PROTECTION.atLevel(level));
       this.withSuffix("of Flamewarding");
    }
 
-   protected void withArmorEnchantments(Random random) {
+   protected void withArmorEnchantments(EaglercraftRandom random) {
       if (random.nextInt(10) == 0) {
          this.withFlameProtection(random);
       } else if (random.nextInt(10) == 0) {

@@ -4,7 +4,7 @@ import com.ferreusveritas.dynamictrees.api.TreeHelper;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import com.ferreusveritas.dynamictrees.trees.TreeFamily;
 import dttraverse.ModContent;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -31,7 +31,7 @@ public final class SpeciesAutumnYellow extends Species {
       return isOneOfBiomes(biome, new Biome[]{TraverseWorld.autumnalWoodedHillsBiome, TraverseWorld.autumnalWoodsBiome});
    }
 
-   public boolean rot(World world, BlockPos pos, int neighborCount, int radius, Random random, boolean rapid) {
+   public boolean rot(World world, BlockPos pos, int neighborCount, int radius, EaglercraftRandom random, boolean rapid) {
       if (super.rot(world, pos, neighborCount, radius, random, rapid)) {
          if (radius > 4 && TreeHelper.isRooty(world.getBlockState(pos.down())) && world.getLightFor(EnumSkyBlock.SKY, pos) < 4) {
             world.setBlockState(pos, Blocks.BROWN_MUSHROOM.getDefaultState());

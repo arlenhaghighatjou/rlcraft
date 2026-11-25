@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.minecraft.util.math.MathHelper;
@@ -65,7 +65,7 @@ public class JoCodeStore {
       this.getListForRadius(radius).add(joCode);
    }
 
-   public JoCode getRandomCode(int radius, Random rand) {
+   public JoCode getRandomCode(int radius, EaglercraftRandom rand) {
       ArrayList<JoCode> list = this.getListForRadius(radius);
       return !list.isEmpty() ? (JoCode)list.get(rand.nextInt(list.size())) : null;
    }

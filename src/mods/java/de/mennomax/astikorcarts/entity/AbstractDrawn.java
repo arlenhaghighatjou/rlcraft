@@ -5,8 +5,8 @@ import de.mennomax.astikorcarts.capabilities.PullProvider;
 import de.mennomax.astikorcarts.config.ModConfig;
 import de.mennomax.astikorcarts.handler.PacketHandler;
 import de.mennomax.astikorcarts.packets.SPacketDrawnUpdate;
-import io.netty.buffer.ByteBuf;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -37,10 +37,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class AbstractDrawn extends Entity implements IEntityAdditionalSpawnData {
-   public static final UUID PULL_SLOWLY_MODIFIER_UUID = UUID.fromString("49B0E52E-48F2-4D89-BED7-4F5DF26F1263");
+   public static final EaglercraftUUID PULL_SLOWLY_MODIFIER_UUID = EaglercraftUUID.fromString("49B0E52E-48F2-4D89-BED7-4F5DF26F1263");
    public static final AttributeModifier PULL_SLOWLY_MODIFIER = (new AttributeModifier(PULL_SLOWLY_MODIFIER_UUID, "Pull slowly modifier", ModConfig.speedModifier, 2)).setSaved(false);
    protected Entity pulling;
-   private UUID firstPullingUUID;
+   private EaglercraftUUID firstPullingUUID;
    @SideOnly(Side.CLIENT)
    private int firstPullingId;
    private int lerpSteps;

@@ -5,7 +5,7 @@ import com.creativemd.creativecore.common.config.holder.CreativeConfigRegistry;
 import com.creativemd.creativecore.common.config.holder.ICreativeConfigHolder;
 import com.creativemd.creativecore.common.packet.CreativeCorePacket;
 import com.google.gson.JsonObject;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.relauncher.Side;

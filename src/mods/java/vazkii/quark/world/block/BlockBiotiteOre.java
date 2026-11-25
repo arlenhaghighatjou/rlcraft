@@ -1,6 +1,6 @@
 package vazkii.quark.world.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -27,7 +27,7 @@ public class BlockBiotiteOre extends BlockMod implements IQuarkBlock {
    }
 
    @Nonnull
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Biotite.biotite;
    }
 
@@ -35,7 +35,7 @@ public class BlockBiotiteOre extends BlockMod implements IQuarkBlock {
       return !(entity instanceof EntityDragon);
    }
 
-   public int quantityDroppedWithBonus(int fortune, @Nonnull Random random) {
+   public int quantityDroppedWithBonus(int fortune, @Nonnull EaglercraftRandom random) {
       if (fortune > 0) {
          int i = random.nextInt(fortune + 2) - 1;
          if (i < 0) {
@@ -49,7 +49,7 @@ public class BlockBiotiteOre extends BlockMod implements IQuarkBlock {
    }
 
    public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune) {
-      Random rand = world instanceof World ? ((World)world).rand : new Random();
+      EaglercraftRandom rand = world instanceof World ? ((World)world).rand : new EaglercraftRandom();
       return MathHelper.getInt(rand, 2, 5);
    }
 }

@@ -3,7 +3,7 @@ package greymerk.roguelike.dungeon.layout.classic;
 import greymerk.roguelike.dungeon.layout.DungeonTunnel;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Direction;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Edge {
    private final LayoutGeneratorClassic layoutGeneratorClassic;
@@ -23,7 +23,7 @@ public class Edge {
       this.extensionsRemaining = 2;
    }
 
-   public void update(Random random) {
+   public void update(EaglercraftRandom random) {
       if (!this.isDone()) {
          if (this.layoutGeneratorClassic.hasNodeNearby(this.end)) {
             this.end.translate(this.getDir(), this.scatter);

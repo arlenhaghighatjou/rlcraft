@@ -2,7 +2,7 @@ package com.mujmajnkraft.bettersurvival.items;
 
 import com.mujmajnkraft.bettersurvival.enchantments.EnchantmentReflection;
 import com.mujmajnkraft.bettersurvival.init.ModEnchantments;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.block.BlockDispenser;
@@ -38,8 +38,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemCustomShield extends ItemShield {
    public float blockpower;
    private int weight;
-   public static UUID weightModifierUUID = UUID.fromString("d6107045-134f-4c54-a645-75c3ae5c7a27");
-   public static UUID knockbackModifierUUID = UUID.fromString("d6107045-134f-4c54-a645-75c0ae5c7a27");
+   public static EaglercraftUUID weightModifierUUID = EaglercraftUUID.fromString("d6107045-134f-4c54-a645-75c3ae5c7a27");
+   public static EaglercraftUUID knockbackModifierUUID = EaglercraftUUID.fromString("d6107045-134f-4c54-a645-75c0ae5c7a27");
 
    public ItemCustomShield(float blockpower, int weight) {
       this.maxStackSize = 1;

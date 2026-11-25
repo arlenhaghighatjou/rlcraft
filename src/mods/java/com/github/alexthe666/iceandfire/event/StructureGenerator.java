@@ -19,7 +19,7 @@ import com.github.alexthe666.iceandfire.world.village.MapGenPixieVillage;
 import com.github.alexthe666.iceandfire.world.village.MapGenSnowVillage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
@@ -62,7 +62,7 @@ public class StructureGenerator implements IWorldGenerator {
       return world.getHeight(pos);
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       boolean prevLogCascadingWorldGen = ForgeModContainer.logCascadingWorldGeneration;
       if (!IceAndFire.CONFIG.logCascadingWorldGen) {
          ForgeModContainer.logCascadingWorldGeneration = false;

@@ -3,7 +3,7 @@ package com.endertech.minecraft.forge.world;
 import com.endertech.common.Args;
 import com.endertech.minecraft.forge.data.INBTSerializable;
 import com.endertech.minecraft.forge.data.INetSerializable;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.Objects;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;

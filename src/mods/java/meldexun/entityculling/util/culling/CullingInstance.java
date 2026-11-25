@@ -10,7 +10,7 @@ import meldexun.renderlib.util.GLShader;
 import meldexun.renderlib.util.GLUtil;
 import meldexun.renderlib.util.RenderUtil;
 import meldexun.renderlib.util.GLShader.Builder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.CullFace;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL15;

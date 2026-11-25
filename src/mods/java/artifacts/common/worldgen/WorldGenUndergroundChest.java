@@ -4,7 +4,7 @@ import artifacts.common.ModConfig;
 import artifacts.common.entity.EntityMimic;
 import artifacts.common.init.ModLootTables;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.BlockChest;
@@ -28,7 +28,7 @@ public class WorldGenUndergroundChest implements IWorldGenerator {
       this.whitelistedDimensions = whitelistedDimensions;
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (world.getWorldType() != WorldType.FLAT && this.whitelistedDimensions.contains(Integer.valueOf(world.provider.getDimension()))) {
          for(double chestChance = ModConfig.general.undergroundChestChance; chestChance > 0.0D; --chestChance) {
             if (random.nextDouble() <= chestChance) {
@@ -39,7 +39,7 @@ public class WorldGenUndergroundChest implements IWorldGenerator {
       }
    }
 
-   private void generateChest(World world, Random random, int chunkX, int chunkZ) {
+   private void generateChest(World world, EaglercraftRandom random, int chunkX, int chunkZ) {
       BlockPos pos = this.getFirstTopSolidBlock(world, new BlockPos(chunkX * 16 + 8 + random.nextInt(16), ModConfig.general.undergroundChestBottomUp ? 1 : ModConfig.general.undergroundChestMaxY, chunkZ * 16 + 8 + random.nextInt(16)), ModConfig.general.undergroundChestBottomUp);
       if (pos != null) {
          if (random.nextDouble() < ModConfig.general.undergroundChestMimicRatio) {

@@ -2,7 +2,7 @@ package atomicstryker.battletowers.common;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import atomicstryker.battletowers.common.AS_WorldGenTower.TowerTypes;
 import net.minecraft.tileentity.TileEntity;
@@ -86,7 +86,7 @@ public class DungeonTweaksCompat
     /**
      * fire the event based upon tower definitions
      */
-    public static void fireDungeonSpawn(TileEntityMobSpawner spawner, World world, Random random, TowerTypes towerChosen)
+    public static void fireDungeonSpawn(TileEntityMobSpawner spawner, World world, EaglercraftRandom random, TowerTypes towerChosen)
     {
         ResourceLocation towerId = towerChosen.getId();
         if (isLegacy)
@@ -95,7 +95,7 @@ public class DungeonTweaksCompat
             {
                 @SuppressWarnings("unchecked")
                 Constructor<? extends Event> constructor = (Constructor<? extends Event>) Class.forName("com.EvilNotch.dungeontweeks.main.Events.EventDungeon$Post").getConstructor(TileEntity.class,
-                        BlockPos.class, Random.class, ResourceLocation.class, World.class);
+                        BlockPos.class, EaglercraftRandom.class, ResourceLocation.class, World.class);
                 Event event = constructor.newInstance(spawner, spawner.getPos(), world.rand, towerId, world);
                 MinecraftForge.EVENT_BUS.post(event);
             }
@@ -109,7 +109,7 @@ public class DungeonTweaksCompat
             try
             {
                 Method fireDungeonTweaks = Class.forName("com.evilnotch.dungeontweeks.main.world.worldgen.mobs.DungeonMobs").getMethod("fireDungeonTweaks", ResourceLocation.class, TileEntity.class,
-                        Random.class, World.class);
+                        EaglercraftRandom.class, World.class);
                 fireDungeonTweaks.invoke(null, towerId, spawner, random, world);
             }
             catch (Throwable t)

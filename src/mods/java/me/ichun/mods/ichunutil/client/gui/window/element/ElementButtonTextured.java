@@ -2,7 +2,7 @@ package me.ichun.mods.ichunutil.client.gui.window.element;
 
 import me.ichun.mods.ichunutil.client.gui.window.Window;
 import me.ichun.mods.ichunutil.client.render.RendererHelper;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 public class ElementButtonTextured extends ElementButton {

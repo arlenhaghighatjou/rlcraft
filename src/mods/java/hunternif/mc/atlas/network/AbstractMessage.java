@@ -1,7 +1,7 @@
 package hunternif.mc.atlas.network;
 
 import hunternif.mc.atlas.AntiqueAtlasMod;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.io.IOException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.PacketBuffer;

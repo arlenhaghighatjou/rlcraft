@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
@@ -71,7 +71,7 @@ public class EnchantmentHelper extends net.minecraft.enchantment.EnchantmentHelp
       curses.add(Enchantments.VANISHING_CURSE);
       curses.add(Enchantments.BINDING_CURSE);
       curses.addAll(availableCurses);
-      Enchantment curse = (Enchantment)curses.get((new Random()).nextInt(curses.size()));
+      Enchantment curse = (Enchantment)curses.get((new EaglercraftRandom()).nextInt(curses.size()));
       List<ItemStack> curseableItems = new ArrayList();
       ItemStack itemToCurse = null;
       NonNullList<ItemStack> armorInventory = player.inventory.armorInventory;
@@ -89,7 +89,7 @@ public class EnchantmentHelper extends net.minecraft.enchantment.EnchantmentHelp
             break;
          case ALL:
          default:
-            if ((new Random()).nextInt(2) == 0) {
+            if ((new EaglercraftRandom()).nextInt(2) == 0) {
                useInventory = mainInventory;
             } else {
                boolean hasArmor = false;
@@ -115,7 +115,7 @@ public class EnchantmentHelper extends net.minecraft.enchantment.EnchantmentHelp
       }
 
       if (!curseableItems.isEmpty()) {
-         itemToCurse = (ItemStack)curseableItems.get((new Random()).nextInt(curseableItems.size()));
+         itemToCurse = (ItemStack)curseableItems.get((new EaglercraftRandom()).nextInt(curseableItems.size()));
       }
 
       if (itemToCurse != null) {
@@ -131,7 +131,7 @@ public class EnchantmentHelper extends net.minecraft.enchantment.EnchantmentHelp
    public static void removeRandomCurse(ItemStack stack) {
       List<Enchantment> curses = getItemCurses(stack);
       if (curses.size() > 0) {
-         Enchantment curseToRemove = (Enchantment)curses.get((new Random()).nextInt(curses.size()));
+         Enchantment curseToRemove = (Enchantment)curses.get((new EaglercraftRandom()).nextInt(curses.size()));
          removeEnchantment(curseToRemove, stack);
       }
 

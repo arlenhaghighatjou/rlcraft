@@ -2,7 +2,7 @@ package cursedflames.bountifulbaubles.client.render;
 
 import cursedflames.bountifulbaubles.client.model.ModelFlare;
 import cursedflames.bountifulbaubles.entity.EntityFlare;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

@@ -3,7 +3,7 @@ package vazkii.quark.world.feature;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -50,7 +50,7 @@ public class VariedDungeons extends Feature {
             int j = event.getChunkZ() * 16;
             BlockPos blockpos = new BlockPos(i, 0, j);
             World world = event.getWorld();
-            Random rand = event.getRand();
+            EaglercraftRandom rand = event.getRand();
             if (world instanceof WorldServer) {
                for(int k = 0; k < tries; ++k) {
                   int x = rand.nextInt(16) + 8;
@@ -68,7 +68,7 @@ public class VariedDungeons extends Feature {
       }
    }
 
-   public boolean couldDungeonGenerate(World worldIn, Random rand, BlockPos position) {
+   public boolean couldDungeonGenerate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int i = 3;
       int j = rand.nextInt(2) + 2;
       int k = -j - 1;
@@ -104,7 +104,7 @@ public class VariedDungeons extends Feature {
       return j2 >= 1 && j2 <= 5;
    }
 
-   public void placeDungeonAt(WorldServer world, Random rand, BlockPos position) {
+   public void placeDungeonAt(WorldServer world, EaglercraftRandom rand, BlockPos position) {
       int dungeonType = rand.nextInt(10);
       MinecraftServer server = world.getMinecraftServer();
       Template template = world.getStructureTemplateManager().getTemplate(server, new ResourceLocation("quark", "dungeon_" + dungeonType));

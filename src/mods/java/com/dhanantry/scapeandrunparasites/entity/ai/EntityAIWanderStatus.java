@@ -1,7 +1,7 @@
 package com.dhanantry.scapeandrunparasites.entity.ai;
 
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
@@ -67,7 +67,7 @@ public class EntityAIWanderStatus extends EntityAIBase {
          } else if (this.entity.getParasiteFollowing() == null) {
             return this.entity.getRNG().nextFloat() >= this.probability ? RandomPositionGenerator.getLandPos(this.entity, 10, 7) : RandomPositionGenerator.findRandomTarget(this.entity, 10, 7);
          } else {
-            Random ran = new Random();
+            EaglercraftRandom ran = new EaglercraftRandom();
             if (ran.nextInt(3) == 0) {
                return this.entity.getRNG().nextFloat() >= this.probability ? RandomPositionGenerator.getLandPos(this.entity, 3, 2) : RandomPositionGenerator.findRandomTarget(this.entity, 3, 2);
             } else {
@@ -77,7 +77,7 @@ public class EntityAIWanderStatus extends EntityAIBase {
       } else if (this.entity.getParasiteFollowing() == null) {
          return RandomPositionGenerator.findRandomTarget(this.entity, 10, 7);
       } else {
-         Random ran = new Random();
+         EaglercraftRandom ran = new EaglercraftRandom();
          return ran.nextInt(3) == 0 ? RandomPositionGenerator.findRandomTarget(this.entity, 0, 0) : null;
       }
    }

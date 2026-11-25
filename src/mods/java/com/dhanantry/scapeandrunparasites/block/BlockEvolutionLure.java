@@ -6,7 +6,7 @@ import com.dhanantry.scapeandrunparasites.item.ItemBlockVariant;
 import com.dhanantry.scapeandrunparasites.network.SRPPacketParticle;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigSystems;
 import com.dhanantry.scapeandrunparasites.world.SRPWorldData;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -132,7 +132,7 @@ public class BlockEvolutionLure extends BlockBase implements IMetaName {
       return new ItemBlockVariant(this);
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
    }
 
    private boolean checkBlocks(World worldIn, BlockPos pos) {

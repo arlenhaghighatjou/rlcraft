@@ -9,7 +9,7 @@ import com.oblivioussp.spartanweaponry.init.EnchantmentRegistrySW;
 import com.oblivioussp.spartanweaponry.init.SoundRegistry;
 import com.oblivioussp.spartanweaponry.item.ItemThrowingWeapon;
 import com.oblivioussp.spartanweaponry.util.DamageSourcesSW;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

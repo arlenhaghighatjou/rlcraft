@@ -1,6 +1,6 @@
 package rustic.common.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +15,7 @@ public class WorldGenSurfaceHerbs extends WorldGenerator {
    public WorldGenSurfaceHerbs() {
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       Biome biome = world.getBiome(pos);
       if (biome.isSnowyBiome()) {
          return false;
@@ -40,7 +40,7 @@ public class WorldGenSurfaceHerbs extends WorldGenerator {
       }
    }
 
-   private boolean generateHerb(World world, Random rand, BlockPos pos, BlockHerbBase herb) {
+   private boolean generateHerb(World world, EaglercraftRandom rand, BlockPos pos, BlockHerbBase herb) {
       IBlockState state = world.getBlockState(pos.down());
       if (world.isAirBlock(pos) && state.getBlock().canSustainPlant(state, world, pos.down(), EnumFacing.UP, herb)) {
          world.setBlockState(pos, herb.getDefaultState().withProperty(BlockHerbBase.AGE, Integer.valueOf(3)));

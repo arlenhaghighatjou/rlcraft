@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
@@ -389,7 +389,7 @@ public class TilePipe extends TileSimpleInventory implements ITickable {
             List<EnumFacing> sides = new ArrayList(HORIZONTAL_SIDES_LIST);
             sides.remove(this.incomingFace);
             sides.remove(incomingOpposite);
-            Random rng = new Random(this.rngSeed);
+            EaglercraftRandom rng = new EaglercraftRandom(this.rngSeed);
             this.rngSeed = rng.nextLong();
             Collections.shuffle(sides, rng);
 

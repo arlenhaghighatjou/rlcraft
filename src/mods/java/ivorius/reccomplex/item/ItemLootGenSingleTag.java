@@ -6,7 +6,7 @@ import ivorius.reccomplex.gui.loot.TableDataSourceLootGeneratorSingleTag;
 import ivorius.reccomplex.world.storage.loot.LootTable;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
@@ -26,7 +26,7 @@ public class ItemLootGenSingleTag extends ItemLootGenerationTag implements ItemS
    public ItemLootGenSingleTag() {
    }
 
-   public void generateInInventory(WorldServer server, IItemHandlerModifiable inventory, Random random, ItemStack stack, int fromSlot) {
+   public void generateInInventory(WorldServer server, IItemHandlerModifiable inventory, EaglercraftRandom random, ItemStack stack, int fromSlot) {
       LootTable lootTable = lootTable(stack);
       if (lootTable != null) {
          ItemStack generated = random.nextFloat() < this.getItemChance(stack) ? lootTable.getRandomItemStack(server, random) : null;

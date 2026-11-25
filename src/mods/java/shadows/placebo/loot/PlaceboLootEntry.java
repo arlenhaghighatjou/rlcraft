@@ -3,7 +3,7 @@ package shadows.placebo.loot;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import java.util.Collection;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.storage.loot.LootContext;
@@ -29,7 +29,7 @@ public class PlaceboLootEntry extends LootEntry {
       this(RecipeHelper.makeStack(thing), min, max, weight, quality);
    }
 
-   public void addLoot(Collection<ItemStack> stacks, Random rand, LootContext context) {
+   public void addLoot(Collection<ItemStack> stacks, EaglercraftRandom rand, LootContext context) {
       ItemStack s = this.stack.copy();
       s.setCount(MathHelper.getInt(rand, this.min, this.max));
       stacks.add(s);

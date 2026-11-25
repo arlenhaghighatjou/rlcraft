@@ -6,7 +6,7 @@ import com.yungnickyoung.minecraft.bettermineshafts.util.BoxUtil;
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.BetterMineshaftGenerator;
 import com.yungnickyoung.minecraft.bettermineshafts.world.generator.MineshaftVariantSettings;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.BlockLadder;
@@ -38,7 +38,7 @@ public class SideRoom extends MineshaftPiece {
    public SideRoom() {
    }
 
-   public SideRoom(int i, int pieceChainLen, Random random, StructureBoundingBox blockBox, EnumFacing direction, MineshaftVariantSettings settings) {
+   public SideRoom(int i, int pieceChainLen, EaglercraftRandom random, StructureBoundingBox blockBox, EnumFacing direction, MineshaftVariantSettings settings) {
       super(i, pieceChainLen, settings);
       this.setCoordBaseMode(direction);
       this.boundingBox = blockBox;
@@ -56,13 +56,13 @@ public class SideRoom extends MineshaftPiece {
       this.hasDownstairs = tag.getBoolean("hasDownstairs");
    }
 
-   public static StructureBoundingBox determineBoxPosition(List<StructureComponent> list, Random random, int x, int y, int z, EnumFacing direction) {
+   public static StructureBoundingBox determineBoxPosition(List<StructureComponent> list, EaglercraftRandom random, int x, int y, int z, EnumFacing direction) {
       StructureBoundingBox blockBox = BoxUtil.boxFromCoordsWithRotation(x, y, z, 10, 5, 5, direction);
       StructureComponent intersectingPiece = StructureComponent.findIntersecting(list, blockBox);
       return intersectingPiece != null ? null : blockBox;
    }
 
-   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, Random random) {
+   public void buildComponent(StructureComponent structurePiece, List<StructureComponent> list, EaglercraftRandom random) {
       if (random.nextFloat() < Configuration.spawnRates.workstationDungeonSpawnRate) {
          EnumFacing direction = this.getCoordBaseMode();
          if (direction == null) {
@@ -92,7 +92,7 @@ public class SideRoom extends MineshaftPiece {
    }
 
    @ParametersAreNonnullByDefault
-   public boolean addComponentParts(World world, Random random, StructureBoundingBox box) {
+   public boolean addComponentParts(World world, EaglercraftRandom random, StructureBoundingBox box) {
       if (this.isLiquidInStructureBoundingBox(world, box)) {
          return false;
       } else if (!this.isInOcean(world, 0, 0) && !this.isInOcean(world, 9, 4)) {
@@ -150,14 +150,14 @@ public class SideRoom extends MineshaftPiece {
       }
    }
 
-   private void generateLegs(World world, StructureBoundingBox box, Random random) {
+   private void generateLegs(World world, StructureBoundingBox box, EaglercraftRandom random) {
       this.generateLeg(world, random, box, 1, 1, this.getBrickSelector());
       this.generateLeg(world, random, box, 1, 3, this.getBrickSelector());
       this.generateLeg(world, random, box, 8, 1, this.getBrickSelector());
       this.generateLeg(world, random, box, 8, 3, this.getBrickSelector());
    }
 
-   private void generateIronBarSupports(World world, StructureBoundingBox box, Random random, boolean[][] ceiling) {
+   private void generateIronBarSupports(World world, StructureBoundingBox box, EaglercraftRandom random, boolean[][] ceiling) {
       List<Integer> invalidXs = Lists.newLinkedList();
 
       for(int z = 2; z <= 3; ++z) {

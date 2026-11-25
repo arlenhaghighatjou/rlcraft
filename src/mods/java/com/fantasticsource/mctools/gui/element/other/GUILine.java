@@ -5,7 +5,7 @@ import com.fantasticsource.mctools.gui.element.GUIElement;
 import com.fantasticsource.tools.Collision;
 import com.fantasticsource.tools.Tools;
 import com.fantasticsource.tools.datastructures.Color;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GUILine extends GUIElement {
    protected static final int TOLERANCE_PX = 5;

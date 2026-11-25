@@ -5,8 +5,8 @@ import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.core.config.ConfigBase;
 import com.lycanitesmobs.core.dungeon.instance.DungeonInstance;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -26,7 +26,7 @@ public class WorldGeneratorDungeon implements IWorldGenerator {
       TOWER_CHANCE = config.getDouble("Dungeons", "Tower Chance", TOWER_CHANCE, "The chance of a dungeon generating a tower on top (0.25 by default).");
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (this.enabled) {
          ExtendedWorld extendedWorld = ExtendedWorld.getForWorld(world);
          if (extendedWorld != null) {
@@ -48,7 +48,7 @@ public class WorldGeneratorDungeon implements IWorldGenerator {
                            BlockPos dungeonPos = (new ChunkPos(chunkX + dungeonSizeMax * x, chunkZ + dungeonSizeMax * z)).getBlock(7, yPos, 7);
                            dungeonInstance.setOrigin(dungeonPos);
                            if (dungeonInstance.init(world)) {
-                              extendedWorld.addDungeonInstance(dungeonInstance, new UUID(world.rand.nextLong(), world.rand.nextLong()));
+                              extendedWorld.addDungeonInstance(dungeonInstance, new EaglercraftUUID(world.rand.nextLong(), world.rand.nextLong()));
                            }
                         }
                      }

@@ -1,7 +1,7 @@
 package com.github.fnar.minecraft.item;
 
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Arrow implements RldItem {
    private Potion tip;
@@ -13,7 +13,7 @@ public class Arrow implements RldItem {
       return new Arrow();
    }
 
-   public static Arrow newRandomHarmful(Random random) {
+   public static Arrow newRandomHarmful(EaglercraftRandom random) {
       return newArrow().withTip(Potion.newPotion().withEffect(Potion.Effect.chooseRandomAmong(random, Potion.Effect.HARMFUL)));
    }
 

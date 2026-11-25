@@ -1,6 +1,6 @@
 package noppes.vc.client;
 
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import java.io.IOException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;

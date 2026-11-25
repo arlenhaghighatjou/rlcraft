@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.PositionTextureVertex;
 import net.minecraft.client.model.TexturedQuad;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 
 public class ModelPlaneRenderer extends ModelRenderer {
    private int textureOffsetX;
@@ -112,7 +112,7 @@ public class ModelPlaneRenderer extends ModelRenderer {
 
       }
 
-      public void render(BufferBuilder par1Tessellator, float par2) {
+      public void render(WorldRenderer par1Tessellator, float par2) {
          this.quad.draw(par1Tessellator, par2);
       }
    }

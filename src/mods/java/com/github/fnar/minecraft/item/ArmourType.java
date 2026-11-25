@@ -1,7 +1,7 @@
 package com.github.fnar.minecraft.item;
 
 import com.github.fnar.minecraft.entity.Slot;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum ArmourType {
    BOOTS,
@@ -13,7 +13,7 @@ public enum ArmourType {
    private ArmourType() {
    }
 
-   public static ArmourType random(Random random) {
+   public static ArmourType random(EaglercraftRandom random) {
       int choice = random.nextInt(values().length);
       return values()[choice];
    }

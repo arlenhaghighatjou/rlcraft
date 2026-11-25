@@ -4,13 +4,13 @@ import com.github.fnar.minecraft.block.spawner.MobType;
 import greymerk.roguelike.monster.Mob;
 import greymerk.roguelike.monster.MonsterProfile;
 import greymerk.roguelike.monster.MonsterProfileType;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ProfileSkeleton implements MonsterProfile {
    public ProfileSkeleton() {
    }
 
-   public Mob apply(Mob mob, int level, int difficulty, Random rand) {
+   public Mob apply(Mob mob, int level, int difficulty, EaglercraftRandom rand) {
       mob.setMobType(MobType.SKELETON);
       if (level == 3 && rand.nextInt(40) == 0) {
          return MonsterProfileType.POISON_ARCHER.apply(mob, level, difficulty, rand).withMobType(MobType.STRAY);

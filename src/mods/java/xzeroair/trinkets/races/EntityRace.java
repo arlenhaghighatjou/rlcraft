@@ -1,6 +1,6 @@
 package xzeroair.trinkets.races;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
@@ -27,7 +27,7 @@ import xzeroair.trinkets.traits.elements.IElementProvider;
 
 public class EntityRace extends Impl<EntityRace> implements IElementProvider {
    public static final ForgeRegistry<EntityRace> Registry = Registries.getRaceRegistry();
-   protected final UUID uuid;
+   protected final EaglercraftUUID uuid;
    protected final String name;
    protected int primaryColor;
    protected int secondaryColor;
@@ -49,7 +49,7 @@ public class EntityRace extends Impl<EntityRace> implements IElementProvider {
       this.raceWidth = 100;
       this.canFly = false;
       this.name = name;
-      this.uuid = UUID.fromString(uuid);
+      this.uuid = EaglercraftUUID.fromString(uuid);
       this.primaryColor = color1;
       this.secondaryColor = color2;
    }
@@ -62,7 +62,7 @@ public class EntityRace extends Impl<EntityRace> implements IElementProvider {
       return (EntityRace)Registry.getValue(id);
    }
 
-   public static EntityRace getByUUID(UUID uuid) {
+   public static EntityRace getByUUID(EaglercraftUUID uuid) {
       for(EntityRace race : Registry.getValuesCollection()) {
          if (race.getUUID().compareTo(uuid) == 0) {
             return race;
@@ -90,7 +90,7 @@ public class EntityRace extends Impl<EntityRace> implements IElementProvider {
       return this.name;
    }
 
-   public UUID getUUID() {
+   public EaglercraftUUID getUUID() {
       return this.uuid;
    }
 

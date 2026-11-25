@@ -11,7 +11,7 @@ import mods.octarinecore.client.render.RenderVertex;
 import mods.octarinecore.client.render.ShadingContext;
 import mods.octarinecore.client.render.Vertex;
 import mods.octarinecore.common.Rotation;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.util.EnumFacing.Axis;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
    d2 = {"<anonymous>", "", "Lmods/octarinecore/client/render/RenderVertex;", "<anonymous parameter 0>", "Lmods/octarinecore/client/render/ShadingContext;", "<anonymous parameter 1>", "", "<anonymous parameter 2>", "Lmods/octarinecore/client/render/Quad;", "<anonymous parameter 3>", "<anonymous parameter 4>", "Lmods/octarinecore/client/render/Vertex;", "invoke", "mods/betterfoliage/client/render/column/AbstractRenderColumn$render$1$1$2", "mods/betterfoliage/client/render/column/AbstractRenderColumn$$special$$inlined$forEachIndexed$lambda$2"}
 )
 final class AbstractRenderColumn$render$$inlined$renderAs$lambda$2 extends Lambda implements Function6<RenderVertex, ShadingContext, Integer, Quad, Integer, Vertex, Unit> {
-   AbstractRenderColumn$render$$inlined$renderAs$lambda$2(BooleanRef var1, int var2, AbstractRenderColumn var3, Rotation var4, ColumnLayerData var5, BufferBuilder var6) {
+   AbstractRenderColumn$render$$inlined$renderAs$lambda$2(BooleanRef var1, int var2, AbstractRenderColumn var3, Rotation var4, ColumnLayerData var5, WorldRenderer var6) {
       super(6);
       this.$isLidDown = var1;
       this.$idx = var2;

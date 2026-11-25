@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import javax.annotation.Nullable;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class AffixRegistry {
    private static final Map<String, AffixBase> affixMap = Maps.newHashMap();

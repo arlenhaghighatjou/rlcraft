@@ -14,11 +14,11 @@ import knightminer.inspirations.library.util.TextureBlockUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.IResourceManager;
@@ -58,7 +58,7 @@ public final class ClientUtil {
       if (model == null) {
          return Integer.valueOf(-1);
       } else {
-         TextureAtlasSprite sprite = model.getParticleTexture();
+         EaglerTextureAtlasSprite sprite = model.getParticleTexture();
          if (sprite == null) {
             return Integer.valueOf(-1);
          } else {
@@ -99,9 +99,9 @@ public final class ClientUtil {
       colorCache.clear();
    }
 
-   public static TextureAtlasSprite getSprite(ResourceLocation location) {
+   public static EaglerTextureAtlasSprite getSprite(ResourceLocation location) {
       TextureMap textureMapBlocks = mc.getTextureMapBlocks();
-      TextureAtlasSprite sprite = null;
+      EaglerTextureAtlasSprite sprite = null;
       if (location != null) {
          sprite = textureMapBlocks.getTextureExtry(location.toString());
       }
@@ -113,7 +113,7 @@ public final class ClientUtil {
       return sprite;
    }
 
-   public static void renderFilledSprite(TextureAtlasSprite sprite, int x, int y, int size, int filled) {
+   public static void renderFilledSprite(EaglerTextureAtlasSprite sprite, int x, int y, int size, int filled) {
       double uMin = (double)sprite.getMinU();
       double uMax = (double)sprite.getMaxU();
       double vMin = (double)sprite.getMinV();
@@ -121,7 +121,7 @@ public final class ClientUtil {
       uMax = uMax - (double)(16 - size) / 16.0D * (uMax - uMin);
       vMax = vMax - (double)(16 - filled) / 16.0D * (vMax - vMin);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferBuilder = tessellator.getBuffer();
+      WorldRenderer bufferBuilder = tessellator.getBuffer();
       bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       bufferBuilder.pos((double)x, (double)(y + size), 100.0D).tex(uMin, vMax).endVertex();
       bufferBuilder.pos((double)(x + size), (double)(y + size), 100.0D).tex(uMax, vMax).endVertex();
@@ -188,7 +188,7 @@ public final class ClientUtil {
       GlStateManager.enableBlend();
       mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
       GlStateManager.color(color[0], color[1], color[2]);
-      TextureAtlasSprite sprite = getSprite(location);
+      EaglerTextureAtlasSprite sprite = getSprite(location);
       if (level == 0) {
          renderFilledSprite(sprite, x, y, 16, 16);
       } else {

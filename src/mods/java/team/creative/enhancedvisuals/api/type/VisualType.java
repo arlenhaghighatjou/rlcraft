@@ -7,7 +7,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.shader.Framebuffer;
@@ -84,7 +84,7 @@ public abstract class VisualType implements ICreativeConfig {
       return false;
    }
 
-   public double randomScale(Random rand) {
+   public double randomScale(EaglercraftRandom rand) {
       return 1.0D;
    }
 

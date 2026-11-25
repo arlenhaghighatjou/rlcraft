@@ -1,6 +1,6 @@
 package vazkii.quark.world.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -21,7 +21,7 @@ public class BiotiteGenerator implements IWorldGenerator {
       generator = new WorldGenMinable(Biotite.biotite_ore.getDefaultState(), clusterSize, BlockMatcher.forBlock(Blocks.END_STONE));
    }
 
-   public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom rand, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       boolean isEnd = world.provider instanceof WorldProviderEnd;
       if (isEnd && Biotite.generateNaturally) {
          for(int i = 0; i < this.clusterCount; ++i) {

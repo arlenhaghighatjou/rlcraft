@@ -1,6 +1,6 @@
 package paulevs.betternether.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
 import net.minecraft.init.Blocks;
@@ -15,7 +15,7 @@ public class NetherBiomeJungle extends NetherBiome {
       super(name);
    }
 
-   public void genFloorObjects(World world, BlockPos pos, Random random) {
+   public void genFloorObjects(World world, BlockPos pos, EaglercraftRandom random) {
       Block ground = world.getBlockState(pos).getBlock();
       if (ground instanceof BlockNetherrack || ground == Blocks.SOUL_SAND) {
          boolean reeds = false;
@@ -38,21 +38,21 @@ public class NetherBiomeJungle extends NetherBiome {
 
    }
 
-   public void genWallObjects(World world, BlockPos origin, BlockPos pos, Random random) {
+   public void genWallObjects(World world, BlockPos origin, BlockPos pos, EaglercraftRandom random) {
       if (random.nextFloat() <= this.plantDensity && BNWorldGenerator.hasLucisGen && random.nextInt(4) == 0 && world.getBlockState(origin).getBlock() == Blocks.NETHERRACK) {
          BNWorldGenerator.lucisGen.generate(world, pos, random);
       }
 
    }
 
-   public void genCeilObjects(World world, BlockPos pos, Random random) {
+   public void genCeilObjects(World world, BlockPos pos, EaglercraftRandom random) {
       if (random.nextFloat() <= this.plantDensity && BNWorldGenerator.hasEyeGen && random.nextInt(8) == 0 && random.nextDouble() * 4.0D + 0.5D < this.getFeatureNoise(pos)) {
          BNWorldGenerator.eyeGen.generate(world, pos.down(), random);
       }
 
    }
 
-   public void genSurfColumn(World world, BlockPos pos, Random random) {
+   public void genSurfColumn(World world, BlockPos pos, EaglercraftRandom random) {
       if (random.nextFloat() <= this.plantDensity && world.getBlockState(pos).getBlock() == Blocks.NETHERRACK) {
          if (BlocksRegister.BLOCK_NETHERRACK_MOSS != Blocks.AIR) {
             switch(random.nextInt(3)) {

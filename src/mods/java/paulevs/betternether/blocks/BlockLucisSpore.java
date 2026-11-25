@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.BlockNetherrack;
@@ -119,11 +119,11 @@ public class BlockLucisSpore extends Block implements IGrowable {
       return true;
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return (double)worldIn.rand.nextFloat() < 0.45D;
    }
 
-   public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       IBlockState center = BlocksRegister.BLOCK_LUCIS_MUSHROOM.getDefaultState().withProperty(BlockLucisMushroom.SHAPE, BlockLucisMushroom.EnumShape.CENTER);
       IBlockState side = BlocksRegister.BLOCK_LUCIS_MUSHROOM.getDefaultState().withProperty(BlockLucisMushroom.SHAPE, BlockLucisMushroom.EnumShape.SIDE);
       IBlockState corner = BlocksRegister.BLOCK_LUCIS_MUSHROOM.getDefaultState().withProperty(BlockLucisMushroom.SHAPE, BlockLucisMushroom.EnumShape.CORNER);
@@ -190,7 +190,7 @@ public class BlockLucisSpore extends Block implements IGrowable {
 
    }
 
-   public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom random) {
       if (!worldIn.isRemote) {
          super.updateTick(worldIn, pos, state, random);
          if (random.nextInt(16) == 0) {

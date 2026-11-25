@@ -3,7 +3,7 @@ package c4.champions.client.renderer;
 import c4.champions.common.entity.AbstractEntitySpark;
 import javax.annotation.Nonnull;
 import net.minecraft.client.model.ModelShulkerBullet;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

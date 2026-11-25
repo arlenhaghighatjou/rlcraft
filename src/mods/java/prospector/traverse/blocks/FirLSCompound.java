@@ -1,6 +1,6 @@
 package prospector.traverse.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
@@ -23,7 +23,7 @@ public class FirLSCompound {
          super("fir", (Item)null, 60);
       }
 
-      public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+      public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
          return Item.getItemFromBlock(FirLSCompound.this.lsSapling);
       }
    }
@@ -33,7 +33,7 @@ public class FirLSCompound {
          super("fir", new TraverseTreeGenerator(false));
       }
 
-      public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+      public void generateTree(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
          if (TerrainGen.saplingGrowTree(worldIn, rand, pos)) {
             worldIn.setBlockToAir(pos);
             if (!(new WorldGenFirTree(true)).generate(worldIn, rand, pos)) {

@@ -1,6 +1,6 @@
 package net.ilexiconn.llibrary.server.network;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.ilexiconn.llibrary.server.capability.EntityDataHandler;
 import net.ilexiconn.llibrary.server.capability.IEntityData;
 import net.ilexiconn.llibrary.server.entity.EntityProperties;

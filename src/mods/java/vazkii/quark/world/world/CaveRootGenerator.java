@@ -1,6 +1,6 @@
 package vazkii.quark.world.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -16,7 +16,7 @@ public class CaveRootGenerator implements IWorldGenerator {
    public CaveRootGenerator() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (CaveRoots.dimensions.canSpawnHere(world) && !(chunkGenerator instanceof ChunkGeneratorFlat)) {
          for(int i = 0; i < CaveRoots.chunkAttempts; ++i) {
             int x = chunkX * 16 + 8 + random.nextInt(16);

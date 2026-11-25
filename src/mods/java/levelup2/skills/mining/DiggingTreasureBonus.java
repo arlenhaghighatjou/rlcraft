@@ -1,6 +1,6 @@
 package levelup2.skills.mining;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import levelup2.config.LevelUpConfig;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
@@ -41,7 +41,7 @@ public class DiggingTreasureBonus extends BaseSkill {
    public void dirtLooting(HarvestDropsEvent evt) {
       if (this.isActive()) {
          if (evt.getHarvester() != null && !evt.getWorld().isRemote) {
-            Random rand = evt.getHarvester().getRNG();
+            EaglercraftRandom rand = evt.getHarvester().getRNG();
             int skill = SkillRegistry.getSkillLevel(evt.getHarvester(), this.getSkillName());
             if (skill > 0 && !evt.isSilkTouching() && !evt.getDrops().isEmpty() && SkillRegistry.listContains((ItemStack)evt.getDrops().get(0), OreDictionary.getOres("dirt"))) {
                ItemStack drop = ((ItemStack)evt.getDrops().get(0)).copy();
@@ -72,7 +72,7 @@ public class DiggingTreasureBonus extends BaseSkill {
       return ItemStack.EMPTY;
    }
 
-   private ResourceLocation getTableFromWeightedPool(Random rand) {
+   private ResourceLocation getTableFromWeightedPool(EaglercraftRandom rand) {
       if (LevelUpConfig.combinedChance == 0) {
          return null;
       } else {

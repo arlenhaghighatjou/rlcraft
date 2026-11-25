@@ -3,7 +3,7 @@ package lykrast.defiledlands.client.render.entity;
 import lykrast.defiledlands.client.render.entity.layers.LayerSlimeDefiledGel;
 import lykrast.defiledlands.common.entity.monster.EntitySlimeDefiled;
 import net.minecraft.client.model.ModelSlime;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

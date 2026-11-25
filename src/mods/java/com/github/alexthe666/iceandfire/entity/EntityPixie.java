@@ -10,7 +10,7 @@ import com.github.alexthe666.iceandfire.entity.ai.PixieAISteal;
 import com.github.alexthe666.iceandfire.entity.tile.TileEntityPixieHouse;
 import com.github.alexthe666.iceandfire.message.MessageUpdatePixieHouse;
 import com.google.common.base.Predicate;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.block.state.IBlockState;
@@ -70,7 +70,7 @@ public class EntityPixie extends EntityTameable {
       this.setDropChance(EntityEquipmentSlot.MAINHAND, 0.0F);
    }
 
-   public static BlockPos getPositionRelativetoGround(Entity entity, World world, double x, double z, Random rand) {
+   public static BlockPos getPositionRelativetoGround(Entity entity, World world, double x, double z, EaglercraftRandom rand) {
       BlockPos pos = new BlockPos(x, entity.posY, z);
 
       for(int yDown = 0; yDown < 3; ++yDown) {

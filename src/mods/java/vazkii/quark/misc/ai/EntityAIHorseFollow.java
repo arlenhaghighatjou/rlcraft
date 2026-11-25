@@ -1,7 +1,7 @@
 package vazkii.quark.misc.ai;
 
 import java.util.Objects;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,7 +27,7 @@ public class EntityAIHorseFollow extends EntityAIBase {
    private final PathNavigate petPathfinder;
    private int timeToRebuildPath;
    private float oldWaterCost;
-   private static final UUID HORSE_SIGHT = UUID.fromString("f58c267b-67fb-4997-b2a0-27649fb0aa9a");
+   private static final EaglercraftUUID HORSE_SIGHT = EaglercraftUUID.fromString("f58c267b-67fb-4997-b2a0-27649fb0aa9a");
 
    public EntityAIHorseFollow(AbstractHorse horse, double followSpeedIn) {
       this.horse = horse;

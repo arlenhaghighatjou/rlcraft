@@ -1,7 +1,7 @@
 package org.orecruncher.dsurround.client.handlers;
 
 import com.google.common.base.MoreObjects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +14,7 @@ import org.orecruncher.lib.random.XorShiftRandom;
 
 @SideOnly(Side.CLIENT)
 public abstract class EffectHandlerBase {
-   protected final Random RANDOM = XorShiftRandom.current();
+   protected final EaglercraftRandom RANDOM = XorShiftRandom.current();
    private final TimerEMA timer;
    private final String handlerName;
 

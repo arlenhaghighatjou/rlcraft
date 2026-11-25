@@ -6,8 +6,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
@@ -60,7 +60,7 @@ public class GuiRenderHelper {
       GlStateManager.pushMatrix();
       GlStateManager.glLineWidth(4.0F);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(3, DefaultVertexFormats.POSITION_COLOR);
       bufferbuilder.pos((double)x1, (double)y1, 0.0D).color(f1, f2, f3, f).endVertex();
       bufferbuilder.pos((double)x2, (double)y2, 0.0D).color(f1, f2, f3, f).endVertex();
@@ -82,7 +82,7 @@ public class GuiRenderHelper {
       GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
       GlStateManager.shadeModel(7425);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
       vertexbuffer.pos((double)x + (double)widthThird, (double)y, 0.0D).color(0, 0, 0, 0).endVertex();
       vertexbuffer.pos((double)x, (double)y, 0.0D).color(0, 0, 0, 0).endVertex();
@@ -142,7 +142,7 @@ public class GuiRenderHelper {
       GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
       GlStateManager.shadeModel(7425);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
       vertexbuffer.pos(right, top, 0.0D).color(f1, f2, f3, f).endVertex();
       vertexbuffer.pos(left, top, 0.0D).color(f1, f2, f3, f).endVertex();
@@ -170,7 +170,7 @@ public class GuiRenderHelper {
       GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
       GlStateManager.shadeModel(7425);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
       vertexbuffer.pos((double)right, (double)top, 0.0D).color(f5, f6, f7, f4).endVertex();
       vertexbuffer.pos((double)left, (double)top, 0.0D).color(f1, f2, f3, f).endVertex();
@@ -197,7 +197,7 @@ public class GuiRenderHelper {
       float f = 0.00390625F;
       float f1 = 0.00390625F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       bufferbuilder.pos((double)(x + 0), (double)(y + height), 0.0D).tex((double)((float)(textureX + 0) * 0.00390625F), (double)((float)(textureY + height) * 0.00390625F)).endVertex();
       bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((float)(textureX + width) * 0.00390625F), (double)((float)(textureY + height) * 0.00390625F)).endVertex();
@@ -210,7 +210,7 @@ public class GuiRenderHelper {
       float f = 0.00390625F;
       float f1 = 0.00390625F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       bufferbuilder.pos((double)(x + 0), (double)(y + height), 0.0D).tex((double)((float)(textureX + 0) * 0.00390625F), (double)((float)(textureY + textureH) * 0.00390625F)).endVertex();
       bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((float)(textureX + textureW) * 0.00390625F), (double)((float)(textureY + textureH) * 0.00390625F)).endVertex();
@@ -225,7 +225,7 @@ public class GuiRenderHelper {
 
    public void renderColorPlate(int x, int y, Color color, int width, int height) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       GlStateManager.enableBlend();
       GlStateManager.disableTexture2D();
       GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
@@ -242,7 +242,7 @@ public class GuiRenderHelper {
 
    public static void renderColorTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Color color) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       GlStateManager.enableBlend();
       GlStateManager.disableTexture2D();
       GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
@@ -268,7 +268,7 @@ public class GuiRenderHelper {
       GlStateManager.pushMatrix();
       GlStateManager.translate(-0.5F, -0.5F, -0.5F);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.ITEM);
 
       for(int i = 0; i < baked.size(); ++i) {

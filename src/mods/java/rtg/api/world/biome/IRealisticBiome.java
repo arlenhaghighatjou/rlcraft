@@ -1,7 +1,7 @@
 package rtg.api.world.biome;
 
 import java.util.Collection;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import net.minecraft.block.BlockLeaves;
@@ -132,7 +132,7 @@ public interface IRealisticBiome {
       this.addTree(tree, true);
    }
 
-   default void rDecorate(RTGWorld rtgWorld, Random rand, ChunkPos chunkPos, float river, boolean hasVillage) {
+   default void rDecorate(RTGWorld rtgWorld, EaglercraftRandom rand, ChunkPos chunkPos, float river, boolean hasVillage) {
       this.getDecos().stream().filter((deco) -> {
          return deco.preGenerate(river);
       }).forEach((deco) -> {

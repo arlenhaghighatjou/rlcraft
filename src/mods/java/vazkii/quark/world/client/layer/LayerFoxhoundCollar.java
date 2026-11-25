@@ -1,7 +1,7 @@
 package vazkii.quark.world.client.layer;
 
 import javax.annotation.Nonnull;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 import vazkii.quark.world.client.render.RenderFoxhound;

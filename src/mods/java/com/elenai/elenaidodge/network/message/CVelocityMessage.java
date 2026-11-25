@@ -1,7 +1,7 @@
 package com.elenai.elenaidodge.network.message;
 
 import com.elenai.elenaidodge.ElenaiDodge;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

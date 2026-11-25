@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -190,7 +190,7 @@ class RuinGenerator
         }
     }
 
-    void generateNormal(World world, Random random, int xBase, int zBase)
+    void generateNormal(World world, EaglercraftRandom random, int xBase, int zBase)
     {
         for (int c = 0; c < fileHandler.triesPerChunkNormal; c++)
         {
@@ -201,7 +201,7 @@ class RuinGenerator
         }
     }
 
-    void generateNether(World world, Random random, int xBase, int zBase)
+    void generateNether(World world, EaglercraftRandom random, int xBase, int zBase)
     {
         for (int c = 0; c < fileHandler.triesPerChunkNether; c++)
         {
@@ -212,7 +212,7 @@ class RuinGenerator
         }
     }
 
-    private void createBuilding(World world, Random random, int x, int z, boolean nether)
+    private void createBuilding(World world, EaglercraftRandom random, int x, int z, boolean nether)
     {
         final int rotate = random.nextInt(4);
         final Biome biome = world.getBiomeForCoordsBody(new BlockPos(x, 0, z));

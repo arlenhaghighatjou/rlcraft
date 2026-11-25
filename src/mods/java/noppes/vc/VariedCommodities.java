@@ -25,8 +25,8 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import noppes.vc.client.VCSounds;
 import noppes.vc.config.ConfigLoader;
 import noppes.vc.config.ConfigProp;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 @Mod(
    modid = "variedcommodities",

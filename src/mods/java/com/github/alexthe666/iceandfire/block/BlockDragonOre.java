@@ -3,7 +3,7 @@ package com.github.alexthe666.iceandfire.block;
 import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.core.ModBlocks;
 import com.github.alexthe666.iceandfire.core.ModItems;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -26,7 +26,7 @@ public class BlockDragonOre extends Block {
       this.setRegistryName("iceandfire", gameName);
    }
 
-   public int quantityDroppedWithBonus(int fortune, Random random) {
+   public int quantityDroppedWithBonus(int fortune, EaglercraftRandom random) {
       if (fortune > 0 && Item.getItemFromBlock(this) != this.getItemDropped((IBlockState)this.getBlockState().getValidStates().iterator().next(), random, fortune)) {
          int i = random.nextInt(fortune + 2) - 1;
          if (i < 0) {
@@ -40,11 +40,11 @@ public class BlockDragonOre extends Block {
    }
 
    public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune) {
-      Random rand = world instanceof World ? ((World)world).rand : new Random();
+      EaglercraftRandom rand = world instanceof World ? ((World)world).rand : new EaglercraftRandom();
       return this.getItemDropped(state, rand, fortune) != Item.getItemFromBlock(this) && this == ModBlocks.sapphireOre ? MathHelper.getInt(rand, 3, 7) : 0;
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return this == ModBlocks.sapphireOre ? ModItems.sapphireGem : Item.getItemFromBlock(ModBlocks.silverOre);
    }
 }

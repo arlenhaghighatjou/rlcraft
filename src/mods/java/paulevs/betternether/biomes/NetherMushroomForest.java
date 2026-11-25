@@ -1,6 +1,6 @@
 package paulevs.betternether.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockNetherWart;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -16,7 +16,7 @@ public class NetherMushroomForest extends NetherBiome {
       super(name);
    }
 
-   public void genSurfColumn(World world, BlockPos pos, Random random) {
+   public void genSurfColumn(World world, BlockPos pos, EaglercraftRandom random) {
       if (world.getBlockState(pos).getBlock() == Blocks.NETHERRACK) {
          switch(random.nextInt(10)) {
          case 0:
@@ -43,7 +43,7 @@ public class NetherMushroomForest extends NetherBiome {
 
    }
 
-   public void genFloorObjects(World world, BlockPos pos, Random random) {
+   public void genFloorObjects(World world, BlockPos pos, EaglercraftRandom random) {
       if (random.nextFloat() <= this.plantDensity && world.getBlockState(pos).getBlock() == BlocksRegister.BLOCK_NETHER_MYCELIUM || world.getBlockState(pos).getBlock() == Blocks.MYCELIUM) {
          if (BNWorldGenerator.hasRedMushroomGen && random.nextInt(7) == 0) {
             BNWorldGenerator.redMushroomGen.generate(world, pos, random);
@@ -66,14 +66,14 @@ public class NetherMushroomForest extends NetherBiome {
 
    }
 
-   public void genWallObjects(World world, BlockPos origin, BlockPos pos, Random random) {
+   public void genWallObjects(World world, BlockPos origin, BlockPos pos, EaglercraftRandom random) {
       if (random.nextFloat() <= this.plantDensity && BNWorldGenerator.hasLucisGen && random.nextInt(4) == 0 && world.getBlockState(origin).getBlock() == Blocks.NETHERRACK) {
          BNWorldGenerator.lucisGen.generate(world, pos, random);
       }
 
    }
 
-   private void growRedMushroom(Chunk chunk, BlockPos pos, Random random) {
+   private void growRedMushroom(Chunk chunk, BlockPos pos, EaglercraftRandom random) {
       int size = 2 + random.nextInt(3);
 
       for(int y = 1; y <= size; ++y) {

@@ -1,7 +1,7 @@
 package net.ilexiconn.llibrary.server.structure;
 
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 
 public class BlockList {
@@ -17,7 +17,7 @@ public class BlockList {
       this.probabilities = probabilities;
    }
 
-   public IBlockState getRandom(Random rand) {
+   public IBlockState getRandom(EaglercraftRandom rand) {
       float chosen = rand.nextFloat();
       IBlockState result = null;
 

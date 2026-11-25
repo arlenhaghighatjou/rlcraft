@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class PanelScrollingStrings extends CanvasScrolling implements IPEventListener {
    private final GuiColorStatic red = new GuiColorStatic(255, 0, 0, 255);

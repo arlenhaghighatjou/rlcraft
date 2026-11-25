@@ -5,7 +5,7 @@ import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Interfaces.IEnchantmentCurse;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import net.minecraft.enchantment.Enchantment;
@@ -96,7 +96,7 @@ public class EnchantmentRusted extends EnchantmentBase implements IEnchantmentCu
                if (entry.getKey() == Smc_010.Rusted) {
                   int lvl = ((Integer)entry.getValue()).intValue();
                   if (lvl >= 1) {
-                     Random rand = player.getRNG();
+                     EaglercraftRandom rand = player.getRNG();
                      int divisor = 100 - lvl * this.delayFactor;
                      if (divisor < this.divisorMin) {
                         divisor = this.divisorMin;

@@ -3,7 +3,7 @@ package rtg.api.util.noise;
 import java.awt.Point;
 import java.awt.geom.Point2D.Double;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import rtg.api.util.LimitedArrayCacheMap;
 
 public class SpacedCellularNoise implements CellularNoise {
@@ -17,7 +17,7 @@ public class SpacedCellularNoise implements CellularNoise {
 
    public SpacedCellularNoise(long xSeed) {
       this.xSeed = xSeed;
-      this.ySeed = (new Random(xSeed)).nextLong();
+      this.ySeed = (new EaglercraftRandom(xSeed)).nextLong();
       this.allPoints = new Double[100];
       this.setPoints();
    }
@@ -106,7 +106,7 @@ public class SpacedCellularNoise implements CellularNoise {
    }
 
    private Double[] generatedAreaPoints(Point area) {
-      Random random = new Random((long)area.hashCode());
+      EaglercraftRandom random = new EaglercraftRandom((long)area.hashCode());
       boolean[] used = new boolean[100];
       Double[] result = new Double[25];
       int index = 0;
@@ -132,8 +132,8 @@ public class SpacedCellularNoise implements CellularNoise {
    }
 
    private void setPoints() {
-      Random xRandom = new Random(this.xSeed);
-      Random yRandom = new Random(this.ySeed);
+      EaglercraftRandom xRandom = new EaglercraftRandom(this.xSeed);
+      EaglercraftRandom yRandom = new EaglercraftRandom(this.ySeed);
       int i = 0;
 
       while(i < 100) {

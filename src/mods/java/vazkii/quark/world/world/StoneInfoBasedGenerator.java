@@ -1,6 +1,6 @@
 package vazkii.quark.world.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import net.minecraft.block.state.IBlockState;
@@ -46,7 +46,7 @@ public class StoneInfoBasedGenerator extends MultiChunkFeatureGenerator {
       return info.clusterSize;
    }
 
-   public void generateChunkPart(BlockPos src, Random random, int chunkX, int chunkZ, World world) {
+   public void generateChunkPart(BlockPos src, EaglercraftRandom random, int chunkX, int chunkZ, World world) {
       RevampStoneGen.StoneInfo info = (RevampStoneGen.StoneInfo)this.infoSupplier.get();
       this.forEachChunkBlock(chunkX, chunkZ, info.lowerBound - info.clusterSize, info.upperBound + info.clusterSize, (pos) -> {
          if (this.canPlaceBlock(world, pos) && pos.distanceSq(src) < (double)(info.clusterSize * info.clusterSize)) {
@@ -60,7 +60,7 @@ public class StoneInfoBasedGenerator extends MultiChunkFeatureGenerator {
       return world.getBlockState(pos).getBlock() == Blocks.STONE;
    }
 
-   public BlockPos[] getSourcesInChunk(Random random, int chunkX, int chunkZ) {
+   public BlockPos[] getSourcesInChunk(EaglercraftRandom random, int chunkX, int chunkZ) {
       RevampStoneGen.StoneInfo info = (RevampStoneGen.StoneInfo)this.infoSupplier.get();
       int chance = info.clusterRarity;
       int amount = 1;

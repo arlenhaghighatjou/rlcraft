@@ -1,7 +1,7 @@
 package com.realgecko.xpfromharvest;
 
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -36,7 +36,7 @@ public class SimpleHarvestHandler {
       }
    }
 
-   void handleHarvest(Block block, World world, BlockPos pos, IBlockState state, Random rand) {
+   void handleHarvest(Block block, World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       NonNullList<ItemStack> drops = NonNullList.create();
       block.getDrops(drops, world, pos, state, 0);
       boolean foundSeed = false;

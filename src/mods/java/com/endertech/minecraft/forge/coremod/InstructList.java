@@ -4,7 +4,7 @@ import com.endertech.minecraft.forge.coremod.names.ClassName;
 import com.endertech.minecraft.forge.coremod.signatures.FieldSignature;
 import com.endertech.minecraft.forge.coremod.signatures.MethodSignature;
 import javax.annotation.Nullable;
-import org.apache.logging.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.InsnList;

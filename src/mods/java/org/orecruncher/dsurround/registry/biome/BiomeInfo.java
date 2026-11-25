@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -256,7 +256,7 @@ public final class BiomeInfo implements Comparable<BiomeInfo> {
    }
 
    @Nullable
-   public SoundEffect getSpotSound(@Nonnull Random random) {
+   public SoundEffect getSpotSound(@Nonnull EaglercraftRandom random) {
       return this.spotSounds != NO_SOUNDS && random.nextInt(this.spotSoundChance) == 0 ? (SoundEffect)(new WeightTable(this.spotSounds)).next() : null;
    }
 

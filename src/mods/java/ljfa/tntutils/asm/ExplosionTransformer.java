@@ -2,8 +2,8 @@ package ljfa.tntutils.asm;
 
 import java.util.Iterator;
 import net.minecraft.launchwrapper.IClassTransformer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.apache.logging.log4j.message.StringFormatterMessageFactory;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;

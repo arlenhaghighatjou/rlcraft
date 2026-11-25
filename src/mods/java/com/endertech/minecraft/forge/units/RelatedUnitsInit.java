@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public abstract class RelatedUnitsInit<T extends IRelatedUnit, E extends Enum<?> & IForgeEnum> extends UnitsInitWithEnum<T, E> implements IPostInit {
    protected final Map<BlockState, T> blockStates = new StateHashMap<BlockState, T>();

@@ -1,6 +1,6 @@
 package net.silentchaos512.scalinghealth;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Supplier;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,8 +24,8 @@ import net.silentchaos512.scalinghealth.command.CommandRecalculate;
 import net.silentchaos512.scalinghealth.command.CommandScalingHealth;
 import net.silentchaos512.scalinghealth.init.ModItems;
 import net.silentchaos512.scalinghealth.proxy.ScalingHealthCommonProxy;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 @Mod(
    modid = "scalinghealth",
@@ -46,7 +46,7 @@ public class ScalingHealth implements IModBase {
    public static final String DEPENDENCIES = "required-after:forge@[14.23.5.2779,);required-after:silentlib@[3.0.13,);after:morpheus";
    public static final String RESOURCE_PREFIX = "scalinghealth:";
    public static final String GAME_RULE_DIFFICULTY = "ScalingHealthDifficulty";
-   public static final Random random = new Random();
+   public static final EaglercraftRandom random = new EaglercraftRandom();
    /** @deprecated */
    @Deprecated
    public static final LogHelper logHelper = new LogHelper("Scaling Health", 147);

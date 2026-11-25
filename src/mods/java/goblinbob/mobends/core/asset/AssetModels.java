@@ -18,12 +18,12 @@ import net.minecraft.client.renderer.block.model.ModelRotation;
 import net.minecraft.client.renderer.block.model.SimpleBakedModel;
 import net.minecraft.client.renderer.block.model.SimpleBakedModel.Builder;
 import net.minecraft.client.renderer.texture.PngSizeInfo;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.model.ITransformation;
 import net.minecraftforge.common.model.TRSRTransformation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class AssetModels {
    public static final AssetModels INSTANCE = new AssetModels();
@@ -66,7 +66,7 @@ public class AssetModels {
       return name.equals("missingno") ? null : new AssetLocation("textures/" + name);
    }
 
-   protected BakedQuad makeBakedQuad(BlockPart p_177589_1_, BlockPartFace p_177589_2_, TextureAtlasSprite p_177589_3_, EnumFacing p_177589_4_, ITransformation p_177589_5_, boolean p_177589_6_) {
+   protected BakedQuad makeBakedQuad(BlockPart p_177589_1_, BlockPartFace p_177589_2_, EaglerTextureAtlasSprite p_177589_3_, EnumFacing p_177589_4_, ITransformation p_177589_5_, boolean p_177589_6_) {
       return this.faceBakery.makeBakedQuad(p_177589_1_.positionFrom, p_177589_1_.positionTo, p_177589_2_, p_177589_3_, p_177589_4_, p_177589_5_, p_177589_1_.partRotation, p_177589_6_, p_177589_1_.shade);
    }
 
@@ -81,7 +81,7 @@ public class AssetModels {
                BlockPartFace blockpartface = (BlockPartFace)blockpart.mapFaces.get(enumfacing);
                AssetLocation textureLocation = this.resolveTextureName(modelBlock.resolveTextureName(blockpartface.texture));
                if (textureLocation != null) {
-                  TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().registerSprite(textureLocation);
+                  EaglerTextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().registerSprite(textureLocation);
                   PngSizeInfo sizeInfo = new PngSizeInfo(new FileInputStream(AssetsModule.INSTANCE.getAssetFile(textureLocation)));
                   sprite.loadSprite(sizeInfo, true);
                   sprite.initSprite(sizeInfo.pngWidth, sizeInfo.pngHeight, 0, 0, false);

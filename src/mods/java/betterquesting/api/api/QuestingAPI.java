@@ -2,10 +2,10 @@ package betterquesting.api.api;
 
 import betterquesting.api.storage.INameCache;
 import java.util.HashMap;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.player.EntityPlayer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class QuestingAPI {
    private static final HashMap<ApiKey<?>, Object> apis = new HashMap();
@@ -31,12 +31,12 @@ public class QuestingAPI {
       return (T)(obj == null ? null : obj);
    }
 
-   public static UUID getQuestingUUID(EntityPlayer player) {
+   public static EaglercraftUUID getQuestingUUID(EntityPlayer player) {
       if (player == null) {
          return null;
       } else {
          if (player.world.isRemote) {
-            UUID uuid = ((INameCache)getAPI(ApiReference.NAME_CACHE)).getUUID(player.getGameProfile().getName());
+            EaglercraftUUID uuid = ((INameCache)getAPI(ApiReference.NAME_CACHE)).getUUID(player.getGameProfile().getName());
             if (uuid != null) {
                return uuid;
             }

@@ -1,6 +1,6 @@
 package vazkii.quark.vanity.client.render;
 
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.item.ItemStack;

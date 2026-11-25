@@ -13,7 +13,7 @@ import ivorius.reccomplex.world.gen.feature.structure.StructureRegistry;
 import ivorius.reccomplex.world.gen.feature.structure.context.StructureSpawnContext;
 import ivorius.reccomplex.world.gen.feature.structure.generic.generation.GenerationType;
 import ivorius.reccomplex.world.gen.feature.structure.generic.generation.VanillaGeneration;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -50,7 +50,7 @@ public class GenericVillagePiece extends Village {
    }
 
    @Nullable
-   public static AxisAlignedTransform2D getTransform(@Nullable EnumFacing front, boolean canMirror, boolean canRotate, EnumFacing toFront, Random random) {
+   public static AxisAlignedTransform2D getTransform(@Nullable EnumFacing front, boolean canMirror, boolean canRotate, EnumFacing toFront, EaglercraftRandom random) {
       boolean mirror = canMirror && random.nextBoolean();
       AxisAlignedTransform2D transform = front != null ? getTransform(front, mirror, toFront) : AxisAlignedTransform2D.from(canRotate ? random.nextInt(4) : 0, mirror);
       return !canRotate && transform.getRotation() != 0 ? null : transform;
@@ -108,7 +108,7 @@ public class GenericVillagePiece extends Village {
    }
 
    @ParametersAreNonnullByDefault
-   public boolean addComponentParts(World world, Random random, StructureBoundingBox boundingBox) {
+   public boolean addComponentParts(World world, EaglercraftRandom random, StructureBoundingBox boundingBox) {
       Structure<?> structure = (Structure)StructureRegistry.INSTANCE.get(this.structureID);
       if (structure == null) {
          return false;
@@ -169,7 +169,7 @@ public class GenericVillagePiece extends Village {
       super.readStructureFromNBT(compound, manager);
       this.structureID = compound.getString("RcSId");
       this.generationID = compound.getString("RcGtId");
-      this.seed = compound.hasKey("seed") ? compound.getLong("seed") : (new Random()).nextLong();
+      this.seed = compound.hasKey("seed") ? compound.getLong("seed") : (new EaglercraftRandom()).nextLong();
       this.transform = RCAxisAlignedTransform.read(compound, "RcRotation", "RcMirror");
       this.startedGeneration = compound.getBoolean("RcStartGen");
       this.instanceData = compound.hasKey("RcInstDat") ? compound.getTag("RcInstDat") : null;

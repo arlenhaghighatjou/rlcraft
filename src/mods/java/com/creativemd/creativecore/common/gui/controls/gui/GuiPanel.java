@@ -5,7 +5,7 @@ import com.creativemd.creativecore.common.gui.client.style.ColoredDisplayStyle;
 import com.creativemd.creativecore.common.gui.client.style.DisplayStyle;
 import com.creativemd.creativecore.common.gui.client.style.Style;
 import com.creativemd.creativecore.common.gui.container.GuiParent;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GuiPanel extends GuiParent {
    public static Style panelStyle = new Style("panel", new ColoredDisplayStyle(0, 0, 0, 140), DisplayStyle.emptyDisplay, DisplayStyle.emptyDisplay, DisplayStyle.emptyDisplay, DisplayStyle.emptyDisplay);

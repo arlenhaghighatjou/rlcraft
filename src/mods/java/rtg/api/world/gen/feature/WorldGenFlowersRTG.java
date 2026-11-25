@@ -3,7 +3,7 @@ package rtg.api.world.gen.feature;
 import com.google.common.collect.Iterables;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockFlower.EnumFlowerType;
 import net.minecraft.block.state.IBlockState;
@@ -20,9 +20,9 @@ public class WorldGenFlowersRTG extends WorldGenerator {
       this.flowers = Collections.unmodifiableCollection(flowers);
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       if (this.flowers != null && !this.flowers.isEmpty()) {
-         IBlockState flower = BlockUtil.getStateFlower((EnumFlowerType)Iterables.get(this.flowers, (new Random()).nextInt(this.flowers.size())));
+         IBlockState flower = BlockUtil.getStateFlower((EnumFlowerType)Iterables.get(this.flowers, (new EaglercraftRandom()).nextInt(this.flowers.size())));
          BlockFlower block = (BlockFlower)flower.getBlock();
          if (world.isAirBlock(pos) && pos.getY() < 255 && block.canPlaceBlockAt(world, pos) && block.canBlockStay(world, pos, flower)) {
             world.setBlockState(pos, flower, 2);

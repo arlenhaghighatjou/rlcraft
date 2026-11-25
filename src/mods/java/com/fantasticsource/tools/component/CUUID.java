@@ -1,18 +1,18 @@
 package com.fantasticsource.tools.component;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 
 public class CUUID extends Component {
-   public UUID value;
+   public EaglercraftUUID value;
 
    public CUUID() {
    }
 
-   public CUUID set(UUID value) {
+   public CUUID set(EaglercraftUUID value) {
       this.value = value;
       return this;
    }
@@ -24,7 +24,7 @@ public class CUUID extends Component {
    }
 
    public CUUID read(ByteBuf buf) {
-      this.value = new UUID(buf.readLong(), buf.readLong());
+      this.value = new EaglercraftUUID(buf.readLong(), buf.readLong());
       return this;
    }
 
@@ -52,7 +52,7 @@ public class CUUID extends Component {
             long mostSig = ((long)upper & 4294967295L) << 32 | (long)lower & 4294967295L;
             upper = (bytes[8] & 255) << 24 | (bytes[9] & 255) << 16 | (bytes[10] & 255) << 8 | bytes[11] & 255;
             lower = (bytes[12] & 255) << 24 | (bytes[13] & 255) << 16 | (bytes[14] & 255) << 8 | bytes[15] & 255;
-            this.value = new UUID(mostSig, ((long)upper & 4294967295L) << 32 | (long)lower & 4294967295L);
+            this.value = new EaglercraftUUID(mostSig, ((long)upper & 4294967295L) << 32 | (long)lower & 4294967295L);
             return this;
          }
       } catch (IOException var7) {

@@ -3,7 +3,7 @@ package com.fantasticsource.setbonus.client;
 import com.fantasticsource.tools.datastructures.Color;
 import java.nio.IntBuffer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import org.lwjgl.opengl.GL30;
 
 public class Canvas {

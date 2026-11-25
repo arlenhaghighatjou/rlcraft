@@ -11,7 +11,7 @@ import com.ferreusveritas.dynamictrees.systems.GrowSignal;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import com.google.common.base.Predicate;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -92,7 +92,7 @@ public class BlockBranchCactus extends BlockBranch {
       return hardness;
    }
 
-   public boolean checkForRot(World world, BlockPos pos, Species species, int radius, Random rand, float chance, boolean rapid) {
+   public boolean checkForRot(World world, BlockPos pos, Species species, int radius, EaglercraftRandom rand, float chance, boolean rapid) {
       return false;
    }
 

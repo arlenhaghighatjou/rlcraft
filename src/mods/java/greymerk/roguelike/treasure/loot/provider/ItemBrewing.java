@@ -4,7 +4,7 @@ import com.github.fnar.minecraft.item.Ingredient;
 import com.github.fnar.minecraft.item.RldItemStack;
 import greymerk.roguelike.treasure.loot.MinecraftItemLootItem;
 import greymerk.roguelike.util.WeightedRandomizer;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ItemBrewing extends LootItem {
    private final WeightedRandomizer<RldItemStack> items = new WeightedRandomizer<RldItemStack>();
@@ -28,7 +28,7 @@ public class ItemBrewing extends LootItem {
       this.items.add(new MinecraftItemLootItem(Ingredient.Type.GLASS_BOTTLE.asItem(), 0, 3, 12, 1));
    }
 
-   public RldItemStack getLootItem(Random random) {
+   public RldItemStack getLootItem(EaglercraftRandom random) {
       return this.items.get(random);
    }
 }

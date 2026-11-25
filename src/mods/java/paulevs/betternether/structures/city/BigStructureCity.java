@@ -2,7 +2,7 @@ package paulevs.betternether.structures.city;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -20,7 +20,7 @@ public class BigStructureCity extends BigStructure {
    protected CityGenerator generator;
    protected ArrayList<BuildingInfo> buildings;
 
-   public BigStructureCity(BlockPos pos, int cx, int cz, CityGenerator generator, Random random) {
+   public BigStructureCity(BlockPos pos, int cx, int cz, CityGenerator generator, EaglercraftRandom random) {
       super(pos, cx, cz);
       this.generator = generator;
       this.buildings = generator.generate(pos, random);

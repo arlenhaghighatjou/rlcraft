@@ -2,7 +2,7 @@ package org.orecruncher.dsurround.client.handlers;
 
 import javax.annotation.Nonnull;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.EntityViewRenderEvent.FogColors;
 import net.minecraftforge.client.event.EntityViewRenderEvent.RenderFogEvent;

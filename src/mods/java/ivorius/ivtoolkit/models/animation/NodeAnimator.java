@@ -4,7 +4,7 @@ import ivorius.ivtoolkit.models.Node;
 import ivorius.ivtoolkit.models.NodeAnimation;
 import ivorius.ivtoolkit.models.NodeKeyframe;
 import org.lwjgl.util.vector.Quaternion;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class NodeAnimator {
    private NodeAnimation nodeAnimation;

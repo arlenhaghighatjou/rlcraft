@@ -1,6 +1,6 @@
 package sereneseasons.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -37,7 +37,7 @@ public class BlockGreenhouseGlass extends BlockBreakable implements ISSBlock {
       this.setSoundType(SoundType.GLASS);
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 

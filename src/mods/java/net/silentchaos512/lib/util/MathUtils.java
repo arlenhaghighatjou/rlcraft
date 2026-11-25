@@ -1,12 +1,12 @@
 package net.silentchaos512.lib.util;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3i;
 
 public final class MathUtils {
    private static final double DOUBLES_EQUAL_PRECISION = 1.0E-9D;
-   private static final Random RANDOM = new Random();
+   private static final EaglercraftRandom RANDOM = new EaglercraftRandom();
 
    private MathUtils() {
       throw new IllegalAccessError("Utility class");
@@ -166,7 +166,7 @@ public final class MathUtils {
       return deviation * RANDOM.nextGaussian() + mean;
    }
 
-   public static double nextGaussian(Random random, double mean, double deviation) {
+   public static double nextGaussian(EaglercraftRandom random, double mean, double deviation) {
       return deviation * random.nextGaussian() + mean;
    }
 
@@ -178,7 +178,7 @@ public final class MathUtils {
       return RANDOM.nextInt(max - min + 1) + min;
    }
 
-   public static int nextIntInclusive(Random random, int min, int max) {
+   public static int nextIntInclusive(EaglercraftRandom random, int min, int max) {
       return random.nextInt(max - min + 1) + min;
    }
 
@@ -186,7 +186,7 @@ public final class MathUtils {
       return RANDOM.nextDouble() < percent;
    }
 
-   public static boolean tryPercentage(Random random, double percent) {
+   public static boolean tryPercentage(EaglercraftRandom random, double percent) {
       return random.nextDouble() < percent;
    }
 }

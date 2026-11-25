@@ -1,10 +1,11 @@
 package com.endertech.minecraft.forge;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import com.endertech.minecraft.forge.units.IForgeUnit;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -34,21 +35,21 @@ public final class ForgeRendering {
 
    public static void renderItemLayerIn2D(int width, int height, float thickness, float minX, float minY, float maxX, float maxY, float minU, float minV, float maxU, float maxV, double layerOffsetX, double layerOffsetY, double layerOffsetZ) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buffer = tessellator.getBuffer();
+      WorldRenderer buffer = tessellator.getBuffer();
       double x1 = (double)minX + layerOffsetX;
       double x2 = (double)maxX - layerOffsetX;
       double y1 = (double)minY + layerOffsetY;
       double y2 = (double)maxY - layerOffsetY;
       double z1 = 0.0D - layerOffsetZ;
       double z2 = layerOffsetZ - (double)thickness;
-      GL11.glNormal3f(0.0F, 0.0F, 1.0F);
+      EaglercraftGPU.glNormal3f(0.0F, 0.0F, 1.0F);
       buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       buffer.pos(x1, y1, z1).tex((double)minU, (double)minV).endVertex();
       buffer.pos(x2, y1, z1).tex((double)maxU, (double)minV).endVertex();
       buffer.pos(x2, y2, z1).tex((double)maxU, (double)maxV).endVertex();
       buffer.pos(x1, y2, z1).tex((double)minU, (double)maxV).endVertex();
       tessellator.draw();
-      GL11.glNormal3f(0.0F, 0.0F, -1.0F);
+      EaglercraftGPU.glNormal3f(0.0F, 0.0F, -1.0F);
       buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       buffer.pos(x1, y2, z2).tex((double)minU, (double)maxV).endVertex();
       buffer.pos(x2, y2, z2).tex((double)maxU, (double)maxV).endVertex();
@@ -57,7 +58,7 @@ public final class ForgeRendering {
       tessellator.draw();
       float halfPixelWidth = 0.5F * (minU - maxU) / (float)width;
       float halfPixelHeight = 0.5F * (minV - maxV) / (float)height;
-      GL11.glNormal3f(-1.0F, 0.0F, 0.0F);
+      EaglercraftGPU.glNormal3f(-1.0F, 0.0F, 0.0F);
       buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
 
       for(int i = 0; i < width; ++i) {
@@ -71,7 +72,7 @@ public final class ForgeRendering {
       }
 
       tessellator.draw();
-      GL11.glNormal3f(1.0F, 0.0F, 0.0F);
+      EaglercraftGPU.glNormal3f(1.0F, 0.0F, 0.0F);
       buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
 
       for(int var45 = 0; var45 < width; ++var45) {
@@ -85,7 +86,7 @@ public final class ForgeRendering {
       }
 
       tessellator.draw();
-      GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+      EaglercraftGPU.glNormal3f(0.0F, 1.0F, 0.0F);
       buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
 
       for(int var46 = 0; var46 < height; ++var46) {
@@ -99,7 +100,7 @@ public final class ForgeRendering {
       }
 
       tessellator.draw();
-      GL11.glNormal3f(0.0F, -1.0F, 0.0F);
+      EaglercraftGPU.glNormal3f(0.0F, -1.0F, 0.0F);
       buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
 
       for(int var47 = 0; var47 < height; ++var47) {

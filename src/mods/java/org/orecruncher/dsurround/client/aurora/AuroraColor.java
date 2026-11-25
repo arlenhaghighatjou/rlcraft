@@ -2,7 +2,7 @@ package org.orecruncher.dsurround.client.aurora;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -28,7 +28,7 @@ public final class AuroraColor {
    }
 
    @Nonnull
-   public static AuroraColor get(@Nonnull Random random) {
+   public static AuroraColor get(@Nonnull EaglercraftRandom random) {
       int idx = random.nextInt(COLOR_SETS.size());
       return (AuroraColor)COLOR_SETS.get(idx);
    }

@@ -6,7 +6,7 @@ import com.fantasticsource.tools.datastructures.VectorN;
 import java.util.ArrayList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.entity.Entity;
@@ -153,7 +153,7 @@ public class PathedParticle extends Particle {
       return this.useBlockLight ? super.getBrightnessForRender(p_189214_1_) : 15728880;
    }
 
-   public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+   public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
       if (this.readyToRender) {
          double x = this.prevPosX + (this.posX - this.prevPosX) * (double)partialTicks - interpPosX;
          double y = this.prevPosY + (this.posY - this.prevPosY) * (double)partialTicks - interpPosY;

@@ -3,7 +3,7 @@ package materialtweaker.mixin;
 import materialtweaker.core.MaterialTweaker;
 import materialtweaker.handlers.ForgeConfigHandler;
 import net.minecraftforge.common.util.EnumHelper;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;

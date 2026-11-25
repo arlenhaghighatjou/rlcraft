@@ -3,7 +3,7 @@ package mezz.jei.gui.elements;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.ingredients.IIngredientRenderer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class DrawableIngredient<V> implements IDrawable {
    private final V ingredient;

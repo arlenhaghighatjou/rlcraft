@@ -1,6 +1,6 @@
 package svenhjol.charm.automation.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneLight;
 import net.minecraft.block.SoundType;
@@ -61,7 +61,7 @@ public class BlockVariableRedstoneLight extends BlockRedstoneLight implements IM
 
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote && ((Integer)state.getValue(LEVEL)).intValue() > 0) {
          int power = worldIn.isBlockPowered(pos) ? worldIn.isBlockIndirectlyGettingPowered(pos) : 0;
          this.updateState(worldIn, pos, state, power);
@@ -89,7 +89,7 @@ public class BlockVariableRedstoneLight extends BlockRedstoneLight implements IM
       return new ItemStack(this);
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(VariableRedstoneLamp.block);
    }
 

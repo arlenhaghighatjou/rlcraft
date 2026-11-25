@@ -1,6 +1,6 @@
 package vazkii.quark.world.entity;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IMerchant;
@@ -47,7 +47,7 @@ public class EntityArchaeologist extends EntityCreature implements IMerchant {
          this.buyingList = new MerchantRecipeList();
       }
 
-      Random r = this.world.rand;
+      EaglercraftRandom r = this.world.rand;
       this.buyingList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 2 + this.rand.nextInt(3)), new ItemStack(Items.BONE, 3 + this.rand.nextInt(3))));
       if (r.nextBoolean()) {
          this.buyingList.add(new MerchantRecipe(new ItemStack(Items.BONE, 10 + this.rand.nextInt(5)), new ItemStack(Items.EMERALD, 1)));

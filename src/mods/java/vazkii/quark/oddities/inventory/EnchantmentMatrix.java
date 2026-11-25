@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import net.minecraft.enchantment.Enchantment;
@@ -38,9 +38,9 @@ public class EnchantmentMatrix {
    public int typeCount;
    public final boolean book;
    public final ItemStack target;
-   public final Random rng;
+   public final EaglercraftRandom rng;
 
-   public EnchantmentMatrix(ItemStack target, Random rng) {
+   public EnchantmentMatrix(ItemStack target, EaglercraftRandom rng) {
       this.target = target;
       this.rng = rng;
       this.book = target.getItem() == Items.BOOK;
@@ -435,7 +435,7 @@ public class EnchantmentMatrix {
          this.marked = wrapper.marked;
          this.influence = wrapper.influence;
          this.type = type;
-         Random rng = new Random((long)Objects.toString(this.enchant.getRegistryName()).hashCode());
+         EaglercraftRandom rng = new EaglercraftRandom((long)Objects.toString(this.enchant.getRegistryName()).hashCode());
          float h = rng.nextFloat();
          float s = rng.nextFloat() * 0.2F + 0.8F;
          float b = rng.nextFloat() * 0.25F + 0.75F;

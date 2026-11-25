@@ -1,6 +1,6 @@
 package org.jwaresoftware.mcmods.lib.api.mod;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,7 +10,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.event.FMLStateEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public interface IModRuntime extends IModInventoryRenderingHelper {
    String UI = "ui";
@@ -39,7 +39,7 @@ public interface IModRuntime extends IModInventoryRenderingHelper {
    default void reloadConfig() {
    }
 
-   Random getPRNG();
+   EaglercraftRandom getPRNG();
 
    default void setupModdedLootTables(WorldServer world) {
    }

@@ -3,7 +3,7 @@ package com.github.fnar.minecraft.item;
 import com.github.fnar.util.Color;
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -15,14 +15,14 @@ public class Firework extends RldBaseItem {
    public Firework() {
    }
 
-   public static List<Color> randomColors(Random random) {
+   public static List<Color> randomColors(EaglercraftRandom random) {
       int numberOfColours = random.nextInt(4) + 1;
       return (List)IntStream.range(0, numberOfColours).mapToObj((i) -> {
          return randomColor(random);
       }).collect(Collectors.toList());
    }
 
-   private static Color randomColor(Random random) {
+   private static Color randomColor(EaglercraftRandom random) {
       return Color.HSLToColor(random.nextFloat(), 1.0F, 0.5F);
    }
 
@@ -118,7 +118,7 @@ public class Firework extends RldBaseItem {
       private FlightLength() {
       }
 
-      public static Firework.FlightLength chooseRandom(Random random) {
+      public static Firework.FlightLength chooseRandom(EaglercraftRandom random) {
          Firework.FlightLength[] values = values();
          return values[random.nextInt(values.length)];
       }

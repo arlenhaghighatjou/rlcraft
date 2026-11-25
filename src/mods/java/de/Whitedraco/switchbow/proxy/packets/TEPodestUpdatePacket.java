@@ -1,7 +1,7 @@
 package de.Whitedraco.switchbow.proxy.packets;
 
 import de.Whitedraco.switchbow.tileentity.TileEntityPodest;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

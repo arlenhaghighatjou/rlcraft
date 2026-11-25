@@ -1,7 +1,7 @@
 package org.orecruncher.dsurround.client.footsteps;
 
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -26,7 +26,7 @@ import org.orecruncher.lib.random.XorShiftRandom;
 
 @SideOnly(Side.CLIENT)
 public class SoundPlayer implements ISoundPlayer {
-   protected final Random random = XorShiftRandom.current();
+   protected final EaglercraftRandom random = XorShiftRandom.current();
    protected final ObjectArray<PendingSound> pending = new ObjectArray();
    protected final float scale;
 
@@ -77,7 +77,7 @@ public class SoundPlayer implements ISoundPlayer {
 
    }
 
-   public Random getRNG() {
+   public EaglercraftRandom getRNG() {
       return this.random;
    }
 
@@ -96,7 +96,7 @@ public class SoundPlayer implements ISoundPlayer {
       });
    }
 
-   private long randAB(@Nonnull Random rng, long a, long b) {
+   private long randAB(@Nonnull EaglercraftRandom rng, long a, long b) {
       return a >= b ? a : a + (long)rng.nextInt((int)(b + 1L));
    }
 }

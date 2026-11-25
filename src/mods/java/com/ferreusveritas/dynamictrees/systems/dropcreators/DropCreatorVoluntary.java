@@ -2,7 +2,7 @@ package com.ferreusveritas.dynamictrees.systems.dropcreators;
 
 import com.ferreusveritas.dynamictrees.trees.Species;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +18,7 @@ public class DropCreatorVoluntary extends DropCreator {
       this.rate = rate;
    }
 
-   public List<ItemStack> getVoluntaryDrop(World world, Species species, BlockPos rootPos, Random random, List<ItemStack> dropList, int soilLife) {
+   public List<ItemStack> getVoluntaryDrop(World world, Species species, BlockPos rootPos, EaglercraftRandom random, List<ItemStack> dropList, int soilLife) {
       if (this.rate > random.nextFloat()) {
          dropList.add(this.droppedItem.copy());
       }

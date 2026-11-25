@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -44,11 +44,11 @@ public class BlockEyeSeed extends Block implements IGrowable {
       return true;
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return (double)worldIn.rand.nextFloat() < 0.45D;
    }
 
-   public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       int h = rand.nextInt(19) + 5;
       int h2 = h;
       boolean interrupted = false;
@@ -89,7 +89,7 @@ public class BlockEyeSeed extends Block implements IGrowable {
       worldIn.setBlockState(pos.down(h), eyeState);
    }
 
-   public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom random) {
       if (!worldIn.isRemote) {
          super.updateTick(worldIn, pos, state, random);
          if (worldIn.getBlockState(pos.up()).getBlock() != Blocks.NETHERRACK) {

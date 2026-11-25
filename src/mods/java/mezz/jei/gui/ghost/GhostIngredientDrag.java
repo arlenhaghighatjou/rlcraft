@@ -8,7 +8,7 @@ import mezz.jei.api.gui.IGhostIngredientHandler;
 import mezz.jei.api.ingredients.IIngredientRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
 import org.lwjgl.opengl.GL11;
 

@@ -21,8 +21,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.init.SoundEvents;
@@ -128,7 +128,7 @@ public class GuiSkillInfo extends GuiScreen {
 
    public void drawTexturedRec(int x, int y, int width, int height) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       bufferbuilder.pos((double)x, (double)(y + height), (double)this.zLevel).tex(0.0D, 1.0D).endVertex();
       bufferbuilder.pos((double)(x + width), (double)(y + height), (double)this.zLevel).tex(1.0D, 1.0D).endVertex();

@@ -7,8 +7,8 @@ import net.ilexiconn.llibrary.client.ClientProxy;
 import net.ilexiconn.llibrary.server.update.UpdateContainer;
 import net.ilexiconn.llibrary.server.update.UpdateHandler;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -17,7 +17,7 @@ import net.minecraft.util.StringUtils;
 import net.minecraftforge.fml.client.GuiScrollingList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.util.vector.Vector2f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector2f;
 
 @SideOnly(Side.CLIENT)
 public class ModUpdateListGUI extends GuiScrollingList {
@@ -81,7 +81,7 @@ public class ModUpdateListGUI extends GuiScrollingList {
          float iconWidth = ((Vector2f)this.cachedLogoDimensions.get(Integer.valueOf(idx))).getX() * scale;
          float iconHeight = ((Vector2f)this.cachedLogoDimensions.get(Integer.valueOf(idx))).getY() * scale;
          int offset = 12;
-         BufferBuilder renderer = tess.getBuffer();
+         WorldRenderer renderer = tess.getBuffer();
          renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
          renderer.pos((double)offset, (double)((float)top + iconHeight), 0.0D).tex(0.0D, 1.0D).endVertex();
          renderer.pos((double)((float)offset + iconWidth), (double)((float)top + iconHeight), 0.0D).tex(1.0D, 1.0D).endVertex();

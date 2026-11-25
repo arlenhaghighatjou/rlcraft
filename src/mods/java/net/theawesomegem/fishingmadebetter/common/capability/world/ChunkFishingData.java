@@ -3,7 +3,7 @@ package net.theawesomegem.fishingmadebetter.common.capability.world;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeProvider;
@@ -152,7 +152,7 @@ public class ChunkFishingData implements IChunkFishingData {
 
    private void regenerateInitialFishes() {
       Map<String, PopulationData> fishPopulationMap = new HashMap();
-      Random random = this.chunk.getWorld().rand;
+      EaglercraftRandom random = this.chunk.getWorld().rand;
 
       for(FishData fishData : CustomConfigurationHandler.getAllFishData()) {
          if (fishData.dimensionBlacklist != this.isChunkInDimension(fishData.dimensionList) && fishData.biomeBlacklist != this.isChunkBiomeInBiomeList(fishData.biomeTagList)) {
@@ -189,7 +189,7 @@ public class ChunkFishingData implements IChunkFishingData {
       return TimeUtil.minutesToMinecraftTicks(ConfigurationManager.server.fishReproductionTime);
    }
 
-   private int getInitialPopulationCount(Random random, FishData fishData) {
+   private int getInitialPopulationCount(EaglercraftRandom random, FishData fishData) {
       float popRarity = (float)fishData.rarity * 0.5F;
       int popFactor = ConfigurationManager.server.randomPopulationFactor;
       return Math.max(0, (int)((double)popRarity * (1.0D + (double)((float)RandomUtil.getRandomInRange(random, -popFactor, popFactor)) / 100.0D) + 0.5D));

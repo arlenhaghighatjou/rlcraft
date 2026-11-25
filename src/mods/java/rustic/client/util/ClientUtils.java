@@ -2,11 +2,11 @@ package rustic.client.util;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@ public class ClientUtils {
       int red = color >> 16 & 255;
       int alpha = color >> 24 & 255;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexBuffer = tessellator.getBuffer();
+      WorldRenderer vertexBuffer = tessellator.getBuffer();
       vertexBuffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
       vertexBuffer.pos((double)x, (double)(y + height), 0.0D).tex((double)minU, (double)maxV).color(red, green, blue, alpha).endVertex();
       vertexBuffer.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)maxU, (double)maxV).color(red, green, blue, alpha).endVertex();
@@ -37,9 +37,9 @@ public class ClientUtils {
       return Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(stack, (World)null, (EntityLivingBase)null);
    }
 
-   public static TextureAtlasSprite getItemTexture(ItemStack stack) {
+   public static EaglerTextureAtlasSprite getItemTexture(ItemStack stack) {
       IBakedModel model = getItemModel(stack);
-      TextureAtlasSprite sprite = model.getParticleTexture();
+      EaglerTextureAtlasSprite sprite = model.getParticleTexture();
       if (!sprite.getIconName().equals("missingno")) {
          return sprite;
       } else {
@@ -62,7 +62,7 @@ public class ClientUtils {
       return getTextureColor(getItemTexture(stack));
    }
 
-   public static int getTextureColor(TextureAtlasSprite sprite) {
+   public static int getTextureColor(EaglerTextureAtlasSprite sprite) {
       if (sprite == null) {
          return -65281;
       } else {

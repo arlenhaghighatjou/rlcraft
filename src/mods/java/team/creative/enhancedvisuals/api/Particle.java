@@ -1,7 +1,7 @@
 package team.creative.enhancedvisuals.api;
 
 import com.creativemd.creativecore.common.config.premade.curve.Curve;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureManager;
 import team.creative.enhancedvisuals.api.type.VisualType;
 

@@ -4,7 +4,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.JsonUtils;
@@ -19,7 +19,7 @@ public class PropertyBlight implements EntityProperty {
       this.isBlight = isBlight;
    }
 
-   public boolean testProperty(Random random, Entity entityIn) {
+   public boolean testProperty(EaglercraftRandom random, Entity entityIn) {
       return entityIn instanceof EntityLivingBase && this.isBlight == BlightHandler.isBlight((EntityLivingBase)entityIn);
    }
 

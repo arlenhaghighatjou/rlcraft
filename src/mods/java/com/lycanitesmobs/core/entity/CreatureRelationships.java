@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +13,7 @@ import net.minecraft.nbt.NBTTagList;
 
 public class CreatureRelationships {
    protected BaseCreatureEntity creatureEntity;
-   protected Map<UUID, CreatureRelationshipEntry> relationships = new HashMap();
+   protected Map<EaglercraftUUID, CreatureRelationshipEntry> relationships = new HashMap();
 
    public CreatureRelationships(BaseCreatureEntity creatureEntity) {
       this.creatureEntity = creatureEntity;

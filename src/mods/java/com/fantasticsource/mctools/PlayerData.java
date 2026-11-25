@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -20,14 +20,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 
 public class PlayerData {
-   public static LinkedHashMap<UUID, PlayerData> playerData = new LinkedHashMap();
+   public static LinkedHashMap<EaglercraftUUID, PlayerData> playerData = new LinkedHashMap();
    private static String modDir = Loader.instance().getConfigDir().getAbsolutePath() + File.separator + "fantasticlib" + File.separator;
    private static String referenceDir = modDir + "reference" + File.separator;
    public String name;
-   public UUID id;
+   public EaglercraftUUID id;
    public EntityPlayer player;
 
-   public PlayerData(String name, UUID id) {
+   public PlayerData(String name, EaglercraftUUID id) {
       this.player = null;
       this.name = name;
       this.id = id;
@@ -39,7 +39,7 @@ public class PlayerData {
       this.id = player.getPersistentID();
    }
 
-   public static PlayerData get(UUID id) {
+   public static PlayerData get(EaglercraftUUID id) {
       MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
       PlayerList playerList = server == null ? null : server.getPlayerList();
       EntityPlayer player = playerList == null ? null : playerList.getPlayerByUUID(id);
@@ -76,17 +76,17 @@ public class PlayerData {
       }
    }
 
-   public static String getName(UUID id) {
+   public static String getName(EaglercraftUUID id) {
       PlayerData data = get(id);
       return data == null ? null : data.name;
    }
 
-   public static UUID getID(String name) {
+   public static EaglercraftUUID getID(String name) {
       PlayerData data = get(name);
       return data == null ? null : data.id;
    }
 
-   public static EntityPlayer getEntity(UUID id) {
+   public static EntityPlayer getEntity(EaglercraftUUID id) {
       PlayerData data = get(id);
       return data == null ? null : data.player;
    }
@@ -110,7 +110,7 @@ public class PlayerData {
       try {
          BufferedWriter writer = new BufferedWriter(new FileWriter(new File(referenceDir + "players.txt")));
 
-         for(UUID id : playerData.keySet()) {
+         for(EaglercraftUUID id : playerData.keySet()) {
             PlayerData data = get(id);
             if (data != null && data.name != null) {
                writer.write(id + " = " + data.name + "\r\n");
@@ -144,7 +144,7 @@ public class PlayerData {
 
             for(String line = reader.readLine(); line != null && !line.trim().equals(""); line = reader.readLine()) {
                String[] tokens = line.split("=");
-               UUID id = UUID.fromString(tokens[0].trim());
+               EaglercraftUUID id = EaglercraftUUID.fromString(tokens[0].trim());
                playerData.put(id, new PlayerData(tokens[1].trim(), id));
             }
 
@@ -170,7 +170,7 @@ public class PlayerData {
    @SubscribeEvent
    public static void playerLogoff(PlayerLoggedOutEvent event) {
       if (event.player != null) {
-         UUID id = event.player.getPersistentID();
+         EaglercraftUUID id = event.player.getPersistentID();
          if (playerData.containsKey(id)) {
             ((PlayerData)playerData.get(id)).player = null;
          }

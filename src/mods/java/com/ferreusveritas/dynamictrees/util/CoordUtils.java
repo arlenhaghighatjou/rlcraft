@@ -3,7 +3,7 @@ package com.ferreusveritas.dynamictrees.util;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import com.google.common.collect.AbstractIterator;
 import java.util.Iterator;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -37,7 +37,7 @@ public class CoordUtils {
       return true;
    }
 
-   public static EnumFacing getRandomDir(Random rand) {
+   public static EnumFacing getRandomDir(EaglercraftRandom rand) {
       return EnumFacing.getFront(2 + rand.nextInt(4));
    }
 

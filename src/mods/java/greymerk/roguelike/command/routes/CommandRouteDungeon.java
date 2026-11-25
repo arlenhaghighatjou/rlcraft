@@ -15,7 +15,7 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Supplier;
 
 public class CommandRouteDungeon extends CommandRouteBase {
@@ -79,14 +79,14 @@ public class CommandRouteDungeon extends CommandRouteBase {
 
    private DungeonSettings resolveTestDungeon(WorldEditor editor, Coord pos) throws Exception {
       Dungeon.initResolver();
-      Random random = editor.getRandom();
+      EaglercraftRandom random = editor.getRandom();
       random.setSeed((long)editor.getSeed(pos));
       return new TestDungeonSettings(random);
    }
 
    private DungeonSettings resolveRandomDungeon(WorldEditor editor, Coord pos) throws Exception {
       Dungeon.initResolver();
-      Random random = editor.getRandom();
+      EaglercraftRandom random = editor.getRandom();
       random.setSeed((long)editor.getSeed(pos));
       return new SettingsRandom(random);
    }

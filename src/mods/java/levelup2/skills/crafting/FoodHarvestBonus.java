@@ -1,6 +1,6 @@
 package levelup2.skills.crafting;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
 import net.minecraft.block.BlockCrops;
@@ -55,7 +55,7 @@ public class FoodHarvestBonus extends BaseSkill {
    }
 
    private void doCropDrops(BreakEvent evt) {
-      Random rand = evt.getPlayer().getRNG();
+      EaglercraftRandom rand = evt.getPlayer().getRNG();
       int skill = SkillRegistry.getSkillLevel(evt.getPlayer(), this.getSkillName());
       if (skill > 0 && rand.nextInt(10) < skill) {
          Item item = evt.getState().getBlock().getItemDropped(evt.getState(), rand, 0);

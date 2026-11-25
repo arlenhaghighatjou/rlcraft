@@ -1,7 +1,7 @@
 package com.tmtravlr.qualitytools.network;
 
 import com.tmtravlr.qualitytools.reforging.TileEntityReforgingStation;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;

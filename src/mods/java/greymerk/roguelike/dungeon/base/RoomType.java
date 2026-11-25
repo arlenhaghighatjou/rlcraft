@@ -6,7 +6,7 @@ import greymerk.roguelike.dungeon.rooms.RoomSetting;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -69,7 +69,7 @@ public enum RoomType {
       return new RoomSetting(this, (String)null, Frequency.SINGLE, 1, 1, Lists.newArrayList(new Integer[]{Integer.valueOf(0), Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(3), Integer.valueOf(4)}), Optional.empty());
    }
 
-   public static RoomType getRandomIntersection(Random random) {
+   public static RoomType getRandomIntersection(EaglercraftRandom random) {
       List<RoomType> intersections = getIntersections();
       return (RoomType)intersections.get(random.nextInt(intersections.size()));
    }
@@ -82,7 +82,7 @@ public enum RoomType {
       return (List)Arrays.stream(values()).filter(RoomType::isIntersection).collect(Collectors.toList());
    }
 
-   public static RoomType getRandomSecret(Random random) {
+   public static RoomType getRandomSecret(EaglercraftRandom random) {
       List<RoomType> secrets = getSecrets();
       return (RoomType)secrets.get(random.nextInt(secrets.size()));
    }

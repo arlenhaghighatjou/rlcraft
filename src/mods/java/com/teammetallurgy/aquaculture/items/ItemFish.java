@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.client.util.ITooltipFlag;
@@ -70,7 +70,7 @@ public class ItemFish extends Item {
          if (f.maxWeight != 1 || f.minWeight != 1) {
             float min = (float)f.minWeight;
             min = (float)((double)min + (double)((float)f.maxWeight - min) * 0.1D * (double)heavyLineLvl);
-            float weight = (new Random()).nextFloat() * ((float)f.maxWeight - min) + min;
+            float weight = (new EaglercraftRandom()).nextFloat() * ((float)f.maxWeight - min) + min;
             if (!stack.hasTagCompound()) {
                stack.setTagCompound(new NBTTagCompound());
             }

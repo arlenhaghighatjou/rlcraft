@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.ChunkPos;
 
@@ -22,7 +22,7 @@ public class DungeonLayout {
       this.dungeonInstance = dungeonInstance;
    }
 
-   public void generate(Random random) {
+   public void generate(EaglercraftRandom random) {
       this.sectors.clear();
       this.sectorChunkMap.clear();
       this.openConnectors.clear();
@@ -81,7 +81,7 @@ public class DungeonLayout {
       LycanitesMobs.logDebug("Dungeon", "Dungeon Instance Generation Complete!");
    }
 
-   public SectorInstance start(Random random) {
+   public SectorInstance start(EaglercraftRandom random) {
       this.originConnector = new SectorConnector(this.dungeonInstance.originPos, (SectorInstance)null, 0, EnumFacing.HORIZONTALS[random.nextInt(EnumFacing.HORIZONTALS.length)]);
       DungeonSector entranceDungeonSector = this.dungeonInstance.schematic.getRandomSector("entrance", random);
       SectorInstance entranceSector = new SectorInstance(this, entranceDungeonSector, random);
@@ -96,7 +96,7 @@ public class DungeonLayout {
       return sectorInstance;
    }
 
-   public SectorInstance snake(Random random, SectorInstance startSector, int length) {
+   public SectorInstance snake(EaglercraftRandom random, SectorInstance startSector, int length) {
       SectorInstance lastSector = startSector;
 
       for(int i = 0; i < length; ++i) {
@@ -129,7 +129,7 @@ public class DungeonLayout {
       return lastSector;
    }
 
-   public List<SectorInstance> stem(Random random, int maxSectors) {
+   public List<SectorInstance> stem(EaglercraftRandom random, int maxSectors) {
       List<SectorInstance> generatedSectors = new ArrayList();
       int stemmedSectors = 0;
 
@@ -157,7 +157,7 @@ public class DungeonLayout {
       return generatedSectors;
    }
 
-   public SectorInstance tower(Random random, SectorInstance startSector) {
+   public SectorInstance tower(EaglercraftRandom random, SectorInstance startSector) {
       DungeonSector dungeonSector = this.dungeonInstance.schematic.getRandomSector("tower", random);
       SectorInstance sectorInstance = new SectorInstance(this, dungeonSector, random);
       SectorConnector sectorConnector = startSector.getRandomConnector(random, sectorInstance);
@@ -171,7 +171,7 @@ public class DungeonLayout {
       }
    }
 
-   public SectorInstance ledge(Random random, SectorInstance startSector, int ledgeCount) {
+   public SectorInstance ledge(EaglercraftRandom random, SectorInstance startSector, int ledgeCount) {
       SectorInstance lastSectorInstance = null;
       int bossIndex = 0;
       if (ledgeCount > 0) {

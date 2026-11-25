@@ -2,7 +2,7 @@ package paulevs.betternether.blocks;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -105,7 +105,7 @@ public class BlockPottedPlant1 extends Block {
 
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(((BlockPottedPlant1.EnumPlant)state.getValue(PLANT)).block);
    }
 

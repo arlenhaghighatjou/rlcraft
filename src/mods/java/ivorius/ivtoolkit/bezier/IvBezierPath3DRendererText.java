@@ -3,8 +3,8 @@ package ivorius.ivtoolkit.bezier;
 import ivorius.ivtoolkit.math.IvMathHelper;
 import java.util.ArrayList;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 
 public class IvBezierPath3DRendererText {
    private FontRenderer fontRenderer;

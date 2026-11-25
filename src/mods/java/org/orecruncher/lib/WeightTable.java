@@ -1,13 +1,13 @@
 package org.orecruncher.lib;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.orecruncher.lib.collections.ObjectArray;
 import org.orecruncher.lib.random.XorShiftRandom;
 
 public class WeightTable<T> extends ObjectArray<WeightTable.IItem<? extends T>> {
-   protected static final Random RANDOM = XorShiftRandom.current();
+   protected static final EaglercraftRandom RANDOM = XorShiftRandom.current();
    protected int totalWeight = 0;
 
    public WeightTable() {

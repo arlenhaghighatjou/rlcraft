@@ -1,6 +1,6 @@
 package snownee.kiwi.client.gui.component;
 
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import snownee.kiwi.client.gui.GuiControl;
 import snownee.kiwi.client.gui.element.DrawableNineSlice;

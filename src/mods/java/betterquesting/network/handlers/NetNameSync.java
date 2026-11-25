@@ -11,7 +11,7 @@ import betterquesting.storage.NameCache;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -42,12 +42,12 @@ public class NetNameSync {
    }
 
    @SideOnly(Side.CLIENT)
-   public static void sendRequest(@Nullable UUID[] uuids, @Nullable String[] names) {
+   public static void sendRequest(@Nullable EaglercraftUUID[] uuids, @Nullable String[] names) {
       NBTTagCompound payload = new NBTTagCompound();
       if (uuids != null) {
          NBTTagList uList = new NBTTagList();
 
-         for(UUID id : uuids) {
+         for(EaglercraftUUID id : uuids) {
             if (id != null) {
                uList.appendTag(new NBTTagString(id.toString()));
             }
@@ -83,7 +83,7 @@ public class NetNameSync {
             MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
             List<EntityPlayerMP> playerList = new ArrayList();
 
-            for(UUID playerID : party.getMembers()) {
+            for(EaglercraftUUID playerID : party.getMembers()) {
                EntityPlayerMP p = server.getPlayerList().getPlayerByUUID(playerID);
                if (p != null) {
                   playerList.add(p);
@@ -96,15 +96,15 @@ public class NetNameSync {
       }
    }
 
-   public static void sendNames(@Nullable EntityPlayerMP[] players, @Nullable UUID[] uuids, @Nullable String[] names) {
-      List<UUID> idList = uuids == null && names == null ? null : new ArrayList();
+   public static void sendNames(@Nullable EntityPlayerMP[] players, @Nullable EaglercraftUUID[] uuids, @Nullable String[] names) {
+      List<EaglercraftUUID> idList = uuids == null && names == null ? null : new ArrayList();
       if (uuids != null) {
          idList.addAll(Arrays.asList(uuids));
       }
 
       if (names != null) {
          for(String s : names) {
-            UUID id = NameCache.INSTANCE.getUUID(s);
+            EaglercraftUUID id = NameCache.INSTANCE.getUUID(s);
             if (id != null) {
                idList.add(id);
             }
@@ -123,15 +123,15 @@ public class NetNameSync {
    }
 
    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
-      UUID[] uuids = null;
+      EaglercraftUUID[] uuids = null;
       String[] names = null;
       if (((NBTTagCompound)message.getFirst()).hasKey("uuids", 9)) {
          NBTTagList uList = ((NBTTagCompound)message.getFirst()).getTagList("uuids", 8);
-         uuids = new UUID[uList.tagCount()];
+         uuids = new EaglercraftUUID[uList.tagCount()];
 
          for(int i = 0; i < uuids.length; ++i) {
             try {
-               uuids[i] = UUID.fromString(uList.getStringTagAt(i));
+               uuids[i] = EaglercraftUUID.fromString(uList.getStringTagAt(i));
             } catch (Exception var6) {
                ;
             }

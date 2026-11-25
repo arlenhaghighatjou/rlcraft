@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.fx;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -21,11 +21,11 @@ public class FountainJetEffect extends JetEffect {
       return BlockEffectType.FOUNTAIN_JET;
    }
 
-   public boolean canTrigger(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull Random random) {
+   public boolean canTrigger(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EaglercraftRandom random) {
       return provider.isAirBlock(pos.up()) && super.canTrigger(provider, state, pos, random);
    }
 
-   public void doEffect(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull Random random) {
+   public void doEffect(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EaglercraftRandom random) {
       ParticleJet effect = new ParticleFountainJet(5, provider.getWorld(), (double)pos.getX() + 0.5D, (double)pos.getY() + 1.1D, (double)pos.getZ() + 0.5D, state);
       this.addEffect(effect);
    }

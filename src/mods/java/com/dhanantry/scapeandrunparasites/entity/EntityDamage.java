@@ -3,7 +3,7 @@ package com.dhanantry.scapeandrunparasites.entity;
 import com.dhanantry.scapeandrunparasites.block.IMetaName;
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +24,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 public class EntityDamage extends Entity {
    private int lifeTicks;
    private EntityLivingBase caster;
-   private UUID casterUuid;
+   private EaglercraftUUID casterUuid;
    private float mobDamage;
    private boolean pulling;
    private float str;

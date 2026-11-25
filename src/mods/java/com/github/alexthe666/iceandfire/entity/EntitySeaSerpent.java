@@ -10,7 +10,7 @@ import com.github.alexthe666.iceandfire.entity.ai.SeaSerpentAIAttackMelee;
 import com.github.alexthe666.iceandfire.entity.ai.SeaSerpentAIGetInWater;
 import com.github.alexthe666.iceandfire.enums.EnumSeaSerpent;
 import com.google.common.base.Predicate;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
@@ -675,7 +675,7 @@ public class EntitySeaSerpent extends EntityAnimal implements IAnimatedEntity, I
       return livingdata;
    }
 
-   public void onWorldSpawn(Random random) {
+   public void onWorldSpawn(EaglercraftRandom random) {
       this.setVariant(random.nextInt(6));
       boolean ancient = random.nextInt(15) == 1;
       if (ancient) {
@@ -763,7 +763,7 @@ public class EntitySeaSerpent extends EntityAnimal implements IAnimatedEntity, I
       return this.ticksJumping > 30 || !isWaterBlock(this.world, this.world.getHeight(new BlockPos(this)).down(1));
    }
 
-   public static BlockPos getPositionRelativeToSeafloor(EntitySeaSerpent entity, World world, double x, double z, Random rand) {
+   public static BlockPos getPositionRelativeToSeafloor(EntitySeaSerpent entity, World world, double x, double z, EaglercraftRandom rand) {
       BlockPos topY = new BlockPos(x, entity.posY, z);
 
       BlockPos bottomY;
@@ -791,7 +791,7 @@ public class EntitySeaSerpent extends EntityAnimal implements IAnimatedEntity, I
       }
    }
 
-   public static BlockPos getPositionInOrbit(EntitySeaSerpent entity, World world, BlockPos orbit, Random rand) {
+   public static BlockPos getPositionInOrbit(EntitySeaSerpent entity, World world, BlockPos orbit, EaglercraftRandom rand) {
       float possibleOrbitRadius = entity.orbitRadius + 10.0F;
       float radius = 5.0F * entity.getSeaSerpentScale();
       float angle = 0.017453292F * possibleOrbitRadius;

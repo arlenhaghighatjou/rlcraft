@@ -2,13 +2,13 @@ package com.teamacronymcoders.base.items;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 
 public class WeightedDropTable implements IDropTable {
    private ItemStack[][] dropTable;
    private Boolean[] fortuneTable;
-   private Random rng = new Random();
+   private EaglercraftRandom rng = new EaglercraftRandom();
 
    public WeightedDropTable(List<List<ItemStack>> dropTable, List<Boolean> fortuneTable) {
       this.dropTable = new ItemStack[dropTable.size()][];

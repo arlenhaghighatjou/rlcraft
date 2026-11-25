@@ -11,7 +11,7 @@ import greymerk.roguelike.worldgen.WorldEditor;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.IntConsumer;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
@@ -82,7 +82,7 @@ public class TreasureChest {
       return this;
    }
 
-   public static boolean shouldBeTrapped(Random random, int level) {
+   public static boolean shouldBeTrapped(EaglercraftRandom random, int level) {
       return random.nextInt(30 / Math.max(1, level)) == 0;
    }
 

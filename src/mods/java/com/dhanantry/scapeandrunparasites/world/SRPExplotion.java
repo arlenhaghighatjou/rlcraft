@@ -5,7 +5,7 @@ import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -32,7 +32,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class SRPExplotion extends Explosion {
    private boolean causesFire;
    private boolean damagesTerrain;
-   private Random random;
+   private EaglercraftRandom random;
    private World world;
    private double x;
    private double y;
@@ -56,7 +56,7 @@ public class SRPExplotion extends Explosion {
 
    public SRPExplotion(World worldIn, Entity entityIn, double x, double y, double z, float size, boolean flaming, boolean damagesTerrain) {
       super(worldIn, entityIn, x, y, z, size, flaming, true);
-      this.random = new Random();
+      this.random = new EaglercraftRandom();
       this.affectedBlockPositions = Lists.newArrayList();
       this.world = worldIn;
       this.exploder = entityIn;

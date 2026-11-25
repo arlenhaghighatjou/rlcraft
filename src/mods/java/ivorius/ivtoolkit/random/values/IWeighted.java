@@ -1,6 +1,6 @@
 package ivorius.ivtoolkit.random.values;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class IWeighted implements IValue {
    public int[] values;
@@ -22,7 +22,7 @@ public class IWeighted implements IValue {
 
    }
 
-   public Integer getValue(Random random) {
+   public Integer getValue(EaglercraftRandom random) {
       int total = getTotalWeight(this.weights);
       int selected = random.nextInt(total);
 

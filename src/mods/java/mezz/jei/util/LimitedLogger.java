@@ -3,8 +3,8 @@ package mezz.jei.util;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class LimitedLogger {
    private final Map<String, Long> logTimes = new HashMap();

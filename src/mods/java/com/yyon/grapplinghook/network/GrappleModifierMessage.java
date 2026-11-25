@@ -2,7 +2,7 @@ package com.yyon.grapplinghook.network;
 
 import com.yyon.grapplinghook.GrappleCustomization;
 import com.yyon.grapplinghook.blocks.TileEntityGrappleModifier;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;

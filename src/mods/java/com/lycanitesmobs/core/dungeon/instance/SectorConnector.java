@@ -1,6 +1,6 @@
 package com.lycanitesmobs.core.dungeon.instance;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -60,7 +60,7 @@ public class SectorConnector {
       }
    }
 
-   public void buildEntrance(World world, ChunkPos chunkPos, Random random) {
+   public void buildEntrance(World world, ChunkPos chunkPos, EaglercraftRandom random) {
       SectorInstance sectorInstance = this.parentSector;
       if (sectorInstance == null) {
          sectorInstance = this.childSector;
@@ -130,7 +130,7 @@ public class SectorConnector {
       }
    }
 
-   public void buildTest(World world, ChunkPos chunkPos, Random random) {
+   public void buildTest(World world, ChunkPos chunkPos, EaglercraftRandom random) {
       SectorInstance sectorInstance = this.parentSector;
       if (sectorInstance == null) {
          sectorInstance = this.childSector;

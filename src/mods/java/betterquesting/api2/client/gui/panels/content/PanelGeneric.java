@@ -5,7 +5,7 @@ import betterquesting.api2.client.gui.panels.IGuiPanel;
 import betterquesting.api2.client.gui.resources.colors.IGuiColor;
 import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import java.util.List;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class PanelGeneric implements IGuiPanel {
    private final IGuiRect transform;

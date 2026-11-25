@@ -2,7 +2,7 @@ package org.orecruncher.dsurround.client.aurora;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -34,7 +34,7 @@ public final class AuroraFactory {
       }
 
       @Nonnull
-      public static AuroraFactory.AuroraGeometry get(@Nonnull Random random) {
+      public static AuroraFactory.AuroraGeometry get(@Nonnull EaglercraftRandom random) {
          int idx = random.nextInt(PRESET.size());
          return (AuroraFactory.AuroraGeometry)PRESET.get(idx);
       }

@@ -2,7 +2,7 @@ package svenhjol.charm.tweaks.feature;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.passive.EntityWolf;
@@ -107,7 +107,7 @@ public class RandomAnimalTextures extends Feature {
    }
 
    public static String getRandomTexture(Entity entity, String[] set) {
-      UUID id = entity.getUniqueID();
+      EaglercraftUUID id = entity.getUniqueID();
       int choice = Math.abs((int)(id.getMostSignificantBits() % (long)set.length));
       return set[choice];
    }

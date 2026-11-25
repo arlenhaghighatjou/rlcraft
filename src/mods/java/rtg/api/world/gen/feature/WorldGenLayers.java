@@ -2,7 +2,7 @@ package rtg.api.world.gen.feature;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockDirt.DirtType;
 import net.minecraft.block.properties.PropertyInteger;
@@ -37,7 +37,7 @@ public class WorldGenLayers extends WorldGenerator {
       this.setValidGroundBlocks(validGroundBlocks);
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       MutableBlockPos blockpos = new MutableBlockPos();
 
       for(int x = pos.getX() - this.layerRange; x <= pos.getX() + this.layerRange; ++x) {

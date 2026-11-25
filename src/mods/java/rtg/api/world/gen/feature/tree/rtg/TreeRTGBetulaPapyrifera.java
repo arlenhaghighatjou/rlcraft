@@ -1,6 +1,6 @@
 package rtg.api.world.gen.feature.tree.rtg;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -12,7 +12,7 @@ public class TreeRTGBetulaPapyrifera extends TreeRTG {
       this.setLeavesBlock(BlockUtil.getStateLeaf(EnumType.BIRCH));
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       if (!this.isGroundValid(world, pos)) {
          return false;
       } else {
@@ -81,7 +81,7 @@ public class TreeRTGBetulaPapyrifera extends TreeRTG {
       }
    }
 
-   public void buildBranch(World world, Random rand, int x, int y, int z, int dX, int dZ, int logLength, int leaveSize) {
+   public void buildBranch(World world, EaglercraftRandom rand, int x, int y, int z, int dX, int dZ, int logLength, int leaveSize) {
       for(int i = -1; i <= 1; ++i) {
          for(int j = -1; j <= 1; ++j) {
             for(int k = 0; k < 2; ++k) {

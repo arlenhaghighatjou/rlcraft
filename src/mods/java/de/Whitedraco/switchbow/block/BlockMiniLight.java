@@ -1,6 +1,6 @@
 package de.Whitedraco.switchbow.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
@@ -51,7 +51,7 @@ public class BlockMiniLight extends Block {
    }
 
    @Nullable
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return null;
    }
 
@@ -64,7 +64,7 @@ public class BlockMiniLight extends Block {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       double d0 = (double)pos.getX() + 0.5D;
       double d1 = (double)pos.getY() + 0.7D;
       double d2 = (double)pos.getZ() + 0.5D;
@@ -76,7 +76,7 @@ public class BlockMiniLight extends Block {
       return BlockFaceShape.UNDEFINED;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 }

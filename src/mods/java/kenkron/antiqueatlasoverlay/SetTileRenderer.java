@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Function;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -29,7 +29,7 @@ class SetTileRenderer {
          ArrayList<SetTileRenderer.TileCorner> tca = (ArrayList)this.subjects.get(key);
          Minecraft.getMinecraft().renderEngine.bindTexture(key);
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder renderer = tessellator.getBuffer();
+         WorldRenderer renderer = tessellator.getBuffer();
          renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
 
          for(SetTileRenderer.TileCorner tc : tca) {
@@ -47,7 +47,7 @@ class SetTileRenderer {
       float minV = (float)v / 6.0F;
       float maxV = (float)(v + 1) / 6.0F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder renderer = tessellator.getBuffer();
+      WorldRenderer renderer = tessellator.getBuffer();
       renderer.pos((double)(x + this.tileHalfSize), (double)(y + this.tileHalfSize), 0.0D).tex((double)maxU, (double)maxV).endVertex();
       renderer.pos((double)(x + this.tileHalfSize), (double)y, 0.0D).tex((double)maxU, (double)minV).endVertex();
       renderer.pos((double)x, (double)y, 0.0D).tex((double)minU, (double)minV).endVertex();

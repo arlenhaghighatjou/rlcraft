@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ItemTransformVec3f;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.model.TRSRTransformation;
@@ -50,7 +50,7 @@ public class LiquidBarrelFilledItemModel implements IBakedModel {
       return this.parentModel.isBuiltInRenderer();
    }
 
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       return this.parentModel.getParticleTexture();
    }
 
@@ -79,14 +79,14 @@ public class LiquidBarrelFilledItemModel implements IBakedModel {
       }
    }
 
-   private int[] vertexToInts(float x, float y, float z, int color, TextureAtlasSprite texture, float u, float v) {
+   private int[] vertexToInts(float x, float y, float z, int color, EaglerTextureAtlasSprite texture, float u, float v) {
       return new int[]{Float.floatToRawIntBits(x), Float.floatToRawIntBits(y), Float.floatToRawIntBits(z), color, Float.floatToRawIntBits(texture.getInterpolatedU((double)u)), Float.floatToRawIntBits(texture.getInterpolatedV((double)v)), 0};
    }
 
    private List<BakedQuad> getLiquidQuads(int amount, int capacity, Fluid fluid) {
       List<BakedQuad> returnList = new ArrayList();
       if (fluid != null) {
-         TextureAtlasSprite fluidTexture = (TextureAtlasSprite)FluidClientUtil.stillTextures.get(fluid);
+         EaglerTextureAtlasSprite fluidTexture = (EaglerTextureAtlasSprite)FluidClientUtil.stillTextures.get(fluid);
          if (fluidTexture == null) {
             return returnList;
          }

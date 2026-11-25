@@ -4,7 +4,7 @@ import greymerk.roguelike.theme.Theme;
 import greymerk.roguelike.theme.Themes;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum TowerType {
    BUMBO,
@@ -113,7 +113,7 @@ public enum TowerType {
       return false;
    }
 
-   public static TowerType random(Random random) {
+   public static TowerType random(EaglercraftRandom random) {
       TowerType[] values = values();
       return values[random.nextInt(values.length)];
    }

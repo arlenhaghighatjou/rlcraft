@@ -1,7 +1,7 @@
 package team.creative.enhancedvisuals.common.packet;
 
 import com.creativemd.creativecore.common.packet.CreativeCorePacket;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.Vec3d;
 import team.creative.enhancedvisuals.common.handler.VisualHandlers;

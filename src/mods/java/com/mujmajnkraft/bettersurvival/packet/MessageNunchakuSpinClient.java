@@ -2,7 +2,7 @@ package com.mujmajnkraft.bettersurvival.packet;
 
 import com.mujmajnkraft.bettersurvival.capabilities.nunchakucombo.INunchakuCombo;
 import com.mujmajnkraft.bettersurvival.capabilities.nunchakucombo.NunchakuComboProvider;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

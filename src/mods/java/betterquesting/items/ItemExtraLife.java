@@ -5,7 +5,7 @@ import betterquesting.api.properties.NativeProps;
 import betterquesting.core.BetterQuesting;
 import betterquesting.storage.LifeDatabase;
 import betterquesting.storage.QuestSettings;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nonnull;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +40,7 @@ public class ItemExtraLife extends Item {
                stack.grow(-1);
             }
 
-            UUID uuid = QuestingAPI.getQuestingUUID(player);
+            EaglercraftUUID uuid = QuestingAPI.getQuestingUUID(player);
             int lives = LifeDatabase.INSTANCE.getLives(uuid);
             if (lives >= ((Integer)QuestSettings.INSTANCE.getProperty(NativeProps.LIVES_MAX)).intValue()) {
                if (!world.isRemote) {

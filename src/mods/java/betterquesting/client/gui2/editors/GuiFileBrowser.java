@@ -37,7 +37,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.client.gui.GuiScreen;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class GuiFileBrowser extends GuiScreenCanvas implements IPEventListener {
    private final ICallback<File[]> callback;

@@ -1,6 +1,6 @@
 package vazkii.quark.world.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Supplier;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -17,7 +17,7 @@ public class BasaltGenerator extends StoneInfoBasedGenerator implements IWorldGe
       super(infoSupplier, Basalt.basalt.getDefaultState(), "basalt");
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       this.generate(chunkX, chunkZ, world);
    }
 

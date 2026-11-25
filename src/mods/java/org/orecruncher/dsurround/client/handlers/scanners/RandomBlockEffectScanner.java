@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.handlers.scanners;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -30,7 +30,7 @@ public class RandomBlockEffectScanner extends RandomScanner {
       return BlockStateUtil.getStateData(state).hasSoundsOrEffects();
    }
 
-   public void blockScan(@Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull Random rand) {
+   public void blockScan(@Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EaglercraftRandom rand) {
       IBlockAccessEx provider = this.locus.getWorld();
       BlockStateData profile = BlockStateUtil.getStateData(state);
       BlockEffect[] effects = profile.getEffects();

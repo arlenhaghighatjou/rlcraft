@@ -4,7 +4,7 @@ import com.bloodnbonesgaming.loadingscreens.LoadingScreens;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.util.ResourceLocation;

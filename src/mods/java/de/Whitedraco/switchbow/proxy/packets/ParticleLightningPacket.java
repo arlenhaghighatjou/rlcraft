@@ -1,7 +1,7 @@
 package de.Whitedraco.switchbow.proxy.packets;
 
-import io.netty.buffer.ByteBuf;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -41,7 +41,7 @@ public class ParticleLightningPacket implements IMessage {
    @SideOnly(Side.CLIENT)
    public void execute(MessageContext ctx) {
       if (ctx.side.isClient()) {
-         new Random();
+         new EaglercraftRandom();
          int FPS = Minecraft.getDebugFPS();
          WorldClient world = Minecraft.getMinecraft().world;
          BlockPos posRender = new BlockPos(this.posX, this.posY, this.posZ);

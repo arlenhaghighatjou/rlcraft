@@ -3,7 +3,7 @@ package greymerk.roguelike.treasure.loot.provider;
 import com.github.fnar.minecraft.item.Material;
 import com.github.fnar.minecraft.item.RldItemStack;
 import greymerk.roguelike.util.IWeighted;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public abstract class LootItem implements IWeighted<RldItemStack> {
    int level;
@@ -14,13 +14,13 @@ public abstract class LootItem implements IWeighted<RldItemStack> {
       this.level = level;
    }
 
-   public abstract RldItemStack getLootItem(Random var1);
+   public abstract RldItemStack getLootItem(EaglercraftRandom var1);
 
    public int getWeight() {
       return this.weight;
    }
 
-   public RldItemStack get(Random rand) {
+   public RldItemStack get(EaglercraftRandom rand) {
       try {
          return this.getLootItem(rand);
       } catch (Exception var3) {
@@ -29,7 +29,7 @@ public abstract class LootItem implements IWeighted<RldItemStack> {
       }
    }
 
-   public static int getEnchantmentLevel(Random random, int level) {
+   public static int getEnchantmentLevel(EaglercraftRandom random, int level) {
       switch(level) {
       case 0:
          return 1 + random.nextInt(4);

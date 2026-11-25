@@ -1,7 +1,7 @@
 package ivorius.ivtoolkit.tools;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import ivorius.ivtoolkit.math.IvBytePacker;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;

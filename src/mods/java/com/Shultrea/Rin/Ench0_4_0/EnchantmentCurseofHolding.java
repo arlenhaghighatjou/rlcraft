@@ -4,7 +4,7 @@ import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enum.EnumList;
 import com.Shultrea.Rin.Interfaces.IEnchantmentCurse;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class EnchantmentCurseofHolding extends EnchantmentBase implements IEnchantmentCurse {
    int interval;
-   public static final UUID CACHED_UUID = UUID.fromString("e2125897-134f-4c14-a535-19c2ae4c7a21");
+   public static final EaglercraftUUID CACHED_UUID = EaglercraftUUID.fromString("e2125897-134f-4c14-a535-19c2ae4c7a21");
 
    public EnchantmentCurseofHolding() {
       super(Rarity.VERY_RARE, EnumList.ALL, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});

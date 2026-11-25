@@ -6,7 +6,7 @@ import ivorius.reccomplex.world.gen.feature.structure.context.StructureSpawnCont
 import ivorius.reccomplex.world.gen.feature.structure.registry.MCRegistrySpecial;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,7 +18,7 @@ public class LootGenerationHandler {
    public LootGenerationHandler() {
    }
 
-   public static void generateAllTags(WorldServer server, IItemHandlerModifiable inventory, MCRegistrySpecial.ItemHidingRegistry registry, Random random) {
+   public static void generateAllTags(WorldServer server, IItemHandlerModifiable inventory, MCRegistrySpecial.ItemHidingRegistry registry, EaglercraftRandom random) {
       List<Triple<ItemStack, GeneratingItem, Integer>> foundTags = new ArrayList();
       boolean didChange = true;
       int cycles = 0;

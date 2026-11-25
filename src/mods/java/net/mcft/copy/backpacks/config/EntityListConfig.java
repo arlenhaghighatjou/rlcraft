@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 import net.mcft.copy.backpacks.WearableBackpacks;
 import net.mcft.copy.backpacks.api.BackpackRegistry;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class EntityListConfig {
    private static File configFolder = null;

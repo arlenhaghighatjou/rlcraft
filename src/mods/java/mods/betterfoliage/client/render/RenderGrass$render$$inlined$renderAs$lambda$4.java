@@ -7,7 +7,7 @@ import kotlin.jvm.internal.Intrinsics;
 import kotlin.jvm.internal.Lambda;
 import mods.betterfoliage.client.texture.GrassInfo;
 import mods.octarinecore.client.render.Quad;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import org.jetbrains.annotations.NotNull;
 
 @Metadata(
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
    d2 = {"<anonymous>", "", "qi", "", "<anonymous parameter 1>", "Lmods/octarinecore/client/render/Quad;", "invoke", "mods/betterfoliage/client/render/RenderGrass$render$1$1"}
 )
 final class RenderGrass$render$$inlined$renderAs$lambda$4 extends Lambda implements Function2<Integer, Quad, Boolean> {
-   RenderGrass$render$$inlined$renderAs$lambda$4(BufferBuilder var1, List var2, GrassInfo var3, boolean var4, int var5) {
+   RenderGrass$render$$inlined$renderAs$lambda$4(WorldRenderer var1, List var2, GrassInfo var3, boolean var4, int var5) {
       super(2);
       this.$renderer$inlined = var1;
       this.$isHidden$inlined = var2;

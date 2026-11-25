@@ -5,7 +5,7 @@ import com.dhanantry.scapeandrunparasites.proxy.CommonProxy;
 import java.io.File;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class SRPConfigWorld {
    private static final String CATEGORY_GENERAL_WORLD = "configuration_world";

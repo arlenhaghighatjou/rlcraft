@@ -8,13 +8,13 @@ import betterquesting.api2.client.gui.misc.IGuiRect;
 import betterquesting.api2.client.gui.panels.IGuiPanel;
 import betterquesting.api2.utils.EntityPlayerPreview;
 import bqtweaker.client.util.RenderUtilsOverride;
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.concurrent.Callable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 public class PanelPlayerPortraitOverride implements IGuiPanel {
@@ -27,7 +27,7 @@ public class PanelPlayerPortraitOverride implements IGuiPanel {
    private IValueIO<Float> yawDriver;
    private float zDepth;
 
-   public PanelPlayerPortraitOverride(IGuiRect rect, UUID playerID, String username) {
+   public PanelPlayerPortraitOverride(IGuiRect rect, EaglercraftUUID playerID, String username) {
       this(rect, new EntityPlayerPreview(Minecraft.getMinecraft().world, new GameProfile(playerID, username)));
    }
 

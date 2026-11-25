@@ -4,7 +4,7 @@ import com.charles445.simpledifficulty.api.SDBlocks;
 import com.charles445.simpledifficulty.config.ModConfig;
 import com.charles445.simpledifficulty.util.OreDictUtil;
 import com.charles445.simpledifficulty.util.SoundUtil;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -112,7 +112,7 @@ public class BlockCampfire extends Block implements IBlockStateIgnore {
       }
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!world.isRemote) {
          int age = ((Integer)state.getValue(AGE)).intValue();
          boolean burning = ((Boolean)state.getValue(BURNING)).booleanValue();
@@ -176,12 +176,12 @@ public class BlockCampfire extends Block implements IBlockStateIgnore {
       return ((Boolean)state.getValue(BURNING)).booleanValue() ? 15 : 0;
    }
 
-   public int quantityDropped(IBlockState state, int fortune, Random random) {
+   public int quantityDropped(IBlockState state, int fortune, EaglercraftRandom random) {
       return 0;
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, EaglercraftRandom rand) {
       super.randomDisplayTick(state, world, pos, rand);
       if (((Boolean)state.getValue(BURNING)).booleanValue()) {
          int age = ((Integer)state.getValue(AGE)).intValue();
@@ -210,7 +210,7 @@ public class BlockCampfire extends Block implements IBlockStateIgnore {
       world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, 0.25D + (double)pos.getX(), 0.25D + (double)pos.getY(), 0.25D + (double)pos.getZ(), 0.0D, 0.05D, 0.0D, new int[0]);
    }
 
-   private void createFlameParticle(World world, BlockPos pos, Random rand) {
+   private void createFlameParticle(World world, BlockPos pos, EaglercraftRandom rand) {
       double yOffset = rand.nextDouble() * 0.35D + 0.35D;
       double offAdj = (0.7D - yOffset) * 2.28571428D;
       double xOffset = (rand.nextDouble() - 0.5D) * offAdj + 0.5D;

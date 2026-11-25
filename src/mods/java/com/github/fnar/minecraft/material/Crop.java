@@ -2,7 +2,7 @@ package com.github.fnar.minecraft.material;
 
 import com.github.fnar.minecraft.block.decorative.CropBlock;
 import com.github.fnar.minecraft.item.Seed;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum Crop {
    BEETROOTS,
@@ -25,7 +25,7 @@ public enum Crop {
       return CropBlock.crop().setCrop(this);
    }
 
-   public static Crop chooseOneAtRandom(Random random) {
+   public static Crop chooseOneAtRandom(EaglercraftRandom random) {
       Crop[] crops = values();
       return crops[random.nextInt(crops.length)];
    }

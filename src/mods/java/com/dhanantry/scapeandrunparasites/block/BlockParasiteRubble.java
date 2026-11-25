@@ -7,7 +7,7 @@ import com.dhanantry.scapeandrunparasites.item.ItemBlockVariant;
 import com.dhanantry.scapeandrunparasites.util.ParasiteEventWorld;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigSystems;
 import com.dhanantry.scapeandrunparasites.world.biome.BiomeParasite;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -72,7 +72,7 @@ public class BlockParasiteRubble extends BlockBase implements IMetaName {
       return new ItemBlockVariant(this);
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (worldIn.isAreaLoaded(pos, 3)) {
          if (worldIn.getBiome(pos) instanceof BiomeParasite) {
             ParasiteEventWorld.spreadBiomeBlockStain(worldIn, pos, rand);
@@ -90,7 +90,7 @@ public class BlockParasiteRubble extends BlockBase implements IMetaName {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       if (worldIn.getBlockState(pos.up()).getBlock() == Blocks.AIR || worldIn.getBlockState(pos.up()).getBlock() == SRPBlocks.ParasiteBush) {
          if (rand.nextDouble() <= (double)SRPConfigSystems.rsBlockParticleS) {
             double d0 = (double)pos.getX() + rand.nextDouble();

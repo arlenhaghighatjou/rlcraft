@@ -6,7 +6,7 @@ import com.yungnickyoung.minecraft.yungslaw.config.io.ConfigLoader;
 import com.yungnickyoung.minecraft.yungslaw.config.util.ConfigHolder;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.IntPredicate;
@@ -24,7 +24,7 @@ public class BlockGenerator implements IWorldGenerator {
    public BlockGenerator() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (world instanceof WorldServer) {
          if (this.isDimensionWhitelisted(world)) {
             ConfigHolder config = (ConfigHolder)YungsLaw.configMap.computeIfAbsent(Integer.valueOf(world.provider.getDimension()), ConfigLoader::loadConfigFromFileForDimension);

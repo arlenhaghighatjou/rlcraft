@@ -1,7 +1,7 @@
 package jaredbgreat.dldungeons.util.debug;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class Logging {
    private static Logger logger;

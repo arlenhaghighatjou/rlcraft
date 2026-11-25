@@ -1,6 +1,6 @@
 package xzeroair.trinkets.traits.abilities;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
@@ -23,7 +23,7 @@ public class AbilityWitherAffinity extends Ability implements IAttackAbility, IP
 
    public boolean attackEntity(EntityLivingBase target, DamageSource source, float dmg, boolean cancel) {
       if (serverConfig.wither && !target.isPotionActive(MobEffects.WITHER)) {
-         Random rand = new Random();
+         EaglercraftRandom rand = new EaglercraftRandom();
          if (rand.nextInt(serverConfig.wither_chance) == 0) {
             target.addPotionEffect(new PotionEffect(MobEffects.WITHER, serverConfig.wither_duration, 0, false, true));
          }

@@ -6,7 +6,7 @@ import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import betterquesting.storage.LifeDatabase;
 import java.util.Arrays;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -28,7 +28,7 @@ public class NetLifeSync {
 
    }
 
-   public static void sendSync(@Nullable EntityPlayerMP[] players, @Nullable UUID[] playerIDs) {
+   public static void sendSync(@Nullable EntityPlayerMP[] players, @Nullable EaglercraftUUID[] playerIDs) {
       NBTTagCompound payload = new NBTTagCompound();
       payload.setTag("data", LifeDatabase.INSTANCE.writeToNBT(new NBTTagCompound(), playerIDs == null ? null : Arrays.asList(playerIDs)));
       payload.setBoolean("merge", playerIDs != null);

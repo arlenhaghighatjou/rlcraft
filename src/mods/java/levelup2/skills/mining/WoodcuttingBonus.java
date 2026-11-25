@@ -1,6 +1,6 @@
 package levelup2.skills.mining;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
 import levelup2.util.PlankCache;
@@ -37,7 +37,7 @@ public class WoodcuttingBonus extends BaseSkill {
          if (evt.getHarvester() != null && !evt.getWorld().isRemote) {
             int skill = SkillRegistry.getSkillLevel(evt.getHarvester(), this.getSkillName());
             IBlockState state = evt.getState();
-            Random rand = evt.getHarvester().getRNG();
+            EaglercraftRandom rand = evt.getHarvester().getRNG();
             if (skill > 0 && PlankCache.contains(state.getBlock(), state.getBlock().damageDropped(state))) {
                if (rand.nextDouble() <= (double)skill / 30.0D) {
                   ItemStack planks = PlankCache.getProduct(state.getBlock(), state.getBlock().damageDropped(state));

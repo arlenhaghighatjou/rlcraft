@@ -1,6 +1,6 @@
 package rustic.common.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
@@ -83,7 +83,7 @@ public class BlockSaplingRustic extends BlockBush implements IGrowable {
       return SAPLING_AABB;
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          super.updateTick(worldIn, pos, state, rand);
          if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && rand.nextInt(7) == 0) {
@@ -93,7 +93,7 @@ public class BlockSaplingRustic extends BlockBush implements IGrowable {
 
    }
 
-   public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void generateTree(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (TerrainGen.saplingGrowTree(worldIn, rand, pos)) {
          WorldGenerator worldgenerator = null;
          int i = 0;
@@ -135,11 +135,11 @@ public class BlockSaplingRustic extends BlockBush implements IGrowable {
       return true;
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return (double)worldIn.rand.nextFloat() < 0.45D;
    }
 
-   public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       if (((Integer)state.getValue(STAGE)).intValue() == 0) {
          worldIn.setBlockState(pos, state.cycleProperty(STAGE), 4);
       } else {

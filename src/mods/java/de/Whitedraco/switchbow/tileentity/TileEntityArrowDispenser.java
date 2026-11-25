@@ -1,7 +1,7 @@
 package de.Whitedraco.switchbow.tileentity;
 
 import de.Whitedraco.switchbow.gui.ContainerArrowDispenser;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -16,7 +16,7 @@ import net.minecraft.tileentity.TileEntityLockableLoot;
 import net.minecraft.util.NonNullList;
 
 public class TileEntityArrowDispenser extends TileEntityLockableLoot implements IInventory {
-   private static final Random RNG = new Random();
+   private static final EaglercraftRandom RNG = new EaglercraftRandom();
    private NonNullList<ItemStack> stacks = NonNullList.withSize(9, ItemStack.EMPTY);
    protected String customName;
    private float shootangle = 45.5F;

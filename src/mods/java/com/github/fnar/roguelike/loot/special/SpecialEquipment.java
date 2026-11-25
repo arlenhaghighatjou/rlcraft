@@ -17,7 +17,7 @@ import com.github.fnar.roguelike.loot.special.weapons.SpecialSword;
 import greymerk.roguelike.treasure.loot.Equipment;
 import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.util.TextFormat;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SpecialEquipment {
    private final StringBuilder prefix = new StringBuilder();
@@ -30,7 +30,7 @@ public class SpecialEquipment {
    public SpecialEquipment() {
    }
 
-   public static RldItemStack newRandomSpecialEquipment(Random random, Equipment type, Quality quality) {
+   public static RldItemStack newRandomSpecialEquipment(EaglercraftRandom random, Equipment type, Quality quality) {
       switch(type) {
       case SWORD:
          return SpecialSword.newSpecialSword(random, quality).asStack();
@@ -86,11 +86,11 @@ public class SpecialEquipment {
       return this;
    }
 
-   public SpecialEquipment withCommonEnchantments(Random random) {
+   public SpecialEquipment withCommonEnchantments(EaglercraftRandom random) {
       return this.withMending(random).withUnbreaking(random);
    }
 
-   protected SpecialEquipment withMending(Random random) {
+   protected SpecialEquipment withMending(EaglercraftRandom random) {
       if (random.nextDouble() >= 0.03D) {
          return this;
       } else {
@@ -101,7 +101,7 @@ public class SpecialEquipment {
       }
    }
 
-   public SpecialEquipment withUnbreaking(Random random) {
+   public SpecialEquipment withUnbreaking(EaglercraftRandom random) {
       int enchantmentLevel = random.nextInt(5) - 1;
       if (enchantmentLevel > 0) {
          this.withEnchantment(Enchantment.Effect.UNBREAKING.atLevel(enchantmentLevel));

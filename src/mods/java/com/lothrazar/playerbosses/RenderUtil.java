@@ -1,7 +1,7 @@
 package com.lothrazar.playerbosses;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLiving;
@@ -25,7 +25,7 @@ public final class RenderUtil {
          GL11.glTranslatef((float)x, (float)y, (float)z);
          GL11.glPushMatrix();
          GL11.glRotatef(-entity.renderYawOffset, 0.0F, 1.0F, 0.0F);
-         BufferBuilder tes = Tessellator.getInstance().getBuffer();
+         WorldRenderer tes = Tessellator.getInstance().getBuffer();
          double width = (bb.maxX - bb.minX) / 2.0D;
          double height = bb.maxY - bb.minY;
          double depth = (bb.maxZ - bb.minZ) / 2.0D;

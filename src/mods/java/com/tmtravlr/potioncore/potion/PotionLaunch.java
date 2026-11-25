@@ -2,7 +2,7 @@ package com.tmtravlr.potioncore.potion;
 
 import com.tmtravlr.potioncore.PotionCore;
 import com.tmtravlr.potioncore.network.SToCMessage;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;

@@ -1,8 +1,8 @@
 package com.tmtravlr.potioncore.network;
 
 import com.tmtravlr.potioncore.PotionCoreAttributes;
-import io.netty.buffer.Unpooled;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -38,7 +38,7 @@ public class PacketHandlerServer implements IMessageHandler<CToSMessage, IMessag
       switch(type) {
       case 1:
          server.addScheduledTask(() -> {
-            Entity player = server.getPlayerList().getPlayerByUUID(new UUID(buff.readLong(), buff.readLong()));
+            Entity player = server.getPlayerList().getPlayerByUUID(new EaglercraftUUID(buff.readLong(), buff.readLong()));
             if (player != null) {
                player.fallDistance = 0.0F;
             }
@@ -47,7 +47,7 @@ public class PacketHandlerServer implements IMessageHandler<CToSMessage, IMessag
          break;
       case 2:
          server.addScheduledTask(() -> {
-            EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(new UUID(buff.readLong(), buff.readLong()));
+            EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(new EaglercraftUUID(buff.readLong(), buff.readLong()));
             if (player != null) {
                useEntity(player, buff);
             }

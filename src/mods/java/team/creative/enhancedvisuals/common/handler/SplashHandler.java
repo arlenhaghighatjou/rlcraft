@@ -4,7 +4,7 @@ import com.creativemd.creativecore.common.config.api.CreativeConfig;
 import com.creativemd.creativecore.common.config.premade.DecimalMinMax;
 import com.creativemd.creativecore.common.config.premade.IntMinMax;
 import com.creativemd.creativecore.common.config.premade.curve.DecimalCurve;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
@@ -23,7 +23,7 @@ public class SplashHandler extends VisualHandler {
    @CreativeConfig
    public VisualType blur = new VisualTypeBlur("blur");
    public boolean wasInWater = false;
-   public Random rand = new Random();
+   public EaglercraftRandom rand = new EaglercraftRandom();
 
    public SplashHandler() {
    }

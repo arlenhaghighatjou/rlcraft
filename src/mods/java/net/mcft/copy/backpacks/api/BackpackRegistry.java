@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.function.Function;
@@ -198,7 +198,7 @@ public final class BackpackRegistry {
 
    public static final class ColorRange {
       public static final BackpackRegistry.ColorRange DEFAULT = new BackpackRegistry.ColorRange(2105376, 13684944);
-      private static final Random rnd = new Random();
+      private static final EaglercraftRandom rnd = new EaglercraftRandom();
       public final int min;
       public final int max;
 

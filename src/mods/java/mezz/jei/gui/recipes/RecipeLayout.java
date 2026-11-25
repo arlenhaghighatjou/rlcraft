@@ -31,7 +31,7 @@ import mezz.jei.util.ErrorUtil;
 import mezz.jei.util.LegacyUtil;
 import mezz.jei.util.Log;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 

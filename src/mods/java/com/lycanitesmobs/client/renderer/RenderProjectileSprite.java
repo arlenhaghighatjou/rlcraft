@@ -7,8 +7,8 @@ import com.lycanitesmobs.core.entity.EntityProjectileLaser;
 import com.lycanitesmobs.core.entity.LaserEndProjectileEntity;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -97,7 +97,7 @@ public class RenderProjectileSprite extends Render {
          GlStateManager.enableOutlineMode(this.getTeamColor(entity));
       }
 
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
       vertexbuffer.pos(-textureWidth, -textureHeight + textureHeight / 2.0D + offsetY, 0.0D).tex(minU, maxV).normal(0.0F, 1.0F, 0.0F).endVertex();
       vertexbuffer.pos(textureWidth, -textureHeight + textureHeight / 2.0D + offsetY, 0.0D).tex(maxU, maxV).normal(0.0F, 1.0F, 0.0F).endVertex();

@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.init.ModBlocks;
 import lykrast.defiledlands.common.init.ModItems;
 import lykrast.defiledlands.common.util.PlantUtils;
@@ -65,7 +65,7 @@ public class BlockBlastem extends BlockBush implements IGrowable, ICustomItemBlo
       return false;
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       int j = ((Integer)state.getValue(AGE)).intValue();
       if (j < 15 && ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
          worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(j + 1)), 2);
@@ -75,7 +75,7 @@ public class BlockBlastem extends BlockBush implements IGrowable, ICustomItemBlo
       super.updateTick(worldIn, pos, state, rand);
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return ModItems.blastemSeed;
    }
 
@@ -144,11 +144,11 @@ public class BlockBlastem extends BlockBush implements IGrowable, ICustomItemBlo
       return ((Integer)state.getValue(AGE)).intValue() < 15;
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return true;
    }
 
-   public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       int age = Math.min(15, ((Integer)state.getValue(AGE)).intValue() + MathHelper.getInt(rand, 2, 5));
       worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(age)), 2);
    }

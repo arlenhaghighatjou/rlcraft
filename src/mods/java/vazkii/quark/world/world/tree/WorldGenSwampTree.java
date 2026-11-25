@@ -1,6 +1,6 @@
 package vazkii.quark.world.world.tree;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
@@ -29,7 +29,7 @@ public class WorldGenSwampTree extends WorldGenSwamp {
       this.leaf = TreeVariants.variant_leaves.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
    }
 
-   public boolean generate(@Nonnull World worldIn, @Nonnull Random rand, @Nonnull BlockPos pos) {
+   public boolean generate(@Nonnull World worldIn, @Nonnull EaglercraftRandom rand, @Nonnull BlockPos pos) {
       int i;
       for(i = rand.nextInt(4) + 5; worldIn.getBlockState(pos.down()).getMaterial() == Material.WATER; pos = pos.down()) {
          ;

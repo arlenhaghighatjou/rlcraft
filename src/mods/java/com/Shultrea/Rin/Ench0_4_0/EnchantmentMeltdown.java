@@ -3,7 +3,7 @@ package com.Shultrea.Rin.Ench0_4_0;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.enchantment.Enchantment.Rarity;
@@ -39,7 +39,7 @@ public class EnchantmentMeltdown extends EnchantmentBase {
    }
 
    public void onUserHurt(EntityLivingBase user, Entity attacker, int level) {
-      Random random = user.getRNG();
+      EaglercraftRandom random = user.getRNG();
       ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Smc_040.meltdown, user);
       if (Math.random() < (double)(0.05F + 0.05F * (float)level)) {
          if (attacker != null) {
@@ -73,7 +73,7 @@ public class EnchantmentMeltdown extends EnchantmentBase {
          armor.damageArmor(entity, stack, DamageSource.causeExplosionDamage(entity), amount, slot);
       } else {
          if (entity instanceof EntityPlayerMP) {
-            stack.attemptDamageItem(amount, new Random(), (EntityPlayerMP)entity);
+            stack.attemptDamageItem(amount, new EaglercraftRandom(), (EntityPlayerMP)entity);
          } else {
             stack.damageItem(amount, entity);
          }

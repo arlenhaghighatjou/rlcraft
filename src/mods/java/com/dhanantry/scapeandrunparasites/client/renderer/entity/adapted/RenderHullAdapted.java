@@ -3,7 +3,7 @@ package com.dhanantry.scapeandrunparasites.client.renderer.entity.adapted;
 import com.dhanantry.scapeandrunparasites.client.model.entity.adapted.ModelHullAdapted;
 import com.dhanantry.scapeandrunparasites.client.renderer.RenderMalleable;
 import com.dhanantry.scapeandrunparasites.entity.monster.adapted.EntityHullAdapted;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.RenderManager;

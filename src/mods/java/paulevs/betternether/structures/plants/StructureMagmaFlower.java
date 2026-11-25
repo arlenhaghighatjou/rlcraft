@@ -1,6 +1,6 @@
 package paulevs.betternether.structures.plants;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockMagma;
 import net.minecraft.block.BlockNetherrack;
 import net.minecraft.block.state.IBlockState;
@@ -17,7 +17,7 @@ public class StructureMagmaFlower implements IStructure {
    public StructureMagmaFlower() {
    }
 
-   public void generate(World world, BlockPos pos, Random random) {
+   public void generate(World world, BlockPos pos, EaglercraftRandom random) {
       if (world.getBlockState(pos).getBlock() instanceof BlockNetherrack) {
          IBlockState state = BlocksRegister.BLOCK_MAGMA_FLOWER.getDefaultState();
          offsetNoise = new WorleyNoise((long)pos.getX() << 32 | (long)pos.getZ());

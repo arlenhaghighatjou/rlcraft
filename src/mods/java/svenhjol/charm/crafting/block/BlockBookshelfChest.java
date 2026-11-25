@@ -1,6 +1,6 @@
 package svenhjol.charm.crafting.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -126,11 +126,11 @@ public class BlockBookshelfChest extends MesonBlockTE<TileBookshelfChest> implem
    }
 
    @Nullable
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Items.BOOK;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 3;
    }
 

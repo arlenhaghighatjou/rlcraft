@@ -1,6 +1,6 @@
 package tschipp.forgottenitems.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import javax.annotation.Nullable;
 
@@ -85,7 +85,7 @@ public class BlockAdvancedRuneReader extends TSBlock {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand)
 	{
 		if(FIConfig.runeReaderEmitsParticles)
 		{

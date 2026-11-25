@@ -8,7 +8,7 @@ import com.Shultrea.Rin.Main_Sector.somanyenchantments;
 import com.Shultrea.Rin.Utility_Sector.MsgSP_Particle;
 import com.Shultrea.Rin.Utility_Sector.SMEnetwork;
 import com.Shultrea.Rin.Utility_Sector.UtilityAccessor;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.entity.EntityLivingBase;
@@ -100,7 +100,7 @@ public class EnchantmentCulling extends EnchantmentBase {
                               double X = fEvent.getEntity().posX;
                               double Y = fEvent.getEntity().posY;
                               double Z = fEvent.getEntity().posZ;
-                              Random random = fEvent.getEntity().world.rand;
+                              EaglercraftRandom random = fEvent.getEntity().world.rand;
 
                               for(int i = 0; i < 20; ++i) {
                                  double d0 = random.nextGaussian() * 0.02D;

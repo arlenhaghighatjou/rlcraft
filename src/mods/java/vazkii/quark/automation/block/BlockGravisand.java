@@ -1,6 +1,6 @@
 package vazkii.quark.automation.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -50,7 +50,7 @@ public class BlockGravisand extends BlockMod implements IQuarkBlock {
       return 15;
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote && this.checkFallable(worldIn, pos)) {
          for(EnumFacing face : EnumFacing.VALUES) {
             BlockPos offPos = pos.offset(face);

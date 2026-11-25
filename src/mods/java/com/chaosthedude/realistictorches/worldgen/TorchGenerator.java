@@ -2,7 +2,7 @@ package com.chaosthedude.realistictorches.worldgen;
 
 import com.chaosthedude.realistictorches.blocks.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -16,7 +16,7 @@ public class TorchGenerator implements IWorldGenerator {
    public TorchGenerator() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (ConfigHandler.generateLitTorches) {
          for(int x = 0; x < 16; ++x) {
             for(int y = 0; y < world.getHeight(); ++y) {

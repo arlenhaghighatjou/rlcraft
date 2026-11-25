@@ -11,7 +11,7 @@ import com.fantasticsource.tools.datastructures.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 

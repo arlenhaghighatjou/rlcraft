@@ -8,7 +8,7 @@ import baubles.api.cap.IBaublesItemHandler;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -71,11 +71,11 @@ public class AttributeModifierBauble extends BaubleBase {
    }
 
    public static class ExtendedAttributeModifier {
-      public final UUID id;
+      public final EaglercraftUUID id;
       public final String name;
       public final IAttribute affectedAttribute;
 
-      public ExtendedAttributeModifier(UUID id, String nameIn, IAttribute affectedAttribute) {
+      public ExtendedAttributeModifier(EaglercraftUUID id, String nameIn, IAttribute affectedAttribute) {
          this.id = id;
          this.name = nameIn;
          this.affectedAttribute = affectedAttribute;

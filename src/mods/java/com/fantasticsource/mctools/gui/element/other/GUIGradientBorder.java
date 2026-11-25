@@ -4,8 +4,8 @@ import com.fantasticsource.mctools.gui.GUIScreen;
 import com.fantasticsource.mctools.gui.element.GUIElement;
 import com.fantasticsource.tools.Tools;
 import com.fantasticsource.tools.datastructures.Color;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
@@ -73,7 +73,7 @@ public class GUIGradientBorder extends GUIElement {
       double xThickness = min / (double)this.absolutePxWidth();
       double yThickness = min / (double)this.absolutePxHeight();
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
       bufferbuilder.pos(1.0D - xThickness, yThickness, 0.0D).color(c.r(), c.g(), c.b(), c.a()).endVertex();
       bufferbuilder.pos(xThickness, yThickness, 0.0D).color(c.r(), c.g(), c.b(), c.a()).endVertex();

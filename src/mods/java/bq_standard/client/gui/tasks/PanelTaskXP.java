@@ -19,7 +19,7 @@ import java.util.concurrent.Callable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Items;
 import net.minecraft.util.text.TextFormatting;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class PanelTaskXP extends CanvasEmpty {
    private final TaskXP task;

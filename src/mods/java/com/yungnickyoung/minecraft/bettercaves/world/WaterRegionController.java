@@ -6,7 +6,7 @@ import com.yungnickyoung.minecraft.bettercaves.enums.RegionSize;
 import com.yungnickyoung.minecraft.bettercaves.noise.FastNoise;
 import com.yungnickyoung.minecraft.bettercaves.noise.NoiseUtils;
 import com.yungnickyoung.minecraft.bettercaves.util.BetterCavesUtils;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -18,7 +18,7 @@ public class WaterRegionController {
    private long worldSeed;
    private int dimensionID;
    private String dimensionName;
-   private Random rand;
+   private EaglercraftRandom rand;
    private IBlockState lavaBlock;
    private IBlockState waterBlock;
    private float waterRegionThreshold;
@@ -29,7 +29,7 @@ public class WaterRegionController {
       this.worldSeed = world.getSeed();
       this.dimensionID = world.provider.getDimension();
       this.dimensionName = world.provider.getDimensionType().toString();
-      this.rand = new Random();
+      this.rand = new EaglercraftRandom();
       this.lavaBlock = this.getLavaBlockFromString(config.lavaBlock.get());
       this.waterBlock = this.getWaterBlockFromString(config.waterBlock.get());
       this.waterRegionThreshold = NoiseUtils.simplexNoiseOffsetByPercent(-1.0F, ((Float)config.waterRegionSpawnChance.get()).floatValue() / 100.0F);
@@ -55,7 +55,7 @@ public class WaterRegionController {
       return blocks;
    }
 
-   private IBlockState getLiquidBlockAtPos(Random rand, BlockPos blockPos) {
+   private IBlockState getLiquidBlockAtPos(EaglercraftRandom rand, BlockPos blockPos) {
       IBlockState liquidBlock = this.lavaBlock;
       if (this.waterRegionThreshold > -1.0F) {
          float waterRegionNoise = this.waterRegionController.GetNoise((float)blockPos.getX(), (float)blockPos.getZ());

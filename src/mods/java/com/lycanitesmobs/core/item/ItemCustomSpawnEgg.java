@@ -7,7 +7,7 @@ import com.lycanitesmobs.core.info.CreatureInfo;
 import com.lycanitesmobs.core.info.CreatureManager;
 import com.lycanitesmobs.core.info.CreatureType;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.BlockFence;
@@ -260,7 +260,7 @@ public class ItemCustomSpawnEgg extends ItemBase {
 
             NBTTagCompound entityNBT = new NBTTagCompound();
             targetEntity.writeToNBT(entityNBT);
-            UUID uuid = targetEntity.getUniqueID();
+            EaglercraftUUID uuid = targetEntity.getUniqueID();
             entityNBT.merge(nbttagcompound.getCompoundTag("CreatureInfoSpawnEgg"));
             targetEntity.setUniqueId(uuid);
             targetEntity.readFromNBT(entityNBT);

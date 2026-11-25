@@ -1,6 +1,6 @@
 package me.ichun.mods.ichunutil.common.packet.mod;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.ArrayList;
 import me.ichun.mods.ichunutil.common.core.network.AbstractPacket;
 import me.ichun.mods.ichunutil.common.grab.GrabHandler;

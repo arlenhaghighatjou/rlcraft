@@ -1,9 +1,9 @@
 package org.orecruncher.lib.random;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import org.orecruncher.lib.math.MathStuff;
 
-public final class XorShiftRandom extends Random {
+public final class XorShiftRandom extends EaglercraftRandom {
    private static final long PRIME = 402653189L;
    private static final double DOUBLE_UNIT = 1.1102230246251565E-16D;
    private static final float FLOAT_UNIT = 5.9604645E-8F;
@@ -114,7 +114,7 @@ public final class XorShiftRandom extends Random {
       return (int)this.nextLong() >>> 32 - bits;
    }
 
-   public static Random current() {
-      return (Random)localRandom.get();
+   public static EaglercraftRandom current() {
+      return (EaglercraftRandom)localRandom.get();
    }
 }

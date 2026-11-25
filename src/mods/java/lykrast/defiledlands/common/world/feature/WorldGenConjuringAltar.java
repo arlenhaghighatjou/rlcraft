@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.world.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.block.BlockStoneDefiledDecoration;
 import lykrast.defiledlands.common.init.ModBlocks;
 import lykrast.defiledlands.common.world.biome.BiomeDefiled;
@@ -18,7 +18,7 @@ public class WorldGenConjuringAltar extends WorldGenerator {
    public WorldGenConjuringAltar() {
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       if (!(worldIn.getBiome(position) instanceof BiomeDefiled)) {
          return false;
       } else {
@@ -62,7 +62,7 @@ public class WorldGenConjuringAltar extends WorldGenerator {
       }
    }
 
-   private IBlockState getRandomBrick(Random rand) {
+   private IBlockState getRandomBrick(EaglercraftRandom rand) {
       return rand.nextInt(4) == 0 ? this.cracked : this.bricks;
    }
 }

@@ -6,7 +6,7 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Direction;
 import greymerk.roguelike.worldgen.WorldEditor;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public abstract class Threshold {
    public Threshold() {
@@ -21,7 +21,7 @@ public abstract class Threshold {
       return (BaseGeneratable)(rollForDoor(worldEditor.getRandom(), level).booleanValue() && isNextToAir(worldEditor, origin, facing) ? Threshold.Type.randomBlocking(worldEditor.getRandom()).toThreshold(worldEditor) : new Entryway(worldEditor));
    }
 
-   private static Boolean rollForDoor(Random random, int level) {
+   private static Boolean rollForDoor(EaglercraftRandom random, int level) {
       return random.nextDouble() < getDoorChance(level).doubleValue();
    }
 
@@ -43,12 +43,12 @@ public abstract class Threshold {
       private Type() {
       }
 
-      public static Threshold.Type random(Random random) {
+      public static Threshold.Type random(EaglercraftRandom random) {
          Threshold.Type[] values = values();
          return values[random.nextInt(values.length)];
       }
 
-      private static Threshold.Type randomBlocking(Random random) {
+      private static Threshold.Type randomBlocking(EaglercraftRandom random) {
          Threshold.Type[] values = new Threshold.Type[]{DOORWAY, IRON_BARRED, WALLED};
          return values[random.nextInt(values.length)];
       }

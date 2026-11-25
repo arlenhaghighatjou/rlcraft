@@ -23,14 +23,14 @@ import ichttt.mods.firstaid.common.potion.FirstAidPotion;
 import ichttt.mods.firstaid.common.potion.PotionPoisonPatched;
 import ichttt.mods.firstaid.common.util.CommonUtils;
 import ichttt.mods.firstaid.common.util.PlayerSizeHelper;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.WeakHashMap;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -80,7 +80,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class EventHandler {
-   public static final Random rand = new Random();
+   public static final EaglercraftRandom rand = new EaglercraftRandom();
    public static final SoundEvent HEARTBEAT = (SoundEvent)(new SoundEvent(new ResourceLocation("firstaid", "debuff.heartbeat"))).setRegistryName(new ResourceLocation("firstaid", "debuff.heartbeat"));
    public static final Potion MORPHINE = (new FirstAidPotion(false, 3549, "morphine")).setBeneficial();
    public static final Potion POISEN_PATCHED = PotionPoisonPatched.INSTANCE;

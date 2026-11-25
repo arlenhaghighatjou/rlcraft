@@ -1,9 +1,9 @@
 package tschipp.forgottenitems;
 
 import java.io.File;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -55,7 +55,7 @@ public class FIM
 
 	public static final int RECIPE_AMOUNT = 25;
 	
-	public static final Random RANDOM = new Random();
+	public static final EaglercraftRandom RANDOM = new EaglercraftRandom();
 	public static Logger LOGGER;
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

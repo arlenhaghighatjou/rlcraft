@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 
 public class InfernalMobsReflect {
@@ -36,7 +36,7 @@ public class InfernalMobsReflect {
    }
 
    private void populateEnchantmentList() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-      this.m_InfernalMobsCore_getRandomEnchantment.invoke(this.o_InfernalMobsCore_instance, new Random());
+      this.m_InfernalMobsCore_getRandomEnchantment.invoke(this.o_InfernalMobsCore_instance, new EaglercraftRandom());
    }
 
    public boolean getSemaphor() throws IllegalArgumentException, IllegalAccessException {

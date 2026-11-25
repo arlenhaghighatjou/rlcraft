@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import net.minecraft.enchantment.EnchantmentData;
@@ -49,7 +49,7 @@ public class ArtifactItem {
    }
 
    @Nonnull
-   public static ItemStack any(Random random) {
+   public static ItemStack any(EaglercraftRandom random) {
       Set<ItemStack> stacks = artifacts.keySet();
       ItemStack[] stackArray = (ItemStack[])stacks.toArray(new ItemStack[stacks.size()]);
       ItemStack origStack = stackArray[random.nextInt(stackArray.length)];

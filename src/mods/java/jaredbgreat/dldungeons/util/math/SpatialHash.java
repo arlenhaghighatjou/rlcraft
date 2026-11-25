@@ -1,6 +1,6 @@
 package jaredbgreat.dldungeons.util.math;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SpatialHash {
    public static final int INT_MASK = Integer.MAX_VALUE;
@@ -13,12 +13,12 @@ public class SpatialHash {
    public SpatialHash() {
       long theSeed = System.nanoTime();
       this.seed1 = theSeed;
-      this.seed2 = (new Random(this.seed1)).nextLong();
+      this.seed2 = (new EaglercraftRandom(this.seed1)).nextLong();
    }
 
    public SpatialHash(long theSeed) {
       this.seed1 = theSeed;
-      this.seed2 = (new Random(this.seed1)).nextLong();
+      this.seed2 = (new EaglercraftRandom(this.seed1)).nextLong();
    }
 
    public SpatialHash(long theSeed, long altSeed) {
@@ -105,8 +105,8 @@ public class SpatialHash {
       return in >>> dist | in << 64 - dist;
    }
 
-   public Random getRandom(int x, int z, int t) {
-      return new Random(this.longFor(x, z, t));
+   public EaglercraftRandom getRandom(int x, int z, int t) {
+      return new EaglercraftRandom(this.longFor(x, z, t));
    }
 
    public SpatialHash.RandomAt getRandomAt(int x, int z, int t) {
@@ -130,7 +130,7 @@ public class SpatialHash {
       return out ^ alt;
    }
 
-   public static Random randomFromSeed(long seed, int x, int z, int t) {
+   public static EaglercraftRandom randomFromSeed(long seed, int x, int z, int t) {
       long out = seed + 15485077L * (long)t + 12338621L * (long)x + 14416417L * (long)z;
       long alt = seed + 179424743L * (long)t + 179426003L * (long)x + 179425819L * (long)z;
       alt = alt ^ rotateLeft(alt, x % 29 + 13);
@@ -140,7 +140,7 @@ public class SpatialHash {
       out = out ^ rotateLeft(out, (x & Integer.MAX_VALUE) % 13 + 5);
       out = out ^ rotateRight(out, (z & Integer.MAX_VALUE) % 11 + 28);
       out = out ^ rotateLeft(out, (t & Integer.MAX_VALUE) % 17 + 45);
-      return new Random(out ^ alt);
+      return new EaglercraftRandom(out ^ alt);
    }
 
    public static class RandomAt extends SpatialHash {

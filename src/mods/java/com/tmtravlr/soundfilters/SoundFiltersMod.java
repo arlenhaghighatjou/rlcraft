@@ -3,7 +3,7 @@ package com.tmtravlr.soundfilters;
 import com.tmtravlr.soundfilters.filters.FilterLowPass;
 import com.tmtravlr.soundfilters.filters.FilterReverb;
 import java.util.Comparator;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.TreeMap;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.config.Configuration;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import paulscode.sound.SoundSystemConfig;
 import paulscode.sound.SoundSystemException;
 
@@ -36,7 +36,7 @@ public class SoundFiltersMod {
    )
    public static CommonProxy proxy;
    public static Logger logger;
-   private static Random rand = new Random();
+   private static EaglercraftRandom rand = new EaglercraftRandom();
    public static int profileSize = 1024;
    public static boolean doSkyChecks = true;
    public static boolean doReverb = true;

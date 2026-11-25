@@ -1,6 +1,6 @@
 package prospector.traverse.world.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockDirt.DirtType;
 import net.minecraft.block.BlockDoublePlant.EnumPlantType;
@@ -50,11 +50,11 @@ public class BiomeThicket extends Biome implements WorldGenConstants {
       return super.getModdedBiomeFoliageColor(-9588895);
    }
 
-   public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+   public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand) {
       return TALLER_OAK_TREE_FEATURE;
    }
 
-   public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
+   public void genTerrainBlocks(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
       if (noiseVal > 1.5D) {
          this.topBlock = Blocks.GRASS.getDefaultState();
          this.fillerBlock = Blocks.DIRT.getDefaultState();
@@ -66,7 +66,7 @@ public class BiomeThicket extends Biome implements WorldGenConstants {
       this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
    }
 
-   public void decorate(World worldIn, Random rand, BlockPos pos) {
+   public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos) {
       int podzolChance = rand.nextInt(4);
       if (podzolChance == 0) {
          int k6 = rand.nextInt(16) + 8;

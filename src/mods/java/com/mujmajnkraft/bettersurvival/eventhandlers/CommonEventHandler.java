@@ -35,7 +35,7 @@ import com.mujmajnkraft.bettersurvival.items.ItemNunchaku;
 import com.mujmajnkraft.bettersurvival.items.ItemSpear;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -423,8 +423,8 @@ public class CommonEventHandler {
       }
 
       if (entity instanceof EntityLiving) {
-         if (entity.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).hasModifier(new AttributeModifier(UUID.fromString("a6107045-134f-4c14-a645-75c3ae5c7a27"), "blind", 0.0D, 1))) {
-            entity.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).removeModifier(UUID.fromString("a6107045-134f-4c14-a645-75c3ae5c7a27"));
+         if (entity.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).hasModifier(new AttributeModifier(EaglercraftUUID.fromString("a6107045-134f-4c14-a645-75c3ae5c7a27"), "blind", 0.0D, 1))) {
+            entity.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).removeModifier(EaglercraftUUID.fromString("a6107045-134f-4c14-a645-75c3ae5c7a27"));
          }
 
          if (entity.getActivePotionEffect(MobEffects.BLINDNESS) != null) {
@@ -432,7 +432,7 @@ public class CommonEventHandler {
             if (entry != null && !Arrays.asList(ForgeConfigHandler.potions.blindnessBlacklist).contains(entry.getRegistryName().toString())) {
                double strength = -0.01D * ForgeConfigHandler.potions.blindnessStrength;
                if (strength < 0.0D) {
-                  AttributeModifier modifier = new AttributeModifier(UUID.fromString("a6107045-134f-4c14-a645-75c3ae5c7a27"), "blind", strength, 1);
+                  AttributeModifier modifier = new AttributeModifier(EaglercraftUUID.fromString("a6107045-134f-4c14-a645-75c3ae5c7a27"), "blind", strength, 1);
                   entity.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).applyModifier(modifier);
                }
             }

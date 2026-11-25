@@ -1,7 +1,7 @@
 package betterquesting.api2.utils;
 
-import com.mojang.authlib.GameProfile;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.util.ResourceLocation;
@@ -15,7 +15,7 @@ public class EntityPlayerPreview extends EntityOtherPlayerMP {
    private final ResourceLocation resource;
 
    public EntityPlayerPreview(World worldIn) {
-      this(worldIn, new GameProfile((UUID)null, "Notch"));
+      this(worldIn, new GameProfile((EaglercraftUUID)null, "Notch"));
    }
 
    public EntityPlayerPreview(World worldIn, GameProfile gameProfileIn) {

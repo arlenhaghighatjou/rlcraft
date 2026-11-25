@@ -3,7 +3,7 @@ package com.teammetallurgy.aquaculture.loot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.world.biome.Biome;
 
 public class BiomeType {
@@ -57,7 +57,7 @@ public class BiomeType {
       }
 
       ArrayList<BiomeType> list = (ArrayList)biomeMap.get(Integer.valueOf(biomeID));
-      return (BiomeType)list.get((new Random()).nextInt(list.size()));
+      return (BiomeType)list.get((new EaglercraftRandom()).nextInt(list.size()));
    }
 
    public String toString() {

@@ -1,6 +1,6 @@
 package rtg.api.world.gen.feature.tree.rtg;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -12,7 +12,7 @@ public class TreeRTGPinusNigra extends TreeRTG {
    public TreeRTGPinusNigra() {
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       if (!this.isGroundValid(world, pos)) {
          return false;
       } else {
@@ -53,7 +53,7 @@ public class TreeRTGPinusNigra extends TreeRTG {
       }
    }
 
-   public void buildLeaves(World world, Random rand, int x, int y, int z, int size) {
+   public void buildLeaves(World world, EaglercraftRandom rand, int x, int y, int z, int size) {
       if (!this.noLeaves) {
          int t = (int)Math.pow((double)size, 2.0D);
 
@@ -71,7 +71,7 @@ public class TreeRTGPinusNigra extends TreeRTG {
 
    }
 
-   public void buildTrunk(World world, Random rand, int x, int y, int z) {
+   public void buildTrunk(World world, EaglercraftRandom rand, int x, int y, int z) {
       int[] pos = new int[]{0, 0, 1, 0, 0, 1, -1, 0, 0, -1};
 
       for(int t = 0; t < 5; ++t) {

@@ -1,6 +1,6 @@
 package meldexun.renderlib.mixin.caching.boundingbox;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import meldexun.randomutil.FastRandom;
 import meldexun.renderlib.RenderLib;
 import meldexun.renderlib.api.IBoundingBoxCache;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Unique;
 @Mixin({TileEntity.class})
 public class MixinTileEntity implements IBoundingBoxCache {
    @Unique
-   private static final Random RAND = new FastRandom();
+   private static final EaglercraftRandom RAND = new FastRandom();
    @Unique
    private final MutableAABB cachedBoundingBox = new MutableAABB();
    @Unique

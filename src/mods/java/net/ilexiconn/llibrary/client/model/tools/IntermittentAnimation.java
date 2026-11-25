@@ -1,6 +1,6 @@
 package net.ilexiconn.llibrary.client.model.tools;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.ilexiconn.llibrary.server.entity.IIntermittentEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class IntermittentAnimation<T extends Entity & IIntermittentEntity> {
-   private Random rand = new Random();
+   private EaglercraftRandom rand = new EaglercraftRandom();
    private T entity;
    private int timeRunning;
    private int duration;

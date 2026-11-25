@@ -1,6 +1,6 @@
 package com.github.fnar.minecraft;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum EffectType {
    SPEED(1),
@@ -46,7 +46,7 @@ public enum EffectType {
       return this.id;
    }
 
-   public static EffectType chooseRandom(Random random) {
+   public static EffectType chooseRandom(EaglercraftRandom random) {
       return values()[random.nextInt(values().length)];
    }
 }

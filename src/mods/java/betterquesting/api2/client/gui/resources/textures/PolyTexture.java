@@ -4,8 +4,8 @@ import betterquesting.api2.client.gui.misc.IGuiRect;
 import betterquesting.api2.client.gui.resources.colors.GuiColorStatic;
 import betterquesting.api2.client.gui.resources.colors.IGuiColor;
 import javax.annotation.Nonnull;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -67,7 +67,7 @@ public class PolyTexture implements IGuiTexture {
       if (width > 0 && height > 0) {
          GlStateManager.pushMatrix();
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder vertexbuffer = tessellator.getBuffer();
+         WorldRenderer vertexbuffer = tessellator.getBuffer();
          GlStateManager.enableBlend();
          GlStateManager.disableTexture2D();
          GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);

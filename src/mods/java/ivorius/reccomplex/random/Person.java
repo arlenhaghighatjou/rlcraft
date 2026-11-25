@@ -6,7 +6,7 @@ import ivorius.ivtoolkit.strings.LayeredStringGenerator.LayerStatic;
 import ivorius.ivtoolkit.strings.LayeredStringGenerator.LayerUppercase;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Person {
    private static final LayeredStringGenerator chaoticNameGen;
@@ -22,12 +22,12 @@ public class Person {
       this.lastName = lastName;
    }
 
-   public static Person randomHuman(Random random, boolean male) {
+   public static Person randomHuman(EaglercraftRandom random, boolean male) {
       Person.NameType nameType = random.nextFloat() < 0.95F ? Person.NameType.NORDIC : Person.NameType.CHAOTIC;
       return randomPerson(random, male, nameType);
    }
 
-   public static Person randomPerson(Random random, boolean male, Person.NameType type) {
+   public static Person randomPerson(EaglercraftRandom random, boolean male, Person.NameType type) {
       switch(type) {
       case CHAOTIC:
          return randomChaoticPerson(random, male);
@@ -38,29 +38,29 @@ public class Person {
       }
    }
 
-   private static Person randomChaoticPerson(Random random, boolean male) {
+   private static Person randomChaoticPerson(EaglercraftRandom random, boolean male) {
       return new Person(chaoticName(random, male), random.nextFloat() < 0.15F ? chaoticName(random, male) : null, random.nextFloat() < 0.4F ? chaoticName(random, male) : null);
    }
 
-   private static Person randomNordicPerson(Random random, boolean male) {
+   private static Person randomNordicPerson(EaglercraftRandom random, boolean male) {
       String middleName = random.nextFloat() < 0.3F ? nordicName(random, male) : null;
       String lastName = random.nextFloat() < 0.95F ? nordicLastName(random, male, random.nextFloat() < 0.1F) : null;
       return new Person(nordicName(random, male), middleName, lastName);
    }
 
-   public static String nordicName(Random random, boolean male) {
+   public static String nordicName(EaglercraftRandom random, boolean male) {
       return male ? (String)getRandomElementFrom(nordicNamesMale, random) : (String)getRandomElementFrom(nordicNamesFemale, random);
    }
 
-   public static String nordicLastName(Random random, boolean male, boolean parentMale) {
+   public static String nordicLastName(EaglercraftRandom random, boolean male, boolean parentMale) {
       return nordicName(random, parentMale) + (male ? "sson" : "sdottir");
    }
 
-   public static String chaoticName(Random random, boolean male) {
+   public static String chaoticName(EaglercraftRandom random, boolean male) {
       return chaoticNameGen.randomString(random);
    }
 
-   private static <O> O getRandomElementFrom(List<O> list, Random random) {
+   private static <O> O getRandomElementFrom(List<O> list, EaglercraftRandom random) {
       return (O)list.get(random.nextInt(list.size()));
    }
 

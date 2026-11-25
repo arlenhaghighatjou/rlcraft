@@ -1,7 +1,7 @@
 package xzeroair.trinkets.blocks;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -90,7 +90,7 @@ public class BlockTeddyBear extends BlockHorizontal implements IsModelLoaded {
       super.breakBlock(worldIn, pos, state);
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       this.checkAndDropBlock(world, pos, state);
    }
 
@@ -144,7 +144,7 @@ public class BlockTeddyBear extends BlockHorizontal implements IsModelLoaded {
 
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return ModItems.trinkets.TrinketTeddyBear;
    }
 

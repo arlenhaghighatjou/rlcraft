@@ -1,6 +1,6 @@
 package tschipp.forgottenitems.items;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -37,7 +37,7 @@ public class ItemEnderTalisman extends ItemTalisman {
 		{
 			BlockPos pos = ray.getBlockPos().offset(ray.sideHit);
 			player.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-			stack.damageItem(new Random().nextInt(20), player);
+			stack.damageItem(new EaglercraftRandom().nextInt(20), player);
 	        player.getCooldownTracker().setCooldown(this, FIConfig.enderTalismanCooldown);
 			if(!world.isRemote)
 				((WorldServer)world).spawnParticle(EnumParticleTypes.PORTAL, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.25D, (double)pos.getZ() + 0.5D, 80, 0.0d, 0.5D, 0.0D, 0.0D, new int[0]);

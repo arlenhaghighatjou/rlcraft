@@ -1,9 +1,9 @@
 package com.ferreusveritas.dynamictrees.util;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 
-public class RandomXOR extends Random {
+public class RandomXOR extends EaglercraftRandom {
    private static final long serialVersionUID = -3477272122511092632L;
    int xor = 0;
 

@@ -7,16 +7,16 @@ import net.minecraft.client.renderer.block.model.BlockPartFace;
 import net.minecraft.client.renderer.block.model.BlockPartRotation;
 import net.minecraft.client.renderer.block.model.FaceBakery;
 import net.minecraft.client.renderer.block.model.ModelRotation;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 import reborncore.common.misc.vecmath.Vecs3dCube;
 
 public class BakedModelUtils {
    public BakedModelUtils() {
    }
 
-   public static void addCubeToList(Vecs3dCube cube, ArrayList<BakedQuad> list, BlockPartFace face, ModelRotation modelRotation, TextureAtlasSprite cubeTexture, EnumFacing dir, FaceBakery faceBakery) {
+   public static void addCubeToList(Vecs3dCube cube, ArrayList<BakedQuad> list, BlockPartFace face, ModelRotation modelRotation, EaglerTextureAtlasSprite cubeTexture, EnumFacing dir, FaceBakery faceBakery) {
       BlockFaceUV uv = new BlockFaceUV(new float[]{(float)cube.getMinX(), (float)cube.getMinY(), (float)cube.getMaxX(), (float)cube.getMaxY()}, 0);
       face = new BlockPartFace(dir, 0, "", uv);
       list.add(faceBakery.makeBakedQuad(new Vector3f((float)cube.getMinX(), (float)cube.getMinY(), (float)cube.getMinZ()), new Vector3f((float)cube.getMaxX(), (float)cube.getMinY(), (float)cube.getMaxZ()), face, cubeTexture, EnumFacing.DOWN, modelRotation, (BlockPartRotation)null, true, true));

@@ -10,7 +10,7 @@ import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.party.PartyManager;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -44,7 +44,7 @@ public class NetPartySync {
       if (server != null && party != null) {
          List<EntityPlayerMP> players = new ArrayList();
 
-         for(UUID uuid : party.getMembers()) {
+         for(EaglercraftUUID uuid : party.getMembers()) {
             EntityPlayerMP p = server.getPlayerList().getPlayerByUUID(uuid);
             if (p != null) {
                players.add(p);

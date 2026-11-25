@@ -6,7 +6,7 @@ import ivorius.reccomplex.world.gen.feature.structure.Structure;
 import ivorius.reccomplex.world.gen.feature.structure.generic.generation.GenerationType;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
@@ -21,11 +21,11 @@ public class MixingStructureSelector<T extends GenerationType & EnvironmentalSel
       super(structures, provider, biome, typeClass);
    }
 
-   public int structuresInBiome(C category, WorldProvider worldProvider, Biome biome, Float distanceToSpawn, Random random) {
+   public int structuresInBiome(C category, WorldProvider worldProvider, Biome biome, Float distanceToSpawn, EaglercraftRandom random) {
       return category != null ? category.structuresInBiome(biome, worldProvider, this.totalWeight(category), distanceToSpawn, random) : 0;
    }
 
-   public List<Pair<Structure<?>, T>> generatedStructures(Random random, Biome biome, WorldProvider provider, Float distanceToSpawn) {
+   public List<Pair<Structure<?>, T>> generatedStructures(EaglercraftRandom random, Biome biome, WorldProvider provider, Float distanceToSpawn) {
       return (List)this.weightedStructureInfos.keySet().stream().flatMap((category) -> {
          return IntStream.range(0, this.structuresInBiome(category, provider, biome, distanceToSpawn, random)).mapToObj((i) -> {
             return category;
@@ -36,7 +36,7 @@ public class MixingStructureSelector<T extends GenerationType & EnvironmentalSel
    }
 
    @Nullable
-   public Pair<Structure<?>, T> selectOne(Random random, WorldProvider provider, Biome biome, @Nullable C c, Float distanceToSpawn) {
+   public Pair<Structure<?>, T> selectOne(EaglercraftRandom random, WorldProvider provider, Biome biome, @Nullable C c, Float distanceToSpawn) {
       if (c != null) {
          return super.selectOne(random, c);
       } else {
@@ -48,6 +48,6 @@ public class MixingStructureSelector<T extends GenerationType & EnvironmentalSel
    }
 
    interface Category {
-      int structuresInBiome(Biome var1, WorldProvider var2, double var3, Float var5, Random var6);
+      int structuresInBiome(Biome var1, WorldProvider var2, double var3, Float var5, EaglercraftRandom var6);
    }
 }

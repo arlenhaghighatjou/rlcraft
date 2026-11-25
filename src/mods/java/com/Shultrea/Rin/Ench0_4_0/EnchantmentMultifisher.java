@@ -2,7 +2,7 @@ package com.Shultrea.Rin.Ench0_4_0;
 
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Utility_Sector.EnchantmentsUtility;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -111,7 +111,7 @@ public class EnchantmentMultifisher extends Enchantment {
    }
 
    private void hookShoot(EntityFishHook fishHook) {
-      Random rand = new Random();
+      EaglercraftRandom rand = new EaglercraftRandom();
       float f = fishHook.rotationYaw + (fishHook.rotationYaw - fishHook.prevRotationYaw);
       float f1 = fishHook.prevRotationPitch + (fishHook.rotationPitch - fishHook.prevRotationPitch);
       float f2 = MathHelper.cos(-f1 * 0.017453292F - 3.1415927F);

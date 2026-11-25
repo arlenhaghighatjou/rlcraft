@@ -2,7 +2,7 @@ package tschipp.callablehorses.common;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -53,7 +53,7 @@ public class HorseManager {
                return false;
             }
 
-            Random rand = new Random();
+            EaglercraftRandom rand = new EaglercraftRandom();
             player.world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, WhistleSounds.getRandomWhistle(), SoundCategory.PLAYERS, 1.0F, (float)(1.4D + rand.nextGaussian() / 3.0D));
             AbstractHorse e = findHorseWithStorageID(horseOwner.getStorageUUID(), player.world);
             if (e != null) {

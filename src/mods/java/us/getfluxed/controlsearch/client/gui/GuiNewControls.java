@@ -26,8 +26,8 @@ import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Pre;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class GuiNewControls extends GuiControls {
    private static final Options[] OPTIONS_ARR = new Options[]{Options.INVERT_MOUSE, Options.SENSITIVITY, Options.TOUCHSCREEN, Options.AUTO_JUMP};

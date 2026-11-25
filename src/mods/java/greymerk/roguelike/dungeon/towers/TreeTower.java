@@ -15,7 +15,7 @@ import greymerk.roguelike.worldgen.shapes.RectSolid;
 import greymerk.roguelike.worldgen.shapes.Sphere;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class TreeTower extends Tower {
    public static final Wood WOOD_TYPE = Wood.OAK;
@@ -96,7 +96,7 @@ public class TreeTower extends Tower {
       List<TreeTower.Branch> branches;
       double thickness;
 
-      public Branch(Random rand, Coord start) {
+      public Branch(EaglercraftRandom rand, Coord start) {
          this.start = start.copy();
          this.branches = new ArrayList();
          int counter = 7;
@@ -115,7 +115,7 @@ public class TreeTower extends Tower {
 
       }
 
-      public Branch(Random rand, Coord start, int counter, double length, double thickness, int density, double noise, double pitch, double yaw) {
+      public Branch(EaglercraftRandom rand, Coord start, int counter, double length, double thickness, int density, double noise, double pitch, double yaw) {
          this.start = start.copy();
          this.thickness = thickness < 1.0D ? 1.0D : thickness;
          this.branches = new ArrayList();
@@ -152,7 +152,7 @@ public class TreeTower extends Tower {
 
       }
 
-      public void genLeaves(WorldEditor editor, Random rand) {
+      public void genLeaves(WorldEditor editor, EaglercraftRandom rand) {
          MultiShape leafShape = new MultiShape();
          this.getLeafShape(leafShape, editor.getRandom());
          BlockWeightedRandom leaves = new BlockWeightedRandom();
@@ -161,7 +161,7 @@ public class TreeTower extends Tower {
          leafShape.fill(editor, leaves, true, false);
       }
 
-      public void getLeafShape(MultiShape leaves, Random rand) {
+      public void getLeafShape(MultiShape leaves, EaglercraftRandom rand) {
          if (this.branches.isEmpty()) {
             Coord s = this.end.copy();
             Coord e = s.copy();

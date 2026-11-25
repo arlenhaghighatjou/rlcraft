@@ -3,7 +3,7 @@ package com.fantasticsource.mctools.event;
 import com.fantasticsource.mctools.MCTools;
 import com.fantasticsource.tools.datastructures.Pair;
 import java.util.HashMap;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GametypeChangedEvent extends Event {
-   public static final HashMap<Pair<UUID, Boolean>, GameType> PLAYER_GAMETYPES = new HashMap();
+   public static final HashMap<Pair<EaglercraftUUID, Boolean>, GameType> PLAYER_GAMETYPES = new HashMap();
    public final EntityPlayer player;
    public final GameType oldGameType;
    public final GameType newGameType;
@@ -48,7 +48,7 @@ public class GametypeChangedEvent extends Event {
    public static void playerTick(PlayerTickEvent event) {
       if (event.phase != Phase.END) {
          EntityPlayer player = event.player;
-         Pair<UUID, Boolean> pair = new Pair<UUID, Boolean>(player.getPersistentID(), player instanceof EntityPlayerMP);
+         Pair<EaglercraftUUID, Boolean> pair = new Pair<EaglercraftUUID, Boolean>(player.getPersistentID(), player instanceof EntityPlayerMP);
          GameType oldGameType = (GameType)PLAYER_GAMETYPES.get(pair);
          GameType newGameType = MCTools.getGameType(player);
          if (oldGameType != newGameType) {

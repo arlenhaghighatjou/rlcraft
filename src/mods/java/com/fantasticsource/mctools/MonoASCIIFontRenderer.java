@@ -2,8 +2,8 @@ package com.fantasticsource.mctools;
 
 import com.fantasticsource.tools.datastructures.Color;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -30,7 +30,7 @@ public class MonoASCIIFontRenderer {
          GlStateManager.enableTexture2D();
          TEXTURE_MANAGER.bindTexture(TEXTURE);
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder bufferBuilder = tessellator.getBuffer();
+         WorldRenderer bufferBuilder = tessellator.getBuffer();
          bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
          if (shadowColor.a() > 0) {
             drawText(text, bufferBuilder, x, y + 1.0D, shadowColor);
@@ -51,7 +51,7 @@ public class MonoASCIIFontRenderer {
       return text.length() * (CHAR_WIDTH + 2);
    }
 
-   private static void drawText(String text, BufferBuilder bufferBuilder, double left, double top, Color color) {
+   private static void drawText(String text, WorldRenderer bufferBuilder, double left, double top, Color color) {
       for(char c : text.toCharArray()) {
          if (c < 256) {
             drawChar(c, bufferBuilder, left, top, color.r(), color.g(), color.b(), color.a());
@@ -62,7 +62,7 @@ public class MonoASCIIFontRenderer {
 
    }
 
-   private static void drawChar(char c, BufferBuilder bufferBuilder, double left, double top, int r, int g, int b, int a) {
+   private static void drawChar(char c, WorldRenderer bufferBuilder, double left, double top, int r, int g, int b, int a) {
       double u = (double)(c % 16) * 0.0625D;
       double v = (double)(c >>> 4) * 0.0625D;
       bufferBuilder.pos(left, top, 0.0D).tex(u, v).lightmap(15728880, 15728880).color(r, g, b, a).endVertex();

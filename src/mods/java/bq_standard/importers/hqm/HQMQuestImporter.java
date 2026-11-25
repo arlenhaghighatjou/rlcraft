@@ -50,7 +50,7 @@ import java.util.concurrent.Future;
 import java.util.function.Function;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagList;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class HQMQuestImporter implements IImporter {
    public static final HQMQuestImporter INSTANCE = new HQMQuestImporter();

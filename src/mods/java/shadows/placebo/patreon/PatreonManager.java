@@ -8,8 +8,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumParticleTypes;
@@ -27,7 +27,7 @@ import shadows.placebo.Placebo;
 )
 public class PatreonManager {
    public static final Int2ObjectMap<Consumer<String>> DATA_PARSERS = new Int2ObjectOpenHashMap();
-   public static final Map<UUID, EnumParticleTypes> PATREONS = new HashMap();
+   public static final Map<EaglercraftUUID, EnumParticleTypes> PATREONS = new HashMap();
 
    public PatreonManager() {
    }
@@ -71,7 +71,7 @@ public class PatreonManager {
       if (split.length != 2) {
          Placebo.LOG.error("Invalid patreon data entry (version 0) {} will be ignored.", s);
       } else {
-         UUID id = UUID.fromString(split[0]);
+         EaglercraftUUID id = EaglercraftUUID.fromString(split[0]);
          EnumParticleTypes type = EnumParticleTypes.getByName(split[1]);
          PATREONS.put(id, type);
       }
@@ -80,7 +80,7 @@ public class PatreonManager {
    @SubscribeEvent
    public static void onPlayerTick(PlayerTickEvent e) {
       if (e.player.world.isRemote) {
-         Random rand = Minecraft.getMinecraft().world.rand;
+         EaglercraftRandom rand = Minecraft.getMinecraft().world.rand;
          if (rand.nextInt(35) == 0) {
             EnumParticleTypes type = (EnumParticleTypes)PATREONS.get(e.player.getGameProfile().getId());
             if (type == null) {

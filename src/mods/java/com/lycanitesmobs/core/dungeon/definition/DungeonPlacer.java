@@ -3,7 +3,7 @@ package com.lycanitesmobs.core.dungeon.definition;
 import com.google.gson.JsonObject;
 import com.lycanitesmobs.core.helpers.JSONHelper;
 import java.util.HashSet;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -33,7 +33,7 @@ public abstract class DungeonPlacer {
    public void loadFromJSON(JsonObject json) {
    }
 
-   public abstract BlockPos calculatePosition(World var1, BlockPos var2, Random var3);
+   public abstract BlockPos calculatePosition(World var1, BlockPos var2, EaglercraftRandom var3);
 
    public static class RandomPlacer extends DungeonPlacer {
       private int minY = 64;
@@ -53,7 +53,7 @@ public abstract class DungeonPlacer {
 
       }
 
-      public BlockPos calculatePosition(World world, BlockPos pos, Random random) {
+      public BlockPos calculatePosition(World world, BlockPos pos, EaglercraftRandom random) {
          int y = this.minY;
          if (this.minY < this.maxY) {
             y += random.nextInt(this.maxY - this.minY);
@@ -73,7 +73,7 @@ public abstract class DungeonPlacer {
          this.materialsToIgnore = new HashSet(JSONHelper.getJsonMaterials(json));
       }
 
-      public BlockPos calculatePosition(World world, BlockPos pos, Random random) {
+      public BlockPos calculatePosition(World world, BlockPos pos, EaglercraftRandom random) {
          Chunk chunk = world.getChunkFromBlockCoords(pos);
          MutableBlockPos mutablePos = new MutableBlockPos(pos.getX(), chunk.getTopFilledSegment() + 15, pos.getZ());
 

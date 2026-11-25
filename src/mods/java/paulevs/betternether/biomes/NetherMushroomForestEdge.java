@@ -1,6 +1,6 @@
 package paulevs.betternether.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockNetherWart;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -13,7 +13,7 @@ public class NetherMushroomForestEdge extends NetherMushroomForest {
       super(name);
    }
 
-   public void genFloorObjects(World world, BlockPos pos, Random random) {
+   public void genFloorObjects(World world, BlockPos pos, EaglercraftRandom random) {
       if (random.nextFloat() <= this.plantDensity) {
          if (world.getBlockState(pos).getBlock() != BlocksRegister.BLOCK_NETHER_MYCELIUM && world.getBlockState(pos).getBlock() != Blocks.MYCELIUM) {
             if (world.getBlockState(pos).getBlock() == Blocks.NETHERRACK && random.nextBoolean() && BlocksRegister.BLOCK_NETHER_GRASS != Blocks.AIR) {
@@ -40,7 +40,7 @@ public class NetherMushroomForestEdge extends NetherMushroomForest {
 
    }
 
-   public void genSurfColumn(World world, BlockPos pos, Random random) {
+   public void genSurfColumn(World world, BlockPos pos, EaglercraftRandom random) {
       if (world.getBlockState(pos).getBlock() == Blocks.NETHERRACK) {
          switch(random.nextInt(5)) {
          case 0:

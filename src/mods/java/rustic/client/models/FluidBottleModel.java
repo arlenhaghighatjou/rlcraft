@@ -23,8 +23,8 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -95,13 +95,13 @@ public class FluidBottleModel implements IModel {
       return builder.build();
    }
 
-   public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+   public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter) {
       ImmutableMap<TransformType, TRSRTransformation> transformMap = PerspectiveMapWrapper.getTransforms(state);
       TRSRTransformation transform = (TRSRTransformation)state.apply(Optional.empty()).orElse(TRSRTransformation.identity());
-      TextureAtlasSprite fluidSprite = null;
+      EaglerTextureAtlasSprite fluidSprite = null;
       com.google.common.collect.ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
       if (this.fluid != null) {
-         fluidSprite = (TextureAtlasSprite)bakedTextureGetter.apply(this.fluid.getStill());
+         fluidSprite = (EaglerTextureAtlasSprite)bakedTextureGetter.apply(this.fluid.getStill());
       }
 
       if (this.bottleLocation != null) {
@@ -110,7 +110,7 @@ public class FluidBottleModel implements IModel {
       }
 
       if (this.liquidLocation != null && fluidSprite != null) {
-         TextureAtlasSprite liquid = (TextureAtlasSprite)bakedTextureGetter.apply(this.liquidLocation);
+         EaglerTextureAtlasSprite liquid = (EaglerTextureAtlasSprite)bakedTextureGetter.apply(this.liquidLocation);
          builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, liquid, fluidSprite, 0.468625F, EnumFacing.NORTH, this.fluid.getColor()));
          builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, liquid, fluidSprite, 0.531375F, EnumFacing.SOUTH, this.fluid.getColor()));
       }
@@ -127,11 +127,11 @@ public class FluidBottleModel implements IModel {
       private final Map<String, IBakedModel> cache;
       private final ImmutableMap<TransformType, TRSRTransformation> transforms;
       private final ImmutableList<BakedQuad> quads;
-      private final TextureAtlasSprite particle;
+      private final EaglerTextureAtlasSprite particle;
       private final VertexFormat format;
       private static final TRSRTransformation flipX = new TRSRTransformation((Vector3f)null, (Quat4f)null, new Vector3f(-1.0F, 1.0F, 1.0F), (Quat4f)null);
 
-      public BakedFluidBottle(FluidBottleModel parent, ImmutableList<BakedQuad> quads, TextureAtlasSprite particle, VertexFormat format, ImmutableMap<TransformType, TRSRTransformation> transforms, Map<String, IBakedModel> cache) {
+      public BakedFluidBottle(FluidBottleModel parent, ImmutableList<BakedQuad> quads, EaglerTextureAtlasSprite particle, VertexFormat format, ImmutableMap<TransformType, TRSRTransformation> transforms, Map<String, IBakedModel> cache) {
          this.quads = quads;
          this.particle = particle;
          this.format = format;
@@ -185,7 +185,7 @@ public class FluidBottleModel implements IModel {
          return false;
       }
 
-      public TextureAtlasSprite getParticleTexture() {
+      public EaglerTextureAtlasSprite getParticleTexture() {
          return this.particle;
       }
 
@@ -216,8 +216,8 @@ public class FluidBottleModel implements IModel {
             String name = fluid.getName();
             if (!model.cache.containsKey(name)) {
                IModel parent = model.parent.process(ImmutableMap.of("fluid", name));
-               Function<ResourceLocation, TextureAtlasSprite> textureGetter = new Function<ResourceLocation, TextureAtlasSprite>() {
-                  public TextureAtlasSprite apply(ResourceLocation location) {
+               Function<ResourceLocation, EaglerTextureAtlasSprite> textureGetter = new Function<ResourceLocation, EaglerTextureAtlasSprite>() {
+                  public EaglerTextureAtlasSprite apply(ResourceLocation location) {
                      return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
                   }
                };

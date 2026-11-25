@@ -4,10 +4,10 @@ import com.github.fnar.minecraft.item.ArmourType;
 import com.github.fnar.minecraft.item.Enchantment;
 import com.github.fnar.minecraft.item.RldItem;
 import greymerk.roguelike.treasure.loot.Quality;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SpecialBoots extends SpecialArmour {
-   public SpecialBoots(Random random, Quality quality) {
+   public SpecialBoots(EaglercraftRandom random, Quality quality) {
       this.withQuality(quality);
       this.withRldItem(this.getItem());
       this.withBootsEnchantments(random);
@@ -17,7 +17,7 @@ public class SpecialBoots extends SpecialArmour {
       this.withRandomColour(random);
    }
 
-   private void withBootsEnchantments(Random random) {
+   private void withBootsEnchantments(EaglercraftRandom random) {
       if (random.nextInt(20) == 0) {
          this.withFeatherFalling(random);
       } else {
@@ -26,7 +26,7 @@ public class SpecialBoots extends SpecialArmour {
 
    }
 
-   private void withFeatherFalling(Random random) {
+   private void withFeatherFalling(EaglercraftRandom random) {
       int level = this.getQuality() == Quality.DIAMOND ? 4 : 1 + random.nextInt(3);
       this.withEnchantment(Enchantment.Effect.FEATHER_FALLING.atLevel(level));
       this.withEnchantment(Enchantment.Effect.PROTECTION.atLevel(SpecialArmour.getProtectionLevel(this.getQuality(), random)));

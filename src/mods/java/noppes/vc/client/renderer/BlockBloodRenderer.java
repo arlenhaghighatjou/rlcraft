@@ -1,7 +1,7 @@
 package noppes.vc.client.renderer;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -25,7 +25,7 @@ public class BlockBloodRenderer extends TileEntitySpecialRenderer {
       GlStateManager.disableRescaleNormal();
       GlStateManager.enableAlpha();
       GlStateManager.disableLighting();
-      BufferBuilder tessellator = Tessellator.getInstance().getBuffer();
+      WorldRenderer tessellator = Tessellator.getInstance().getBuffer();
       tessellator.begin(7, DefaultVertexFormats.POSITION_TEX);
       if (var1 != null) {
          int meta = var1.getBlockMetadata();

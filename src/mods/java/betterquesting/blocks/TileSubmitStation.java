@@ -11,7 +11,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.QuestDatabase;
 import betterquesting.storage.QuestSettings;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +42,7 @@ public class TileSubmitStation extends TileEntity implements IFluidHandler, ISid
    private final IFluidHandler fluidHandler = this;
    private NonNullList<ItemStack> itemStack = NonNullList.withSize(2, ItemStack.EMPTY);
    private boolean needsUpdate = false;
-   public UUID owner = null;
+   public EaglercraftUUID owner = null;
    public int questID = -1;
    public int taskID = -1;
    private DBEntry<IQuest> qCached;
@@ -240,7 +240,7 @@ public class TileSubmitStation extends TileEntity implements IFluidHandler, ISid
       }
    }
 
-   public void setupTask(UUID owner, IQuest quest, ITask task) {
+   public void setupTask(EaglercraftUUID owner, IQuest quest, ITask task) {
       if (owner != null && quest != null && task != null) {
          this.questID = QuestDatabase.INSTANCE.getID(quest);
          this.qCached = new DBEntry<IQuest>(this.questID, quest);
@@ -282,7 +282,7 @@ public class TileSubmitStation extends TileEntity implements IFluidHandler, ISid
       ItemStackHelper.loadAllItems(tags.getCompoundTag("inventory"), this.itemStack);
 
       try {
-         this.owner = UUID.fromString(tags.getString("owner"));
+         this.owner = EaglercraftUUID.fromString(tags.getString("owner"));
       } catch (Exception var3) {
          this.reset();
          return;

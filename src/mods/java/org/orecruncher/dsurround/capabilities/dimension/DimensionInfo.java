@@ -1,7 +1,7 @@
 package org.orecruncher.dsurround.capabilities.dimension;
 
 import java.text.DecimalFormat;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -18,7 +18,7 @@ public final class DimensionInfo implements IDimensionInfoEx {
    public static final float MAX_INTENSITY = 1.0F;
    private static final int SPACE_HEIGHT_OFFSET = 32;
    private static final DecimalFormat FORMATTER = new DecimalFormat("0");
-   protected final Random RANDOM = XorShiftRandom.current();
+   protected final EaglercraftRandom RANDOM = XorShiftRandom.current();
    protected final World world;
    private float intensity = 0.0F;
    private float currentIntensity = 0.0F;

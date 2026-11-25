@@ -4,7 +4,7 @@ import betterwithmods.api.FeatureEnabledEvent;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.item.ItemFood;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.TextFormatting;

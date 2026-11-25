@@ -2,7 +2,7 @@ package mcjty.lostcities.dimensions.world.lost;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import mcjty.lostcities.api.RailChunkType;
 import mcjty.lostcities.config.LostCityProfile;
 import mcjty.lostcities.dimensions.world.LostCityChunkGenerator;
@@ -21,7 +21,7 @@ public class Railway {
    }
 
    private static Railway.RailChunkInfo getRailChunkTypeInternal(int chunkX, int chunkZ, LostCityChunkGenerator provider) {
-      Random rand = new QualityRandom(provider.seed + (long)chunkZ * 2600003897L + (long)chunkX * 43600002517L);
+      EaglercraftRandom rand = new QualityRandom(provider.seed + (long)chunkZ * 2600003897L + (long)chunkX * 43600002517L);
       rand.nextFloat();
       rand.nextFloat();
       LostCityProfile profile = BuildingInfo.getProfile(chunkX, chunkZ, provider);

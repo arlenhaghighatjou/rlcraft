@@ -1,7 +1,7 @@
 package com.Shultrea.Rin.Utility_Sector;
 
 import com.Shultrea.Rin.Main_Sector.ModConfig;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LivingAttackFixerHandler {
-   private static final UUID CACHED_UUID = UUID.fromString("e6123481-134f-4c54-a535-29c3a241c7a21");
+   private static final EaglercraftUUID CACHED_UUID = EaglercraftUUID.fromString("e6123481-134f-4c54-a535-29c3a241c7a21");
    private PotionEffect potyon = null;
    int level = 0;
    float addedDamage = 0.0F;

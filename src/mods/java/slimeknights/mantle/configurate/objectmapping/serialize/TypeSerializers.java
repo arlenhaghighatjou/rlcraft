@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -40,7 +40,7 @@ public class TypeSerializers {
    static {
       DEFAULT_SERIALIZERS.registerType(TypeToken.of(URI.class), new TypeSerializers.URISerializer());
       DEFAULT_SERIALIZERS.registerType(TypeToken.of(URL.class), new TypeSerializers.URLSerializer());
-      DEFAULT_SERIALIZERS.registerType(TypeToken.of(UUID.class), new TypeSerializers.UUIDSerializer());
+      DEFAULT_SERIALIZERS.registerType(TypeToken.of(EaglercraftUUID.class), new TypeSerializers.UUIDSerializer());
       DEFAULT_SERIALIZERS.registerPredicate((input) -> {
          return input.getRawType().isAnnotationPresent(ConfigSerializable.class);
       }, new TypeSerializers.AnnotatedObjectSerializer());
@@ -341,19 +341,19 @@ public class TypeSerializers {
       }
    }
 
-   private static class UUIDSerializer implements TypeSerializer<UUID> {
+   private static class UUIDSerializer implements TypeSerializer<EaglercraftUUID> {
       private UUIDSerializer() {
       }
 
-      public UUID deserialize(TypeToken<?> type, ConfigurationNode value) throws ObjectMappingException {
+      public EaglercraftUUID deserialize(TypeToken<?> type, ConfigurationNode value) throws ObjectMappingException {
          try {
-            return UUID.fromString(value.getString());
+            return EaglercraftUUID.fromString(value.getString());
          } catch (IllegalArgumentException var4) {
-            throw new ObjectMappingException("Value not a UUID", var4);
+            throw new ObjectMappingException("Value not a EaglercraftUUID", var4);
          }
       }
 
-      public void serialize(TypeToken<?> type, UUID obj, ConfigurationNode value) throws ObjectMappingException {
+      public void serialize(TypeToken<?> type, EaglercraftUUID obj, ConfigurationNode value) throws ObjectMappingException {
          value.setValue(obj.toString());
       }
    }

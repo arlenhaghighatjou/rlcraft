@@ -2,7 +2,7 @@ package org.orecruncher.lib.chunk;
 
 import com.google.common.base.Predicate;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
@@ -107,7 +107,7 @@ class NullChunk extends Chunk {
    }
 
    @Nonnull
-   public Random getRandomWithSeed(long seed) {
+   public EaglercraftRandom getRandomWithSeed(long seed) {
       throw new UnsupportedOperationException();
    }
 

@@ -3,8 +3,8 @@ package cursedflames.bountifulbaubles.client.render;
 import cursedflames.bountifulbaubles.BountifulBaubles;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -30,7 +30,7 @@ public class ItemlessRender<T extends Entity> extends Render<T> {
       }
 
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       GlStateManager.rotate(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
       GlStateManager.rotate((float)(this.renderManager.options.thirdPersonView == 2 ? -1 : 1) * -this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);

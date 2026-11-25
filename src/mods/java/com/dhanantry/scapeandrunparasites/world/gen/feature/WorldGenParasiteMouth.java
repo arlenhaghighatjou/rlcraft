@@ -3,7 +3,7 @@ package com.dhanantry.scapeandrunparasites.world.gen.feature;
 import com.dhanantry.scapeandrunparasites.block.BlockParasiteStain;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
 import com.dhanantry.scapeandrunparasites.util.ParasiteEventEntity;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockStairs.EnumHalf;
 import net.minecraft.init.Blocks;
@@ -16,7 +16,7 @@ public class WorldGenParasiteMouth extends WorldGenParasiteGenAbstract {
       super(notify);
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       this.genMouth(worldIn, rand, position);
       int rana = rand.nextInt(7) + 1;
       if (rand.nextBoolean()) {
@@ -50,7 +50,7 @@ public class WorldGenParasiteMouth extends WorldGenParasiteGenAbstract {
       return true;
    }
 
-   private void genMouth(World worldIn, Random rand, BlockPos position) {
+   private void genMouth(World worldIn, EaglercraftRandom rand, BlockPos position) {
       for(int yyy = 0; yyy <= 2; ++yyy) {
          for(int xs = -2; xs <= 2; ++xs) {
             for(int zs = -2; zs <= 2; ++zs) {
@@ -89,7 +89,7 @@ public class WorldGenParasiteMouth extends WorldGenParasiteGenAbstract {
       case 0:
          if (bottom) {
             this.setBlockAndNotifyAdequately(worldIn, pos.north(times), SRPBlocks.ParasiteStainFleshStair.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.SOUTH).withProperty(BlockStairs.HALF, EnumHalf.BOTTOM));
-            this.placeColumn(worldIn, pos.north(times).down(), 2, (Random)null, 0.0D);
+            this.placeColumn(worldIn, pos.north(times).down(), 2, (EaglercraftRandom)null, 0.0D);
          } else {
             this.setBlockAndNotifyAdequately(worldIn, pos.north(times), SRPBlocks.ParasiteStainFleshStair.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.SOUTH).withProperty(BlockStairs.HALF, EnumHalf.TOP));
          }
@@ -97,7 +97,7 @@ public class WorldGenParasiteMouth extends WorldGenParasiteGenAbstract {
       case 1:
          if (bottom) {
             this.setBlockAndNotifyAdequately(worldIn, pos.east(times), SRPBlocks.ParasiteStainFleshStair.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST).withProperty(BlockStairs.HALF, EnumHalf.BOTTOM));
-            this.placeColumn(worldIn, pos.east(times).down(), 2, (Random)null, 0.0D);
+            this.placeColumn(worldIn, pos.east(times).down(), 2, (EaglercraftRandom)null, 0.0D);
          } else {
             this.setBlockAndNotifyAdequately(worldIn, pos.east(times), SRPBlocks.ParasiteStainFleshStair.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST).withProperty(BlockStairs.HALF, EnumHalf.TOP));
          }
@@ -106,7 +106,7 @@ public class WorldGenParasiteMouth extends WorldGenParasiteGenAbstract {
       default:
          if (bottom) {
             this.setBlockAndNotifyAdequately(worldIn, pos.south(times), SRPBlocks.ParasiteStainFleshStair.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.NORTH).withProperty(BlockStairs.HALF, EnumHalf.BOTTOM));
-            this.placeColumn(worldIn, pos.south(times).down(), 2, (Random)null, 0.0D);
+            this.placeColumn(worldIn, pos.south(times).down(), 2, (EaglercraftRandom)null, 0.0D);
          } else {
             this.setBlockAndNotifyAdequately(worldIn, pos.south(times), SRPBlocks.ParasiteStainFleshStair.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.NORTH).withProperty(BlockStairs.HALF, EnumHalf.TOP));
          }
@@ -114,7 +114,7 @@ public class WorldGenParasiteMouth extends WorldGenParasiteGenAbstract {
       case 3:
          if (bottom) {
             this.setBlockAndNotifyAdequately(worldIn, pos.west(times), SRPBlocks.ParasiteStainFleshStair.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.EAST).withProperty(BlockStairs.HALF, EnumHalf.BOTTOM));
-            this.placeColumn(worldIn, pos.west(times).down(), 2, (Random)null, 0.0D);
+            this.placeColumn(worldIn, pos.west(times).down(), 2, (EaglercraftRandom)null, 0.0D);
          } else {
             this.setBlockAndNotifyAdequately(worldIn, pos.west(times), SRPBlocks.ParasiteStainFleshStair.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.EAST).withProperty(BlockStairs.HALF, EnumHalf.TOP));
          }
@@ -135,7 +135,7 @@ public class WorldGenParasiteMouth extends WorldGenParasiteGenAbstract {
       }
    }
 
-   private BlockPos placeColumn(World worldIn, BlockPos pos, int in, Random rand, double extraChance) {
+   private BlockPos placeColumn(World worldIn, BlockPos pos, int in, EaglercraftRandom rand, double extraChance) {
       int current = pos.getY();
       int currentY = pos.getY();
       int atm = current;
@@ -155,7 +155,7 @@ public class WorldGenParasiteMouth extends WorldGenParasiteGenAbstract {
    private void placePeri(World worldIn, BlockPos position, int type, int area) {
       for(int i = 0; i <= 3; ++i) {
          BlockPos helper = this.getDirectionRoot(position, i, area);
-         this.placeColumn(worldIn, helper.down(), 2, (Random)null, 0.0D);
+         this.placeColumn(worldIn, helper.down(), 2, (EaglercraftRandom)null, 0.0D);
          if (type == 5) {
             this.placeFlesh(worldIn, helper);
          } else if (type == 1) {
@@ -173,7 +173,7 @@ public class WorldGenParasiteMouth extends WorldGenParasiteGenAbstract {
                helper = this.directionToGrow(rootH, (i + 3) % 4, false);
             }
 
-            this.placeColumn(worldIn, helper.down(), 2, (Random)null, 0.0D);
+            this.placeColumn(worldIn, helper.down(), 2, (EaglercraftRandom)null, 0.0D);
             if (type == 5) {
                this.placeFlesh(worldIn, helper);
             } else if (type == 1) {

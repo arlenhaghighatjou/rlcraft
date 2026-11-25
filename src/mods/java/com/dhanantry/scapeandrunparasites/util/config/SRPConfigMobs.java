@@ -6,7 +6,7 @@ import com.dhanantry.scapeandrunparasites.util.SRPAttributes;
 import java.io.File;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class SRPConfigMobs {
    private static final String CATEGORY_GENERAL_MOBS = "configuration_mobs";

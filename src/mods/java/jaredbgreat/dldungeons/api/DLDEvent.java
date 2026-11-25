@@ -4,7 +4,7 @@ import jaredbgreat.dldungeons.builder.IBlockPlacer;
 import jaredbgreat.dldungeons.planner.Dungeon;
 import jaredbgreat.dldungeons.planner.mapping.MapMatrix;
 import jaredbgreat.dldungeons.rooms.Room;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
@@ -50,10 +50,10 @@ public class DLDEvent extends Event {
       private final int x;
       private final int y;
       private final int z;
-      private final Random random;
+      private final EaglercraftRandom random;
       private final int level;
 
-      public AfterChestTileEntity(World world, TileEntityChest contents, int which, int x, int y, int z, Random random, int level) {
+      public AfterChestTileEntity(World world, TileEntityChest contents, int which, int x, int y, int z, EaglercraftRandom random, int level) {
          this.world = world;
          this.contents = contents;
          this.which = which;
@@ -88,7 +88,7 @@ public class DLDEvent extends Event {
          return this.z;
       }
 
-      public Random getRandom() {
+      public EaglercraftRandom getRandom() {
          return this.random;
       }
 

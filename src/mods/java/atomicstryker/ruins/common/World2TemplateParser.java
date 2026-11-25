@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

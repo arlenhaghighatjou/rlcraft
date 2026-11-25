@@ -2,7 +2,7 @@ package com.charles445.simpledifficulty.block;
 
 import com.charles445.simpledifficulty.api.SDBlocks;
 import com.charles445.simpledifficulty.tileentity.TileEntitySpit;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -51,7 +51,7 @@ public class BlockSpit extends BlockContainer {
       }
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       this.checkCampfireOrDestroy(world, pos, state);
    }
 

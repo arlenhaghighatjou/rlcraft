@@ -7,11 +7,11 @@ import kotlin.jvm.internal.DefaultConstructorMarker;
 import kotlin.jvm.internal.Intrinsics;
 import mods.betterfoliage.client.Client;
 import mods.octarinecore.client.resource.ModelRenderKey;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 @Metadata(
@@ -107,7 +107,7 @@ public final class StandardLeafKey implements ModelRenderKey<LeafInfo> {
          Intrinsics.throwUninitializedPropertyAccessException("generated");
       }
 
-      TextureAtlasSprite var10002 = mods.octarinecore.client.resource.Utils.get(atlas, var10003);
+      EaglerTextureAtlasSprite var10002 = mods.octarinecore.client.resource.Utils.get(atlas, var10003);
       if (var10002 == null) {
          var10002 = atlas.getMissingSprite();
          Intrinsics.checkExpressionValueIsNotNull(var10002, "atlas.missingSprite");

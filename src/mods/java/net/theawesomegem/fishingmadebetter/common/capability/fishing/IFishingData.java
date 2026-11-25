@@ -1,6 +1,6 @@
 package net.theawesomegem.fishingmadebetter.common.capability.fishing;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.theawesomegem.fishingmadebetter.common.data.FishCaughtData;
 import net.theawesomegem.fishingmadebetter.common.networking.packet.PacketKeybindS;
@@ -96,7 +96,7 @@ public interface IFishingData {
 
    void setLineBreak(int var1);
 
-   void startFishing(Random var1, ItemStack var2, Integer[] var3);
+   void startFishing(EaglercraftRandom var1, ItemStack var2, Integer[] var3);
 
    void reset(boolean var1);
 

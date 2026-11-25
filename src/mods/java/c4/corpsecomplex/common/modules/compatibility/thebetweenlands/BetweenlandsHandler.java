@@ -7,7 +7,7 @@ import c4.corpsecomplex.common.modules.inventory.helpers.DeathInventoryHandler;
 import c4.corpsecomplex.common.modules.inventory.helpers.DeathStackHelper;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -41,7 +41,7 @@ public class BetweenlandsHandler extends DeathInventoryHandler {
          EnumEquipmentInventory.VALUES.forEach((value) -> {
             IInventory var10000 = (IInventory)inventories.put(value, this.betweenlandsEquipment.getInventory(value));
          });
-         Random generator = new Random();
+         EaglercraftRandom generator = new EaglercraftRandom();
          NBTTagCompound compound = new NBTTagCompound();
          inventories.forEach((equipment, inventory) -> {
             String name = equipment.toString();

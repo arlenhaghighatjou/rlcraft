@@ -4,7 +4,7 @@ import com.ferreusveritas.dynamictrees.api.TreeHelper;
 import com.ferreusveritas.dynamictrees.blocks.properties.UnlistedPropertyBool;
 import com.ferreusveritas.dynamictrees.blocks.properties.UnlistedPropertyFloat;
 import com.ferreusveritas.dynamictrees.tileentity.TileEntitySpecies;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
@@ -227,11 +227,11 @@ public class BlockRootyWater extends BlockRooty {
       return Blocks.WATER.getDefaultState();
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Items.AIR;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 

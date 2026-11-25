@@ -3,7 +3,7 @@ package bq_standard;
 import betterquesting.api2.storage.INBTPartial;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import java.util.function.Function;
 import javax.annotation.Nonnull;
@@ -11,19 +11,19 @@ import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public class ScoreboardBQ implements INBTPartial<NBTTagList, UUID> {
+public class ScoreboardBQ implements INBTPartial<NBTTagList, EaglercraftUUID> {
    public static final ScoreboardBQ INSTANCE = new ScoreboardBQ();
    private final HashMap<String, ScoreBQ> objectives = new HashMap();
 
    public ScoreboardBQ() {
    }
 
-   public synchronized int getScore(@Nonnull UUID uuid, @Nonnull String scoreName) {
+   public synchronized int getScore(@Nonnull EaglercraftUUID uuid, @Nonnull String scoreName) {
       ScoreBQ score = (ScoreBQ)this.objectives.get(scoreName);
       return score == null ? 0 : score.getScore(uuid);
    }
 
-   public synchronized void setScore(@Nonnull UUID uuid, @Nonnull String scoreName, int value) {
+   public synchronized void setScore(@Nonnull EaglercraftUUID uuid, @Nonnull String scoreName, int value) {
       ScoreBQ score = (ScoreBQ)this.objectives.computeIfAbsent(scoreName, (key) -> {
          return new ScoreBQ();
       });
@@ -45,7 +45,7 @@ public class ScoreboardBQ implements INBTPartial<NBTTagList, UUID> {
 
    }
 
-   public synchronized NBTTagList writeToNBT(NBTTagList nbt, @Nullable List<UUID> users) {
+   public synchronized NBTTagList writeToNBT(NBTTagList nbt, @Nullable List<EaglercraftUUID> users) {
       for(Entry<String, ScoreBQ> entry : this.objectives.entrySet()) {
          NBTTagCompound jObj = new NBTTagCompound();
          jObj.setString("name", (String)entry.getKey());

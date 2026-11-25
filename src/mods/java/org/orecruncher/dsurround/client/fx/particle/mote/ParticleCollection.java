@@ -2,11 +2,11 @@ package org.orecruncher.dsurround.client.fx.particle.mote;
 
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -80,7 +80,7 @@ public class ParticleCollection extends ParticleBase {
       return DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP;
    }
 
-   public void renderParticle(@Nonnull BufferBuilder buffer, @Nonnull Entity entityIn, float partialTicks, float rotX, float rotZ, float rotYZ, float rotXY, float rotXZ) {
+   public void renderParticle(@Nonnull WorldRenderer buffer, @Nonnull Entity entityIn, float partialTicks, float rotX, float rotZ, float rotYZ, float rotXY, float rotXZ) {
       if (this.myParticles.size() != 0) {
          this.bindTexture(this.texture);
          this.preRender();

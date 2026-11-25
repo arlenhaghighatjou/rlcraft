@@ -8,8 +8,8 @@ import gigaherz.toolbelt.network.SwapItems;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 @EventBusSubscriber({Side.CLIENT})
 public class GuiRadialMenu extends GuiScreen {
@@ -253,7 +253,7 @@ public class GuiRadialMenu extends GuiScreen {
                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                GlStateManager.translate(0.0F, animTop, 0.0F);
                Tessellator tessellator = Tessellator.getInstance();
-               BufferBuilder buffer = tessellator.getBuffer();
+               WorldRenderer buffer = tessellator.getBuffer();
                buffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
                boolean hasMouseOver = false;
                ItemStack itemMouseOver = ItemStack.EMPTY;
@@ -368,7 +368,7 @@ public class GuiRadialMenu extends GuiScreen {
       Mouse.setCursorPosition((int)(x * (double)this.mc.displayWidth / (double)this.width), (int)(y * (double)this.mc.displayHeight / (double)this.height));
    }
 
-   private void drawPieArc(BufferBuilder buffer, float x, float y, float z, float radiusIn, float radiusOut, float startAngle, float endAngle, int r, int g, int b, int a) {
+   private void drawPieArc(WorldRenderer buffer, float x, float y, float z, float radiusIn, float radiusOut, float startAngle, float endAngle, int r, int g, int b, int a) {
       float angle = endAngle - startAngle;
       int sections = Math.max(1, MathHelper.ceil(angle / 5.0F));
       startAngle = (float)Math.toRadians((double)startAngle);

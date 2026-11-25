@@ -2,7 +2,7 @@ package com.ferreusveritas.dynamictrees.client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 
 public class TextureUtils {
    public TextureUtils() {
@@ -73,14 +73,14 @@ public class TextureUtils {
          this.pixels = new int[w * h];
       }
 
-      public PixelBuffer(TextureAtlasSprite sprite) {
+      public PixelBuffer(EaglerTextureAtlasSprite sprite) {
          this.w = sprite.getIconWidth();
          this.h = sprite.getIconHeight();
          int[][] data = sprite.getFrameTextureData(0);
          this.pixels = data[0];
       }
 
-      public PixelBuffer(TextureAtlasSprite sprite, boolean copy) {
+      public PixelBuffer(EaglerTextureAtlasSprite sprite, boolean copy) {
          this.w = sprite.getIconWidth();
          this.h = sprite.getIconHeight();
          int[][] original = sprite.getFrameTextureData(0);
@@ -93,7 +93,7 @@ public class TextureUtils {
          this.pixels = Arrays.copyOf(other.pixels, other.pixels.length);
       }
 
-      public void apply(TextureAtlasSprite sprite) {
+      public void apply(EaglerTextureAtlasSprite sprite) {
          if (this.w == sprite.getIconWidth() && this.h == sprite.getIconHeight()) {
             int[][] original = sprite.getFrameTextureData(0);
             int[][] data = new int[original.length][];

@@ -8,9 +8,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemTransformVec3f;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +18,7 @@ import net.minecraftforge.client.model.obj.OBJModel.Normal;
 import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad.Builder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 @SideOnly(Side.CLIENT)
 public class ModelUtils {
@@ -28,15 +28,15 @@ public class ModelUtils {
    public ModelUtils() {
    }
 
-   public static BakedQuad createBakedQuad(VertexFormat format, Vector3f[] vertices, EnumFacing facing, TextureAtlasSprite sprite, double[] uvs, float[] colour, boolean invert) {
+   public static BakedQuad createBakedQuad(VertexFormat format, Vector3f[] vertices, EnumFacing facing, EaglerTextureAtlasSprite sprite, double[] uvs, float[] colour, boolean invert) {
       return createBakedQuad(format, vertices, facing, sprite, uvs, colour, invert, alphaNoFading);
    }
 
-   public static BakedQuad createBakedQuad(VertexFormat format, Vector3f[] vertices, EnumFacing facing, TextureAtlasSprite sprite, double[] uvs, float[] colour, boolean invert, float[] alpha) {
+   public static BakedQuad createBakedQuad(VertexFormat format, Vector3f[] vertices, EnumFacing facing, EaglerTextureAtlasSprite sprite, double[] uvs, float[] colour, boolean invert, float[] alpha) {
       return createBakedQuad(format, vertices, facing, sprite, uvs, colour, invert, alpha, false, (BlockPos)null);
    }
 
-   public static BakedQuad createBakedQuad(VertexFormat format, Vector3f[] vertices, EnumFacing facing, TextureAtlasSprite sprite, double[] uvs, float[] colour, boolean invert, float[] alpha, boolean smartLighting, BlockPos basePos) {
+   public static BakedQuad createBakedQuad(VertexFormat format, Vector3f[] vertices, EnumFacing facing, EaglerTextureAtlasSprite sprite, double[] uvs, float[] colour, boolean invert, float[] alpha, boolean smartLighting, BlockPos basePos) {
       Builder builder = new Builder(format);
       builder.setQuadOrientation(facing);
       builder.setTexture(sprite);
@@ -57,7 +57,7 @@ public class ModelUtils {
       return (BakedQuad)(smartLighting ? new SmartLightingQuad(tmp.getVertexData(), -1, facing, sprite, format, basePos) : tmp);
    }
 
-   protected static void putVertexData(VertexFormat format, Builder builder, Vector3f pos, Normal faceNormal, double u, double v, TextureAtlasSprite sprite, float[] colour, float alpha) {
+   protected static void putVertexData(VertexFormat format, Builder builder, Vector3f pos, Normal faceNormal, double u, double v, EaglerTextureAtlasSprite sprite, float[] colour, float alpha) {
       for(int e = 0; e < format.getElementCount(); ++e) {
          switch(format.getElement(e).getUsage()) {
          case POSITION:
@@ -84,7 +84,7 @@ public class ModelUtils {
 
    }
 
-   public static TextureAtlasSprite getBlockSprite(ResourceLocation path) {
+   public static EaglerTextureAtlasSprite getBlockSprite(ResourceLocation path) {
       if (!path.getResourcePath().contains("blocks/")) {
          path = new ResourceLocation(path.getResourceDomain(), "blocks/" + path.getResourcePath());
       }
@@ -100,13 +100,13 @@ public class ModelUtils {
       return bakeQuads(getBlockSprite(sprite), color);
    }
 
-   public static List<BakedQuad> bakeQuads(TextureAtlasSprite sprite, Color color) {
-      TextureAtlasSprite[] sprites = new TextureAtlasSprite[6];
+   public static List<BakedQuad> bakeQuads(EaglerTextureAtlasSprite sprite, Color color) {
+      EaglerTextureAtlasSprite[] sprites = new EaglerTextureAtlasSprite[6];
       Arrays.fill(sprites, sprite);
       return bakeQuads(sprites, color);
    }
 
-   public static List<BakedQuad> bakeQuads(TextureAtlasSprite[] sprites, Color color) {
+   public static List<BakedQuad> bakeQuads(EaglerTextureAtlasSprite[] sprites, Color color) {
       List<BakedQuad> quads = Lists.newArrayListWithExpectedSize(6);
       float[] colorArray;
       if (color != null) {

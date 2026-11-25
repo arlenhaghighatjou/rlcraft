@@ -7,7 +7,7 @@ import com.Shultrea.Rin.Main_Sector.ModConfig;
 import com.Shultrea.Rin.Main_Sector.somanyenchantments;
 import com.Shultrea.Rin.Utility_Sector.EnchantmentLister;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantment.Rarity;
@@ -57,7 +57,7 @@ public class EnchantmentPandora extends EnchantmentBase implements IEnchantmentG
          if (e.player != null && e.side != Side.CLIENT) {
             EntityPlayer player = e.player;
             InventoryPlayer inv = player.inventory;
-            Random randy = new Random();
+            EaglercraftRandom randy = new EaglercraftRandom();
             if (randy.nextInt(1000) < 1) {
                for(int x = 0; x < inv.mainInventory.size(); ++x) {
                   ItemStack stack = (ItemStack)inv.mainInventory.get(x);

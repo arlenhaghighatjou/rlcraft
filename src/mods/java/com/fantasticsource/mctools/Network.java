@@ -8,8 +8,8 @@ import com.fantasticsource.mctools.sound.SimpleSound;
 import com.fantasticsource.tools.component.CUUID;
 import com.fantasticsource.tools.component.Component;
 import com.fantasticsource.tools.component.path.CPath;
-import io.netty.buffer.ByteBuf;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound.AttenuationType;
 import net.minecraft.entity.Entity;
@@ -383,7 +383,7 @@ public class Network {
 
    public static class RemoveBipedAnimationPacket implements IMessage {
       int entityID;
-      UUID animationID;
+      EaglercraftUUID animationID;
 
       public RemoveBipedAnimationPacket() {
       }

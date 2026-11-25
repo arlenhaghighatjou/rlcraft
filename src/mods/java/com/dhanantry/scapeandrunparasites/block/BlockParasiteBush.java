@@ -2,7 +2,7 @@ package com.dhanantry.scapeandrunparasites.block;
 
 import com.dhanantry.scapeandrunparasites.SRPMain;
 import com.dhanantry.scapeandrunparasites.item.ItemBlockVariant;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
@@ -106,7 +106,7 @@ public class BlockParasiteBush extends BlockBush implements IMetaName {
       return false;
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return null;
    }
 
@@ -118,7 +118,7 @@ public class BlockParasiteBush extends BlockBush implements IMetaName {
       return false;
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return false;
    }
 

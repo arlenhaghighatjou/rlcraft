@@ -1,6 +1,6 @@
 package com.bloodnbonesgaming.loadingscreens.client.gui;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -26,7 +26,7 @@ public class GuiElementTextureTile extends GuiElementTexture {
       double xEndPos = (double)width / this.tileXSize * 2.0D;
       double yEndPos = (double)height / this.tileYSize * 2.0D;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       bufferbuilder.pos((double)(x + 0), (double)(y + height), 0.0D).tex(xStartPos, yEndPos).endVertex();
       bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex(xEndPos, yEndPos).endVertex();

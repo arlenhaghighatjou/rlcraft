@@ -3,7 +3,7 @@ package net.mcft.copy.backpacks.client.gui;
 import java.util.EnumSet;
 import net.mcft.copy.backpacks.client.gui.control.GuiSlider;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

@@ -8,7 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.chunk.ChunkCompileTaskGenerator;
 import net.minecraft.client.renderer.chunk.CompiledChunk;
@@ -112,7 +112,7 @@ public class RenderChunkWorldPortal extends RenderChunk implements IRenderChunkW
                   ForgeHooksClient.setRenderLayer(blockrenderlayer1);
                   int j = blockrenderlayer1.ordinal();
                   if (block.getDefaultState().getRenderType() != EnumBlockRenderType.INVISIBLE) {
-                     BufferBuilder bufferbuilder = generator.getRegionRenderCacheBuilder().getWorldRendererByLayerId(j);
+                     WorldRenderer bufferbuilder = generator.getRegionRenderCacheBuilder().getWorldRendererByLayerId(j);
                      if (!compiledchunk.isLayerStarted(blockrenderlayer1)) {
                         compiledchunk.setLayerStarted(blockrenderlayer1);
                         this.preRenderBlocks(bufferbuilder, blockpos);

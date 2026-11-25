@@ -8,7 +8,7 @@ import betterquesting.api2.storage.SimpleDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
@@ -19,7 +19,7 @@ public class LootGroup extends SimpleDatabase<LootGroup.LootEntry> implements IN
    public LootGroup() {
    }
 
-   public List<BigItemStack> getRandomReward(Random rand) {
+   public List<BigItemStack> getRandomReward(EaglercraftRandom rand) {
       int total = this.getTotalWeight();
       float r = rand.nextFloat() * (float)total;
       int cnt = 0;

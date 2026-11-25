@@ -7,8 +7,8 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleSmokeNormal;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -29,7 +29,7 @@ public class FBPParticleSmokeNormal extends ParticleSmokeNormal {
    Vec2f par;
    ParticleSmokeNormal original;
 
-   protected FBPParticleSmokeNormal(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double mX, double mY, double mZ, float scale, boolean b, TextureAtlasSprite tex, ParticleSmokeNormal original) {
+   protected FBPParticleSmokeNormal(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double mX, double mY, double mZ, float scale, boolean b, EaglerTextureAtlasSprite tex, ParticleSmokeNormal original) {
       super(worldIn, xCoordIn, yCoordIn, zCoordIn, mX, mY, mZ, scale);
       this.original = original;
       this.motionX = mX;
@@ -174,7 +174,7 @@ public class FBPParticleSmokeNormal extends ParticleSmokeNormal {
       this.posZ = (axisalignedbb.minZ + axisalignedbb.maxZ) / 2.0D;
    }
 
-   public void renderParticle(BufferBuilder worldRendererIn, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+   public void renderParticle(WorldRenderer worldRendererIn, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
       if (!FBP.isEnabled() && this.particleMaxAge != 0) {
          this.particleMaxAge = 0;
       }
@@ -193,7 +193,7 @@ public class FBPParticleSmokeNormal extends ParticleSmokeNormal {
       worldRendererIn.setTranslation(0.0D, 0.0D, 0.0D);
    }
 
-   public void putCube(BufferBuilder worldRendererIn, double scale, int j, int k, float r, float g, float b, float a) {
+   public void putCube(WorldRenderer worldRendererIn, double scale, int j, int k, float r, float g, float b, float a) {
       float brightnessForRender = 1.0F;
       float R = 0.0F;
       float G = 0.0F;
@@ -216,7 +216,7 @@ public class FBPParticleSmokeNormal extends ParticleSmokeNormal {
 
    }
 
-   private void addVt(BufferBuilder worldRendererIn, double scale, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a) {
+   private void addVt(WorldRenderer worldRendererIn, double scale, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a) {
       worldRendererIn.pos(pos.x * scale, pos.y * scale, pos.z * scale).tex(u, v).color(r, g, b, a).lightmap(j, k).endVertex();
    }
 

@@ -1,6 +1,6 @@
 package moe.plushie.armourers_workshop.api.common.skin.data;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 
 public interface ISkinDye {
    byte[] getDyeColour(int var1);

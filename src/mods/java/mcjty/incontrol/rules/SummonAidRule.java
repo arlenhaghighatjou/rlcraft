@@ -3,7 +3,7 @@ package mcjty.incontrol.rules;
 import com.google.gson.JsonElement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import mcjty.incontrol.InControl;
 import mcjty.incontrol.compat.ModRuleCompatibilityLayer;
@@ -36,7 +36,7 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class SummonAidRule extends RuleBase<SummonEventGetter> {
    public static final IEventQuery<SummonAidEvent> EVENT_QUERY = new IEventQuery<SummonAidEvent>() {
@@ -77,7 +77,7 @@ public class SummonAidRule extends RuleBase<SummonEventGetter> {
       }
    };
    private static final GenericAttributeMapFactory FACTORY = new GenericAttributeMapFactory();
-   private static Random rnd = new Random();
+   private static EaglercraftRandom rnd = new EaglercraftRandom();
    private final GenericRuleEvaluator ruleEvaluator;
    private Result result;
 

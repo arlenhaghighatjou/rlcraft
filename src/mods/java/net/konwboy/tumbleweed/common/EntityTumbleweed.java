@@ -1,10 +1,10 @@
 package net.konwboy.tumbleweed.common;
 
 import com.google.common.base.Predicate;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.IntFunction;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -33,7 +33,7 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.util.vector.Quaternion;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class EntityTumbleweed extends Entity implements IEntityAdditionalSpawnData {
    public static final int FADE_TIME = 80;
@@ -160,7 +160,7 @@ public class EntityTumbleweed extends Entity implements IEntityAdditionalSpawnDa
 
    public void setEntityId(int id) {
       super.setEntityId(id);
-      Random rand = new Random((long)id);
+      EaglercraftRandom rand = new EaglercraftRandom((long)id);
       this.windMod = 1.05D - 0.1D * rand.nextDouble();
       this.lifetime = 2400 + rand.nextInt(200);
    }

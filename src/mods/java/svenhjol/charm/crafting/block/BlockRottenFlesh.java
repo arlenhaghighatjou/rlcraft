@@ -3,7 +3,7 @@ package svenhjol.charm.crafting.block;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.SoundType;
@@ -47,7 +47,7 @@ public class BlockRottenFlesh extends MesonBlock {
       return "charm";
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       super.updateTick(world, pos, state, rand);
       if (!world.isRemote) {
          if (!RottenFleshBlock.transformToPodzol && !RottenFleshBlock.transformToSoil) {
@@ -78,7 +78,7 @@ public class BlockRottenFlesh extends MesonBlock {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       super.randomDisplayTick(stateIn, worldIn, pos, rand);
       if (RottenFleshBlock.showParticles && rand.nextInt(10) == 0) {
          worldIn.spawnParticle(EnumParticleTypes.TOWN_AURA, (double)((float)pos.getX() + rand.nextFloat()), (double)((float)pos.getY() + 1.1F), (double)((float)pos.getZ() + rand.nextFloat()), 0.0D, 0.0D, 0.0D, new int[0]);

@@ -8,7 +8,7 @@ import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.party.PartyInvitations;
 import java.util.Collections;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
@@ -35,7 +35,7 @@ public class NetInviteSync {
 
    public static void sendSync(@Nonnull EntityPlayerMP player) {
       NBTTagCompound payload = new NBTTagCompound();
-      UUID playerID = QuestingAPI.getQuestingUUID(player);
+      EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(player);
       payload.setInteger("action", 0);
       payload.setTag("data", PartyInvitations.INSTANCE.writeToNBT(new NBTTagList(), Collections.singletonList(playerID)));
       PacketSender.INSTANCE.sendToPlayers(new QuestingPacket(ID_NAME, payload), player);
@@ -55,7 +55,7 @@ public class NetInviteSync {
          PartyInvitations.INSTANCE.readFromNBT(message.getTagList("data", 10), true);
          MinecraftForge.EVENT_BUS.post(new DatabaseEvent.Update(DatabaseEvent.DBType.PARTY));
       } else if (action == 1) {
-         UUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
+         EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
          PartyInvitations.INSTANCE.revokeInvites(playerID, message.getIntArray("IDs"));
          MinecraftForge.EVENT_BUS.post(new DatabaseEvent.Update(DatabaseEvent.DBType.PARTY));
       }

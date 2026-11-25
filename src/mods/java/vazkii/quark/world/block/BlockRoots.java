@@ -2,7 +2,7 @@ package vazkii.quark.world.block;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -52,21 +52,21 @@ public class BlockRoots extends BlockMod implements IQuarkBlock, IShearable, IGr
    protected static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(0.9375D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
    protected static final AxisAlignedBB NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.0625D);
    protected static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.9375D, 1.0D, 1.0D, 1.0D);
-   private final Random rng;
+   private final EaglercraftRandom rng;
 
    public BlockRoots(String name) {
       super(name, Material.VINE, new String[0]);
       this.setDefaultState(this.blockState.getBaseState().withProperty(UP, Boolean.valueOf(false)).withProperty(NORTH, Boolean.valueOf(false)).withProperty(EAST, Boolean.valueOf(false)).withProperty(SOUTH, Boolean.valueOf(false)).withProperty(WEST, Boolean.valueOf(false)));
       this.setTickRandomly(true);
       this.setCreativeTab(CreativeTabs.DECORATIONS);
-      this.rng = new Random();
+      this.rng = new EaglercraftRandom();
    }
 
    public BlockRoots() {
       this("roots");
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote && worldIn.rand.nextInt(2) == 0) {
          this.grow(worldIn, rand, pos, state);
       }
@@ -135,15 +135,15 @@ public class BlockRoots extends BlockMod implements IQuarkBlock, IShearable, IGr
       return worldIn.getLight(pos) < 7;
    }
 
-   public boolean canUseBonemeal(@Nonnull World worldIn, @Nonnull Random rand, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
+   public boolean canUseBonemeal(@Nonnull World worldIn, @Nonnull EaglercraftRandom rand, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
       return (double)rand.nextFloat() < 0.4D;
    }
 
-   public void grow(@Nonnull World worldIn, @Nonnull Random rand, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
+   public void grow(@Nonnull World worldIn, @Nonnull EaglercraftRandom rand, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
       growAndReturnLastPos(worldIn, pos, state, false);
    }
 
-   private static IBlockState nextState(Random rand) {
+   private static IBlockState nextState(EaglercraftRandom rand) {
       if (CaveRoots.enableFlowers && rand.nextFloat() <= CaveRoots.flowerChance) {
          switch(rand.nextInt(3)) {
          case 0:

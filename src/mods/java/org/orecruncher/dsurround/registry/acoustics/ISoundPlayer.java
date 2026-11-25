@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.registry.acoustics;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.util.SoundEvent;
@@ -12,5 +12,5 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public interface ISoundPlayer {
    void playSound(@Nonnull Vec3d var1, @Nonnull SoundEvent var2, float var3, float var4, @Nullable IOptions var5);
 
-   Random getRNG();
+   EaglercraftRandom getRNG();
 }

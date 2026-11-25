@@ -3,8 +3,8 @@ package com.TominoCZ.FBP.util;
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.vector.FBPVector3d;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -14,13 +14,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class FBPRenderUtil {
    public FBPRenderUtil() {
    }
 
-   public static void renderCubeShaded_S(BufferBuilder buf, Vec2f[] par, float f5, float f6, float f7, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a, boolean cartoon) {
+   public static void renderCubeShaded_S(WorldRenderer buf, Vec2f[] par, float f5, float f6, float f7, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a, boolean cartoon) {
       Tessellator.getInstance().draw();
       Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
       buf.begin(7, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
@@ -38,7 +38,7 @@ public class FBPRenderUtil {
       RenderHelper.disableStandardItemLighting();
    }
 
-   public static void renderCubeShaded_WH(BufferBuilder buf, Vec2f[] par, float f5, float f6, float f7, double width, double height, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a, boolean cartoon) {
+   public static void renderCubeShaded_WH(WorldRenderer buf, Vec2f[] par, float f5, float f6, float f7, double width, double height, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a, boolean cartoon) {
       Tessellator.getInstance().draw();
       Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
       buf.begin(7, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
@@ -56,7 +56,7 @@ public class FBPRenderUtil {
       RenderHelper.disableStandardItemLighting();
    }
 
-   static void putCube_S(BufferBuilder worldRendererIn, Vec2f[] par, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a, boolean cartoon) {
+   static void putCube_S(WorldRenderer worldRendererIn, Vec2f[] par, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a, boolean cartoon) {
       float radsX = (float)Math.toRadians(rotVec.x);
       float radsY = (float)Math.toRadians(rotVec.y);
       float radsZ = (float)Math.toRadians(rotVec.z);
@@ -86,7 +86,7 @@ public class FBPRenderUtil {
 
    }
 
-   static void putCube_WH(BufferBuilder worldRendererIn, Vec2f[] par, double width, double height, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a, boolean cartoon) {
+   static void putCube_WH(WorldRenderer worldRendererIn, Vec2f[] par, double width, double height, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a, boolean cartoon) {
       float radsX = (float)Math.toRadians(rotVec.x);
       float radsY = (float)Math.toRadians(rotVec.y);
       float radsZ = (float)Math.toRadians(rotVec.z);
@@ -116,11 +116,11 @@ public class FBPRenderUtil {
 
    }
 
-   static void addVt_S(BufferBuilder worldRendererIn, double scale, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a, Vec3d n) {
+   static void addVt_S(WorldRenderer worldRendererIn, double scale, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a, Vec3d n) {
       worldRendererIn.pos(pos.x * scale, pos.y * scale, pos.z * scale).tex(u, v).color(r, g, b, a).lightmap(j, k).normal((float)n.x, (float)n.y, (float)n.z).endVertex();
    }
 
-   static void addVt_WH(BufferBuilder worldRendererIn, double width, double height, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a, Vec3d n) {
+   static void addVt_WH(WorldRenderer worldRendererIn, double width, double height, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a, Vec3d n) {
       worldRendererIn.pos(pos.x * width, pos.y * height, pos.z * width).tex(u, v).color(r, g, b, a).lightmap(j, k).normal((float)n.x, (float)n.y, (float)n.z).endVertex();
    }
 

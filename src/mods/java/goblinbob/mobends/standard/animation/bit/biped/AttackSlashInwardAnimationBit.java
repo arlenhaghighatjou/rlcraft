@@ -9,7 +9,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.MathHelper;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class AttackSlashInwardAnimationBit extends AnimationBit<BipedEntityData<?>> {
    private static final String[] ACTIONS = new String[]{"attack", "attack_slash_inward"};

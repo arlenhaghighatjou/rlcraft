@@ -9,7 +9,7 @@ import mcjty.lostcities.LostCities;
 import mcjty.lostcities.setup.ModSetup;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.FMLLog;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class ConfigSetup {
    private static Configuration mainConfig;

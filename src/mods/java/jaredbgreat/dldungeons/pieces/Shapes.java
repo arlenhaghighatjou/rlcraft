@@ -1,7 +1,7 @@
 package jaredbgreat.dldungeons.pieces;
 
 import jaredbgreat.dldungeons.planner.Symmetry;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum Shapes {
    X(1, 1, Shape.xgroup),
@@ -25,7 +25,7 @@ public enum Shapes {
       this.family = family;
    }
 
-   public static Shapes wholeShape(Symmetry sym, Random random) {
+   public static Shapes wholeShape(Symmetry sym, EaglercraftRandom random) {
       switch(sym) {
       case NONE:
          return Symmetry.allPart[random.nextInt(Symmetry.allPart.length)];

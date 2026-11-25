@@ -2,8 +2,8 @@ package noppes.vc.client.renderer;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.entity.Render;
@@ -42,7 +42,7 @@ public class RenderProjectile extends Render {
          GlStateManager.rotate(par1EntityProjectile.prevRotationYaw + (par1EntityProjectile.rotationYaw - par1EntityProjectile.prevRotationYaw) * partialTicks - 90.0F, 0.0F, 1.0F, 0.0F);
          GlStateManager.rotate(par1EntityProjectile.prevRotationPitch + (par1EntityProjectile.rotationPitch - par1EntityProjectile.prevRotationPitch) * partialTicks, 0.0F, 0.0F, 1.0F);
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder vertexbuffer = tessellator.getBuffer();
+         WorldRenderer vertexbuffer = tessellator.getBuffer();
          int i = 0;
          float f = 0.0F;
          float f1 = 0.5F;

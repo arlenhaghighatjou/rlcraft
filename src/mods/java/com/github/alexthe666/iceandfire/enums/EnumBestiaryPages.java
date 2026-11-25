@@ -4,7 +4,7 @@ import com.github.alexthe666.iceandfire.item.ItemBestiary;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -98,14 +98,14 @@ public enum EnumBestiaryPages {
    }
 
    public static EnumBestiaryPages getRand() {
-      return values()[(new Random()).nextInt(values().length)];
+      return values()[(new EaglercraftRandom()).nextInt(values().length)];
    }
 
    public static void addRandomPage(ItemStack book) {
       if (book.getItem() instanceof ItemBestiary) {
          List<EnumBestiaryPages> list = possiblePages(book);
          if (list != null && !list.isEmpty()) {
-            addPage((EnumBestiaryPages)list.get((new Random()).nextInt(list.size())), book);
+            addPage((EnumBestiaryPages)list.get((new EaglercraftRandom()).nextInt(list.size())), book);
          }
       }
 

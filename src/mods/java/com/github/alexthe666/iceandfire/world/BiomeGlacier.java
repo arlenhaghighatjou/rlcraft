@@ -1,6 +1,6 @@
 package com.github.alexthe666.iceandfire.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -17,11 +17,11 @@ public class BiomeGlacier extends BiomeSnow {
       this.fillerBlock = Blocks.PACKED_ICE.getDefaultState();
    }
 
-   public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
+   public void genTerrainBlocks(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
       this.generateGlacierBiome(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
    }
 
-   public final void generateGlacierBiome(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
+   public final void generateGlacierBiome(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
       int i = worldIn.getSeaLevel();
       IBlockState iblockstate = this.topBlock;
       IBlockState iblockstate1 = rand.nextInt(5) == 0 ? Blocks.ICE.getDefaultState() : this.fillerBlock;

@@ -2,7 +2,7 @@ package paulevs.betternether.structures;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -31,7 +31,7 @@ public class StructureNBT {
       this.template = template;
    }
 
-   public boolean generateCentered(World world, BlockPos pos, Random random) {
+   public boolean generateCentered(World world, BlockPos pos, EaglercraftRandom random) {
       return this.generateCentered(world, pos, Rotation.values()[random.nextInt(Rotation.values().length)]);
    }
 

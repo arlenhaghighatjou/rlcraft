@@ -15,8 +15,8 @@ import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigMobs;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
@@ -50,7 +50,7 @@ import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 
 public class EntityInfEndermanHead extends EntityPInfected {
    private static final DataParameter<Boolean> SCREAMING = EntityDataManager.createKey(EntityInfEndermanHead.class, DataSerializers.BOOLEAN);
-   private static final UUID ATTACKING_SPEED_BOOST_ID = UUID.fromString("020E0DFB-87AE-4653-9556-831010E291A0");
+   private static final EaglercraftUUID ATTACKING_SPEED_BOOST_ID = EaglercraftUUID.fromString("020E0DFB-87AE-4653-9556-831010E291A0");
    private static final AttributeModifier ATTACKING_SPEED_BOOST = (new AttributeModifier(ATTACKING_SPEED_BOOST_ID, "Attacking speed boost", 0.15000000596046448D, 0)).setSaved(false);
    private int lastCreepySound;
    private int targetChangeTime;
@@ -281,7 +281,7 @@ public class EntityInfEndermanHead extends EntityPInfected {
       boolean flag = false;
       BlockPos blockpos = new BlockPos(this);
       World world = this.world;
-      Random random = this.getRNG();
+      EaglercraftRandom random = this.getRNG();
       if (world.isBlockLoaded(blockpos)) {
          boolean flag1 = false;
 

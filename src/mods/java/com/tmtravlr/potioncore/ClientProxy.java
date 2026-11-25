@@ -1,13 +1,13 @@
 package com.tmtravlr.potioncore;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class ClientProxy extends CommonProxy {
-   Random random = new Random();
+   EaglercraftRandom random = new EaglercraftRandom();
 
    public ClientProxy() {
    }

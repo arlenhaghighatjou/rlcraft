@@ -20,9 +20,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.concurrent.Callable;
 import java.util.function.Predicate;
 import java.util.zip.GZIPInputStream;
@@ -39,7 +39,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class SupporterAPI {
    private static Gson GSON = (new GsonBuilder()).create();
    private static final String charSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv0123456789";
-   private static final Random rand = new Random();
+   private static final EaglercraftRandom rand = new EaglercraftRandom();
 
    public SupporterAPI() {
    }
@@ -218,7 +218,7 @@ public class SupporterAPI {
 
    private static byte[] makeFormat_0(@Nonnull DataOutputStream dos, long seed) throws IOException {
       byte[] b = new byte[16];
-      (new Random(seed)).nextBytes(b);
+      (new EaglercraftRandom(seed)).nextBytes(b);
       dos.writeLong(seed);
       return b;
    }
@@ -249,7 +249,7 @@ public class SupporterAPI {
       for(Tuple<Boolean, String> t : tokens) {
          byte[] b = ((Boolean)t.getFirst()).booleanValue() ? ((String)t.getSecond()).getBytes(StandardCharsets.UTF_8) : new byte[16];
          if (!((Boolean)t.getFirst()).booleanValue()) {
-            (new Random((long)((String)t.getSecond()).hashCode())).nextBytes(b);
+            (new EaglercraftRandom((long)((String)t.getSecond()).hashCode())).nextBytes(b);
          }
 
          l.add(b);
@@ -291,7 +291,7 @@ public class SupporterAPI {
       try {
          byte[] b = new byte[16];
          long seed = dis.readLong();
-         (new Random(seed)).nextBytes(b);
+         (new EaglercraftRandom(seed)).nextBytes(b);
          return b;
       } catch (Exception var4) {
          return new byte[]{127};
@@ -309,7 +309,7 @@ public class SupporterAPI {
 
          String service = new String(Base64.getDecoder().decode(dis.readUTF()));
          int threshold = dis.readInt();
-         UUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
+         EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
          SupporterEntry entry = SupporterDB.INSTANCE.getValue(playerID);
          int m = 0;
          Set<byte[]> encoded = new HashSet();
@@ -320,7 +320,7 @@ public class SupporterAPI {
             });
             byte[] b = c ? k.getBytes(StandardCharsets.UTF_8) : new byte[16];
             if (c) {
-               (new Random((long)k.hashCode())).nextBytes(b);
+               (new EaglercraftRandom((long)k.hashCode())).nextBytes(b);
             }
 
             encoded.add(b);

@@ -10,7 +10,7 @@ import familiarfauna.particle.FFParticleTypes;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
@@ -289,7 +289,7 @@ public class EntityPixie extends EntityAmbientCreature implements EntityFlying {
       }
 
       public void startExecuting() {
-         Random rand = this.pixie.getRNG();
+         EaglercraftRandom rand = this.pixie.getRNG();
          if (!this.tryGoingRandomDirection(rand, 6.0D)) {
             if (!this.tryGoingRandomDirection(rand, 2.0D)) {
                List<EnumFacing> directions = Arrays.asList(EnumFacing.values());
@@ -305,14 +305,14 @@ public class EntityPixie extends EntityAmbientCreature implements EntityFlying {
          }
       }
 
-      public boolean tryGoingRandomDirection(Random rand, double maxDistance) {
+      public boolean tryGoingRandomDirection(EaglercraftRandom rand, double maxDistance) {
          double dirX = (rand.nextDouble() * 2.0D - 1.0D) * maxDistance;
          double dirY = (rand.nextDouble() * 2.0D - 1.1D) * maxDistance;
          double dirZ = (rand.nextDouble() * 2.0D - 1.0D) * maxDistance;
          return this.tryGoing(dirX, dirY, dirZ);
       }
 
-      public boolean tryGoingAlongAxis(Random rand, EnumFacing facing, double maxDistance) {
+      public boolean tryGoingAlongAxis(EaglercraftRandom rand, EnumFacing facing, double maxDistance) {
          double dirX = 0.0D;
          double dirY = 0.0D;
          double dirZ = 0.0D;

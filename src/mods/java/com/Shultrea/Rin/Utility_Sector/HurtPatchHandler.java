@@ -1,7 +1,7 @@
 package com.Shultrea.Rin.Utility_Sector;
 
 import com.Shultrea.Rin.Main_Sector.ModConfig;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class HurtPatchHandler {
-   private static final UUID TWEAKER_UUID = UUID.fromString("e6123481-134f-4c54-a535-29c3a241c7a22");
+   private static final EaglercraftUUID TWEAKER_UUID = EaglercraftUUID.fromString("e6123481-134f-4c54-a535-29c3a241c7a22");
 
    public HurtPatchHandler() {
    }

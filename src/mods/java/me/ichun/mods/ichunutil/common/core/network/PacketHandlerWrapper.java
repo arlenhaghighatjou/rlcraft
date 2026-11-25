@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class PacketHandlerWrapper<REQ extends AbstractPacket> extends SimpleChannelInboundHandler<REQ> {
    private final Side side;

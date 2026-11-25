@@ -1,6 +1,6 @@
 package vazkii.quark.misc.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -30,7 +30,7 @@ public class BlockGlowstoneDust extends BlockQuarkDust {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       if ((double)rand.nextFloat() < 0.1D) {
          float x = (float)pos.getX() + 0.3F + rand.nextFloat() * 0.4F;
          float y = (float)pos.getY() + 0.2F;
@@ -48,7 +48,7 @@ public class BlockGlowstoneDust extends BlockQuarkDust {
    }
 
    @Nonnull
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Items.GLOWSTONE_DUST;
    }
 }

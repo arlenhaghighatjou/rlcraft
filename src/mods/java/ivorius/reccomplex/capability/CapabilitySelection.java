@@ -1,6 +1,6 @@
 package ivorius.reccomplex.capability;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import ivorius.ivtoolkit.blocks.BlockPositions;
 import ivorius.ivtoolkit.network.IvNetworkHelperServer;
 import ivorius.ivtoolkit.network.PartialUpdateHandler;

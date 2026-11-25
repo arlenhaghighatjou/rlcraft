@@ -10,8 +10,8 @@ import de.Whitedraco.switchbow.item.ItemSwitchBow;
 import de.Whitedraco.switchbow.item.ItemSwitchCrossbow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -127,7 +127,7 @@ public class ClientEventHandler {
                GlStateManager.disableAlpha();
                mc.getTextureManager().bindTexture(Scope_Texture);
                Tessellator tessellator = Tessellator.getInstance();
-               BufferBuilder vertexbuffer = tessellator.getBuffer();
+               WorldRenderer vertexbuffer = tessellator.getBuffer();
                vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
                vertexbuffer.pos(c, d + a, -90.0D).tex(0.0D, 1.0D).endVertex();
                vertexbuffer.pos(c + b, d + a, -90.0D).tex(1.0D, 1.0D).endVertex();
@@ -149,7 +149,7 @@ public class ClientEventHandler {
                GlStateManager.disableAlpha();
                mc.getTextureManager().bindTexture(Love_Texture);
                Tessellator tessellator = Tessellator.getInstance();
-               BufferBuilder vertexbuffer = tessellator.getBuffer();
+               WorldRenderer vertexbuffer = tessellator.getBuffer();
                vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
                ScaledResolution scaledRes = new ScaledResolution(mc);
                vertexbuffer.pos(0.0D, (double)scaledRes.getScaledHeight(), -90.0D).tex(0.0D, 1.0D).endVertex();
@@ -187,7 +187,7 @@ public class ClientEventHandler {
                GlStateManager.disableAlpha();
                mc.getTextureManager().bindTexture(Love_Texture);
                Tessellator tessellator = Tessellator.getInstance();
-               BufferBuilder vertexbuffer = tessellator.getBuffer();
+               WorldRenderer vertexbuffer = tessellator.getBuffer();
                vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
                ScaledResolution scaledRes = new ScaledResolution(mc);
                vertexbuffer.pos(0.0D, (double)scaledRes.getScaledHeight(), -90.0D).tex(0.0D, 1.0D).endVertex();

@@ -20,7 +20,7 @@ import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent.Post;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class GuiEventHandler {
    private final IngredientListOverlay ingredientListOverlay;

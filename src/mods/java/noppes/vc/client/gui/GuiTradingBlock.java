@@ -2,11 +2,11 @@ package noppes.vc.client.gui;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -133,7 +133,7 @@ public class GuiTradingBlock extends GuiContainerBasic implements GuiBasic.IGuiD
          if (id.isEmpty()) {
             this.container.tile.trader2 = null;
          } else {
-            this.container.tile.trader2 = this.player.world.getPlayerEntityByUUID(UUID.fromString(id));
+            this.container.tile.trader2 = this.player.world.getPlayerEntityByUUID(EaglercraftUUID.fromString(id));
          }
       } else if (compound.hasKey("State")) {
          this.container.state = compound.getInteger("State");

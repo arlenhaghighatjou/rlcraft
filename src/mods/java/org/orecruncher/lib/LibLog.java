@@ -1,6 +1,6 @@
 package org.orecruncher.lib;
 
-import org.apache.logging.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import org.orecruncher.lib.logging.ModLog;
 
 public final class LibLog {

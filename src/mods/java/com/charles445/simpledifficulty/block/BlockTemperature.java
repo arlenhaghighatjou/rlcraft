@@ -3,7 +3,7 @@ package com.charles445.simpledifficulty.block;
 import com.charles445.simpledifficulty.SimpleDifficulty;
 import com.charles445.simpledifficulty.config.ModConfig;
 import com.charles445.simpledifficulty.tileentity.TileEntityTemperature;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
@@ -63,7 +63,7 @@ public class BlockTemperature extends BlockContainer {
 
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!world.isRemote && ((Boolean)state.getValue(ENABLED)).booleanValue() && !world.isBlockPowered(pos)) {
          this.turnOff(world, pos, state);
       }
@@ -79,7 +79,7 @@ public class BlockTemperature extends BlockContainer {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, EaglercraftRandom rand) {
       super.randomDisplayTick(state, world, pos, rand);
       if (((Boolean)state.getValue(ENABLED)).booleanValue() && rand.nextFloat() <= 0.33F) {
          this.createRandomParticle(world, pos, rand);
@@ -87,7 +87,7 @@ public class BlockTemperature extends BlockContainer {
 
    }
 
-   private void createRandomParticle(World world, BlockPos pos, Random rand) {
+   private void createRandomParticle(World world, BlockPos pos, EaglercraftRandom rand) {
       double x_a = 0.125D;
       double z_a = 0.125D;
       double x_b = 0.0D;

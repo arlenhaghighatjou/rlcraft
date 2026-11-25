@@ -3,7 +3,7 @@ package betterquesting.handlers;
 import betterquesting.api.storage.BQ_Settings;
 import betterquesting.core.BetterQuesting;
 import net.minecraftforge.common.config.Configuration;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class ConfigHandler {
    public static Configuration config;

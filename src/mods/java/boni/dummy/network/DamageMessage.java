@@ -2,7 +2,7 @@ package boni.dummy.network;
 
 import boni.dummy.EntityDummy;
 import boni.dummy.EntityFloatingNumber;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.FMLCommonHandler;

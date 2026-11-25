@@ -1,6 +1,6 @@
 package rustic.common.entities;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -33,7 +33,7 @@ public class EntityTomato extends EntityThrowable {
    @SideOnly(Side.CLIENT)
    public void handleStatusUpdate(byte id) {
       if (id == 3) {
-         Random rand = this.world.rand;
+         EaglercraftRandom rand = this.world.rand;
 
          for(int i = 0; i < rand.nextInt(8) + 4; ++i) {
             this.world.spawnParticle(EnumParticleTypes.ITEM_CRACK, this.posX, this.posY, this.posZ, rand.nextDouble() * 0.06D - 0.03D, rand.nextDouble() * 0.06D - 0.03D, rand.nextDouble() * 0.06D - 0.03D, new int[]{Item.getIdFromItem(ModItems.TOMATO)});

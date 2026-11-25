@@ -3,7 +3,7 @@ package com.ferreusveritas.dynamictrees.blocks;
 import com.ferreusveritas.dynamictrees.entities.EntityFallingTree;
 import com.ferreusveritas.dynamictrees.util.CoordUtils;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -58,7 +58,7 @@ public class BlockTrunkShell extends Block {
       return new BlockStateContainer(this, new IProperty[]{COREDIR});
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (this.getMuseUnchecked(worldIn, state, pos) == null) {
          worldIn.setBlockToAir(pos);
       }
@@ -239,11 +239,11 @@ public class BlockTrunkShell extends Block {
       return BlockFaceShape.UNDEFINED;
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return null;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 
@@ -283,7 +283,7 @@ public class BlockTrunkShell extends Block {
 
          IBlockState museState = muse.state;
          BlockPos musePos = muse.pos;
-         Random rand = world.rand;
+         EaglercraftRandom rand = world.rand;
          int x = musePos.getX();
          int y = musePos.getY();
          int z = musePos.getZ();

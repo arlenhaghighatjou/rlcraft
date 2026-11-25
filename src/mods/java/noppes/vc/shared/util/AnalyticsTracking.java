@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class AnalyticsTracking {
@@ -15,7 +15,7 @@ public class AnalyticsTracking {
       (new Thread(new Runnable() {
          public void run() {
             try {
-               UUID uuid = player.getUniqueID();
+               EaglercraftUUID uuid = player.getUniqueID();
                String analyticsPostData = "v=1&tid=UA-29079943-5&cid=" + uuid.toString() + "&t=event&ec=" + modid + "_" + version + "&ea=" + event + "&el=" + data + "&ev=300";
                URL url = new URL("http://www.google-analytics.com/collect");
                HttpURLConnection connection = (HttpURLConnection)url.openConnection();

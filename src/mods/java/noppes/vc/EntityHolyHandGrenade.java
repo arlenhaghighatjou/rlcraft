@@ -1,7 +1,7 @@
 package noppes.vc;
 
 import java.util.Optional;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -392,7 +392,7 @@ public class EntityHolyHandGrenade extends EntityThrowable {
    public EntityLivingBase getThrower() {
       if (this.throwerName != null && !this.throwerName.isEmpty()) {
          try {
-            UUID uuid = UUID.fromString(this.throwerName);
+            EaglercraftUUID uuid = EaglercraftUUID.fromString(this.throwerName);
             if (this.thrower == null && uuid != null) {
                this.thrower = this.world.getPlayerEntityByUUID(uuid);
             }

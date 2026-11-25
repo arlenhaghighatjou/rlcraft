@@ -1,6 +1,6 @@
 package reborncore.common.util;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
@@ -11,7 +11,7 @@ public class OreDropSet {
       this.dropSet = oreDrops;
    }
 
-   public NonNullList<ItemStack> drop(int fortune, Random random) {
+   public NonNullList<ItemStack> drop(int fortune, EaglercraftRandom random) {
       NonNullList<ItemStack> drops = NonNullList.create();
 
       for(OreDrop drop : this.dropSet) {

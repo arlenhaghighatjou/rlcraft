@@ -1,7 +1,7 @@
 package noppes.vc.client;
 
 import java.awt.Color;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -87,7 +87,7 @@ public class ClientProxy extends CommonProxy {
          int number = ((Integer)ob[1]).intValue();
 
          for(int i = 0; i < number; ++i) {
-            Random rand = player.getRNG();
+            EaglercraftRandom rand = player.getRNG();
             double x = (rand.nextDouble() - 0.5D) * (double)player.width;
             double y = (double)player.getEyeHeight();
             double z = (rand.nextDouble() - 0.5D) * (double)player.width;

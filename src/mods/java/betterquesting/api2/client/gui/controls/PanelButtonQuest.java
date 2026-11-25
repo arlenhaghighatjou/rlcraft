@@ -24,7 +24,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -91,7 +91,7 @@ public class PanelButtonQuest extends PanelButtonStorage<DBEntry<IQuest>> {
    private List<String> getStandardTooltip(IQuest quest, EntityPlayer player, int qID) {
       List<String> list = new ArrayList();
       list.add(QuestTranslation.translate((String)quest.getProperty(NativeProps.NAME)) + (!Minecraft.getMinecraft().gameSettings.advancedItemTooltips ? "" : " #" + qID));
-      UUID playerID = QuestingAPI.getQuestingUUID(player);
+      EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(player);
       if (quest.isComplete(playerID)) {
          list.add(TextFormatting.GREEN + QuestTranslation.translate("betterquesting.tooltip.complete"));
          if (!quest.hasClaimed(playerID)) {

@@ -4,7 +4,7 @@ import com.lycanitesmobs.ObjectManager;
 import com.lycanitesmobs.client.localisation.LanguageManager;
 import com.lycanitesmobs.core.info.ModInfo;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -33,7 +33,7 @@ public class BlockDoubleSlab extends BlockPillar {
       return "§a" + LanguageManager.translate(this.getUnlocalizedName() + ".description");
    }
 
-   public Item getItemDropped(IBlockState state, Random random, int zero) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom random, int zero) {
       Block slabBlock = ObjectManager.getBlock(this.slabName);
       return slabBlock != null ? Item.getItemFromBlock(slabBlock) : super.getItemDropped(state, random, zero);
    }
@@ -42,7 +42,7 @@ public class BlockDoubleSlab extends BlockPillar {
       return 0;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return ObjectManager.getBlock(this.slabName) != null ? 2 : 1;
    }
 }

@@ -1,9 +1,9 @@
 package vazkii.quark.world.client.model;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class ModelWraith extends ModelBase {
@@ -28,7 +28,7 @@ public class ModelWraith extends ModelBase {
 
    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
       GlStateManager.pushMatrix();
-      Random rng = new Random((long)entity.getEntityId());
+      EaglercraftRandom rng = new EaglercraftRandom((long)entity.getEntityId());
       float time = (float)entity.ticksExisted + f + (float)rng.nextInt(10000000);
       GlStateManager.translate(0.0D, Math.sin((double)(time / 16.0F)) * 0.1D + 0.15D, 0.0D);
       this.leftArm.rotateAngleX = (float)Math.toRadians((double)(-50.0F + rng.nextFloat() * 20.0F));

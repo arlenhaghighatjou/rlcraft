@@ -5,7 +5,7 @@ import com.oblivioussp.spartanweaponry.ModSpartanWeaponry;
 import com.oblivioussp.spartanweaponry.item.ItemQuiverBase;
 import com.oblivioussp.spartanweaponry.util.QuiverHelper;
 import com.oblivioussp.spartanweaponry.util.StringHelper;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;

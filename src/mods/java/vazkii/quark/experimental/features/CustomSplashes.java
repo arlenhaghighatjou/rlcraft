@@ -1,6 +1,6 @@
 package vazkii.quark.experimental.features;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
@@ -12,7 +12,7 @@ import vazkii.quark.base.module.Feature;
 
 public class CustomSplashes extends Feature {
    private static String[] splashes;
-   private static final Random rand = new Random();
+   private static final EaglercraftRandom rand = new EaglercraftRandom();
    private static boolean inMainMenu = false;
 
    public CustomSplashes() {

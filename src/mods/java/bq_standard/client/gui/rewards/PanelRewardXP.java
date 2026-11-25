@@ -13,7 +13,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import bq_standard.rewards.RewardXP;
 import net.minecraft.init.Items;
 import net.minecraft.util.text.TextFormatting;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class PanelRewardXP extends CanvasEmpty {
    private final RewardXP reward;

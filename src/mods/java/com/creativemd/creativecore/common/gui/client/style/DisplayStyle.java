@@ -1,7 +1,7 @@
 package com.creativemd.creativecore.common.gui.client.style;
 
 import com.creativemd.creativecore.common.gui.GuiRenderHelper;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public abstract class DisplayStyle {
    public static DisplayStyle emptyDisplay = new DisplayStyle() {

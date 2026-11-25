@@ -16,7 +16,7 @@ import ivorius.reccomplex.world.gen.feature.structure.generic.generation.Generat
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
@@ -76,12 +76,12 @@ public class StructureSelector<T extends GenerationType & EnvironmentalSelection
    }
 
    @Nullable
-   public Pair<Structure<?>, T> selectOne(Random random, @Nonnull C c) {
+   public Pair<Structure<?>, T> selectOne(EaglercraftRandom random, @Nonnull C c) {
       return this.selectOne(random, c, this.totalWeight(c));
    }
 
    @Nullable
-   public Pair<Structure<?>, T> selectOne(Random random, @Nonnull C c, double totalWeight) {
+   public Pair<Structure<?>, T> selectOne(EaglercraftRandom random, @Nonnull C c, double totalWeight) {
       return totalWeight > 0.0D ? (Pair)WeightedSelector.select(random, this.weightedStructureInfos.get(c)) : null;
    }
 

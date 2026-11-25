@@ -5,8 +5,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -254,7 +254,7 @@ public final class LightLevelHUD extends GuiOverlay {
 
       float rotationAngle = playerFacing.getOpposite().getHorizontalAngle();
       sheet.bindTexture();
-      BufferBuilder renderer = Tessellator.getInstance().getBuffer();
+      WorldRenderer renderer = Tessellator.getInstance().getBuffer();
 
       for(int i = 0; i < nextCoord; ++i) {
          LightLevelHUD.LightCoord coord = (LightLevelHUD.LightCoord)lightLevels.get(i);

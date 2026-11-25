@@ -1,6 +1,6 @@
 package net.silentchaos512.lib.config;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.config.Configuration;
@@ -29,7 +29,7 @@ public class ConfigOptionOreGen {
       this.maxY = maxY;
    }
 
-   public int getVeinCount(Random random) {
+   public int getVeinCount(EaglercraftRandom random) {
       float diff = this.veinCount - (float)((int)this.veinCount);
       return (int)this.veinCount + (random.nextFloat() < diff ? 1 : 0);
    }
@@ -64,7 +64,7 @@ public class ConfigOptionOreGen {
       return this.veinCount > 0.0F && this.veinSize > 0;
    }
 
-   public BlockPos getRandomPos(Random random, int posX, int posZ) {
+   public BlockPos getRandomPos(EaglercraftRandom random, int posX, int posZ) {
       return new BlockPos(posX + random.nextInt(16), this.minY + random.nextInt(this.maxY - this.minY), posZ + random.nextInt(16));
    }
 

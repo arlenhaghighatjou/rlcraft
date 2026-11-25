@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.Function;
 import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

@@ -1,6 +1,6 @@
 package paulevs.betternether.structures.plants;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockNetherrack;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -13,7 +13,7 @@ public class StructureStalagnate implements IStructure {
    public StructureStalagnate() {
    }
 
-   public void generate(World chunk, BlockPos pos, Random random) {
+   public void generate(World chunk, BlockPos pos, EaglercraftRandom random) {
       BlockPos up = this.upRay(chunk, pos);
       if (up != BlockPos.ORIGIN) {
          IBlockState bottom = BlocksRegister.BLOCK_STALAGNATE_BOTTOM.getDefaultState();

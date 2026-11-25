@@ -2,9 +2,9 @@ package com.endertech.minecraft.forge.configs;
 
 import com.endertech.common.CommonString;
 import com.endertech.minecraft.forge.math.Vect3d;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.Locale;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -61,7 +61,7 @@ public final class ForgeNBT {
       return ForgeNBT.Types.NULL;
    }
 
-   public static void writeUUID(NBTTagCompound compound, String key, UUID uuid) {
+   public static void writeUUID(NBTTagCompound compound, String key, EaglercraftUUID uuid) {
       if (compound != null) {
          NBTTagCompound tag = new NBTTagCompound();
          tag.setLong(ForgeNBT.UUIDKeys.m.name(), uuid.getMostSignificantBits());
@@ -71,9 +71,9 @@ public final class ForgeNBT {
 
    }
 
-   public static UUID readUUID(NBTTagCompound compound, String key) {
+   public static EaglercraftUUID readUUID(NBTTagCompound compound, String key) {
       NBTTagCompound tag = compound.getCompoundTag(key);
-      return new UUID(tag.getLong(ForgeNBT.UUIDKeys.m.name()), tag.getLong(ForgeNBT.UUIDKeys.l.name()));
+      return new EaglercraftUUID(tag.getLong(ForgeNBT.UUIDKeys.m.name()), tag.getLong(ForgeNBT.UUIDKeys.l.name()));
    }
 
    public static void writeVec3d(NBTTagCompound compound, String key, Vect3d vec) {

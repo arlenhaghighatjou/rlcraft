@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
@@ -31,8 +31,8 @@ import org.apache.commons.io.IOUtils;
 
 public class PlayerFamiliars {
    public static PlayerFamiliars INSTANCE = new PlayerFamiliars();
-   public Map<UUID, Map<UUID, PetEntry>> playerFamiliars = new HashMap();
-   public Map<UUID, Long> playerFamiliarLoadedTimes = new HashMap();
+   public Map<EaglercraftUUID, Map<EaglercraftUUID, PetEntry>> playerFamiliars = new HashMap();
+   public Map<EaglercraftUUID, Long> playerFamiliarLoadedTimes = new HashMap();
    public List<String> familiarBlacklist = new ArrayList();
    public SSLContext sslContext;
 
@@ -68,9 +68,9 @@ public class PlayerFamiliars {
          while(jsonIterator.hasNext()) {
             try {
                JsonObject familiarJson = ((JsonElement)jsonIterator.next()).getAsJsonObject();
-               UUID minecraft_uuid = UUID.fromString(familiarJson.get("minecraft_uuid").getAsString());
+               EaglercraftUUID minecraft_uuid = EaglercraftUUID.fromString(familiarJson.get("minecraft_uuid").getAsString());
                if (!this.familiarBlacklist.contains(minecraft_uuid.toString())) {
-                  UUID familiar_uuid = UUID.fromString(familiarJson.get("familiar_uuid").getAsString());
+                  EaglercraftUUID familiar_uuid = EaglercraftUUID.fromString(familiarJson.get("familiar_uuid").getAsString());
                   String familiar_species = familiarJson.get("familiar_species").getAsString();
                   CreatureInfo creatureInfo = CreatureManager.getInstance().getCreature(familiar_species);
                   int familiar_subspecies = familiarJson.get("familiar_subspecies").getAsInt();
@@ -117,7 +117,7 @@ public class PlayerFamiliars {
 
    }
 
-   public Map<UUID, PetEntry> getFamiliarsForPlayer(EntityPlayer player) {
+   public Map<EaglercraftUUID, PetEntry> getFamiliarsForPlayer(EntityPlayer player) {
       long currentTime = System.currentTimeMillis() / 1000L;
       long loadedTime = this.getPlayerFamiliarLoadedTime(player);
       if (loadedTime < 0L || currentTime - loadedTime > 1800L) {
@@ -127,7 +127,7 @@ public class PlayerFamiliars {
          thread.start();
       }
 
-      Map<UUID, PetEntry> playerFamiliarEntries = new HashMap();
+      Map<EaglercraftUUID, PetEntry> playerFamiliarEntries = new HashMap();
       if (this.playerFamiliars.containsKey(player.getUniqueID())) {
          playerFamiliarEntries = (Map)this.playerFamiliars.get(player.getUniqueID());
 
@@ -142,7 +142,7 @@ public class PlayerFamiliars {
    }
 
    public long getPlayerFamiliarLoadedTime(EntityPlayer player) {
-      UUID uuid = player.getUniqueID();
+      EaglercraftUUID uuid = player.getUniqueID();
       return !this.playerFamiliarLoadedTimes.containsKey(uuid) ? -1L : ((Long)this.playerFamiliarLoadedTimes.get(uuid)).longValue();
    }
 
@@ -201,7 +201,7 @@ public class PlayerFamiliars {
          PlayerFamiliars.INSTANCE.updatePlayerFamiliarLoadedTime(this.player);
       }
 
-      private void getForPlayerUUID(UUID uuid) {
+      private void getForPlayerUUID(EaglercraftUUID uuid) {
          String jsonString;
          try {
             URL url = new URL("https://service.lycanitesmobs.com/api/v1/familiars?minecraft_uuid=" + uuid.toString());

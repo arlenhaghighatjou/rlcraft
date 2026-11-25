@@ -1,7 +1,7 @@
 package jaredbgreat.dldungeons.pieces.chests;
 
 import jaredbgreat.dldungeons.builder.AbstractBlock;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -11,7 +11,7 @@ public class WeakChest extends BasicChest {
       super(x, y, z, 0, category);
    }
 
-   public void place(World world, int x, int y, int z, Random random) {
+   public void place(World world, int x, int y, int z, EaglercraftRandom random) {
       BlockPos pos = new BlockPos(x, y, z);
       TileEntityChest contents = (TileEntityChest)world.getTileEntity(pos);
       if (world.getBlockState(pos).getBlock() != AbstractBlock.chest) {

@@ -5,7 +5,7 @@ import c4.corpsecomplex.common.modules.inventory.capability.IDeathInventory;
 import c4.corpsecomplex.common.modules.inventory.enchantment.EnchantmentModule;
 import c4.corpsecomplex.common.modules.inventory.helpers.DeathInventoryHandler;
 import c4.corpsecomplex.common.modules.inventory.helpers.DeathStackHelper;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.mcft.copy.backpacks.api.BackpackHelper;
 import net.mcft.copy.backpacks.api.IBackpack;
 import net.mcft.copy.backpacks.api.IBackpackData;
@@ -41,7 +41,7 @@ public class WBHandler extends DeathInventoryHandler {
          }
 
          if (!stack.isEmpty()) {
-            Random generator = new Random();
+            EaglercraftRandom generator = new EaglercraftRandom();
             boolean essential = DeathStackHelper.isEssential(stack);
             boolean cursed = !essential && DeathStackHelper.isCursed(stack);
             boolean store = this.checkToStore(0) && !cursed || essential;

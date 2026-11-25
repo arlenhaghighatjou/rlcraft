@@ -3,7 +3,7 @@ package noppes.vc.shared.gui;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiHoverText extends GuiScreen {

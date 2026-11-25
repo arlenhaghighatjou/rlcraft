@@ -2,8 +2,8 @@ package slimeknights.mantle.pulsar.debug;
 
 import com.google.common.eventbus.Subscribe;
 import net.minecraftforge.fml.common.Loader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import slimeknights.mantle.pulsar.pulse.Pulse;
 
 @Pulse(

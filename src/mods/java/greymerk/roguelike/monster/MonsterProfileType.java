@@ -17,7 +17,7 @@ import greymerk.roguelike.monster.profiles.ProfileWitch;
 import greymerk.roguelike.monster.profiles.ProfileWitherSkeleton;
 import greymerk.roguelike.monster.profiles.ProfileZombie;
 import greymerk.roguelike.monster.profiles.ProfileZombieVillager;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum MonsterProfileType {
    ARCHER(new ProfileArcher()),
@@ -44,7 +44,7 @@ public enum MonsterProfileType {
       this.monsterProfile = monsterProfile;
    }
 
-   public Mob apply(Mob mob, int level, int difficulty, Random rand) {
+   public Mob apply(Mob mob, int level, int difficulty, EaglercraftRandom rand) {
       return this.monsterProfile.apply(mob, level, difficulty, rand);
    }
 }

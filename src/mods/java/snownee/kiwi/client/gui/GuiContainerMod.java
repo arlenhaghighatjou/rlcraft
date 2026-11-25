@@ -6,7 +6,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 import snownee.kiwi.client.gui.component.Component;
 
 public abstract class GuiContainerMod extends GuiContainer implements IMessageHandler {

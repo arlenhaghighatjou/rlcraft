@@ -1,7 +1,7 @@
 package net.ilexiconn.llibrary.client.model.obj;
 
 import java.util.Locale;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class Vertex {
    private Vector3f position;

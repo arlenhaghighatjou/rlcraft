@@ -15,7 +15,7 @@ import ivorius.reccomplex.world.gen.feature.structure.generic.generation.Generat
 import ivorius.reccomplex.world.gen.feature.structure.generic.generation.VanillaDecorationGeneration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -38,7 +38,7 @@ public class RCBiomeDecorator {
    }
 
    @ParametersAreNonnullByDefault
-   public static Result decorate(WorldServer worldIn, Random random, BlockPos chunkPos, RCBiomeDecorator.DecorationType type) {
+   public static Result decorate(WorldServer worldIn, EaglercraftRandom random, BlockPos chunkPos, RCBiomeDecorator.DecorationType type) {
       try {
          return doDecorate(worldIn, random, chunkPos, type);
       } catch (Exception var5) {
@@ -47,7 +47,7 @@ public class RCBiomeDecorator {
       }
    }
 
-   protected static Result doDecorate(WorldServer worldIn, Random random, BlockPos chunkPos, RCBiomeDecorator.DecorationType type) {
+   protected static Result doDecorate(WorldServer worldIn, EaglercraftRandom random, BlockPos chunkPos, RCBiomeDecorator.DecorationType type) {
       Biome biomeIn = worldIn.getBiome(chunkPos.add(16, 0, 16));
       BiomeDecorator decorator = biomeIn.decorator;
       RCBiomeDecorator.Adapter adapter = adapter(worldIn, chunkPos, type, biomeIn, decorator);
@@ -73,7 +73,7 @@ public class RCBiomeDecorator {
    }
 
    @ParametersAreNonnullByDefault
-   public static int decorate(WorldServer worldIn, Random random, BlockPos chunkPos, RCBiomeDecorator.DecorationType type, int amount) {
+   public static int decorate(WorldServer worldIn, EaglercraftRandom random, BlockPos chunkPos, RCBiomeDecorator.DecorationType type, int amount) {
       try {
          return doDecorate(worldIn, random, chunkPos, type, amount, false);
       } catch (Exception var6) {
@@ -82,7 +82,7 @@ public class RCBiomeDecorator {
       }
    }
 
-   protected static int doDecorate(WorldServer worldIn, Random random, BlockPos blockPos, RCBiomeDecorator.DecorationType type, int amount, boolean lowChance) {
+   protected static int doDecorate(WorldServer worldIn, EaglercraftRandom random, BlockPos blockPos, RCBiomeDecorator.DecorationType type, int amount, boolean lowChance) {
       ChunkPos chunkPos = new ChunkPos(blockPos);
       double baseWeight = RCConfig.baseDecorationWeights.get(type) * (double)(RCConfig.isGenerationEnabled(worldIn.provider) ? 1 : 0);
       if (baseWeight <= 0.0D) {
@@ -95,7 +95,7 @@ public class RCBiomeDecorator {
       }
    }
 
-   public static Pair<Structure<?>, VanillaDecorationGeneration> selectDecoration(WorldServer worldIn, Random random, BlockPos blockPos, RCBiomeDecorator.DecorationType type) {
+   public static Pair<Structure<?>, VanillaDecorationGeneration> selectDecoration(WorldServer worldIn, EaglercraftRandom random, BlockPos blockPos, RCBiomeDecorator.DecorationType type) {
       ChunkPos chunkPos = new ChunkPos(blockPos);
       double baseWeight = RCConfig.baseDecorationWeights.get(type) * (double)(RCConfig.isGenerationEnabled(worldIn.provider) ? 1 : 0);
       if (baseWeight <= 0.0D) {
@@ -118,7 +118,7 @@ public class RCBiomeDecorator {
       }).findFirst().orElse(vanillaAdapter);
    }
 
-   public static int tryGenerate(WorldServer worldIn, Random random, ChunkPos chunkPos, StructureSelector<VanillaDecorationGeneration, RCBiomeDecorator.DecorationType> selector, RCBiomeDecorator.DecorationType type, double totalWeight, double baseWeight, int vanillaAmount, boolean mayGiveUp) {
+   public static int tryGenerate(WorldServer worldIn, EaglercraftRandom random, ChunkPos chunkPos, StructureSelector<VanillaDecorationGeneration, RCBiomeDecorator.DecorationType> selector, RCBiomeDecorator.DecorationType type, double totalWeight, double baseWeight, int vanillaAmount, boolean mayGiveUp) {
       int rcAmount = amount(random, totalWeight * baseWeight, vanillaAmount);
       if (rcAmount <= 0 && mayGiveUp) {
          return -1;
@@ -136,7 +136,7 @@ public class RCBiomeDecorator {
       }
    }
 
-   public static boolean generate(Pair<Structure<?>, VanillaDecorationGeneration> generation, WorldServer worldIn, ChunkPos chunkPos, Random random) {
+   public static boolean generate(Pair<Structure<?>, VanillaDecorationGeneration> generation, WorldServer worldIn, ChunkPos chunkPos, EaglercraftRandom random) {
       long seed = random.nextLong();
       return (new StructureGenerator((Structure)generation.getLeft())).generationInfo((GenerationType)generation.getRight()).world(worldIn).seed(Long.valueOf(seed)).maturity(StructureSpawnContext.GenerateMaturity.SUGGEST).partially(true, chunkPos).allowOverlaps(true).randomPosition(WorldGenStructures.randomSurfacePos(chunkPos, seed), ((VanillaDecorationGeneration)generation.getRight()).placer()).fromCenter(true).generate().succeeded();
    }
@@ -147,7 +147,7 @@ public class RCBiomeDecorator {
       };
    }
 
-   protected static int amount(Random random, double totalWeight, int picks) {
+   protected static int amount(EaglercraftRandom random, double totalWeight, int picks) {
       int amount = 0;
 
       for(int i = 0; i < picks; ++i) {
@@ -162,11 +162,11 @@ public class RCBiomeDecorator {
    interface Adapter {
       boolean matches(WorldServer var1, Biome var2, BiomeDecorator var3, BlockPos var4, RCBiomeDecorator.DecorationType var5);
 
-      int amount(WorldServer var1, Random var2, Biome var3, BiomeDecorator var4, BlockPos var5, RCBiomeDecorator.DecorationType var6);
+      int amount(WorldServer var1, EaglercraftRandom var2, Biome var3, BiomeDecorator var4, BlockPos var5, RCBiomeDecorator.DecorationType var6);
 
-      boolean mayGiveUp(WorldServer var1, Random var2, Biome var3, BiomeDecorator var4, BlockPos var5, RCBiomeDecorator.DecorationType var6);
+      boolean mayGiveUp(WorldServer var1, EaglercraftRandom var2, Biome var3, BiomeDecorator var4, BlockPos var5, RCBiomeDecorator.DecorationType var6);
 
-      void generate(WorldServer var1, Random var2, Biome var3, BiomeDecorator var4, BlockPos var5, RCBiomeDecorator.DecorationType var6);
+      void generate(WorldServer var1, EaglercraftRandom var2, Biome var3, BiomeDecorator var4, BlockPos var5, RCBiomeDecorator.DecorationType var6);
    }
 
    public static enum DecorationType {

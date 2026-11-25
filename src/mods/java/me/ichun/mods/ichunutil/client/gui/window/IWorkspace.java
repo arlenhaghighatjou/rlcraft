@@ -10,10 +10,10 @@ import me.ichun.mods.ichunutil.client.gui.window.element.ITextInput;
 import me.ichun.mods.ichunutil.client.render.RendererHelper;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.text.translation.I18n;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public abstract class IWorkspace extends GuiScreen {
    public int oldWidth;

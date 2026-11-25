@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.fx.particle;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.client.particle.ParticleBubble;
 import net.minecraft.entity.Entity;
@@ -18,7 +18,7 @@ public class ParticleBubbleBreath extends ParticleBubble {
 
    public ParticleBubbleBreath(@Nonnull Entity entity, boolean isDrowning) {
       super(entity.getEntityWorld(), 0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
-      Random random = XorShiftRandom.current();
+      EaglercraftRandom random = XorShiftRandom.current();
       boolean isChild = entity instanceof EntityLivingBase && ((EntityLivingBase)entity).isChild();
       Vec3d eyePosition = this.eyePosition(entity).subtract(0.0D, isChild ? 0.05D : 0.1D, 0.0D);
       Vec3d look = entity.getLook(1.0F);

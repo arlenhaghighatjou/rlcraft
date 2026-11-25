@@ -5,7 +5,7 @@ import com.lycanitesmobs.core.entity.AgeableCreatureEntity;
 import com.lycanitesmobs.core.entity.BaseCreatureEntity;
 import com.lycanitesmobs.core.entity.goals.actions.FollowParentGoal;
 import com.lycanitesmobs.core.info.CreatureManager;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -21,7 +21,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class EntityConcapedeSegment extends AgeableCreatureEntity {
-   UUID parentUUID = null;
+   EaglercraftUUID parentUUID = null;
    public BaseCreatureEntity backSegment;
 
    public EntityConcapedeSegment(World world) {

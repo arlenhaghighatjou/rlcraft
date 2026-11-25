@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -14,8 +14,8 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +28,7 @@ import net.minecraftforge.fml.client.GuiScrollingList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.ForgeRegistry;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 import xzeroair.trinkets.Trinkets;
 import xzeroair.trinkets.capabilities.Capabilities;
 import xzeroair.trinkets.capabilities.race.EntityProperties;
@@ -78,7 +78,7 @@ public class GuiRaceSelectionScreen extends GuiScreen {
       int yPos = 40;
 
       for(EntityRace r : registryList) {
-         if (r.getUUID().compareTo(UUID.fromString("00000000-0000-0000-0000-000000000000")) != 0) {
+         if (r.getUUID().compareTo(EaglercraftUUID.fromString("00000000-0000-0000-0000-000000000000")) != 0) {
             boolean forbiddon = false;
 
             for(String blkList : TrinketsConfig.SERVER.races.selectionBlacklist) {
@@ -305,7 +305,7 @@ public class GuiRaceSelectionScreen extends GuiScreen {
          if (this.logoPath != null) {
             GlStateManager.enableBlend();
             GuiRaceSelectionScreen.this.getMinecraftInstance().renderEngine.bindTexture(this.logoPath);
-            BufferBuilder wr = tess.getBuffer();
+            WorldRenderer wr = tess.getBuffer();
             int offset = this.left + this.listWidth / 2 - this.logoDims.width / 2;
             wr.begin(7, DefaultVertexFormats.POSITION_TEX);
             wr.pos((double)offset, (double)(relativeY + this.logoDims.height), (double)GuiRaceSelectionScreen.this.zLevel).tex(0.0D, 1.0D).endVertex();

@@ -3,7 +3,7 @@ package jaredbgreat.dldungeons.pieces.chests;
 import jaredbgreat.dldungeons.builder.AbstractBlock;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
@@ -22,7 +22,7 @@ public class TreasureChest extends BasicChest {
       super(x, y, z, level, category);
    }
 
-   public void place(World world, int x, int y, int z, Random random) {
+   public void place(World world, int x, int y, int z, EaglercraftRandom random) {
       BlockPos pos = new BlockPos(x, y, z);
       Collections.shuffle(slots, random);
       this.slot = 0;

@@ -12,7 +12,7 @@ import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.util.DyeColor;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -21,7 +21,7 @@ public class GardenLootItem extends LootItem {
       super(weight, level);
    }
 
-   public RldItemStack getLootItem(Random random) {
+   public RldItemStack getLootItem(EaglercraftRandom random) {
       List<RldItemStack> items = Lists.newArrayList();
       Arrays.stream(Crop.values()).map(Crop::asSeed).map(RldItem::asStack).forEach(items::add);
       items.add(BlockType.PUMPKIN.asItem().asStack());

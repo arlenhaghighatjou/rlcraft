@@ -1,6 +1,6 @@
 package paulevs.betternether.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockNetherWart;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -13,7 +13,7 @@ public class NetherWartForest extends NetherBiome {
       super(name);
    }
 
-   public void genFloorObjects(World world, BlockPos pos, Random random) {
+   public void genFloorObjects(World world, BlockPos pos, EaglercraftRandom random) {
       if (random.nextFloat() <= this.plantDensity && world.getBlockState(pos).getBlock() == Blocks.SOUL_SAND) {
          if (BNWorldGenerator.hasWartTreeGen && random.nextInt(15) == 0) {
             BNWorldGenerator.wartTreeGen.generate(world, pos, random);
@@ -24,7 +24,7 @@ public class NetherWartForest extends NetherBiome {
 
    }
 
-   public void genSurfColumn(World world, BlockPos pos, Random random) {
+   public void genSurfColumn(World world, BlockPos pos, EaglercraftRandom random) {
       if (world.getBlockState(pos).getBlock() == Blocks.NETHERRACK) {
          switch(random.nextInt(3)) {
          case 0:

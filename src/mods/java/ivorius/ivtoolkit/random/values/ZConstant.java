@@ -1,6 +1,6 @@
 package ivorius.ivtoolkit.random.values;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ZConstant implements ZValue {
    public boolean value;
@@ -9,7 +9,7 @@ public class ZConstant implements ZValue {
       this.value = value;
    }
 
-   public Boolean getValue(Random random) {
+   public Boolean getValue(EaglercraftRandom random) {
       return this.value;
    }
 }

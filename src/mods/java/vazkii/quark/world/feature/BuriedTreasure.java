@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -84,7 +84,7 @@ public class BuriedTreasure extends Feature {
    }
 
    public ItemStack makeMap(ItemStack itemstack, World world, BlockPos sourcePos) {
-      Random r = world.rand;
+      EaglercraftRandom r = world.rand;
       boolean validPos = false;
       int tries = 0;
 
@@ -145,7 +145,7 @@ public class BuriedTreasure extends Feature {
       }
 
       @Nonnull
-      public ItemStack apply(@Nonnull ItemStack stack, @Nonnull Random rand, @Nonnull LootContext context) {
+      public ItemStack apply(@Nonnull ItemStack stack, @Nonnull EaglercraftRandom rand, @Nonnull LootContext context) {
          int id = context.getWorld().getUniqueDataId("map");
          stack.setItemDamage(id);
          stack.setTranslatableName("quarkmisc.buried_chest_map");

@@ -1,6 +1,6 @@
 package com.dhanantry.scapeandrunparasites.world.gen.structure;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Mirror;
@@ -23,7 +23,7 @@ public class WorldGenStructure extends WorldGenerator {
       structureName = name;
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       generate(worldIn, position);
       return true;
    }

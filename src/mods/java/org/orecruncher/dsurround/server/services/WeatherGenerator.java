@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.server.services;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +17,7 @@ import org.orecruncher.lib.PlayerUtils;
 import org.orecruncher.lib.random.XorShiftRandom;
 
 public class WeatherGenerator {
-   protected final Random RANDOM = XorShiftRandom.current();
+   protected final EaglercraftRandom RANDOM = XorShiftRandom.current();
    protected final World world;
    protected final IDimensionInfoEx data;
 

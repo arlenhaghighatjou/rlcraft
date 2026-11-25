@@ -1,6 +1,6 @@
 package snownee.snow;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -91,7 +91,7 @@ public class FallingSnowEntity extends Entity {
 
                if (state.getMaterial() == Material.LAVA) {
                   if (this.world.isRemote) {
-                     Random random = this.world.rand;
+                     EaglercraftRandom random = this.world.rand;
 
                      for(int i = 0; i < 10; ++i) {
                         double d0 = random.nextGaussian() * 0.02D;

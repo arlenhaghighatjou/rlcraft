@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import lykrast.defiledlands.common.init.ModBlocks;
 import lykrast.defiledlands.common.util.CorruptionHelper;
@@ -31,7 +31,7 @@ public class BlockLeafTenebra extends BlockLeaves {
       this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       CorruptionHelper.spread(worldIn, pos, state, rand);
       super.updateTick(worldIn, pos, state, rand);
    }
@@ -65,7 +65,7 @@ public class BlockLeafTenebra extends BlockLeaves {
       return 0;
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(ModBlocks.tenebraSapling);
    }
 

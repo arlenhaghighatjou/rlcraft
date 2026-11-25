@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -533,11 +533,11 @@ public final class Armory {
    }
 
    public static final class UUIDPeek extends Item {
-      public static final UUID getAttackDamageUUID() {
+      public static final EaglercraftUUID getAttackDamageUUID() {
          return Item.ATTACK_DAMAGE_MODIFIER;
       }
 
-      public static final UUID getAttackSpeedoUUID() {
+      public static final EaglercraftUUID getAttackSpeedoUUID() {
          return Item.ATTACK_SPEED_MODIFIER;
       }
 
@@ -545,7 +545,7 @@ public final class Armory {
          return getAttackDamageUUID().toString().equals(uuidstring);
       }
 
-      public static final boolean isAttackDamage(UUID uuid) {
+      public static final boolean isAttackDamage(EaglercraftUUID uuid) {
          return uuid != null && (uuid == Item.ATTACK_DAMAGE_MODIFIER || isAttackDamage(uuid.toString()));
       }
 
@@ -553,7 +553,7 @@ public final class Armory {
          return getAttackSpeedoUUID().toString().equals(uuidstring);
       }
 
-      public static final boolean isAttackSpeedo(UUID uuid) {
+      public static final boolean isAttackSpeedo(EaglercraftUUID uuid) {
          return uuid != null && (uuid == Item.ATTACK_SPEED_MODIFIER || isAttackSpeedo(uuid.toString()));
       }
 

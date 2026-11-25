@@ -3,7 +3,7 @@ package net.ilexiconn.llibrary.client.model.obj;
 import java.util.ArrayList;
 import java.util.List;
 import org.lwjgl.util.vector.Matrix3f;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class Shape {
    private String name;

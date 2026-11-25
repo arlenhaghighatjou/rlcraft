@@ -4,7 +4,7 @@ import com.google.common.collect.Multimap;
 import com.mujmajnkraft.bettersurvival.config.ForgeConfigHandler;
 import com.mujmajnkraft.bettersurvival.entities.projectiles.EntityFlyingSpear;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -31,7 +31,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemSpear extends ItemCustomWeapon {
-   private static final UUID REACH_MODIFIER_UUID = UUID.fromString("f14d3a86-ef0c-48a7-a59f-b6650e6132f5");
+   private static final EaglercraftUUID REACH_MODIFIER_UUID = EaglercraftUUID.fromString("f14d3a86-ef0c-48a7-a59f-b6650e6132f5");
    private static final String REACH_MODIFIER_STRING = "bettersurvival:spear_reach";
    private final float reach;
 

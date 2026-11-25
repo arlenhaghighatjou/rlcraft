@@ -1,6 +1,6 @@
 package mezz.jei.network.packets;
 
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import mezz.jei.network.IPacketId;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;

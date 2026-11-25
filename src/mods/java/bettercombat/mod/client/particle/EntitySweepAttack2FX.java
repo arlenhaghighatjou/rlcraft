@@ -1,13 +1,13 @@
 package bettercombat.mod.client.particle;
 
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -31,7 +31,7 @@ public class EntitySweepAttack2FX extends Particle {
       this.size = 1.0F - (float)scale * 0.5F;
    }
 
-   public void renderParticle(BufferBuilder buf, Entity entityIn, float partialTicks, float rotationX, float rotZ, float rotYZ, float rotXY, float rotXZ) {
+   public void renderParticle(WorldRenderer buf, Entity entityIn, float partialTicks, float rotationX, float rotZ, float rotYZ, float rotXY, float rotXZ) {
       int tInd = (int)(((float)this.life + partialTicks) * 3.0F / (float)this.lifeTime);
       if (tInd <= 7) {
          this.textureManager.bindTexture(SWEEP_TEXTURE);

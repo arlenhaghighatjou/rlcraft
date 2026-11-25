@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockShulkerBox;
 import net.minecraft.block.state.IBlockState;
@@ -12,7 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.resources.I18n;
@@ -64,7 +64,7 @@ public class Crate extends Feature {
    }
 
    public static Crate.CrateType getRandomCrateType(Crate.RARITY r) {
-      Random rand = new Random();
+      EaglercraftRandom rand = new EaglercraftRandom();
       List<Crate.CrateType> t = (List)types.get(r);
       return (Crate.CrateType)t.get(rand.nextInt(t.size()));
    }

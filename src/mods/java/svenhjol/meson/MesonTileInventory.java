@@ -3,7 +3,7 @@ package svenhjol.meson;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -62,7 +62,7 @@ public abstract class MesonTileInventory extends MesonTile {
 
    }
 
-   protected List<ItemStack> generateLootForPools(LootTable table, Random rand, LootContext context) {
+   protected List<ItemStack> generateLootForPools(LootTable table, EaglercraftRandom rand, LootContext context) {
       List<ItemStack> loot = table.generateLootForPools(rand, context);
       if (this.lootSize > 0) {
          int i = 0;

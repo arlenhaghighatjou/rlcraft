@@ -2,7 +2,7 @@ package prospector.traverse.world.features;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -31,7 +31,7 @@ public class WorldGenSurfacePatch extends WorldGenerator {
       this(state, size, Blocks.DIRT, Blocks.GRASS, Blocks.STONE);
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int i = rand.nextInt(this.size - 2) + 2;
       int j = 1;
 

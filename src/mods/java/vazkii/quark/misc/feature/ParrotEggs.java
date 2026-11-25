@@ -1,8 +1,8 @@
 package vazkii.quark.misc.feature;
 
 import java.util.Objects;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.passive.EntityParrot;
@@ -48,7 +48,7 @@ public class ParrotEggs extends Feature {
    @SideOnly(Side.CLIENT)
    public static ResourceLocation getTextureForParrot(ResourceLocation previous, NBTTagCompound parrot) {
       if (ModuleLoader.isFeatureEnabled(ParrotEggs.class) && enableKotobirb) {
-         UUID uuid = parrot.getUniqueId("UUID");
+         EaglercraftUUID uuid = parrot.getUniqueId("EaglercraftUUID");
          Class<?> entityClass = EntityList.getClassFromName(parrot.getString("id"));
          return entityClass != EntityParrot.class || parrot.getInteger("Variant") != 4 || uuid != null && uuid.getLeastSignificantBits() % 20L != 0L ? previous : KOTO;
       } else {
@@ -143,7 +143,7 @@ public class ParrotEggs extends Feature {
 
    private int getResultingEggColor(EntityParrot parrot) {
       int color = parrot.getVariant();
-      Random rand = parrot.world.rand;
+      EaglercraftRandom rand = parrot.world.rand;
       return rand.nextBoolean() ? color : rand.nextInt(5);
    }
 

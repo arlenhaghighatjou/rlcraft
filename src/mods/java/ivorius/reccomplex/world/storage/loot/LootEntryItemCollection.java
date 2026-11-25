@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import ivorius.reccomplex.json.JsonUtils;
 import java.util.Collection;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootEntry;
@@ -23,7 +23,7 @@ public class LootEntryItemCollection extends LootEntry {
       return new LootEntryItemCollection(weightIn, qualityIn, conditionsIn, entryName, JsonUtils.getString(json, "itemCollectionID", ""));
    }
 
-   public void addLoot(Collection<ItemStack> stacks, Random rand, LootContext context) {
+   public void addLoot(Collection<ItemStack> stacks, EaglercraftRandom rand, LootContext context) {
       GenericLootTable.Component component = (GenericLootTable.Component)GenericItemCollectionRegistry.INSTANCE.get(this.itemCollectionID);
       if (component != null) {
          stacks.add(component.getRandomItemStack(rand));

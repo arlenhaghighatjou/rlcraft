@@ -10,7 +10,7 @@ import goblinbob.mobends.standard.data.BipedEntityData;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.function.Supplier;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.entity.EntityLivingBase;

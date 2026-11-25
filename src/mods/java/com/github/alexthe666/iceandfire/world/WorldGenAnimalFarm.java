@@ -1,6 +1,6 @@
 package com.github.alexthe666.iceandfire.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -22,7 +22,7 @@ public class WorldGenAnimalFarm extends WorldGenerator {
    public WorldGenAnimalFarm() {
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       if (worldIn == null) {
          return false;
       } else {

@@ -10,11 +10,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLiving;
@@ -46,7 +46,7 @@ public class VisualStatDisplay extends Feature {
    private static final ImmutableSet<String> MULTIPLIER_ATTRIBUTES = ImmutableSet.of("generic.movementSpeed");
    private static final ImmutableSet<String> POTION_MULTIPLIER_ATTRIBUTES = ImmutableSet.of("generic.attackSpeed");
    private static final ImmutableSet<String> PERCENT_ATTRIBUTES = ImmutableSet.of("generic.knockbackResistance", "generic.luck");
-   private static final UUID DUMMY_UUID = new UUID(0L, 0L);
+   private static final EaglercraftUUID DUMMY_UUID = new EaglercraftUUID(0L, 0L);
    private static final AttributeModifier DUMMY_MODIFIER = new AttributeModifier(DUMMY_UUID, "NO-OP", 0.0D, 0);
    private static final ImmutableSet<String> ATTRIBUTE_FORMATS = ImmutableSet.of("plus", "take", "equals");
 

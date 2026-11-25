@@ -4,7 +4,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumUsage;
 
@@ -17,7 +17,7 @@ public class FBPModelHelper {
 
    public static boolean isModelValid(IBlockState state) {
       IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(state);
-      TextureAtlasSprite s = model.getParticleTexture();
+      EaglerTextureAtlasSprite s = model.getParticleTexture();
       if (s != null && !s.getIconName().equals("missingno")) {
          vertexes = 0;
 
@@ -28,7 +28,7 @@ public class FBPModelHelper {
                      ++FBPModelHelper.vertexes;
                   }
 
-                  TextureAtlasSprite s = quad.getSprite();
+                  EaglerTextureAtlasSprite s = quad.getSprite();
                   if (s != null && !s.getIconName().equals("missingno")) {
                      FBPModelHelper.isAllCorruptedTexture = false;
                   }

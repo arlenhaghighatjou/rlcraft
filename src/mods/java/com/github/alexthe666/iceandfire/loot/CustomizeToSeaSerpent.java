@@ -6,7 +6,7 @@ import com.github.alexthe666.iceandfire.item.ItemSeaSerpentScales;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
@@ -18,9 +18,9 @@ public class CustomizeToSeaSerpent extends LootFunction {
       super(conditionsIn);
    }
 
-   public ItemStack apply(ItemStack stack, Random rand, LootContext context) {
+   public ItemStack apply(ItemStack stack, EaglercraftRandom rand, LootContext context) {
       if (!stack.isEmpty() && context.getLootedEntity() instanceof EntitySeaSerpent) {
-         Random random = new Random();
+         EaglercraftRandom random = new EaglercraftRandom();
          EntitySeaSerpent seaSerpent = (EntitySeaSerpent)context.getLootedEntity();
          int ancientModifier = seaSerpent.isAncient() ? 2 : 1;
          if (stack.getItem() instanceof ItemSeaSerpentScales) {

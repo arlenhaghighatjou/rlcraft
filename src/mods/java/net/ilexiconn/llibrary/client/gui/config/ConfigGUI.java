@@ -21,7 +21,7 @@ import net.ilexiconn.llibrary.client.gui.element.ListElement;
 import net.ilexiconn.llibrary.client.gui.element.color.ColorScheme;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;

@@ -3,8 +3,8 @@ package vazkii.quark.decoration.client.render;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BannerTextures;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelManager;
@@ -46,7 +46,7 @@ public class RenderGlassItemFrame extends RenderFlatItemFrame {
          if (res != null) {
             Minecraft.getMinecraft().renderEngine.bindTexture(res);
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder buffer = tessellator.getBuffer();
+            WorldRenderer buffer = tessellator.getBuffer();
             float f = 0.015625F;
             float u = 1.0F * f;
             float v = 1.0F * f;

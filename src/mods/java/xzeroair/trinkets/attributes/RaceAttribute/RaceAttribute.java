@@ -1,6 +1,6 @@
 package xzeroair.trinkets.attributes.RaceAttribute;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
@@ -14,7 +14,7 @@ public class RaceAttribute {
    public RaceAttribute() {
    }
 
-   public static void removeModifier(EntityLivingBase entity, UUID uuid) {
+   public static void removeModifier(EntityLivingBase entity, EaglercraftUUID uuid) {
       IAttributeInstance AttributeInstance = entity.getAttributeMap().getAttributeInstance(ENTITY_RACE);
       if (AttributeInstance != null) {
          if (AttributeInstance.getModifier(uuid) != null) {
@@ -28,7 +28,7 @@ public class RaceAttribute {
       removeModifier(entity, race.getUUID());
    }
 
-   public static void removeAllModifiersExcluding(EntityLivingBase entity, UUID uuid) {
+   public static void removeAllModifiersExcluding(EntityLivingBase entity, EaglercraftUUID uuid) {
       IAttributeInstance AttributeInstance = entity.getAttributeMap().getAttributeInstance(ENTITY_RACE);
       if (AttributeInstance != null) {
          if (!AttributeInstance.getModifiers().isEmpty()) {

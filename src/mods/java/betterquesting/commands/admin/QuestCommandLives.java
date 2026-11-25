@@ -9,7 +9,7 @@ import betterquesting.storage.NameCache;
 import betterquesting.storage.QuestSettings;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -44,7 +44,7 @@ public class QuestCommandLives extends QuestCommandBase {
 
    public void runCommand(MinecraftServer server, CommandBase command, ICommandSender sender, String[] args) throws CommandException {
       String action = args[1];
-      UUID playerID = null;
+      EaglercraftUUID playerID = null;
 
       int value;
       try {
@@ -67,15 +67,15 @@ public class QuestCommandLives extends QuestCommandBase {
             LifeDatabase.INSTANCE.setLives(playerID, value);
             EntityPlayerMP target = server.getPlayerList().getPlayerByUUID(playerID);
             if (target != null) {
-               NetLifeSync.sendSync(new EntityPlayerMP[]{target}, new UUID[]{playerID});
+               NetLifeSync.sendSync(new EntityPlayerMP[]{target}, new EaglercraftUUID[]{playerID});
             }
 
             sender.sendMessage(new TextComponentTranslation("betterquesting.cmd.lives.set_player", new Object[]{pName, value}));
          } else {
             for(EntityPlayerMP p : server.getPlayerList().getPlayers()) {
-               UUID uuid = QuestingAPI.getQuestingUUID(p);
+               EaglercraftUUID uuid = QuestingAPI.getQuestingUUID(p);
                LifeDatabase.INSTANCE.setLives(uuid, value);
-               NetLifeSync.sendSync(new EntityPlayerMP[]{p}, new UUID[]{uuid});
+               NetLifeSync.sendSync(new EntityPlayerMP[]{p}, new EaglercraftUUID[]{uuid});
             }
 
             sender.sendMessage(new TextComponentTranslation("betterquesting.cmd.lives.set_all", new Object[]{value}));
@@ -86,7 +86,7 @@ public class QuestCommandLives extends QuestCommandBase {
             LifeDatabase.INSTANCE.setLives(playerID, lives);
             EntityPlayerMP target = server.getPlayerList().getPlayerByUUID(playerID);
             if (target != null) {
-               NetLifeSync.sendSync(new EntityPlayerMP[]{target}, new UUID[]{playerID});
+               NetLifeSync.sendSync(new EntityPlayerMP[]{target}, new EaglercraftUUID[]{playerID});
             }
 
             if (value >= 0) {
@@ -96,10 +96,10 @@ public class QuestCommandLives extends QuestCommandBase {
             }
          } else {
             for(EntityPlayerMP p : server.getPlayerList().getPlayers()) {
-               UUID uuid = QuestingAPI.getQuestingUUID(p);
+               EaglercraftUUID uuid = QuestingAPI.getQuestingUUID(p);
                int lives = LifeDatabase.INSTANCE.getLives(uuid);
                LifeDatabase.INSTANCE.setLives(uuid, lives + value);
-               NetLifeSync.sendSync(new EntityPlayerMP[]{p}, new UUID[]{uuid});
+               NetLifeSync.sendSync(new EntityPlayerMP[]{p}, new EaglercraftUUID[]{uuid});
             }
 
             if (value >= 0) {

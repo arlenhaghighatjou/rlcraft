@@ -4,7 +4,7 @@ import kotlin.Metadata;
 import kotlin.jvm.internal.Intrinsics;
 import mods.octarinecore.common.Double3;
 import mods.octarinecore.common.Rotation;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import org.jetbrains.annotations.NotNull;
 
 @Metadata(
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
    bv = {1, 0, 3},
    k = 1,
    d1 = {"\u0000T\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0002\n\u0002\u0010\u0007\n\u0002\b\u0005\n\u0002\u0010\b\n\u0002\b\b\n\u0002\u0010\u0015\n\u0002\b\u0006\n\u0002\u0010\u0006\n\u0002\b\u0012\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u0002\n\u0000\n\u0002\u0010\u000b\n\u0002\b\u000b\n\u0002\u0018\u0002\n\u0002\b\u0002\u0018\u00002\u00020\u0001B\u0005¢\u0006\u0002\u0010\u0002J\u000e\u0010+\u001a\u00020\u00002\u0006\u0010,\u001a\u00020-J\u001e\u0010+\u001a\u00020\u00002\u0006\u0010,\u001a\u00020-2\u0006\u0010.\u001a\u00020/2\u0006\u00100\u001a\u000201J\u0019\u00102\u001a\u0002032\u0006\u00104\u001a\u0002052\u0006\u00106\u001a\u000205H\u0086\bJ\u0011\u00107\u001a\u0002032\u0006\u00108\u001a\u00020\nH\u0086\bJ\u000e\u00109\u001a\u00020\u00002\u0006\u0010.\u001a\u00020/J\u0011\u0010:\u001a\u00020\u00002\u0006\u0010;\u001a\u00020\nH\u0086\bJ\u0011\u0010<\u001a\u0002032\u0006\u00108\u001a\u00020\nH\u0086\bJ\u0011\u0010=\u001a\u0002032\u0006\u0010>\u001a\u00020\u0004H\u0086\bJ\u0011\u0010?\u001a\u00020\u00002\u0006\u0010@\u001a\u00020AH\u0086\bJ\u000e\u0010B\u001a\u00020\u00002\u0006\u00100\u001a\u000201R\u001a\u0010\u0003\u001a\u00020\u0004X\u0086\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\u0005\u0010\u0006\"\u0004\b\u0007\u0010\bR\u001a\u0010\t\u001a\u00020\nX\u0086\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\u000b\u0010\f\"\u0004\b\r\u0010\u000eR\u001a\u0010\u000f\u001a\u00020\u0004X\u0086\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\u0010\u0010\u0006\"\u0004\b\u0011\u0010\bR\u0011\u0010\u0012\u001a\u00020\u0013¢\u0006\b\n\u0000\u001a\u0004\b\u0014\u0010\u0015R\u001a\u0010\u0016\u001a\u00020\u0004X\u0086\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\u0017\u0010\u0006\"\u0004\b\u0018\u0010\bR\u001a\u0010\u0019\u001a\u00020\u001aX\u0086\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\u001b\u0010\u001c\"\u0004\b\u001d\u0010\u001eR\u001a\u0010\u001f\u001a\u00020\u001aX\u0086\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b \u0010\u001c\"\u0004\b!\u0010\u001eR\u001a\u0010\"\u001a\u00020\u001aX\u0086\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b#\u0010\u001c\"\u0004\b$\u0010\u001eR\u001a\u0010%\u001a\u00020\u001aX\u0086\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b&\u0010\u001c\"\u0004\b'\u0010\u001eR\u001a\u0010(\u001a\u00020\u001aX\u0086\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b)\u0010\u001c\"\u0004\b*\u0010\u001e¨\u0006C"},
-   d2 = {"Lmods/octarinecore/client/render/RenderVertex;", "", "()V", "blue", "", "getBlue", "()F", "setBlue", "(F)V", "brightness", "", "getBrightness", "()I", "setBrightness", "(I)V", "green", "getGreen", "setGreen", "rawData", "", "getRawData", "()[I", "red", "getRed", "setRed", "u", "", "getU", "()D", "setU", "(D)V", "v", "getV", "setV", "x", "getX", "setX", "y", "getY", "setY", "z", "getZ", "setZ", "init", "vertex", "Lmods/octarinecore/client/render/Vertex;", "rot", "Lmods/octarinecore/common/Rotation;", "trans", "Lmods/octarinecore/common/Double3;", "mirrorUV", "", "mirrorU", "", "mirrorV", "multiplyColor", "color", "rotate", "rotateUV", "n", "setColor", "setGrey", "level", "setIcon", "icon", "Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;", "translate", "BetterFoliage-MC1.12"}
+   d2 = {"Lmods/octarinecore/client/render/RenderVertex;", "", "()V", "blue", "", "getBlue", "()F", "setBlue", "(F)V", "brightness", "", "getBrightness", "()I", "setBrightness", "(I)V", "green", "getGreen", "setGreen", "rawData", "", "getRawData", "()[I", "red", "getRed", "setRed", "u", "", "getU", "()D", "setU", "(D)V", "v", "getV", "setV", "x", "getX", "setX", "y", "getY", "setY", "z", "getZ", "setZ", "init", "vertex", "Lmods/octarinecore/client/render/Vertex;", "rot", "Lmods/octarinecore/common/Rotation;", "trans", "Lmods/octarinecore/common/Double3;", "mirrorUV", "", "mirrorU", "", "mirrorV", "multiplyColor", "color", "rotate", "rotateUV", "n", "setColor", "setGrey", "level", "setIcon", "icon", "Lnet/minecraft/client/renderer/texture/EaglerTextureAtlasSprite;", "translate", "BetterFoliage-MC1.12"}
 )
 public final class RenderVertex {
    private double x;
@@ -177,7 +177,7 @@ public final class RenderVertex {
    }
 
    @NotNull
-   public final RenderVertex setIcon(@NotNull TextureAtlasSprite icon) {
+   public final RenderVertex setIcon(@NotNull EaglerTextureAtlasSprite icon) {
       int $i$f$setIcon = 0;
       Intrinsics.checkParameterIsNotNull(icon, "icon");
       this.setU((double)(icon.getMaxU() - icon.getMinU()) * (this.getU() + 0.5D) + (double)icon.getMinU());

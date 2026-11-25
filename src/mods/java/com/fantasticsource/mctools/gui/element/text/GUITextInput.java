@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.function.Function;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraftforge.common.MinecraftForge;
 
 public class GUITextInput extends GUIText {

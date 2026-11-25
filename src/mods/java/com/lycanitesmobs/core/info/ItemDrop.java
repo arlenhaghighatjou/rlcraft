@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -197,7 +197,7 @@ public class ItemDrop {
       return this;
    }
 
-   public int getQuantity(Random random, int bonus, int multiplier) {
+   public int getQuantity(EaglercraftRandom random, int bonus, int multiplier) {
       float roll = random.nextFloat();
       roll = Math.max(roll, 0.0F);
       if (roll > this.chance) {

@@ -3,7 +3,7 @@ package gigaherz.toolbelt.network;
 import gigaherz.toolbelt.ToolBelt;
 import gigaherz.toolbelt.customslots.IExtensionSlot;
 import gigaherz.toolbelt.slot.ExtensionSlotBelt;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;

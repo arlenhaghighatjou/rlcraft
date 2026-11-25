@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.world.feature;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
@@ -17,7 +17,7 @@ public class WorldGenTenebra extends WorldGenAbstractTree {
       super(notify);
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int i = rand.nextInt(6) + rand.nextInt(6) + 3;
       boolean flag = true;
       if (position.getY() >= 1 && position.getY() + i + 1 <= 256) {

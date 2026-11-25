@@ -5,7 +5,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
-import org.lwjgl.util.vector.Vector2f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector2f;
 
 public class Vector2fDeserializer implements JsonDeserializer<Vector2f> {
    public Vector2fDeserializer() {

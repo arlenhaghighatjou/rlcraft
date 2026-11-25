@@ -15,7 +15,7 @@ import greymerk.roguelike.worldgen.Direction;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SilverfishNest {
    private static final int RECESSED = 6;
@@ -23,7 +23,7 @@ public class SilverfishNest {
    public SilverfishNest() {
    }
 
-   public static void generate(SilverfishNest silverfishNest, WorldEditor editor, Random rand, DungeonLevel level, Direction dir, Coord origin) {
+   public static void generate(SilverfishNest silverfishNest, WorldEditor editor, EaglercraftRandom rand, DungeonLevel level, Direction dir, Coord origin) {
       if (isValidLocation(editor, origin.copy(), dir)) {
          generate(silverfishNest, editor, rand, level.getSettings(), origin.copy(), dir);
       }
@@ -46,7 +46,7 @@ public class SilverfishNest {
       return true;
    }
 
-   private static void generate(SilverfishNest silverfishNest, WorldEditor editor, Random rand, LevelSettings settings, Coord origin, Direction dir) {
+   private static void generate(SilverfishNest silverfishNest, WorldEditor editor, EaglercraftRandom rand, LevelSettings settings, Coord origin, Direction dir) {
       Coord corridor = origin.copy();
       Coord centre = origin.copy();
       centre.translate(dir, 6);
@@ -61,7 +61,7 @@ public class SilverfishNest {
       BaseRoom.generateSpawnerSafe(editor, spawner, centre);
    }
 
-   private void nest(WorldEditor editor, Random rand, int x, int y, int z) {
+   private void nest(WorldEditor editor, EaglercraftRandom rand, int x, int y, int z) {
       BlockWeightedRandom fish = new BlockWeightedRandom();
       BlockBrush egg = InfestedBlock.getJumble();
       fish.addBlock(egg, 20);

@@ -1,7 +1,7 @@
 package net.silentchaos512.scalinghealth.event;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -207,7 +207,7 @@ public class DifficultyHandler {
          float difficulty = (float)Config.Difficulty.AREA_DIFFICULTY_MODE.getAreaDifficulty(world, entityLiving.getPosition());
          float originalDifficulty = difficulty;
          float originalMaxHealth = entityLiving.getMaxHealth();
-         Random rand = ScalingHealth.random;
+         EaglercraftRandom rand = ScalingHealth.random;
          boolean isHostile = entityLiving instanceof IMob;
          if (Config.Difficulty.DIFFICULTY_LUNAR_MULTIPLIERS_ENABLED && world.getWorldTime() % 24000L > 12000L) {
             int moonPhase = world.provider.getMoonPhase(world.getWorldTime()) % 8;
@@ -300,7 +300,7 @@ public class DifficultyHandler {
       }
    }
 
-   private void makeEntityBlight(EntityLiving entityLiving, Random rand) {
+   private void makeEntityBlight(EntityLiving entityLiving, EaglercraftRandom rand) {
       BlightSpawnEvent event = new BlightSpawnEvent.Pre(entityLiving, entityLiving.world, (float)entityLiving.posX, (float)entityLiving.posY, (float)entityLiving.posZ);
       if (!MinecraftForge.EVENT_BUS.post(event)) {
          BlightHandler.markBlight(entityLiving, true);

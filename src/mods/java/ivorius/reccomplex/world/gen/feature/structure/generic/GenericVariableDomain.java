@@ -16,7 +16,7 @@ import ivorius.reccomplex.world.gen.feature.structure.VariableDomain;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -31,7 +31,7 @@ public class GenericVariableDomain {
       return this.variables;
    }
 
-   public void fill(VariableDomain domain, Environment environment, Random random) {
+   public void fill(VariableDomain domain, Environment environment, EaglercraftRandom random) {
       for(GenericVariableDomain.Variable variable : this.variables) {
          if (environment.variables.isSet(variable.id)) {
             domain.set(variable.id, environment.variables.get(variable.id));

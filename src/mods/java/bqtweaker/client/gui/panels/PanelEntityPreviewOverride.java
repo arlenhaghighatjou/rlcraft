@@ -9,7 +9,7 @@ import betterquesting.api2.client.gui.panels.IGuiPanel;
 import bqtweaker.client.util.RenderUtilsOverride;
 import java.util.List;
 import java.util.concurrent.Callable;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 

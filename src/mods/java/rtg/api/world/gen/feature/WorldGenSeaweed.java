@@ -2,7 +2,7 @@ package rtg.api.world.gen.feature;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -21,7 +21,7 @@ public class WorldGenSeaweed extends WorldGenerator {
       this.setValidGroundBlocks(new ArrayList(Arrays.asList(Blocks.DIRT, Blocks.GRAVEL, Blocks.CLAY, Blocks.SAND)));
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       int x = pos.getX();
       int y = pos.getY();
       int z = pos.getZ();

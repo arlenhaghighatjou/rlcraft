@@ -14,7 +14,7 @@ import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.QuestLineDatabase;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,7 +28,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class NetQuestEdit {
    private static final ResourceLocation ID_NAME = new ResourceLocation("betterquesting:quest_edit");
@@ -55,11 +55,11 @@ public class NetQuestEdit {
       if (server != null) {
          boolean isOP = server.getPlayerList().canSendCommands(sender.getGameProfile());
          if (!isOP) {
-            BetterQuesting.logger.log(Level.WARN, "Player " + sender.getName() + " (UUID:" + QuestingAPI.getQuestingUUID(sender) + ") tried to edit quests without OP permissions!");
+            BetterQuesting.logger.log(Level.WARN, "Player " + sender.getName() + " (EaglercraftUUID:" + QuestingAPI.getQuestingUUID(sender) + ") tried to edit quests without OP permissions!");
             sender.sendStatusMessage(new TextComponentString(TextFormatting.RED + "You need to be OP to edit quests!"), true);
          } else {
             NBTTagCompound tag = (NBTTagCompound)message.getFirst();
-            UUID senderID = QuestingAPI.getQuestingUUID(sender);
+            EaglercraftUUID senderID = QuestingAPI.getQuestingUUID(sender);
             int action = !((NBTTagCompound)message.getFirst()).hasKey("action", 99) ? -1 : ((NBTTagCompound)message.getFirst()).getInteger("action");
             switch(action) {
             case 0:
@@ -112,7 +112,7 @@ public class NetQuestEdit {
       PacketSender.INSTANCE.sendToAll(new QuestingPacket(ID_NAME, payload));
    }
 
-   public static void setQuestStates(int[] questIDs, boolean state, UUID targetID) {
+   public static void setQuestStates(int[] questIDs, boolean state, EaglercraftUUID targetID) {
       for(DBEntry<IQuest> entry : QuestDatabase.INSTANCE.bulkLookup(questIDs)) {
          if (!state) {
             ((IQuest)entry.getValue()).resetUser(targetID, true);

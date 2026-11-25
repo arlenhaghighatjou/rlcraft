@@ -15,9 +15,9 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.TextureOffset;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -163,7 +163,7 @@ public class ModelPart extends ModelRenderer implements IModelPart {
    protected void compileDisplayList(float scale) {
       this.displayList = GLAllocation.generateDisplayLists(1);
       GlStateManager.glNewList(this.displayList, 4864);
-      BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
+      WorldRenderer bufferbuilder = Tessellator.getInstance().getBuffer();
 
       for(ModelBox modelBox : this.cubeList) {
          modelBox.render(bufferbuilder, scale);

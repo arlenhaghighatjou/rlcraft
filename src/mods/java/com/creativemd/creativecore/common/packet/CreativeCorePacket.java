@@ -3,7 +3,7 @@ package com.creativemd.creativecore.common.packet;
 import com.creativemd.creativecore.common.utils.stack.InfoStack;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

@@ -4,7 +4,7 @@ import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Interfaces.IEnchantmentCurse;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -20,7 +20,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentHeavyWeight extends EnchantmentBase implements IEnchantmentCurse {
-   public static final UUID CACHED_UUID = UUID.fromString("e2765897-134f-4c14-a535-29c3ae5c7a21");
+   public static final EaglercraftUUID CACHED_UUID = EaglercraftUUID.fromString("e2765897-134f-4c14-a535-29c3ae5c7a21");
 
    public EnchantmentHeavyWeight() {
       super(Rarity.VERY_RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});

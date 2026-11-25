@@ -1,6 +1,6 @@
 package net.silentchaos512.lib.util;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
@@ -10,12 +10,12 @@ public class AttributeHelper {
    public AttributeHelper() {
    }
 
-   public static void apply(EntityLivingBase entity, IAttribute attribute, UUID uuid, String name, double amount, int op) {
+   public static void apply(EntityLivingBase entity, IAttribute attribute, EaglercraftUUID uuid, String name, double amount, int op) {
       IAttributeInstance instance = entity.getAttributeMap().getAttributeInstance(attribute);
       apply(instance, uuid, name, amount, op);
    }
 
-   public static void apply(IAttributeInstance attributeInstance, UUID uuid, String name, double amount, int op) {
+   public static void apply(IAttributeInstance attributeInstance, EaglercraftUUID uuid, String name, double amount, int op) {
       if (attributeInstance != null) {
          AttributeModifier currentMod = attributeInstance.getModifier(uuid);
          AttributeModifier newMod = new AttributeModifier(uuid, name, amount, op);
@@ -31,12 +31,12 @@ public class AttributeHelper {
       }
    }
 
-   public static void remove(EntityLivingBase entity, IAttribute attribute, UUID uuid) {
+   public static void remove(EntityLivingBase entity, IAttribute attribute, EaglercraftUUID uuid) {
       IAttributeInstance instance = entity.getAttributeMap().getAttributeInstance(attribute);
       remove(instance, uuid);
    }
 
-   public static void remove(IAttributeInstance attributeInstance, UUID uuid) {
+   public static void remove(IAttributeInstance attributeInstance, EaglercraftUUID uuid) {
       if (attributeInstance != null) {
          attributeInstance.removeModifier(uuid);
       }

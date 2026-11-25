@@ -20,7 +20,7 @@ import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ModelBlock;
 import net.minecraft.client.renderer.block.model.ModelRotation;
 import net.minecraft.client.renderer.block.model.SimpleBakedModel.Builder;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.EnumFacing.Axis;
@@ -31,18 +31,18 @@ import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 @SideOnly(Side.CLIENT)
 public class BakedModelBlockSurfaceRoot implements IBakedModel {
    protected ModelBlock modelBlock = new ModelBlock((ResourceLocation)null, (List)null, (Map)null, false, false, ItemCameraTransforms.DEFAULT, (List)null);
-   TextureAtlasSprite barkParticles;
+   EaglerTextureAtlasSprite barkParticles;
    private final IBakedModel[][] sleeves = new IBakedModel[4][7];
    private final IBakedModel[][] cores = new IBakedModel[2][8];
    private final IBakedModel[][] verts = new IBakedModel[4][8];
 
-   public BakedModelBlockSurfaceRoot(ResourceLocation barkRes, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-      TextureAtlasSprite barkIcon = (TextureAtlasSprite)bakedTextureGetter.apply(barkRes);
+   public BakedModelBlockSurfaceRoot(ResourceLocation barkRes, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter) {
+      EaglerTextureAtlasSprite barkIcon = (EaglerTextureAtlasSprite)bakedTextureGetter.apply(barkRes);
       this.barkParticles = barkIcon;
 
       for(int r = 0; r < 8; ++r) {
@@ -65,7 +65,7 @@ public class BakedModelBlockSurfaceRoot implements IBakedModel {
       return radius * 2;
    }
 
-   public IBakedModel bakeSleeve(int radius, EnumFacing dir, TextureAtlasSprite bark) {
+   public IBakedModel bakeSleeve(int radius, EnumFacing dir, EaglerTextureAtlasSprite bark) {
       int radialHeight = this.getRadialHeight(radius);
       int dradius = radius * 2;
       int halfSize = (16 - dradius) / 2;
@@ -110,7 +110,7 @@ public class BakedModelBlockSurfaceRoot implements IBakedModel {
       return builder.makeBakedModel();
    }
 
-   private IBakedModel bakeVert(int radius, EnumFacing dir, TextureAtlasSprite bark) {
+   private IBakedModel bakeVert(int radius, EnumFacing dir, EaglerTextureAtlasSprite bark) {
       int radialHeight = this.getRadialHeight(radius);
       Builder builder = (new Builder(this.modelBlock, ItemOverrideList.NONE)).setTexture(bark);
       AxisAlignedBB partBoundary = (new AxisAlignedBB((double)(8 - radius), (double)radialHeight, (double)(8 - radius), (double)(8 + radius), (double)(16 + radialHeight), (double)(8 + radius))).offset((double)(dir.getFrontOffsetX() * 7), 0.0D, (double)(dir.getFrontOffsetZ() * 7));
@@ -131,7 +131,7 @@ public class BakedModelBlockSurfaceRoot implements IBakedModel {
       return builder.makeBakedModel();
    }
 
-   public IBakedModel bakeCore(int radius, Axis axis, TextureAtlasSprite icon) {
+   public IBakedModel bakeCore(int radius, Axis axis, EaglerTextureAtlasSprite icon) {
       int radialHeight = this.getRadialHeight(radius);
       Vector3f posFrom = new Vector3f((float)(8 - radius), 0.0F, (float)(8 - radius));
       Vector3f posTo = new Vector3f((float)(8 + radius), (float)radialHeight, (float)(8 + radius));
@@ -254,7 +254,7 @@ public class BakedModelBlockSurfaceRoot implements IBakedModel {
       return true;
    }
 
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       return this.barkParticles;
    }
 

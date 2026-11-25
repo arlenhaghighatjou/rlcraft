@@ -4,8 +4,8 @@ import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.entity.EntityDragonEgg;
 import com.github.alexthe666.iceandfire.entity.EntityIceDragon;
 import com.github.alexthe666.iceandfire.enums.EnumDragonEgg;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,7 +20,7 @@ public class TileEntityEggInIce extends TileEntity implements ITickable {
    public int age;
    public int ticksExisted;
    @Nullable
-   public UUID ownerUUID;
+   public EaglercraftUUID ownerUUID;
 
    public TileEntityEggInIce() {
    }
@@ -55,7 +55,7 @@ public class TileEntityEggInIce extends TileEntity implements ITickable {
       }
 
       if (!s.isEmpty()) {
-         this.ownerUUID = UUID.fromString(s);
+         this.ownerUUID = EaglercraftUUID.fromString(s);
       }
 
    }
@@ -91,7 +91,7 @@ public class TileEntityEggInIce extends TileEntity implements ITickable {
          EntityIceDragon dragon = new EntityIceDragon(this.world);
          dragon.setPosition((double)this.pos.getX() + 0.5D, (double)(this.pos.getY() + 1), (double)this.pos.getZ() + 0.5D);
          dragon.setVariant(this.type.ordinal() - 4);
-         dragon.setGender((new Random()).nextBoolean());
+         dragon.setGender((new EaglercraftRandom()).nextBoolean());
          dragon.setTamed(true);
          dragon.setHunger(50);
          dragon.setOwnerId(this.ownerUUID);

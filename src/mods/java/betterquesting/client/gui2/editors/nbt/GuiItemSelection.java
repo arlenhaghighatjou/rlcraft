@@ -37,8 +37,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.oredict.OreDictionary;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class GuiItemSelection extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
    private final ICallback<BigItemStack> callback;

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lumien.custommainmenu.CustomMainMenu;
 import lumien.custommainmenu.configuration.Alignment;
 import lumien.custommainmenu.configuration.Config;
@@ -27,8 +27,8 @@ import net.minecraft.client.gui.GuiLabel;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiYesNoCallback;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -39,7 +39,7 @@ import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Pre;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Project;
 
@@ -52,7 +52,7 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
    private ITexture[] titlePanoramaPaths;
    public Object beingChecked;
    public GuiConfig guiConfig;
-   Random rand;
+   EaglercraftRandom rand;
    protected DynamicTexture viewportTexture;
    protected ResourceLocation backgroundTexture;
    protected String splashText;
@@ -66,7 +66,7 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
 
    public GuiCustom(GuiConfig guiConfig) {
       this.guiConfig = guiConfig;
-      this.rand = new Random();
+      this.rand = new EaglercraftRandom();
       this.loadedSplashText = false;
    }
 
@@ -191,7 +191,7 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
       GlStateManager.blendFunc(770, 771);
       Panorama panorama = this.guiConfig.panorama;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexBuffer = tessellator.getBuffer();
+      WorldRenderer vertexBuffer = tessellator.getBuffer();
       if (panorama != null) {
          if (this.guiConfig.panorama != null) {
             if (this.guiConfig.panorama.synced) {
@@ -379,7 +379,7 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
       int i = this.width;
       int j = this.height;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexBuffer = tessellator.getBuffer();
+      WorldRenderer vertexBuffer = tessellator.getBuffer();
       vertexBuffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
       vertexBuffer.pos(0.0D, (double)j, (double)this.zLevel).tex((double)(0.5F - f1), (double)(0.5F + f2)).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();
       vertexBuffer.pos((double)i, (double)j, (double)this.zLevel).tex((double)(0.5F - f1), (double)(0.5F - f2)).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();
@@ -390,7 +390,7 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
 
    private void drawPanorama(int p_73970_1_, int p_73970_2_, float p_73970_3_) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexBuffer = tessellator.getBuffer();
+      WorldRenderer vertexBuffer = tessellator.getBuffer();
       GlStateManager.matrixMode(5889);
       GlStateManager.pushMatrix();
       GlStateManager.loadIdentity();
@@ -497,7 +497,7 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
       GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
       GlStateManager.colorMask(true, true, true, false);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexBuffer = tessellator.getBuffer();
+      WorldRenderer vertexBuffer = tessellator.getBuffer();
       vertexBuffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
       GlStateManager.disableAlpha();
       int i = 3;

@@ -1,7 +1,7 @@
 package net.silentchaos512.scalinghealth.event;
 
 import java.util.Calendar;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -47,7 +47,7 @@ public class ScalingHealthCommonEvents {
          if (player.world.getGameRules().getBoolean("doMobLoot")) {
             EntityLivingBase killedEntity = event.getEntityLiving();
             if (!killedEntity.world.isRemote) {
-               Random rand = ScalingHealth.random;
+               EaglercraftRandom rand = ScalingHealth.random;
                int stackSize = 0;
                float dropRate = killedEntity instanceof IMob ? Config.Items.Heart.chanceHostile : Config.Items.Heart.chancePassive;
                if (killedEntity instanceof EntitySlime) {

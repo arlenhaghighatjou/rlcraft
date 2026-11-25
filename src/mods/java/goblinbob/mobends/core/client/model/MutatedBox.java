@@ -7,7 +7,7 @@ import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.PositionTextureVertex;
 import net.minecraft.client.model.TexturedQuad;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 
 public class MutatedBox extends ModelBox {
    protected final byte faceVisibilityFlag;
@@ -119,7 +119,7 @@ public class MutatedBox extends ModelBox {
       this(modelRenderer, texU, texV, x, y, z, width, height, length, inflation, modelRenderer.mirror, (byte)63);
    }
 
-   public void render(BufferBuilder bufferBuilder, float scale) {
+   public void render(WorldRenderer bufferBuilder, float scale) {
       byte tempFlag = this.faceVisibilityFlag;
 
       for(TexturedQuad quad : this.quadList) {

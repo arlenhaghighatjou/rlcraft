@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
@@ -81,7 +81,7 @@ public class BlockCincinnasiteForge extends BlockContainer {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       if (((Boolean)stateIn.getValue(ACTIVE)).booleanValue()) {
          EnumFacing enumfacing = (EnumFacing)stateIn.getValue(FACING);
          double d0 = (double)pos.getX() + 0.5D;

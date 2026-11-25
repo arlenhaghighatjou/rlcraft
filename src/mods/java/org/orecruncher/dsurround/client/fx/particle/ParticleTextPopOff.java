@@ -1,9 +1,9 @@
 package org.orecruncher.dsurround.client.fx.particle;
 
 import javax.annotation.Nonnull;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -61,7 +61,7 @@ public class ParticleTextPopOff extends ParticleBase {
       return this;
    }
 
-   public void renderParticle(@Nonnull BufferBuilder worldRendererIn, @Nonnull Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+   public void renderParticle(@Nonnull WorldRenderer worldRendererIn, @Nonnull Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
       float pitch = this.manager.playerViewX * (float)(this.isThirdPersonView() ? -1 : 1);
       float yaw = -this.manager.playerViewY;
       float locX = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)partialTicks - this.interpX());

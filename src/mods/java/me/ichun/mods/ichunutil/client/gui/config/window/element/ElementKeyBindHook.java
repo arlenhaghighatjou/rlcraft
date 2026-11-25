@@ -6,7 +6,7 @@ import me.ichun.mods.ichunutil.client.keybind.KeyBind;
 import me.ichun.mods.ichunutil.common.iChunUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class ElementKeyBindHook extends Element {
    public WindowSetKeyBind bind;

@@ -13,7 +13,7 @@ import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class BlazeRoom extends BaseRoom {
    public BlazeRoom(RoomSetting roomSetting, LevelSettings levelSettings, WorldEditor worldEditor) {
@@ -206,7 +206,7 @@ public class BlazeRoom extends BaseRoom {
    }
 
    private void generateLiquidPitChest(Coord origin) {
-      Random random = this.worldEditor.getRandom();
+      EaglercraftRandom random = this.worldEditor.getRandom();
       if (random.nextDouble() < 0.1D) {
          int x = random.nextInt(5) - 2;
          int y = -3;

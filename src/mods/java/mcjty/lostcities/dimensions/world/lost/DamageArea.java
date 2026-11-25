@@ -2,7 +2,7 @@ package mcjty.lostcities.dimensions.world.lost;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import mcjty.lostcities.config.LostCityProfile;
 import mcjty.lostcities.dimensions.world.LostCityChunkGenerator;
 import mcjty.lostcities.dimensions.world.lost.cityassets.CompiledPalette;
@@ -26,7 +26,7 @@ public class DamageArea {
       this.chunkX = chunkX;
       this.chunkZ = chunkZ;
       this.chunkBox = new AxisAlignedBB((double)(chunkX * 16), 0.0D, (double)(chunkZ * 16), (double)(chunkX * 16 + 15), 256.0D, (double)(chunkZ * 16 + 15));
-      Random rand = new Random(this.seed + (long)chunkZ * 295075153L + (long)chunkX * 899826547L);
+      EaglercraftRandom rand = new EaglercraftRandom(this.seed + (long)chunkZ * 295075153L + (long)chunkX * 899826547L);
       rand.nextFloat();
       rand.nextFloat();
       int offset = (Math.max(info.profile.EXPLOSION_MAXRADIUS, info.profile.MINI_EXPLOSION_MAXRADIUS) + 15) / 16;
@@ -89,14 +89,14 @@ public class DamageArea {
    }
 
    private Explosion getExplosionAt(int chunkX, int chunkZ, LostCityChunkGenerator provider) {
-      Random rand = new Random(this.seed + (long)chunkZ * 295075153L + (long)chunkX * 797003437L);
+      EaglercraftRandom rand = new EaglercraftRandom(this.seed + (long)chunkZ * 295075153L + (long)chunkX * 797003437L);
       rand.nextFloat();
       rand.nextFloat();
       return rand.nextFloat() < this.profile.EXPLOSION_CHANCE ? new Explosion(this.profile.EXPLOSION_MINRADIUS + rand.nextInt(this.profile.EXPLOSION_MAXRADIUS - this.profile.EXPLOSION_MINRADIUS), new BlockPos(chunkX * 16 + rand.nextInt(16), BuildingInfo.getBuildingInfo(chunkX, chunkZ, provider).cityLevel * 6 + this.profile.EXPLOSION_MINHEIGHT + rand.nextInt(this.profile.EXPLOSION_MAXHEIGHT - this.profile.EXPLOSION_MINHEIGHT), chunkZ * 16 + rand.nextInt(16))) : null;
    }
 
    private Explosion getMiniExplosionAt(int chunkX, int chunkZ, LostCityChunkGenerator provider) {
-      Random rand = new Random(this.seed + (long)chunkZ * 1400305337L + (long)chunkX * 573259391L);
+      EaglercraftRandom rand = new EaglercraftRandom(this.seed + (long)chunkZ * 1400305337L + (long)chunkX * 573259391L);
       rand.nextFloat();
       rand.nextFloat();
       return rand.nextFloat() < this.profile.MINI_EXPLOSION_CHANCE ? new Explosion(this.profile.MINI_EXPLOSION_MINRADIUS + rand.nextInt(this.profile.MINI_EXPLOSION_MAXRADIUS - this.profile.MINI_EXPLOSION_MINRADIUS), new BlockPos(chunkX * 16 + rand.nextInt(16), BuildingInfo.getBuildingInfo(chunkX, chunkZ, provider).cityLevel * 6 + this.profile.MINI_EXPLOSION_MINHEIGHT + rand.nextInt(this.profile.MINI_EXPLOSION_MAXHEIGHT - this.profile.MINI_EXPLOSION_MINHEIGHT), chunkZ * 16 + rand.nextInt(16))) : null;

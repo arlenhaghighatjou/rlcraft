@@ -1,7 +1,7 @@
 package com.github.alexthe666.iceandfire.structures;
 
 import com.github.alexthe666.iceandfire.entity.EntitySiren;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -12,7 +12,7 @@ public class WorldGenSirenIsland extends WorldGenerator {
    public WorldGenSirenIsland() {
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int up = rand.nextInt(4) + 1;
       BlockPos center = position.up(up);
       int layer = 0;
@@ -51,7 +51,7 @@ public class WorldGenSirenIsland extends WorldGenerator {
       return layer > up ? (int)((double)layer * 0.25D) + up : layer;
    }
 
-   private IBlockState getStone(Random random) {
+   private IBlockState getStone(EaglercraftRandom random) {
       int chance = random.nextInt(100);
       if (chance > 90) {
          return Blocks.MOSSY_COBBLESTONE.getDefaultState();
@@ -62,7 +62,7 @@ public class WorldGenSirenIsland extends WorldGenerator {
       }
    }
 
-   private void spawnSiren(World worldIn, Random rand, BlockPos position) {
+   private void spawnSiren(World worldIn, EaglercraftRandom rand, BlockPos position) {
       EntitySiren siren = new EntitySiren(worldIn);
       siren.setSinging(true);
       siren.setHairColor(rand.nextInt(2));

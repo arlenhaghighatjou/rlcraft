@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class DoorChecker {
    static DoorChecker.CompareLists c = new DoorChecker.CompareLists();
@@ -34,7 +34,7 @@ public class DoorChecker {
       return validateTile(dungeon, door.x - 1, door.z) && validateTile(dungeon, door.x + 1, door.z) && validateTile(dungeon, door.x, door.z - 1) && validateTile(dungeon, door.x, door.z + 1) && validateTile(dungeon, door.x - 1, door.z - 1) && validateTile(dungeon, door.x + 1, door.z + 1) && validateTile(dungeon, door.x + 1, door.z - 1) && validateTile(dungeon, door.x - 1, door.z + 1);
    }
 
-   public static ArrayList<Doorway> makeConnectionList(Room room, Random random) {
+   public static ArrayList<Doorway> makeConnectionList(Room room, EaglercraftRandom random) {
       ArrayList<Doorway> out = new ArrayList(room.connections.size());
 
       for(DoorQueue exits : room.connections) {

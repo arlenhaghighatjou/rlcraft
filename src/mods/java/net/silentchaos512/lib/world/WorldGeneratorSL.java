@@ -1,6 +1,6 @@
 package net.silentchaos512.lib.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
@@ -28,7 +28,7 @@ public abstract class WorldGeneratorSL implements IWorldGenerator {
 
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       int dim = world.provider.getDimension();
       int posX = chunkX * 16;
       int posZ = chunkZ * 16;
@@ -50,16 +50,16 @@ public abstract class WorldGeneratorSL implements IWorldGenerator {
 
    }
 
-   protected void generateSurface(World world, Random random, int posX, int posZ) {
+   protected void generateSurface(World world, EaglercraftRandom random, int posX, int posZ) {
    }
 
-   protected void generateNether(World world, Random random, int posX, int posZ) {
+   protected void generateNether(World world, EaglercraftRandom random, int posX, int posZ) {
    }
 
-   protected void generateEnd(World world, Random random, int posX, int posZ) {
+   protected void generateEnd(World world, EaglercraftRandom random, int posX, int posZ) {
    }
 
-   protected boolean generateForDimension(int dim, World world, Random random, int posX, int posZ) {
+   protected boolean generateForDimension(int dim, World world, EaglercraftRandom random, int posX, int posZ) {
       return false;
    }
 }

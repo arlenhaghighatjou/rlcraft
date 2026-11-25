@@ -19,7 +19,7 @@ import greymerk.roguelike.worldgen.shapes.IShape;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -181,7 +181,7 @@ public abstract class BaseRoom {
       return this.secondaryTheme().getWall();
    }
 
-   protected Random random() {
+   protected EaglercraftRandom random() {
       return this.worldEditor.getRandom();
    }
 

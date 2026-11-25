@@ -2,8 +2,8 @@ package me.jellysquid.mods.phosphor.core;
 
 import java.util.Map;
 import net.minecraftforge.fml.relauncher.IFMLCallHook;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.Mixins;
 

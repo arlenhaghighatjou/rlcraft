@@ -2,7 +2,7 @@ package c4.champions.common.entity;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
@@ -36,9 +36,9 @@ public abstract class AbstractEntitySpark extends Entity {
    private double targetDeltaX;
    private double targetDeltaY;
    private double targetDeltaZ;
-   private UUID ownerUniqueId;
+   private EaglercraftUUID ownerUniqueId;
    private BlockPos ownerBlockPos;
-   private UUID targetUniqueId;
+   private EaglercraftUUID targetUniqueId;
    private BlockPos targetBlockPos;
 
    public AbstractEntitySpark(World worldIn) {

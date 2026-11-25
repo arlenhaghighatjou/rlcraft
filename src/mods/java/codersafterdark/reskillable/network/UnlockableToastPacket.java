@@ -3,7 +3,7 @@ package codersafterdark.reskillable.network;
 import codersafterdark.reskillable.api.ReskillableRegistries;
 import codersafterdark.reskillable.api.toast.ToastHelper;
 import codersafterdark.reskillable.api.unlockable.Unlockable;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.concurrent.Callable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;

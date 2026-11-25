@@ -1,9 +1,9 @@
 package vazkii.quark.oddities.client.render;
 
 import java.util.Iterator;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
@@ -14,7 +14,7 @@ import net.minecraft.util.EnumFacing;
 import vazkii.quark.oddities.tile.TilePipe;
 
 public class RenderTilePipe extends TileEntitySpecialRenderer<TilePipe> {
-   private Random random = new Random();
+   private EaglercraftRandom random = new EaglercraftRandom();
 
    public RenderTilePipe() {
    }

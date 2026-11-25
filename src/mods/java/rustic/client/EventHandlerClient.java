@@ -7,8 +7,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -339,7 +339,7 @@ public class EventHandlerClient {
             double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double)event.getPartialTicks();
             double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double)event.getPartialTicks();
             Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder vertexbuffer = tessellator.getBuffer();
+            WorldRenderer vertexbuffer = tessellator.getBuffer();
             vertexbuffer.begin(3, DefaultVertexFormats.POSITION_COLOR);
             vertexbuffer.setTranslation(-d0, -d1, -d2);
             AABB = AABB.grow(0.0020000000949949026D);
@@ -359,7 +359,7 @@ public class EventHandlerClient {
    private void drawBlockOverlay(ResourceLocation location) {
       Minecraft.getMinecraft().getTextureManager().bindTexture(location);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       GlStateManager.enableBlend();
       GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
       GlStateManager.pushMatrix();
@@ -377,7 +377,7 @@ public class EventHandlerClient {
    }
 
    @SideOnly(Side.CLIENT)
-   private void drawRotablePlacementBlockHighlight(BufferBuilder buffer, AxisAlignedBB AABB, EnumFacing side, BlockPos pos) {
+   private void drawRotablePlacementBlockHighlight(WorldRenderer buffer, AxisAlignedBB AABB, EnumFacing side, BlockPos pos) {
       double minXZ = Math.max(AABB.minX, AABB.minZ);
       double maxXZ = Math.min(AABB.maxX, AABB.maxZ);
       double y = side == EnumFacing.UP ? AABB.maxY : AABB.minY;

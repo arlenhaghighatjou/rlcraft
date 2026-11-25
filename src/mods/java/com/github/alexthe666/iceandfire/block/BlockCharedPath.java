@@ -2,7 +2,7 @@ package com.github.alexthe666.iceandfire.block;
 
 import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.core.ModBlocks;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrassPath;
@@ -54,7 +54,7 @@ public class BlockCharedPath extends BlockGrassPath {
    }
 
    @Nullable
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return this.isFire ? ModBlocks.charedDirt.getItemDropped(ModBlocks.charedDirt.getDefaultState(), rand, fortune) : ModBlocks.frozenDirt.getItemDropped(ModBlocks.frozenDirt.getDefaultState(), rand, fortune);
    }
 

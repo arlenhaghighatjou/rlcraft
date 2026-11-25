@@ -1,8 +1,8 @@
 package noppes.vc.client.renderer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -39,7 +39,7 @@ public class BlockTradingRenderer extends TileEntitySpecialRenderer {
       GlStateManager.translate(var2 + 0.05D, var4, var6 + 0.05D);
       GlStateManager.scale(0.9F, 0.9F, 0.9F);
       Minecraft.getMinecraft().getTextureManager().bindTexture(resource2);
-      BufferBuilder tessellator = Tessellator.getInstance().getBuffer();
+      WorldRenderer tessellator = Tessellator.getInstance().getBuffer();
       tessellator.begin(7, DefaultVertexFormats.POSITION_TEX);
       int i = 0;
       int j = 1;

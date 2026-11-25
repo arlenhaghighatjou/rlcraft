@@ -1,6 +1,6 @@
 package jaredbgreat.dldungeons.pieces.chests;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -24,7 +24,7 @@ public class LootCategory {
       this.loot = new LootList[]{this.lists.loot1, this.lists.loot2, this.lists.loot3, this.lists.loot4, this.lists.loot5, this.lists.loot6, this.lists.loot7};
    }
 
-   public LootResult getLoot(LootType type, int level, Random random) {
+   public LootResult getLoot(LootType type, int level, EaglercraftRandom random) {
       if (level <= 6) {
          level = Math.min(6, level + random.nextInt(2) - random.nextInt(2));
       }
@@ -72,7 +72,7 @@ public class LootCategory {
       }
    }
 
-   private LootResult getEnchantedGear(int lootLevel, Random random) {
+   private LootResult getEnchantedGear(int lootLevel, EaglercraftRandom random) {
       float portion = random.nextFloat() / 2.0F;
       int lootPart = Math.min(6, Math.max(0, (int)((float)lootLevel * (1.0F - portion) + 0.5F)));
       LootItem item = this.gear[lootPart].getLoot(random);
@@ -87,7 +87,7 @@ public class LootCategory {
       }
    }
 
-   private LootResult enchantedLowerLevel(LootItem item, int level, Random random) {
+   private LootResult enchantedLowerLevel(LootItem item, int level, EaglercraftRandom random) {
       int diff = level - item.level;
       ItemStack out;
       if (this.isEnchantable(item) && diff > random.nextInt(2)) {
@@ -106,7 +106,7 @@ public class LootCategory {
       return (in.nbtData == null || in.nbtData.isEmpty()) && (item instanceof ItemSword || item instanceof ItemTool || item instanceof ItemArmor || item instanceof ItemBow);
    }
 
-   private LootResult getEnchantedBook(int level, Random random) {
+   private LootResult getEnchantedBook(int level, EaglercraftRandom random) {
       ItemStack out = new ItemStack(Items.BOOK, 1);
       out = EnchantmentHelper.addRandomEnchantment(random, out, Math.min(30, (int)((double)level * 7.5D)), true);
       return new LootResult(out, Math.min(level, 6));

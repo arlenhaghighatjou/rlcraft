@@ -2,7 +2,7 @@ package ivorius.reccomplex.random;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Artifact {
    private static List<String> objectTypes = Arrays.asList("tool", "eye", "board", "weapon", "toy", "memory", "relic", "orb", "block", "killer", "diminisher", "eater", "devourer", "helper", "teacher", "remedy", "prophet", "stone", "artifact", "scroll", "amulet", "ring", "tablet");
@@ -20,18 +20,18 @@ public class Artifact {
       this.uniqueName = uniqueName;
    }
 
-   public static Artifact randomArtifact(Random random) {
+   public static Artifact randomArtifact(EaglercraftRandom random) {
       return randomArtifact(random, (String)getRandomElementFrom(objectTypes, random));
    }
 
-   public static Artifact randomArtifact(Random random, String objectType) {
+   public static Artifact randomArtifact(EaglercraftRandom random, String objectType) {
       String trait = random.nextFloat() < 0.2F ? (String)getRandomElementFrom(traits, random) : null;
       String power = random.nextFloat() < 0.1F ? Person.chaoticName(random, random.nextBoolean()) : (random.nextFloat() < 0.8F ? (String)getRandomElementFrom(powers, random) : null);
       String uniqueName = random.nextFloat() < 0.2F ? Person.chaoticName(random, random.nextBoolean()) : null;
       return new Artifact(objectType, trait, power, uniqueName);
    }
 
-   private static <O> O getRandomElementFrom(List<O> list, Random random) {
+   private static <O> O getRandomElementFrom(List<O> list, EaglercraftRandom random) {
       return (O)list.get(random.nextInt(list.size()));
    }
 

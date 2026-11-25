@@ -37,7 +37,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.registry.EntityEntry;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 public class GuiEntitySelection extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
    private final ICallback<Entity> callback;

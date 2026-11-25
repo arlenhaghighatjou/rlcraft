@@ -1,6 +1,6 @@
 package knightminer.inspirations.utility.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -69,10 +69,10 @@ public class BlockRedstoneCharge extends Block {
       super.breakBlock(world, pos, state);
    }
 
-   public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom random) {
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!world.isRemote) {
          world.setBlockToAir(pos);
          world.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_REDSTONE_TORCH_BURNOUT, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
@@ -139,7 +139,7 @@ public class BlockRedstoneCharge extends Block {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       EnumFacing facing = (EnumFacing)stateIn.getValue(FACING);
       int offX = facing.getFrontOffsetX();
       int offY = facing.getFrontOffsetY();

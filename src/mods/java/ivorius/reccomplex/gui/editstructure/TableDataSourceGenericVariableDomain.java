@@ -7,7 +7,7 @@ import ivorius.reccomplex.gui.table.cell.TableCell;
 import ivorius.reccomplex.gui.table.datasource.TableDataSourceList;
 import ivorius.reccomplex.world.gen.feature.structure.generic.GenericVariableDomain;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import net.minecraft.util.text.TextFormatting;
@@ -42,7 +42,7 @@ public class TableDataSourceGenericVariableDomain extends TableDataSourceList<Ge
 
    public GenericVariableDomain.Variable newEntry(String actionID) {
       GenericVariableDomain.Variable variable = new GenericVariableDomain.Variable();
-      variable.id = String.format("var_%d", (new Random()).nextInt(100));
+      variable.id = String.format("var_%d", (new EaglercraftRandom()).nextInt(100));
       return variable;
    }
 

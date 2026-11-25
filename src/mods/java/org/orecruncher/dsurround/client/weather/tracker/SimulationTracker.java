@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.weather.tracker;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -23,7 +23,7 @@ public class SimulationTracker extends Tracker {
    protected float maxIntensityLevel = 0.0F;
    protected int nextThunderEvent = 0;
    protected Weather.Properties intensity = Weather.Properties.NONE;
-   protected Random random;
+   protected EaglercraftRandom random;
 
    public SimulationTracker() {
    }

@@ -2,7 +2,7 @@ package yalter.mousetweaks;
 
 import java.io.File;
 import java.util.List;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 import yalter.mousetweaks.api.IMTModGuiContainer;
 import yalter.mousetweaks.api.IMTModGuiContainer2;
 import yalter.mousetweaks.api.IMTModGuiContainer2Ex;

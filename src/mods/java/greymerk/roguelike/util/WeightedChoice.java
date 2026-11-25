@@ -1,7 +1,7 @@
 package greymerk.roguelike.util;
 
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class WeightedChoice<T> implements IWeighted<T> {
    private final T item;
@@ -16,7 +16,7 @@ public class WeightedChoice<T> implements IWeighted<T> {
       return this.weight;
    }
 
-   public T get(Random rand) {
+   public T get(EaglercraftRandom rand) {
       return this.item;
    }
 

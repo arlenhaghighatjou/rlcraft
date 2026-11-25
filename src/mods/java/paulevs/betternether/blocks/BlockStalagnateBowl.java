@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
@@ -57,7 +57,7 @@ public class BlockStalagnateBowl extends Block {
       return AABB;
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return ((BlockStalagnateBowl.EnumFood)state.getValue(FOOD)).getItem();
    }
 

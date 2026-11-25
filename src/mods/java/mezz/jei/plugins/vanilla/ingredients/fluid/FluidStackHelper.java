@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import mezz.jei.api.ingredients.IIngredientHelper;
 import mezz.jei.color.ColorGetter;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -60,7 +60,7 @@ public class FluidStackHelper implements IIngredientHelper<FluidStack> {
       TextureMap textureMapBlocks = Minecraft.getMinecraft().getTextureMapBlocks();
       ResourceLocation fluidStill = fluid.getStill();
       if (fluidStill != null) {
-         TextureAtlasSprite fluidStillSprite = textureMapBlocks.getTextureExtry(fluidStill.toString());
+         EaglerTextureAtlasSprite fluidStillSprite = textureMapBlocks.getTextureExtry(fluidStill.toString());
          if (fluidStillSprite != null) {
             int renderColor = ingredient.getFluid().getColor(ingredient);
             return ColorGetter.getColors(fluidStillSprite, renderColor, 1);

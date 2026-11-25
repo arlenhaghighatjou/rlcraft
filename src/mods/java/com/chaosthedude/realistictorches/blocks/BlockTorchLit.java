@@ -2,7 +2,7 @@ package com.chaosthedude.realistictorches.blocks;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.items.RealisticTorchesItems;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -49,15 +49,15 @@ public class BlockTorchLit extends BlockRealisticTorch {
 
    }
 
-   public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom random) {
       this.updateTorch(world, pos);
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       this.extinguish(world, pos, false);
    }
 
-   public Item getItemDropped(IBlockState state, Random random, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom random, int fortune) {
       return !ConfigHandler.noRelightEnabled ? Item.getItemFromBlock(RealisticTorchesBlocks.torchUnlit) : null;
    }
 

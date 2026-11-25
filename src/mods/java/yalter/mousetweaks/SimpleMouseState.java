@@ -1,6 +1,6 @@
 package yalter.mousetweaks;
 
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class SimpleMouseState implements IMouseState {
    private int scrollAmount = 0;

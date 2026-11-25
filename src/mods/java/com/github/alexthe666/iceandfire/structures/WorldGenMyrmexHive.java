@@ -13,7 +13,7 @@ import com.github.alexthe666.iceandfire.entity.MyrmexHive;
 import com.github.alexthe666.iceandfire.world.MyrmexWorldData;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.init.Blocks;
@@ -42,7 +42,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
       this.jungle = jungle;
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       this.hasFoodRoom = false;
       this.hasNursery = false;
       this.totalRooms = 0;
@@ -54,7 +54,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
       return false;
    }
 
-   private void generateMainRoom(World world, Random rand, BlockPos position) {
+   private void generateMainRoom(World world, EaglercraftRandom rand, BlockPos position) {
       this.hive = new MyrmexHive(world, position, 100);
       MyrmexWorldData.addHive(world, this.hive);
       IBlockState resin = this.jungle ? JUNGLE_RESIN : DESERT_RESIN;
@@ -113,7 +113,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
 
    }
 
-   private void generatePath(World world, Random rand, BlockPos offset, int length, EnumFacing direction, int roomChance) {
+   private void generatePath(World world, EaglercraftRandom rand, BlockPos offset, int length, EnumFacing direction, int roomChance) {
       if (roomChance != 0) {
          if (this.small) {
             length = length / 2;
@@ -158,7 +158,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
       }
    }
 
-   private void generateRoom(World world, Random rand, BlockPos position, int size, int height, int roomChance, EnumFacing direction) {
+   private void generateRoom(World world, EaglercraftRandom rand, BlockPos position, int size, int height, int roomChance, EnumFacing direction) {
       IBlockState resin = this.jungle ? JUNGLE_RESIN : DESERT_RESIN;
       IBlockState sticky_resin = this.jungle ? STICKY_JUNGLE_RESIN : STICKY_DESERT_RESIN;
       WorldGenMyrmexHive.RoomType type = WorldGenMyrmexHive.RoomType.random(rand);
@@ -194,7 +194,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
 
    }
 
-   private void generateEntrance(World world, Random rand, BlockPos position, int size, int height, EnumFacing direction) {
+   private void generateEntrance(World world, EaglercraftRandom rand, BlockPos position, int size, int height, EnumFacing direction) {
       BlockPos up = position.up();
       this.hive.getEntranceBottoms().put(up, direction);
 
@@ -212,7 +212,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
       ++this.entrances;
    }
 
-   private void generateCircle(World world, Random rand, BlockPos position, int size, int height, EnumFacing direction) {
+   private void generateCircle(World world, EaglercraftRandom rand, BlockPos position, int size, int height, EnumFacing direction) {
       IBlockState resin = this.jungle ? JUNGLE_RESIN : DESERT_RESIN;
       IBlockState sticky_resin = this.jungle ? STICKY_JUNGLE_RESIN : STICKY_DESERT_RESIN;
       int radius = size + 2;
@@ -246,7 +246,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
       this.decorateCircle(world, rand, position, size, height, direction);
    }
 
-   private void generateCircleRespectSky(World world, Random rand, BlockPos position, int size, int height, EnumFacing direction) {
+   private void generateCircleRespectSky(World world, EaglercraftRandom rand, BlockPos position, int size, int height, EnumFacing direction) {
       IBlockState resin = this.jungle ? JUNGLE_RESIN : DESERT_RESIN;
       IBlockState sticky_resin = this.jungle ? STICKY_JUNGLE_RESIN : STICKY_DESERT_RESIN;
       int radius = size + 2;
@@ -282,7 +282,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
       this.decorateCircle(world, rand, position, size, height, direction);
    }
 
-   private void generateCircleAir(World world, Random rand, BlockPos position, int size, int height, EnumFacing direction) {
+   private void generateCircleAir(World world, EaglercraftRandom rand, BlockPos position, int size, int height, EnumFacing direction) {
       int radius = size;
 
       for(float i = 0.0F; i < (float)radius; i = (float)((double)i + 0.5D)) {
@@ -300,7 +300,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
       this.decorateCircle(world, rand, position, size, height, direction);
    }
 
-   public void generateSphere(World world, Random rand, BlockPos position, int size, int height, IBlockState fill) {
+   public void generateSphere(World world, EaglercraftRandom rand, BlockPos position, int size, int height, IBlockState fill) {
       int ySize = rand.nextInt(2);
       int j = size + rand.nextInt(2);
       int k = height + ySize;
@@ -315,7 +315,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
 
    }
 
-   public void generateSphere(World world, Random rand, BlockPos position, int size, int height, IBlockState fill, IBlockState fill2) {
+   public void generateSphere(World world, EaglercraftRandom rand, BlockPos position, int size, int height, IBlockState fill, IBlockState fill2) {
       int ySize = rand.nextInt(2);
       int j = size + rand.nextInt(2);
       int k = height + ySize;
@@ -330,7 +330,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
 
    }
 
-   public void generateSphereRespectResin(World world, Random rand, BlockPos position, int size, int height, IBlockState fill, IBlockState fill2) {
+   public void generateSphereRespectResin(World world, EaglercraftRandom rand, BlockPos position, int size, int height, IBlockState fill, IBlockState fill2) {
       int ySize = rand.nextInt(2);
       int j = size + rand.nextInt(2);
       int k = height + ySize;
@@ -345,7 +345,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
 
    }
 
-   public void generateSphereRespectAir(World world, Random rand, BlockPos position, int size, int height, IBlockState fill, IBlockState fill2) {
+   public void generateSphereRespectAir(World world, EaglercraftRandom rand, BlockPos position, int size, int height, IBlockState fill, IBlockState fill2) {
       int ySize = rand.nextInt(2);
       int j = size + rand.nextInt(2);
       int k = height + ySize;
@@ -369,7 +369,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
       return world.getBlockState(copy).getBlock() instanceof BlockMyrmexResin || world.getBlockState(copy).getBlock() instanceof BlockMyrmexConnectedResin;
    }
 
-   private void decorateCircle(World world, Random rand, BlockPos position, int size, int height, EnumFacing direction) {
+   private void decorateCircle(World world, EaglercraftRandom rand, BlockPos position, int size, int height, EnumFacing direction) {
       int radius = size + 2;
 
       for(float i = 0.0F; i < (float)radius; i = (float)((double)i + 0.5D)) {
@@ -398,7 +398,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
 
    }
 
-   private void decorateSphere(World world, Random rand, BlockPos position, int size, int height, WorldGenMyrmexHive.RoomType roomType) {
+   private void decorateSphere(World world, EaglercraftRandom rand, BlockPos position, int size, int height, WorldGenMyrmexHive.RoomType roomType) {
       int ySize = rand.nextInt(2);
       int j = size + rand.nextInt(2);
       int k = height + ySize;
@@ -419,7 +419,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
 
    }
 
-   private void decorate(World world, BlockPos blockpos, BlockPos center, int size, Random random, WorldGenMyrmexHive.RoomType roomType) {
+   private void decorate(World world, BlockPos blockpos, BlockPos center, int size, EaglercraftRandom random, WorldGenMyrmexHive.RoomType roomType) {
       switch(roomType) {
       case FOOD:
          if (random.nextInt(45) == 0 && world.getBlockState(blockpos.down()).getBlock() instanceof BlockMyrmexResin) {
@@ -490,7 +490,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
 
    }
 
-   private void decorateTubers(World world, BlockPos blockpos, Random random, WorldGenMyrmexHive.RoomType roomType) {
+   private void decorateTubers(World world, BlockPos blockpos, EaglercraftRandom random, WorldGenMyrmexHive.RoomType roomType) {
       if (world.getBlockState(blockpos.up()).isOpaqueCube() && random.nextInt(roomType != WorldGenMyrmexHive.RoomType.ENTERANCE && roomType != WorldGenMyrmexHive.RoomType.TUNNEL ? 6 : 20) == 0) {
          int tuberLength = roomType != WorldGenMyrmexHive.RoomType.ENTERANCE && roomType != WorldGenMyrmexHive.RoomType.TUNNEL ? (roomType == WorldGenMyrmexHive.RoomType.QUEEN ? 1 + random.nextInt(5) : 1 + random.nextInt(3)) : 1;
 
@@ -520,7 +520,7 @@ public class WorldGenMyrmexHive extends WorldGenerator {
          this.random = random;
       }
 
-      public static WorldGenMyrmexHive.RoomType random(Random rand) {
+      public static WorldGenMyrmexHive.RoomType random(EaglercraftRandom rand) {
          List<WorldGenMyrmexHive.RoomType> list = new ArrayList();
 
          for(WorldGenMyrmexHive.RoomType type : values()) {

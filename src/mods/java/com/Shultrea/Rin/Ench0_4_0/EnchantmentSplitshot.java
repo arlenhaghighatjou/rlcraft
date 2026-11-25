@@ -3,7 +3,7 @@ package com.Shultrea.Rin.Ench0_4_0;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.enchantment.Enchantment.Rarity;
@@ -55,7 +55,7 @@ public class EnchantmentSplitshot extends EnchantmentBase {
 
          for(int x = 0; x < l; ++x) {
             EntityPlayer entityplayer = event.getEntityPlayer();
-            float Yaw = (new Random()).nextFloat() * (float)Math.random() * 110.0F - 35.0F;
+            float Yaw = (new EaglercraftRandom()).nextFloat() * (float)Math.random() * 110.0F - 35.0F;
             float Pitch = (float)Math.random() * entityplayer.getRNG().nextFloat() * 3.125F - 1.3525F;
             World worldIn = event.getWorld();
             ItemStack stack = event.getBow();

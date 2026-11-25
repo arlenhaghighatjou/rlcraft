@@ -7,7 +7,7 @@ import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ItemOre extends LootItem {
    private final Map<Integer, WeightedRandomizer<RldItemStack>> loot = new HashMap();
@@ -67,7 +67,7 @@ public class ItemOre extends LootItem {
 
    }
 
-   public RldItemStack getLootItem(Random random) {
+   public RldItemStack getLootItem(EaglercraftRandom random) {
       return (RldItemStack)((WeightedRandomizer)this.loot.get(Integer.valueOf(this.level))).get(random);
    }
 }

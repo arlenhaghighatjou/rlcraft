@@ -1,7 +1,7 @@
 package pl.asie.foamfix.coremod.injections.network;
 
 import com.google.common.base.Utf8;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.nio.charset.StandardCharsets;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import org.apache.commons.lang3.Validate;

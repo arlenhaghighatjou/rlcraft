@@ -5,7 +5,7 @@ import greymerk.roguelike.treasure.loot.ChestType;
 import greymerk.roguelike.util.IWeighted;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.IntFunction;
@@ -15,9 +15,9 @@ import java.util.stream.IntStream;
 
 public class TreasureManager {
    Set<TreasureChest> chests = new HashSet();
-   private final Random random;
+   private final EaglercraftRandom random;
 
-   public TreasureManager(Random random) {
+   public TreasureManager(EaglercraftRandom random) {
       this.random = random;
    }
 

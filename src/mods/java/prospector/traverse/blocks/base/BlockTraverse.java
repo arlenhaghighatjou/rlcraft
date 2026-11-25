@@ -1,6 +1,6 @@
 package prospector.traverse.blocks.base;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -34,7 +34,7 @@ public class BlockTraverse extends Block {
       this(name, material, soundType, (ResourceLocation)null);
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return this.drop != null ? (Item)ForgeRegistries.ITEMS.getValue(this.drop) : super.getItemDropped(state, rand, fortune);
    }
 }

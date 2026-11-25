@@ -1,6 +1,6 @@
 package meldexun.reachfix.util;
 
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import meldexun.reachfix.ReachFix;
 import meldexun.reachfix.config.ReachFixConfig;
 import meldexun.reachfix.integration.SpartanWeaponry;
@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 
 public class ReachFixUtil {
-   private static final UUID REACH_UUID = UUID.fromString("00d4860f-b487-4402-b424-373a52566330");
+   private static final EaglercraftUUID REACH_UUID = EaglercraftUUID.fromString("00d4860f-b487-4402-b424-373a52566330");
    private static final String REACH_STRING = "reachfix:base_reach";
 
    public ReachFixUtil() {

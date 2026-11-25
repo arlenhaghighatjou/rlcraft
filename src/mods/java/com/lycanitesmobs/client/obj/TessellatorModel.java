@@ -10,11 +10,11 @@ import javax.vecmath.Vector2f;
 import javax.vecmath.Vector3f;
 import javax.vecmath.Vector4f;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
@@ -72,7 +72,7 @@ public class TessellatorModel extends ObjModel {
 
    public void renderGroupImpl(ObjObject obj, Vector4f color, Vector2f textureOffset, VertexFormat vertexFormat) {
       Tessellator tess = Tessellator.getInstance();
-      BufferBuilder bufferBuilder = tess.getBuffer();
+      WorldRenderer bufferBuilder = tess.getBuffer();
       if (obj.mesh != null) {
          int[] indices = obj.mesh.indices;
          Vertex[] vertices = obj.mesh.vertices;

@@ -18,7 +18,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
 import net.minecraft.util.ResourceLocation;
@@ -304,14 +304,14 @@ public abstract class ForgeTrades {
          this.bargains = bargains;
       }
 
-      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
          List<ForgeTrades.Bargain> pickedBargains = new ArrayList();
          int amount = ForgeBounds.BARGAINS_PER_TRADER.getIntBounds().randomBetween().intValue();
          if (this.bargains.size() <= amount) {
             pickedBargains.addAll(this.bargains);
          } else {
             for(int count = 0; count < amount; ++count) {
-               ForgeTrades.Bargain randomBargain = (ForgeTrades.Bargain)CommonMath.Random.from(this.bargains);
+               ForgeTrades.Bargain randomBargain = (ForgeTrades.Bargain)CommonMath.EaglercraftRandom.from(this.bargains);
                if (!pickedBargains.contains(randomBargain)) {
                   pickedBargains.add(randomBargain);
                }

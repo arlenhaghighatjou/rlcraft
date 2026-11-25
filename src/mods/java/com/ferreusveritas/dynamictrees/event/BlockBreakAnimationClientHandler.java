@@ -16,9 +16,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.DestroyBlockProgress;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
@@ -28,7 +28,7 @@ import net.minecraft.client.renderer.block.model.BakedQuadRetextured;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.SimpleBakedModel;
 import net.minecraft.client.renderer.block.model.SimpleBakedModel.Builder;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -63,7 +63,7 @@ public class BlockBreakAnimationClientHandler implements ISelectiveResourceReloa
    public static final BlockBreakAnimationClientHandler instance = new BlockBreakAnimationClientHandler(Minecraft.getMinecraft());
    private static final Map<Integer, DestroyBlockProgress> damagedBranches = new ConcurrentHashMap();
    private int tickCounter = 0;
-   private final TextureAtlasSprite[] destroyBlockIcons = new TextureAtlasSprite[10];
+   private final EaglerTextureAtlasSprite[] destroyBlockIcons = new EaglerTextureAtlasSprite[10];
    static Method preRenderMethod = ReflectionHelper.findMethod(RenderGlobal.class, "preRenderDamagedBlocks", "preRenderDamagedBlocks", new Class[0]);
    static Method postRenderMethod = ReflectionHelper.findMethod(RenderGlobal.class, "postRenderDamagedBlocks", "postRenderDamagedBlocks", new Class[0]);
 
@@ -164,7 +164,7 @@ public class BlockBreakAnimationClientHandler implements ISelectiveResourceReloa
 
    }
 
-   private void drawBlockDamageTexture(Minecraft mc, TextureManager renderEngine, Tessellator tessellatorIn, BufferBuilder bufferBuilderIn, Entity entityIn, float partialTicks) {
+   private void drawBlockDamageTexture(Minecraft mc, TextureManager renderEngine, Tessellator tessellatorIn, WorldRenderer bufferBuilderIn, Entity entityIn, float partialTicks) {
       double posX = entityIn.lastTickPosX + (entityIn.posX - entityIn.lastTickPosX) * (double)partialTicks;
       double posY = entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double)partialTicks;
       double posZ = entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * (double)partialTicks;
@@ -189,7 +189,7 @@ public class BlockBreakAnimationClientHandler implements ISelectiveResourceReloa
                IBlockState state = mc.world.getBlockState(pos);
                if (state.getBlock() instanceof BlockBranch) {
                   int k1 = destroyblockprogress.getPartialBlockDamage();
-                  TextureAtlasSprite textureatlassprite = this.destroyBlockIcons[k1];
+                  EaglerTextureAtlasSprite textureatlassprite = this.destroyBlockIcons[k1];
                   BlockRendererDispatcher blockrendererdispatcher = mc.getBlockRendererDispatcher();
                   if (state.getRenderType() == EnumBlockRenderType.MODEL) {
                      state = state.getActualState(mc.world, pos);
@@ -210,7 +210,7 @@ public class BlockBreakAnimationClientHandler implements ISelectiveResourceReloa
 
    }
 
-   private IBakedModel getDamageModel(IBakedModel baseModel, TextureAtlasSprite texture, IBlockState state, IBlockAccess world, BlockPos pos) {
+   private IBakedModel getDamageModel(IBakedModel baseModel, EaglerTextureAtlasSprite texture, IBlockState state, IBlockAccess world, BlockPos pos) {
       state = state.getBlock().getExtendedState(state, world, pos);
       if (!(baseModel instanceof ICustomDamageModel)) {
          return (new Builder(state, baseModel, texture, pos)).makeBakedModel();

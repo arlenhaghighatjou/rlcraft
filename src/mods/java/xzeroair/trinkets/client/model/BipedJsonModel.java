@@ -5,9 +5,9 @@ import javax.annotation.Nonnull;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.CullFace;
@@ -141,7 +141,7 @@ public class BipedJsonModel extends ModelBiped {
 
    private void renderModel(RenderItem renderer, IBakedModel model, int color, ItemStack stack) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.ITEM);
 
       for(EnumFacing enumfacing : EnumFacing.values()) {
@@ -152,7 +152,7 @@ public class BipedJsonModel extends ModelBiped {
       tessellator.draw();
    }
 
-   public void renderQuads(RenderItem renderer, BufferBuilder buffer, List<BakedQuad> quads, int color, ItemStack stack) {
+   public void renderQuads(RenderItem renderer, WorldRenderer buffer, List<BakedQuad> quads, int color, ItemStack stack) {
       boolean flag = color == -1;
       int i = 0;
 

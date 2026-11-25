@@ -74,8 +74,8 @@ import net.silentchaos512.lib.item.ICustomEnchantColor;
 import net.silentchaos512.lib.item.ItemBlockMetaSubtypes;
 import net.silentchaos512.lib.util.GameUtil;
 import net.silentchaos512.lib.util.LogHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class SRegistry {
    private static final Pattern PATTERN_REGISTRY_NAME = Pattern.compile("[^a-z0-9_]+");

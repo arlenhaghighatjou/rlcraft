@@ -1,6 +1,6 @@
 package net.silentchaos512.lib.util;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.creativetab.CreativeTabs;
@@ -21,13 +21,13 @@ public class ItemHelper {
 
    /** @deprecated */
    @Deprecated
-   public static boolean attemptDamageItem(ItemStack stack, int amount, Random rand) {
+   public static boolean attemptDamageItem(ItemStack stack, int amount, EaglercraftRandom rand) {
       return attemptDamageItem(stack, amount, rand, (EntityPlayer)null);
    }
 
    /** @deprecated */
    @Deprecated
-   public static boolean attemptDamageItem(ItemStack stack, int amount, Random rand, @Nullable EntityPlayer player) {
+   public static boolean attemptDamageItem(ItemStack stack, int amount, EaglercraftRandom rand, @Nullable EntityPlayer player) {
       EntityPlayerMP playermp = player instanceof EntityPlayerMP ? (EntityPlayerMP)player : null;
       return stack.attemptDamageItem(amount, rand, playermp);
    }

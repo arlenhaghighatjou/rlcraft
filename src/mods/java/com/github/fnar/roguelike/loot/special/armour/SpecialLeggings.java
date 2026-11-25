@@ -3,10 +3,10 @@ package com.github.fnar.roguelike.loot.special.armour;
 import com.github.fnar.minecraft.item.ArmourType;
 import com.github.fnar.minecraft.item.RldItem;
 import greymerk.roguelike.treasure.loot.Quality;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SpecialLeggings extends SpecialArmour {
-   public SpecialLeggings(Random random, Quality quality) {
+   public SpecialLeggings(EaglercraftRandom random, Quality quality) {
       this.withQuality(quality);
       this.withRldItem(this.getSpecialLeggingsItem());
       this.withName(this.getSpecialLeggingsName());
@@ -16,7 +16,7 @@ public class SpecialLeggings extends SpecialArmour {
       this.withRandomColour(random);
    }
 
-   private void withLeggingsEnchantments(Random random) {
+   private void withLeggingsEnchantments(EaglercraftRandom random) {
       this.withArmorEnchantments(random);
    }
 

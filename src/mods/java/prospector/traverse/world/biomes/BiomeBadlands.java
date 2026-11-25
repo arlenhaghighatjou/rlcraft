@@ -1,6 +1,6 @@
 package prospector.traverse.world.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockDoublePlant.EnumPlantType;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
@@ -56,12 +56,12 @@ public class BiomeBadlands extends Biome implements WorldGenConstants {
       return super.getModdedBiomeFoliageColor(-4013720);
    }
 
-   public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+   public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand) {
       int num = rand.nextInt(2);
       return (WorldGenAbstractTree)(num == 0 ? new WorldGenShrub(OAK_LOG, OAK_LEAVES) : TREE_FEATURE);
    }
 
-   public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
+   public void genTerrainBlocks(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
       if (noiseVal > 1.5D) {
          this.topBlock = Blocks.STONE.getDefaultState();
          this.fillerBlock = Blocks.STONE.getDefaultState();
@@ -73,7 +73,7 @@ public class BiomeBadlands extends Biome implements WorldGenConstants {
       this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
    }
 
-   public void decorate(World worldIn, Random rand, BlockPos pos) {
+   public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos) {
       if (TerrainGen.decorate(worldIn, rand, pos, EventType.TREE)) {
          int fallenTreeChance = rand.nextInt(3);
          if (fallenTreeChance == 0) {

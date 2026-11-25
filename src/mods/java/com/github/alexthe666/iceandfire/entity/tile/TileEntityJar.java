@@ -6,8 +6,8 @@ import com.github.alexthe666.iceandfire.entity.EntityPixie;
 import com.github.alexthe666.iceandfire.message.MessageUpdatePixieHouse;
 import com.github.alexthe666.iceandfire.message.MessageUpdatePixieHouseModel;
 import com.github.alexthe666.iceandfire.message.MessageUpdatePixieJar;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,13 +26,13 @@ public class TileEntityJar extends TileEntity implements ITickable {
    public boolean hasPixie;
    public boolean hasProduced;
    public boolean tamedPixie;
-   public UUID pixieOwnerUUID;
+   public EaglercraftUUID pixieOwnerUUID;
    public int pixieType;
    public int ticksExisted;
    public NonNullList<ItemStack> pixieItems = NonNullList.withSize(1, ItemStack.EMPTY);
    public float rotationYaw;
    public float prevRotationYaw;
-   private Random rand = new Random();
+   private EaglercraftRandom rand = new EaglercraftRandom();
 
    public TileEntityJar() {
       this.hasPixie = true;
@@ -111,7 +111,7 @@ public class TileEntityJar extends TileEntity implements ITickable {
 
    public void releasePixie() {
       EntityPixie pixie = new EntityPixie(this.world);
-      pixie.setPositionAndRotation((double)((float)this.pos.getX() + 0.5F), (double)((float)this.pos.getY() + 1.0F), (double)((float)this.pos.getZ() + 0.5F), (float)(new Random()).nextInt(360), 0.0F);
+      pixie.setPositionAndRotation((double)((float)this.pos.getX() + 0.5F), (double)((float)this.pos.getY() + 1.0F), (double)((float)this.pos.getZ() + 0.5F), (float)(new EaglercraftRandom()).nextInt(360), 0.0F);
       pixie.setHeldItem(EnumHand.MAIN_HAND, (ItemStack)this.pixieItems.get(0));
       pixie.setColor(this.pixieType);
       if (!this.world.isRemote) {

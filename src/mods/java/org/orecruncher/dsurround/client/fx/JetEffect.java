@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.fx;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import net.minecraft.block.state.IBlockState;
@@ -30,7 +30,7 @@ public abstract class JetEffect extends BlockEffect {
       super(chance);
    }
 
-   public boolean canTrigger(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull Random random) {
+   public boolean canTrigger(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EaglercraftRandom random) {
       if (!this.alwaysExecute() && random.nextInt(this.getChance()) != 0) {
          return false;
       } else {

@@ -1,6 +1,6 @@
 package rtg.world.biome.realistic.defiledlands;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -38,7 +38,7 @@ public class RealisticBiomeDLSwampDefiled extends RealisticBiomeDLBase {
       }
 
       public void paintTerrain(ChunkPrimer primer, int i, int j, int x, int z, int depth, RTGWorld rtgWorld, float[] noise, float river, Biome[] base) {
-         Random rand = rtgWorld.rand();
+         EaglercraftRandom rand = rtgWorld.rand();
          float c = TerrainBase.calcCliff(x, z, noise);
          boolean cliff = c > 1.4F;
 

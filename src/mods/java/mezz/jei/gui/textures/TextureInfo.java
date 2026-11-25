@@ -1,11 +1,11 @@
 package mezz.jei.gui.textures;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
 
 public class TextureInfo {
    private final ResourceLocation location;
-   private final TextureAtlasSprite sprite;
+   private final EaglerTextureAtlasSprite sprite;
    private final int width;
    private final int height;
    private int sliceLeft;
@@ -17,7 +17,7 @@ public class TextureInfo {
    private int trimTop;
    private int trimBottom;
 
-   public TextureInfo(ResourceLocation location, TextureAtlasSprite sprite, int width, int height) {
+   public TextureInfo(ResourceLocation location, EaglerTextureAtlasSprite sprite, int width, int height) {
       this.location = location;
       this.sprite = sprite;
       this.width = width;
@@ -44,7 +44,7 @@ public class TextureInfo {
       return this.location;
    }
 
-   public TextureAtlasSprite getSprite() {
+   public EaglerTextureAtlasSprite getSprite() {
       return this.sprite;
    }
 

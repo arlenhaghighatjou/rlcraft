@@ -2,7 +2,7 @@ package greymerk.roguelike.treasure.loot.provider;
 
 import com.github.fnar.minecraft.item.Miscellaneous;
 import com.github.fnar.minecraft.item.RldItemStack;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class EnchantedBookLootItem extends LootItem {
    private final int enchantmentLevel;
@@ -16,7 +16,7 @@ public class EnchantedBookLootItem extends LootItem {
       this.enchantmentLevel = enchantmentLevel;
    }
 
-   public RldItemStack getLootItem(Random random) {
+   public RldItemStack getLootItem(EaglercraftRandom random) {
       int enchantLevel = this.enchantmentLevel != 0 ? this.enchantmentLevel : LootItem.getEnchantmentLevel(random, this.level);
       return Miscellaneous.Type.BOOK.asItem().plzEnchantAtLevel(enchantLevel).asStack();
    }

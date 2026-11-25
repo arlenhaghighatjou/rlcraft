@@ -1,12 +1,12 @@
 package ivorius.ivtoolkit.random.values;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class RandomValues {
    public RandomValues() {
    }
 
-   public static int[] getValueRange(IValue value, Random random) {
+   public static int[] getValueRange(IValue value, EaglercraftRandom random) {
       int[] result = new int[2];
       int val1 = value.getValue(random).intValue();
       int val2 = value.getValue(random).intValue();
@@ -16,7 +16,7 @@ public class RandomValues {
       return result;
    }
 
-   public static double[] getValueRange(DValue value, Random random) {
+   public static double[] getValueRange(DValue value, EaglercraftRandom random) {
       double[] result = new double[2];
       double val1 = value.getValue(random).doubleValue();
       double val2 = value.getValue(random).doubleValue();

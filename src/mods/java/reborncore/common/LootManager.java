@@ -3,7 +3,7 @@ package reborncore.common;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -77,7 +77,7 @@ public class LootManager {
 
       }
 
-      public void generateLoot(Collection<ItemStack> stacks, Random rand, LootContext context) {
+      public void generateLoot(Collection<ItemStack> stacks, EaglercraftRandom rand, LootContext context) {
          for(LootItem entry : this.items) {
             if (rand.nextDouble() < entry.chance) {
                ItemStack stack = entry.createStack(rand);

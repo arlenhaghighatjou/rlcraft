@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
@@ -65,7 +65,7 @@ public class BlockEggPlant extends Block {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       worldIn.spawnParticle(EnumParticleTypes.SPELL_MOB, (double)pos.getX() + rand.nextDouble(), (double)pos.getY() + 0.4D, (double)pos.getZ() + rand.nextDouble(), 0.46D, 0.28D, 0.55D, new int[0]);
    }
 

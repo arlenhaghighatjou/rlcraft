@@ -6,7 +6,7 @@ import com.github.fnar.minecraft.item.mapper.ItemMapper1_12;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.monster.Mob;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -21,7 +21,7 @@ public class SpawnPotentialMapper1_12 {
    public SpawnPotentialMapper1_12() {
    }
 
-   public static NBTTagList mapToNbt(List<SpawnPotential> spawnerPotentials, Random random, int level) {
+   public static NBTTagList mapToNbt(List<SpawnPotential> spawnerPotentials, EaglercraftRandom random, int level) {
       NBTTagList potentialsNbtTagList = new NBTTagList();
       spawnerPotentials.stream().map((potential) -> {
          return mapToNbt(potential, random, level);
@@ -31,7 +31,7 @@ public class SpawnPotentialMapper1_12 {
       return potentialsNbtTagList;
    }
 
-   private static NBTTagList mapToNbt(SpawnPotential spawnPotential, Random random, int level) {
+   private static NBTTagList mapToNbt(SpawnPotential spawnPotential, EaglercraftRandom random, int level) {
       NBTTagList potentials = new NBTTagList();
       IntStream.range(0, 12).mapToObj((i) -> {
          return spawnPotential.generateMob(random, level);

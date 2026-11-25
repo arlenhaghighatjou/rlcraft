@@ -4,8 +4,8 @@ import com.yyon.grapplinghook.items.grappleBow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -111,7 +111,7 @@ public class crosshairRenderer {
       float f = 0.00390625F;
       float f1 = 0.00390625F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexbuffer.pos((double)(x + 0), (double)(y + height), (double)this.zLevel).tex((double)((float)(textureX + 0) * f), (double)((float)(textureY + height) * f1)).endVertex();
       vertexbuffer.pos((double)(x + width), (double)(y + height), (double)this.zLevel).tex((double)((float)(textureX + width) * f), (double)((float)(textureY + height) * f1)).endVertex();
@@ -122,7 +122,7 @@ public class crosshairRenderer {
 
    public void drawRect(int x, int y, int width, int height, int g, int a) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
       vertexbuffer.pos((double)(x + 0), (double)(y + height), (double)this.zLevel).color(g, g, g, a).endVertex();
       vertexbuffer.pos((double)(x + width), (double)(y + height), (double)this.zLevel).color(g, g, g, a).endVertex();

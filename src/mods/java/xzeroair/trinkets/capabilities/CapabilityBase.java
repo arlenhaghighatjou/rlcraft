@@ -1,12 +1,12 @@
 package xzeroair.trinkets.capabilities;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.nbt.NBTTagCompound;
 import xzeroair.trinkets.util.Reference;
 import xzeroair.trinkets.util.handlers.TickHandler;
 
 public abstract class CapabilityBase<T, E> implements ITrinketCapability<T> {
-   protected Random random = Reference.random;
+   protected EaglercraftRandom random = Reference.random;
    protected NBTTagCompound tag = new NBTTagCompound();
    protected TickHandler tickHandler = new TickHandler();
    protected E object;

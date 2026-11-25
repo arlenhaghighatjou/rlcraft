@@ -18,8 +18,8 @@ import net.ilexiconn.llibrary.client.util.Matrix;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
@@ -50,19 +50,19 @@ public class VanillaTabulaModel implements IModel {
       return this.textures;
    }
 
-   public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+   public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter) {
       List<ResourceLocation> locations = Lists.newArrayList(this.textures);
       if (locations.isEmpty()) {
          locations.add(new ResourceLocation("missingno"));
       }
 
       Builder<BakedQuad> builder = ImmutableList.builder();
-      TextureAtlasSprite particleSprite = (TextureAtlasSprite)bakedTextureGetter.apply(this.particle == null ? (ResourceLocation)locations.get(0) : this.particle);
+      EaglerTextureAtlasSprite particleSprite = (EaglerTextureAtlasSprite)bakedTextureGetter.apply(this.particle == null ? (ResourceLocation)locations.get(0) : this.particle);
       int layer = 0;
 
       for(ResourceLocation resourceLocation : locations) {
          Matrix matrix = new Matrix();
-         TextureAtlasSprite sprite = (TextureAtlasSprite)bakedTextureGetter.apply(resourceLocation);
+         EaglerTextureAtlasSprite sprite = (EaglerTextureAtlasSprite)bakedTextureGetter.apply(resourceLocation);
          TRSRTransformation transformation = (TRSRTransformation)state.apply(Optional.empty()).orElse(TRSRTransformation.identity());
          matrix.multiply(transformation.getMatrix());
          matrix.translate(0.5D, 1.5D, 0.5D);
@@ -74,7 +74,7 @@ public class VanillaTabulaModel implements IModel {
       return new BakedTabulaModel(leQuads, particleSprite, this.transforms);
    }
 
-   private void build(Matrix mat, Builder<BakedQuad> builder, VertexFormat format, List<TabulaCubeContainer> cubeContainerList, TextureAtlasSprite sprite, int layer) {
+   private void build(Matrix mat, Builder<BakedQuad> builder, VertexFormat format, List<TabulaCubeContainer> cubeContainerList, EaglerTextureAtlasSprite sprite, int layer) {
       for(TabulaCubeContainer cube : cubeContainerList) {
          int[] dimensions = cube.getDimensions();
          double[] position = cube.getPosition();
@@ -161,7 +161,7 @@ public class VanillaTabulaModel implements IModel {
 
    }
 
-   private boolean hasTransparency(TabulaCubeContainer cube, TextureAtlasSprite sprite) {
+   private boolean hasTransparency(TabulaCubeContainer cube, EaglerTextureAtlasSprite sprite) {
       int textureWidth = this.model.getTextureWidth();
       int textureHeight = this.model.getTextureHeight();
       int width = sprite.getIconWidth();
@@ -205,7 +205,7 @@ public class VanillaTabulaModel implements IModel {
       return false;
    }
 
-   private void buildQuad(Builder<BakedQuad> builder, VertexFormat format, boolean isTxMirror, Point3f vert0, Point3f vert1, Point3f vert2, Point3f vert3, Point2i minUV, Point2i maxUV, TextureAtlasSprite sprite, boolean hasTransparency, int layer) {
+   private void buildQuad(Builder<BakedQuad> builder, VertexFormat format, boolean isTxMirror, Point3f vert0, Point3f vert1, Point3f vert2, Point3f vert3, Point2i minUV, Point2i maxUV, EaglerTextureAtlasSprite sprite, boolean hasTransparency, int layer) {
       Point3f[] vertices = new Point3f[]{vert0, vert1, vert2, vert3};
       if (!this.isQuadOneDimensional(vertices)) {
          Point2i[] uvs = new Point2i[]{new Point2i(maxUV.x, minUV.y), new Point2i(minUV.x, minUV.y), new Point2i(minUV.x, maxUV.y), new Point2i(maxUV.x, maxUV.y)};

@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SpawnerSettings {
    private WeightedRandomizer<Spawner> spawners = new WeightedRandomizer<Spawner>();
@@ -48,7 +48,7 @@ public class SpawnerSettings {
       return this.spawners.toString();
    }
 
-   public Spawner chooseOneAtRandom(Random random) {
+   public Spawner chooseOneAtRandom(EaglercraftRandom random) {
       return (Spawner)this.getSpawners().get(random);
    }
 }

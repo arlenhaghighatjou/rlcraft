@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.shader;
 
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.util.ResourceLocation;
 import org.orecruncher.lib.gfx.shaders.ShaderProgram;
 

@@ -7,7 +7,7 @@ import betterquesting.api2.storage.IDatabaseNBT;
 import betterquesting.api2.storage.SimpleDatabase;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -77,7 +77,7 @@ public class RewardStorage extends SimpleDatabase<IReward> implements IDatabaseN
 
    }
 
-   public NBTTagList writeProgressToNBT(NBTTagList nbt, @Nullable List<UUID> user) {
+   public NBTTagList writeProgressToNBT(NBTTagList nbt, @Nullable List<EaglercraftUUID> user) {
       return nbt;
    }
 

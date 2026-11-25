@@ -10,7 +10,7 @@ import com.fantasticsource.tools.datastructures.Color;
 import java.util.ArrayList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GUIText extends GUIElement {
    public final double scale;

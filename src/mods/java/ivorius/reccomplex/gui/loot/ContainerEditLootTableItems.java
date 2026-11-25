@@ -1,6 +1,6 @@
 package ivorius.reccomplex.gui.loot;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import ivorius.ivtoolkit.network.PacketGuiAction.ActionHandler;
 import ivorius.reccomplex.gui.SlotDynamicIndex;
 import ivorius.reccomplex.world.storage.loot.GenericLootTable;

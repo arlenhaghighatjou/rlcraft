@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.lycanitesmobs.client.localisation.LanguageManager;
 import com.lycanitesmobs.core.helpers.JSONHelper;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
@@ -299,7 +299,7 @@ public class HarvestEquipmentFeature extends EquipmentFeature {
             BlockPos pos = new BlockPos(entity.posX, entity.posY, entity.posZ);
             if (target.isShearable(itemStack, entity.world, pos)) {
                List<ItemStack> drops = target.onSheared(itemStack, entity.world, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, itemStack));
-               Random rand = new Random();
+               EaglercraftRandom rand = new EaglercraftRandom();
 
                for(ItemStack stack : drops) {
                   EntityItem ent = entity.entityDropItem(stack, 1.0F);

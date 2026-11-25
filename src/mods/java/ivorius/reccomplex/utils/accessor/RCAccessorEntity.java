@@ -1,7 +1,7 @@
 package ivorius.reccomplex.utils.accessor;
 
 import java.lang.reflect.Field;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -18,7 +18,7 @@ public class RCAccessorEntity {
 
    }
 
-   public static void setEntityUniqueID(Entity entity, UUID uuid) {
+   public static void setEntityUniqueID(Entity entity, EaglercraftUUID uuid) {
       initializeUniqueID();
 
       try {
@@ -29,11 +29,11 @@ public class RCAccessorEntity {
 
    }
 
-   public static UUID getEntityUniqueID(Entity entity) {
+   public static EaglercraftUUID getEntityUniqueID(Entity entity) {
       initializeUniqueID();
 
       try {
-         return (UUID)uniqueID.get(entity);
+         return (EaglercraftUUID)uniqueID.get(entity);
       } catch (IllegalAccessException var2) {
          var2.printStackTrace();
          return null;

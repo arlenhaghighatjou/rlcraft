@@ -8,7 +8,7 @@ import com.creativemd.creativecore.common.gui.container.SubGui;
 import com.creativemd.creativecore.common.gui.mc.ContainerSub;
 import com.creativemd.creativecore.common.packet.CreativeCorePacket;
 import com.google.gson.JsonObject;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 

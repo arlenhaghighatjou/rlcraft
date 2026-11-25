@@ -1,7 +1,7 @@
 package com.lycanitesmobs.client.obj;
 
 import javax.vecmath.Vector3f;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL15;
@@ -34,7 +34,7 @@ public class Mesh {
          }
 
          Tessellator tesselator = Tessellator.getInstance();
-         BufferBuilder bufferBuilder = tesselator.getBuffer();
+         WorldRenderer bufferBuilder = tesselator.getBuffer();
          bufferBuilder.begin(4, DefaultVertexFormats.POSITION_TEX_NORMAL);
 
          for(int i = 0; i < this.indices.length; ++i) {

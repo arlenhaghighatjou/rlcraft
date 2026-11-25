@@ -1,12 +1,12 @@
 package rustic.client.renderer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -41,7 +41,7 @@ public class LiquidBarrelRenderer extends TileEntitySpecialRenderer<TileEntityLi
          this.green = c >> 8 & 255;
          this.red = c >> 16 & 255;
          this.a = c >> 24 & 255;
-         TextureAtlasSprite sprite = (TextureAtlasSprite)FluidClientUtil.stillTextures.get(fluid);
+         EaglerTextureAtlasSprite sprite = (EaglerTextureAtlasSprite)FluidClientUtil.stillTextures.get(fluid);
          if (sprite == null) {
             return;
          }
@@ -63,7 +63,7 @@ public class LiquidBarrelRenderer extends TileEntitySpecialRenderer<TileEntityLi
          GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
          Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
          Tessellator tess = Tessellator.getInstance();
-         BufferBuilder buffer = tess.getBuffer();
+         WorldRenderer buffer = tess.getBuffer();
          buffer.begin(7, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
          buffer.pos(x + 0.1875D, y + 0.125D + 0.8125D * (double)((float)amount / (float)capacity), z + 0.1875D).tex(this.minU, this.minV).lightmap(this.lightx, this.lighty).color(this.red, this.green, this.blue, this.a).endVertex();
          buffer.pos(x + 0.8125D, y + 0.125D + 0.8125D * (double)((float)amount / (float)capacity), z + 0.1875D).tex(this.maxU, this.minV).lightmap(this.lightx, this.lighty).color(this.red, this.green, this.blue, this.a).endVertex();

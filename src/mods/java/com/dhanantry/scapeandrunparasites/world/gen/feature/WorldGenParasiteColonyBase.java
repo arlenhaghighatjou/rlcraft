@@ -6,7 +6,7 @@ import com.dhanantry.scapeandrunparasites.block.BlockParasiteRubble;
 import com.dhanantry.scapeandrunparasites.block.BlockParasiteRubbleDense;
 import com.dhanantry.scapeandrunparasites.block.BlockParasiteStain;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
@@ -51,7 +51,7 @@ public abstract class WorldGenParasiteColonyBase extends WorldGenParasiteGenAbst
       }
    }
 
-   protected BlockPos placeColumn(World worldIn, BlockPos pos, int in, Random rand, double extraChance, IBlockState state) {
+   protected BlockPos placeColumn(World worldIn, BlockPos pos, int in, EaglercraftRandom rand, double extraChance, IBlockState state) {
       int current = pos.getY();
       int atm = current;
       int times = 0;
@@ -124,7 +124,7 @@ public abstract class WorldGenParasiteColonyBase extends WorldGenParasiteGenAbst
       }
    }
 
-   protected void addVines(World worldIn, BlockPos position, Random rand, int longer) {
+   protected void addVines(World worldIn, BlockPos position, EaglercraftRandom rand, int longer) {
       if (worldIn.getBlockState(position).getBlock() == Blocks.AIR) {
          this.placeVine(worldIn, position);
 

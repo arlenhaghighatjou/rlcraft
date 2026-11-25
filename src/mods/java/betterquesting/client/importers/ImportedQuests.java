@@ -8,7 +8,7 @@ import betterquesting.questing.QuestInstance;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -69,7 +69,7 @@ public class ImportedQuests extends SimpleDatabase<IQuest> implements IQuestData
 
    }
 
-   public NBTTagList writeProgressToNBT(NBTTagList nbt, @Nullable List<UUID> users) {
+   public NBTTagList writeProgressToNBT(NBTTagList nbt, @Nullable List<EaglercraftUUID> users) {
       return nbt;
    }
 

@@ -1,6 +1,6 @@
 package svenhjol.charm.world.generator;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +19,7 @@ public class NetherGoldDepositGenerator implements IWorldGenerator {
       generator = new WorldGenMinable(NetherGoldDeposits.ore.getDefaultState(), NetherGoldDeposits.clusterSize, BlockMatcher.forBlock(Blocks.NETHERRACK));
    }
 
-   public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom rand, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (world.provider instanceof WorldProviderHell) {
          for(int i = 0; i < NetherGoldDeposits.clusterCount; ++i) {
             int x = chunkX * 16 + rand.nextInt(16);

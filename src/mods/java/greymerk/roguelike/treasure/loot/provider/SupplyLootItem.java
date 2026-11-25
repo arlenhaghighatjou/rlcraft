@@ -6,14 +6,14 @@ import com.github.fnar.minecraft.item.Material;
 import com.github.fnar.minecraft.item.RldItemStack;
 import com.github.fnar.minecraft.material.Crop;
 import com.github.fnar.minecraft.material.Wood;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SupplyLootItem extends LootItem {
    public SupplyLootItem(int weight, int level) {
       super(weight, level);
    }
 
-   public RldItemStack getLootItem(Random random) {
+   public RldItemStack getLootItem(EaglercraftRandom random) {
       if (random.nextInt(20) == 0) {
          return Food.Type.CARROT.asItem().asStack().withCount(1);
       } else if (random.nextInt(20) == 0) {

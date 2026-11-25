@@ -39,8 +39,8 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
@@ -54,8 +54,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.ClickEvent.Action;
 import net.minecraftforge.common.MinecraftForge;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 import org.lwjgl.opengl.GL11;
 
 public class GuiAtlas extends GuiComponent {
@@ -678,7 +678,7 @@ public class GuiAtlas extends GuiComponent {
             GlStateManager.translate((float)(-xWidth - centerXtranslate), (float)(-this.fontRenderer.FONT_HEIGHT / 2), 0.0F);
             GlStateManager.disableTexture2D();
             Tessellator t = Tessellator.getInstance();
-            BufferBuilder vb = t.getBuffer();
+            WorldRenderer vb = t.getBuffer();
             vb.begin(7, DefaultVertexFormats.POSITION);
             vb.pos((double)centerXtranslate, (double)(this.fontRenderer.FONT_HEIGHT - 1), 0.0D).endVertex();
             vb.pos((double)(-centerXtranslate - 1), (double)(this.fontRenderer.FONT_HEIGHT - 1), 0.0D).endVertex();

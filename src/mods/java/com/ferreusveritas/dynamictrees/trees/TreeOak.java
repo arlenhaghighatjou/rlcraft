@@ -9,7 +9,7 @@ import com.ferreusveritas.dynamictrees.systems.featuregen.FeatureGenFruit;
 import com.ferreusveritas.dynamictrees.systems.featuregen.FeatureGenVine;
 import com.ferreusveritas.dynamictrees.util.SafeChunkBounds;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.state.IBlockState;
@@ -105,7 +105,7 @@ public class TreeOak extends TreeFamilyVanilla {
          return isOneOfBiomes(biome, new Biome[]{Biomes.FOREST, Biomes.FOREST_HILLS});
       }
 
-      public boolean rot(World world, BlockPos pos, int neighborCount, int radius, Random random, boolean rapid) {
+      public boolean rot(World world, BlockPos pos, int neighborCount, int radius, EaglercraftRandom random, boolean rapid) {
          if (super.rot(world, pos, neighborCount, radius, random, rapid)) {
             if (radius > 4 && TreeHelper.isRooty(world.getBlockState(pos.down())) && world.getLightFor(EnumSkyBlock.SKY, pos) < 4) {
                world.setBlockState(pos, random.nextInt(3) == 0 ? ModBlocks.blockStates.redMushroom : ModBlocks.blockStates.brownMushroom);
@@ -141,7 +141,7 @@ public class TreeOak extends TreeFamilyVanilla {
          return TreeOak.this.getCommonSpecies().getSeed();
       }
 
-      public boolean rot(World world, BlockPos pos, int neighborCount, int radius, Random random, boolean rapid) {
+      public boolean rot(World world, BlockPos pos, int neighborCount, int radius, EaglercraftRandom random, boolean rapid) {
          if (super.rot(world, pos, neighborCount, radius, random, rapid)) {
             if (radius > 4 && TreeHelper.isRooty(world.getBlockState(pos.down())) && world.getLightFor(EnumSkyBlock.SKY, pos) < 4) {
                world.setBlockState(pos, random.nextInt(3) == 0 ? ModBlocks.blockStates.redMushroom : ModBlocks.blockStates.brownMushroom);
@@ -170,7 +170,7 @@ public class TreeOak extends TreeFamilyVanilla {
          return this.isGeneratingInWater(world, pos, soilBlockState) ? true : super.isAcceptableSoilForWorldgen(world, pos, soilBlockState);
       }
 
-      public boolean generate(World world, BlockPos rootPos, Biome biome, Random random, int radius, SafeChunkBounds safeBounds) {
+      public boolean generate(World world, BlockPos rootPos, Biome biome, EaglercraftRandom random, int radius, SafeChunkBounds safeBounds) {
          if (this.isGeneratingInWater(world, rootPos, world.getBlockState(rootPos))) {
             return radius >= 5 ? super.generate(world, rootPos.down(), biome, random, radius, safeBounds) : false;
          } else {

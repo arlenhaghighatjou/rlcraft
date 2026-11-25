@@ -3,8 +3,8 @@ package rustic.client.util;
 import com.google.common.collect.Maps;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
@@ -12,7 +12,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 public class FluidClientUtil {
-   public static Map<Fluid, TextureAtlasSprite> stillTextures = Maps.newHashMap();
+   public static Map<Fluid, EaglerTextureAtlasSprite> stillTextures = Maps.newHashMap();
 
    public FluidClientUtil() {
    }
@@ -29,7 +29,7 @@ public class FluidClientUtil {
 
    public static void drawFluidStack(FluidStack fluid, int x, int y, int width, int height) {
       if (fluid != null && fluid.getFluid() != null && fluid.amount > 0) {
-         TextureAtlasSprite sprite = (TextureAtlasSprite)stillTextures.get(fluid.getFluid());
+         EaglerTextureAtlasSprite sprite = (EaglerTextureAtlasSprite)stillTextures.get(fluid.getFluid());
          if (sprite != null) {
             int color = fluid.getFluid().getColor();
             float minU = sprite.getMinU();
@@ -78,7 +78,7 @@ public class FluidClientUtil {
       for(Fluid fluid : FluidRegistry.getRegisteredFluids().values()) {
          if (fluid.getStill() != null) {
             String still = fluid.getStill().toString();
-            TextureAtlasSprite sprite;
+            EaglerTextureAtlasSprite sprite;
             if (map.getTextureExtry(still) != null) {
                sprite = map.getTextureExtry(still);
             } else {

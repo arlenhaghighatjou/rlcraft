@@ -8,7 +8,7 @@ import betterquesting.api2.storage.IDatabaseNBT;
 import betterquesting.api2.storage.SimpleDatabase;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -74,7 +74,7 @@ public class TaskStorage extends SimpleDatabase<ITask> implements IDatabaseNBT<I
 
    }
 
-   public NBTTagList writeProgressToNBT(NBTTagList json, @Nullable List<UUID> user) {
+   public NBTTagList writeProgressToNBT(NBTTagList json, @Nullable List<EaglercraftUUID> user) {
       for(DBEntry<ITask> entry : this.getEntries()) {
          ResourceLocation taskID = ((ITask)entry.getValue()).getFactoryID();
          NBTTagCompound qJson = (NBTTagCompound)((ITask)entry.getValue()).writeProgressToNBT(new NBTTagCompound(), user);

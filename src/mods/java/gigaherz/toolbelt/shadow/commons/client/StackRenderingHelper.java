@@ -1,8 +1,8 @@
 package gigaherz.toolbelt.shadow.commons.client;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -45,7 +45,7 @@ public class StackRenderingHelper {
 
    private static void renderItem(IBakedModel model, int color) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder worldrenderer = tessellator.getBuffer();
+      WorldRenderer worldrenderer = tessellator.getBuffer();
       worldrenderer.begin(7, DefaultVertexFormats.ITEM);
 
       for(BakedQuad bakedquad : model.getQuads((IBlockState)null, (EnumFacing)null, 0L)) {

@@ -3,7 +3,7 @@ package atomicstryker.battletowers.common;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -135,7 +135,7 @@ public class TowerStageItemManager
 
     /**
      * @param rand
-     *            your WorldGen Random
+     *            your WorldGen EaglercraftRandom
      * @param teChest
      *            chest tileentity to fill with loot
      * @param count
@@ -144,7 +144,7 @@ public class TowerStageItemManager
      * @return ItemStack instance of the configured Block or Item with amount,
      *         or null
      */
-    public List<ItemStack> getStageItemStacks(World world, Random rand, TileEntityChest teChest, int count)
+    public List<ItemStack> getStageItemStacks(World world, EaglercraftRandom rand, TileEntityChest teChest, int count)
     {
         List<ItemStack> result = new ArrayList<>();
         int index = 0;

@@ -3,9 +3,9 @@ package mezz.jei.gui.elements;
 import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.gui.textures.TextureInfo;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -31,7 +31,7 @@ public class DrawableSprite implements IDrawableStatic {
 
    public void draw(Minecraft minecraft, int xOffset, int yOffset, int maskTop, int maskBottom, int maskLeft, int maskRight) {
       ResourceLocation location = this.info.getLocation();
-      TextureAtlasSprite sprite = this.info.getSprite();
+      EaglerTextureAtlasSprite sprite = this.info.getSprite();
       int textureWidth = this.info.getWidth();
       int textureHeight = this.info.getHeight();
       TextureManager textureManager = minecraft.getTextureManager();
@@ -51,7 +51,7 @@ public class DrawableSprite implements IDrawableStatic {
       float maxU = sprite.getMaxU() - uSize * ((float)maskRight / (float)textureWidth);
       float maxV = sprite.getMaxV() - vSize * ((float)maskBottom / (float)textureHeight);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferBuilder = tessellator.getBuffer();
+      WorldRenderer bufferBuilder = tessellator.getBuffer();
       bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       bufferBuilder.pos((double)x, (double)(y + height), 0.0D).tex((double)minU, (double)maxV).endVertex();
       bufferBuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)maxU, (double)maxV).endVertex();

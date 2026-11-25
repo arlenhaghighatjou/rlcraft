@@ -2,12 +2,12 @@ package com.teamacronymcoders.base.util;
 
 import com.teamacronymcoders.base.client.ClientHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -48,7 +48,7 @@ public class RenderingUtils {
       OpenGlHelper.glBlendFunc(770, 771, 1, 0);
    }
 
-   private static void renderTranslucent(BufferBuilder vertex, double startX, double startY, double startZ, double endX, double endY, double endZ, double rotationX, double rotationY, double rotationZ) {
+   private static void renderTranslucent(WorldRenderer vertex, double startX, double startY, double startZ, double endX, double endY, double endZ, double rotationX, double rotationY, double rotationZ) {
       GL11.glPushMatrix();
       GL11.glRotated(rotationX, 1.0D, 0.0D, 0.0D);
       GL11.glRotated(rotationY, 0.0D, 1.0D, 0.0D);
@@ -64,7 +64,7 @@ public class RenderingUtils {
       GL11.glPopMatrix();
    }
 
-   private static void drawTranslucent(BufferBuilder vertex, double startX, double startY, double startZ, double endX, double endY, double endZ) {
+   private static void drawTranslucent(WorldRenderer vertex, double startX, double startY, double startZ, double endX, double endY, double endZ) {
       vertex.begin(7, DefaultVertexFormats.POSITION_COLOR);
       vertex.pos(-startX, startY, -startZ).color(100, 0, 0, 255).endVertex();
       vertex.pos(startX, startY, -startZ).color(0, 100, 0, 255).endVertex();
@@ -80,7 +80,7 @@ public class RenderingUtils {
       setupGlTranslucent();
       GL11.glTranslatef(0.5F, 0.0F, 0.5F);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertex = tessellator.getBuffer();
+      WorldRenderer vertex = tessellator.getBuffer();
       renderTranslucent(vertex, startX, startY, startZ, endX, endY, endZ, rotationX, rotationY, rotationZ);
       GL11.glPopAttrib();
       GL11.glPopMatrix();
@@ -90,7 +90,7 @@ public class RenderingUtils {
       int existed = ClientHelper.player().ticksExisted;
       float alpha = 0.3F + MathHelper.sin((float)((double)existed + x)) * 0.3F + 0.3F;
       Tessellator tess = Tessellator.getInstance();
-      BufferBuilder buff = tess.getBuffer();
+      WorldRenderer buff = tess.getBuffer();
       GL11.glPushMatrix();
       GL11.glPushAttrib(1048575);
       GL11.glLineWidth(lineWidth);
@@ -112,7 +112,7 @@ public class RenderingUtils {
       int count = ClientHelper.player().ticksExisted;
       float alpha = 0.3F + MathHelper.sin((float)((double)count + x)) * 0.3F + 0.3F;
       Tessellator tess = Tessellator.getInstance();
-      BufferBuilder buff = tess.getBuffer();
+      WorldRenderer buff = tess.getBuffer();
       GL11.glPushMatrix();
       GL11.glLineWidth(lineWidth);
       GL11.glDisable(3553);
@@ -130,7 +130,7 @@ public class RenderingUtils {
 
    public static void drawLineNoFade(double x, double y, double x2, double y2, float red, float green, float blue, float lineWidth, float alpha) {
       Tessellator tess = Tessellator.getInstance();
-      BufferBuilder buff = tess.getBuffer();
+      WorldRenderer buff = tess.getBuffer();
       GL11.glPushMatrix();
       GL11.glLineWidth(lineWidth);
       GL11.glDisable(3553);
@@ -148,7 +148,7 @@ public class RenderingUtils {
 
    public static void drawLineNoFade(double x, double y, double z, double x2, double y2, double z2, float red, float green, float blue, float lineWidth, float alpha) {
       Tessellator tess = Tessellator.getInstance();
-      BufferBuilder buff = tess.getBuffer();
+      WorldRenderer buff = tess.getBuffer();
       GL11.glPushMatrix();
       GL11.glLineWidth(lineWidth);
       GL11.glDisable(3553);
@@ -168,7 +168,7 @@ public class RenderingUtils {
       int count = ClientHelper.player().ticksExisted;
       float alpha = fadeSpeed + MathHelper.sin((float)((double)count + x)) * 0.3F + 0.3F;
       Tessellator tess = Tessellator.getInstance();
-      BufferBuilder buff = tess.getBuffer();
+      WorldRenderer buff = tess.getBuffer();
       GL11.glPushMatrix();
       GL11.glLineWidth(lineWidth);
       GL11.glDisable(3553);
@@ -188,7 +188,7 @@ public class RenderingUtils {
       int existed = ClientHelper.player().ticksExisted;
       float alpha = 0.3F + MathHelper.sin((float)((double)existed + x)) * 0.3F + 0.3F;
       Tessellator tess = Tessellator.getInstance();
-      BufferBuilder buff = tess.getBuffer();
+      WorldRenderer buff = tess.getBuffer();
       GL11.glPushMatrix();
       GL11.glLineWidth(lineWidth);
       GL11.glDisable(3553);
@@ -253,13 +253,13 @@ public class RenderingUtils {
 
    public static void renderFluidCuboid(FluidStack fluid, BlockPos pos, double x, double y, double z, double x1, double y1, double z1, double x2, double y2, double z2, int color) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder renderer = tessellator.getBuffer();
+      WorldRenderer renderer = tessellator.getBuffer();
       renderer.begin(7, DefaultVertexFormats.BLOCK);
       mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
       int brightness = mc.world.getCombinedLight(pos, fluid.getFluid().getLuminosity());
       pre(x, y, z);
-      TextureAtlasSprite still = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
-      TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getFlowing(fluid).toString());
+      EaglerTextureAtlasSprite still = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
+      EaglerTextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getFlowing(fluid).toString());
       putTexturedQuad(renderer, still, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.DOWN, color, brightness, false);
       putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.NORTH, color, brightness, true);
       putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.EAST, color, brightness, true);
@@ -277,15 +277,15 @@ public class RenderingUtils {
    public static void renderStackedFluidCuboid(FluidStack fluid, double px, double py, double pz, BlockPos pos, BlockPos from, BlockPos to, double ymin, double ymax, float offsetToBlockEdge) {
       if (ymin < ymax) {
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder renderer = tessellator.getBuffer();
+         WorldRenderer renderer = tessellator.getBuffer();
          renderer.begin(7, DefaultVertexFormats.BLOCK);
          mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
          int color = fluid.getFluid().getColor(fluid);
          int brightness = mc.world.getCombinedLight(pos, fluid.getFluid().getLuminosity());
          pre(px, py, pz);
          GlStateManager.translate((float)from.getX(), (float)from.getY(), (float)from.getZ());
-         TextureAtlasSprite still = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
-         TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getFlowing(fluid).toString());
+         EaglerTextureAtlasSprite still = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
+         EaglerTextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getFlowing(fluid).toString());
          if (still == null) {
             still = mc.getTextureMapBlocks().getMissingSprite();
          }
@@ -372,9 +372,9 @@ public class RenderingUtils {
       }
    }
 
-   public static void putTexturedCuboid(BufferBuilder renderer, ResourceLocation location, double x1, double y1, double z1, double x2, double y2, double z2, int color, int brightness) {
+   public static void putTexturedCuboid(WorldRenderer renderer, ResourceLocation location, double x1, double y1, double z1, double x2, double y2, double z2, int color, int brightness) {
       boolean flowing = false;
-      TextureAtlasSprite sprite = mc.getTextureMapBlocks().getTextureExtry(location.toString());
+      EaglerTextureAtlasSprite sprite = mc.getTextureMapBlocks().getTextureExtry(location.toString());
       putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.DOWN, color, brightness, flowing);
       putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.NORTH, color, brightness, flowing);
       putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.EAST, color, brightness, flowing);
@@ -383,7 +383,7 @@ public class RenderingUtils {
       putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.UP, color, brightness, flowing);
    }
 
-   public static void putTexturedQuad(BufferBuilder renderer, TextureAtlasSprite sprite, double x, double y, double z, double w, double h, double d, EnumFacing face, int color, int brightness, boolean flowing) {
+   public static void putTexturedQuad(WorldRenderer renderer, EaglerTextureAtlasSprite sprite, double x, double y, double z, double w, double h, double d, EnumFacing face, int color, int brightness, boolean flowing) {
       int l1 = brightness >> 16 & '\uffff';
       int l2 = brightness & '\uffff';
       int a = color >> 24 & 255;
@@ -393,7 +393,7 @@ public class RenderingUtils {
       putTexturedQuad(renderer, sprite, x, y, z, w, h, d, face, r, g, b, a, l1, l2, flowing);
    }
 
-   public static void putTexturedQuad(BufferBuilder renderer, TextureAtlasSprite sprite, double x, double y, double z, double w, double h, double d, EnumFacing face, int r, int g, int b, int a, int light1, int light2, boolean flowing) {
+   public static void putTexturedQuad(WorldRenderer renderer, EaglerTextureAtlasSprite sprite, double x, double y, double z, double w, double h, double d, EnumFacing face, int r, int g, int b, int a, int light1, int light2, boolean flowing) {
       if (sprite != null) {
          double size = 16.0D;
          if (flowing) {
@@ -536,7 +536,7 @@ public class RenderingUtils {
       GlStateManager.color(r, g, b, a);
    }
 
-   public static void setBrightness(BufferBuilder renderer, int brightness) {
+   public static void setBrightness(WorldRenderer renderer, int brightness) {
       renderer.putBrightness4(brightness, brightness, brightness, brightness);
    }
 

@@ -1,7 +1,7 @@
 package vazkii.quark.world.world;
 
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +24,7 @@ public class ArchaeologistHouseGenerator implements IWorldGenerator {
    public ArchaeologistHouseGenerator() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (!(chunkGenerator instanceof ChunkGeneratorFlat) && Archaeologist.dims.canSpawnHere(world) && random.nextDouble() < Archaeologist.chance) {
          int x = chunkX * 16 + 8 + random.nextInt(16);
          int z = chunkZ * 16 + 8 + random.nextInt(16);
@@ -35,7 +35,7 @@ public class ArchaeologistHouseGenerator implements IWorldGenerator {
 
    }
 
-   private void setHouseAt(Random random, World world, BlockPos pos) {
+   private void setHouseAt(EaglercraftRandom random, World world, BlockPos pos) {
       if (world.isAirBlock(pos) && world instanceof WorldServer) {
          BlockPos down = pos.down();
 

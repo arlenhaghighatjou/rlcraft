@@ -5,7 +5,7 @@ import com.github.fnar.minecraft.EffectType;
 import com.github.fnar.minecraft.item.Potion;
 import com.github.fnar.minecraft.item.RldItemStack;
 import com.github.fnar.util.Color;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum PotionMixture {
    ABSINTHE,
@@ -26,27 +26,27 @@ public enum PotionMixture {
    private PotionMixture() {
    }
 
-   public static RldItemStack chooseRandomBooze(Random random) {
+   public static RldItemStack chooseRandomBooze(EaglercraftRandom random) {
       return getPotion(random, chooseRandomAmong(random, BOOZE));
    }
 
-   public static RldItemStack chooseRandomPotion(Random random) {
+   public static RldItemStack chooseRandomPotion(EaglercraftRandom random) {
       return getPotion(random, chooseRandomAmong(random, POTIONS));
    }
 
-   public static PotionMixture chooseRandom(Random random) {
+   public static PotionMixture chooseRandom(EaglercraftRandom random) {
       return chooseRandomAmong(random, values());
    }
 
-   public static PotionMixture chooseRandomAmong(Random random, PotionMixture[] potions) {
+   public static PotionMixture chooseRandomAmong(EaglercraftRandom random, PotionMixture[] potions) {
       return potions[random.nextInt(potions.length)];
    }
 
-   public static RldItemStack getPotion(Random random, PotionMixture type) {
+   public static RldItemStack getPotion(EaglercraftRandom random, PotionMixture type) {
       return getPotionAsRldItemStack(random, type);
    }
 
-   public static RldItemStack getPotionAsRldItemStack(Random random, PotionMixture type) {
+   public static RldItemStack getPotionAsRldItemStack(EaglercraftRandom random, PotionMixture type) {
       switch(type) {
       case ABSINTHE:
          return getAbsinthe();
@@ -74,7 +74,7 @@ public enum PotionMixture {
       }
    }
 
-   public static RldItemStack getTequila(Random random) {
+   public static RldItemStack getTequila(EaglercraftRandom random) {
       return Potion.newPotion().withEffect(Effect.newEffect(EffectType.STRENGTH, 2, 30 + random.nextInt(60))).withEffect(Effect.newEffect(EffectType.FATIGUE, 0, 30 + random.nextInt(60))).withColor(Color.POPCORN).asStack().withDisplayName("Tequila").withHideFlag(ItemHideFlags.EFFECTS);
    }
 
@@ -82,7 +82,7 @@ public enum PotionMixture {
       return Potion.newPotion().withEffect(Effect.newEffect(EffectType.REGEN, 2, 8)).withEffect(Effect.newEffect(EffectType.WEAKNESS, 1, 5)).withEffect(Effect.newEffect(EffectType.SLOWNESS, 1, 5)).withEffect(Effect.newEffect(EffectType.FATIGUE, 1, 5)).withEffect(Effect.newEffect(EffectType.NAUSEA, 0, 5)).withColor(Color.SPLIT_PEA_SOUP).asStack().withDisplayName("Laudanum").withDisplayLore("A medicinal tincture.").withHideFlag(ItemHideFlags.EFFECTS);
    }
 
-   public static RldItemStack getMoonshine(Random random) {
+   public static RldItemStack getMoonshine(EaglercraftRandom random) {
       return Potion.newPotion().withEffect(Effect.newEffect(EffectType.DAMAGE, 0, 1)).withEffect(Effect.newEffect(EffectType.BLINDNESS, 0, 30 + random.nextInt(60))).withEffect(Effect.newEffect(EffectType.RESISTANCE, 1, 30 + random.nextInt(30))).withColor(Color.ICE_FISHING).asStack().withDisplayName("Moonshine").withHideFlag(ItemHideFlags.EFFECTS);
    }
 
@@ -90,7 +90,7 @@ public enum PotionMixture {
       return Potion.newPotion().withEffect(Effect.newEffect(EffectType.POISON, 0, 3)).withEffect(Effect.newEffect(EffectType.NIGHT_VISION, 0, 120)).withEffect(Effect.newEffect(EffectType.JUMP, 2, 120)).withColor(Color.ADVERTISING_GREEN).asStack().withDisplayName("Absinthe").withHideFlag(ItemHideFlags.EFFECTS);
    }
 
-   public static RldItemStack getVile(Random random) {
+   public static RldItemStack getVile(EaglercraftRandom random) {
       EffectType randomEffect0 = EffectType.chooseRandom(random);
       EffectType randomEffect1 = EffectType.chooseRandom(random);
       return Potion.newPotion().withForm(Potion.Form.chooseRandom(random)).withEffect(Potion.Effect.chooseRandom(random)).withAmplification(random.nextBoolean()).withExtension(random.nextBoolean()).withEffect(Effect.newEffect().withType(randomEffect0).withAmplification(Potion.Amplification.chooseRandom(random)).withDuration(getSuggestedDuration(random, randomEffect0))).withEffect(Effect.newEffect().withType(randomEffect1).withAmplification(Potion.Amplification.chooseRandom(random)).withDuration(getSuggestedDuration(random, randomEffect1))).withColor(Color.random(random)).asStack().withDisplayName("Vile Mixture").withHideFlag(ItemHideFlags.EFFECTS);
@@ -120,7 +120,7 @@ public enum PotionMixture {
       return Potion.newPotion().withEffect(Effect.newEffect(EffectType.GLOWING, 0, 600)).withColor(Color.DELAYED_YELLOW).asStack().withDisplayName("Luma").withDisplayLore("A glowstone extract.").withHideFlag(ItemHideFlags.EFFECTS);
    }
 
-   public static int getSuggestedDuration(Random random, EffectType type) {
+   public static int getSuggestedDuration(EaglercraftRandom random, EffectType type) {
       switch(type) {
       case SATURATION:
       case HEALTH:

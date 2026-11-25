@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.fx.particle.mote;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,7 +39,7 @@ public class MoteWaterSpray extends MoteMotionBase {
       this.alpha = 255;
    }
 
-   public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+   public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
       float x = this.renderX(partialTicks);
       float y = this.renderY(partialTicks);
       float z = this.renderZ(partialTicks);

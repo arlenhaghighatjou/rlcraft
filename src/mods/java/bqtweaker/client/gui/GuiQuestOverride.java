@@ -51,7 +51,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.ClickEvent.Action;
 import net.minecraftforge.fml.common.Loader;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class GuiQuestOverride extends GuiScreenCanvas implements IPEventListener, INeedsRefresh {
    private final int questID;

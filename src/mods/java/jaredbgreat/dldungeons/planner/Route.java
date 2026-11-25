@@ -2,7 +2,7 @@ package jaredbgreat.dldungeons.planner;
 
 import jaredbgreat.dldungeons.rooms.Room;
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Route {
    private final Node start;
@@ -208,7 +208,7 @@ public class Route {
       }
    }
 
-   private void getGrowthDir(Random random) {
+   private void getGrowthDir(EaglercraftRandom random) {
       boolean posX = this.current1.realX < this.current2.realX;
       boolean posZ = this.current1.realZ < this.current2.realZ;
       if (this.xOverlap()) {

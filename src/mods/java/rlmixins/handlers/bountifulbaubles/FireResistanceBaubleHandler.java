@@ -6,7 +6,7 @@ import cursedflames.bountifulbaubles.baubleeffect.IFireResistance;
 import cursedflames.bountifulbaubles.item.ItemShieldObsidian;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -26,7 +26,7 @@ public class FireResistanceBaubleHandler {
          EntityPlayer player = (EntityPlayer)event.getEntityLiving();
          float damageMulti = 1.0F;
          IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
-         List<UUID> found = new ArrayList();
+         List<EaglercraftUUID> found = new ArrayList();
 
          for(int i = -2; i < baubles.getSlots(); ++i) {
             ItemStack stack = i >= 0 ? baubles.getStackInSlot(i) : (i == -2 ? player.getHeldItemMainhand() : player.getHeldItemOffhand());

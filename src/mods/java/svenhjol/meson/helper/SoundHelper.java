@@ -1,7 +1,7 @@
 package svenhjol.meson.helper;
 
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SoundHandler;
@@ -38,7 +38,7 @@ public class SoundHelper {
    }
 
    public static void playerSound(EntityPlayer player, SoundEvent sound, float volume, float pitch, float pitchVariation, SoundCategory category) {
-      pitch = pitch + (pitchVariation - pitchVariation * (new Random()).nextFloat() * 2.0F);
+      pitch = pitch + (pitchVariation - pitchVariation * (new EaglercraftRandom()).nextFloat() * 2.0F);
       playerSound(player, sound, volume, pitch, category);
    }
 

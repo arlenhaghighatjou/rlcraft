@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.registry.acoustics;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.util.SoundEvent;
@@ -50,15 +50,15 @@ public class SimpleAcoustic implements IAcoustic {
       }
    }
 
-   private float generateVolume(@Nonnull Random rng) {
+   private float generateVolume(@Nonnull EaglercraftRandom rng) {
       return this.randAB(rng, this.volMin, this.volMax);
    }
 
-   private float generatePitch(@Nonnull Random rng) {
+   private float generatePitch(@Nonnull EaglercraftRandom rng) {
       return this.randAB(rng, this.pitchMin, this.pitchMax);
    }
 
-   private float randAB(@Nonnull Random rng, float a, float b) {
+   private float randAB(@Nonnull EaglercraftRandom rng, float a, float b) {
       return a >= b ? a : a + rng.nextFloat() * (b - a);
    }
 

@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.world.biome;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.init.ModBlocks;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.World;
@@ -14,7 +14,7 @@ public class BiomeHillsDefiled extends BiomeDefiled {
       super(properties);
    }
 
-   public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
+   public void genTerrainBlocks(World worldIn, EaglercraftRandom rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
       this.topBlock = ModBlocks.grassDefiled.getDefaultState();
       this.fillerBlock = ModBlocks.dirtDefiled.getDefaultState();
       if (noiseVal > 1.0D) {

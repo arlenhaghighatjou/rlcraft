@@ -3,9 +3,9 @@ package noppes.vc.shared.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import noppes.vc.shared.util.NoppesStringUtils;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class GuiSliderNop extends GuiButton {
    private GuiSliderNop.ISliderListener listener;

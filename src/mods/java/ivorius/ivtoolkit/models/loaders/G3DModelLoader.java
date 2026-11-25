@@ -45,11 +45,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.logging.log4j.Logger;
-import org.lwjgl.util.vector.Matrix4f;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
 import org.lwjgl.util.vector.Quaternion;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector2f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class G3DModelLoader implements ModelLoader {
    public static final short VERSION_HI = 0;

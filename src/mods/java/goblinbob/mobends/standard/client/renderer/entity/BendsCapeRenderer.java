@@ -3,9 +3,9 @@ package goblinbob.mobends.standard.client.renderer.entity;
 import goblinbob.mobends.standard.data.PlayerData;
 import net.minecraft.client.model.PositionTextureVertex;
 import net.minecraft.client.model.TexturedQuad;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -157,7 +157,7 @@ public class BendsCapeRenderer {
       private void compileDisplayList(float scale) {
          this.displayList = GLAllocation.generateDisplayLists(1);
          GlStateManager.glNewList(this.displayList, 4864);
-         BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
+         WorldRenderer bufferbuilder = Tessellator.getInstance().getBuffer();
 
          for(TexturedQuad texturedquad : this.quadList) {
             texturedquad.draw(bufferbuilder, scale);

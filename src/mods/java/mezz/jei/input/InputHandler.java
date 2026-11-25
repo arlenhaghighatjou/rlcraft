@@ -30,8 +30,8 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent.Post;
 import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent.Pre;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class InputHandler {
    private final RecipeRegistry recipeRegistry;

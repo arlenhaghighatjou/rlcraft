@@ -7,7 +7,7 @@ import com.endertech.minecraft.forge.coremod.names.ClassName;
 import com.endertech.minecraft.forge.coremod.signatures.MethodSignature;
 import java.util.Iterator;
 import net.minecraft.launchwrapper.IClassTransformer;
-import org.apache.logging.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.AbstractInsnNode;

@@ -11,7 +11,7 @@ import com.tmtravlr.potioncore.potion.PotionRevival;
 import com.tmtravlr.potioncore.potion.PotionSlowfall;
 import com.tmtravlr.potioncore.potion.PotionStepup;
 import com.tmtravlr.potioncore.potion.PotionTeleportSpawn;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;

@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -77,7 +77,7 @@ public class RCE {
    }
 
    public static void randomString(Expect e) {
-      Random rand = new Random();
+      EaglercraftRandom rand = new EaglercraftRandom();
       e.any(Person.chaoticName(rand, rand.nextBoolean()));
    }
 

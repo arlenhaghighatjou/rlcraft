@@ -3,7 +3,7 @@ package knightminer.inspirations.recipes.block;
 import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import knightminer.inspirations.common.Config;
 import knightminer.inspirations.library.InspirationsRegistry;
@@ -155,7 +155,7 @@ public class BlockEnhancedCauldron extends BlockCauldron implements ITileEntityP
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState state, World world, BlockPos pos, EaglercraftRandom rand) {
       if (((Boolean)state.getValue(BOILING)).booleanValue()) {
          int level = this.getLevel(state);
          if (level != 0) {

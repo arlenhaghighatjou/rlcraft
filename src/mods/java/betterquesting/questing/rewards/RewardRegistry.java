@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class RewardRegistry implements IRegistry<IFactoryData<IReward, NBTTagCompound>, IReward> {
    public static final RewardRegistry INSTANCE = new RewardRegistry();

@@ -1,6 +1,6 @@
 package paulevs.betternether.structures;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
@@ -26,7 +26,7 @@ public interface IStructureWorld {
       return 1.0F;
    }
 
-   default void generateSurface(World world, BlockPos pos, Random random) {
+   default void generateSurface(World world, BlockPos pos, EaglercraftRandom random) {
       Rotation rotation = Rotation.values()[random.nextInt(Rotation.values().length)];
       if ((double)this.getAirFraction(world, pos, rotation) > 0.8D) {
          this.generate(world, pos, rotation);
@@ -34,7 +34,7 @@ public interface IStructureWorld {
 
    }
 
-   default void generateSubterrain(World world, BlockPos pos, Random random) {
+   default void generateSubterrain(World world, BlockPos pos, EaglercraftRandom random) {
       Rotation rotation = Rotation.values()[random.nextInt(Rotation.values().length)];
       if ((double)this.getAirFraction(world, pos, rotation) < 0.4D) {
          this.generate(world, pos, rotation);
@@ -42,7 +42,7 @@ public interface IStructureWorld {
 
    }
 
-   default void generateLava(World world, BlockPos pos, Random random) {
+   default void generateLava(World world, BlockPos pos, EaglercraftRandom random) {
       Rotation rotation = Rotation.values()[random.nextInt(Rotation.values().length)];
       this.generate(world, pos, rotation);
    }

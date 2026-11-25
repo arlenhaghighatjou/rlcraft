@@ -10,7 +10,7 @@ import ivorius.reccomplex.world.gen.feature.decoration.RCBiomeDecorator;
 import ivorius.reccomplex.world.gen.feature.structure.generic.generation.VanillaDecorationGeneration;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import net.minecraft.util.math.BlockPos;
@@ -71,7 +71,7 @@ public class MapGenStructureHook extends MapGenStructure {
       return name != null ? name : "";
    }
 
-   public boolean generateStructure(World worldIn, Random randomIn, ChunkPos chunkCoord) {
+   public boolean generateStructure(World worldIn, EaglercraftRandom randomIn, ChunkPos chunkCoord) {
       return this.base.generateStructure(worldIn, randomIn, chunkCoord);
    }
 

@@ -1,7 +1,7 @@
 package snownee.snow;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.BiPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDeadBush;
@@ -162,7 +162,7 @@ public class ModSnowBlock extends BlockSnow {
 
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          this.checkFallable(worldIn, pos, state);
       }
@@ -179,7 +179,7 @@ public class ModSnowBlock extends BlockSnow {
       }
    }
 
-   public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom random) {
       if (!ModConfig.snowNeverMelt && worldIn.getLightFor(EnumSkyBlock.BLOCK, pos) > 11) {
          worldIn.setBlockToAir(pos);
       } else if ((ModConfig.snowAccumulationDuringSnowfall || ModConfig.snowAccumulationDuringSnowstorm) && random.nextInt(8) <= 0 && worldIn.canSeeSky(pos.up())) {
@@ -389,7 +389,7 @@ public class ModSnowBlock extends BlockSnow {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       if (ModConfig.particleThroughLeaves && rand.nextInt(31) == 1) {
          IBlockState stateDown = worldIn.getBlockState(pos.down());
          if (stateDown.getBlock().isLeaves(stateDown, worldIn, pos.down())) {

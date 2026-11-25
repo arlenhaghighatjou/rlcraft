@@ -1,7 +1,7 @@
 package c4.corpsecomplex.network;
 
-import io.netty.buffer.ByteBuf;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TeleportSoundMessage implements IMessage {
-   private static Random rand = new Random();
+   private static EaglercraftRandom rand = new EaglercraftRandom();
 
    public TeleportSoundMessage() {
    }

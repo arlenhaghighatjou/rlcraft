@@ -13,7 +13,7 @@ import com.ferreusveritas.dynamictrees.systems.featuregen.FeatureGenMound;
 import com.ferreusveritas.dynamictrees.systems.featuregen.FeatureGenPredicate;
 import com.ferreusveritas.dynamictrees.systems.featuregen.FeatureGenRoots;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import net.minecraft.block.Block;
@@ -113,7 +113,7 @@ public class TreeDarkOak extends TreeFamilyVanilla {
          return super.getGrowthRate(world, pos) * this.biomeSuitability(world, pos);
       }
 
-      public boolean rot(World world, BlockPos pos, int neighborCount, int radius, Random random, boolean rapid) {
+      public boolean rot(World world, BlockPos pos, int neighborCount, int radius, EaglercraftRandom random, boolean rapid) {
          if (super.rot(world, pos, neighborCount, radius, random, rapid)) {
             if (radius > 2 && TreeHelper.isRooty(world.getBlockState(pos.down())) && world.getLightFor(EnumSkyBlock.SKY, pos) < 6) {
                world.setBlockState(pos, ModBlocks.blockStates.redMushroom);

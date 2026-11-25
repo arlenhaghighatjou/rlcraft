@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -19,7 +19,7 @@ public abstract class StructureManager {
    private static final long RANDOM_A = 341873128712L;
    protected ArrayList<BigStructure> structures = new ArrayList();
    protected ArrayList<BigStructure> toRemove = new ArrayList();
-   protected Random random = new Random();
+   protected EaglercraftRandom random = new EaglercraftRandom();
    protected int distance;
    protected int variance;
    protected long seed;

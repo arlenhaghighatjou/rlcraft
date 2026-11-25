@@ -1,7 +1,7 @@
 package com.github.fnar.minecraft.block.decorative;
 
 import greymerk.roguelike.worldgen.BlockBrush;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum Plant {
    DANDELION,
@@ -33,7 +33,7 @@ public enum Plant {
       return PlantBlock.plant().setPlant(this);
    }
 
-   public static Plant chooseRandom(Random random) {
+   public static Plant chooseRandom(EaglercraftRandom random) {
       return values()[random.nextInt(values().length)];
    }
 }

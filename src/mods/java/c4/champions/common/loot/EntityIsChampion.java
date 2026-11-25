@@ -7,7 +7,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -26,7 +26,7 @@ public class EntityIsChampion implements EntityProperty {
       this.maxTier = maxTierIn;
    }
 
-   public boolean testProperty(@Nonnull Random random, @Nonnull Entity entityIn) {
+   public boolean testProperty(@Nonnull EaglercraftRandom random, @Nonnull Entity entityIn) {
       if (ChampionHelper.isValidChampion(entityIn)) {
          IChampionship chp = CapabilityChampionship.getChampionship((EntityLiving)entityIn);
          if (chp != null && ChampionHelper.isElite(chp.getRank())) {

@@ -8,7 +8,7 @@ import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import com.dhanantry.scapeandrunparasites.init.SRPSounds;
 import com.dhanantry.scapeandrunparasites.util.SRPAttributes;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
@@ -382,7 +382,7 @@ public class EntityOroncoAW extends EntityPAncient {
                }
             }
          } else {
-            Random random = EntityOroncoAW.this.getRNG();
+            EaglercraftRandom random = EntityOroncoAW.this.getRNG();
             double d0 = EntityOroncoAW.this.posX + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
             double d1 = EntityOroncoAW.this.posY + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
             double d2 = EntityOroncoAW.this.posZ + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);

@@ -14,7 +14,7 @@ import net.minecraft.block.BlockCactus;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing.Axis;
 import net.minecraftforge.common.MinecraftForge;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 @Metadata(

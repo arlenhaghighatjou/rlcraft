@@ -31,7 +31,7 @@ import com.google.common.base.Predicate;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.block.Block;
@@ -100,7 +100,7 @@ public class EventLiving {
          return entity != null && entity instanceof IVillagerFear;
       }
    };
-   Random rand = new Random();
+   EaglercraftRandom rand = new EaglercraftRandom();
 
    public EventLiving() {
    }

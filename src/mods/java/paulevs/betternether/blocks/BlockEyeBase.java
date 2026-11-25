@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -32,7 +32,7 @@ public class BlockEyeBase extends Block {
 
    }
 
-   private void spawnSeeds(World world, BlockPos pos, Random random) {
+   private void spawnSeeds(World world, BlockPos pos, EaglercraftRandom random) {
       if (!world.isRemote) {
          ItemStack drop = new ItemStack(BlocksRegister.BLOCK_EYE_SEED, 1 + random.nextInt(3));
          EntityItem itemEntity = new EntityItem(world, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, drop);
@@ -46,7 +46,7 @@ public class BlockEyeBase extends Block {
       worldIn.destroyBlock(pos, true);
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Items.SLIME_BALL;
    }
 }

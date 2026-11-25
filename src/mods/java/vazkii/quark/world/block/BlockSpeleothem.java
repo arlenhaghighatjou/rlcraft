@@ -1,7 +1,7 @@
 package vazkii.quark.world.block;
 
 import java.util.Locale;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -59,7 +59,7 @@ public class BlockSpeleothem extends BlockMod implements IQuarkBlock {
 
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 

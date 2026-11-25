@@ -1,7 +1,7 @@
 package vazkii.quark.decoration.block;
 
 import java.util.Locale;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
@@ -45,7 +45,7 @@ public class BlockCandle extends BlockMetaVariants<BlockCandle.Variants> impleme
       worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote && TallowAndCandles.candlesFall) {
          this.checkFallable(worldIn, pos);
       }
@@ -111,7 +111,7 @@ public class BlockCandle extends BlockMetaVariants<BlockCandle.Variants> impleme
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       double d0 = (double)pos.getX() + 0.5D;
       double d1 = (double)pos.getY() + 0.7D;
       double d2 = (double)pos.getZ() + 0.5D;

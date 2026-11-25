@@ -2,7 +2,7 @@ package ivorius.reccomplex.item;
 
 import ivorius.reccomplex.events.ItemGenerationEvent;
 import ivorius.reccomplex.random.item.Book;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -28,7 +28,7 @@ public class ItemBookGenerator extends Item implements GeneratingItem {
       }
    }
 
-   public void generateInInventory(WorldServer server, IItemHandlerModifiable inventory, Random random, ItemStack stack, int fromSlot) {
+   public void generateInInventory(WorldServer server, IItemHandlerModifiable inventory, EaglercraftRandom random, ItemStack stack, int fromSlot) {
       if (!MinecraftForge.EVENT_BUS.post(new ItemGenerationEvent.Book(server, inventory, random, stack, fromSlot))) {
          inventory.setStackInSlot(fromSlot, Book.any(random));
       }

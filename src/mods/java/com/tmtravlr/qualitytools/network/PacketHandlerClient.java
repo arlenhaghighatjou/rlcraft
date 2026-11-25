@@ -1,7 +1,7 @@
 package com.tmtravlr.qualitytools.network;
 
 import com.tmtravlr.qualitytools.config.ConfigLoader;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import java.io.IOException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;

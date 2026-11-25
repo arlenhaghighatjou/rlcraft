@@ -9,7 +9,7 @@ import com.lycanitesmobs.client.renderer.layer.LayerCreatureScrolling;
 import com.lycanitesmobs.core.entity.BaseCreatureEntity;
 import javax.vecmath.Vector2f;
 import javax.vecmath.Vector4f;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.math.MathHelper;

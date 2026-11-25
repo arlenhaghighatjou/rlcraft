@@ -2,7 +2,7 @@ package jaredbgreat.dldungeons.themes;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
@@ -301,7 +301,7 @@ public class BiomeSets {
 
    }
 
-   public static Theme getTheme(Biome biome, Random random, int dimID) {
+   public static Theme getTheme(Biome biome, EaglercraftRandom random, int dimID) {
       HashSet<Theme> set = new HashSet();
       ArrayList<Theme> use = new ArrayList();
       set.clear();

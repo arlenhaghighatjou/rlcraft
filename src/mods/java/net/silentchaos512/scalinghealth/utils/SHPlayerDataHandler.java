@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -182,7 +182,7 @@ public final class SHPlayerDataHandler {
       static final String NBT_HEALTH = "health";
       static final String NBT_MAX_HEALTH = "max_health";
       static final String NBT_LAST_LOGIN = "last_login";
-      private static final UUID UUID_XP_HEALTH_BONUS = UUID.fromString("3d3cb1b5-03b0-496a-aaac-60bf63ba139b");
+      private static final EaglercraftUUID UUID_XP_HEALTH_BONUS = EaglercraftUUID.fromString("3d3cb1b5-03b0-496a-aaac-60bf63ba139b");
       double difficulty = 0.0D;
       float health = 20.0F;
       float maxHealth = (float)Config.Player.Health.startingHealth;

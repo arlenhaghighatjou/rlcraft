@@ -1,7 +1,7 @@
 package com.oblivioussp.spartanhudbaubles.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class Log {
    protected static final Logger LOGGER = LogManager.getLogger("Spartan HUD: Baubles");

@@ -4,7 +4,7 @@ import com.dhanantry.scapeandrunparasites.entity.monster.inborn.EntityKol;
 import com.dhanantry.scapeandrunparasites.util.ParasiteEventEntity;
 import com.dhanantry.scapeandrunparasites.util.ParasiteEventWorld;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -63,7 +63,7 @@ public class BlockColonyCore extends BlockBase {
       }
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          if (worldIn.isAreaLoaded(pos, 3)) {
             int meta = this.getMetaFromState(state);

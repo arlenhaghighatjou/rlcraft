@@ -1,7 +1,7 @@
 package svenhjol.charm.world.decorator.outer;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntitySnowman;
@@ -21,7 +21,7 @@ import svenhjol.meson.helper.EntityHelper;
 import svenhjol.meson.helper.WorldHelper;
 
 public class Mobs extends MesonOuterDecorator {
-   public Mobs(World world, BlockPos pos, Random rand, List<ChunkPos> chunks) {
+   public Mobs(World world, BlockPos pos, EaglercraftRandom rand, List<ChunkPos> chunks) {
       super(world, pos, rand, chunks);
    }
 

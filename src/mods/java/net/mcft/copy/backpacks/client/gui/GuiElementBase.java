@@ -6,8 +6,8 @@ import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -428,7 +428,7 @@ public abstract class GuiElementBase {
 
    public static void drawRect(int x, int y, int width, int height) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buffer = tessellator.getBuffer();
+      WorldRenderer buffer = tessellator.getBuffer();
       buffer.begin(7, DefaultVertexFormats.POSITION);
       buffer.pos((double)x, (double)y, 0.0D).endVertex();
       buffer.pos((double)x, (double)(y + height), 0.0D).endVertex();
@@ -458,7 +458,7 @@ public abstract class GuiElementBase {
 
    public static void drawRect(int x, int y, int width, int height, float u1, float v1, float u2, float v2) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buffer = tessellator.getBuffer();
+      WorldRenderer buffer = tessellator.getBuffer();
       buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       buffer.pos((double)x, (double)y, 0.0D).tex((double)u1, (double)v1).endVertex();
       buffer.pos((double)x, (double)(y + height), 0.0D).tex((double)u1, (double)v2).endVertex();
@@ -477,7 +477,7 @@ public abstract class GuiElementBase {
 
    public static void drawColoredRectARGB(int x, int y, int width, int height, int colorTL, int colorTR, int colorBL, int colorBR) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buffer = tessellator.getBuffer();
+      WorldRenderer buffer = tessellator.getBuffer();
       buffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
       buffer.pos((double)x, (double)y, 0.0D).color(colorTL >> 16 & 255, colorTL >> 8 & 255, colorTL & 255, colorTL >> 24 & 255).endVertex();
       buffer.pos((double)x, (double)(y + height), 0.0D).color(colorBL >> 16 & 255, colorBL >> 8 & 255, colorBL & 255, colorBL >> 24 & 255).endVertex();
@@ -496,7 +496,7 @@ public abstract class GuiElementBase {
 
    public static void drawColoredRectARGB(int x, int y, int width, int height, float u1, float v1, float u2, float v2, int colorTL, int colorTR, int colorBL, int colorBR) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buffer = tessellator.getBuffer();
+      WorldRenderer buffer = tessellator.getBuffer();
       buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
       buffer.pos((double)x, (double)y, 0.0D).tex((double)u1, (double)v1).color(colorTL >> 16 & 255, colorTL >> 8 & 255, colorTL & 255, colorTL >> 24 & 255).endVertex();
       buffer.pos((double)x, (double)(y + height), 0.0D).tex((double)u1, (double)v2).color(colorBL >> 16 & 255, colorBL >> 8 & 255, colorBL & 255, colorBL >> 24 & 255).endVertex();

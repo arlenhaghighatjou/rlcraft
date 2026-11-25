@@ -8,7 +8,7 @@ import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum Equipment {
    SWORD,
@@ -27,12 +27,12 @@ public enum Equipment {
    private Equipment() {
    }
 
-   public static Equipment random(Random rand) {
+   public static Equipment random(EaglercraftRandom rand) {
       int choice = rand.nextInt(values().length);
       return values()[choice];
    }
 
-   public static Quality rollQuality(Random rand, int level) {
+   public static Quality rollQuality(EaglercraftRandom rand, int level) {
       return (Quality)((IWeighted)equipmentQuality.get(Integer.valueOf(level))).get(rand);
    }
 

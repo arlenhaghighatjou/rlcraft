@@ -3,7 +3,7 @@ package com.dhanantry.scapeandrunparasites.entity.ai;
 import com.dhanantry.scapeandrunparasites.block.IMetaName;
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import com.dhanantry.scapeandrunparasites.util.ParasiteEventWorld;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.world.World;
@@ -38,7 +38,7 @@ public class EntityAIBlockInfest extends EntityAIBase {
             return;
          }
 
-         ParasiteEventWorld.canInfestBlock(world, this.parentEntity.getPosition(), new Random(), this.stage, true);
+         ParasiteEventWorld.canInfestBlock(world, this.parentEntity.getPosition(), new EaglercraftRandom(), this.stage, true);
       }
 
    }

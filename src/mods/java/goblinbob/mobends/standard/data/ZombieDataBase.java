@@ -1,7 +1,7 @@
 package goblinbob.mobends.standard.data;
 
 import goblinbob.mobends.core.client.event.DataUpdateHandler;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.monster.EntityZombie;
 
 public abstract class ZombieDataBase<E extends EntityZombie> extends BipedEntityData<E> {
@@ -9,7 +9,7 @@ public abstract class ZombieDataBase<E extends EntityZombie> extends BipedEntity
    protected int animationSet = 0;
    protected int currentWalkingState = 0;
    protected float ticksBeforeStateChange = 0.0F;
-   private final Random random = new Random();
+   private final EaglercraftRandom random = new EaglercraftRandom();
 
    public ZombieDataBase(E entity) {
       super(entity);

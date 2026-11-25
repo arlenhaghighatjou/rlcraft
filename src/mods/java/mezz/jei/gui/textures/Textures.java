@@ -1,6 +1,6 @@
 package mezz.jei.gui.textures;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
 
 public class Textures {
@@ -51,7 +51,7 @@ public class Textures {
    }
 
    private TextureInfo registerGuiSprite(String name, int width, int height) {
-      TextureAtlasSprite textureAtlasSprite = this.textureMap.registerSprite(new ResourceLocation("jei", "gui/" + name));
+      EaglerTextureAtlasSprite textureAtlasSprite = this.textureMap.registerSprite(new ResourceLocation("jei", "gui/" + name));
       ResourceLocation location = this.textureMap.getLocation();
       return new TextureInfo(location, textureAtlasSprite, width, height);
    }

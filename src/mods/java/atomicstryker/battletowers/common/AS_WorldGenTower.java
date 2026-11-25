@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
@@ -46,7 +46,7 @@ public class AS_WorldGenTower
      * @return -1 when no tower should be able to spawn, else Towerchosen enum
      *         ordinal
      */
-    public int getChosenTowerOrdinal(World world, Random random, int ix, int jy, int kz)
+    public int getChosenTowerOrdinal(World world, EaglercraftRandom random, int ix, int jy, int kz)
     {
         TowerTypes towerChosen;
         int countWater = 0;
@@ -151,7 +151,7 @@ public class AS_WorldGenTower
 
     @SuppressWarnings("deprecation") // is needed because getDefaultState on
                                      // stairs does not work
-    public void generate(World world, Random random, int ix, int jy, int kz, int towerchoice, boolean underground)
+    public void generate(World world, EaglercraftRandom random, int ix, int jy, int kz, int towerchoice, boolean underground)
     {
         TowerTypes towerChosen = TowerTypes.values()[towerchoice];
 
@@ -592,7 +592,7 @@ public class AS_WorldGenTower
                 || iD == Blocks.LAVA);
     }
 
-    private ResourceLocation getMobType(Random random)
+    private ResourceLocation getMobType(EaglercraftRandom random)
     {
         switch (random.nextInt(10))
         {

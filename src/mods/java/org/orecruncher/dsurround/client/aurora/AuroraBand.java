@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.aurora;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -12,7 +12,7 @@ public class AuroraBand {
    protected static final float ANGLE2 = MathStuff.toRadians(12.857142F);
    protected static final float AURORA_SPEED = 0.75F;
    public static final float AURORA_AMPLITUDE = 18.0F;
-   protected final Random random;
+   protected final EaglercraftRandom random;
    protected Panel[] nodes;
    protected float cycle = 0.0F;
    protected int alphaLimit = 128;
@@ -20,7 +20,7 @@ public class AuroraBand {
    protected float nodeLength;
    protected float nodeWidth;
 
-   public AuroraBand(Random random, AuroraFactory.AuroraGeometry geo, boolean noTaper, boolean fixedHeight) {
+   public AuroraBand(EaglercraftRandom random, AuroraFactory.AuroraGeometry geo, boolean noTaper, boolean fixedHeight) {
       this.random = random;
       this.preset(geo);
       this.generateBands(noTaper, fixedHeight);

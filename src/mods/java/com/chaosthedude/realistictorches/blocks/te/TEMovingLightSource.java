@@ -3,7 +3,7 @@ package com.chaosthedude.realistictorches.blocks.te;
 import com.chaosthedude.realistictorches.blocks.BlockMovingLightSource;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.handler.LightSourceHandler;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,7 +12,7 @@ import net.minecraft.util.ITickable;
 
 public class TEMovingLightSource extends TileEntity implements ITickable {
    public static final String NAME = "te_moving_light_source";
-   private UUID playerUUID;
+   private EaglercraftUUID playerUUID;
 
    public TEMovingLightSource() {
    }
@@ -37,7 +37,7 @@ public class TEMovingLightSource extends TileEntity implements ITickable {
    public void readFromNBT(NBTTagCompound tag) {
       super.readFromNBT(tag);
       if (tag.hasKey("PlayerUUID")) {
-         this.playerUUID = UUID.fromString(tag.getString("PlayerUUID"));
+         this.playerUUID = EaglercraftUUID.fromString(tag.getString("PlayerUUID"));
       }
 
    }

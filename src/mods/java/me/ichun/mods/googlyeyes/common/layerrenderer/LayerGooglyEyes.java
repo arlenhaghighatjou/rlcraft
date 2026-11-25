@@ -6,7 +6,7 @@ import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
 import me.ichun.mods.ichunutil.api.client.head.HeadBase;
 import me.ichun.mods.ichunutil.client.entity.head.HeadHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.Render;

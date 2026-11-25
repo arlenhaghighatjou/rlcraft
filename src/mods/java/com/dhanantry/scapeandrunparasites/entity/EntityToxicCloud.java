@@ -7,7 +7,7 @@ import com.google.common.collect.Maps;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.EnumPushReaction;
@@ -45,7 +45,7 @@ public class EntityToxicCloud extends Entity {
    private float radiusOnUse;
    private float radiusPerTick;
    private EntityLivingBase owner;
-   private UUID ownerUniqueId;
+   private EaglercraftUUID ownerUniqueId;
 
    public EntityToxicCloud(World worldIn) {
       super(worldIn);

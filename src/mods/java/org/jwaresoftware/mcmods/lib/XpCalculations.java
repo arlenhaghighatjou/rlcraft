@@ -1,6 +1,6 @@
 package org.jwaresoftware.mcmods.lib;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -64,7 +64,7 @@ public final class XpCalculations {
       }
    }
 
-   public static final void spawnXP(@Nonnull World world, double x, double y, double z, int amount, @Nullable Random rand) {
+   public static final void spawnXP(@Nonnull World world, double x, double y, double z, int amount, @Nullable EaglercraftRandom rand) {
       float dx = rand != null ? rand.nextFloat() * 0.8F + 0.1F : 0.0F;
       float dy = rand != null ? rand.nextFloat() * 0.8F + 0.1F : 0.0F;
       float dz = rand != null ? rand.nextFloat() * 0.8F + 0.1F : 0.0F;
@@ -72,7 +72,7 @@ public final class XpCalculations {
       world.spawnEntity(orb);
    }
 
-   public static final void spawnXPBurst(@Nonnull World world, double x, double y, double z, int amount, @Nullable Random rand) {
+   public static final void spawnXPBurst(@Nonnull World world, double x, double y, double z, int amount, @Nullable EaglercraftRandom rand) {
       while(amount > 0) {
          int subamount = EntityXPOrb.getXPSplit(amount);
          amount -= subamount;

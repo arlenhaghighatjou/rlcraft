@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class TaskRegistry implements IRegistry<IFactoryData<ITask, NBTTagCompound>, ITask> {
    public static final TaskRegistry INSTANCE = new TaskRegistry();

@@ -2,7 +2,7 @@ package com.creativemd.itemphysic.packet;
 
 import com.creativemd.creativecore.common.packet.CreativeCorePacket;
 import com.creativemd.itemphysic.EventHandler;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

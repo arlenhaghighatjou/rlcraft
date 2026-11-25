@@ -12,7 +12,7 @@ import com.github.alexthe666.iceandfire.entity.ai.AmphithereAIHurtByTarget;
 import com.github.alexthe666.iceandfire.entity.ai.EntityAIWatchClosestIgnoreRider;
 import com.github.alexthe666.iceandfire.entity.ai.PathNavigateFlyingCreature;
 import com.github.alexthe666.iceandfire.message.MessageDragonControl;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
@@ -900,7 +900,7 @@ public class EntityAmphithere extends EntityTameable implements IAnimatedEntity,
    public void fall(float distance, float damageMultiplier) {
    }
 
-   public static BlockPos getPositionRelativetoGround(Entity entity, World world, double x, double z, Random rand) {
+   public static BlockPos getPositionRelativetoGround(Entity entity, World world, double x, double z, EaglercraftRandom rand) {
       BlockPos pos = new BlockPos(x, entity.posY, z);
 
       for(int yDown = 0; yDown < 6 + rand.nextInt(6); ++yDown) {
@@ -912,7 +912,7 @@ public class EntityAmphithere extends EntityTameable implements IAnimatedEntity,
       return pos;
    }
 
-   public static BlockPos getPositionInOrbit(EntityAmphithere entity, World world, BlockPos orbit, Random rand) {
+   public static BlockPos getPositionInOrbit(EntityAmphithere entity, World world, BlockPos orbit, EaglercraftRandom rand) {
       float possibleOrbitRadius = entity.orbitRadius + 10.0F;
       float radius = 10.0F;
       if (entity.getCommand() == 2) {

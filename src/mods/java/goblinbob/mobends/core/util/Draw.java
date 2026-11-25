@@ -1,7 +1,7 @@
 package goblinbob.mobends.core.util;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -18,7 +18,7 @@ public class Draw {
       float green = (float)(color >> 8 & 255) / 255.0F;
       float blue = (float)(color & 255) / 255.0F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       GlStateManager.enableBlend();
       GlStateManager.disableTexture2D();
       GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
@@ -35,7 +35,7 @@ public class Draw {
 
    public static void rectangle(float left, float top, float width, float height) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       GlStateManager.enableBlend();
       GlStateManager.disableTexture2D();
       GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
@@ -112,7 +112,7 @@ public class Draw {
       float g1 = (float)(color1 >> 8 & 255) / 255.0F;
       float b1 = (float)(color1 & 255) / 255.0F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       GlStateManager.enableBlend();
       GlStateManager.disableTexture2D();
       GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
@@ -139,7 +139,7 @@ public class Draw {
       float g1 = (float)(color1 >> 8 & 255) / 255.0F;
       float b1 = (float)(color1 & 255) / 255.0F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
       vertexbuffer.pos((double)x, (double)y + (double)h, 0.0D).color(r1, g1, b1, a1).endVertex();
@@ -153,7 +153,7 @@ public class Draw {
 
    public static void circle(double x, double y, double radius, int vertices) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       GlStateManager.enableBlend();
       GlStateManager.disableTexture2D();
       GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
@@ -179,7 +179,7 @@ public class Draw {
       float b = color.getB();
       float a = color.getA();
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
       vertexbuffer.pos(minX, maxY, minZ).tex(0.0D, 0.0D).color(r, g, b, a).normal(-1.0F, 0.0F, 0.0F).endVertex();
       vertexbuffer.pos(minX, minY, minZ).tex(0.0D, 0.0D).color(r, g, b, a).normal(-1.0F, 0.0F, 0.0F).endVertex();
@@ -212,7 +212,7 @@ public class Draw {
       float f = 0.00390625F;
       float f1 = 0.00390625F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexbuffer.pos((double)(x + 0), (double)(y + height), 0.0D).tex((double)((float)(textureX + 0) * 0.00390625F), (double)((float)(textureY + height) * 0.00390625F)).endVertex();
       vertexbuffer.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((float)(textureX + width) * 0.00390625F), (double)((float)(textureY + height) * 0.00390625F)).endVertex();
@@ -223,7 +223,7 @@ public class Draw {
 
    public static void texturedModalRect(int x, int y, int width, int height, int textureX, int textureY, int textureWidth, int textureHeight) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexbuffer.pos((double)(x + 0), (double)(y + height), 0.0D).tex((double)((float)(textureX + 0) * 0.00390625F), (double)((float)(textureY + textureHeight) * 0.00390625F)).endVertex();
       vertexbuffer.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((float)(textureX + textureWidth) * 0.00390625F), (double)((float)(textureY + textureHeight) * 0.00390625F)).endVertex();
@@ -234,7 +234,7 @@ public class Draw {
 
    public static void texturedRectangle(int x, int y, int width, int height, float textureX, float textureY, float textureWidth, float textureHeight) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexbuffer.pos((double)(x + 0), (double)(y + height), 0.0D).tex((double)textureX, (double)(textureY + textureHeight)).endVertex();
       vertexbuffer.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)(textureX + textureWidth), (double)(textureY + textureHeight)).endVertex();
@@ -263,7 +263,7 @@ public class Draw {
 
    public static void line(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, IColorRead color) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(1, DefaultVertexFormats.POSITION_COLOR);
       vertexbuffer.pos(minX, minY, minZ).color(color.getR(), color.getG(), color.getB(), color.getA()).endVertex();
       vertexbuffer.pos(maxX, maxY, maxZ).color(color.getR(), color.getG(), color.getB(), color.getA()).endVertex();

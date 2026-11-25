@@ -1,9 +1,9 @@
 package org.orecruncher.dsurround.client.fx.particle.mote;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
@@ -15,7 +15,7 @@ import org.orecruncher.lib.random.XorShiftRandom;
 
 @SideOnly(Side.CLIENT)
 public abstract class MoteParticle implements IParticleMote {
-   protected static final Random RANDOM = XorShiftRandom.current();
+   protected static final EaglercraftRandom RANDOM = XorShiftRandom.current();
    protected static final RenderManager RENDERER = Minecraft.getMinecraft().getRenderManager();
    protected final World world;
    protected boolean isAlive = true;
@@ -99,22 +99,22 @@ public abstract class MoteParticle implements IParticleMote {
       return (float)(this.posZ - this.interpZ());
    }
 
-   protected void applyColor(@Nonnull BufferBuilder buffer) {
+   protected void applyColor(@Nonnull WorldRenderer buffer) {
       buffer.color(this.red, this.green, this.blue, this.alpha);
    }
 
-   protected void applyLightmap(@Nonnull BufferBuilder buffer) {
+   protected void applyLightmap(@Nonnull WorldRenderer buffer) {
       buffer.lightmap(this.slX16, this.blX16);
    }
 
-   protected void drawVertex(BufferBuilder buffer, double x, double y, double z, double u, double v) {
+   protected void drawVertex(WorldRenderer buffer, double x, double y, double z, double u, double v) {
       buffer.pos(x, y, z).tex(u, v);
       this.applyColor(buffer);
       this.applyLightmap(buffer);
       buffer.endVertex();
    }
 
-   public abstract void renderParticle(BufferBuilder var1, Entity var2, float var3, float var4, float var5, float var6, float var7, float var8);
+   public abstract void renderParticle(WorldRenderer var1, Entity var2, float var3, float var4, float var5, float var6, float var7, float var8);
 
    public int getBrightnessForRender(float partialTicks) {
       return ClientChunkCache.instance().getCombinedLight(this.position, 0);

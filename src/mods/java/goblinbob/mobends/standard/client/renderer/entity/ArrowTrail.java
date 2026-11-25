@@ -4,8 +4,8 @@ import goblinbob.mobends.core.client.event.DataUpdateHandler;
 import goblinbob.mobends.core.math.vector.Vec3f;
 import goblinbob.mobends.core.math.vector.VectorUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -72,7 +72,7 @@ public class ArrowTrail {
          GlStateManager.enableBlend();
          GlStateManager.blendFunc(770, 771);
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder vertexbuffer = tessellator.getBuffer();
+         WorldRenderer vertexbuffer = tessellator.getBuffer();
          vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
 
          for(int i = 1; i < 10; ++i) {
@@ -121,7 +121,7 @@ public class ArrowTrail {
       GlStateManager.depthFunc(519);
       GlStateManager.translate(x, y, z);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       GlStateManager.color(1.0F, 0.0F, 0.0F, 1.0F);
       vertexbuffer.begin(1, DefaultVertexFormats.POSITION_TEX);
       vertexbuffer.pos(0.0D, 0.0D, 0.0D).tex(0.0D, 0.15625D).endVertex();

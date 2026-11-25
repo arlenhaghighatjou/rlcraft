@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import net.minecraft.enchantment.Enchantment;
@@ -201,7 +201,7 @@ public class AncientTomes extends Feature {
       }
 
       @Nonnull
-      public ItemStack apply(@Nonnull ItemStack stack, @Nonnull Random rand, @Nonnull LootContext context) {
+      public ItemStack apply(@Nonnull ItemStack stack, @Nonnull EaglercraftRandom rand, @Nonnull LootContext context) {
          Enchantment enchantment = (Enchantment)AncientTomes.validEnchants.get(rand.nextInt(AncientTomes.validEnchants.size()));
          ItemEnchantedBook.addEnchantment(stack, new EnchantmentData(enchantment, enchantment.getMaxLevel()));
          return stack;

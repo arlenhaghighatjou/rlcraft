@@ -1,6 +1,6 @@
 package prospector.traverse.world.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
@@ -24,7 +24,7 @@ public class BiomeMountainousDesert extends BiomeDesert implements WorldGenConst
       super(properties);
    }
 
-   public void decorate(World worldIn, Random rand, BlockPos pos) {
+   public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos) {
       int stoneChance = rand.nextInt(9);
       if (stoneChance == 0) {
          int k6 = rand.nextInt(16) + 8;

@@ -2,7 +2,7 @@ package tschipp.forgottenitems.items;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
@@ -146,7 +146,7 @@ public class ItemBoundShovel extends TSShovel {
 				}
 				else
 				{
-					Random rand = new Random(owner.hashCode());
+					EaglercraftRandom rand = new EaglercraftRandom(owner.hashCode());
 					return rand.nextInt(16777215);
 				}
 

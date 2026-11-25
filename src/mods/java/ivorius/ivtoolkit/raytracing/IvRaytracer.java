@@ -2,9 +2,9 @@ package ivorius.ivtoolkit.raytracing;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import org.lwjgl.opengl.GL11;
 
 public class IvRaytracer {
@@ -53,7 +53,7 @@ public class IvRaytracer {
       GL11.glLineWidth(2.0F);
       GlStateManager.disableTexture2D();
       GlStateManager.depthMask(false);
-      Random r = new Random(0L);
+      EaglercraftRandom r = new EaglercraftRandom(0L);
 
       for(IvRaytraceableObject object : objects) {
          int color = r.nextInt();

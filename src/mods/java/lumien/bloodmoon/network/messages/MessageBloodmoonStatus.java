@@ -1,6 +1,6 @@
 package lumien.bloodmoon.network.messages;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class MessageBloodmoonStatus implements IMessage {

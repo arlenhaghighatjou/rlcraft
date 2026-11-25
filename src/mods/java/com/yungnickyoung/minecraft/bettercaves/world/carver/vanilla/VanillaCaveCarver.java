@@ -5,7 +5,7 @@ import com.yungnickyoung.minecraft.bettercaves.util.BetterCavesUtils;
 import com.yungnickyoung.minecraft.bettercaves.world.carver.CarverUtils;
 import com.yungnickyoung.minecraft.bettercaves.world.carver.ICarver;
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -118,7 +118,7 @@ public class VanillaCaveCarver extends MapGenCaves implements ICarver {
    }
 
    protected void addTunnel(long seed, int originChunkX, int originChunkZ, ChunkPrimer primer, double caveStartX, double caveStartY, double caveStartZ, float width, float yaw, float pitch, int startCounter, int endCounter, double heightModifier, IBlockState[][] liquidBlocks, boolean[][] carvingMask) {
-      Random random = new Random(seed);
+      EaglercraftRandom random = new EaglercraftRandom(seed);
       double originBlockX = (double)(originChunkX * 16 + 8);
       double originBlockZ = (double)(originChunkZ * 16 + 8);
       float yawModifier = 0.0F;

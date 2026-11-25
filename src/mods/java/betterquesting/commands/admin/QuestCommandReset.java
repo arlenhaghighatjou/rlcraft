@@ -10,7 +10,7 @@ import betterquesting.storage.NameCache;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -52,7 +52,7 @@ public class QuestCommandReset extends QuestCommandBase {
 
    public void runCommand(MinecraftServer server, CommandBase command, ICommandSender sender, String[] args) throws CommandException {
       String action = args[1];
-      UUID uuid = null;
+      EaglercraftUUID uuid = null;
       if (args.length == 3) {
          uuid = this.findPlayerID(server, sender, args[2]);
          if (uuid == null) {
@@ -67,7 +67,7 @@ public class QuestCommandReset extends QuestCommandBase {
             if (uuid != null) {
                ((IQuest)entry.getValue()).resetUser(uuid, true);
             } else {
-               ((IQuest)entry.getValue()).resetUser((UUID)null, true);
+               ((IQuest)entry.getValue()).resetUser((EaglercraftUUID)null, true);
             }
          }
 
@@ -91,7 +91,7 @@ public class QuestCommandReset extends QuestCommandBase {
                   NetQuestSync.sendSync(player, new int[]{id}, false, true);
                }
             } else {
-               quest.resetUser((UUID)null, true);
+               quest.resetUser((EaglercraftUUID)null, true);
                sender.sendMessage(new TextComponentTranslation("betterquesting.cmd.reset.all_single", new Object[]{new TextComponentTranslation((String)quest.getProperty(NativeProps.NAME), new Object[0])}));
                NetQuestSync.quickSync(id, false, true);
             }

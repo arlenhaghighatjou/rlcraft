@@ -1,6 +1,6 @@
 package knightminer.inspirations.building.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import knightminer.inspirations.building.InspirationsBuilding;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.SoundType;
@@ -25,7 +25,7 @@ public class BlockGlassDoor extends BlockDoor {
    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return InspirationsBuilding.glassDoorItem;
    }
 
@@ -41,7 +41,7 @@ public class BlockGlassDoor extends BlockDoor {
       return new ItemStack(InspirationsBuilding.glassDoorItem);
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import java.util.function.Function;
 import net.minecraft.block.Block;
@@ -204,7 +204,7 @@ public class LeavesPropertiesJson extends LeavesProperties {
       this.leavesUpdate = leavesUpdate;
    }
 
-   public boolean updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public boolean updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       return this.leavesUpdate.updateTick(worldIn, pos, state, rand, this);
    }
 
@@ -275,7 +275,7 @@ public class LeavesPropertiesJson extends LeavesProperties {
    }
 
    public interface ILeavesUpdate {
-      boolean updateTick(World var1, BlockPos var2, IBlockState var3, Random var4, ILeavesProperties var5);
+      boolean updateTick(World var1, BlockPos var2, IBlockState var3, EaglercraftRandom var4, ILeavesProperties var5);
    }
 
    public static class PrimitiveLeavesComponents {

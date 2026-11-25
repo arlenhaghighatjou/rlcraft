@@ -2,7 +2,7 @@ package jaredbgreat.dldungeons.commands;
 
 import jaredbgreat.dldungeons.ConfigHandler;
 import jaredbgreat.dldungeons.builder.Builder;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -28,7 +28,7 @@ public class CmdSpawn extends CommandBase {
       BlockPos location = sender.getPosition();
 
       try {
-         Builder.placeDungeon(new Random(), location.getX() / 16, location.getZ() / 16, world);
+         Builder.placeDungeon(new EaglercraftRandom(), location.getX() / 16, location.getZ() / 16, world);
       } catch (Throwable var7) {
          System.err.println("[DLDUNGEONS] Danger!  Failed to finalize a dungeon after building!");
          var7.printStackTrace();

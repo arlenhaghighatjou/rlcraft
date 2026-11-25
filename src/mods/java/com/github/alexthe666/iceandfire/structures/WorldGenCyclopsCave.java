@@ -3,7 +3,7 @@ package com.github.alexthe666.iceandfire.structures;
 import com.github.alexthe666.iceandfire.block.BlockGoldPile;
 import com.github.alexthe666.iceandfire.core.ModBlocks;
 import com.github.alexthe666.iceandfire.entity.EntityCyclops;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockBone;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.passive.EntitySheep;
@@ -25,7 +25,7 @@ public class WorldGenCyclopsCave extends WorldGenerator {
    public WorldGenCyclopsCave() {
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int i1 = 16;
       int i2 = i1 - 2;
       int sheepPenCount = 0;
@@ -81,11 +81,11 @@ public class WorldGenCyclopsCave extends WorldGenerator {
 
                if (rand.nextInt(80) == 0 && this.isTouchingAir(worldIn, blockpos.up())) {
                   worldIn.setBlockState(blockpos.up(), ModBlocks.goldPile.getDefaultState().withProperty(BlockGoldPile.LAYERS, Integer.valueOf(8)), 3);
-                  worldIn.setBlockState(blockpos.up().north(), ModBlocks.goldPile.getDefaultState().withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new Random()).nextInt(7))), 3);
-                  worldIn.setBlockState(blockpos.up().south(), ModBlocks.goldPile.getDefaultState().withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new Random()).nextInt(7))), 3);
-                  worldIn.setBlockState(blockpos.up().west(), ModBlocks.goldPile.getDefaultState().withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new Random()).nextInt(7))), 3);
-                  worldIn.setBlockState(blockpos.up().east(), ModBlocks.goldPile.getDefaultState().withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new Random()).nextInt(7))), 3);
-                  worldIn.setBlockState(blockpos.up(2), Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.HORIZONTALS[(new Random()).nextInt(3)]), 3);
+                  worldIn.setBlockState(blockpos.up().north(), ModBlocks.goldPile.getDefaultState().withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new EaglercraftRandom()).nextInt(7))), 3);
+                  worldIn.setBlockState(blockpos.up().south(), ModBlocks.goldPile.getDefaultState().withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new EaglercraftRandom()).nextInt(7))), 3);
+                  worldIn.setBlockState(blockpos.up().west(), ModBlocks.goldPile.getDefaultState().withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new EaglercraftRandom()).nextInt(7))), 3);
+                  worldIn.setBlockState(blockpos.up().east(), ModBlocks.goldPile.getDefaultState().withProperty(BlockGoldPile.LAYERS, Integer.valueOf(1 + (new EaglercraftRandom()).nextInt(7))), 3);
+                  worldIn.setBlockState(blockpos.up(2), Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.HORIZONTALS[(new EaglercraftRandom()).nextInt(3)]), 3);
                   if (worldIn.getBlockState(blockpos.up(2)).getBlock() instanceof BlockChest) {
                      TileEntity tileentity1 = worldIn.getTileEntity(blockpos.up(2));
                      if (tileentity1 instanceof TileEntityChest && !((TileEntityChest)tileentity1).isInvalid()) {
@@ -116,7 +116,7 @@ public class WorldGenCyclopsCave extends WorldGenerator {
       }
    }
 
-   private void genSheepPen(World worldIn, BlockPos blockpos, Random rand, BlockPos origin, float radius) {
+   private void genSheepPen(World worldIn, BlockPos blockpos, EaglercraftRandom rand, BlockPos origin, float radius) {
       int width = 5 + rand.nextInt(3);
       int sheeps = 2 + rand.nextInt(3);
       int sheepsSpawned = 0;
@@ -167,8 +167,8 @@ public class WorldGenCyclopsCave extends WorldGenerator {
       return isTouchingAir;
    }
 
-   private void genSkeleton(World worldIn, BlockPos blockpos, Random rand, BlockPos origin, float radius) {
-      EnumFacing direction = EnumFacing.HORIZONTALS[(new Random()).nextInt(3)];
+   private void genSkeleton(World worldIn, BlockPos blockpos, EaglercraftRandom rand, BlockPos origin, float radius) {
+      EnumFacing direction = EnumFacing.HORIZONTALS[(new EaglercraftRandom()).nextInt(3)];
       Axis oppositeAxis = direction.getAxis() == Axis.X ? Axis.Z : Axis.X;
       int maxRibHeight = rand.nextInt(2);
 

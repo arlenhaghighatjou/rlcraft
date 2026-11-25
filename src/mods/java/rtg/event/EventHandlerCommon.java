@@ -2,7 +2,7 @@ package rtg.event;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import net.minecraft.block.BlockSapling;
@@ -51,7 +51,7 @@ public final class EventHandlerCommon {
 
    }
 
-   private static void generateFalls(World world, Random rand, ChunkPos chunkPos, EventType type) {
+   private static void generateFalls(World world, EaglercraftRandom rand, ChunkPos chunkPos, EventType type) {
       BlockPos offsetpos = new BlockPos(chunkPos.x * 16 + 8, 0, chunkPos.z * 16 + 8);
       switch(type) {
       case LAKE_WATER:
@@ -78,7 +78,7 @@ public final class EventHandlerCommon {
          if (!(saplingBlock.getBlock() instanceof BlockSapling)) {
             Logger.debug("[SaplingGrowTreeEvent] Aborting: Sapling is not a sapling block ({})", saplingBlock.getBlock().getClass().getName());
          } else {
-            Random rand = event.getRand();
+            EaglercraftRandom rand = event.getRand();
             int chance = RTGConfig.rtgTreeChance();
             if (rand.nextInt(chance < 1 ? 1 : chance) != 0) {
                Logger.debug("[SaplingGrowTreeEvent] Aborting RTG tree generation: random chance");

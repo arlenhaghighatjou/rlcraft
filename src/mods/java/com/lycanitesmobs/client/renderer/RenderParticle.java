@@ -2,8 +2,8 @@ package com.lycanitesmobs.client.renderer;
 
 import com.lycanitesmobs.core.entity.BaseProjectileEntity;
 import com.lycanitesmobs.core.entity.EntityParticle;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -82,7 +82,7 @@ public class RenderParticle extends Render {
          GlStateManager.enableOutlineMode(this.getTeamColor(entity));
       }
 
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexbuffer.pos(xCoord + 0.0D, yCoord + (double)((float)maxV), zLevel).tex((minU + 0.0D) * (double)textureWidth, (minV + maxV) * (double)textureHeight).endVertex();
       vertexbuffer.pos(xCoord + (double)((float)maxU), yCoord + (double)((float)maxV), zLevel).tex((minU + maxU) * (double)textureWidth, (minV + maxV) * (double)textureHeight).endVertex();

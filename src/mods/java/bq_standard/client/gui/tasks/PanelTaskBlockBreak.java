@@ -16,7 +16,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.utils.QuestTranslation;
 import bq_standard.NbtBlockType;
 import bq_standard.tasks.TaskBlockBreak;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextFormatting;
 
@@ -30,7 +30,7 @@ public class PanelTaskBlockBreak extends CanvasEmpty {
 
    public void initPanel() {
       super.initPanel();
-      UUID uuid = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
+      EaglercraftUUID uuid = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
       int[] progress = this.task.getUsersProgress(uuid);
       boolean isComplete = this.task.isComplete(uuid);
       CanvasScrolling cvList = new CanvasScrolling(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(0, 0, 8, 0), 0));

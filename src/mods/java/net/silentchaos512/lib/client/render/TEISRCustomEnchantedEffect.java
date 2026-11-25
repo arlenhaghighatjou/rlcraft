@@ -7,8 +7,8 @@ import java.util.List;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -88,7 +88,7 @@ public class TEISRCustomEnchantedEffect extends TileEntityItemStackRenderer {
       return effectColor;
    }
 
-   private void renderQuads(BufferBuilder renderer, List<BakedQuad> quads, int color, ItemStack stack) {
+   private void renderQuads(WorldRenderer renderer, List<BakedQuad> quads, int color, ItemStack stack) {
       boolean flag = color == -1 && !stack.isEmpty();
       int i = 0;
 
@@ -142,7 +142,7 @@ public class TEISRCustomEnchantedEffect extends TileEntityItemStackRenderer {
 
    private void renderModelExcluding(IBakedModel model, int color, ItemStack stack, int layerIndex, Collection<EnumFacing> excludeFaces) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.ITEM);
       List<BakedQuad> quads = new ArrayList();
       if (layerIndex < 0) {

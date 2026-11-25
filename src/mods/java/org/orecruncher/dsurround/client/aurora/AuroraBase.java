@@ -1,6 +1,6 @@
 package org.orecruncher.dsurround.client.aurora;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -13,7 +13,7 @@ import org.orecruncher.lib.random.XorShiftRandom;
 
 @SideOnly(Side.CLIENT)
 public abstract class AuroraBase implements IAurora {
-   protected final Random random;
+   protected final EaglercraftRandom random;
    protected final AuroraBand band;
    protected final int bandCount;
    protected final float offset;
@@ -30,7 +30,7 @@ public abstract class AuroraBase implements IAurora {
       this(new XorShiftRandom(seed), flag);
    }
 
-   public AuroraBase(Random rand, boolean flag) {
+   public AuroraBase(EaglercraftRandom rand, boolean flag) {
       this.random = rand;
       this.bandCount = Math.min(this.random.nextInt(3) + 1, ModOptions.aurora.maxBands);
       this.offset = (float)(this.random.nextInt(20) + 20);

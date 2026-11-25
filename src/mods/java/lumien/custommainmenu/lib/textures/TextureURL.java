@@ -6,9 +6,9 @@ import java.net.URL;
 import lumien.custommainmenu.CustomMainMenu;
 import lumien.custommainmenu.handler.LoadTextureURL;
 import lumien.custommainmenu.lib.StringReplacer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureUtil;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import org.lwjgl.opengl.GL11;
 
 public class TextureURL implements ITexture {

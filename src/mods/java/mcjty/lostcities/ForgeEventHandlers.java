@@ -1,6 +1,6 @@
 package mcjty.lostcities;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import mcjty.lostcities.config.LostCityConfiguration;
@@ -144,7 +144,7 @@ public class ForgeEventHandlers {
    }
 
    private void findSafeSpawnPoint(World world, LostCityChunkGenerator provider, @Nonnull Predicate<BlockPos> isSuitable) {
-      Random rand = new Random(world.getSeed());
+      EaglercraftRandom rand = new EaglercraftRandom(world.getSeed());
       rand.nextFloat();
       rand.nextFloat();
       int radius = 200;

@@ -121,7 +121,7 @@ import crafttweaker.runtime.ScriptLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -391,7 +391,7 @@ public class CommonEventHandler {
          }
 
          if (!entityDefinition.getDrops().isEmpty()) {
-            Random rand = entity.world.rand;
+            EaglercraftRandom rand = entity.world.rand;
             entityDefinition.getDrops().forEach((drop) -> {
                if (!drop.isPlayerOnly() || ev.getSource().getTrueSource() instanceof EntityPlayer) {
                   if (drop.getChance() <= 0.0F || drop.getChance() >= 1.0F || rand.nextFloat() <= drop.getChance()) {

@@ -1,6 +1,6 @@
 package jaredbgreat.dldungeons.themes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SizeElement implements Autoselecting {
    private Sizes tiny = Sizes.TINY;
@@ -28,7 +28,7 @@ public class SizeElement implements Autoselecting {
       this.probScale = prob1 + prob2 + prob3 + prob4 + prob5;
    }
 
-   public Sizes select(Random random) {
+   public Sizes select(EaglercraftRandom random) {
       int roll = random.nextInt(this.probScale);
       if (roll < this.prob1) {
          return Sizes.TINY;

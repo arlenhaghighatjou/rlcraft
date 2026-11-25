@@ -1,7 +1,7 @@
 package ivorius.ivtoolkit.network;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import java.util.function.Supplier;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumFacing;

@@ -1,6 +1,6 @@
 package ivorius.ivtoolkit.network;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.function.Supplier;
 
 public class IvPacketHelper {

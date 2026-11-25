@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 
 public enum Direction {
@@ -26,7 +26,7 @@ public enum Direction {
       this.zDelta = zDelta;
    }
 
-   public static Direction randomCardinal(Random random) {
+   public static Direction randomCardinal(EaglercraftRandom random) {
       return (Direction)CARDINAL.get(random.nextInt(CARDINAL.size()));
    }
 

@@ -27,7 +27,7 @@ import greymerk.roguelike.worldgen.WorldEditor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -50,20 +50,20 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.ChunkProviderServer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class WorldEditor1_12 implements WorldEditor {
    private static final Logger logger = LogManager.getLogger("roguelike");
    private static final Set<Material> validGroundBlocks = Sets.newHashSet(new Material[]{Material.GRASS, Material.GROUND, Material.ROCK, Material.SAND, Material.ICE, Material.PACKED_ICE, Material.SNOW, Material.CLAY});
    private final World world;
    private final Map<BlockType, Integer> stats = new HashMap();
-   private final Random random;
+   private final EaglercraftRandom random;
    private final TreasureManager treasureManager;
 
    public WorldEditor1_12(World world) {
       this.world = world;
-      this.random = new Random((long)Objects.hash(new Object[]{this.getSeed()}));
+      this.random = new EaglercraftRandom((long)Objects.hash(new Object[]{this.getSeed()}));
       this.treasureManager = new TreasureManager(this.random);
    }
 
@@ -86,7 +86,7 @@ public class WorldEditor1_12 implements WorldEditor {
       skull.setType(getSkullId(type));
    }
 
-   public static void setSkullRotation(Random rand, TileEntitySkull skull, Direction dir) {
+   public static void setSkullRotation(EaglercraftRandom rand, TileEntitySkull skull, Direction dir) {
       int directionValue = getDirectionValue(dir);
       directionValue = directionValue + -1 + rand.nextInt(3);
       directionValue = directionValue % 16;
@@ -147,11 +147,11 @@ public class WorldEditor1_12 implements WorldEditor {
       return false;
    }
 
-   public Random getRandom() {
+   public EaglercraftRandom getRandom() {
       return this.random;
    }
 
-   public Random getRandom(Coord pos) {
+   public EaglercraftRandom getRandom(Coord pos) {
       this.random.setSeed((long)this.getSeed(pos));
       return this.random;
    }

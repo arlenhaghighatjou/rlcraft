@@ -2,7 +2,7 @@ package ivorius.ivtoolkit.rendering.grid;
 
 import ivorius.ivtoolkit.rendering.IvRenderHelper;
 import ivorius.ivtoolkit.tools.BufferBuilderAccessor;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
@@ -57,7 +57,7 @@ public class GridRenderer {
          z = (float)((double)z + (double)zDir * 0.5D);
       }
 
-      BufferBuilder renderer = Tessellator.getInstance().getBuffer();
+      WorldRenderer renderer = Tessellator.getInstance().getBuffer();
       BufferBuilderAccessor.addTranslation(renderer, (double)x, (double)y, (double)z);
       IvRenderHelper.renderCuboid(renderer, xDir, yDir, zDir, 1.0F);
       BufferBuilderAccessor.addTranslation(renderer, (double)(-x), (double)(-y), (double)(-z));

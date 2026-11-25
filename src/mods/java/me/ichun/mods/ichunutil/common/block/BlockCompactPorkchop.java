@@ -1,6 +1,6 @@
 package me.ichun.mods.ichunutil.common.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -12,7 +12,7 @@ public class BlockCompactPorkchop extends Block {
    public BlockCompactPorkchop() {
       super(Material.CAKE);
       this.blockSoundType = new SoundType(0.8F, 1.0F, SoundEvents.ENTITY_PIG_AMBIENT, SoundEvents.ENTITY_PIG_AMBIENT, SoundEvents.ENTITY_PIG_AMBIENT, SoundEvents.ENTITY_PIG_AMBIENT, SoundEvents.ENTITY_PIG_AMBIENT) {
-         public Random rand = new Random();
+         public EaglercraftRandom rand = new EaglercraftRandom();
 
          public float getPitch() {
             return (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F;

@@ -1,6 +1,6 @@
 package vazkii.quark.automation.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -93,10 +93,10 @@ public class BlockRedstoneInductor extends BlockMod implements IQuarkBlock, IBlo
       return BlockRedstoneRepeater.isDiode(iblockstate) ? worldIn.getStrongPower(pos, side) : 0;
    }
 
-   public void randomTick(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random random) {
+   public void randomTick(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EaglercraftRandom random) {
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       boolean isLocked = this.isLocked(state);
       boolean willBeLocked = this.shouldBeLocked(worldIn, pos, state);
       EnumFacing side = (EnumFacing)state.getValue(FACING);

@@ -5,7 +5,7 @@ import jaredbgreat.dldungeons.themes.Sizes;
 import jaredbgreat.dldungeons.util.cache.Coords;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -19,14 +19,14 @@ public class GenerationHandler implements IWorldGenerator {
    private static int frequency;
    private static int factor = 6;
    private static int minXZ;
-   private static Random mrand;
+   private static EaglercraftRandom mrand;
    private static HashSet<Integer> dimensions;
 
    public GenerationHandler() {
       GameRegistry.registerWorldGenerator(this, 100);
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (!world.isRemote) {
          if ((!ConfigHandler.obeyRule || world.getWorldInfo().isMapFeaturesEnabled()) && ConfigHandler.naturalSpawn) {
             this.findDungeonsToBuild(world, chunkX, chunkZ);
@@ -85,7 +85,7 @@ public class GenerationHandler implements IWorldGenerator {
       } else if (dimensions.contains(Integer.valueOf(world.provider.getDimension())) != ConfigHandler.positiveDims) {
          return false;
       } else if (Math.abs(chunkX - world.getSpawnPoint().getX() / 16) >= minXZ && Math.abs(chunkZ - world.getSpawnPoint().getZ() / 16) >= minXZ) {
-         mrand = new Random(seed + (long)dim + 2027L * (long)(chunkX / factor) + 1987L * (long)(chunkZ / factor));
+         mrand = new EaglercraftRandom(seed + (long)dim + 2027L * (long)(chunkX / factor) + 1987L * (long)(chunkZ / factor));
          int xrand = mrand.nextInt();
          int zrand = mrand.nextInt();
          int xuse = (chunkX + xrand) % factor;

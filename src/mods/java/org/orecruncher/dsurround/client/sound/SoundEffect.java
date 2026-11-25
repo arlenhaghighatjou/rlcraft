@@ -1,7 +1,7 @@
 package org.orecruncher.dsurround.client.sound;
 
 import com.google.common.base.MoreObjects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
@@ -31,7 +31,7 @@ import org.orecruncher.lib.random.XorShiftRandom;
 public final class SoundEffect implements ISpecialEffect, IEntrySource<SoundEffect>, IItem<SoundEffect> {
    private static final int SPOT_SOUND_RANGE = 8;
    private static final float[] pitchDelta = new float[]{-0.2F, 0.0F, 0.0F, 0.2F, 0.2F, 0.2F};
-   private static final Random RANDOM = XorShiftRandom.current();
+   private static final EaglercraftRandom RANDOM = XorShiftRandom.current();
    private final SoundEvent sound;
    private final String soundName;
    private SoundType type;
@@ -138,11 +138,11 @@ public final class SoundEffect implements ISpecialEffect, IEntrySource<SoundEffe
       return this.volume;
    }
 
-   protected float getPitch(Random rand) {
+   protected float getPitch(EaglercraftRandom rand) {
       return rand != null && this.variable ? this.pitch + pitchDelta[rand.nextInt(pitchDelta.length)] : this.pitch;
    }
 
-   protected int getRepeat(Random rand) {
+   protected int getRepeat(EaglercraftRandom rand) {
       return this.repeatDelayRandom <= 0 ? Math.max(this.repeatDelay, 0) : this.repeatDelay + rand.nextInt(this.repeatDelayRandom);
    }
 
@@ -177,11 +177,11 @@ public final class SoundEffect implements ISpecialEffect, IEntrySource<SoundEffe
       return sound;
    }
 
-   public boolean canTrigger(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull Random random) {
+   public boolean canTrigger(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EaglercraftRandom random) {
       return true;
    }
 
-   public void doEffect(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull Random random) {
+   public void doEffect(@Nonnull IBlockAccessEx provider, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EaglercraftRandom random) {
       SoundEffectHandler.INSTANCE.playSoundAt(pos, this, 0);
    }
 

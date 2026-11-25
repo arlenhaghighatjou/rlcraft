@@ -2,7 +2,7 @@ package vazkii.quark.vanity.client.gui;
 
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import vazkii.quark.base.client.gui.GuiButtonTranslucent;
 import vazkii.quark.base.lib.LibMisc;

@@ -5,13 +5,13 @@ import com.github.fnar.util.Color;
 import greymerk.roguelike.monster.Mob;
 import greymerk.roguelike.monster.MonsterProfile;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ProfileSwordsman implements MonsterProfile {
    public ProfileSwordsman() {
    }
 
-   public Mob apply(Mob mob, int level, int difficulty, Random random) {
+   public Mob apply(Mob mob, int level, int difficulty, EaglercraftRandom random) {
       if (random.nextDouble() < 0.05D) {
          mob.equipMainhand(ItemNovelty.valandrahsKiss());
       } else {

@@ -1,6 +1,6 @@
 package rlmixins.mixin.vanilla;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -20,12 +20,12 @@ public abstract class BlockPortalMixin {
       method = {"updateTick"},
       at = {@At(
    value = "INVOKE",
-   target = "Lnet/minecraft/block/BlockBreakable;updateTick(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V",
+   target = "Lnet/minecraft/block/BlockBreakable;updateTick(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/EaglercraftRandom;)V",
    shift = Shift.AFTER
 )},
       cancellable = true
    )
-   public void rlmixins_vanillaBlockPortal_updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand, CallbackInfo ci) {
+   public void rlmixins_vanillaBlockPortal_updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand, CallbackInfo ci) {
       ci.cancel();
    }
 }

@@ -1,6 +1,6 @@
 package net.theawesomegem.fishingmadebetter.common.data;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.theawesomegem.fishingmadebetter.util.RandomUtil;
 
 public class FishCaughtData {
@@ -28,7 +28,7 @@ public class FishCaughtData {
       this.deepLevel = deepLevel;
    }
 
-   public static FishCaughtData fromFishData(FishData fishData, Random random) {
+   public static FishCaughtData fromFishData(FishData fishData, EaglercraftRandom random) {
       int fishTime = RandomUtil.getRandomInRange(random, fishData.minFishTime, fishData.maxFishTime);
       int errorVariance = RandomUtil.getRandomInRange(random, fishData.minErrorVariance, fishData.maxErrorVariance);
       int weight = RandomUtil.getRandomInRange(random, fishData.minWeight, fishData.maxWeight);

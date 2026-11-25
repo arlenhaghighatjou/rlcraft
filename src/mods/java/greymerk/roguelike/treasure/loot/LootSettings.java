@@ -4,7 +4,7 @@ import com.github.fnar.minecraft.item.RldItemStack;
 import greymerk.roguelike.util.IWeighted;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class LootSettings {
    private final Map<GreymerkChestType, IWeighted<RldItemStack>> loot = new HashMap();
@@ -16,7 +16,7 @@ public class LootSettings {
 
    }
 
-   public RldItemStack get(GreymerkChestType type, Random rand) {
+   public RldItemStack get(GreymerkChestType type, EaglercraftRandom rand) {
       IWeighted<RldItemStack> provider = (IWeighted)this.loot.get(type);
       return provider.get(rand);
    }

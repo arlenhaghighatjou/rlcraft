@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import levelup2.config.LevelUpConfig;
 import levelup2.skills.SkillRegistry;
@@ -28,8 +28,8 @@ public class Library {
    public static int[] tenLevels = new int[]{5, 7, 11, 13, 17, 23, 29, 31, 37, 41};
    public static int[] fiveLevels = new int[]{11, 17, 29, 37, 41};
    public static int[] highTenLevels = new int[]{11, 17, 23, 29, 37, 41, 43, 47, 51, 53};
-   public static final UUID speedID = UUID.fromString("4f7637c8-6106-4050-96cb-e47f83bfa415");
-   public static final UUID sneakID = UUID.fromString("a4dc0b04-f78a-43f6-8805-5ebfbab10b18");
+   public static final EaglercraftUUID speedID = EaglercraftUUID.fromString("4f7637c8-6106-4050-96cb-e47f83bfa415");
+   public static final EaglercraftUUID sneakID = EaglercraftUUID.fromString("a4dc0b04-f78a-43f6-8805-5ebfbab10b18");
    public static final ResourceLocation SKILL_LOCATION = new ResourceLocation("levelup", "skills");
    private static Set<Block> ores = Sets.newIdentityHashSet();
    private static Map<String, ItemStack> oreToChunk = new HashMap();
@@ -44,11 +44,11 @@ public class Library {
       return FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? null : FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUsername(username);
    }
 
-   public static EntityPlayer getPlayerFromUUID(UUID uuid) {
+   public static EntityPlayer getPlayerFromUUID(EaglercraftUUID uuid) {
       return getPlayerFromUsername(getUsernameFromUUID(uuid));
    }
 
-   public static String getUsernameFromUUID(UUID uuid) {
+   public static String getUsernameFromUUID(EaglercraftUUID uuid) {
       return UsernameCache.getLastKnownUsername(uuid);
    }
 

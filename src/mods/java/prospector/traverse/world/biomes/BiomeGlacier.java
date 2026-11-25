@@ -1,6 +1,6 @@
 package prospector.traverse.world.biomes;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import net.minecraft.entity.monster.EntityPolarBear;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -61,7 +61,7 @@ public class BiomeGlacier extends Biome implements WorldGenConstants {
       return properties;
    }
 
-   public void decorate(World worldIn, Random rand, BlockPos pos) {
+   public void decorate(World worldIn, EaglercraftRandom rand, BlockPos pos) {
       if (!TraverseConfig.disallowBoulders && TerrainGen.decorate(worldIn, rand, pos, EventType.ROCK)) {
          int genChance = rand.nextInt(9);
          if (genChance == 0) {
@@ -84,7 +84,7 @@ public class BiomeGlacier extends Biome implements WorldGenConstants {
       super.decorate(worldIn, rand, pos);
    }
 
-   public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+   public WorldGenAbstractTree getRandomTreeFeature(EaglercraftRandom rand) {
       return new WorldGenTaiga2(false);
    }
 }

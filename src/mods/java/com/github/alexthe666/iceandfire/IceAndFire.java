@@ -29,7 +29,7 @@ import com.github.alexthe666.iceandfire.world.village.ComponentAnimalFarm;
 import com.github.alexthe666.iceandfire.world.village.MapGenSnowVillage;
 import com.github.alexthe666.iceandfire.world.village.VillageAnimalFarmCreator;
 import java.io.File;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.ilexiconn.llibrary.server.network.NetworkWrapper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -55,8 +55,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 @Mod(
    modid = "iceandfire",
@@ -144,28 +144,28 @@ public class IceAndFire {
       dragon = new DamageSource("dragon") {
          public ITextComponent getDeathMessage(EntityLivingBase entityLivingBaseIn) {
             String s = "death.attack.dragon";
-            String s1 = s + ".player_" + (new Random()).nextInt(2);
+            String s1 = s + ".player_" + (new EaglercraftRandom()).nextInt(2);
             return (new TextComponentString(entityLivingBaseIn.getDisplayName().getFormattedText() + " ")).appendSibling(new TextComponentTranslation(s1, new Object[]{entityLivingBaseIn.getDisplayName()}));
          }
       };
       dragonFire = (new DamageSource("dragon_fire") {
          public ITextComponent getDeathMessage(EntityLivingBase entityLivingBaseIn) {
             String s = "death.attack.dragon_fire";
-            String s1 = s + ".player_" + (new Random()).nextInt(2);
+            String s1 = s + ".player_" + (new EaglercraftRandom()).nextInt(2);
             return (new TextComponentString(entityLivingBaseIn.getDisplayName().getFormattedText() + " ")).appendSibling(new TextComponentTranslation(s1, new Object[]{entityLivingBaseIn.getDisplayName()}));
          }
       }).setFireDamage();
       dragonIce = new DamageSource("dragon_ice") {
          public ITextComponent getDeathMessage(EntityLivingBase entityLivingBaseIn) {
             String s = "death.attack.dragon_ice";
-            String s1 = s + ".player_" + (new Random()).nextInt(2);
+            String s1 = s + ".player_" + (new EaglercraftRandom()).nextInt(2);
             return (new TextComponentString(entityLivingBaseIn.getDisplayName().getFormattedText() + " ")).appendSibling(new TextComponentTranslation(s1, new Object[]{entityLivingBaseIn.getDisplayName()}));
          }
       };
       gorgon = (new DamageSource("gorgon") {
          public ITextComponent getDeathMessage(EntityLivingBase entityLivingBaseIn) {
             String s = "death.attack.gorgon";
-            String s1 = s + ".player_" + (new Random()).nextInt(2);
+            String s1 = s + ".player_" + (new EaglercraftRandom()).nextInt(2);
             return (new TextComponentString(entityLivingBaseIn.getDisplayName().getFormattedText() + " ")).appendSibling(new TextComponentTranslation(s1, new Object[]{entityLivingBaseIn.getDisplayName()}));
          }
       }).setDamageBypassesArmor();

@@ -1,6 +1,6 @@
 package ivorius.reccomplex.gui.container;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import ivorius.reccomplex.RecurrentComplex;
 import ivorius.reccomplex.network.PacketOpenGui;
 import java.util.HashMap;

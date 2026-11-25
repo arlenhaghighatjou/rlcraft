@@ -4,8 +4,8 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.relauncher.Side;
@@ -108,7 +108,7 @@ public class RenderHelper {
       GlStateManager.blendFunc(770, 771);
       GlStateManager.shadeModel(7425);
       Tessellator var15 = Tessellator.getInstance();
-      BufferBuilder buff = var15.getBuffer();
+      WorldRenderer buff = var15.getBuffer();
       buff.begin(7, DefaultVertexFormats.POSITION_COLOR);
       buff.pos((double)par3, (double)par2, (double)z).color(var8, var9, var10, var7).endVertex();
       buff.pos((double)par1, (double)par2, (double)z).color(var8, var9, var10, var7).endVertex();
@@ -127,7 +127,7 @@ public class RenderHelper {
 
    public static void drawTexturedModalRect(int par1, int par2, float z, int par3, int par4, int par5, int par6, float f, float f1) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buff = tessellator.getBuffer();
+      WorldRenderer buff = tessellator.getBuffer();
       buff.begin(7, DefaultVertexFormats.POSITION_TEX);
       buff.pos((double)par1, (double)(par2 + par6), (double)z).tex((double)((float)par3 * f), (double)((float)(par4 + par6) * f1)).endVertex();
       buff.pos((double)(par1 + par5), (double)(par2 + par6), (double)z).tex((double)((float)(par3 + par5) * f), (double)((float)(par4 + par6) * f1)).endVertex();

@@ -1,7 +1,7 @@
 package dev.satyrn.wolfarmor.common.network;
 
 import dev.satyrn.wolfarmor.WolfArmorMod;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.io.IOException;
 import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;

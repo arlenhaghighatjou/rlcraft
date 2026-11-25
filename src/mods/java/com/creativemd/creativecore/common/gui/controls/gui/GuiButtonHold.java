@@ -1,6 +1,6 @@
 package com.creativemd.creativecore.common.gui.controls.gui;
 
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public abstract class GuiButtonHold extends GuiButton {
    public static final int toWait = 500;

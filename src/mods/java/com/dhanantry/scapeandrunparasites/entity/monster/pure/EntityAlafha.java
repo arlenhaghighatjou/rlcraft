@@ -17,7 +17,7 @@ import com.dhanantry.scapeandrunparasites.util.ParasiteEventEntity;
 import com.dhanantry.scapeandrunparasites.util.SRPAttributes;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigMobs;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -280,7 +280,7 @@ public class EntityAlafha extends EntityPPure implements EntityBodyParts, Entity
                }
             }
          } else {
-            Random random = EntityAlafha.this.getRNG();
+            EaglercraftRandom random = EntityAlafha.this.getRNG();
             double d0 = EntityAlafha.this.posX + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
             double d1 = EntityAlafha.this.posY + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
             double d2 = EntityAlafha.this.posZ + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);

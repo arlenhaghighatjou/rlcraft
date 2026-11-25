@@ -2,7 +2,7 @@ package c4.champions.common.entity;
 
 import c4.champions.common.init.ChampionsRegistry;
 import java.awt.Color;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.EnumPushReaction;
@@ -18,7 +18,7 @@ import net.minecraft.world.WorldServer;
 public class EntityJail extends Entity {
    private int duration;
    private EntityLivingBase prisoner;
-   private UUID prisonerUniqueId;
+   private EaglercraftUUID prisonerUniqueId;
 
    public EntityJail(World world) {
       super(world);

@@ -5,7 +5,7 @@ import com.mojang.authlib.GameProfileRepository;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import java.io.File;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import me.ichun.mods.ichunutil.client.core.event.EventHandlerClient;
 import me.ichun.mods.ichunutil.client.entity.EntityLatchedRenderer;
 import me.ichun.mods.ichunutil.client.keybind.KeyBind;
@@ -78,7 +78,7 @@ public class ProxyClient extends ProxyCommon {
    }
 
    public void setGameProfileLookupService() {
-      YggdrasilAuthenticationService yggdrasilauthenticationservice = new YggdrasilAuthenticationService(Minecraft.getMinecraft().getProxy(), UUID.randomUUID().toString());
+      YggdrasilAuthenticationService yggdrasilauthenticationservice = new YggdrasilAuthenticationService(Minecraft.getMinecraft().getProxy(), EaglercraftUUID.randomUUID().toString());
       EntityHelper.sessionService = yggdrasilauthenticationservice.createMinecraftSessionService();
       GameProfileRepository gameprofilerepository = yggdrasilauthenticationservice.createProfileRepository();
       EntityHelper.profileCache = new PlayerProfileCache(gameprofilerepository, new File(Minecraft.getMinecraft().mcDataDir, MinecraftServer.USER_CACHE_FILE.getName()));

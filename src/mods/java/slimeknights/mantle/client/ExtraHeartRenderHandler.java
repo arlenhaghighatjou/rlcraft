@@ -1,10 +1,10 @@
 package slimeknights.mantle.client;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
@@ -32,7 +32,7 @@ public class ExtraHeartRenderHandler {
    private int lastPlayerHealth = 0;
    private long healthUpdateCounter = 0L;
    private long lastSystemTime = 0L;
-   private Random rand = new Random();
+   private EaglercraftRandom rand = new EaglercraftRandom();
    private int height;
    private int width;
    private int regen;

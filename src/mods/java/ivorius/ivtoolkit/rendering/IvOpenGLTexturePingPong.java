@@ -1,9 +1,9 @@
 package ivorius.ivtoolkit.rendering;
 
 import java.nio.ByteBuffer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 
 public class IvOpenGLTexturePingPong {

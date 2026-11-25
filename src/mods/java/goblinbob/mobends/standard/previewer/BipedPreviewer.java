@@ -8,7 +8,7 @@ import goblinbob.mobends.core.math.vector.Vec3fReadonly;
 import goblinbob.mobends.standard.data.BipedEntityData;
 import java.util.HashMap;
 import java.util.Map;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class BipedPreviewer<D extends BipedEntityData<?>> implements IPreviewer<D> {
    private static final Vec3fReadonly VIEWPORT_ANCHOR = new Vec3fReadonly(0.0F, 1.3F, 0.0F);

@@ -1,6 +1,6 @@
 package ivorius.reccomplex.events;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
@@ -11,11 +11,11 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 public class ItemGenerationEvent extends Event {
    public final WorldServer server;
    public final IItemHandlerModifiable inventory;
-   public final Random random;
+   public final EaglercraftRandom random;
    public final ItemStack fromStack;
    public final int fromSlot;
 
-   public ItemGenerationEvent(WorldServer server, IItemHandlerModifiable inventory, Random random, ItemStack fromStack, int fromSlot) {
+   public ItemGenerationEvent(WorldServer server, IItemHandlerModifiable inventory, EaglercraftRandom random, ItemStack fromStack, int fromSlot) {
       this.server = server;
       this.inventory = inventory;
       this.random = random;
@@ -24,13 +24,13 @@ public class ItemGenerationEvent extends Event {
    }
 
    public static class Artifact extends ItemGenerationEvent {
-      public Artifact(WorldServer server, IItemHandlerModifiable inventory, Random random, ItemStack fromStack, int fromSlot) {
+      public Artifact(WorldServer server, IItemHandlerModifiable inventory, EaglercraftRandom random, ItemStack fromStack, int fromSlot) {
          super(server, inventory, random, fromStack, fromSlot);
       }
    }
 
    public static class Book extends ItemGenerationEvent {
-      public Book(WorldServer server, IItemHandlerModifiable inventory, Random random, ItemStack fromStack, int fromSlot) {
+      public Book(WorldServer server, IItemHandlerModifiable inventory, EaglercraftRandom random, ItemStack fromStack, int fromSlot) {
          super(server, inventory, random, fromStack, fromSlot);
       }
    }

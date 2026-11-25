@@ -3,10 +3,10 @@ package com.github.fnar.roguelike.loot.special.tools;
 import com.github.fnar.minecraft.item.RldItem;
 import com.github.fnar.minecraft.item.ToolType;
 import greymerk.roguelike.treasure.loot.Quality;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SpecialPickaxe extends SpecialTool {
-   public SpecialPickaxe(Random random, Quality quality) {
+   public SpecialPickaxe(EaglercraftRandom random, Quality quality) {
       this.withQuality(quality);
       this.withName(quality.getDescriptor() + " Pick");
       this.withRldItem(this.getItem());

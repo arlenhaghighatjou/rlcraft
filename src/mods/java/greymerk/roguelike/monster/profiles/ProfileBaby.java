@@ -4,13 +4,13 @@ import com.github.fnar.minecraft.Difficulty;
 import greymerk.roguelike.monster.Mob;
 import greymerk.roguelike.monster.MonsterProfile;
 import greymerk.roguelike.monster.MonsterProfileType;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ProfileBaby implements MonsterProfile {
    public ProfileBaby() {
    }
 
-   public Mob apply(Mob mob, int level, int difficulty, Random random) {
+   public Mob apply(Mob mob, int level, int difficulty, EaglercraftRandom random) {
       mob.setChild(true);
       if (random.nextBoolean()) {
          return MonsterProfileType.ZOMBIE_VILLAGER.apply(mob, level, difficulty, random);

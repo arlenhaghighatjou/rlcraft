@@ -8,7 +8,7 @@ import crafttweaker.api.util.IRandom;
 import crafttweaker.mc1120.util.MCRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import leviathan143.loottweaker.common.zenscript.wrapper.ZenLootContext;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
@@ -29,7 +29,7 @@ public class ZenLambdaLootCondition implements LootCondition {
       this.id = INSTANCES.size() - 1;
    }
 
-   public boolean testCondition(Random rand, LootContext context) {
+   public boolean testCondition(EaglercraftRandom rand, LootContext context) {
       return this.delegate.test(new MCRandom(rand), new ZenLootContext(context));
    }
 

@@ -1,6 +1,6 @@
 package vazkii.quark.world.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -20,7 +20,7 @@ public class ObsidianSpikeGenerator implements IWorldGenerator {
    public ObsidianSpikeGenerator() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (world.provider.isNether() && (double)random.nextFloat() < NetherObsidianSpikes.chunkChance) {
          for(int i = 0; i < NetherObsidianSpikes.triesPerChunk; ++i) {
             int x = chunkX * 16 + random.nextInt(16) + 8;

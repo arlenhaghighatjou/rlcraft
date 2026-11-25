@@ -8,7 +8,7 @@ import com.ferreusveritas.dynamictrees.util.CoordUtils;
 import com.ferreusveritas.dynamictrees.util.SafeChunkBounds;
 import com.ferreusveritas.dynamictrees.util.SimpleVoxmap;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.BlockOldLog;
@@ -53,7 +53,7 @@ public class FeatureGenBush implements IFullGenFeature, IPostGenFeature {
       return this;
    }
 
-   public boolean generate(World world, BlockPos rootPos, Species species, Biome biome, Random random, int radius, SafeChunkBounds safeBounds) {
+   public boolean generate(World world, BlockPos rootPos, Species species, Biome biome, EaglercraftRandom random, int radius, SafeChunkBounds safeBounds) {
       this.commonGen(world, rootPos, species, random, radius, safeBounds);
       return true;
    }
@@ -67,7 +67,7 @@ public class FeatureGenBush implements IFullGenFeature, IPostGenFeature {
       }
    }
 
-   protected void commonGen(World world, BlockPos rootPos, Species species, Random random, int radius, SafeChunkBounds safeBounds) {
+   protected void commonGen(World world, BlockPos rootPos, Species species, EaglercraftRandom random, int radius, SafeChunkBounds safeBounds) {
       if (radius > 2) {
          Vec3d vTree = (new Vec3d(rootPos)).addVector(0.5D, 0.5D, 0.5D);
 

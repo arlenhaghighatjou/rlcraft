@@ -12,7 +12,7 @@ import com.github.alexthe666.iceandfire.entity.ai.MyrmexAITradePlayer;
 import com.github.alexthe666.iceandfire.entity.ai.MyrmexAIWander;
 import com.github.alexthe666.iceandfire.entity.ai.MyrmexAIWanderHiveCenter;
 import com.google.common.base.Predicate;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.block.state.IBlockState;
@@ -344,7 +344,7 @@ public class EntityMyrmexRoyal extends EntityMyrmexBase {
 
    }
 
-   public static BlockPos getPositionRelativetoGround(Entity entity, World world, double x, double z, Random rand) {
+   public static BlockPos getPositionRelativetoGround(Entity entity, World world, double x, double z, EaglercraftRandom rand) {
       BlockPos pos = new BlockPos(x, entity.posY, z);
 
       for(int yDown = 0; yDown < 10; ++yDown) {

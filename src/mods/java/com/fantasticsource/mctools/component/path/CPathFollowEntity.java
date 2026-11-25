@@ -4,7 +4,7 @@ import com.fantasticsource.mctools.MCTools;
 import com.fantasticsource.tools.component.CInt;
 import com.fantasticsource.tools.component.path.CPath;
 import com.fantasticsource.tools.datastructures.VectorN;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.io.InputStream;
 import java.io.OutputStream;
 import net.minecraft.entity.Entity;

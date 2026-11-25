@@ -1,6 +1,6 @@
 package slimeknights.mantle.util;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
 import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@ public class TradeRandom extends TradeGeneric {
    }
 
    @Nonnull
-   protected ItemStack getOutput(Random random) {
+   protected ItemStack getOutput(EaglercraftRandom random) {
       if (this.outputs == null) {
          return super.getOutput(random);
       } else {
@@ -34,7 +34,7 @@ public class TradeRandom extends TradeGeneric {
    }
 
    @Nonnull
-   protected ItemStack getInput(Random random) {
+   protected ItemStack getInput(EaglercraftRandom random) {
       if (this.inputs == null) {
          return super.getInput(random);
       } else {

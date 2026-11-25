@@ -3,7 +3,7 @@ package hunternif.mc.atlas.client.gui;
 import hunternif.mc.atlas.client.Textures;
 import hunternif.mc.atlas.client.gui.core.GuiComponentButton;
 import hunternif.mc.atlas.util.AtlasRenderHelper;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 
 public class GuiArrowButton extends GuiComponentButton {

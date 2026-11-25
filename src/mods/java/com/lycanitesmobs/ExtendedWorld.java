@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Function;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,8 +43,8 @@ public class ExtendedWorld extends WorldSavedData {
    private long worldEventLastStartedTime = 0L;
    private String worldEventName = "";
    private int worldEventCount = -1;
-   public Map<UUID, BossEntry> bosses = new HashMap();
-   public Map<UUID, DungeonInstance> dungeons = new HashMap();
+   public Map<EaglercraftUUID, BossEntry> bosses = new HashMap();
+   public Map<EaglercraftUUID, DungeonInstance> dungeons = new HashMap();
 
    public static ExtendedWorld getForWorld(World world) {
       return world == null ? null : (ExtendedWorld)loadedExtWorlds.computeIfAbsent(world, (k) -> {
@@ -153,7 +153,7 @@ public class ExtendedWorld extends WorldSavedData {
       ++this.worldEventCount;
    }
 
-   public int getRandomEventDelay(Random random) {
+   public int getRandomEventDelay(EaglercraftRandom random) {
       int min = Math.max(200, MobEventManager.getInstance().minTicksUntilEvent);
       int max = Math.max(200, MobEventManager.getInstance().maxTicksUntilEvent);
       return max <= min ? min : min + random.nextInt(max - min);
@@ -355,7 +355,7 @@ public class ExtendedWorld extends WorldSavedData {
 
    }
 
-   public void addDungeonInstance(DungeonInstance dungeonInstance, UUID uuid) {
+   public void addDungeonInstance(DungeonInstance dungeonInstance, EaglercraftUUID uuid) {
       dungeonInstance.uuid = uuid;
       this.dungeons.put(dungeonInstance.uuid, dungeonInstance);
       this.markDirty();

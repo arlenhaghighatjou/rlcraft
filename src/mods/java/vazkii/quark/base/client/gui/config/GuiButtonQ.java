@@ -2,7 +2,7 @@ package vazkii.quark.base.client.gui.config;
 
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import vazkii.quark.base.client.ContributorRewardHandler;
 import vazkii.quark.base.client.gui.GuiButtonColor;
 import vazkii.quark.base.lib.LibMisc;

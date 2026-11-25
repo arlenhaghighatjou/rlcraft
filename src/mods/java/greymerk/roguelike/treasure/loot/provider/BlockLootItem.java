@@ -5,7 +5,7 @@ import com.github.fnar.minecraft.item.RldBaseItem;
 import com.github.fnar.minecraft.item.RldItemStack;
 import greymerk.roguelike.util.WeightedRandomizer;
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class BlockLootItem extends LootItem {
    private final WeightedRandomizer<RldBaseItem> loot = new WeightedRandomizer<RldBaseItem>();
@@ -21,7 +21,7 @@ public class BlockLootItem extends LootItem {
       this.loot.add(BlockType.STONE_BRICK_CRACKED.asItem(), 1);
    }
 
-   public RldItemStack getLootItem(Random random) {
+   public RldItemStack getLootItem(EaglercraftRandom random) {
       return ((RldBaseItem)this.loot.get(random)).asStack().withCount(8 + random.nextInt(24));
    }
 

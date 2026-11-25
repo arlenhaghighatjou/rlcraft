@@ -11,7 +11,7 @@ import net.ilexiconn.llibrary.client.model.tabula.container.TabulaCubeGroupConta
 import net.ilexiconn.llibrary.client.model.tabula.container.TabulaModelContainer;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

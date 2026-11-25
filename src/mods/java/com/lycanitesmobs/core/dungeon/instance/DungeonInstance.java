@@ -6,15 +6,15 @@ import com.lycanitesmobs.core.dungeon.DungeonManager;
 import com.lycanitesmobs.core.dungeon.definition.DungeonSchematic;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 
 public class DungeonInstance {
-   public UUID uuid;
+   public EaglercraftUUID uuid;
    public DungeonSchematic schematic;
    public boolean complete = false;
    public int chunksBuilt = 0;
@@ -23,7 +23,7 @@ public class DungeonInstance {
    public ChunkPos chunkMax;
    public World world;
    long seed = 0L;
-   public Random random;
+   public EaglercraftRandom random;
    public DungeonLayout layout;
 
    public DungeonInstance() {
@@ -62,7 +62,7 @@ public class DungeonInstance {
             this.seed = world.rand.nextLong();
          }
 
-         this.random = new Random(this.seed);
+         this.random = new EaglercraftRandom(this.seed);
          this.originPos = this.schematic.placer.calculatePosition(world, this.originPos, this.random);
          LycanitesMobs.logDebug("Dungeon", "Starting Dungeon Instance Generation For " + this);
          if (this.layout == null) {

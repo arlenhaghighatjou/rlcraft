@@ -1,7 +1,7 @@
 package ivorius.ivtoolkit.raytracing;
 
 import java.util.List;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
@@ -150,7 +150,7 @@ public class IvRaytraceableAxisAlignedSurface extends IvRaytraceableObject {
    }
 
    public void drawOutlines() {
-      BufferBuilder renderer = Tessellator.getInstance().getBuffer();
+      WorldRenderer renderer = Tessellator.getInstance().getBuffer();
       renderer.begin(3, DefaultVertexFormats.POSITION);
       if (this.width == 0.0D) {
          renderer.pos(this.x, this.y, this.z).endVertex();

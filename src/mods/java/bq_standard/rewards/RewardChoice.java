@@ -14,7 +14,7 @@ import bq_standard.core.BQ_Standard;
 import bq_standard.rewards.factory.FactoryRewardChoice;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -23,11 +23,11 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class RewardChoice implements IReward {
    public final ArrayList<BigItemStack> choices = new ArrayList();
-   private final HashMap<UUID, Integer> selected = new HashMap();
+   private final HashMap<EaglercraftUUID, Integer> selected = new HashMap();
 
    public RewardChoice() {
    }
@@ -40,11 +40,11 @@ public class RewardChoice implements IReward {
       return "bq_standard.reward.choice";
    }
 
-   public int getSelecton(UUID uuid) {
+   public int getSelecton(EaglercraftUUID uuid) {
       return !this.selected.containsKey(uuid) ? -1 : ((Integer)this.selected.get(uuid)).intValue();
    }
 
-   public void setSelection(UUID uuid, int value) {
+   public void setSelection(EaglercraftUUID uuid, int value) {
       this.selected.put(uuid, Integer.valueOf(value));
    }
 
@@ -58,7 +58,7 @@ public class RewardChoice implements IReward {
    }
 
    public void claimReward(EntityPlayer player, DBEntry<IQuest> quest) {
-      UUID playerID = QuestingAPI.getQuestingUUID(player);
+      EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(player);
       if (this.choices.size() > 0) {
          if (this.selected.containsKey(playerID)) {
             int tmp = ((Integer)this.selected.get(playerID)).intValue();

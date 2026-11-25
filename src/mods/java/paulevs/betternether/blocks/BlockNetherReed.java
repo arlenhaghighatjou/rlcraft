@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
@@ -102,7 +102,7 @@ public class BlockNetherReed extends Block {
       return new BlockStateContainer(this, new IProperty[]{SHAPE});
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if ((worldIn.getBlockState(pos.down()).getBlock() == this || this.checkForDrop(worldIn, pos, state)) && worldIn.isAirBlock(pos.up())) {
          int i;
          for(i = 1; worldIn.getBlockState(pos.down(i)).getBlock() == this; ++i) {

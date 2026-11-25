@@ -16,7 +16,7 @@ import com.oblivioussp.spartanweaponry.util.StringHelper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.GuiScreen;
@@ -69,7 +69,7 @@ public class ItemThrowingWeapon extends Item implements IWeaponPropertyContainer
    protected float throwDamageMultiplier;
    public static final String NBT_AMMO = "Ammo";
    public static final String NBT_AMMO_USED = "AmmoUsed";
-   public static final String NBT_UUID = "UUID";
+   public static final String NBT_UUID = "EaglercraftUUID";
    public static final String NBT_ORIGINAL = "Original";
 
    public ItemThrowingWeapon(String unlocName, ToolMaterialEx material, float weaponDamageBase, float weaponDamageMultiplier, float weaponSpeed, int maxAmmoCapacity, WeaponProperty... weaponProperties) {
@@ -382,8 +382,8 @@ public class ItemThrowingWeapon extends Item implements IWeaponPropertyContainer
       tooltip.add(TextFormatting.DARK_AQUA + StringHelper.translateFormattedString("throwable.charge_time", "tooltip", "spartanweaponry", TextFormatting.GRAY + StringHelper.translateFormattedString("throwable.charge_time.value", "tooltip", (float)this.getMaxChargeTicks(stack) / 20.0F)));
       if (stack.hasTagCompound()) {
          NBTTagCompound tag = stack.getTagCompound();
-         if (tag.hasUniqueId("UUID") && flagIn == TooltipFlags.ADVANCED) {
-            tooltip.add(TextFormatting.DARK_PURPLE + "UUID: " + TextFormatting.GRAY + "" + tag.getUniqueId("UUID").toString());
+         if (tag.hasUniqueId("EaglercraftUUID") && flagIn == TooltipFlags.ADVANCED) {
+            tooltip.add(TextFormatting.DARK_PURPLE + "EaglercraftUUID: " + TextFormatting.GRAY + "" + tag.getUniqueId("EaglercraftUUID").toString());
          }
       }
 
@@ -492,8 +492,8 @@ public class ItemThrowingWeapon extends Item implements IWeaponPropertyContainer
          tag.setInteger("AmmoUsed", 0);
       }
 
-      if (initUUID && !tag.hasUniqueId("UUID")) {
-         stack.getTagCompound().setUniqueId("UUID", UUID.randomUUID());
+      if (initUUID && !tag.hasUniqueId("EaglercraftUUID")) {
+         stack.getTagCompound().setUniqueId("EaglercraftUUID", EaglercraftUUID.randomUUID());
          stack.getTagCompound().setBoolean("Original", true);
       }
 

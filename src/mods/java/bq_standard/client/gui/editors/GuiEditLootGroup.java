@@ -32,8 +32,8 @@ import java.text.DecimalFormat;
 import java.util.List;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.NBTTagCompound;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class GuiEditLootGroup extends GuiScreenCanvas implements IVolatileScreen {
    private LootGroup selGroup;

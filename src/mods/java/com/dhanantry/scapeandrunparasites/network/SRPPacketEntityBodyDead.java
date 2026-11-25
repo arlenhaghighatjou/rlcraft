@@ -1,7 +1,7 @@
 package com.dhanantry.scapeandrunparasites.network;
 
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityBodyParts;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.FMLCommonHandler;

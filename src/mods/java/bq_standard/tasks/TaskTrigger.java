@@ -21,7 +21,7 @@ import com.google.gson.JsonObject;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,11 +39,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class TaskTrigger implements ITask {
    private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
-   private final Set<UUID> completeUsers = new TreeSet();
+   private final Set<EaglercraftUUID> completeUsers = new TreeSet();
    private String triggerID = "minecraft:impossible";
    private String critJson = "{}";
    private BqsAdvListener listener = null;
@@ -108,7 +108,7 @@ public class TaskTrigger implements ITask {
 
    public void onCriteriaComplete(EntityPlayerMP player, BqsAdvListener advList, int questID) {
       if (advList == this.listener) {
-         UUID playerID = QuestingAPI.getQuestingUUID(player);
+         EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(player);
          this.setComplete(playerID);
          QuestCache qc = (QuestCache)player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, (EnumFacing)null);
          if (qc != null) {
@@ -135,15 +135,15 @@ public class TaskTrigger implements ITask {
    public void detect(ParticipantInfo pInfo, DBEntry<IQuest> quest) {
    }
 
-   public boolean isComplete(UUID uuid) {
+   public boolean isComplete(EaglercraftUUID uuid) {
       return this.completeUsers.contains(uuid);
    }
 
-   public void setComplete(UUID uuid) {
+   public void setComplete(EaglercraftUUID uuid) {
       this.completeUsers.add(uuid);
    }
 
-   public void resetUser(@Nullable UUID uuid) {
+   public void resetUser(@Nullable EaglercraftUUID uuid) {
       if (uuid == null) {
          this.completeUsers.clear();
       } else {
@@ -164,7 +164,7 @@ public class TaskTrigger implements ITask {
       return null;
    }
 
-   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<EaglercraftUUID> users) {
       NBTTagList jArray = new NBTTagList();
       this.completeUsers.forEach((uuid) -> {
          if (users == null || users.contains(uuid)) {
@@ -185,9 +185,9 @@ public class TaskTrigger implements ITask {
 
       for(int i = 0; i < cList.tagCount(); ++i) {
          try {
-            this.completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
+            this.completeUsers.add(EaglercraftUUID.fromString(cList.getStringTagAt(i)));
          } catch (Exception var6) {
-            BQ_Standard.logger.log(Level.ERROR, "Unable to load UUID for task", var6);
+            BQ_Standard.logger.log(Level.ERROR, "Unable to load EaglercraftUUID for task", var6);
          }
       }
 

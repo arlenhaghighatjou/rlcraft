@@ -4,8 +4,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
@@ -101,7 +101,7 @@ public class MultiblockRenderEvent {
    private void renderModel(World world, BlockPos pos, IBlockState state) {
       BlockRendererDispatcher blockRendererDispatcher = Minecraft.getMinecraft().blockRenderDispatcher;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buffer = tessellator.getBuffer();
+      WorldRenderer buffer = tessellator.getBuffer();
       GlStateManager.translate((float)(-pos.getX()), (float)(-pos.getY()), (float)(-pos.getZ()));
       buffer.begin(7, DefaultVertexFormats.BLOCK);
       if (state.getRenderType() == EnumBlockRenderType.LIQUID) {

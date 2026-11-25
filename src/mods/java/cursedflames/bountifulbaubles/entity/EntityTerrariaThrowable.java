@@ -1,7 +1,7 @@
 package cursedflames.bountifulbaubles.entity;
 
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.Block;
@@ -236,7 +236,7 @@ public abstract class EntityTerrariaThrowable extends Entity implements IProject
          this.thrower = this.world.getPlayerEntityByName(this.throwerName);
          if (this.thrower == null && this.world instanceof WorldServer) {
             try {
-               Entity entity = ((WorldServer)this.world).getEntityFromUuid(UUID.fromString(this.throwerName));
+               Entity entity = ((WorldServer)this.world).getEntityFromUuid(EaglercraftUUID.fromString(this.throwerName));
                if (entity instanceof EntityLivingBase) {
                   this.thrower = (EntityLivingBase)entity;
                }

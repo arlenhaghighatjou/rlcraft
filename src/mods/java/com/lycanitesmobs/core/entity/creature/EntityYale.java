@@ -7,7 +7,7 @@ import com.lycanitesmobs.core.entity.goals.actions.EatBlockGoal;
 import com.lycanitesmobs.core.entity.goals.actions.TemptGoal;
 import com.lycanitesmobs.core.info.ItemDrop;
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -127,7 +127,7 @@ public class EntityYale extends AgeableCreatureEntity implements IShearable {
       super.setColor(color);
    }
 
-   public int getRandomFurColor(Random random) {
+   public int getRandomFurColor(EaglercraftRandom random) {
       int i = random.nextInt(100);
       return i < 5 ? 15 : (i < 10 ? 7 : (i < 15 ? 8 : (i < 18 ? 12 : (random.nextInt(500) == 0 ? 6 : 0))));
    }

@@ -10,7 +10,7 @@ import com.charles445.rltweaker.util.ErrorUtil;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
@@ -51,7 +51,7 @@ public class SereneSeasonsHandler {
    public class SereneChunkTick implements HookWorld.IChunkTickPost<SereneSeasonsReflect.SubSeason> {
       IEventListener handler;
       private boolean selfWorking;
-      private int LCG = (new Random()).nextInt();
+      private int LCG = (new EaglercraftRandom()).nextInt();
       private Map<ResourceLocation, Boolean> cachedBiomeSeasonalEffects;
       private Map<ResourceLocation, Boolean> cachedBiomeTropical;
 

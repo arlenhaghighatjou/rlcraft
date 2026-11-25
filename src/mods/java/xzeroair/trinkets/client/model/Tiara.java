@@ -4,8 +4,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.CullFace;
@@ -143,7 +143,7 @@ public class Tiara extends ModelBiped {
                GlStateManager.translate(-0.5F, -0.0F, -0.5F);
                if (!model.isBuiltInRenderer()) {
                   Tessellator tessellator = Tessellator.getInstance();
-                  BufferBuilder bufferbuilder = tessellator.getBuffer();
+                  WorldRenderer bufferbuilder = tessellator.getBuffer();
                   bufferbuilder.begin(7, DefaultVertexFormats.ITEM);
 
                   for(EnumFacing enumfacing : EnumFacing.values()) {

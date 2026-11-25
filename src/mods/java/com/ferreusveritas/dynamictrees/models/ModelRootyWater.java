@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -20,8 +20,8 @@ import net.minecraftforge.fml.common.Loader;
 
 public class ModelRootyWater implements IBakedModel {
    protected IBakedModel rootsModel;
-   protected TextureAtlasSprite stillWaterTexture;
-   protected TextureAtlasSprite flowWaterTexture;
+   protected EaglerTextureAtlasSprite stillWaterTexture;
+   protected EaglerTextureAtlasSprite flowWaterTexture;
 
    public ModelRootyWater(IBakedModel rootsModel) {
       this.rootsModel = rootsModel;
@@ -48,7 +48,7 @@ public class ModelRootyWater implements IBakedModel {
                float y1 = ((Float)extState.getValue(BlockRootyWater.CORNER_HEIGHTS[1])).floatValue() - yOffset;
                float y2 = ((Float)extState.getValue(BlockRootyWater.CORNER_HEIGHTS[2])).floatValue() - yOffset;
                float y3 = ((Float)extState.getValue(BlockRootyWater.CORNER_HEIGHTS[3])).floatValue() - yOffset;
-               TextureAtlasSprite textureatlassprite = this.stillWaterTexture;
+               EaglerTextureAtlasSprite textureatlassprite = this.stillWaterTexture;
                int[] colors = new int[6];
 
                for(EnumFacing facing : EnumFacing.values()) {
@@ -95,7 +95,7 @@ public class ModelRootyWater implements IBakedModel {
       }
    }
 
-   protected int[] vertexToInts(float x, float y, float z, int color, TextureAtlasSprite texture, float u, float v) {
+   protected int[] vertexToInts(float x, float y, float z, int color, EaglerTextureAtlasSprite texture, float u, float v) {
       return new int[]{Float.floatToRawIntBits(x), Float.floatToRawIntBits(y), Float.floatToRawIntBits(z), color, Float.floatToRawIntBits(texture.getInterpolatedU((double)u)), Float.floatToRawIntBits(texture.getInterpolatedV((double)v)), 0};
    }
 
@@ -111,7 +111,7 @@ public class ModelRootyWater implements IBakedModel {
       return true;
    }
 
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       return this.stillWaterTexture;
    }
 

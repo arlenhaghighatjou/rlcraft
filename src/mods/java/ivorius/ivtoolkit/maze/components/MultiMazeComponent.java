@@ -4,7 +4,7 @@ import com.google.common.collect.Multimap;
 import ivorius.ivtoolkit.random.WeightedSelector;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.ToDoubleFunction;
 
@@ -37,7 +37,7 @@ public class MultiMazeComponent<M extends WeightedMazeComponent<C>, C> implement
       return this.weight;
    }
 
-   public PlacedMazeComponent<M, C> place(MazeRoom shift, Random random) {
+   public PlacedMazeComponent<M, C> place(MazeRoom shift, EaglercraftRandom random) {
       return new PlacedMazeComponent<M, C>((WeightedMazeComponent)WeightedSelector.selectItem(random, this.components), shift);
    }
 }

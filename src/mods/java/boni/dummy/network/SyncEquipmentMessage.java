@@ -1,7 +1,7 @@
 package boni.dummy.network;
 
 import boni.dummy.EntityDummy;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

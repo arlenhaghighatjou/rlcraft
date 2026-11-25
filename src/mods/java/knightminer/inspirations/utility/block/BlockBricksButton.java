@@ -3,7 +3,7 @@ package knightminer.inspirations.utility.block;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 import java.util.Locale;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import knightminer.inspirations.library.Util;
 import net.minecraft.block.BlockButton;
@@ -108,10 +108,10 @@ public class BlockBricksButton extends EnumBlock<BlockBricksButton.BrickType> {
       }
    }
 
-   public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom random) {
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!world.isRemote) {
          if (((Boolean)state.getValue(POWERED)).booleanValue()) {
             world.setBlockState(pos, state.withProperty(POWERED, Boolean.valueOf(false)));

@@ -1,6 +1,6 @@
 package me.ichun.mods.ichunutil.client.render.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -64,7 +64,7 @@ public class RenderGlobalProxy extends RenderGlobal {
    }
 
    public void playEvent(EntityPlayer player, int type, BlockPos blockPosIn, int data) {
-      Random random = this.world.rand;
+      EaglercraftRandom random = this.world.rand;
       switch(type) {
       case 2000:
          int i1 = data % 3 - 1;

@@ -3,7 +3,7 @@ package com.github.fnar.minecraft.item;
 import com.github.fnar.util.Color;
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Potion implements RldItem {
    private Potion.Effect effect;
@@ -119,7 +119,7 @@ public class Potion implements RldItem {
          return this.level;
       }
 
-      public static Potion.Amplification chooseRandom(Random random) {
+      public static Potion.Amplification chooseRandom(EaglercraftRandom random) {
          return values()[random.nextInt(values().length)];
       }
    }
@@ -155,11 +155,11 @@ public class Potion implements RldItem {
       private Effect() {
       }
 
-      public static Potion.Effect chooseRandom(Random random) {
+      public static Potion.Effect chooseRandom(EaglercraftRandom random) {
          return chooseRandomAmong(random, values());
       }
 
-      public static Potion.Effect chooseRandomAmong(Random random, Potion.Effect[] effects) {
+      public static Potion.Effect chooseRandomAmong(EaglercraftRandom random, Potion.Effect[] effects) {
          return effects[random.nextInt(effects.length)];
       }
 
@@ -176,7 +176,7 @@ public class Potion implements RldItem {
       private Form() {
       }
 
-      public static Potion.Form chooseRandom(Random rand) {
+      public static Potion.Form chooseRandom(EaglercraftRandom rand) {
          return values()[rand.nextInt(values().length)];
       }
    }

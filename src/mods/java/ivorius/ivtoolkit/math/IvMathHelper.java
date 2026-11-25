@@ -1,6 +1,6 @@
 package ivorius.ivtoolkit.math;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.MathHelper;
 
 public class IvMathHelper {
@@ -89,7 +89,7 @@ public class IvMathHelper {
       return value;
    }
 
-   public static int randomLinearNumber(Random random, float number) {
+   public static int randomLinearNumber(EaglercraftRandom random, float number) {
       return MathHelper.floor(number) + (random.nextFloat() < number % 1.0F ? 1 : 0);
    }
 

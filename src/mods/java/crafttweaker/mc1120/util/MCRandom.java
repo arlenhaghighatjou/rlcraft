@@ -1,13 +1,13 @@
 package crafttweaker.mc1120.util;
 
 import crafttweaker.api.util.IRandom;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.MathHelper;
 
 public class MCRandom implements IRandom {
-   private final Random random;
+   private final EaglercraftRandom random;
 
-   public MCRandom(Random random) {
+   public MCRandom(EaglercraftRandom random) {
       this.random = random;
    }
 

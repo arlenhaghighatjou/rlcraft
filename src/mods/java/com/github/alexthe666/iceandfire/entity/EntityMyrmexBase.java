@@ -10,8 +10,8 @@ import com.github.alexthe666.iceandfire.entity.ai.PathNavigateMyrmex;
 import com.github.alexthe666.iceandfire.structures.WorldGenMyrmexHive;
 import com.github.alexthe666.iceandfire.world.MyrmexWorldData;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
@@ -89,7 +89,7 @@ public abstract class EntityMyrmexBase extends EntityAnimal implements IAnimated
    private EntityPlayer buyingPlayer;
    @Nullable
    private MerchantRecipeList buyingList;
-   private UUID lastBuyingPlayer;
+   private EaglercraftUUID lastBuyingPlayer;
    private int careerId;
    private int careerLevel;
    private boolean needsInitilization;
@@ -526,7 +526,7 @@ public abstract class EntityMyrmexBase extends EntityAnimal implements IAnimated
    }
 
    public void onStaffInteract(EntityPlayer player, ItemStack itemstack) {
-      UUID staffUUID = itemstack.getTagCompound().getUniqueId("HiveUUID");
+      EaglercraftUUID staffUUID = itemstack.getTagCompound().getUniqueId("HiveUUID");
       if (!this.world.isRemote) {
          if (player.isCreative() || this.getHive() == null || this.getHive().canPlayerCommandHive(player.getUniqueID())) {
             if (this.getHive() == null) {
@@ -742,7 +742,7 @@ public abstract class EntityMyrmexBase extends EntityAnimal implements IAnimated
       return this.width;
    }
 
-   public static int getRandomCaste(World world, Random random, boolean royal) {
+   public static int getRandomCaste(World world, EaglercraftRandom random, boolean royal) {
       float rand = random.nextFloat();
       if (royal) {
          if ((double)rand > 0.9D) {
@@ -772,7 +772,7 @@ public abstract class EntityMyrmexBase extends EntityAnimal implements IAnimated
          this.secondPrice = secondPrice;
       }
 
-      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
          int i = this.firstPrice.getPrice(random);
          int j = this.secondPrice.getPrice(random);
          recipeList.add(new MerchantRecipe(new ItemStack(this.first.getItem(), i, this.first.getItemDamage()), new ItemStack(this.second.getItem(), j, this.second.getItemDamage())));

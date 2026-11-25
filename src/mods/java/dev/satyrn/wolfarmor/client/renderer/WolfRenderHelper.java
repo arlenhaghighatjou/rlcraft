@@ -8,8 +8,8 @@ import dev.satyrn.wolfarmor.util.WolfFoodStatsLevel;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -63,7 +63,7 @@ public class WolfRenderHelper {
    private static void drawIcon(int x, int y, int texX, int texY) {
       float pixelScale = 0.00390625F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder builder = tessellator.getBuffer();
+      WorldRenderer builder = tessellator.getBuffer();
       builder.begin(7, DefaultVertexFormats.POSITION_TEX);
       builder.pos((double)x, (double)(y + 9), 0.0D).tex((double)((float)texX * 0.00390625F), (double)((float)(texY + 9) * 0.00390625F)).endVertex();
       builder.pos((double)(x + 9), (double)(y + 9), 0.0D).tex((double)((float)(texX + 9) * 0.00390625F), (double)((float)(texY + 9) * 0.00390625F)).endVertex();
@@ -75,7 +75,7 @@ public class WolfRenderHelper {
    private static void drawReversedIcon(int x, int y, int texX, int texY) {
       float pixelScale = 0.00390625F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder builder = tessellator.getBuffer();
+      WorldRenderer builder = tessellator.getBuffer();
       builder.begin(7, DefaultVertexFormats.POSITION_TEX);
       builder.pos((double)x, (double)(y + 9), 0.0D).tex((double)((float)(texX + 9) * pixelScale), (double)((float)(texY + 9) * pixelScale)).endVertex();
       builder.pos((double)(x + 9), (double)(y + 9), 0.0D).tex((double)((float)texX * pixelScale), (double)((float)(texY + 9) * pixelScale)).endVertex();

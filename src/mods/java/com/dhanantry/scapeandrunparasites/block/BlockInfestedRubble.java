@@ -9,7 +9,7 @@ import com.dhanantry.scapeandrunparasites.util.ParasiteEventWorld;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigSystems;
 import com.dhanantry.scapeandrunparasites.world.SRPWorldData;
 import com.dhanantry.scapeandrunparasites.world.biome.BiomeParasite;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
@@ -47,7 +47,7 @@ public class BlockInfestedRubble extends BlockBase {
       }
    }
 
-   public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void randomTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (worldIn.isAreaLoaded(pos, 3)) {
          if (rand.nextDouble() < 0.5D) {
             if (worldIn.getBiome(pos) instanceof BiomeParasite) {
@@ -69,7 +69,7 @@ public class BlockInfestedRubble extends BlockBase {
       }
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (worldIn.isAreaLoaded(pos, 3)) {
          if (!worldIn.isRemote) {
             ParasiteEventWorld.canInfestBlock(worldIn, pos, rand, this.getMetaFromState(state), true);
@@ -95,7 +95,7 @@ public class BlockInfestedRubble extends BlockBase {
                   }
                }
 
-               Random rand = new Random();
+               EaglercraftRandom rand = new EaglercraftRandom();
                if (rand.nextInt(4) == 0) {
                   ParasiteEventEntity.spawnTurrets((EntityLivingBase)entityIn, 4, (byte)2, meta);
                } else {
@@ -125,8 +125,8 @@ public class BlockInfestedRubble extends BlockBase {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-      rand = new Random();
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
+      rand = new EaglercraftRandom();
       if (worldIn.getBlockState(pos.up()).getBlock() == Blocks.AIR || worldIn.getBlockState(pos.up()).getBlock() == SRPBlocks.ParasiteBush) {
          int stage = this.getMetaFromState(stateIn);
          if (stage == 2) {

@@ -3,7 +3,7 @@ package com.github.alexthe666.iceandfire.world.village;
 import com.github.alexthe666.iceandfire.IceAndFire;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -39,7 +39,7 @@ public class MapGenPixieVillage extends WorldGenerator {
 
    }
 
-   public boolean generate(World world, Random rand, BlockPos position) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos position) {
       this.distance = 9;
       boolean canSpawn = this.canSpawnStructureAtCoords(world, position.getX() >> 4, position.getZ() >> 4);
       int new_size = 32;
@@ -64,7 +64,7 @@ public class MapGenPixieVillage extends WorldGenerator {
 
       int k = chunkX / this.distance;
       int l = chunkZ / this.distance;
-      Random random = world.setRandomSeed(k, l, 10387312);
+      EaglercraftRandom random = world.setRandomSeed(k, l, 10387312);
       k = k * this.distance;
       l = l * this.distance;
       k = k + random.nextInt(this.distance - 8);
@@ -72,7 +72,7 @@ public class MapGenPixieVillage extends WorldGenerator {
       return i == k && j == l;
    }
 
-   protected StructureStart getStructureStart(World world, int chunkX, int chunkZ, Random random) {
+   protected StructureStart getStructureStart(World world, int chunkX, int chunkZ, EaglercraftRandom random) {
       return new MapGenPixieVillage.Start(world, random, chunkX, chunkZ, this.size);
    }
 
@@ -82,7 +82,7 @@ public class MapGenPixieVillage extends WorldGenerator {
       public Start() {
       }
 
-      public Start(World worldIn, Random rand, int x, int z, int size) {
+      public Start(World worldIn, EaglercraftRandom rand, int x, int z, int size) {
          super(x, z);
          List<PixieVillagePieces.PieceWeight> list = PixieVillagePieces.getStructureVillageWeightedPieceList(rand, size);
          PixieVillagePieces.Start structurevillagepieces$start = new PixieVillagePieces.Start(worldIn.getBiomeProvider(), 0, rand, (x << 4) + 2, (z << 4) + 2, list, size);

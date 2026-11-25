@@ -1,6 +1,6 @@
 package reborncore.common.util;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 
 public class OreDrop {
@@ -31,7 +31,7 @@ public class OreDrop {
       this.maxQuantity = maxQuantity;
    }
 
-   public ItemStack getDrops(int fortuneLevel, Random random) {
+   public ItemStack getDrops(int fortuneLevel, EaglercraftRandom random) {
       int count;
       if (this.baseChance.intValue() == 100) {
          count = this.calculateFortuneMulti(fortuneLevel, random);
@@ -44,19 +44,19 @@ public class OreDrop {
       return new ItemStack(this.drop.getItem(), count, this.drop.getItemDamage());
    }
 
-   private int calculateFortuneMulti(int fortune, Random random) {
+   private int calculateFortuneMulti(int fortune, EaglercraftRandom random) {
       int chanceOfEachBonus = 100 / (fortune + 2);
       int roll = random.nextInt(100);
       return roll < chanceOfEachBonus * fortune ? this.calculateBaseQuantity(random) * (roll / chanceOfEachBonus + 2) : this.calculateBaseQuantity(random);
    }
 
-   private boolean calculateFortuneSingle(int fortune, Random random) {
+   private boolean calculateFortuneSingle(int fortune, EaglercraftRandom random) {
       double total = (double)(this.baseChance.intValue() + fortune * this.baseChance.intValue() / 2);
       int roll = random.nextInt(100);
       return (double)roll <= total;
    }
 
-   private int calculateBaseQuantity(Random random) {
+   private int calculateBaseQuantity(EaglercraftRandom random) {
       return this.minQuantity.intValue() + random.nextInt(this.maxQuantity - this.minQuantity.intValue() + 1);
    }
 }

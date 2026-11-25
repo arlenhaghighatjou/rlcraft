@@ -24,7 +24,7 @@ import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class FireworkRoom extends BaseRoom {
    public FireworkRoom(RoomSetting roomSetting, LevelSettings levelSettings, WorldEditor worldEditor) {
@@ -153,7 +153,7 @@ public class FireworkRoom extends BaseRoom {
       BlockType.DROPPER.getBrush().setFacing(Direction.UP).stroke(editor, cursor);
 
       for(int i = 0; i < 8; ++i) {
-         RldItemStack stick = Material.Type.STICK.asItem().asStack().withDisplayName(Integer.toString(i)).withDisplayLore(TextFormat.DARKGRAY.apply("Random logic unit"));
+         RldItemStack stick = Material.Type.STICK.asItem().asStack().withDisplayName(Integer.toString(i)).withDisplayLore(TextFormat.DARKGRAY.apply("EaglercraftRandom logic unit"));
          editor.setItem(cursor, i, stick);
       }
 
@@ -232,7 +232,7 @@ public class FireworkRoom extends BaseRoom {
       }
    }
 
-   private RldItemStack createFireworks(Random random) {
+   private RldItemStack createFireworks(EaglercraftRandom random) {
       int stackSize = 16 + random.nextInt(16);
       return (new Firework()).withExplosion((new Firework.Explosion()).withFlicker(random.nextBoolean()).withTrail(random.nextBoolean()).withColors(Firework.randomColors(random))).withFlightLength(Firework.FlightLength.chooseRandom(random)).asStack().withCount(stackSize);
    }

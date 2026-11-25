@@ -1,6 +1,6 @@
 package net.silentchaos512.scalinghealth.utils;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 
 /** @deprecated */
@@ -16,7 +16,7 @@ public class StackProducer {
       this.stack = stack;
    }
 
-   public ItemStack get(Random rand) {
+   public ItemStack get(EaglercraftRandom rand) {
       return this.stack;
    }
 }

@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import javax.annotation.Nonnull;
@@ -347,7 +347,7 @@ public final class Loot {
    }
 
    @Nonnull
-   public static final List<Integer> getEmptySlotsRandomized(IItemHandler inventory, Random rand) {
+   public static final List<Integer> getEmptySlotsRandomized(IItemHandler inventory, EaglercraftRandom rand) {
       List<Integer> list = new ArrayList();
       int i = 0;
 
@@ -384,7 +384,7 @@ public final class Loot {
       return ItemStackArray.create(slotCount);
    }
 
-   public static final List<Integer> getEmptySlots(IInventory inventory, Random rand) {
+   public static final List<Integer> getEmptySlots(IInventory inventory, EaglercraftRandom rand) {
       ArrayList<Integer> empty_slots = new ArrayList();
 
       for(int i = 0; i < inventory.getSizeInventory(); ++i) {
@@ -428,7 +428,7 @@ public final class Loot {
          super(conditions);
       }
 
-      public ItemStack apply(ItemStack stack, Random rand, LootContext context) {
+      public ItemStack apply(ItemStack stack, EaglercraftRandom rand, LootContext context) {
          if (!stack.isEmpty()) {
             Entity e = context.getKillerPlayer();
             EntityPlayer player;
@@ -463,7 +463,7 @@ public final class Loot {
          super(conditions);
       }
 
-      public ItemStack apply(ItemStack stack, Random rand, LootContext context) {
+      public ItemStack apply(ItemStack stack, EaglercraftRandom rand, LootContext context) {
          if (!stack.isEmpty() && stack.getItem() instanceof ILootedListener) {
             Entity e = context.getKillerPlayer();
             EntityPlayer player;

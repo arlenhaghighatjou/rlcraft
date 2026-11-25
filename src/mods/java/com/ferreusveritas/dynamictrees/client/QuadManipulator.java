@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumUsage;
 import net.minecraft.util.EnumFacing;
@@ -136,17 +136,17 @@ public class QuadManipulator {
       return (ModelResourceLocation)getModelManager().getBlockModelShapes().getBlockStateMapper().getVariants(state.getBlock()).get(state);
    }
 
-   public static ResourceLocation getModelTexture(IModel model, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, IBlockState state, EnumFacing dir) {
+   public static ResourceLocation getModelTexture(IModel model, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter, IBlockState state, EnumFacing dir) {
       float[] uvs = getSpriteUVFromBlockState(state, dir);
       if (uvs == null) {
          return null;
       } else {
-         List<TextureAtlasSprite> sprites = new ArrayList();
+         List<EaglerTextureAtlasSprite> sprites = new ArrayList();
          float closest = Float.POSITIVE_INFINITY;
          ResourceLocation closestTex = new ResourceLocation("missingno");
          if (model != null) {
             for(ResourceLocation tex : model.getTextures()) {
-               TextureAtlasSprite tas = (TextureAtlasSprite)bakedTextureGetter.apply(tex);
+               EaglerTextureAtlasSprite tas = (EaglerTextureAtlasSprite)bakedTextureGetter.apply(tex);
                float u = tas.getInterpolatedU(8.0D);
                float v = tas.getInterpolatedV(8.0D);
                sprites.add(tas);

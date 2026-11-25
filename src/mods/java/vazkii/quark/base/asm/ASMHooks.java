@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiBeacon;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.entity.Render;
@@ -161,7 +161,7 @@ public final class ASMHooks {
    }
 
    @SideOnly(Side.CLIENT)
-   public static void putColorsFlat(IBlockAccess world, IBlockState state, BlockPos pos, BufferBuilder buffer, BakedQuad quad, int brightness) {
+   public static void putColorsFlat(IBlockAccess world, IBlockState state, BlockPos pos, WorldRenderer buffer, BakedQuad quad, int brightness) {
       ColoredLights.putColorsFlat(world, state, pos, buffer, quad, brightness);
    }
 

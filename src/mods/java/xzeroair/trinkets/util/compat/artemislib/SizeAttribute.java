@@ -1,7 +1,7 @@
 package xzeroair.trinkets.util.compat.artemislib;
 
 import com.artemis.artemislib.util.attributes.ArtemisLibAttributes;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
@@ -12,8 +12,8 @@ import xzeroair.trinkets.util.TrinketsConfig;
 public class SizeAttribute {
    private final String id = "xat.";
    private String name;
-   protected final UUID uuid = UUID.fromString("02a31a03-4d5b-46ed-947b-322c4f004a75");
-   protected final UUID uuidW = UUID.fromString("4ff77810-5a91-44ce-8e93-fc05a8d00def");
+   protected final EaglercraftUUID uuid = EaglercraftUUID.fromString("02a31a03-4d5b-46ed-947b-322c4f004a75");
+   protected final EaglercraftUUID uuidW = EaglercraftUUID.fromString("4ff77810-5a91-44ce-8e93-fc05a8d00def");
    private int operation;
    private EntityLivingBase entity;
    private double height;

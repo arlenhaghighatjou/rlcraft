@@ -7,8 +7,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFlame;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -158,7 +158,7 @@ public class FBPParticleFlame extends ParticleFlame {
       this.posZ = (axisalignedbb.minZ + axisalignedbb.maxZ) / 2.0D;
    }
 
-   public void renderParticle(BufferBuilder buf, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+   public void renderParticle(WorldRenderer buf, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
       if (!FBP.isEnabled() && this.particleMaxAge != 0) {
          this.particleMaxAge = 0;
       }
@@ -188,7 +188,7 @@ public class FBPParticleFlame extends ParticleFlame {
       buf.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
    }
 
-   public void putCube(BufferBuilder worldRendererIn, double scale, int j, int k, float r, float g, float b, float a) {
+   public void putCube(WorldRenderer worldRendererIn, double scale, int j, int k, float r, float g, float b, float a) {
       float brightnessForRender = 1.0F;
       float R = 0.0F;
       float G = 0.0F;
@@ -211,7 +211,7 @@ public class FBPParticleFlame extends ParticleFlame {
 
    }
 
-   private void addVt(BufferBuilder worldRendererIn, double scale, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a) {
+   private void addVt(WorldRenderer worldRendererIn, double scale, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a) {
       worldRendererIn.pos(pos.x * scale, pos.y * scale, pos.z * scale).tex(u, v).color(r, g, b, a).lightmap(j, k).endVertex();
    }
 

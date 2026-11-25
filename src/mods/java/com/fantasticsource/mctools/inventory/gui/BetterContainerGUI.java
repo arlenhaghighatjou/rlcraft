@@ -6,12 +6,12 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiLabel;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
@@ -26,7 +26,7 @@ import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Pre;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
 @SideOnly(Side.CLIENT)
 public class BetterContainerGUI extends GuiContainer {
@@ -399,7 +399,7 @@ public class BetterContainerGUI extends GuiContainer {
                int v = betterSlot.v;
                this.mc.getTextureManager().bindTexture(betterSlot.texture);
                Tessellator tessellator = Tessellator.getInstance();
-               BufferBuilder bufferbuilder = tessellator.getBuffer();
+               WorldRenderer bufferbuilder = tessellator.getBuffer();
                bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
                bufferbuilder.pos((double)x, (double)(y + 16), (double)this.zLevel).tex((double)u * betterSlot.uPixel, (double)(v + 16) * betterSlot.vPixel).endVertex();
                bufferbuilder.pos((double)(x + 16), (double)(y + 16), (double)this.zLevel).tex((double)(u + 16) * betterSlot.uPixel, (double)(v + 16) * betterSlot.vPixel).endVertex();
@@ -407,7 +407,7 @@ public class BetterContainerGUI extends GuiContainer {
                bufferbuilder.pos((double)x, (double)y, (double)this.zLevel).tex((double)u * betterSlot.uPixel, (double)v * betterSlot.vPixel).endVertex();
                tessellator.draw();
             } else {
-               TextureAtlasSprite textureatlassprite = slot.getBackgroundSprite();
+               EaglerTextureAtlasSprite textureatlassprite = slot.getBackgroundSprite();
                if (textureatlassprite != null) {
                   this.mc.getTextureManager().bindTexture(slot.getBackgroundLocation());
                   this.drawTexturedModalRect(x, y, textureatlassprite, 16, 16);

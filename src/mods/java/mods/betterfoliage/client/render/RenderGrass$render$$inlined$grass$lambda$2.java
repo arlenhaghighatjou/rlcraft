@@ -13,7 +13,7 @@ import mods.octarinecore.client.render.ShadingContext;
 import mods.octarinecore.client.render.Vertex;
 import mods.octarinecore.client.resource.IconHolder;
 import mods.octarinecore.client.resource.IconSet;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import org.jetbrains.annotations.NotNull;
 
 @Metadata(
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
    d2 = {"<anonymous>", "", "Lmods/octarinecore/client/render/RenderVertex;", "<anonymous parameter 0>", "Lmods/octarinecore/client/render/ShadingContext;", "<anonymous parameter 1>", "", "<anonymous parameter 2>", "Lmods/octarinecore/client/render/Quad;", "<anonymous parameter 3>", "<anonymous parameter 4>", "Lmods/octarinecore/client/render/Vertex;", "invoke", "mods/betterfoliage/client/render/RenderGrass$render$2$2"}
 )
 final class RenderGrass$render$$inlined$grass$lambda$2 extends Lambda implements Function6<RenderVertex, ShadingContext, Integer, Quad, Integer, Vertex, Unit> {
-   RenderGrass$render$$inlined$grass$lambda$2(RenderGrass var1, BufferBuilder var2, Integer[] var3, BlockContext var4, boolean var5, IconHolder var6, IconSet var7, GrassInfo var8, int var9) {
+   RenderGrass$render$$inlined$grass$lambda$2(RenderGrass var1, WorldRenderer var2, Integer[] var3, BlockContext var4, boolean var5, IconHolder var6, IconSet var7, GrassInfo var8, int var9) {
       super(6);
       this.this$0 = var1;
       this.$renderer$inlined = var2;

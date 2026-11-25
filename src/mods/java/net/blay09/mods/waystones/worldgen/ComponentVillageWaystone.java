@@ -2,7 +2,7 @@ package net.blay09.mods.waystones.worldgen;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import net.blay09.mods.waystones.Waystones;
@@ -34,7 +34,7 @@ public class ComponentVillageWaystone extends Village {
       this.setCoordBaseMode(facing);
    }
 
-   public boolean addComponentParts(World world, Random random, StructureBoundingBox boundingBox) {
+   public boolean addComponentParts(World world, EaglercraftRandom random, StructureBoundingBox boundingBox) {
       if (this.averageGroundLvl < 0) {
          this.averageGroundLvl = this.getAverageGroundLevel(world, boundingBox);
          if (this.averageGroundLvl < 0) {
@@ -62,7 +62,7 @@ public class ComponentVillageWaystone extends Village {
    }
 
    @Nullable
-   public static Village buildComponent(PieceWeight villagePiece, Start startPiece, List<StructureComponent> pieces, Random random, int x, int y, int z, EnumFacing facing, int type) {
+   public static Village buildComponent(PieceWeight villagePiece, Start startPiece, List<StructureComponent> pieces, EaglercraftRandom random, int x, int y, int z, EnumFacing facing, int type) {
       StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(x, y, z, 0, 0, 0, 7, 6, 7, facing);
       return canVillageGoDeeper(boundingBox) && findIntersecting(pieces, boundingBox) == null ? new ComponentVillageWaystone(startPiece, type, boundingBox, facing) : null;
    }

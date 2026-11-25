@@ -2,8 +2,8 @@ package codersafterdark.reskillable.network;
 
 import codersafterdark.reskillable.api.requirement.Requirement;
 import codersafterdark.reskillable.api.requirement.RequirementCache;
-import io.netty.buffer.ByteBuf;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.concurrent.Callable;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -14,18 +14,18 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class InvalidateRequirementPacket implements IMessage, IMessageHandler<InvalidateRequirementPacket, IMessage> {
    private Class<? extends Requirement>[] cacheTypes;
-   private UUID uuid;
+   private EaglercraftUUID uuid;
 
    public InvalidateRequirementPacket() {
    }
 
-   public InvalidateRequirementPacket(UUID uuid, Class<? extends Requirement>... cacheTypes) {
+   public InvalidateRequirementPacket(EaglercraftUUID uuid, Class<? extends Requirement>... cacheTypes) {
       this.uuid = uuid;
       this.cacheTypes = cacheTypes;
    }
 
    public void fromBytes(ByteBuf buf) {
-      this.uuid = new UUID(buf.readLong(), buf.readLong());
+      this.uuid = new EaglercraftUUID(buf.readLong(), buf.readLong());
       this.cacheTypes = new Class[buf.readInt()];
 
       for(int i = 0; i < this.cacheTypes.length; ++i) {

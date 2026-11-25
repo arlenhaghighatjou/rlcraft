@@ -7,7 +7,7 @@ import goblinbob.mobends.core.util.Color;
 import goblinbob.mobends.core.util.MeshBuilder;
 import goblinbob.mobends.standard.data.WolfData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;

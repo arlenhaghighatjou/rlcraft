@@ -5,7 +5,7 @@ import com.ferreusveritas.dynamictrees.blocks.BlockBranch;
 import com.ferreusveritas.dynamictrees.systems.dropcreators.DropCreator;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,15 +24,15 @@ public class DropCreatorFruit extends DropCreator {
       this.chance = chance;
    }
 
-   public List<ItemStack> getLeavesDrop(IBlockAccess access, Species species, BlockPos breakPos, Random random, List<ItemStack> dropList, int fortune) {
+   public List<ItemStack> getLeavesDrop(IBlockAccess access, Species species, BlockPos breakPos, EaglercraftRandom random, List<ItemStack> dropList, int fortune) {
       return this.getLeafDrops(access, species, breakPos, random, dropList, fortune);
    }
 
-   public List<ItemStack> getHarvestDrop(World world, Species species, BlockPos leafPos, Random random, List<ItemStack> dropList, int soilLife, int fortune) {
+   public List<ItemStack> getHarvestDrop(World world, Species species, BlockPos leafPos, EaglercraftRandom random, List<ItemStack> dropList, int soilLife, int fortune) {
       return this.getLeafDrops(world, species, leafPos, random, dropList, fortune);
    }
 
-   public List<ItemStack> getVoluntaryDrop(World world, Species species, BlockPos rootPos, Random random, List<ItemStack> dropList, int soilLife) {
+   public List<ItemStack> getVoluntaryDrop(World world, Species species, BlockPos rootPos, EaglercraftRandom random, List<ItemStack> dropList, int soilLife) {
       BlockPos treePos = rootPos.up();
       IBlockState trunk = world.getBlockState(treePos);
       BlockBranch branch = TreeHelper.getBranch(trunk);
@@ -43,7 +43,7 @@ public class DropCreatorFruit extends DropCreator {
       return dropList;
    }
 
-   protected List<ItemStack> getLeafDrops(IBlockAccess access, Species species, BlockPos leafPos, Random random, List<ItemStack> dropList, int fortune) {
+   protected List<ItemStack> getLeafDrops(IBlockAccess access, Species species, BlockPos leafPos, EaglercraftRandom random, List<ItemStack> dropList, int fortune) {
       int chance = this.chance;
       if (fortune > 0) {
          chance -= fortune;

@@ -1,7 +1,7 @@
 package com.fantasticsource.tools.component;
 
 import com.fantasticsource.tools.datastructures.VectorN;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.io.InputStream;
 import java.io.OutputStream;
 

@@ -2,8 +2,8 @@ package vazkii.quark.client.feature;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -56,7 +56,7 @@ public class MapTooltip extends Feature {
          RenderHelper.disableStandardItemLighting();
          mc.getTextureManager().bindTexture(RES_MAP_BACKGROUND);
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder buffer = tessellator.getBuffer();
+         WorldRenderer buffer = tessellator.getBuffer();
          int pad = 7;
          float size = 135.0F;
          float scale = 0.5F;

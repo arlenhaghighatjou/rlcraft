@@ -1,6 +1,6 @@
 package org.jwaresoftware.mcmods.lib;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.item.ItemStack;
 
@@ -32,7 +32,7 @@ public final class SkinsHelper {
       return skin;
    }
 
-   public static final void initSkinUnbounded(ItemStack stack, @Nonnull Random rand, int[] skins, int default_skin) {
+   public static final void initSkinUnbounded(ItemStack stack, @Nonnull EaglercraftRandom rand, int[] skins, int default_skin) {
       int f = skins.length > 0 ? skins[rand.nextInt(skins.length)] : default_skin;
       if (f != default_skin) {
          ItemStacks.getTagCompoundNonNull(stack).setInteger(NBT_TAGNAME, f);
@@ -40,7 +40,7 @@ public final class SkinsHelper {
 
    }
 
-   public static final void initSkin(ItemStack stack, @Nonnull Random rand, int num_skins, int default_skin) {
+   public static final void initSkin(ItemStack stack, @Nonnull EaglercraftRandom rand, int num_skins, int default_skin) {
       int f = rand.nextInt(num_skins);
       if (f != default_skin) {
          ItemStacks.getTagCompoundNonNull(stack).setInteger(NBT_TAGNAME, f);
@@ -48,7 +48,7 @@ public final class SkinsHelper {
 
    }
 
-   public static final void initSkinConditionally(ItemStack stack, @Nonnull Random rand, int[] skins, int default_skin) {
+   public static final void initSkinConditionally(ItemStack stack, @Nonnull EaglercraftRandom rand, int[] skins, int default_skin) {
       int f = getSkinUnbounded(stack, default_skin);
       if (f == default_skin) {
          initSkinUnbounded(stack, rand, skins, default_skin);
@@ -56,7 +56,7 @@ public final class SkinsHelper {
 
    }
 
-   public static final void initSkinConditionally(ItemStack stack, @Nonnull Random rand, int num_skins, int default_skin) {
+   public static final void initSkinConditionally(ItemStack stack, @Nonnull EaglercraftRandom rand, int num_skins, int default_skin) {
       int f = getSkin(stack, num_skins, default_skin);
       if (f == default_skin) {
          initSkin(stack, rand, num_skins, default_skin);

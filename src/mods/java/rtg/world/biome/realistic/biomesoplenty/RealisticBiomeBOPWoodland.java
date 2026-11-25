@@ -1,7 +1,7 @@
 package rtg.world.biome.realistic.biomesoplenty;
 
 import biomesoplenty.api.biome.BOPBiomes;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower.EnumFlowerType;
 import net.minecraft.block.BlockPlanks.EnumType;
@@ -123,7 +123,7 @@ public class RealisticBiomeBOPWoodland extends RealisticBiomeBOPBase {
       }
 
       public void paintTerrain(ChunkPrimer primer, int i, int j, int x, int z, int depth, RTGWorld rtgWorld, float[] noise, float river, Biome[] base) {
-         Random rand = rtgWorld.rand();
+         EaglercraftRandom rand = rtgWorld.rand();
          float c = TerrainBase.calcCliff(x, z, noise);
          boolean cliff = c > 1.4F;
 

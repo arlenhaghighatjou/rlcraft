@@ -1,6 +1,6 @@
 package vazkii.quark.world.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -34,7 +34,7 @@ public class BlockGlowshroom extends BlockQuarkBush implements IGrowable {
       return state.getBlock() == UndergroundBiomes.glowcelium;
    }
 
-   public void updateTick(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, Random rand) {
+   public void updateTick(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, EaglercraftRandom rand) {
       if (rand.nextInt(UndergroundBiomes.glowshroomGrowthRate) == 0) {
          int i = 5;
 
@@ -65,7 +65,7 @@ public class BlockGlowshroom extends BlockQuarkBush implements IGrowable {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       super.randomDisplayTick(stateIn, worldIn, pos, rand);
       if (rand.nextInt(20) == 0) {
          worldIn.spawnParticle(EnumParticleTypes.END_ROD, (double)pos.getX() + 0.2D + (double)rand.nextFloat() * 0.6D, (double)((float)pos.getY() + 0.3F), (double)pos.getZ() + 0.2D + (double)rand.nextFloat() * 0.6D, 0.0D, 0.0D, 0.0D, new int[0]);
@@ -77,11 +77,11 @@ public class BlockGlowshroom extends BlockQuarkBush implements IGrowable {
       return UndergroundBiomes.bigGlowshroomsEnabled;
    }
 
-   public boolean canUseBonemeal(@Nonnull World worldIn, @Nonnull Random rand, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
+   public boolean canUseBonemeal(@Nonnull World worldIn, @Nonnull EaglercraftRandom rand, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
       return UndergroundBiomes.bigGlowshroomsEnabled && (double)rand.nextFloat() < 0.4D;
    }
 
-   public void grow(@Nonnull World worldIn, @Nonnull Random rand, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
+   public void grow(@Nonnull World worldIn, @Nonnull EaglercraftRandom rand, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
       if (UndergroundBiomes.bigGlowshroomsEnabled) {
          worldIn.setBlockToAir(pos);
          if (!BlockHugeGlowshroom.setInPosition(worldIn, rand, pos, true)) {

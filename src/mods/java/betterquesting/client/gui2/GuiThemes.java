@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class GuiThemes extends GuiScreenCanvas {
    private PanelVScrollBar scrollPanel;

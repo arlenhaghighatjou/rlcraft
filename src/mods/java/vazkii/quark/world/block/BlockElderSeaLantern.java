@@ -1,6 +1,6 @@
 package vazkii.quark.world.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -24,16 +24,16 @@ public class BlockElderSeaLantern extends BlockMod implements IQuarkBlock {
       this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 2 + random.nextInt(2);
    }
 
-   public int quantityDroppedWithBonus(int fortune, @Nonnull Random random) {
+   public int quantityDroppedWithBonus(int fortune, @Nonnull EaglercraftRandom random) {
       return MathHelper.clamp(this.quantityDropped(random) + random.nextInt(fortune + 1), 1, 5);
    }
 
    @Nonnull
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Items.PRISMARINE_CRYSTALS;
    }
 

@@ -3,7 +3,7 @@ package me.ichun.mods.ichunutil.client.render;
 import java.awt.Color;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import me.ichun.mods.ichunutil.client.render.world.RenderGlobalProxy;
 import me.ichun.mods.ichunutil.common.iChunUtil;
 import me.ichun.mods.ichunutil.common.core.util.ResourceHelper;
@@ -12,9 +12,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -40,7 +40,7 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class RendererHelper {
    private static boolean canUseStencils;
-   private static Random lightningRand;
+   private static EaglercraftRandom lightningRand;
    public static HashSet<Framebuffer> frameBuffers = new HashSet();
    public static HashSet<RenderGlobalProxy> renderGlobalProxies = new HashSet();
 
@@ -53,7 +53,7 @@ public class RendererHelper {
          canUseStencils = Minecraft.getMinecraft().getFramebuffer().enableStencil();
       }
 
-      lightningRand = new Random();
+      lightningRand = new EaglercraftRandom();
    }
 
    public static boolean canUseStencils() {
@@ -170,7 +170,7 @@ public class RendererHelper {
 
    private static void renderModel(IBakedModel model, int color, ItemStack stack) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.ITEM);
 
       for(EnumFacing enumfacing : EnumFacing.values()) {
@@ -181,7 +181,7 @@ public class RendererHelper {
       tessellator.draw();
    }
 
-   private static void renderQuads(BufferBuilder renderer, List<BakedQuad> quads, int color, ItemStack stack) {
+   private static void renderQuads(WorldRenderer renderer, List<BakedQuad> quads, int color, ItemStack stack) {
       boolean flag = color == -1 && stack != null;
       int i = 0;
 
@@ -207,7 +207,7 @@ public class RendererHelper {
       float g = (float)(clr >> 8 & 255) / 255.0F;
       float b = (float)(clr & 255) / 255.0F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       GlStateManager.disableTexture2D();
       GlStateManager.disableLighting();
       GlStateManager.enableBlend();
@@ -232,7 +232,7 @@ public class RendererHelper {
       float g = (float)(clr >> 8 & 255) / 255.0F;
       float b = (float)(clr & 255) / 255.0F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       GlStateManager.disableTexture2D();
       GlStateManager.disableLighting();
       GlStateManager.enableBlend();
@@ -251,7 +251,7 @@ public class RendererHelper {
       }
 
       for(int layers = 0; layers < layerCount; ++layers) {
-         Random random1 = new Random((long)randSeed);
+         EaglercraftRandom random1 = new EaglercraftRandom((long)randSeed);
          int k = bends - 1;
          int l = 0;
          double d5 = 0.0D;
@@ -328,7 +328,7 @@ public class RendererHelper {
 
    public static void drawOnScreen(double posX, double posY, double width, double height, double zLevel) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       bufferbuilder.pos(posX, posY + height, zLevel).tex(0.0D, 1.0D).endVertex();
       bufferbuilder.pos(posX + width, posY + height, zLevel).tex(1.0D, 1.0D).endVertex();
@@ -348,7 +348,7 @@ public class RendererHelper {
       if (width > 0.0D && height > 0.0D) {
          GlStateManager.disableTexture2D();
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder bufferbuilder = tessellator.getBuffer();
+         WorldRenderer bufferbuilder = tessellator.getBuffer();
          bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
          bufferbuilder.pos(posX, posY + height, zLevel).color(r, g, b, alpha).endVertex();
          bufferbuilder.pos(posX + width, posY + height, zLevel).color(r, g, b, alpha).endVertex();
@@ -367,7 +367,7 @@ public class RendererHelper {
          GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
          GlStateManager.shadeModel(7425);
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder bufferbuilder = tessellator.getBuffer();
+         WorldRenderer bufferbuilder = tessellator.getBuffer();
          bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
          int alpha = downLeft >> 24 & 255;
          int r = downLeft >> 16 & 255;
@@ -407,7 +407,7 @@ public class RendererHelper {
          double sHeight = height / 6.0D;
          int[][] colourArray = new int[][]{{255, 0, 0}, {255, 0, 255}, {0, 0, 255}, {0, 255, 255}, {0, 255, 0}, {255, 255, 0}, {255, 0, 0}};
          Tessellator tessellator = Tessellator.getInstance();
-         BufferBuilder bufferbuilder = tessellator.getBuffer();
+         WorldRenderer bufferbuilder = tessellator.getBuffer();
 
          for(int i = 0; i < 6; ++i) {
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
@@ -426,7 +426,7 @@ public class RendererHelper {
    }
 
    public static int getRandomColourFromString(String s) {
-      Random rand = new Random();
+      EaglercraftRandom rand = new EaglercraftRandom();
       rand.setSeed((long)Math.abs(s.hashCode() * 1000));
       int clr = Math.round(1.6777215E7F * rand.nextFloat());
       float[] hsb = new float[3];

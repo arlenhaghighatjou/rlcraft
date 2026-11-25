@@ -21,7 +21,7 @@ import net.minecraft.client.renderer.block.model.ItemOverride;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -39,7 +39,7 @@ import org.apache.commons.lang3.tuple.Pair;
 public class CreativeBakedModel implements IBakedModel {
    public static Minecraft mc = Minecraft.getMinecraft();
    public static ItemColors itemColores = null;
-   public static TextureAtlasSprite woodenTexture;
+   public static EaglerTextureAtlasSprite woodenTexture;
    private static ItemStack lastItemStack = null;
    public static ItemOverrideList customOverride = new ItemOverrideList(new ArrayList()) {
       public IBakedModel handleItemState(IBakedModel originalModel, ItemStack stack, World world, EntityLivingBase entity) {
@@ -62,7 +62,7 @@ public class CreativeBakedModel implements IBakedModel {
       lastItemStack = stack;
    }
 
-   public static TextureAtlasSprite getWoodenTexture() {
+   public static EaglerTextureAtlasSprite getWoodenTexture() {
       if (woodenTexture == null) {
          woodenTexture = mc.getTextureMapBlocks().getAtlasSprite("minecraft:blocks/planks_oak");
       }
@@ -173,7 +173,7 @@ public class CreativeBakedModel implements IBakedModel {
       return false;
    }
 
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       return getWoodenTexture();
    }
 

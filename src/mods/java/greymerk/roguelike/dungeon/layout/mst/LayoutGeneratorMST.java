@@ -12,7 +12,7 @@ import greymerk.roguelike.worldgen.Direction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -28,7 +28,7 @@ public class LayoutGeneratorMST implements LayoutGenerator {
       this.layout = new LevelLayout();
    }
 
-   public LevelLayout generate(Coord start, Random random) {
+   public LevelLayout generate(Coord start, EaglercraftRandom random) {
       MinimumSpanningTree mst = new MinimumSpanningTree(random, this.length, this.scatter, start.copy());
       Graph<Coord> layout = mst.getGraph();
       List<Edge<Coord>> edges = layout.getEdges();

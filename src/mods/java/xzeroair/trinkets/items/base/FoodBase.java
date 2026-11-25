@@ -1,7 +1,7 @@
 package xzeroair.trinkets.items.base;
 
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Function;
 import javax.annotation.Nullable;
 import net.minecraft.client.gui.GuiScreen;
@@ -23,7 +23,7 @@ import xzeroair.trinkets.util.helpers.TranslationHelper;
 import xzeroair.trinkets.util.interfaces.IsModelLoaded;
 
 public class FoodBase extends ItemFood implements IsModelLoaded {
-   private UUID uuid;
+   private EaglercraftUUID uuid;
    protected int cooldown = 0;
    protected boolean canEat = true;
 
@@ -91,15 +91,15 @@ public class FoodBase extends ItemFood implements IsModelLoaded {
       return super.getItemStackDisplayName(stack);
    }
 
-   public UUID getUUID() {
+   public EaglercraftUUID getUUID() {
       return this.uuid;
    }
 
    public void setUUID(String uuid) {
       if (!uuid.isEmpty()) {
-         this.uuid = UUID.fromString(uuid);
+         this.uuid = EaglercraftUUID.fromString(uuid);
       } else {
-         this.uuid = UUID.randomUUID();
+         this.uuid = EaglercraftUUID.randomUUID();
       }
 
    }

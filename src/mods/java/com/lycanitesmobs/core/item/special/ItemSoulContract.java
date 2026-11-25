@@ -6,7 +6,7 @@ import com.lycanitesmobs.core.entity.TameableCreatureEntity;
 import com.lycanitesmobs.core.item.ItemBase;
 import com.lycanitesmobs.core.pets.PetEntry;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,9 +22,9 @@ public class ItemSoulContract extends ItemBase {
       this.setup();
    }
 
-   public UUID getOwnerUUID(ItemStack itemStack) {
+   public EaglercraftUUID getOwnerUUID(ItemStack itemStack) {
       NBTTagCompound nbt = this.getTagCompound(itemStack);
-      UUID uuid = null;
+      EaglercraftUUID uuid = null;
       if (nbt.hasUniqueId("ownerUUID")) {
          uuid = nbt.getUniqueId("ownerUUID");
       }
@@ -32,9 +32,9 @@ public class ItemSoulContract extends ItemBase {
       return uuid;
    }
 
-   public UUID getPetEntryUUID(ItemStack itemStack) {
+   public EaglercraftUUID getPetEntryUUID(ItemStack itemStack) {
       NBTTagCompound nbt = this.getTagCompound(itemStack);
-      UUID uuid = null;
+      EaglercraftUUID uuid = null;
       if (nbt.hasUniqueId("petEntryUUID")) {
          uuid = nbt.getUniqueId("petEntryUUID");
       }
@@ -44,8 +44,8 @@ public class ItemSoulContract extends ItemBase {
 
    public void addInformation(ItemStack itemStack, World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
       super.addInformation(itemStack, world, tooltip, tooltipFlag);
-      UUID ownerUUID = this.getOwnerUUID(itemStack);
-      UUID petEntryUUID = this.getPetEntryUUID(itemStack);
+      EaglercraftUUID ownerUUID = this.getOwnerUUID(itemStack);
+      EaglercraftUUID petEntryUUID = this.getPetEntryUUID(itemStack);
       if (ownerUUID != null && petEntryUUID != null) {
          EntityPlayer owner = world.getPlayerEntityByUUID(ownerUUID);
          ExtendedPlayer extendedOwner = ExtendedPlayer.getForPlayer(owner);
@@ -70,8 +70,8 @@ public class ItemSoulContract extends ItemBase {
    public boolean onItemRightClickOnEntity(EntityPlayer player, Entity entity, ItemStack itemStack) {
       if (entity instanceof TameableCreatureEntity && ((TameableCreatureEntity)entity).isBoundPet()) {
          TameableCreatureEntity tameableCreatureEntity = (TameableCreatureEntity)entity;
-         UUID ownerUUID = this.getOwnerUUID(itemStack);
-         UUID petEntryUUID = this.getPetEntryUUID(itemStack);
+         EaglercraftUUID ownerUUID = this.getOwnerUUID(itemStack);
+         EaglercraftUUID petEntryUUID = this.getPetEntryUUID(itemStack);
          return ownerUUID != null && petEntryUUID != null ? this.transferSoul(itemStack, player, tameableCreatureEntity, ownerUUID, petEntryUUID) : this.bindSoul(itemStack, player, tameableCreatureEntity);
       } else {
          if (!player.getEntityWorld().isRemote) {
@@ -102,7 +102,7 @@ public class ItemSoulContract extends ItemBase {
       }
    }
 
-   public boolean transferSoul(ItemStack itemStack, EntityPlayer player, TameableCreatureEntity tameableCreatureEntity, UUID ownerUUID, UUID petEntryUUID) {
+   public boolean transferSoul(ItemStack itemStack, EntityPlayer player, TameableCreatureEntity tameableCreatureEntity, EaglercraftUUID ownerUUID, EaglercraftUUID petEntryUUID) {
       if (player.getUniqueID().equals(ownerUUID)) {
          if (petEntryUUID.equals(tameableCreatureEntity.getPetEntry().petEntryID)) {
             if (!player.getEntityWorld().isRemote) {

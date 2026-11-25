@@ -2,7 +2,7 @@ package rtg.api.world.gen.feature.tree.rtg;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -13,7 +13,7 @@ public class TreeRTGPinusPonderosa extends TreeRTG {
    public TreeRTGPinusPonderosa() {
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       int x = pos.getX();
       int y = pos.getY();
       int z = pos.getZ();
@@ -98,7 +98,7 @@ public class TreeRTGPinusPonderosa extends TreeRTG {
       }
    }
 
-   public void buildTrunk(World world, Random rand, int x, int y, int z) {
+   public void buildTrunk(World world, EaglercraftRandom rand, int x, int y, int z) {
       int h = (int)Math.ceil((double)((float)this.trunkSize / 4.0F));
       h = h + rand.nextInt(h * 2);
 
@@ -108,7 +108,7 @@ public class TreeRTGPinusPonderosa extends TreeRTG {
 
    }
 
-   public void buildBranch(World world, Random rand, int x, int y, int z, int dX, int dZ, int logLength, int leaveSize) {
+   public void buildBranch(World world, EaglercraftRandom rand, int x, int y, int z, int dX, int dZ, int logLength, int leaveSize) {
       if (logLength == 3 && Math.abs(dX) + Math.abs(dZ) == 2) {
          --logLength;
       }

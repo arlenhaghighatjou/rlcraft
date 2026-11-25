@@ -3,7 +3,7 @@ package svenhjol.charm.world.feature;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
@@ -65,7 +65,7 @@ public class VillagerTrades extends Feature {
       public CurseBreakTrade() {
       }
 
-      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
          int emeraldCount = 2 * (random.nextInt(15) + 5);
          ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
          EnchantmentHelper.setEnchantments(new HashMap<Enchantment, Integer>() {
@@ -81,7 +81,7 @@ public class VillagerTrades extends Feature {
       public DamagedAnvilsTrade() {
       }
 
-      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
          int ironCount = random.nextInt(4) + 4;
          recipeList.add(new MerchantRecipe(new ItemStack(Blocks.ANVIL, 1, 2), new ItemStack(Items.IRON_INGOT, ironCount), new ItemStack(Blocks.ANVIL)));
       }
@@ -91,7 +91,7 @@ public class VillagerTrades extends Feature {
       public EnchantedBookTrade() {
       }
 
-      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
          ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
          int emeraldCount = random.nextInt(4) + 1;
          recipeList.add(new MerchantRecipe(book, new ItemStack(Items.EMERALD, emeraldCount)));
@@ -102,7 +102,7 @@ public class VillagerTrades extends Feature {
       public FortuneShovelTrade() {
       }
 
-      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
          int emeraldCount = random.nextInt(5) + 12;
          ItemStack shovel = new ItemStack(Items.DIAMOND_SHOVEL);
          EnchantmentHelper.setEnchantments(new HashMap<Enchantment, Integer>() {
@@ -118,7 +118,7 @@ public class VillagerTrades extends Feature {
       public LanternsTrade() {
       }
 
-      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
          int emeraldCount = random.nextInt(1) + 1;
          int lanternCount = random.nextInt(2) + 2;
          ItemStack lanterns = new ItemStack(Lantern.getDefaultLantern(), lanternCount);
@@ -130,7 +130,7 @@ public class VillagerTrades extends Feature {
       public SalvageTrade() {
       }
 
-      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
          int emeraldCount = random.nextInt(15) + 5;
          ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
          EnchantmentHelper.setEnchantments(new HashMap<Enchantment, Integer>() {
@@ -146,7 +146,7 @@ public class VillagerTrades extends Feature {
       public SuspiciousSoupTrade() {
       }
 
-      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
          int beetrootCount = random.nextInt(10) + 5;
          ItemStack soup = new ItemStack(SuspiciousSoup.suspiciousSoup, 1, random.nextInt(SuspiciousSoup.maxTypes));
          recipeList.add(new MerchantRecipe(new ItemStack(Items.BEETROOT, beetrootCount), soup));
@@ -160,7 +160,7 @@ public class VillagerTrades extends Feature {
          this.forWhat = forWhat;
       }
 
-      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+      public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, EaglercraftRandom random) {
          int fleshCount = random.nextInt(10) + 5;
          int tradeCount = Math.min(random.nextInt(2) + 2, fleshCount);
          List<Item> items = Arrays.asList(this.forWhat);

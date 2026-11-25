@@ -1,7 +1,7 @@
 package bl4ckscor3.mod.xptome;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,7 +19,7 @@ import openmods.utils.EnchantmentUtils;
 public class ItemXPTome extends Item {
    public static final String NAME = "xp_book";
    public static final int MAX_STORAGE = 1395;
-   private final Random random = new Random();
+   private final EaglercraftRandom random = new EaglercraftRandom();
 
    public ItemXPTome() {
       this.setCreativeTab(CreativeTabs.MISC);

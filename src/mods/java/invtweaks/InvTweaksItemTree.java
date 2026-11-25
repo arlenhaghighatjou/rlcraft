@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreDictionary.OreRegisterEvent;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -191,7 +191,7 @@ public class InvTweaksItemTree implements IItemTree {
    }
 
    @NotNull
-   public IItemTreeItem getRandomItem(@NotNull Random r) {
+   public IItemTreeItem getRandomItem(@NotNull EaglercraftRandom r) {
       return (IItemTreeItem)this.itemsByName.values().toArray()[r.nextInt(this.itemsByName.size())];
    }
 

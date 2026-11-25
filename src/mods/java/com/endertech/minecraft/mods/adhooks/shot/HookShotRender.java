@@ -11,7 +11,7 @@ import com.endertech.minecraft.forge.units.UnitId;
 import com.endertech.minecraft.mods.adhooks.init.HookType;
 import com.endertech.minecraft.mods.adhooks.items.Rope;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;

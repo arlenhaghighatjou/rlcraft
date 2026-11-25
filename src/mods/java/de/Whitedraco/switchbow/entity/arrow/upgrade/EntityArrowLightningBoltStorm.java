@@ -4,7 +4,7 @@ import de.Whitedraco.switchbow.ItemInit;
 import de.Whitedraco.switchbow.Config.ArrowConfig;
 import de.Whitedraco.switchbow.entity.EntityArrowBase;
 import de.Whitedraco.switchbow.entity.EntityLightningBoltSwitchBow;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IThrowableEntity;
 
 public class EntityArrowLightningBoltStorm extends EntityArrowBase implements IThrowableEntity {
-   private Random random = new Random();
+   private EaglercraftRandom random = new EaglercraftRandom();
    private boolean spawnLightningBolt = true;
    private double damagesetter = ArrowConfig.DamageArrowLightningStrom.getDoub();
 

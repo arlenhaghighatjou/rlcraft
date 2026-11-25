@@ -1,16 +1,16 @@
 package ivorius.ivtoolkit.tools;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class IvStringHelper {
    public IvStringHelper() {
    }
 
    public static String cheeseString(String string, float effect, long seed) {
-      return cheeseString(string, effect, new Random(seed));
+      return cheeseString(string, effect, new EaglercraftRandom(seed));
    }
 
-   public static String cheeseString(String string, float effect, Random rand) {
+   public static String cheeseString(String string, float effect, EaglercraftRandom rand) {
       if (effect <= 0.0F) {
          return string;
       } else {

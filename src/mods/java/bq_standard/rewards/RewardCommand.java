@@ -9,9 +9,9 @@ import betterquesting.api2.storage.DBEntry;
 import bq_standard.AdminExecute;
 import bq_standard.client.gui.rewards.PanelRewardCommand;
 import bq_standard.rewards.factory.FactoryRewardCommand;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.Arrays;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nonnull;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.command.FunctionObject;
@@ -51,7 +51,7 @@ public class RewardCommand implements IReward {
 
    public void claimReward(EntityPlayer player, DBEntry<IQuest> quest) {
       if (!player.world.isRemote) {
-         UUID playerID = QuestingAPI.getQuestingUUID(player);
+         EaglercraftUUID playerID = QuestingAPI.getQuestingUUID(player);
          String tmp = this.command.replaceAll("VAR_NAME", player.getName());
          String finCom = tmp.replaceAll("VAR_UUID", playerID.toString());
          String[] comAry = finCom.split("\n");

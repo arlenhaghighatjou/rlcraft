@@ -1,6 +1,6 @@
 package net.mcft.copy.backpacks.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.mcft.copy.backpacks.api.BackpackHelper;
 import net.mcft.copy.backpacks.api.IBackpack;
@@ -49,7 +49,7 @@ public class BlockBackpack extends BlockContainer {
       return new TileEntityBackpack();
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 0;
    }
 

@@ -1,6 +1,6 @@
 package vazkii.quark.world.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockStone.EnumType;
@@ -21,7 +21,7 @@ public class SpeleothemGenerator implements IWorldGenerator {
    public SpeleothemGenerator() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (Speleothems.dimensionConfig.canSpawnHere(world)) {
          int x = chunkX * 16 + 8;
          int z = chunkZ * 16 + 8;
@@ -50,7 +50,7 @@ public class SpeleothemGenerator implements IWorldGenerator {
       }
    }
 
-   private boolean placeSpeleothemCluster(Random random, World world, BlockPos pos, int spread, int tries) {
+   private boolean placeSpeleothemCluster(EaglercraftRandom random, World world, BlockPos pos, int spread, int tries) {
       if (!this.findAndPlaceSpeleothem(random, world, pos)) {
          return false;
       } else {
@@ -63,7 +63,7 @@ public class SpeleothemGenerator implements IWorldGenerator {
       }
    }
 
-   private boolean findAndPlaceSpeleothem(Random random, World world, BlockPos pos) {
+   private boolean findAndPlaceSpeleothem(EaglercraftRandom random, World world, BlockPos pos) {
       if (!world.isAirBlock(pos)) {
          return false;
       } else {
@@ -90,7 +90,7 @@ public class SpeleothemGenerator implements IWorldGenerator {
       }
    }
 
-   private void placeSpeleothem(Random random, World world, BlockPos pos, Block type, boolean up) {
+   private void placeSpeleothem(EaglercraftRandom random, World world, BlockPos pos, Block type, boolean up) {
       if (type != null) {
          EnumFacing diff = up ? EnumFacing.UP : EnumFacing.DOWN;
          int size = random.nextInt(3) == 0 ? 2 : 3;

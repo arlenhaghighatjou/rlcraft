@@ -1,7 +1,7 @@
 package de.Whitedraco.switchbow.proxy.packets;
 
-import io.netty.buffer.ByteBuf;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class ParticleLovePacket implements IMessage {
-   protected Random rand = new Random();
+   protected EaglercraftRandom rand = new EaglercraftRandom();
    double posX;
    double posY;
    double posZ;

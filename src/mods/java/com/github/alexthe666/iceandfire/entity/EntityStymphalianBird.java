@@ -7,7 +7,7 @@ import com.github.alexthe666.iceandfire.entity.ai.StymphalianBirdAIFlee;
 import com.github.alexthe666.iceandfire.entity.ai.StymphalianBirdAITarget;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nullable;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
@@ -53,7 +53,7 @@ public class EntityStymphalianBird extends EntityCreature implements IAnimatedEn
    private static final int FLIGHT_CHANCE_PER_TICK = 100;
    private int animationTick;
    private Animation currentAnimation;
-   private static final DataParameter<Optional<UUID>> VICTOR_ENTITY = EntityDataManager.createKey(EntityStymphalianBird.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+   private static final DataParameter<Optional<EaglercraftUUID>> VICTOR_ENTITY = EntityDataManager.createKey(EntityStymphalianBird.class, DataSerializers.OPTIONAL_UNIQUE_ID);
    private static final DataParameter<Boolean> FLYING = EntityDataManager.createKey(EntityStymphalianBird.class, DataSerializers.BOOLEAN);
    private EntityLivingBase victorEntity;
    private boolean isFlying;
@@ -154,7 +154,7 @@ public class EntityStymphalianBird extends EntityCreature implements IAnimatedEn
 
       if (!s.isEmpty()) {
          try {
-            this.setVictorId(UUID.fromString(s));
+            this.setVictorId(EaglercraftUUID.fromString(s));
          } catch (Throwable var4) {
             ;
          }
@@ -230,18 +230,18 @@ public class EntityStymphalianBird extends EntityCreature implements IAnimatedEn
    }
 
    @Nullable
-   public UUID getVictorId() {
-      return (UUID)((Optional)this.dataManager.get(VICTOR_ENTITY)).orNull();
+   public EaglercraftUUID getVictorId() {
+      return (EaglercraftUUID)((Optional)this.dataManager.get(VICTOR_ENTITY)).orNull();
    }
 
-   public void setVictorId(@Nullable UUID uuid) {
+   public void setVictorId(@Nullable EaglercraftUUID uuid) {
       this.dataManager.set(VICTOR_ENTITY, Optional.fromNullable(uuid));
    }
 
    @Nullable
    public EntityLivingBase getVictor() {
       try {
-         UUID uuid = this.getVictorId();
+         EaglercraftUUID uuid = this.getVictorId();
          return uuid == null ? null : this.world.getPlayerEntityByUUID(uuid);
       } catch (IllegalArgumentException var21) {
          return null;

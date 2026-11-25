@@ -4,7 +4,7 @@ import ivorius.reccomplex.RCConfig;
 import ivorius.reccomplex.world.gen.feature.decoration.RCBiomeDecorator;
 import ivorius.reccomplex.world.gen.feature.sapling.RCSaplingGenerator;
 import ivorius.reccomplex.world.gen.feature.structure.MapGenStructureHook;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -100,7 +100,7 @@ public class RCTerrainGenEventHandler {
                   return hook.getStructureName();
                }
 
-               public boolean generateStructure(World worldIn, Random randomIn, ChunkPos chunkCoord) {
+               public boolean generateStructure(World worldIn, EaglercraftRandom randomIn, ChunkPos chunkCoord) {
                   return hook.generateStructure(worldIn, randomIn, chunkCoord);
                }
 
@@ -129,7 +129,7 @@ public class RCTerrainGenEventHandler {
                   return hook.getStructureName();
                }
 
-               public boolean generateStructure(World worldIn, Random randomIn, ChunkPos chunkCoord) {
+               public boolean generateStructure(World worldIn, EaglercraftRandom randomIn, ChunkPos chunkCoord) {
                   return hook.generateStructure(worldIn, randomIn, chunkCoord);
                }
 
@@ -158,7 +158,7 @@ public class RCTerrainGenEventHandler {
                   return hook.getStructureName();
                }
 
-               public boolean generateStructure(World worldIn, Random randomIn, ChunkPos chunkCoord) {
+               public boolean generateStructure(World worldIn, EaglercraftRandom randomIn, ChunkPos chunkCoord) {
                   return hook.generateStructure(worldIn, randomIn, chunkCoord);
                }
 
@@ -187,7 +187,7 @@ public class RCTerrainGenEventHandler {
                   return hook.getStructureName();
                }
 
-               public boolean generateStructure(World worldIn, Random randomIn, ChunkPos chunkCoord) {
+               public boolean generateStructure(World worldIn, EaglercraftRandom randomIn, ChunkPos chunkCoord) {
                   return hook.generateStructure(worldIn, randomIn, chunkCoord);
                }
 
@@ -216,7 +216,7 @@ public class RCTerrainGenEventHandler {
                   return hook.getStructureName();
                }
 
-               public boolean generateStructure(World worldIn, Random randomIn, ChunkPos chunkCoord) {
+               public boolean generateStructure(World worldIn, EaglercraftRandom randomIn, ChunkPos chunkCoord) {
                   return hook.generateStructure(worldIn, randomIn, chunkCoord);
                }
 
@@ -245,7 +245,7 @@ public class RCTerrainGenEventHandler {
                   return hook.getStructureName();
                }
 
-               public boolean generateStructure(World worldIn, Random randomIn, ChunkPos chunkCoord) {
+               public boolean generateStructure(World worldIn, EaglercraftRandom randomIn, ChunkPos chunkCoord) {
                   return hook.generateStructure(worldIn, randomIn, chunkCoord);
                }
 

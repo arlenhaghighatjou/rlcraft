@@ -4,13 +4,13 @@ import com.github.alexthe666.iceandfire.IceAndFire;
 import com.github.alexthe666.iceandfire.structures.WorldGenMyrmexHive;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.mojang.authlib.GameProfile;
+import net.lax1dude.eaglercraft.v1_8.mojang.authlib.GameProfile;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
@@ -42,29 +42,29 @@ public class MyrmexHive {
    private int tickCounter;
    private int numMyrmex;
    private int noBreedTicks;
-   private final Map<UUID, Integer> playerReputation = Maps.newHashMap();
+   private final Map<EaglercraftUUID, Integer> playerReputation = Maps.newHashMap();
    private final List<MyrmexHive.HiveAggressor> villageAgressors = Lists.newArrayList();
-   private final List<UUID> myrmexList = Lists.newArrayList();
-   public UUID hiveUUID;
+   private final List<EaglercraftUUID> myrmexList = Lists.newArrayList();
+   public EaglercraftUUID hiveUUID;
    public String colonyName = "";
    public boolean reproduces = true;
    public boolean hasOwner = false;
-   public UUID ownerUUID = null;
+   public EaglercraftUUID ownerUUID = null;
 
    public MyrmexHive() {
-      this.hiveUUID = UUID.randomUUID();
+      this.hiveUUID = EaglercraftUUID.randomUUID();
    }
 
    public MyrmexHive(World worldIn) {
       this.world = worldIn;
-      this.hiveUUID = UUID.randomUUID();
+      this.hiveUUID = EaglercraftUUID.randomUUID();
    }
 
    public MyrmexHive(World worldIn, BlockPos center, int radius) {
       this.world = worldIn;
       this.center = center;
       this.villageRadius = radius;
-      this.hiveUUID = UUID.randomUUID();
+      this.hiveUUID = EaglercraftUUID.randomUUID();
    }
 
    public void setWorld(World worldIn) {
@@ -170,7 +170,7 @@ public class MyrmexHive {
       double d0 = Double.MAX_VALUE;
       EntityPlayer entityplayer = null;
 
-      for(UUID s : this.playerReputation.keySet()) {
+      for(EaglercraftUUID s : this.playerReputation.keySet()) {
          if (this.isPlayerReputationTooLowToFight(s)) {
             EntityPlayer entityplayer1 = world.getPlayerEntityByUUID(s);
             if (entityplayer1 != null) {
@@ -198,12 +198,12 @@ public class MyrmexHive {
 
    }
 
-   public int getPlayerReputation(UUID playerName) {
+   public int getPlayerReputation(EaglercraftUUID playerName) {
       Integer integer = (Integer)this.playerReputation.get(playerName);
       return integer == null ? 0 : integer.intValue();
    }
 
-   private UUID findUUID(String name) {
+   private EaglercraftUUID findUUID(String name) {
       if (this.world != null && this.world.getMinecraftServer() != null) {
          GameProfile profile = this.world.getMinecraftServer().getPlayerProfileCache().getGameProfileForUsername(name);
          return profile == null ? EntityPlayer.getOfflineUUID(name) : profile.getId();
@@ -212,7 +212,7 @@ public class MyrmexHive {
       }
    }
 
-   public int modifyPlayerReputation(UUID playerName, int reputation) {
+   public int modifyPlayerReputation(EaglercraftUUID playerName, int reputation) {
       int i = this.getPlayerReputation(playerName);
       int j = MathHelper.clamp(i + reputation, 0, 100);
       if (this.hasOwner && playerName.equals(this.ownerUUID)) {
@@ -224,7 +224,7 @@ public class MyrmexHive {
       try {
          player = this.world.getPlayerEntityByUUID(playerName);
       } catch (Exception var7) {
-         IceAndFire.logger.warn("Myrmex Hive could not find player with associated UUID");
+         IceAndFire.logger.warn("Myrmex Hive could not find player with associated EaglercraftUUID");
       }
 
       if (player != null) {
@@ -261,15 +261,15 @@ public class MyrmexHive {
       return j;
    }
 
-   public boolean isPlayerReputationTooLowToTrade(UUID uuid) {
+   public boolean isPlayerReputationTooLowToTrade(EaglercraftUUID uuid) {
       return this.getPlayerReputation(uuid) < 50;
    }
 
-   public boolean canPlayerCommandHive(UUID uuid) {
+   public boolean canPlayerCommandHive(EaglercraftUUID uuid) {
       return this.getPlayerReputation(uuid) >= 75;
    }
 
-   public boolean isPlayerReputationTooLowToFight(UUID uuid) {
+   public boolean isPlayerReputationTooLowToFight(EaglercraftUUID uuid) {
       return this.getPlayerReputation(uuid) < 25;
    }
 
@@ -346,8 +346,8 @@ public class MyrmexHive {
 
       for(int j = 0; j < nbttaglist1.tagCount(); ++j) {
          NBTTagCompound nbttagcompound1 = nbttaglist1.getCompoundTagAt(j);
-         if (nbttagcompound1.hasKey("UUID")) {
-            this.playerReputation.put(UUID.fromString(nbttagcompound1.getString("UUID")), Integer.valueOf(nbttagcompound1.getInteger("S")));
+         if (nbttagcompound1.hasKey("EaglercraftUUID")) {
+            this.playerReputation.put(EaglercraftUUID.fromString(nbttagcompound1.getString("EaglercraftUUID")), Integer.valueOf(nbttagcompound1.getInteger("S")));
          } else {
             this.playerReputation.put(this.findUUID(nbttagcompound1.getString("Name")), Integer.valueOf(nbttagcompound1.getInteger("S")));
          }
@@ -389,7 +389,7 @@ public class MyrmexHive {
 
       NBTTagList hiveMembers = new NBTTagList();
 
-      for(UUID memberUUID : this.myrmexList) {
+      for(EaglercraftUUID memberUUID : this.myrmexList) {
          NBTTagCompound nbttagcompound = new NBTTagCompound();
          nbttagcompound.setUniqueId("MyrmexUUID", memberUUID);
          hiveMembers.appendTag(nbttagcompound);
@@ -457,11 +457,11 @@ public class MyrmexHive {
       compound.setTag("Doors", nbttaglist);
       NBTTagList nbttaglist1 = new NBTTagList();
 
-      for(UUID s : this.playerReputation.keySet()) {
+      for(EaglercraftUUID s : this.playerReputation.keySet()) {
          NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 
          try {
-            nbttagcompound1.setString("UUID", s.toString());
+            nbttagcompound1.setString("EaglercraftUUID", s.toString());
             nbttagcompound1.setInteger("S", ((Integer)this.playerReputation.get(s)).intValue());
             nbttaglist1.appendTag(nbttagcompound1);
          } catch (RuntimeException var14) {
@@ -548,17 +548,17 @@ public class MyrmexHive {
       return this.allRooms;
    }
 
-   public BlockPos getRandomRoom(Random random, BlockPos returnPos) {
+   public BlockPos getRandomRoom(EaglercraftRandom random, BlockPos returnPos) {
       List<BlockPos> rooms = this.getAllRooms();
       return rooms.isEmpty() ? returnPos : (BlockPos)rooms.get(random.nextInt(Math.max(rooms.size() - 1, 1)));
    }
 
-   public BlockPos getRandomRoom(WorldGenMyrmexHive.RoomType roomType, Random random, BlockPos returnPos) {
+   public BlockPos getRandomRoom(WorldGenMyrmexHive.RoomType roomType, EaglercraftRandom random, BlockPos returnPos) {
       List<BlockPos> rooms = this.getRooms(roomType);
       return rooms.isEmpty() ? returnPos : (BlockPos)rooms.get(random.nextInt(Math.max(rooms.size() - 1, 1)));
    }
 
-   public BlockPos getClosestEntranceToEntity(Entity entity, Random random, boolean randomize) {
+   public BlockPos getClosestEntranceToEntity(Entity entity, EaglercraftRandom random, boolean randomize) {
       Entry<BlockPos, EnumFacing> closest = this.getClosestEntrance(entity);
       if (closest != null) {
          if (randomize) {
@@ -572,7 +572,7 @@ public class MyrmexHive {
       }
    }
 
-   public BlockPos getClosestEntranceBottomToEntity(Entity entity, Random random) {
+   public BlockPos getClosestEntranceBottomToEntity(Entity entity, EaglercraftRandom random) {
       Entry<BlockPos, EnumFacing> closest = null;
 
       for(Entry<BlockPos, EnumFacing> entry : this.entranceBottoms.entrySet()) {
@@ -609,7 +609,7 @@ public class MyrmexHive {
    }
 
    public void setDefaultPlayerReputation(int defaultReputation) {
-      for(UUID s : this.playerReputation.keySet()) {
+      for(EaglercraftUUID s : this.playerReputation.keySet()) {
          this.modifyPlayerReputation(s, defaultReputation);
       }
 

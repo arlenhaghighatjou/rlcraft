@@ -3,7 +3,7 @@ package betterquesting.api2.supporter;
 import betterquesting.api2.storage.INBTSaveLoad;
 import betterquesting.core.BetterQuesting;
 import java.util.TreeMap;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -12,12 +12,12 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class SupporterDB implements INBTSaveLoad<NBTTagCompound> {
    public static final SupporterDB INSTANCE = new SupporterDB();
-   private final TreeMap<UUID, SupporterEntry> mapDB = new TreeMap();
+   private final TreeMap<EaglercraftUUID, SupporterEntry> mapDB = new TreeMap();
 
    public SupporterDB() {
    }
 
-   public synchronized SupporterEntry add(@Nonnull UUID playerID) {
+   public synchronized SupporterEntry add(@Nonnull EaglercraftUUID playerID) {
       SupporterEntry entry = new SupporterEntry();
       if (this.mapDB.putIfAbsent(playerID, entry) != null) {
          BetterQuesting.logger.warn("Tried to add duplicate supporter to DB: " + playerID.toString());
@@ -27,12 +27,12 @@ public class SupporterDB implements INBTSaveLoad<NBTTagCompound> {
       }
    }
 
-   public synchronized boolean removeID(@Nonnull UUID playerID) {
+   public synchronized boolean removeID(@Nonnull EaglercraftUUID playerID) {
       return this.mapDB.remove(playerID) != null;
    }
 
    @Nullable
-   public synchronized SupporterEntry getValue(@Nonnull UUID playerID) {
+   public synchronized SupporterEntry getValue(@Nonnull EaglercraftUUID playerID) {
       return (SupporterEntry)this.mapDB.get(playerID);
    }
 
@@ -50,7 +50,7 @@ public class SupporterDB implements INBTSaveLoad<NBTTagCompound> {
          try {
             SupporterEntry entry = new SupporterEntry();
             entry.readFromNBT(nbt.getCompoundTag(key));
-            this.mapDB.put(UUID.fromString(key), entry);
+            this.mapDB.put(EaglercraftUUID.fromString(key), entry);
          } catch (Exception var4) {
             ;
          }

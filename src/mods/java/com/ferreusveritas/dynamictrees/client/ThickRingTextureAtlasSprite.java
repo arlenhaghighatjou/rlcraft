@@ -4,13 +4,13 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import java.util.Collection;
 import java.util.function.Function;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.EnumFacing.Axis;
 
-public class ThickRingTextureAtlasSprite extends TextureAtlasSprite {
+public class ThickRingTextureAtlasSprite extends EaglerTextureAtlasSprite {
    private final ResourceLocation baseRingLocation;
    private final ResourceLocation baseRingLocationAlternate;
 
@@ -30,7 +30,7 @@ public class ThickRingTextureAtlasSprite extends TextureAtlasSprite {
       return true;
    }
 
-   public ResourceLocation solveRingTexture(Function<ResourceLocation, TextureAtlasSprite> textureGetter) {
+   public ResourceLocation solveRingTexture(Function<ResourceLocation, EaglerTextureAtlasSprite> textureGetter) {
       if (this.baseRingLocationAlternate == null) {
          return this.baseRingLocation;
       } else if (this.baseRingLocation.getResourcePath().endsWith("top")) {
@@ -38,13 +38,13 @@ public class ThickRingTextureAtlasSprite extends TextureAtlasSprite {
       } else if (this.baseRingLocationAlternate.getResourcePath().endsWith("top")) {
          return this.baseRingLocationAlternate;
       } else {
-         int deltaA = this.getDeltaBorderVsCenterColor((TextureAtlasSprite)textureGetter.apply(this.baseRingLocation));
-         int deltaB = this.getDeltaBorderVsCenterColor((TextureAtlasSprite)textureGetter.apply(this.baseRingLocationAlternate));
+         int deltaA = this.getDeltaBorderVsCenterColor((EaglerTextureAtlasSprite)textureGetter.apply(this.baseRingLocation));
+         int deltaB = this.getDeltaBorderVsCenterColor((EaglerTextureAtlasSprite)textureGetter.apply(this.baseRingLocationAlternate));
          return deltaA > deltaB ? this.baseRingLocation : this.baseRingLocationAlternate;
       }
    }
 
-   private int getDeltaBorderVsCenterColor(TextureAtlasSprite sprite) {
+   private int getDeltaBorderVsCenterColor(EaglerTextureAtlasSprite sprite) {
       TextureUtils.PixelBuffer pixbuf = new TextureUtils.PixelBuffer(sprite);
       int u = pixbuf.w / 16;
       TextureUtils.PixelBuffer wide = new TextureUtils.PixelBuffer(u * 14, u * 1);
@@ -74,8 +74,8 @@ public class ThickRingTextureAtlasSprite extends TextureAtlasSprite {
       return delR * delR + delG * delG + delB * delB;
    }
 
-   public boolean load(IResourceManager manager, ResourceLocation location, Function<ResourceLocation, TextureAtlasSprite> textureGetter) {
-      TextureAtlasSprite baseTexture = (TextureAtlasSprite)textureGetter.apply(this.solveRingTexture(textureGetter));
+   public boolean load(IResourceManager manager, ResourceLocation location, Function<ResourceLocation, EaglerTextureAtlasSprite> textureGetter) {
+      EaglerTextureAtlasSprite baseTexture = (EaglerTextureAtlasSprite)textureGetter.apply(this.solveRingTexture(textureGetter));
       int srcWidth = baseTexture.getIconWidth();
       int srcHeight = baseTexture.getIconHeight();
       this.width = srcWidth * 3;

@@ -4,7 +4,7 @@ import gnu.trove.map.hash.THashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.IMob;
@@ -33,7 +33,7 @@ public final class DamageScaling {
    private boolean affectPassiveMobs;
    private DamageScaling.Mode scaleMode;
    private final Map<String, Float> scalingMap = new THashMap();
-   private final Set<UUID> entityAttackedThisTick = new HashSet();
+   private final Set<EaglercraftUUID> entityAttackedThisTick = new HashSet();
 
    private DamageScaling() {
    }

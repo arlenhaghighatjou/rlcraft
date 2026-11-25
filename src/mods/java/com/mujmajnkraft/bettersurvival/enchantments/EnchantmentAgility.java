@@ -1,7 +1,7 @@
 package com.mujmajnkraft.bettersurvival.enchantments;
 
 import com.mujmajnkraft.bettersurvival.config.ForgeConfigHandler;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.enchantment.Enchantment.Rarity;
@@ -12,7 +12,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.inventory.EntityEquipmentSlot;
 
 public class EnchantmentAgility extends Enchantment {
-   public static final UUID speedModifier = UUID.fromString("e6107045-134f-4c54-a645-75c3ae5c7a27");
+   public static final EaglercraftUUID speedModifier = EaglercraftUUID.fromString("e6107045-134f-4c54-a645-75c3ae5c7a27");
 
    public EnchantmentAgility() {
       super(Rarity.RARE, EnumEnchantmentType.ARMOR_LEGS, new EntityEquipmentSlot[]{EntityEquipmentSlot.LEGS});

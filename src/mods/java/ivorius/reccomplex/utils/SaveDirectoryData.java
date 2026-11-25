@@ -1,6 +1,6 @@
 package ivorius.reccomplex.utils;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import ivorius.reccomplex.files.loading.ResourceDirectory;
 import java.util.Collection;
 import java.util.Set;

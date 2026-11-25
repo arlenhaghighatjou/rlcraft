@@ -6,8 +6,8 @@ import net.minecraft.world.storage.loot.LootEntryEmpty;
 import net.minecraft.world.storage.loot.LootEntryItem;
 import net.minecraft.world.storage.loot.LootEntryTable;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public interface MutableLootEntry {
    Logger __LOGGER__ = LogManager.getLogger("loottweaker.mutable_loot");

@@ -2,7 +2,7 @@ package greymerk.roguelike.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class WeightedRandomizer<T> implements IWeighted<T> {
    private int weight;
@@ -60,7 +60,7 @@ public class WeightedRandomizer<T> implements IWeighted<T> {
       return this;
    }
 
-   public T get(Random rand) {
+   public T get(EaglercraftRandom rand) {
       if (this.weightSum == 0) {
          return (T)null;
       } else if (this.items.isEmpty()) {

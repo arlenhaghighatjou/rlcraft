@@ -8,7 +8,7 @@ import com.google.gson.JsonPrimitive;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.function.Predicate;
 import mcjty.lostcities.api.ILostCityAsset;
@@ -100,7 +100,7 @@ public class WorldStyle implements ILostCityAsset {
       return object;
    }
 
-   public String getRandomCityStyle(LostCityChunkGenerator provider, int chunkX, int chunkZ, Random random) {
+   public String getRandomCityStyle(LostCityChunkGenerator provider, int chunkX, int chunkZ, EaglercraftRandom random) {
       Biome[] biomes = BiomeInfo.getBiomeInfo(provider, new ChunkCoord(provider.dimensionId, chunkX, chunkZ)).getBiomes();
       WorldStyle.Info info = new WorldStyle.Info(biomes, chunkX, chunkZ);
       List<Pair<Float, String>> ct = new ArrayList();

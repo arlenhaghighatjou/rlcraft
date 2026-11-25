@@ -3,7 +3,7 @@ package svenhjol.meson.decorator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockAnvil;
@@ -44,7 +44,7 @@ import svenhjol.meson.helper.EntityHelper;
 public class MesonDecoratorItems {
    protected MesonInnerDecorator generator;
    protected MesonDecoratorTheme theme;
-   protected Random rand;
+   protected EaglercraftRandom rand;
    protected World world;
    protected StructureBoundingBox box;
    protected StructureComponent structure;
@@ -171,7 +171,7 @@ public class MesonDecoratorItems {
       }
    }
 
-   public void addRug(int floor, int x0, int z0, int x1, int z1, @Nullable Random rand) {
+   public void addRug(int floor, int x0, int z0, int x1, int z1, @Nullable EaglercraftRandom rand) {
       if (rand == null) {
          rand = this.generator.getRand();
       }

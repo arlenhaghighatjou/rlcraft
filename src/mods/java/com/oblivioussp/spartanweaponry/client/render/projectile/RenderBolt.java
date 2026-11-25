@@ -1,8 +1,8 @@
 package com.oblivioussp.spartanweaponry.client.render.projectile;
 
 import com.oblivioussp.spartanweaponry.entity.projectile.EntityBolt;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderArrow;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -42,7 +42,7 @@ public class RenderBolt extends RenderArrow<EntityBolt> {
       GlStateManager.rotate(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks, 0.0F, 0.0F, 1.0F);
       GlStateManager.translate(0.2F, 0.0F, 0.0F);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder vertexbuffer = tessellator.getBuffer();
+      WorldRenderer vertexbuffer = tessellator.getBuffer();
       GlStateManager.enableRescaleNormal();
       float f9 = (float)entity.arrowShake - partialTicks;
       if (f9 > 0.0F) {

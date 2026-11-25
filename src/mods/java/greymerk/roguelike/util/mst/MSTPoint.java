@@ -2,7 +2,7 @@ package greymerk.roguelike.util.mst;
 
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Direction;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class MSTPoint {
    private Coord position;
@@ -10,7 +10,7 @@ public class MSTPoint {
    private int rank = 0;
    private MSTPoint parent;
 
-   public MSTPoint(Coord pos, Random rand) {
+   public MSTPoint(Coord pos, EaglercraftRandom rand) {
       this.position = pos.copy();
       this.adjusted = pos.copy();
       this.adjusted.translate(Direction.randomCardinal(rand));

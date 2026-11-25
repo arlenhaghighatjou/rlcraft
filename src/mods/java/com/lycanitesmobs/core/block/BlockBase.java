@@ -3,7 +3,7 @@ package com.lycanitesmobs.core.block;
 import com.lycanitesmobs.client.localisation.LanguageManager;
 import com.lycanitesmobs.core.info.ModInfo;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -76,7 +76,7 @@ public class BlockBase extends Block {
 
    }
 
-   public Item getItemDropped(IBlockState state, Random random, int zero) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom random, int zero) {
       return super.getItemDropped(state, random, zero);
    }
 
@@ -84,7 +84,7 @@ public class BlockBase extends Block {
       return 0;
    }
 
-   public int quantityDropped(Random random) {
+   public int quantityDropped(EaglercraftRandom random) {
       return 1;
    }
 
@@ -112,7 +112,7 @@ public class BlockBase extends Block {
       return this.tickRate;
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!world.isRemote) {
          if (this.removeOnTick && this.canRemove(world, pos, state, rand)) {
             world.setBlockToAir(pos);
@@ -127,7 +127,7 @@ public class BlockBase extends Block {
       return this.tickRate > 0;
    }
 
-   public boolean canRemove(World world, BlockPos pos, IBlockState state, Random rand) {
+   public boolean canRemove(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       return true;
    }
 

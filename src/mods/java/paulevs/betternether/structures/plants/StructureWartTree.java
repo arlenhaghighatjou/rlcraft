@@ -2,7 +2,7 @@ package paulevs.betternether.structures.plants;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -18,7 +18,7 @@ public class StructureWartTree implements IStructure {
    public StructureWartTree() {
    }
 
-   public void generate(World world, BlockPos pos, Random random) {
+   public void generate(World world, BlockPos pos, EaglercraftRandom random) {
       int height = 5 + random.nextInt(5);
       boolean b1 = world.getBlockState(new BlockPos(pos.getX() - 4, pos.getY() + 5, pos.getZ())).getBlock() == Blocks.AIR;
       boolean b2 = world.getBlockState(new BlockPos(pos.getX() + 4, pos.getY() + 5, pos.getZ())).getBlock() == Blocks.AIR;

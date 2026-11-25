@@ -2,7 +2,7 @@ package com.dhanantry.scapeandrunparasites.client.renderer.entity.inborn;
 
 import com.dhanantry.scapeandrunparasites.client.model.entity.inborn.ModelLesh;
 import com.dhanantry.scapeandrunparasites.entity.monster.crude.EntityLesh;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

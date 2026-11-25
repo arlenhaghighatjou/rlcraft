@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -31,7 +31,7 @@ public class TokenReplacer {
    public TokenReplacer() {
    }
 
-   public static <T> String evaluate(Random random, List<TokenReplacer.Token> text, T context, Poem.StitchedTheme theme) throws TokenReplacer.OverpoemedException {
+   public static <T> String evaluate(EaglercraftRandom random, List<TokenReplacer.Token> text, T context, Poem.StitchedTheme theme) throws TokenReplacer.OverpoemedException {
       StringBuilder builder = new StringBuilder();
       PassLimiter<TokenReplacer.OverpoemedException> limiter = new PassLimiter<TokenReplacer.OverpoemedException>(TokenReplacer.OverpoemedException::new, 1000);
       ArrayDeque<TokenReplacer.Token> queue = new ArrayDeque();
@@ -80,10 +80,10 @@ public class TokenReplacer {
          };
       }
 
-      List<TokenReplacer.Token> explode(TokenReplacer.ExplodingToken var1, Poem.StitchedTheme var2, T var3, Random var4);
+      List<TokenReplacer.Token> explode(TokenReplacer.ExplodingToken var1, Poem.StitchedTheme var2, T var3, EaglercraftRandom var4);
 
       public interface StringExploder<T> {
-         String evaluate(TokenReplacer.ExplodingToken var1, Poem.StitchedTheme var2, T var3, Random var4);
+         String evaluate(TokenReplacer.ExplodingToken var1, Poem.StitchedTheme var2, T var3, EaglercraftRandom var4);
       }
    }
 
@@ -99,7 +99,7 @@ public class TokenReplacer {
          this.exploder = exploder;
       }
 
-      public List<TokenReplacer.Token> explode(Poem.StitchedTheme theme, T context, Random random) {
+      public List<TokenReplacer.Token> explode(Poem.StitchedTheme theme, T context, EaglercraftRandom random) {
          return this.exploder.explode(this, theme, context, random);
       }
    }

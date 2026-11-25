@@ -1,7 +1,7 @@
 package com.github.alexthe666.iceandfire.entity.tile;
 
 import com.github.alexthe666.iceandfire.inventory.ContainerMyrmexCocoon;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -112,11 +112,11 @@ public class TileEntityMyrmexCocoon extends TileEntityLockableLoot {
       if (this.lootTable != null && this.world != null && this.world.getLootTableManager() != null) {
          LootTable loottable = this.world.getLootTableManager().getLootTableFromLocation(this.lootTable);
          this.lootTable = null;
-         Random random;
+         EaglercraftRandom random;
          if (this.lootTableSeed == 0L) {
-            random = new Random();
+            random = new EaglercraftRandom();
          } else {
-            random = new Random(this.lootTableSeed);
+            random = new EaglercraftRandom(this.lootTableSeed);
          }
 
          Builder lootcontext$builder = new Builder((WorldServer)this.world);

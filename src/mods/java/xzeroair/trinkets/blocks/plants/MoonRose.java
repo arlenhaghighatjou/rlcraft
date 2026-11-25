@@ -1,7 +1,7 @@
 package xzeroair.trinkets.blocks.plants;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -103,7 +103,7 @@ public class MoonRose extends BlockBush implements IsModelLoaded {
       return new BlockStateContainer(this, new IProperty[]{FACING});
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       super.updateTick(worldIn, pos, state, rand);
    }
 

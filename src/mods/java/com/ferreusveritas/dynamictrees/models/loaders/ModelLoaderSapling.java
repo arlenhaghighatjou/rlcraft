@@ -3,8 +3,8 @@ package com.ferreusveritas.dynamictrees.models.loaders;
 import com.ferreusveritas.dynamictrees.models.bakedmodels.BakedModelSapling;
 import java.util.function.Function;
 import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
@@ -20,7 +20,7 @@ public class ModelLoaderSapling implements ICustomModelLoader {
 
    public IModel loadModel(ResourceLocation modelLocation) throws Exception {
       return new IModel() {
-         public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+         public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter) {
             return new BakedModelSapling(state, format, bakedTextureGetter);
          }
       };

@@ -12,7 +12,7 @@ import greymerk.roguelike.util.mst.MinimumSpanningTree;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class CityGrounds {
    public CityGrounds() {
@@ -55,7 +55,7 @@ public class CityGrounds {
 
       for(Coord c : layout.getPoints()) {
          c.translate(pos);
-         Random rand = editor.getRandom();
+         EaglercraftRandom rand = editor.getRandom();
          Theme themeBase = Themes.values()[rand.nextInt(Themes.values().length)].getThemeBase();
          Tower tower = TowerType.instantiate(TowerType.values()[rand.nextInt(TowerType.values().length)], editor, themeBase);
          tower.generate(new Coord(c.getX(), 50, c.getZ()));

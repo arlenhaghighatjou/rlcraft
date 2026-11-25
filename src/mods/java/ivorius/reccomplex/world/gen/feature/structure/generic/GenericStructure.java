@@ -48,8 +48,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -209,7 +209,7 @@ public class GenericStructure implements Structure<GenericStructure.InstanceData
             if (entity != null) {
                PosTransformer.transformEntityPos(entity, context.transform, areaSize);
                Mover.moveEntity(entity, origin);
-               RCAccessorEntity.setEntityUniqueID(entity, UUID.randomUUID());
+               RCAccessorEntity.setEntityUniqueID(entity, EaglercraftUUID.randomUUID());
                generateEntityContents(context, entity);
                world.spawnEntity(entity);
             } else {
@@ -385,7 +385,7 @@ public class GenericStructure implements Structure<GenericStructure.InstanceData
             RecurrentComplex.logger.warn("Structure JSON missing 'version', using latest (3)");
          }
 
-         GenerationType.idRandomizers.push(new Random(-559038737L));
+         GenerationType.idRandomizers.push(new EaglercraftRandom(-559038737L));
          if (jsonObject.has("generationInfos")) {
             Collections.addAll(structureInfo.generationTypes, context.deserialize(jsonObject.get("generationInfos"), GenerationType[].class));
          }
@@ -403,7 +403,7 @@ public class GenericStructure implements Structure<GenericStructure.InstanceData
             structureInfo.generationTypes.add(MazeGeneration.getGson().fromJson(jsonObject.get("mazeGenerationInfo"), MazeGeneration.class));
          }
 
-         Transformer.idRandomizers.push(new Random(-559038737L));
+         Transformer.idRandomizers.push(new EaglercraftRandom(-559038737L));
          if (jsonObject.has("transformer")) {
             structureInfo.transformer = (TransformerMulti)context.deserialize(jsonObject.get("transformer"), TransformerMulti.class);
          } else if (jsonObject.has("transformers")) {

@@ -1,6 +1,6 @@
 package net.blay09.mods.waystones.network.message;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.blay09.mods.waystones.WaystoneConfig;
 import net.blay09.mods.waystones.util.WaystoneEntry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

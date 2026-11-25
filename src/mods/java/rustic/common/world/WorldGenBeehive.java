@@ -1,6 +1,6 @@
 package rustic.common.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
@@ -17,7 +17,7 @@ public class WorldGenBeehive extends WorldGenerator {
    public WorldGenBeehive() {
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos centerPos) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos centerPos) {
       for(int i = 0; i < Config.MAX_BEEHIVE_ATTEMPTS; ++i) {
          int j = centerPos.getX() + rand.nextInt(8) - rand.nextInt(8);
          int l = centerPos.getZ() + rand.nextInt(8) - rand.nextInt(8);

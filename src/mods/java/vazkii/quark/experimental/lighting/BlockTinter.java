@@ -2,7 +2,7 @@ package vazkii.quark.experimental.lighting;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -19,7 +19,7 @@ public class BlockTinter {
    public BlockTinter() {
    }
 
-   public static void tintBlockFlat(IBlockAccess world, IBlockState state, BlockPos pos, BufferBuilder buffer, BakedQuad quad, int lightColor) {
+   public static void tintBlockFlat(IBlockAccess world, IBlockState state, BlockPos pos, WorldRenderer buffer, BakedQuad quad, int lightColor) {
       if ((lightColor & 240) != 0) {
          float[] colors = ColoredLightSystem.getLightColor(world, pos.offset(quad.getFace()));
          if (ColoredLights.cullToLightmap) {

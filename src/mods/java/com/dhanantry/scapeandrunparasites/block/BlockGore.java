@@ -5,7 +5,7 @@ import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import com.dhanantry.scapeandrunparasites.init.SRPPotions;
 import com.dhanantry.scapeandrunparasites.item.ItemBlockVariant;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigSystems;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
@@ -94,7 +94,7 @@ public class BlockGore extends BlockBush implements IMetaName {
       super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          int air = 10;
          BlockGore.EnumType c = (BlockGore.EnumType)state.getValue(VARIANT);
@@ -117,7 +117,7 @@ public class BlockGore extends BlockBush implements IMetaName {
       return false;
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return null;
    }
 
@@ -129,7 +129,7 @@ public class BlockGore extends BlockBush implements IMetaName {
       return false;
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return false;
    }
 

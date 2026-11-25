@@ -45,8 +45,8 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector4f;
+import net.lax1dude.eaglercraft.v1_8.Keyboard;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector4f;
 
 public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
    private final NBTBase nbt;

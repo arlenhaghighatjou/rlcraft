@@ -21,13 +21,13 @@ import mods.octarinecore.client.resource.VectorSet;
 import mods.octarinecore.common.Int3;
 import mods.octarinecore.common.Rotation;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import org.jetbrains.annotations.NotNull;
 
 @SideOnly(Side.CLIENT)
@@ -36,7 +36,7 @@ import org.jetbrains.annotations.NotNull;
    bv = {1, 0, 3},
    k = 1,
    d1 = {"\u0000J\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0007\n\u0002\u0010\u0002\n\u0000\n\u0002\u0010\u000b\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\b\u0007\u0018\u00002\u00020\u0001B\u0005¢\u0006\u0002\u0010\u0002J\b\u0010\u0013\u001a\u00020\u0014H\u0016J\u0010\u0010\u0015\u001a\u00020\u00162\u0006\u0010\u0017\u001a\u00020\u0018H\u0016J(\u0010\u0019\u001a\u00020\u00162\u0006\u0010\u0017\u001a\u00020\u00182\u0006\u0010\u001a\u001a\u00020\u001b2\u0006\u0010\u001c\u001a\u00020\u001d2\u0006\u0010\u001e\u001a\u00020\u001fH\u0016R\u0011\u0010\u0003\u001a\u00020\u0004¢\u0006\b\n\u0000\u001a\u0004\b\u0005\u0010\u0006R\u0011\u0010\u0007\u001a\u00020\b¢\u0006\b\n\u0000\u001a\u0004\b\t\u0010\nR\u0011\u0010\u000b\u001a\u00020\f¢\u0006\b\n\u0000\u001a\u0004\b\r\u0010\u000eR\u0011\u0010\u000f\u001a\u00020\u0004¢\u0006\b\n\u0000\u001a\u0004\b\u0010\u0010\u0006R\u0011\u0010\u0011\u001a\u00020\b¢\u0006\b\n\u0000\u001a\u0004\b\u0012\u0010\n¨\u0006 "},
-   d2 = {"Lmods/betterfoliage/client/render/RenderLilypad;", "Lmods/octarinecore/client/render/AbstractBlockRenderingHandler;", "()V", "flowerIcon", "Lmods/octarinecore/client/resource/IconSet;", "getFlowerIcon", "()Lmods/octarinecore/client/resource/IconSet;", "flowerModel", "Lmods/octarinecore/client/resource/ModelHolder;", "getFlowerModel", "()Lmods/octarinecore/client/resource/ModelHolder;", "perturbs", "Lmods/octarinecore/client/resource/VectorSet;", "getPerturbs", "()Lmods/octarinecore/client/resource/VectorSet;", "rootIcon", "getRootIcon", "rootModel", "getRootModel", "afterPreStitch", "", "isEligible", "", "ctx", "Lmods/octarinecore/client/render/BlockContext;", "render", "dispatcher", "Lnet/minecraft/client/renderer/BlockRendererDispatcher;", "renderer", "Lnet/minecraft/client/renderer/BufferBuilder;", "layer", "Lnet/minecraft/util/BlockRenderLayer;", "BetterFoliage-MC1.12"}
+   d2 = {"Lmods/betterfoliage/client/render/RenderLilypad;", "Lmods/octarinecore/client/render/AbstractBlockRenderingHandler;", "()V", "flowerIcon", "Lmods/octarinecore/client/resource/IconSet;", "getFlowerIcon", "()Lmods/octarinecore/client/resource/IconSet;", "flowerModel", "Lmods/octarinecore/client/resource/ModelHolder;", "getFlowerModel", "()Lmods/octarinecore/client/resource/ModelHolder;", "perturbs", "Lmods/octarinecore/client/resource/VectorSet;", "getPerturbs", "()Lmods/octarinecore/client/resource/VectorSet;", "rootIcon", "getRootIcon", "rootModel", "getRootModel", "afterPreStitch", "", "isEligible", "", "ctx", "Lmods/octarinecore/client/render/BlockContext;", "render", "dispatcher", "Lnet/minecraft/client/renderer/BlockRendererDispatcher;", "renderer", "Lnet/minecraft/client/renderer/WorldRenderer;", "layer", "Lnet/minecraft/util/BlockRenderLayer;", "BetterFoliage-MC1.12"}
 )
 public final class RenderLilypad extends AbstractBlockRenderingHandler {
    @NotNull
@@ -91,7 +91,7 @@ public final class RenderLilypad extends AbstractBlockRenderingHandler {
       return Config.INSTANCE.getEnabled() && Config.lilypad.INSTANCE.getEnabled() && Config.blocks.INSTANCE.getLilypad().matchesClass(ctx.getBlock());
    }
 
-   public boolean render(@NotNull BlockContext ctx, @NotNull BlockRendererDispatcher dispatcher, @NotNull BufferBuilder renderer, @NotNull BlockRenderLayer layer) {
+   public boolean render(@NotNull BlockContext ctx, @NotNull BlockRendererDispatcher dispatcher, @NotNull WorldRenderer renderer, @NotNull BlockRenderLayer layer) {
       Intrinsics.checkParameterIsNotNull(ctx, "ctx");
       Intrinsics.checkParameterIsNotNull(dispatcher, "dispatcher");
       Intrinsics.checkParameterIsNotNull(renderer, "renderer");
@@ -126,12 +126,12 @@ public final class RenderLilypad extends AbstractBlockRenderingHandler {
          }
 
          if (rand[3].intValue() < Config.lilypad.INSTANCE.getFlowerChance()) {
-            ModelRenderer.render$default(RendererHolder.getModelRenderer(), renderer, this.flowerModel.getModel(), Rotation.Companion.getIdentity(), ctx.getBlockCenter().add(this.perturbs.get(rand[4].intValue())), true, (Function2)null, new Function3<ShadingContext, Integer, Quad, TextureAtlasSprite>() {
+            ModelRenderer.render$default(RendererHolder.getModelRenderer(), renderer, this.flowerModel.getModel(), Rotation.Companion.getIdentity(), ctx.getBlockCenter().add(this.perturbs.get(rand[4].intValue())), true, (Function2)null, new Function3<ShadingContext, Integer, Quad, EaglerTextureAtlasSprite>() {
                @NotNull
-               public final TextureAtlasSprite invoke(@NotNull ShadingContext $noName_0, int $noName_1, @NotNull Quad $noName_2) {
+               public final EaglerTextureAtlasSprite invoke(@NotNull ShadingContext $noName_0, int $noName_1, @NotNull Quad $noName_2) {
                   Intrinsics.checkParameterIsNotNull($noName_0, "<anonymous parameter 0>");
                   Intrinsics.checkParameterIsNotNull($noName_2, "<anonymous parameter 2>");
-                  TextureAtlasSprite var10000 = RenderLilypad.this.getFlowerIcon().get(rand[0].intValue());
+                  EaglerTextureAtlasSprite var10000 = RenderLilypad.this.getFlowerIcon().get(rand[0].intValue());
                   if (var10000 == null) {
                      Intrinsics.throwNpe();
                   }

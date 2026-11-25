@@ -3,7 +3,7 @@ package com.dhanantry.scapeandrunparasites.client.renderer.entity.primitive;
 import com.dhanantry.scapeandrunparasites.client.model.entity.primitive.ModelLum;
 import com.dhanantry.scapeandrunparasites.client.renderer.RenderMalleable;
 import com.dhanantry.scapeandrunparasites.entity.monster.primitive.EntityLum;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;

@@ -1,6 +1,6 @@
 package ivorius.reccomplex.world.gen.feature.sapling;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.state.IBlockState;
@@ -81,7 +81,7 @@ public class VanillaSaplingPredictor implements RCSaplingGenerator.Predictor {
       return sapling.isTypeAt(worldIn, pos.add(p_181624_3_, 0, p_181624_4_), type) && sapling.isTypeAt(worldIn, pos.add(p_181624_3_ + 1, 0, p_181624_4_), type) && sapling.isTypeAt(worldIn, pos.add(p_181624_3_, 0, p_181624_4_ + 1), type) && sapling.isTypeAt(worldIn, pos.add(p_181624_3_ + 1, 0, p_181624_4_ + 1), type);
    }
 
-   public int complexity(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public int complexity(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       VanillaSaplingPredictor.Type type = vanillaType(worldIn, pos, state);
       return type == VanillaSaplingPredictor.Type.NORMAL ? 1 : (type == VanillaSaplingPredictor.Type.BIG ? 4 : -1);
    }

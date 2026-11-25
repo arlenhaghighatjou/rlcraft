@@ -1,6 +1,6 @@
 package svenhjol.charm.smithing.compat;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -29,7 +29,7 @@ public class QuarkTallow {
             }
 
             ItemStack out = in.copy();
-            out.setRepairCost(in.getRepairCost() + ((double)(new Random()).nextFloat() < TallowIncreasesDurability.chance ? 1 : 0));
+            out.setRepairCost(in.getRepairCost() + ((double)(new EaglercraftRandom()).nextFloat() < TallowIncreasesDurability.chance ? 1 : 0));
             out.setItemDamage(currentDamage - (int)((double)maxDamage * TallowIncreasesDurability.amount));
             event.setOutput(out);
             event.setCost(TallowIncreasesDurability.xpCost);

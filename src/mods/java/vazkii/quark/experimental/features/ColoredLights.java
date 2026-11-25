@@ -2,7 +2,7 @@ package vazkii.quark.experimental.features;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -30,7 +30,7 @@ public class ColoredLights extends Feature {
       return "This feature is an incomplete test, and not fit for regular gameplay. Feel free to enable it to mess around but it may explode horribly. Don't report bugs with it.\nTo make a colored light, use a Lit Redstone Lamp and put the color of Stained Glass you want under it.\nFor obvious reasons, this is incompatible with Optifine.\n";
    }
 
-   public static void putColorsFlat(IBlockAccess world, IBlockState state, BlockPos pos, BufferBuilder buffer, BakedQuad quad, int lightColor) {
+   public static void putColorsFlat(IBlockAccess world, IBlockState state, BlockPos pos, WorldRenderer buffer, BakedQuad quad, int lightColor) {
       if (enabled) {
          BlockTinter.tintBlockFlat(world, state, pos, buffer, quad, lightColor);
       }

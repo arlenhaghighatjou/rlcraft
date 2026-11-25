@@ -8,8 +8,8 @@ import java.lang.reflect.Type;
 import leviathan143.loottweaker.common.darkmagic.LootConditionManagerAccessors;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager.Serializer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class RobustLootConditionSerialiser implements JsonSerializer<LootCondition> {
    private static final Logger SANITY_LOGGER = LogManager.getLogger("loottweaker.sanity_checks");

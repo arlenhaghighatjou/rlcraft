@@ -9,7 +9,7 @@ import meldexun.renderlib.integration.FairyLights;
 import meldexun.renderlib.util.EntityUtil;
 import meldexun.renderlib.util.RenderUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.entity.Entity;

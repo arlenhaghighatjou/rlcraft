@@ -1,6 +1,6 @@
 package paulevs.betternether.structures.plants;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -10,7 +10,7 @@ public class StructureReeds {
    public StructureReeds() {
    }
 
-   public static boolean generate(World world, BlockPos pos, Random random) {
+   public static boolean generate(World world, BlockPos pos, EaglercraftRandom random) {
       if (!checkLava(world, pos)) {
          return false;
       } else {

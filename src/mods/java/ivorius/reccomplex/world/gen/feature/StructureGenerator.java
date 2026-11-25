@@ -26,7 +26,7 @@ import ivorius.reccomplex.world.gen.feature.structure.generic.transformers.RunTr
 import ivorius.reccomplex.world.gen.feature.structure.generic.transformers.TransformerMulti;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
@@ -314,7 +314,7 @@ public class StructureGenerator<S extends NBTStorable> {
          return this.transform;
       } else {
          Structure<S> structure = this.structure();
-         Random random = new Random(this.seed() ^ 1283901823092812394L);
+         EaglercraftRandom random = new EaglercraftRandom(this.seed() ^ 1283901823092812394L);
          AxisAlignedTransform2D transform = AxisAlignedTransform2D.from(structure.isRotatable() ? random.nextInt(4) : 0, structure.isMirrorable() && random.nextBoolean());
          return this.transform = transform;
       }
@@ -480,13 +480,13 @@ public class StructureGenerator<S extends NBTStorable> {
 
    @Nonnull
    public StructurePlaceContext place() {
-      return new StructurePlaceContext(new Random(this.seed() ^ 1923419028309182309L), this.environment(), this.transform(), this.surfaceBoundingBox());
+      return new StructurePlaceContext(new EaglercraftRandom(this.seed() ^ 1923419028309182309L), this.environment(), this.transform(), this.surfaceBoundingBox());
    }
 
    @Nonnull
    public Optional<StructurePrepareContext> prepare() {
       return this.boundingBox().map((bb) -> {
-         return new StructurePrepareContext(this.transform(), bb, this.generateAsSource, this.environment(), new Random(this.seed() ^ 2482039482903842269L), this.generateMaturity);
+         return new StructurePrepareContext(this.transform(), bb, this.generateAsSource, this.environment(), new EaglercraftRandom(this.seed() ^ 2482039482903842269L), this.generateMaturity);
       });
    }
 
@@ -500,7 +500,7 @@ public class StructureGenerator<S extends NBTStorable> {
    @Nonnull
    public Optional<StructureSpawnContext> spawn() {
       return this.boundingBox().map((bb) -> {
-         return new StructureSpawnContext(this.environment(), new Random(this.seed() ^ 2309842093742837432L), this.transform(), bb, this.generationBB, this.generationPredicate, this.generationLayer, this.generateAsSource, this.generateMaturity);
+         return new StructureSpawnContext(this.environment(), new EaglercraftRandom(this.seed() ^ 2309842093742837432L), this.transform(), bb, this.generationBB, this.generationPredicate, this.generationLayer, this.generateAsSource, this.generateMaturity);
       });
    }
 

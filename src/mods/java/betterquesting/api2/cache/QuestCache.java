@@ -13,7 +13,7 @@ import betterquesting.questing.QuestDatabase;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -99,7 +99,7 @@ public class QuestCache implements INBTSerializable<NBTTagCompound> {
 
    public synchronized void updateCache(EntityPlayer player) {
       if (player != null) {
-         UUID uuid = QuestingAPI.getQuestingUUID(player);
+         EaglercraftUUID uuid = QuestingAPI.getQuestingUUID(player);
          List<DBEntry<IQuest>> questDB = ((IQuestDatabase)QuestingAPI.getAPI(ApiReference.QUEST_DB)).getEntries();
          NonNullList<Integer> tmpVisible = NonNullList.create();
          NonNullList<Integer> tmpActive = NonNullList.create();
@@ -203,7 +203,7 @@ public class QuestCache implements INBTSerializable<NBTTagCompound> {
 
    }
 
-   public static boolean isQuestShown(IQuest quest, UUID uuid, EntityPlayer player) {
+   public static boolean isQuestShown(IQuest quest, EaglercraftUUID uuid, EntityPlayer player) {
       if (quest != null && uuid != null) {
          EnumQuestVisibility vis = (EnumQuestVisibility)quest.getProperty(NativeProps.VISIBILITY);
          if (!((IQuestSettings)QuestingAPI.getAPI(ApiReference.SETTINGS)).canUserEdit(player) && vis != EnumQuestVisibility.ALWAYS) {

@@ -3,7 +3,7 @@ package levelup2.skills.crafting;
 import com.google.common.collect.Lists;
 import java.util.ConcurrentModificationException;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -97,7 +97,7 @@ public class FurnaceEfficiencyBonus extends BaseSkill {
                   cap.setUUID(player.getGameProfile().getId());
                } else if (cap.getPlayerFromUUID().getGameProfile().getId() == player.getGameProfile().getId()) {
                   player.sendStatusMessage(new TextComponentTranslation("levelup.interact.unregister", new Object[]{name}), true);
-                  cap.setUUID((UUID)null);
+                  cap.setUUID((EaglercraftUUID)null);
                } else {
                   name = UsernameCache.getLastKnownUsername(cap.getPlayerFromUUID().getGameProfile().getId());
                   player.sendStatusMessage(new TextComponentTranslation("levelup.interact.notowned", new Object[]{name}), true);

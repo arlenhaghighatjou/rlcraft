@@ -1,10 +1,10 @@
 package net.mcft.copy.backpacks.misc.util;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public final class RandomUtils {
-   public static final Random RAND = new Random();
+   public static final EaglercraftRandom RAND = new EaglercraftRandom();
 
    private RandomUtils() {
    }

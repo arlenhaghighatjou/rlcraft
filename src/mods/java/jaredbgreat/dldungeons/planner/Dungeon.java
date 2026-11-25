@@ -26,7 +26,7 @@ import jaredbgreat.dldungeons.util.cache.IHaveCoords;
 import jaredbgreat.dldungeons.util.math.SpatialHash;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -35,7 +35,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class Dungeon implements IHaveCoords {
    private final Coords coords;
    public Theme theme;
-   public Random random;
+   public EaglercraftRandom random;
    public Biome biome;
    public MapMatrix map;
    public Node[] nodes;

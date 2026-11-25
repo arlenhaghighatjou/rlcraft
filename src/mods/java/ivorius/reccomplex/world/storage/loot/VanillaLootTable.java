@@ -3,7 +3,7 @@ package ivorius.reccomplex.world.storage.loot;
 import ivorius.ivtoolkit.tools.IvTranslations;
 import ivorius.reccomplex.RecurrentComplex;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.WorldServer;
@@ -16,7 +16,7 @@ public class VanillaLootTable implements LootTable {
       this.vanillaKey = lootTableKey;
    }
 
-   public ItemStack getRandomItemStack(WorldServer server, Random random) {
+   public ItemStack getRandomItemStack(WorldServer server, EaglercraftRandom random) {
       List<ItemStack> loot = null;
 
       try {

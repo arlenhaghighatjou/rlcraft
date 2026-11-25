@@ -1,6 +1,6 @@
 package rtg.api.world.gen.feature.tree.rtg;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -31,7 +31,7 @@ public class TreeRTGRhizophoraMucronata extends TreeRTG {
       this.verRand = 0.1F;
    }
 
-   public boolean generate(World world, Random rand, BlockPos pos) {
+   public boolean generate(World world, EaglercraftRandom rand, BlockPos pos) {
       if (!this.isGroundValid(world, pos)) {
          return false;
       } else {
@@ -68,7 +68,7 @@ public class TreeRTGRhizophoraMucronata extends TreeRTG {
       }
    }
 
-   public void generateBranch(World world, Random rand, float x, float y, float z, double horDir, float verDir, float length, float speed, boolean isTrunk, RTGTreeData treeData) {
+   public void generateBranch(World world, EaglercraftRandom rand, float x, float y, float z, double horDir, float verDir, float length, float speed, boolean isTrunk, RTGTreeData treeData) {
       if (verDir < 0.0F) {
          verDir = -verDir;
       }
@@ -95,7 +95,7 @@ public class TreeRTGRhizophoraMucronata extends TreeRTG {
 
    }
 
-   public void generateLeaves(World world, Random rand, int x, int y, int z, float size, float width, RTGTreeData treeData) {
+   public void generateLeaves(World world, EaglercraftRandom rand, int x, int y, int z, float size, float width, RTGTreeData treeData) {
       int s = (int)(size - 1.0F);
       int w = (int)((size - 1.0F) * width);
 

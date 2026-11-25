@@ -1,7 +1,7 @@
 package com.github.alexthe666.iceandfire.entity.ai;
 
 import com.github.alexthe666.iceandfire.entity.EntitySiren;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -50,7 +50,7 @@ public class AquaticAIGetOutOfWater extends EntityAIBase {
 
    @Nullable
    private Vec3d findPossibleShelter() {
-      Random random = this.creature.getRNG();
+      EaglercraftRandom random = this.creature.getRNG();
       BlockPos blockpos = new BlockPos(this.creature.posX, this.creature.getEntityBoundingBox().minY, this.creature.posZ);
 
       for(int i = 0; i < 10; ++i) {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.entity.item.EntityItem;
@@ -33,7 +33,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class EnchantmentRune_Resurrection extends EnchantmentBase {
-   private final Map<UUID, InventoryPlayer> INVENTORY_MAP = new HashMap();
+   private final Map<EaglercraftUUID, InventoryPlayer> INVENTORY_MAP = new HashMap();
 
    public EnchantmentRune_Resurrection() {
       super(Rarity.VERY_RARE, EnumList.COMBAT_GOLDEN_APPLE, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND});

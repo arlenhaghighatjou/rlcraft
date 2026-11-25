@@ -1,6 +1,6 @@
 package vazkii.quark.world.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +24,7 @@ public class SakuraTreeGenerator implements IWorldGenerator {
    public SakuraTreeGenerator() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       for(double chance = TreeVariants.sakuraChance; random.nextDouble() < chance; --chance) {
          int x = chunkX * 16 + random.nextInt(16) + 8;
          int z = chunkZ * 16 + random.nextInt(16) + 8;

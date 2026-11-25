@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -194,7 +194,7 @@ public class LootItem {
 
    }
 
-   public ItemStack getStack(Random random) {
+   public ItemStack getStack(EaglercraftRandom random) {
       ItemStack out;
       if (this.max <= this.min) {
          if (this.item instanceof Item) {

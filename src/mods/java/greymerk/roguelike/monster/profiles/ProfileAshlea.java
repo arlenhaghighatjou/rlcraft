@@ -5,13 +5,13 @@ import greymerk.roguelike.monster.Mob;
 import greymerk.roguelike.monster.MonsterProfile;
 import greymerk.roguelike.monster.MonsterProfileType;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ProfileAshlea implements MonsterProfile {
    public ProfileAshlea() {
    }
 
-   public Mob apply(Mob mob, int level, int difficulty, Random rand) {
+   public Mob apply(Mob mob, int level, int difficulty, EaglercraftRandom rand) {
       MonsterProfileType.ZOMBIE_VILLAGER.apply(mob, level, difficulty, rand);
       mob.setChild(true);
       mob.equipMainhand(ItemNovelty.ashleasOatmealCookie());

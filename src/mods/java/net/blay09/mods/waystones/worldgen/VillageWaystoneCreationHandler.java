@@ -1,7 +1,7 @@
 package net.blay09.mods.waystones.worldgen;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.blay09.mods.waystones.WaystoneConfig;
 import net.minecraft.util.EnumFacing;
@@ -15,7 +15,7 @@ public class VillageWaystoneCreationHandler implements IVillageCreationHandler {
    public VillageWaystoneCreationHandler() {
    }
 
-   public PieceWeight getVillagePieceWeight(Random random, int size) {
+   public PieceWeight getVillagePieceWeight(EaglercraftRandom random, int size) {
       return random.nextFloat() > WaystoneConfig.worldGen.villageChance ? new PieceWeight(this.getComponentClass(), 0, 0) : new PieceWeight(ComponentVillageWaystone.class, 3, 1);
    }
 
@@ -24,7 +24,7 @@ public class VillageWaystoneCreationHandler implements IVillageCreationHandler {
    }
 
    @Nullable
-   public Village buildComponent(PieceWeight villagePiece, Start startPiece, List<StructureComponent> pieces, Random random, int x, int y, int z, EnumFacing facing, int type) {
+   public Village buildComponent(PieceWeight villagePiece, Start startPiece, List<StructureComponent> pieces, EaglercraftRandom random, int x, int y, int z, EnumFacing facing, int type) {
       return ComponentVillageWaystone.buildComponent(villagePiece, startPiece, pieces, random, x, y, z, facing, type);
    }
 }

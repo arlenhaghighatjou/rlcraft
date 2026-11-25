@@ -1,7 +1,7 @@
 package vazkii.quark.world.block;
 
 import java.util.Locale;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.IGrowable;
@@ -50,7 +50,7 @@ public class BlockVariantSapling extends BlockQuarkBush implements IGrowable {
       };
    }
 
-   public void updateTick(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, Random rand) {
+   public void updateTick(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          super.updateTick(worldIn, pos, state, rand);
          if (!worldIn.isAreaLoaded(pos, 1)) {
@@ -64,7 +64,7 @@ public class BlockVariantSapling extends BlockQuarkBush implements IGrowable {
 
    }
 
-   public void grow(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void grow(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (((Integer)state.getValue(STAGE)).intValue() == 0) {
          worldIn.setBlockState(pos, state.cycleProperty(STAGE), 4);
       } else {
@@ -73,7 +73,7 @@ public class BlockVariantSapling extends BlockQuarkBush implements IGrowable {
 
    }
 
-   public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void generateTree(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (TerrainGen.saplingGrowTree(worldIn, rand, pos)) {
          WorldGenAbstractTree generator = (WorldGenAbstractTree)(state.getValue(VARIANT) == BlockVariantSapling.Variant.SWAMP_SAPLING ? new WorldGenSwampTree(false) : new WorldGenSakuraTree(true));
          worldIn.setBlockToAir(pos);
@@ -88,11 +88,11 @@ public class BlockVariantSapling extends BlockQuarkBush implements IGrowable {
       return true;
    }
 
-   public boolean canUseBonemeal(@Nonnull World worldIn, @Nonnull Random rand, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
+   public boolean canUseBonemeal(@Nonnull World worldIn, @Nonnull EaglercraftRandom rand, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
       return (double)worldIn.rand.nextFloat() < 0.45D;
    }
 
-   public void grow(@Nonnull World worldIn, @Nonnull Random rand, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
+   public void grow(@Nonnull World worldIn, @Nonnull EaglercraftRandom rand, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
       this.grow(worldIn, pos, state, rand);
    }
 

@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.world.World;
 
 public class ReadAPI {
@@ -16,7 +16,7 @@ public class ReadAPI {
    public static void spawnDungeon(World world, int chunkX, int chunkZ) {
       if (!ConfigHandler.disableAPI) {
          try {
-            Builder.placeDungeon(new Random(), chunkX, chunkZ, world);
+            Builder.placeDungeon(new EaglercraftRandom(), chunkX, chunkZ, world);
          } catch (Throwable var4) {
             System.err.println("[DLDUNGEONS] Danger!  Failed to finalize a dungeon after building!");
             var4.printStackTrace();
@@ -28,7 +28,7 @@ public class ReadAPI {
    public static void spawnDungeon(World world, int chunkX, int chunkZ, long seed) {
       if (!ConfigHandler.disableAPI) {
          try {
-            Builder.placeDungeon(new Random(seed), chunkX, chunkZ, world);
+            Builder.placeDungeon(new EaglercraftRandom(seed), chunkX, chunkZ, world);
          } catch (Throwable var6) {
             System.err.println("[DLDUNGEONS] Danger!  Failed to finalize a dungeon after building!");
             var6.printStackTrace();
@@ -37,7 +37,7 @@ public class ReadAPI {
       }
    }
 
-   public static void spawnDungeon(World world, int chunkX, int chunkZ, Random random) {
+   public static void spawnDungeon(World world, int chunkX, int chunkZ, EaglercraftRandom random) {
       if (!ConfigHandler.disableAPI) {
          try {
             Builder.placeDungeon(random, chunkX, chunkZ, world);

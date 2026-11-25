@@ -3,7 +3,7 @@ package com.github.fnar.minecraft.item;
 import com.google.common.collect.Lists;
 import greymerk.roguelike.util.DyeColor;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Banner extends RldBaseItem {
    private final List<Design> designs = Lists.newArrayList();
@@ -15,7 +15,7 @@ public class Banner extends RldBaseItem {
       return ItemType.BANNER;
    }
 
-   public void addRandomPattern(Random random) {
+   public void addRandomPattern(EaglercraftRandom random) {
       this.withDesign(DesignPattern.chooseRandom(random).withColor(DyeColor.chooseRandom(random)));
    }
 

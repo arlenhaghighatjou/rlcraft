@@ -5,7 +5,7 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.gui.GuiHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class GuiIconButtonSmall extends GuiButton {
    private final IDrawable icon;

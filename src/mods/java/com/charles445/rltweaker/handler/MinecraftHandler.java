@@ -14,7 +14,7 @@ import com.charles445.rltweaker.network.TaskScheduler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.FutureTask;
@@ -65,7 +65,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class MinecraftHandler {
    private static final ReflectionMethod<Void> WRITE_PLAYER_DATA = new ReflectionMethod<Void>(PlayerList.class, "writePlayerData", "writePlayerData", new Class[]{EntityPlayerMP.class});
    public static Map<String, MinecraftHandler.IContainerValidator> containerValidators = new ConcurrentHashMap();
-   public Map<UUID, BlockPos> containerEnforcedPlayers = new ConcurrentHashMap();
+   public Map<EaglercraftUUID, BlockPos> containerEnforcedPlayers = new ConcurrentHashMap();
 
    public MinecraftHandler() {
       MinecraftForge.EVENT_BUS.register(this);
@@ -77,7 +77,7 @@ public class MinecraftHandler {
          EntityPlayer player = (EntityPlayer)event.getEntity();
          World world = player.world;
          if (!world.isRemote && player.openContainer != null && !player.openContainer.equals(player.inventoryContainer)) {
-            UUID playerId = EntityPlayer.getUUID(player.getGameProfile());
+            EaglercraftUUID playerId = EntityPlayer.getUUID(player.getGameProfile());
             MinecraftHandler.IContainerValidator validator = (MinecraftHandler.IContainerValidator)containerValidators.get(player.openContainer.getClass().getName());
             if (validator != null && !validator.isValid(player.openContainer)) {
                this.containerEnforcedPlayers.remove(playerId);
@@ -333,7 +333,7 @@ public class MinecraftHandler {
       if (event.getEntityPlayer() != null) {
          if (event.getContainer() != null) {
             EntityPlayer player = event.getEntityPlayer();
-            UUID playerId = EntityPlayer.getUUID(player.getGameProfile());
+            EaglercraftUUID playerId = EntityPlayer.getUUID(player.getGameProfile());
             String containerClazz = event.getContainer().getClass().getName();
             String[] distanceClazzes = ModConfig.server.minecraft.containerDistanceClasses;
 

@@ -9,7 +9,7 @@ import ivorius.reccomplex.world.gen.feature.structure.Structures;
 import ivorius.reccomplex.world.gen.feature.structure.generic.generation.GenerationType;
 import ivorius.reccomplex.world.gen.feature.structure.generic.generation.VanillaGeneration;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -37,7 +37,7 @@ public class GenericVillageCreationHandler implements IVillageCreationHandler {
       return VanillaGenerationClassFactory.instance().getClass(structureID, generationID);
    }
 
-   public PieceWeight getVillagePieceWeight(Random random, int villageSize) {
+   public PieceWeight getVillagePieceWeight(EaglercraftRandom random, int villageSize) {
       Structure structure = StructureRegistry.INSTANCE.hasActive(this.structureID) ? (Structure)StructureRegistry.INSTANCE.get(this.structureID) : null;
       if (structure != null) {
          float tweakedWeight = RCConfig.tweakedSpawnRate(this.structureID);
@@ -56,7 +56,7 @@ public class GenericVillageCreationHandler implements IVillageCreationHandler {
       return getPieceClass(this.structureID, this.generationID);
    }
 
-   public Village buildComponent(PieceWeight villagePiece, Start startPiece, List<StructureComponent> pieces, Random random, int x, int y, int z, EnumFacing front, int generationDepth) {
+   public Village buildComponent(PieceWeight villagePiece, Start startPiece, List<StructureComponent> pieces, EaglercraftRandom random, int x, int y, int z, EnumFacing front, int generationDepth) {
       Structure structure = (Structure)StructureRegistry.INSTANCE.get(this.structureID);
       if (structure == null) {
          return this.kill(villagePiece);

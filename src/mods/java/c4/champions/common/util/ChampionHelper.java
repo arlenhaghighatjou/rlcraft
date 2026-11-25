@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import java.util.Map.Entry;
 import java.util.function.Function;
@@ -41,10 +41,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.silentchaos512.scalinghealth.api.ScalingHealthAPI;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class ChampionHelper {
-   public static Random rand = new Random();
+   public static EaglercraftRandom rand = new EaglercraftRandom();
    private static Set<Integer> dimensions = Sets.newHashSet();
    private static Set<ResourceLocation> mobs = Sets.newHashSet();
    private static Map<Integer, List<ChampionHelper.LootData>> drops = Maps.newHashMap();

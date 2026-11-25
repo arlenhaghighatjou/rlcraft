@@ -2,7 +2,7 @@ package com.oblivioussp.spartanshields.network;
 
 import com.oblivioussp.spartanshields.item.ItemShieldBase;
 import com.oblivioussp.spartanshields.util.ConfigHandler;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

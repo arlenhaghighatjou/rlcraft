@@ -2,7 +2,7 @@ package com.github.alexthe666.iceandfire.client.render.entity;
 
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import java.util.Map;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.util.ResourceLocation;
@@ -20,9 +20,9 @@ public class RenderModCapes {
    public ResourceLocation blueElytraTex = new ResourceLocation("iceandfire", "textures/models/misc/elytra_ice.png");
    public ResourceLocation betaTex = new ResourceLocation("iceandfire", "textures/models/misc/cape_beta.png");
    public ResourceLocation betaElytraTex = new ResourceLocation("iceandfire", "textures/models/misc/elytra_beta.png");
-   public UUID[] redcapes = new UUID[]{UUID.fromString("59efccaf-902d-45da-928a-5a549b9fd5e0"), UUID.fromString("71363abe-fd03-49c9-940d-aae8b8209b7c")};
-   public UUID[] bluecapes = new UUID[]{UUID.fromString("0ed918c8-d612-4360-b711-cd415671356f"), UUID.fromString("5d43896a-06a0-49fb-95c5-38485c63667f")};
-   public UUID[] betatesters = new UUID[0];
+   public EaglercraftUUID[] redcapes = new EaglercraftUUID[]{EaglercraftUUID.fromString("59efccaf-902d-45da-928a-5a549b9fd5e0"), EaglercraftUUID.fromString("71363abe-fd03-49c9-940d-aae8b8209b7c")};
+   public EaglercraftUUID[] bluecapes = new EaglercraftUUID[]{EaglercraftUUID.fromString("0ed918c8-d612-4360-b711-cd415671356f"), EaglercraftUUID.fromString("5d43896a-06a0-49fb-95c5-38485c63667f")};
+   public EaglercraftUUID[] betatesters = new EaglercraftUUID[0];
 
    public RenderModCapes() {
    }
@@ -72,8 +72,8 @@ public class RenderModCapes {
 
    }
 
-   private boolean hasRedCape(UUID uniqueID) {
-      for(UUID uuid1 : this.redcapes) {
+   private boolean hasRedCape(EaglercraftUUID uniqueID) {
+      for(EaglercraftUUID uuid1 : this.redcapes) {
          if (uniqueID.equals(uuid1)) {
             return true;
          }
@@ -82,8 +82,8 @@ public class RenderModCapes {
       return false;
    }
 
-   private boolean hasBlueCape(UUID uniqueID) {
-      for(UUID uuid1 : this.bluecapes) {
+   private boolean hasBlueCape(EaglercraftUUID uniqueID) {
+      for(EaglercraftUUID uuid1 : this.bluecapes) {
          if (uniqueID.equals(uuid1)) {
             return true;
          }
@@ -92,8 +92,8 @@ public class RenderModCapes {
       return false;
    }
 
-   private boolean hasBetaCape(UUID uniqueID) {
-      for(UUID uuid1 : this.betatesters) {
+   private boolean hasBetaCape(EaglercraftUUID uniqueID) {
+      for(EaglercraftUUID uuid1 : this.betatesters) {
          if (uniqueID.equals(uuid1)) {
             return true;
          }

@@ -1,8 +1,9 @@
 package com.github.alexthe666.iceandfire.client.render.entity;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import com.github.alexthe666.iceandfire.entity.EntityStymphalianFeather;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -30,7 +31,7 @@ public class RenderStymphalianFeather extends Render {
       GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks - 90.0F, 0.0F, 1.0F, 0.0F);
       GlStateManager.rotate(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks, 0.0F, 0.0F, 1.0F);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder BufferBuilder = tessellator.getBuffer();
+      WorldRenderer WorldRenderer = tessellator.getBuffer();
       int i = 0;
       float f = 0.0F;
       float f1 = 0.5F;
@@ -51,29 +52,29 @@ public class RenderStymphalianFeather extends Render {
       GlStateManager.rotate(45.0F, 1.0F, 0.0F, 0.0F);
       GlStateManager.scale(f8, f8, f8);
       GlStateManager.translate(-4.0F, 0.0F, 0.0F);
-      GL11.glNormal3f(f8, 0.0F, 0.0F);
-      BufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-      BufferBuilder.pos(-7.0D, -2.0D, -2.0D).tex((double)f4, (double)f6).endVertex();
-      BufferBuilder.pos(-7.0D, -2.0D, 2.0D).tex((double)f5, (double)f6).endVertex();
-      BufferBuilder.pos(-7.0D, 2.0D, 2.0D).tex((double)f5, (double)f7).endVertex();
-      BufferBuilder.pos(-7.0D, 2.0D, -2.0D).tex((double)f4, (double)f7).endVertex();
+      EaglercraftGPU.glNormal3f(f8, 0.0F, 0.0F);
+      WorldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+      WorldRenderer.pos(-7.0D, -2.0D, -2.0D).tex((double)f4, (double)f6).endVertex();
+      WorldRenderer.pos(-7.0D, -2.0D, 2.0D).tex((double)f5, (double)f6).endVertex();
+      WorldRenderer.pos(-7.0D, 2.0D, 2.0D).tex((double)f5, (double)f7).endVertex();
+      WorldRenderer.pos(-7.0D, 2.0D, -2.0D).tex((double)f4, (double)f7).endVertex();
       tessellator.draw();
-      GL11.glNormal3f(-f8, 0.0F, 0.0F);
-      BufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-      BufferBuilder.pos(-7.0D, 2.0D, -2.0D).tex((double)f4, (double)f6).endVertex();
-      BufferBuilder.pos(-7.0D, 2.0D, 2.0D).tex((double)f5, (double)f6).endVertex();
-      BufferBuilder.pos(-7.0D, -2.0D, 2.0D).tex((double)f5, (double)f7).endVertex();
-      BufferBuilder.pos(-7.0D, -2.0D, -2.0D).tex((double)f4, (double)f7).endVertex();
+      EaglercraftGPU.glNormal3f(-f8, 0.0F, 0.0F);
+      WorldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+      WorldRenderer.pos(-7.0D, 2.0D, -2.0D).tex((double)f4, (double)f6).endVertex();
+      WorldRenderer.pos(-7.0D, 2.0D, 2.0D).tex((double)f5, (double)f6).endVertex();
+      WorldRenderer.pos(-7.0D, -2.0D, 2.0D).tex((double)f5, (double)f7).endVertex();
+      WorldRenderer.pos(-7.0D, -2.0D, -2.0D).tex((double)f4, (double)f7).endVertex();
       tessellator.draw();
 
       for(int j = 0; j < 4; ++j) {
          GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
-         GL11.glNormal3f(0.0F, 0.0F, f8);
-         BufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-         BufferBuilder.pos(-8.0D, -2.0D, 0.0D).tex((double)f, (double)f2).endVertex();
-         BufferBuilder.pos(8.0D, -2.0D, 0.0D).tex((double)f1, (double)f2).endVertex();
-         BufferBuilder.pos(8.0D, 2.0D, 0.0D).tex((double)f1, (double)f3).endVertex();
-         BufferBuilder.pos(-8.0D, 2.0D, 0.0D).tex((double)f, (double)f3).endVertex();
+         EaglercraftGPU.glNormal3f(0.0F, 0.0F, f8);
+         WorldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+         WorldRenderer.pos(-8.0D, -2.0D, 0.0D).tex((double)f, (double)f2).endVertex();
+         WorldRenderer.pos(8.0D, -2.0D, 0.0D).tex((double)f1, (double)f2).endVertex();
+         WorldRenderer.pos(8.0D, 2.0D, 0.0D).tex((double)f1, (double)f3).endVertex();
+         WorldRenderer.pos(-8.0D, 2.0D, 0.0D).tex((double)f, (double)f3).endVertex();
          tessellator.draw();
       }
 

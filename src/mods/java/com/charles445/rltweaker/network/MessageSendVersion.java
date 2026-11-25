@@ -3,7 +3,7 @@ package com.charles445.rltweaker.network;
 import com.charles445.rltweaker.RLTweaker;
 import com.charles445.rltweaker.util.ErrorUtil;
 import com.charles445.rltweaker.util.VersionDelimiter;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;

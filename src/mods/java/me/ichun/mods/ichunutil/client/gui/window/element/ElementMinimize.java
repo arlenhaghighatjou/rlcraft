@@ -3,7 +3,7 @@ package me.ichun.mods.ichunutil.client.gui.window.element;
 import me.ichun.mods.ichunutil.client.gui.Theme;
 import me.ichun.mods.ichunutil.client.gui.window.Window;
 import me.ichun.mods.ichunutil.client.render.RendererHelper;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class ElementMinimize extends Element {
    public ElementMinimize(Window window, int x, int y, int w, int h, int id) {

@@ -1,6 +1,6 @@
 package prospector.traverse.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -28,7 +28,7 @@ public class AutumnalLSCompound {
          super(AutumnalLSCompound.this.name, (Item)null, 20);
       }
 
-      public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+      public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
          return Item.getItemFromBlock(AutumnalLSCompound.this.lsSapling);
       }
 
@@ -45,7 +45,7 @@ public class AutumnalLSCompound {
          super(AutumnalLSCompound.this.name, new TraverseTreeGenerator(false));
       }
 
-      public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+      public void generateTree(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
          if (TerrainGen.saplingGrowTree(worldIn, rand, pos)) {
             worldIn.setBlockToAir(pos);
             if (!(new TraverseTreeGenerator(true, 4, TraverseTreeGenerator.OAK_LOG, AutumnalLSCompound.this.lsLeaves.getDefaultState())).generate(worldIn, rand, pos)) {

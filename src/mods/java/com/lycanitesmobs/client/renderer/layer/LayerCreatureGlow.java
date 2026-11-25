@@ -4,7 +4,7 @@ import com.lycanitesmobs.client.AssetManager;
 import com.lycanitesmobs.client.renderer.RenderCreature;
 import com.lycanitesmobs.core.entity.BaseCreatureEntity;
 import javax.vecmath.Vector4f;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;

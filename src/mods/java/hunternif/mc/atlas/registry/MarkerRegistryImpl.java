@@ -7,14 +7,14 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import javax.annotation.Nullable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.IRegistry;
 import org.apache.commons.lang3.Validate;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 class MarkerRegistryImpl<V extends IRegistryEntry> implements IRegistry<ResourceLocation, V> {
    private static final Logger LOGGER = LogManager.getLogger();
@@ -61,7 +61,7 @@ class MarkerRegistryImpl<V extends IRegistryEntry> implements IRegistry<Resource
    }
 
    @Nullable
-   public V getRandomObject(Random random) {
+   public V getRandomObject(EaglercraftRandom random) {
       this.getValues();
       return (V)(this.values.get(random.nextInt(this.values.size())));
    }

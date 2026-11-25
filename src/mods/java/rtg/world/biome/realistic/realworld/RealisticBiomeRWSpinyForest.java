@@ -1,6 +1,6 @@
 package rtg.world.biome.realistic.realworld;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand.EnumType;
 import net.minecraft.block.state.IBlockState;
@@ -57,7 +57,7 @@ public class RealisticBiomeRWSpinyForest extends RealisticBiomeRWBase {
       }
 
       public void paintTerrain(ChunkPrimer primer, int i, int j, int x, int z, int depth, RTGWorld rtgWorld, float[] noise, float river, Biome[] base) {
-         Random rand = rtgWorld.rand();
+         EaglercraftRandom rand = rtgWorld.rand();
          SimplexNoise simplex = rtgWorld.simplexInstance(0);
          float c = TerrainBase.calcCliff(x, z, noise);
          int cliff = 0;

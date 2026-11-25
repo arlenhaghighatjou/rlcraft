@@ -3,8 +3,8 @@ package net.ilexiconn.llibrary.client.gui.element;
 import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.LogicOp;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -390,7 +390,7 @@ public abstract class InputElementBase<T extends IElementGUI> extends Element<T>
       }
 
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buffer = tessellator.getBuffer();
+      WorldRenderer buffer = tessellator.getBuffer();
       GlStateManager.color(0.0F, 0.0F, 255.0F, 255.0F);
       GlStateManager.disableTexture2D();
       GlStateManager.enableColorLogic();

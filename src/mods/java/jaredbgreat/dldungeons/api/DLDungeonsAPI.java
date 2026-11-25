@@ -2,7 +2,7 @@ package jaredbgreat.dldungeons.api;
 
 import jaredbgreat.dldungeons.ReadAPI;
 import jaredbgreat.dldungeons.themes.ThemeType;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.world.World;
 
 public class DLDungeonsAPI {
@@ -17,7 +17,7 @@ public class DLDungeonsAPI {
       ReadAPI.spawnDungeon(world, chunkX, chunkZ, seed);
    }
 
-   public static void spawnDungeon(World world, int chunkX, int chunkZ, Random random) {
+   public static void spawnDungeon(World world, int chunkX, int chunkZ, EaglercraftRandom random) {
       ReadAPI.spawnDungeon(world, chunkX, chunkZ, random);
    }
 

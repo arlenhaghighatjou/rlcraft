@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -32,10 +32,10 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class TaskRequirement implements ITask {
-   private final Set<UUID> completeUsers = new TreeSet();
+   private final Set<EaglercraftUUID> completeUsers = new TreeSet();
    private List<String> requirements = new ArrayList();
    private RequirementHolder holder;
    private boolean hasUncacheable;
@@ -52,12 +52,12 @@ public class TaskRequirement implements ITask {
    }
 
    public void detect(ParticipantInfo participant, DBEntry<IQuest> quest) {
-      if (!this.isComplete(participant.UUID)) {
+      if (!this.isComplete(participant.EaglercraftUUID)) {
          PlayerData data = PlayerDataHandler.get(participant.PLAYER);
          if (data != null) {
             this.setHolder();
             if (data.matchStats(this.holder)) {
-               this.setComplete(participant.UUID);
+               this.setComplete(participant.EaglercraftUUID);
             }
 
             participant.markDirty(Collections.singletonList(Integer.valueOf(quest.getID())));
@@ -85,15 +85,15 @@ public class TaskRequirement implements ITask {
 
    }
 
-   public boolean isComplete(UUID uuid) {
+   public boolean isComplete(EaglercraftUUID uuid) {
       return this.completeUsers.contains(uuid);
    }
 
-   public void setComplete(UUID uuid) {
+   public void setComplete(EaglercraftUUID uuid) {
       this.completeUsers.add(uuid);
    }
 
-   public void resetUser(@Nullable UUID uuid) {
+   public void resetUser(@Nullable EaglercraftUUID uuid) {
       if (uuid == null) {
          this.completeUsers.clear();
       } else {
@@ -142,7 +142,7 @@ public class TaskRequirement implements ITask {
       this.setHolder();
    }
 
-   public NBTTagCompound writeProgressToNBT(NBTTagCompound json, @Nullable List<UUID> users) {
+   public NBTTagCompound writeProgressToNBT(NBTTagCompound json, @Nullable List<EaglercraftUUID> users) {
       NBTTagList jArray = new NBTTagList();
       this.completeUsers.stream().filter((completeUser) -> {
          return users == null || users.contains(completeUser);
@@ -162,9 +162,9 @@ public class TaskRequirement implements ITask {
 
       for(int i = 0; i < cList.tagCount(); ++i) {
          try {
-            this.completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
+            this.completeUsers.add(EaglercraftUUID.fromString(cList.getStringTagAt(i)));
          } catch (Exception var6) {
-            CompatSkills.logger.log(Level.ERROR, "Unable to load UUID for task", var6);
+            CompatSkills.logger.log(Level.ERROR, "Unable to load EaglercraftUUID for task", var6);
          }
       }
 

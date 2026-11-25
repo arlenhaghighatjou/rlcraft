@@ -1,7 +1,7 @@
 package greymerk.roguelike.treasure.loot;
 
 import java.util.Arrays;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 
 public enum Quality {
@@ -33,7 +33,7 @@ public enum Quality {
       return this.toolName;
    }
 
-   public static Quality random(Random random) {
+   public static Quality random(EaglercraftRandom random) {
       Quality[] values = values();
       return values[random.nextInt(values.length)];
    }

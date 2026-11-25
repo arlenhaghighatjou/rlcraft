@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -51,7 +51,7 @@ public class BookBakedModel implements IBakedModel {
          }
       };
       int maxLineWidth = 64;
-      TextureAtlasSprite fontSprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(font2.toString());
+      EaglerTextureAtlasSprite fontSprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(font2.toString());
       fontRenderer.setSprite(fontSprite);
       fontRenderer.setFillBlanks(false);
       int yOffset = 2;
@@ -86,7 +86,7 @@ public class BookBakedModel implements IBakedModel {
       return this.parent.isBuiltInRenderer();
    }
 
-   public TextureAtlasSprite getParticleTexture() {
+   public EaglerTextureAtlasSprite getParticleTexture() {
       return this.parent.getParticleTexture();
    }
 

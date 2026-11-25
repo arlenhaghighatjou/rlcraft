@@ -5,7 +5,7 @@ import com.github.alexthe666.iceandfire.entity.ai.StymphalianBirdAIAirTarget;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,7 +18,7 @@ public class StymphalianBirdFlock {
    private ArrayList<EntityStymphalianBird> members = new ArrayList();
    private BlockPos leaderTarget;
    private BlockPos prevLeaderTarget;
-   private Random random;
+   private EaglercraftRandom random;
    private int distance = 15;
 
    private StymphalianBirdFlock() {

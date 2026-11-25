@@ -1,8 +1,8 @@
 package ivorius.ivtoolkit.rendering.grid;
 
 import ivorius.ivtoolkit.blocks.BlockArea;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.BlockPos;
@@ -44,7 +44,7 @@ public class AreaRenderer {
       GlStateManager.popMatrix();
    }
 
-   public static void drawCuboid(BufferBuilder renderer, float sizeX, float sizeY, float sizeZ, float in) {
+   public static void drawCuboid(WorldRenderer renderer, float sizeX, float sizeY, float sizeZ, float in) {
       renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
       renderer.pos((double)(-sizeX * in), (double)(-sizeY * in), (double)(-sizeZ)).tex(0.0D, 0.0D).endVertex();
       renderer.pos((double)(-sizeX * in), (double)(sizeY * in), (double)(-sizeZ)).tex(0.0D, 1.0D).endVertex();
@@ -73,7 +73,7 @@ public class AreaRenderer {
       Tessellator.getInstance().draw();
    }
 
-   public static void drawLineCuboid(BufferBuilder renderer, float sizeX, float sizeY, float sizeZ, float in) {
+   public static void drawLineCuboid(WorldRenderer renderer, float sizeX, float sizeY, float sizeZ, float in) {
       renderer.begin(3, DefaultVertexFormats.POSITION);
       renderer.pos((double)(-sizeX * in), (double)(-sizeY * in), (double)(-sizeZ)).endVertex();
       renderer.pos((double)(-sizeX * in), (double)(sizeY * in), (double)(-sizeZ)).endVertex();

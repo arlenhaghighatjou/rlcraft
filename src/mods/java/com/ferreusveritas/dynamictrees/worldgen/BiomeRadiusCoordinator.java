@@ -1,7 +1,7 @@
 package com.ferreusveritas.dynamictrees.worldgen;
 
 import com.ferreusveritas.dynamictrees.api.worldgen.IRadiusCoordinator;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -10,7 +10,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 
 public class BiomeRadiusCoordinator implements IRadiusCoordinator {
-   public NoiseGeneratorPerlin noiseGenerator = new NoiseGeneratorPerlin(new Random(96L), 1);
+   public NoiseGeneratorPerlin noiseGenerator = new NoiseGeneratorPerlin(new EaglercraftRandom(96L), 1);
    protected final TreeGenerator treeGenerator;
    protected final World world;
    protected int pass;

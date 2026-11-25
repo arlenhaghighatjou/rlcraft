@@ -1,7 +1,7 @@
 package com.dhanantry.scapeandrunparasites.client;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -36,7 +36,7 @@ public class SRPProjectile extends Render {
       GlStateManager.enableRescaleNormal();
       GlStateManager.scale(this.scale, this.scale, this.scale);
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       GlStateManager.rotate(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
       GlStateManager.rotate(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
       if (this.renderOutlines) {

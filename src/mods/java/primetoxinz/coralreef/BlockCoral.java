@@ -1,6 +1,6 @@
 package primetoxinz.coralreef;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -125,7 +125,7 @@ public class BlockCoral extends Block implements IPlantable {
       this.checkAndDropBlock(worldIn, pos, state);
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       this.checkAndDropBlock(worldIn, pos, state);
    }
 
@@ -144,7 +144,7 @@ public class BlockCoral extends Block implements IPlantable {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World world, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World world, BlockPos pos, EaglercraftRandom rand) {
       if (CoralReef.ConfigHandler.bubbles && world.getBlockState(pos.up()).getMaterial() == Material.WATER) {
          double offset = 0.0625D;
 

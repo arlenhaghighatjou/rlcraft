@@ -1,6 +1,6 @@
 package melonslise.locks.common.network.toclient;
 
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import melonslise.locks.common.container.LockPickingContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.Container;

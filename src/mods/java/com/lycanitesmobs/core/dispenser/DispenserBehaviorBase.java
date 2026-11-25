@@ -1,7 +1,7 @@
 package com.lycanitesmobs.core.dispenser;
 
 import com.lycanitesmobs.core.info.projectile.ProjectileInfo;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IBlockSource;
@@ -55,7 +55,7 @@ public class DispenserBehaviorBase extends BehaviorProjectileDispense {
    protected void playDispenseSound(IBlockSource blockSource) {
       SoundEvent soundEvent = this.getDispenseSound();
       if (soundEvent != null && blockSource != null) {
-         blockSource.getWorld().playSound((EntityPlayer)null, blockSource.getBlockPos(), soundEvent, SoundCategory.AMBIENT, 1.0F, 1.0F / ((new Random()).nextFloat() * 0.4F + 0.8F));
+         blockSource.getWorld().playSound((EntityPlayer)null, blockSource.getBlockPos(), soundEvent, SoundCategory.AMBIENT, 1.0F, 1.0F / ((new EaglercraftRandom()).nextFloat() * 0.4F + 0.8F));
       }
    }
 

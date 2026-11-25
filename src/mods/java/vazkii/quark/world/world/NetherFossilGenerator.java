@@ -1,6 +1,6 @@
 package vazkii.quark.world.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
@@ -33,7 +33,7 @@ public class NetherFossilGenerator implements IWorldGenerator {
    public NetherFossilGenerator() {
    }
 
-   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+   public void generate(EaglercraftRandom random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
       if (world.provider.isNether() && random.nextInt(NetherFossils.chance) == 0) {
          int x = chunkX * 16 + random.nextInt(16) + 8;
          int z = chunkZ * 16 + random.nextInt(16) + 8;
@@ -56,7 +56,7 @@ public class NetherFossilGenerator implements IWorldGenerator {
 
    }
 
-   private void generateFossil(World world, Random random, BlockPos pos) {
+   private void generateFossil(World world, EaglercraftRandom random, BlockPos pos) {
       MinecraftServer minecraftserver = world.getMinecraftServer();
       Rotation[] rotations = Rotation.values();
       Rotation rotation = rotations[random.nextInt(rotations.length)];

@@ -2,7 +2,7 @@ package rustic.common.blocks.crops;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -61,7 +61,7 @@ public abstract class BlockBerryBush extends BlockBase implements IColoredBlock,
 
    public abstract Item getBerries();
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       super.updateTick(worldIn, pos, state, rand);
       this.checkAndDropBlock(worldIn, pos, state);
       if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && !((Boolean)state.getValue(BERRIES)).booleanValue()) {
@@ -88,7 +88,7 @@ public abstract class BlockBerryBush extends BlockBase implements IColoredBlock,
       return n;
    }
 
-   protected void growOutward(World world, BlockPos pos, Random rand) {
+   protected void growOutward(World world, BlockPos pos, EaglercraftRandom rand) {
       List<BlockPos> positions = new ArrayList();
 
       for(int i = -1; i <= 1; ++i) {
@@ -225,11 +225,11 @@ public abstract class BlockBerryBush extends BlockBase implements IColoredBlock,
       return true;
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return true;
    }
 
-   public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public void grow(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       if (((Boolean)state.getValue(BERRIES)).booleanValue()) {
          this.growOutward(worldIn, pos, rand);
       } else {

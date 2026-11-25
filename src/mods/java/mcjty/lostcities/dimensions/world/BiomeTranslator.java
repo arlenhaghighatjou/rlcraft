@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Map.Entry;
 import mcjty.lostcities.LostCities;
 import mcjty.lostcities.config.BiomeSelectionStrategy;
@@ -154,7 +154,7 @@ public class BiomeTranslator {
             this.translationMap.put(biome.biomeName, bestFit.get(0));
          } else {
             long seed = (long)biome.biomeName.hashCode();
-            Random random = new Random(seed);
+            EaglercraftRandom random = new EaglercraftRandom(seed);
             random.nextFloat();
             random.nextFloat();
             this.translationMap.put(biome.biomeName, bestFit.get(random.nextInt(bestFit.size())));

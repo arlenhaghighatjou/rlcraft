@@ -6,7 +6,7 @@ import com.lycanitesmobs.core.block.BlockFluidBase;
 import com.lycanitesmobs.core.entity.creature.EntityVespid;
 import com.lycanitesmobs.core.entity.creature.EntityVespidQueen;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -81,7 +81,7 @@ public class BlockFluidVeshoney extends BlockFluidBase {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState blockState, World world, BlockPos pos, Random random) {
+   public void randomDisplayTick(IBlockState blockState, World world, BlockPos pos, EaglercraftRandom random) {
       if (random.nextInt(100) == 0) {
          float f = (float)pos.getX() + random.nextFloat();
          float f1 = (float)pos.getY() + random.nextFloat() * 0.5F;

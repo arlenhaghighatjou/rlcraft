@@ -1,6 +1,6 @@
 package reborncore.common;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -23,7 +23,7 @@ public class LootItem {
       this.lootTableList = lootTableList;
    }
 
-   public ItemStack createStack(Random rnd) {
+   public ItemStack createStack(EaglercraftRandom rnd) {
       int size = this.minSize;
       if (this.maxSize > this.minSize) {
          size += rnd.nextInt(this.maxSize - this.minSize + 1);

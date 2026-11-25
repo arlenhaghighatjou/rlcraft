@@ -1,7 +1,7 @@
 package net.theawesomegem.fishingmadebetter.common.block;
 
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -52,7 +52,7 @@ public class BlockBaitBox extends BlockTileEntityBase<TileEntityBaitBox> {
       }
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(this);
    }
 

@@ -8,13 +8,13 @@ import greymerk.roguelike.monster.Mob;
 import greymerk.roguelike.monster.MonsterProfile;
 import greymerk.roguelike.treasure.loot.Quality;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ProfileRleahy implements MonsterProfile {
    public ProfileRleahy() {
    }
 
-   public Mob apply(Mob mob, int level, int difficulty, Random random) {
+   public Mob apply(Mob mob, int level, int difficulty, EaglercraftRandom random) {
       RldItemStack weapon = ItemNovelty.rleahianBattleSub();
       mob.equipMainhand(weapon);
       mob.equipShield(random);

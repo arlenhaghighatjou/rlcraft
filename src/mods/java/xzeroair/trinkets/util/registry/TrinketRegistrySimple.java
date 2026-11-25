@@ -5,12 +5,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import javax.annotation.Nullable;
 import org.apache.commons.lang3.Validate;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 public class TrinketRegistrySimple<K, V> implements ITrinketRegistry<K, V> {
    private static final Logger LOGGER = LogManager.getLogger();
@@ -45,7 +45,7 @@ public class TrinketRegistrySimple<K, V> implements ITrinketRegistry<K, V> {
    }
 
    @Nullable
-   public V getRandomObject(Random random) {
+   public V getRandomObject(EaglercraftRandom random) {
       if (this.values == null) {
          Collection<?> collection = this.registryObjects.values();
          if (collection.isEmpty()) {

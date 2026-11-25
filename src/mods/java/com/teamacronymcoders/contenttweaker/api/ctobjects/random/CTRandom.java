@@ -1,16 +1,16 @@
 package com.teamacronymcoders.contenttweaker.api.ctobjects.random;
 
 import crafttweaker.annotations.ZenRegister;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenRegister
-@ZenClass("mods.contenttweaker.Random")
+@ZenClass("mods.contenttweaker.EaglercraftRandom")
 public class CTRandom {
-   private Random random;
+   private EaglercraftRandom random;
 
-   public CTRandom(Random random) {
+   public CTRandom(EaglercraftRandom random) {
       this.random = random;
    }
 

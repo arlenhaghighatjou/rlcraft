@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public class GuiDropDownList<T> implements IObservable {
    public static final int HEIGHT = 16;

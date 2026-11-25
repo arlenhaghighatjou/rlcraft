@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.entity.boss;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import lykrast.defiledlands.common.entity.IEntityDefiled;
 import net.minecraft.block.Block;
@@ -375,7 +375,7 @@ public class EntityMourner extends EntityMob implements IEntityDefiled {
       boolean flag = false;
       BlockPos blockpos = new BlockPos(this);
       World world = this.world;
-      Random random = this.getRNG();
+      EaglercraftRandom random = this.getRNG();
       if (world.isBlockLoaded(blockpos)) {
          this.setPositionAndUpdate(this.posX, this.posY, this.posZ);
          if (world.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && !world.containsAnyLiquid(this.getEntityBoundingBox())) {

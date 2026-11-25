@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -38,11 +38,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class TaskBlockBreak implements ITask {
-   private final Set<UUID> completeUsers = new TreeSet();
-   private final HashMap<UUID, int[]> userProgress = new HashMap();
+   private final Set<EaglercraftUUID> completeUsers = new TreeSet();
+   private final HashMap<EaglercraftUUID, int[]> userProgress = new HashMap();
    public final List<NbtBlockType> blockTypes = new ArrayList();
 
    public TaskBlockBreak() {
@@ -53,11 +53,11 @@ public class TaskBlockBreak implements ITask {
       return FactoryTaskBlockBreak.INSTANCE.getRegistryName();
    }
 
-   public boolean isComplete(UUID uuid) {
+   public boolean isComplete(EaglercraftUUID uuid) {
       return this.completeUsers.contains(uuid);
    }
 
-   public void setComplete(UUID uuid) {
+   public void setComplete(EaglercraftUUID uuid) {
       this.completeUsers.add(uuid);
    }
 
@@ -86,7 +86,7 @@ public class TaskBlockBreak implements ITask {
    public void onBlockBreak(ParticipantInfo pInfo, DBEntry<IQuest> quest, IBlockState state, BlockPos pos) {
       TileEntity tile = state.getBlock().hasTileEntity(state) ? pInfo.PLAYER.world.getTileEntity(pos) : null;
       NBTTagCompound tags = tile == null ? null : tile.writeToNBT(new NBTTagCompound());
-      List<Tuple<UUID, int[]>> progress = this.getBulkProgress(pInfo.ALL_UUIDS);
+      List<Tuple<EaglercraftUUID, int[]>> progress = this.getBulkProgress(pInfo.ALL_UUIDS);
       boolean changed = false;
 
       for(int i = 0; i < this.blockTypes.size(); ++i) {
@@ -158,9 +158,9 @@ public class TaskBlockBreak implements ITask {
 
       for(int i = 0; i < cList.tagCount(); ++i) {
          try {
-            this.completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
+            this.completeUsers.add(EaglercraftUUID.fromString(cList.getStringTagAt(i)));
          } catch (Exception var11) {
-            BQ_Standard.logger.log(Level.ERROR, "Unable to load UUID for task", var11);
+            BQ_Standard.logger.log(Level.ERROR, "Unable to load EaglercraftUUID for task", var11);
          }
       }
 
@@ -169,7 +169,7 @@ public class TaskBlockBreak implements ITask {
       for(int n = 0; n < pList.tagCount(); ++n) {
          try {
             NBTTagCompound pTag = pList.getCompoundTagAt(n);
-            UUID uuid = UUID.fromString(pTag.getString("uuid"));
+            EaglercraftUUID uuid = EaglercraftUUID.fromString(pTag.getString("uuid"));
             int[] data = new int[this.blockTypes.size()];
             NBTTagList dNbt = pTag.getTagList("data", 3);
 
@@ -185,7 +185,7 @@ public class TaskBlockBreak implements ITask {
 
    }
 
-   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<EaglercraftUUID> users) {
       NBTTagList jArray = new NBTTagList();
       NBTTagList progArray = new NBTTagList();
       if (users != null) {
@@ -232,7 +232,7 @@ public class TaskBlockBreak implements ITask {
       return nbt;
    }
 
-   public void resetUser(@Nullable UUID uuid) {
+   public void resetUser(@Nullable EaglercraftUUID uuid) {
       if (uuid == null) {
          this.completeUsers.clear();
          this.userProgress.clear();
@@ -253,20 +253,20 @@ public class TaskBlockBreak implements ITask {
       return null;
    }
 
-   private void setUserProgress(UUID uuid, int[] progress) {
+   private void setUserProgress(EaglercraftUUID uuid, int[] progress) {
       this.userProgress.put(uuid, progress);
    }
 
-   public int[] getUsersProgress(UUID uuid) {
+   public int[] getUsersProgress(EaglercraftUUID uuid) {
       int[] progress = (int[])this.userProgress.get(uuid);
       return progress != null && progress.length == this.blockTypes.size() ? progress : new int[this.blockTypes.size()];
    }
 
-   private List<Tuple<UUID, int[]>> getBulkProgress(@Nonnull List<UUID> uuids) {
+   private List<Tuple<EaglercraftUUID, int[]>> getBulkProgress(@Nonnull List<EaglercraftUUID> uuids) {
       if (uuids.size() <= 0) {
          return Collections.emptyList();
       } else {
-         List<Tuple<UUID, int[]>> list = new ArrayList();
+         List<Tuple<EaglercraftUUID, int[]>> list = new ArrayList();
          uuids.forEach((key) -> {
             list.add(new Tuple(key, this.getUsersProgress(key)));
          });
@@ -274,9 +274,9 @@ public class TaskBlockBreak implements ITask {
       }
    }
 
-   private void setBulkProgress(@Nonnull List<Tuple<UUID, int[]>> list) {
+   private void setBulkProgress(@Nonnull List<Tuple<EaglercraftUUID, int[]>> list) {
       list.forEach((entry) -> {
-         this.setUserProgress((UUID)entry.getFirst(), (int[])entry.getSecond());
+         this.setUserProgress((EaglercraftUUID)entry.getFirst(), (int[])entry.getSecond());
       });
    }
 }

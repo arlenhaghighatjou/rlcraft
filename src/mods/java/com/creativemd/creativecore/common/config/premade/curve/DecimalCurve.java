@@ -4,7 +4,7 @@ import com.creativemd.creativecore.common.config.api.CreativeConfig;
 import com.creativemd.creativecore.common.config.api.ICreativeConfig;
 import com.creativemd.creativecore.common.config.premade.DecimalMinMax;
 import com.creativemd.creativecore.common.config.premade.IntMinMax;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class DecimalCurve implements ICreativeConfig, Curve {
    @CreativeConfig
@@ -23,14 +23,14 @@ public class DecimalCurve implements ICreativeConfig, Curve {
       this.maxValue = maxValue;
    }
 
-   public DecimalCurve(Random rand, IntMinMax duration, DecimalMinMax intensity) {
+   public DecimalCurve(EaglercraftRandom rand, IntMinMax duration, DecimalMinMax intensity) {
       this.min = 0.0D;
       this.minValue = intensity.next(rand);
       this.max = (double)duration.next(rand);
       this.maxValue = 0.0D;
    }
 
-   public DecimalCurve(Random rand, IntMinMax duration, double intensity) {
+   public DecimalCurve(EaglercraftRandom rand, IntMinMax duration, double intensity) {
       this.min = 0.0D;
       this.minValue = intensity;
       this.max = (double)duration.next(rand);

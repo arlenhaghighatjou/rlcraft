@@ -4,7 +4,7 @@ import java.awt.Color;
 import javax.annotation.Nonnull;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelElytra;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;

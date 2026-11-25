@@ -1,6 +1,6 @@
 package jaredbgreat.dldungeons.util.math;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Vec3D {
    private static final double P2 = 6.283185307179586D;
@@ -14,7 +14,7 @@ public class Vec3D {
       this.z = z;
    }
 
-   public Vec3D(Random rand) {
+   public Vec3D(EaglercraftRandom rand) {
       this.x = rand.nextDouble() * 2.0D - 1.0D;
       this.y = rand.nextDouble() * 2.0D - 1.0D;
       this.z = rand.nextDouble() * 2.0D - 1.0D;

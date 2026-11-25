@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.Logger;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 import com.google.common.collect.Lists;
 
@@ -302,7 +302,7 @@ public class InfernalMobsCore
 
     private void parseItemsForList(String itemIDs, ArrayList<ItemStack> list)
     {
-        Random rand = new Random();
+        EaglercraftRandom rand = new EaglercraftRandom();
         itemIDs = itemIDs.trim();
         for (String s : itemIDs.split(","))
         {
@@ -743,7 +743,7 @@ public class InfernalMobsCore
         }
     }
 
-    private EnchantmentData getRandomEnchantment(Random rand)
+    private EnchantmentData getRandomEnchantment(EaglercraftRandom rand)
     {
         if (enchantmentList == null)
         {
@@ -771,7 +771,7 @@ public class InfernalMobsCore
      * Custom Enchanting Helper
      * 
      * @param rand
-     *            Random gen to use
+     *            EaglercraftRandom gen to use
      * @param itemStack
      *            ItemStack to be enchanted
      * @param itemEnchantability
@@ -779,7 +779,7 @@ public class InfernalMobsCore
      * @param modStr
      *            MobModifier strength to be used. Should be in range 2-5
      */
-    private void enchantRandomly(Random rand, ItemStack itemStack, int itemEnchantability, int modStr)
+    private void enchantRandomly(EaglercraftRandom rand, ItemStack itemStack, int itemEnchantability, int modStr)
     {
         int remainStr = (modStr + 1) / 2; // should result in 1-3
         List<?> enchantments = EnchantmentHelper.buildEnchantmentList(rand, itemStack, itemEnchantability, true);

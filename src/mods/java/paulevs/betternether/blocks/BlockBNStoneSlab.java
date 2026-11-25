@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.SoundType;
@@ -90,7 +90,7 @@ public abstract class BlockBNStoneSlab extends BlockSlab {
          this.drop = drop;
       }
 
-      public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+      public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
          return Item.getItemFromBlock(this.drop);
       }
 

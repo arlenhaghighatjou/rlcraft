@@ -2,7 +2,7 @@ package vazkii.quark.world.entity;
 
 import com.google.common.base.Predicate;
 import java.util.List;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
@@ -247,7 +247,7 @@ public class EntityFoxhound extends EntityWolf implements IMob {
 
    public EntityWolf createChild(EntityAgeable otherParent) {
       EntityWolf entitywolf = new EntityFoxhound(this.world);
-      UUID uuid = this.getOwnerId();
+      EaglercraftUUID uuid = this.getOwnerId();
       if (uuid != null) {
          entitywolf.setOwnerId(uuid);
          entitywolf.setTamed(true);

@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockMagma;
 import net.minecraft.block.SoundType;
@@ -52,7 +52,7 @@ public class BlockMagmaFlower extends Block {
 
    }
 
-   public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom random) {
       if (!worldIn.isRemote) {
          super.updateTick(worldIn, pos, state, random);
          int size = ((Integer)state.getValue(SIZE)).intValue();
@@ -93,7 +93,7 @@ public class BlockMagmaFlower extends Block {
       return EnumOffsetType.XYZ;
    }
 
-   private void spawnSeeds(World world, BlockPos pos, Random random) {
+   private void spawnSeeds(World world, BlockPos pos, EaglercraftRandom random) {
       if (!world.isRemote) {
          ItemStack drop = new ItemStack(Items.MAGMA_CREAM, 1 + random.nextInt(3));
          EntityItem itemEntity = new EntityItem(world, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, drop);

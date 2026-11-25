@@ -32,7 +32,7 @@ import com.ferreusveritas.dynamictrees.render.RenderFallingTree;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import com.ferreusveritas.dynamictrees.trees.TreeFamily;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import net.minecraft.block.Block;
@@ -45,7 +45,7 @@ import net.minecraft.client.renderer.block.statemap.StateMap.Builder;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -87,7 +87,7 @@ public class ClientProxy extends CommonProxy {
    }
 
    private void discoverWoodColors() {
-      Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter = (location) -> {
+      Function<ResourceLocation, EaglerTextureAtlasSprite> bakedTextureGetter = (location) -> {
          return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
       };
 
@@ -101,7 +101,7 @@ public class ClientProxy extends CommonProxy {
                IModel model = QuadManipulator.getModelForState(state);
                ResourceLocation resloc = QuadManipulator.getModelTexture(model, bakedTextureGetter, state, EnumFacing.UP);
                if (resloc != null) {
-                  TextureUtils.PixelBuffer pixbuf = new TextureUtils.PixelBuffer((TextureAtlasSprite)bakedTextureGetter.apply(resloc));
+                  TextureUtils.PixelBuffer pixbuf = new TextureUtils.PixelBuffer((EaglerTextureAtlasSprite)bakedTextureGetter.apply(resloc));
                   int u = pixbuf.w / 16;
                   TextureUtils.PixelBuffer center = new TextureUtils.PixelBuffer(u * 8, u * 8);
                   pixbuf.blit(center, u * -8, u * -8);
@@ -237,7 +237,7 @@ public class ClientProxy extends CommonProxy {
 
    public void crushLeavesBlock(World world, BlockPos pos, IBlockState blockState, Entity entity) {
       if (world.isRemote) {
-         Random random = world.rand;
+         EaglercraftRandom random = world.rand;
          ITreePart treePart = TreeHelper.getTreePart(blockState);
          if (treePart instanceof BlockDynamicLeaves) {
             BlockDynamicLeaves leaves = (BlockDynamicLeaves)treePart;

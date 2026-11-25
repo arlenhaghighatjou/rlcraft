@@ -2,7 +2,7 @@ package ivorius.reccomplex.random;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Place {
    private static List<String> placeTypes = Arrays.asList("hill", "mountain", "village", "town", "sea", "forest", "cave", "field", "tower", "dungeon", "realm", "dimension", "temple", "shrine", "hut", "shack", "cottage", "cavern", "crevice", "ruïns", "lowland", "plain", "peak", "cliff", "creek", "meadow", "tower", "lighthouse", "mansion", "sewer", "cellar", "church", "valley", "ravine", "ridge", "glacier", "river", "lake", "waterfall", "island", "isle", "reef");
@@ -17,7 +17,7 @@ public class Place {
       this.placeName = placeName;
    }
 
-   public static Place randomPlace(Random random) {
+   public static Place randomPlace(EaglercraftRandom random) {
       String placeType = (String)getRandomElementFrom(placeTypes, random) + (random.nextFloat() < 0.6F ? "s" : "");
       String placeTrait = random.nextFloat() < 0.9F ? (String)getRandomElementFrom(placeTraits, random) : null;
       String placeName = null;
@@ -42,7 +42,7 @@ public class Place {
       return new Place(placeType, placeTrait, placeName);
    }
 
-   private static <O> O getRandomElementFrom(List<O> list, Random random) {
+   private static <O> O getRandomElementFrom(List<O> list, EaglercraftRandom random) {
       return (O)list.get(random.nextInt(list.size()));
    }
 

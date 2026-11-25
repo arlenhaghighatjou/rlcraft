@@ -1,6 +1,6 @@
 package knightminer.inspirations.utility.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import knightminer.inspirations.Inspirations;
 import knightminer.inspirations.utility.tileentity.TileCollector;
 import net.minecraft.block.Block;
@@ -131,7 +131,7 @@ public class BlockCollector extends BlockInventory {
       return 4;
    }
 
-   public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!world.isRemote) {
          TileEntity te = world.getTileEntity(pos);
          if (te instanceof TileCollector) {

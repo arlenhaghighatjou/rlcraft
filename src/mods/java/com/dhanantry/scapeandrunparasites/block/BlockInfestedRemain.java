@@ -14,7 +14,7 @@ import com.dhanantry.scapeandrunparasites.util.config.SRPConfigSystems;
 import com.dhanantry.scapeandrunparasites.world.SRPWorldData;
 import com.dhanantry.scapeandrunparasites.world.biome.BiomeParasite;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
@@ -67,7 +67,7 @@ public class BlockInfestedRemain extends BlockBush {
       return true;
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          if (worldIn.getDifficulty() == EnumDifficulty.PEACEFUL) {
             return;
@@ -228,7 +228,7 @@ public class BlockInfestedRemain extends BlockBush {
       super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return null;
    }
 
@@ -240,7 +240,7 @@ public class BlockInfestedRemain extends BlockBush {
       return false;
    }
 
-   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+   public boolean canUseBonemeal(World worldIn, EaglercraftRandom rand, BlockPos pos, IBlockState state) {
       return false;
    }
 

@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,7 +17,7 @@ import net.silentchaos512.lib.guidebook.internal.GuiGuideBase;
 import net.silentchaos512.lib.guidebook.misc.GuideBookUtils;
 import net.silentchaos512.lib.util.StringUtil;
 import org.apache.commons.lang3.ArrayUtils;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 @SideOnly(Side.CLIENT)
 public abstract class GuiGuide extends GuiGuideBase {

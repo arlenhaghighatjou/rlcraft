@@ -1,9 +1,9 @@
 package hunternif.mc.atlas.client.gui.core;
 
 import java.io.IOException;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public abstract class AGuiScrollbar extends GuiComponent {
    ResourceLocation texture;

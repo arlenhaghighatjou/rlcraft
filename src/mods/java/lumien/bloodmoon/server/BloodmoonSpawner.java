@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
 import lumien.bloodmoon.config.BloodmoonConfig;
 import net.minecraft.block.Block;
@@ -196,7 +196,7 @@ public final class BloodmoonSpawner {
       }
    }
 
-   public static void performWorldGenSpawning(World worldIn, Biome biomeIn, int p_77191_2_, int p_77191_3_, int p_77191_4_, int p_77191_5_, Random randomIn) {
+   public static void performWorldGenSpawning(World worldIn, Biome biomeIn, int p_77191_2_, int p_77191_3_, int p_77191_4_, int p_77191_5_, EaglercraftRandom randomIn) {
       List<SpawnListEntry> list = biomeIn.getSpawnableList(EnumCreatureType.CREATURE);
       if (!list.isEmpty()) {
          while(randomIn.nextFloat() < biomeIn.getSpawningChance()) {

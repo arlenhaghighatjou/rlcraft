@@ -2,7 +2,7 @@ package com.ferreusveritas.dynamictrees.trees;
 
 import com.ferreusveritas.dynamictrees.api.TreeHelper;
 import com.ferreusveritas.dynamictrees.items.Seed;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.init.Biomes;
@@ -63,7 +63,7 @@ public class TreeBirch extends TreeFamilyVanilla {
          return isOneOfBiomes(biome, new Biome[]{Biomes.BIRCH_FOREST, Biomes.BIRCH_FOREST_HILLS});
       }
 
-      public boolean rot(World world, BlockPos pos, int neighborCount, int radius, Random random, boolean rapid) {
+      public boolean rot(World world, BlockPos pos, int neighborCount, int radius, EaglercraftRandom random, boolean rapid) {
          if (super.rot(world, pos, neighborCount, radius, random, rapid)) {
             if (radius > 4 && TreeHelper.isRooty(world.getBlockState(pos.down())) && world.getLightFor(EnumSkyBlock.SKY, pos) < 4) {
                world.setBlockState(pos, Blocks.BROWN_MUSHROOM.getDefaultState());

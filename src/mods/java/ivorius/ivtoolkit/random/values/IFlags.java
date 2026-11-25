@@ -1,6 +1,6 @@
 package ivorius.ivtoolkit.random.values;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class IFlags implements IValue {
    public int[] flags;
@@ -25,7 +25,7 @@ public class IFlags implements IValue {
 
    }
 
-   public Integer getValue(Random random) {
+   public Integer getValue(EaglercraftRandom random) {
       int value = 0;
       int flagsSet = 0;
 
@@ -58,7 +58,7 @@ public class IFlags implements IValue {
       return value;
    }
 
-   public static int getRandomValue(Random random, int[] values, double[] weights) {
+   public static int getRandomValue(EaglercraftRandom random, int[] values, double[] weights) {
       double total = 0.0D;
 
       for(double weight : weights) {

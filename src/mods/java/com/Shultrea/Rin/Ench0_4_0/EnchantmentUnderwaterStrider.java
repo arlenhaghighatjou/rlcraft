@@ -2,7 +2,7 @@ package com.Shultrea.Rin.Ench0_4_0;
 
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class EnchantmentUnderwaterStrider extends EnchantmentBase {
-   public static final UUID CACHED_UUID = UUID.fromString("a612fe81-132f-4c58-a335-13c4ae5cba21");
+   public static final EaglercraftUUID CACHED_UUID = EaglercraftUUID.fromString("a612fe81-132f-4c58-a335-13c4ae5cba21");
 
    public EnchantmentUnderwaterStrider() {
       super(Rarity.RARE, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[]{EntityEquipmentSlot.FEET});

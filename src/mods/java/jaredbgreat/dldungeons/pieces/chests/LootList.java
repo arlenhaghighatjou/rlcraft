@@ -1,7 +1,7 @@
 package jaredbgreat.dldungeons.pieces.chests;
 
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
@@ -19,7 +19,7 @@ public class LootList extends ArrayList<LootItem> {
       this.add(new LootItem(item, min, max));
    }
 
-   public LootItem getLoot(Random random) {
+   public LootItem getLoot(EaglercraftRandom random) {
       if (this.isEmpty()) {
          return null;
       } else {

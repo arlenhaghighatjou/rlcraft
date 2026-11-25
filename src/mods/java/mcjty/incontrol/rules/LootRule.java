@@ -3,7 +3,7 @@ package mcjty.incontrol.rules;
 import com.google.gson.JsonElement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import javax.annotation.Nullable;
@@ -31,7 +31,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class LootRule extends RuleBase<EventGetter> {
    public static final IEventQuery<LivingDropsEvent> EVENT_QUERY = new IEventQuery<LivingDropsEvent>() {
@@ -73,7 +73,7 @@ public class LootRule extends RuleBase<EventGetter> {
       }
    };
    private static final GenericAttributeMapFactory FACTORY = new GenericAttributeMapFactory();
-   private static Random rnd = new Random();
+   private static EaglercraftRandom rnd = new EaglercraftRandom();
    private final GenericRuleEvaluator ruleEvaluator;
    private List<Predicate<ItemStack>> toRemoveItems = new ArrayList();
    private List<Pair<ItemStack, Function<Integer, Integer>>> toAddItems = new ArrayList();

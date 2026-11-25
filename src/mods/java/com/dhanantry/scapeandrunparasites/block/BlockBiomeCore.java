@@ -2,7 +2,7 @@ package com.dhanantry.scapeandrunparasites.block;
 
 import com.dhanantry.scapeandrunparasites.util.ParasiteEventWorld;
 import com.dhanantry.scapeandrunparasites.world.gen.feature.WorldGenParasiteNodeCore;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -60,7 +60,7 @@ public class BlockBiomeCore extends BlockBase {
       }
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (!worldIn.isRemote) {
          if (worldIn.isAreaLoaded(pos, 3)) {
             int meta = this.getMetaFromState(state);
@@ -71,11 +71,11 @@ public class BlockBiomeCore extends BlockBase {
                   switch(age) {
                   case 2:
                      WorldGenParasiteNodeCore tree2 = new WorldGenParasiteNodeCore(false, 2);
-                     tree2.generate(worldIn, new Random(), pos.up());
+                     tree2.generate(worldIn, new EaglercraftRandom(), pos.up());
                      break;
                   case 3:
                      WorldGenParasiteNodeCore tree3 = new WorldGenParasiteNodeCore(false, 3);
-                     tree3.generate(worldIn, new Random(), pos.up());
+                     tree3.generate(worldIn, new EaglercraftRandom(), pos.up());
                   }
                }
             }

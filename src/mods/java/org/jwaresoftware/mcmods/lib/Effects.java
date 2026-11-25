@@ -1,6 +1,6 @@
 package org.jwaresoftware.mcmods.lib;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
@@ -208,14 +208,14 @@ public final class Effects {
       playSound(world, player, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, volume < 0.0F ? 0.2F : volume, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
    }
 
-   public static final void spawnWarningParticle(World world, BlockPos at, Random rand, @Nonnull EnumParticleTypes particleType) {
+   public static final void spawnWarningParticle(World world, BlockPos at, EaglercraftRandom rand, @Nonnull EnumParticleTypes particleType) {
       if (rand.nextInt(20) == 0) {
          world.spawnParticle(particleType, (double)((float)at.getX() + rand.nextFloat()), (double)((float)at.getY() + 1.0F), (double)((float)at.getZ() + rand.nextFloat()), 0.0D, 0.0D, 0.0D, ArrayUtils.EMPTY_INT_ARRAY);
       }
 
    }
 
-   public static final void spawnSmallArrayOfParticles(@Nonnull World world, BlockPos at, Random rand, @Nonnull EnumParticleTypes particleType) {
+   public static final void spawnSmallArrayOfParticles(@Nonnull World world, BlockPos at, EaglercraftRandom rand, @Nonnull EnumParticleTypes particleType) {
       if (rand == null) {
          rand = world.rand;
       }
@@ -232,7 +232,7 @@ public final class Effects {
 
    }
 
-   public static final void spawnPinklyParticles(World world, BlockPos at, @Nullable EnumParticleTypes particleType, Random rand) {
+   public static final void spawnPinklyParticles(World world, BlockPos at, @Nullable EnumParticleTypes particleType, EaglercraftRandom rand) {
       if (rand == null) {
          rand = world.rand;
       }
@@ -264,7 +264,7 @@ public final class Effects {
       play(2003, world, at);
    }
 
-   public static final void spawnTpParticles(World world, BlockPos at, Random rand) {
+   public static final void spawnTpParticles(World world, BlockPos at, EaglercraftRandom rand) {
       if (rand == null) {
          rand = world.rand;
       }
@@ -279,7 +279,7 @@ public final class Effects {
       play(SharedGlue.PORTAL_TRAVEL_SFX(), world, at);
    }
 
-   public static final void spawnParticles(@Nonnull World world, double atX, double atY, double atZ, @Nullable Random rand, @Nullable EnumParticleTypes particleType, int count, boolean still) {
+   public static final void spawnParticles(@Nonnull World world, double atX, double atY, double atZ, @Nullable EaglercraftRandom rand, @Nullable EnumParticleTypes particleType, int count, boolean still) {
       if (particleType == null) {
          particleType = EnumParticleTypes.VILLAGER_HAPPY;
       }
@@ -301,11 +301,11 @@ public final class Effects {
 
    }
 
-   public static final void spawnVisualBOOM(@Nonnull World world, double atX, double atY, double atZ, @Nullable Random rand, @Nullable EnumParticleTypes particleType) {
+   public static final void spawnVisualBOOM(@Nonnull World world, double atX, double atY, double atZ, @Nullable EaglercraftRandom rand, @Nullable EnumParticleTypes particleType) {
       spawnParticles(world, atX, atY, atZ, rand, particleType, -1, false);
    }
 
-   public static final void spawnVisualWhack(@Nonnull World world, @Nonnull Entity at, @Nullable Random rand, @Nullable EnumParticleTypes particleType) {
+   public static final void spawnVisualWhack(@Nonnull World world, @Nonnull Entity at, @Nullable EaglercraftRandom rand, @Nullable EnumParticleTypes particleType) {
       spawnParticles(world, at.posX, at.posY + 0.5D, at.posZ, rand, particleType, -1, false);
    }
 
@@ -317,15 +317,15 @@ public final class Effects {
          world.spawnParticle(EnumParticleTypes.FLAME, at.posX, y, at.posZ + 1.0D, 0.0D, 0.0D, 0.0D, new int[0]);
          world.spawnParticle(EnumParticleTypes.FLAME, at.posX, y, at.posZ - 1.0D, 0.0D, 0.0D, 0.0D, new int[0]);
       } else {
-         spawnParticles(world, at.posX + 1.0D, y, at.posZ, (Random)null, EnumParticleTypes.FLAME, 1, true);
-         spawnParticles(world, at.posX - 1.0D, y, at.posZ, (Random)null, EnumParticleTypes.FLAME, 1, true);
-         spawnParticles(world, at.posX, y, at.posZ + 1.0D, (Random)null, EnumParticleTypes.FLAME, 1, true);
-         spawnParticles(world, at.posX, y, at.posZ - 1.0D, (Random)null, EnumParticleTypes.FLAME, 1, true);
+         spawnParticles(world, at.posX + 1.0D, y, at.posZ, (EaglercraftRandom)null, EnumParticleTypes.FLAME, 1, true);
+         spawnParticles(world, at.posX - 1.0D, y, at.posZ, (EaglercraftRandom)null, EnumParticleTypes.FLAME, 1, true);
+         spawnParticles(world, at.posX, y, at.posZ + 1.0D, (EaglercraftRandom)null, EnumParticleTypes.FLAME, 1, true);
+         spawnParticles(world, at.posX, y, at.posZ - 1.0D, (EaglercraftRandom)null, EnumParticleTypes.FLAME, 1, true);
       }
 
    }
 
-   public static final void spawnRainbowParticlesAround(@Nonnull World world, BlockPos pos, @Nullable Random rand) {
+   public static final void spawnRainbowParticlesAround(@Nonnull World world, BlockPos pos, @Nullable EaglercraftRandom rand) {
       if (rand == null) {
          rand = world.rand;
       }

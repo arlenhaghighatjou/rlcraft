@@ -1,7 +1,7 @@
 package de.Whitedraco.switchbow.proxy.packets;
 
 import de.Whitedraco.switchbow.Config.SwitchBowConfig;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.io.IOException;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;

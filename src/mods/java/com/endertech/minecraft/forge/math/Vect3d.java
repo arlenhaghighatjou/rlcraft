@@ -2,7 +2,7 @@ package com.endertech.minecraft.forge.math;
 
 import com.endertech.common.Args;
 import com.endertech.common.CommonMath;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.Objects;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;

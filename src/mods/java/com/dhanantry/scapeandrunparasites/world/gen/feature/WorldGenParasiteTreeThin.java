@@ -3,7 +3,7 @@ package com.dhanantry.scapeandrunparasites.world.gen.feature;
 import com.dhanantry.scapeandrunparasites.block.BlockParasiteCanister;
 import com.dhanantry.scapeandrunparasites.block.BlockParasiteTrunk;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
@@ -14,7 +14,7 @@ public class WorldGenParasiteTreeThin extends WorldGenParasiteTreeAbstract {
       super(notify);
    }
 
-   public boolean generate(World worldIn, Random rand, BlockPos position) {
+   public boolean generate(World worldIn, EaglercraftRandom rand, BlockPos position) {
       int i = 16;
       boolean flag = true;
       if (worldIn.getBlockState(position.down()).getBlock() == Blocks.AIR) {
@@ -79,7 +79,7 @@ public class WorldGenParasiteTreeThin extends WorldGenParasiteTreeAbstract {
       this.setBlockAndNotifyAdequately(worldIn, pos, SRPBlocks.ParasiteTrunk.getDefaultState().withProperty(BlockParasiteTrunk.VARIANT, BlockParasiteTrunk.EnumType.TREE));
    }
 
-   private BlockPos placeColumn(World worldIn, BlockPos pos, int times, Random rand, double extraChance, int minimum) {
+   private BlockPos placeColumn(World worldIn, BlockPos pos, int times, EaglercraftRandom rand, double extraChance, int minimum) {
       int current = pos.getY();
       int atm = current;
       BlockPos newPos = pos;
@@ -98,7 +98,7 @@ public class WorldGenParasiteTreeThin extends WorldGenParasiteTreeAbstract {
       return newPos;
    }
 
-   private void grow(World worldIn, BlockPos pos, Random rand, int direction) {
+   private void grow(World worldIn, BlockPos pos, EaglercraftRandom rand, int direction) {
       pos = this.placeColumn(worldIn, pos, 2, rand, 0.3D, 2);
       if (rand.nextInt(3) == 0) {
          pos = this.directionToGrow(pos, direction);

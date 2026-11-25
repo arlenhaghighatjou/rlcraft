@@ -1,7 +1,7 @@
 package com.creativemd.creativecore.common.packet;
 
 import com.creativemd.creativecore.common.tileentity.TileEntityCreative;
-import io.netty.buffer.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

@@ -2,7 +2,7 @@ package goblinbob.mobends.core.client.model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 
 public class ModelPartExtended extends ModelPart {
    protected IModelPart extension;

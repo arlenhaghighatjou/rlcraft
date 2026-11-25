@@ -2,7 +2,7 @@ package com.jamieswhiteshirt.trumpetskeleton.client.renderer.entity;
 
 import com.jamieswhiteshirt.trumpetskeleton.client.model.ModelTrumpetSkeleton;
 import com.jamieswhiteshirt.trumpetskeleton.common.entity.EntityTrumpetSkeleton;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;

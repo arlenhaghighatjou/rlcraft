@@ -15,7 +15,7 @@ import net.ellerton.japng.argb8888.Argb8888BitmapSequence;
 import net.ellerton.japng.argb8888.Argb8888BitmapSequence.Frame;
 import net.ellerton.japng.chunks.PngAnimationControl;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;

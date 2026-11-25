@@ -1,7 +1,7 @@
 package vazkii.quark.base.client.gui;
 
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
@@ -17,7 +17,7 @@ public class GuiButtonTranslucent extends GuiButton {
    public void drawActualTexturedModalRect(int x, int y, int textureX, int textureY, int width, int height) {
       float f = 0.00390625F;
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferbuilder = tessellator.getBuffer();
+      WorldRenderer bufferbuilder = tessellator.getBuffer();
       bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
       bufferbuilder.pos((double)x, (double)(y + height), (double)this.zLevel).tex((double)((float)textureX * f), (double)((float)(textureY + height) * f)).endVertex();
       bufferbuilder.pos((double)(x + width), (double)(y + height), (double)this.zLevel).tex((double)((float)(textureX + width) * f), (double)((float)(textureY + height) * f)).endVertex();

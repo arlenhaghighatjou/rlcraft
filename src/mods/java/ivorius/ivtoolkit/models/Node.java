@@ -3,9 +3,9 @@ package ivorius.ivtoolkit.models;
 import ivorius.ivtoolkit.models.utils.MatrixMathUtils;
 import java.util.ArrayList;
 import java.util.List;
-import org.lwjgl.util.vector.Matrix4f;
+import net.lax1dude.eaglercraft.v1_8.vector.Matrix4f;
 import org.lwjgl.util.vector.Quaternion;
-import org.lwjgl.util.vector.Vector3f;
+import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class Node {
    public String id;

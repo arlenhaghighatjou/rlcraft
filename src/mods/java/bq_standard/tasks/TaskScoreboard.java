@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import javax.annotation.Nonnull;
@@ -32,10 +32,10 @@ import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class TaskScoreboard implements ITaskTickable {
-   private final Set<UUID> completeUsers = new TreeSet();
+   private final Set<EaglercraftUUID> completeUsers = new TreeSet();
    public String scoreName = "Score";
    public String scoreDisp = "Score";
    public String type = "dummy";
@@ -55,15 +55,15 @@ public class TaskScoreboard implements ITaskTickable {
       return "bq_standard.task.scoreboard";
    }
 
-   public boolean isComplete(UUID uuid) {
+   public boolean isComplete(EaglercraftUUID uuid) {
       return this.completeUsers.contains(uuid);
    }
 
-   public void setComplete(UUID uuid) {
+   public void setComplete(EaglercraftUUID uuid) {
       this.completeUsers.add(uuid);
    }
 
-   public void resetUser(@Nullable UUID uuid) {
+   public void resetUser(@Nullable EaglercraftUUID uuid) {
       if (uuid == null) {
          this.completeUsers.clear();
       } else {
@@ -96,16 +96,16 @@ public class TaskScoreboard implements ITaskTickable {
       }
 
       int points = board.getOrCreateScore(pInfo.PLAYER.getName(), scoreObj).getScorePoints();
-      int lastValue = ScoreboardBQ.INSTANCE.getScore(pInfo.UUID, this.scoreName);
+      int lastValue = ScoreboardBQ.INSTANCE.getScore(pInfo.EaglercraftUUID, this.scoreName);
       if (points != lastValue) {
-         ScoreboardBQ.INSTANCE.setScore(pInfo.UUID, this.scoreName, points);
+         ScoreboardBQ.INSTANCE.setScore(pInfo.EaglercraftUUID, this.scoreName, points);
          if (pInfo.PLAYER instanceof EntityPlayerMP) {
             NetScoreSync.sendScore((EntityPlayerMP)pInfo.PLAYER);
          }
       }
 
       if (this.operation.checkValues(points, this.target)) {
-         this.setComplete(pInfo.UUID);
+         this.setComplete(pInfo.EaglercraftUUID);
          pInfo.markDirty(Collections.singletonList(Integer.valueOf(quest.getID())));
       }
 
@@ -139,7 +139,7 @@ public class TaskScoreboard implements ITaskTickable {
 
    }
 
-   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+   public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<EaglercraftUUID> users) {
       NBTTagList jArray = new NBTTagList();
       this.completeUsers.forEach((uuid) -> {
          if (users == null || users.contains(uuid)) {
@@ -160,9 +160,9 @@ public class TaskScoreboard implements ITaskTickable {
 
       for(int i = 0; i < cList.tagCount(); ++i) {
          try {
-            this.completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
+            this.completeUsers.add(EaglercraftUUID.fromString(cList.getStringTagAt(i)));
          } catch (Exception var6) {
-            BQ_Standard.logger.log(Level.ERROR, "Unable to load UUID for task", var6);
+            BQ_Standard.logger.log(Level.ERROR, "Unable to load EaglercraftUUID for task", var6);
          }
       }
 

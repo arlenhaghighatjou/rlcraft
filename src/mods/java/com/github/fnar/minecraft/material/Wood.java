@@ -8,7 +8,7 @@ import com.github.fnar.minecraft.block.redstone.DoorBlock;
 import com.github.fnar.minecraft.item.Sapling;
 import greymerk.roguelike.worldgen.BlockBrush;
 import greymerk.roguelike.worldgen.Direction;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public enum Wood {
    OAK,
@@ -25,7 +25,7 @@ public enum Wood {
       return values()[(int)(Math.random() * (double)values().length)];
    }
 
-   public static Wood chooseRandom(Random random) {
+   public static Wood chooseRandom(EaglercraftRandom random) {
       return values()[random.nextInt(values().length)];
    }
 

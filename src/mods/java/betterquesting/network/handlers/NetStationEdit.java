@@ -8,7 +8,7 @@ import betterquesting.blocks.TileSubmitStation;
 import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.QuestDatabase;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -59,7 +59,7 @@ public class NetStationEdit {
             if (action == 0) {
                oss.reset();
             } else if (action == 1) {
-               UUID QID = QuestingAPI.getQuestingUUID((EntityPlayer)message.getSecond());
+               EaglercraftUUID QID = QuestingAPI.getQuestingUUID((EntityPlayer)message.getSecond());
                IQuest quest = (IQuest)QuestDatabase.INSTANCE.getValue(data.getInteger("questID"));
                ITask task = quest == null ? null : (ITask)quest.getTasks().getValue(data.getInteger("taskID"));
                if (quest != null && task != null) {

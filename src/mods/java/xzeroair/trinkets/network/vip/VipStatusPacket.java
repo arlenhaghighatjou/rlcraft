@@ -1,7 +1,7 @@
 package xzeroair.trinkets.network.vip;
 
-import io.netty.buffer.ByteBuf;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -65,7 +65,7 @@ public class VipStatusPacket extends ThreadSafePacket {
 
             String id = this.tag.getString("uuid");
             if (VIPHandler.Vips.containsKey(id.replaceAll("-", ""))) {
-               Entity entity = serverPlayer.getServerWorld().getEntityFromUuid(UUID.fromString(id));
+               Entity entity = serverPlayer.getServerWorld().getEntityFromUuid(EaglercraftUUID.fromString(id));
                if (entity != null && entity instanceof EntityPlayerMP) {
                   EntityPlayerMP vip = (EntityPlayerMP)entity;
                   VipStatus status = Capabilities.getVipStatus(vip);

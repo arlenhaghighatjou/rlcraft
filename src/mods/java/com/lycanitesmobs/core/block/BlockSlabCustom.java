@@ -2,7 +2,7 @@ package com.lycanitesmobs.core.block;
 
 import com.lycanitesmobs.client.localisation.LanguageManager;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockSlab.EnumBlockHalf;
@@ -76,7 +76,7 @@ public class BlockSlabCustom extends BlockSlab {
       return BlockSlabCustom.Variant.DEFAULT;
    }
 
-   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+   public Item getItemDropped(IBlockState state, EaglercraftRandom rand, int fortune) {
       return Item.getItemFromBlock(this);
    }
 

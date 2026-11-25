@@ -3,7 +3,7 @@ package tschipp.forgottenitems.crafting;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.apache.logging.log4j.Level;
+import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.FMLLog;

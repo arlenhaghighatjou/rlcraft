@@ -3,8 +3,8 @@ package goblinbob.mobends.core.client.gui.elements;
 import goblinbob.mobends.core.util.Draw;
 import goblinbob.mobends.core.util.GUtil;
 import goblinbob.mobends.core.util.UIScissorHelper;
-import net.minecraft.client.renderer.GlStateManager;
-import org.lwjgl.input.Mouse;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.Mouse;
 
 public abstract class GuiScrollPanel extends GuiElement {
    protected int width;

@@ -12,9 +12,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
-import java.util.UUID;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -164,12 +164,12 @@ public class RecurrentHandler {
       private int cleanAllStructures(World world) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
          Object wsgData = RecurrentHandler.this.reflector.getWorldStructureGenerationData(world);
          synchronized(wsgData) {
-            Map<UUID, Object> entryMap = (Map)RecurrentHandler.this.reflector.getEntryMap(wsgData);
-            Set<UUID> entrySet = entryMap.keySet();
-            Set<UUID> entrySetClone = new HashSet();
+            Map<EaglercraftUUID, Object> entryMap = (Map)RecurrentHandler.this.reflector.getEntryMap(wsgData);
+            Set<EaglercraftUUID> entrySet = entryMap.keySet();
+            Set<EaglercraftUUID> entrySetClone = new HashSet();
             entrySetClone.addAll(entrySet);
 
-            for(UUID uuid : entrySetClone) {
+            for(EaglercraftUUID uuid : entrySetClone) {
                RecurrentHandler.this.reflector.removeEntry(wsgData, uuid);
             }
 
@@ -212,7 +212,7 @@ public class RecurrentHandler {
          }
       }
 
-      private void decorate(WorldServer world, Random random, ChunkPos chunkPos) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+      private void decorate(WorldServer world, EaglercraftRandom random, ChunkPos chunkPos) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
          boolean mapFeatures = world.getWorldInfo().isMapFeaturesEnabled();
          Object wsgData = RecurrentHandler.this.reflector.getWorldStructureGenerationData(world);
          synchronized(wsgData) {
@@ -241,7 +241,7 @@ public class RecurrentHandler {
          }
       }
 
-      private void planStructuresInChunk(Random random, ChunkPos chunkPos, WorldServer world, Biome biome) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+      private void planStructuresInChunk(EaglercraftRandom random, ChunkPos chunkPos, WorldServer world, Biome biome) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
          float spawnDistance = RecurrentHandler.this.reflector.distance(new ChunkPos(world.getSpawnPoint()), chunkPos);
          Object structureRegistryInstance = RecurrentHandler.this.reflector.getStructureRegistryInstance();
          Object cachedSelectors = RecurrentHandler.this.reflector.getNaturalGenerationSelectors(structureRegistryInstance);

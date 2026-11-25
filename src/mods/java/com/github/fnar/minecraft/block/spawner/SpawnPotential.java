@@ -1,7 +1,7 @@
 package com.github.fnar.minecraft.block.spawner;
 
 import greymerk.roguelike.monster.Mob;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class SpawnPotential {
    private final String name;
@@ -13,7 +13,7 @@ public class SpawnPotential {
       this.name = name;
    }
 
-   public Mob generateMob(Random random, int level) {
+   public Mob generateMob(EaglercraftRandom random, int level) {
       Mob mob = new Mob();
       return this.isEquip() ? mob.withRandomEquipment(level, random) : mob;
    }

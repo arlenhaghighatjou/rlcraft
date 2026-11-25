@@ -1,6 +1,6 @@
 package paulevs.betternether.blocks;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -17,7 +17,7 @@ public class BlockGrayMold extends BlockMold {
    }
 
    @SideOnly(Side.CLIENT)
-   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+   public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, EaglercraftRandom rand) {
       super.randomDisplayTick(stateIn, worldIn, pos, rand);
       if (rand.nextInt(3) == 0) {
          worldIn.spawnParticle(EnumParticleTypes.TOWN_AURA, (double)pos.getX() + rand.nextDouble(), (double)pos.getY() + rand.nextDouble() * 0.5D, (double)pos.getZ() + rand.nextDouble(), 0.0D, 0.0D, 0.0D, new int[0]);

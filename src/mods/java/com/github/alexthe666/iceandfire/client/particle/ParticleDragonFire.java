@@ -1,7 +1,7 @@
 package com.github.alexthe666.iceandfire.client.particle;
 
 import net.minecraft.client.particle.ParticleFlame;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -16,7 +16,7 @@ public class ParticleDragonFire extends ParticleFlame {
       this.particleMaxAge = 3;
    }
 
-   public void renderParticle(BufferBuilder worldRendererIn, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+   public void renderParticle(WorldRenderer worldRendererIn, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
       if (this.particleAge > 3) {
          this.setExpired();
       }

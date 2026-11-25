@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import java.util.List;
 import java.util.function.Consumer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -43,7 +43,7 @@ public class ModelHelperSL {
 
    public static void renderModel(IBakedModel model, int color) {
       Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder buffer = tessellator.getBuffer();
+      WorldRenderer buffer = tessellator.getBuffer();
       buffer.begin(7, DefaultVertexFormats.ITEM);
       List<BakedQuad> quads = model.getQuads((IBlockState)null, (EnumFacing)null, 0L);
       quads.forEach((quad) -> {

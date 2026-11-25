@@ -5,7 +5,7 @@ import c4.corpsecomplex.common.modules.inventory.capability.IDeathInventory;
 import c4.corpsecomplex.common.modules.inventory.enchantment.EnchantmentModule;
 import c4.corpsecomplex.common.modules.inventory.helpers.DeathInventoryHandler;
 import c4.corpsecomplex.common.modules.inventory.helpers.DeathStackHelper;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -25,7 +25,7 @@ public class CampingHandler extends DeathInventoryHandler {
    public void storeInventory() {
       NonNullList<ItemStack> storedStacks = NonNullList.withSize(4, ItemStack.EMPTY);
       if (this.campingSlots != null) {
-         Random generator = new Random();
+         EaglercraftRandom generator = new EaglercraftRandom();
 
          for(int i = 0; i < this.campingSlots.size(); ++i) {
             ItemStack stack = (ItemStack)this.campingSlots.get(i);

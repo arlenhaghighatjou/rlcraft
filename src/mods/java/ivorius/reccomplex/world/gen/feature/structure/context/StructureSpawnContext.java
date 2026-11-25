@@ -9,7 +9,7 @@ import ivorius.reccomplex.utils.RCBlockAreas;
 import ivorius.reccomplex.utils.RCStructureBoundingBoxes;
 import ivorius.reccomplex.world.gen.feature.HeightMapFreezer;
 import ivorius.reccomplex.world.gen.feature.structure.Environment;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,7 +21,7 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 public class StructureSpawnContext extends StructureLiveContext {
    @Nonnull
-   public final Random random;
+   public final EaglercraftRandom random;
    @Nullable
    public final StructureBoundingBox generationBB;
    @Nullable
@@ -30,7 +30,7 @@ public class StructureSpawnContext extends StructureLiveContext {
    public final StructureSpawnContext.GenerateMaturity generateMaturity;
    private HeightMapFreezer heightMapFreezer;
 
-   public StructureSpawnContext(@Nonnull Environment environment, @Nonnull Random random, @Nonnull AxisAlignedTransform2D transform, @Nonnull StructureBoundingBox boundingBox, @Nullable StructureBoundingBox generationBB, Predicate<Vec3i> generationPredicate, int generationLayer, boolean generateAsSource, StructureSpawnContext.GenerateMaturity generateMaturity) {
+   public StructureSpawnContext(@Nonnull Environment environment, @Nonnull EaglercraftRandom random, @Nonnull AxisAlignedTransform2D transform, @Nonnull StructureBoundingBox boundingBox, @Nullable StructureBoundingBox generationBB, Predicate<Vec3i> generationPredicate, int generationLayer, boolean generateAsSource, StructureSpawnContext.GenerateMaturity generateMaturity) {
       super(transform, boundingBox, generateAsSource, environment);
       this.random = random;
       this.generationBB = generationBB;

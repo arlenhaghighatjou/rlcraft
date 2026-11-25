@@ -1,6 +1,6 @@
 package lykrast.defiledlands.common.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import lykrast.defiledlands.common.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
@@ -30,7 +30,7 @@ public class BlockScuronotte extends BlockBush {
       return EnumOffsetType.XZ;
    }
 
-   public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+   public void updateTick(World worldIn, BlockPos pos, IBlockState state, EaglercraftRandom rand) {
       if (rand.nextInt(25) == 0) {
          int i = 5;
 

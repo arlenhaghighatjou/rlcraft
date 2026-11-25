@@ -1,7 +1,7 @@
 package ivorius.reccomplex.utils;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufInputStream;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBufInputStream;
 import io.netty.handler.codec.EncoderException;
 import java.io.IOException;
 import javax.annotation.Nullable;

@@ -5,7 +5,7 @@ import de.impelon.disenchanter.DisenchantingProperties;
 import de.impelon.disenchanter.inventory.ContainerDisenchantmentBase;
 import java.util.List;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;

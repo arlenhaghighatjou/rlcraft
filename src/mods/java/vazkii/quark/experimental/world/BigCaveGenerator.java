@@ -1,6 +1,6 @@
 package vazkii.quark.experimental.world;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
@@ -8,7 +8,7 @@ import net.minecraft.world.gen.MapGenCaves;
 import vazkii.quark.experimental.features.BiggerCaves;
 
 public class BigCaveGenerator extends MapGenCaves {
-   private final Random rand2 = new Random();
+   private final EaglercraftRandom rand2 = new EaglercraftRandom();
 
    public BigCaveGenerator() {
    }

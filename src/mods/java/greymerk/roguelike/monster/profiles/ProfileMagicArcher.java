@@ -5,13 +5,13 @@ import com.github.fnar.minecraft.item.Arrow;
 import com.github.fnar.util.Color;
 import greymerk.roguelike.monster.Mob;
 import greymerk.roguelike.monster.MonsterProfile;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class ProfileMagicArcher implements MonsterProfile {
    public ProfileMagicArcher() {
    }
 
-   public Mob apply(Mob mob, int level, int difficulty, Random random) {
+   public Mob apply(Mob mob, int level, int difficulty, EaglercraftRandom random) {
       mob.equipBow(random, level, Difficulty.fromInt(difficulty));
       mob.equipArrows(Arrow.newRandomHarmful(random));
       mob.equipArmor(random, level, Color.DEEP_VIOLET, difficulty);

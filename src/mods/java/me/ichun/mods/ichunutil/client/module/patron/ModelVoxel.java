@@ -1,16 +1,16 @@
 package me.ichun.mods.ichunutil.client.module.patron;
 
 import java.util.ArrayList;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import me.ichun.mods.ichunutil.client.entity.EntityLatchedRenderer;
 import me.ichun.mods.ichunutil.common.core.tracker.EntityTrackerRegistry;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelVoxel extends ModelBase {
-   public Random rand = new Random();
+   public EaglercraftRandom rand = new EaglercraftRandom();
    public ModelRenderer[] modelHead = new ModelRenderer[512];
    public ModelRenderer[] modelBody = new ModelRenderer[384];
    public ModelRenderer[] modelLimb = new ModelRenderer[192];

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Consumer;
 import net.minecraft.world.World;
 
@@ -15,15 +15,15 @@ public class BlockFamily implements IBlockPlacer {
    private static final Map<String, BlockFamily> FAMILIES = new HashMap();
    private final String name;
    private final IBlockPlacer[] blocks;
-   private static Random random;
+   private static EaglercraftRandom random;
 
    private BlockFamily(String name, List<IBlockPlacer> theBlocks) {
       this.name = name;
       this.blocks = (IBlockPlacer[])theBlocks.toArray(new IBlockPlacer[theBlocks.size()]);
-      random = new Random();
+      random = new EaglercraftRandom();
    }
 
-   public static void setRadnom(Random r) {
+   public static void setRadnom(EaglercraftRandom r) {
       random = r;
    }
 

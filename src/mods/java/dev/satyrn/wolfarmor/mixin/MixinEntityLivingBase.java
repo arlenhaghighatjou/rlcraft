@@ -1,6 +1,6 @@
 package dev.satyrn.wolfarmor.mixin;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
@@ -31,7 +31,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
    public abstract IAttributeInstance getEntityAttribute(IAttribute var1);
 
    @Shadow
-   public abstract Random getRNG();
+   public abstract EaglercraftRandom getRNG();
 
    @Shadow
    protected void onNewPotionEffect(PotionEffect id) {

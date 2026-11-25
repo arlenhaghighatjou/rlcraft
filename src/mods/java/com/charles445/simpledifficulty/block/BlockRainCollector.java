@@ -7,7 +7,7 @@ import com.charles445.simpledifficulty.api.thirst.ThirstEnum;
 import com.charles445.simpledifficulty.api.thirst.ThirstUtil;
 import com.charles445.simpledifficulty.config.ModConfig;
 import com.charles445.simpledifficulty.util.SoundUtil;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -42,7 +42,7 @@ public class BlockRainCollector extends Block {
       this.setTickRandomly(true);
    }
 
-   public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+   public void randomTick(World world, BlockPos pos, IBlockState state, EaglercraftRandom random) {
       if (world.rand.nextInt(Math.max(1, ModConfig.server.miscellaneous.rainCollectorFillChance)) == 0 && world.isRainingAt(pos.up())) {
          float f = world.getBiome(pos).getTemperature(pos);
          if (world.getBiomeProvider().getTemperatureAtHeight(f, pos.getY()) >= 0.15F) {

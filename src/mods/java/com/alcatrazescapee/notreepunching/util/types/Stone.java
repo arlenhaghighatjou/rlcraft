@@ -2,7 +2,7 @@ package com.alcatrazescapee.notreepunching.util.types;
 
 import com.alcatrazescapee.alcatrazcore.util.CoreHelpers;
 import com.alcatrazescapee.notreepunching.ModConfig;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockStone;
@@ -28,7 +28,7 @@ public enum Stone {
    private final boolean hasCobblestone;
 
    @Nonnull
-   public static Stone getFromBlock(IBlockState state, Random random) {
+   public static Stone getFromBlock(IBlockState state, EaglercraftRandom random) {
       Stone stone = getFromBlock(state);
       if (stone == STONE && ModConfig.GENERAL.enableRandomStoneWorldGenVariants) {
          switch(random.nextInt(5)) {

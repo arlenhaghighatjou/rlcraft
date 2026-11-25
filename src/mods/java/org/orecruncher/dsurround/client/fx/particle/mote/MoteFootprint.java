@@ -2,7 +2,7 @@ package org.orecruncher.dsurround.client.fx.particle.mote;
 
 import javax.annotation.Nonnull;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -90,7 +90,7 @@ public class MoteFootprint extends MoteAgeable {
 
    }
 
-   public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotX, float rotZ, float rotYZ, float rotXY, float rotXZ) {
+   public void renderParticle(WorldRenderer buffer, Entity entityIn, float partialTicks, float rotX, float rotZ, float rotYZ, float rotXY, float rotXZ) {
       float f = ((float)this.age + partialTicks) / ((float)this.maxAge + 1.0F);
       f = f * f;
       this.alpha = (int)(MathStuff.clamp(1.0F - f, 0.0F, 1.0F) * 255.0F);

@@ -11,7 +11,7 @@ import mods.octarinecore.client.render.Quad;
 import mods.octarinecore.client.render.RenderVertex;
 import mods.octarinecore.client.render.ShadingContext;
 import mods.octarinecore.client.render.Vertex;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import org.jetbrains.annotations.NotNull;
 
 @Metadata(
@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
    d2 = {"<anonymous>", "", "Lmods/octarinecore/client/render/RenderVertex;", "ctx", "Lmods/octarinecore/client/render/ShadingContext;", "<anonymous parameter 1>", "", "<anonymous parameter 2>", "Lmods/octarinecore/client/render/Quad;", "<anonymous parameter 3>", "<anonymous parameter 4>", "Lmods/octarinecore/client/render/Vertex;", "invoke", "mods/betterfoliage/client/render/RenderGrass$render$1$3"}
 )
 final class RenderGrass$render$$inlined$renderAs$lambda$6 extends Lambda implements Function6<RenderVertex, ShadingContext, Integer, Quad, Integer, Vertex, Unit> {
-   RenderGrass$render$$inlined$renderAs$lambda$6(BufferBuilder var1, List var2, GrassInfo var3, boolean var4, int var5) {
+   RenderGrass$render$$inlined$renderAs$lambda$6(WorldRenderer var1, List var2, GrassInfo var3, boolean var4, int var5) {
       super(6);
       this.$renderer$inlined = var1;
       this.$isHidden$inlined = var2;

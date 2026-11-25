@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -82,7 +82,7 @@ public class Barrel extends Feature {
    }
 
    public static Barrel.BarrelType getRandomBarrelType(Barrel.RARITY r) {
-      Random rand = new Random();
+      EaglercraftRandom rand = new EaglercraftRandom();
       List<Barrel.BarrelType> t = (List)types.get(r);
       return (Barrel.BarrelType)t.get(rand.nextInt(types.size()));
    }

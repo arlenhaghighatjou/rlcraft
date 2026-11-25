@@ -15,7 +15,7 @@ import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigSystems;
 import com.google.common.base.Predicate;
 import java.util.List;
-import java.util.Random;
+import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
@@ -189,7 +189,7 @@ public abstract class EntityPPure extends EntityPMalleable implements EntityCanS
    protected boolean spawnT(EntityLivingBase in, int range2, int mini2, int check, int type) {
       int range = range2;
       int mini = mini2;
-      Random rand = new Random();
+      EaglercraftRandom rand = new EaglercraftRandom();
       double x = in.posX;
       double y = in.posY;
       double z = in.posZ;

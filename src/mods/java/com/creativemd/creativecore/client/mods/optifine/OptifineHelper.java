@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.chunk.RenderChunk;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.lax1dude.eaglercraft.v1_8.minecraft.EaglerTextureAtlasSprite;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -59,12 +59,12 @@ public class OptifineHelper {
          try {
             renderEnvConstructor = renderEnvClass.getConstructor(IBlockAccess.class, IBlockState.class, BlockPos.class);
             resetEnv = ReflectionHelper.findMethod(renderEnvClass, "reset", "reset", new Class[]{IBlockAccess.class, IBlockState.class, BlockPos.class});
-            getEnv = ReflectionHelper.findMethod(BufferBuilder.class, "getRenderEnv", "getRenderEnv", new Class[]{IBlockAccess.class, IBlockState.class, BlockPos.class});
+            getEnv = ReflectionHelper.findMethod(WorldRenderer.class, "getRenderEnv", "getRenderEnv", new Class[]{IBlockAccess.class, IBlockState.class, BlockPos.class});
          } catch (NoSuchMethodException var2) {
             newVersion = true;
             renderEnvConstructor = renderEnvClass.getConstructor(IBlockState.class, BlockPos.class);
             resetEnv = ReflectionHelper.findMethod(renderEnvClass, "reset", "reset", new Class[]{IBlockState.class, BlockPos.class});
-            getEnv = ReflectionHelper.findMethod(BufferBuilder.class, "getRenderEnv", "getRenderEnv", new Class[]{IBlockState.class, BlockPos.class});
+            getEnv = ReflectionHelper.findMethod(WorldRenderer.class, "getRenderEnv", "getRenderEnv", new Class[]{IBlockState.class, BlockPos.class});
          }
 
          getAoFace = ReflectionHelper.findMethod(renderEnvClass, "getAoFace", "getAoFace", new Class[0]);
@@ -90,7 +90,7 @@ public class OptifineHelper {
          isFastRender = configClass.getMethod("isFastRender");
          regionX = ReflectionHelper.findField(RenderChunk.class, new String[]{"regionX"});
          regionZ = ReflectionHelper.findField(RenderChunk.class, new String[]{"regionZ"});
-         isEmissive = ReflectionHelper.findField(TextureAtlasSprite.class, new String[]{"isEmissive"});
+         isEmissive = ReflectionHelper.findField(EaglerTextureAtlasSprite.class, new String[]{"isEmissive"});
          getQuadEmissive = ReflectionHelper.findMethod(BakedQuad.class, "getQuadEmissive", "getQuadEmissive", new Class[0]);
       } catch (NoSuchMethodException | SecurityException | ClassNotFoundException var3) {
          active = false;
@@ -112,7 +112,7 @@ public class OptifineHelper {
       }
    }
 
-   public static Object getEnv(BufferBuilder builder, IBlockAccess world, IBlockState state, BlockPos pos) {
+   public static Object getEnv(WorldRenderer builder, IBlockAccess world, IBlockState state, BlockPos pos) {
       try {
          return newVersion ? getEnv.invoke(builder, state, pos) : getEnv.invoke(builder, world, state, pos);
       } catch (IllegalArgumentException | InvocationTargetException | IllegalAccessException var5) {
@@ -247,7 +247,7 @@ public class OptifineHelper {
       }
    }
 
-   public static boolean isEmissive(TextureAtlasSprite sprite) {
+   public static boolean isEmissive(EaglerTextureAtlasSprite sprite) {
       if (!active) {
          return false;
       } else {
