@@ -16,6 +16,8 @@
 
 package net.lax1dude.eaglercraft.v1_8.sp.gui;
 
+import java.util.function.Supplier;
+
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.lax1dude.eaglercraft.v1_8.sp.SingleplayerServerController;
 import net.lax1dude.eaglercraft.v1_8.sp.WorkerStartupFailedException;
@@ -31,6 +33,7 @@ public class GuiScreenIntegratedServerStartup extends GuiScreen {
 
 	private final GuiScreen backScreen;
 	private final boolean singleThread;
+	private final Supplier<GuiScreen> readyScreen;
 	private static final String[] dotDotDot = new String[] { "", ".", "..", "..." };
 
 	private int counter = 0;
@@ -38,13 +41,21 @@ public class GuiScreenIntegratedServerStartup extends GuiScreen {
 	private GuiButton cancelButton;
 
 	public GuiScreenIntegratedServerStartup(GuiScreen backScreen) {
-		this.backScreen = backScreen;
-		this.singleThread = false;
+		this(backScreen, false);
 	}
 
 	public GuiScreenIntegratedServerStartup(GuiScreen backScreen, boolean singleThread) {
+		this(backScreen, singleThread, () -> new GuiWorldSelection(backScreen));
+	}
+
+	public GuiScreenIntegratedServerStartup(GuiScreen backScreen, Supplier<GuiScreen> readyScreen) {
+		this(backScreen, false, readyScreen);
+	}
+
+	private GuiScreenIntegratedServerStartup(GuiScreen backScreen, boolean singleThread, Supplier<GuiScreen> readyScreen) {
 		this.backScreen = backScreen;
 		this.singleThread = singleThread;
+		this.readyScreen = readyScreen;
 	}
 
 	public void initGui() {
@@ -59,7 +70,7 @@ public class GuiScreenIntegratedServerStartup extends GuiScreen {
 			try {
 				SingleplayerServerController.startIntegratedServerWorker(singleThread);
 			}catch(WorkerStartupFailedException ex) {
-				mc.displayGuiScreen(new GuiScreenIntegratedServerFailed(ex.getMessage(), new GuiMainMenu()));
+				mc.displayGuiScreen(new GuiScreenIntegratedServerFailed(ex.getMessage(), backScreen));
 				return;
 			}
 		}else if(counter > 2) {
@@ -68,9 +79,9 @@ public class GuiScreenIntegratedServerStartup extends GuiScreen {
 			}
 			IPCPacket15Crashed[] crashReport = SingleplayerServerController.worldStatusErrors();
 			if(crashReport != null) {
-				mc.displayGuiScreen(GuiScreenIntegratedServerBusy.createException(new GuiMainMenu(), "singleplayer.failed.notStarted", crashReport));
+				mc.displayGuiScreen(GuiScreenIntegratedServerBusy.createException(backScreen, "singleplayer.failed.notStarted", crashReport));
 			}else if(SingleplayerServerController.isIntegratedServerWorkerStarted()) {
-				GuiScreen cont = new GuiWorldSelection(backScreen);
+				GuiScreen cont = readyScreen.get();
 				if(SingleplayerServerController.isRunningSingleThreadMode()) {
 					cont = new GuiScreenIntegratedServerFailed("singleplayer.failed.singleThreadWarning.1", "singleplayer.failed.singleThreadWarning.2", cont);
 				} else if (!EagRuntime.getConfiguration().isRamdiskMode()
@@ -86,7 +97,7 @@ public class GuiScreenIntegratedServerStartup extends GuiScreen {
 	protected void actionPerformed(GuiButton parGuiButton) {
 		if(parGuiButton.id == 0) {
 			SingleplayerServerController.killWorker();
-			mc.displayGuiScreen(new GuiScreenIntegratedServerStartup(new GuiMainMenu(), true));
+			mc.displayGuiScreen(new GuiScreenIntegratedServerStartup(backScreen, true, readyScreen));
 		}
 	}
 
