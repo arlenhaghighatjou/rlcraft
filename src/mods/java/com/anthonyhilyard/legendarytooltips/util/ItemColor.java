@@ -31,7 +31,7 @@ public abstract class ItemColor {
 
    public static Integer getColorForItem(ItemStack item, int defaultColor) {
       Integer result = null;
-      if (item == null) {
+      if (item == null || item.isEmpty()) {
          return defaultColor;
       } else {
          if (item.getTextComponent() != null && item.getTextComponent().getStyle() != null && item.getTextComponent().getStyle().getColor() != null) {

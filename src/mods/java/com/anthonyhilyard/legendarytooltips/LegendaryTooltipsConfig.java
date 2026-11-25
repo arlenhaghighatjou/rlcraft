@@ -96,6 +96,10 @@ public class LegendaryTooltipsConfig extends Configuration {
    }
 
    public int getFrameLevelForItem(ItemStack item) {
+      if (item.isEmpty()) {
+         return -1;
+      }
+
       if (this.frameLevelCache.containsKey(item)) {
          return ((Integer)this.frameLevelCache.get(item)).intValue();
       } else {
