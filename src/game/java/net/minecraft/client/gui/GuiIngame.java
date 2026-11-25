@@ -100,6 +100,11 @@ public class GuiIngame extends Gui
     protected long healthUpdateCounter;
     protected final Map<ChatType, List<IChatListener>> chatListeners = Maps.<ChatType, List<IChatListener>>newHashMap();
 
+    public void addChatListener(ChatType type, IChatListener listener)
+    {
+        this.chatListeners.get(type).add(listener);
+    }
+
     public GuiIngame(Minecraft mcIn)
     {
         this.mc = mcIn;
