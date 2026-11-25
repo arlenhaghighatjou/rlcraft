@@ -4,18 +4,18 @@ import lellson.roughTweaks.items.RoughItems;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class RoughEvents {
-   public RoughEvents() {
-      MinecraftForge.EVENT_BUS.register(this);
+   public void register(EventBus bus) {
+      bus.register(PlayerLoggedInEvent.class, this::logIn);
+      bus.register(PlayerTickEvent.class, this::tickEvent);
+      bus.register(LivingDropsEvent.class, this::dropEvent);
    }
 
-   @SubscribeEvent
    public void logIn(PlayerLoggedInEvent event) {
       if (RoughConfig.healthRegenOff && event.player.world.getGameRules().getBoolean("naturalRegeneration")) {
          event.player.world.getGameRules().setOrCreateGameRule("naturalRegeneration", "false");
@@ -23,7 +23,6 @@ public class RoughEvents {
 
    }
 
-   @SubscribeEvent
    public void tickEvent(PlayerTickEvent event) {
       if (event.player.isPlayerFullyAsleep()) {
          event.player.heal((float)RoughConfig.sleepHealAmount);
@@ -31,9 +30,8 @@ public class RoughEvents {
 
    }
 
-   @SubscribeEvent
    public void dropEvent(LivingDropsEvent event) {
-      if (RoughConfig.dropChance > 0 && event.getEntityLiving() instanceof EntityMob) {
+      if (RoughConfig.dropChance > 0 && event.getEntityLiving() instanceof EntityMob && this.getEnabledItems() > 0) {
          ItemStack stack = null;
          switch(event.getEntity().world.rand.nextInt(RoughConfig.dropChance * this.getEnabledItems())) {
          case 0:

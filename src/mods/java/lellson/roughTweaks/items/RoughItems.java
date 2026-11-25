@@ -10,7 +10,6 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraftforge.common.MinecraftForge;
 
 public class RoughItems {
    public static final List<Item> ITEMS = new ArrayList();
@@ -19,10 +18,6 @@ public class RoughItems {
    public static final ItemHeal BANDAGE = new ItemHeal("bandage", RoughConfig.bandageHealCount, 20, RoughConfig.bandageHealAmount, (PotionEffect)null, (ItemStack)null);
    public static final ItemHeal MEDIKIT = new ItemHeal("medikit", RoughConfig.medikitHealCount, 40, RoughConfig.medikitHealAmount, (PotionEffect)null, (ItemStack)null);
    public static final ItemHeal ENCHANTED_MEDIKIT = new ItemHeal("medikitEnchanted", RoughConfig.medikitEnchantedHealCount, 40, RoughConfig.medikitEnchantedHealAmount, new PotionEffect(MobEffects.ABSORPTION, 1200), (ItemStack)null);
-
-   public RoughItems() {
-      MinecraftForge.EVENT_BUS.register(new RoughItemRegistry());
-   }
 
    public static void registerRenderers() {
       for(Item item : ITEMS) {
