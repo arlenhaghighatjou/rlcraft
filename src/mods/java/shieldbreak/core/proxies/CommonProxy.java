@@ -16,7 +16,7 @@ public class CommonProxy {
    }
 
    public void registerHandlers() {
-      MinecraftForge.EVENT_BUS.register(new EventHandler());
+      (new EventHandler()).register(MinecraftForge.EVENT_BUS);
    }
 
    public IThreadListener getListener(MessageContext ctx) {

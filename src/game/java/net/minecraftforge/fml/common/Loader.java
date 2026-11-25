@@ -183,6 +183,7 @@ public class Loader
         mods.add(new FMLModContainer<>("placebo", "Placebo", "1.6.0", "", "[1.12.2]", "placebo", Placebo::new, Placebo::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("neat", "Neat", "1.4-17", "", "[1.12.2]", "neat", Neat::new, Neat::handleModStateEvent).clientSideOnly().guiFactory(GuiFactory::new));
         mods.add(new FMLModContainer<>("craftablechainmail", "craftablechainmail", "1.0", "", "[1.12.2]", "craftablechainmail", moddy10.craftablechainmail.CraftableChainmail::new, moddy10.craftablechainmail.CraftableChainmail::handleModStateEvent));
+        mods.add(new FMLModContainer<>("shieldbreak", "ShieldBreak", "1.1.3", "", "", "shieldbreak", shieldbreak.core.ShieldBreak::new, shieldbreak.core.ShieldBreak::handleModStateEvent).acceptableRemoteVersions("*"));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }

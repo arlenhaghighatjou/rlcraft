@@ -1,5 +1,6 @@
 package shieldbreak.handlers;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.List;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -25,7 +26,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import shieldbreak.util.PotionEntry;
@@ -34,9 +34,11 @@ public class EventHandler {
    public EventHandler() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingAttackEvent.class, EventPriority.LOWEST, false, this::onLivingAttack);
+      bus.register(ItemTooltipEvent.class, EventPriority.LOWEST, false, this::onItemTooltip);
+   }
+
    public void onLivingAttack(LivingAttackEvent event) {
       if (!event.getEntityLiving().world.isRemote && !event.isCanceled() && event.getEntityLiving() instanceof EntityPlayer && event.getSource().getTrueSource() instanceof EntityLivingBase && event.getAmount() > 0.0F) {
          World world = event.getEntityLiving().world;
@@ -102,9 +104,6 @@ public class EventHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
    @SideOnly(Side.CLIENT)
    public void onItemTooltip(ItemTooltipEvent event) {
       if (!event.isCanceled() && event.getItemStack().getItem() instanceof ItemShield) {
