@@ -20,7 +20,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextFormatting;
 import org.apache.commons.lang3.ArrayUtils;
-import org.lwjgl.opengl.GL11;
 
 public class GuiWaystoneList extends GuiScreen {
    private final WarpMode warpMode;
@@ -151,7 +150,7 @@ public class GuiWaystoneList extends GuiScreen {
    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
       this.drawWorldBackground(0);
       super.drawScreen(mouseX, mouseY, partialTicks);
-      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       this.drawCenteredString(this.fontRenderer, I18n.format("gui.waystones:warpStone.selectDestination", new Object[0]), this.width / 2, this.headerY + (this.fromWaystone != null ? 20 : 0), 16777215);
       if (this.fromWaystone != null) {
          this.drawLocationHeader(this.fromWaystone.getName(), mouseX, mouseY, this.width / 2, this.headerY);

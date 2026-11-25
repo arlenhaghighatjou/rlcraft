@@ -1,5 +1,6 @@
 package net.blay09.mods.waystones.client;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Locale;
@@ -37,7 +38,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ClientProxy extends CommonProxy {
    private GuiButtonInventoryWarp buttonWarp;
@@ -49,12 +49,18 @@ public class ClientProxy extends CommonProxy {
 
    public void preInit(FMLPreInitializationEvent event) {
       super.preInit(event);
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
       ClientRegistry.bindTileEntitySpecialRenderer(TileWaystone.class, new RenderWaystone());
       this.isVivecraftInstalled = ClientBrandRetriever.getClientModName().toLowerCase(Locale.ENGLISH).contains("vivecraft");
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Post.class, this::onInitGui);
+      bus.register(Pre.class, this::onActionPerformed);
+      bus.register(net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent.Post.class, this::onDrawScreen);
+      bus.register(FOVUpdateEvent.class, this::onFOV);
+   }
+
    public void onInitGui(Post event) {
       if (WaystoneConfig.general.teleportButton && event.getGui() instanceof GuiInventory) {
          this.buttonWarp = new GuiButtonInventoryWarp((GuiContainer)event.getGui());
@@ -63,7 +69,6 @@ public class ClientProxy extends CommonProxy {
 
    }
 
-   @SubscribeEvent
    public void onActionPerformed(Pre event) {
       if (event.getButton() instanceof GuiButtonInventoryWarp) {
          EntityPlayer entityPlayer = FMLClientHandler.instance().getClientPlayerEntity();
@@ -85,7 +90,6 @@ public class ClientProxy extends CommonProxy {
 
    }
 
-   @SubscribeEvent
    public void onDrawScreen(net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent.Post event) {
       if (event.getGui() instanceof GuiInventory && this.buttonWarp != null && this.buttonWarp.isHovered()) {
          tmpTooltip.clear();
@@ -122,7 +126,6 @@ public class ClientProxy extends CommonProxy {
 
    }
 
-   @SubscribeEvent
    public void onFOV(FOVUpdateEvent event) {
       if (!event.getEntity().getActiveItemStack().isEmpty() && event.getEntity().getActiveItemStack().getItem() == Waystones.itemReturnScroll) {
          event.setNewfov((float)event.getEntity().getItemInUseCount() / 64.0F * 2.0F + 0.5F);

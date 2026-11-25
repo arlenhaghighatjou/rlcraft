@@ -104,7 +104,7 @@ public class NameGenerator extends WorldSavedData {
    }
 
    private void addBiomeName(Biome biome, String name) {
-      this.BIOME_NAMES.put(biome.biomeName, name);
+      this.BIOME_NAMES.put(biome.getBiomeName(), name);
    }
 
    /** @deprecated */
@@ -130,7 +130,7 @@ public class NameGenerator extends WorldSavedData {
       }
 
       if (name == null) {
-         String biomeSuffix = (String)this.BIOME_NAMES.get(biome.biomeName);
+         String biomeSuffix = (String)this.BIOME_NAMES.get(biome.getBiomeName());
          name = this.randomName(rand) + (biomeSuffix != null ? " " + biomeSuffix : "");
          String tryName = name;
 

@@ -36,16 +36,16 @@ public class NetworkHandler {
    }
 
    public static void init() {
-      channel.registerMessage(HandlerConfig.class, MessageConfig.class, 0, Side.CLIENT);
-      channel.registerMessage(HandlerWaystones.class, MessageWaystones.class, 1, Side.CLIENT);
-      channel.registerMessage(HandlerFreeWarpReturn.class, MessageFreeWarpReturn.class, 2, Side.SERVER);
-      channel.registerMessage(HandlerEditWaystone.class, MessageEditWaystone.class, 3, Side.SERVER);
-      channel.registerMessage(HandlerTeleportToWaystone.class, MessageTeleportToWaystone.class, 4, Side.SERVER);
-      channel.registerMessage(HandlerTeleportEffect.class, MessageTeleportEffect.class, 5, Side.CLIENT);
-      channel.registerMessage(HandlerSortWaystone.class, MessageSortWaystone.class, 6, Side.SERVER);
-      channel.registerMessage(HandlerRemoveWaystone.class, MessageRemoveWaystone.class, 7, Side.SERVER);
-      channel.registerMessage(HandlerTeleportToGlobal.class, MessageTeleportToGlobal.class, 8, Side.SERVER);
-      channel.registerMessage(HandlerOpenWaystoneSelection.class, MessageOpenWaystoneSelection.class, 9, Side.CLIENT);
+      channel.registerMessage(new HandlerConfig(), MessageConfig.class, MessageConfig::new, 0, Side.CLIENT);
+      channel.registerMessage(new HandlerWaystones(), MessageWaystones.class, MessageWaystones::new, 1, Side.CLIENT);
+      channel.registerMessage(new HandlerFreeWarpReturn(), MessageFreeWarpReturn.class, MessageFreeWarpReturn::new, 2, Side.SERVER);
+      channel.registerMessage(new HandlerEditWaystone(), MessageEditWaystone.class, MessageEditWaystone::new, 3, Side.SERVER);
+      channel.registerMessage(new HandlerTeleportToWaystone(), MessageTeleportToWaystone.class, MessageTeleportToWaystone::new, 4, Side.SERVER);
+      channel.registerMessage(new HandlerTeleportEffect(), MessageTeleportEffect.class, MessageTeleportEffect::new, 5, Side.CLIENT);
+      channel.registerMessage(new HandlerSortWaystone(), MessageSortWaystone.class, MessageSortWaystone::new, 6, Side.SERVER);
+      channel.registerMessage(new HandlerRemoveWaystone(), MessageRemoveWaystone.class, MessageRemoveWaystone::new, 7, Side.SERVER);
+      channel.registerMessage(new HandlerTeleportToGlobal(), MessageTeleportToGlobal.class, MessageTeleportToGlobal::new, 8, Side.SERVER);
+      channel.registerMessage(new HandlerOpenWaystoneSelection(), MessageOpenWaystoneSelection.class, MessageOpenWaystoneSelection::new, 9, Side.CLIENT);
    }
 
    public static IThreadListener getThreadListener(MessageContext ctx) {

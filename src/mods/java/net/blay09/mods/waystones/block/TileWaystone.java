@@ -7,7 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -67,7 +67,7 @@ public class TileWaystone extends TileEntity {
 
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity pkt) {
       super.onDataPacket(net, pkt);
       this.generateNameIfNecessary();
       this.readFromNBT(pkt.getNbtCompound());

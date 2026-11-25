@@ -1,5 +1,6 @@
 package net.blay09.mods.waystones;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.Lists;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -13,7 +14,6 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
@@ -23,10 +23,15 @@ public class CommonProxy {
    }
 
    public void preInit(FMLPreInitializationEvent event) {
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlayerLoggedInEvent.class, this::onPlayerLoggedIn);
+      bus.register(PlayerChangedDimensionEvent.class, this::onPlayerChangedDimension);
+      bus.register(PlayerRespawnEvent.class, this::onPlayerRespawn);
+   }
+
    public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
       GlobalWaystones globalWaystones = GlobalWaystones.get(event.player.world);
       PlayerWaystoneData waystoneData = PlayerWaystoneData.fromPlayer(event.player);
@@ -49,12 +54,10 @@ public class CommonProxy {
       WaystoneManager.sendPlayerWaystones(event.player);
    }
 
-   @SubscribeEvent
    public void onPlayerChangedDimension(PlayerChangedDimensionEvent event) {
       WaystoneManager.sendPlayerWaystones(event.player);
    }
 
-   @SubscribeEvent
    public void onPlayerRespawn(PlayerRespawnEvent event) {
       WaystoneManager.sendPlayerWaystones(event.player);
    }

@@ -1,5 +1,11 @@
 package net.blay09.mods.waystones;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
+import net.minecraftforge.registries.ObjectHolderRegistry;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.blay09.mods.waystones.block.BlockWaystone;
 import net.blay09.mods.waystones.block.TileWaystone;
 import net.blay09.mods.waystones.item.ItemBoundScroll;
@@ -29,43 +35,24 @@ import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 @Mod(
    modid = "waystones",
    name = "Waystones",
    acceptedMinecraftVersions = "[1.12]"
 )
-@EventBusSubscriber
 public class Waystones {
    public static final String MOD_ID = "waystones";
-   @Instance("waystones")
    public static Waystones instance;
-   @SidedProxy(
-      serverSide = "net.blay09.mods.waystones.CommonProxy",
-      clientSide = "net.blay09.mods.waystones.client.ClientProxy"
-   )
    public static CommonProxy proxy;
-   @ObjectHolder("waystone")
-   public static final Block blockWaystone = Blocks.AIR;
-   @ObjectHolder("return_scroll")
-   public static final Item itemReturnScroll = Items.AIR;
-   @ObjectHolder("bound_scroll")
-   public static final Item itemBoundScroll = Items.AIR;
-   @ObjectHolder("warp_scroll")
-   public static final Item itemWarpScroll = Items.AIR;
-   @ObjectHolder("warp_stone")
-   public static final Item itemWarpStone = Items.AIR;
+   public static Block blockWaystone = Blocks.AIR;
+   public static Item itemReturnScroll = Items.AIR;
+   public static Item itemBoundScroll = Items.AIR;
+   public static Item itemWarpScroll = Items.AIR;
+   public static Item itemWarpStone = Items.AIR;
    public static final CreativeTabs creativeTab = new CreativeTabs("waystones") {
       public ItemStack getTabIconItem() {
          return new ItemStack(Waystones.blockWaystone);
@@ -75,18 +62,36 @@ public class Waystones {
    public Waystones() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new net.blay09.mods.waystones.client.ClientProxy() : new net.blay09.mods.waystones.CommonProxy();
+         net.blay09.mods.waystones.WaystoneConfig.register();
+         net.blay09.mods.waystones.Waystones.registerHolders();
+         net.blay09.mods.waystones.Waystones.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
-      GameRegistry.registerTileEntity(TileWaystone.class, new ResourceLocation("waystones", "waystone"));
+      GameRegistry.registerTileEntity(TileWaystone.class, new ResourceLocation("waystones", "waystone"), TileWaystone::new);
       NetworkHandler.init();
       VillagerRegistry.instance().registerVillageCreationHandler(new VillageWaystoneCreationHandler());
       MapGenStructureIO.registerStructureComponent(ComponentVillageWaystone.class, "waystones:village_waystone");
       GameRegistry.registerWorldGenerator(new LegacyWorldGen(), 0);
       proxy.preInit(event);
-      MinecraftForge.EVENT_BUS.register(new WarpDamageResetHandler());
+      (new WarpDamageResetHandler()).register(MinecraftForge.EVENT_BUS);
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, Waystones::onConfigChanged);
+      bus.registerGeneric(Register.class, Block.class, Waystones::registerBlocks);
+      bus.registerGeneric(Register.class, Item.class, Waystones::registerItems);
+      bus.register(ModelRegistryEvent.class, Waystones::registerModels);
+   }
+
    public static void onConfigChanged(OnConfigChangedEvent event) {
       if ("waystones".equals(event.getModID())) {
          ConfigManager.sync("waystones", Type.INSTANCE);
@@ -94,18 +99,15 @@ public class Waystones {
 
    }
 
-   @SubscribeEvent
    public static void registerBlocks(Register<Block> event) {
       event.getRegistry().registerAll(new Block[]{new BlockWaystone()});
    }
 
-   @SubscribeEvent
    public static void registerItems(Register<Item> event) {
       event.getRegistry().registerAll(new Item[]{(Item)(new ItemBlock(blockWaystone)).setRegistryName("waystone")});
       event.getRegistry().registerAll(new Item[]{(Item)(new ItemReturnScroll()).setRegistryName(ItemReturnScroll.registryName), (Item)(new ItemBoundScroll()).setRegistryName(ItemBoundScroll.registryName), new ItemWarpScroll(), new ItemWarpStone()});
    }
 
-   @SubscribeEvent
    public static void registerModels(ModelRegistryEvent event) {
       ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockWaystone), 0, new ModelResourceLocation(BlockWaystone.registryName, "inventory"));
       ModelLoader.setCustomModelResourceLocation(itemWarpStone, 0, new ModelResourceLocation(ItemWarpStone.registryName, "inventory"));
@@ -115,8 +117,11 @@ public class Waystones {
       ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(blockWaystone), 0, TileWaystone.class);
    }
 
-   @EventHandler
-   public void init(FMLInitializationEvent event) {
-      FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "net.blay09.mods.waystones.compat.TheOneProbeAddon");
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("waystones:waystone"), v -> blockWaystone = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("waystones:return_scroll"), v -> itemReturnScroll = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("waystones:bound_scroll"), v -> itemBoundScroll = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("waystones:warp_scroll"), v -> itemWarpScroll = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("waystones:warp_stone"), v -> itemWarpStone = v);
    }
 }
