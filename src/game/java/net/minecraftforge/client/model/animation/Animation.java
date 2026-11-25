@@ -21,7 +21,7 @@ package net.minecraftforge.client.model.animation;
 
 import net.minecraft.world.World;
 
-import java.lang.ref.WeakReference;
+import com.arlenh7.eaglercraft.ref.WeakReference;
 
 public enum Animation
 {

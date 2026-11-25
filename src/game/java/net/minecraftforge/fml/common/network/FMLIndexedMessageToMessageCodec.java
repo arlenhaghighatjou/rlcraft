@@ -26,7 +26,7 @@ import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
 import com.arlenh7.eaglercraft.netty.MessageToMessageCodec;
 import com.arlenh7.eaglercraft.netty.AttributeKey;
 
-import java.lang.ref.WeakReference;
+import com.arlenh7.eaglercraft.ref.WeakReference;
 import java.util.List;
 import java.util.function.Supplier;
 

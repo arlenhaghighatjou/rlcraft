@@ -24,7 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.ref.WeakReference;
+import com.arlenh7.eaglercraft.ref.WeakReference;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Collections;

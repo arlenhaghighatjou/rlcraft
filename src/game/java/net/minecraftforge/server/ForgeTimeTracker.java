@@ -19,7 +19,7 @@
 
 package net.minecraftforge.server;
 
-import java.lang.ref.WeakReference;
+import com.arlenh7.eaglercraft.ref.WeakReference;
 import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;

@@ -19,7 +19,7 @@
 
 package net.minecraftforge.common.util;
 
-import java.lang.ref.WeakReference;
+import com.arlenh7.eaglercraft.ref.WeakReference;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
