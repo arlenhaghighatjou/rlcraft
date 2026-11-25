@@ -7,10 +7,15 @@ import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLEvent;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import de.impelon.disenchanter.proxy.CommonProxy;
+import de.impelon.disenchanter.crafting.ConfigConditionFactory;
+import de.impelon.disenchanter.crafting.UpgradeJarRecipeFactory;
+import de.impelon.disenchanter.crafting.UpgradeTableRecipeFactory;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -53,6 +58,19 @@ public class DisenchanterMain {
 
    public static void preInit(FMLPreInitializationEvent ev) {
       proxy.preInit(ev);
+      ConfigConditionFactory condition = new ConfigConditionFactory();
+      CraftingHelper.register(new ResourceLocation(MODID, "disenchantment_table_enabled"), condition);
+      CraftingHelper.register(new ResourceLocation(MODID, "automatic_upgrade_enabled"), condition);
+      CraftingHelper.register(new ResourceLocation(MODID, "bulkdisenchanting_upgrade_enabled"), condition);
+      CraftingHelper.register(new ResourceLocation(MODID, "cycling_upgrade_enabled"), condition);
+      CraftingHelper.register(new ResourceLocation(MODID, "voiding_upgrade_enabled"), condition);
+      CraftingHelper.register(new ResourceLocation(MODID, "clear_table_upgrades_enabled"), condition);
+      CraftingHelper.register(new ResourceLocation(MODID, "experience_jar_enabled"), condition);
+      CraftingHelper.register(new ResourceLocation(MODID, "overload_upgrade_enabled"), condition);
+      CraftingHelper.register(new ResourceLocation(MODID, "capacity_upgrade_enabled"), condition);
+      CraftingHelper.register(new ResourceLocation(MODID, "clear_jar_upgrades_enabled"), condition);
+      CraftingHelper.register(new ResourceLocation(MODID, "upgrade_jar"), new UpgradeJarRecipeFactory());
+      CraftingHelper.register(new ResourceLocation(MODID, "upgrade_table"), new UpgradeTableRecipeFactory());
    }
 
    public static void load(FMLInitializationEvent ev) {
