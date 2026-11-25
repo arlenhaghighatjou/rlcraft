@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 import ladysnake.spawnercontrol.config.MSCConfig;
 import ladysnake.spawnercontrol.config.SpawnerConfig;
 import ladysnake.spawnercontrol.controlledspawner.BlockControlledSpawner;
@@ -212,14 +211,10 @@ public class SpawnerEventHandler {
    public static void onLivingExperienceDrop(LivingExperienceDropEvent event) {
       SpawnerConfig cfg = SpawnerUtil.getConfig(event.getEntityLiving().getEntityData().getTag("spawnercontrol:spawnerPos"));
       if (cfg != null) {
-         try {
-            ResourceLocation rl = EntityList.getKey(event.getEntity());
-            if (rl != null) {
-               SpawnerConfig.MobLoot.MobLootEntry entry = (SpawnerConfig.MobLoot.MobLootEntry)cfg.mobLoot.lootEntries.get(rl);
-               event.setDroppedExperience(MathHelper.floor((float)event.getOriginalExperience() * entry.xpMultiplier + (float)entry.flatXpIncrease + (float)(event.getDroppedExperience() - event.getOriginalExperience())));
-            }
-         } catch (ExecutionException var4) {
-            SpawnerControl.LOGGER.error("Error while handling spawned experience drop", var4);
+         ResourceLocation rl = EntityList.getKey(event.getEntity());
+         if (rl != null) {
+            SpawnerConfig.MobLoot.MobLootEntry entry = (SpawnerConfig.MobLoot.MobLootEntry)cfg.mobLoot.lootEntries.get(rl);
+            event.setDroppedExperience(MathHelper.floor((float)event.getOriginalExperience() * entry.xpMultiplier + (float)entry.flatXpIncrease + (float)(event.getDroppedExperience() - event.getOriginalExperience())));
          }
       }
 
@@ -273,7 +268,7 @@ public class SpawnerEventHandler {
                   }
                }
             }
-         } catch (ExecutionException | NumberFormatException var22) {
+         } catch (NumberFormatException var22) {
             SpawnerControl.LOGGER.error("Error while handling spawned item drops", var22);
          }
       }
