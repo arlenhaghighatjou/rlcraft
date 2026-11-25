@@ -30,9 +30,9 @@ public class TargetJson extends DumpZsTarget {
          FileUtils.writeStringToFile(file, dump.toJson(), "utf8");
       } catch (IOException var6) {
          CraftTweakerAPI.logError("Couldn't export json", var6);
-         sender.sendMessage(new TextComponentString("§4Couldn't export json file."));
+         sender.sendMessage(new TextComponentString("\u00a74Couldn't export json file."));
       }
 
-      sender.sendMessage(SpecialMessagesChat.getFileOpenText("Dumped content of the GlobalRegistry to a json file §r[§6Click here to open§r]", file.getAbsolutePath()));
+      sender.sendMessage(SpecialMessagesChat.getFileOpenText("Dumped content of the GlobalRegistry to a json file \u00a7r[\u00a76Click here to open\u00a7r]", file.getAbsolutePath()));
    }
 }

@@ -104,7 +104,7 @@ public class MethodParameterInfo {
    }
 
    public boolean isMandated() {
-      return (this.modifiers & '耀') != 0;
+      return (this.modifiers & '\u8000') != 0;
    }
 
    public boolean equals(Object obj) {
@@ -131,7 +131,7 @@ public class MethodParameterInfo {
          buf.append("synthetic ");
       }
 
-      if ((modifiers & '耀') != 0) {
+      if ((modifiers & '\u8000') != 0) {
          buf.append("mandated ");
       }
 

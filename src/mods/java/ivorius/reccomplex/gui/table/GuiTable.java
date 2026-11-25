@@ -113,9 +113,9 @@ public class GuiTable extends Gui {
       }
 
       int roundedScrollIndex = MathHelper.floor(this.currentScroll + 0.5F);
-      this.scrollUpButton = new GuiButton(-1, this.tableBounds.getMaxX() + 4, this.tableBounds.getMinY(), 15, 20, TextFormatting.BOLD + "↑");
+      this.scrollUpButton = new GuiButton(-1, this.tableBounds.getMaxX() + 4, this.tableBounds.getMinY(), 15, 20, TextFormatting.BOLD + "\u2191");
       this.delegate.addButtonToTable(this.scrollUpButton);
-      this.scrollDownButton = new GuiButton(-1, this.tableBounds.getMaxX() + 4, this.tableBounds.getMaxY() - 20, 15, 20, TextFormatting.BOLD + "↓");
+      this.scrollDownButton = new GuiButton(-1, this.tableBounds.getMaxX() + 4, this.tableBounds.getMaxY() - 20, 15, 20, TextFormatting.BOLD + "\u2193");
       this.delegate.addButtonToTable(this.scrollDownButton);
       boolean needsUpScroll = this.canScrollUp(numberOfCells);
       boolean needsDownScroll = this.canScrollDown(numberOfCells);

@@ -85,7 +85,7 @@ public class Commands {
          }
 
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct foods", "/ct foods", true), SpecialMessagesChat.getNormalMessage(" §3Outputs a list of all foods in the game to the crafttweaker.log")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct foods", "/ct foods", true), SpecialMessagesChat.getNormalMessage(" \u00a73Outputs a list of all foods in the game to the crafttweaker.log")});
          }
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("liquids") {
@@ -110,7 +110,7 @@ public class Commands {
          }
 
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct liquids", "/ct liquids", true), SpecialMessagesChat.getNormalMessage(" §3Outputs a list of all liquid names in the game to the crafttweaker.log")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct liquids", "/ct liquids", true), SpecialMessagesChat.getNormalMessage(" \u00a73Outputs a list of all liquid names in the game to the crafttweaker.log")});
          }
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("blocks") {
@@ -127,12 +127,12 @@ public class Commands {
          }
 
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct blocks", "/ct blocks", true), SpecialMessagesChat.getNormalMessage(" §3Outputs a list of all blocks in the game to the crafttweaker log")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct blocks", "/ct blocks", true), SpecialMessagesChat.getNormalMessage(" \u00a73Outputs a list of all blocks in the game to the crafttweaker log")});
          }
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("entities") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct entities", "/ct entities", true), SpecialMessagesChat.getNormalMessage(" §3Outputs a list of all entity definitions in the game to the crafttweaker log")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct entities", "/ct entities", true), SpecialMessagesChat.getNormalMessage(" \u00a73Outputs a list of all entity definitions in the game to the crafttweaker log")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -149,7 +149,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("potions") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct potions", "/ct potions", true), SpecialMessagesChat.getNormalMessage(" §3Outputs a list of all potions to the crafttweaker.log")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct potions", "/ct potions", true), SpecialMessagesChat.getNormalMessage(" \u00a73Outputs a list of all potions to the crafttweaker.log")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -165,7 +165,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("recipeNames") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct recipeNames", "/ct recipeNames", true), SpecialMessagesChat.getNormalMessage(" §3A modid can be provided to filter results"), SpecialMessagesChat.getNormalMessage(" §3/ct recipeNames <modid>"), SpecialMessagesChat.getNormalMessage(" §3Lists all crafting recipe names in the game")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct recipeNames", "/ct recipeNames", true), SpecialMessagesChat.getNormalMessage(" \u00a73A modid can be provided to filter results"), SpecialMessagesChat.getNormalMessage(" \u00a73/ct recipeNames <modid>"), SpecialMessagesChat.getNormalMessage(" \u00a73Lists all crafting recipe names in the game")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -183,7 +183,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("reload") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct reload", "/ct reload", true), SpecialMessagesChat.getNormalMessage(" §3Gives information as to why reloading is not possible")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct reload", "/ct reload", true), SpecialMessagesChat.getNormalMessage(" \u00a73Gives information as to why reloading is not possible")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -193,7 +193,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("recipes") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct recipes", "/ct recipes", true), SpecialMessagesChat.getNormalMessage(" §3Lists all crafting recipes in the game"), SpecialMessagesChat.getClickableCommandText(" §a/ct recipes hand", "/ct recipes hand", true), SpecialMessagesChat.getNormalMessage("  §bLists all crafting recipes for the item in your hand"), SpecialMessagesChat.getNormalMessage("  §bAlso copies the recipes to clipboard"), SpecialMessagesChat.getClickableCommandText(" §a/ct recipes furnace", "/ct recipes furnace", true), SpecialMessagesChat.getNormalMessage("  §blists all furnace recipes in the game")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct recipes", "/ct recipes", true), SpecialMessagesChat.getNormalMessage(" \u00a73Lists all crafting recipes in the game"), SpecialMessagesChat.getClickableCommandText(" \u00a7a/ct recipes hand", "/ct recipes hand", true), SpecialMessagesChat.getNormalMessage("  \u00a7bLists all crafting recipes for the item in your hand"), SpecialMessagesChat.getNormalMessage("  \u00a7bAlso copies the recipes to clipboard"), SpecialMessagesChat.getClickableCommandText(" \u00a7a/ct recipes furnace", "/ct recipes furnace", true), SpecialMessagesChat.getNormalMessage("  \u00a7blists all furnace recipes in the game")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -271,7 +271,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("inventory") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct inventory", "/ct inventory", true), SpecialMessagesChat.getNormalMessage(" §3Lists all items in your inventory")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct inventory", "/ct inventory", true), SpecialMessagesChat.getNormalMessage(" \u00a73Lists all items in your inventory")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -295,7 +295,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("hand") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct hand", "/ct hand", true), SpecialMessagesChat.getNormalMessage(" §3Outputs the name of the item in your hand"), SpecialMessagesChat.getNormalMessage(" §3Also copies the name to clipboard and prints"), SpecialMessagesChat.getNormalMessage(" §3OreDict entries")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct hand", "/ct hand", true), SpecialMessagesChat.getNormalMessage(" \u00a73Outputs the name of the item in your hand"), SpecialMessagesChat.getNormalMessage(" \u00a73Also copies the name to clipboard and prints"), SpecialMessagesChat.getNormalMessage(" \u00a73OreDict entries")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -315,21 +315,21 @@ public class Commands {
                   }
 
                   ClipboardHelper.copyStringPlayer(player, itemName + withNBT);
-                  ClipboardHelper.sendMessageWithCopy(player, "Item §2" + itemName + "§a" + withNBT, itemName + withNBT);
+                  ClipboardHelper.sendMessageWithCopy(player, "Item \u00a72" + itemName + "\u00a7a" + withNBT, itemName + withNBT);
                   ILiquidStack liquidStack = CraftTweakerMC.getILiquidStack(FluidUtil.getFluidContained(heldItem));
                   if (liquidStack != null) {
                      String liquidCommandString = liquidStack.toCommandString();
-                     ClipboardHelper.sendMessageWithCopy(player, "Contains Liquid §2" + liquidCommandString, liquidCommandString);
+                     ClipboardHelper.sendMessageWithCopy(player, "Contains Liquid \u00a72" + liquidCommandString, liquidCommandString);
                   }
 
                   if (!oreDictNames.isEmpty()) {
-                     sender.sendMessage(new TextComponentString("§3OreDict Entries:"));
+                     sender.sendMessage(new TextComponentString("\u00a73OreDict Entries:"));
 
                      for(String oreName : oreDictNames) {
-                        ClipboardHelper.sendMessageWithCopy(player, "    §e- §b" + oreName, "<ore:" + oreName + ">");
+                        ClipboardHelper.sendMessageWithCopy(player, "    \u00a7e- \u00a7b" + oreName, "<ore:" + oreName + ">");
                      }
                   } else {
-                     sender.sendMessage(new TextComponentString("§3No OreDict Entries"));
+                     sender.sendMessage(new TextComponentString("\u00a73No OreDict Entries"));
                   }
                } else {
                   RayTraceResult rayTraceResult = CommandUtils.getPlayerLookat(player, 100.0D);
@@ -339,24 +339,24 @@ public class Commands {
                      int meta = block.getBlock().getMetaFromState(block);
                      String blockName = "<" + block.getBlock().getRegistryName() + (meta == 0 ? "" : ":" + meta) + ">";
                      ClipboardHelper.copyStringPlayer(player, blockName);
-                     ClipboardHelper.sendMessageWithCopy(player, "Block §2" + blockName + " §rat §9[" + blockPos.getX() + ", " + blockPos.getY() + ", " + blockPos.getZ() + "]§r", blockName);
+                     ClipboardHelper.sendMessageWithCopy(player, "Block \u00a72" + blockName + " \u00a7rat \u00a79[" + blockPos.getX() + ", " + blockPos.getY() + ", " + blockPos.getZ() + "]\u00a7r", blockName);
 
                      try {
                         List<String> oreDictNames = CommandUtils.getOreDictOfItem(new ItemStack(block.getBlock(), 1, block.getBlock().getMetaFromState(block)));
                         if (!oreDictNames.isEmpty()) {
-                           sender.sendMessage(new TextComponentString("§3OreDict Entries:"));
+                           sender.sendMessage(new TextComponentString("\u00a73OreDict Entries:"));
 
                            for(String oreName : oreDictNames) {
-                              ClipboardHelper.sendMessageWithCopy(player, "    §e- §b" + oreName, "<ore:" + oreName + ">");
+                              ClipboardHelper.sendMessageWithCopy(player, "    \u00a7e- \u00a7b" + oreName, "<ore:" + oreName + ">");
                            }
                         } else {
-                           sender.sendMessage(new TextComponentString("§3No OreDict Entries"));
+                           sender.sendMessage(new TextComponentString("\u00a73No OreDict Entries"));
                         }
                      } catch (IllegalArgumentException var14) {
-                        sender.sendMessage(new TextComponentString("§3No OreDict Entries"));
+                        sender.sendMessage(new TextComponentString("\u00a73No OreDict Entries"));
                      }
                   } else {
-                     sender.sendMessage(new TextComponentString("§4Please hold an Item in your hand or look at a Block."));
+                     sender.sendMessage(new TextComponentString("\u00a74Please hold an Item in your hand or look at a Block."));
                   }
                }
             } else {
@@ -367,7 +367,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("json") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct json", "/ct json", true), SpecialMessagesChat.getNormalMessage(" §3Outputs the nbt of the item in your hand"), SpecialMessagesChat.getNormalMessage(" §3This format is in json format, different from the one used in ZenScript"), SpecialMessagesChat.getClickableCommandText(" §a/ct json escaped", "/ct json escaped", true), SpecialMessagesChat.getNormalMessage("  §bAutomatically escapes the string to use in json.")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct json", "/ct json", true), SpecialMessagesChat.getNormalMessage(" \u00a73Outputs the nbt of the item in your hand"), SpecialMessagesChat.getNormalMessage(" \u00a73This format is in json format, different from the one used in ZenScript"), SpecialMessagesChat.getClickableCommandText(" \u00a7a/ct json escaped", "/ct json escaped", true), SpecialMessagesChat.getNormalMessage("  \u00a7bAutomatically escapes the string to use in json.")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -390,9 +390,9 @@ public class Commands {
                   }
 
                   ClipboardHelper.copyStringPlayer(player, itemName + withNBT);
-                  ClipboardHelper.sendMessageWithCopy(player, "Item §2" + itemName + "§a" + withNBT, itemName + withNBT);
+                  ClipboardHelper.sendMessageWithCopy(player, "Item \u00a72" + itemName + "\u00a7a" + withNBT, itemName + withNBT);
                } else {
-                  sender.sendMessage(new TextComponentString("§4Please hold an Item in your hand."));
+                  sender.sendMessage(new TextComponentString("\u00a74Please hold an Item in your hand."));
                }
             } else {
                sender.sendMessage(new TextComponentString("This command can only be casted by a player inGame"));
@@ -402,14 +402,14 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("mods") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct mods", "/ct mods", true), SpecialMessagesChat.getNormalMessage(" §3Outputs all active mod IDs and versions in the game")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct mods", "/ct mods", true), SpecialMessagesChat.getNormalMessage(" \u00a73Outputs all active mod IDs and versions in the game")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
             CraftTweakerAPI.logCommand("Mods list:");
 
             for(IMod mod : CraftTweakerAPI.loadedMods) {
-               String message = "§5" + mod.getId() + "§r - §d" + mod.getName() + "§ - " + mod.getVersion();
+               String message = "\u00a75" + mod.getId() + "\u00a7r - \u00a7d" + mod.getName() + "\u00a7 - " + mod.getVersion();
                String messageWithoutColor = mod.getId() + " - " + mod.getName() + " - " + mod.getVersion();
                sender.sendMessage(new TextComponentString(message));
                CraftTweakerAPI.logCommand(messageWithoutColor);
@@ -420,7 +420,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("oredict") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct oredict", "/ct oredict", true), SpecialMessagesChat.getNormalMessage(" §3Outputs all ore dictionary entries in the game to the crafttweaker log"), SpecialMessagesChat.getClickableCommandText("§a/ct oredict <name>", "/ct oredict ", false), SpecialMessagesChat.getNormalMessage("  §bOutputs all items in the given ore dictionary entry to the crafttweaker log")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct oredict", "/ct oredict", true), SpecialMessagesChat.getNormalMessage(" \u00a73Outputs all ore dictionary entries in the game to the crafttweaker log"), SpecialMessagesChat.getClickableCommandText("\u00a7a/ct oredict <name>", "/ct oredict ", false), SpecialMessagesChat.getNormalMessage("  \u00a7bOutputs all items in the given ore dictionary entry to the crafttweaker log")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -454,7 +454,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("seeds") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct seeds", "/ct seeds", true), SpecialMessagesChat.getNormalMessage(" §3Prints all seeds registered"), SpecialMessagesChat.getNormalMessage(" §3for tall grass")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct seeds", "/ct seeds", true), SpecialMessagesChat.getNormalMessage(" \u00a73Prints all seeds registered"), SpecialMessagesChat.getNormalMessage(" \u00a73for tall grass")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -462,7 +462,7 @@ public class Commands {
 
             for(WeightedItemStack seed : CraftTweakerAPI.vanilla.getSeeds().getSeeds()) {
                String itemname = "<" + seed.getStack().getName() + ":" + seed.getStack().getDamage() + ">";
-               String message = "§2" + itemname + "§r - §e" + (int)seed.getChance();
+               String message = "\u00a72" + itemname + "\u00a7r - \u00a7e" + (int)seed.getChance();
                sender.sendMessage(SpecialMessagesChat.getCopyMessage(message, itemname));
                CraftTweakerAPI.logCommand("Seed: " + message);
             }
@@ -472,7 +472,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("wiki") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct wiki", "/ct wiki", true), SpecialMessagesChat.getNormalMessage(" §3Opens your browser with the wiki")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct wiki", "/ct wiki", true), SpecialMessagesChat.getNormalMessage(" \u00a73Opens your browser with the wiki")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -489,7 +489,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("bugs") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct bugs", "/ct bugs", true), SpecialMessagesChat.getNormalMessage(" §3Opens your browser with the GitHub bug tracker")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct bugs", "/ct bugs", true), SpecialMessagesChat.getNormalMessage(" \u00a73Opens your browser with the GitHub bug tracker")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -505,7 +505,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("discord") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct discord", "/ct discord", true), SpecialMessagesChat.getNormalMessage(" §3Opens your browser with a link to the Discord server")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct discord", "/ct discord", true), SpecialMessagesChat.getNormalMessage(" \u00a73Opens your browser with a link to the Discord server")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -521,7 +521,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("docs") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct docs", "/ct docs", true), SpecialMessagesChat.getNormalMessage(" §3Opens your browser with the docs")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct docs", "/ct docs", true), SpecialMessagesChat.getNormalMessage(" \u00a73Opens your browser with the docs")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -537,7 +537,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("biomes") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct biomes", "/ct biomes", true), SpecialMessagesChat.getNormalMessage(" §3Lists all the biomes in the game")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct biomes", "/ct biomes", true), SpecialMessagesChat.getNormalMessage(" \u00a73Lists all the biomes in the game")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -552,7 +552,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("biomeTypes") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct biomeTypes", "/ct biomeTypes", true), SpecialMessagesChat.getNormalMessage(" §3Lists all the biome types in the game")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct biomeTypes", "/ct biomeTypes", true), SpecialMessagesChat.getNormalMessage(" \u00a73Lists all the biome types in the game")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -565,7 +565,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("enchants") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct enchants", "/ct enchants", true), SpecialMessagesChat.getNormalMessage(" §3Lists all the enchants in the game.")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct enchants", "/ct enchants", true), SpecialMessagesChat.getNormalMessage(" \u00a73Lists all the enchants in the game.")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -579,7 +579,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("blockinfo") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct blockinfo", "/ct blockinfo", true), SpecialMessagesChat.getNormalMessage(" §3Activates or deactivates block reader. In block info mode,"), SpecialMessagesChat.getNormalMessage(" §3right-click a block to see ID, meta and tile entity data")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct blockinfo", "/ct blockinfo", true), SpecialMessagesChat.getNormalMessage(" \u00a73Activates or deactivates block reader. In block info mode,"), SpecialMessagesChat.getNormalMessage(" \u00a73right-click a block to see ID, meta and tile entity data")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -608,7 +608,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("copy") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct copy", "/ct copy", false), SpecialMessagesChat.getNormalMessage(" §3Copies the provided string behind it")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct copy", "/ct copy", false), SpecialMessagesChat.getNormalMessage(" \u00a73Copies the provided string behind it")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -617,7 +617,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("nbt") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct nbt", "/ct nbt", true), SpecialMessagesChat.getNormalMessage(" §3Shows the NBT of the block you are looking at"), SpecialMessagesChat.getNormalMessage(" §3or the item you are holding")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct nbt", "/ct nbt", true), SpecialMessagesChat.getNormalMessage(" \u00a73Shows the NBT of the block you are looking at"), SpecialMessagesChat.getNormalMessage(" \u00a73or the item you are holding")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -637,29 +637,29 @@ public class Commands {
                   }
 
                   ClipboardHelper.copyStringPlayer(player, itemName + withNBT);
-                  ClipboardHelper.sendMessageWithCopy(player, "Item §2" + itemName, itemName + withNBT);
+                  ClipboardHelper.sendMessageWithCopy(player, "Item \u00a72" + itemName, itemName + withNBT);
                   if (nbt.length() > 0) {
-                     sender.sendMessage(new TextComponentString("§3NBT-Data:"));
+                     sender.sendMessage(new TextComponentString("\u00a73NBT-Data:"));
                      ClipboardHelper.sendMessageWithCopy(player, NBTUtils.getAppealingString(nbt), nbt);
                   } else {
-                     sender.sendMessage(new TextComponentString("§3No NBT Data"));
+                     sender.sendMessage(new TextComponentString("\u00a73No NBT Data"));
                   }
                } else {
                   RayTraceResult rayTraceResult = CommandUtils.getPlayerLookat(player, 100.0D);
                   if (rayTraceResult != null && rayTraceResult.typeOfHit == Type.BLOCK) {
                      BlockPos blockPos = rayTraceResult.getBlockPos();
                      IBlockState block = server.getEntityWorld().getBlockState(blockPos);
-                     ClipboardHelper.sendMessageWithCopy(player, "Block §2[" + block.getBlock().getRegistryName() + ":" + block.getBlock().getMetaFromState(block) + "] §rat §9[" + blockPos.getX() + ", " + blockPos.getY() + ", " + blockPos.getZ() + "]§r", block.getBlock().getRegistryName() + ":" + block.getBlock().getMetaFromState(block));
+                     ClipboardHelper.sendMessageWithCopy(player, "Block \u00a72[" + block.getBlock().getRegistryName() + ":" + block.getBlock().getMetaFromState(block) + "] \u00a7rat \u00a79[" + blockPos.getX() + ", " + blockPos.getY() + ", " + blockPos.getZ() + "]\u00a7r", block.getBlock().getRegistryName() + ":" + block.getBlock().getMetaFromState(block));
                      TileEntity te = server.getEntityWorld().getTileEntity(blockPos);
                      if (te != null) {
-                        sender.sendMessage(new TextComponentString("§3NBT-Data:"));
+                        sender.sendMessage(new TextComponentString("\u00a73NBT-Data:"));
                         String nbt = NBTConverter.from(te.serializeNBT(), false).toString();
                         ClipboardHelper.sendMessageWithCopy(player, NBTUtils.getAppealingString(nbt), nbt);
                      } else {
-                        sender.sendMessage(new TextComponentString("§3Block is no TileEntity and has no NBT"));
+                        sender.sendMessage(new TextComponentString("\u00a73Block is no TileEntity and has no NBT"));
                      }
                   } else {
-                     sender.sendMessage(new TextComponentString("§4Please hold an Item in your hand or look at a Block."));
+                     sender.sendMessage(new TextComponentString("\u00a74Please hold an Item in your hand or look at a Block."));
                   }
                }
             }
@@ -668,7 +668,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("log") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct log", "/ct log", true), SpecialMessagesChat.getNormalMessage(" §3Sends a clickable link to open the crafttweaker.log")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct log", "/ct log", true), SpecialMessagesChat.getNormalMessage(" \u00a73Sends a clickable link to open the crafttweaker.log")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -682,12 +682,12 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("scripts") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct scripts", "/ct scripts", true), SpecialMessagesChat.getNormalMessage(" §3Sends a clickable link to open the scripts directory")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct scripts", "/ct scripts", true), SpecialMessagesChat.getNormalMessage(" \u00a73Sends a clickable link to open the scripts directory")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
             if (sender.getCommandSenderEntity() instanceof EntityPlayer) {
-               sender.sendMessage(SpecialMessagesChat.getFileOpenText("Click to open the §a/scripts/ §rDirectory [§6Click here to open§r]", (new File("scripts/")).getAbsolutePath()));
+               sender.sendMessage(SpecialMessagesChat.getFileOpenText("Click to open the \u00a7a/scripts/ \u00a7rDirectory [\u00a76Click here to open\u00a7r]", (new File("scripts/")).getAbsolutePath()));
             } else {
                sender.sendMessage(SpecialMessagesChat.getNormalMessage("Path to the scripts: " + (new File("scripts/")).getAbsolutePath()));
                sender.sendMessage(SpecialMessagesChat.getNormalMessage("Command must be executed as a Player (inGame) to be clickable"));
@@ -697,7 +697,7 @@ public class Commands {
       });
       CTChatCommand.registerCommand(new CraftTweakerCommand("syntax") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct syntax", "/ct syntax", true), SpecialMessagesChat.getNormalMessage(" §3Checks the Syntax of the scripts"), SpecialMessagesChat.getNormalMessage(" §3To see the effect you have to restart the game"), SpecialMessagesChat.getNormalMessage(" §3Will print errors of the Bracket Handler")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct syntax", "/ct syntax", true), SpecialMessagesChat.getNormalMessage(" \u00a73Checks the Syntax of the scripts"), SpecialMessagesChat.getNormalMessage(" \u00a73To see the effect you have to restart the game"), SpecialMessagesChat.getNormalMessage(" \u00a73Will print errors of the Bracket Handler")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -705,7 +705,7 @@ public class Commands {
                CraftTweakerAPI.tweaker.enableDebug();
             }
 
-            sender.sendMessage(SpecialMessagesChat.getNormalMessage("§bBeginning load of the scripts"));
+            sender.sendMessage(SpecialMessagesChat.getNormalMessage("\u00a7bBeginning load of the scripts"));
             List<ScriptLoader> erroredLoaders = new ArrayList();
 
             for(ScriptLoader loader : CraftTweakerAPI.tweaker.getLoaders()) {
@@ -716,13 +716,13 @@ public class Commands {
             }
 
             if (erroredLoaders.isEmpty()) {
-               sender.sendMessage(SpecialMessagesChat.getNormalMessage("Syntax of scripts is §acorrect§r, to see the effect §erestart the game"));
-               sender.sendMessage(SpecialMessagesChat.getNormalMessage("Please be advised that §bbrackets (<>) §rmay have §4errored, see above."));
+               sender.sendMessage(SpecialMessagesChat.getNormalMessage("Syntax of scripts is \u00a7acorrect\u00a7r, to see the effect \u00a7erestart the game"));
+               sender.sendMessage(SpecialMessagesChat.getNormalMessage("Please be advised that \u00a7bbrackets (<>) \u00a7rmay have \u00a74errored, see above."));
                sender.sendMessage(SpecialMessagesChat.getNormalMessage("If no errors appeared above everything was fine."));
             } else {
                sender.sendMessage(SpecialMessagesChat.getNormalMessage("These loaders failed to load correctly:"));
                sender.sendMessage(SpecialMessagesChat.getNormalMessage((String)erroredLoaders.stream().map(ScriptLoader::getMainName).collect(Collectors.joining(", "))));
-               sender.sendMessage(SpecialMessagesChat.getLinkToCraftTweakerLog("§4Syntax of the scripts is incorrect!", sender));
+               sender.sendMessage(SpecialMessagesChat.getLinkToCraftTweakerLog("\u00a74Syntax of the scripts is incorrect!", sender));
             }
 
          }
@@ -758,7 +758,7 @@ public class Commands {
          }
 
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct keyNames", "/ct keyNames", true), SpecialMessagesChat.getNormalMessage(" §3Outputs a list of all LWJGL keynames to their respective KeyCodes in the game to the crafttweaker.log")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct keyNames", "/ct keyNames", true), SpecialMessagesChat.getNormalMessage(" \u00a73Outputs a list of all LWJGL keynames to their respective KeyCodes in the game to the crafttweaker.log")});
          }
       });
    }

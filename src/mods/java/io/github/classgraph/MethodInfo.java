@@ -474,7 +474,7 @@ public class MethodInfo extends ScanResultObject implements Comparable<MethodInf
       if (this.isVarArgs()) {
          for(int i = allParamInfo.length - 1; i >= 0; --i) {
             int mods = allParamInfo[i].getModifiers();
-            if ((mods & 4096) == 0 && (mods & '耀') == 0) {
+            if ((mods & 4096) == 0 && (mods & '\u8000') == 0) {
                TypeSignature paramType = allParamInfo[i].getTypeSignatureOrTypeDescriptor();
                if (paramType instanceof ArrayTypeSignature) {
                   varArgsParamIndex = i;

@@ -23,7 +23,7 @@ public class ResourceListCommand extends CraftTweakerCommand {
    }
 
    protected void init() {
-      this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct " + this.subCommandName, "/ct " + this.subCommandName, true), SpecialMessagesChat.getNormalMessage(" §3Outputs a list of all " + this.subCommandName + "names in the game to the crafttweaker.log")});
+      this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct " + this.subCommandName, "/ct " + this.subCommandName, true), SpecialMessagesChat.getNormalMessage(" \u00a73Outputs a list of all " + this.subCommandName + "names in the game to the crafttweaker.log")});
    }
 
    public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {

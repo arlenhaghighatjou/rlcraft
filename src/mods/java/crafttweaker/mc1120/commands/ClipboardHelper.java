@@ -29,7 +29,7 @@ public class ClipboardHelper {
 
       if (sender.getCommandSenderEntity() instanceof EntityPlayer) {
          copyStringPlayer((EntityPlayer)sender.getCommandSenderEntity(), message.toString());
-         sender.sendMessage(new TextComponentString("Copied [§6" + message.toString() + "§r] to the clipboard"));
+         sender.sendMessage(new TextComponentString("Copied [\u00a76" + message.toString() + "\u00a7r] to the clipboard"));
       } else {
          sender.sendMessage(new TextComponentString("This command can only be executed as a Player (InGame)"));
       }

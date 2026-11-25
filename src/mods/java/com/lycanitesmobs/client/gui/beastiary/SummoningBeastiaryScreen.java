@@ -166,7 +166,7 @@ public class SummoningBeastiaryScreen extends BeastiaryScreen {
             this.renderCreature(selectedCreature, this.colRightX + marginX / 2 + this.colRightWidth / 2, this.colRightY + Math.round((float)this.colRightHeight / 2.0F), mouseX, mouseY, partialTicks);
          }
 
-         String text = "§l" + LanguageManager.translate("gui.beastiary.player.focus") + ": ";
+         String text = "\u00a7l" + LanguageManager.translate("gui.beastiary.player.focus") + ": ";
          this.getFontRenderer().drawString(text, (float)nextX, (float)nextY, 16777215, true);
          int barX = nextX + this.getFontRenderer().getStringWidth(text);
          int focusMax = Math.round((float)this.playerExt.summonFocusMax / (float)this.playerExt.summonFocusCharge);
@@ -180,7 +180,7 @@ public class SummoningBeastiaryScreen extends BeastiaryScreen {
 
          if (selectedCreature != null) {
             nextY = nextY + 4 + this.getFontRenderer().getWordWrappedHeight(text, this.colRightWidth);
-            text = "§l" + LanguageManager.translate("creature.stat.focus") + ": ";
+            text = "\u00a7l" + LanguageManager.translate("creature.stat.focus") + ": ";
             this.getFontRenderer().drawString(text, (float)nextX, (float)nextY, 16777215, true);
             this.drawLevel(selectedCreature, AssetManager.getTexture("GUIPetLevel"), nextX + this.getFontRenderer().getStringWidth(text), nextY);
          } else {
@@ -192,11 +192,11 @@ public class SummoningBeastiaryScreen extends BeastiaryScreen {
          int buttonHeight = 20;
          int buttonSpacing = 2;
          int buttonY = this.colRightY + this.colRightHeight - (buttonHeight + buttonSpacing) * 3;
-         this.getFontRenderer().drawString("§l" + LanguageManager.translate("gui.pet.actions"), (float)this.colRightX, (float)(buttonY + 6), 16777215, true);
+         this.getFontRenderer().drawString("\u00a7l" + LanguageManager.translate("gui.pet.actions"), (float)this.colRightX, (float)(buttonY + 6), 16777215, true);
          buttonY = buttonY + buttonHeight + buttonSpacing;
-         this.getFontRenderer().drawString("§l" + LanguageManager.translate("gui.pet.stance"), (float)this.colRightX, (float)(buttonY + 6), 16777215, true);
+         this.getFontRenderer().drawString("\u00a7l" + LanguageManager.translate("gui.pet.stance"), (float)this.colRightX, (float)(buttonY + 6), 16777215, true);
          buttonY = buttonY + buttonHeight + buttonSpacing;
-         this.getFontRenderer().drawString("§l" + LanguageManager.translate("gui.pet.movement"), (float)this.colRightX, (float)(buttonY + 6), 16777215, true);
+         this.getFontRenderer().drawString("\u00a7l" + LanguageManager.translate("gui.pet.movement"), (float)this.colRightX, (float)(buttonY + 6), 16777215, true);
       }
    }
 

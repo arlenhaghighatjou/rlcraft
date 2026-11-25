@@ -176,7 +176,7 @@ public class FBPGuiMenuPage1 extends GuiScreen {
       String text = "";
       switch(this.selected) {
       case 1:
-         text = "Sets the §6weather particle density §ato §6" + (int)(FBP.weatherParticleDensity * 100.0D) + "%§a.";
+         text = "Sets the \u00a76weather particle density \u00a7ato \u00a76" + (int)(FBP.weatherParticleDensity * 100.0D) + "%\u00a7a.";
          break;
       default:
          text = "";
@@ -195,7 +195,7 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 
    private void drawInfo() {
       int posY = this.Done.y - 18;
-      String s = "Weather Particle Density [§6" + (int)(FBP.weatherParticleDensity * 100.0D) + "%§f]";
+      String s = "Weather Particle Density [\u00a76" + (int)(FBP.weatherParticleDensity * 100.0D) + "%\u00a7f]";
       this.WeatherParticleDensity.displayString = s;
    }
 

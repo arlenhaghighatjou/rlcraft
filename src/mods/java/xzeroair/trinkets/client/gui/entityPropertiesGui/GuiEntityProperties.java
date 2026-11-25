@@ -251,7 +251,7 @@ public class GuiEntityProperties extends GuiScreen {
       int backHeight = 30;
       if (this.properties.getCurrentRace().canFly()) {
          backHeight = 42;
-         int flying = this.properties.getRaceHandler().canFly() ? '저' : 13107200;
+         int flying = this.properties.getRaceHandler().canFly() ? '\uc800' : 13107200;
          fontRenderer.drawStringWithShadow("Flying", 17.0F, 62.0F, flying);
       }
 

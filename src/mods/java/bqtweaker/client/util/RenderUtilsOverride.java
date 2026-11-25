@@ -507,7 +507,7 @@ public class RenderUtilsOverride {
                ++j;
             }
             break;
-         case '§':
+         case '\u00a7':
             if (k < i - 1) {
                ++k;
                char c1 = str.charAt(k);

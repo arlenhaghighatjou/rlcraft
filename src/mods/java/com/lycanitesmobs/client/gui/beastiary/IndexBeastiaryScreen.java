@@ -70,14 +70,14 @@ public class IndexBeastiaryScreen extends BeastiaryScreen {
       yOffset = yOffset + this.getFontRenderer().getWordWrappedHeight(info, this.colRightWidth);
       VersionChecker.VersionInfo latestVersion = VersionChecker.INSTANCE.getLatestVersion();
       if (latestVersion != null) {
-         String version = "\n§l" + LanguageManager.translate("gui.beastiary.index.version") + ": §r";
+         String version = "\n\u00a7l" + LanguageManager.translate("gui.beastiary.index.version") + ": \u00a7r";
          if (latestVersion.isNewer) {
-            version = version + "§4";
+            version = version + "\u00a74";
          }
 
-         version = version + "2.0.8.9§r";
+         version = version + "2.0.8.9\u00a7r";
          if (latestVersion.isNewer) {
-            version = version + " §l" + LanguageManager.translate("gui.beastiary.index.version.newer") + ": §r§2" + latestVersion.versionNumber + "§r";
+            version = version + " \u00a7l" + LanguageManager.translate("gui.beastiary.index.version.newer") + ": \u00a7r\u00a72" + latestVersion.versionNumber + "\u00a7r";
          }
 
          this.drawSplitString(version, this.colRightX + 1, yOffset, this.colRightWidth, 16777215, true);

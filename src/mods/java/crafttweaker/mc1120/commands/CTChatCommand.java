@@ -66,7 +66,7 @@ public class CTChatCommand extends CommandBase {
                ((CraftTweakerCommand)craftTweakerCommands.get(args[0])).executeCommand(server, sender, (String[])ArrayUtils.subarray(args, 1, args.length));
             }
          } else {
-            sender.sendMessage(SpecialMessagesChat.getClickableCommandText("§cNo such command! §6[Click to show help]", "/ct help", true));
+            sender.sendMessage(SpecialMessagesChat.getClickableCommandText("\u00a7cNo such command! \u00a76[Click to show help]", "/ct help", true));
          }
 
       }

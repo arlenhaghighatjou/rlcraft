@@ -238,8 +238,8 @@ public class ElementNumberInput extends Element implements ITextInput {
          GlStateManager.pushMatrix();
          float scale = 1.0F;
          GlStateManager.scale(scale, scale, scale);
-         this.parent.workspace.getFontRenderer().drawString("▲", (float)((int)((float)(this.getPosX() + this.width / this.textFields.size() * (i + 1) - 8) / scale)), (float)((int)((float)(this.getPosY() - 1) / scale)), Theme.getAsHex(this.parent.workspace.currentTheme.font), false);
-         this.parent.workspace.getFontRenderer().drawString("▼", (float)((int)((float)(this.getPosX() + this.width / this.textFields.size() * (i + 1) - 8) / scale)), (float)((int)((float)(this.getPosY() + 5) / scale)), Theme.getAsHex(this.parent.workspace.currentTheme.font), false);
+         this.parent.workspace.getFontRenderer().drawString("\u25b2", (float)((int)((float)(this.getPosX() + this.width / this.textFields.size() * (i + 1) - 8) / scale)), (float)((int)((float)(this.getPosY() - 1) / scale)), Theme.getAsHex(this.parent.workspace.currentTheme.font), false);
+         this.parent.workspace.getFontRenderer().drawString("\u25bc", (float)((int)((float)(this.getPosX() + this.width / this.textFields.size() * (i + 1) - 8) / scale)), (float)((int)((float)(this.getPosY() + 5) / scale)), Theme.getAsHex(this.parent.workspace.currentTheme.font), false);
          GlStateManager.popMatrix();
       }
 

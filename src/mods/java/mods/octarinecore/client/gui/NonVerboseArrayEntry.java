@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
    mv = {1, 1, 15},
    bv = {1, 0, 3},
    k = 1,
-   d1 = {"\u0000$\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u0002\n\u0000\u0018\u00002\u00020\u0001B\u001d\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u0012\u0006\u0010\u0004\u001a\u00020\u0005\u0012\u0006\u0010\u0006\u001a\u00020\u0007¢\u0006\u0002\u0010\bJ\b\u0010\t\u001a\u00020\nH\u0016¨\u0006\u000b"},
+   d1 = {"\u0000$\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u0002\n\u0000\u0018\u00002\u00020\u0001B\u001d\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u0012\u0006\u0010\u0004\u001a\u00020\u0005\u0012\u0006\u0010\u0006\u001a\u00020\u0007\u00a2\u0006\u0002\u0010\bJ\b\u0010\t\u001a\u00020\nH\u0016\u00a8\u0006\u000b"},
    d2 = {"Lmods/octarinecore/client/gui/NonVerboseArrayEntry;", "Lnet/minecraftforge/fml/client/config/GuiConfigEntries$ArrayEntry;", "owningScreen", "Lnet/minecraftforge/fml/client/config/GuiConfig;", "owningEntryList", "Lnet/minecraftforge/fml/client/config/GuiConfigEntries;", "configElement", "Lnet/minecraftforge/fml/client/config/IConfigElement;", "(Lnet/minecraftforge/fml/client/config/GuiConfig;Lnet/minecraftforge/fml/client/config/GuiConfigEntries;Lnet/minecraftforge/fml/client/config/IConfigElement;)V", "updateValueButtonText", "", "BetterFoliage-MC1.12"}
 )
 public final class NonVerboseArrayEntry extends ArrayEntry {
@@ -44,7 +44,7 @@ public final class NonVerboseArrayEntry extends ArrayEntry {
          String shortDefaults = I18n.format(configElement.getLanguageKey() + ".arrayEntry", new Object[]{configElement.getDefaults().length});
          var10000 = this.toolTip;
          List var10001 = this.mc.fontRenderer.listFormattedStringToWidth(TextFormatting.AQUA + I18n.format("fml.configgui.tooltip.default", new Object[]{shortDefaults}), 300);
-         Intrinsics.checkExpressionValueIsNotNull(var10001, "mc.fontRenderer.listForm…\", shortDefaults)}\", 300)");
+         Intrinsics.checkExpressionValueIsNotNull(var10001, "mc.fontRenderer.listForm\u2026\", shortDefaults)}\", 300)");
          var10000.addAll((Collection)var10001);
       }
    }

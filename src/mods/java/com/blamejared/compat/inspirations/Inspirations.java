@@ -22,7 +22,7 @@ public class Inspirations {
    public static void registerCommands() {
       CTChatCommand.registerCommand(new CraftTweakerCommand("inspirations") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct inspirations {dyes|potions}", "/ct inspirations {dyes|potions}", false), SpecialMessagesChat.getNormalMessage(" §3Dumps all the dye names or potion type resource locations to the log")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct inspirations {dyes|potions}", "/ct inspirations {dyes|potions}", false), SpecialMessagesChat.getNormalMessage(" \u00a73Dumps all the dye names or potion type resource locations to the log")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] arguments) {

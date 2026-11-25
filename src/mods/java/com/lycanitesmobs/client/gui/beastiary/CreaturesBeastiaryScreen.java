@@ -93,15 +93,15 @@ public class CreaturesBeastiaryScreen extends BeastiaryScreen {
             this.renderCreature(this.playerExt.selectedCreature, this.colRightX + marginX / 2 + this.colRightWidth / 2, this.colRightY + 100, mouseX, mouseY, partialTicks);
             CreatureInfo creatureInfo = this.playerExt.selectedCreature;
             CreatureKnowledge creatureKnowledge = this.playerExt.beastiary.getCreatureKnowledge(this.playerExt.selectedCreature.getName());
-            String text = "§l" + LanguageManager.translate("creature.stat.element") + ": §r";
+            String text = "\u00a7l" + LanguageManager.translate("creature.stat.element") + ": \u00a7r";
             text = text + (creatureInfo.elements != null ? creatureInfo.getElementNames(subspecies) : "None");
             this.getFontRenderer().drawString(text, (float)nextX, (float)nextY, 16777215, true);
             nextY = nextY + 2 + this.getFontRenderer().getWordWrappedHeight(text, width);
-            text = "§l" + LanguageManager.translate("creature.stat.cost") + ": §r";
+            text = "\u00a7l" + LanguageManager.translate("creature.stat.cost") + ": \u00a7r";
             this.getFontRenderer().drawString(text, (float)nextX, (float)nextY, 16777215, true);
             this.drawLevel(creatureInfo, AssetManager.getTexture("GUIPetLevel"), nextX + this.getFontRenderer().getStringWidth(text), nextY);
             nextY = nextY + 2 + this.getFontRenderer().getWordWrappedHeight(text, width);
-            text = "§l" + LanguageManager.translate("creature.stat.knowledge") + ": §r";
+            text = "\u00a7l" + LanguageManager.translate("creature.stat.knowledge") + ": \u00a7r";
             int rankX = nextX + this.getFontRenderer().getStringWidth(text);
             int barX = rankX + 29;
             int barWidth = 80;

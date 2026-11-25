@@ -5,7 +5,7 @@ import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 public class Place {
-   private static List<String> placeTypes = Arrays.asList("hill", "mountain", "village", "town", "sea", "forest", "cave", "field", "tower", "dungeon", "realm", "dimension", "temple", "shrine", "hut", "shack", "cottage", "cavern", "crevice", "ruïns", "lowland", "plain", "peak", "cliff", "creek", "meadow", "tower", "lighthouse", "mansion", "sewer", "cellar", "church", "valley", "ravine", "ridge", "glacier", "river", "lake", "waterfall", "island", "isle", "reef");
+   private static List<String> placeTypes = Arrays.asList("hill", "mountain", "village", "town", "sea", "forest", "cave", "field", "tower", "dungeon", "realm", "dimension", "temple", "shrine", "hut", "shack", "cottage", "cavern", "crevice", "ru\u00efns", "lowland", "plain", "peak", "cliff", "creek", "meadow", "tower", "lighthouse", "mansion", "sewer", "cellar", "church", "valley", "ravine", "ridge", "glacier", "river", "lake", "waterfall", "island", "isle", "reef");
    private static List<String> placeTraits = Arrays.asList("luscious", "heavenly", "lush", "dense", "palatial", "firey", "blazing", "hot", "mystical", "arcane", "anagogic", "hermetical", "orphic", "magical", "vast", "boundless", "colossal", "enormous", "extensive", "immensive", "monumental", "tremendous", "eternal", "pristine", "immaculate", "cold", "snowy", "frigid", "frozen", "frosty", "glacial", "brobdingnagian", "gamol", "icey", "barren", "deserted", "rotten", "undead", "cursed", "godlike", "vibrant", "doomed", "sacred", "divine");
    private String placeType;
    private String placeTrait;

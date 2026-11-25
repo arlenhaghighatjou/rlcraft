@@ -17,7 +17,7 @@ public class Chisel {
    public static void registerCommands() {
       CTChatCommand.registerCommand(new CraftTweakerCommand("chiselGroups") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct chiselGroups", "/ct chiselGroups", true), SpecialMessagesChat.getNormalMessage(" §3Dumps all the Chisel group names to the crafttweaker log")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct chiselGroups", "/ct chiselGroups", true), SpecialMessagesChat.getNormalMessage(" \u00a73Dumps all the Chisel group names to the crafttweaker log")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {

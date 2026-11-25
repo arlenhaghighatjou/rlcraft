@@ -26,7 +26,7 @@ public enum ChatFormatting {
    ITALIC('o', true),
    RESET('r');
 
-   public static final char PREFIX_CODE = '§';
+   public static final char PREFIX_CODE = '\u00a7';
    private final char code;
    private final boolean isFormat;
    private final String toString;
@@ -38,7 +38,7 @@ public enum ChatFormatting {
    private ChatFormatting(char code, boolean isFormat) {
       this.code = code;
       this.isFormat = isFormat;
-      this.toString = "§" + code;
+      this.toString = "\u00a7" + code;
    }
 
    public char getChar() {

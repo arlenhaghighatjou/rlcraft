@@ -56,7 +56,7 @@ public class MTLogger implements ILogger {
          logger.logWarning(message);
       }
 
-      String message2 = "§eWARNING: " + message;
+      String message2 = "\u00a7eWARNING: " + message;
       if (this.players.isEmpty()) {
          this.unprocessed.add(new MTLogger.ErrorMessage(message2, true));
       } else if (!CraftTweakerAPI.isSuppressingWarnings()) {
@@ -76,7 +76,7 @@ public class MTLogger implements ILogger {
          logger.logError(message, exception);
       }
 
-      String message2 = "§cERROR: " + this.getMessageToSendPlayer(message, exception);
+      String message2 = "\u00a7cERROR: " + this.getMessageToSendPlayer(message, exception);
       if (this.players.isEmpty()) {
          this.unprocessed.add(new MTLogger.ErrorMessage(message2, false));
       } else if (!CraftTweakerAPI.isSuppressingErrors()) {

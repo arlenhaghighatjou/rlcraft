@@ -19,8 +19,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class TableCellEnum<T> extends TableCellPropertyDefault<T> {
-   public static final String LEFT_ARROW = TextFormatting.BOLD + "←";
-   public static final String RIGHT_ARROW = TextFormatting.BOLD + "→";
+   public static final String LEFT_ARROW = TextFormatting.BOLD + "\u2190";
+   public static final String RIGHT_ARROW = TextFormatting.BOLD + "\u2192";
    protected GuiButton leftButton;
    protected GuiButton rightButton;
    private List<TableCellEnum.Option<T>> options;

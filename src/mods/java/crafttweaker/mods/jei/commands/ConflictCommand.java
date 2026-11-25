@@ -51,12 +51,12 @@ public class ConflictCommand extends CraftTweakerCommand {
    }
 
    protected void init() {
-      this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct conflict", "/ct conflict", true), SpecialMessagesChat.getNormalMessage(" §3Lists all conflicting crafting recipes in the game"), SpecialMessagesChat.getNormalMessage(" §3Might take a bit of time depending on the size of the pack"), SpecialMessagesChat.getNormalMessage(" §3This needs to be run on a client and with JEI installed")});
+      this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct conflict", "/ct conflict", true), SpecialMessagesChat.getNormalMessage(" \u00a73Lists all conflicting crafting recipes in the game"), SpecialMessagesChat.getNormalMessage(" \u00a73Might take a bit of time depending on the size of the pack"), SpecialMessagesChat.getNormalMessage(" \u00a73This needs to be run on a client and with JEI installed")});
    }
 
    public void executeCommand(MinecraftServer server, final ICommandSender sender, String[] args) {
       if (JEIAddonPlugin.recipeRegistry != null && Loader.isModLoaded("jei")) {
-         sender.sendMessage(SpecialMessagesChat.getNormalMessage("§6Running Conflict scan. This might take a while"));
+         sender.sendMessage(SpecialMessagesChat.getNormalMessage("\u00a76Running Conflict scan. This might take a while"));
          (new Thread("ConflictScan_mc_thread") {
             public void run() {
                try {
@@ -69,7 +69,7 @@ public class ConflictCommand extends CraftTweakerCommand {
             }
          }).start();
       } else {
-         sender.sendMessage(SpecialMessagesChat.getNormalMessage("§4This command can only be executed on the Client and with JEI installed"));
+         sender.sendMessage(SpecialMessagesChat.getNormalMessage("\u00a74This command can only be executed on the Client and with JEI installed"));
          CraftTweakerAPI.logWarning("JEI plugin not loaded!");
       }
 

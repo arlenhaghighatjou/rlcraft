@@ -36,7 +36,7 @@ public class ThaumCraft {
    public static void registerCommands() {
       CTChatCommand.registerCommand(new CraftTweakerCommand("thaumcraftDump") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct thaumcraftDump", "/ct thaumcraftDump", true), SpecialMessagesChat.getNormalMessage(" §3Dumps all the Thaumcraft information to the crafttweaker log")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct thaumcraftDump", "/ct thaumcraftDump", true), SpecialMessagesChat.getNormalMessage(" \u00a73Dumps all the Thaumcraft information to the crafttweaker log")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {

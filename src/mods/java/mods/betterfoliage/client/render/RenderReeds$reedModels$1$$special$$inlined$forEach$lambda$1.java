@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
    mv = {1, 1, 15},
    bv = {1, 0, 3},
    k = 3,
-   d1 = {"\u0000\u000e\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\b\u0003\u0010\u0000\u001a\u00020\u00012\u0006\u0010\u0002\u001a\u00020\u0001H\n¢\u0006\u0002\b\u0003¨\u0006\u0004"},
+   d1 = {"\u0000\u000e\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\b\u0003\u0010\u0000\u001a\u00020\u00012\u0006\u0010\u0002\u001a\u00020\u0001H\n\u00a2\u0006\u0002\b\u0003\u00a8\u0006\u0004"},
    d2 = {"<anonymous>", "Lmods/octarinecore/client/render/Quad;", "it", "invoke", "mods/betterfoliage/client/render/RenderReeds$reedModels$1$1$1"}
 )
 final class RenderReeds$reedModels$1$$special$$inlined$forEach$lambda$1 extends Lambda implements Function1<Quad, Quad> {

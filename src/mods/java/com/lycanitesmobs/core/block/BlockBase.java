@@ -66,7 +66,7 @@ public class BlockBase extends Block {
    }
 
    public String getDescription(ItemStack itemStack, World world) {
-      return "§a" + LanguageManager.translate("tile." + this.blockName + ".description");
+      return "\u00a7a" + LanguageManager.translate("tile." + this.blockName + ".description");
    }
 
    public void onBlockAdded(World world, BlockPos pos, IBlockState state) {

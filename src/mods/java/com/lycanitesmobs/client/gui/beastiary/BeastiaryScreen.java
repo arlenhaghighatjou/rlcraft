@@ -182,7 +182,7 @@ public abstract class BeastiaryScreen extends BaseScreen {
    }
 
    public void drawForeground(int mouseX, int mouseY, float partialTicks) {
-      String title = "§l§n" + this.getTitle();
+      String title = "\u00a7l\u00a7n" + this.getTitle();
       float width = (float)this.getFontRenderer().getStringWidth(title);
       this.getFontRenderer().drawString(title, (float)(this.colRightCenterX - Math.round(width / 2.0F)), (float)this.colRightY, 16777215, true);
    }

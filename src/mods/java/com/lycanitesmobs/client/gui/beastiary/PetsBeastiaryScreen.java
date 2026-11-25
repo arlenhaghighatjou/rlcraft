@@ -176,7 +176,7 @@ public class PetsBeastiaryScreen extends BeastiaryScreen {
             this.renderCreature(this.playerExt.selectedPet.getCreatureInfo(), this.colRightX + marginX / 2 + this.colRightWidth / 2, this.colRightY + Math.round((float)this.colRightHeight / 2.0F), mouseX, mouseY, partialTicks);
          }
 
-         String text = "§l" + LanguageManager.translate("gui.beastiary.player.spirit") + ": ";
+         String text = "\u00a7l" + LanguageManager.translate("gui.beastiary.player.spirit") + ": ";
          this.getFontRenderer().drawString(text, (float)nextX, (float)nextY, 16777215, true);
          int barX = nextX + this.getFontRenderer().getStringWidth(text);
          int spiritMax = Math.round((float)this.playerExt.spiritMax / (float)this.playerExt.spiritCharge);
@@ -192,14 +192,14 @@ public class PetsBeastiaryScreen extends BeastiaryScreen {
          this.drawBar(AssetManager.getTexture("GUIPetSpiritUsed"), barX, nextY, 0.0F, 9.0F, 9.0F, spiritReserved, -10);
          if (this.playerExt.selectedPet != null) {
             nextY = nextY + 4 + this.getFontRenderer().getWordWrappedHeight(text, this.colRightWidth);
-            text = "§l" + LanguageManager.translate("creature.stat.spirit") + ": ";
+            text = "\u00a7l" + LanguageManager.translate("creature.stat.spirit") + ": ";
             this.getFontRenderer().drawString(text, (float)nextX, (float)nextY, 16777215, true);
             this.drawLevel(this.playerExt.selectedPet.getCreatureInfo(), AssetManager.getTexture("GUIPetLevel"), nextX + this.getFontRenderer().getStringWidth(text), nextY);
             nextY = nextY + 4 + this.getFontRenderer().getWordWrappedHeight(text, this.colRightWidth);
             if (this.playerExt.selectedPet.respawnTime <= 0) {
-               text = "§l" + LanguageManager.translate("creature.stat.health") + ": ";
+               text = "\u00a7l" + LanguageManager.translate("creature.stat.health") + ": ";
             } else {
-               text = "§l" + LanguageManager.translate("creature.stat.respawning") + ": ";
+               text = "\u00a7l" + LanguageManager.translate("creature.stat.respawning") + ": ";
             }
 
             this.getFontRenderer().drawString(text, (float)nextX, (float)nextY, 16777215, true);
@@ -221,7 +221,7 @@ public class PetsBeastiaryScreen extends BeastiaryScreen {
             }
 
             nextY = nextY + 4 + this.getFontRenderer().getWordWrappedHeight(text, this.colRightWidth);
-            text = "§l" + LanguageManager.translate("creature.stat.experience") + ": ";
+            text = "\u00a7l" + LanguageManager.translate("creature.stat.experience") + ": ";
             this.getFontRenderer().drawString(text, (float)nextX, (float)nextY, 16777215, true);
             barY = nextY - 1;
             barWidth = 80;
@@ -243,11 +243,11 @@ public class PetsBeastiaryScreen extends BeastiaryScreen {
          int buttonSpacing = 2;
          int buttonY = this.colRightY + this.colRightHeight - (buttonHeight + buttonSpacing) * 3;
          if (this.playerExt.selectedPet != null && !this.playerExt.selectedPet.releaseEntity) {
-            this.getFontRenderer().drawString("§l" + LanguageManager.translate("gui.pet.actions"), (float)this.colRightX, (float)(buttonY + 6), 16777215, true);
+            this.getFontRenderer().drawString("\u00a7l" + LanguageManager.translate("gui.pet.actions"), (float)this.colRightX, (float)(buttonY + 6), 16777215, true);
             buttonY = buttonY + buttonHeight + buttonSpacing;
-            this.getFontRenderer().drawString("§l" + LanguageManager.translate("gui.pet.stance"), (float)this.colRightX, (float)(buttonY + 6), 16777215, true);
+            this.getFontRenderer().drawString("\u00a7l" + LanguageManager.translate("gui.pet.stance"), (float)this.colRightX, (float)(buttonY + 6), 16777215, true);
             buttonY = buttonY + buttonHeight + buttonSpacing;
-            this.getFontRenderer().drawString("§l" + LanguageManager.translate("gui.pet.movement"), (float)this.colRightX, (float)(buttonY + 6), 16777215, true);
+            this.getFontRenderer().drawString("\u00a7l" + LanguageManager.translate("gui.pet.movement"), (float)this.colRightX, (float)(buttonY + 6), 16777215, true);
          }
 
          if (this.playerExt.selectedPet != null && this.playerExt.selectedPet.releaseEntity) {

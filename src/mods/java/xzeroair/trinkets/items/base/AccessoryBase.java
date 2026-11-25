@@ -307,7 +307,7 @@ public abstract class AccessoryBase extends Item implements IsModelLoaded, IAcce
                TrinketProperties prop = Capabilities.getTrinketProperties(stack);
                if (prop != null) {
                   TrinketHelper.SlotInformation info = prop.getSlotInfo();
-                  tooltip.add("Â§6" + info.getHandler() + "Â§r:Â§f" + info.getSlot() + "Â§r");
+                  tooltip.add("\u00c2\u00a76" + info.getHandler() + "\u00c2\u00a7r:\u00c2\u00a7f" + info.getSlot() + "\u00c2\u00a7r");
                }
             }
 

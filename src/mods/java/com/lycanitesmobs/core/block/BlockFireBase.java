@@ -70,7 +70,7 @@ public class BlockFireBase extends BlockBase {
    }
 
    public String getDescription(ItemStack itemStack, World world) {
-      return "§a" + LanguageManager.translate(this.getUnlocalizedName() + ".description");
+      return "\u00a7a" + LanguageManager.translate(this.getUnlocalizedName() + ".description");
    }
 
    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {

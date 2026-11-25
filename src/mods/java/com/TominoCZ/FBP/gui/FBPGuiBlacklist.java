@@ -77,7 +77,7 @@ public class FBPGuiBlacklist extends GuiScreen {
       Block b = ib instanceof ItemBlock ? ((ItemBlock)ib).getBlock() : null;
       this.animation.enabled = b != null && !(b instanceof BlockDoublePlant) && FBPModelHelper.isModelValid(b.getDefaultState());
       this.particle.enabled = this.selectedBlock.getBlock() != Blocks.REDSTONE_BLOCK;
-      FBPGuiButton guide = new FBPGuiButton(-1, this.animation.x + 30, this.animation.y + 30 - 10, (this.animation.enabled ? "§a<" : "§c<") + "             " + (this.particle.enabled ? "§a>" : "§c>"), false, false);
+      FBPGuiButton guide = new FBPGuiButton(-1, this.animation.x + 30, this.animation.y + 30 - 10, (this.animation.enabled ? "\u00a7a<" : "\u00a7c<") + "             " + (this.particle.enabled ? "\u00a7a>" : "\u00a7c>"), false, false);
       guide.enabled = false;
       this.buttonList.addAll(Arrays.asList(guide, this.animation, this.particle));
    }
@@ -162,21 +162,21 @@ public class FBPGuiBlacklist extends GuiScreen {
       GlStateManager.scale(0.25D, 0.25D, 0.25D);
       GlStateManager.translate((float)(-x), (float)(-y), 0.0F);
       String itemName = ((Impl)(this.selectedPos == null ? this.displayItemStack.getItem() : this.selectedBlock.getBlock())).getRegistryName().toString();
-      itemName = ((itemName.contains(":") ? "§6§l" : "§a§l") + itemName).replaceAll(":", "§c§l:§a§l");
+      itemName = ((itemName.contains(":") ? "\u00a76\u00a7l" : "\u00a7a\u00a7l") + itemName).replaceAll(":", "\u00a7c\u00a7l:\u00a7a\u00a7l");
       FBPGuiHelper._drawCenteredString(this.fontRenderer, itemName, this.width / 2, this.height / 2 - 19, 0);
-      String animationText1 = this.animation.enabled ? (this.animation.isMouseOver() ? (this.animation.isInExceptions ? "§c§lREMOVE" : "§a§lADD") : "") : "§c§lCAN'T BE ANIMATED";
-      String particleText1 = this.particle.enabled ? (this.particle.isMouseOver() ? (this.particle.isInExceptions ? "§c§lREMOVE" : "§a§lADD") : "") : "§c§lCAN'T BE ADDED";
+      String animationText1 = this.animation.enabled ? (this.animation.isMouseOver() ? (this.animation.isInExceptions ? "\u00a7c\u00a7lREMOVE" : "\u00a7a\u00a7lADD") : "") : "\u00a7c\u00a7lCAN'T BE ANIMATED";
+      String particleText1 = this.particle.enabled ? (this.particle.isMouseOver() ? (this.particle.isInExceptions ? "\u00a7c\u00a7lREMOVE" : "\u00a7a\u00a7lADD") : "") : "\u00a7c\u00a7lCAN'T BE ADDED";
       FBPGuiHelper._drawCenteredString(this.fontRenderer, animationText1, this.animation.x + 30, this.animation.y + 65, 0);
       FBPGuiHelper._drawCenteredString(this.fontRenderer, particleText1, this.particle.x + 30, this.particle.y + 65, 0);
       if (this.animation.isMouseOver()) {
-         FBPGuiHelper._drawCenteredString(this.fontRenderer, "§a§lPLACE ANIMATION", this.animation.x + 30, this.animation.y - 12, 0);
+         FBPGuiHelper._drawCenteredString(this.fontRenderer, "\u00a7a\u00a7lPLACE ANIMATION", this.animation.x + 30, this.animation.y - 12, 0);
       }
 
       if (this.particle.isMouseOver()) {
-         FBPGuiHelper._drawCenteredString(this.fontRenderer, "§a§lPARTICLES", this.particle.x + 30, this.particle.y - 12, 0);
+         FBPGuiHelper._drawCenteredString(this.fontRenderer, "\u00a7a\u00a7lPARTICLES", this.particle.x + 30, this.particle.y - 12, 0);
       }
 
-      this.drawCenteredString(this.fontRenderer, "§LBlacklist a Block", this.width / 2, 20, this.fontRenderer.getColorCode('a'));
+      this.drawCenteredString(this.fontRenderer, "\u00a7LBlacklist a Block", this.width / 2, 20, this.fontRenderer.getColorCode('a'));
       this.mc.getTextureManager().bindTexture(new ResourceLocation("textures/gui/widgets.png"));
       super.drawScreen(mouseX, mouseY, partialTicks);
       this.mc.getTextureManager().bindTexture(FBP.FBP_WIDGETS);

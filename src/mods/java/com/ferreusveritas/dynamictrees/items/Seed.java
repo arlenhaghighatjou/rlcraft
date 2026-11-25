@@ -223,16 +223,16 @@ public class Seed extends Item {
       if (stack.hasTagCompound()) {
          String joCode = this.getCode(stack);
          if (!joCode.isEmpty()) {
-            tooltip.add("Code: Â§6" + joCode);
+            tooltip.add("Code: \u00c2\u00a76" + joCode);
          }
 
          if (this.hasForcePlant(stack)) {
-            tooltip.add("Force Planting: Â§3Enabled");
+            tooltip.add("Force Planting: \u00c2\u00a73Enabled");
          }
 
          NBTTagCompound nbtData = stack.getTagCompound();
          if (nbtData.hasKey("lifespan")) {
-            tooltip.add("Seed Life Span: Â§3" + nbtData.getInteger("lifespan"));
+            tooltip.add("Seed Life Span: \u00c2\u00a73" + nbtData.getInteger("lifespan"));
          }
       }
 

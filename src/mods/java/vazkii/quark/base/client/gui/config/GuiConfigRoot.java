@@ -63,7 +63,7 @@ public class GuiConfigRoot extends GuiConfigBase {
             s = I18n.format("quarkmisc.patronPlug", new Object[]{ContributorRewardHandler.featuredPatron});
          }
       } else {
-         s = "♥ " + I18n.format("quarkmisc.supportMessage", new Object[]{this.mc.getSession().getUsername()}) + " ♥";
+         s = "\u2665 " + I18n.format("quarkmisc.supportMessage", new Object[]{this.mc.getSession().getUsername()}) + " \u2665";
       }
 
       this.drawCenteredString(this.mc.fontRenderer, s, this.width / 2, 27, 16748416);

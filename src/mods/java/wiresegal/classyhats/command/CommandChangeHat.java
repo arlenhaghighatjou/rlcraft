@@ -42,7 +42,7 @@ import wiresegal.classyhats.util.HatData;
    mv = {1, 1, 13},
    bv = {1, 0, 3},
    k = 1,
-   d1 = {"\u0000L\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\u0002\n\u0002\u0010 \n\u0000\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u0011\n\u0002\b\u0003\n\u0002\u0010\b\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0004\n\u0002\u0010\u000b\n\u0002\b\u0003\bÆ\u0002\u0018\u00002\u00020\u0001B\u0007\b\u0002¢\u0006\u0002\u0010\u0002J-\u0010\b\u001a\u00020\t2\u0006\u0010\n\u001a\u00020\u000b2\u0006\u0010\f\u001a\u00020\r2\u000e\u0010\u000e\u001a\n\u0012\u0006\b\u0001\u0012\u00020\u00040\u000fH\u0016¢\u0006\u0002\u0010\u0010J\b\u0010\u0011\u001a\u00020\u0004H\u0016J\b\u0010\u0012\u001a\u00020\u0013H\u0016J;\u0010\u0014\u001a\b\u0012\u0004\u0012\u00020\u00040\u00072\u0006\u0010\n\u001a\u00020\u000b2\u0006\u0010\f\u001a\u00020\r2\f\u0010\u000e\u001a\b\u0012\u0004\u0012\u00020\u00040\u000f2\b\u0010\u0015\u001a\u0004\u0018\u00010\u0016H\u0016¢\u0006\u0002\u0010\u0017J\u0014\u0010\u0018\u001a\u00020\u00042\n\b\u0002\u0010\u0019\u001a\u0004\u0018\u00010\u0004H\u0002J\u0012\u0010\u0018\u001a\u00020\u00042\b\u0010\f\u001a\u0004\u0018\u00010\rH\u0016J#\u0010\u001a\u001a\u00020\u001b2\f\u0010\u000e\u001a\b\u0012\u0004\u0012\u00020\u00040\u000f2\u0006\u0010\u001c\u001a\u00020\u0013H\u0016¢\u0006\u0002\u0010\u001dR\u000e\u0010\u0003\u001a\u00020\u0004X\u0082D¢\u0006\u0002\n\u0000R\u000e\u0010\u0005\u001a\u00020\u0004X\u0082D¢\u0006\u0002\n\u0000R\u0014\u0010\u0006\u001a\b\u0012\u0004\u0012\u00020\u00040\u0007X\u0082\u0004¢\u0006\u0002\n\u0000¨\u0006\u001e"},
+   d1 = {"\u0000L\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\u0002\n\u0002\u0010 \n\u0000\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u0011\n\u0002\b\u0003\n\u0002\u0010\b\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0004\n\u0002\u0010\u000b\n\u0002\b\u0003\b\u00c6\u0002\u0018\u00002\u00020\u0001B\u0007\b\u0002\u00a2\u0006\u0002\u0010\u0002J-\u0010\b\u001a\u00020\t2\u0006\u0010\n\u001a\u00020\u000b2\u0006\u0010\f\u001a\u00020\r2\u000e\u0010\u000e\u001a\n\u0012\u0006\b\u0001\u0012\u00020\u00040\u000fH\u0016\u00a2\u0006\u0002\u0010\u0010J\b\u0010\u0011\u001a\u00020\u0004H\u0016J\b\u0010\u0012\u001a\u00020\u0013H\u0016J;\u0010\u0014\u001a\b\u0012\u0004\u0012\u00020\u00040\u00072\u0006\u0010\n\u001a\u00020\u000b2\u0006\u0010\f\u001a\u00020\r2\f\u0010\u000e\u001a\b\u0012\u0004\u0012\u00020\u00040\u000f2\b\u0010\u0015\u001a\u0004\u0018\u00010\u0016H\u0016\u00a2\u0006\u0002\u0010\u0017J\u0014\u0010\u0018\u001a\u00020\u00042\n\b\u0002\u0010\u0019\u001a\u0004\u0018\u00010\u0004H\u0002J\u0012\u0010\u0018\u001a\u00020\u00042\b\u0010\f\u001a\u0004\u0018\u00010\rH\u0016J#\u0010\u001a\u001a\u00020\u001b2\f\u0010\u000e\u001a\b\u0012\u0004\u0012\u00020\u00040\u000f2\u0006\u0010\u001c\u001a\u00020\u0013H\u0016\u00a2\u0006\u0002\u0010\u001dR\u000e\u0010\u0003\u001a\u00020\u0004X\u0082D\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u0005\u001a\u00020\u0004X\u0082D\u00a2\u0006\u0002\n\u0000R\u0014\u0010\u0006\u001a\b\u0012\u0004\u0012\u00020\u00040\u0007X\u0082\u0004\u00a2\u0006\u0002\n\u0000\u00a8\u0006\u001e"},
    d2 = {"Lwiresegal/classyhats/command/CommandChangeHat;", "Lnet/minecraft/command/CommandBase;", "()V", "msgFail", "", "msgSuccess", "pages", "", "execute", "", "server", "Lnet/minecraft/server/MinecraftServer;", "sender", "Lnet/minecraft/command/ICommandSender;", "args", "", "(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/command/ICommandSender;[Ljava/lang/String;)V", "getName", "getRequiredPermissionLevel", "", "getTabCompletions", "targetPos", "Lnet/minecraft/util/math/BlockPos;", "(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/command/ICommandSender;[Ljava/lang/String;Lnet/minecraft/util/math/BlockPos;)Ljava/util/List;", "getUsage", "key", "isUsernameIndex", "", "index", "([Ljava/lang/String;I)Z", "classyhats"}
 )
 public final class CommandChangeHat extends CommandBase {
@@ -209,11 +209,11 @@ public final class CommandChangeHat extends CommandBase {
       case 1:
          String[] var10001 = server.getOnlinePlayerNames();
          List var17 = CommandBase.getListOfStringsMatchingLastWord(args, (String[])Arrays.copyOf(var10001, var10001.length));
-         Intrinsics.checkExpressionValueIsNotNull(var17, "CommandBase.getListOfStr…server.onlinePlayerNames)");
+         Intrinsics.checkExpressionValueIsNotNull(var17, "CommandBase.getListOfStr\u2026server.onlinePlayerNames)");
          return var17;
       case 2:
          List var10000 = CommandBase.getListOfStringsMatchingLastWord(args, new String[]{"equipped", "page"});
-         Intrinsics.checkExpressionValueIsNotNull(var10000, "CommandBase.getListOfStr…args, \"equipped\", \"page\")");
+         Intrinsics.checkExpressionValueIsNotNull(var10000, "CommandBase.getListOfStr\u2026args, \"equipped\", \"page\")");
          return var10000;
       default:
          String var5 = args[1];
@@ -223,7 +223,7 @@ public final class CommandChangeHat extends CommandBase {
                switch(args.length) {
                case 3:
                   List var22 = CommandBase.getListOfStringsMatchingLastWord(args, (Collection)pages);
-                  Intrinsics.checkExpressionValueIsNotNull(var22, "CommandBase.getListOfStr…hingLastWord(args, pages)");
+                  Intrinsics.checkExpressionValueIsNotNull(var22, "CommandBase.getListOfStr\u2026hingLastWord(args, pages)");
                   return var22;
                case 4:
                   SpreadBuilder var24 = new SpreadBuilder(2);
@@ -243,7 +243,7 @@ public final class CommandChangeHat extends CommandBase {
                   Object[] var16 = var20;
                   var15.addSpread(var16);
                   List var21 = CommandBase.getListOfStringsMatchingLastWord(args, (String[])var14.toArray(new String[var14.size()]));
-                  Intrinsics.checkExpressionValueIsNotNull(var21, "CommandBase.getListOfStr…                        )");
+                  Intrinsics.checkExpressionValueIsNotNull(var21, "CommandBase.getListOfStr\u2026                        )");
                   return var21;
                }
             }
@@ -267,7 +267,7 @@ public final class CommandChangeHat extends CommandBase {
                Object[] var12 = var18;
                var11.addSpread(var12);
                List var19 = CommandBase.getListOfStringsMatchingLastWord(args, (String[])var10.toArray(new String[var10.size()]));
-               Intrinsics.checkExpressionValueIsNotNull(var19, "CommandBase.getListOfStr…                        )");
+               Intrinsics.checkExpressionValueIsNotNull(var19, "CommandBase.getListOfStr\u2026                        )");
                return var19;
             }
          }

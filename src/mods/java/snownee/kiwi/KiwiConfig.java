@@ -44,7 +44,7 @@ public class KiwiConfig {
          min = 50
       )
       public int tooltipWrapWidth = 100;
-      @Comment({"Use §x (almost) everywhere. Fix MC-109260. Do NOT enable this unless you know what you are doing"})
+      @Comment({"Use \u00a7x (almost) everywhere. Fix MC-109260. Do NOT enable this unless you know what you are doing"})
       @Name("Replace Default Font Renderer")
       @RequiresMcRestart
       public boolean replaceDefaultFontRenderer = false;

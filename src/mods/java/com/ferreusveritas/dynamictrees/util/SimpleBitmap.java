@@ -184,7 +184,7 @@ public class SimpleBitmap {
          String buff = "";
 
          for(int x = 0; x < this.w; ++x) {
-            buff = buff + (this.isPixelOn(x, y) ? "â–ˆ" : "â–‘");
+            buff = buff + (this.isPixelOn(x, y) ? "\u00e2\u2013\u02c6" : "\u00e2\u2013\u2018");
          }
 
          System.out.println(buff);

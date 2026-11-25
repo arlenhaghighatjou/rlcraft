@@ -36,7 +36,7 @@ public class JEIMod {
          CTChatCommand.registerCommand(new ConflictCommand());
          CTChatCommand.registerCommand(new CraftTweakerCommand("jeiCategories") {
             protected void init() {
-               this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct jeiCategories", "/ct jeiCategories", true), SpecialMessagesChat.getNormalMessage(" §3Lists all JEI recipe categories in the game")});
+               this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct jeiCategories", "/ct jeiCategories", true), SpecialMessagesChat.getNormalMessage(" \u00a73Lists all JEI recipe categories in the game")});
             }
 
             public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -52,11 +52,11 @@ public class JEIMod {
       } else {
          CTChatCommand.registerCommand(new CraftTweakerCommand("conflict") {
             protected void init() {
-               this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct conflict", "/ct conflict", true), SpecialMessagesChat.getNormalMessage(" §3Lists all conflicting crafting recipes in the game"), SpecialMessagesChat.getNormalMessage(" §3Might take a bit of time depending on the size of the pack"), SpecialMessagesChat.getNormalMessage(" §3This needs to be run on a client and with JEI installed")});
+               this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct conflict", "/ct conflict", true), SpecialMessagesChat.getNormalMessage(" \u00a73Lists all conflicting crafting recipes in the game"), SpecialMessagesChat.getNormalMessage(" \u00a73Might take a bit of time depending on the size of the pack"), SpecialMessagesChat.getNormalMessage(" \u00a73This needs to be run on a client and with JEI installed")});
             }
 
             public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {
-               sender.sendMessage(SpecialMessagesChat.getNormalMessage("§4This Command needs to be run with JEI installed"));
+               sender.sendMessage(SpecialMessagesChat.getNormalMessage("\u00a74This Command needs to be run with JEI installed"));
             }
          });
       }

@@ -46,7 +46,7 @@ public class GenericFoodItem extends ItemFood {
 
          for(Object formattedDescription : fontRenderer.listFormattedStringToWidth(description, ItemBase.DESCRIPTION_WIDTH)) {
             if (formattedDescription instanceof String) {
-               tooltip.add("§a" + formattedDescription);
+               tooltip.add("\u00a7a" + formattedDescription);
             }
          }
       }

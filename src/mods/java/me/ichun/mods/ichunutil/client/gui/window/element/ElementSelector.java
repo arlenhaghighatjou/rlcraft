@@ -35,7 +35,7 @@ public class ElementSelector extends Element {
          RendererHelper.drawColourOnScreen(this.parent.workspace.currentTheme.elementInputBorder[0], this.parent.workspace.currentTheme.elementInputBorder[1], this.parent.workspace.currentTheme.elementInputBorder[2], 255, (double)this.getPosX(), (double)this.getPosY(), (double)this.height, (double)this.height, 0.0D);
       }
 
-      this.parent.workspace.getFontRenderer().drawString("◀", (float)(this.getPosX() + this.height - (this.height + this.parent.workspace.getFontRenderer().getStringWidth("◀")) / 2), (float)(this.getPosY() + this.height - (this.height + this.parent.workspace.getFontRenderer().FONT_HEIGHT) / 2), Theme.getAsHex(this.parent.workspace.currentTheme.font), false);
+      this.parent.workspace.getFontRenderer().drawString("\u25c0", (float)(this.getPosX() + this.height - (this.height + this.parent.workspace.getFontRenderer().getStringWidth("\u25c0")) / 2), (float)(this.getPosY() + this.height - (this.height + this.parent.workspace.getFontRenderer().FONT_HEIGHT) / 2), Theme.getAsHex(this.parent.workspace.currentTheme.font), false);
       boolean hoverRight = mouseX >= this.posX + this.width - this.height && mouseX <= this.posX + this.width && mouseY >= this.posY && mouseY <= this.posY + this.height;
       if (hoverRight) {
          if (Mouse.isButtonDown(0)) {
@@ -47,7 +47,7 @@ public class ElementSelector extends Element {
          RendererHelper.drawColourOnScreen(this.parent.workspace.currentTheme.elementInputBorder[0], this.parent.workspace.currentTheme.elementInputBorder[1], this.parent.workspace.currentTheme.elementInputBorder[2], 255, (double)(this.getPosX() + this.width - this.height), (double)this.getPosY(), (double)this.height, (double)this.height, 0.0D);
       }
 
-      this.parent.workspace.getFontRenderer().drawString("▶", (float)(this.getPosX() + this.width - (this.height + this.parent.workspace.getFontRenderer().getStringWidth("▶")) / 2), (float)(this.getPosY() + this.height - (this.height + this.parent.workspace.getFontRenderer().FONT_HEIGHT) / 2), Theme.getAsHex(this.parent.workspace.currentTheme.font), false);
+      this.parent.workspace.getFontRenderer().drawString("\u25b6", (float)(this.getPosX() + this.width - (this.height + this.parent.workspace.getFontRenderer().getStringWidth("\u25b6")) / 2), (float)(this.getPosY() + this.height - (this.height + this.parent.workspace.getFontRenderer().FONT_HEIGHT) / 2), Theme.getAsHex(this.parent.workspace.currentTheme.font), false);
       if (!this.choices.containsKey(this.selected)) {
          if (this.choices.isEmpty()) {
             this.selected = "";

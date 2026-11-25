@@ -48,9 +48,9 @@ public class ElementDescriptionList extends GuiScrollingList {
       if (this.elementInfo == null) {
          return "";
       } else {
-         String text = "§l" + this.elementInfo.getTitle() + ": §r";
+         String text = "\u00a7l" + this.elementInfo.getTitle() + ": \u00a7r";
          text = text + "\n" + this.elementInfo.getDescription();
-         text = text + "\n\n§l" + LanguageManager.translate("gui.beastiary.elements.buffs") + ": §r";
+         text = text + "\n\n\u00a7l" + LanguageManager.translate("gui.beastiary.elements.buffs") + ": \u00a7r";
 
          for(String buff : this.elementInfo.buffs) {
             ResourceLocation effectResource = new ResourceLocation(buff);
@@ -58,7 +58,7 @@ public class ElementDescriptionList extends GuiScrollingList {
             text = text + ": " + LanguageManager.translate("effect." + effectResource.getResourcePath() + ".description");
          }
 
-         text = text + "\n\n§l" + LanguageManager.translate("gui.beastiary.elements.debuffs") + ": §r";
+         text = text + "\n\n\u00a7l" + LanguageManager.translate("gui.beastiary.elements.debuffs") + ": \u00a7r";
 
          for(String debuff : this.elementInfo.debuffs) {
             if ("burning".equals(debuff)) {

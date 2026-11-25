@@ -10,6 +10,6 @@ public class FBPGuiNote extends Gui {
    public FBPGuiNote() {
       ScaledResolution scaledResolutionIn = new ScaledResolution(this.mc);
       int width = scaledResolutionIn.getScaledWidth();
-      this.drawCenteredString(this.mc.fontRenderer, "§LFreeze Effect", width / 2, 5, Integer.parseInt("FFAA00", 16));
+      this.drawCenteredString(this.mc.fontRenderer, "\u00a7LFreeze Effect", width / 2, 5, Integer.parseInt("FFAA00", 16));
    }
 }

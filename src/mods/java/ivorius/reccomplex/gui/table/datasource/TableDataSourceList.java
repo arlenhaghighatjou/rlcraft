@@ -26,9 +26,9 @@ public abstract class TableDataSourceList<T, L extends List<T>> extends TableDat
    protected TableDelegate tableDelegate;
    protected TableNavigator navigator;
    @Nullable
-   protected String earlierTitle = TextFormatting.BOLD + "↑";
+   protected String earlierTitle = TextFormatting.BOLD + "\u2191";
    @Nullable
-   protected String laterTitle = TextFormatting.BOLD + "↓";
+   protected String laterTitle = TextFormatting.BOLD + "\u2193";
    @Nullable
    protected String deleteTitle = TextFormatting.RED + "-";
    @Nullable

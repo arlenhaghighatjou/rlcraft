@@ -30,7 +30,7 @@ public class BufferBuilderObject implements VertexData {
       this.buffer.flip();
       this.byteBuffer.flip();
       this.bufferHandle = this.createBufferObject();
-      this.usage = isStatic ? '裤' : '裨';
+      this.usage = isStatic ? '\u88e4' : '\u88e8';
    }
 
    private int createBufferObject() {

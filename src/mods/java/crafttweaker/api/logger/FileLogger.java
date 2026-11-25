@@ -13,7 +13,7 @@ import java.io.Writer;
 import java.util.regex.Pattern;
 
 public class FileLogger implements ILogger {
-   private static final Pattern FORMATTING_CODE_PATTERN = Pattern.compile("(?i)" + String.valueOf('§') + "[0-9A-FK-OR]");
+   private static final Pattern FORMATTING_CODE_PATTERN = Pattern.compile("(?i)" + String.valueOf('\u00a7') + "[0-9A-FK-OR]");
    private final Writer writer;
    private final PrintWriter printWriter;
    private boolean isDefaultDisabled = false;

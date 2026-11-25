@@ -52,7 +52,7 @@ public class ChargeItem extends ItemBase {
       for(String description : this.getAdditionalDescriptions(itemStack, world, tooltipFlag)) {
          for(Object formattedDescription : fontRenderer.listFormattedStringToWidth("-------------------\n" + description, DESCRIPTION_WIDTH)) {
             if (formattedDescription instanceof String) {
-               tooltip.add("§3" + formattedDescription);
+               tooltip.add("\u00a73" + formattedDescription);
             }
          }
       }

@@ -22,12 +22,12 @@ public class DumpZsCommand extends CraftTweakerCommand {
          return t.argumentName;
       }, Function.identity()));
       ITextComponent[] components = new ITextComponent[this.targets.size() + 2];
-      components[0] = SpecialMessagesChat.getClickableCommandText("§2/ct dumpzs " + (String)this.targets.keySet().stream().collect(Collectors.joining(" | ", "[", "]")), "/ct dumpzs", true);
-      components[1] = SpecialMessagesChat.getNormalMessage(" §3Dumps the whole ZenScript Registry");
+      components[0] = SpecialMessagesChat.getClickableCommandText("\u00a72/ct dumpzs " + (String)this.targets.keySet().stream().collect(Collectors.joining(" | ", "[", "]")), "/ct dumpzs", true);
+      components[1] = SpecialMessagesChat.getNormalMessage(" \u00a73Dumps the whole ZenScript Registry");
       int i = 2;
 
       for(DumpZsTarget value : this.targets.values()) {
-         components[i++] = SpecialMessagesChat.getNormalMessage(String.format(" §3[%s]: %s", value.argumentName, value.getDescription()));
+         components[i++] = SpecialMessagesChat.getNormalMessage(String.format(" \u00a73[%s]: %s", value.argumentName, value.getDescription()));
       }
 
       this.setDescription(components);

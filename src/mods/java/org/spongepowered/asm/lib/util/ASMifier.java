@@ -903,7 +903,7 @@ public class ASMifier extends Printer {
          first = false;
       }
 
-      if ((access & '耀') != 0) {
+      if ((access & '\u8000') != 0) {
          if (!first) {
             this.buf.append(" + ");
          }

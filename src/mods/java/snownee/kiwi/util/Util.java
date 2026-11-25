@@ -11,7 +11,7 @@ public class Util {
    }
 
    public static String color(int color) {
-      return String.format("§x%06x", color & 16777215);
+      return String.format("\u00a7x%06x", color & 16777215);
    }
 
    public static String formatComma(long number) {

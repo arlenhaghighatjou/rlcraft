@@ -112,7 +112,7 @@ public class TargetHtml extends DumpZsTarget {
          CraftTweaker.LOG.catching(var14);
       }
 
-      sender.sendMessage(SpecialMessagesChat.getFileOpenText("Dumped content of the GlobalRegistry to a html file §r[§6Click here to open§r]", zsDataFolder.getAbsolutePath() + "/tree3.html"));
+      sender.sendMessage(SpecialMessagesChat.getFileOpenText("Dumped content of the GlobalRegistry to a html file \u00a7r[\u00a76Click here to open\u00a7r]", zsDataFolder.getAbsolutePath() + "/tree3.html"));
    }
 
    private void sortTreeNodes(TreeNode<String> parentNode) {

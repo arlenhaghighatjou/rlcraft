@@ -19,7 +19,7 @@ public class SpecialMessagesChat {
       Style style = new Style();
       ClickEvent click = new ClickEvent(runDirectly ? Action.RUN_COMMAND : Action.SUGGEST_COMMAND, command);
       style.setClickEvent(click);
-      HoverEvent hoverEvent = new HoverEvent(net.minecraft.util.text.event.HoverEvent.Action.SHOW_TEXT, new TextComponentString("Click to execute [§6" + command + "§r]"));
+      HoverEvent hoverEvent = new HoverEvent(net.minecraft.util.text.event.HoverEvent.Action.SHOW_TEXT, new TextComponentString("Click to execute [\u00a76" + command + "\u00a7r]"));
       style.setHoverEvent(hoverEvent);
       return (new TextComponentString(message)).setStyle(style);
    }
@@ -30,7 +30,7 @@ public class SpecialMessagesChat {
       style.setClickEvent(click);
       style.setColor(TextFormatting.AQUA);
       style.setUnderlined(Boolean.valueOf(true));
-      HoverEvent hoverEvent = new HoverEvent(net.minecraft.util.text.event.HoverEvent.Action.SHOW_TEXT, new TextComponentString("Click to Open [§6" + url + "§r]"));
+      HoverEvent hoverEvent = new HoverEvent(net.minecraft.util.text.event.HoverEvent.Action.SHOW_TEXT, new TextComponentString("Click to Open [\u00a76" + url + "\u00a7r]"));
       style.setHoverEvent(hoverEvent);
       return (new TextComponentString(message)).setStyle(style);
    }
@@ -39,7 +39,7 @@ public class SpecialMessagesChat {
       Style style = new Style();
       ClickEvent click = new ClickEvent(Action.OPEN_FILE, filepath);
       style.setClickEvent(click);
-      HoverEvent hoverEvent = new HoverEvent(net.minecraft.util.text.event.HoverEvent.Action.SHOW_TEXT, new TextComponentString("Click to open [§6" + filepath + "§r]"));
+      HoverEvent hoverEvent = new HoverEvent(net.minecraft.util.text.event.HoverEvent.Action.SHOW_TEXT, new TextComponentString("Click to open [\u00a76" + filepath + "\u00a7r]"));
       style.setHoverEvent(hoverEvent);
       return (new TextComponentString(message)).setStyle(style);
    }
@@ -49,14 +49,14 @@ public class SpecialMessagesChat {
    }
 
    public static ITextComponent getLinkToCraftTweakerLog(String message, ICommandSender sender) {
-      return sender.getEntityWorld().isRemote ? getNormalMessage(message + "\nSee §acrafttweaker.log §rin your minecraft dir") : getFileOpenText(message + "\nSee §acrafttweaker.log §r[§6Click here to open§r]", CTChatCommand.CRAFTTWEAKER_LOG_PATH);
+      return sender.getEntityWorld().isRemote ? getNormalMessage(message + "\nSee \u00a7acrafttweaker.log \u00a7rin your minecraft dir") : getFileOpenText(message + "\nSee \u00a7acrafttweaker.log \u00a7r[\u00a76Click here to open\u00a7r]", CTChatCommand.CRAFTTWEAKER_LOG_PATH);
    }
 
    public static ITextComponent getCopyMessage(String message, String copyMessage) {
       Style style = new Style();
       ClickEvent click = new ClickEvent(Action.RUN_COMMAND, "/ct copy " + copyMessage);
       style.setClickEvent(click);
-      HoverEvent hoverEvent = new HoverEvent(net.minecraft.util.text.event.HoverEvent.Action.SHOW_TEXT, new TextComponentString("Click to copy [§6" + copyMessage + "§r]"));
+      HoverEvent hoverEvent = new HoverEvent(net.minecraft.util.text.event.HoverEvent.Action.SHOW_TEXT, new TextComponentString("Click to copy [\u00a76" + copyMessage + "\u00a7r]"));
       style.setHoverEvent(hoverEvent);
       return (new TextComponentString(message)).setStyle(style);
    }

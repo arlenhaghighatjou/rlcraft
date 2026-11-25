@@ -38,7 +38,7 @@ public class MMCQ {
    }
 
    private static int[] getHisto(int[][] pixels) {
-      int[] histo = new int['耀'];
+      int[] histo = new int['\u8000'];
 
       for(int[] pixel : pixels) {
          int rval = pixel[0] >> 3;

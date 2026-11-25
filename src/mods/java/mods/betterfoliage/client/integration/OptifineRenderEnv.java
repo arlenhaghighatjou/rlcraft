@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
    mv = {1, 1, 15},
    bv = {1, 0, 3},
    k = 1,
-   d1 = {"\u0000\u001e\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0005\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\b\u0007\u0018\u00002\u00020\u0001B\u0005¢\u0006\u0002\u0010\u0002J\u0016\u0010\u0006\u001a\u00020\u00072\u0006\u0010\b\u001a\u00020\t2\u0006\u0010\n\u001a\u00020\u000bR\u0011\u0010\u0003\u001a\u00020\u0001¢\u0006\b\n\u0000\u001a\u0004\b\u0004\u0010\u0005¨\u0006\f"},
+   d1 = {"\u0000\u001e\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0005\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\b\u0007\u0018\u00002\u00020\u0001B\u0005\u00a2\u0006\u0002\u0010\u0002J\u0016\u0010\u0006\u001a\u00020\u00072\u0006\u0010\b\u001a\u00020\t2\u0006\u0010\n\u001a\u00020\u000bR\u0011\u0010\u0003\u001a\u00020\u0001\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0004\u0010\u0005\u00a8\u0006\f"},
    d2 = {"Lmods/betterfoliage/client/integration/OptifineRenderEnv;", "", "()V", "wrapped", "getWrapped", "()Ljava/lang/Object;", "reset", "", "state", "Lnet/minecraft/block/state/IBlockState;", "pos", "Lnet/minecraft/util/math/BlockPos;", "BetterFoliage-MC1.12"}
 )
 public final class OptifineRenderEnv {
@@ -48,7 +48,7 @@ public final class OptifineRenderEnv {
       Object var10000 = var1.newInstance(null, null);
       Intrinsics.checkExpressionValueIsNotNull(var10000, "it.newInstance(null, null)");
       Object var7 = var10000;
-      Intrinsics.checkExpressionValueIsNotNull(var7, "Refs.RenderEnv.element!!…nstance(null, null)\n    }");
+      Intrinsics.checkExpressionValueIsNotNull(var7, "Refs.RenderEnv.element!!\u2026nstance(null, null)\n    }");
       this.wrapped = var7;
    }
 }

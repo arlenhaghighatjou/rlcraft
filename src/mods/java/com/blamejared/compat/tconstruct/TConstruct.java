@@ -19,7 +19,7 @@ public class TConstruct {
    public static void registerCommands() {
       CTChatCommand.registerCommand(new CraftTweakerCommand("ticmat") {
          protected void init() {
-            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct ticmat", "/ct ticmat", true), SpecialMessagesChat.getNormalMessage(" §3Dumps all the Tinkers Construct material names to the crafttweaker log")});
+            this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct ticmat", "/ct ticmat", true), SpecialMessagesChat.getNormalMessage(" \u00a73Dumps all the Tinkers Construct material names to the crafttweaker log")});
          }
 
          public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {

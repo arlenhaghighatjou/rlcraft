@@ -46,23 +46,23 @@ public class FBPGuiButton extends GuiButton {
 
       switch(var8) {
       case 0:
-         this.displayString = "§a§L" + this.displayString;
+         this.displayString = "\u00a7a\u00a7L" + this.displayString;
          this.offsetX = (this.height - 5) / 2;
          break;
       case 1:
-         this.displayString = "§c§L" + this.displayString;
+         this.displayString = "\u00a7c\u00a7L" + this.displayString;
          this.offsetX = (this.height - 5) / 2;
          break;
       case 2:
-         this.displayString = "§6" + this.displayString;
+         this.displayString = "\u00a76" + this.displayString;
          this.offsetX = (this.height - 7) / 2;
          break;
       case 3:
-         this.displayString = "§6" + this.displayString;
+         this.displayString = "\u00a76" + this.displayString;
          this.offsetX = (this.height - 10) / 2;
          break;
       case 4:
-         this.displayString = "§a§L...";
+         this.displayString = "\u00a7a\u00a7L...";
          this.offsetX = 6;
          break;
       default:
@@ -113,7 +113,7 @@ public class FBPGuiButton extends GuiButton {
             }
          } else {
             this.drawString(fontrenderer, this.displayString, this.x + 8, this.y + (this.height - 8) / 2, j);
-            this.drawString(fontrenderer, this.toggle ? "§a ON" : "§cOFF", this.x + this.width - 25, this.y + (this.height - 8) / 2, j);
+            this.drawString(fontrenderer, this.toggle ? "\u00a7a ON" : "\u00a7cOFF", this.x + this.width - 25, this.y + (this.height - 8) / 2, j);
          }
       }
 

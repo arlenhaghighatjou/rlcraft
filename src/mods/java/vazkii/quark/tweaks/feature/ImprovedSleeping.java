@@ -108,11 +108,11 @@ public class ImprovedSleeping extends Feature {
                ITextComponent sleepingList = new TextComponentString("");
 
                for(String s : sleepingPlayers) {
-                  sleepingList.appendSibling((new TextComponentString("\n✔ " + s)).setStyle((new Style()).setColor(TextFormatting.GREEN)));
+                  sleepingList.appendSibling((new TextComponentString("\n\u2714 " + s)).setStyle((new Style()).setColor(TextFormatting.GREEN)));
                }
 
                for(String s : nonSleepingPlayers) {
-                  sleepingList.appendSibling((new TextComponentString("\n✘ " + s)).setStyle((new Style()).setColor(TextFormatting.RED)));
+                  sleepingList.appendSibling((new TextComponentString("\n\u2718 " + s)).setStyle((new Style()).setColor(TextFormatting.RED)));
                }
 
                ITextComponent hoverText = new TextComponentTranslation(isDay ? "quarkmisc.nappingListHeader" : "quarkmisc.sleepingListHeader", new Object[]{sleepingList});
@@ -197,11 +197,11 @@ public class ImprovedSleeping extends Feature {
             ITextComponent sleepingList = new TextComponentString("");
 
             for(String s : sleepingPlayers) {
-               sleepingList.appendSibling((new TextComponentString("\n✔ " + s)).setStyle((new Style()).setColor(TextFormatting.GREEN)));
+               sleepingList.appendSibling((new TextComponentString("\n\u2714 " + s)).setStyle((new Style()).setColor(TextFormatting.GREEN)));
             }
 
             for(String s : nonSleepingPlayers) {
-               sleepingList.appendSibling((new TextComponentString("\n✘ " + s)).setStyle((new Style()).setColor(TextFormatting.RED)));
+               sleepingList.appendSibling((new TextComponentString("\n\u2718 " + s)).setStyle((new Style()).setColor(TextFormatting.RED)));
             }
 
             ITextComponent hoverText = new TextComponentTranslation("quarkmisc.sleepingListHeader", new Object[]{sleepingList});

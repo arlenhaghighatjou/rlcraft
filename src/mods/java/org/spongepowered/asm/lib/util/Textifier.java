@@ -1028,7 +1028,7 @@ public class Textifier extends Printer {
          this.buf.append("synthetic ");
       }
 
-      if ((access & '耀') != 0) {
+      if ((access & '\u8000') != 0) {
          this.buf.append("mandated ");
       }
 

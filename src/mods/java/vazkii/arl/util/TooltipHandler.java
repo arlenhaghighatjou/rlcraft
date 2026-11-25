@@ -22,11 +22,11 @@ public final class TooltipHandler {
 
    @SideOnly(Side.CLIENT)
    public static void addToTooltip(List<String> tooltip, String s, Object... format) {
-      s = local(s).replaceAll("&", "§");
+      s = local(s).replaceAll("&", "\u00a7");
       Object[] formatVals = new String[format.length];
 
       for(int i = 0; i < format.length; ++i) {
-         formatVals[i] = local(format[i].toString()).replaceAll("&", "§");
+         formatVals[i] = local(format[i].toString()).replaceAll("&", "\u00a7");
       }
 
       if (formatVals.length > 0) {

@@ -61,7 +61,7 @@ public class ItemRingFlywheel extends AGenericItemBauble {
       if (e != null) {
          int energy = e.getEnergyStored();
          int max = e.getMaxEnergyStored();
-         String color = energy == 0 ? "�4" : (energy < max / 4 ? "�c" : (energy < max / 2 ? "�e" : "�a"));
+         String color = energy == 0 ? "\ufffd4" : (energy < max / 4 ? "\ufffdc" : (energy < max / 2 ? "\ufffde" : "\ufffda"));
          tooltip.add(color + String.valueOf(energy) + "/" + max + "RF");
       }
 

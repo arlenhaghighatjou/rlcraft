@@ -701,7 +701,7 @@ class Classfile {
          if ("java.lang.Object".equals(this.className)) {
             throw new Classfile.SkipClassException("No need to scan java.lang.Object");
          } else {
-            boolean isModule = (this.classModifiers & '耀') != 0;
+            boolean isModule = (this.classModifiers & '\u8000') != 0;
             boolean isPackage = this.relativePath.regionMatches(this.relativePath.lastIndexOf(47) + 1, "package-info.class", 0, 18);
             if (!this.scanSpec.ignoreClassVisibility && !Modifier.isPublic(this.classModifiers) && !isModule && !isPackage) {
                throw new Classfile.SkipClassException("Class is not public, and ignoreClassVisibility() was not called");

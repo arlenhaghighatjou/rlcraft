@@ -78,10 +78,10 @@ public class ItemStackData {
 
       if (isMissingItem) {
          NBTTagCompound display = itemStack.getOrCreateSubCompound("display");
-         display.setString("Name", "§rUnknown Item");
+         display.setString("Name", "\u00a7rUnknown Item");
          NBTTagList lore = new NBTTagList();
-         lore.appendTag(new NBTTagString("§r§eItem Name:"));
-         lore.appendTag(new NBTTagString("§r§e" + this.id));
+         lore.appendTag(new NBTTagString("\u00a7r\u00a7eItem Name:"));
+         lore.appendTag(new NBTTagString("\u00a7r\u00a7e" + this.id));
          display.setTag("Lore", lore);
       }
 

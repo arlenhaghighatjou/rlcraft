@@ -19,8 +19,8 @@ public class FBPGuiYesNo extends GuiScreen {
 
    public void initGui() {
       this.buttonList.clear();
-      this.yes = new FBPGuiButton(1, this.width / 2 - 75, (int)((double)this.height / 1.85D), "§aYes", false, false);
-      this.no = new FBPGuiButton(0, this.width / 2 + 26, (int)((double)this.height / 1.85D), "§cNo", false, false);
+      this.yes = new FBPGuiButton(1, this.width / 2 - 75, (int)((double)this.height / 1.85D), "\u00a7aYes", false, false);
+      this.no = new FBPGuiButton(0, this.width / 2 + 26, (int)((double)this.height / 1.85D), "\u00a7cNo", false, false);
       this.yes.setWidth(50);
       this.no.setWidth(50);
       this.buttonList.add(this.yes);

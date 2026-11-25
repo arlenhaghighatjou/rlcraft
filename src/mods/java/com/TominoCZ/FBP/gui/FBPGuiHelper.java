@@ -14,8 +14,8 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class FBPGuiHelper extends GuiScreen {
-   public static final String on = "§a ON";
-   public static final String off = "§cOFF";
+   public static final String on = "\u00a7a ON";
+   public static final String off = "\u00a7cOFF";
 
    public FBPGuiHelper() {
    }
@@ -72,9 +72,9 @@ public class FBPGuiHelper extends GuiScreen {
          _drawCenteredString(fr, "= disabled =", screenWidth / 2, y - 35, fr.getColorCode('c'));
       }
 
-      _drawCenteredString(fr, "= §LFancy Block Particles =", screenWidth / 2, y - 27, fr.getColorCode('6'));
+      _drawCenteredString(fr, "= \u00a7LFancy Block Particles =", screenWidth / 2, y - 27, fr.getColorCode('6'));
       String version = FMLCommonHandler.instance().findContainerFor(FBP.INSTANCE).getVersion();
-      _drawCenteredString(fr, "= §L" + version + " =", screenWidth / 2, y - 17, fr.getColorCode('a'));
+      _drawCenteredString(fr, "= \u00a7L" + version + " =", screenWidth / 2, y - 17, fr.getColorCode('a'));
    }
 
    protected static void _drawCenteredString(FontRenderer fontRendererIn, String text, int x, int y, int color) {

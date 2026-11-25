@@ -30,7 +30,7 @@ public class HelpCommand extends CraftTweakerCommand {
    }
 
    protected void init() {
-      this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct help", "/ct help", true), SpecialMessagesChat.getNormalMessage(" §3Prints out the this help page")});
+      this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct help", "/ct help", true), SpecialMessagesChat.getNormalMessage(" \u00a73Prints out the this help page")});
    }
 
    public void sendUsage(ICommandSender sender, int pageNum) {

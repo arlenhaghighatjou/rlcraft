@@ -396,10 +396,10 @@ public class JavaMethod implements IJavaMethod {
 
          for(int i1 = 0; i1 < this.method.getParameterAnnotations()[i].length; ++i1) {
             Annotation an = this.method.getParameterAnnotations()[i][i1];
-            builder.append("§a").append(an.annotationType().getSimpleName()).append(" ");
+            builder.append("\u00a7a").append(an.annotationType().getSimpleName()).append(" ");
          }
 
-         builder.append("§r").append(type.toString()).append(", ");
+         builder.append("\u00a7r").append(type.toString()).append(", ");
       }
 
       int length = builder.length();

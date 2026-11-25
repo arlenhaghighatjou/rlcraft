@@ -27,9 +27,9 @@ public class PhosphorEvents {
             if (event.getEntity() instanceof EntityPlayer) {
                EntityPlayer player = (EntityPlayer)event.getEntity();
                if (isAetherInstalled()) {
-                  player.sendMessage((new TextComponentString(TextFormatting.YELLOW + "The Aether II includes the Phosphor mod! ❤ " + TextFormatting.GOLD + "You can help fund the development of Phosphor with a pledge to the author's Patreon. " + TextFormatting.YELLOW + TextFormatting.UNDERLINE + "Click this link to make a pledge!")).setStyle((new Style()).setClickEvent(new ClickEvent(Action.OPEN_URL, "https://www.patreon.com/jellysquid"))));
+                  player.sendMessage((new TextComponentString(TextFormatting.YELLOW + "The Aether II includes the Phosphor mod! \u2764 " + TextFormatting.GOLD + "You can help fund the development of Phosphor with a pledge to the author's Patreon. " + TextFormatting.YELLOW + TextFormatting.UNDERLINE + "Click this link to make a pledge!")).setStyle((new Style()).setClickEvent(new ClickEvent(Action.OPEN_URL, "https://www.patreon.com/jellysquid"))));
                } else {
-                  player.sendMessage((new TextComponentString(TextFormatting.YELLOW + "Thanks for installing Phosphor! ❤ " + TextFormatting.GOLD + "You can help fund the development of future optimization mods like this one through pledging to my Patreon. " + TextFormatting.YELLOW + TextFormatting.UNDERLINE + "Click this link to make a pledge!")).setStyle((new Style()).setClickEvent(new ClickEvent(Action.OPEN_URL, "https://www.patreon.com/jellysquid"))));
+                  player.sendMessage((new TextComponentString(TextFormatting.YELLOW + "Thanks for installing Phosphor! \u2764 " + TextFormatting.GOLD + "You can help fund the development of future optimization mods like this one through pledging to my Patreon. " + TextFormatting.YELLOW + TextFormatting.UNDERLINE + "Click this link to make a pledge!")).setStyle((new Style()).setClickEvent(new ClickEvent(Action.OPEN_URL, "https://www.patreon.com/jellysquid"))));
                }
 
                config.showPatreonMessage = false;

@@ -206,7 +206,7 @@ public class Crate extends Feature {
 
             for(int i = 1; i < tooltipCopy.size(); ++i) {
                String s = (String)tooltipCopy.get(i);
-               if (!s.startsWith("§") || s.startsWith("§o")) {
+               if (!s.startsWith("\u00a7") || s.startsWith("\u00a7o")) {
                   tooltip.remove(s);
                }
             }

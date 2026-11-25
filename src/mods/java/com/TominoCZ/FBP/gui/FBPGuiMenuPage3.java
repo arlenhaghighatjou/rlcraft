@@ -51,7 +51,7 @@ public class FBPGuiMenuPage3 extends GuiScreen {
       this.b4 = new FBPGuiButton(4, x, this.b3.y + this.b1.height + 1, this.b4Text, FBP.smartBreaking, true);
       this.b5 = new FBPGuiButton(5, x, this.b4.y + this.b1.height + 6, this.b5Text, FBP.fancyPlaceAnim, true);
       this.b6 = new FBPGuiButton(6, x, this.b5.y + this.b1.height + 1, this.b6Text, FBP.spawnPlaceParticles, true);
-      this.b7 = new FBPGuiButton(7, x + this.b5.width + 5, this.b5.y, FBP.animSmoothLighting ? "§a§LS" : "§c§LF", false, false);
+      this.b7 = new FBPGuiButton(7, x + this.b5.width + 5, this.b5.y, FBP.animSmoothLighting ? "\u00a7a\u00a7LS" : "\u00a7c\u00a7LF", false, false);
       this.Back = new FBPGuiButton(-3, this.b6.x - 44, 6 * this.b1.height + this.b1.y - 5 + 10 - this.GUIOffsetY, "<<", false, false);
       this.Next = new FBPGuiButton(-6, this.b6.x + this.b6.width + 25, this.b6.y + 10 - this.GUIOffsetY, ">>", false, false);
       this.Defaults = new FBPGuiButton(0, this.width / 2 + 2, this.b6.y + this.Back.height + 24 - this.GUIOffsetY, "Defaults", false, false);
@@ -111,7 +111,7 @@ public class FBPGuiMenuPage3 extends GuiScreen {
          FBP.spawnPlaceParticles = !FBP.spawnPlaceParticles;
          break;
       case 7:
-         this.b7.displayString = (FBP.animSmoothLighting = !FBP.animSmoothLighting) ? "§a§LS" : "§c§LF";
+         this.b7.displayString = (FBP.animSmoothLighting = !FBP.animSmoothLighting) ? "\u00a7a\u00a7LS" : "\u00a7c\u00a7LF";
       }
 
       FBPConfigHandler.write();
@@ -140,25 +140,25 @@ public class FBPGuiMenuPage3 extends GuiScreen {
          if (b.isMouseOver()) {
             switch(b.id) {
             case 1:
-               this.description = "Enables §6entity collisions §awith the particles.";
+               this.description = "Enables \u00a76entity collisions \u00a7awith the particles.";
                break;
             case 2:
-               this.description = "Makes the particles §6ricochet/bounce§a off walls.";
+               this.description = "Makes the particles \u00a76ricochet/bounce\u00a7a off walls.";
                break;
             case 3:
-               this.description = "Lowers the §6traction deceleration§a on the ground.";
+               this.description = "Lowers the \u00a76traction deceleration\u00a7a on the ground.";
                break;
             case 4:
-               this.description = "Smart particle §6motion§a and §6scaling§a.";
+               this.description = "Smart particle \u00a76motion\u00a7a and \u00a76scaling\u00a7a.";
                break;
             case 5:
-               this.description = "Adds a §6fancy block placing§a animation §6[§cALPHA§6]§a.";
+               this.description = "Adds a \u00a76fancy block placing\u00a7a animation \u00a76[\u00a7cALPHA\u00a76]\u00a7a.";
                break;
             case 6:
-               this.description = "Enables§6 block place particles§a.";
+               this.description = "Enables\u00a76 block place particles\u00a7a.";
                break;
             case 7:
-               this.description = "Set animation §6render mode§a to §6§L" + (FBP.animSmoothLighting ? "Flat" : "Smooth") + "§a.";
+               this.description = "Set animation \u00a76render mode\u00a7a to \u00a76\u00a7L" + (FBP.animSmoothLighting ? "Flat" : "Smooth") + "\u00a7a.";
             }
          }
       }

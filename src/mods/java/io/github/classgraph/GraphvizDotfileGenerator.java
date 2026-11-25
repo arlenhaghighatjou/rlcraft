@@ -54,40 +54,40 @@ final class GraphvizDotfileGenerator {
          case '\\':
             buf.append("&lsol;");
             break;
-         case ' ':
+         case '\u00a0':
             buf.append("&nbsp;");
             break;
-         case '£':
+         case '\u00a3':
             buf.append("&pound;");
             break;
-         case '©':
+         case '\u00a9':
             buf.append("&copy;");
             break;
-         case '«':
+         case '\u00ab':
             buf.append("&laquo;");
             break;
-         case '®':
+         case '\u00ae':
             buf.append("&reg;");
             break;
-         case '»':
+         case '\u00bb':
             buf.append("&raquo;");
             break;
-         case '–':
+         case '\u2013':
             buf.append("&ndash;");
             break;
-         case '—':
+         case '\u2014':
             buf.append("&mdash;");
             break;
-         case '‘':
+         case '\u2018':
             buf.append("&lsquo;");
             break;
-         case '’':
+         case '\u2019':
             buf.append("&rsquo;");
             break;
-         case '“':
+         case '\u201c':
             buf.append("&ldquo;");
             break;
-         case '”':
+         case '\u201d':
             buf.append("&rdquo;");
             break;
          default:
@@ -484,10 +484,10 @@ final class GraphvizDotfileGenerator {
    }
 
    static {
-      String wsChars = " \t\n\u000b\f\r\u0085  ᠎           \u2028\u2029  　";
+      String wsChars = " \t\n\u000b\f\r\u0085\u00a0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000";
 
-      for(int i = 0; i < " \t\n\u000b\f\r\u0085  ᠎           \u2028\u2029  　".length(); ++i) {
-         IS_UNICODE_WHITESPACE.set(" \t\n\u000b\f\r\u0085  ᠎           \u2028\u2029  　".charAt(i));
+      for(int i = 0; i < " \t\n\u000b\f\r\u0085\u00a0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000".length(); ++i) {
+         IS_UNICODE_WHITESPACE.set(" \t\n\u000b\f\r\u0085\u00a0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000".charAt(i));
       }
 
    }

@@ -16,7 +16,7 @@ public class GiveCommand extends CraftTweakerCommand {
    }
 
    protected void init() {
-      this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct give", "/ct give", true), SpecialMessagesChat.getNormalMessage(" §3Gives an item using the BH")});
+      this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct give", "/ct give", true), SpecialMessagesChat.getNormalMessage(" \u00a73Gives an item using the BH")});
    }
 
    public void executeCommand(MinecraftServer server, ICommandSender sender, String[] args) {

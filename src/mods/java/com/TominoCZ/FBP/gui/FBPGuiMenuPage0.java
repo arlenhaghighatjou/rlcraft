@@ -55,8 +55,8 @@ public class FBPGuiMenuPage0 extends GuiScreen {
       this.ScaleMultSlider = new FBPGuiSlider(X, this.ParticleCountBase.y + this.ParticleCountBase.height + 1, (FBP.scaleMult - 0.75D) / 0.5D);
       this.GravitiyForceSlider = new FBPGuiSlider(X, this.ScaleMultSlider.y + this.ScaleMultSlider.height + 6, (FBP.gravityMult - 0.05D) / 2.95D);
       this.RotSpeedSlider = new FBPGuiSlider(X, this.GravitiyForceSlider.y + this.GravitiyForceSlider.height + 1, FBP.rotationMult / 1.5D);
-      this.InfiniteDuration = new FBPGuiButton(11, x1 + 25, this.MinDurationSlider.y + 10, (FBP.infiniteDuration ? "§a" : "§c") + "∞", false, false);
-      this.TimeUnit = new FBPGuiButton(12, x2 - 25, this.MinDurationSlider.y + 10, "§a§L" + (FBP.showInMillis ? "ms" : "ti"), false, false);
+      this.InfiniteDuration = new FBPGuiButton(11, x1 + 25, this.MinDurationSlider.y + 10, (FBP.infiniteDuration ? "\u00a7a" : "\u00a7c") + "\u221e", false, false);
+      this.TimeUnit = new FBPGuiButton(12, x2 - 25, this.MinDurationSlider.y + 10, "\u00a7a\u00a7L" + (FBP.showInMillis ? "ms" : "ti"), false, false);
       this.Defaults = new FBPGuiButton(0, this.width / 2 + 2, this.RotSpeedSlider.y + this.RotSpeedSlider.height + 24 - this.GUIOffsetY, "Defaults", false, false);
       this.Done = new FBPGuiButton(-1, x2, this.Defaults.y, "Done", false, false);
       this.Reload = new FBPGuiButton(-2, x2, this.Defaults.y + this.Defaults.height + 1, "Reload Config", false, false);
@@ -115,11 +115,11 @@ public class FBPGuiMenuPage0 extends GuiScreen {
       default:
          break;
       case 11:
-         this.InfiniteDuration.displayString = ((FBP.infiniteDuration = !FBP.infiniteDuration) ? "§a" : "§c") + "∞";
+         this.InfiniteDuration.displayString = ((FBP.infiniteDuration = !FBP.infiniteDuration) ? "\u00a7a" : "\u00a7c") + "\u221e";
          init = false;
          break;
       case 12:
-         this.TimeUnit.displayString = "§a§L" + ((FBP.showInMillis = !FBP.showInMillis) ? "ms" : "ti");
+         this.TimeUnit.displayString = "\u00a7a\u00a7L" + ((FBP.showInMillis = !FBP.showInMillis) ? "ms" : "ti");
          init = false;
       }
 
@@ -254,29 +254,29 @@ public class FBPGuiMenuPage0 extends GuiScreen {
       switch(this.selected) {
       case 1:
          if (!FBP.infiniteDuration) {
-            String _text = FBP.minAge != FBP.maxAge ? "range§a to between §6" + (FBP.showInMillis ? FBP.minAge * 50 : FBP.minAge) + "§a and §6" + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + (FBP.showInMillis ? "ms" : (FBP.maxAge > 1 ? " ticks" : " tick")) : "§ato §6" + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + (FBP.showInMillis ? "ms" : (FBP.maxAge > 1 ? " ticks" : " tick"));
-            text = "Sets §6particle life duration " + _text + "§a.";
+            String _text = FBP.minAge != FBP.maxAge ? "range\u00a7a to between \u00a76" + (FBP.showInMillis ? FBP.minAge * 50 : FBP.minAge) + "\u00a7a and \u00a76" + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + (FBP.showInMillis ? "ms" : (FBP.maxAge > 1 ? " ticks" : " tick")) : "\u00a7ato \u00a76" + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + (FBP.showInMillis ? "ms" : (FBP.maxAge > 1 ? " ticks" : " tick"));
+            text = "Sets \u00a76particle life duration " + _text + "\u00a7a.";
          } else {
-            text = "Sets §6particle life duration §ato §6infinity§a.";
+            text = "Sets \u00a76particle life duration \u00a7ato \u00a76infinity\u00a7a.";
          }
          break;
       case 2:
-         text = "Sets the §6block destroy particle count§a to §6" + (int)Math.pow((double)FBP.particlesPerAxis, 3.0D) + " §c[§6" + FBP.particlesPerAxis + "^3§c]§a.";
+         text = "Sets the \u00a76block destroy particle count\u00a7a to \u00a76" + (int)Math.pow((double)FBP.particlesPerAxis, 3.0D) + " \u00a7c[\u00a76" + FBP.particlesPerAxis + "^3\u00a7c]\u00a7a.";
          break;
       case 3:
-         text = "Sets §6particle scale multiplier §ato §6" + FBP.scaleMult + "§a.";
+         text = "Sets \u00a76particle scale multiplier \u00a7ato \u00a76" + FBP.scaleMult + "\u00a7a.";
          break;
       case 4:
-         text = "Multiplies §6default particle gravity force§a by §6" + FBP.gravityMult + "§a.";
+         text = "Multiplies \u00a76default particle gravity force\u00a7a by \u00a76" + FBP.gravityMult + "\u00a7a.";
          break;
       case 5:
-         text = "Multiplies §6particle rotation§a by §6" + FBP.rotationMult + "§a.";
+         text = "Multiplies \u00a76particle rotation\u00a7a by \u00a76" + FBP.rotationMult + "\u00a7a.";
          break;
       case 6:
-         text = (FBP.infiniteDuration ? "§cDisable" : "Enable") + " §6infinite particle life duration§a.";
+         text = (FBP.infiniteDuration ? "\u00a7cDisable" : "Enable") + " \u00a76infinite particle life duration\u00a7a.";
          break;
       case 7:
-         text = "Show the time in §6" + (!FBP.showInMillis ? "milliseconds" : "ticks") + "§a.";
+         text = "Show the time in \u00a76" + (!FBP.showInMillis ? "milliseconds" : "ticks") + "\u00a7a.";
          break;
       default:
          text = "";
@@ -295,25 +295,25 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 
    private void drawInfo() {
       int posY = this.Done.y - 18;
-      String s = "Destroy Particle Count [§6" + (int)Math.pow((double)FBP.particlesPerAxis, 3.0D) + "§f]";
+      String s = "Destroy Particle Count [\u00a76" + (int)Math.pow((double)FBP.particlesPerAxis, 3.0D) + "\u00a7f]";
       this.ParticleCountBase.displayString = s;
       if (FBP.infiniteDuration) {
-         s = "Min. Duration [§6∞" + (FBP.showInMillis ? " ms" : " ticks") + "§f]";
+         s = "Min. Duration [\u00a76\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "\u00a7f]";
       } else {
-         s = "Min. Duration [§6" + (FBP.showInMillis ? FBP.minAge * 50 + "ms" : FBP.minAge + (FBP.minAge > 1 ? " ticks" : " tick")) + "§f]";
+         s = "Min. Duration [\u00a76" + (FBP.showInMillis ? FBP.minAge * 50 + "ms" : FBP.minAge + (FBP.minAge > 1 ? " ticks" : " tick")) + "\u00a7f]";
       }
 
       this.MinDurationSlider.displayString = s;
       if (FBP.infiniteDuration) {
-         s = "Max. Duration [§6∞" + (FBP.showInMillis ? " ms" : " ticks") + "§f]";
+         s = "Max. Duration [\u00a76\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "\u00a7f]";
       } else {
-         s = "Max. Duration [§6" + (FBP.showInMillis ? FBP.maxAge * 50 + "ms" : FBP.maxAge + (FBP.maxAge > 1 ? " ticks" : " tick")) + "§f]";
+         s = "Max. Duration [\u00a76" + (FBP.showInMillis ? FBP.maxAge * 50 + "ms" : FBP.maxAge + (FBP.maxAge > 1 ? " ticks" : " tick")) + "\u00a7f]";
       }
 
       this.MaxDurationSlider.displayString = s;
-      this.ScaleMultSlider.displayString = "Scale Mult. [§6" + FBP.scaleMult + "§f]";
-      this.GravitiyForceSlider.displayString = "Gravity Force Mult. [§6" + FBP.gravityMult + "§f]";
-      this.RotSpeedSlider.displayString = "Rotation Speed Mult. [§6" + (FBP.rotationMult != 0.0D ? FBP.rotationMult : "§cOFF") + "§f]";
+      this.ScaleMultSlider.displayString = "Scale Mult. [\u00a76" + FBP.scaleMult + "\u00a7f]";
+      this.GravitiyForceSlider.displayString = "Gravity Force Mult. [\u00a76" + FBP.gravityMult + "\u00a7f]";
+      this.RotSpeedSlider.displayString = "Rotation Speed Mult. [\u00a76" + (FBP.rotationMult != 0.0D ? FBP.rotationMult : "\u00a7cOFF") + "\u00a7f]";
    }
 
    boolean isMouseOverSliders(int mouseX, int mouseY) {

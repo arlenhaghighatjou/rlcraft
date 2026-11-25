@@ -171,22 +171,22 @@ public class FBPGuiMenuPage2 extends GuiScreen {
          if (b.isMouseOver()) {
             switch(b.id) {
             case 1:
-               this.description = "Enables §6random §aand §6simple rotation §amath.";
+               this.description = "Enables \u00a76random \u00a7aand \u00a76simple rotation \u00a7amath.";
                break;
             case 2:
-               this.description = "Makes the particles look §6cartoon§a-ish.";
+               this.description = "Makes the particles look \u00a76cartoon\u00a7a-ish.";
                break;
             case 3:
-               this.description = "Makes the particle §6scale§a slightly §6randomized§a.";
+               this.description = "Makes the particle \u00a76scale\u00a7a slightly \u00a76randomized\u00a7a.";
                break;
             case 4:
-               this.description = "Enables §6random §aparticle §6fade away§a-transition speed.";
+               this.description = "Enables \u00a76random \u00a7aparticle \u00a76fade away\u00a7a-transition speed.";
                break;
             case 5:
-               this.description = "Allows spawning §6redstone block§a particles.";
+               this.description = "Allows spawning \u00a76redstone block\u00a7a particles.";
                break;
             case 6:
-               this.description = "Allows spawning particles in §6freeze mode§a.";
+               this.description = "Allows spawning particles in \u00a76freeze mode\u00a7a.";
             }
          }
       }

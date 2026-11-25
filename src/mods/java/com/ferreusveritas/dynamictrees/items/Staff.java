@@ -263,8 +263,8 @@ public class Staff extends Item {
 
    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flagIn) {
       Species species = this.getSpecies(stack);
-      tooltip.add(getTranslationText("tooltip.woodland_staff.tree") + " " + (species != null ? "Â§a" + species.getLocalizedName() : getTranslationText("tooltip.woodland_staff.tree_not_set")));
-      tooltip.add("JoCode: Â§6" + this.getCode(stack));
+      tooltip.add(getTranslationText("tooltip.woodland_staff.tree") + " " + (species != null ? "\u00c2\u00a7a" + species.getLocalizedName() : getTranslationText("tooltip.woodland_staff.tree_not_set")));
+      tooltip.add("JoCode: \u00c2\u00a76" + this.getCode(stack));
    }
 
    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack) {

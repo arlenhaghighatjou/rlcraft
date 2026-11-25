@@ -52,7 +52,7 @@ public class EquipmentStationBlock extends BlockBase implements ITileEntityProvi
    }
 
    public String getDescription(ItemStack itemStack, World world) {
-      return "§a" + LanguageManager.translate(this.getUnlocalizedName() + ".description");
+      return "\u00a7a" + LanguageManager.translate(this.getUnlocalizedName() + ".description");
    }
 
    public void onBlockAdded(World world, BlockPos pos, IBlockState state) {

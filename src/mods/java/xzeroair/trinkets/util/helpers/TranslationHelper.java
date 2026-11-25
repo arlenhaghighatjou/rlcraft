@@ -79,7 +79,7 @@ public class TranslationHelper {
    }
 
    public boolean isStringEmpty(String string) {
-      return string.replace("ï¿½r", "").replace("ï¿½6", "").replace("ï¿½", "").replace("Â§r", "").replaceAll(" ", "").isEmpty();
+      return string.replace("\u00ef\u00bf\u00bdr", "").replace("\u00ef\u00bf\u00bd6", "").replace("\u00ef\u00bf\u00bd", "").replace("\u00c2\u00a7r", "").replaceAll(" ", "").isEmpty();
    }
 
    public String TranslationKeyReplace(String itemKey, boolean enabled, String key, String translation) {

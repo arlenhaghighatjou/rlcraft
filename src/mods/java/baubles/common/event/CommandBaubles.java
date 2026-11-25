@@ -49,20 +49,20 @@ public class CommandBaubles extends CommandBase {
          if (args.length >= 2) {
             EntityPlayerMP entityplayermp = getPlayer(server, sender, args[1]);
             if (entityplayermp == null) {
-               sender.sendMessage(new TextComponentTranslation("§c" + args[1] + " not found", new Object[0]));
+               sender.sendMessage(new TextComponentTranslation("\u00a7c" + args[1] + " not found", new Object[0]));
                return;
             }
 
             IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(entityplayermp);
             if (args[0].equalsIgnoreCase("view")) {
-               sender.sendMessage(new TextComponentTranslation("§3Showing baubles for " + entityplayermp.getName(), new Object[0]));
+               sender.sendMessage(new TextComponentTranslation("\u00a73Showing baubles for " + entityplayermp.getName(), new Object[0]));
 
                for(int a = 0; a < baubles.getSlots(); ++a) {
                   ItemStack st = baubles.getStackInSlot(a);
                   if (!st.isEmpty() && st.hasCapability(BaublesCapabilities.CAPABILITY_ITEM_BAUBLE, (EnumFacing)null)) {
                      IBauble bauble = (IBauble)st.getCapability(BaublesCapabilities.CAPABILITY_ITEM_BAUBLE, (EnumFacing)null);
                      BaubleType bt = bauble.getBaubleType(st);
-                     sender.sendMessage(new TextComponentTranslation("§3 [Slot " + a + "] " + bt + " " + st.getDisplayName(), new Object[0]));
+                     sender.sendMessage(new TextComponentTranslation("\u00a73 [Slot " + a + "] " + bt + " " + st.getDisplayName(), new Object[0]));
                   }
                }
             } else if (args[0].equalsIgnoreCase("clear")) {
@@ -77,33 +77,33 @@ public class CommandBaubles extends CommandBase {
 
                   if (slot >= 0 && slot < baubles.getSlots()) {
                      baubles.setStackInSlot(slot, ItemStack.EMPTY);
-                     sender.sendMessage(new TextComponentTranslation("§3Cleared baubles slot " + slot + " for " + entityplayermp.getName(), new Object[0]));
-                     entityplayermp.sendMessage(new TextComponentTranslation("§4Your baubles slot " + slot + " has been cleared by admin " + sender.getName(), new Object[0]));
+                     sender.sendMessage(new TextComponentTranslation("\u00a73Cleared baubles slot " + slot + " for " + entityplayermp.getName(), new Object[0]));
+                     entityplayermp.sendMessage(new TextComponentTranslation("\u00a74Your baubles slot " + slot + " has been cleared by admin " + sender.getName(), new Object[0]));
                   } else {
-                     sender.sendMessage(new TextComponentTranslation("§cInvalid arguments", new Object[0]));
-                     sender.sendMessage(new TextComponentTranslation("§cUse /baubles help to get help", new Object[0]));
+                     sender.sendMessage(new TextComponentTranslation("\u00a7cInvalid arguments", new Object[0]));
+                     sender.sendMessage(new TextComponentTranslation("\u00a7cUse /baubles help to get help", new Object[0]));
                   }
                } else {
                   for(int a = 0; a < baubles.getSlots(); ++a) {
                      baubles.setStackInSlot(a, ItemStack.EMPTY);
                   }
 
-                  sender.sendMessage(new TextComponentTranslation("§3Cleared all baubles slots for " + entityplayermp.getName(), new Object[0]));
-                  entityplayermp.sendMessage(new TextComponentTranslation("§4All your baubles slots have been cleared by admin " + sender.getName(), new Object[0]));
+                  sender.sendMessage(new TextComponentTranslation("\u00a73Cleared all baubles slots for " + entityplayermp.getName(), new Object[0]));
+                  entityplayermp.sendMessage(new TextComponentTranslation("\u00a74All your baubles slots have been cleared by admin " + sender.getName(), new Object[0]));
                }
             } else {
-               sender.sendMessage(new TextComponentTranslation("§cInvalid arguments", new Object[0]));
-               sender.sendMessage(new TextComponentTranslation("§cUse /baubles help to get help", new Object[0]));
+               sender.sendMessage(new TextComponentTranslation("\u00a7cInvalid arguments", new Object[0]));
+               sender.sendMessage(new TextComponentTranslation("\u00a7cUse /baubles help to get help", new Object[0]));
             }
          } else {
-            sender.sendMessage(new TextComponentTranslation("§cInvalid arguments", new Object[0]));
-            sender.sendMessage(new TextComponentTranslation("§cUse /baubles help to get help", new Object[0]));
+            sender.sendMessage(new TextComponentTranslation("\u00a7cInvalid arguments", new Object[0]));
+            sender.sendMessage(new TextComponentTranslation("\u00a7cUse /baubles help to get help", new Object[0]));
          }
       } else {
-         sender.sendMessage(new TextComponentTranslation("§3You can also use /baub or /bau instead of /baubles.", new Object[0]));
-         sender.sendMessage(new TextComponentTranslation("§3Use this to view the baubles inventory of a player.", new Object[0]));
+         sender.sendMessage(new TextComponentTranslation("\u00a73You can also use /baub or /bau instead of /baubles.", new Object[0]));
+         sender.sendMessage(new TextComponentTranslation("\u00a73Use this to view the baubles inventory of a player.", new Object[0]));
          sender.sendMessage(new TextComponentTranslation("  /baubles view <player>", new Object[0]));
-         sender.sendMessage(new TextComponentTranslation("§3Use this to clear a players baubles inventory. Default is everything or you can give a slot number", new Object[0]));
+         sender.sendMessage(new TextComponentTranslation("\u00a73Use this to clear a players baubles inventory. Default is everything or you can give a slot number", new Object[0]));
          sender.sendMessage(new TextComponentTranslation("  /baubles clear <player> [<slot>]", new Object[0]));
       }
 

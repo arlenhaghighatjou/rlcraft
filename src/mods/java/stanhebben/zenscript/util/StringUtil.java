@@ -45,7 +45,7 @@ public class StringUtil {
 
    public static String methodMatchingError(List<IJavaMethod> methods, Expression... arguments) {
       if (methods.isEmpty()) {
-         return "§cno method with that name available";
+         return "\u00a7cno method with that name available";
       } else {
          StringBuilder message = new StringBuilder();
          if (methods.size() == 1) {
@@ -54,7 +54,7 @@ public class StringUtil {
             message.append(methods.size()).append(" methods ");
          }
 
-         message.append("available but §4none§r matches the parameters (");
+         message.append("available but \u00a74none\u00a7r matches the parameters (");
          boolean first = true;
 
          for(Expression value : arguments) {
@@ -68,7 +68,7 @@ public class StringUtil {
          }
 
          message.append(")");
-         message.append("\nThis is §ousually§r an error in your script, not in the mod");
+         message.append("\nThis is \u00a7ousually\u00a7r an error in your script, not in the mod");
 
          for(IJavaMethod meth : methods) {
             message.append(meth.getErrorDescription());

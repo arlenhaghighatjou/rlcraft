@@ -32,13 +32,13 @@ public class Meson {
 
    public static void fatal(Object... out) {
       for(Object obj : out) {
-         LogManager.getLogger("Meson DIED (✖╭╮✖)").fatal(obj);
+         LogManager.getLogger("Meson DIED (\u2716\u256d\u256e\u2716)").fatal(obj);
       }
 
    }
 
    public static void runtimeException(String message) {
-      throw new RuntimeException("MESON DIED (✖╭╮✖): " + message);
+      throw new RuntimeException("MESON DIED (\u2716\u256d\u256e\u2716): " + message);
    }
 
    public static void init() {

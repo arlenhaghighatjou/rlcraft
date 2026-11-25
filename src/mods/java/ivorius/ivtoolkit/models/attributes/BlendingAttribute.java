@@ -44,7 +44,7 @@ public class BlendingAttribute extends Attribute {
    }
 
    public BlendingAttribute(BlendingAttribute copyFrom) {
-      this(copyFrom == null ? true : copyFrom.blended, copyFrom == null ? '薈' : copyFrom.sourceFunction, copyFrom == null ? 771 : copyFrom.destFunction, copyFrom == null ? 1.0F : copyFrom.opacity);
+      this(copyFrom == null ? true : copyFrom.blended, copyFrom == null ? '\u8588' : copyFrom.sourceFunction, copyFrom == null ? 771 : copyFrom.destFunction, copyFrom == null ? 1.0F : copyFrom.opacity);
    }
 
    public BlendingAttribute copy() {

@@ -17,7 +17,7 @@ public abstract class Constants {
    public static final String OBJECT_DESC = "Ljava/lang/Object;";
    public static final String CLASS_DESC = "Ljava/lang/Class;";
    public static final String SYNTHETIC_PACKAGE = "org.spongepowered.asm.synthetic";
-   public static final char UNICODE_SNOWMAN = '☃';
+   public static final char UNICODE_SNOWMAN = '\u2603';
    public static final File DEBUG_OUTPUT_DIR = new File(".mixin.out");
    public static final String SIDE_DEDICATEDSERVER = "DEDICATEDSERVER";
    public static final String SIDE_SERVER = "SERVER";

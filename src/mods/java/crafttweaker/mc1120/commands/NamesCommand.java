@@ -28,7 +28,7 @@ public class NamesCommand extends CraftTweakerCommand {
    }
 
    protected void init() {
-      this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("§2/ct names", "/ct names", true), SpecialMessagesChat.getNormalMessage(" §3Outputs a list of all item names in the game to the CraftTweaker log"), SpecialMessagesChat.getClickableCommandText(" §a/ct names display unloc maxstack maxuse maxdamage rarity repaircost damageable repairable creativetabs enchantability burntime", "/ct names display unloc maxstack maxuse maxdamage rarity repaircost damageable repairable creativetabs", true), SpecialMessagesChat.getNormalMessage("  §bAdds all possible information to the output.")});
+      this.setDescription(new ITextComponent[]{SpecialMessagesChat.getClickableCommandText("\u00a72/ct names", "/ct names", true), SpecialMessagesChat.getNormalMessage(" \u00a73Outputs a list of all item names in the game to the CraftTweaker log"), SpecialMessagesChat.getClickableCommandText(" \u00a7a/ct names display unloc maxstack maxuse maxdamage rarity repaircost damageable repairable creativetabs enchantability burntime", "/ct names display unloc maxstack maxuse maxdamage rarity repaircost damageable repairable creativetabs", true), SpecialMessagesChat.getNormalMessage("  \u00a7bAdds all possible information to the output.")});
       this.subCommands = new ArrayList(2);
 
       for(NamesCommand.NameCommandParams para : NamesCommand.NameCommandParams.values()) {

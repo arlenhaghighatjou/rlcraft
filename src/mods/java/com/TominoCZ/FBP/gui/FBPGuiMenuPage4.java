@@ -135,22 +135,22 @@ public class FBPGuiMenuPage4 extends GuiScreen {
          if (b.isMouseOver()) {
             switch(b.id) {
             case 1:
-               this.description = "Makes §6flame particles§a fancy.";
+               this.description = "Makes \u00a76flame particles\u00a7a fancy.";
                break;
             case 2:
-               this.description = "Makes §6smoke particles§a fancy.";
+               this.description = "Makes \u00a76smoke particles\u00a7a fancy.";
                break;
             case 3:
-               this.description = "Makes §6rain particles§a fancy.";
+               this.description = "Makes \u00a76rain particles\u00a7a fancy.";
                break;
             case 4:
-               this.description = "Makes §6snow particles§a fancy.";
+               this.description = "Makes \u00a76snow particles\u00a7a fancy.";
                break;
             case 5:
-               this.description = "Makes §6wood§a particles §6float§a and others to §6sink slower§a.";
+               this.description = "Makes \u00a76wood\u00a7a particles \u00a76float\u00a7a and others to \u00a76sink slower\u00a7a.";
                break;
             case 6:
-               this.description = "Makes particles rest §6aligned§a on the ground.";
+               this.description = "Makes particles rest \u00a76aligned\u00a7a on the ground.";
             }
          }
       }

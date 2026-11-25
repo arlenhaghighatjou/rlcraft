@@ -41,7 +41,7 @@ public class BlockFluidBase extends BlockFluidClassic {
    }
 
    public String getDescription(ItemStack itemStack, World world) {
-      return "§a" + LanguageManager.translate(this.getUnlocalizedName() + ".description");
+      return "\u00a7a" + LanguageManager.translate(this.getUnlocalizedName() + ".description");
    }
 
    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {

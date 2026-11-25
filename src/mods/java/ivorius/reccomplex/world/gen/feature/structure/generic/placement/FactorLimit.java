@@ -106,9 +106,9 @@ public class FactorLimit extends GenericPlacer.Factor {
       @Nonnull
       public static String directionArrow(Boolean up) {
          if (up == null) {
-            return "▶";
+            return "\u25b6";
          } else {
-            return up.booleanValue() ? "▲" : "▼";
+            return up.booleanValue() ? "\u25b2" : "\u25bc";
          }
       }
 

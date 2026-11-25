@@ -14,8 +14,8 @@ public class NBTUtils {
       int currentIndent = 0;
       boolean inQuotes = false;
       boolean isInValue = false;
-      stringBuilder.append("§e├");
-      stringBuilderNonColor.append("\n├");
+      stringBuilder.append("\u00a7e\u251c");
+      stringBuilderNonColor.append("\n\u251c");
 
       for(int i = 0; i < string.length(); ++i) {
          char[] cArray = new char[1];
@@ -24,28 +24,28 @@ public class NBTUtils {
          switch(c) {
          case '"':
             inQuotes = !inQuotes;
-            stringBuilder.append("§3\"");
+            stringBuilder.append("\u00a73\"");
             stringBuilderNonColor.append(c);
             break;
          case ',':
             if (!inQuotes) {
                isInValue = false;
-               stringBuilder.append("§2,");
+               stringBuilder.append("\u00a72,");
                addNewLine(stringBuilder, currentIndent);
                stringBuilderNonColor.append(c);
                addNewLineNoColor(stringBuilderNonColor, currentIndent);
             } else {
-               stringBuilder.append("§b,");
+               stringBuilder.append("\u00a7b,");
                stringBuilderNonColor.append(c);
             }
             break;
          case ':':
             if (!inQuotes) {
                isInValue = true;
-               stringBuilder.append("§2").append(c);
+               stringBuilder.append("\u00a72").append(c);
                stringBuilderNonColor.append(c);
             } else {
-               stringBuilder.append("§b").append(c);
+               stringBuilder.append("\u00a7b").append(c);
                stringBuilderNonColor.append(c);
             }
             break;
@@ -54,12 +54,12 @@ public class NBTUtils {
             if (!inQuotes) {
                ++currentIndent;
                isInValue = false;
-               stringBuilder.append("§2").append(c);
+               stringBuilder.append("\u00a72").append(c);
                addNewLine(stringBuilder, currentIndent);
                stringBuilderNonColor.append(c);
                addNewLineNoColor(stringBuilderNonColor, currentIndent);
             } else {
-               stringBuilder.append("§b").append(c);
+               stringBuilder.append("\u00a7b").append(c);
                stringBuilderNonColor.append(c);
             }
             break;
@@ -69,20 +69,20 @@ public class NBTUtils {
                --currentIndent;
                isInValue = false;
                addNewLine(stringBuilder, currentIndent);
-               stringBuilder.append("§2").append(c);
+               stringBuilder.append("\u00a72").append(c);
                addNewLineNoColor(stringBuilderNonColor, currentIndent);
                stringBuilderNonColor.append(c);
             } else {
-               stringBuilder.append("§b").append(c);
+               stringBuilder.append("\u00a7b").append(c);
                stringBuilderNonColor.append(c);
             }
             break;
          default:
             if (inQuotes) {
-               stringBuilder.append("§b").append(c);
+               stringBuilder.append("\u00a7b").append(c);
                stringBuilderNonColor.append(c);
             } else if (isInValue) {
-               stringBuilder.append("§b").append(c);
+               stringBuilder.append("\u00a7b").append(c);
                stringBuilderNonColor.append(c);
             } else {
                stringBuilder.append(c);
@@ -97,16 +97,16 @@ public class NBTUtils {
    }
 
    private static void addNewLine(StringBuilder s, int indent) {
-      s.append("\n§e├");
+      s.append("\n\u00a7e\u251c");
 
       for(int j = 0; j < indent; ++j) {
-         s.append("§e    ");
+         s.append("\u00a7e    ");
       }
 
    }
 
    private static void addNewLineNoColor(StringBuilder s, int indent) {
-      s.append("\n├");
+      s.append("\n\u251c");
 
       for(int j = 0; j < indent; ++j) {
          s.append("    ");

@@ -35,6 +35,6 @@ public enum TextFormat {
    }
 
    public String apply(String text) {
-      return String.format("Â§%s%s", this.getCodeChar(), text);
+      return String.format("\u00c2\u00a7%s%s", this.getCodeChar(), text);
    }
 }

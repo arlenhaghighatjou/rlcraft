@@ -23,9 +23,9 @@ public class ElementMinimize extends Element {
          float scale = 2.0F;
          GlStateManager.scale(scale, scale, scale);
          if ((!this.parent.minimized || this.parent.invertMinimizeSymbol()) && (this.parent.minimized || !this.parent.invertMinimizeSymbol())) {
-            this.parent.workspace.getFontRenderer().drawString("▲", (float)((int)((float)(this.getPosX() + 2) / scale)), (float)((int)((float)(this.getPosY() - 2) / scale)), Theme.getAsHex(this.parent.workspace.currentTheme.font), false);
+            this.parent.workspace.getFontRenderer().drawString("\u25b2", (float)((int)((float)(this.getPosX() + 2) / scale)), (float)((int)((float)(this.getPosY() - 2) / scale)), Theme.getAsHex(this.parent.workspace.currentTheme.font), false);
          } else {
-            this.parent.workspace.getFontRenderer().drawString("▼", (float)((int)((float)(this.getPosX() + 2) / scale)), (float)((int)((float)(this.getPosY() - 2) / scale)), Theme.getAsHex(this.parent.workspace.currentTheme.font), false);
+            this.parent.workspace.getFontRenderer().drawString("\u25bc", (float)((int)((float)(this.getPosX() + 2) / scale)), (float)((int)((float)(this.getPosY() - 2) / scale)), Theme.getAsHex(this.parent.workspace.currentTheme.font), false);
          }
 
          GlStateManager.popMatrix();

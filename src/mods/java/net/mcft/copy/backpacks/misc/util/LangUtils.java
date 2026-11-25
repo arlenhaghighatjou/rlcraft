@@ -54,7 +54,7 @@ public final class LangUtils {
    @SideOnly(Side.CLIENT)
    public static void formatTooltipKey(List<String> tooltip, String langKey, KeyBinding keyBinding) {
       if (keyBinding.getKeyCode() != 0) {
-         formatTooltip(tooltip, langKey, "§6" + keyBinding.getDisplayName() + "§7");
+         formatTooltip(tooltip, langKey, "\u00a76" + keyBinding.getDisplayName() + "\u00a77");
       }
    }
 
@@ -62,7 +62,7 @@ public final class LangUtils {
    public static boolean tooltipIsShiftKeyDown(List<String> tooltip) {
       boolean shift = GuiScreen.isShiftKeyDown();
       if (!shift) {
-         formatTooltip(tooltip, "moreInfo", "§6SHIFT§7");
+         formatTooltip(tooltip, "moreInfo", "\u00a76SHIFT\u00a77");
       }
 
       return shift;

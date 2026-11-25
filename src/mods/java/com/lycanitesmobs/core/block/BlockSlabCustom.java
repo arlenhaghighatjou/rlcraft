@@ -53,7 +53,7 @@ public class BlockSlabCustom extends BlockSlab {
    }
 
    public String getDescription(ItemStack itemStack, World world) {
-      return "§a" + LanguageManager.translate(this.getUnlocalizedName() + ".description");
+      return "\u00a7a" + LanguageManager.translate(this.getUnlocalizedName() + ".description");
    }
 
    protected BlockStateContainer createBlockState() {

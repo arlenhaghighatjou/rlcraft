@@ -55,25 +55,25 @@ public class CreatureDescriptionList extends GuiScrollingList {
             String text = "";
             if (creatureInfo.creatureType != null) {
                if (creatureInfo.isTameable() && creatureInfo.creatureType.getTreatItem() != null) {
-                  text = text + "§l" + LanguageManager.translate("gui.beastiary.tameable") + ": §r" + LanguageManager.translate(creatureInfo.creatureType.getTreatItem().getUnlocalizedName() + ".name") + "\n\n";
+                  text = text + "\u00a7l" + LanguageManager.translate("gui.beastiary.tameable") + ": \u00a7r" + LanguageManager.translate(creatureInfo.creatureType.getTreatItem().getUnlocalizedName() + ".name") + "\n\n";
                   if (creatureInfo.isMountable()) {
-                     text = text + "§l" + LanguageManager.translate("gui.beastiary.mountable") + "§r\n\n";
+                     text = text + "\u00a7l" + LanguageManager.translate("gui.beastiary.mountable") + "\u00a7r\n\n";
                   }
                }
 
                if (creatureInfo.isSummonable()) {
-                  text = text + "§l" + LanguageManager.translate("gui.beastiary.summonable") + "§r\n\n";
+                  text = text + "\u00a7l" + LanguageManager.translate("gui.beastiary.summonable") + "\u00a7r\n\n";
                }
 
                if ((creatureInfo.isTameable() || creatureInfo.isSummonable()) && creatureInfo.isPerchable()) {
-                  text = text + "§l" + LanguageManager.translate("gui.beastiary.perchable") + "§r\n\n";
+                  text = text + "\u00a7l" + LanguageManager.translate("gui.beastiary.perchable") + "\u00a7r\n\n";
                }
             }
 
-            text = text + "§l" + LanguageManager.translate("gui.beastiary.diet") + ": §r" + creatureInfo.getDietNames() + "\n\n";
-            text = text + "§l" + LanguageManager.translate("gui.beastiary.summary") + ": §r";
+            text = text + "\u00a7l" + LanguageManager.translate("gui.beastiary.diet") + ": \u00a7r" + creatureInfo.getDietNames() + "\n\n";
+            text = text + "\u00a7l" + LanguageManager.translate("gui.beastiary.summary") + ": \u00a7r";
             text = text + "\n" + creatureInfo.getDescription();
-            text = text + "\n\n§l" + LanguageManager.translate("creature.stat.base") + ": §r";
+            text = text + "\n\n\u00a7l" + LanguageManager.translate("creature.stat.base") + ": \u00a7r";
             if (this.creatureKnowledge.rank >= 2) {
                String statPrefix = "\n" + LanguageManager.translate("creature.stat.base") + " ";
                text = text + "\n" + LanguageManager.translate("creature.stat.health") + ": " + creatureInfo.health;
@@ -91,28 +91,28 @@ public class CreatureDescriptionList extends GuiScrollingList {
                text = text + "\n" + LanguageManager.translate("gui.beastiary.unlockedat") + " " + LanguageManager.translate("creature.stat.knowledge") + " " + 2;
             }
 
-            text = text + "\n\n§l" + LanguageManager.translate("gui.beastiary.combat") + ": §r";
+            text = text + "\n\n\u00a7l" + LanguageManager.translate("gui.beastiary.combat") + ": \u00a7r";
             if (this.creatureKnowledge.rank >= 2) {
                text = text + "\n" + creatureInfo.getCombatDescription();
             } else {
                text = text + "\n" + LanguageManager.translate("gui.beastiary.unlockedat") + " " + LanguageManager.translate("creature.stat.knowledge") + " " + 2;
             }
 
-            text = text + "\n\n§l" + LanguageManager.translate("gui.beastiary.habitat") + ": §r";
+            text = text + "\n\n\u00a7l" + LanguageManager.translate("gui.beastiary.habitat") + ": \u00a7r";
             if (this.creatureKnowledge.rank >= 2) {
                text = text + "\n" + creatureInfo.getHabitatDescription();
             } else {
                text = text + "\n" + LanguageManager.translate("gui.beastiary.unlockedat") + " " + LanguageManager.translate("creature.stat.knowledge") + " " + 2;
             }
 
-            text = text + "\n\n§l" + LanguageManager.translate("gui.beastiary.biomes") + ": §r";
+            text = text + "\n\n\u00a7l" + LanguageManager.translate("gui.beastiary.biomes") + ": \u00a7r";
             if (this.creatureKnowledge.rank >= 2) {
                text = text + "\n" + creatureInfo.getBiomeNames();
             } else {
                text = text + "\n" + LanguageManager.translate("gui.beastiary.unlockedat") + " " + LanguageManager.translate("creature.stat.knowledge") + " " + 2;
             }
 
-            text = text + "\n\n§l" + LanguageManager.translate("gui.beastiary.drops") + ": §r";
+            text = text + "\n\n\u00a7l" + LanguageManager.translate("gui.beastiary.drops") + ": \u00a7r";
             if (this.creatureKnowledge.rank >= 2) {
                text = text + "\n" + creatureInfo.getDropNames();
             } else {

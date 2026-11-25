@@ -105,7 +105,7 @@ public class ItemBackpack extends Item implements IBackpackType, IDyeableItem, I
       }
 
       if (isEquipped && backpack.getPlayersUsing() > 0) {
-         LangUtils.formatTooltipPrepend(tooltip, "¨o", "used");
+         LangUtils.formatTooltipPrepend(tooltip, "\u00a8o", "used");
       }
 
       if (flagIn.isAdvanced()) {

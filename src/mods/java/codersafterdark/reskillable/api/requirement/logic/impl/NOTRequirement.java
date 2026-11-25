@@ -21,7 +21,7 @@ public class NOTRequirement extends Requirement implements OuterRequirement {
       }
 
       String start = TextFormatting.GRAY + " - ";
-      if (parentToolTip.length() > 2 && parentToolTip.startsWith("§")) {
+      if (parentToolTip.length() > 2 && parentToolTip.startsWith("\u00a7")) {
          start = start + parentToolTip.substring(0, 2);
          parentToolTip = parentToolTip.substring(2);
       }
