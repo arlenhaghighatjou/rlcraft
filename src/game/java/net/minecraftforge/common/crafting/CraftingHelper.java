@@ -406,12 +406,8 @@ public class CraftingHelper {
     // INTERNAL
     //=======================================================
 
-    public static void init()
+    private static void init()
     {
-        conditions.clear();
-        ingredients.clear();
-        recipes.clear();
-
         registerC("forge:mod_loaded", (context, json) -> {
             String modid = JsonUtils.getString(json, "modid");
             return () -> Loader.isModLoaded(modid);
@@ -547,7 +543,6 @@ public class CraftingHelper {
         //TODO: If this errors in ServerInit it freezes the client at loading world, find a way to pop that up?
         //TODO: Figure out how to remove recipes, and override them. This relies on cpw to help.
         //For now this is only done one after mod init, I want to move this to ServerInit and re-do it many times.
-        init();
         ForgeRegistry<IRecipe> reg = (ForgeRegistry<IRecipe>)ForgeRegistries.RECIPES;
         //reg.unfreeze();
         if (DEBUG_LOAD_MINECRAFT)
