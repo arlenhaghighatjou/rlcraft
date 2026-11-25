@@ -1348,7 +1348,7 @@ public class ForgeHooks
     private static boolean loadAdvancements(Map<ResourceLocation, Advancement.Builder> map, ModContainer mod)
     {
         if ("minecraft".equals(mod.getModId())) return true;
-        String directory = "assets/" + mod.getModId() + "/advancements/";
+        String directory = mod.getAssetsPrefix() + mod.getModId() + "/advancements/";
         List<String> files = EagRuntime.listResources(directory);
         JsonContext ctx = new JsonContext(mod.getModId());
         boolean success = true;

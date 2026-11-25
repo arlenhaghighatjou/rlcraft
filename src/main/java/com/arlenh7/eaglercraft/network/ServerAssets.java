@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arlenh7.eaglercraft.forge.ModAssets;
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.lax1dude.eaglercraft.v1_8.EaglerInputStream;
 import net.lax1dude.eaglercraft.v1_8.EaglerOutputStream;
@@ -20,17 +21,21 @@ public final class ServerAssets
 
 	public static byte[] pack()
 	{
-		List<String> all = EagRuntime.listResources("assets/");
+		List<String> prefixes = ModAssets.prefixes();
 		List<String> paths = new ArrayList<>();
-		for (int i = 0, l = all.size(); i < l; ++i)
+		for (int k = 0, m = prefixes.size(); k < m; ++k)
 		{
-			String path = all.get(i);
-			for (int j = 0; j < DIRECTORIES.length; ++j)
+			List<String> all = EagRuntime.listResources(prefixes.get(k));
+			for (int i = 0, l = all.size(); i < l; ++i)
 			{
-				if (path.indexOf(DIRECTORIES[j]) > 0)
+				String path = all.get(i);
+				for (int j = 0; j < DIRECTORIES.length; ++j)
 				{
-					paths.add(path);
-					break;
+					if (path.indexOf(DIRECTORIES[j]) > 0)
+					{
+						paths.add(path);
+						break;
+					}
 				}
 			}
 		}

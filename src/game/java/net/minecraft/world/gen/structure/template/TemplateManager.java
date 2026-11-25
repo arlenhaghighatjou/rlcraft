@@ -135,7 +135,8 @@ public class TemplateManager
 
         try
         {
-            inputstream = MinecraftServer.class.getResourceAsStream("/assets/" + s + "/structures/" + s1 + ".nbt");
+            String path = com.arlenh7.eaglercraft.forge.ModAssets.find(s + "/structures/" + s1 + ".nbt");
+            inputstream = path == null ? null : net.lax1dude.eaglercraft.v1_8.EagRuntime.getResourceStream("/" + path);
             this.readTemplateFromStream(s1, inputstream);
             return true;
         }

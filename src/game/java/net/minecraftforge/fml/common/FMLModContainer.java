@@ -364,6 +364,12 @@ public class FMLModContainer<T> implements ModContainer
     }
 
     @Override
+    public String getAssetsPrefix()
+    {
+        return folder + "/assets/";
+    }
+
+    @Override
     public Map<String, String> getSharedModDescriptor()
     {
         Map<String, String> descriptor = com.google.common.collect.Maps.newHashMap();

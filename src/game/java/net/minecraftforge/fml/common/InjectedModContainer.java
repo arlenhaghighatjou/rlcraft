@@ -197,6 +197,12 @@ public class InjectedModContainer implements ModContainer
     }
 
     @Override
+    public String getAssetsPrefix()
+    {
+        return wrappedContainer.getAssetsPrefix();
+    }
+
+    @Override
     public java.io.File getSource()
     {
         return wrappedContainer.getSource();

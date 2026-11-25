@@ -32,6 +32,8 @@ import java.util.Set;
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.lax1dude.eaglercraft.v1_8.EaglerInputStream;
 import net.lax1dude.eaglercraft.v1_8.minecraft.ResourceIndex;
+import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
+import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.resources.AbstractResourcePack;
 import net.minecraftforge.fml.common.ModContainer;
 
@@ -103,6 +105,13 @@ public class FMLFolderResourcePack extends AbstractResourcePack
             }
         }
         return domains;
+    }
+
+    @Override
+    public ImageData getPackImage() throws IOException
+    {
+        String logoFile = container.getMetadata().logoFile;
+        return TextureUtil.readBufferedImage(getInputStreamByName(logoFile.startsWith("/") ? logoFile.substring(1) : logoFile));
     }
 
     @Override

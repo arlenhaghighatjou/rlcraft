@@ -577,7 +577,7 @@ public class CraftingHelper {
 	}
 
 	private static boolean loadBundledRecipes(ModContainer mod, JsonContext context) {
-		String directory = "assets/" + mod.getModId() + "/recipes/";
+		String directory = mod.getAssetsPrefix() + mod.getModId() + "/recipes/";
 		List<String> files = net.lax1dude.eaglercraft.v1_8.EagRuntime.listResources(directory);
 		if (files.isEmpty()) {
 			return true;
@@ -631,8 +631,8 @@ public class CraftingHelper {
 
     private static JsonContext loadContext(ModContainer mod, JsonContext ctx, ResourceLocation path) throws IOException
     {
-        try (BufferedReader reader = openBundledResource("assets/" + path.getResourceDomain()
-                + "/" + path.getResourcePath()))
+        String full = com.arlenh7.eaglercraft.forge.ModAssets.find(path.getResourceDomain() + "/" + path.getResourcePath());
+        try (BufferedReader reader = full == null ? null : openBundledResource(full))
         {
             if (reader == null)
             {

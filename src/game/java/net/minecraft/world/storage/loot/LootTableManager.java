@@ -101,9 +101,9 @@ public class LootTableManager
         @Nullable
         private LootTable loadBuiltinLootTable(ResourceLocation resource)
         {
-			String path = "/assets/" + resource.getResourceDomain() + "/loot_tables/"
-					+ resource.getResourcePath() + ".json";
-			String json = net.lax1dude.eaglercraft.v1_8.EagRuntime.getResourceString(path);
+			String path = com.arlenh7.eaglercraft.forge.ModAssets.find(resource.getResourceDomain() + "/loot_tables/"
+					+ resource.getResourcePath() + ".json");
+			String json = path == null ? null : net.lax1dude.eaglercraft.v1_8.EagRuntime.getResourceString("/" + path);
 			if (json == null) {
 				return null;
 			}

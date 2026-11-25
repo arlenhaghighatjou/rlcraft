@@ -158,6 +158,10 @@ public interface ModContainer
 		return null;
 	}
 
+	default String getAssetsPrefix() {
+		return "assets/";
+	}
+
     boolean shouldLoadInEnvironment();
 
 }
