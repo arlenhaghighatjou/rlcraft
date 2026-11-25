@@ -1,5 +1,6 @@
 package com.jamieswhiteshirt.trumpetskeleton.client;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.jamieswhiteshirt.trumpetskeleton.client.renderer.entity.RenderTrumpetSkeleton;
 import com.jamieswhiteshirt.trumpetskeleton.common.CommonProxy;
 import com.jamieswhiteshirt.trumpetskeleton.common.TrumpetSkeletonItems;
@@ -11,7 +12,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -22,11 +22,14 @@ public class ClientProxy extends CommonProxy {
 
    public void preInit(FMLPreInitializationEvent event) {
       super.preInit(event);
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
       RenderingRegistry.registerEntityRenderingHandler(EntityTrumpetSkeleton.class, RenderTrumpetSkeleton::new);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, this::registerModels);
+   }
+
    public void registerModels(ModelRegistryEvent event) {
       ModelLoader.setCustomModelResourceLocation(TrumpetSkeletonItems.TRUMPET, 0, new ModelResourceLocation(TrumpetSkeletonItems.TRUMPET.getRegistryName(), "inventory"));
    }

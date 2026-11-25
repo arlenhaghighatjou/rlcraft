@@ -1,12 +1,17 @@
 package com.jamieswhiteshirt.trumpetskeleton.common;
 
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import com.jamieswhiteshirt.trumpetskeleton.common.item.ItemTrumpet;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
-@ObjectHolder("trumpetskeleton")
 public class TrumpetSkeletonItems {
-   public static final ItemTrumpet TRUMPET = null;
+   public static ItemTrumpet TRUMPET = null;
 
    public TrumpetSkeletonItems() {
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("trumpetskeleton:TRUMPET"), v -> TRUMPET = (ItemTrumpet)v);
    }
 }

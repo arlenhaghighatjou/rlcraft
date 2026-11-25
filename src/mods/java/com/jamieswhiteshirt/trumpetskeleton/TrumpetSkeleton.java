@@ -1,5 +1,10 @@
 package com.jamieswhiteshirt.trumpetskeleton;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import com.jamieswhiteshirt.trumpetskeleton.common.CommonProxy;
 import com.jamieswhiteshirt.trumpetskeleton.common.TrumpetSkeletonItems;
 import com.jamieswhiteshirt.trumpetskeleton.common.TrumpetSkeletonSoundEvents;
@@ -27,12 +32,8 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent.Tick;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -50,47 +51,58 @@ public class TrumpetSkeleton {
    public static final String MODID = "trumpetskeleton";
    public static final String VERSION = "1.12-1.0.2.1";
    public static final ResourceLocation ENTITIES_TRUMPET_SKELETON_LOOT_TABLE = new ResourceLocation("trumpetskeleton", "entities/trumpet_skeleton");
-   @Instance
    public static TrumpetSkeleton instance;
-   @SidedProxy(
-      clientSide = "com.jamieswhiteshirt.trumpetskeleton.client.ClientProxy",
-      serverSide = "com.jamieswhiteshirt.trumpetskeleton.server.ServerProxy",
-      modId = "trumpetskeleton"
-   )
    public static CommonProxy proxy;
    public static final Logger logger = LogManager.getLogger("trumpetskeleton");
 
    public TrumpetSkeleton() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new com.jamieswhiteshirt.trumpetskeleton.client.ClientProxy() : new com.jamieswhiteshirt.trumpetskeleton.server.ServerProxy();
+         com.jamieswhiteshirt.trumpetskeleton.common.TrumpetSkeletonItems.registerHolders();
+         com.jamieswhiteshirt.trumpetskeleton.common.TrumpetSkeletonSoundEvents.registerHolders();
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
       LootTableList.register(ENTITIES_TRUMPET_SKELETON_LOOT_TABLE);
       proxy.preInit(event);
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       EntityParrot.registerMimicSound(EntityTrumpetSkeleton.class, TrumpetSkeletonSoundEvents.E_PARROT_IM_TRUMPET_SKELETON);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Item.class, this::registerItems);
+      bus.registerGeneric(Register.class, SoundEvent.class, this::registerSoundEvents);
+      bus.registerGeneric(Register.class, EntityEntry.class, this::registerEntityEntries);
+      bus.register(Tick.class, this::onActiveItemUseTick);
+      bus.register(PlaySoundAtEntityEvent.class, this::onPlaySoundAtEntity);
+   }
+
    public void registerItems(Register<Item> event) {
       event.getRegistry().registerAll(new Item[]{((Item)(new ItemTrumpet()).setUnlocalizedName("trumpetskeleton.trumpet").setRegistryName("trumpetskeleton", "trumpet")).setCreativeTab(CreativeTabs.MISC)});
    }
 
-   @SubscribeEvent
    public void registerSoundEvents(Register<SoundEvent> event) {
       event.getRegistry().registerAll(new SoundEvent[]{(SoundEvent)(new SoundEvent(new ResourceLocation("trumpetskeleton", "entity.trumpet_skeleton.ambient"))).setRegistryName(new ResourceLocation("trumpetskeleton", "entity.trumpet_skeleton.ambient")), (SoundEvent)(new SoundEvent(new ResourceLocation("trumpetskeleton", "item.trumpet.use"))).setRegistryName(new ResourceLocation("trumpetskeleton", "item.trumpet.use")), (SoundEvent)(new SoundEvent(new ResourceLocation("trumpetskeleton", "entity.parrot.imitate.trumpet_skeleton"))).setRegistryName(new ResourceLocation("trumpetskeleton", "entity.parrot.imitate.trumpet_skeleton"))});
    }
 
-   @SubscribeEvent
    public void registerEntityEntries(Register<EntityEntry> event) {
-      EntityRegistry.registerModEntity(new ResourceLocation("trumpetskeleton", "trumpet_skeleton"), EntityTrumpetSkeleton.class, "trumpetskeleton.TrumpetSkeleton", 0, this, 80, 3, false, 12698049, 16579584);
+      EntityRegistry.registerModEntity(new ResourceLocation("trumpetskeleton", "trumpet_skeleton"), EntityTrumpetSkeleton.class, "trumpetskeleton.TrumpetSkeleton", 0, this, 80, 3, false, 12698049, 16579584, EntityTrumpetSkeleton::new);
 
       for(Biome biome : ForgeRegistries.BIOMES.getValues()) {
-         for(SpawnListEntry entry : new ArrayList(biome.getSpawnableList(EnumCreatureType.MONSTER))) {
+         for(SpawnListEntry entry : new ArrayList<SpawnListEntry>(biome.getSpawnableList(EnumCreatureType.MONSTER))) {
             if (entry.entityClass == EntitySkeleton.class) {
                EntityRegistry.addSpawn(EntityTrumpetSkeleton.class, entry.itemWeight / 4, entry.minGroupCount, entry.maxGroupCount, EnumCreatureType.MONSTER, new Biome[]{biome});
             }
@@ -115,7 +127,6 @@ public class TrumpetSkeleton {
 
    }
 
-   @SubscribeEvent
    public void onActiveItemUseTick(Tick event) {
       ItemStack stack = event.getItem();
       if (stack.getItem() == TrumpetSkeletonItems.TRUMPET) {
@@ -132,7 +143,6 @@ public class TrumpetSkeleton {
 
    }
 
-   @SubscribeEvent
    public void onPlaySoundAtEntity(PlaySoundAtEntityEvent event) {
       Entity entity = event.getEntity();
       if (entity instanceof EntityPlayer) {
