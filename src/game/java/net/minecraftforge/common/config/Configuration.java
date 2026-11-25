@@ -78,7 +78,7 @@ public class Configuration
 
     VFile2 file;
 
-    private Map<String, ConfigCategory> categories = new TreeMap<String, ConfigCategory>();
+    protected Map<String, ConfigCategory> categories = new TreeMap<String, ConfigCategory>();
     private Map<String, Configuration> children = new TreeMap<String, Configuration>();
 
     private boolean caseSensitiveCustomCategories;
