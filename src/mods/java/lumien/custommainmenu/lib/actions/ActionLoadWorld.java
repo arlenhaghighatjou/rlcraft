@@ -1,12 +1,15 @@
 package lumien.custommainmenu.lib.actions;
 
-import java.io.File;
-import java.io.FileInputStream;
 import lumien.custommainmenu.gui.GuiCustom;
+import java.util.List;
+import net.lax1dude.eaglercraft.v1_8.sp.SingleplayerServerController;
+import net.lax1dude.eaglercraft.v1_8.sp.gui.GuiScreenIntegratedServerBusy;
+import net.lax1dude.eaglercraft.v1_8.sp.gui.GuiScreenIntegratedServerStartup;
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.client.AnvilConverterException;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.WorldSettings;
+import net.minecraft.world.storage.WorldSummary;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.GuiOldSaveLoadConfirm;
 import net.minecraftforge.fml.common.FMLLog;
@@ -22,30 +25,47 @@ public class ActionLoadWorld implements IAction {
    }
 
    public void perform(Object source, GuiCustom menu) {
-      File dir = new File(FMLClientHandler.instance().getSavesDir(), this.dirName);
+      Minecraft mc = Minecraft.getMinecraft();
+      mc.displayGuiScreen(new GuiScreenIntegratedServerStartup(menu, () -> requestWorldList(mc, menu)));
+   }
 
-      NBTTagCompound leveldat;
+   private GuiScreen requestWorldList(Minecraft mc, GuiCustom menu) {
+      mc.getSaveLoader().flushCache();
+      return new GuiScreenIntegratedServerBusy(menu, "singleplayer.busy.listingworlds",
+          "singleplayer.failed.listingworlds", SingleplayerServerController::isReady) {
+         @Override
+         public void updateScreen() {
+            GuiScreen busy = mc.currentScreen;
+            super.updateScreen();
+            if (busy == this && mc.currentScreen == menu) {
+               loadExistingWorld(mc, menu);
+            }
+         }
+      };
+   }
+
+   private void loadExistingWorld(Minecraft mc, GuiScreen menu) {
+      List<WorldSummary> worlds;
       try {
-         leveldat = CompressedStreamTools.readCompressed(new FileInputStream(new File(dir, "level.dat")));
-      } catch (Exception var9) {
-         try {
-            leveldat = CompressedStreamTools.readCompressed(new FileInputStream(new File(dir, "level.dat_old")));
-         } catch (Exception var8) {
-            FMLLog.warning("There appears to be a problem loading the save %s, both level files are unreadable.", new Object[]{this.dirName});
+         worlds = mc.getSaveLoader().getSaveList();
+      } catch (AnvilConverterException ex) {
+         FMLLog.log.error("Could not read the world list", ex);
+         return;
+      }
+      for (WorldSummary world : worlds) {
+         if (this.dirName.equals(world.getFileName())) {
+            NBTTagCompound levelDat = world.levelDat;
+            if (levelDat != null && levelDat.getCompoundTag("FML").hasKey("ModItemData")) {
+               FMLClientHandler.instance().showGuiScreen(new GuiOldSaveLoadConfirm(this.dirName, this.saveName, menu));
+            } else {
+               try {
+                  mc.launchIntegratedServer(this.dirName, this.saveName, null);
+               } catch (AbortedException ignored) {
+               }
+            }
             return;
          }
       }
-
-      NBTTagCompound fmlData = leveldat.getCompoundTag("FML");
-      if (fmlData.hasKey("ModItemData")) {
-         FMLClientHandler.instance().showGuiScreen(new GuiOldSaveLoadConfirm(this.dirName, this.saveName, menu));
-      } else {
-         try {
-            Minecraft.getMinecraft().launchIntegratedServer(this.dirName, this.saveName, (WorldSettings)null);
-         } catch (AbortedException var7) {
-            ;
-         }
-      }
-
+      FMLLog.warning("Could not find the save named %s.", this.dirName);
    }
 }

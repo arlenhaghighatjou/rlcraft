@@ -1,8 +1,6 @@
 package lumien.custommainmenu.gui;
 
 import com.google.common.base.Strings;
-import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import lumien.custommainmenu.configuration.elements.Label;
 import lumien.custommainmenu.lib.ANCHOR;
@@ -17,7 +15,6 @@ import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Loader;
 
 public class GuiCustomLabel extends Gui {
    Label text;
@@ -27,10 +24,6 @@ public class GuiCustomLabel extends Gui {
    int width;
    int height;
    GuiCustom parent;
-   static final String TIME_FORMAT = "HH:mm";
-   static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-   static Field mcpversionField;
-   public static String mcpversion;
    boolean hovered;
 
    public GuiCustomLabel(GuiCustom customGUI, Label text, int posX, int posY) {
@@ -162,14 +155,4 @@ public class GuiCustomLabel extends Gui {
 
    }
 
-   static {
-      try {
-         mcpversionField = Loader.class.getDeclaredField("mcpversion");
-         mcpversionField.setAccessible(true);
-         mcpversion = (String)mcpversionField.get((Object)null);
-      } catch (Exception var1) {
-         var1.printStackTrace();
-      }
-
-   }
 }

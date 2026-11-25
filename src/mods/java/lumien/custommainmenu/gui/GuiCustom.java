@@ -1,7 +1,7 @@
 package lumien.custommainmenu.gui;
 
 import java.io.IOException;
-import java.net.URI;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,9 +30,8 @@ import net.minecraft.client.gui.GuiYesNoCallback;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.lax1dude.eaglercraft.v1_8.minecraft.MainMenuSkyboxTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Post;
 import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Pre;
@@ -40,8 +39,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.Project;
+import static net.lax1dude.eaglercraft.v1_8.internal.PlatformOpenGL._wglBindFramebuffer;
+import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.GL_COLOR_BUFFER_BIT;
 
 @SideOnly(Side.CLIENT)
 public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
@@ -53,8 +52,8 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
    public Object beingChecked;
    public GuiConfig guiConfig;
    EaglercraftRandom rand;
-   protected DynamicTexture viewportTexture;
-   protected ResourceLocation backgroundTexture;
+   private static MainMenuSkyboxTexture skybox;
+   private static MainMenuSkyboxTexture blurBuffer;
    protected String splashText;
    protected int openGLWarning2Width;
    protected int openGLWarning1Width;
@@ -104,8 +103,6 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
 
       this.textLabels = new ArrayList();
       this.buttonCounter = 0;
-      this.viewportTexture = new DynamicTexture(256, 256);
-      this.backgroundTexture = this.mc.getTextureManager().getDynamicTextureLocation("background", this.viewportTexture);
       Calendar calendar = Calendar.getInstance();
       calendar.setTime(new Date());
       if (calendar.get(2) + 1 == 11 && calendar.get(5) == 9) {
@@ -162,13 +159,7 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
          }
 
          if (link != null) {
-            try {
-               Class oclass = Class.forName("java.awt.Desktop");
-               Object object = oclass.getMethod("getDesktop").invoke((Object)null);
-               oclass.getMethod("browse", URI.class).invoke(object, new URI(link));
-            } catch (Throwable var6) {
-               CustomMainMenu.INSTANCE.logger.error("Couldn't open link", var6);
-            }
+            EagRuntime.openLink(link);
          }
       }
 
@@ -220,16 +211,7 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
             this.drawGradientRect(0, 0, this.width, this.height, 0, Integer.MIN_VALUE);
          }
       } else {
-         GL11.glBegin(7);
-         GL11.glColor3f(0.0F, 0.0F, 0.0F);
-         GL11.glVertex3f(0.0F, 0.0F, 0.0F);
-         GL11.glColor3f(0.0F, 0.0F, 0.0F);
-         GL11.glVertex3f(0.0F, (float)this.height, 0.0F);
-         GL11.glColor3f(0.0F, 0.0F, 0.0F);
-         GL11.glVertex3f((float)this.width, (float)this.height, 0.0F);
-         GL11.glColor3f(0.0F, 0.0F, 0.0F);
-         GL11.glVertex3f((float)this.width, 0.0F, 0.0F);
-         GL11.glEnd();
+         drawRect(0, 0, this.width, this.height, 0xFF000000);
       }
 
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -240,16 +222,13 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
          if (background == Background.OPTIONS_BACKGROUND) {
             this.drawDefaultBackground();
          } else if (!background.ichBinEineSlideshow) {
-            background.image.bind();
-            this.drawBackground(background.mode);
+            this.drawBackground(background.image, background.mode);
          } else {
-            background.slideShow.getCurrentResource1().bind();
-            this.drawBackground(background.mode);
+            this.drawBackground(background.slideShow.getCurrentResource1(), background.mode);
             if (background.slideShow.fading()) {
                GlStateManager.enableBlend();
-               background.slideShow.getCurrentResource2().bind();
                GlStateManager.color(1.0F, 1.0F, 1.0F, background.slideShow.getAlphaFade(partialTicks));
-               this.drawBackground(background.mode);
+               this.drawBackground(background.slideShow.getCurrentResource2(), background.mode);
                GlStateManager.disableBlend();
                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             }
@@ -318,60 +297,57 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
 
    }
 
-   private void drawImageWithMode(MODE mode, int x, int y, int width, int height) {
-      int imageWidth = GL11.glGetTexLevelParameteri(3553, 0, 4096);
-      int imageHeight = GL11.glGetTexLevelParameteri(3553, 0, 4097);
-      int drawWidth = 0;
-      int drawHeight = 0;
-      float factorWidth = (float)width / (float)imageWidth;
-      float factorHeight = (float)height / (float)imageHeight;
-      switch(mode) {
+   private void drawBackground(ITexture texture, MODE mode) {
+      texture.bind();
+      int imageWidth = texture.getWidth();
+      int imageHeight = texture.getHeight();
+      switch (mode) {
       case FILL:
-         if (factorWidth > factorHeight) {
-            drawWidth = (int)((float)imageWidth * factorWidth);
-            drawHeight = (int)((float)imageHeight * factorWidth);
-         } else {
-            drawWidth = (int)((float)imageWidth * factorHeight);
-            drawHeight = (int)((float)imageHeight * factorHeight);
-         }
-
-         RenderUtil.drawPartialImage(x, y, 0, 0, drawWidth, drawHeight, imageWidth, imageHeight);
+         double scale = Math.max((double)this.width / imageWidth, (double)this.height / imageHeight);
+         double cropX = (1.0D - this.width / (imageWidth * scale)) * 0.5D;
+         double cropY = (1.0D - this.height / (imageHeight * scale)) * 0.5D;
+         RenderUtil.drawImage(0, 0, this.width, this.height, cropX, cropY, 1.0D - cropX, 1.0D - cropY);
          break;
       case STRETCH:
-         RenderUtil.drawCompleteImage(x, y, width, height);
+         RenderUtil.drawCompleteImage(0, 0, this.width, this.height);
          break;
       case CENTER:
-         RenderUtil.drawCompleteImage(x + (int)((float)width / 2.0F - (float)imageWidth / 2.0F), y + (int)((float)height / 2.0F - (float)imageHeight / 2.0F), imageWidth, imageHeight);
+         RenderUtil.drawCompleteImage((this.width - imageWidth) / 2, (this.height - imageHeight) / 2, imageWidth, imageHeight);
          break;
       case TILE:
-         int countX = (int)Math.ceil((double)((float)width / (float)imageWidth));
-         int countY = (int)Math.ceil((double)((float)height / (float)imageHeight));
-
-         for(int cX = 0; cX < countX; ++cX) {
-            for(int cY = 0; cY < countY; ++cY) {
-               RenderUtil.drawCompleteImage(x + cX * imageWidth, y + cY * imageHeight, imageWidth, imageHeight);
+         for (int x = 0; x < this.width; x += imageWidth) {
+            for (int y = 0; y < this.height; y += imageHeight) {
+               int w = Math.min(imageWidth, this.width - x);
+               int h = Math.min(imageHeight, this.height - y);
+               RenderUtil.drawImage(x, y, w, h, 0.0D, 0.0D, (double)w / imageWidth, (double)h / imageHeight);
             }
          }
+         break;
       }
-
-   }
-
-   private void drawBackground(MODE mode) {
-      this.drawImageWithMode(mode, 0, 0, this.width, this.height);
    }
 
    protected void renderSkybox(int p_73971_1_, int p_73971_2_, float p_73971_3_) {
-      this.mc.getFramebuffer().unbindFramebuffer();
+      if (skybox == null) {
+         skybox = new MainMenuSkyboxTexture(256, 256);
+         blurBuffer = new MainMenuSkyboxTexture(256, 256);
+      }
+      skybox.bindFramebuffer();
       GlStateManager.viewport(0, 0, 256, 256);
+      GlStateManager.clearColor(0.0F, 0.0F, 0.0F, 1.0F);
+      GlStateManager.clear(GL_COLOR_BUFFER_BIT);
       this.drawPanorama(p_73971_1_, p_73971_2_, p_73971_3_);
-      this.rotateAndBlurSkybox(p_73971_3_);
-      this.rotateAndBlurSkybox(p_73971_3_);
-      this.rotateAndBlurSkybox(p_73971_3_);
-      this.rotateAndBlurSkybox(p_73971_3_);
-      this.rotateAndBlurSkybox(p_73971_3_);
-      this.rotateAndBlurSkybox(p_73971_3_);
-      this.rotateAndBlurSkybox(p_73971_3_);
-      this.mc.getFramebuffer().bindFramebuffer(true);
+      if (this.guiConfig.panorama.blur) {
+         for (int pass = 0; pass < 3; ++pass) {
+            blurBuffer.bindFramebuffer();
+            GlStateManager.bindTexture(skybox.getGlTextureId());
+            this.rotateAndBlurSkybox();
+            skybox.bindFramebuffer();
+            GlStateManager.bindTexture(blurBuffer.getGlTextureId());
+            this.rotateAndBlurSkybox();
+         }
+      }
+      _wglBindFramebuffer(MainMenuSkyboxTexture._GL_FRAMEBUFFER, null);
+      GlStateManager.bindTexture(skybox.getGlTextureId());
       GlStateManager.viewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
       float f = this.width > this.height ? 120.0F / (float)this.width : 120.0F / (float)this.height;
       float f1 = (float)this.height * f / 256.0F;
@@ -394,7 +370,7 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
       GlStateManager.matrixMode(5889);
       GlStateManager.pushMatrix();
       GlStateManager.loadIdentity();
-      Project.gluPerspective(120.0F, 1.0F, 0.05F, 10.0F);
+      GlStateManager.gluPerspective(120.0F, 1.0F, 0.05F, 10.0F);
       GlStateManager.matrixMode(5888);
       GlStateManager.pushMatrix();
       GlStateManager.loadIdentity();
@@ -406,9 +382,9 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
       GlStateManager.disableCull();
       GlStateManager.depthMask(false);
       GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-      int i = 8;
+      int i = this.guiConfig.panorama.blur ? 4 : 1;
 
-      for(int j = 0; j < 64; ++j) {
+      for(int j = 0; j < i * i; ++j) {
          GlStateManager.pushMatrix();
          float f = ((float)(j % i) / (float)i - 0.5F) / 64.0F;
          float f1 = ((float)(j / i) / (float)i - 0.5F) / 64.0F;
@@ -488,11 +464,7 @@ public class GuiCustom extends GuiScreen implements GuiYesNoCallback {
 
    }
 
-   private void rotateAndBlurSkybox(float p_73968_1_) {
-      this.mc.getTextureManager().bindTexture(this.backgroundTexture);
-      GL11.glTexParameteri(3553, 10241, 9729);
-      GL11.glTexParameteri(3553, 10240, 9729);
-      GL11.glCopyTexSubImage2D(3553, 0, 0, 0, 0, 0, 256, 256);
+   private void rotateAndBlurSkybox() {
       GlStateManager.enableBlend();
       GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
       GlStateManager.colorMask(true, true, true, false);

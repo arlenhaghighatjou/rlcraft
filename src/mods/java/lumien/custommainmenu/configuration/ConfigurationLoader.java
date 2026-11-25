@@ -1,127 +1,50 @@
 package lumien.custommainmenu.configuration;
 
-import com.google.common.io.ByteStreams;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import lumien.custommainmenu.CustomMainMenu;
 import lumien.custommainmenu.gui.GuiCustom;
-import org.apache.commons.io.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 
 public class ConfigurationLoader {
-   Config config;
+   private final Config config;
 
    public ConfigurationLoader(Config config) {
       this.config = config;
    }
 
-   public void load() throws Exception {
-      JsonParser jsonParser = new JsonParser();
-      File configFolder = new File(CustomMainMenu.INSTANCE.configFolder, "CustomMainMenu");
-      if (!configFolder.exists()) {
-         configFolder.mkdir();
+   public void load() throws IOException {
+      VFile2 folder = new VFile2(CustomMainMenu.INSTANCE.configFolder, "CustomMainMenu");
+      VFile2 main = new VFile2(folder, "mainmenu.json");
+      String menu = main.getAllChars();
+      if (menu == null) {
+         menu = EagRuntime.getResourceString("/pack-defaults/config/CustomMainMenu/mainmenu.json");
+      }
+      if (menu == null) {
+         return;
       }
 
-      File mainmenuConfig = new File(configFolder, "mainmenu.json");
-      if (!mainmenuConfig.exists()) {
-         InputStream input = null;
-         OutputStream output = null;
-
-         try {
-            output = new FileOutputStream(mainmenuConfig);
-            input = this.getClass().getResourceAsStream("/assets/custommainmenu/mainmenu_default.json");
-            ByteStreams.copy(input, output);
-         } catch (FileNotFoundException var33) {
-            var33.printStackTrace();
-         } catch (IOException var34) {
-            var34.printStackTrace();
-         } finally {
-            IOUtils.closeQuietly(output);
-            IOUtils.closeQuietly(input);
+      loadGui("mainmenu", menu);
+      String prefix = folder.getPath() + "/";
+      for (VFile2 file : folder.listFiles(false)) {
+         String name = file.getPath().substring(prefix.length());
+         if (!name.equals("mainmenu.json") && name.endsWith(".json")) {
+            String contents = file.getAllChars();
+            if (contents == null) {
+               throw new IOException("Could not read Custom Main Menu config " + file.getPath());
+            }
+            loadGui(name.substring(0, name.length() - 5), contents);
          }
       }
+   }
 
-      File[] jsonFiles = configFolder.listFiles();
-
-      for(File guiFile : jsonFiles) {
-         if (guiFile.getName().equals("mainmenu.json")) {
-            GuiConfig guiConfig = new GuiConfig();
-            String name = guiFile.getName().replace(".json", "");
-            JsonReader reader = null;
-
-            try {
-               reader = new JsonReader(new FileReader(guiFile));
-            } catch (FileNotFoundException var32) {
-               var32.printStackTrace();
-            }
-
-            try {
-               JsonElement jsonElement = jsonParser.parse(reader);
-               JsonObject jsonObject = jsonElement.getAsJsonObject();
-               guiConfig.load(name, jsonObject);
-            } catch (Exception var31) {
-               try {
-                  reader.close();
-               } catch (IOException var26) {
-                  var26.printStackTrace();
-               }
-
-               throw var31;
-            }
-
-            try {
-               reader.close();
-            } catch (IOException var30) {
-               var30.printStackTrace();
-            }
-
-            this.config.addGui(guiConfig.name, new GuiCustom(guiConfig));
-         }
-      }
-
-      for(File guiFile : jsonFiles) {
-         if (!guiFile.getName().equals("mainmenu.json") && guiFile.getName().endsWith(".json")) {
-            GuiConfig guiConfig = new GuiConfig();
-            String name = guiFile.getName().replace(".json", "");
-            JsonReader reader = null;
-
-            try {
-               reader = new JsonReader(new FileReader(guiFile));
-            } catch (FileNotFoundException var29) {
-               var29.printStackTrace();
-            }
-
-            try {
-               JsonElement jsonElement = jsonParser.parse(reader);
-               JsonObject jsonObject = jsonElement.getAsJsonObject();
-               guiConfig.load(name, jsonObject);
-            } catch (Exception var28) {
-               try {
-                  reader.close();
-               } catch (IOException var25) {
-                  var25.printStackTrace();
-               }
-
-               throw var28;
-            }
-
-            try {
-               reader.close();
-            } catch (IOException var27) {
-               var27.printStackTrace();
-            }
-
-            this.config.addGui(guiConfig.name, new GuiCustom(guiConfig));
-         }
-      }
-
+   private void loadGui(String name, String source) {
+      JsonObject json = new JsonParser().parse(source).getAsJsonObject();
+      GuiConfig gui = new GuiConfig();
+      gui.load(name, json);
+      this.config.addGui(gui.name, new GuiCustom(gui));
+      CustomMainMenu.INSTANCE.logger.debug("Loaded custom menu {}", name);
    }
 }

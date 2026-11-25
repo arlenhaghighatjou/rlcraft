@@ -1,56 +1,49 @@
 package lumien.custommainmenu.lib.textures;
 
-import java.awt.image.BufferedImage;
-import java.net.MalformedURLException;
-import java.net.URL;
 import lumien.custommainmenu.CustomMainMenu;
-import lumien.custommainmenu.handler.LoadTextureURL;
 import lumien.custommainmenu.lib.StringReplacer;
+import net.lax1dude.eaglercraft.v1_8.internal.PlatformRuntime;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
 import net.minecraft.client.renderer.texture.TextureUtil;
-import net.lax1dude.eaglercraft.v1_8.log4j.Level;
-import org.lwjgl.opengl.GL11;
 
 public class TextureURL implements ITexture {
-   URL url;
-   int textureID = -1;
-   private BufferedImage bi;
+   private ImageData pending;
+   private int textureId = -1;
+   private int width = 1;
+   private int height = 1;
 
    public TextureURL(String url) {
-      try {
-         this.url = new URL(StringReplacer.replacePlaceholders(url));
-      } catch (MalformedURLException var3) {
-         CustomMainMenu.INSTANCE.logger.log(Level.ERROR, "Invalid URL: " + url);
-         var3.printStackTrace();
+      String location = StringReplacer.replacePlaceholders(url);
+      if (location.startsWith("https://") || location.startsWith("http://")) {
+         PlatformRuntime.downloadRemoteURIByteArray(location, bytes -> {
+            if (bytes != null) {
+               this.pending = ImageData.loadImageFile(bytes, "image/png");
+            }
+         });
       }
-
-      (new LoadTextureURL(this)).start();
    }
 
    public void bind() {
-      if (this.textureID != -1) {
-         GlStateManager.bindTexture(this.textureID);
-      } else {
-         if (this.bi != null) {
-            this.setTextureID(TextureUtil.uploadTextureImageAllocate(GL11.glGenTextures(), this.bi, false, false));
-            this.bind();
-            return;
-         }
-
-         CustomMainMenu.bindTransparent();
+      ImageData image = this.pending;
+      if (image != null) {
+         this.pending = null;
+         this.textureId = TextureUtil.uploadTextureImageAllocate(TextureUtil.glGenTextures(), image, false, false);
+         this.width = image.width;
+         this.height = image.height;
       }
-
+      if (this.textureId == -1) {
+         CustomMainMenu.bindTransparent();
+      } else {
+         GlStateManager.bindTexture(this.textureId);
+      }
    }
 
-   public void finishLoading(BufferedImage bi) {
-      this.bi = bi;
+   public int getWidth() {
+      return this.width;
    }
 
-   public URL getURL() {
-      return this.url;
-   }
-
-   public void setTextureID(int textureID) {
-      this.textureID = textureID;
+   public int getHeight() {
+      return this.height;
    }
 }

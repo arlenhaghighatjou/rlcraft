@@ -33,12 +33,16 @@ public class Config {
    }
 
    public GuiCustom getGUI(String name) {
-      return ((GuiEntry)this.guis.get(name)).getCurrentGUI();
+      GuiEntry entry = this.guis.get(name);
+      return entry == null ? null : entry.getCurrentGUI();
    }
 
    public void tick() {
       this.guis.values().forEach((ge) -> {
-         ge.getCurrentGUI().tick();
+         GuiCustom gui = ge.getCurrentGUI();
+         if (gui != null) {
+            gui.tick();
+         }
       });
    }
 }

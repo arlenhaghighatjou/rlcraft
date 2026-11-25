@@ -68,7 +68,7 @@ public class GuiCustomButton extends GuiButton {
          GlStateManager.blendFunc(770, 771);
          if (this.texture != null) {
             this.texture.bind();
-            RenderUtil.drawPartialImage(this.x, this.y, 0, (k - 1) * this.b.imageHeight, this.b.width, this.b.height, this.b.imageWidth, this.b.imageHeight);
+            RenderUtil.drawPartialImage(this.texture, this.x, this.y, 0, (k - 1) * this.b.imageHeight, this.b.width, this.b.height, this.b.imageWidth, this.b.imageHeight);
          } else {
             mc.getTextureManager().bindTexture(BUTTON_TEXTURES);
             this.drawTexturedModalRect(this.x, this.y, 0, 46 + k * 20, this.width / 2, this.height);
@@ -90,7 +90,7 @@ public class GuiCustomButton extends GuiButton {
 
    }
 
-   protected void drawHoveringText(Minecraft mc, List textLines, int x, int y, FontRenderer font) {
+   protected void drawHoveringText(Minecraft mc, List<String> textLines, int x, int y, FontRenderer font) {
       if (!textLines.isEmpty()) {
          int width = mc.currentScreen.width;
          int height = mc.currentScreen.height;

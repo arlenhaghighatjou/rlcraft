@@ -1,19 +1,16 @@
 package lumien.custommainmenu;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import lumien.custommainmenu.configuration.Config;
 import lumien.custommainmenu.configuration.ConfigurationLoader;
 import lumien.custommainmenu.handler.CMMEventHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
 @Mod(
@@ -27,13 +24,12 @@ public class CustomMainMenu {
    public static final String MOD_ID = "custommainmenu";
    public static final String MOD_NAME = "Custom Main Menu";
    public static final String MOD_VERSION = "2.0.9.1";
-   @Instance("custommainmenu")
    public static CustomMainMenu INSTANCE;
    public static CMMEventHandler EVENT_HANDLER;
    private ConfigurationLoader configLoader;
    public Config config;
    public Logger logger;
-   public File configFolder;
+   public VFile2 configFolder;
    static ResourceLocation transparentTexture;
 
    public CustomMainMenu() {
@@ -43,27 +39,28 @@ public class CustomMainMenu {
       Minecraft.getMinecraft().renderEngine.bindTexture(transparentTexture);
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLPreInitializationEvent) {
+         preInit((FMLPreInitializationEvent)event);
+      }
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
+      INSTANCE = this;
       this.configFolder = event.getModConfigurationDirectory();
       this.config = new Config();
       transparentTexture = new ResourceLocation("custommainmenu:textures/gui/transparent.png");
       EVENT_HANDLER = new CMMEventHandler();
-      MinecraftForge.EVENT_BUS.register(EVENT_HANDLER);
-      FMLCommonHandler.instance().bus().register(EVENT_HANDLER);
+      EVENT_HANDLER.register(MinecraftForge.EVENT_BUS);
       this.logger = event.getModLog();
       this.configLoader = new ConfigurationLoader(this.config);
 
       try {
          this.configLoader.load();
       } catch (Exception var3) {
-         this.logger.log(Level.ERROR, "Error while loading config file. Will have to crash here :(.");
-         throw new RuntimeException(var3);
+         this.logger.error("Could not load the custom menu configuration", var3);
+         this.config = new Config();
       }
-   }
-
-   @EventHandler
-   public void postInit(FMLPostInitializationEvent event) {
    }
 
    public void reload() {
@@ -75,9 +72,8 @@ public class CustomMainMenu {
          this.configLoader.load();
          EVENT_HANDLER.displayMs = -1L;
       } catch (Exception var3) {
-         var3.printStackTrace();
-         EVENT_HANDLER.displayMs = System.currentTimeMillis();
-         this.logger.log(Level.ERROR, "Error while loading new config file, trying to keep the old one loaded.");
+         EVENT_HANDLER.displayMs = EagRuntime.steadyTimeMillis();
+         this.logger.error("Could not reload the custom menu configuration", var3);
          this.config = backup;
       }
 

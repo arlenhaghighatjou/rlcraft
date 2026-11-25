@@ -1,48 +1,43 @@
 package lumien.custommainmenu.lib.texts;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import lumien.custommainmenu.handler.LoadStringURL;
+import java.nio.charset.StandardCharsets;
 import lumien.custommainmenu.lib.StringReplacer;
+import net.lax1dude.eaglercraft.v1_8.internal.PlatformRuntime;
 
 public class TextURL implements IText {
-   URL url;
-   public String string;
-   int refreshInterval;
-   int refreshCounter;
-   LoadStringURL loadThread;
+   private final String url;
+   private final int refreshInterval;
+   private String text = "";
+   private boolean loading;
+   private int refreshCounter;
 
    public TextURL(String url, int refreshInterval) {
-      try {
-         this.url = new URL(StringReplacer.replacePlaceholders(url));
-      } catch (MalformedURLException var4) {
-         var4.printStackTrace();
-      }
-
-      this.string = "";
-      (this.loadThread = new LoadStringURL(this)).start();
+      this.url = StringReplacer.replacePlaceholders(url);
       this.refreshInterval = refreshInterval;
-      this.refreshCounter = 0;
+      this.request();
+   }
+
+   private void request() {
+      if (!this.url.startsWith("https://") && !this.url.startsWith("http://")) {
+         return;
+      }
+      this.loading = true;
+      PlatformRuntime.downloadRemoteURIByteArray(this.url, bytes -> {
+         if (bytes != null) {
+            this.text = new String(bytes, StandardCharsets.UTF_8);
+         }
+         this.loading = false;
+      });
    }
 
    public void tick() {
-      if (this.refreshInterval != -1 && this.refreshInterval >= 60) {
-         ++this.refreshCounter;
-         if (this.refreshCounter >= this.refreshInterval && !this.loadThread.isAlive()) {
-            (this.loadThread = new LoadStringURL(this)).start();
-            this.refreshCounter = 0;
-         }
+      if (this.refreshInterval >= 60 && ++this.refreshCounter >= this.refreshInterval && !this.loading) {
+         this.refreshCounter = 0;
+         this.request();
       }
-
    }
 
    public String get() {
-      synchronized(this.string) {
-         return this.string;
-      }
-   }
-
-   public URL getURL() {
-      return this.url;
+      return this.text;
    }
 }

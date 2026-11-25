@@ -1,8 +1,11 @@
 package lumien.custommainmenu.lib.actions;
 
-import com.google.common.util.concurrent.Runnables;
 import lumien.custommainmenu.CustomMainMenu;
 import lumien.custommainmenu.gui.GuiCustom;
+import net.lax1dude.eaglercraft.v1_8.profile.GuiScreenEditProfile;
+import net.lax1dude.eaglercraft.v1_8.sp.gui.GuiScreenIntegratedServerStartup;
+import net.lax1dude.eaglercraft.v1_8.sp.gui.GuiScreenLANConnect;
+import net.lax1dude.eaglercraft.v1_8.sp.gui.GuiScreenLANInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiControls;
 import net.minecraft.client.gui.GuiCreateWorld;
@@ -14,12 +17,10 @@ import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiScreenOptionsSounds;
 import net.minecraft.client.gui.GuiScreenResourcePacks;
-import net.minecraft.client.gui.GuiSnooper;
 import net.minecraft.client.gui.GuiVideoSettings;
 import net.minecraft.client.gui.GuiWinGame;
 import net.minecraft.client.gui.GuiWorldSelection;
 import net.minecraft.client.gui.ScreenChatOptions;
-import net.minecraft.realms.RealmsBridge;
 import net.minecraftforge.fml.client.GuiModList;
 
 public class ActionOpenGUI implements IAction {
@@ -37,9 +38,9 @@ public class ActionOpenGUI implements IAction {
       } else if (this.guiName.equalsIgnoreCase("mods")) {
          gui = new GuiModList(menu);
       } else if (this.guiName.equalsIgnoreCase("singleplayer")) {
-         gui = new GuiWorldSelection(menu);
+         gui = new GuiScreenIntegratedServerStartup(menu);
       } else if (this.guiName.equalsIgnoreCase("singleplayer.createworld")) {
-         gui = new GuiCreateWorld(menu);
+         gui = new GuiScreenIntegratedServerStartup(menu, () -> new GuiCreateWorld(menu));
       } else if (this.guiName.equalsIgnoreCase("multiplayer")) {
          gui = new GuiMultiplayer(menu);
       } else if (this.guiName.equalsIgnoreCase("options")) {
@@ -49,11 +50,13 @@ public class ActionOpenGUI implements IAction {
       } else if (this.guiName.equalsIgnoreCase("options.ressourcepacks")) {
          gui = new GuiScreenResourcePacks(menu);
       } else if (this.guiName.equalsIgnoreCase("options.snooper")) {
-         gui = new GuiSnooper(menu, menu.mc.gameSettings);
+         CustomMainMenu.INSTANCE.logger.warn("The snooper screen is unavailable in this runtime.");
       } else if (this.guiName.equalsIgnoreCase("options.sounds")) {
          gui = new GuiScreenOptionsSounds(menu, menu.mc.gameSettings);
       } else if (this.guiName.equalsIgnoreCase("options.skinsettings")) {
          gui = new GuiCustomizeSkin(menu);
+      } else if (this.guiName.equalsIgnoreCase("profile")) {
+         gui = new GuiScreenEditProfile(menu);
       } else if (this.guiName.equalsIgnoreCase("options.video")) {
          gui = new GuiVideoSettings(menu, menu.mc.gameSettings);
       } else if (this.guiName.equalsIgnoreCase("options.controls")) {
@@ -63,10 +66,9 @@ public class ActionOpenGUI implements IAction {
       } else if (this.guiName.equalsIgnoreCase("mainmenu")) {
          gui = new GuiMainMenu();
       } else if (this.guiName.equalsIgnoreCase("realms")) {
-         RealmsBridge realmsbridge = new RealmsBridge();
-         realmsbridge.switchToRealms(Minecraft.getMinecraft().currentScreen);
+         gui = GuiScreenLANInfo.showLANInfoScreen(new GuiScreenLANConnect(menu));
       } else if (this.guiName.equalsIgnoreCase("credits")) {
-         gui = new GuiWinGame(false, Runnables.doNothing());
+         gui = new GuiWinGame(false, () -> Minecraft.getMinecraft().displayGuiScreen(menu));
       }
 
       if (gui != null) {

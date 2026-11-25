@@ -211,6 +211,7 @@ public class Loader
         mods.add(new FMLModContainer<>("chunkanimator", "Chunk Animator", "1.12.2-1.2", "", "[1.12.2]", "chunkanimator", lumien.chunkanimator.ChunkAnimator::new, lumien.chunkanimator.ChunkAnimator::handleModStateEvent).clientSideOnly().guiFactory(lumien.chunkanimator.config.ChunkAnimatorGuiFactory::new));
         mods.add(new FMLModContainer<>("resourceloader", "Resource Loader", "1.5.3", "", "[1.12,1.13)", "resourceloader", lumien.resourceloader.ResourceLoader::new, lumien.resourceloader.ResourceLoader::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("bnbgaminglib", "BNBGamingLib", "2.17.6", "after:bnbgamingcore", "[1.12.2]", "bnbgaminglib", com.bloodnbonesgaming.lib.BNBGamingLib::new, com.bloodnbonesgaming.lib.BNBGamingLib::handleModStateEvent).acceptableRemoteVersions("*"));
+        mods.add(new FMLModContainer<>("custommainmenu", "Custom Main Menu", "2.0.9.1", "", "[1.12.2]", "custommainmenu", lumien.custommainmenu.CustomMainMenu::new, lumien.custommainmenu.CustomMainMenu::handleModStateEvent).clientSideOnly());
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }
