@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher;
+import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 
 import net.lax1dude.eaglercraft.v1_8.EaglerOutputStream;
 import net.lax1dude.eaglercraft.v1_8.EaglerZLIB;
@@ -230,6 +231,11 @@ public class IntegratedServerPlayerNetworkManager implements INetworkManager {
 
 	public void sendPacket(Packet pkt) {
 		if(!isChannelOpen()) {
+			return;
+		}
+		
+		if(dispatcher != null && pkt instanceof FMLProxyPacket) {
+			dispatcher.sendProxy((FMLProxyPacket)pkt);
 			return;
 		}
 		
