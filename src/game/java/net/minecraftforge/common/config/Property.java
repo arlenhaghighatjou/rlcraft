@@ -80,8 +80,8 @@ public class Property
     private String[] validValues;
     private String[] validValuesDisplay;
     private String langKey;
-    private String minValue;
-    private String maxValue;
+    public String minValue;
+    public String maxValue;
     /** If true, will have a slider attached automatically in configuration UI */
     private boolean hasSlidingControl;
 

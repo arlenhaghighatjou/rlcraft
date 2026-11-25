@@ -163,7 +163,7 @@ public class ConfigManager
     // =======================================================
     //                    INTERNAL
     // =======================================================
-    static Configuration getConfiguration(String modid, String name)
+    public static Configuration getConfiguration(String modid, String name)
     {
         if (Strings.isNullOrEmpty(name))
             name = modid;
@@ -172,7 +172,7 @@ public class ConfigManager
         return CONFIGS.get(configFile.getPath());
     }
 
-    private static void sync(Configuration cfg, ConfigEntry[] entries, String modid, String category, boolean loading)
+    public static void sync(Configuration cfg, ConfigEntry[] entries, String modid, String category, boolean loading)
     {
         for (int e = 0; e < entries.length; ++e)
         {
