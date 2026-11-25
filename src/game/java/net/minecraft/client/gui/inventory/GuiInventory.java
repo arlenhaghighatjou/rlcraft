@@ -23,8 +23,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiInventory extends InventoryEffectRenderer implements IRecipeShownListener
 {
-    private float oldMouseX;
-    private float oldMouseY;
+    public float oldMouseX;
+    public float oldMouseY;
     private GuiButtonImage recipeButton;
     private final GuiRecipeBook recipeBookGui = new GuiRecipeBook();
     private boolean widthTooNarrow;
