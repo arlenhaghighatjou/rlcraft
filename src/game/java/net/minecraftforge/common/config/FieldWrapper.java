@@ -19,18 +19,14 @@
 
 package net.minecraftforge.common.config;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.GenericArrayType;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.*;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import com.google.common.collect.Lists;
 
-import net.minecraftforge.common.config.Config.RangeDouble;
-import net.minecraftforge.common.config.Config.RangeInt;
 import org.apache.commons.lang3.StringUtils;
 
 import static net.minecraftforge.common.config.ConfigManager.*;
@@ -39,92 +35,48 @@ public abstract class FieldWrapper implements IFieldWrapper
 {
     protected String category, name;
 
-    protected Field field;
-    protected Object instance;
+    protected ConfigEntry entry;
 
-    public FieldWrapper(String category, Field field, Object instance)
+    public FieldWrapper(String category, ConfigEntry entry)
     {
-        this.instance = instance;
-        this.field = field;
+        this.entry = entry;
         this.category = category;
-        this.name = field.getName();
-
-        if (field.isAnnotationPresent(Config.Name.class))
-            this.name = field.getAnnotation(Config.Name.class).value();
-
-        this.field.setAccessible(true); // Just in case
+        this.name = entry.name;
     }
 
-    public static IFieldWrapper get(Object instance, Field field, String category)
+    public static IFieldWrapper get(ConfigEntry entry, String category)
     {
-        if (ADAPTERS.get(field.getType()) != null)
-            return new PrimitiveWrapper(category, field, instance);
-        else if (Enum.class.isAssignableFrom(field.getType()))
-            return new EnumWrapper(category, field, instance);
-        else if (Map.class.isAssignableFrom(field.getType()))
-            return new MapWrapper(category, field, instance);
-        else if (field.getType().getSuperclass().equals(Object.class))
-            throw new RuntimeException("Objects should not be handled by field wrappers");
+        if (entry.enumValues != null)
+            return new EnumWrapper(category, entry);
+        else if (entry.map != null)
+            return new MapWrapper(category, entry);
+        else if (ADAPTERS.get(entry.type) != null)
+            return new PrimitiveWrapper(category, entry);
         else
-            throw new IllegalArgumentException(String.format("Fields of type '%s' are not supported!", field.getType().getCanonicalName()));
-    }
-
-    public static boolean hasWrapperFor(Field field)
-    {
-        if (ADAPTERS.get(field.getType()) != null)
-            return true;
-        else if (Enum.class.isAssignableFrom(field.getType()))
-            return true;
-        else if (Map.class.isAssignableFrom(field.getType()))
-            return true;
-        return false;
+            throw new IllegalArgumentException(String.format("Entries of type '%s' are not supported!", entry.type));
     }
 
     private static class MapWrapper extends FieldWrapper
     {
-        private Map<String, Object> theMap = null;
-        private Type mType;
+        private Map<String, Object> theMap;
         private final String baseName;
         ITypeAdapter adapter;
 
-        @SuppressWarnings("unchecked")
-        private MapWrapper(String category, Field field, Object instance)
+        private MapWrapper(String category, ConfigEntry entry)
         {
-            super(category, field, instance);
+            super(category, entry);
 
             this.baseName = (this.category == null) ? "" : (this.category + ".") + this.name.toLowerCase(Locale.ENGLISH) + ".";
+            this.theMap = entry.map;
+            this.adapter = ADAPTERS.get(entry.type);
 
-            try
-            {
-                theMap = (Map<String, Object>) field.get(instance);
-            }
-            catch (ClassCastException cce)
-            {
-                throw new IllegalArgumentException(String.format("The map '%s' of class '%s' must have the key type String!", field.getName(),
-                        field.getDeclaringClass().getCanonicalName()), cce);
-            }
-            catch (IllegalAccessException e)
-            {
-                throw new RuntimeException(e);
-            }
-
-            ParameterizedType type = (ParameterizedType) field.getGenericType();
-            mType = type.getActualTypeArguments()[1];
-
-            this.adapter = ADAPTERS.get(mType);
-            if (this.adapter == null && mType instanceof GenericArrayType)
-            {
-                this.adapter = ADAPTERS.get(ARRAY_REMAP.get(((GenericArrayType)mType).getGenericComponentType())); //J6 seems to have issues, Need to find a better way to translate this. We don't have access to array depth.
-            }
-
-            if (mType instanceof Class && Enum.class.isAssignableFrom((Class<?>)mType))
+            if (this.adapter == null && Enum.class.isAssignableFrom(entry.type))
             {
                 this.adapter = TypeAdapters.Str;
             }
 
             if (this.adapter == null)
-                throw new IllegalArgumentException(String.format("The map '%s' of class '%s' has target values which are neither primitive nor an enum!",
-                        field.getName(), field.getDeclaringClass().getCanonicalName()));
+                throw new IllegalArgumentException(String.format("The map '%s' has target values which are neither primitive nor an enum!", entry.name));
         }
 
         @Override
@@ -136,13 +88,12 @@ public abstract class FieldWrapper implements IFieldWrapper
         @Override
         public String[] getKeys()
         {
-            Set<String> keys = theMap.keySet();
-            String[] keyArray = new String[keys.size()];
+            String[] keyArray = new String[theMap.size()];
 
-            Iterator<String> it = keys.iterator();
-            for (int i = 0; i < keyArray.length; i++)
+            int i = 0;
+            for (String key : theMap.keySet())
             {
-                keyArray[i] = this.baseName + it.next();
+                keyArray[i++] = this.baseName + key;
             }
 
             return keyArray;
@@ -196,11 +147,6 @@ public abstract class FieldWrapper implements IFieldWrapper
             return (this.category == null) ? "" : (this.category + ".") + this.name.toLowerCase(Locale.ENGLISH);
         }
 
-        /**
-         * Removes the {@code this.baseName} prefix from the key
-         * @param key the key to be edited
-         * @return the keys suffix
-         */
         private String getSuffix(String key)
         {
             return StringUtils.replaceOnce(key, this.baseName, "");
@@ -211,9 +157,9 @@ public abstract class FieldWrapper implements IFieldWrapper
     private static class EnumWrapper extends SingleValueFieldWrapper
     {
 
-        private EnumWrapper(String category, Field field, Object instance)
+        private EnumWrapper(String category, ConfigEntry entry)
         {
-            super(category, field, instance);
+            super(category, entry);
         }
 
         @Override
@@ -228,16 +174,7 @@ public abstract class FieldWrapper implements IFieldWrapper
             if (!hasKey(key))
                 throw new IllegalArgumentException("Unsupported Key!");
 
-            try
-            {
-                @SuppressWarnings("rawtypes")
-                Enum enu = (Enum) field.get(instance);
-                return enu.name();
-            }
-            catch (IllegalAccessException e)
-            {
-                throw new RuntimeException(e);
-            }
+            return ((Enum<?>) entry.getter.get()).name();
         }
 
         @Override
@@ -245,16 +182,16 @@ public abstract class FieldWrapper implements IFieldWrapper
         {
             if (!hasKey(key))
                 throw new IllegalArgumentException("Unsupported Key!");
-            @SuppressWarnings({ "unchecked", "rawtypes" })
-            Enum enu = Enum.valueOf((Class<? extends Enum>) field.getType(), (String) value);
-            try
+            Enum<?>[] values = entry.enumValues;
+            for (int i = 0; i < values.length; ++i)
             {
-                field.set(instance, enu);
+                if (values[i].name().equals(value))
+                {
+                    entry.setter.accept(values[i]);
+                    return;
+                }
             }
-            catch (IllegalAccessException e)
-            {
-                throw new RuntimeException(e);
-            }
+            throw new IllegalArgumentException("No enum constant " + value);
         }
 
         @Override
@@ -262,7 +199,6 @@ public abstract class FieldWrapper implements IFieldWrapper
             this.setupConfiguration(cfg, desc, langKey, reqMCRestart, reqWorldRestart,false);
         }
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
         public void setupConfiguration(Configuration cfg, String desc, String langKey, boolean reqMCRestart, boolean reqWorldRestart, boolean hasSlidingControl)
         {
@@ -272,10 +208,11 @@ public abstract class FieldWrapper implements IFieldWrapper
 
             List<String> listValidValues = Lists.newArrayList();
             List<String> listValidValuesDisplay = Lists.newArrayList();
-            for (Enum e : ((Class<? extends Enum>) field.getType()).getEnumConstants())
+            Enum<?>[] values = entry.enumValues;
+            for (int i = 0; i < values.length; ++i)
             {
-                listValidValues.add(e.name());
-                listValidValuesDisplay.add(e.toString());
+                listValidValues.add(values[i].name());
+                listValidValuesDisplay.add(values[i].toString());
             }
 
             prop.setValidationPattern(Pattern.compile(PIPE.join(listValidValues)));
@@ -294,15 +231,15 @@ public abstract class FieldWrapper implements IFieldWrapper
     private static class PrimitiveWrapper extends SingleValueFieldWrapper
     {
 
-        private PrimitiveWrapper(String category, Field field, Object instance)
+        private PrimitiveWrapper(String category, ConfigEntry entry)
         {
-            super(category, field, instance);
+            super(category, entry);
         }
 
         @Override
         public ITypeAdapter getTypeAdapter()
         {
-            return ADAPTERS.get(field.getType());
+            return ADAPTERS.get(entry.type);
         }
 
         @Override
@@ -310,14 +247,7 @@ public abstract class FieldWrapper implements IFieldWrapper
         {
             if (!hasKey(key))
                 throw new IllegalArgumentException("Unknown key!");
-            try
-            {
-                return field.get(instance);
-            }
-            catch (IllegalAccessException e)
-            {
-                throw new RuntimeException(e);
-            }
+            return entry.getter.get();
         }
 
         @Override
@@ -325,14 +255,7 @@ public abstract class FieldWrapper implements IFieldWrapper
         {
             if (!hasKey(key))
                 throw new IllegalArgumentException("Unknown key: " + key);
-            try
-            {
-                field.set(instance, value);
-            }
-            catch (IllegalAccessException e)
-            {
-                throw new RuntimeException(e);
-            }
+            entry.setter.accept(value);
         }
 
         @Override
@@ -347,27 +270,28 @@ public abstract class FieldWrapper implements IFieldWrapper
 
             Property prop = cfg.getCategory(this.category).get(this.name);
 
-            RangeInt ia = field.getAnnotation(RangeInt.class);
-            if (ia != null)
+            if (entry.hasRange)
             {
-                prop.setMinValue(ia.min());
-                prop.setMaxValue(ia.max());
-                if (desc != null)
-                    prop.setComment(NEW_LINE.join(new String[] { desc, "Min: " + ia.min(), "Max: " + ia.max() }));
+                String min;
+                String max;
+                if (entry.intRange)
+                {
+                    prop.setMinValue((int)entry.min);
+                    prop.setMaxValue((int)entry.max);
+                    min = String.valueOf((int)entry.min);
+                    max = String.valueOf((int)entry.max);
+                }
                 else
-                    prop.setComment(NEW_LINE.join(new String[] { "Min: " + ia.min(), "Max: " + ia.max() }));
-                prop.setHasSlidingControl(hasSlidingControl);
-            }
-
-            RangeDouble da = field.getAnnotation(RangeDouble.class);
-            if (da != null)
-            {
-                prop.setMinValue(da.min());
-                prop.setMaxValue(da.max());
+                {
+                    prop.setMinValue(entry.min);
+                    prop.setMaxValue(entry.max);
+                    min = String.valueOf(entry.min);
+                    max = String.valueOf(entry.max);
+                }
                 if (desc != null)
-                    prop.setComment(NEW_LINE.join(new String[] { desc, "Min: " + da.min(), "Max: " + da.max() }));
+                    prop.setComment(NEW_LINE.join(new String[] { desc, "Min: " + min, "Max: " + max }));
                 else
-                    prop.setComment(NEW_LINE.join(new String[] { "Min: " + da.min(), "Max: " + da.max() }));
+                    prop.setComment(NEW_LINE.join(new String[] { "Min: " + min, "Max: " + max }));
                 prop.setHasSlidingControl(hasSlidingControl);
             }
         }
@@ -375,9 +299,9 @@ public abstract class FieldWrapper implements IFieldWrapper
 
     private static abstract class SingleValueFieldWrapper extends FieldWrapper
     {
-        private SingleValueFieldWrapper(String category, Field field, Object instance)
+        private SingleValueFieldWrapper(String category, ConfigEntry entry)
         {
-            super(category, field, instance);
+            super(category, entry);
         }
 
         @Override

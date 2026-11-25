@@ -28,6 +28,8 @@ import java.util.function.Supplier;
 
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.minecraft.client.resources.IResourcePack;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.FMLFolderResourcePack;
 import net.minecraftforge.fml.client.IModGuiFactory;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
@@ -291,6 +293,10 @@ public class FMLModContainer<T> implements ModContainer
         try
         {
             handler.accept(modInstance, event);
+            if (event instanceof FMLConstructionEvent)
+            {
+                ConfigManager.sync(modId, Config.Type.INSTANCE);
+            }
         }
         catch (Throwable t)
         {

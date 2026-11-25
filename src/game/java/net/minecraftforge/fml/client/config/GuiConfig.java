@@ -36,6 +36,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigElement;
+import net.minecraftforge.common.config.ConfigDescriptor;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.config.GuiConfigEntries.IConfigEntry;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -94,7 +95,7 @@ public class GuiConfig extends GuiScreen
      */
     public GuiConfig(GuiScreen parentScreen, String modid, String title)
     {
-        this(parentScreen, modid, false, false, title, ConfigManager.getModConfigClasses(modid)); 
+        this(parentScreen, modid, false, false, title, ConfigManager.getModConfigs(modid)); 
     }
     
     /**
@@ -105,27 +106,27 @@ public class GuiConfig extends GuiScreen
      * @param allRequireMcRestart whether all config elements on this screen require a game restart
      * @param title the desired title for this screen. For consistency it is recommended that you pass the path of the config file being
      *            edited.
-     * @param configClasses an array of classes annotated with {@code @Config} providing the configuration
+     * @param configDescriptors the registered configurations providing the entries
      */
     public GuiConfig(GuiScreen parentScreen, String modID, boolean allRequireWorldRestart, boolean allRequireMcRestart, String title,
-            Class<?>... configClasses)
+            ConfigDescriptor... configDescriptors)
     {
-        this(parentScreen, collectConfigElements(configClasses), modID, null, allRequireWorldRestart, allRequireMcRestart, title, null);
+        this(parentScreen, collectConfigElements(configDescriptors), modID, null, allRequireWorldRestart, allRequireMcRestart, title, null);
     }
     
-    private static List<IConfigElement> collectConfigElements(Class<?>[] configClasses)
+    private static List<IConfigElement> collectConfigElements(ConfigDescriptor[] configDescriptors)
     {
         List<IConfigElement> toReturn;
-        if(configClasses.length == 1)
+        if(configDescriptors.length == 1)
         {
-            toReturn = ConfigElement.from(configClasses[0]).getChildElements();
+            toReturn = ConfigElement.from(configDescriptors[0]).getChildElements();
         }
         else
         {
             toReturn = new ArrayList<IConfigElement>();
-            for(Class<?> clazz : configClasses)
+            for(ConfigDescriptor descriptor : configDescriptors)
             {
-                toReturn.add(ConfigElement.from(clazz));
+                toReturn.add(ConfigElement.from(descriptor));
             }
         }
         toReturn.sort(Comparator.comparing(e -> I18n.format(e.getLanguageKey())));

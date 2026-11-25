@@ -378,28 +378,19 @@ public class ConfigElement implements IConfigElement
      * @param configClass the class which contains the configuration
      * @return A ConfigElement based on the described category.
      */
-    public static IConfigElement from(Class<?> configClass)
+    public static IConfigElement from(ConfigDescriptor descriptor)
     {
-        Config annotation = configClass.getAnnotation(Config.class);
-        if (annotation == null)
-            throw new RuntimeException(String.format("The class '%s' has no @Config annotation!", configClass.getName()));
-        
-        Configuration config = ConfigManager.getConfiguration(annotation.modid(), annotation.name());
+        Configuration config = ConfigManager.getConfiguration(descriptor.modid, descriptor.name);
         if (config == null)
         {
-            String error = String.format("The configuration '%s' of mod '%s' isn't loaded with the ConfigManager!", annotation.name(), annotation.modid());
+            String error = String.format("The configuration '%s' of mod '%s' isn't loaded with the ConfigManager!", descriptor.name, descriptor.modid);
             throw new RuntimeException(error);
         }
         
-        String name = Strings.isNullOrEmpty(annotation.name()) ? annotation.modid() : annotation.name();
-        String langKey = name;
-        Config.LangKey langKeyAnnotation = configClass.getAnnotation(Config.LangKey.class);
-        if (langKeyAnnotation != null)
-        {
-            langKey = langKeyAnnotation.value();
-        }
+        String name = descriptor.name;
+        String langKey = descriptor.langKey;
          
-        if (annotation.category().isEmpty())
+        if (descriptor.category.isEmpty())
         {
             List<IConfigElement> elements = Lists.newArrayList();
             Set<String> catNames = config.getCategoryNames();
@@ -420,7 +411,7 @@ public class ConfigElement implements IConfigElement
         }
         else
         {
-            ConfigCategory category = config.getCategory(annotation.category());
+            ConfigCategory category = config.getCategory(descriptor.category);
             DummyCategoryElement element = new DummyCategoryElement(name, langKey, new ConfigElement(category).getChildElements());   
             element.setRequiresMcRestart(category.requiresMcRestart());
             element.setRequiresWorldRestart(category.requiresWorldRestart());

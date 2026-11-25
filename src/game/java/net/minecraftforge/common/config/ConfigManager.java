@@ -20,39 +20,28 @@
 package net.minecraftforge.common.config;
 
 import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
 
-import net.minecraftforge.common.config.Config.Comment;
-import net.minecraftforge.common.config.Config.LangKey;
-import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.LoaderException;
 import net.minecraftforge.fml.common.LoaderState;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
-import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
-import net.minecraftforge.fml.common.discovery.asm.ModAnnotation.EnumHolder;
 
 import org.apache.commons.lang3.StringUtils;
 
 public class ConfigManager
 {
-    private static Map<String, Multimap<Config.Type, ASMData>> asm_data = Maps.newHashMap();
     static Map<Class<?>, ITypeAdapter> ADAPTERS = Maps.newHashMap();
-    static Map<Class<?>, Class<?>> ARRAY_REMAP = Maps.newHashMap();
     private static Map<String, Configuration> CONFIGS = Maps.newHashMap();
-    private static Map<String, Set<Class<?>>> MOD_CONFIG_CLASSES = Maps.newHashMap();
+    private static Map<String, List<ConfigDescriptor>> MOD_CONFIGS = Maps.newHashMap();
 
     static
     {
@@ -86,35 +75,15 @@ public class ConfigManager
         register(Integer[].class,   TypeAdapters.IntA);
         register(String.class,      TypeAdapters.Str);
         register(String[].class,    TypeAdapters.StrA);
-
-
-        ARRAY_REMAP.put(Boolean.class,   Boolean[].class  );
-        ARRAY_REMAP.put(Float.class,     Float[].class    );
-        ARRAY_REMAP.put(Double.class,    Double[].class   );
-        ARRAY_REMAP.put(Byte.class,      Byte[].class     );
-        ARRAY_REMAP.put(Character.class, Character[].class);
-        ARRAY_REMAP.put(Short.class,     Short[].class    );
-        ARRAY_REMAP.put(Integer.class,   Integer[].class  );
-        ARRAY_REMAP.put(String.class,    String[].class   );
     }
     private static void register(Class<?> cls, ITypeAdapter adpt)
     {
         ADAPTERS.put(cls, adpt);
     }
 
-    public static void loadData(ASMDataTable data)
+    public static void register(String modid, String name, String category, String langKey, ConfigEntry... entries)
     {
-        FMLLog.log.debug("Loading @Config anotation data");
-        for (ASMData target : data.getAll(Config.class.getName()))
-        {
-            String modid = (String)target.getAnnotationInfo().get("modid");
-            Multimap<Config.Type, ASMData> map = asm_data.computeIfAbsent(modid, k -> ArrayListMultimap.create());
-
-            EnumHolder tholder = (EnumHolder)target.getAnnotationInfo().get("type");
-            Config.Type type = tholder == null ? Config.Type.INSTANCE : Config.Type.valueOf(tholder.getValue());
-
-            map.put(type, target);
-        }
+        MOD_CONFIGS.computeIfAbsent(modid, k -> new ArrayList<>()).add(new ConfigDescriptor(modid, name, category, langKey, entries));
     }
 
     /**
@@ -127,12 +96,12 @@ public class ConfigManager
     }
 
     /**
-     * Synchronizes configuration data between the file on disk, the {@code Configuration} object and the annotated
-     * mod classes containing the configuration variables.
+     * Synchronizes configuration data between the file on disk, the {@code Configuration} object and the registered
+     * mod configuration entries containing the configuration variables.
      *
      * When first called, this method will try to load the configuration from disk. If this fails, because the file
-     * does not exist, it will be created with default values derived from the mods config classes variable default values
-     * and comments and ranges, as well as configuration names based on the appropriate annotations found in {@code @Config}.
+     * does not exist, it will be created with default values derived from the mods config entries default values
+     * and comments and ranges, as well as configuration names based on the registered {@code ConfigDescriptor}.
      *
      * Note, that this method is being called by the {@link net.minecraftforge.fml.common.FMLModContainer}, so the mod needn't call it in init().
      *
@@ -145,31 +114,19 @@ public class ConfigManager
      */
     public static void sync(String modid, Config.Type type)
     {
-        FMLLog.log.debug("Attempting to inject @Config classes into {} for type {}", modid, type);
-        ClassLoader mcl = ConfigManager.class.getClassLoader();
+        FMLLog.log.debug("Attempting to inject config entries into {} for type {}", modid, type);
         VFile2 configDir = Loader.instance().getConfigDir();
-        Multimap<Config.Type, ASMData> map = asm_data.get(modid);
+        List<ConfigDescriptor> descriptors = MOD_CONFIGS.get(modid);
 
-        if (map == null)
+        if (descriptors == null)
             return;
 
-        for (ASMData targ : map.get(type))
+        for (int i = 0, l = descriptors.size(); i < l; ++i)
         {
+            ConfigDescriptor descriptor = descriptors.get(i);
             try
             {
-                Class<?> cls = Class.forName(targ.getClassName(), true, mcl);
-
-                Set<Class<?>> modConfigClasses = MOD_CONFIG_CLASSES.computeIfAbsent(modid, k -> Sets.<Class<?>>newHashSet());
-                modConfigClasses.add(cls);
-
-                String name = (String)targ.getAnnotationInfo().get("name");
-                if (name == null)
-                    name = modid;
-                String category = (String)targ.getAnnotationInfo().get("category");
-                if (category == null)
-                    category = "general";
-
-                VFile2 file = new VFile2(configDir, name + ".cfg");
+                VFile2 file = new VFile2(configDir, descriptor.name + ".cfg");
 
                 Configuration cfg = CONFIGS.get(file.getPath());
                 if (cfg == null)
@@ -179,33 +136,35 @@ public class ConfigManager
                     CONFIGS.put(file.getPath(), cfg);
                 }
 
-                sync(cfg, cls, modid, category, !Loader.instance().hasReachedState(LoaderState.AVAILABLE), null);
+                sync(cfg, descriptor.entries, modid, descriptor.category, !Loader.instance().hasReachedState(LoaderState.AVAILABLE));
 
                 cfg.save();
 
             }
             catch (Exception e)
             {
-                FMLLog.log.error("An error occurred trying to load a config for {} into {}", modid, targ.getClassName(), e);
+                FMLLog.log.error("An error occurred trying to load a config for {} into {}", modid, descriptor.name, e);
                 throw new LoaderException(e);
             }
         }
     }
 
-    public static Class<?>[] getModConfigClasses(String modid)
+    public static ConfigDescriptor[] getModConfigs(String modid)
     {
-        return (MOD_CONFIG_CLASSES.containsKey(modid) ? MOD_CONFIG_CLASSES.get(modid).toArray(new Class<?>[0]) : new Class<?>[0]);
+        List<ConfigDescriptor> descriptors = MOD_CONFIGS.get(modid);
+        return descriptors == null ? new ConfigDescriptor[0] : descriptors.toArray(new ConfigDescriptor[0]);
     }
 
     public static boolean hasConfigForMod(String modid)
     {
-        return asm_data.containsKey(modid);
+        return MOD_CONFIGS.containsKey(modid);
     }
 
     // =======================================================
     //                    INTERNAL
     // =======================================================
-    static Configuration getConfiguration(String modid, String name) {
+    static Configuration getConfiguration(String modid, String name)
+    {
         if (Strings.isNullOrEmpty(name))
             name = modid;
         VFile2 configDir = Loader.instance().getConfigDir();
@@ -213,42 +172,27 @@ public class ConfigManager
         return CONFIGS.get(configFile.getPath());
     }
 
-    private static void sync(Configuration cfg, Class<?> cls, String modid, String category, boolean loading, Object instance)
+    private static void sync(Configuration cfg, ConfigEntry[] entries, String modid, String category, boolean loading)
     {
-        for (Field f : cls.getDeclaredFields())
+        for (int e = 0; e < entries.length; ++e)
         {
-            if (!Modifier.isPublic(f.getModifiers()))
-                continue;
+            ConfigEntry entry = entries[e];
 
-            //Only the root class may have static fields. Otherwise category tree nodes of the same type would share the
-            //contained value messing up the sync
-            if (Modifier.isStatic(f.getModifiers()) != (instance == null))
-                continue;
+            String comment = entry.comment;
 
-            if (f.isAnnotationPresent(Config.Ignore.class))
-                continue;
+            String langKey = entry.langKey != null ? entry.langKey : modid + "." + (category.isEmpty() ? "" : category + Configuration.CATEGORY_SPLITTER) + entry.name.toLowerCase(Locale.ENGLISH);
 
-            String comment = null;
-            Comment ca = f.getAnnotation(Comment.class);
-            if (ca != null)
-                comment = NEW_LINE.join(ca.value());
+            boolean requiresMcRestart = entry.requiresMcRestart;
+            boolean requiresWorldRestart = entry.requiresWorldRestart;
+            boolean hasSlidingControl = entry.slidingOption;
 
-            String langKey = modid + "." + (category.isEmpty() ? "" : category + Configuration.CATEGORY_SPLITTER) + f.getName().toLowerCase(Locale.ENGLISH);
-            LangKey la = f.getAnnotation(LangKey.class);
-            if (la != null)
-                langKey = la.value();
-
-            boolean requiresMcRestart = f.isAnnotationPresent(Config.RequiresMcRestart.class);
-            boolean requiresWorldRestart = f.isAnnotationPresent(Config.RequiresWorldRestart.class);
-            boolean hasSlidingControl = f.isAnnotationPresent(Config.SlidingOption.class);
-
-            if (FieldWrapper.hasWrapperFor(f)) //Wrappers exist for primitives, enums, maps and arrays
+            if (entry.children == null)
             {
                 if (Strings.isNullOrEmpty(category))
                     throw new RuntimeException("An empty category may not contain anything but objects representing categories!");
                 try
                 {
-                    IFieldWrapper wrapper = FieldWrapper.get(instance, f, category);
+                    IFieldWrapper wrapper = FieldWrapper.get(entry, category);
                     ITypeAdapter adapt = wrapper.getTypeAdapter();
                     Property.Type propType = adapt.getType();
 
@@ -298,40 +242,24 @@ public class ConfigManager
                         wrapper.setupConfiguration(cfg, comment, langKey, requiresMcRestart, requiresWorldRestart, hasSlidingControl);
 
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    String format = "Error syncing field '%s' of class '%s'!";
-                    String error = String.format(format, f.getName(), cls.getName());
-                    throw new RuntimeException(error, e);
+                    String format = "Error syncing entry '%s' of mod '%s'!";
+                    String error = String.format(format, entry.name, modid);
+                    throw new RuntimeException(error, ex);
                 }
             }
-            else if (f.getType().getSuperclass() != null && f.getType().getSuperclass().equals(Object.class))
-            { //If the field extends Object directly, descend the object tree and access the objects members
-                Object newInstance = null;
-                try
-                {
-                    newInstance = f.get(instance);
-                }
-                catch (IllegalAccessException e)
-                {
-                    throw new RuntimeException(e);
-                }
-
+            else
+            {
                 //Setup the sub category with its respective name, comment, language key, etc.
-                String sub = (category.isEmpty() ? "" : category + Configuration.CATEGORY_SPLITTER) + getName(f).toLowerCase(Locale.ENGLISH);
+                String sub = (category.isEmpty() ? "" : category + Configuration.CATEGORY_SPLITTER) + entry.name.toLowerCase(Locale.ENGLISH);
                 ConfigCategory confCat = cfg.getCategory(sub);
                 confCat.setComment(comment);
                 confCat.setLanguageKey(langKey);
                 confCat.setRequiresMcRestart(requiresMcRestart);
                 confCat.setRequiresWorldRestart(requiresWorldRestart);
 
-                sync(cfg, f.getType(), modid, sub, loading, newInstance);
-            }
-            else
-            {
-                String format = "Can't handle field '%s' of class '%s': Unknown type.";
-                String error = String.format(format, f.getName(), cls.getCanonicalName());
-                throw new RuntimeException(error);
+                sync(cfg, entry.children, modid, sub, loading);
             }
         }
     }
@@ -368,13 +296,6 @@ public class ConfigManager
                 return true;
         }
         return false;
-    }
-
-    private static String getName(Field f)
-    {
-        if (f.isAnnotationPresent(Name.class))
-            return f.getAnnotation(Name.class).value();
-        return f.getName();
     }
 
 }
