@@ -47,6 +47,7 @@ selectWorld.title=Select World
 selectWorld.empty=empty
 selectWorld.world=World
 selectWorld.select=Play Selected World
+selectWorld.rename=Rename
 selectWorld.create=Create New World
 selectWorld.recreate=Re-Create
 selectWorld.createDemo=Play New Demo World
