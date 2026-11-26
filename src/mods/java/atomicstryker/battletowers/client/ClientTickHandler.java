@@ -1,5 +1,6 @@
 package atomicstryker.battletowers.client;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.List;
 
 import atomicstryker.battletowers.common.AS_BattleTowersCore;
@@ -14,9 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class ClientTickHandler
 {
@@ -24,7 +23,11 @@ public class ClientTickHandler
     private RayTraceResult playerTarget;
     private boolean hackFailed;
 
-    @SubscribeEvent
+    public void register(EventBus bus)
+    {
+        bus.register(TickEvent.RenderTickEvent.class, this::onTick);
+    }
+
     public void onTick(TickEvent.RenderTickEvent tick)
     {
         Minecraft mc = FMLClientHandler.instance().getClient();
@@ -77,7 +80,7 @@ public class ClientTickHandler
                             float progress = 0;
                             try
                             {
-                                progressHack = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, 4);
+                                progressHack = mc.playerController.curBlockDamageMP;
                                 progress = (Float) progressHack;
                             }
                             catch (Exception e)

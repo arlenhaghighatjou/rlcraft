@@ -226,6 +226,7 @@ public class Loader
         mods.add(new FMLModContainer<>("toolbelt", "toolbelt", "1.9.14", "after:baubles;after:jei@[4.6,)", "[1.12.0,1.13.0)", "toolbelt", gigaherz.toolbelt.ToolBelt::new, gigaherz.toolbelt.ToolBelt::handleModStateEvent).guiFactory(gigaherz.toolbelt.client.config.ConfigGuiFactory::new));
         mods.add(new FMLModContainer<>("coralreef", "CoralReef", "2.0", "", "[1.12, 1.13)", "coralreef", primetoxinz.coralreef.CoralReef::new, primetoxinz.coralreef.CoralReef::handleModStateEvent));
         mods.add(new FMLModContainer<>("multimine", "Multi Mine", "1.6.2", "", "", "AS_MultiMine", atomicstryker.multimine.common.MultiMine::new, atomicstryker.multimine.common.MultiMine::handleModStateEvent));
+        mods.add(new FMLModContainer<>("battletowers", "Battle Towers", "1.6.5", "", "", "battletowers", atomicstryker.battletowers.common.AS_BattleTowersCore::new, atomicstryker.battletowers.common.AS_BattleTowersCore::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

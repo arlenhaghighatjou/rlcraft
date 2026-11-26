@@ -1,7 +1,7 @@
 package atomicstryker.battletowers.common;
 
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
@@ -171,7 +171,7 @@ public class TowerStageItemManager
                     {
                         while (generatedItems.size() > number)
                         {
-                            Collections.shuffle(generatedItems);
+                            ThreadLocalRandom.current().shuffle(generatedItems);
                             generatedItems.remove(generatedItems.size() - 1);
                         }
                         result.addAll(generatedItems);

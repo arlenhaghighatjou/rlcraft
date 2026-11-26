@@ -410,28 +410,14 @@ public class AS_WorldGenTower
                     TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner) world.getTileEntity(new BlockPos(ix + 2, builderHeight + 6, kz + 2));
                     if (tileentitymobspawner != null)
                     {
-                        if (!DungeonTweaksCompat.isLoaded)
-                        {
-                            tileentitymobspawner.getSpawnerBaseLogic().setEntityId(getMobType(world.rand));
-                        }
-                        else
-                        {
-                            DungeonTweaksCompat.fireDungeonSpawn(tileentitymobspawner, world, random, towerChosen);
-                        }
+                        tileentitymobspawner.getSpawnerBaseLogic().setEntityId(getMobType(world.rand));
                     }
 
                     world.setBlockState(new BlockPos(ix - 3, builderHeight + 6, kz + 2), Blocks.MOB_SPAWNER.getDefaultState());
                     tileentitymobspawner = (TileEntityMobSpawner) world.getTileEntity(new BlockPos(ix - 3, builderHeight + 6, kz + 2));
                     if (tileentitymobspawner != null)
                     {
-                        if (!DungeonTweaksCompat.isLoaded)
-                        {
-                            tileentitymobspawner.getSpawnerBaseLogic().setEntityId(getMobType(world.rand));
-                        }
-                        else
-                        {
-                            DungeonTweaksCompat.fireDungeonSpawn(tileentitymobspawner, world, random, towerChosen);
-                        }
+                        tileentitymobspawner.getSpawnerBaseLogic().setEntityId(getMobType(world.rand));
                     }
                 }
                 else

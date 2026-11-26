@@ -14,7 +14,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public void preInit()
     {
-        MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
+        (new ClientTickHandler()).register(MinecraftForge.EVENT_BUS);
         
         RenderingRegistry.registerEntityRenderingHandler(AS_EntityGolem.class, new IRenderFactory<AS_EntityGolem>()
         {

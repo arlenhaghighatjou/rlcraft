@@ -1,13 +1,13 @@
 package atomicstryker.battletowers.common.network;
 
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashSet;
+import java.util.function.Supplier;
 
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
-import io.netty.channel.ChannelHandler.Sharable;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import com.arlenh7.eaglercraft.netty.ChannelHandler.Sharable;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.SimpleChannelInboundHandler;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.FMLEmbeddedChannel;
 import net.minecraftforge.fml.common.network.FMLIndexedMessageToMessageCodec;
@@ -46,14 +46,17 @@ public class NetworkHelper
      * @param handledPacketClasses provide the IPacket classes you want to use for communication here
      */
     @SafeVarargs
-    public NetworkHelper(String channelName, Class<? extends IPacket> ... handledPacketClasses)
+    public NetworkHelper(String channelName, Supplier<? extends IPacket>... handledPackets)
     {
-        EnumMap<Side, FMLEmbeddedChannel> channelPair = NetworkRegistry.INSTANCE.newChannel(channelName, new ChannelCodec(handledPacketClasses), new ChannelHandler());
+        EnumMap<Side, FMLEmbeddedChannel> channelPair = NetworkRegistry.INSTANCE.newChannel(channelName, new ChannelCodec(handledPackets), new ChannelHandler());
         clientOutboundChannel = channelPair.get(Side.CLIENT);
         serverOutboundChannel = channelPair.get(Side.SERVER);
         
-        registeredClasses = new HashSet<Class<? extends IPacket>>(handledPacketClasses.length);
-        Collections.addAll(registeredClasses, handledPacketClasses);
+        registeredClasses = new HashSet<Class<? extends IPacket>>(handledPackets.length);
+        for (int i = 0; i < handledPackets.length; i++)
+        {
+            registeredClasses.add(handledPackets[i].get().getClass());
+        }
     }
     
     /**
@@ -174,11 +177,12 @@ public class NetworkHelper
     {
         
         @SafeVarargs
-        public ChannelCodec(Class<? extends IPacket> ... handledPacketClasses)
+        public ChannelCodec(Supplier<? extends IPacket>... handledPackets)
         {
-            for (int i = 0; i < handledPacketClasses.length; i++)
+            super(IPacket.class);
+            for (int i = 0; i < handledPackets.length; i++)
             {
-                addDiscriminator(i, handledPacketClasses[i]);
+                addDiscriminator(i, handledPackets[i].get().getClass(), handledPackets[i]);
             }
         }
 
@@ -199,7 +203,10 @@ public class NetworkHelper
     @Sharable
     public class ChannelHandler extends SimpleChannelInboundHandler<IPacket>
     {
-        public ChannelHandler() {}
+        public ChannelHandler()
+        {
+            super(IPacket.class);
+        }
         
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, IPacket msg) throws Exception

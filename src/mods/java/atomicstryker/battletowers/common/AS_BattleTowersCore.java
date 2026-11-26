@@ -1,5 +1,10 @@
 package atomicstryker.battletowers.common;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
+import net.minecraftforge.registries.ObjectHolderRegistry;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,26 +23,50 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
-@ObjectHolder("battletowers")
 @Mod(modid = "battletowers", name = "Battle Towers", version = "1.6.5")
 public class AS_BattleTowersCore
 {
+    public void handleModStateEvent(FMLEvent event)
+    {
+        if (event instanceof FMLConstructionEvent)
+        {
+            instance = this;
+            proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new atomicstryker.battletowers.client.ClientProxy() : new atomicstryker.battletowers.common.CommonProxy();
+            atomicstryker.battletowers.common.AS_BattleTowersCore.registerHolders();
+            atomicstryker.battletowers.common.AS_BattleTowersCore.RegistrationHandler.register(MinecraftForge.EVENT_BUS);
+        }
+        else if (event instanceof FMLPreInitializationEvent)
+        {
+            this.preInit((FMLPreInitializationEvent)event);
+        }
+        else if (event instanceof FMLInitializationEvent)
+        {
+            this.load((FMLInitializationEvent)event);
+        }
+        else if (event instanceof FMLPostInitializationEvent)
+        {
+            this.modsLoaded((FMLPostInitializationEvent)event);
+        }
+        else if (event instanceof FMLServerStartingEvent)
+        {
+            this.serverStarted((FMLServerStartingEvent)event);
+        }
+        else if (event instanceof FMLServerStoppedEvent)
+        {
+            this.serverStopped((FMLServerStoppedEvent)event);
+        }
+    }
 
     private Set<AS_TowerDestroyer> towerDestroyers;
     public int minDistanceFromSpawn;
@@ -49,10 +78,8 @@ public class AS_BattleTowersCore
     public boolean towerFallDestroysMobSpawners;
     // private int golemEntityID;
 
-    @Instance(value = "battletowers")
     public static AS_BattleTowersCore instance;
 
-    @SidedProxy(clientSide = "atomicstryker.battletowers.client.ClientProxy", serverSide = "atomicstryker.battletowers.common.CommonProxy")
     public static CommonProxy proxy;
     
     public static Logger LOGGER;
@@ -62,79 +89,70 @@ public class AS_BattleTowersCore
 
     public NetworkHelper networkHelper;
 
-    @ObjectHolder("towerbreakstart")
-    public static final SoundEvent soundTowerBreakStart = createSoundEvent("towerbreakstart");
+    public static SoundEvent soundTowerBreakStart = createSoundEvent("towerbreakstart");
 
-    @ObjectHolder("towercrumble")
-    public static final SoundEvent soundTowerCrumble = createSoundEvent("towercrumble");
+    public static SoundEvent soundTowerCrumble = createSoundEvent("towercrumble");
 
-    @ObjectHolder("golemawaken")
-    public static final SoundEvent soundGolemAwaken = createSoundEvent("golemawaken");
+    public static SoundEvent soundGolemAwaken = createSoundEvent("golemawaken");
 
-    @ObjectHolder("golemspecial")
-    public static final SoundEvent soundGolemSpecial = createSoundEvent("golemspecial");
+    public static SoundEvent soundGolemSpecial = createSoundEvent("golemspecial");
 
-    @ObjectHolder("golemcharge")
-    public static final SoundEvent soundGolemCharge = createSoundEvent("golemcharge");
+    public static SoundEvent soundGolemCharge = createSoundEvent("golemcharge");
 
-    @ObjectHolder("golem")
-    public static final SoundEvent soundGolem = createSoundEvent("golem");
+    public static SoundEvent soundGolem = createSoundEvent("golem");
 
-    @ObjectHolder("golemhurt")
-    public static final SoundEvent soundGolemHurt = createSoundEvent("golemhurt");
+    public static SoundEvent soundGolemHurt = createSoundEvent("golemhurt");
 
-    @ObjectHolder("golemdeath")
-    public static final SoundEvent soundGolemDeath = createSoundEvent("golemdeath");
+    public static SoundEvent soundGolemDeath = createSoundEvent("golemdeath");
 
-    @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-    	DungeonTweaksCompat.legacyCheck();
-    	DungeonTweaksCompat.registerDungeons();
-    	
         configuration = new Configuration(event.getSuggestedConfigurationFile(), false);
         loadForgeConfig();
 
         proxy.preInit();
 
-        networkHelper = new NetworkHelper("AS_BT", LoginPacket.class, ChestAttackedPacket.class);
+        networkHelper = new NetworkHelper("AS_BT", LoginPacket::new, ChestAttackedPacket::new);
 
-        MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new ServerTickHandler());
+        this.register(MinecraftForge.EVENT_BUS);
+        (new ServerTickHandler()).register(MinecraftForge.EVENT_BUS);
         
         LOGGER = event.getModLog();
     }
 
-    @SubscribeEvent
+    public void register(EventBus bus)
+    {
+        bus.register(ClientConnectedToServerEvent.class, this::onClientConnected);
+        bus.register(ClientDisconnectionFromServerEvent.class, this::onClientDisconnected);
+        bus.register(PlayerLoggedInEvent.class, this::onPlayerLogin);
+    }
+
     public void onClientConnected(ClientConnectedToServerEvent event)
     {
         System.out.println(FMLCommonHandler.instance().getEffectiveSide() + " registered ClientConnectedToServerEvent, sending packet to server");
         networkHelper.sendPacketToServer(new LoginPacket());
     }
 
-    @SubscribeEvent
     public void onClientDisconnected(ClientDisconnectionFromServerEvent event)
     {
         //Tell the client's WorldGenHandler to clear the world map on the next world load
         WorldGenHandler.shouldClearWorldMap = true;
     }
 
-    @SubscribeEvent
     public void onPlayerLogin(PlayerLoggedInEvent event)
     {
         networkHelper.sendPacketToPlayer(new LoginPacket(), (EntityPlayerMP) event.player);
     }
 
-    @EventHandler
     public void load(FMLInitializationEvent evt)
     {
         proxy.load();
 
         // EntityRegistry.registerGlobalEntityID(AS_EntityGolem.class,
         // "Battletower Golem", golemEntityID, 0xA0A0A0, 0x808080);
-        EntityRegistry.registerModEntity(new ResourceLocation("battletowers", "golem"), AS_EntityGolem.class, "Battletower Golem", 1, this, 32, 3, false);
+        EntityRegistry.registerModEntity(new ResourceLocation("battletowers", "golem"), AS_EntityGolem.class, "Battletower Golem", 1, this, 32, 3, false, AS_EntityGolem::new);
 
-        EntityRegistry.registerModEntity(new ResourceLocation("battletowers", "golemfireball"), AS_EntityGolemFireball.class, "Golem Fireball", 2, this, 32, 3, false);
+        EntityRegistry.registerModEntity(new ResourceLocation("battletowers", "golemfireball"), AS_EntityGolemFireball.class, "Golem Fireball", 2, this, 32, 3, false, AS_EntityGolemFireball::new);
 
         towerDestroyers = new HashSet<AS_TowerDestroyer>();
 
@@ -154,17 +172,18 @@ public class AS_BattleTowersCore
         return new SoundEvent(soundID).setRegistryName(soundID);
     }
 
-    @Mod.EventBusSubscriber
     public static class RegistrationHandler
     {
-        @SubscribeEvent
+        public static void register(EventBus bus) {
+           bus.registerGeneric(RegistryEvent.Register.class, SoundEvent.class, RegistrationHandler::registerSoundEvents);
+        }
+
         public static void registerSoundEvents(RegistryEvent.Register<SoundEvent> event)
         {
             event.getRegistry().registerAll(soundTowerBreakStart, soundTowerCrumble, soundGolemAwaken, soundGolemSpecial, soundGolemCharge, soundGolem, soundGolemHurt, soundGolemDeath);
         }
     }
 
-    @EventHandler
     public void modsLoaded(FMLPostInitializationEvent evt)
     {
         configuration.load();
@@ -241,7 +260,6 @@ public class AS_BattleTowersCore
         configuration.save();
     }
 
-    @EventHandler
     public void serverStarted(FMLServerStartingEvent evt)
     {
         evt.registerServerCommand(new CommandSpawnBattleTower());
@@ -251,7 +269,6 @@ public class AS_BattleTowersCore
         evt.registerServerCommand(new CommandDeleteAllBattleTowers());
     }
     
-    @EventHandler
     public void serverStopped(FMLServerStoppedEvent evt)
     {
     	//Wipe world handles to avoid save folder conflicts
@@ -285,4 +302,15 @@ public class AS_BattleTowersCore
         return instance.towerDestroyers;
     }
 
+    public static void registerHolders()
+    {
+        ObjectHolderRegistry.INSTANCE.register(SoundEvent.class, new ResourceLocation("battletowers:towerbreakstart"), v -> soundTowerBreakStart = v);
+        ObjectHolderRegistry.INSTANCE.register(SoundEvent.class, new ResourceLocation("battletowers:towercrumble"), v -> soundTowerCrumble = v);
+        ObjectHolderRegistry.INSTANCE.register(SoundEvent.class, new ResourceLocation("battletowers:golemawaken"), v -> soundGolemAwaken = v);
+        ObjectHolderRegistry.INSTANCE.register(SoundEvent.class, new ResourceLocation("battletowers:golemspecial"), v -> soundGolemSpecial = v);
+        ObjectHolderRegistry.INSTANCE.register(SoundEvent.class, new ResourceLocation("battletowers:golemcharge"), v -> soundGolemCharge = v);
+        ObjectHolderRegistry.INSTANCE.register(SoundEvent.class, new ResourceLocation("battletowers:golem"), v -> soundGolem = v);
+        ObjectHolderRegistry.INSTANCE.register(SoundEvent.class, new ResourceLocation("battletowers:golemhurt"), v -> soundGolemHurt = v);
+        ObjectHolderRegistry.INSTANCE.register(SoundEvent.class, new ResourceLocation("battletowers:golemdeath"), v -> soundGolemDeath = v);
+    }
 }

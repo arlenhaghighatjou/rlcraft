@@ -1,7 +1,7 @@
 package atomicstryker.battletowers.client;
 
-import org.lwjgl.opengl.GL11;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import atomicstryker.battletowers.common.AS_EntityGolem;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderBiped;
@@ -21,7 +21,7 @@ public class AS_RenderGolem extends RenderBiped<AS_EntityGolem>
 
     protected void rescaleGolem()
     {
-        GL11.glScalef(2.0F, 2.0F, 2.0F);
+        GlStateManager.scale(2.0F, 2.0F, 2.0F);
     }
     
     @Override

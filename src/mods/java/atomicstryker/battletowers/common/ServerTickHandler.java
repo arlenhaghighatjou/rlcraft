@@ -1,8 +1,8 @@
 package atomicstryker.battletowers.common;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.Iterator;
 
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ServerTickHandler
@@ -14,7 +14,11 @@ public class ServerTickHandler
         time = System.currentTimeMillis();
     }
 
-    @SubscribeEvent
+    public void register(EventBus bus)
+    {
+        bus.register(TickEvent.WorldTickEvent.class, this::onTick);
+    }
+
     public void onTick(TickEvent.WorldTickEvent tick)
     {
         if (System.currentTimeMillis() > time + 1000L) // its a one second timer OMFG

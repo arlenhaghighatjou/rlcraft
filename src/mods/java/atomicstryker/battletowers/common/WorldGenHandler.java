@@ -1,12 +1,9 @@
 package atomicstryker.battletowers.common;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerSaveHandler;
+import net.lax1dude.eaglercraft.v1_8.sp.server.WorldsDB;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +20,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class WorldGenHandler implements IWorldGenerator
 {
@@ -44,13 +40,13 @@ public class WorldGenHandler implements IWorldGenerator
         providerMap = new HashMap<String, Boolean>();
         generator = new AS_WorldGenTower();
 
-        MinecraftForge.EVENT_BUS.register(this);
+        this.register(MinecraftForge.EVENT_BUS);
     }
 
     private class WorldHandle
     {
         boolean posFileLoaded;
-        File worldSaveDirectory;
+        VFile2 worldSaveDirectory;
         final ArrayList<TowerPosition> towerPositions = new ArrayList<TowerPosition>();
         boolean towerPositionsAccessLock;
         int disableGenerationHook;
@@ -61,7 +57,12 @@ public class WorldGenHandler implements IWorldGenerator
         worldMap.clear();
     }
 
-    @SubscribeEvent
+    public void register(EventBus bus)
+    {
+        bus.register(WorldEvent.Load.class, this::eventWorldLoad);
+        bus.register(WorldEvent.Save.class, this::eventWorldSave);
+    }
+
     public void eventWorldLoad(WorldEvent.Load evt)
     {
         if(shouldClearWorldMap)
@@ -74,7 +75,10 @@ public class WorldGenHandler implements IWorldGenerator
         if (!wh.posFileLoaded)
         {
             wh.posFileLoaded = true;
-            loadPosFile(wh, new File(wh.worldSaveDirectory, fileName), evt.getWorld());
+            if (wh.worldSaveDirectory != null)
+            {
+                loadPosFile(wh, new VFile2(wh.worldSaveDirectory, fileName), evt.getWorld());
+            }
         }
     }
 
@@ -85,22 +89,10 @@ public class WorldGenHandler implements IWorldGenerator
         if (result == null)
         {
             result = new WorldHandle();
-            result.worldSaveDirectory = world.getSaveHandler().getWorldDirectory();
-            if (result.worldSaveDirectory != null)
+            if (world.getSaveHandler() instanceof EaglerSaveHandler)
             {
-                String dim_folder = "";
-                if (dimension != 0)
-                    dim_folder = File.separator + world.provider.getSaveFolder();
-                try
-                {
-                    result.worldSaveDirectory = new File(world.getSaveHandler().getWorldDirectory().getCanonicalPath() + dim_folder);
-                }
-                catch (IOException e)
-                {
-                    // Failed, revert to old handling for safety
-                    result.worldSaveDirectory = world.getSaveHandler().getWorldDirectory();
-                    e.printStackTrace();
-                }
+                VFile2 worldPath = ((EaglerSaveHandler) world.getSaveHandler()).getWorldPath();
+                result.worldSaveDirectory = dimension != 0 ? WorldsDB.newVFile(worldPath, "level" + dimension) : worldPath;
             }
             result.posFileLoaded = false;
             result.towerPositionsAccessLock = false;
@@ -110,11 +102,13 @@ public class WorldGenHandler implements IWorldGenerator
         return result;
     }
 
-    @SubscribeEvent
     public void eventWorldSave(WorldEvent.Save evt)
     {
         WorldHandle wh = getWorldHandle(evt.getWorld());
-        flushCurrentPosListToFile(wh, wh.worldSaveDirectory);
+        if (wh.worldSaveDirectory != null)
+        {
+            flushCurrentPosListToFile(wh, wh.worldSaveDirectory);
+        }
     }
 
     @Override
@@ -356,30 +350,22 @@ public class WorldGenHandler implements IWorldGenerator
         }
     }
 
-    private static void loadPosFile(WorldHandle worldHandle, File file, World world)
+    private static void loadPosFile(WorldHandle worldHandle, VFile2 file, World world)
     {
-        if (!file.getAbsolutePath().contains(world.getWorldInfo().getWorldName()))
-        {
-            return;
-        }
-
         obtainTowerPosListAccess(worldHandle);
         try
         {
-            if (!file.exists())
+            String[] lines = file.getAllLines();
+            if (lines == null)
             {
-                if (!file.createNewFile())
-                {
-                    throw new RuntimeException("Battletowers mod crashed trying to create pos file " + file);
-                }
+                file.setAllChars("");
+                lines = new String[0];
             }
             int lineNumber = 1;
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line = br.readLine();
             TowerPosition tp = instance.new TowerPosition(0, 0, 0, 0, false);
-            while (line != null)
+            for (int i = 0; i < lines.length; i++)
             {
-                line = line.trim();
+                String line = lines[i].trim();
                 if (!line.startsWith("#"))
                 {
                     try
@@ -397,9 +383,7 @@ public class WorldGenHandler implements IWorldGenerator
                 }
 
                 lineNumber++;
-                line = br.readLine();
             }
-            br.close();
             System.out.println("Battletower Positions reloaded. Lines " + lineNumber + ", entries " + worldHandle.towerPositions.size());
         }
         catch (Exception e)
@@ -409,7 +393,7 @@ public class WorldGenHandler implements IWorldGenerator
         releaseTowerPosListAccess(worldHandle);
     }
 
-    private static void flushCurrentPosListToFile(WorldHandle worldHandle, File worldSaveFile)
+    private static void flushCurrentPosListToFile(WorldHandle worldHandle, VFile2 worldSaveFile)
     {
         if (worldHandle.towerPositions.isEmpty())
         {
@@ -417,43 +401,26 @@ public class WorldGenHandler implements IWorldGenerator
         }
 
         obtainTowerPosListAccess(worldHandle);
-        File file = new File(worldSaveFile, fileName);
-        if (file.exists())
+        StringBuilder sb = new StringBuilder();
+        sb.append("# Behold! The Battletower position management file. Below, you see all data accumulated by AtomicStrykers Battletowers during the last run of this World.").append('\n');
+        sb.append("# Data is noted as follows: Each line stands for one successfull Battletower spawn. Data syntax is:").append('\n');
+        sb.append("# xCoordinate yCoordinate zCoordinate towerType towerUnderground").append('\n');
+        sb.append("# everything but the last value is an integer value. Towertypes values are:").append('\n');
+        sb.append("# 0: Null, 1: Cobblestone, 2: Mossy Cobblestone, 3: Sandstone, 4: Ice, 5: Smoothstone, 6: Nether, 7: Jungle").append('\n');
+        sb.append("#").append('\n');
+        sb.append("# DO NOT EDIT THIS FILE UNLESS YOU ARE SURE OF WHAT YOU ARE DOING").append('\n');
+        sb.append("#").append('\n');
+        sb.append("# the primary function of this file is to enable regeneration or removal of spawned Battletowers.").append('\n');
+        sb.append("# that is possible via commands /regenerateallbattletowers and /deleteallbattletowers.").append('\n');
+        sb.append("# do not change values once towers have spawned! Either do that before creating a World (put this file in a world named folder)...").append('\n');
+        sb.append("# ... or use /deletebattletowers, exit the game, modify this file any way you want, load the world, then use /regeneratebattletowers!").append('\n');
+
+        for (TowerPosition t : worldHandle.towerPositions)
         {
-            if (!file.delete())
-            {
-                throw new RuntimeException("Battletowers mod crashed because it was denied file write access to " + file);
-            }
+            sb.append(t.toString()).append('\n');
         }
 
-        try
-        {
-            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
-            pw.println("# Behold! The Battletower position management file. Below, you see all data accumulated by AtomicStrykers Battletowers during the last run of this World.");
-            pw.println("# Data is noted as follows: Each line stands for one successfull Battletower spawn. Data syntax is:");
-            pw.println("# xCoordinate yCoordinate zCoordinate towerType towerUnderground");
-            pw.println("# everything but the last value is an integer value. Towertypes values are:");
-            pw.println("# 0: Null, 1: Cobblestone, 2: Mossy Cobblestone, 3: Sandstone, 4: Ice, 5: Smoothstone, 6: Nether, 7: Jungle");
-            pw.println("#");
-            pw.println("# DO NOT EDIT THIS FILE UNLESS YOU ARE SURE OF WHAT YOU ARE DOING");
-            pw.println("#");
-            pw.println("# the primary function of this file is to enable regeneration or removal of spawned Battletowers.");
-            pw.println("# that is possible via commands /regenerateallbattletowers and /deleteallbattletowers.");
-            pw.println("# do not change values once towers have spawned! Either do that before creating a World (put this file in a world named folder)...");
-            pw.println("# ... or use /deletebattletowers, exit the game, modify this file any way you want, load the world, then use /regeneratebattletowers!");
-
-            for (TowerPosition t : worldHandle.towerPositions)
-            {
-                pw.println(t.toString());
-            }
-
-            pw.flush();
-            pw.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        new VFile2(worldSaveFile, fileName).setAllChars(sb.toString());
         releaseTowerPosListAccess(worldHandle);
     }
 

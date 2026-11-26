@@ -3,7 +3,7 @@ package atomicstryker.battletowers.common.network;
 import atomicstryker.battletowers.common.AS_EntityGolem;
 import atomicstryker.battletowers.common.network.NetworkHelper.IPacket;
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
+import com.arlenh7.eaglercraft.netty.ChannelHandlerContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.FMLCommonHandler;
