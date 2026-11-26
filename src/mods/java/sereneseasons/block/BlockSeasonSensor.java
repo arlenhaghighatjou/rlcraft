@@ -34,8 +34,8 @@ public class BlockSeasonSensor extends BlockContainer implements ISSBlock {
    public static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D);
    private final BlockSeasonSensor.DetectorType type;
 
-   public Class<? extends ItemBlock> getItemClass() {
-      return ItemSSBlock.class;
+   public ItemBlock createItemBlock() {
+      return new ItemSSBlock(this);
    }
 
    public IProperty[] getPresetProperties() {

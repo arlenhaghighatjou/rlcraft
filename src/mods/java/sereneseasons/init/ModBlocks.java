@@ -52,7 +52,7 @@ public class ModBlocks {
       block.setCreativeTab(tab);
       if (block instanceof ISSBlock) {
          ISSBlock bopBlock = (ISSBlock)block;
-         registerBlockWithItem(block, blockName, bopBlock.getItemClass());
+         registerBlockWithItem(block, blockName, bopBlock.createItemBlock());
          SereneSeasons.proxy.registerBlockSided(block);
          IBlockState defaultState = block.getDefaultState();
          if (defaultState == null) {
@@ -76,26 +76,17 @@ public class ModBlocks {
             }
          }
       } else {
-         registerBlockWithItem(block, blockName, ItemBlock.class);
+         registerBlockWithItem(block, blockName, new ItemBlock(block));
          registerBlockItemModel(block, blockName, 0);
       }
 
       return block;
    }
 
-   private static void registerBlockWithItem(Block block, String blockName, Class<? extends ItemBlock> clazz) {
-      try {
-         Item itemBlock = clazz != null ? (Item)clazz.getConstructor(Block.class).newInstance(block) : null;
-         new ResourceLocation("sereneseasons", blockName);
-         block.setRegistryName(new ResourceLocation("sereneseasons", blockName));
-         ForgeRegistries.BLOCKS.register(block);
-         if (itemBlock != null) {
-            itemBlock.setRegistryName(new ResourceLocation("sereneseasons", blockName));
-            ForgeRegistries.ITEMS.register(itemBlock);
-         }
-
-      } catch (Exception var5) {
-         throw new RuntimeException("An error occurred associating an item block during registration of " + blockName, var5);
-      }
+   private static void registerBlockWithItem(Block block, String blockName, Item itemBlock) {
+      block.setRegistryName(new ResourceLocation("sereneseasons", blockName));
+      ForgeRegistries.BLOCKS.register(block);
+      itemBlock.setRegistryName(new ResourceLocation("sereneseasons", blockName));
+      ForgeRegistries.ITEMS.register(itemBlock);
    }
 }

@@ -14,8 +14,8 @@ import sereneseasons.api.ISSBlock;
 import sereneseasons.item.ItemSSBlock;
 
 public class BlockGreenhouseGlass extends BlockBreakable implements ISSBlock {
-   public Class<? extends ItemBlock> getItemClass() {
-      return ItemSSBlock.class;
+   public ItemBlock createItemBlock() {
+      return new ItemSSBlock(this);
    }
 
    public IProperty[] getPresetProperties() {

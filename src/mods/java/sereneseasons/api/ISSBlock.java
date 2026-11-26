@@ -5,7 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 
 public interface ISSBlock {
-   Class<? extends ItemBlock> getItemClass();
+   ItemBlock createItemBlock();
 
    IProperty[] getPresetProperties();
 
