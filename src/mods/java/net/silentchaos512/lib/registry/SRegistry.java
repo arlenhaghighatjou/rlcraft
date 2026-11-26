@@ -1,5 +1,6 @@
 package net.silentchaos512.lib.registry;
 
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -171,7 +172,7 @@ public class SRegistry {
       ForgeRegistries.ITEMS.register(itemBlock);
       if (block instanceof ITileEntityBlock) {
          Class<? extends TileEntity> clazz = ((ITileEntityBlock)block).getTileEntityClass();
-         this.registerTileEntity(clazz, key);
+         this.registerTileEntity((Class)clazz, key, (Supplier)((ITileEntityBlock)block).getTileEntityFactory());
       }
 
       if (block instanceof IAddRecipes) {
@@ -219,26 +220,26 @@ public class SRegistry {
       ForgeRegistries.ENCHANTMENTS.register(enchantment);
    }
 
-   public void registerEntity(Class<? extends Entity> entityClass, String key) {
-      this.registerEntity(entityClass, key, ++this.lastEntityId, this.mod, 64, 20, true);
+   public <T extends Entity> void registerEntity(Class<T> entityClass, String key, Function<World, T> factory) {
+      this.registerEntity(entityClass, key, ++this.lastEntityId, this.mod, 64, 20, true, factory);
    }
 
-   public void registerEntity(Class<? extends Entity> entityClass, String key, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates) {
-      this.registerEntity(entityClass, key, ++this.lastEntityId, this.mod, trackingRange, updateFrequency, sendsVelocityUpdates);
+   public <T extends Entity> void registerEntity(Class<T> entityClass, String key, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, Function<World, T> factory) {
+      this.registerEntity(entityClass, key, ++this.lastEntityId, this.mod, trackingRange, updateFrequency, sendsVelocityUpdates, factory);
    }
 
-   public void registerEntity(Class<? extends Entity> entityClass, String key, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates) {
+   public <T extends Entity> void registerEntity(Class<T> entityClass, String key, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, Function<World, T> factory) {
       ResourceLocation resource = new ResourceLocation(this.modId, key);
-      EntityRegistry.registerModEntity(resource, entityClass, key, id, mod, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityRegistry.registerModEntity(resource, entityClass, key, id, mod, trackingRange, updateFrequency, sendsVelocityUpdates, factory);
    }
 
-   public void registerEntity(Class<? extends Entity> entityClass, String key, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggPrimary, int eggSecondary) {
-      this.registerEntity(entityClass, key, ++this.lastEntityId, this.mod, trackingRange, updateFrequency, sendsVelocityUpdates, eggPrimary, eggSecondary);
+   public <T extends Entity> void registerEntity(Class<T> entityClass, String key, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggPrimary, int eggSecondary, Function<World, T> factory) {
+      this.registerEntity(entityClass, key, ++this.lastEntityId, this.mod, trackingRange, updateFrequency, sendsVelocityUpdates, eggPrimary, eggSecondary, factory);
    }
 
-   public void registerEntity(Class<? extends Entity> entityClass, String key, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggPrimary, int eggSecondary) {
+   public <T extends Entity> void registerEntity(Class<T> entityClass, String key, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggPrimary, int eggSecondary, Function<World, T> factory) {
       ResourceLocation resource = new ResourceLocation(this.modId, key);
-      EntityRegistry.registerModEntity(resource, entityClass, key, id, mod, trackingRange, updateFrequency, sendsVelocityUpdates, eggPrimary, eggSecondary);
+      EntityRegistry.registerModEntity(resource, entityClass, key, id, mod, trackingRange, updateFrequency, sendsVelocityUpdates, eggPrimary, eggSecondary, factory);
    }
 
    @SideOnly(Side.CLIENT)
@@ -301,8 +302,8 @@ public class SRegistry {
       return trigger;
    }
 
-   public void registerTileEntity(Class<? extends TileEntity> tileClass, String key) {
-      GameRegistry.registerTileEntity(tileClass, new ResourceLocation(this.modId, key));
+   public <T extends TileEntity> void registerTileEntity(Class<T> tileClass, String key, Supplier<T> factory) {
+      GameRegistry.registerTileEntity(tileClass, new ResourceLocation(this.modId, key), factory);
    }
 
    @SideOnly(Side.CLIENT)
