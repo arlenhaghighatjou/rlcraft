@@ -229,6 +229,7 @@ public class Loader
         mods.add(new FMLModContainer<>("battletowers", "Battle Towers", "1.6.5", "", "", "battletowers", atomicstryker.battletowers.common.AS_BattleTowersCore::new, atomicstryker.battletowers.common.AS_BattleTowersCore::handleModStateEvent));
         mods.add(new FMLModContainer<>("infernalmobs", "Infernal Mobs", "1.7.6", "", "", "InfernalMobs", atomicstryker.infernalmobs.common.InfernalMobsCore::new, atomicstryker.infernalmobs.common.InfernalMobsCore::handleModStateEvent));
         mods.add(new FMLModContainer<>("bloodmoon", "Bloodmoon", "1.5.3", "", "[1.12,1.13)", "bloodmoon", lumien.bloodmoon.Bloodmoon::new, lumien.bloodmoon.Bloodmoon::handleModStateEvent));
+        mods.add(new FMLModContainer<>("advanced-fishing", "Advanced-Fishing", "1.3.3", "", "[1.12.2]", "advanced-fishing", nightkosh.advanced_fishing.ModAdvancedFishing::new, nightkosh.advanced_fishing.ModAdvancedFishing::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

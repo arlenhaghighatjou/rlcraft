@@ -1,6 +1,8 @@
 package nightkosh.advanced_fishing.core;
 
+import java.util.function.Function;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import nightkosh.advanced_fishing.entity.item.EntityFireproofItem;
 import nightkosh.advanced_fishing.entity.projectile.EntityCustomFishHook;
@@ -19,13 +21,13 @@ public class Entity {
    }
 
    public static void registration() {
-      registerModEntity(CUSTOM_FISH_HOOK_ID, EntityCustomFishHook.class, "CustomFishHook");
-      registerModEntity(LAVA_FISH_HOOK_ID, EntityLavaFishHook.class, "LavaFishHook");
-      registerModEntity(FIREPROOF_ITEM_ID, EntityFireproofItem.class, "FireproofItem");
+      registerModEntity(CUSTOM_FISH_HOOK_ID, EntityCustomFishHook.class, "CustomFishHook", EntityCustomFishHook::new);
+      registerModEntity(LAVA_FISH_HOOK_ID, EntityLavaFishHook.class, "LavaFishHook", EntityLavaFishHook::new);
+      registerModEntity(FIREPROOF_ITEM_ID, EntityFireproofItem.class, "FireproofItem", EntityFireproofItem::new);
    }
 
-   private static void registerModEntity(ResourceLocation resource, Class<? extends net.minecraft.entity.Entity> entityClass, String entityName) {
-      EntityRegistry.registerModEntity(resource, entityClass, entityName, mobId, "advanced-fishing", 100, 1, true);
+   private static <T extends net.minecraft.entity.Entity> void registerModEntity(ResourceLocation resource, Class<T> entityClass, String entityName, Function<World, T> factory) {
+      EntityRegistry.registerModEntity(resource, entityClass, entityName, mobId, "advanced-fishing", 100, 1, true, factory);
       ++mobId;
    }
 }

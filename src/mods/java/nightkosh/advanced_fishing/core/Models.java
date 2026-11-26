@@ -1,27 +1,24 @@
 package nightkosh.advanced_fishing.core;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import nightkosh.advanced_fishing.api.EnumFishType;
 
-@ObjectHolder("advanced-fishing")
 public class Models {
    public Models() {
    }
 
-   @EventBusSubscriber(
-      modid = "advanced-fishing"
-   )
    public static class RegistrationHandler {
       public RegistrationHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.register(ModelRegistryEvent.class, RegistrationHandler::registerModels);
+      }
+
       public static void registerModels(ModelRegistryEvent event) {
          ModelLoader.setCustomModelResourceLocation(Items.BLAZING_FISHING_POLE, 0, ResourcesModels.BLAZING_FISHING_POLE);
          ModelLoader.setCustomModelResourceLocation(Items.FISH, EnumFishType.BLUE_JELLYFISH.ordinal(), ResourcesModels.BLUE_JELLYFISH);

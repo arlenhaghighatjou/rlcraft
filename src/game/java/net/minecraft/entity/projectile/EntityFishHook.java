@@ -38,16 +38,16 @@ public class EntityFishHook extends Entity
     private static final DataParameter<Integer> DATA_HOOKED_ENTITY = EntityDataManager.<Integer>createKey(EntityFishHook.class, DataSerializers.VARINT);
     private boolean inGround;
     private int ticksInGround;
-    private EntityPlayer angler;
+    public EntityPlayer angler;
     private int ticksInAir;
     private int ticksCatchable;
     private int ticksCaughtDelay;
     private int ticksCatchableDelay;
     private float fishApproachAngle;
     public Entity caughtEntity;
-    private EntityFishHook.State currentState = EntityFishHook.State.FLYING;
-    private int luck;
-    private int lureSpeed;
+    public EntityFishHook.State currentState = EntityFishHook.State.FLYING;
+    public int luck;
+    public int lureSpeed;
 
     @SideOnly(Side.CLIENT)
     public EntityFishHook(World worldIn, EntityPlayer p_i47290_2_, double x, double y, double z)
@@ -283,7 +283,7 @@ public class EntityFishHook extends Entity
         }
     }
 
-    private void updateRotation()
+    public void updateRotation()
     {
         float f = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
         this.rotationYaw = (float)(MathHelper.atan2(this.motionX, this.motionZ) * (180D / Math.PI));
@@ -312,7 +312,7 @@ public class EntityFishHook extends Entity
         this.rotationYaw = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * 0.2F;
     }
 
-    private void checkCollision()
+    public void checkCollision()
     {
         Vec3d vec3d = new Vec3d(this.posX, this.posY, this.posZ);
         Vec3d vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
@@ -368,7 +368,7 @@ public class EntityFishHook extends Entity
         }
     }
 
-    private void setHookedEntity()
+    public void setHookedEntity()
     {
         this.getDataManager().set(DATA_HOOKED_ENTITY, Integer.valueOf(this.caughtEntity.getEntityId() + 1));
     }
@@ -609,7 +609,7 @@ public class EntityFishHook extends Entity
         return this.angler;
     }
 
-    static enum State
+    public static enum State
     {
         FLYING,
         HOOKED_IN_ENTITY,
