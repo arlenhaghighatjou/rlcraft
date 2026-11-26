@@ -1,5 +1,6 @@
 package atomicstryker.battletowers.common;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerSaveHandler;
 import net.lax1dude.eaglercraft.v1_8.sp.server.WorldsDB;
@@ -289,8 +290,8 @@ public class WorldGenHandler implements IWorldGenerator
                     return null;
                 }
             }
-            System.out.printf("Logged %d towers so far for world %s, accepted new site coords [%d,%d], mindist %f\n", worldHandle.towerPositions.size(), worldHandle.worldSaveDirectory, xActual,
-                    zActual, mindist);
+            System.out.print(HString.format("Logged %d towers so far for world %s, accepted new site coords [%d,%d], mindist %f\n", worldHandle.towerPositions.size(), worldHandle.worldSaveDirectory, xActual,
+                    zActual, mindist));
             releaseTowerPosListAccess(worldHandle);
         }
 
