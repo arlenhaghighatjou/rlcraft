@@ -1,5 +1,6 @@
 package vazkii.arl.util;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.List;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -30,7 +31,7 @@ public final class TooltipHandler {
       }
 
       if (formatVals.length > 0) {
-         s = String.format(s, formatVals);
+         s = HString.format(s, formatVals);
       }
 
       tooltip.add(s);

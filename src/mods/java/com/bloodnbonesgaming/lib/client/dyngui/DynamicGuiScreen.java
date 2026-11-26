@@ -2,7 +2,6 @@ package com.bloodnbonesgaming.lib.client.dyngui;
 
 import com.bloodnbonesgaming.lib.util.GuiHelper;
 import com.google.common.collect.Lists;
-import java.beans.ConstructorProperties;
 import java.util.List;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiLabel;
@@ -22,7 +21,6 @@ public class DynamicGuiScreen extends GuiScreen implements Cloneable {
       return new DynamicGuiScreen(GuiHelper.deepCloneButton(this.buttons), GuiHelper.deepCloneText(this.textFields), GuiHelper.deepCloneLabel(this.labels));
    }
 
-   @ConstructorProperties({"buttons", "textFields", "labels"})
    public DynamicGuiScreen(List<GuiButton> buttons, List<GuiTextField> textFields, List<GuiLabel> labels) {
       this.buttons = buttons;
       this.textFields = textFields;

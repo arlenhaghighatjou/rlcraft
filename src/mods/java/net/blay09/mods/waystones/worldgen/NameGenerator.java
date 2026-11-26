@@ -1,9 +1,9 @@
 package net.blay09.mods.waystones.worldgen;
 
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
@@ -120,7 +120,7 @@ public class NameGenerator extends WorldSavedData {
 
       String name = null;
       List<String> customNames = Arrays.asList(WaystoneConfig.worldGen.customNames);
-      Collections.shuffle(customNames);
+      ThreadLocalRandom.current().shuffle(customNames);
 
       for(String customName : customNames) {
          if (!this.usedNames.contains(customName)) {

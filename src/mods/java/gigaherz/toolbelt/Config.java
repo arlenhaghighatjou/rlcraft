@@ -44,7 +44,7 @@ public class Config {
    public static boolean disableAnvilUpgrading = false;
    public static Config.CustomBeltSlotMode customBeltSlotMode = Config.CustomBeltSlotMode.ON;
    public static boolean customBeltSlotEnabled = true;
-   private static final Pattern itemRegex = Pattern.compile("^(?<item>([a-zA-Z-0-9_]+:)?[a-zA-Z-0-9_]+)(?:@((?<meta>[0-9]+)|(?<any>any)))?$");
+   private static final Pattern itemRegex = Pattern.compile("^(([a-zA-Z-0-9_]+:)?[a-zA-Z-0-9_]+)(?:@(([0-9]+)|(any)))?$");
 
    public Config() {
    }
@@ -132,13 +132,13 @@ public class Config {
          ToolBelt.logger.warn("Could not parse item " + itemString);
          return ItemStack.EMPTY;
       } else {
-         Item item = (Item)ForgeRegistries.ITEMS.getValue(new ResourceLocation(matcher.group("item")));
+         Item item = (Item)ForgeRegistries.ITEMS.getValue(new ResourceLocation(matcher.group(1)));
          if (item == null) {
             ToolBelt.logger.warn("Could not parse item " + itemString);
             return ItemStack.EMPTY;
          } else {
-            String anyString = matcher.group("any");
-            String metaString = matcher.group("meta");
+            String anyString = matcher.group(5);
+            String metaString = matcher.group(4);
             int meta = Strings.isNullOrEmpty(anyString) ? (Strings.isNullOrEmpty(metaString) ? 0 : Integer.parseInt(metaString)) : 32767;
             return new ItemStack(item, 1, meta);
          }

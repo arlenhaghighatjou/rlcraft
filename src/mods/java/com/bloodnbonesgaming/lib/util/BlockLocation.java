@@ -1,6 +1,5 @@
 package com.bloodnbonesgaming.lib.util;
 
-import java.beans.ConstructorProperties;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -77,7 +76,6 @@ public class BlockLocation {
       return new BlockLocation(pos.getX(), pos.getY(), pos.getZ());
    }
 
-   @ConstructorProperties({"pos"})
    public BlockLocation(BlockPos pos) {
       this.pos = pos;
    }

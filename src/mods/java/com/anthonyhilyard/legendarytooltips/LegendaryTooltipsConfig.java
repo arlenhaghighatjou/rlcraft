@@ -6,16 +6,10 @@ import com.anthonyhilyard.legendarytooltips.util.TextColor;
 import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.function.ToIntFunction;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigManager;
@@ -58,13 +52,18 @@ public class LegendaryTooltipsConfig extends Configuration {
       ordered.put("colors", this.getCategory("colors"));
       this.categories = ordered;
       this.getCategory("visual_options").setComment(" Legendary Tooltips Configuration Instructions\n\n *** READ THIS FIRST ***\n\n By default, this mod does not apply special borders to most items.  It was designed to work well with mod packs\n where the available selection of items can vary widely, so it is up to the user or mod pack designer to customize as needed.\n There are many options available for setting up which custom borders (also called frames) apply to which items.  Follow these steps:\n   1. Decide which items you want to have custom borders, and which borders.  Note that each custom border has a number associated with it (starting at 0).\n   2. For each custom border you want to use, fill out the associated list in the \"definitions\" section.  This will be filled out with a list of \"selectors\",\n      each of which tell the mod what items have that border.  Please read the information above the definitions section for specifics.\n   3. Selectors for borders are checked in the order provided in the \"priorities\" section.  Once a match is found, that border is displayed.\n      For example, if border 0 had the selector \"%Diamond\" and border 1 had the selector \"diamond_sword\", they would both match for diamond swords.\n      In this case, whichever border number came first in the priority list would be the border that would get drawn in-game.\n   4. Optionally, border colors associated with custom borders can be set in the \"colors\" section.  The start color is the color at the top of the tooltip,\n      and the end color is the bottom, with a smooth transition between.  Please read the information above the color section for specifics.");
-      this.getCategory("definitions").setPropertyOrder((List)IntStream.rangeClosed(0, 15).boxed().map((x) -> {
-         return String.format("level%d_entries", x);
-      }).collect(Collectors.toList())).setComment(" Entry types:\n   Item name - Use item name for vanilla items or include mod name for modded items.  Examples: minecraft:stick, iron_ore\n   Item Metadata - After an item name, you may include a colon and then a number to indicate metadata.  Examples: minecraft:wool:5, minecraft:sponge:1\n   Tag - $ followed by ore dictionary tag name.  Examples: $plankWood or $ingotIron\n   Mod name - @ followed by mod identifier.  Examples: @spoiledeggs\n   Rarity - ! followed by item's rarity.  Examples: !uncommon, !rare !epic\n   Item name color - # followed by color hex code, the hex code must match exactly.  Examples: #23F632\n   Display name - % followed by any text.  Will match any item with this text in its tooltip display name.  Examples: %Uncommon\n   Tooltip text - ^ followed by any text.  Will match any item with this text anywhere in the tooltip text (besides the name).  Examples: ^Legendary\n   NBT tag - & followed by tag name and optional comparator (=, >, <, or !=) and value, in the format <tag><comparator><value> or just <tag>.\n             Examples: &Damage=0, &Tier>1, &Enchantments, &map!=128");
+      List<String> definitionOrder = new ArrayList(16);
+      List<String> colorOrder = new ArrayList(32);
+
+      for(int i = 0; i < 16; ++i) {
+         definitionOrder.add("level" + i + "_entries");
+         colorOrder.add("level" + i + "_start_color");
+         colorOrder.add("level" + i + "_end_color");
+      }
+
+      this.getCategory("definitions").setPropertyOrder(definitionOrder).setComment(" Entry types:\n   Item name - Use item name for vanilla items or include mod name for modded items.  Examples: minecraft:stick, iron_ore\n   Item Metadata - After an item name, you may include a colon and then a number to indicate metadata.  Examples: minecraft:wool:5, minecraft:sponge:1\n   Tag - $ followed by ore dictionary tag name.  Examples: $plankWood or $ingotIron\n   Mod name - @ followed by mod identifier.  Examples: @spoiledeggs\n   Rarity - ! followed by item's rarity.  Examples: !uncommon, !rare !epic\n   Item name color - # followed by color hex code, the hex code must match exactly.  Examples: #23F632\n   Display name - % followed by any text.  Will match any item with this text in its tooltip display name.  Examples: %Uncommon\n   Tooltip text - ^ followed by any text.  Will match any item with this text anywhere in the tooltip text (besides the name).  Examples: ^Legendary\n   NBT tag - & followed by tag name and optional comparator (=, >, <, or !=) and value, in the format <tag><comparator><value> or just <tag>.\n             Examples: &Damage=0, &Tier>1, &Enchantments, &map!=128");
       this.getCategory("priorities").setComment("Set border priorities here.  This should be a string containing a comma-separated list of numbers that\ncorrespond to border levels, with numbers coming first being higher priority.");
-      this.getCategory("colors").setPropertyOrder((List)IntStream.rangeClosed(0, 15).boxed().flatMap((x) -> {
-         return Stream.of(String.format("level%d_start_color", x), String.format("level%d_end_color", x));
-      }).collect(Collectors.toList())).setComment("The start and end border colors and background colors of each level.\n Note that they can be entered as any one of: a hex color code in the format #AARRGGBB or #RRGGBB, OR a string color name.\n Examples: #FFFF00, #FF73D984, red, #FFCC00");
+      this.getCategory("colors").setPropertyOrder(colorOrder).setComment("The start and end border colors and background colors of each level.\n Note that they can be entered as any one of: a hex color code in the format #AARRGGBB or #RRGGBB, OR a string color name.\n Examples: #FFFF00, #FF73D984, red, #FFCC00");
       this.nameSeparator = this.getBoolean("name_separator", "visual_options", true, "Whether item names in tooltips should have a line under them separating them from the rest of the tooltip.");
       this.bordersMatchRarity = this.getBoolean("borders_match_rarity", "visual_options", true, "If enabled, tooltip border colors will match item rarity colors (except for custom borders).");
       this.tooltipShadow = this.getBoolean("tooltip_shadow", "visual_options", true, "If enabled, tooltips will display a drop shadow.");
@@ -75,21 +74,23 @@ public class LegendaryTooltipsConfig extends Configuration {
       this.itemSelectors.add(Arrays.asList(this.getStringList("level0_entries", "definitions", new String[]{"!epic", "!rare"}, "")));
 
       for(int i = 1; i < 16; ++i) {
-         this.itemSelectors.add(Arrays.asList(this.getStringList(String.format("level%d_entries", i), "definitions", new String[0], "")));
+         this.itemSelectors.add(Arrays.asList(this.getStringList("level" + i + "_entries", "definitions", new String[0], "")));
       }
 
       this.framePriorities.clear();
-      this.framePriorities.addAll((Collection)Arrays.asList(this.getString("priorities", "priorities", "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15", "").split(",")).stream().map((x) -> {
-         return x.trim();
-      }).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList()));
+      String[] priorities = this.getString("priorities", "priorities", "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15", "").split(",");
+
+      for(int i = 0; i < priorities.length; ++i) {
+         this.framePriorities.add(Integer.parseInt(priorities[i].trim()));
+      }
       this.startColors[0] = this.getString("level0_start_color", "colors", "#FF996922", "");
       this.endColors[0] = this.getString("level0_end_color", "colors", "#FF5A3A1D", "");
       this.bgColors[0] = this.getString("level0_bg_color", "colors", "#F0160A00", "");
 
       for(int i = 1; i < 16; ++i) {
-         this.startColors[i] = this.getString(String.format("level%d_start_color", i), "colors", "#FF996922", "");
-         this.endColors[i] = this.getString(String.format("level%d_end_color", i), "colors", "#FF5A3A1D", "");
-         this.bgColors[i] = this.getString(String.format("level%d_bg_color", i), "colors", "#F0160A00", "");
+         this.startColors[i] = this.getString("level" + i + "_start_color", "colors", "#FF996922", "");
+         this.endColors[i] = this.getString("level" + i + "_end_color", "colors", "#FF5A3A1D", "");
+         this.bgColors[i] = this.getString("level" + i + "_bg_color", "colors", "#F0160A00", "");
       }
 
       this.save();

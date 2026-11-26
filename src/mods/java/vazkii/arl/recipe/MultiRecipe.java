@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public class MultiRecipe extends ModRecipe {
    private List<IRecipe> subRecipes = new LinkedList();
-   private ThreadLocal<IRecipe> matched = new ThreadLocal();
+   private IRecipe matched;
 
    public MultiRecipe(ResourceLocation res) {
       super(res);
@@ -23,11 +23,11 @@ public class MultiRecipe extends ModRecipe {
    }
 
    public boolean matches(@Nonnull InventoryCrafting inv, @Nonnull World worldIn) {
-      this.matched.set(null);
+      this.matched = null;
 
       for(IRecipe recipe : this.subRecipes) {
          if (recipe.matches(inv, worldIn)) {
-            this.matched.set(recipe);
+            this.matched = recipe;
             return true;
          }
       }
@@ -37,7 +37,7 @@ public class MultiRecipe extends ModRecipe {
 
    @Nonnull
    public ItemStack getCraftingResult(@Nonnull InventoryCrafting inv) {
-      IRecipe match = (IRecipe)this.matched.get();
+      IRecipe match = this.matched;
       return match == null ? ItemStack.EMPTY : match.getCraftingResult(inv);
    }
 

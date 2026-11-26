@@ -1,7 +1,7 @@
 package shadows.placebo.util;
 
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
-import java.util.concurrent.ThreadLocalRandom;
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

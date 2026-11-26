@@ -1,5 +1,6 @@
 package com.alcatrazescapee.notreepunching.common.items;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.alcatrazescapee.alcatrazcore.inventory.capability.ItemHandlerItem;
 import com.alcatrazescapee.alcatrazcore.item.ItemCore;
 import com.alcatrazescapee.notreepunching.NoTreePunching;
@@ -58,7 +59,7 @@ public class ItemSmallVessel extends ItemCore {
                   flag = false;
                }
 
-               tooltip.add(String.format(TextFormatting.GRAY + "%dx %s", stack1.getCount(), stack1.getDisplayName()));
+               tooltip.add(HString.format(TextFormatting.GRAY + "%dx %s", stack1.getCount(), stack1.getDisplayName()));
             }
          }
       }

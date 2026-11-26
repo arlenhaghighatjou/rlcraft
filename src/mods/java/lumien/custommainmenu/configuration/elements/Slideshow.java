@@ -1,7 +1,7 @@
 package lumien.custommainmenu.configuration.elements;
 
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import lumien.custommainmenu.configuration.GuiConfig;
 import lumien.custommainmenu.lib.textures.ITexture;
@@ -28,7 +28,7 @@ public class Slideshow extends Element {
 
    public void shuffle() {
       List<ITexture> list = Arrays.asList(this.ressources);
-      Collections.shuffle(list);
+      ThreadLocalRandom.current().shuffle(list);
       this.ressources = (ITexture[])list.toArray();
    }
 
