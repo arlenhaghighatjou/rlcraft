@@ -1,17 +1,20 @@
 package de.Whitedraco.switchbow.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.EntitySelectors;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
 public class WorldtickEvent {
    public WorldtickEvent() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(WorldTickEvent.class, this::onRenderTick);
+   }
+
    public void onRenderTick(WorldTickEvent event) {
       if (!event.world.isRemote) {
          List<EntityArrow> a = event.world.getEntities(EntityArrow.class, EntitySelectors.IS_ALIVE);

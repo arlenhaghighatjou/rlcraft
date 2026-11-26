@@ -1,11 +1,11 @@
 package de.Whitedraco.switchbow.renderer.arrow;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import de.Whitedraco.switchbow.entity.arrow.EntityArrowSplit;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -32,7 +32,7 @@ public class RenderArrowSplit<T extends EntityArrowSplit> extends Render<T> {
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       GlStateManager.pushMatrix();
       GlStateManager.enableBlend();
-      GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
       GlStateManager.disableLighting();
       GlStateManager.translate((float)x, (float)y, (float)z);
       GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks - 90.0F, 0.0F, 1.0F, 0.0F);
@@ -64,14 +64,14 @@ public class RenderArrowSplit<T extends EntityArrowSplit> extends Render<T> {
          GlStateManager.enableOutlineMode(this.getTeamColor(entity));
       }
 
-      GlStateManager.glNormal3f(0.05625F, 0.0F, 0.0F);
+      EaglercraftGPU.glNormal3f(0.05625F, 0.0F, 0.0F);
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexbuffer.pos(-7.0D, -2.0D, -2.0D).tex(0.0D, 0.15625D).endVertex();
       vertexbuffer.pos(-7.0D, -2.0D, 2.0D).tex(0.15625D, 0.15625D).endVertex();
       vertexbuffer.pos(-7.0D, 2.0D, 2.0D).tex(0.15625D, 0.3125D).endVertex();
       vertexbuffer.pos(-7.0D, 2.0D, -2.0D).tex(0.0D, 0.3125D).endVertex();
       tessellator.draw();
-      GlStateManager.glNormal3f(-0.05625F, 0.0F, 0.0F);
+      EaglercraftGPU.glNormal3f(-0.05625F, 0.0F, 0.0F);
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexbuffer.pos(-7.0D, 2.0D, -2.0D).tex(0.0D, 0.15625D).endVertex();
       vertexbuffer.pos(-7.0D, 2.0D, 2.0D).tex(0.15625D, 0.15625D).endVertex();
@@ -81,7 +81,7 @@ public class RenderArrowSplit<T extends EntityArrowSplit> extends Render<T> {
 
       for(int j = 0; j < 4; ++j) {
          GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
-         GlStateManager.glNormal3f(0.0F, 0.0F, 0.05625F);
+         EaglercraftGPU.glNormal3f(0.0F, 0.0F, 0.05625F);
          vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
          vertexbuffer.pos(-8.0D, -2.0D, 0.0D).tex(0.0D, 0.0D).endVertex();
          vertexbuffer.pos(8.0D, -2.0D, 0.0D).tex(0.5D, 0.0D).endVertex();

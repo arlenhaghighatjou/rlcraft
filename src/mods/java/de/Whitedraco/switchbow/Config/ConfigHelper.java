@@ -1,9 +1,11 @@
 package de.Whitedraco.switchbow.Config;
 
+import java.nio.charset.StandardCharsets;
+import java.io.Writer;
+import java.io.OutputStreamWriter;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import de.Whitedraco.switchbow.Config.variable.ConfigValue;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -13,8 +15,8 @@ public class ConfigHelper {
    public ConfigHelper() {
    }
 
-   public static void writeConfig(File ConfigPath, List<ConfigValue> list) throws IOException {
-      FileWriter fw = new FileWriter(ConfigPath);
+   public static void writeConfig(VFile2 ConfigPath, List<ConfigValue> list) throws IOException {
+      Writer fw = new OutputStreamWriter(ConfigPath.getOutputStream(), StandardCharsets.UTF_8);
       BufferedWriter bw = new BufferedWriter(fw);
 
       for(ConfigValue text : list) {

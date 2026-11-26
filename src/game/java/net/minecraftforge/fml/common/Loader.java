@@ -245,6 +245,7 @@ public class Loader
         mods.add(new FMLModContainer<>("reskillable", "Reskillable", "1.12.2-1.13.0", "", "[1.12.2]", "reskillable", codersafterdark.reskillable.Reskillable::new, codersafterdark.reskillable.Reskillable::handleModStateEvent).guiFactory(codersafterdark.reskillable.client.gui.GuiFactory::new));
         mods.add(new FMLModContainer<>("silentlib", "Silent Lib", "3.0.13", "required-after:forge@[14.23.3.2669,);", "[1.12.2]", "silentlib", net.silentchaos512.lib.SilentLib::new, net.silentchaos512.lib.SilentLib::handleModStateEvent));
         mods.add(new FMLModContainer<>("scalinghealth", "Scaling Health", "1.3.37", "required-after:forge@[14.23.5.2779,);required-after:silentlib@[3.0.13,);after:morpheus", "[1.12.2]", "scalinghealth", net.silentchaos512.scalinghealth.ScalingHealth::new, net.silentchaos512.scalinghealth.ScalingHealth::handleModStateEvent).guiFactory(net.silentchaos512.scalinghealth.gui.GuiFactoryScalingHealth::new));
+        mods.add(new FMLModContainer<>("switchbow", "switchbow", "1.6.8", "", "[1.12.2]", "switchbow", de.Whitedraco.switchbow.Initial::new, de.Whitedraco.switchbow.Initial::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

@@ -1,14 +1,14 @@
 package de.Whitedraco.switchbow.Config;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import de.Whitedraco.switchbow.Config.variable.ConfigValue;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 public class SwitchBowConfig {
    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
-   private static File path = new File("config/SwitchBow/General Settings.cfg");
+   private static VFile2 path = new VFile2("config/SwitchBow/General Settings.cfg");
    public static ConfigValue showScope = new ConfigValue("Show Scope when Enchant", true);
    public static ConfigValue scopeZoom = new ConfigValue("Zoom strength", 0.65F);
    public static ConfigValue arrowPicPosX = new ConfigValue("Pos.X from Image", -99);
@@ -50,7 +50,7 @@ public class SwitchBowConfig {
       return new ConfigValue(text);
    }
 
-   public static File getPath() {
+   public static VFile2 getPath() {
       return path;
    }
 }

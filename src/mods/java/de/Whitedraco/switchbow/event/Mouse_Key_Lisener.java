@@ -1,5 +1,6 @@
 package de.Whitedraco.switchbow.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import de.Whitedraco.switchbow.Initial;
 import de.Whitedraco.switchbow.helper.ArrowItemStackEqual;
 import de.Whitedraco.switchbow.helper.QuiverArrowHelper;
@@ -13,7 +14,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,7 +23,11 @@ public class Mouse_Key_Lisener {
    public Mouse_Key_Lisener() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(KeyInputEvent.class, this::keylisener);
+      bus.register(MouseEvent.class, this::shiftandscroll);
+   }
+
    public void keylisener(KeyInputEvent event) {
       EntityPlayerSP player = Minecraft.getMinecraft().player;
       ItemStack stack = ItemStack.EMPTY;
@@ -47,7 +51,6 @@ public class Mouse_Key_Lisener {
 
    }
 
-   @SubscribeEvent
    public void shiftandscroll(MouseEvent event) {
       EntityPlayerSP player = Minecraft.getMinecraft().player;
       if (event.getDwheel() != 0 && player != null && player.isSneaking()) {

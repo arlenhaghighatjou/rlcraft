@@ -1,10 +1,8 @@
 package de.Whitedraco.switchbow.item.arrow;
 
+import java.util.function.BiFunction;
 import de.Whitedraco.switchbow.Initial;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -17,14 +15,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemArrowsUpgrade extends ItemArrow {
-   private Class<? extends Entity> entityClass;
+   private BiFunction<World, EntityLivingBase, ? extends EntityArrow> factory;
    private boolean infinity;
 
-   public ItemArrowsUpgrade(String UnlocalizedName, Class<? extends Entity> entityClass) {
+   public ItemArrowsUpgrade(String UnlocalizedName, BiFunction<World, EntityLivingBase, ? extends EntityArrow> factory) {
       this.setRegistryName(UnlocalizedName);
       this.setCreativeTab(Initial.tabSwitchbow);
       this.setUnlocalizedName(UnlocalizedName);
-      this.entityClass = entityClass;
+      this.factory = factory;
    }
 
    @SideOnly(Side.CLIENT)
@@ -33,26 +31,7 @@ public class ItemArrowsUpgrade extends ItemArrow {
    }
 
    public EntityArrow createArrow(World worldIn, ItemStack stack, EntityLivingBase shooter) {
-      try {
-         Constructor ctor = this.entityClass.getDeclaredConstructor(World.class, EntityLivingBase.class);
-         ctor.setAccessible(true);
-         EntityArrow arrow = (EntityArrow)ctor.newInstance(worldIn, shooter);
-         return arrow;
-      } catch (NoSuchMethodException var6) {
-         var6.printStackTrace();
-      } catch (SecurityException var7) {
-         var7.printStackTrace();
-      } catch (InstantiationException var8) {
-         var8.printStackTrace();
-      } catch (IllegalAccessException var9) {
-         var9.printStackTrace();
-      } catch (IllegalArgumentException var10) {
-         var10.printStackTrace();
-      } catch (InvocationTargetException var11) {
-         var11.printStackTrace();
-      }
-
-      return null;
+      return this.factory.apply(worldIn, shooter);
    }
 
    public boolean isInfinite(ItemStack stack, ItemStack bow, EntityPlayer player) {

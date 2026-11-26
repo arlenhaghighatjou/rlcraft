@@ -1,5 +1,7 @@
 package de.Whitedraco.switchbow.event;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import de.Whitedraco.switchbow.EnchantInit;
 import de.Whitedraco.switchbow.PotionInit;
 import de.Whitedraco.switchbow.Config.SwitchBowConfig;
@@ -13,8 +15,6 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
@@ -27,7 +27,6 @@ import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderSpecificHandEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,7 +43,12 @@ public class ClientEventHandler {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(FOVUpdateEvent.class, this::onUpdateFOV);
+      bus.register(RenderSpecificHandEvent.class, this::RenderSpecificHand);
+      bus.register(RenderGameOverlayEvent.class, this::onRenderGameOverlay);
+   }
+
    public void onUpdateFOV(FOVUpdateEvent event) {
       float f = event.getFov();
       boolean flag = false;
@@ -76,7 +80,6 @@ public class ClientEventHandler {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public void RenderSpecificHand(RenderSpecificHandEvent event) {
       Minecraft mc = Minecraft.getMinecraft();
       Item activeItem = null;
@@ -95,7 +98,6 @@ public class ClientEventHandler {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public void onRenderGameOverlay(RenderGameOverlayEvent event) {
       if (!event.isCancelable() && event.getType() == ElementType.EXPERIENCE) {
          Minecraft mc = Minecraft.getMinecraft();
@@ -122,7 +124,7 @@ public class ClientEventHandler {
 
                GlStateManager.disableDepth();
                GlStateManager.depthMask(false);
-               GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+               GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                GlStateManager.disableAlpha();
                mc.getTextureManager().bindTexture(Scope_Texture);
@@ -144,7 +146,7 @@ public class ClientEventHandler {
                GlStateManager.disableDepth();
                GlStateManager.alphaFunc(519, 1.0F);
                GlStateManager.depthMask(false);
-               GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+               GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                GlStateManager.disableAlpha();
                mc.getTextureManager().bindTexture(Love_Texture);
@@ -182,7 +184,7 @@ public class ClientEventHandler {
                GlStateManager.disableDepth();
                GlStateManager.alphaFunc(519, 1.0F);
                GlStateManager.depthMask(false);
-               GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+               GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                GlStateManager.disableAlpha();
                mc.getTextureManager().bindTexture(Love_Texture);

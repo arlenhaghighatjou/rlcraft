@@ -1,12 +1,11 @@
 package de.Whitedraco.switchbow.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import de.Whitedraco.switchbow.entity.EntityLightningBoltSwitchBow;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -23,7 +22,7 @@ public class RenderLightnigBoltSwitchBow extends Render<EntityLightningBoltSwitc
       GlStateManager.disableTexture2D();
       GlStateManager.disableLighting();
       GlStateManager.enableBlend();
-      GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE);
       double[] adouble = new double[8];
       double[] adouble1 = new double[8];
       double d0 = 0.0D;

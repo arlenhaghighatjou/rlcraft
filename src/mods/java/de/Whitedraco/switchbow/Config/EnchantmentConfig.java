@@ -1,14 +1,14 @@
 package de.Whitedraco.switchbow.Config;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import de.Whitedraco.switchbow.Config.variable.ConfigValue;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 public class EnchantmentConfig {
    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
-   private static File path = new File("config/SwitchBow/Enchantment Settings.cfg");
+   private static VFile2 path = new VFile2("config/SwitchBow/Enchantment Settings.cfg");
    public static ConfigValue enchantPullingSpeedRegistry = new ConfigValue("Registry Enchantment 'Pull-Speed'", true);
    public static ConfigValue enchantPullingSpeedProcent = new ConfigValue("Increase Pulling-Speed by", 30);
    public static ConfigValue enchantPullingSpeedMax = new ConfigValue("Max. Enchantment-Level 'Pull-Speed'", 3);
@@ -33,7 +33,7 @@ public class EnchantmentConfig {
       return new ConfigValue(text);
    }
 
-   public static File getPath() {
+   public static VFile2 getPath() {
       return path;
    }
 }

@@ -1,15 +1,14 @@
 package de.Whitedraco.switchbow.Config;
 
+import java.io.StringReader;
+import java.io.Reader;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.google.common.collect.Lists;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 public class WriteLoadConfig {
-   private static File Ordner = new File("config/SwitchBow");
 
    public WriteLoadConfig() {
    }
@@ -23,24 +22,14 @@ public class WriteLoadConfig {
       readConfig(BlackListBurialBlockConfig.getPath(), 6);
    }
 
-   public static void readConfig(File filepath, int flag) throws IOException {
-      if (!Ordner.exists()) {
-         Ordner.mkdirs();
-      }
-
+   public static void readConfig(VFile2 filepath, int flag) throws IOException {
       if (flag == 3) {
-         filepath.mkdirs();
-
-         try {
-            CraftingConfig.writeConfigCrafting();
-         } catch (URISyntaxException var8) {
-            var8.printStackTrace();
-         }
+         CraftingConfig.writeConfigCrafting();
       }
 
       if (flag != 3) {
          if (!filepath.exists()) {
-            filepath.createNewFile();
+            filepath.setAllChars("");
             switch(flag) {
             case 1:
                SwitchBowConfig.writeConfigSwitchBow();
@@ -61,7 +50,7 @@ public class WriteLoadConfig {
             }
          }
 
-         FileReader fr = new FileReader(filepath);
+         Reader fr = new StringReader(filepath.getAllChars());
          BufferedReader br = new BufferedReader(fr);
          String zeile = "";
          List<String[]> readData = Lists.newArrayList();

@@ -30,7 +30,7 @@ public class GUIHandle implements IGuiHandler {
             return null;
          }
       case 1:
-         ItemStack itemstack = ItemStack.EMPTY;
+         itemstack = ItemStack.EMPTY;
          if (player.getHeldItemMainhand() != ItemStack.EMPTY && player.getHeldItemMainhand().getItem() instanceof ItemMagicQuiver) {
             itemstack = player.getHeldItemMainhand();
             return new ContainerMagicQuiver(player, itemstack);
@@ -72,7 +72,7 @@ public class GUIHandle implements IGuiHandler {
             return null;
          }
       case 1:
-         ItemStack item = ItemStack.EMPTY;
+         item = ItemStack.EMPTY;
          if (player.getHeldItemMainhand() != ItemStack.EMPTY && player.getHeldItemMainhand().getItem() instanceof ItemMagicQuiver) {
             item = player.getHeldItemMainhand();
             return new GUIMagicQuiver(player, item);

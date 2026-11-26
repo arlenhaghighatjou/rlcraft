@@ -10,7 +10,7 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityLockableLoot;
 import net.minecraft.util.NonNullList;
@@ -147,7 +147,7 @@ public class TileEntityArrowDispenser extends TileEntityLockableLoot implements 
       this.markDirty();
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity pkt) {
       NBTTagCompound tag = pkt.getNbtCompound();
       this.readUpdateTag(tag);
    }

@@ -1,5 +1,6 @@
 package de.Whitedraco.switchbow.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import de.Whitedraco.switchbow.Initial;
 import de.Whitedraco.switchbow.PotionInit;
 import de.Whitedraco.switchbow.Config.ArrowConfig;
@@ -23,7 +24,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventHandler {
    private final int procentArrowBlock = 75;
@@ -34,7 +34,12 @@ public class EventHandler {
       this.Love = new AttributeModifier(this.loveUUID, "Love", -1.0D, 1);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingUpdateEvent.class, this::onEntityUpdate);
+      bus.register(LootingLevelEvent.class, this::LootingLevelEvent);
+      bus.register(LivingAttackEvent.class, this::onEntityAttacked);
+   }
+
    public void onEntityUpdate(LivingUpdateEvent e) {
       EntityLivingBase eos = e.getEntityLiving();
       if (eos.isPotionActive(PotionInit.PotionFreeze)) {
@@ -106,7 +111,6 @@ public class EventHandler {
 
    }
 
-   @SubscribeEvent
    public void LootingLevelEvent(LootingLevelEvent e) {
       DamageSource damageSource = e.getDamageSource();
       if (damageSource != null && damageSource.getImmediateSource() != null) {
@@ -119,7 +123,6 @@ public class EventHandler {
 
    }
 
-   @SubscribeEvent
    public void onEntityAttacked(LivingAttackEvent e) {
       if (HelperMethodes.checkProbability(75) && HelperMethodes.hasFullArcherArmor(e.getEntityLiving()) && e.getSource().getImmediateSource() instanceof EntityArrow) {
          e.setCanceled(true);

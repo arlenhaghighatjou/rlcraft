@@ -1,5 +1,11 @@
 package de.Whitedraco.switchbow.Config;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.lax1dude.eaglercraft.v1_8.EaglerInputStream;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import java.util.List;
+import java.io.StringReader;
+import java.io.FileNotFoundException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -7,24 +13,11 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import de.Whitedraco.switchbow.Initial;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.nio.file.CopyOption;
-import java.nio.file.FileSystem;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
@@ -32,59 +25,39 @@ import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 
 public class CraftingConfig {
    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
-   private static File ConfigPathCraftingRecipes = new File("config/SwitchBow/Crafting-Recipes");
-   private static FileSystem filesystem;
+   private static VFile2 ConfigPathCraftingRecipes = new VFile2("config/SwitchBow/Crafting-Recipes");
 
    public CraftingConfig() {
    }
 
-   static String[] getResourceListing(Class clazz, String path) throws URISyntaxException, IOException {
-      URL dirURL = clazz.getClassLoader().getResource(path);
-      if (dirURL != null && dirURL.getProtocol().equals("file")) {
-         return (new File(dirURL.toURI())).list();
-      } else {
-         if (dirURL == null) {
-            String me = clazz.getName().replace(".", "/") + ".class";
-            dirURL = clazz.getClassLoader().getResource(me);
+   static String[] getResourceListing(String path) {
+      String prefix = "switchbow/" + path;
+      List<String> files = EagRuntime.listResources(prefix);
+      Set<String> result = new HashSet();
+
+      for(int i = 0, l = files.size(); i < l; ++i) {
+         String entry = files.get(i).substring(prefix.length());
+         int checkSubdir = entry.indexOf("/");
+         if (checkSubdir >= 0) {
+            entry = entry.substring(0, checkSubdir);
          }
 
-         if (dirURL.getProtocol().equals("jar")) {
-            String jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!"));
-            JarFile jar = new JarFile(URLDecoder.decode(jarPath, "UTF-8"));
-            Enumeration<JarEntry> entries = jar.entries();
-            Set<String> result = new HashSet();
-
-            while(entries.hasMoreElements()) {
-               String name = ((JarEntry)entries.nextElement()).getName();
-               if (name.startsWith(path)) {
-                  String entry = name.substring(path.length());
-                  int checkSubdir = entry.indexOf("/");
-                  if (checkSubdir >= 0) {
-                     entry = entry.substring(0, checkSubdir);
-                  }
-
-                  result.add(entry);
-               }
-            }
-
-            return (String[])result.toArray(new String[result.size()]);
-         } else {
-            throw new UnsupportedOperationException("Cannot list files for URL " + dirURL);
-         }
+         result.add(entry);
       }
+
+      return (String[])result.toArray(new String[result.size()]);
    }
 
-   public static void writeConfigCrafting() throws IOException, URISyntaxException {
-      String[] fileNames = getResourceListing(Initial.class, "assets/switchbow/recipes_template/");
+   public static void writeConfigCrafting() throws IOException {
+      String[] fileNames = getResourceListing("assets/switchbow/recipes_template/");
 
       for(int i = 0; i < fileNames.length; ++i) {
          if ("json".equals(FilenameUtils.getExtension(fileNames[i]))) {
             String recipeName = fileNames[i];
-            InputStream reader = Initial.class.getResourceAsStream("/assets/switchbow/recipes_template/" + recipeName);
+            InputStream reader = EagRuntime.getResourceStream("/switchbow/assets/switchbow/recipes_template/" + recipeName);
             copy(reader, "config/SwitchBow/Crafting-Recipes/" + recipeName);
          }
       }
@@ -92,19 +65,24 @@ public class CraftingConfig {
    }
 
    public static void readCraftingConfig() throws IOException {
-      Iterator<Path> iterator = Files.walk(ConfigPathCraftingRecipes.toPath()).iterator();
+      Iterator<String> iterator = ConfigPathCraftingRecipes.listFilenames(true).iterator();
       Gson gson = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
 
       while(iterator.hasNext()) {
-         Path path1 = (Path)iterator.next();
-         if ("json".equals(FilenameUtils.getExtension(path1.toString()))) {
-            Path path2 = ConfigPathCraftingRecipes.toPath().relativize(path1);
-            String s = FilenameUtils.removeExtension(path2.toString()).replaceAll("\\\\", "/");
+         String path1 = (String)iterator.next();
+         if ("json".equals(FilenameUtils.getExtension(path1))) {
+            String path2 = path1.substring(ConfigPathCraftingRecipes.getPath().length() + 1);
+            String s = FilenameUtils.removeExtension(path2).replaceAll("\\\\", "/");
             ResourceLocation resourcelocation = new ResourceLocation("switchbow".toLowerCase(), s);
             BufferedReader bufferedreader = null;
 
             try {
-               bufferedreader = Files.newBufferedReader(path1);
+               String text = (new VFile2(path1)).getAllChars();
+               if (text == null) {
+                  throw new FileNotFoundException(path1);
+               }
+
+               bufferedreader = new BufferedReader(new StringReader(text));
                Object recipe = parseRecipeJson((JsonObject)JsonUtils.fromJson(gson, bufferedreader, JsonObject.class), s);
                if (recipe != null) {
                   ForgeRegistries.RECIPES.register((IRecipe)recipe);
@@ -116,8 +94,6 @@ public class CraftingConfig {
             } catch (IOException var14) {
                System.out.println("Couldn't read recipe " + resourcelocation + " from " + path1);
                boolean flag = false;
-            } finally {
-               IOUtils.closeQuietly(bufferedreader);
             }
          }
       }
@@ -145,12 +121,12 @@ public class CraftingConfig {
 
    public static boolean copy(InputStream source, String destination) {
       boolean succeess = true;
-      File tester = new File(destination);
+      VFile2 tester = new VFile2(destination);
 
       try {
          if (!tester.exists() && source != null) {
             System.out.println("Copying Recipe ->" + source + "\n\tto ->" + destination);
-            Files.copy(source, Paths.get(destination), new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
+            tester.setAllBytes(EaglerInputStream.inputStreamToBytes(source));
          }
       } catch (IOException var5) {
          succeess = false;
@@ -159,7 +135,7 @@ public class CraftingConfig {
       return succeess;
    }
 
-   public static File getPath() {
+   public static VFile2 getPath() {
       return ConfigPathCraftingRecipes;
    }
 }

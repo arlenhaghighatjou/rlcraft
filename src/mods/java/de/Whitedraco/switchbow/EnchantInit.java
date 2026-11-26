@@ -6,7 +6,6 @@ import de.Whitedraco.switchbow.enchant.EnchantCooldownReduce;
 import de.Whitedraco.switchbow.enchant.EnchantPullSpeed;
 import java.util.ArrayList;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 
 public class EnchantInit {
@@ -35,7 +34,6 @@ public class EnchantInit {
 
    public static void registerEnchant(Register<Enchantment> event) {
       for(Enchantment enchant : enchantList) {
-         MinecraftForge.EVENT_BUS.register(enchant);
          event.getRegistry().register(enchant);
       }
 

@@ -1,12 +1,11 @@
 package de.Whitedraco.switchbow.gui;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,7 +23,7 @@ public class GUIArrowOverlay extends GuiContainer {
       GlStateManager.disableDepth();
       GlStateManager.alphaFunc(519, 1.0F);
       GlStateManager.depthMask(false);
-      GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+      GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       GlStateManager.disableAlpha();
       this.mc.getTextureManager().bindTexture(Love_Texture);
