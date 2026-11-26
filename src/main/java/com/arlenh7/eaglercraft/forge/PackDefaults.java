@@ -1,7 +1,9 @@
 package com.arlenh7.eaglercraft.forge;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONArray;
 
@@ -25,17 +27,25 @@ public final class PackDefaults
 	public static void install()
 	{
 		List<String> files = EagRuntime.listResources(ROOT);
+		Set<String> listed = new HashSet<>();
+		Set<String> existing = new HashSet<>();
 		for (int i = 0, l = files.size(); i < l; ++i)
 		{
 			String path = files.get(i);
-			if (path.startsWith(PACKS) || path.startsWith(ROOT + "options"))
+			int slash = path.indexOf('/', ROOT.length());
+			if (slash == -1 || path.startsWith(PACKS))
 			{
 				continue;
 			}
-			VFile2 target = new VFile2(path.substring(ROOT.length()));
-			if (!target.exists())
+			String target = path.substring(ROOT.length());
+			String directory = target.substring(0, slash - ROOT.length());
+			if (listed.add(directory))
 			{
-				target.setAllBytes(EagRuntime.getRequiredResourceBytes(path));
+				existing.addAll(new VFile2(directory).listFilenames(true));
+			}
+			if (!existing.contains(target))
+			{
+				new VFile2(target).setAllBytes(EagRuntime.getRequiredResourceBytes(path));
 			}
 		}
 	}
@@ -51,8 +61,17 @@ public final class PackDefaults
 		{
 			return;
 		}
-		String options = EagRuntime.getResourceString(ROOT + "options.txt");
-		JSONArray enabled = new JSONArray(options.substring(options.indexOf("resourcePacks:") + 14, options.indexOf('\n', options.indexOf("resourcePacks:"))).trim());
+		JSONArray enabled = new JSONArray();
+		List<String> options = EagRuntime.getResourceLines(ROOT + "options.txt");
+		for (int i = 0, l = options.size(); i < l; ++i)
+		{
+			String line = options.get(i);
+			if (line.startsWith("resourcePacks:"))
+			{
+				enabled = new JSONArray(line.substring(14));
+				break;
+			}
+		}
 		String[] names = new String[enabled.length()];
 		for (int i = 0, l = files.size(); i < l; ++i)
 		{
