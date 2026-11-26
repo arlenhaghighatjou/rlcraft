@@ -182,7 +182,7 @@ public class Loader
         mods.add(new FMLModContainer<>("autoreglib", "AutoRegLib", "1.3-32", "required-after:forge@[14.21.1.2387,)", "[1.12.2]", "autoreglib", AutoRegLib::new, AutoRegLib::handleModStateEvent));
         mods.add(new FMLModContainer<>("placebo", "Placebo", "1.6.0", "", "[1.12.2]", "placebo", Placebo::new, Placebo::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("neat", "Neat", "1.4-17", "", "[1.12.2]", "neat", Neat::new, Neat::handleModStateEvent).clientSideOnly().guiFactory(GuiFactory::new));
-        mods.add(new FMLModContainer<>("craftablechainmail", "craftablechainmail", "1.0", "", "[1.12.2]", "craftablechainmail", moddy10.craftablechainmail.CraftableChainmail::new, moddy10.craftablechainmail.CraftableChainmail::handleModStateEvent));
+        mods.add(new FMLModContainer<>("craftablechainmail", "", "", "", "[1.12.2]", "craftablechainmail", moddy10.craftablechainmail.CraftableChainmail::new, moddy10.craftablechainmail.CraftableChainmail::handleModStateEvent));
         mods.add(new FMLModContainer<>("shieldbreak", "ShieldBreak", "1.1.3", "", "", "shieldbreak", shieldbreak.core.ShieldBreak::new, shieldbreak.core.ShieldBreak::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("anvilpatch", "Anvil Patch - Lawful", "1.1.1", "", "", "anvilpatch", lumberwizard.anvilpatch.AnvilPatch::new, lumberwizard.anvilpatch.AnvilPatch::handleModStateEvent));
         mods.add(new FMLModContainer<>("collisiondamage", "CollisionDamage", "1.2.2", "", "", "collisiondamage", collisiondamage.core.CollisionDamage::new, collisiondamage.core.CollisionDamage::handleModStateEvent));
@@ -197,23 +197,23 @@ public class Loader
         mods.add(new FMLModContainer<>("xpbook", "XP Tome", "v1.1.6", "", "[1.12.2]", "xptome-1.12.2-v1.1.6", bl4ckscor3.mod.xptome.XPTome::new, bl4ckscor3.mod.xptome.XPTome::handleModStateEvent));
         mods.add(new FMLModContainer<>("sit", "Sit", "v1.3", "", "[1.12.2]", "sit-1.12.2-v1.3", bl4ckscor3.mod.sit.Sit::new, bl4ckscor3.mod.sit.Sit::handleModStateEvent));
         mods.add(new FMLModContainer<>("friendlyendermite", "Friendly Endermite", "1.0", "", "[1.12.2]", "friendlyendermite", com.creativemd.friendlyendermite.FriendlyEndermite::new, com.creativemd.friendlyendermite.FriendlyEndermite::handleModStateEvent).acceptableRemoteVersions("*"));
-        mods.add(new FMLModContainer<>("helpfixer", "HelpFixer", "1.12.1-1.5.18", "", "[1.12.2]", "helpfixer", com.matthewprenger.helpfixer.HelpFixer::new, com.matthewprenger.helpfixer.HelpFixer::handleModStateEvent).acceptableRemoteVersions("*"));
+        mods.add(new FMLModContainer<>("helpfixer", "HelpFixer", "", "", "[1.12.1]", "helpfixer", com.matthewprenger.helpfixer.HelpFixer::new, com.matthewprenger.helpfixer.HelpFixer::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("foodexpansion", "Food Expansion", "1.3", "", "[1.12.2]", "fe", lellson.foodexpansion.FoodExpansion::new, lellson.foodexpansion.FoodExpansion::handleModStateEvent));
         mods.add(new FMLModContainer<>("attributefix", "Attribute Fix", "1.0.12", "", "", "attributefix", net.darkhax.attributefix.AttributeFix::new, net.darkhax.attributefix.AttributeFix::handleModStateEvent));
         mods.add(new FMLModContainer<>("enchdesc", "Enchantment Descriptions", "1.1.20", "", "[1.12.2]", "enchdesc", net.darkhax.enchdesc.EnchantmentDescriptions::new, net.darkhax.enchdesc.EnchantmentDescriptions::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("roughtweaks", "Rough Tweaks", "1.0", "", "[1.12.2]", "roughtweaks", lellson.roughTweaks.RoughTweaks::new, lellson.roughTweaks.RoughTweaks::handleModStateEvent));
-        mods.add(new FMLModContainer<>("alcatrazcore", "Alcatraz Core", "1.0.4", com.alcatrazescapee.alcatrazcore.AlcatrazCore.DEPENDENCIES, "[1.12.2]", "alcatrazcore", com.alcatrazescapee.alcatrazcore.AlcatrazCore::new, com.alcatrazescapee.alcatrazcore.AlcatrazCore::handleModStateEvent));
-        mods.add(new FMLModContainer<>("notreepunching", "No Tree Punching", "2.0.21", com.alcatrazescapee.notreepunching.NoTreePunching.DEPENDENCIES, "[1.12.2]", "notreepunching", com.alcatrazescapee.notreepunching.NoTreePunching::new, com.alcatrazescapee.notreepunching.NoTreePunching::handleModStateEvent));
+        mods.add(new FMLModContainer<>("alcatrazcore", "Alcatraz Core", "1.0.4", com.alcatrazescapee.alcatrazcore.AlcatrazCore.DEPENDENCIES, "[1.12.2]", "alcatrazcore", com.alcatrazescapee.alcatrazcore.AlcatrazCore::new, com.alcatrazescapee.alcatrazcore.AlcatrazCore::handleModStateEvent).useMetadata(true));
+        mods.add(new FMLModContainer<>("notreepunching", "No Tree Punching", "2.0.21", com.alcatrazescapee.notreepunching.NoTreePunching.DEPENDENCIES, "[1.12.2]", "notreepunching", com.alcatrazescapee.notreepunching.NoTreePunching::new, com.alcatrazescapee.notreepunching.NoTreePunching::handleModStateEvent).useMetadata(true));
         mods.add(new FMLModContainer<>("toastcontrol", "Toast Control", "1.8.1", shadows.toaster.ToastControl.DEPS, "[1.12.2]", "toastcontrol", shadows.toaster.ToastControl::new, shadows.toaster.ToastControl::handleModStateEvent).clientSideOnly());
-        mods.add(new FMLModContainer<>("tumbleweed", "Tumbleweed", "1.12-0.4.7", "", "[1.12.2]", "tumbleweed", net.konwboy.tumbleweed.Tumbleweed::new, net.konwboy.tumbleweed.Tumbleweed::handleModStateEvent));
-        mods.add(new FMLModContainer<>("blockoverlayfix", "Block Overlay Fix", "1.0.0", "", "[1.12.2]", "blockoverlayfix", meldexun.blockoverlayfix.BlockOverlayFix::new, meldexun.blockoverlayfix.BlockOverlayFix::handleModStateEvent).clientSideOnly());
+        mods.add(new FMLModContainer<>("tumbleweed", "Tumbleweed", "1.12-0.4.7", "", "[1.11,1.12.2]", "tumbleweed", net.konwboy.tumbleweed.Tumbleweed::new, net.konwboy.tumbleweed.Tumbleweed::handleModStateEvent).useMetadata(true));
+        mods.add(new FMLModContainer<>("blockoverlayfix", "", "", "", "", "blockoverlayfix", meldexun.blockoverlayfix.BlockOverlayFix::new, meldexun.blockoverlayfix.BlockOverlayFix::handleModStateEvent));
         mods.add(new FMLModContainer<>("potionfingers", "Potion Fingers", "r1.0-8", vazkii.potionfingers.PotionFingers.DEPENDENCIES, "[1.12.2]", "potionfingers", vazkii.potionfingers.PotionFingers::new, vazkii.potionfingers.PotionFingers::handleModStateEvent));
-        mods.add(new FMLModContainer<>("chunkanimator", "Chunk Animator", "1.12.2-1.2", "", "[1.12.2]", "chunkanimator", lumien.chunkanimator.ChunkAnimator::new, lumien.chunkanimator.ChunkAnimator::handleModStateEvent).clientSideOnly().guiFactory(lumien.chunkanimator.config.ChunkAnimatorGuiFactory::new));
+        mods.add(new FMLModContainer<>("chunkanimator", "Chunk Animator", "1.12.2-1.2", "", "", "chunkanimator", lumien.chunkanimator.ChunkAnimator::new, lumien.chunkanimator.ChunkAnimator::handleModStateEvent).clientSideOnly().guiFactory(lumien.chunkanimator.config.ChunkAnimatorGuiFactory::new));
         mods.add(new FMLModContainer<>("resourceloader", "Resource Loader", "1.5.3", "", "[1.12,1.13)", "resourceloader", lumien.resourceloader.ResourceLoader::new, lumien.resourceloader.ResourceLoader::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("bnbgaminglib", "BNBGamingLib", "2.17.6", "after:bnbgamingcore", "[1.12.2]", "bnbgaminglib", com.bloodnbonesgaming.lib.BNBGamingLib::new, com.bloodnbonesgaming.lib.BNBGamingLib::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("custommainmenu", "Custom Main Menu", "2.0.9.1", "", "[1.12.2]", "custommainmenu", lumien.custommainmenu.CustomMainMenu::new, lumien.custommainmenu.CustomMainMenu::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("trumpetskeleton", "Trumpet Skeleton", "1.12-1.0.2.1", "required-after:forge@[14.21.1.2387,)", "[1.12,1.13)", "trumpetskeleton", com.jamieswhiteshirt.trumpetskeleton.TrumpetSkeleton::new, com.jamieswhiteshirt.trumpetskeleton.TrumpetSkeleton::handleModStateEvent));
-        mods.add(new FMLModContainer<>("playerbosses", "playerbosses", "1.0", "", "[1.12.2]", "examplemod", com.lothrazar.playerbosses.ModBosses::new, com.lothrazar.playerbosses.ModBosses::handleModStateEvent));
+        mods.add(new FMLModContainer<>("playerbosses", "", "", "", "[1.12.2]", "examplemod", com.lothrazar.playerbosses.ModBosses::new, com.lothrazar.playerbosses.ModBosses::handleModStateEvent));
         mods.add(new FMLModContainer<>("legendarytooltips", "Legendary Tooltips", "1.1.9", "", "[1.12.2]", "legendarytooltips", com.anthonyhilyard.legendarytooltips.LegendaryTooltips::new, com.anthonyhilyard.legendarytooltips.LegendaryTooltips::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("controlling", "Controlling", "3.0.10", "", "[1.12.2]", "controlling", us.getfluxed.controlsearch.Control::new, us.getfluxed.controlsearch.Control::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("testdummy", "MmmMmmMmmMmm", "1.12", "", "[1.12,1.13)", "testdummy", boni.dummy.TestDummyMod::new, boni.dummy.TestDummyMod::handleModStateEvent));
@@ -221,9 +221,17 @@ public class Loader
         mods.add(new FMLModContainer<>("spawnercontrol", "Mob Spawner Control", "1.6.3b", "required-after:forge@[14.23.2.2596,);", "[1.12, 1.13)", "spawnercontrol", ladysnake.spawnercontrol.SpawnerControl::new, ladysnake.spawnercontrol.SpawnerControl::handleModStateEvent).acceptableRemoteVersions("*").guiFactory(ladysnake.spawnercontrol.client.MSCConfigFactory::new));
         mods.add(new FMLModContainer<>("surge", "Surge", "2.0.79", "", "[1.12.2]", "surge", net.darkhax.surge.Surge::new, net.darkhax.surge.Surge::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("tnt_utilities", "TNTUtils", "1.2.3", "", "[1.12,1.13)", "tnt_utilities", ljfa.tntutils.TNTUtils::new, ljfa.tntutils.TNTUtils::handleModStateEvent).acceptableRemoteVersions("*").guiFactory(ljfa.tntutils.gui.TntuGuiFactory::new));
-        mods.add(new FMLModContainer<>("waystones", "Waystones", "1.0", "", "[1.12]", "waystones", net.blay09.mods.waystones.Waystones::new, net.blay09.mods.waystones.Waystones::handleModStateEvent));
+        mods.add(new FMLModContainer<>("waystones", "Waystones", "", "", "[1.12]", "waystones", net.blay09.mods.waystones.Waystones::new, net.blay09.mods.waystones.Waystones::handleModStateEvent));
         mods.add(new FMLModContainer<>("sereneseasons", "Serene Seasons", "1.2.18", "required-after:forge@[14.23.5.2768,)", "[1.12.2]", "sereneseasons", sereneseasons.core.SereneSeasons::new, sereneseasons.core.SereneSeasons::handleModStateEvent));
         mods.add(new FMLModContainer<>("toolbelt", "toolbelt", "1.9.14", "after:baubles;after:jei@[4.6,)", "[1.12.0,1.13.0)", "toolbelt", gigaherz.toolbelt.ToolBelt::new, gigaherz.toolbelt.ToolBelt::handleModStateEvent).guiFactory(gigaherz.toolbelt.client.config.ConfigGuiFactory::new));
+        for (int i = 0, l = mods.size(); i < l; ++i)
+        {
+            ModContainer mod = mods.get(i);
+            if (mod instanceof FMLModContainer)
+            {
+                ((FMLModContainer<?>)mod).bindMetadata();
+            }
+        }
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }

@@ -58,7 +58,7 @@ public class FMLModContainer<T> implements ModContainer
     private T modInstance;
     private ModMetadata modMetadata;
     private String internalVersion;
-    private boolean overridesMetadata;
+    private boolean overridesMetadata = true;
     private boolean enabled = true;
     private boolean clientSideOnly;
     private boolean serverSideOnly;
@@ -84,14 +84,6 @@ public class FMLModContainer<T> implements ModContainer
         this.factory = factory;
         this.handler = handler;
         sanityCheckModId();
-        try (InputStream info = EagRuntime.getResourceStream("/" + folder + "/mcmod.info"))
-        {
-            bindMetadata(MetadataCollection.from(info, folder));
-        }
-        catch (java.io.IOException e)
-        {
-            throw new LoaderException(e);
-        }
     }
 
     public FMLModContainer<T> clientSideOnly()
@@ -174,6 +166,18 @@ public class FMLModContainer<T> implements ModContainer
     public ModMetadata getMetadata()
     {
         return modMetadata;
+    }
+
+    public void bindMetadata()
+    {
+        try (InputStream info = EagRuntime.getResourceStream("/" + folder + "/mcmod.info"))
+        {
+            bindMetadata(MetadataCollection.from(info, folder));
+        }
+        catch (java.io.IOException e)
+        {
+            throw new LoaderException(e);
+        }
     }
 
     @Override
