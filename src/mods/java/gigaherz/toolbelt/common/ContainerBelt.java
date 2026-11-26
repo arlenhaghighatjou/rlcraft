@@ -1,8 +1,10 @@
 package gigaherz.toolbelt.common;
 
 import gigaherz.toolbelt.BeltFinder;
+import gigaherz.toolbelt.belt.ItemToolBelt;
 import gigaherz.toolbelt.belt.ToolBeltInventory;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -12,6 +14,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 public class ContainerBelt extends Container {
    public final int beltSlots;
+   private final ItemStack stack;
+   private final int blockedSlot;
 
    public ContainerBelt(IInventory playerInventory, int blockedSlot, ItemStack heldItem) {
       ToolBeltInventory beltInventory = (ToolBeltInventory)heldItem.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, (EnumFacing)null);
@@ -23,6 +27,8 @@ public class ContainerBelt extends Container {
       }
 
       this.bindPlayerInventory(playerInventory, blockedSlot);
+      this.stack = heldItem;
+      this.blockedSlot = blockedSlot;
    }
 
    private void bindPlayerInventory(IInventory playerInventory, int blockedSlot) {
@@ -48,7 +54,11 @@ public class ContainerBelt extends Container {
    }
 
    public boolean canInteractWith(EntityPlayer playerIn) {
-      return true;
+      return !this.stack.isEmpty() && playerIn.inventory.getStackInSlot(this.blockedSlot).equals(this.stack);
+   }
+
+   public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+      return slotId >= 0 && this.getSlot(slotId) != null && this.getSlot(slotId).getStack().getItem() instanceof ItemToolBelt ? ItemStack.EMPTY : super.slotClick(slotId, dragType, clickTypeIn, player);
    }
 
    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
