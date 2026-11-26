@@ -1,8 +1,7 @@
 package tschipp.callablehorses;
 
-import java.util.concurrent.Callable;
+import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -18,29 +17,28 @@ import tschipp.callablehorses.common.capabilities.storedhorse.IStoredHorse;
 import tschipp.callablehorses.common.capabilities.storedhorse.StoredHorse;
 import tschipp.callablehorses.network.HorseCapSyncPacket;
 import tschipp.callablehorses.network.OwnerSyncShowStatsPacket;
+import tschipp.callablehorses.common.worlddata.StoredHorsesWorldData;
 import tschipp.callablehorses.network.PressKeyPacket;
 
 public class CommonProxy {
    public CommonProxy() {
    }
 
-   @EventHandler
    public void preInit(FMLPreInitializationEvent event) {
       CallableHorses.network = NetworkRegistry.INSTANCE.newSimpleChannel("CallableHorses");
-      CallableHorses.network.registerMessage(PressKeyPacket.class, PressKeyPacket.class, 0, Side.SERVER);
-      CallableHorses.network.registerMessage(HorseCapSyncPacket.class, HorseCapSyncPacket.class, 1, Side.CLIENT);
-      CallableHorses.network.registerMessage(OwnerSyncShowStatsPacket.class, OwnerSyncShowStatsPacket.class, 2, Side.CLIENT);
+      CallableHorses.network.registerMessage(new PressKeyPacket(), PressKeyPacket.class, PressKeyPacket::new, 0, Side.SERVER);
+      CallableHorses.network.registerMessage(new HorseCapSyncPacket(), HorseCapSyncPacket.class, HorseCapSyncPacket::new, 1, Side.CLIENT);
+      CallableHorses.network.registerMessage(new OwnerSyncShowStatsPacket(), OwnerSyncShowStatsPacket.class, OwnerSyncShowStatsPacket::new, 2, Side.CLIENT);
       WhistleSounds.registerSounds();
+      MapStorage.storageProviders.put(StoredHorsesWorldData.class, StoredHorsesWorldData::new);
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       CapabilityManager.INSTANCE.register(IHorseOwner.class, new HorseOwnerStorage(), HorseOwner::new);
       CapabilityManager.INSTANCE.register(IStoredHorse.class, new HorseStorage(), StoredHorse::new);
       NetworkRegistry.INSTANCE.registerGuiHandler(CallableHorses.instance, new GuiHandler());
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent e) {
    }
 }

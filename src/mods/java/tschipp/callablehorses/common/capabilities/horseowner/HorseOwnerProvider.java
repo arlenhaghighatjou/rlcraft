@@ -1,14 +1,13 @@
 package tschipp.callablehorses.common.capabilities.horseowner;
 
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 public class HorseOwnerProvider implements ICapabilitySerializable {
-   @CapabilityInject(IHorseOwner.class)
-   public static final Capability<IHorseOwner> OWNER_CAPABILITY = null;
+   public static Capability<IHorseOwner> OWNER_CAPABILITY = null;
    private IHorseOwner instance;
 
    public HorseOwnerProvider() {
@@ -29,5 +28,9 @@ public class HorseOwnerProvider implements ICapabilitySerializable {
 
    public void deserializeNBT(NBTBase nbt) {
       OWNER_CAPABILITY.getStorage().readNBT(OWNER_CAPABILITY, this.instance, (EnumFacing)null, nbt);
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(IHorseOwner.class, capability -> OWNER_CAPABILITY = capability);
    }
 }

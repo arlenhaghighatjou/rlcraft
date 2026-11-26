@@ -1,8 +1,6 @@
 package tschipp.callablehorses.client.gui;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
@@ -16,7 +14,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import tschipp.callablehorses.common.capabilities.horseowner.IHorseOwner;
@@ -46,18 +43,11 @@ public class GuiStatViewer extends GuiScreen {
       IItemHandler horseInventory = (IItemHandler)this.horse.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, (EnumFacing)null);
       this.horse.setHorseSaddled(!horseInventory.getStackInSlot(0).isEmpty() && this.horse.canBeSaddled());
       if (this.horse instanceof EntityLlama) {
-         Method setColor = ReflectionHelper.findMethod(EntityLlama.class, "setColor", "setColor", new Class[]{EnumDyeColor.class});
-         if (setColor != null) {
-            try {
-               ItemStack stack = horseInventory.getStackInSlot(1);
-               if (this.horse.isArmor(stack)) {
-                  setColor.invoke(this.horse, EnumDyeColor.byMetadata(stack.getMetadata()));
-               } else {
-                  setColor.invoke(this.horse, (EnumDyeColor)null);
-               }
-            } catch (IllegalArgumentException | InvocationTargetException | IllegalAccessException var5) {
-               var5.printStackTrace();
-            }
+         ItemStack stack = horseInventory.getStackInSlot(1);
+         if (this.horse.isArmor(stack)) {
+            ((EntityLlama)this.horse).setColor(EnumDyeColor.byMetadata(stack.getMetadata()));
+         } else {
+            ((EntityLlama)this.horse).setColor((EnumDyeColor)null);
          }
       }
 

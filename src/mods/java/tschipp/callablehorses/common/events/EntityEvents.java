@@ -1,5 +1,6 @@
 package tschipp.callablehorses.common.events;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,8 +23,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
 import net.minecraftforge.event.entity.player.PlayerEvent.StopTracking;
 import net.minecraftforge.event.world.ChunkEvent.Load;
 import net.minecraftforge.event.world.ChunkEvent.Unload;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import tschipp.callablehorses.CallableHorses;
 import tschipp.callablehorses.common.HorseManager;
 import tschipp.callablehorses.common.capabilities.horseowner.HorseOwnerProvider;
@@ -34,14 +33,23 @@ import tschipp.callablehorses.common.config.CallableHorsesConfig;
 import tschipp.callablehorses.common.helper.HorseHelper;
 import tschipp.callablehorses.common.worlddata.StoredHorsesWorldData;
 
-@EventBusSubscriber(
-   modid = "callablehorses"
-)
 public class EntityEvents {
    public EntityEvents() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, EntityEvents::onAttachCaps);
+      bus.register(Load.class, EntityEvents::onChunkLoad);
+      bus.register(Clone.class, EntityEvents::onClone);
+      bus.register(Unload.class, EntityEvents::onChunkUnload);
+      bus.register(StopTracking.class, EntityEvents::onStopTracking);
+      bus.register(StartTracking.class, EntityEvents::onStartTracking);
+      bus.register(LivingUpdateEvent.class, EntityEvents::onLivingUpdate);
+      bus.register(LivingDeathEvent.class, EntityEvents::onLivingDeath);
+      bus.register(EntityJoinWorldEvent.class, EntityEvents::onJoinWorld);
+      bus.register(LivingDropsEvent.class, EntityEvents::onEntityDrop);
+   }
+
    public static void onAttachCaps(AttachCapabilitiesEvent<Entity> event) {
       if (event.getObject() instanceof EntityPlayer) {
          event.addCapability(new ResourceLocation("callablehorses", "horse_owner"), new HorseOwnerProvider());
@@ -53,13 +61,12 @@ public class EntityEvents {
 
    }
 
-   @SubscribeEvent
    public static void onChunkLoad(Load event) {
       World world = event.getWorld();
       if (!world.isRemote) {
          Chunk chk = event.getChunk();
          ClassInheritanceMultiMap<Entity>[] entitylists = chk.getEntityLists();
-         ClassInheritanceMultiMap[] var4 = entitylists;
+         ClassInheritanceMultiMap<Entity>[] var4 = entitylists;
          int var5 = entitylists.length;
 
          for(int var6 = 0; var6 < var5; ++var6) {
@@ -87,7 +94,6 @@ public class EntityEvents {
 
    }
 
-   @SubscribeEvent
    public static void onClone(Clone event) {
       EntityPlayer original = event.getOriginal();
       EntityPlayer newPlayer = event.getEntityPlayer();
@@ -98,13 +104,12 @@ public class EntityEvents {
       newHorse.setStorageUUID(oldHorse.getStorageUUID());
    }
 
-   @SubscribeEvent
    public static void onChunkUnload(Unload event) {
       World world = event.getWorld();
       if (!world.isRemote) {
          Chunk chk = event.getChunk();
          ClassInheritanceMultiMap<Entity>[] entitylists = chk.getEntityLists();
-         ClassInheritanceMultiMap[] var4 = entitylists;
+         ClassInheritanceMultiMap<Entity>[] var4 = entitylists;
          int var5 = entitylists.length;
 
          for(int var6 = 0; var6 < var5; ++var6) {
@@ -116,7 +121,6 @@ public class EntityEvents {
 
    }
 
-   @SubscribeEvent
    public static void onStopTracking(StopTracking event) {
       EntityPlayer player = event.getEntityPlayer();
       World world = player.world;
@@ -127,7 +131,6 @@ public class EntityEvents {
 
    }
 
-   @SubscribeEvent
    public static void onStartTracking(StartTracking event) {
       EntityPlayer player = event.getEntityPlayer();
       if (!player.world.isRemote) {
@@ -139,7 +142,6 @@ public class EntityEvents {
 
    }
 
-   @SubscribeEvent
    public static void onLivingUpdate(LivingUpdateEvent event) {
       if (CallableHorsesConfig.settings.enableDebug || CallableHorsesConfig.settings.continuousAntiDupeChecking) {
          Entity e = event.getEntityLiving();
@@ -162,7 +164,6 @@ public class EntityEvents {
 
    }
 
-   @SubscribeEvent
    public static void onLivingDeath(LivingDeathEvent event) {
       Entity e = event.getEntity();
       if (!e.world.isRemote && e instanceof AbstractHorse) {
@@ -189,7 +190,6 @@ public class EntityEvents {
 
    }
 
-   @SubscribeEvent
    public static void onJoinWorld(EntityJoinWorldEvent event) {
       Entity joiningEntity = event.getEntity();
       World world = event.getWorld();
@@ -222,7 +222,6 @@ public class EntityEvents {
 
    }
 
-   @SubscribeEvent
    public static void onEntityDrop(LivingDropsEvent event) {
       if (CallableHorsesConfig.settings.disableHorseDrops) {
          Entity e = event.getEntity();

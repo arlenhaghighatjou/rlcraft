@@ -356,7 +356,7 @@ public class EntityLlama extends AbstractChestHorse implements IRangedAttackMob
         }
     }
 
-    private void setColor(@Nullable EnumDyeColor color)
+    public void setColor(@Nullable EnumDyeColor color)
     {
         this.dataManager.set(DATA_COLOR_ID, Integer.valueOf(color == null ? -1 : color.getMetadata()));
     }

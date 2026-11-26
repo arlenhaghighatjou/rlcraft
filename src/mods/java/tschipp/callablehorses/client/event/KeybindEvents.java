@@ -1,8 +1,7 @@
 package tschipp.callablehorses.client.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -12,17 +11,16 @@ import tschipp.callablehorses.common.config.CallableHorsesConfig;
 import tschipp.callablehorses.network.PressKeyPacket;
 
 @SideOnly(Side.CLIENT)
-@EventBusSubscriber(
-   value = {Side.CLIENT},
-   modid = "callablehorses"
-)
 public class KeybindEvents {
    private static long lastPressTime = 0L;
 
    public KeybindEvents() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(PlayerTickEvent.class, KeybindEvents::onPlayerTick);
+   }
+
    @SideOnly(Side.CLIENT)
    public static void onPlayerTick(PlayerTickEvent event) {
       EntityPlayer player = event.player;
