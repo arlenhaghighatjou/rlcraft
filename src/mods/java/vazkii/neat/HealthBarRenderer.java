@@ -4,7 +4,6 @@ import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.Stack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
@@ -39,6 +38,13 @@ import net.minecraftforge.fml.common.eventhandler.EventBus;
 
 public class HealthBarRenderer {
    List<EntityLivingBase> renderedEntities = new ArrayList();
+   private final List<EntityLivingBase> ridingStack = new ArrayList();
+   private ItemStack spiderEye;
+   private ItemStack rottenFlesh;
+   private ItemStack creeperHead;
+   private ItemStack skeletonSkull;
+   private ItemStack ironChestplate;
+   private ItemStack diamondChestplate;
 
    public HealthBarRenderer() {
    }
@@ -67,7 +73,7 @@ public class HealthBarRenderer {
             WorldClient client = mc.world;
 
             for(Entity entity : client.entityList) {
-               if (entity != null && entity instanceof EntityLivingBase && entity != mc.player && entity.isInRangeToRender3d((double)renderingVector.getX(), (double)renderingVector.getY(), (double)renderingVector.getZ()) && (entity.ignoreFrustumCheck || frustum.isBoundingBoxInFrustum(entity.getEntityBoundingBox())) && entity.isEntityAlive() && entity.getRecursivePassengers().isEmpty()) {
+               if (entity != null && entity instanceof EntityLivingBase && entity != mc.player && entity.isInRangeToRender3d((double)renderingVector.getX(), (double)renderingVector.getY(), (double)renderingVector.getZ()) && (entity.ignoreFrustumCheck || frustum.isBoundingBoxInFrustum(entity.getEntityBoundingBox())) && entity.isEntityAlive() && !entity.isBeingRidden()) {
                   this.renderHealthBar((EntityLivingBase)entity, partialTicks, cameraEntity);
                }
             }
@@ -77,20 +83,30 @@ public class HealthBarRenderer {
    }
 
    public void renderHealthBar(EntityLivingBase passedEntity, float partialTicks, Entity viewPoint) {
-      Stack<EntityLivingBase> ridingStack = new Stack();
+      if (this.ironChestplate == null) {
+         this.spiderEye = new ItemStack(Items.SPIDER_EYE);
+         this.rottenFlesh = new ItemStack(Items.ROTTEN_FLESH);
+         this.creeperHead = new ItemStack(Items.SKULL, 1, 4);
+         this.skeletonSkull = new ItemStack(Items.SKULL);
+         this.ironChestplate = new ItemStack(Items.IRON_CHESTPLATE);
+         this.diamondChestplate = new ItemStack(Items.DIAMOND_CHESTPLATE);
+      }
+
+      List<EntityLivingBase> ridingStack = this.ridingStack;
+      ridingStack.clear();
       EntityLivingBase entity = passedEntity;
-      ridingStack.push(passedEntity);
+      ridingStack.add(passedEntity);
 
       while(entity.getRidingEntity() != null && entity.getRidingEntity() instanceof EntityLivingBase) {
          entity = (EntityLivingBase)entity.getRidingEntity();
-         ridingStack.push(entity);
+         ridingStack.add(entity);
       }
 
       Minecraft mc = Minecraft.getMinecraft();
       float pastTranslate = 0.0F;
 
       while(!ridingStack.isEmpty()) {
-         entity = (EntityLivingBase)ridingStack.pop();
+         entity = (EntityLivingBase)ridingStack.remove(ridingStack.size() - 1);
          boolean boss = !entity.isNonBoss();
          String entityID = EntityList.getEntityString(entity);
          if (!NeatConfig.blacklist.contains(entityID)) {
@@ -134,18 +150,18 @@ public class HealthBarRenderer {
                      EnumCreatureAttribute attr = entity.getCreatureAttribute();
                      switch(attr) {
                      case ARTHROPOD:
-                        stack = new ItemStack(Items.SPIDER_EYE);
+                        stack = this.spiderEye;
                         break;
                      case UNDEAD:
-                        stack = new ItemStack(Items.ROTTEN_FLESH);
+                        stack = this.rottenFlesh;
                         break;
                      default:
-                        stack = new ItemStack(Items.SKULL, 1, 4);
+                        stack = this.creeperHead;
                      }
                   }
 
                   if (boss) {
-                     stack = new ItemStack(Items.SKULL);
+                     stack = this.skeletonSkull;
                      size = (float)NeatConfig.plateSizeBoss;
                      r = 128;
                      g = 0;
@@ -254,14 +270,14 @@ public class HealthBarRenderer {
                         diamondArmor = 0;
                      }
 
-                     stack = new ItemStack(Items.IRON_CHESTPLATE);
+                     stack = this.ironChestplate;
 
                      for(int i = 0; i < ironArmor; ++i) {
                         this.renderIcon(off, 0, stack, 16, 16);
                         off -= 4;
                      }
 
-                     stack = new ItemStack(Items.DIAMOND_CHESTPLATE);
+                     stack = this.diamondChestplate;
 
                      for(int i = 0; i < diamondArmor; ++i) {
                         this.renderIcon(off, 0, stack, 16, 16);
