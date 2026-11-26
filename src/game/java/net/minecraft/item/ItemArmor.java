@@ -2,7 +2,10 @@ package net.minecraft.item;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Multimap;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
@@ -236,14 +239,18 @@ public class ItemArmor extends Item
         return this.material == ItemArmor.ArmorMaterial.LEATHER || getColor(stack) != 0x00FFFFFF;
     }
 
-    public static enum ArmorMaterial
+    public static final class ArmorMaterial
     {
-        LEATHER("leather", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F),
-        CHAIN("chainmail", 15, new int[]{1, 4, 5, 2}, 12, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.0F),
-        IRON("iron", 15, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F),
-        GOLD("gold", 7, new int[]{1, 3, 5, 2}, 25, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F),
-        DIAMOND("diamond", 33, new int[]{3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F);
+        private static final List<ArmorMaterial> VALUES = new ArrayList<>();
+        private static final Map<String, ArmorMaterial> BY_NAME = new HashMap<>();
+        public static final ArmorMaterial LEATHER = register("LEATHER", "leather", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F);
+        public static final ArmorMaterial CHAIN = register("CHAIN", "chainmail", 15, new int[]{1, 4, 5, 2}, 12, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.0F);
+        public static final ArmorMaterial IRON = register("IRON", "iron", 15, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
+        public static final ArmorMaterial GOLD = register("GOLD", "gold", 7, new int[]{1, 3, 5, 2}, 25, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F);
+        public static final ArmorMaterial DIAMOND = register("DIAMOND", "diamond", 33, new int[]{3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F);
 
+        private final String constantName;
+        private final int ordinal;
         private final String name;
         private final int maxDamageFactor;
         private final int[] damageReductionAmountArray;
@@ -253,14 +260,55 @@ public class ItemArmor extends Item
         //Added by forge for custom Armor materials.
         public ItemStack repairMaterial = ItemStack.EMPTY;
 
-        private ArmorMaterial(String nameIn, int maxDamageFactorIn, int[] damageReductionAmountArrayIn, int enchantabilityIn, SoundEvent soundEventIn, float toughnessIn)
+        private ArmorMaterial(String constantName, int ordinal, String nameIn, int maxDamageFactorIn, int[] damageReductionAmountArrayIn, int enchantabilityIn, SoundEvent soundEventIn, float toughnessIn)
         {
+            this.constantName = constantName;
+            this.ordinal = ordinal;
             this.name = nameIn;
             this.maxDamageFactor = maxDamageFactorIn;
             this.damageReductionAmountArray = damageReductionAmountArrayIn;
             this.enchantability = enchantabilityIn;
             this.soundEvent = soundEventIn;
             this.toughness = toughnessIn;
+        }
+
+        public static ArmorMaterial register(String constantName, String textureName, int durability, int[] reductionAmounts, int enchantability, SoundEvent soundOnEquip, float toughness)
+        {
+            ArmorMaterial material = new ArmorMaterial(constantName, VALUES.size(), textureName, durability, reductionAmounts, enchantability, soundOnEquip, toughness);
+            VALUES.add(material);
+            BY_NAME.put(constantName, material);
+            return material;
+        }
+
+        public static ArmorMaterial valueOf(String name)
+        {
+            ArmorMaterial material = BY_NAME.get(java.util.Objects.requireNonNull(name, "name"));
+            if (material == null)
+            {
+                throw new IllegalArgumentException("No enum constant net.minecraft.item.ItemArmor.ArmorMaterial." + name);
+            }
+            return material;
+        }
+
+        public static ArmorMaterial[] values()
+        {
+            return VALUES.toArray(new ArmorMaterial[VALUES.size()]);
+        }
+
+        public String name()
+        {
+            return this.constantName;
+        }
+
+        public int ordinal()
+        {
+            return this.ordinal;
+        }
+
+        @Override
+        public String toString()
+        {
+            return this.constantName;
         }
 
         public int getDurability(EntityEquipmentSlot armorType)

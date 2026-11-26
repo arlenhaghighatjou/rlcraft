@@ -87,10 +87,9 @@ public class EnumHelper
     {
         return addEnum(EnumAction.class, name);
     }
-    @Nullable
     public static ArmorMaterial addArmorMaterial(String name, String textureName, int durability, int[] reductionAmounts, int enchantability, SoundEvent soundOnEquip, float toughness)
     {
-        return addEnum(ArmorMaterial.class, name, textureName, durability, reductionAmounts, enchantability, soundOnEquip, toughness);
+        return ArmorMaterial.register(name, textureName, durability, reductionAmounts, enchantability, soundOnEquip, toughness);
     }
     @Nullable
     public static EnumArt addArt(String name, String tile, int sizeX, int sizeY, int offsetX, int offsetY)
@@ -112,10 +111,9 @@ public class EnumHelper
     {
         return addEnum(Door.class, name);
     }
-    @Nullable
     public static EnumEnchantmentType addEnchantmentType(String name, Predicate<Item> delegate)
     {
-        return addEnum(EnumEnchantmentType.class, name, delegate);
+        return EnumEnchantmentType.register(name, delegate);
     }
     @Nullable
     public static Sensitivity addSensitivity(String name)
