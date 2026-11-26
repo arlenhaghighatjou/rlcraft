@@ -1,12 +1,17 @@
 package com.tmtravlr.potioncore;
 
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.EaglerInputStream;
+import net.lax1dude.eaglercraft.v1_8.EaglerOutputStream;
+import net.lax1dude.eaglercraft.v1_8.EaglerZLIB;
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.tmtravlr.potioncore.potion.PotionDrown;
 import com.tmtravlr.potioncore.potion.PotionPerplexity;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -16,10 +21,6 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.GlStateManager.CullFace;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.FogMode;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
@@ -39,19 +40,10 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.Post;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ISpecialArmor;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GLContext;
 
-@EventBusSubscriber(
-   value = {Side.CLIENT},
-   modid = "potioncore"
-)
 public class PotionCoreEventHandlerClient {
    private static final Minecraft MC = Minecraft.getMinecraft();
    public static boolean inverted = false;
@@ -62,7 +54,14 @@ public class PotionCoreEventHandlerClient {
    public PotionCoreEventHandlerClient() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(Pre.class, PotionCoreEventHandlerClient::renderOverlaysPre);
+      bus.register(Post.class, PotionCoreEventHandlerClient::renderOverlaysPost);
+      bus.register(FogDensity.class, PotionCoreEventHandlerClient::onFogRender);
+      bus.register(ClientConnectedToServerEvent.class, PotionCoreEventHandlerClient::onClientConnectToServer);
+      bus.register(ClientTickEvent.class, PotionCoreEventHandlerClient::onClientTick);
+   }
+
    public static void renderOverlaysPre(Pre event) {
       if (event.getType() == ElementType.AIR) {
          EntityLivingBase player = (EntityLivingBase)MC.getRenderViewEntity();
@@ -120,7 +119,6 @@ public class PotionCoreEventHandlerClient {
 
    }
 
-   @SubscribeEvent
    public static void renderOverlaysPost(Post event) {
       if (event.getType() == ElementType.ARMOR && ConfigLoader.renderArmorOverlay) {
          MC.mcProfiler.startSection("armor");
@@ -208,10 +206,10 @@ public class PotionCoreEventHandlerClient {
       float scale = 8.0F;
       GlStateManager.pushMatrix();
       GlStateManager.alphaFunc(516, 0.1F);
-      GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+      GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
       GlStateManager.depthMask(false);
       GlStateManager.depthFunc(516);
-      GlStateManager.blendFunc(SourceFactor.SRC_COLOR, DestFactor.ONE);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_COLOR, RealOpenGLEnums.GL_ONE);
       GlStateManager.matrixMode(5890);
       GlStateManager.color(0.95F, 0.75F, 0.95F);
       GlStateManager.pushMatrix();
@@ -229,10 +227,10 @@ public class PotionCoreEventHandlerClient {
       drawGlintRectangle(x, y, z, width, height);
       GlStateManager.popMatrix();
       GlStateManager.matrixMode(5888);
-      GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
       GlStateManager.depthFunc(515);
       GlStateManager.depthMask(true);
-      GlStateManager.cullFace(CullFace.BACK);
+      GlStateManager.cullFace(RealOpenGLEnums.GL_BACK);
       GlStateManager.popMatrix();
    }
 
@@ -261,7 +259,6 @@ public class PotionCoreEventHandlerClient {
       return ret;
    }
 
-   @SubscribeEvent
    public static void onFogRender(FogDensity event) {
       if (ConfigLoader.fixBlindness && event.getEntity() == MC.player && MC.player.isPotionActive(MobEffects.BLINDNESS)) {
          float f1 = 5.0F;
@@ -272,30 +269,24 @@ public class PotionCoreEventHandlerClient {
          }
 
          float multiplier = 0.25F / (float)amplifier;
-         GlStateManager.setFog(FogMode.LINEAR);
+         GlStateManager.setFog(RealOpenGLEnums.GL_LINEAR);
          GlStateManager.setFogStart(f1 * multiplier);
          GlStateManager.setFogEnd(f1 * multiplier * 4.0F);
-         if (GLContext.getCapabilities().GL_NV_fog_distance) {
-            GL11.glFogi(34138, 34139);
-         }
-
          event.setDensity(2.0F);
          event.setCanceled(true);
       }
 
    }
 
-   @SubscribeEvent
    public static void onClientConnectToServer(ClientConnectedToServerEvent event) {
       PotionCoreHelper.hasServer = false;
    }
 
-   @SubscribeEvent
    public static void onClientTick(ClientTickEvent event) {
       EntityPlayer player = MC.player;
       new NBTTagCompound();
       if (ConfigLoader.fixReach && player != null && MC.playerController != null && !(MC.playerController instanceof PotionCorePlayerController)) {
-         NetHandlerPlayClient netHandler = (NetHandlerPlayClient)ObfuscationReflectionHelper.getPrivateValue(PlayerControllerMP.class, MC.playerController, new String[]{"netClientHandler", "connection"});
+         NetHandlerPlayClient netHandler = MC.playerController.connection;
          GameType gameType = MC.playerController.getCurrentGameType();
          MC.playerController = new PotionCorePlayerController(MC, netHandler);
          MC.playerController.setGameType(gameType);
@@ -322,14 +313,16 @@ public class PotionCoreEventHandlerClient {
       inverted = toSave;
 
       try {
-         File options = (File)ObfuscationReflectionHelper.getPrivateValue(GameSettings.class, Minecraft.getMinecraft().gameSettings, new String[]{"optionsFile", "optionsFile"});
-         if (!options.exists()) {
+         if (EagRuntime.getStorage("g") == null) {
             return;
          }
 
-         PrintWriter printwriter = new PrintWriter(new FileWriter(options));
-         printwriter.println("inverted:" + inverted);
-         printwriter.close();
+         EaglerOutputStream bao = new EaglerOutputStream();
+         try (OutputStream gzip = EaglerZLIB.newGZIPOutputStream(bao)) {
+            gzip.write(("inverted:" + inverted + "\n").getBytes(StandardCharsets.UTF_8));
+         }
+
+         EagRuntime.setStorage("g", bao.toByteArray());
       } catch (Exception var3) {
          PotionCore.logger.warn("Failed to save options", var3);
       }
@@ -348,10 +341,10 @@ public class PotionCoreEventHandlerClient {
    }
 
    public static void loadInverted() {
-      File options = (File)ObfuscationReflectionHelper.getPrivateValue(GameSettings.class, Minecraft.getMinecraft().gameSettings, new String[]{"optionsFile", "optionsFile"});
-      if (options.exists()) {
+      byte[] options = EagRuntime.getStorage("g");
+      if (options != null) {
          try {
-            BufferedReader bufferedreader = new BufferedReader(new FileReader(options));
+            BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(EaglerZLIB.newGZIPInputStream(new EaglerInputStream(options)), StandardCharsets.UTF_8));
             String s = "";
 
             while((s = bufferedreader.readLine()) != null) {

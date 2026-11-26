@@ -168,9 +168,9 @@ public abstract class Entity implements ICommandSender, net.minecraftforge.commo
     protected boolean inPortal;
     protected int portalCounter;
     public int dimension;
-    protected BlockPos lastPortalPos;
-    protected Vec3d lastPortalVec;
-    protected EnumFacing teleportDirection;
+    public BlockPos lastPortalPos;
+    public Vec3d lastPortalVec;
+    public EnumFacing teleportDirection;
     private boolean invulnerable;
     protected EaglercraftUUID entityUniqueID;
     protected String cachedUniqueIdString;

@@ -18,7 +18,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class PotionCoreTeleporter extends Teleporter {
    private WorldServer worldServer;
@@ -201,9 +200,9 @@ public class PotionCoreTeleporter extends Teleporter {
       nbttagcompound.removeTag("Dimension");
       newEntity.readFromNBT(nbttagcompound);
       newEntity.timeUntilPortal = oldEntity.timeUntilPortal;
-      ObfuscationReflectionHelper.setPrivateValue(Entity.class, newEntity, ObfuscationReflectionHelper.getPrivateValue(Entity.class, oldEntity, new String[]{"lastPortalPos", "lastPortalPos"}), new String[]{"lastPortalPos", "lastPortalPos"});
-      ObfuscationReflectionHelper.setPrivateValue(Entity.class, newEntity, ObfuscationReflectionHelper.getPrivateValue(Entity.class, oldEntity, new String[]{"lastPortalVec", "lastPortalVec"}), new String[]{"lastPortalVec", "lastPortalVec"});
-      ObfuscationReflectionHelper.setPrivateValue(Entity.class, newEntity, ObfuscationReflectionHelper.getPrivateValue(Entity.class, oldEntity, new String[]{"teleportDirection", "teleportDirection"}), new String[]{"teleportDirection", "teleportDirection"});
+      newEntity.lastPortalPos = oldEntity.lastPortalPos;
+      newEntity.lastPortalVec = oldEntity.lastPortalVec;
+      newEntity.teleportDirection = oldEntity.teleportDirection;
    }
 
    private static void forceTeleportEntityFromEnd(Entity entity, int newDimension, Teleporter teleporter, WorldServer worldServerNew) {

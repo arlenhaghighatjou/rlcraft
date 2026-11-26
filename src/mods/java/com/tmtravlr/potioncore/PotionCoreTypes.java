@@ -75,9 +75,9 @@ public class PotionCoreTypes {
          }
       }
 
-      EXTRA_VANILLA_TYPES.forEach((typex) -> {
-         if (ConfigLoader.extraVanillaPotionTypesEnabled.containsKey(type.getRegistryName()) && ((Boolean)ConfigLoader.extraVanillaPotionTypesEnabled.get(type.getRegistryName())).booleanValue()) {
-            registry.register(type);
+      EXTRA_VANILLA_TYPES.forEach((extraType) -> {
+         if (ConfigLoader.extraVanillaPotionTypesEnabled.containsKey(extraType.getRegistryName()) && ((Boolean)ConfigLoader.extraVanillaPotionTypesEnabled.get(extraType.getRegistryName())).booleanValue()) {
+            registry.register(extraType);
          }
 
       });

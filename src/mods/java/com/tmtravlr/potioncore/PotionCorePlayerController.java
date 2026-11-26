@@ -15,7 +15,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameType;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class PotionCorePlayerController extends PlayerControllerMP {
    private final Minecraft mc;
@@ -76,8 +75,8 @@ public class PotionCorePlayerController extends PlayerControllerMP {
 
    private void syncCurrentPlayItem() {
       int i = this.mc.player.inventory.currentItem;
-      if (i != ((Integer)ObfuscationReflectionHelper.getPrivateValue(PlayerControllerMP.class, this, new String[]{"currentPlayerItem", "currentPlayerItem"})).intValue()) {
-         ObfuscationReflectionHelper.setPrivateValue(PlayerControllerMP.class, this, Integer.valueOf(i), new String[]{"currentPlayerItem", "currentPlayerItem"});
+      if (i != this.currentPlayerItem) {
+         this.currentPlayerItem = i;
          this.netHandlerVisible.sendPacket(new CPacketHeldItemChange(i));
       }
 

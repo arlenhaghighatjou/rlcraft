@@ -28,7 +28,7 @@ public class MobEffects
     public static final Potion WITHER;
     public static final Potion HEALTH_BOOST;
     public static final Potion ABSORPTION;
-    public static final Potion SATURATION;
+    public static Potion SATURATION;
     public static final Potion GLOWING;
     public static final Potion LEVITATION;
     public static final Potion LUCK;

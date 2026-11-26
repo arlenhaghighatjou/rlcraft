@@ -80,11 +80,11 @@ public class PacketHandlerServer implements IMessageHandler<CToSMessage, IMessag
                player.interactOn(entity, enumhand);
                break;
             case 5:
-               EnumHand enumhand = (EnumHand)buff.readEnumValue(EnumHand.class);
-               player.getHeldItem(enumhand);
+               EnumHand enumhand1 = (EnumHand)buff.readEnumValue(EnumHand.class);
+               player.getHeldItem(enumhand1);
                Vec3d posVec = new Vec3d(buff.readDouble(), buff.readDouble(), buff.readDouble());
-               if (ForgeHooks.onInteractEntityAt(player, entity, posVec, enumhand) == null) {
-                  entity.applyPlayerInteraction(player, posVec, enumhand);
+               if (ForgeHooks.onInteractEntityAt(player, entity, posVec, enumhand1) == null) {
+                  entity.applyPlayerInteraction(player, posVec, enumhand1);
                }
             }
          }

@@ -51,7 +51,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class PlayerControllerMP
 {
     private final Minecraft mc;
-    private final NetHandlerPlayClient connection;
+    public final NetHandlerPlayClient connection;
     private BlockPos currentBlock = new BlockPos(-1, -1, -1);
     private ItemStack currentItemHittingBlock = ItemStack.EMPTY;
     public float curBlockDamageMP;
@@ -59,7 +59,7 @@ public class PlayerControllerMP
     private int blockHitDelay;
     private boolean isHittingBlock;
     private GameType currentGameType = GameType.SURVIVAL;
-    private int currentPlayerItem;
+    public int currentPlayerItem;
 
     public PlayerControllerMP(Minecraft mcIn, NetHandlerPlayClient netHandler)
     {

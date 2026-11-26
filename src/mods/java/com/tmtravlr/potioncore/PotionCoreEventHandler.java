@@ -1,5 +1,6 @@
 package com.tmtravlr.potioncore;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.tmtravlr.potioncore.network.SToCMessage;
 import com.tmtravlr.potioncore.potion.PotionAntidote;
 import com.tmtravlr.potioncore.potion.PotionDrown;
@@ -49,38 +50,47 @@ import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@EventBusSubscriber(
-   modid = "potioncore"
-)
 public class PotionCoreEventHandler {
    private static final Object INVUL_RESET_LOCK = new Object();
 
    public PotionCoreEventHandler() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Potion.class, PotionCoreEventHandler::onRegisterPotions);
+      bus.registerGeneric(Register.class, PotionType.class, PotionCoreEventHandler::onRegisterPotionTypes);
+      bus.register(EntityConstructing.class, PotionCoreEventHandler::onEntityConstructing);
+      bus.register(LivingJumpEvent.class, PotionCoreEventHandler::onLivingJump);
+      bus.register(BreakSpeed.class, PotionCoreEventHandler::onPlayerDig);
+      bus.register(LivingFallEvent.class, EventPriority.HIGHEST, false, PotionCoreEventHandler::onLivingFall);
+      bus.register(LivingHurtEvent.class, EventPriority.HIGH, false, PotionCoreEventHandler::onLivingHurt);
+      bus.register(LivingHurtEvent.class, EventPriority.LOWEST, false, PotionCoreEventHandler::onLivingHurtLow);
+      bus.register(LivingAttackEvent.class, PotionCoreEventHandler::onLivingAttack);
+      bus.register(LivingUpdateEvent.class, PotionCoreEventHandler::onLivingUpdate);
+      bus.register(LivingDeathEvent.class, EventPriority.HIGHEST, false, PotionCoreEventHandler::onLivingDeath);
+      bus.register(LivingSetAttackTargetEvent.class, EventPriority.LOWEST, false, PotionCoreEventHandler::onSetAttackTarget);
+      bus.register(PlayerLoggedInEvent.class, PotionCoreEventHandler::onPlayerLogIn);
+      bus.register(EntityJoinWorldEvent.class, PotionCoreEventHandler::onEntityJoinWorld);
+      bus.register(WorldTickEvent.class, PotionCoreEventHandler::onWorldTick);
+   }
+
    public static void onRegisterPotions(Register<Potion> event) {
       IForgeRegistry<Potion> registry = event.getRegistry();
       PotionCoreEffects.loadPotionEffects(registry);
    }
 
-   @SubscribeEvent
    public static void onRegisterPotionTypes(Register<PotionType> event) {
       IForgeRegistry<PotionType> registry = event.getRegistry();
       PotionCoreTypes.loadPotionTypes(registry);
    }
 
-   @SubscribeEvent
    public static void onEntityConstructing(EntityConstructing event) {
       if (event.getEntity() instanceof EntityLivingBase) {
          ((EntityLivingBase)event.getEntity()).getAttributeMap().registerAttribute(PotionCoreAttributes.PROJECTILE_DAMAGE);
@@ -96,7 +106,6 @@ public class PotionCoreEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onLivingJump(LivingJumpEvent event) {
       if (!event.getEntity().world.isRemote || PotionCoreHelper.hasServer) {
          if (ConfigLoader.controllableJumpBoost) {
@@ -125,7 +134,6 @@ public class PotionCoreEventHandler {
       }
    }
 
-   @SubscribeEvent
    public static void onPlayerDig(BreakSpeed event) {
       if (!event.getEntity().world.isRemote || PotionCoreHelper.hasServer) {
          float speed = event.getNewSpeed();
@@ -137,9 +145,6 @@ public class PotionCoreEventHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
    public static void onLivingFall(LivingFallEvent event) {
       if (!event.getEntity().world.isRemote || PotionCoreHelper.hasServer) {
          float jump = (float)PotionCoreAttributes.getAdjustedJumpHeightAttribute(event.getEntityLiving());
@@ -150,9 +155,6 @@ public class PotionCoreEventHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
    public static void onLivingHurt(LivingHurtEvent event) {
       if (!event.getEntity().world.isRemote || PotionCoreHelper.hasServer) {
          if (!event.getSource().isDamageAbsolute()) {
@@ -199,9 +201,6 @@ public class PotionCoreEventHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
    public static void onLivingHurtLow(LivingHurtEvent event) {
       if (event.getSource().getTrueSource() instanceof EntityLivingBase) {
          EntityLivingBase source = (EntityLivingBase)event.getSource().getTrueSource();
@@ -231,7 +230,6 @@ public class PotionCoreEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onLivingAttack(LivingAttackEvent event) {
       checkInvulReset();
       if (ConfigLoader.separateInvulTimers) {
@@ -256,7 +254,6 @@ public class PotionCoreEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onLivingUpdate(LivingUpdateEvent event) {
       if (!event.getEntity().world.isRemote) {
          event.getEntityLiving().getEntityData().setFloat("Potion Core - Health Fix", event.getEntityLiving().getHealth());
@@ -429,7 +426,7 @@ public class PotionCoreEventHandler {
          }
 
          if (player.world.isRemote && event.getEntityLiving().getEntityData().getBoolean("Potion Core - Jump Boost Jumping")) {
-            boolean isJumping = ((Boolean)ObfuscationReflectionHelper.getPrivateValue(EntityLivingBase.class, player, new String[]{"isJumping", "isJumping"})).booleanValue();
+            boolean isJumping = player.isJumping;
             double height = player.getEntityData().getDouble("Potion Core - Jump Boost Height");
             double base = player.getEntityData().getDouble("Potion Core - Jump Boost Base");
             if (isJumping && player.posY > player.prevPosY && player.posY - base + 1.0D < height) {
@@ -450,9 +447,6 @@ public class PotionCoreEventHandler {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
    public static void onLivingDeath(LivingDeathEvent event) {
       if (PotionRevival.INSTANCE.isEnabled() && event.getEntityLiving().isPotionActive(PotionRevival.INSTANCE)) {
          int level = event.getEntityLiving().getActivePotionEffect(PotionRevival.INSTANCE).getAmplifier() + 1;
@@ -469,9 +463,6 @@ public class PotionCoreEventHandler {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
    public static void onSetAttackTarget(LivingSetAttackTargetEvent event) {
       if (event.getEntity() instanceof EntityLiving) {
          EntityLiving entity = (EntityLiving)event.getEntity();
@@ -489,7 +480,6 @@ public class PotionCoreEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onPlayerLogIn(PlayerLoggedInEvent event) {
       if (event.player instanceof EntityPlayerMP) {
          PacketBuffer out = new PacketBuffer(Unpooled.buffer());
@@ -499,7 +489,6 @@ public class PotionCoreEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
       if (event.getEntity() instanceof EntityLivingBase) {
          EntityLivingBase entityLiving = (EntityLivingBase)event.getEntity();
@@ -553,7 +542,6 @@ public class PotionCoreEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onWorldTick(WorldTickEvent event) {
       if (event.phase == Phase.END) {
          if (!PotionCoreHelper.playersToHeal.isEmpty()) {

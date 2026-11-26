@@ -129,7 +129,7 @@ public abstract class EntityLivingBase extends Entity
     protected float unused180;
     protected int scoreValue;
     protected float lastDamage;
-    protected boolean isJumping;
+    public boolean isJumping;
     public float moveStrafing;
     public float moveVertical;
     public float moveForward;

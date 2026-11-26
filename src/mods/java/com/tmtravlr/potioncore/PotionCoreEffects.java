@@ -45,7 +45,6 @@ import com.tmtravlr.potioncore.potion.PotionTeleportSpawn;
 import com.tmtravlr.potioncore.potion.PotionTeleportSurface;
 import com.tmtravlr.potioncore.potion.PotionVulnerable;
 import com.tmtravlr.potioncore.potion.PotionWeight;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.annotation.Nullable;
@@ -143,32 +142,7 @@ public class PotionCoreEffects {
    }
 
    private static void replaceVanillaSaturation(Potion fixedSaturation) {
-      Exception caught = null;
-      Potion saturation = MobEffects.SATURATION;
-
-      try {
-         Class mobEffectsClass = MobEffects.class;
-         String[] fieldNames = new String[]{"SATURATION", "SATURATION"};
-         Field f = null;
-
-         for(String fieldName : fieldNames) {
-            try {
-               f = mobEffectsClass.getDeclaredField(fieldName);
-               f.setAccessible(true);
-               Field modifiersField = Field.class.getDeclaredField("modifiers");
-               modifiersField.setAccessible(true);
-               modifiersField.setInt(f, f.getModifiers() & -17);
-               f.set((Object)null, fixedSaturation);
-               return;
-            } catch (Exception var11) {
-               caught = var11;
-            }
-         }
-      } catch (Exception var12) {
-         caught = var12;
-      }
-
-      PotionCore.logger.warn("Unable to fix saturation", caught);
+      MobEffects.SATURATION = fixedSaturation;
    }
 
    static {
