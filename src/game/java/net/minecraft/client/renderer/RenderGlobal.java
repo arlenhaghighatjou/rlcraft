@@ -130,7 +130,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
     private int glSkyList = -1;
     private int glSkyList2 = -1;
     private int cloudTickCounter;
-    private final Map<Integer, DestroyBlockProgress> damagedBlocks = Maps.<Integer, DestroyBlockProgress>newHashMap();
+    public final Map<Integer, DestroyBlockProgress> damagedBlocks = Maps.<Integer, DestroyBlockProgress>newHashMap();
     private final Map<BlockPos, ISound> mapSoundPositions = Maps.<BlockPos, ISound>newHashMap();
     private final EaglerTextureAtlasSprite[] destroyBlockIcons = new EaglerTextureAtlasSprite[10];
     private double frustumUpdatePosX = Double.MIN_VALUE;

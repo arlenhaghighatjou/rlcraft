@@ -54,7 +54,7 @@ public class PlayerControllerMP
     private final NetHandlerPlayClient connection;
     private BlockPos currentBlock = new BlockPos(-1, -1, -1);
     private ItemStack currentItemHittingBlock = ItemStack.EMPTY;
-    private float curBlockDamageMP;
+    public float curBlockDamageMP;
     private float stepSoundTickCounter;
     private int blockHitDelay;
     private boolean isHittingBlock;
