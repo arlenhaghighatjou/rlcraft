@@ -931,6 +931,9 @@ public class EntityRenderer implements IResourceManagerReloadListener
                     int k = (int)(f8 * 255.0F);
                     int l = (int)(f9 * 255.0F);
                     int i1 = (int)(f10 * 255.0F);
+                    k = lumien.bloodmoon.client.ClientBloodmoonHandler.INSTANCE.manipulateRed(i, k);
+                    l = lumien.bloodmoon.client.ClientBloodmoonHandler.INSTANCE.manipulateGreen(i, l);
+                    i1 = lumien.bloodmoon.client.ClientBloodmoonHandler.INSTANCE.manipulateBlue(i, i1);
                     this.lightmapColors[i] = -16777216 | k << 16 | l << 8 | i1;
                 }
 

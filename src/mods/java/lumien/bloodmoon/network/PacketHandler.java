@@ -12,6 +12,6 @@ public class PacketHandler {
    }
 
    public static void init() {
-      INSTANCE.registerMessage(HandleBloodmoonStatus.class, MessageBloodmoonStatus.class, 0, Side.CLIENT);
+      INSTANCE.registerMessage(new HandleBloodmoonStatus(), MessageBloodmoonStatus.class, MessageBloodmoonStatus::new, 0, Side.CLIENT);
    }
 }

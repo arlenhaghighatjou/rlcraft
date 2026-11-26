@@ -4,9 +4,9 @@ import javax.annotation.Nullable;
 public class Vec3d
 {
     public static final Vec3d ZERO = new Vec3d(0.0D, 0.0D, 0.0D);
-    public final double x;
-    public final double y;
-    public final double z;
+    public double x;
+    public double y;
+    public double z;
 
     public Vec3d(double xIn, double yIn, double zIn)
     {

@@ -1,13 +1,13 @@
 package lumien.bloodmoon.client;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import lumien.bloodmoon.config.BloodmoonConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
-import org.lwjgl.opengl.GL11;
 
 public class ClientBloodmoonHandler {
    public static ClientBloodmoonHandler INSTANCE = new ClientBloodmoonHandler();
@@ -34,7 +34,7 @@ public class ClientBloodmoonHandler {
 
    public void moonColorHook() {
       if (this.isBloodmoonActive() && BloodmoonConfig.APPEARANCE.RED_MOON) {
-         GL11.glColor3f(0.8F, 0.0F, 0.0F);
+         GlStateManager.color(0.8F, 0.0F, 0.0F);
       }
 
    }
@@ -77,7 +77,10 @@ public class ClientBloodmoonHandler {
       return originalValue;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ClientTickEvent.class, this::clientTick);
+   }
+
    public void clientTick(ClientTickEvent event) {
       if (this.isBloodmoonActive()) {
          WorldClient world = Minecraft.getMinecraft().world;

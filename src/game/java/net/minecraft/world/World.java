@@ -1484,7 +1484,7 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
     @SideOnly(Side.CLIENT)
     public Vec3d getSkyColor(Entity entityIn, float partialTicks)
     {
-        return this.provider.getSkyColor(entityIn, partialTicks);
+        return lumien.bloodmoon.client.ClientBloodmoonHandler.INSTANCE.skyColorHook(this.provider.getSkyColor(entityIn, partialTicks));
     }
 
     @SideOnly(Side.CLIENT)
@@ -1552,7 +1552,9 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
     @SideOnly(Side.CLIENT)
     public int getMoonPhase()
     {
-        return this.provider.getMoonPhase(this.getWorldTime());
+        int moonPhase = this.provider.getMoonPhase(this.getWorldTime());
+        lumien.bloodmoon.client.ClientBloodmoonHandler.INSTANCE.moonColorHook();
+        return moonPhase;
     }
 
     public float getCurrentMoonPhaseFactor()

@@ -1,5 +1,6 @@
 package lumien.bloodmoon.handler;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import lumien.bloodmoon.Bloodmoon;
 import lumien.bloodmoon.client.ClientBloodmoonHandler;
 import lumien.bloodmoon.config.BloodmoonConfig;
@@ -18,7 +19,6 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -27,7 +27,17 @@ public class BloodmoonEventHandler {
    public BloodmoonEventHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Load.class, this::loadWorld);
+      bus.register(LivingDropsEvent.class, this::livingDrops);
+      bus.register(LivingUpdateEvent.class, this::livingUpdate);
+      bus.register(PlayerSleepInBedEvent.class, this::sleepInBed);
+      bus.register(OnConfigChangedEvent.class, this::onConfigChange);
+      bus.register(FogColors.class, this::fogColor);
+      bus.register(EntityJoinWorldEvent.class, this::playerJoinedWorld);
+      bus.register(WorldTickEvent.class, this::endWorldTick);
+   }
+
    public void loadWorld(Load event) {
       if (!event.getWorld().isRemote && event.getWorld().provider.getDimension() == 0) {
          BloodmoonHandler.INSTANCE = (BloodmoonHandler)event.getWorld().getMapStorage().getOrLoadData(BloodmoonHandler.class, "Bloodmoon");
@@ -42,7 +52,6 @@ public class BloodmoonEventHandler {
 
    }
 
-   @SubscribeEvent
    public void livingDrops(LivingDropsEvent event) {
       if (!event.getEntityLiving().world.isRemote && event.getSource() == DamageSource.OUT_OF_WORLD && event.getEntityLiving().getEntityData().getBoolean("bloodmoonSpawned")) {
          event.setCanceled(true);
@@ -50,7 +59,6 @@ public class BloodmoonEventHandler {
 
    }
 
-   @SubscribeEvent
    public void livingUpdate(LivingUpdateEvent event) {
       if (BloodmoonConfig.GENERAL.VANISH && BloodmoonHandler.INSTANCE != null && event.getEntityLiving().dimension == 0 && !event.getEntityLiving().world.isRemote && !BloodmoonHandler.INSTANCE.isBloodmoonActive() && event.getEntityLiving().world.getTotalWorldTime() % 20L == 0L && Math.random() <= 0.20000000298023224D && event.getEntityLiving().getEntityData().getBoolean("bloodmoonSpawned")) {
          event.getEntityLiving().onKillCommand();
@@ -58,7 +66,6 @@ public class BloodmoonEventHandler {
 
    }
 
-   @SubscribeEvent
    public void sleepInBed(PlayerSleepInBedEvent event) {
       if (BloodmoonHandler.INSTANCE != null && BloodmoonConfig.GENERAL.NO_SLEEP && Bloodmoon.proxy.isBloodmoon()) {
          event.setResult(SleepResult.OTHER_PROBLEM);
@@ -67,12 +74,10 @@ public class BloodmoonEventHandler {
 
    }
 
-   @SubscribeEvent
    public void onConfigChange(OnConfigChangedEvent event) {
       ConfigManager.sync("bloodmoon", Type.INSTANCE);
    }
 
-   @SubscribeEvent
    @SideOnly(Side.CLIENT)
    public void fogColor(FogColors event) {
       if (BloodmoonConfig.APPEARANCE.BLACK_FOG && ClientBloodmoonHandler.INSTANCE.isBloodmoonActive()) {
@@ -83,7 +88,6 @@ public class BloodmoonEventHandler {
 
    }
 
-   @SubscribeEvent
    public void playerJoinedWorld(EntityJoinWorldEvent event) {
       if (BloodmoonHandler.INSTANCE != null && !event.getWorld().isRemote) {
          BloodmoonHandler.INSTANCE.playerJoinedWorld(event);
@@ -91,7 +95,6 @@ public class BloodmoonEventHandler {
 
    }
 
-   @SubscribeEvent
    public void endWorldTick(WorldTickEvent event) {
       if (BloodmoonHandler.INSTANCE != null) {
          BloodmoonHandler.INSTANCE.endWorldTick(event);

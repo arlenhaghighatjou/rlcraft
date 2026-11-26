@@ -3,7 +3,7 @@ package lumien.bloodmoon.server;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.ArrayList;
-import java.util.Collections;
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
@@ -80,7 +80,7 @@ public final class BloodmoonSpawner {
                spawnLimit = spawnLimit * BloodmoonConfig.SPAWNING.SPAWN_LIMIT_MULT;
                if (k4 <= spawnLimit) {
                   ArrayList<ChunkPos> shuffled = Lists.newArrayList(this.eligibleChunksForSpawning);
-                  Collections.shuffle(shuffled);
+                  ThreadLocalRandom.current().shuffle(shuffled);
                   MutableBlockPos blockpos$mutableblockpos = new MutableBlockPos();
 
                   label145:
@@ -121,7 +121,7 @@ public final class BloodmoonSpawner {
                                  if (worldServerIn.canCreatureTypeSpawnHere(enumcreaturetype, biomegenbase$spawnlistentry, blockpos$mutableblockpos) && canCreatureTypeSpawnAtLocation(EntitySpawnPlacementRegistry.getPlacementForEntity(biomegenbase$spawnlistentry.entityClass), worldServerIn, blockpos$mutableblockpos)) {
                                     EntityLiving entityliving;
                                     try {
-                                       entityliving = (EntityLiving)biomegenbase$spawnlistentry.entityClass.getConstructor(World.class).newInstance(worldServerIn);
+                                       entityliving = biomegenbase$spawnlistentry.newInstance(worldServerIn);
                                     } catch (Exception var37) {
                                        var37.printStackTrace();
                                        return j4;
@@ -216,7 +216,7 @@ public final class BloodmoonSpawner {
                   if (canCreatureTypeSpawnAtLocation(SpawnPlacementType.ON_GROUND, worldIn, blockpos)) {
                      EntityLiving entityliving;
                      try {
-                        entityliving = (EntityLiving)biomegenbase$spawnlistentry.entityClass.getConstructor(World.class).newInstance(worldIn);
+                        entityliving = biomegenbase$spawnlistentry.newInstance(worldIn);
                      } catch (Exception var21) {
                         var21.printStackTrace();
                         continue;
