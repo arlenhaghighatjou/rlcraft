@@ -1,5 +1,6 @@
 package tschipp.forgottenitems.util;
 
+import net.minecraft.util.ResourceLocation;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,8 +28,8 @@ public class CommonProxy {
 
 		BlockList.registerBlocks();
 		ItemList.registerItems();
-		GameRegistry.registerTileEntity(TileEntityRuneReader.class, FIM.MODID + ":firunereader");
-		GameRegistry.registerTileEntity(TileEntityAdvancedRuneReader.class, FIM.MODID + ":fiadvancedrunereader");
+		GameRegistry.registerTileEntity(TileEntityRuneReader.class, new ResourceLocation(FIM.MODID + ":firunereader"), TileEntityRuneReader::new);
+		GameRegistry.registerTileEntity(TileEntityAdvancedRuneReader.class, new ResourceLocation(FIM.MODID + ":fiadvancedrunereader"), TileEntityAdvancedRuneReader::new);
 
 	}
 	

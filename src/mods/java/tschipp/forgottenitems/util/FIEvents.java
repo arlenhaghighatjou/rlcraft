@@ -1,5 +1,6 @@
 package tschipp.forgottenitems.util;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +43,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import tschipp.forgottenitems.FIM;
 import tschipp.forgottenitems.items.ItemList;
@@ -60,7 +60,19 @@ public class FIEvents {
 	 * Called when a block is broken and a drop appears
 	 * @param event
 	 */
-	@SubscribeEvent
+	public void register(EventBus bus) {
+	   bus.register(HarvestDropsEvent.class, this::onHarvestDrop);
+	   bus.register(LivingEvent.LivingUpdateEvent.class, this::onLivingUpdate);
+	   bus.register(LivingDeathEvent.class, this::onDeath);
+	   bus.register(PlayerEvent.Clone.class, this::onRespawn);
+	   bus.register(LivingHurtEvent.class, this::onLivingHurt);
+	   bus.register(EntityItemPickupEvent.class, this::onPlayerPickupItem);
+	   bus.register(LootTableLoadEvent.class, this::onLootTableLoad);
+	   bus.register(WorldEvent.Load.class, this::onWorldLoad);
+	   bus.register(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent.class, this::onPlayerJoin);
+	   bus.register(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent.class, this::onPlayerChangeDimension);
+	}
+
 	public void onHarvestDrop(HarvestDropsEvent event)
 	{
 		World world = event.getWorld();
@@ -160,7 +172,6 @@ public class FIEvents {
 	 * Fired when an entity updates
 	 * @param event
 	 */
-	@SubscribeEvent
 	public void onLivingUpdate(LivingEvent.LivingUpdateEvent event)
 	{
 		EntityLivingBase living = event.getEntityLiving();
@@ -208,7 +219,6 @@ public class FIEvents {
 	 * Gets fired when a living dies
 	 * @param event
 	 */
-	@SubscribeEvent
 	public void onDeath(LivingDeathEvent event)
 	{
 		EntityLivingBase living = event.getEntityLiving();
@@ -252,7 +262,6 @@ public class FIEvents {
 	 * Gets called when a player respawns
 	 * @param event
 	 */
-	@SubscribeEvent
 	public void onRespawn(PlayerEvent.Clone event)
 	{
 		EntityPlayer newPlayer = event.getEntityPlayer();
@@ -283,7 +292,6 @@ public class FIEvents {
 	 * Called when a living takes damage
 	 * @param event
 	 */
-	@SubscribeEvent
 	public void onLivingHurt(LivingHurtEvent event)
 	{
 		DamageSource source = event.getSource();
@@ -336,7 +344,6 @@ public class FIEvents {
 	 * Called when a player picks up an Item
 	 * @param event
 	 */
-	@SubscribeEvent
 	public void onPlayerPickupItem(EntityItemPickupEvent event)
 	{
 		EntityItem item = event.getItem();
@@ -389,7 +396,6 @@ public class FIEvents {
 	 * Used to add the Crafting runes to the loot tables
 	 * @param event
 	 */
-	@SubscribeEvent
 	public void onLootTableLoad(LootTableLoadEvent event)
 	{
 		LootTable table = event.getTable();
@@ -453,7 +459,6 @@ public class FIEvents {
 	 * Called when the world loads
 	 * @param event
 	 */
-	@SubscribeEvent
 	public void onWorldLoad(WorldEvent.Load event)
 	{
 		World world = event.getWorld();
@@ -473,7 +478,6 @@ public class FIEvents {
 	 * Called when a player joins the world
 	 * @param event
 	 */
-	@SubscribeEvent 
 	public void onPlayerJoin(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event)
 	{	
 		World world = event.player.world;
@@ -493,7 +497,6 @@ public class FIEvents {
 	 * Called when the player changes dimensions
 	 * @param event
 	 */
-	@SubscribeEvent 
 	public void onPlayerChangeDimension(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent event)
 	{
 		World world = event.player.world;

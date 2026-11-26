@@ -261,6 +261,7 @@ public class Loader
         mods.add(new FMLModContainer<>("dynamictrees", "Dynamic Trees", "1.12.2-0.9.29", "required-after:forge@[14.23.5.2859,);before:rustic@(1.0.14,);before:dynamictreesbop@[1.12.2-1.4.3,);before:dynamictreestc@[1.12.2-1.4.2,);before:@[1.12.2-2.0.3,)@[1.12.2-2.0.3,);before:dttraverse@[1.12.2-2.0,);before:dynamictreeshnc@(1.1,);after:reccomplex", "[1.12.2]", "dynamictrees", com.ferreusveritas.dynamictrees.DynamicTrees::new, com.ferreusveritas.dynamictrees.DynamicTrees::handleModStateEvent));
         mods.add(new FMLModContainer<>("dttraverse", "Dynamic Trees Traverse", "1.12.2-2.1", "required-after:dynamictrees@[1.12.2-0.9.18,);required-after:traverse", "[1.12.2]", "dttraverse", dttraverse.DynamicTreesTraverse::new, dttraverse.DynamicTreesTraverse::handleModStateEvent));
         mods.add(new FMLModContainer<>("tschipplib", "TschippLib", "1.1.6", "", "", "tschipplib", tschipp.tschipplib.TschippLib::new, tschipp.tschipplib.TschippLib::handleModStateEvent).acceptableRemoteVersions("[1.1.3,)"));
+        mods.add(new FMLModContainer<>("forgottenitems", "Forgotten Items", "1.2.1", "required-after:tschipplib", "[1.12,1.13)", "forgottenitems", tschipp.forgottenitems.FIM::new, tschipp.forgottenitems.FIM::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {
